@@ -450,8 +450,10 @@ const [queryMode, setQueryMode] = useLocalState('kjs_query_mode', 'all'); // all
 
 // === Admin：管理員名單＋目前登入者 ===
 const [admins, setAdmins] = useLocalState('kjs_admins', [
-  // 預設 1 位管理者：只有名稱，尚未設定密碼（第一次登入會被要求設定）
-  { name: 'admin', passwordHash: '' }
+  { 
+    name: 'admin', 
+    passwordHash: '8efdbb89a7394f7a1a3f3a81d1b91a2781a5a66d74f40bfa7f2f5a5a8d79f5f2' 
+  }
 ]);
 const [currentAdmin, setCurrentAdmin] = useLocalState('kjs_current_admin', ''); // 空字串＝未登入
 
