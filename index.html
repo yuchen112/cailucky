@@ -1,0 +1,3746 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>開獎所｜公共/管理雙模式（空資料版）—Part 1</title>
+  <meta name="color-scheme" content="light dark">
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: { DEFAULT: '#14b8a6', fg: '#0f766e', amber: '#f59e0b' }
+        },
+        boxShadow: {
+          soft: '0 10px 25px -10px rgb(0 0 0 / 0.25)',
+          elevate: '0 12px 30px -12px rgba(0,0,0,.35)'
+        },
+        borderRadius: { 'xl2': '1rem' },
+        keyframes: {
+          fadeIn: { '0%': {opacity:0, transform:'translateY(6px)'},
+                    '100%': {opacity:1, transform:'translateY(0)'} },
+          pulseSoft: { '0%,100%': {opacity:.75}, '50%': {opacity:1} }
+        },
+        animation: {
+          fadeIn: 'fadeIn .35s ease-out both',
+          pulseSoft: 'pulseSoft 2.4s ease-in-out infinite'
+        }
+      }
+    }
+  }
+</script>
+
+  <!-- React 18 UMD + Babel for in-browser JSX -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+ 
+/* 柔和格點背景 + 漸層基底 */
+body {
+  background-image:
+    radial-gradient(at 20% 0%, rgba(20,184,166,.08), transparent 35%),
+    radial-gradient(at 80% 10%, rgba(245,158,11,.08), transparent 35%),
+    radial-gradient(at 50% 100%, rgba(15,118,110,.08), transparent 35%);
+}
+
+   
+    .tap-target{padding:10px 12px; min-width:44px; min-height:44px}
+
+    .no-scrollbar::-webkit-scrollbar{display:none}
+    .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+  
+/* === 背景圖片（整站） ================================== */
+html, body { min-height: 100%; }
+body::before{
+  content:"";
+  position: fixed; inset: 0; z-index:-1;
+  background-image:
+    linear-gradient(var(--bg-tint, rgba(255,255,255,0.0)), var(--bg-tint, rgba(255,255,255,0.0))),
+    var(--bg-img, none);
+  background-size: var(--bg-size, cover);
+  background-position: var(--bg-pos, center);
+  background-repeat: no-repeat;
+  filter: brightness(var(--bg-brightness,1)) blur(var(--bg-blur,0px));
+  opacity: var(--bg-opacity,1);
+  transition: filter .25s ease, opacity .25s ease, background .25s ease;
+}
+
+/* === 漢堡選單背景 ======================= */
+.menu-pane{
+  position: relative;
+  overflow: hidden;
+  background: var(--menu-fallback, rgba(255,255,255,.92));
+  border-right: 1px solid rgba(15,23,42,.08);
+}
+.menu-pane::before{
+  content:"";
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(var(--menu-tint, rgba(255,255,255,0.0)), var(--menu-tint, rgba(255,255,255,0.0))),
+    var(--menu-bg-img, none);
+  background-size: var(--menu-bg-size, cover);
+  background-position: var(--menu-bg-pos, center);
+  background-repeat: no-repeat;
+  filter: brightness(var(--menu-brightness,1)) blur(var(--menu-blur,0px));
+  opacity: var(--menu-opacity,1);
+}
+.menu-pane > *{ position: relative; z-index:1; }
+
+</style>
+</head>
+<body class="bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-100">
+  <div id="root" class="min-h-screen"></div>
+
+  <script type="text/babel">
+    const { useEffect, useState } = React;
+
+    // —— LocalStorage Keys ——
+    const LS = { data: 'kjs_site_data_v1', admin: 'kjs_admin_pass' };
+
+  // === Default Settings（可被管理面板覆寫） ===
+const DEFAULT_SETTINGS = {
+  drawMaxPerRun: 500,      // 單次最多抽出人數上限（名額）
+  drawPublicShowLimit: 50, // 公開結果最多顯示幾位
+  drawCooldownSec: 10,     // 同一活動重跑冷卻秒數
+};
+
+// === History 狀態選單 ===
+const HISTORY_STATUS_OPTIONS = [
+  { value: "已寄出",   label: "✅ 已寄出" },
+  { value: "處理中",   label: "⏳ 處理中" },
+  { value: "未回覆",   label: "🔴 未回覆" },
+  { value: "再寄送中", label: "📦 再寄送中" },
+  { value: "待寄送",   label: "🟡 待寄送" },
+  { value: "放棄領獎", label: "🚫 放棄領獎" },
+];
+// 顯示用（歷史列表）
+const HISTORY_STATUS_ICON = {
+  "已寄出":"✅","處理中":"⏳","未回覆":"🔴","再寄送中":"📦","待寄送":"🟡","放棄領獎":"🚫"
+};
+
+// ========== 狀態標籤樣式（柔和、不刺眼） ==========
+const HISTORY_STATUS_STYLE = {
+  "已寄出":   { bg: "bg-emerald-100/70 dark:bg-emerald-300/15", text: "text-emerald-700 dark:text-emerald-300", ring:"ring-emerald-500/20" },
+  "處理中":   { bg: "bg-sky-100/70 dark:bg-sky-300/15",         text: "text-sky-700 dark:text-sky-300",         ring:"ring-sky-500/20" },
+  "未回覆":   { bg: "bg-rose-100/70 dark:bg-rose-300/15",       text: "text-rose-700 dark:text-rose-300",       ring:"ring-rose-500/20" },
+  "再寄送中": { bg: "bg-indigo-100/70 dark:bg-indigo-300/15",   text: "text-indigo-700 dark:text-indigo-300",   ring:"ring-indigo-500/20" },
+  "待寄送":   { bg: "bg-amber-100/70 dark:bg-amber-300/15",     text: "text-amber-800 dark:text-amber-300",     ring:"ring-amber-500/20" },
+  "放棄領獎": { bg: "bg-slate-200/70 dark:bg-slate-300/15",     text: "text-slate-700 dark:text-slate-300",     ring:"ring-slate-400/20" },
+};
+
+// 小元件：狀態膠囊（含 emoji）
+function StatusTag({ value }) {
+  const v = String(value || "").trim();
+  if (!v) return null;
+  const icon = HISTORY_STATUS_ICON[v] || "🏷️";
+  const style = HISTORY_STATUS_STYLE[v] || { bg: "bg-slate-100/70 dark:bg-slate-300/10", text: "text-slate-600 dark:text-slate-300", ring:"ring-slate-400/20" };
+  return (
+    <span
+      className={[
+        "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs",
+        "border border-transparent ring-1", style.ring, style.bg, style.text
+      ].join(" ")}
+      title={`狀態：${v}`}
+    >
+      <span aria-hidden="true">{icon}</span>
+      <span className="leading-none">{v}</span>
+    </span>
+  );
+}
+
+
+// —— 小工具 ——（你剛剛不小心刪掉的）
+const cx = (...xs) => xs.filter(Boolean).join(' ');
+const nid = () => Math.random().toString(36).slice(2,10);
+
+function useLocalState(key, initial){
+  const [state, setState] = React.useState(()=>{
+    try{
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : initial;
+    }catch{
+      return initial;
+    }
+  });
+  React.useEffect(()=>{
+    localStorage.setItem(key, JSON.stringify(state));
+  },[key, state]);
+  return [state, setState];
+}
+
+// 文字名單清洗：去空白、全/半形空白、連續空白、大小寫不敏感去重
+function parseLinesClean(txt="") {
+  const normalize = s => s.replace(/\u3000/g, " ").replace(/\s+/g, " ").trim();
+  const set = new Set(), out = [];
+  for (const raw of String(txt).split(/\r?\n/)) {
+    const v = normalize(raw);
+    if (!v) continue;
+    const key = v.toLowerCase();
+    if (!set.has(key)) { set.add(key); out.push(v); }
+  }
+  return out;
+}
+
+// —— 文字比對：大小寫不敏感、全形空白轉半形、連續空白歸一化 —— //
+function matchText(hay="", needle=""){
+  const norm = (s)=> String(s||"").replace(/\u3000/g," ").replace(/\s+/g," ").trim().toLowerCase();
+  const a = norm(hay), b = norm(needle);
+  if (!b) return true; // 空字串視為全部匹配
+  return a.includes(b);
+}
+
+// —— History 搜尋規則（依模式）—— //
+// rec: { title, winners[], note, status, youtube, ... }
+// mode: 'all' | 'prize' | 'winner' | 'note'
+// q: 關鍵字
+function historyMatchByMode(rec, q, mode){
+  const m = mode || 'all';
+  const title = rec?.title || "";
+  const note  = rec?.note  || rec?.desc || "";
+  const winners = Array.isArray(rec?.winners) ? rec.winners : [];
+
+  if (!q) return true; // 沒輸入關鍵字 => 不過濾
+
+  switch (m) {
+    case 'prize':
+      return matchText(title, q);
+
+    case 'winner':
+      return winners.some(w => matchText(w, q));
+
+    case 'note':
+      // 備註/說明：優先 note/desc，其次 status、youtube 也納入關聯搜尋
+      return (
+        matchText(note, q) ||
+        matchText(rec?.status || "", q) ||
+        matchText(rec?.youtube || "", q)
+      );
+
+    case 'all':
+    default:
+      // 全部：title、winners、note/status/youtube 皆納入
+      return (
+        matchText(title, q) ||
+        winners.some(w => matchText(w, q)) ||
+        matchText(note, q) ||
+        matchText(rec?.status || "", q) ||
+        matchText(rec?.youtube || "", q)
+      );
+  }
+}
+
+// === Admin：純前端 SHA-256 雜湊（避免明文存密碼） ===
+async function hashTextSHA256(text) {
+  const enc = new TextEncoder();
+  const buf = await crypto.subtle.digest("SHA-256", enc.encode(String(text)));
+  const arr = Array.from(new Uint8Array(buf));
+  return arr.map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+
+// === 補齊小工具（不依賴回收站） ===
+function nowISO(){
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2,'0');
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function exportCSV(filename, rows){
+  const csv = rows
+    .map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(','))
+    .join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// 取得商品剩餘數量（相容多種欄位命名）
+function getRemain(x){
+  const cand = [x?.stock, x?.qty, x?.quantity, x?.remaining];
+  for (const v of cand){
+    if (typeof v === 'number' && Number.isFinite(v)) return v;
+    if (typeof v === 'string' && v.trim()!=='' && !Number.isNaN(+v)) return +v;
+  }
+  return null; // 沒有數量就不顯示
+}
+
+// 防呆刪除關鍵字確認（預設關鍵字：刪除）
+function confirmKeyword({ label='', keyword='刪除' } = {}){
+  const input = prompt(`為了防呆，請輸入「${keyword}」以確認：\n${label}`);
+  return input === keyword;
+}
+
+// —— 空資料（全部留給你用 Admin 後續新增） ——
+// 直接在 EMPTY 內放入 settings（注意 others 後面的逗號）
+const EMPTY = {
+  homepage: { title: '開獎所', subtitle: '免費抽獎・不定期驚喜', announcements: [] },
+  history: [],     // 📚 歷史抽獎紀錄
+  pending: [],     // ⏳ 等待開獎
+  ongoing: [],     // 🔄 進行中活動
+  shop: { items: [], people: [] }, // 🛍️ 點數商城（商品/可選人員點數表）
+  others: { cards: [] },           // 📌 其他資料卡片集合（這行後面一定要逗號）
+  settings: { ...DEFAULT_SETTINGS },
+};
+
+
+
+function normName(s=""){ return s.replace(/\u3000/g," ").replace(/\s+/g," ").trim().toLowerCase(); }
+function parseISODate(d=""){ // 專吃 YYYY-MM-DD（空字串回 NaN）
+  if(!d) return NaN;
+  // 強制用 UTC 防止時區偏移
+  const m = String(d).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(!m) return NaN;
+  return Date.UTC(+m[1], +m[2]-1, +m[3]);
+}
+function sortHistoryDesc(arr=[]) {
+  const safe = (x)=> {
+    const t = parseISODate(x?.date || "");
+    return Number.isNaN(t) ? -Infinity : t; // 沒日期的排最下
+  };
+  return [...arr].sort((a,b)=> safe(b) - safe(a));
+}
+
+// === Calendar helpers for History ===
+function ymdStringUTC(y, mZeroBased, d) {
+  const y4 = String(y).padStart(4, '0');
+  const m2 = String(mZeroBased + 1).padStart(2, '0');
+  const d2 = String(d).padStart(2, '0');
+  return `${y4}-${m2}-${d2}`;
+}
+
+function buildMonthDaysUTC(y, mZeroBased) {
+  // 以 UTC 計算月曆，避免時區偏移
+  const first = new Date(Date.UTC(y, mZeroBased, 1));
+  const startDow = first.getUTCDay(); // 0=Sun..6=Sat
+  const daysInMonth = new Date(Date.UTC(y, mZeroBased + 1, 0)).getUTCDate();
+
+  const days = [];
+  for (let i = 0; i < startDow; i++) days.push(null); // 前導空格
+  for (let d = 1; d <= daysInMonth; d++) {
+    days.push(ymdStringUTC(y, mZeroBased, d));
+  }
+  return days;
+}
+
+// === Utils: 抽獎用（安全隨機 / 可選種子） ===
+// 將字串變成 32-bit 整數種子
+function hash32(str="") {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+// xorshift32 產生器（可重現）
+function makePRNG(seedStr="") {
+  if (!seedStr) return null; // 沒種子就用安全隨機
+  let x = hash32(seedStr) || 1;
+  return function next() {
+    // 產 0..1 的浮點數
+    x ^= x << 13; x ^= x >>> 17; x ^= x << 5;
+    // 轉成 0..1
+    return ((x >>> 0) / 4294967296);
+  };
+}
+// Fisher–Yates 洗牌；優先使用 prng，否則用 crypto 安全隨機
+function shufflePick(arr, k, prng=null) {
+  const a = arr.slice();
+  const n = a.length;
+  // 只洗到取到 k 個為止
+  for (let i = 0; i < k; i++) {
+    let r;
+    if (prng) {
+      r = i + Math.floor(prng() * (n - i));
+    } else {
+      const buf = new Uint32Array(1);
+      crypto.getRandomValues(buf);
+      r = i + (buf[0] % (n - i));
+    }
+    [a[i], a[r]] = [a[r], a[i]];
+  }
+  return a.slice(0, k);
+}
+
+function drawCooldownKey(pendingId){ return `kjs_draw_cd_${pendingId}`; }
+
+// === Announcement helpers (NEW) ===
+// 安全把 YYYY-MM-DD 加天數（UTC，不吃時區誤差）
+function addDaysUTC(ymd="", days=1){
+  const ts = parseISODate(ymd);
+  if (Number.isNaN(ts)) return "";
+  const d = new Date(ts);
+  d.setUTCDate(d.getUTCDate() + days);
+  const y = d.getUTCFullYear(), m = d.getUTCMonth(), day = d.getUTCDate();
+  return ymdStringUTC(y, m, day);
+}
+
+// 依卡片資料產生公告模板（回傳字串）
+function buildAnnouncementText(p){
+  const title   = p?.title || "（未命名）";
+  const planned = (typeof p?.plannedWinners === 'number' && p.plannedWinners>0) ? String(p.plannedWinners) : "（未填）";
+  const deadline = p?.deadline || "（未填）";
+  const announce = p?.deadline ? addDaysUTC(p.deadline, 1) : "（未填）";
+  const noteLine = p?.note ? `（${p.note}）\n` : ""; // 若想用 desc 當備註，可把 p.note 換成 p.desc
+
+  return [
+    "🎉【限時抽獎來啦！】🎉",
+    "",
+    `🎁 ${title}`,
+    noteLine ? noteLine : "",
+    `📌 抽出名額：${planned} 位幸運兒`,
+    `📅 截止時間：${deadline} 晚上 23:59 前`,
+    `🕰 開獎公告：${announce} 晚間公布於群組`,
+    "",
+    "📣 參加方式：",
+    "直接在這篇留言「我要參加」即可！",
+    "",
+    "✅ 完全免費參加",
+    "✅ 得獎只需自付運費（可選貨到付款）"
+  ].filter(Boolean).join("\n");
+}
+
+// === Collapse（收合/展開）— 支援外部控制 force: 'open' | 'close' | null ===
+function Collapse({ header, children, defaultOpen=false, force=null }) {
+  const { useState, useRef, useEffect } = React;
+  const [open, setOpen] = useState(!!defaultOpen);
+  const ref = useRef(null);
+
+  useEffect(()=>{ if (force==='open') setOpen(true); else if(force==='close') setOpen(false); },[force]);
+  useEffect(()=>{ if(ref.current){ ref.current.style.height = open ? ref.current.scrollHeight+'px' : '0px'; }},[open,children]);
+
+  return (
+    <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden bg-white/70 dark:bg-slate-900/40">
+      <button
+        className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition"
+        onClick={()=>setOpen(o=>!o)}
+      >
+        <div className="font-medium">{header}</div>
+        <svg className={"w-4 h-4 transition " + (open ? "rotate-180" : "")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
+      <div ref={ref} className="px-4 pb-4 transition-[height] duration-300 ease-in-out" style={{height: defaultOpen?'auto':'0px'}}>
+        <div className="pt-2">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+
+    // —— 主 App（Part 1：骨架/導覽/雙模式/匯入匯出，未含編輯器） ——
+    function App(){
+      const [data, setData] = useLocalState(LS.data, EMPTY);
+// === PointsPanel 展開狀態（預設展開，會記住使用者選擇） ===
+const [pointsOpen, setPointsOpen] = useLocalState('kjs_points_open', true);
+      
+const [tab, setTab] = useState('home'); // home | history | pending | ongoing | shop | others
+      const [menuOpen, setMenuOpen] = useState(false);
+      const [adminMode, setAdminMode] = useState(false);
+      const [query, setQuery] = useState('');
+const [queryMode, setQueryMode] = useLocalState('kjs_query_mode', 'all'); // all | prize | winner | note
+
+
+// === Admin：管理員名單＋目前登入者 ===
+const [admins, setAdmins] = useLocalState('kjs_admins', [
+  // 預設 1 位管理者：只有名稱，尚未設定密碼（第一次登入會被要求設定）
+  { name: 'admin', passwordHash: '' }
+]);
+const [currentAdmin, setCurrentAdmin] = useLocalState('kjs_current_admin', ''); // 空字串＝未登入
+
+// === Admin：登入 Modal 狀態（兩段式）===
+const [showAdminLogin, setShowAdminLogin] = React.useState(false);
+const [adminLoginStep, setAdminLoginStep] = React.useState(1); // 1=輸入/選擇名稱；2=輸入密碼
+const [loginName, setLoginName] = React.useState('');
+const [loginPwd, setLoginPwd] = React.useState('');
+const [loginAttempts, setLoginAttempts] = React.useState(0);
+const [loginLockUntil, setLoginLockUntil] = React.useState(0); // Date.now() 毫秒
+const [showAdminHint, setShowAdminHint] = React.useState(false);
+
+// === Admin 密技：長按 5~8 秒（手機）／桌面連點 7 下 ===
+const secretHoldMsRef = React.useRef(6000);        // 每次開啟登入視窗，隨機 5000~8000ms
+const secretTimerRef = React.useRef(null);
+const secretClicksRef = React.useRef(0);
+const secretClicksTimerRef = React.useRef(null);
+
+React.useEffect(() => {
+  if (showAdminLogin) {
+    secretHoldMsRef.current = 5000 + Math.floor(Math.random() * 3000); // 5000~8000
+    secretClicksRef.current = 0;
+  } else {
+    if (secretTimerRef.current) clearTimeout(secretTimerRef.current);
+    secretTimerRef.current = null;
+    if (secretClicksTimerRef.current) clearTimeout(secretClicksTimerRef.current);
+    secretClicksTimerRef.current = null;
+    setShowAdminHint(false);
+  }
+}, [showAdminLogin, setShowAdminHint]);
+
+function startSecretHold(e) {
+  e.preventDefault();
+  if (secretTimerRef.current) clearTimeout(secretTimerRef.current);
+  secretTimerRef.current = setTimeout(() => {
+    setShowAdminHint(true);
+    // 5 秒後自動隱藏
+    setTimeout(() => setShowAdminHint(false), 5000);
+  }, secretHoldMsRef.current);
+}
+function cancelSecretHold() {
+  if (secretTimerRef.current) {
+    clearTimeout(secretTimerRef.current);
+    secretTimerRef.current = null;
+  }
+}
+
+// 桌面：在同一元素上 7 次點擊（4 秒內）
+function secretClick() {
+  secretClicksRef.current += 1;
+  if (!secretClicksTimerRef.current) {
+    secretClicksTimerRef.current = setTimeout(() => {
+      secretClicksRef.current = 0;
+      secretClicksTimerRef.current = null;
+    }, 4000);
+  }
+  if (secretClicksRef.current >= 7) {
+    setShowAdminHint(true);
+    // 5 秒後自動隱藏
+    setTimeout(() => setShowAdminHint(false), 5000);
+    // 重置
+    secretClicksRef.current = 0;
+    if (secretClicksTimerRef.current) { clearTimeout(secretClicksTimerRef.current); secretClicksTimerRef.current = null; }
+  }
+}
+
+
+// 封裝：開啟登入視窗 / 登出
+function enterAdmin() {
+  setLoginName('');
+  setLoginPwd('');
+  setAdminLoginStep(1);
+  setShowAdminLogin(true);
+}
+function exitAdmin() {
+  setAdminMode(false);
+  setCurrentAdmin('');
+  alert('已登出管理模式');
+}
+
+// === Drawer A11y：參考節點 ===
+const menuPaneRef = React.useRef(null);     // 抽屜 <aside>
+const menuButtonRef = React.useRef(null);   // 開啟抽屜的漢堡按鈕
+const appContentRef = React.useRef(null);   // 主內容容器（要 aria-hidden）
+
+// === BackToTop：狀態（滾到一定高度才顯示） ===
+const [showBackTop, setShowBackTop] = React.useState(false);
+
+      // 快捷鍵：/ 搜尋、g h 回首頁、g m 開選單
+      // 快捷鍵：/ 搜尋、g h 回首頁、g m 開選單
+useEffect(()=>{
+  let g = false;
+  const onKey = (e)=>{
+    // 若正在輸入欄位/文字區或組字中就忽略
+    const tag = (e.target && e.target.tagName || '').toString().toLowerCase();
+    if (e.isComposing || tag === 'input' || tag === 'textarea' || tag === 'select' || e.metaKey || e.ctrlKey || e.altKey) return;
+
+    const k = (e.key || '').toLowerCase();     // ← 防呆
+    if (k === '/') { e.preventDefault(); document.getElementById('kjs-search')?.focus(); return; }
+    if (k === 'g') { g = true; setTimeout(()=> g = false, 800); return; }
+    if (k === 'h' && g) { e.preventDefault(); setTab('home'); return; }
+    if (k === 'm' && g) { e.preventDefault(); setMenuOpen(true); return; }
+  };
+  window.addEventListener('keydown', onKey);
+  return ()=> window.removeEventListener('keydown', onKey);
+},[]);
+
+// === Drawer A11y：焦點陷阱、Esc 關閉、鎖定 body 滾動 ===
+React.useEffect(() => {
+  if (!menuOpen) return;
+
+  const pane = menuPaneRef.current;
+  if (!pane) return;
+
+  // 1) 鎖 body 滾動
+  const prevOverflow = document.body.style.overflow;
+  document.body.style.overflow = 'hidden';
+
+  // 2) 聚焦抽屜內第一個可聚焦元素
+  const selectors = 'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+  const focusables = Array.from(pane.querySelectorAll(selectors));
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  const prevActive = document.activeElement;
+
+  first?.focus();
+
+  // 3) 鍵盤行為：Esc 關閉、Tab 焦點環
+  const onKeyDown = (e) => {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setMenuOpen(false);
+      return;
+    }
+    if (e.key === 'Tab' && focusables.length > 0) {
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus(); return;
+      }
+      if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus(); return;
+      }
+    }
+  };
+
+  document.addEventListener('keydown', onKeyDown);
+
+  // 4) 清理：還原 body、解除監聽、把焦點還給開啟鈕
+  return () => {
+    document.body.style.overflow = prevOverflow;
+    document.removeEventListener('keydown', onKeyDown);
+    // 優先回到漢堡按鈕；沒找到就回到原先 focus
+    if (menuButtonRef.current && typeof menuButtonRef.current.focus === 'function') {
+      menuButtonRef.current.focus();
+    } else if (prevActive && typeof prevActive.focus === 'function') {
+      prevActive.focus();
+    }
+  };
+}, [menuOpen, setMenuOpen]);
+
+// === BackToTop：滾動監聽（> 480px 才顯示） ===
+React.useEffect(() => {
+  let ticking = false;
+  const threshold = 480; // 你可以改成 400~600 視覺喜好
+
+  const onScroll = () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY || document.documentElement.scrollTop || 0;
+        setShowBackTop(y > threshold);
+        ticking = false;
+      });
+    }
+  };
+
+  // 先跑一次，避免初次進頁面在中段位置時狀態不準
+  onScroll();
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  return () => window.removeEventListener('scroll', onScroll);
+}, []);
+
+// === 背景設定（主畫面 & 漢堡選單） ===
+const [bg, setBg] = useLocalState('kjs_bg', {
+  url: "",
+  tint: "rgba(255,255,255,0.0)",
+  brightness: 1,
+  blur: 0,
+  opacity: 1,
+  size: "cover",
+  pos: "center",
+  menuUseMain: true,
+  menuUrl: "",
+  menuTint: "rgba(255,255,255,0.0)",
+  menuBrightness: 1,
+  menuBlur: 0,
+  menuOpacity: 1,
+  menuSize: "cover",
+  menuPos: "center",
+});
+
+// 把設定套到 CSS 變數
+useEffect(()=>{
+  const r = document.documentElement;
+  // 主畫面
+  r.style.setProperty('--bg-img', bg.url ? `url("${bg.url}")` : 'none');
+  r.style.setProperty('--bg-tint', bg.tint);
+  r.style.setProperty('--bg-brightness', String(bg.brightness));
+  r.style.setProperty('--bg-blur', bg.blur + 'px');
+  r.style.setProperty('--bg-opacity', String(bg.opacity));
+  r.style.setProperty('--bg-size', bg.size);
+  r.style.setProperty('--bg-pos', bg.pos);
+
+  // 漢堡選單
+  const useMain = !!bg.menuUseMain;
+  const mUrl = useMain ? bg.url : bg.menuUrl;
+  const mTint = useMain ? bg.tint : bg.menuTint;
+  const mBri  = useMain ? bg.brightness : bg.menuBrightness;
+  const mBlur = useMain ? bg.blur : bg.menuBlur;
+  const mOpa  = useMain ? bg.opacity : bg.menuOpacity;
+  const mSize = useMain ? bg.size : bg.menuSize;
+  const mPos  = useMain ? bg.pos : bg.menuPos;
+
+  r.style.setProperty('--menu-bg-img', mUrl ? `url("${mUrl}")` : 'none');
+  r.style.setProperty('--menu-tint', mTint);
+  r.style.setProperty('--menu-brightness', String(mBri));
+  r.style.setProperty('--menu-blur', mBlur + 'px');
+  r.style.setProperty('--menu-opacity', String(mOpa));
+  r.style.setProperty('--menu-bg-size', mSize);
+  r.style.setProperty('--menu-bg-pos', mPos);
+}, [bg]);
+
+
+      // 匯入/匯出（JSON，供你備份搬移）
+      const exportJSON = ()=>{
+        const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `kjs_export_${new Date().toISOString().slice(0,10)}.json`;
+        a.click(); URL.revokeObjectURL(a.href);
+      };
+      const importJSON = (file)=>{
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    try{
+      const obj = JSON.parse(String(e.target.result||'{}'));
+      // ✅ 匯入後把 history 排序（新到舊）
+      if (Array.isArray(obj.history)) obj.history = sortHistoryDesc(obj.history);
+      setData(obj);
+      alert('匯入完成（已自動排序歷史）');
+    } catch{
+      alert('匯入失敗：不是有效 JSON');
+    }
+  }; reader.readAsText(file);
+};
+
+
+      return (
+        <div className="min-h-screen flex flex-col">
+          {/* Header */}
+          <header className="sticky top-0 z-30 bg-white/85 dark:bg-slate-900/85 backdrop-blur border-b border-slate-200/60 dark:border-slate-800">
+            <div className="max-w-5xl mx-auto px-4 py-3 flex items-center gap-2">
+             <button
+  ref={menuButtonRef}
+  type="button"
+  aria-controls="app-menu-pane"
+  aria-expanded={menuOpen ? 'true' : 'false'}
+  aria-label="開啟主選單"
+  className="tap-target -ml-2"
+  onClick={() => setMenuOpen(true)}
+  title="開啟選單"
+>
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+</button>
+
+              <h1 className="text-lg font-semibold">開獎所</h1>
+              <div className="ml-auto flex items-center gap-2">
+                <div className="hidden sm:flex items-center gap-2">
+  {/* 模式選單 */}
+  <label htmlFor="kjs-search-mode" className="sr-only">搜尋模式</label>
+  <select
+    id="kjs-search-mode"
+    value={queryMode}
+    onChange={(e)=>setQueryMode(e.target.value)}
+    className="rounded-xl border border-slate-300 dark:border-slate-700 px-2 py-1.5 text-sm bg-white/70 dark:bg-slate-800/70"
+    title="選擇搜尋模式"
+    aria-label="搜尋模式"
+  >
+    <option value="all">全部</option>
+    <option value="prize">獎品名稱</option>
+    <option value="winner">得獎者</option>
+    <option value="note">備註・說明</option>
+  </select>
+
+  {/* 搜尋輸入框 */}
+  <label htmlFor="kjs-search" className="sr-only">搜尋關鍵字</label>
+  <input
+    id="kjs-search"
+    value={query}
+    onChange={e=>setQuery(e.target.value)}
+    placeholder="搜尋...（按 / 聚焦）"
+    className="rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-sm bg-white/70 dark:bg-slate-800/70 focus:outline-none focus:ring-2 focus:ring-brand"
+  />
+</div>
+
+                {!adminMode && (
+                  <button onClick={enterAdmin} className="tap-target rounded-xl bg-brand text-white px-3 py-1.5 text-sm shadow-soft">管理</button>
+                )}
+                {adminMode && (
+  <div className="flex items-center gap-2">
+    <button onClick={exportJSON} className="tap-target rounded-xl bg-slate-200 dark:bg-slate-800 px-3 py-1.5 text-sm">匯出</button>
+    <label className="tap-target rounded-xl bg-slate-200 dark:bg-slate-800 px-3 py-1.5 text-sm cursor-pointer">匯入
+      <input type="file" accept="application/json" className="hidden" onChange={e=>e.target.files&&importJSON(e.target.files[0])}/>
+    </label>
+
+    {/* 將原本的「重設密碼」改成導向系統設置頁（在那裡改帳號/密碼） */}
+    <button
+      onClick={() => { setTab('system'); /* 可選：帶入錨點 */ const el=document.getElementById('admin-list-panel'); if(el) el.scrollIntoView({behavior:'smooth'}); }}
+      className="tap-target rounded-xl bg-amber-200 text-amber-900 dark:bg-amber-300/20 dark:text-amber-200 px-3 py-1.5 text-sm"
+      title="前往系統設置 > 管理者清單"
+    >
+      管理員設定
+    </button>
+
+    <button onClick={exitAdmin} className="tap-target rounded-xl bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 px-3 py-1.5 text-sm">退出</button>
+  </div>
+)}
+
+              </div>
+            </div>
+          </header>
+
+          {/* Main */}
+          <div ref={appContentRef} aria-hidden={menuOpen ? 'true' : 'false'}>
+  <main className="max-w-5xl mx-auto w-full px-4 py-6 flex-1">
+
+            {tab==='home' && <Home setTab={setTab} data={data} setData={setData} admin={adminMode} />}
+
+            {tab==='history' && <History data={data} admin={adminMode} setData={setData} query={query} queryMode={queryMode} />}
+{tab==='pending' && <Pending data={data} admin={adminMode} setData={setData} query={query} queryMode={queryMode} />}
+{tab==='ongoing' && <Ongoing data={data} admin={adminMode} setData={setData} query={query} queryMode={queryMode} />}
+{tab==='shop' && (
+  <>
+    {/* 查詢點數：可收合卡（預設展開，記憶狀態） */}
+    <section
+      className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur p-0 overflow-hidden"
+      aria-label="查詢點數"
+    >
+      {/* 卡片標題列 */}
+      <div className="flex items-center justify-between px-4 py-3">
+        <div className="flex items-center gap-2">
+          <span className="text-lg">💳</span>
+          <h2 className="text-base font-semibold">查詢點數</h2>
+        </div>
+        <button
+          type="button"
+          aria-controls="points-panel-body"
+          aria-expanded={pointsOpen ? 'true' : 'false'}
+          onClick={()=>setPointsOpen(v=>!v)}
+          className="tap-target rounded-lg border px-3 py-1.5 text-sm"
+          title={pointsOpen ? '收合' : '展開'}
+        >
+          {pointsOpen ? '收合' : '展開'}
+        </button>
+      </div>
+
+      {/* 分隔線 */}
+      <div className="h-px bg-slate-200 dark:bg-slate-700" />
+
+      {/* 卡片內容（可收合） */}
+      {pointsOpen && (
+        <div id="points-panel-body" className="p-4">
+          <PointsPanel data={data} admin={adminMode} setData={setData} />
+        </div>
+      )}
+    </section>
+
+    {/* 與查詢卡片留點間距 */}
+    <div className="h-4" />
+
+    {/* 點數商城內容 */}
+    <Shop data={data} admin={adminMode} setData={setData} query={query} />
+  </>
+)}
+
+{tab==='others' && <Others data={data} admin={adminMode} setData={setData} query={query} queryMode={queryMode} />}
+
+{tab==='system' && adminMode && (
+  <SystemSettings
+    data={data}
+    setData={setData}
+    bg={bg}
+    setBg={setBg}
+    admins={admins}
+    setAdmins={setAdmins}
+    currentAdmin={currentAdmin}
+    setCurrentAdmin={setCurrentAdmin}
+  />
+)}
+
+{/* 返回頂部（手機友善）：僅在滾到一定高度後顯示 */}
+{showBackTop && (
+  <button
+    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+    className="fixed right-4 bottom-20 md:bottom-6 z-40 rounded-full border shadow-soft bg-white/90 dark:bg-slate-900/80 backdrop-blur px-3 py-2 tap-target"
+    aria-label="回到最上面"
+    title="回到最上面"
+  >
+    ↑
+  </button>
+)}
+
+{/* === Admin 登入（二段式 Modal）=== */}
+{showAdminLogin && (
+  <div className="fixed inset-0 z-50">
+    {/* 背景：點擊關閉 */}
+    <div className="absolute inset-0 bg-black/40" onClick={()=>setShowAdminLogin(false)} />
+    <div className="absolute inset-0 flex items-center justify-center p-4">
+      <div className="relative w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl p-4" onClick={(e)=>e.stopPropagation()}>
+
+{/* （密技）左上角 10×10 px 裝飾點：看起來像裝飾，實際是長按/連點啟動器 */}
+<div
+  aria-hidden="true"
+  tabIndex={-1}
+  className="absolute top-1 left-1 w-2.5 h-2.5 rounded-full bg-slate-300/70 dark:bg-slate-600/70 cursor-default select-none"
+  // 手機：長按 5~8 秒
+  onPointerDown={startSecretHold}
+  onPointerUp={cancelSecretHold}
+  onPointerLeave={cancelSecretHold}
+  onPointerCancel={cancelSecretHold}
+  // 桌面：連點 7 下（此元素不顯示任何按鈕樣式，游標不變）
+  onClick={secretClick}
+  onContextMenu={(e)=>e.preventDefault()} // 阻擋長按叫出選單
+/>
+
+
+        <div className="text-base font-semibold mb-2">管理者登入</div>
+
+        {/* 鎖定提示 */}
+        {Date.now() < loginLockUntil && (
+          <div className="text-sm text-red-600 mb-2">
+            嘗試過多，請稍後再試（{Math.ceil((loginLockUntil - Date.now())/1000)} 秒）
+          </div>
+        )}
+
+        {/* Step 1：管理者名稱 */}
+{adminLoginStep === 1 && (
+  <div className="grid gap-2">
+    <label className="text-sm text-slate-600 dark:text-slate-300">管理者名稱</label>
+    <input
+      className="rounded-lg border px-3 py-2"
+      placeholder="例如：admin 或輸入新名稱"
+      value={loginName}
+      onChange={e=>setLoginName(e.target.value)}
+      disabled={Date.now() < loginLockUntil}
+    />
+
+    {/* 注意：不再顯示任何顯示帳號的按鈕或提示；只在密技觸發時短暫顯示名單 */}
+    {showAdminHint && admins.length > 0 && (
+      <div className="text-xs text-slate-600 dark:text-slate-300 rounded-lg border px-3 py-2">
+        {admins.map((a,i)=>(
+          <button
+            key={i}
+            className="mr-2 mb-1 inline-flex items-center px-2 py-0.5 rounded border hover:bg-slate-50 dark:hover:bg-slate-800"
+            onClick={()=>setLoginName(a.name)}
+            disabled={Date.now() < loginLockUntil}
+            title="點一下帶入名稱（5 秒後自動隱藏）"
+          >
+            {a.name}
+          </button>
+        ))}
+      </div>
+    )}
+
+    <div className="flex justify-end gap-2 mt-2">
+      <button className="rounded-lg border px-3 py-1.5" onClick={()=>setShowAdminLogin(false)}>取消</button>
+      <button
+        className="rounded-lg border px-3 py-1.5 bg-brand text-white border-brand"
+        onClick={()=>{
+          if(!loginName.trim()) { alert('請輸入管理者名稱'); return; }
+          setAdminLoginStep(2);
+        }}
+      >
+        下一步
+      </button>
+    </div>
+  </div>
+)}
+
+
+        {/* Step 2：密碼 */}
+        {adminLoginStep === 2 && (
+          <div className="grid gap-2">
+            <label className="text-sm text-slate-600 dark:text-slate-300">密碼</label>
+            <input
+              type="password"
+              className="rounded-lg border px-3 py-2"
+              placeholder="請輸入密碼"
+              value={loginPwd}
+              onChange={e=>setLoginPwd(e.target.value)}
+              disabled={Date.now() < loginLockUntil}
+            />
+            <div className="flex justify-between items-center mt-2">
+              <button className="rounded-lg border px-3 py-1.5" onClick={()=>setAdminLoginStep(1)}>上一步</button>
+              <button
+  className="rounded-lg border px-3 py-1.5 bg-brand text-white border-brand"
+  disabled={Date.now() < loginLockUntil}
+  onClick={async ()=>{
+    const name = (loginName||"").trim();
+    const pass = (loginPwd||"").trim();            // ← 修正：用 loginPwd，不是 loginPassword
+
+    if(!name || !pass){
+      alert("請輸入帳號與密碼");
+      return;
+    }
+
+    // 直接使用狀態中的管理員名單（不要再讀 LS.admins）
+    const list = Array.isArray(admins) ? admins : [];
+    const found = list.find(u => u && u.name === name);
+
+    if(!found){
+      // 🚫 登入流程不允許建立新管理員（只能用既有帳號登入）
+      alert("此帳號不存在，請聯絡既有管理員於「🛠️ 系統設置」新增。");
+      return;
+    }
+
+    // 必須已設定密碼（有 hash），不允許在登入流程建立或變更密碼
+    if(!found.passwordHash || String(found.passwordHash).trim()===""){
+      alert("此帳號尚未設定密碼，請先由既有管理員在「🛠️ 系統設置」為該帳號設定密碼。");
+      return;
+    }
+
+    // 比對 SHA-256 雜湊
+    const hash = await hashTextSHA256(pass);
+    if(hash !== found.passwordHash){
+      alert("密碼錯誤");
+      return;
+    }
+
+    // ✅ 登入成功
+    setCurrentAdmin(name);
+    setAdminMode(true);
+    setShowAdminLogin(false);
+    setLoginName("");
+    setLoginPwd("");         // ← 修正：清空 loginPwd（不是 setLoginPassword）
+    alert(`已以「${name}」登入管理模式`);
+  }}
+>
+  登入
+</button>
+
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+)}
+
+          </main>
+</div>
+
+{/* 底部工具列（手機） */}
+<nav className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-900/80 border-t border-slate-200 dark:border-slate-700 backdrop-blur">
+  <div className="max-w-5xl mx-auto grid grid-cols-4">
+    <button className={"tap-target flex items-center justify-center py-2 " + (tab==='home'?'text-brand':'')} onClick={()=>setTab('home')} title="首頁">🏠</button>
+    <button className={"tap-target flex items-center justify-center py-2 " + (tab==='pending'?'text-brand':'')} onClick={()=>setTab('pending')} title="等待開獎">⏳</button>
+    <button className={"tap-target flex items-center justify-center py-2 " + (tab==='shop'?'text-brand':'')} onClick={()=>setTab('shop')} title="點數商城">🛍️</button>
+    <button className={"tap-target flex items-center justify-center py-2 " + (tab==='history'?'text-brand':'')} onClick={()=>setTab('history')} title="歷史紀錄">📚</button>
+  </div>
+</nav>
+
+          {/* 抽屜式漢堡選單 */}
+      {menuOpen && (
+  <div className="fixed inset-0 z-50">
+    {/* 遮罩：點擊關閉 */}
+    <div className="absolute inset-0 bg-black/40" onClick={()=>setMenuOpen(false)} />
+    {/* 抽屜本體 */}
+    <aside
+      id="app-menu-pane"
+      ref={menuPaneRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="主選單"
+      tabIndex={-1}
+      className="menu-pane absolute left-0 top-0 h-full w-80 max-w-[85%] shadow-xl no-scrollbar overflow-y-auto"
+    >
+      {/* 你的選單內容維持不變：把原本 aside 裡的內容整段貼回來 */}
+      <div className="p-4 border-b ... flex items-center justify-between">
+  <div className="font-semibold">
+    導覽{adminMode && currentAdmin ? <span className="ml-2 text-xs text-slate-500">（{currentAdmin}）</span> : null}
+  </div>
+        <button className="tap-target" onClick={()=>setMenuOpen(false)} aria-label="關閉">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <nav className="p-2 grid gap-1">
+  {/* —— 主導覽 —— */}
+  <NavItem
+    label="🏠 首頁"
+    active={tab==='home'}
+    onClick={()=>{ setTab('home'); setMenuOpen(false); }}
+  />
+  <NavItem
+    label="⏳ 等待開獎"
+    active={tab==='pending'}
+    onClick={()=>{ setTab('pending'); setMenuOpen(false); }}
+  />
+  <NavItem
+    label="🛍️ 點數商城"
+    active={tab==='shop'}
+    onClick={()=>{ setTab('shop'); setMenuOpen(false); }}
+  />
+  <NavItem
+    label="📚 歷史紀錄"
+    active={tab==='history'}
+    onClick={()=>{ setTab('history'); setMenuOpen(false); }}
+  />
+  <NavItem
+    label="🔄 進行中活動"
+    active={tab==='ongoing'}
+    onClick={()=>{ setTab('ongoing'); setMenuOpen(false); }}
+  />
+  <NavItem
+    label="📌 其他資料"
+    active={tab==='others'}
+    onClick={()=>{ setTab('others'); setMenuOpen(false); }}
+  />
+
+  {/* 分隔線 */}
+  <div className="my-2 h-px bg-slate-200 dark:bg-slate-700" />
+
+  {/* —— 管理區（依狀態切換） —— */}
+  {!adminMode ? (
+    <button
+      className="w-full text-left px-3 py-2 rounded-xl tap-target hover:bg-slate-100 dark:hover:bg-slate-800"
+      onClick={()=>{ enterAdmin(); /* 成功進入後保留抽屜開啟，或你也可關閉 */ }}
+      title="進入管理模式"
+    >
+      🔐 進入管理模式
+    </button>
+  ) : (
+    <>
+      {/* 系統設置分頁（你之前要求集中設定在此） */}
+      <NavItem
+        label="🛠️ 系統設置"
+        active={tab==='system'}
+        onClick={()=>{ setTab('system'); setMenuOpen(false); }}
+      />
+
+      {/* 管理常用工具 */}
+      <div className="grid grid-cols-2 gap-2 p-2">
+  <button
+    onClick={exportJSON}
+    className="rounded-lg border px-3 py-2 text-sm"
+    title="匯出整站資料（JSON）"
+  >
+    匯出
+  </button>
+
+  <label
+    className="rounded-lg border px-3 py-2 text-sm cursor-pointer text-center"
+    title="匯入整站資料（JSON）"
+  >
+    純匯入
+    <input
+      type="file"
+      accept="application/json"
+      className="hidden"
+      onChange={e=>e.target.files && importJSON(e.target.files[0])}
+    />
+  </label>
+
+  {/* 導向系統設置 > 管理者清單（取代舊的 resetAdmin） */}
+  <button
+    onClick={()=>{ setTab('system'); setMenuOpen(false); const el=document.getElementById('admin-list-panel'); if(el) el.scrollIntoView({behavior:'smooth'}); }}
+    className="rounded-lg border px-3 py-2 text-sm"
+    title="前往系統設置（管理者清單）"
+  >
+    管理員設定
+  </button>
+
+  <button
+    onClick={()=>{ exitAdmin(); setMenuOpen(false); }}
+    className="rounded-lg border px-3 py-2 text-sm"
+    title="退出管理模式"
+  >
+    退出管理
+  </button>
+</div>
+
+    </>
+  )}
+</nav>
+
+      <div className="p-4 text-xs text-slate-500 border-t border-slate-200/60 dark:border-slate-800">
+        <div>提示：</div>
+        <ul className="list-disc pl-5 mt-1 space-y-1">
+          <li>按 <kbd className="px-1 rounded bg-slate-100 dark:bg-slate-800">/</kbd> 聚焦搜尋</li>
+          <li><kbd className="px-1 rounded bg-slate-100 dark:bg-slate-800">g</kbd> → <kbd className="px-1 rounded bg-slate-100 dark:bg-slate-800">h</kbd>：回首頁</li>
+          <li><kbd className="px-1 rounded bg-slate-100 dark:bg-slate-800">g</kbd> → <kbd className="px-1 rounded bg-slate-100 dark:bg-slate-800">m</kbd>：開選單</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+)}
+
+        </div>
+      );
+    }
+
+    // —— 基礎 UI 元件 ——
+    function NavItem({ label, active, onClick }){
+  return (
+    <button
+      onClick={onClick}
+      className={cx(
+        'w-full text-left px-3 py-2 rounded-xl tap-target transition',
+        active
+          ? 'bg-brand/10 text-brand-fg border border-brand/30'
+          : 'hover:bg-slate-100 dark:hover:bg-slate-800',
+        // 手機/鍵盤的觸覺回饋（沒有 hover 也有清楚的 pressed/focus 狀態）
+        'active:bg-slate-100 dark:active:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/50'
+      )}
+      // 輔助技術可讀性（高亮當前頁）
+      aria-current={active ? 'page' : undefined}
+    >
+      {label}
+    </button>
+  );
+}
+
+
+function StickyBulkToggles({ onOpenAll, onCloseAll, className="" }) {
+  return (
+    <div className={cx(
+      "sticky top-[60px] z-20 flex items-center gap-2 justify-end",
+      className
+    )}>
+      <button
+        type="button"
+        onClick={onOpenAll}
+        className="inline-flex items-center justify-center w-9 h-9 rounded-full border bg-white/90 dark:bg-slate-900/80 backdrop-blur hover:bg-slate-50 dark:hover:bg-slate-800 shadow-soft"
+        title="全部展開"
+        aria-label="全部展開"
+      >
+        {/* 展開 icon */}
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <polyline points="6 15 12 9 18 15"></polyline>
+        </svg>
+      </button>
+      <button
+        type="button"
+        onClick={onCloseAll}
+        className="inline-flex items-center justify-center w-9 h-9 rounded-full border bg-white/90 dark:bg-slate-900/80 backdrop-blur hover:bg-slate-50 dark:hover:bg-slate-800 shadow-soft"
+        title="全部收合"
+        aria-label="全部收合"
+      >
+        {/* 收合 icon */}
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <polyline points="18 9 12 15 6 9"></polyline>
+        </svg>
+      </button>
+    </div>
+  );
+}
+
+   function Section({ title, subtitle, children }){
+  return (
+    <section className="animate-fadeIn">
+      <div className="mb-3">
+        <h2 className="text-[1.25rem] font-semibold tracking-tight">{title}</h2>
+        {subtitle && <p className="text-[13px] text-slate-500 mt-1">{subtitle}</p>}
+      </div>
+
+      {/* 原本的 .section-card 改為直接套工具類 */}
+      <div className="
+        bg-white/80 dark:bg-slate-800/70 backdrop-blur
+        border border-slate-200/70 dark:border-slate-700/60
+        rounded-2xl
+        shadow-[0_10px_25px_-10px_rgba(0,0,0,0.25)]
+        hover:shadow-[0_12px_30px_-12px_rgba(0,0,0,0.35)]
+        transition-shadow
+        p-4 sm:p-5
+      ">
+        {children}
+      </div>
+    </section>
+  );
+}
+
+
+
+    function EmptyCard({ text, admin }){
+      return (
+        <div className="border border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-6 text-center text-slate-500">
+          {text}
+          {admin && <div className="mt-3 text-xs">（進入管理後可新增資料）</div>}
+        </div>
+      );
+    }
+
+    // === Home（主頁）：關於＋社群連結＋快捷入口 ===
+function Home({ setTab, data, setData, admin }) {
+  const { useState, useMemo, useEffect } = React;
+
+  // === 來源資料 ===
+  const about = data.homepage?.about ?? "這裡是「開獎所」，提供歷史抽獎紀錄、等待開獎、進行中活動與點數商城等資訊。";
+  const links = data.homepage?.links ?? []; // [{id, name, url}]
+
+  // === 儀表板統計（四格） ===
+  // 數字為 0 時就顯示 0（不顯示任何額外文字）
+  const stats = useMemo(() => {
+    const historyCount  = Array.isArray(data.history)         ? data.history.length        : 0;
+    const pendingCount  = Array.isArray(data.pending)         ? data.pending.length        : 0;
+    const ongoingCount  = Array.isArray(data.ongoing)         ? data.ongoing.length        : 0;
+    const shopItemCount = Array.isArray(data.shop?.items)     ? data.shop.items.length     : 0;
+    return [
+      { key: 'history',  icon: '📚', label: '歷史紀錄',    value: historyCount,  onClick: () => setTab('history') },
+      { key: 'pending',  icon: '⏳', label: '等待開獎',    value: pendingCount,  onClick: () => setTab('pending') },
+      { key: 'ongoing',  icon: '🔄', label: '進行中活動',  value: ongoingCount,  onClick: () => setTab('ongoing') },
+      { key: 'shop',     icon: '🛍️', label: '商城商品',    value: shopItemCount, onClick: () => setTab('shop') },
+    ];
+  }, [data, setTab]);
+
+  // === 置頂公告 → 改為進站彈窗（僅當次開啟顯示一次） ===
+  const pinnedCards = useMemo(() => {
+    const list = data.others?.cards || [];
+    return list.filter(x => x.pin === true);
+  }, [data.others]);
+
+  const [showPinModal, setShowPinModal] = useState(false);
+
+  useEffect(() => {
+    // 使用 sessionStorage，確保同一次開啟期間只顯示一次
+    const SEEN_KEY = 'kjs_pin_modal_seen_v1';
+    const seen = sessionStorage.getItem(SEEN_KEY);
+    if (!seen && pinnedCards.length > 0) {
+      setShowPinModal(true);
+      sessionStorage.setItem(SEEN_KEY, '1');
+    }
+  }, [pinnedCards]);
+
+  const closePinModal = () => setShowPinModal(false);
+
+  // === 主頁「關於」與「連結」草稿 ===
+  const [draft, setDraft] = useState({ about, linkName: "", linkUrl: "" });
+
+  const saveAbout = () => {
+    if (!admin) return;
+    setData({ ...data, homepage: { ...(data.homepage || {}), about: draft.about, links } });
+    alert("已更新主頁介紹");
+  };
+
+  const addLink = () => {
+    if (!admin) return alert("請進入管理模式");
+    const name = (draft.linkName || "").trim();
+    const url  = (draft.linkUrl  || "").trim();
+    if (!name || !url) return alert("請輸入連結名稱與網址");
+    if (!/^https?:\/\//i.test(url)) return alert("網址需以 http:// 或 https:// 開頭");
+    const next = [...links, { id: Math.random().toString(36).slice(2, 10), name, url }];
+    setData({ ...data, homepage: { ...(data.homepage || {}), about: draft.about, links: next } });
+    setDraft(d => ({ ...d, linkName: "", linkUrl: "" }));
+  };
+
+  const removeLink = (id) => {
+    if (!admin) return;
+    if (!confirm("刪除此連結？")) return;
+    const next = links.filter(x => x.id !== id);
+    setData({ ...data, homepage: { ...(data.homepage || {}), about: draft.about, links: next } });
+  };
+
+  // === 其他資料（在首頁中以簡化列表示意，提供前往按鈕） ===
+  const otherCards = useMemo(() => {
+    const all = data.others?.cards || [];
+    // 不顯示置頂的（置頂改由彈窗顯示），僅列非置頂卡片的前 5 筆作為預覽
+    return all.filter(c => !c.pin).slice(0, 5);
+  }, [data.others]);
+
+  return (
+    <Section title="主頁：開獎所" subtitle="首頁資訊濃縮版">
+      {/* 1) 關於這個網頁（第一區） */}
+      <Collapse header="🧾 關於這個網頁（點我展開）" defaultOpen={true}>
+        {!admin && <p className="text-sm whitespace-pre-wrap">{about}</p>}
+        {admin && (
+          <div className="grid gap-3">
+            <textarea
+              className="rounded-lg border px-3 py-2 min-h-[100px]"
+              value={draft.about}
+              onChange={e => setDraft(d => ({ ...d, about: e.target.value }))}
+              placeholder="簡短介紹此網頁、用途與規則重點"
+            />
+            <div className="flex justify-end">
+              <button onClick={saveAbout} className="rounded-lg bg-brand text-white px-4 py-2">
+                儲存介紹
+              </button>
+            </div>
+          </div>
+        )}
+      </Collapse>
+
+      {/* 2) 四格儀表板（第二區） */}
+      <div
+        className="
+          my-4 grid gap-2
+          grid-cols-2 sm:grid-cols-4
+        "
+        aria-label="首頁總覽儀表板"
+      >
+        {stats.map(s => (
+          <button
+            key={s.key}
+            onClick={s.onClick}
+            className="
+              group rounded-2xl border border-slate-200 dark:border-slate-700
+              bg-white/80 dark:bg-slate-800/70 backdrop-blur
+              px-3 py-3 text-left shadow-[0_10px_25px_-10px_rgba(0,0,0,0.25)]
+              hover:shadow-[0_12px_30px_-12px_rgba(0,0,0,0.35)]
+              transition
+              focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/50
+              active:scale-[0.99]
+            "
+            title={s.label}
+            aria-label={s.label}
+          >
+            <div className="flex items-center justify-between">
+              <div className="text-xl leading-none">{s.icon}</div>
+              <div className="text-[11px] text-slate-500 opacity-80 group-hover:opacity-100">
+                點擊前往
+              </div>
+            </div>
+            <div className="mt-1 text-[13px] text-slate-500">{s.label}</div>
+            <div className="mt-0.5 text-2xl font-semibold tabular-nums">{s.value}</div>
+          </button>
+        ))}
+      </div>
+
+      {/* 3) 社群與官方連結（第三區） */}
+      <Collapse header="🔗 社群與官方連結" defaultOpen={false}>
+        {links.length === 0 && <div className="text-sm text-slate-500">尚未新增連結</div>}
+        <div className="grid gap-2">
+          {links.map(x => (
+            <div key={x.id} className="flex items-center justify-between rounded-lg border px-3 py-2">
+              <a className="text-brand underline truncate" href={x.url} target="_blank" rel="noreferrer">
+                {x.name}
+              </a>
+              {admin && (
+                <button
+                  onClick={() => removeLink(x.id)}
+                  className="rounded-lg bg-red-500 text-white px-3 py-1.5 text-sm"
+                >
+                  刪除
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+        {admin && (
+          <div className="mt-3 grid sm:grid-cols-2 gap-2">
+            <input
+              className="rounded-lg border px-3 py-2"
+              value={draft.linkName}
+              onChange={e => setDraft(d => ({ ...d, linkName: e.target.value }))}
+              placeholder="連結名稱（例如：官方網站 / Facebook / IG / LINE）"
+            />
+            <input
+              className="rounded-lg border px-3 py-2"
+              value={draft.linkUrl}
+              onChange={e => setDraft(d => ({ ...d, linkUrl: e.target.value }))}
+              placeholder="連結位址（https://...）"
+            />
+            <div className="sm:col-span-2 flex justify-end">
+              <button onClick={addLink} className="rounded-lg bg-brand text-white px-4 py-2">
+                新增連結
+              </button>
+            </div>
+          </div>
+        )}
+      </Collapse>
+
+      {/* 4) 其他資料（第四區） */}
+      <Collapse header="📌 其他資料" defaultOpen={false}>
+        {otherCards.length === 0 ? (
+          <div className="text-sm text-slate-500">目前沒有其他資料</div>
+        ) : (
+          <div className="grid gap-2">
+            {otherCards.map(c => (
+              <div key={c.id} className="rounded-lg border px-3 py-2">
+                <div className="text-sm font-medium mb-1">{c.title || "未命名"}</div>
+                <div className="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">
+                  {(c.content || "").split("\n").join(" / ")}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        <div className="mt-3 flex justify-end">
+          <button onClick={() => setTab('others')} className="rounded-lg border px-3 py-1.5 text-sm">
+            前往「其他資料」
+          </button>
+        </div>
+      </Collapse>
+
+      {/* === 置頂公告彈窗（僅當次開啟顯示一次） === */}
+      {showPinModal && (
+        <div className="fixed inset-0 z-50">
+          {/* 背景遮罩：點擊關閉 */}
+          <div className="absolute inset-0 bg-black/40" onClick={closePinModal} />
+          {/* 視窗本體 */}
+          <div className="absolute inset-0 flex items-center justify-center p-4">
+            <div
+              className="
+                relative w-full max-w-md rounded-2xl
+                bg-white dark:bg-slate-900
+                border border-slate-200 dark:border-slate-700
+                shadow-xl p-4
+              "
+              onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-label="置頂公告"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-base font-semibold">📣 最新公告</div>
+                <button
+                  className="tap-target rounded-lg border px-2 py-1 text-sm"
+                  onClick={closePinModal}
+                  aria-label="關閉公告"
+                  title="關閉"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="grid gap-3 max-h-[60vh] overflow-auto pr-1">
+                {pinnedCards.map((c) => (
+                  <div key={c.id} className="rounded-lg border px-3 py-2">
+                    <div className="text-sm font-medium mb-1">{c.title || "未命名"}</div>
+                    <div className="text-sm whitespace-pre-wrap">{c.content || "（無內容）"}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-3 text-right">
+                <button className="rounded-lg bg-brand text-white px-3 py-1.5 text-sm" onClick={closePinModal}>
+                  我知道了
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </Section>
+  );
+}
+
+    function HomeShortcut({ label, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="rounded-xl2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-5 text-left shadow-soft hover:shadow-elevate transition-shadow"
+    >
+      <div className="text-base font-medium">{label}</div>
+      <div className="text-xs text-slate-500 mt-1">點擊進入</div>
+    </button>
+  );
+}
+
+
+// === History（歷史抽獎紀錄）— 可新增/編輯/刪除/複製名單（含分頁與彈層月曆） ===
+function History({ data, admin, setData, query="", queryMode="all" }) {
+  const [bulk, setBulk] = useState(null); // 'open' | 'close' | null
+  const [draft, setDraft] = useState({ date:'', title:'', winnersText:'', winnerCount:'', totalParticipants:'', youtube:'', status:'', note:'' });
+  const [editingId, setEditingId] = useState(null);
+  const [showCal, setShowCal] = useState(false);
+
+  // 📅 月曆：目前檢視的年月（UTC）與被篩選日期
+  const [cal, setCal] = useState(()=>{
+    const now = new Date();
+    return { y: now.getUTCFullYear(), m: now.getUTCMonth() }; // 使用 UTC
+  });
+  const [filterDate, setFilterDate] = useState(""); // YYYY-MM-DD（空字串＝不過濾）
+
+  // 當月日曆與每日紀錄數
+  const dayList = React.useMemo(()=> buildMonthDaysUTC(cal.y, cal.m), [cal]);
+  const dateCounts = React.useMemo(()=>{
+    const map = Object.create(null);
+    for (const r of (data.history || [])) {
+      const d = r?.date || "";
+      if (!d) continue;
+      map[d] = (map[d] || 0) + 1;
+    }
+    return map;
+  }, [data.history]);
+
+ // 篩選＋搜尋後的清單（先依日期篩選、再依搜尋模式）
+const items = React.useMemo(()=>{
+  let list = data.history || [];
+
+  // 1) 日期篩選
+  if (filterDate) {
+    list = list.filter(x => (x.date || "") === filterDate);
+  }
+
+  // 2) 搜尋模式
+  const q = String(query || "").trim();
+  if (!q) return list;
+
+  return list.filter(rec => historyMatchByMode(rec, q, queryMode));
+}, [data.history, filterDate, query, queryMode]);
+
+
+  // === 分頁（固定每頁 20 筆；History 無 list/grid 模式） ===
+  const [historyPage, setHistoryPage] = useLocalState('kjs_history_page', 1);
+  const historyPageSize = 20;
+  const historyTotal = items.length;
+  const historyMaxPage = Math.max(1, Math.ceil(historyTotal / historyPageSize));
+
+  React.useEffect(() => {
+    if (historyPage > historyMaxPage) setHistoryPage(historyMaxPage);
+  }, [historyPage, historyMaxPage, setHistoryPage]);
+
+  // 篩選或搜尋變化時回到第 1 頁
+  React.useEffect(() => {
+    setHistoryPage(1);
+  }, [filterDate, query, setHistoryPage]);
+
+  const historyStart = (historyPage - 1) * historyPageSize;
+  const historyEnd = Math.min(historyStart + historyPageSize, historyTotal);
+  const historyPageItems = items.slice(historyStart, historyEnd);
+
+  // 頁碼視窗（最多 5 格）
+  const historyWindowSize = 5;
+  const historyStartPage = Math.max(
+    1,
+    Math.min(historyPage - Math.floor(historyWindowSize / 2), historyMaxPage - historyWindowSize + 1)
+  );
+  const historyEndPage = Math.min(historyMaxPage, historyStartPage + historyWindowSize - 1);
+
+  // —— 動作：存檔 / 編輯 / 取消 / 刪除 / 複製 —— //
+  const saveRecord = () => {
+    if (!admin) return alert('請進入管理模式');
+    if (!draft.title) return alert('請填寫【獎項名稱】');
+
+    const dateText = draft.date || "";
+    const ts = parseISODate(dateText);
+    if (dateText && Number.isNaN(ts)) return alert("日期格式需為 YYYY-MM-DD（例如 2025-08-30）");
+
+    const rawLines = String(draft.winnersText).split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+    const winners = parseLinesClean(draft.winnersText);
+    const removedDup = Math.max(0, rawLines.length - winners.length);
+
+    const winnerCount = Number(draft.winnerCount || winners.length || 0);
+    const totalParticipants = Number(draft.totalParticipants || 0);
+    if (winnerCount < 0 || totalParticipants < 0) return alert("名額與總參與人數需為 0 或正整數");
+
+    const summary = [
+      `確認要${editingId ? "儲存修改" : "新增紀錄"}嗎？`,
+      `獎項名稱：${draft.title}`,
+      `日期：${dateText || "（未填）"}`,
+      `得獎者人數：${winners.length}${removedDup ? `（已自動去重 ${removedDup} 筆）` : ""}`,
+      `抽出名額：${winnerCount}`,
+      `總參與人數：${totalParticipants || "（未填）"}`
+    ].join("\n");
+    if (!confirm(summary)) return;
+
+    const rec = {
+      id: editingId || Math.random().toString(36).slice(2,10),
+      title: draft.title,
+      date: dateText,
+      winners,
+      winnerCount,
+      totalParticipants,
+      youtube: draft.youtube || "",
+      status: draft.status || "",
+      note: draft.note || ""
+    };
+
+    const base = data.history || [];
+    const next = editingId ? base.map(x => x.id===editingId ? rec : x) : [rec, ...base];
+    const sorted = sortHistoryDesc(next); // 存檔即排序（最新在上）
+    setData({ ...data, history: sorted });
+
+    setEditingId(null);
+    setDraft({ date:'', title:'', winnersText:'', winnerCount:'', totalParticipants:'', youtube:'', status:'', note:'' });
+  };
+
+  const editRecord = (x) => {
+    if (!admin) return;
+    setEditingId(x.id);
+    setDraft({
+      date: x.date||'',
+      title: x.title||'',
+      winnersText: (x.winners||[]).join('\n'),
+      winnerCount: String(x.winnerCount??''),
+      totalParticipants: String(x.totalParticipants??''),
+      youtube: x.youtube||'',
+      status: x.status||'',
+      note: x.note||''
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const cancelEdit = () => {
+    setDraft({ date:'', title:'', winnersText:'', winnerCount:'', totalParticipants:'', youtube:'', status:'', note:'' });
+    setEditingId(null);
+  };
+
+  const removeRecord = (id) => {
+    if (!admin) return;
+    if (!confirm('刪除此筆歷史紀錄？')) return;
+    setData({ ...data, history: (data.history || []).filter(x => x.id !== id) });
+  };
+
+  const copyWinners = (arr=[]) => navigator.clipboard.writeText((arr||[]).join('\n')).then(()=>alert('已複製得獎者名單'));
+
+  // —— 畫面 —— //
+  return (
+    <Section title="📚 歷史抽獎紀錄" subtitle="完整歷屆活動紀錄。">
+      {/* 📅 月曆快篩（頂部）— 小按鈕 + 彈層 */}
+      <div className="flex items-center justify-between mb-3">
+  <div className="text-sm text-slate-500">依日期快速篩選</div>
+  <div className="flex items-center gap-2">
+    {filterDate && (
+      <button
+        type="button"
+        className="inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm"
+        title="清除日期篩選，恢復全部瀏覽"
+        onClick={() => { setFilterDate(""); setHistoryPage(1); }}
+      >
+        清除篩選
+      </button>
+    )}
+    <button
+      onClick={()=>setShowCal(true)}
+      className="inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm"
+      title="開啟月曆"
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <rect x="3" y="4" width="18" height="18" rx="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      月曆
+    </button>
+  </div>
+</div>
+
+
+      {/* 當前篩選提示 */}
+      <div className="text-xs text-slate-500 mb-3">
+        {filterDate
+          ? <>已套用日期篩選：<b>{filterDate}</b>（點月曆清除）</>
+          : <>可依日期快速篩選紀錄</>}
+      </div>
+
+      {/* 彈層月曆（遮罩 + 置中卡片） */}
+      {showCal && (
+  <div className="fixed inset-0 z-50" onClick={()=>setShowCal(false)}>
+    {/* 黑色遮罩（此層不再需要 onClick，維持視覺） */}
+    <div className="absolute inset-0 bg-black/40" />
+    <div className="absolute inset-0 flex items-center justify-center p-4">
+      {/* 卡片主體：阻止冒泡，避免點擊卡片內部也被當成關閉 */}
+      <div
+        className="w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl p-4"
+        onClick={(e)=>e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-medium">{cal.y} 年 {cal.m + 1} 月</div>
+          <div className="flex items-center gap-1">
+            <button
+              className="rounded-lg border px-2 py-1.5 text-sm"
+              onClick={()=>{ setCal(({y,m})=> (m-1<0?{y:y-1,m:11}:{y,m:m-1})); }}
+              title="前一個月"
+            >‹</button>
+            <button
+              className="rounded-lg border px-2 py-1.5 text-sm"
+              onClick={()=>{ setCal(({y,m})=> (m+1>11?{y:y+1,m:0}:{y,m:m+1})); }}
+              title="下一個月"
+            >›</button>
+            {/* 直接在彈層內提供「清除」：一鍵恢復全部瀏覽 */}
+            {filterDate && (
+              <button
+                className="rounded-lg border px-2 py-1.5 text-sm"
+                onClick={()=>{ setFilterDate(""); setHistoryPage(1); }}
+                title="清除日期篩選"
+              >
+                清除
+              </button>
+            )}
+            {/* 額外的關閉按鈕（可選） */}
+            <button
+              className="rounded-lg border px-2 py-1.5 text-sm"
+              onClick={()=>setShowCal(false)}
+              title="關閉"
+            >✕</button>
+          </div>
+        </div>
+
+        {/* 星期列 */}
+        <div className="grid grid-cols-7 text-xs text-slate-500 mt-3">
+          {['日','一','二','三','四','五','六'].map((w,i)=>(<div key={i} className="px-1 py-1 text-center">{w}</div>))}
+        </div>
+
+        {/* 日曆格 */}
+        <div className="grid grid-cols-7 gap-1 mt-1">
+          {dayList.map((d, i)=>{
+            if (!d) return <div key={i} className="h-9 rounded-lg" />;
+            const count = dateCounts[d] || 0;
+            const active = !!count;
+            const selected = filterDate === d;
+            return (
+              <button
+                key={i}
+                onClick={()=>{
+                  setFilterDate(prev => prev === d ? "" : d);
+                  setHistoryPage(1);
+                  setShowCal(false);
+                }}
+                className={[
+                  "h-9 rounded-lg border text-sm flex flex-col items-center justify-center",
+                  selected ? "border-brand bg-brand/10" : "border-slate-200 dark:border-slate-700",
+                  active ? "hover:bg-slate-50 dark:hover:bg-slate-800" : "opacity-60"
+                ].join(" ")}
+                title={active ? `此日共有 ${count} 筆紀錄` : "此日沒有紀錄"}
+              >
+                <div className="leading-none">{parseInt(d.slice(-2),10)}</div>
+                {active && (
+                  <div className="text-[10px] leading-none mt-0.5 inline-flex items-center px-1 rounded border bg-white/70 dark:bg-slate-800/70">
+                    {count}
+                  </div>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+
+      {/* 管理表單 */}
+      {admin && (
+        <div className="rounded-xl border border-slate-200 dark:border-slate-700 p-4 grid gap-3">
+          <div className="grid sm:grid-cols-2 gap-3">
+            <input className="rounded-lg border px-3 py-2" type="date" value={draft.date} onChange={e=>setDraft(d=>({...d,date:e.target.value}))} placeholder="截止/開獎日期"/>
+            <input className="rounded-lg border px-3 py-2" value={draft.title} onChange={e=>setDraft(d=>({...d,title:e.target.value}))} placeholder="獎項名稱"/>
+            <input className="rounded-lg border px-3 py-2" value={draft.winnerCount} onChange={e=>setDraft(d=>({...d,winnerCount:e.target.value}))} placeholder="抽出名額（留空＝以名單數量）"/>
+            <input className="rounded-lg border px-3 py-2" value={draft.totalParticipants} onChange={e=>setDraft(d=>({...d,totalParticipants:e.target.value}))} placeholder="總參與人數"/>
+            <input className="rounded-lg border px-3 py-2 sm:col-span-2" value={draft.youtube} onChange={e=>setDraft(d=>({...d,youtube:e.target.value}))} placeholder="抽獎影片（YouTube 連結，可空白）"/>
+            <select
+              className="rounded-lg border px-3 py-2"
+              value={draft.status}
+              onChange={e=>setDraft(d=>({...d,status:e.target.value}))}
+            >
+              <option value="">（不填）</option>
+              {HISTORY_STATUS_OPTIONS.map(opt=>(
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
+            <input className="rounded-lg border px-3 py-2" value={draft.note} onChange={e=>setDraft(d=>({...d,note:e.target.value}))} placeholder="備註（可空白）"/>
+          </div>
+          <div>
+            <label className="text-sm text-slate-500">得獎者名單（每行一位）</label>
+            <textarea className="mt-1 w-full rounded-lg border px-3 py-2 min-h-[120px]" value={draft.winnersText} onChange={e=>setDraft(d=>({...d,winnersText:e.target.value}))} placeholder="一行一個 LINE 暱稱"></textarea>
+          </div>
+          <div className="flex gap-2 justify-end">
+            {editingId && <button onClick={cancelEdit} className="rounded-lg border px-4 py-2">取消</button>}
+            <button onClick={saveRecord} className="rounded-lg bg-brand text-white px-4 py-2">{editingId ? "儲存修改" : "新增紀錄"}</button>
+          </div>
+        </div>
+      )}
+
+      {items.length===0 && <EmptyCard text="目前沒有資料" admin={admin} />}
+
+      {/* 全展/全收（僅對當頁有效） */}
+      <div className="flex gap-2 justify-end mt-4">
+        <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('open')}>全部展開</button>
+        <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('close')}>全部收合</button>
+      </div>
+
+      {/* 清單（當頁資料） */}
+      <div className="grid gap-4 mt-4">
+        {historyPageItems.map(x => (
+          <Collapse
+            key={x.id}
+            header={
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center px-2 py-0.5 rounded border text-xs bg-white/70 dark:bg-slate-800/70">
+                  {x.date || "未填日期"}
+                </span>
+                <span className="text-sm font-medium truncate">{x.title || "未命名"}</span>
+              </div>
+            }
+            force={bulk}
+          >
+            <div className="text-sm grid sm:grid-cols-2 gap-x-6 gap-y-1">
+              <div>抽出名額：{x.winnerCount ?? (x.winners?.length||0)}</div>
+              <div>總參與人數：{x.totalParticipants ?? '-'}</div>
+              {x.youtube && (
+                <div className="sm:col-span-2 truncate">
+                  影片：<a className="text-brand underline" href={x.youtube} target="_blank" rel="noreferrer">{x.youtube}</a>
+                </div>
+              )}
+              {x.status && (
+  <div className="sm:col-span-2">
+    <StatusTag value={x.status} />
+  </div>
+)}
+
+              {x.note && <div className="sm:col-span-2">備註：{x.note}</div>}
+            </div>
+
+            <div className="mt-3">
+              <div className="text-sm text-slate-500 mb-1">得獎者：</div>
+              <pre className="whitespace-pre-wrap text-sm bg-slate-50 dark:bg-slate-800 p-3 rounded-lg max-h-48 overflow-auto">
+                {(x.winners||[]).join('\n')}
+              </pre>
+            </div>
+
+            <div className="mt-3 flex gap-2 justify-end">
+              <button onClick={()=>copyWinners(x.winners)} className="rounded-lg border px-3 py-1.5">複製名單</button>
+              {admin && (
+                <>
+                  <button onClick={()=>editRecord(x)} className="rounded-lg border px-3 py-1.5">編輯</button>
+                  <button onClick={()=>removeRecord(x.id)} className="rounded-lg bg-red-500 text-white px-3 py-1.5">刪除</button>
+                </>
+              )}
+            </div>
+          </Collapse>
+        ))}
+      </div>
+
+      {/* 分頁控制（History） */}
+      <div className="mt-4 flex items-center justify-center gap-1 select-none">
+        <button
+          type="button"
+          className="rounded-lg border px-3 py-1.5 text-sm"
+          disabled={historyPage <= 1}
+          onClick={() => setHistoryPage(p => Math.max(1, p - 1))}
+        >
+          上一頁
+        </button>
+
+        {Array.from({ length: (historyEndPage - historyStartPage + 1) }, (_, i) => historyStartPage + i).map(p => (
+          <button
+            key={p}
+            type="button"
+            className={`rounded-lg border px-3 py-1.5 text-sm ${p === historyPage ? 'bg-brand text-white border-brand' : ''}`}
+            onClick={() => setHistoryPage(p)}
+          >
+            {p}
+          </button>
+        ))}
+
+        <button
+          type="button"
+          className="rounded-lg border px-3 py-1.5 text-sm"
+          disabled={historyPage >= historyMaxPage}
+          onClick={() => setHistoryPage(p => Math.min(historyMaxPage, p + 1))}
+        >
+          下一頁
+        </button>
+      </div>
+    </Section>
+  );
+}
+
+// === Pending（等待開獎）— 可新增/編輯/刪除/複製名單/轉歷史 ===
+function Pending({ data, admin, setData, query="" }) {
+  const [bulk, setBulk] = useState(null);
+
+
+const [draft, setDraft] = useState({ date:"", title:"", image:"", participantsText:"", plannedWinners:"" });
+  const [editingId, setEditingId] = useState(null);
+
+  // 存每張卡片的模擬結果：sim[id] = { winners:[], seedUsed:"", taken: number }
+  const [sim, setSim] = useState({});
+
+  // 👀 檢視模式：list | grid9 | grid16（用 localStorage 記住偏好）
+  const [view, setView] = useLocalState('kjs_view_pending', 'list');
+
+const [selectMode, setSelectMode] = useState(false);
+// 勾選暫存（每張卡片各自一組）
+const [selected, setSelected] = useState({}); // selected[pendingId] = Set(names)
+
+  const limits = data.settings || DEFAULT_SETTINGS;
+
+  const participants = React.useMemo(
+    () => parseLinesClean(draft.participantsText),
+    [draft.participantsText]
+  );
+
+  const items = React.useMemo(()=>{
+    const list = data.pending || [];
+    const q = String(query).trim().toLowerCase();
+    if(!q) return list;
+    return list.filter(x=>{
+      if((x.title||"").toLowerCase().includes(q)) return true;
+      return (x.participants||[]).some(p => String(p).toLowerCase().includes(q));
+    });
+  },[data.pending, query]);
+
+// === 分頁（Pending）— 放在 view 與 items 之後 ===
+const [pendingPage, setPendingPage] = useLocalState('kjs_pending_page', 1);
+const pendingPageSize = 20;
+
+const pendingTotal = items.length;
+const pendingMaxPage = Math.max(1, Math.ceil(pendingTotal / pendingPageSize));
+
+React.useEffect(() => {
+  if (pendingPage > pendingMaxPage) setPendingPage(pendingMaxPage);
+}, [pendingPage, pendingMaxPage, setPendingPage]);
+
+React.useEffect(() => {
+  setPendingPage(1);
+}, [view, query, setPendingPage]);
+
+const pendingStart = (pendingPage - 1) * pendingPageSize;
+const pendingEnd = Math.min(pendingStart + pendingPageSize, pendingTotal);
+const pendingPageItems = items.slice(pendingStart, pendingEnd);
+
+const pendingWindowSize = 5;
+const pendingStartPage = Math.max(
+  1,
+  Math.min(pendingPage - Math.floor(pendingWindowSize / 2), pendingMaxPage - pendingWindowSize + 1)
+);
+const pendingEndPage = Math.min(pendingMaxPage, pendingStartPage + pendingWindowSize - 1);
+
+  const savePending = () => {
+    if (!admin) return alert("請進入管理模式");
+    if (!draft.title) return alert("請填寫【獎項名稱】");
+
+    const dateText = draft.date || "";
+    const ts = parseISODate(dateText);
+    if (dateText && Number.isNaN(ts)) return alert("開獎日期格式需為 YYYY-MM-DD（例如 2025-08-30）");
+
+    const rawLines = String(draft.participantsText).split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+    const cleaned = parseLinesClean(draft.participantsText);
+    const removedDup = Math.max(0, rawLines.length - cleaned.length);
+
+    const planned = draft.plannedWinners ? Number(draft.plannedWinners) : undefined;
+    const summary = [
+      `確認要${editingId ? "儲存修改" : "新增活動"}嗎？`,
+      `獎項名稱：${draft.title}`,
+      `開獎日期：${dateText || "（未填）"}`,
+      `參與人數：${cleaned.length}${removedDup ? `（已自動去重 ${removedDup} 筆）` : ""}`,
+      typeof planned === 'number' ? `預計抽出名額：${planned}` : null
+    ].filter(Boolean).join("\n");
+    if (!confirm(summary)) return;
+
+    const patch = { title: draft.title, deadline: dateText, image: draft.image || "", participants: cleaned };
+    if (Number.isFinite(planned)) patch.plannedWinners = planned;
+
+    const base = data.pending || [];
+    if (editingId) {
+      const next = base.map(x => x.id===editingId ? { ...x, ...patch } : x);
+      setData({ ...data, pending: next });
+      setEditingId(null);
+    } else {
+      const rec = { id: Math.random().toString(36).slice(2,10), ...patch };
+      setData({ ...data, pending: [rec, ...base] });
+    }
+
+    setDraft({ date:"", title:"", image:"", participantsText:"", plannedWinners:"" });
+  };
+
+  const editPending = (x) => {
+    if (!admin) return;
+    setEditingId(x.id);
+    setDraft({
+      date: x.deadline||"",
+      title: x.title||"",
+      image: x.image||"",
+      participantsText: (x.participants||[]).join("\n"),
+      plannedWinners: typeof x.plannedWinners === 'number' ? String(x.plannedWinners) : ""
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setDraft({ date:"", title:"", image:"", participantsText:"", plannedWinners:"" });
+  };
+
+  const removePending = (id) => {
+    if (!admin) return;
+    if (!confirm("刪除此筆等待開獎活動？")) return;
+    setData({ ...data, pending: (data.pending || []).filter(x => x.id !== id) });
+  };
+
+  const copyParticipants = (arr=[]) =>
+    navigator.clipboard.writeText((arr||[]).join("\n")).then(()=>alert("已複製報名名單"));
+
+  const moveToHistory = (id) => {
+    if (!admin) return alert("請進入管理模式");
+    const it = (data.pending || []).find(x => x.id === id);
+    if (!it) return;
+    if (!confirm("將此活動轉到「歷史抽獎紀錄」？（不抽籤，名單將直接視為得獎者）")) return;
+
+    const winners = parseLinesClean((it.participants || []).join("\n"));
+    const rec = {
+      id: Math.random().toString(36).slice(2, 10),
+      title: it.title,
+      date: it.deadline || "",
+      winners,
+      winnerCount: winners.length,
+      totalParticipants: winners.length,
+      youtube: "",
+      status: "已結束（由等待開獎轉入）",
+      note: ""
+    };
+
+    const nextHistory = sortHistoryDesc([rec, ...(data.history || [])]);
+    setData({
+      ...data,
+      pending: (data.pending || []).filter(x => x.id !== id),
+      history: nextHistory
+    });
+    alert("已轉入歷史；請到「📚 歷史抽獎紀錄」補影片與備註。");
+  };
+
+  const HasImageInput = typeof ImageInput === "function";
+
+  // ✅ 重點：用 Fragment 包住頂部「檢視切換」和 Section，避免回傳多個根節點
+  return (
+    <>
+      {/* 👀 檢視切換：列表 / 9 / 16 */}
+      <div className="mb-4 flex items-center gap-2">
+        <span className="text-sm text-slate-500">檢視：</span>
+<button
+  onClick={()=>setView('list')}
+  className={`rounded-lg border px-3 py-1.5 text-sm ${view==='list' ? 'bg-brand text-white border-brand' : ''}`}
+  title="列表"
+>≡</button>
+<button
+  onClick={()=>setView('grid9')}
+  className={`rounded-lg border px-3 py-1.5 text-sm ${view==='grid9' ? 'bg-brand text-white border-brand' : ''}`}
+  title="9 宮格"
+>▦</button>
+<button
+  onClick={()=>setView('grid16')}
+  className={`rounded-lg border px-3 py-1.5 text-sm ${view==='grid16' ? 'bg-brand text-white border-brand' : ''}`}
+  title="16 宮格"
+>▩</button>
+
+        <div className="ml-auto text-xs text-slate-500">（切到宮格會自動展開卡片）</div>
+      </div>
+
+      <Section title="⏳ 等待開獎" subtitle="報名中/尚未抽出。完整名單可一鍵複製做抽獎用。">
+        {admin && (
+          <div className="rounded-xl border border-slate-200 dark:border-slate-700 p-4 grid gap-3">
+            <div className="grid sm:grid-cols-2 gap-3">
+              <input className="rounded-lg border px-3 py-2" type="date" value={draft.date} onChange={e=>setDraft(d=>({...d,date:e.target.value}))} placeholder="開獎日期"/>
+              <input className="rounded-lg border px-3 py-2" value={draft.title} onChange={e=>setDraft(d=>({...d,title:e.target.value}))} placeholder="獎項名稱"/>
+              <input className="rounded-lg border px-3 py-2" value={draft.plannedWinners} onChange={e=>setDraft(d=>({...d, plannedWinners: e.target.value.replace(/[^0-9]/g,'')}))} placeholder="預計抽出名額（整數）"/>
+              <div className="sm:col-span-2">
+                {HasImageInput
+                  ? <ImageInput label="獎項圖片" value={draft.image} onChange={(v)=>setDraft(d=>({...d,image:v}))}/>
+                  : <input className="rounded-lg border px-3 py-2 w-full" value={draft.image} onChange={e=>setDraft(d=>({...d,image:e.target.value}))} placeholder="獎項圖片（網址或 base64）"/>}
+              </div>
+            </div>
+            <div>
+              <label className="text-sm text-slate-500">已成功報名名單（每行一位）</label>
+              <textarea className="mt-1 w-full rounded-lg border px-3 py-2 min-h-[140px]" value={draft.participantsText} onChange={e=>setDraft(d=>({...d,participantsText:e.target.value}))} placeholder="一行一個 LINE 暱稱"></textarea>
+              <div className="mt-1 text-xs text-slate-500">目前參與人數：{participants.length}</div>
+            </div>
+            <div className="flex gap-2 justify-end">
+              {editingId && <button onClick={cancelEdit} className="rounded-lg border px-4 py-2">取消</button>}
+              <button onClick={savePending} className="rounded-lg bg-brand text-white px-4 py-2">{editingId ? "儲存修改" : "新增活動"}</button>
+            </div>
+          </div>
+        )}
+
+        {items.length===0 && <EmptyCard text="目前沒有資料" admin={admin} />}
+
+        <div className="flex gap-2 justify-end mt-4">
+          {view === 'list' ? (
+            <>
+              <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('open')}>全部展開</button>
+              <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('close')}>全部收合</button>
+              
+            </>
+          ) : (
+            <span className="text-xs text-slate-500">（宮格檢視：點卡片展開）</span>
+
+          )}
+        </div>
+
+{/* 🔝 置頂批次開合（等待開獎） */}
+<StickyBulkToggles
+  onOpenAll={()=> setBulk('open')}
+  onCloseAll={()=> setBulk('close')}
+/>
+
+        {/* 依檢視模式切換容器網格；宮格模式固定展開 */}
+<div
+  className={
+    view === "list"
+      ? "grid gap-4 mt-4"
+      : view === "grid9"
+      ? "grid gap-4 mt-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+      : "grid gap-4 mt-4 grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
+  }
+>
+  {pendingPageItems.map(x => (
+    <Collapse
+      key={x.id}
+            header={
+  view === 'list' ? (
+    /* 列表：只顯示 開獎日期 + 獎品名稱（不顯示圖片） */
+    <div className="flex items-center gap-3">
+      <span className="inline-flex items-center px-2 py-0.5 rounded border text-xs bg-white/70 dark:bg-slate-800/70">
+        {x.deadline || "未填日期"}
+      </span>
+      <span className="text-sm font-medium truncate">{x.title || "未命名"}</span>
+    </div>
+  ) : (
+    /* 宮格：完整圖片 + 名稱（點擊才展開內容） */
+    <div className="w-full">
+      <div className="w-full aspect-square rounded-lg bg-slate-50 dark:bg-slate-800 overflow-hidden flex items-center justify-center">
+        {x.image ? (
+          <img src={x.image} alt="" className="w-full h-full object-contain" loading="lazy" />
+        ) : (
+          <div className="text-xs text-slate-500">無圖</div>
+        )}
+      </div>
+      <div className="mt-2 text-sm font-medium">
+        {(x.title || '未命名').length > 18
+          ? (x.title || '未命名').slice(0, 18) + '****'
+          : (x.title || '未命名')}
+      </div>
+    </div>
+  )
+}
+
+
+
+      force={view === "list" ? bulk : "close"}
+
+    >
+     
+
+      <div className="mt-3 text-sm">
+        目前參與人數：{x.participants?.length || 0}
+      </div>
+
+      {typeof x.plannedWinners === "number" && (
+        <div className="text-sm">預計抽出名額：{x.plannedWinners}</div>
+      )}
+
+      {admin && (
+        <div className="mt-2">
+          <label className="inline-flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={!!selectMode}
+              onChange={(e) => setSelectMode(e.target.checked)}
+            />
+            選取得獎者模式（手動勾選）
+          </label>
+        </div>
+      )}
+
+      {/* 名單區 */}
+      <div className="mt-2">
+        <div className="text-sm text-slate-500 mb-1">已成功報名名單：</div>
+
+        {!selectMode ? (
+          <pre className="whitespace-pre-wrap text-sm bg-slate-50 dark:bg-slate-800 p-3 rounded-lg max-h-48 overflow-auto">
+            {(x.participants || []).join("\n")}
+          </pre>
+        ) : (
+          <div className="rounded-lg bg-slate-50 dark:bg-slate-800 p-3 max-h-56 overflow-auto">
+            {(x.participants || []).map((name) => {
+              const set = selected[x.id] || new Set();
+              const checked = set.has(name);
+              return (
+                <label
+                  key={`${x.id}-${name}`}
+                  className="flex items-center gap-2 text-sm py-0.5"
+                >
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={(e) => {
+                      setSelected((prev) => {
+                        const cur = new Set(prev[x.id] || []);
+                        if (e.target.checked) cur.add(name);
+                        else cur.delete(name);
+                        return { ...prev, [x.id]: cur };
+                      });
+                    }}
+                  />
+                  <span className="truncate">{name}</span>
+                </label>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* 🎲 抽獎模擬（不寫回資料） */}
+      <div className="mt-4 rounded-lg border border-slate-200 dark:border-slate-700 p-3">
+        <div className="flex items-center justify-between mb-2">
+          <div className="text-sm font-medium flex items-center gap-2">
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border">
+              模擬結果（非正式）
+            </span>
+            <span className="text-slate-500">不會更動資料</span>
+          </div>
+        </div>
+
+        <div className="grid sm:grid-cols-3 gap-2">
+          <input
+            className="rounded-lg border px-3 py-2 text-sm"
+            type="number"
+            min="1"
+            defaultValue={
+              typeof x.plannedWinners === "number" && x.plannedWinners > 0
+                ? x.plannedWinners
+                : 1
+            }
+            placeholder="抽出名額"
+            id={`draw-count-${x.id}`}
+          />
+          <input
+            className="rounded-lg border px-3 py-2 text-sm"
+            placeholder="種子（可留白，留白使用安全隨機）"
+            id={`draw-seed-${x.id}`}
+          />
+          <button
+            className="rounded-lg bg-brand text-white px-4 py-2 text-sm"
+            onClick={() => {
+              const participants = (x.participants || []).slice();
+              const total = participants.length;
+              if (total === 0) {
+                alert("沒有可抽名單");
+                return;
+              }
+              const countEl = document.getElementById(`draw-count-${x.id}`);
+              const seedEl = document.getElementById(`draw-seed-${x.id}`);
+              const want = Math.max(
+                1,
+                parseInt(countEl?.value || "1", 10)
+              );
+              const maxAllowed = Math.min(
+                total,
+                (data.settings || DEFAULT_SETTINGS).drawMaxPerRun
+              );
+              if (want > total) {
+                alert(`抽出名額不可超過參與人數（參與 ${total} 人）`);
+                return;
+              }
+              if (want > maxAllowed) {
+                alert(`抽出名額不可超過上限 ${maxAllowed}`);
+                return;
+              }
+
+              const key = drawCooldownKey(x.id);
+              const now = Date.now();
+              const last = parseInt(localStorage.getItem(key) || "0", 10);
+              const waitMs = Math.max(
+                0,
+                (data.settings || DEFAULT_SETTINGS).drawCooldownSec * 1000 -
+                  (now - last)
+              );
+              if (waitMs > 0) {
+                const sec = Math.ceil(waitMs / 1000);
+                alert(`請稍候 ${sec} 秒再試`);
+                return;
+              }
+
+              const seedStr = (seedEl?.value || "").trim();
+              const prng = makePRNG(seedStr);
+              const cleaned = parseLinesClean(participants.join("\n"));
+              const winners = shufflePick(cleaned, want, prng);
+
+              const pool = cleaned.slice(0, Math.min(20, cleaned.length));
+              setSim((prev) => ({
+                ...prev,
+                [x.id]: { anim: true, rolling: pool, taken: want, seedUsed: seedStr },
+              }));
+              localStorage.setItem(key, String(now));
+
+              setTimeout(() => {
+                setSim((prev) => ({
+                  ...prev,
+                  [x.id]: { winners, seedUsed: seedStr, taken: want },
+                }));
+              }, 1200);
+            }}
+          >
+            開始模擬
+          </button>
+        </div>
+
+        {sim[x.id]?.anim && (
+          <div className="mt-3">
+            <div className="text-xs text-slate-500 mb-1">抽獎中…</div>
+            <div className="rounded-lg bg-slate-50 dark:bg-slate-800 p-3 h-24 overflow-hidden">
+              <div className="animate-pulseSoft text-sm">
+                {(sim[x.id].rolling || [])
+                  .sort(() => Math.random() - 0.5)
+                  .slice(0, 5)
+                  .map((n, i) => (
+                    <div key={i} className="py-0.5">
+                      {n}
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {sim[x.id]?.winners?.length > 0 && (
+          <div className="mt-3">
+            <div className="text-xs text-slate-500 mb-1">
+              抽出 {sim[x.id].taken} 位｜
+              Seed：
+              {sim[x.id].seedUsed ? sim[x.id].seedUsed : "安全隨機"}
+              {sim[x.id].winners.length >
+                (data.settings || DEFAULT_SETTINGS).drawPublicShowLimit &&
+                `（僅顯示前 ${
+                  (data.settings || DEFAULT_SETTINGS).drawPublicShowLimit
+                } 位）`}
+            </div>
+            <pre className="whitespace-pre-wrap text-sm bg-slate-50 dark:bg-slate-800 p-3 rounded-lg max-h-48 overflow-auto">
+              {sim[x.id].winners
+                .slice(
+                  0,
+                  (data.settings || DEFAULT_SETTINGS).drawPublicShowLimit
+                )
+                .join("\n")}
+            </pre>
+            <div className="mt-2 flex gap-2 justify-end">
+              <button
+                className="rounded-lg border px-3 py-1.5 text-sm"
+                onClick={() => {
+                  const title = x.title || "未命名活動";
+                  const date = x.deadline || "(未填日期)";
+                  const seed = sim[x.id]?.seedUsed
+                    ? sim[x.id].seedUsed
+                    : "安全隨機";
+                  const lines = (sim[x.id]?.winners || []).join("\n");
+                  const text = `【抽獎模擬結果】\n活動：${title}\n日期：${date}\nSeed：${seed}\n名額：${
+                    sim[x.id]?.taken || 0
+                  }\n———\n${lines}`;
+                  navigator.clipboard
+                    .writeText(text)
+                    .then(() => alert("已複製模擬結果"));
+                }}
+              >
+                複製模擬結果
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 底部操作 */}
+      <div className="mt-3 flex gap-2 justify-end">
+        <button
+          onClick={() => copyParticipants(x.participants)}
+          className="rounded-lg border px-3 py-1.5"
+        >
+          複製名單
+        </button>
+
+        {admin && (
+          <>
+            <button
+              onClick={() => editPending(x)}
+              className="rounded-lg border px-3 py-1.5"
+            >
+              編輯
+            </button>
+
+            <button
+              onClick={() => {
+                const raw = buildAnnouncementText(x);
+                const edited = prompt("公告內容（可編輯，確定後自動複製）", raw);
+                if (edited === null) return;
+                navigator.clipboard
+                  .writeText(edited)
+                  .then(() => alert("已複製公告模板"))
+                  .catch(() => alert("複製失敗，請確認瀏覽器權限"));
+              }}
+              className="rounded-lg border px-3 py-1.5"
+            >
+              套用公告模板
+            </button>
+
+            <button
+              onClick={() => {
+                const s = sim[x.id];
+                if (!s || !s.winners || s.winners.length === 0) {
+                  alert("請先在上方區塊跑一次『開始模擬』，再使用此按鈕。");
+                  return;
+                }
+                const winners = s.winners.slice();
+                const rec = {
+                  id: nid(),
+                  title: x.title,
+                  date: x.deadline || "",
+                  winners,
+                  winnerCount: winners.length,
+                  totalParticipants: x.participants?.length || winners.length,
+                  youtube: "",
+                  status: "處理中",
+                  note: "由等待開獎（模擬結果）轉入",
+                };
+                const nextHistory = sortHistoryDesc([
+                  rec,
+                  ...(data.history || []),
+                ]);
+                setData({
+                  ...data,
+                  pending: (data.pending || []).filter((i) => i.id !== x.id),
+                  history: nextHistory,
+                });
+                alert("已用『模擬結果』轉入歷史");
+              }}
+              className="rounded-lg border px-3 py-1.5"
+            >
+              以模擬結果轉歷史
+            </button>
+
+            <button
+              onClick={() => {
+                const setSel = selected[x.id] || new Set();
+                const winners = Array.from(setSel);
+                if (winners.length === 0) {
+                  alert("尚未勾選任何人");
+                  return;
+                }
+                const rec = {
+                  id: nid(),
+                  title: x.title,
+                  date: x.deadline || "",
+                  winners,
+                  winnerCount: winners.length,
+                  totalParticipants: x.participants?.length || winners.length,
+                  youtube: "",
+                  status: "處理中",
+                  note: "由等待開獎（手動勾選）轉入",
+                };
+                const nextHistory = sortHistoryDesc([
+                  rec,
+                  ...(data.history || []),
+                ]);
+                setData({
+                  ...data,
+                  pending: (data.pending || []).filter((i) => i.id !== x.id),
+                  history: nextHistory,
+                });
+                alert("已以『勾選名單』轉入歷史");
+              }}
+              className="rounded-lg border px-3 py-1.5"
+            >
+              以勾選名單轉歷史
+            </button>
+
+            <button
+              onClick={() => moveToHistory(x.id)}
+              className="rounded-lg bg-brand text-white px-3 py-1.5"
+            >
+              整份名單轉歷史
+            </button>
+
+            <button
+              onClick={() => removePending(x.id)}
+              className="rounded-lg bg-red-500 text-white px-3 py-1.5"
+            >
+              刪除
+            </button>
+          </>
+        )}
+      </div>
+    </Collapse>
+  ))}
+</div>
+
+      </Section>
+    </>
+  );
+}
+
+
+// === Ongoing（進行中活動）— 可新增/編輯/刪除/上下移動/啟用停用 ===
+function Ongoing({ data, admin, setData, query="" }) {
+  const [bulk, setBulk] = useState(null);
+  const [draft, setDraft] = useState({ title:"", desc:"", rules:"", link:"", image:"", enabled:true });
+  const [editingId, setEditingId] = useState(null);
+
+  const items = React.useMemo(()=>{
+  let list = data.ongoing || [];
+  if(!admin) list = list.filter(x => x.enabled !== false);
+  const q = String(query).trim().toLowerCase();
+  if(!q) return list;
+  return list.filter(x=>{
+    const hay = [
+      x.title, x.desc, x.rules, x.link
+    ].map(s => String(s||"").toLowerCase()).join(" ");
+    return hay.includes(q);
+  });
+},[data.ongoing, admin, query]);
+
+  const HasImageInput = typeof ImageInput === "function";
+
+  const saveOngoing = () => {
+    if (!admin) return alert("請進入管理模式");
+    if (!draft.title) return alert("請填寫標題");
+    const rec = { id: editingId || Math.random().toString(36).slice(2,10), title: draft.title, desc: draft.desc||"", rules: draft.rules||"", link: draft.link||"", image: draft.image||"", enabled: !!draft.enabled };
+    const base = data.ongoing || [];
+const next = editingId ? base.map(x => x.id===editingId ? rec : x) : [rec, ...base];
+
+    setData({ ...data, ongoing: next });
+    setEditingId(null); setDraft({ title:"", desc:"", rules:"", link:"", image:"", enabled:true });
+  };
+
+  const editOngoing = (x) => { if(!admin) return; setEditingId(x.id); setDraft({ title:x.title||"", desc:x.desc||"", rules:x.rules||"", link:x.link||"", image:x.image||"", enabled: !!x.enabled }); window.scrollTo({top:0,behavior:"smooth"}); };
+  const cancelEdit = () => { setEditingId(null); setDraft({ title:"", desc:"", rules:"", link:"", image:"", enabled:true }); };
+
+  const removeOngoing = (id) => { if(!admin) return; if(!confirm("刪除此卡片？")) return; setData({ ...data, ongoing: (data.ongoing || []).filter(x => x.id !== id) }); };
+
+  const toggleEnabled = (id) => { if(!admin) return; setData({ ...data, ongoing: (data.ongoing || []).map(x => x.id===id ? { ...x, enabled: !x.enabled } : x) });
+ };
+
+  const move = (id, dir) => {
+  if (!admin) return;
+  const arr = [...(data.ongoing || [])];
+  const i = arr.findIndex(x => x.id === id);
+  const j = dir === "up" ? i - 1 : i + 1;
+  if (i < 0 || j < 0 || j >= arr.length) return;
+  [arr[i], arr[j]] = [arr[j], arr[i]];
+  setData({ ...data, ongoing: arr });
+};
+
+  const moveUp = (id) => move(id, 'up');
+  const moveDown = (id) => move(id, 'down');
+
+  return (
+    <Section title="🔄 進行中活動" subtitle="卡片式展示（可上下移動、啟用/停用、編輯）。">
+      {admin && (
+        <div className="rounded-xl border border-slate-200 dark:border-slate-700 p-4 grid gap-3">
+          <div className="grid sm:grid-cols-2 gap-3">
+            <input className="rounded-lg border px-3 py-2" value={draft.title} onChange={e=>setDraft(d=>({...d,title:e.target.value}))} placeholder="標題"/>
+            <input className="rounded-lg border px-3 py-2" value={draft.link} onChange={e=>setDraft(d=>({...d,link:e.target.value}))} placeholder="連結（可空白）"/>
+            <div className="sm:col-span-2">
+              {HasImageInput
+                ? <ImageInput label="展示圖片" value={draft.image} onChange={(v)=>setDraft(d=>({...d,image:v}))}/>
+                : <input className="rounded-lg border px-3 py-2 w-full" value={draft.image} onChange={e=>setDraft(d=>({...d,image:e.target.value}))} placeholder="展示圖片（網址或 base64）"/>}
+            </div>
+          </div>
+          <textarea className="rounded-lg border px-3 py-2 min-h-[80px]" value={draft.desc} onChange={e=>setDraft(d=>({...d,desc:e.target.value}))} placeholder="介紹（可空白）"></textarea>
+          <textarea className="rounded-lg border px-3 py-2 min-h-[80px]" value={draft.rules} onChange={e=>setDraft(d=>({...d,rules:e.target.value}))} placeholder="規則（可空白）"></textarea>
+          <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={draft.enabled} onChange={e=>setDraft(d=>({...d,enabled:e.target.checked}))}/>啟用（勾選＝對外顯示）</label>
+          <div className="flex gap-2 justify-end">
+            {editingId && <button onClick={cancelEdit} className="rounded-lg border px-4 py-2">取消</button>}
+            <button onClick={saveOngoing} className="rounded-lg bg-brand text-white px-4 py-2">{editingId ? "儲存修改" : "新增卡片"}</button>
+          </div>
+        </div>
+      )}
+
+      {items.length===0 && <EmptyCard text="目前沒有資料" admin={admin} />}
+
+      <div className="flex gap-2 justify-end mt-4">
+        <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('open')}>全部展開</button>
+        <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('close')}>全部收合</button>
+        
+      </div>
+
+      <div className="grid gap-4 mt-4">
+        {items.map((x)=> (
+          <Collapse key={x.id} header={`${x.title || "未命名活動"}`} force={bulk}>
+            {x.image && <img src={x.image} alt="活動圖片" className="rounded-lg max-h-56 object-contain w-full bg-slate-50 dark:bg-slate-800 mb-2"/>}
+            {x.link && <div className="text-sm mb-2">連結：<a className="underline text-brand" href={x.link} target="_blank" rel="noreferrer">{x.link}</a></div>}
+            {x.desc && <div className="text-sm whitespace-pre-wrap mb-2">{x.desc}</div>}
+            {x.rules && <div className="text-sm whitespace-pre-wrap mb-2"><span className="text-slate-500">規則：</span>{x.rules}</div>}
+            <div className="mt-3 flex gap-2 justify-end">
+              {admin && (<>
+                <button onClick={()=>moveUp(x.id)} className="rounded-lg border px-3 py-1.5">上移</button>
+                <button onClick={()=>moveDown(x.id)} className="rounded-lg border px-3 py-1.5">下移</button>
+                <button onClick={()=>toggleEnabled(x.id)} className="rounded-lg border px-3 py-1.5">
+                  {x.enabled ? "停用" : "啟用"}
+                </button>
+                <button onClick={()=>removeOngoing(x.id)} className="rounded-lg bg-red-500 text-white px-3 py-1.5">刪除</button>
+              </>)}
+            </div>
+          </Collapse>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function Shop({ data, admin, setData, query="" }) {
+  const [bulk, setBulk] = React.useState(null); // 'open' | 'close' | null（只用在列表檢視）
+  const [draft, setDraft] = React.useState({ name:"", points:"", stock:"", desc:"", image:"", enabled:true });
+  const [editingId, setEditingId] = React.useState(null);
+
+  // 👀 檢視模式：list | grid9 | grid16（用 localStorage 記住偏好）
+  const [view, setView] = useLocalState('kjs_view_shop', 'list');
+
+  // 商品清單（依搜尋過濾；非管理模式會隱藏停用品）
+  const items = React.useMemo(()=>{
+    let list = data.shop?.items || [];
+    if(!admin) list = list.filter(x => x.enabled !== false);
+    const q = String(query).trim().toLowerCase();
+    if(!q) return list;
+    return list.filter(x=>{
+      const hay = [x.name, x.desc].map(s => String(s||"").toLowerCase()).join(" ");
+      return hay.includes(q);
+    });
+  },[data.shop?.items, admin, query]);
+
+  // === 分頁（Shop） ===
+  const [shopPage, setShopPage] = useLocalState('kjs_shop_page', 1);
+  const shopPageSize = 20; // 列表/宮格都每頁 20
+  const shopTotal = items.length;
+  const shopMaxPage = Math.max(1, Math.ceil(shopTotal / shopPageSize));
+
+  React.useEffect(() => {
+    if (shopPage > shopMaxPage) setShopPage(shopMaxPage);
+  }, [shopPage, shopMaxPage, setShopPage]);
+
+  // 檢視或搜尋變化時回到第 1 頁
+  React.useEffect(() => { setShopPage(1); }, [view, query, setShopPage]);
+
+  const shopStart = (shopPage - 1) * shopPageSize;
+  const shopEnd = Math.min(shopStart + shopPageSize, shopTotal);
+  const shopPageItems = items.slice(shopStart, shopEnd);
+
+  // 頁碼視窗（最多 5 格）
+  const shopWindowSize = 5;
+  const shopStartPage = Math.max(
+    1,
+    Math.min(shopPage - Math.floor(shopWindowSize / 2), shopMaxPage - shopWindowSize + 1)
+  );
+  const shopEndPage = Math.min(shopMaxPage, shopStartPage + shopWindowSize - 1);
+
+  // 是否有檔案選擇器元件（保留你先前「可直接放檔案」的需求）
+  const HasImageInput = typeof ImageInput === "function";
+
+  // —— 動作：新增/修改/刪除/啟停 —— //
+  const saveItem = () => {
+    if (!admin) return alert("請進入管理模式");
+    if (!draft.name) return alert("請填寫商品名稱");
+    const rec = {
+      id: editingId || Math.random().toString(36).slice(2,10),
+      name: draft.name,
+      points: Number(draft.points||0),
+      stock: Number(draft.stock||0),
+      desc: draft.desc||"",
+      image: draft.image||"",
+      enabled: !!draft.enabled
+    };
+    const base = data.shop?.items || [];
+    const next = editingId ? base.map(x => x.id===editingId ? rec : x) : [rec, ...base];
+    setData({ ...data, shop: { ...data.shop, items: next } });
+    setEditingId(null);
+    setDraft({ name:"", points:"", stock:"", desc:"", image:"", enabled:true });
+  };
+
+  const editItem = (x) => {
+    if(!admin) return;
+    setEditingId(x.id);
+    setDraft({
+      name:x.name||"",
+      points:String(x.points??""),
+      stock:String(x.stock??""),
+      desc:x.desc||"",
+      image:x.image||"",
+      enabled: !!x.enabled
+    });
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setDraft({ name:"", points:"", stock:"", desc:"", image:"", enabled:true });
+  };
+
+  const removeItem = (id) => {
+    if(!admin) return;
+    if(!confirm("刪除此商品？")) return;
+    setData({ ...data, shop: { ...data.shop, items: (data.shop?.items || []).filter(x => x.id !== id) } });
+  };
+
+  const toggleEnabled = (id) => {
+    if(!admin) return;
+    setData({ ...data, shop: { ...data.shop, items: (data.shop?.items || []).map(x => x.id===id ? {...x, enabled: !x.enabled} : x) } });
+  };
+
+  // —— 畫面 —— //
+  return (
+    <Section title="🛍️ 點數商城｜兌換好禮" subtitle="列表只顯示名稱；9/16 宮格為完整圖片+名稱，點擊卡片才展開詳細內容。">
+      {/* 檢視切換（圖示） */}
+      <div className="flex items-center justify-between mb-3">
+        <div className="text-sm text-slate-500">共 {shopTotal} 項</div>
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            className={"tap-target rounded-lg border px-2 py-1 text-sm " + (view==='list'?'bg-brand text-white border-brand':'')}
+            title="列表"
+            onClick={()=>setView('list')}
+          >☰</button>
+          <button
+            type="button"
+            className={"tap-target rounded-lg border px-2 py-1 text-sm " + (view==='grid9'?'bg-brand text-white border-brand':'')}
+            title="九宮格"
+            onClick={()=>setView('grid9')}
+          >▦</button>
+          <button
+            type="button"
+            className={"tap-target rounded-lg border px-2 py-1 text-sm " + (view==='grid16'?'bg-brand text-white border-brand':'')}
+            title="十六宮格"
+            onClick={()=>setView('grid16')}
+          >▤</button>
+        </div>
+      </div>
+
+      {/* 管理表單 */}
+      {admin && (
+        <div className="rounded-xl border border-slate-200 dark:border-slate-700 p-4 grid gap-3">
+          <div className="grid sm:grid-cols-2 gap-3">
+            <input className="rounded-lg border px-3 py-2" value={draft.name} onChange={e=>setDraft(d=>({...d,name:e.target.value}))} placeholder="商品名稱"/>
+            <input className="rounded-lg border px-3 py-2" value={draft.points} onChange={e=>setDraft(d=>({...d,points:e.target.value}))} placeholder="所需點數（數字）" inputMode="numeric"/>
+            <input className="rounded-lg border px-3 py-2" value={draft.stock} onChange={e=>setDraft(d=>({...d,stock:e.target.value}))} placeholder="庫存（數字）" inputMode="numeric"/>
+
+            {/* 圖片上傳/連結：若有 ImageInput 元件就給直接上傳；否則維持 URL 輸入 */}
+            {HasImageInput ? (
+              <ImageInput value={draft.image} onChange={url=>setDraft(d=>({...d,image:url}))} className="sm:col-span-2" />
+            ) : (
+              <input className="rounded-lg border px-3 py-2 sm:col-span-2" value={draft.image} onChange={e=>setDraft(d=>({...d,image:e.target.value}))} placeholder="圖片網址（或保留空白）"/>
+            )}
+
+            <textarea className="rounded-lg border px-3 py-2 sm:col-span-2 min-h-[100px]" value={draft.desc} onChange={e=>setDraft(d=>({...d,desc:e.target.value}))} placeholder="商品描述（可空白）"></textarea>
+
+            <label className="inline-flex items-center gap-2 text-sm">
+              <input type="checkbox" checked={!!draft.enabled} onChange={e=>setDraft(d=>({...d,enabled:e.target.checked}))}/>
+              上架（啟用）
+            </label>
+          </div>
+          <div className="flex gap-2 justify-end">
+            {editingId && <button onClick={cancelEdit} className="rounded-lg border px-4 py-2">取消</button>}
+            <button onClick={saveItem} className="rounded-lg bg-brand text-white px-4 py-2">{editingId ? "儲存修改" : "新增商品"}</button>
+          </div>
+        </div>
+      )}
+
+      {/* 無資料 */}
+      {items.length === 0 && <EmptyCard text="目前沒有商品" admin={admin} />}
+
+      {/* 批次展開/收合（只在列表模式有意義） */}
+      <div className="flex gap-2 justify-end mt-4">
+        {view === 'list' ? (
+          <>
+            <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('open')}>全部展開</button>
+            <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('close')}>全部收合</button>
+          </>
+        ) : (
+          <span className="text-xs text-slate-500">（宮格檢視：點卡片才展開詳細）</span>
+        )}
+      </div>
+
+      {/* 清單/宮格容器 */}
+      <div
+        className={
+          view === 'list'
+            ? "grid gap-4 mt-4"
+            : view === 'grid9'
+              ? "grid gap-4 mt-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+              : "grid gap-4 mt-4 grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
+        }
+      >
+        {shopPageItems.map(x => (
+          <Collapse
+            key={x.id}
+            // header：列表=只顯示名稱；宮格=完整圖片 + 名稱（圖片會等比例縮放塞滿方框）
+            header={
+              view === 'list' ? (
+                <div className="text-sm font-medium truncate">{x.name || '未命名'}</div>
+              ) : (
+                <div className="w-full">
+                  {/* 圖片：完整圖等比縮小塞進方框，不裁切 */}
+                  <div className="relative w-full aspect-square rounded-lg bg-slate-50 dark:bg-slate-800 overflow-hidden flex items-center justify-center">
+  {/* 剩餘數量徽章（未展開狀態下也可見） */}
+  {getRemain(x) !== null && (
+    <div className="absolute top-2 left-2 inline-flex items-center gap-1 rounded-full bg-white/90 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 px-2 py-0.5 text-[12px] leading-none">
+      <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500" aria-hidden="true"></span>
+      剩餘 {getRemain(x)}
+    </div>
+  )}
+
+  {/* 完整圖片（等比縮放，不裁切） */}
+  {x.image ? (
+    <img
+      src={x.image}
+      alt={x.title || '商品圖片'}
+      className="max-w-full max-h-full object-contain"
+      loading="lazy"
+      decoding="async"
+    />
+  ) : (
+    <div className="text-xs text-slate-400">無圖片</div>
+  )}
+</div>
+
+                  {/* 名稱：未展開前過長以 **** 收斂；展開後在內容區會有完整描述 */}
+                  <div className="mt-2 text-sm font-medium">
+                    {(x.name || '未命名').length > 18
+                      ? (x.name || '未命名').slice(0, 18) + '****'
+                      : (x.name || '未命名')}
+                  </div>
+                </div>
+              )
+            }
+            force={view === 'list' ? bulk : null}
+          >
+            {/* 內容：點擊後展開才看到 */}
+            <div className="mt-2 text-sm"><b>所需點數：</b>{x.points} 點</div>
+            {x.desc && <div className="mt-2 text-sm whitespace-pre-wrap">{x.desc}</div>}
+
+            <div className="mt-3 flex gap-2 justify-end">
+              {admin && (<>
+                <button onClick={()=>editItem(x)} className="rounded-lg border px-3 py-1.5">編輯</button>
+                <button onClick={()=>toggleEnabled(x.id)} className="rounded-lg border px-3 py-1.5">
+                  {x.enabled ? "停用" : "啟用"}
+                </button>
+                <button onClick={()=>removeItem(x.id)} className="rounded-lg bg-red-500 text-white px-3 py-1.5">刪除</button>
+              </>)}
+            </div>
+          </Collapse>
+        ))}
+      </div>
+
+      {/* 分頁控制（Shop）—— 一定要放在清單之後，不能放在 header 內！ */}
+      <div className="mt-4 flex items-center justify-center gap-1 select-none">
+        <button
+          type="button"
+          className="rounded-lg border px-3 py-1.5 text-sm"
+          disabled={shopPage <= 1}
+          onClick={() => setShopPage(p => Math.max(1, p - 1))}
+        >
+          上一頁
+        </button>
+
+        {Array.from({ length: (shopEndPage - shopStartPage + 1) }, (_, i) => shopStartPage + i).map(p => (
+          <button
+            key={p}
+            type="button"
+            className={`rounded-lg border px-3 py-1.5 text-sm ${p === shopPage ? 'bg-brand text-white border-brand' : ''}`}
+            onClick={() => setShopPage(p)}
+          >
+            {p}
+          </button>
+        ))}
+
+        <button
+          type="button"
+          className="rounded-lg border px-3 py-1.5 text-sm"
+          disabled={shopPage >= shopMaxPage}
+          onClick={() => setShopPage(p => Math.min(shopMaxPage, p + 1))}
+        >
+          下一頁
+        </button>
+      </div>
+    </Section>
+  );
+}
+
+function Others({ data, admin, setData, query="" }) {
+  const [bulk, setBulk] = useState(null);
+  const [draft, setDraft] = useState({ title:"", content:"", pin:false });
+  const [editingId, setEditingId] = useState(null);
+
+  const cards = React.useMemo(()=> data.others?.cards || [], [data.others]);
+
+  const orderedCards = React.useMemo(()=>{
+    const list = data.others?.cards || [];
+    const q = String(query).trim().toLowerCase();
+    const filtered = q
+      ? list.filter(x =>
+          String(x.title||"").toLowerCase().includes(q) ||
+          String(x.content||"").toLowerCase().includes(q)
+        )
+      : list;
+    // pin=true 置頂優先
+    return [...filtered].sort((a,b)=> (b.pin===true) - (a.pin===true));
+  },[data.others, query]);
+
+  const saveCard = () => {
+    if (!admin) return alert("請進入管理模式");
+    if (!draft.title) return alert("請填寫標題");
+    const rec = { id: editingId || Math.random().toString(36).slice(2,10), title: draft.title, content: draft.content||"", pin: !!draft.pin };
+    const next = editingId ? cards.map(x=>x.id===editingId?rec:x) : [rec, ...cards];
+    setData({ ...data, others: { ...data.others, cards: next } });
+    setEditingId(null); setDraft({ title:"", content:"", pin:false });
+  };
+
+  const editCard = (x) => { if(!admin) return; setEditingId(x.id); setDraft({ title:x.title||"", content:x.content||"", pin: !!x.pin }); window.scrollTo({top:0,behavior:"smooth"}); };
+  const cancelEdit = () => { setEditingId(null); setDraft({ title:"", content:"", pin:false }); };
+
+  const removeCard = (id) => { if(!admin) return; if(!confirm("刪除此卡片？")) return; setData({ ...data, others: { ...data.others, cards: cards.filter(x=>x.id!==id) } }); };
+  const togglePin = (id) => { if(!admin) return; setData({ ...data, others: { ...data.others, cards: cards.map(x=>x.id===id?{...x,pin:!x.pin}:x) } }); };
+
+  const move = (id, dir) => {
+    if (!admin) return;
+    const arr = [...cards], i = arr.findIndex(x=>x.id===id), j = dir==="up" ? i-1 : i+1;
+    if (i<0 || j<0 || j>=arr.length) return;
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    setData({ ...data, others: { ...data.others, cards: arr } });
+  };
+
+  return (
+    <Section title="📌 其他資料" subtitle="創立初衷、公告、開獎方式、補寄/再抽規則、點數規則、贊助說明、贊助者名單、查詢點數…">
+      {admin && (
+        <div className="rounded-xl border border-slate-200 dark:border-slate-700 p-4 grid gap-3">
+          <input className="rounded-lg border px-3 py-2" value={draft.title} onChange={e=>setDraft(d=>({...d,title:e.target.value}))} placeholder="卡片標題（如：最新公告）"/>
+          <textarea className="rounded-lg border px-3 py-2 min-h-[120px]" value={draft.content} onChange={e=>setDraft(d=>({...d,content:e.target.value}))} placeholder="內容（可貼連結）"></textarea>
+          <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={draft.pin} onChange={e=>setDraft(d=>({...d,pin:e.target.checked}))}/>置頂</label>
+          <div className="flex gap-2 justify-end">
+            {editingId && <button onClick={cancelEdit} className="rounded-lg border px-4 py-2">取消</button>}
+            <button onClick={saveCard} className="rounded-lg bg-brand text-white px-4 py-2">{editingId ? "儲存修改" : "新增卡片"}</button>
+          </div>
+        </div>
+      )}
+
+      {cards.length === 0 && <EmptyCard text="目前沒有卡片內容" admin={admin} />}
+
+      <div className="flex gap-2 justify-end mt-4">
+        <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('open')}>全部展開</button>
+        <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('close')}>全部收合</button>
+        
+      </div>
+
+      <div className="grid gap-4 mt-4">
+        {orderedCards.map((x)=> (
+          <Collapse key={x.id} header={`${x.title || "未命名卡片"}`} force={bulk}>
+            <div className="whitespace-pre-wrap text-sm">{x.content || "（無內容）"}</div>
+            <div className="mt-3 flex gap-2 justify-end">
+              {admin && (<>
+                <button onClick={()=>move(x.id,'up')} className="rounded-lg border px-3 py-1.5">上移</button>
+                <button onClick={()=>move(x.id,'down')} className="rounded-lg border px-3 py-1.5">下移</button>
+                <button onClick={()=>togglePin(x.id)} className="rounded-lg border px-3 py-1.5">{x.pin ? "取消置頂" : "置頂"}</button>
+                <button onClick={()=>editCard(x)} className="rounded-lg border px-3 py-1.5">編輯</button>
+                <button onClick={()=>removeCard(x.id)} className="rounded-lg bg-red-500 text-white px-3 py-1.5">刪除</button>
+              </>)}
+            </div>
+          </Collapse>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function PointsPanel({ data, admin, setData }) {
+  const people = React.useMemo(() => data.shop?.people || [], [data.shop]);
+  const logs   = React.useMemo(() => data.shop?.logs   || [], [data.shop]); // {id, personId, delta, note, at}
+  const [q, setQ] = useState("");
+  const [draft, setDraft] = useState({ name: "", points: "" });
+
+  // 把「選擇人員」改成可輸入或選擇：用 datalist
+  const [logDraft, setLogDraft] = useState({ name:"", delta:"", note:"" });
+
+  const norm = (s="") => s.trim().toLowerCase();
+
+  const result = React.useMemo(() => {
+    if (!q.trim()) return null;
+    const key = norm(q);
+    const exact = people.find(p => norm(p.name) === key);
+    if (exact) return exact;
+    const fuzzy = people.find(p => norm(p.name).includes(key));
+    return fuzzy || null;
+  }, [q, people]);
+
+const personIdFilter = React.useMemo(() => result?.id || null, [result]);
+
+  const addOrUpdate = () => {
+    if (!admin) return alert("請進入管理模式");
+    const raw = draft.name || "";
+    const name = raw.replace(/\u3000/g," ").replace(/\s+/g," ").trim();
+    if (!name) return alert("請輸入姓名/暱稱");
+    const pts = Number(draft.points || 0);
+    if (!Number.isFinite(pts)) return alert("點數需為數字");
+
+    const key = normName(name);
+    const exists = people.find(p => normName(p.name) === key);
+
+    const summary = exists
+      ? `已存在「${exists.name}」，目前點數：${exists.points}\n要將點數改為：${pts} 嗎？`
+      : `確認新增人員：${name}\n點數：${pts}`;
+    if (!confirm(summary)) return;
+
+    let nextPeople;
+    if (exists) {
+      nextPeople = people.map(p => normName(p.name) === key ? { ...p, name, points: pts } : p);
+    } else {
+      nextPeople = [{ id: nid(), name, points: pts }, ...people];
+    }
+    setData({ ...data, shop: { ...data.shop, people: nextPeople } });
+    setDraft({ name: "", points: "" });
+  };
+
+  const adjust = (id, delta) => {
+    if (!admin) return;
+    const next = people.map(p => p.id === id ? { ...p, points: Math.max(0, Number(p.points||0) + delta) } : p);
+    const log = { id: nid(), personId:id, delta, note: delta>0?'+調整':'-調整', at: nowISO() };
+    setData({ ...data, shop: { ...data.shop, people: next, logs: [log, ...logs] } });
+  };
+
+  // ✅ 刪除人員：關鍵字確認，且不再丟回收站
+  const removePerson = (id) => {
+    if (!admin) return;
+    const p = people.find(x=>x.id===id); if(!p) return;
+    if(!confirmKeyword({label: `欲刪除：${p.name}`, keyword:'刪除'})) return;
+    const nextShop = {
+      ...data.shop,
+      people: people.filter(x=>x.id!==id),
+      logs   : logs // 人員刪除不動歷史流水
+    };
+    setData({ ...data, shop: nextShop });
+  };
+
+  // ✅ 新增異動：用名字找人；不存在就自動建立
+  const addLog = () => {
+    if(!admin) return;
+    const rawName = (logDraft.name||"").replace(/\u3000/g," ").replace(/\s+/g," ").trim();
+    if(!rawName) return alert('請輸入人員姓名/暱稱');
+    const delta = Number(logDraft.delta||0);
+    if(!Number.isFinite(delta) || delta===0) return alert('請輸入非 0 的整數異動');
+
+    // 先找現有人員
+    const key = normName(rawName);
+    let person = people.find(x => normName(x.name) === key);
+
+    let nextPeople = [...people];
+    if (!person) {
+      // 自動建立新的人員（0 點）
+      person = { id: nid(), name: rawName, points: 0 };
+      nextPeople = [person, ...people];
+    }
+
+    // 寫入點數與流水
+    nextPeople = nextPeople.map(x => x.id===person.id ? { ...x, points: Math.max(0, Number(x.points||0) + delta) } : x);
+    const log = { id: nid(), personId: person.id, delta, note: logDraft.note||'', at: nowISO() };
+
+    setData({ ...data, shop: { ...data.shop, people: nextPeople, logs: [log, ...logs] } });
+
+setQ(rawName);
+
+    setLogDraft({ name:"", delta:"", note:"" });
+  };
+
+  const revokeLog = (logId) => {
+    if(!admin) return;
+    const lg = logs.find(l=>l.id===logId); if(!lg) return;
+    if(!confirm('要撤銷這筆異動嗎？會寫入一筆相反數的補記。')) return;
+    const pid = lg.personId; const delta = -lg.delta;
+    const nextPeople = people.map(x=> x.id===pid ? { ...x, points: Math.max(0, Number(x.points||0)+delta) } : x);
+    const newLog = { id: nid(), personId: pid, delta, note: `撤銷 ${logId}`, at: nowISO() };
+    setData({ ...data, shop: { ...data.shop, people: nextPeople, logs: [newLog, ...logs] } });
+  };
+
+  const sorted  = React.useMemo(()=> [...people].sort((a,b)=> a.name.localeCompare(b.name, "zh-Hant")), [people]);
+  // 依目前查詢到的人（result）來過濾其個人流水，並只取 5 筆
+const latest5 = React.useMemo(() => {
+  const filtered = personIdFilter ? logs.filter(l => l.personId === personIdFilter) : logs;
+  return filtered.slice(0,5);
+}, [logs, personIdFilter]);
+
+const visibleLogs = React.useMemo(()=>{
+  return personIdFilter ? logs.filter(l => l.personId === personIdFilter) : logs;
+}, [logs, personIdFilter]);
+
+
+  return (
+    <Section title="🔍 查詢點數" subtitle="公開最多顯示最近 5 筆異動；管理可看全部、加一筆/撤銷、可匯出。">
+      <div className="rounded-xl border border-slate-200 dark:border-slate-700 p-4 grid gap-3">
+        <input className="rounded-lg border px-3 py-2" value={q} onChange={(e)=>setQ(e.target.value)} placeholder="輸入姓名/暱稱進行查詢"/>
+        <div className="text-sm">
+          {q.trim()
+            ? (result
+                ? <span>「<b>{result.name}</b>」目前點數：<b>{result.points}</b></span>
+                : <span>找不到「{q}」的點數紀錄</span>)
+            : <span className="text-slate-500">請輸入要查詢的姓名/暱稱</span>}
+        </div>
+      </div>
+
+      {/* 公開流水：僅顯示查詢到的此人最近 5 筆 */}
+<div className="rounded-xl border border-slate-200 dark:border-slate-700 p-4 mt-3">
+  <div className="text-sm font-medium mb-2">最近 5 筆點數異動（僅此人）</div>
+
+  {!q.trim() ? (
+    <div className="text-sm text-slate-500">請先在上方輸入姓名/暱稱進行查詢</div>
+  ) : !result ? (
+    <div className="text-sm text-slate-500">找不到「{q}」的點數紀錄</div>
+  ) : latest5.length === 0 ? (
+    <div className="text-sm text-slate-500">「{result.name}」目前沒有異動紀錄</div>
+  ) : (
+    <div className="grid gap-2">
+      {latest5.map(l=>{
+        const p = people.find(x=>x.id===l.personId);
+        return (
+          <div key={l.id} className="text-sm flex items-center justify-between">
+            <div className="truncate">{p?.name || '(已刪)'}｜{l.delta>0?`+${l.delta}`:l.delta}｜{l.note||'（無備註）'}</div>
+            <div className="text-xs text-slate-500">{l.at}</div>
+          </div>
+        );
+      })}
+    </div>
+  )}
+</div>
+
+
+      {admin && (
+        <>
+          {/* 新增/更新人員 */}
+          <div className="rounded-xl border border-slate-200 dark:border-slate-700 p-4 grid gap-3 mt-3">
+            <div className="grid sm:grid-cols-2 gap-3">
+              <input className="rounded-lg border px-3 py-2" value={draft.name} onChange={(e)=>setDraft(d=>({ ...d, name: e.target.value }))} placeholder="姓名/暱稱"/>
+              <input className="rounded-lg border px-3 py-2" value={draft.points} onChange={(e)=>setDraft(d=>({ ...d, points: e.target.value }))} placeholder="點數（整數）"/>
+            </div>
+            <div className="flex justify-end">
+              <button onClick={addOrUpdate} className="rounded-lg bg-brand text-white px-4 py-2">新增/更新</button>
+            </div>
+          </div>
+
+          {/* 管理：全部流水表、加一筆 / 撤銷 / 匯出 */}
+          <div className="rounded-xl border border-slate-200 dark:border-slate-700 p-4 grid gap-3 mt-3">
+            <div className="flex items-center justify-between">
+              <div className="text-sm font-medium">全部異動</div>
+              <div className="flex items-center gap-2">
+  {q.trim() && (
+    <button
+      className="rounded-lg border px-3 py-1.5 text-sm"
+      onClick={()=>setQ("")}
+      title="清除人員過濾"
+    >
+      清除過濾
+    </button>
+  )}
+  <button
+    className="rounded-lg border px-3 py-1.5 text-sm"
+    onClick={()=>{
+      const rows = [['at','person','delta','note']];
+      const list = personIdFilter ? logs.filter(l=>l.personId===personIdFilter) : logs;
+      list.forEach(l=>{
+        const p = people.find(x=>x.id===l.personId);
+        rows.push([l.at, p?.name||'(已刪)', l.delta, l.note||'']);
+      });
+      exportCSV('points_logs.csv', rows);
+    }}
+  >
+    匯出 CSV
+  </button>
+</div>
+
+            </div>
+
+            {/* ✅ 新增一筆異動：可輸入或下拉選擇 */}
+            <div className="grid sm:grid-cols-3 gap-2">
+              <div className="sm:col-span-1">
+                <input
+                  className="rounded-lg border px-3 py-2 w-full"
+                  list="people-list"
+                  placeholder="人員（可輸入或選擇）"
+                  value={logDraft.name}
+                  onChange={e=>setLogDraft(d=>({...d, name:e.target.value}))}
+                />
+                <datalist id="people-list">
+                  {people.map(p => <option key={p.id} value={p.name} />)}
+                </datalist>
+              </div>
+              <input className="rounded-lg border px-3 py-2" placeholder="異動（整數，可負）" value={logDraft.delta} onChange={e=>setLogDraft(d=>({...d,delta:e.target.value}))}/>
+              <input className="rounded-lg border px-3 py-2 sm:col-span-1" placeholder="備註（可空白）" value={logDraft.note} onChange={e=>setLogDraft(d=>({...d,note:e.target.value}))}/>
+              <div className="sm:col-span-3 flex justify-end">
+                <button onClick={addLog} className="rounded-lg bg-brand text-white px-4 py-2">新增異動</button>
+              </div>
+            </div>
+
+            {/* 表格 */}
+            <div className="rounded-xl border overflow-hidden">
+              <div className="grid grid-cols-12 text-sm bg-slate-50 dark:bg-slate-800 px-4 py-2">
+                <div className="col-span-3">時間</div>
+                <div className="col-span-3">人員</div>
+                <div className="col-span-2">異動</div>
+                <div className="col-span-3">備註</div>
+                <div className="col-span-1 text-right">操作</div>
+              </div>
+              {logs.length===0 && <div className="px-4 py-3 text-sm text-slate-500">尚無異動</div>}
+              {visibleLogs.map(l=>{
+
+                const p = people.find(x=>x.id===l.personId);
+                return (
+                  <div key={l.id} className="grid grid-cols-12 items-center px-4 py-2 border-t border-slate-200 dark:border-slate-700">
+                    <div className="col-span-3 text-xs">{l.at}</div>
+                    <div className="col-span-3">
+  {p
+    ? <button className="underline text-brand" onClick={()=>setQ(p.name)} title="只看此人">{p.name}</button>
+    : '(已刪)'}
+</div>
+
+                    <div className="col-span-2">{l.delta>0?`+${l.delta}`:l.delta}</div>
+                    <div className="col-span-3 truncate">{l.note||''}</div>
+                    <div className="col-span-1 flex justify-end">
+                      <button onClick={()=>revokeLog(l.id)} className="rounded-lg border px-2 py-1 text-xs">撤銷</button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* 人員列表 */}
+          <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden mt-3">
+            <div className="grid grid-cols-12 text-sm bg-slate-50 dark:bg-slate-800 px-4 py-2">
+              <div className="col-span-6">姓名/暱稱</div>
+              <div className="col-span-3">點數</div>
+              <div className="col-span-3 text-right">操作</div>
+            </div>
+            {sorted.length === 0 && (
+              <div className="px-4 py-3 text-sm text-slate-500">尚無人員點數資料</div>
+            )}
+            {sorted.map(p => (
+              <div key={p.id} className="grid grid-cols-12 items-center px-4 py-2 border-t border-slate-200 dark:border-slate-700">
+                <div className="col-span-6">
+  <button className="underline text-brand" onClick={()=>setQ(p.name)} title="只看此人">
+    {p.name}
+  </button>
+</div>
+
+                <div className="col-span-3">{p.points}</div>
+                <div className="col-span-3 flex justify-end gap-2">
+                  <button onClick={()=>adjust(p.id, +1)} className="rounded-lg border px-3 py-1.5">+1</button>
+                  <button onClick={()=>adjust(p.id, -1)} className="rounded-lg border px-3 py-1.5">-1</button>
+                  <button onClick={()=>removePerson(p.id)} className="rounded-lg bg-red-500 text-white px-3 py-1.5">刪除</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </Section>
+  );
+}
+
+function SettingsPanel({ data, setData, bg, setBg }) {
+  const DEFAULTS = DEFAULT_SETTINGS;
+  const s = data.settings || DEFAULTS;
+  const [draft, setDraft] = React.useState({ ...s });
+
+  const save = () => {
+    const a = Math.max(1, parseInt(draft.drawMaxPerRun, 10) || DEFAULTS.drawMaxPerRun);
+    const b = Math.max(1, parseInt(draft.drawPublicShowLimit, 10) || DEFAULTS.drawPublicShowLimit);
+    const c = Math.max(0, parseInt(draft.drawCooldownSec, 10) || DEFAULTS.drawCooldownSec);
+    setData({ ...data, settings: { drawMaxPerRun: a, drawPublicShowLimit: b, drawCooldownSec: c } });
+    alert("已更新系統設定");
+  };
+
+  const HasImageInput = typeof ImageInput === "function";
+
+  return (
+    <Section title="⚙️ 系統設定" subtitle="調整抽獎模擬器限制與顯示行為 + 背景圖片（僅管理員）">
+      {/* 抽獎模擬器參數 */}
+      <div className="grid sm:grid-cols-3 gap-3">
+        <div className="grid gap-1">
+          <label className="text-sm text-slate-500">抽獎單次名額上限</label>
+          <input
+            className="rounded-lg border px-3 py-2"
+            type="number" min="1"
+            value={draft.drawMaxPerRun}
+            onChange={e=>setDraft(d=>({ ...d, drawMaxPerRun: e.target.value }))}
+          />
+        </div>
+        <div className="grid gap-1">
+          <label className="text-sm text-slate-500">公開結果顯示筆數上限</label>
+          <input
+            className="rounded-lg border px-3 py-2"
+            type="number" min="1"
+            value={draft.drawPublicShowLimit}
+            onChange={e=>setDraft(d=>({ ...d, drawPublicShowLimit: e.target.value }))}
+          />
+        </div>
+        <div className="grid gap-1">
+          <label className="text-sm text-slate-500">模擬重跑冷卻（秒）</label>
+          <input
+            className="rounded-lg border px-3 py-2"
+            type="number" min="0"
+            value={draft.drawCooldownSec}
+            onChange={e=>setDraft(d=>({ ...d, drawCooldownSec: e.target.value }))}
+          />
+        </div>
+      </div>
+
+      <div className="flex justify-end mt-3">
+        <button onClick={save} className="rounded-lg bg-brand text-white px-4 py-2">儲存抽獎設定</button>
+      </div>
+
+      {/* 分隔線 */}
+      <div className="my-6 border-t border-slate-200 dark:border-slate-700" />
+
+      {/* 背景圖片設定（主畫面 + 漢堡選單） */}
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* 主畫面背景 */}
+        <div>
+          <h3 className="text-base font-semibold mb-3">🖼 主畫面背景</h3>
+
+          <div className="grid gap-2">
+            <div>
+              {HasImageInput ? (
+                <ImageInput label="背景圖片" value={bg.url} onChange={v=>setBg({ ...bg, url: v })} />
+              ) : (
+                <input
+                  className="rounded-lg border px-3 py-2 w-full"
+                  placeholder="圖片網址或 base64"
+                  value={bg.url}
+                  onChange={e=>setBg({ ...bg, url: e.target.value })}
+                />
+              )}
+            </div>
+
+            <label className="block text-sm mt-2">亮度：{bg.brightness.toFixed(2)}</label>
+            <input
+              type="range" min="0.6" max="1.4" step="0.02"
+              value={bg.brightness}
+              onChange={e=>setBg({ ...bg, brightness: parseFloat(e.target.value) })}
+            />
+
+            <label className="block text-sm mt-2">模糊：{bg.blur}px</label>
+            <input
+              type="range" min="0" max="20" step="1"
+              value={bg.blur}
+              onChange={e=>setBg({ ...bg, blur: parseInt(e.target.value,10) })}
+            />
+
+            <label className="block text-sm mt-2">透明度：{Math.round(bg.opacity*100)}%</label>
+            <input
+              type="range" min="0" max="1" step="0.05"
+              value={bg.opacity}
+              onChange={e=>setBg({ ...bg, opacity: parseFloat(e.target.value) })}
+            />
+
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              <div>
+                <label className="block text-sm mb-1">位置</label>
+                <select
+                  className="rounded-lg border px-3 py-2 w-full"
+                  value={bg.pos}
+                  onChange={e=>setBg({ ...bg, pos: e.target.value })}
+                >
+                  <option value="center">置中</option>
+                  <option value="top">置頂</option>
+                  <option value="bottom">置底</option>
+                  <option value="left">置左</option>
+                  <option value="right">置右</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm mb-1">尺寸</label>
+                <select
+                  className="rounded-lg border px-3 py-2 w-full"
+                  value={bg.size}
+                  onChange={e=>setBg({ ...bg, size: e.target.value })}
+                >
+                  <option value="cover">cover（滿版）</option>
+                  <option value="contain">contain（等比完整）</option>
+                  <option value="auto">auto</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="mt-2">
+              <label className="block text-sm mb-1">色彩覆蓋（Tint，例：rgba(255,255,255,0.2)）</label>
+              <input
+                className="rounded-lg border px-3 py-2 w-full"
+                placeholder="rgba(…)"
+                value={bg.tint}
+                onChange={e=>setBg({ ...bg, tint: e.target.value })}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* 漢堡選單背景 */}
+        <div>
+          <h3 className="text-base font-semibold mb-3">📂 漢堡選單背景</h3>
+
+          <label className="inline-flex items-center gap-2 text-sm mb-3">
+            <input
+              type="checkbox"
+              checked={!!bg.menuUseMain}
+              onChange={e=>setBg({ ...bg, menuUseMain: e.target.checked })}
+            />
+            沿用主畫面背景（勾選後，下列選單專屬設定會被忽略）
+          </label>
+
+          {!bg.menuUseMain && (
+            <div className="grid gap-2">
+              <div>
+                {HasImageInput ? (
+                  <ImageInput label="選單背景圖片" value={bg.menuUrl} onChange={v=>setBg({ ...bg, menuUrl: v })} />
+                ) : (
+                  <input
+                    className="rounded-lg border px-3 py-2 w-full"
+                    placeholder="圖片網址或 base64"
+                    value={bg.menuUrl}
+                    onChange={e=>setBg({ ...bg, menuUrl: e.target.value })}
+                  />
+                )}
+              </div>
+
+              <label className="block text-sm mt-2">亮度：{bg.menuBrightness.toFixed(2)}</label>
+              <input
+                type="range" min="0.6" max="1.4" step="0.02"
+                value={bg.menuBrightness}
+                onChange={e=>setBg({ ...bg, menuBrightness: parseFloat(e.target.value) })}
+              />
+
+              <label className="block text-sm mt-2">模糊：{bg.menuBlur}px</label>
+              <input
+                type="range" min="0" max="20" step="1"
+                value={bg.menuBlur}
+                onChange={e=>setBg({ ...bg, menuBlur: parseInt(e.target.value,10) })}
+              />
+
+              <label className="block text-sm mt-2">透明度：{Math.round(bg.menuOpacity*100)}%</label>
+              <input
+                type="range" min="0" max="1" step="0.05"
+                value={bg.menuOpacity}
+                onChange={e=>setBg({ ...bg, menuOpacity: parseFloat(e.target.value) })}
+              />
+
+              <div className="grid grid-cols-2 gap-2 mt-2">
+                <div>
+                  <label className="block text-sm mb-1">位置</label>
+                  <select
+                    className="rounded-lg border px-3 py-2 w-full"
+                    value={bg.menuPos}
+                    onChange={e=>setBg({ ...bg, menuPos: e.target.value })}
+                  >
+                    <option value="center">置中</option>
+                    <option value="top">置頂</option>
+                    <option value="bottom">置底</option>
+                    <option value="left">置左</option>
+                    <option value="right">置右</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm mb-1">尺寸</label>
+                  <select
+                    className="rounded-lg border px-3 py-2 w-full"
+                    value={bg.menuSize}
+                    onChange={e=>setBg({ ...bg, menuSize: e.target.value })}
+                  >
+                    <option value="cover">cover（滿版）</option>
+                    <option value="contain">contain（等比完整）</option>
+                    <option value="auto">auto</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="mt-2">
+                <label className="block text-sm mb-1">色彩覆蓋（Tint）</label>
+                <input
+                  className="rounded-lg border px-3 py-2 w-full"
+                  placeholder="rgba(…)"
+                  value={bg.menuTint}
+                  onChange={e=>setBg({ ...bg, menuTint: e.target.value })}
+                />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* 快速風格（可選） */}
+      <div className="mt-6 flex flex-wrap gap-2">
+        <button
+          onClick={()=>setBg({
+            ...bg,
+            tint:"rgba(255,255,255,0.20)", brightness:1.0, blur:2, opacity:1,
+            menuUseMain:true
+          })}
+          className="rounded-lg border px-3 py-1.5 text-sm"
+        >清爽</button>
+        <button
+          onClick={()=>setBg({
+            ...bg,
+            tint:"rgba(255,255,255,0.35)", brightness:0.95, blur:6, opacity:1,
+            menuUseMain:true
+          })}
+          className="rounded-lg border px-3 py-1.5 text-sm"
+        >柔霧</button>
+        <button
+          onClick={()=>setBg({
+            ...bg,
+            tint:"rgba(0,0,0,0.35)", brightness:1.1, blur:0, opacity:1,
+            menuUseMain:true
+          })}
+          className="rounded-lg border px-3 py-1.5 text-sm"
+        >暗底</button>
+        <button
+          onClick={()=>setBg({
+            url:"", tint:"rgba(255,255,255,0.0)", brightness:1, blur:0, opacity:1,
+            size:"cover", pos:"center",
+            menuUseMain:true, menuUrl:"", menuTint:"rgba(255,255,255,0.0)",
+            menuBrightness:1, menuBlur:0, menuOpacity:1, menuSize:"cover", menuPos:"center"
+          })}
+          className="rounded-lg border px-3 py-1.5 text-sm"
+        >清除背景</button>
+      </div>
+    </Section>
+  );
+}
+
+function SystemSettings({ data, setData, bg, setBg, admins, setAdmins, currentAdmin, setCurrentAdmin }) {
+  return (
+    <Section title="⚙️ 系統設置" subtitle="集中管理所有設定項目。">
+      {/* 你原本使用的 SettingsPanel 完整搬到這裡呈現 */}
+      <SettingsPanel data={data} setData={setData} bg={bg} setBg={setBg} />
+
+{/* === 管理者清單（本地）=== */}
+<Section id="admin-list-panel" title="👤 管理者清單" subtitle="新增／刪除／改名／改密碼（資料儲存在本機）。">
+  <div className="grid gap-3">
+    {/* 列表 */}
+    <div className="rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+      <table className="w-full text-sm">
+        <thead className="bg-slate-50 dark:bg-slate-800/50">
+          <tr>
+            <th className="text-left px-3 py-2">名稱</th>
+            <th className="text-left px-3 py-2">密碼狀態</th>
+            <th className="text-right px-3 py-2">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {admins.map((a, idx)=>(
+            <tr key={idx} className="border-t border-slate-200 dark:border-slate-700">
+              <td className="px-3 py-2">{a.name}</td>
+              <td className="px-3 py-2">{a.passwordHash ? '已設定' : '尚未設定'}</td>
+              <td className="px-3 py-2">
+                <div className="flex justify-end gap-2">
+                  <button
+                    className="rounded-lg border px-2 py-1"
+                    onClick={async ()=>{
+                      const newName = prompt('輸入新名稱', a.name) || '';
+                      const trimmed = newName.trim();
+                      if(!trimmed){ alert('名稱不可為空'); return; }
+                      if(trimmed !== a.name && admins.some(x=>x.name === trimmed)){
+                        alert('名稱已存在'); return;
+                      }
+                      const next = admins.map(x => x.name === a.name ? ({ ...x, name: trimmed }) : x);
+                      setAdmins(next);
+                      if(currentAdmin === a.name){ setCurrentAdmin(trimmed); }
+                      alert('名稱已更新');
+                    }}
+                  >改名</button>
+
+                  <button
+                    className="rounded-lg border px-2 py-1"
+                    onClick={async ()=>{
+                      const pwd = prompt('輸入新密碼（至少 4 碼）') || '';
+                      if(pwd.length < 4){ alert('密碼太短'); return; }
+                      const hash = await hashTextSHA256(pwd);
+                      const next = admins.map(x => x.name === a.name ? ({ ...x, passwordHash: hash }) : x);
+                      setAdmins(next);
+                      alert('密碼已更新');
+                    }}
+                  >改密碼</button>
+
+                  <button
+                    className="rounded-lg border px-2 py-1"
+                    onClick={()=>{
+                      if(!confirm(`確定要刪除管理者「${a.name}」？`)) return;
+                      const next = admins.filter(x => x.name !== a.name);
+                      setAdmins(next);
+                      if(currentAdmin === a.name){ setCurrentAdmin(''); setAdminMode(false); }
+                      alert('已刪除');
+                    }}
+                  >刪除</button>
+                </div>
+              </td>
+            </tr>
+          ))}
+          {admins.length === 0 && (
+            <tr className="border-t border-slate-200 dark:border-slate-700">
+              <td className="px-3 py-6 text-center text-slate-500" colSpan={3}>目前沒有管理者</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+
+    {/* 新增 */}
+    <div className="flex gap-2">
+      <button
+        className="rounded-lg border px-3 py-1.5"
+        onClick={async ()=>{
+          const name = prompt('輸入新管理者名稱') || '';
+          const n = name.trim();
+          if(!n){ alert('名稱不可為空'); return; }
+          if(admins.some(a => a.name === n)){ alert('名稱已存在'); return; }
+          const pwd = prompt('設定密碼（至少 4 碼）') || '';
+          if(pwd.length < 4){ alert('密碼太短'); return; }
+          const hash = await hashTextSHA256(pwd);
+          setAdmins([...admins, { name: n, passwordHash: hash }]);
+          alert('已新增管理者');
+        }}
+      >新增管理者</button>
+    </div>
+  </div>
+</Section>
+     
+ {/* 如未來要擴充更多設定，可在此繼續分段 */}
+      {/* 例：網站資訊 / 權限 / 備份工具 / 主題風格 等 */}
+    </Section>
+  );
+}
+
+function ImageInput({ label="圖片", value="", onChange }) {
+  const [mode, setMode] = React.useState(value && /^https?:\/\//i.test(value) ? 'url' : (value ? 'data' : 'url'));
+  const fileRef = React.useRef(null);
+
+  const pickFile = ()=> fileRef.current?.click();
+  const onFile = async (f)=>{
+    if(!f) return;
+    const reader = new FileReader();
+    reader.onload = (e)=> onChange?.(String(e.target?.result||""));
+    reader.readAsDataURL(f);
+  };
+
+  return (
+    <div className="grid gap-1.5">
+      <label className="text-sm text-slate-600 dark:text-slate-300">{label}</label>
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={()=>setMode('url')}
+          className={`px-2 py-1 rounded border text-xs ${mode==='url'?'bg-brand text-white border-brand':'border-slate-300 dark:border-slate-600'}`}
+        >網址</button>
+        <button
+          type="button"
+          onClick={()=>setMode('data')}
+          className={`px-2 py-1 rounded border text-xs ${mode==='data'?'bg-brand text-white border-brand':'border-slate-300 dark:border-slate-600'}`}
+        >本機檔案</button>
+      </div>
+
+      {mode==='url' ? (
+        <input
+          className="rounded-lg border px-3 py-2"
+          value={value}
+          onChange={e=>onChange?.(e.target.value)}
+          placeholder="https://... 或直接貼上網址"
+        />
+      ) : (
+        <>
+          <div className="flex items-center gap-2">
+            <button type="button" onClick={pickFile} className="rounded-lg border px-3 py-2 text-sm">選擇檔案</button>
+            <span className="text-xs text-slate-500">（將讀為 base64，離線也可顯示）</span>
+          </div>
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={e=>onFile(e.target.files?.[0]||null)}
+          />
+        </>
+      )}
+
+      {value && (
+        <div className="mt-2">
+          <img src={value} alt="" className="max-h-40 rounded border bg-slate-50 dark:bg-slate-800 object-contain"/>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+    // —— Render ——
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
