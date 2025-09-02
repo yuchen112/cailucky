@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-02T12:43:15.665Z"
+    "exportedAt": "2025-09-02T13:28:42.555Z"
   },
   "data": {
     "homepage": {
@@ -461,17 +461,17 @@
   },
   "bg": {
     "url": "assets/bg/d45032c7-b11d-41e7-88dc-65f2eec7eeb5.jpg",
-    "tint": "rgba(255,255,255,0.20)",
-    "brightness": 1.28,
+    "tint": "rgba(255,255,255,0.0)",
+    "brightness": 1.1,
     "blur": 4,
-    "opacity": 1,
+    "opacity": 0.65,
     "size": "cover",
     "pos": "center",
     "menuUseMain": false,
     "menuUrl": "assets/bg/LINE_NOTE_250725_1.jpg",
     "menuTint": "rgba(255,255,255,0.0)",
     "menuBrightness": 1,
-    "menuBlur": 6,
+    "menuBlur": 5,
     "menuOpacity": 0.4,
     "menuSize": "cover",
     "menuPos": "center"
