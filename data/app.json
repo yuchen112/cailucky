@@ -1,8 +1,8 @@
 {
   "_meta": {
     "app": "kjs",
-    "version": 1,
-    "exportedAt": "2025-09-02T06:55:22.985Z"
+    "version": 2,
+    "exportedAt": "2025-09-02T12:43:15.665Z"
   },
   "data": {
     "homepage": {
@@ -94,7 +94,7 @@
         "winnerCount": 3,
         "totalParticipants": 14,
         "youtube": "https://youtu.be/Y2NdHDfuqY0",
-        "status": "處理中",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -146,7 +146,7 @@
         "winnerCount": 1,
         "totalParticipants": 13,
         "youtube": "https://youtu.be/9n7y6vSsvJQ",
-        "status": "處理中",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -185,7 +185,7 @@
         "winnerCount": 9,
         "totalParticipants": 9,
         "youtube": "https://youtu.be/29pC0Zg96dI",
-        "status": "✅ 已寄出",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -200,7 +200,7 @@
         "winnerCount": 3,
         "totalParticipants": 21,
         "youtube": "https://youtu.be/MLXNNsrZ9QU",
-        "status": "✅ 已寄出",
+        "status": "已寄出",
         "note": "@光 尚未回覆/重新抽獎 "
       },
       {
@@ -213,7 +213,7 @@
         "winnerCount": 1,
         "totalParticipants": 8,
         "youtube": "https://youtu.be/x-lRM2jse1Y",
-        "status": "✅ 已寄出",
+        "status": "已寄出",
         "note": "第一位得獎人@LCY 退群，進行重抽"
       },
       {
@@ -226,7 +226,7 @@
         "winnerCount": 1,
         "totalParticipants": 16,
         "youtube": "https://youtu.be/TBanV1Y8w5M",
-        "status": "✅ 已寄出",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -239,7 +239,7 @@
         "winnerCount": 1,
         "totalParticipants": 16,
         "youtube": "https://youtu.be/8ASAKKPfC2A",
-        "status": "✅ 已寄出",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -253,7 +253,7 @@
         "winnerCount": 2,
         "totalParticipants": 10,
         "youtube": "https://youtu.be/pAKgpGsOVBw",
-        "status": "✅ 已寄出",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -266,7 +266,7 @@
         "winnerCount": 1,
         "totalParticipants": 12,
         "youtube": "https://www.youtube.com/watch?v=Osvz8T7CtKg",
-        "status": "✅ 已寄出",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -281,7 +281,7 @@
         "winnerCount": 3,
         "totalParticipants": 3,
         "youtube": "https://www.youtube.com/shorts/7sl3MNxcsig",
-        "status": "✅ 已寄出",
+        "status": "已寄出",
         "note": "@LCY 未領取/重新抽獎"
       },
       {
@@ -294,7 +294,7 @@
         "winnerCount": 1,
         "totalParticipants": 5,
         "youtube": "https://www.youtube.com/shorts/M9n8CB1dGME",
-        "status": "✅ 已寄出",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -307,7 +307,7 @@
         "winnerCount": 1,
         "totalParticipants": 1,
         "youtube": "",
-        "status": "✅ 已寄出",
+        "status": "已寄出",
         "note": "7/30無人參與，8/15開獎1人獨得"
       }
     ],
@@ -454,5 +454,26 @@
       "name": "andy13579222@gmail.com",
       "passwordHash": "177bc8c2cbc970dca9dbdd60f8fdb85cfce97c9701b022891135e1129fb8f237"
     }
-  ]
+  ],
+  "images": {
+    "__kind": "images.v1",
+    "data": {}
+  },
+  "bg": {
+    "url": "assets/bg/d45032c7-b11d-41e7-88dc-65f2eec7eeb5.jpg",
+    "tint": "rgba(255,255,255,0.20)",
+    "brightness": 1.28,
+    "blur": 4,
+    "opacity": 1,
+    "size": "cover",
+    "pos": "center",
+    "menuUseMain": false,
+    "menuUrl": "assets/bg/LINE_NOTE_250725_1.jpg",
+    "menuTint": "rgba(255,255,255,0.0)",
+    "menuBrightness": 1,
+    "menuBlur": 6,
+    "menuOpacity": 0.4,
+    "menuSize": "cover",
+    "menuPos": "center"
+  }
 }
