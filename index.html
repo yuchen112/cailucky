@@ -438,6 +438,23 @@ function Collapse({ header, children, defaultOpen=false, force=null }) {
     // —— 主 App（Part 1：骨架/導覽/雙模式/匯入匯出，未含編輯器） ——
     function App(){
       const [data, setData] = useLocalState(LS.data, EMPTY);
+
+// 進站時自動抓 ./data/app.json，覆蓋本機資料，確保大家看到最新
+React.useEffect(() => {
+  (async () => {
+    try {
+      const res = await fetch('./data/app.json?v=' + Date.now(), { cache: 'no-store' });
+      const obj = await res.json();
+      // 讓歷史由新到舊（你的匯入也有做同樣的事）
+      if (Array.isArray(obj.history)) obj.history = sortHistoryDesc(obj.history);
+      setData(obj);
+    } catch (e) {
+      console.error('讀取 data/app.json 失敗：', e);
+    }
+  })();
+}, []);
+
+
 // === PointsPanel 展開狀態（預設展開，會記住使用者選擇） ===
 const [pointsOpen, setPointsOpen] = useLocalState('kjs_points_open', true);
       
@@ -3744,5 +3761,6 @@ function ImageInput({ label="圖片", value="", onChange }) {
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<App />);
   </script>
+
 </body>
 </html>
