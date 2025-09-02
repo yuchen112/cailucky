@@ -4120,33 +4120,33 @@ function ShopImageQuickset({ data, setData, admin }) {
     })));
   }, [items]);
 
-  // 正規化：去頭尾引號與空白
-  const normPath = (s) => String(s || '').trim().replace(/^"+|"+$/g, '');
+  // 正規化：去頭尾引號與空白（※ 只提供給「檔名自動補資料夾」那顆按鈕用；saveAll 不用它）
+const normPath = (s) => String(s || '').trim().replace(/^"+|"+$/g, '');
 
-  // 儲存：把草稿寫回 data.shop.items[i].image
+// 儲存：把草稿寫回 data.shop.items[i].image（★ 原樣保存，不加工） 
 const saveAll = () => {
   const next = items.map((it, i) => {
-    const image = normPath(drafts[i]?.image || '');
-    return { ...it, image };          // ← 修正點
+    const image = drafts[i]?.image ?? '';   // 不做任何處理，原樣字串
+    return { ...it, image };                // ← 修正 ...it
   });
   setData({
-    ...data,                          // ← 修正點
-    shop: { ...(data.shop || {}), items: next }  // ← 修正點
+    ...data,                                // ← 修正 ...data
+    shop: { ...(data.shop || {}), items: next }  // ← 修正 ...(data.shop || {})
   });
   alert('已儲存圖片路徑到商品。之後「匯出」即可把路徑帶出。');
 };
 
+// 若只貼「檔名.jpg」沒有資料夾，自動補 ./assets/products/（★ 僅在你按這顆鈕時才會變動）
+const applyBaseToEmpty = () => {
+  const base = './assets/products/';
+  setDrafts(ds => ds.map(d => {
+    const v = normPath(d.image);
+    if (!v) return d;
+    if (!v.includes('/')) return { ...d, image: base + v }; // ← 修正 ...d
+    return d;
+  }));
+};
 
-  // 若只貼「檔名.jpg」沒有資料夾，自動補 ./assets/products/
-  const applyBaseToEmpty = () => {
-    const base = './assets/products/';
-    setDrafts(ds => ds.map(d => {
-      const v = normPath(d.image);
-      if (!v) return d;
-      if (!v.includes('/')) return { ...d, image: base + v };
-      return d;
-    }));
-  };
 
   return (
     <section
