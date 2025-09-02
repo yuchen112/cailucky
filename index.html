@@ -91,6 +91,19 @@ body::before{
 .menu-pane > *{ position: relative; z-index:1; }
 
 </style>
+
+<!-- [IMGIO CSS START] -->
+<style>
+  /* 基本：當作容器調整時會用到（背景圖等） */
+  [data-img-key]{
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+  /* 若你要用透明度/偏移/縮放等，這裡提供通用 class（JS 會直接改 style，不會動你 class） */
+</style>
+<!-- [IMGIO CSS END] -->
+
 </head>
 <body class="bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-100">
   <div id="root" class="min-h-screen"></div>
@@ -132,7 +145,37 @@ const HISTORY_STATUS_STYLE = {
   "放棄領獎": { bg: "bg-slate-200/70 dark:bg-slate-300/15",     text: "text-slate-700 dark:text-slate-300",     ring:"ring-slate-400/20" },
 };
 
-// 小元件：狀態膠囊（含 emoji）
+// === 列頭：日期 / 獎品名稱(截斷) / 狀態（靠右不換行） ===
+function HistoryHeaderRow({ rec }) {
+  const date = formatDateYMD(rec?.date || "") || "—";
+  const title = rec?.title || "（未命名）";
+  const status = rec?.status || "";
+
+  return (
+    <div className="grid grid-cols-[94px_1fr_auto] sm:grid-cols-[110px_1fr_auto] items-center gap-2 sm:gap-3 w-full">
+      {/* 日期：等寬字體，固定寬度 */}
+      <span className="font-mono text-[13px] text-slate-500">{date}</span>
+
+      {/* 名稱：單行截斷，手機限制字數更緊 */}
+      <div className="flex items-center min-w-0">
+        <span className="mr-2" aria-hidden="true">🎁</span>
+        <span
+          className="truncate max-w-[18ch] sm:max-w-[48ch] text-[15px]"
+          title={title}
+        >
+          {title}
+        </span>
+      </div>
+
+      {/* 狀態：固定在右側、不可縮小 */}
+      <div className="shrink-0">
+        <StatusTag value={status} />
+      </div>
+    </div>
+  );
+}
+
+// 小元件：狀態膠囊（含 emoji，統一規格）
 function StatusTag({ value }) {
   const v = String(value || "").trim();
   if (!v) return null;
@@ -141,7 +184,7 @@ function StatusTag({ value }) {
   return (
     <span
       className={[
-        "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs",
+        "inline-flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-full text-xs min-w-[80px] text-center",
         "border border-transparent ring-1", style.ring, style.bg, style.text
       ].join(" ")}
       title={`狀態：${v}`}
@@ -307,6 +350,31 @@ function sortHistoryDesc(arr=[]) {
   return [...arr].sort((a,b)=> safe(b) - safe(a));
 }
 
+
+/* === 統一日期顯示：把 YYYY-MM-DD → YYYY/MM/DD（用 UTC 免時區偏差） === */
+function formatDateYMD(ymd=""){
+  const ts = parseISODate(ymd);        // 你檔案裡已存在的函式:contentReference[oaicite:2]{index=2}
+  if (Number.isNaN(ts)) return "";
+  const d = new Date(ts);
+  const y = d.getUTCFullYear();
+  const m = String(d.getUTCMonth()+1).padStart(2, '0');
+  const day = String(d.getUTCDate()).padStart(2, '0');
+  return `${y}/${m}/${day}`;
+}
+
+/* === 依歷史「狀態」回傳一個柔和底色（可選用） === */
+function rowClassByStatus(status=""){
+  switch(String(status).trim()){
+    case "已寄出":   return "bg-emerald-50/60 dark:bg-emerald-300/10";
+    case "處理中":   return "bg-sky-50/60 dark:bg-sky-300/10";
+    case "未回覆":   return "bg-rose-50/60 dark:bg-rose-300/10";
+    case "再寄送中": return "bg-indigo-50/60 dark:bg-indigo-300/10";
+    case "待寄送":   return "bg-amber-50/60 dark:bg-amber-300/10";
+    case "放棄領獎": return "bg-slate-50/60 dark:bg-slate-300/10";
+    default:         return "";
+  }
+}
+
 // === Calendar helpers for History ===
 function ymdStringUTC(y, mZeroBased, d) {
   const y4 = String(y).padStart(4, '0');
@@ -328,6 +396,11 @@ function buildMonthDaysUTC(y, mZeroBased) {
   }
   return days;
 }
+
+
+
+
+
 
 // === Utils: 抽獎用（安全隨機 / 可選種子） ===
 // 將字串變成 32-bit 整數種子
@@ -407,22 +480,68 @@ function buildAnnouncementText(p){
   ].filter(Boolean).join("\n");
 }
 
-// === Collapse（收合/展開）— 支援外部控制 force: 'open' | 'close' | null ===
-function Collapse({ header, children, defaultOpen=false, force=null }) {
+// === Collapse（強化版，向下相容）===
+// 保留原：header, children, defaultOpen=false, force=null
+// 新增：group（同一群手風琴 id），uid（該項唯一 id）
+function Collapse({ header, children, defaultOpen=false, force=null, group=null, uid=null }) {
   const { useState, useRef, useEffect } = React;
   const [open, setOpen] = useState(!!defaultOpen);
   const ref = useRef(null);
+  const idRef = useRef(uid || Math.random().toString(36).slice(2,10));
+  const grp = group || null;
 
-  useEffect(()=>{ if (force==='open') setOpen(true); else if(force==='close') setOpen(false); },[force]);
-  useEffect(()=>{ if(ref.current){ ref.current.style.height = open ? ref.current.scrollHeight+'px' : '0px'; }},[open,children]);
+  // force 覆寫（配合你的「全部展開／收合」）
+  useEffect(() => {
+    if (force === 'open') setOpen(true);
+    else if (force === 'close') setOpen(false);
+  }, [force]);
+
+  // 高度動畫維持原有行為
+  useEffect(() => {
+    if (!ref.current) return;
+    ref.current.style.height = open ? ref.current.scrollHeight + 'px' : '0px';
+  }, [open, children]);
+
+  // 🔑 手風琴：監聽同群組的「有人打開」事件，若不是自己就關閉
+  useEffect(() => {
+    if (!grp) return;
+    const onPeerOpen = (e) => {
+      const { group, uid } = e.detail || {};
+      if (group === grp && uid !== idRef.current && force == null) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('kjs:accordionOpen', onPeerOpen);
+    return () => document.removeEventListener('kjs:accordionOpen', onPeerOpen);
+  }, [grp, force]);
+
+  // 點擊：切換自己；若切到開啟，廣播關同群其他
+  const handleToggle = () => {
+    // 若有 force（全部展開/收合中），先忽略使用者點擊
+    if (force === 'open' || force === 'close') return;
+
+    setOpen(prev => {
+      const next = !prev;
+      if (next && grp) {
+        document.dispatchEvent(new CustomEvent('kjs:accordionOpen', {
+          detail: { group: grp, uid: idRef.current }
+        }));
+      }
+      return next;
+    });
+  };
 
   return (
     <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden bg-white/70 dark:bg-slate-900/40">
       <button
         className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition"
-        onClick={()=>setOpen(o=>!o)}
+        onClick={handleToggle}
+        aria-expanded={open ? 'true' : 'false'}
+        type="button"
       >
-        <div className="font-medium">{header}</div>
+        <div className="font-medium">
+    {typeof header === 'function' ? header(open) : header}
+  </div>
         <svg className={"w-4 h-4 transition " + (open ? "rotate-180" : "")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M6 9l6 6 6-6"/>
         </svg>
@@ -434,6 +553,30 @@ function Collapse({ header, children, defaultOpen=false, force=null }) {
   );
 }
 
+/***************************************************
+ * useAccordionController：手風琴控制（一次只開一個）
+ * 也支援「全部展開 / 全部收合」覆寫
+ ***************************************************/
+function useAccordionController() {
+  const [activeId, setActiveId] = React.useState(null); // 正在展開的 id
+  const [force, setForce] = React.useState(null);       // 'open' | 'close' | null
+
+  const openAll  = () => setForce('open');
+  const closeAll = () => { setForce('close'); setActiveId(null); };
+  const clearForce = () => setForce(null);
+
+  // 綁到每個 Collapse 用
+  const bind = (id) => ({
+    isOpen: force === 'open' ? true : force === 'close' ? false : activeId === id,
+    force,
+    onToggle: () => {
+      if (force) setForce(null); // 只要手動切換，回歸手風琴模式
+      setActiveId(prev => (prev === id ? null : id));
+    }
+  });
+
+  return { activeId, setActiveId, force, setForce, openAll, closeAll, clearForce, bind };
+}
 
     // —— 主 App（Part 1：骨架/導覽/雙模式/匯入匯出，未含編輯器） ——
     function App(){
@@ -473,7 +616,7 @@ React.useEffect(() => {
 
 
 // === PointsPanel 展開狀態（預設展開，會記住使用者選擇） ===
-const [pointsOpen, setPointsOpen] = useLocalState('kjs_points_open', true);
+const [pointsOpen, setPointsOpen] = useLocalState('kjs_points_open', false);
       
 const [tab, setTab] = useState('home'); // home | history | pending | ongoing | shop | others
       const [menuOpen, setMenuOpen] = useState(false);
@@ -726,15 +869,20 @@ useEffect(()=>{
 // 匯入時同時支援「新格式（含 data/admins）」與「舊格式（只有 data）」。
 
 const exportJSON = () => {
-  // 打包完整資料（含管理員名單的 SHA-256 雜湊）
+  // 取出目前所有圖片路徑與調整（ImageIO 會回傳字串 JSON）
+  const imagesStr = window.ImageIO ? window.ImageIO.exportImagesJSON() : null;
+  const images = imagesStr ? JSON.parse(imagesStr) : null;
+
   const full = {
     _meta: {
       app: 'kjs',
-      version: 1,
+      version: 2, // 升級一下版本號，方便之後辨識
       exportedAt: new Date().toISOString()
     },
-    data,     // 站內資料（history / pending / ongoing / shop / others / settings ...）
-    admins    // 管理員名單 [{ name, passwordHash }]
+    data,            // 站內資料
+    admins,          // 管理員名單（hash）
+    images,          // ← 新增：全站圖片路徑與調整（images.v1 結構）
+    bg               // ← 新增：背景設定（主畫面 / 漢堡選單）
   };
 
   const blob = new Blob([JSON.stringify(full, null, 2)], { type: 'application/json' });
@@ -764,7 +912,6 @@ const importJSON = (file) => {
     try {
       const obj = JSON.parse(String(e.target.result || '{}'));
 
-      // 判斷是否為新格式
       const looksNew = obj && typeof obj === 'object' && ('data' in obj || 'admins' in obj);
 
       if (looksNew) {
@@ -772,13 +919,22 @@ const importJSON = (file) => {
         const nextAdmins = Array.isArray(obj.admins) ? obj.admins : null;
 
         if (Array.isArray(nextData.history)) nextData.history = sortHistoryDesc(nextData.history);
-
         setData(nextData);
         if (nextAdmins) setAdmins(nextAdmins);
 
+        // ★ 新增：若包了 images（images.v1 結構），呼叫 ImageIO 立即套用
+        if (obj.images && window.ImageIO && typeof window.ImageIO.importImagesJSON === 'function') {
+          try { window.ImageIO.importImagesJSON(obj.images); } catch {}
+        }
+
+        // ★ 新增：若包了 bg（背景設定），直接寫回
+        if (obj.bg) {
+          try { setBg(obj.bg); } catch {}
+        }
+
         alert(`匯入完成${nextAdmins ? '（含管理員名單）' : ''}，歷史已自動排序`);
       } else {
-        // 舊格式
+        // 舊格式：只有 data
         const nextData = obj;
         if (Array.isArray(nextData.history)) nextData.history = sortHistoryDesc(nextData.history);
         setData(nextData);
@@ -1421,7 +1577,7 @@ function Home({ setTab, data, setData, admin }) {
   return (
     <Section title="主頁：開獎所" subtitle="首頁資訊濃縮版">
       {/* 1) 關於這個網頁（第一區） */}
-      <Collapse header="🧾 關於這個網頁（點我展開）" defaultOpen={true}>
+      <Collapse header="🧾 關於這個網頁（點我展開）" defaultOpen={false}>
         {!admin && <p className="text-sm whitespace-pre-wrap">{about}</p>}
         {admin && (
           <div className="grid gap-3">
@@ -1661,7 +1817,23 @@ const items = React.useMemo(()=>{
     if (historyPage > historyMaxPage) setHistoryPage(historyMaxPage);
   }, [historyPage, historyMaxPage, setHistoryPage]);
 
-  // 篩選或搜尋變化時回到第 1 頁
+// 統一日期顯示為 YYYY-MM-DD（也容忍 2025/9/2 這種）
+const fmtDate = React.useCallback((d) => {
+  if (!d) return "未填日期";
+  const m = String(d).trim().match(/^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})$|^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  // m 可能有兩種群組，整理成 y, mo, da
+  let y, mo, da;
+  if (m) {
+    y  = m[1]  || m[4];
+    mo = m[2]  || m[5];
+    da = m[3]  || m[6];
+    return `${y}-${String(+mo).padStart(2, '0')}-${String(+da).padStart(2, '0')}`;
+  }
+  // 非以上格式就不勉強，顯示「未填日期」
+  return "未填日期";
+}, []);
+ 
+ // 篩選或搜尋變化時回到第 1 頁
   React.useEffect(() => {
     setHistoryPage(1);
   }, [filterDate, query, setHistoryPage]);
@@ -1918,25 +2090,39 @@ const items = React.useMemo(()=>{
 
       {/* 全展/全收（僅對當頁有效） */}
       <div className="flex gap-2 justify-end mt-4">
-        <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('open')}>全部展開</button>
-        <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('close')}>全部收合</button>
+        <button
+  className="rounded-lg border px-3 py-1.5"
+  onClick={() => {
+    setBulk('open');
+    setTimeout(() => setBulk(null), 0); // 重置，恢復單項可點擊
+  }}
+>
+  全部展開
+</button>
+
+<button
+  className="rounded-lg border px-3 py-1.5"
+  onClick={() => {
+    setBulk('close');
+    setTimeout(() => setBulk(null), 0); // 重置
+  }}
+>
+  全部收合
+</button>
+
       </div>
 
       {/* 清單（當頁資料） */}
       <div className="grid gap-4 mt-4">
         {historyPageItems.map(x => (
           <Collapse
-            key={x.id}
-            header={
-              <div className="flex items-center gap-3">
-                <span className="inline-flex items-center px-2 py-0.5 rounded border text-xs bg-white/70 dark:bg-slate-800/70">
-                  {x.date || "未填日期"}
-                </span>
-                <span className="text-sm font-medium truncate">{x.title || "未命名"}</span>
-              </div>
-            }
-            force={bulk}
-          >
+  key={x.id}
+  group="history"
+  uid={x.id}
+  force={bulk}  // ← 保留一個就好
+  header={(open) => <HistoryHeaderRow rec={x} />}
+>
+
             <div className="text-sm grid sm:grid-cols-2 gap-x-6 gap-y-1">
               <div>抽出名額：{x.winnerCount ?? (x.winners?.length||0)}</div>
               <div>總參與人數：{x.totalParticipants ?? '-'}</div>
@@ -2220,8 +2406,26 @@ const pendingEndPage = Math.min(pendingMaxPage, pendingStartPage + pendingWindow
         <div className="flex gap-2 justify-end mt-4">
           {view === 'list' ? (
             <>
-              <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('open')}>全部展開</button>
-              <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('close')}>全部收合</button>
+              <button
+  className="rounded-lg border px-3 py-1.5"
+  onClick={() => {
+    setBulk('open');
+    setTimeout(() => setBulk(null), 0); // 重置，恢復單項可點擊
+  }}
+>
+  全部展開
+</button>
+
+<button
+  className="rounded-lg border px-3 py-1.5"
+  onClick={() => {
+    setBulk('close');
+    setTimeout(() => setBulk(null), 0); // 重置
+  }}
+>
+  全部收合
+</button>
+
               
             </>
           ) : (
@@ -2232,8 +2436,8 @@ const pendingEndPage = Math.min(pendingMaxPage, pendingStartPage + pendingWindow
 
 {/* 🔝 置頂批次開合（等待開獎） */}
 <StickyBulkToggles
-  onOpenAll={()=> setBulk('open')}
-  onCloseAll={()=> setBulk('close')}
+   onOpenAll={()=> { setBulk('open');  setTimeout(()=>setBulk(null), 0); }}
+  onCloseAll={()=> { setBulk('close'); setTimeout(()=>setBulk(null), 0); }}
 />
 
         {/* 依檢視模式切換容器網格；宮格模式固定展開 */}
@@ -2249,6 +2453,9 @@ const pendingEndPage = Math.min(pendingMaxPage, pendingStartPage + pendingWindow
   {pendingPageItems.map(x => (
     <Collapse
       key={x.id}
+ group="pending"        // ★ 新增：同分頁同值 → 一次只開一個
+  uid={x.id}             // ★ 新增：同群唯一 id
+  force={bulk}           // ★ 繼續支援「全部展開/收合」
             header={
   view === 'list' ? (
     /* 列表：只顯示 開獎日期 + 獎品名稱（不顯示圖片） */
@@ -2709,14 +2916,36 @@ const next = editingId ? base.map(x => x.id===editingId ? rec : x) : [rec, ...ba
       {items.length===0 && <EmptyCard text="目前沒有資料" admin={admin} />}
 
       <div className="flex gap-2 justify-end mt-4">
-        <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('open')}>全部展開</button>
-        <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('close')}>全部收合</button>
+        <button
+  className="rounded-lg border px-3 py-1.5"
+  onClick={() => {
+    setBulk('open');
+    setTimeout(() => setBulk(null), 0); // 重置，恢復單項可點擊
+  }}
+>
+  全部展開
+</button>
+
+<button
+  className="rounded-lg border px-3 py-1.5"
+  onClick={() => {
+    setBulk('close');
+    setTimeout(() => setBulk(null), 0); // 重置
+  }}
+>
+  全部收合
+</button>
+
         
       </div>
 
       <div className="grid gap-4 mt-4">
         {items.map((x)=> (
-          <Collapse key={x.id} header={`${x.title || "未命名活動"}`} force={bulk}>
+          <Collapse key={x.id} 
+ group="ongoing"        // ★ 新增
+  uid={x.id}             // ★ 新增
+  force={bulk}           // 你原本就有，留著
+header={`${x.title || "未命名活動"}`} force={bulk}>
             {x.image && <img src={x.image} alt="活動圖片" className="rounded-lg max-h-56 object-contain w-full bg-slate-50 dark:bg-slate-800 mb-2"/>}
             {x.link && <div className="text-sm mb-2">連結：<a className="underline text-brand" href={x.link} target="_blank" rel="noreferrer">{x.link}</a></div>}
             {x.desc && <div className="text-sm whitespace-pre-wrap mb-2">{x.desc}</div>}
@@ -2900,8 +3129,26 @@ function Shop({ data, admin, setData, query="" }) {
       <div className="flex gap-2 justify-end mt-4">
         {view === 'list' ? (
           <>
-            <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('open')}>全部展開</button>
-            <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('close')}>全部收合</button>
+            <button
+  className="rounded-lg border px-3 py-1.5"
+  onClick={() => {
+    setBulk('open');
+    setTimeout(() => setBulk(null), 0); // 重置，恢復單項可點擊
+  }}
+>
+  全部展開
+</button>
+
+<button
+  className="rounded-lg border px-3 py-1.5"
+  onClick={() => {
+    setBulk('close');
+    setTimeout(() => setBulk(null), 0); // 重置
+  }}
+>
+  全部收合
+</button>
+
           </>
         ) : (
           <span className="text-xs text-slate-500">（宮格檢視：點卡片才展開詳細）</span>
@@ -3074,15 +3321,40 @@ function Others({ data, admin, setData, query="" }) {
       {cards.length === 0 && <EmptyCard text="目前沒有卡片內容" admin={admin} />}
 
       <div className="flex gap-2 justify-end mt-4">
-        <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('open')}>全部展開</button>
-        <button className="rounded-lg border px-3 py-1.5" onClick={()=>setBulk('close')}>全部收合</button>
+        <button
+  className="rounded-lg border px-3 py-1.5"
+  onClick={() => {
+    setBulk('open');
+    setTimeout(() => setBulk(null), 0); // 重置，恢復單項可點擊
+  }}
+>
+  全部展開
+</button>
+
+<button
+  className="rounded-lg border px-3 py-1.5"
+  onClick={() => {
+    setBulk('close');
+    setTimeout(() => setBulk(null), 0); // 重置
+  }}
+>
+  全部收合
+</button>
+
         
       </div>
 
       <div className="grid gap-4 mt-4">
         {orderedCards.map((x)=> (
-          <Collapse key={x.id} header={`${x.title || "未命名卡片"}`} force={bulk}>
-            <div className="whitespace-pre-wrap text-sm">{x.content || "（無內容）"}</div>
+          <Collapse key={x.id} 
+group="others"         // ★ 新增
+  uid={x.id}             // ★ 新增
+  force={bulk}           // 你原本就有，留著
+header={`${x.title || "未命名卡片"}`} force={bulk}>
+            <div className="whitespace-pre-wrap text-sm max-h-60 overflow-auto">
+  {x.content || "（無內容）"}
+</div>
+
             <div className="mt-3 flex gap-2 justify-end">
               {admin && (<>
                 <button onClick={()=>move(x.id,'up')} className="rounded-lg border px-3 py-1.5">上移</button>
@@ -3852,14 +4124,18 @@ function ShopImageQuickset({ data, setData, admin }) {
   const normPath = (s) => String(s || '').trim().replace(/^"+|"+$/g, '');
 
   // 儲存：把草稿寫回 data.shop.items[i].image
-  const saveAll = () => {
-    const next = items.map((it, i) => {
-      const image = normPath(drafts[i]?.image || '');
-      return { ...it, image };
-    });
-    setData({ ...data, shop: { ...(data.shop || {}), items: next } });
-    alert('已儲存圖片路徑到商品。之後「匯出」即可把路徑帶出。');
-  };
+const saveAll = () => {
+  const next = items.map((it, i) => {
+    const image = normPath(drafts[i]?.image || '');
+    return { ...it, image };          // ← 修正點
+  });
+  setData({
+    ...data,                          // ← 修正點
+    shop: { ...(data.shop || {}), items: next }  // ← 修正點
+  });
+  alert('已儲存圖片路徑到商品。之後「匯出」即可把路徑帶出。');
+};
+
 
   // 若只貼「檔名.jpg」沒有資料夾，自動補 ./assets/products/
   const applyBaseToEmpty = () => {
@@ -3936,6 +4212,285 @@ function ShopImageQuickset({ data, setData, admin }) {
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<App />);
   </script>
+
+<!-- [IMGIO JS START] -->
+<script>
+(function(){
+  // —— 統一的圖片狀態（key -> { src, type, fit, opacity, offsetX, offsetY, scale, rotateDeg }）
+  // 注意：我們不會動你貼進來的 src 字串（絕不正規化、絕不補前綴）。
+  const imageState = new Map();
+
+  // 以 dataset 或 DOM 路徑取得穩定 key（沒有 data-img-key 也能運作）
+  function getStableKeyFor(el){
+    if(el.dataset && el.dataset.imgKey) return el.dataset.imgKey;
+    // 生成 DOM 路徑（避免重整後變動，盡量包含同層索引）
+    const parts=[];
+    let node=el;
+    while(node && node.nodeType===1 && node.tagName.toLowerCase()!=='html'){
+      const tag=node.tagName.toLowerCase();
+      const parent=node.parentElement;
+      let idx=0;
+      if(parent){
+        const siblings=[...parent.children].filter(c=>c.tagName===node.tagName);
+        idx=siblings.indexOf(node);
+      }
+      parts.unshift(`${tag}:nth-of-type(${idx+1})`);
+      node=parent;
+    }
+    return parts.join('>');
+  }
+
+  // 偵測元素是 <img> 還是容器背景
+  function detectType(el){
+    return el.tagName && el.tagName.toLowerCase()==='img' ? 'img' : 'bg';
+  }
+
+  // 套用狀態到元素
+  function applyToElement(el, state){
+    const type = detectType(el);
+    if(type==='img'){
+      if(state.src !== undefined) el.src = state.src; // 原樣字串
+      // 其他調整可用 style 來套
+      if(state.opacity!=null) el.style.opacity = String(state.opacity);
+      const tf = buildTransform(state);
+      if(tf) el.style.transform = tf;
+      // img 的 fit 可用 object-fit / object-position
+      if(state.fit) el.style.objectFit = state.fit; // 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
+      if(state.offsetX!=null || state.offsetY!=null){
+        const ox = state.offsetX ?? 0, oy = state.offsetY ?? 0;
+        el.style.objectPosition = `${ox}px ${oy}px`;
+      }
+    }else{
+      // 背景容器
+      if(state.src !== undefined) el.style.backgroundImage = state.src ? `url("${state.src}")` : 'none';
+      if(state.opacity!=null) el.style.opacity = String(state.opacity);
+      const tf = buildTransform(state);
+      if(tf) el.style.transform = tf;
+      if(state.fit){
+        // 對背景使用 background-size
+        const map = { cover:'cover', contain:'contain', fill:'100% 100%', none:'auto', 'scale-down':'contain' };
+        el.style.backgroundSize = map[state.fit] || state.fit;
+      }
+      if(state.offsetX!=null || state.offsetY!=null){
+        const ox = state.offsetX ?? 0, oy = state.offsetY ?? 0;
+        el.style.backgroundPosition = `${ox}px ${oy}px`;
+      }
+    }
+  }
+
+  function buildTransform(state){
+    const ops=[];
+    if(state.scale!=null && state.scale!==1) ops.push(`scale(${state.scale})`);
+    if(state.rotateDeg!=null && state.rotateDeg!==0) ops.push(`rotate(${state.rotateDeg}deg)`);
+    if(ops.length===0) return '';
+    return ops.join(' ');
+  }
+
+  // 掃描頁面上所有可能的圖片元素
+  function collectImageElements(){
+    const all = new Set();
+    // 1) 具有 data-img-key 的元素
+    document.querySelectorAll('[data-img-key]').forEach(el=>all.add(el));
+    // 2) 所有 <img>
+    document.querySelectorAll('img').forEach(el=>all.add(el));
+    // 3) 明確宣告為背景圖容器的元素（可選）
+    document.querySelectorAll('[data-img-type="bg"]').forEach(el=>all.add(el));
+    return [...all];
+  }
+
+  // 把元素註冊進狀態表（若已有就不覆蓋）
+  function ensureStateForElement(el){
+    const key = getStableKeyFor(el);
+    if(!imageState.has(key)){
+      imageState.set(key, {
+        src: readCurrentSrc(el),
+        type: detectType(el),
+        fit: undefined, opacity: undefined, offsetX: 0, offsetY: 0,
+        scale: 1, rotateDeg: 0
+      });
+    }
+    return key;
+  }
+
+  function readCurrentSrc(el){
+    if(detectType(el)==='img'){
+      return el.getAttribute('src') || '';
+    }else{
+      // 從 style.backgroundImage 取 url(...)（若無則空）
+      const bg = getComputedStyle(el).backgroundImage;
+      if(!bg || bg==='none') return '';
+      // 簡單抽取 url("...") 內容
+      const m = bg.match(/url\((['"]?)(.*?)\1\)/i);
+      return m ? m[2] : '';
+    }
+  }
+
+  // 對單一 key 設定路徑（原樣保存，不改字串）
+  function setPath(key, rawPath){
+    const state = imageState.get(key) || { };
+    state.src = (rawPath==null ? '' : String(rawPath));
+    imageState.set(key, state);
+    // 把它套回對應元素
+    const el = findElementByKey(key);
+    if(el) applyToElement(el, state);
+  }
+
+  // 對單一 key 調整屬性（不影響 src）
+  function setAdjust(key, patch){
+    const state = imageState.get(key) || { };
+    Object.assign(state, patch);
+    imageState.set(key, state);
+    const el = findElementByKey(key);
+    if(el) applyToElement(el, state);
+  }
+
+  function findElementByKey(key){
+    // 先找 data-img-key
+    let el = document.querySelector(`[data-img-key="${CSS.escape(key)}"]`);
+    if(el) return el;
+    // 若不是 data-img-key，可能是自動產生的 DOM 路徑 key
+    try{
+      el = document.querySelector(key.split('>').map(seg=>{
+        // seg 形如 "div:nth-of-type(1)"，直接用
+        return seg.trim();
+      }).join(' > '));
+    }catch(e){}
+    return el || null;
+  }
+
+  // 將目前 imageState 匯出為 JSON（字串）
+  function exportImagesJSON(){
+    // Map -> 純物件
+    const obj = {};
+    for(const [k,v] of imageState.entries()){
+      obj[k] = {
+        src: v.src ?? '',
+        type: v.type ?? 'img',
+        fit: v.fit ?? undefined,
+        opacity: v.opacity ?? undefined,
+        offsetX: v.offsetX ?? 0,
+        offsetY: v.offsetY ?? 0,
+        scale: v.scale ?? 1,
+        rotateDeg: v.rotateDeg ?? 0
+      };
+    }
+    return JSON.stringify({ __kind: 'images.v1', data: obj }, null, 2);
+  }
+
+  // 從 JSON（字串或物件）匯入，原樣還原並立即套用
+  function importImagesJSON(json){
+    const payload = (typeof json==='string') ? JSON.parse(json) : json;
+    if(!payload || payload.__kind!=='images.v1' || !payload.data) return;
+    for(const k of Object.keys(payload.data)){
+      imageState.set(k, { ...payload.data[k] });
+      const el = findElementByKey(k);
+      if(el) applyToElement(el, imageState.get(k));
+    }
+  }
+
+  // 綁定輸入框：任何 input/textarea 只要有 data-img-input="key" 就會貼上即套用
+  function bindInputsLive(){
+    document.querySelectorAll('[data-img-input]').forEach(inp=>{
+      const keyAttr = inp.getAttribute('data-img-input');
+      const elKey = keyAttr && keyAttr.trim() ? keyAttr.trim() : null;
+      // 若沒填 key，嘗試用最近的 data-img-key 容器
+      let key = elKey;
+      if(!key){
+        const host = inp.closest('[data-img-key]');
+        if(host) key = getStableKeyFor(host);
+      }
+      if(!key) return;
+
+      // 確保有狀態
+      imageState.has(key) || imageState.set(key, {});
+
+      // 初始化：如果 input 有值就先套
+      if(inp.value && inp.value.trim()){
+        setPath(key, inp.value.trim());
+      }
+
+      // 即時監聽（貼上/輸入/變更）
+      ['input','change','paste'].forEach(ev=>{
+        inp.addEventListener(ev, ()=>{
+          setPath(key, inp.value);
+        });
+      });
+    });
+  }
+
+  // 掛在全域，方便你呼叫
+  window.ImageIO = {
+    setPath, setAdjust, exportImagesJSON, importImagesJSON,
+    refreshAll(){
+      collectImageElements().forEach(el=>{
+        const key = ensureStateForElement(el);
+        applyToElement(el, imageState.get(key));
+      });
+    }
+  };
+
+  // 初次啟動：收集元素 → 建狀態 → 綁定輸入框 → 首次套用
+  function boot(){
+    const els = collectImageElements();
+    els.forEach(el=>{
+      const key = ensureStateForElement(el);
+      // 初始套用（以 DOM 目前的 src / 背景為基準）
+      applyToElement(el, imageState.get(key));
+    });
+    bindInputsLive();
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', boot);
+  }else{
+    boot();
+  }
+
+  // —— 下面是「示範用」的匯出/匯入按鈕（可保留或整合到你現有 UI） —— //
+  // 匯出：下載 .json（保留原字串路徑）
+  function downloadJSON(filename, content){
+    const blob = new Blob([content], {type:'application/json;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename || 'images.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 0);
+  }
+
+  // 你可以在任何事件中呼叫 window.ImageIO.exportImagesJSON()
+  window.addEventListener('click', function(e){
+    const t = e.target;
+    if(!(t && t.matches)) return;
+    if(t.matches('[data-imgio-export]')){
+      const json = exportImagesJSON();
+      downloadJSON('images.json', json);
+    }
+  });
+
+  // 匯入：讀檔後立即還原
+  window.addEventListener('change', function(e){
+    const t = e.target;
+    if(!(t && t.matches)) return;
+    if(t.matches('[data-imgio-import]') && t.files && t.files[0]){
+      const f = t.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        try{
+          importImagesJSON(reader.result);
+          alert('圖片路徑與調整已匯入並套用完成。');
+        }catch(err){
+          alert('匯入失敗：JSON 格式錯誤或內容不符。');
+        }
+        t.value = '';
+      };
+      reader.readAsText(f);
+    }
+  });
+})();
+</script>
+<!-- [IMGIO JS END] -->
 
 </body>
 </html>
