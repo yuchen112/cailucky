@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>開獎所｜官方網站</title>
+  <title>開獎所｜公共/管理雙模式（空資料版）—Part 1</title>
   <meta name="color-scheme" content="light dark">
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -439,16 +439,32 @@ function Collapse({ header, children, defaultOpen=false, force=null }) {
     function App(){
       const [data, setData] = useLocalState(LS.data, EMPTY);
 
-// 進站時自動抓 ./data/app.json，覆蓋本機資料，確保大家看到最新
+// 進站時自動抓 ./data/app.json，覆蓋本機資料，並同步管理員名單（admins）
 React.useEffect(() => {
   (async () => {
     try {
       const res = await fetch('./data/app.json?v=' + Date.now(), { cache: 'no-store' });
-const raw = await res.json();
-const obj = raw && typeof raw === 'object' && 'data' in raw ? raw.data : raw; // ← 同時吃兩種格式
-if (Array.isArray(obj.history)) obj.history = sortHistoryDesc(obj.history);
-setData(obj);
+      const raw = await res.json();
 
+      // 同時相容兩種格式：扁平 { ... } 或 包一層 { _meta, data, admins }
+      const obj = raw && typeof raw === 'object' && 'data' in raw ? raw.data : raw;
+
+      // 歷史由新到舊
+      if (obj && Array.isArray(obj.history)) {
+        obj.history = sortHistoryDesc(obj.history);
+      }
+
+      // 寫入資料本體
+      if (obj && typeof obj === 'object') {
+        setData(obj);
+      } else {
+        console.error('app.json 結構異常：期望為物件，實得', obj);
+      }
+
+      // ★ 新增：若 app.json 提供 admins，覆蓋本機的管理員名單，避免不同步
+      if (raw && typeof raw === 'object' && Array.isArray(raw.admins)) {
+        setAdmins(raw.admins);
+      }
     } catch (e) {
       console.error('讀取 data/app.json 失敗：', e);
     }
@@ -705,7 +721,7 @@ useEffect(()=>{
 }, [bg]);
 
 
-      // 匯入/匯出（JSON，供你備份搬移）——【整段覆蓋版】
+  // 匯入/匯出（JSON，供你備份搬移）——【整段覆蓋版】
 // 本版會把「站內資料 data」與「管理員名單 admins（只含雜湊，不含明文密碼）」一起匯出；
 // 匯入時同時支援「新格式（含 data/admins）」與「舊格式（只有 data）」。
 
@@ -717,8 +733,8 @@ const exportJSON = () => {
       version: 1,
       exportedAt: new Date().toISOString()
     },
-    data,     // 你原本的整站資料：history / pending / ongoing / shop / others / settings...
-    admins    // 管理員名單：[{ name, passwordHash }]
+    data,     // 站內資料（history / pending / ongoing / shop / others / settings ...）
+    admins    // 管理員名單 [{ name, passwordHash }]
   };
 
   const blob = new Blob([JSON.stringify(full, null, 2)], { type: 'application/json' });
@@ -729,7 +745,7 @@ const exportJSON = () => {
   URL.revokeObjectURL(a.href);
 };
 
-// （可選）僅匯出站內資料，不含管理員名單——如果你要提供給一般成員做備份，可以在某個按鈕綁這顆
+// （可選）僅匯出站內資料，不含管理員名單——如果要給一般成員備份，可以綁這顆
 const exportDataOnly = () => {
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
@@ -748,14 +764,13 @@ const importJSON = (file) => {
     try {
       const obj = JSON.parse(String(e.target.result || '{}'));
 
-      // 判斷是否為新格式（帶 data 或 admins 任一鍵）
+      // 判斷是否為新格式
       const looksNew = obj && typeof obj === 'object' && ('data' in obj || 'admins' in obj);
 
       if (looksNew) {
         const nextData   = obj.data  ?? {};
         const nextAdmins = Array.isArray(obj.admins) ? obj.admins : null;
 
-        // 歷史紀錄照你的規則排序（新到舊）
         if (Array.isArray(nextData.history)) nextData.history = sortHistoryDesc(nextData.history);
 
         setData(nextData);
@@ -763,7 +778,7 @@ const importJSON = (file) => {
 
         alert(`匯入完成${nextAdmins ? '（含管理員名單）' : ''}，歷史已自動排序`);
       } else {
-        // 舊格式：視為 data 本體
+        // 舊格式
         const nextData = obj;
         if (Array.isArray(nextData.history)) nextData.history = sortHistoryDesc(nextData.history);
         setData(nextData);
@@ -775,7 +790,6 @@ const importJSON = (file) => {
   };
   reader.readAsText(file);
 };
-
 
 
       return (
@@ -3911,5 +3925,4 @@ function ShopImageQuickset({ data, setData, admin }) {
   </script>
 
 </body>
-
 </html>
