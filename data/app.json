@@ -1,1 +1,445 @@
-data/app.json
+{
+  "homepage": {
+    "title": "開獎所",
+    "subtitle": "免費抽獎・不定期驚喜",
+    "announcements": [],
+    "about": "🎉 歡迎來到【開獎所｜官方紀錄網頁】\n\n這裡是「開獎所」的專屬資訊中心，整合了所有抽獎相關內容，\n無論你是第一次參加，還是長期支持的老朋友，都能在這裡找到所需資訊。\n\n📚 歷史抽獎紀錄\n\n完整保存歷屆抽獎活動：包含開獎日期、獎品名稱、抽出名額、參與人數。\n\n公開透明：每場活動皆附有抽獎影片（YouTube 連結），並清楚列出得獎名單與備註狀態。\n\n方便查詢：想回顧過往活動或確認得獎紀錄，都能在這裡找到。\n\n⏳ 等待開獎\n\n目前報名中的活動：清楚顯示尚未開獎的項目。\n\n即時資訊：包括獎品名稱、圖片、預計抽出名額與截止日期。\n\n參與狀況：顯示目前已報名人數，並附上完整參與名單（可直接複製，用於抽獎工具）。\n👉 讓大家在抽獎前就能掌握規模與競爭度。\n\n🔄 進行中活動\n\n長期／常駐型活動：例如邀請好友獲得點數、完成任務、限時小挑戰。\n\n規則清楚：每個活動都有詳細說明，包含參加方式、獎勵內容與限制條件。\n\n隨時更新：不定期推出新任務，增加互動與趣味性。\n\n🛍️ 點數商城\n\n好禮兌換專區：各式商品搭配圖片、描述與所需點數。\n\n即時庫存顯示：避免兌換時出現落空。\n\n個人點數查詢：成員可隨時確認自己的點數餘額，安排兌換策略。\n\n商品分級：區分「常態商品」與「期間限定商品」，增添收藏與驚喜感。\n\n📌 其他資料\n\n抽獎規則：清楚說明流程，確保公平、公正、公開。\n\n公告彙整：社群最新資訊與活動提醒，一目了然。\n\n相關連結：包含官方帳號、社群入口、紀錄影片等，方便快速跳轉。\n\n✨ 這個網頁的目的，就是讓大家可以「隨時查詢、放心參與、輕鬆回顧」。\n不論是抽獎結果、點數累積，還是商城兌換，都能在這裡透明呈現。",
+    "links": [
+      {
+        "id": "8kkma8mu",
+        "name": "抽獎群組",
+        "url": "https://reurl.cc/ZNGdXV"
+      },
+      {
+        "id": "5rfhig8c",
+        "name": "官方LINE",
+        "url": "https://lin.ee/kKEvNhs"
+      },
+      {
+        "id": "owa690ts",
+        "name": "🎬【YouTube 頻道】",
+        "url": "https://www.youtube.com/@%E9%96%8B%E7%8D%8E%E6%89%80"
+      }
+    ]
+  },
+  "history": [
+    {
+      "id": "zdrfgtm6",
+      "title": " 鬆餅機 Waffle Maker",
+      "date": "2025-08-30",
+      "winners": [
+        "@Shirley"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 3,
+      "youtube": "https://youtu.be/QU__l2eyFo8",
+      "status": "已寄出",
+      "note": ""
+    },
+    {
+      "id": "ih0t9r8d",
+      "title": "大耳狗絨毛娃娃",
+      "date": "2025-08-30",
+      "winners": [
+        "@ㄩㄣˊ",
+        "@Green"
+      ],
+      "winnerCount": 2,
+      "totalParticipants": 15,
+      "youtube": "https://youtu.be/LnvJJv6hNmc",
+      "status": "處理中",
+      "note": ""
+    },
+    {
+      "id": "n7o7zhkf",
+      "title": "可愛大肚量隨行杯",
+      "date": "2025-08-30",
+      "winners": [
+        "@ARIEL"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 11,
+      "youtube": "https://youtu.be/z4AuhCI8-HM",
+      "status": "已寄出",
+      "note": ""
+    },
+    {
+      "id": "u94ydr5r",
+      "title": "酷洛米 絨毛抱枕",
+      "date": "2025-08-30",
+      "winners": [
+        "@Jr"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 15,
+      "youtube": "https://youtu.be/gL1VojW9IPw",
+      "status": "已寄出",
+      "note": ""
+    },
+    {
+      "id": "83z4ca19",
+      "title": "航海王 手提袋",
+      "date": "2025-08-30",
+      "winners": [
+        "@星⭐️",
+        "@黃國維",
+        "@呀哈"
+      ],
+      "winnerCount": 3,
+      "totalParticipants": 14,
+      "youtube": "https://youtu.be/Y2NdHDfuqY0",
+      "status": "處理中",
+      "note": ""
+    },
+    {
+      "id": "5aertxyj",
+      "title": "蠟筆小新 筆袋",
+      "date": "2025-08-30",
+      "winners": [
+        "@Shirley"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 23,
+      "youtube": "https://youtu.be/MBmFuj30tVU",
+      "status": "已寄出",
+      "note": ""
+    },
+    {
+      "id": "vazw3f1q",
+      "title": "卡皮巴拉 存錢筒",
+      "date": "2025-08-30",
+      "winners": [
+        "@wolf"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 19,
+      "youtube": "https://youtu.be/PzvVBTTPoP4",
+      "status": "處理中",
+      "note": ""
+    },
+    {
+      "id": "hxj967ke",
+      "title": "玩具總動員/甜點系列",
+      "date": "2025-08-30",
+      "winners": [
+        "@黃國維"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 15,
+      "youtube": "https://youtu.be/9n7y6vSsvJQ",
+      "status": "已寄出",
+      "note": ""
+    },
+    {
+      "id": "1x1esw8w",
+      "title": "玩具總動員 盲盒",
+      "date": "2025-08-30",
+      "winners": [
+        "@泰"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 13,
+      "youtube": "https://youtu.be/9n7y6vSsvJQ",
+      "status": "處理中",
+      "note": ""
+    },
+    {
+      "id": "klp6nnsi",
+      "title": "雪寶說故事 盲盒",
+      "date": "2025-08-30",
+      "winners": [
+        "@米寶/1m"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 13,
+      "youtube": "https://youtu.be/aWCgPJOW-TU",
+      "status": "已寄出",
+      "note": ""
+    },
+    {
+      "id": "1pp1up8z",
+      "title": "ATANO 行動電源",
+      "date": "2025-08-30",
+      "winners": [
+        "@西瓜甜不甜🍉"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 27,
+      "youtube": "https://youtu.be/Bli5pqOyVbk",
+      "status": "已寄出",
+      "note": ""
+    },
+    {
+      "id": "vtk6epfh",
+      "title": "矢澤にこ 公仔",
+      "date": "2025-08-30",
+      "winners": [
+        "@星⭐️"
+      ],
+      "winnerCount": 9,
+      "totalParticipants": 9,
+      "youtube": "https://youtu.be/29pC0Zg96dI",
+      "status": "✅ 已寄出",
+      "note": ""
+    },
+    {
+      "id": "e78n8wba",
+      "title": "泡沫花朵洗手液",
+      "date": "2025-08-15",
+      "winners": [
+        "@晴兒",
+        "@Yuma",
+        "@Rita"
+      ],
+      "winnerCount": 3,
+      "totalParticipants": 21,
+      "youtube": "https://youtu.be/MLXNNsrZ9QU",
+      "status": "✅ 已寄出",
+      "note": "@光 尚未回覆/重新抽獎 "
+    },
+    {
+      "id": "g67inl0u",
+      "title": "豬豬彌豆子 Q版手辦公仔",
+      "date": "2025-08-15",
+      "winners": [
+        "@Yuma"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 8,
+      "youtube": "https://youtu.be/x-lRM2jse1Y",
+      "status": "✅ 已寄出",
+      "note": "第一位得獎人@LCY 退群，進行重抽"
+    },
+    {
+      "id": "tuol2432",
+      "title": "多啦A夢鈴鐺抱枕（超可愛經典造型✨）",
+      "date": "2025-08-15",
+      "winners": [
+        "@Yuma"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 16,
+      "youtube": "https://youtu.be/TBanV1Y8w5M",
+      "status": "✅ 已寄出",
+      "note": ""
+    },
+    {
+      "id": "q4roz3xq",
+      "title": "小白背包娃娃（蠟筆小新粉絲必收！）",
+      "date": "2025-08-15",
+      "winners": [
+        "@黃國維"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 16,
+      "youtube": "https://youtu.be/8ASAKKPfC2A",
+      "status": "✅ 已寄出",
+      "note": ""
+    },
+    {
+      "id": "qyl1sviq",
+      "title": " 卡皮巴拉（水豚君）娃娃 ",
+      "date": "2025-08-15",
+      "winners": [
+        "@₊˚̶魁柒໒",
+        "@秀"
+      ],
+      "winnerCount": 2,
+      "totalParticipants": 10,
+      "youtube": "https://youtu.be/pAKgpGsOVBw",
+      "status": "✅ 已寄出",
+      "note": ""
+    },
+    {
+      "id": "5hje5u4d",
+      "title": "DXF 和之國 布魯克正版公仔(證紙有褪色反白)",
+      "date": "2025-08-15",
+      "winners": [
+        "@米寶/1m"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 12,
+      "youtube": "https://www.youtube.com/watch?v=Osvz8T7CtKg",
+      "status": "✅ 已寄出",
+      "note": ""
+    },
+    {
+      "id": "rahp640y",
+      "title": "Q posket 公仔與鬼滅之刃造型公仔共 6 盒",
+      "date": "2025-07-30",
+      "winners": [
+        "@habv",
+        "@✎ .白白",
+        "@Yu"
+      ],
+      "winnerCount": 3,
+      "totalParticipants": 3,
+      "youtube": "https://www.youtube.com/shorts/7sl3MNxcsig",
+      "status": "✅ 已寄出",
+      "note": "@LCY 未領取/重新抽獎"
+    },
+    {
+      "id": "ljhvhhen",
+      "title": " 拉拉熊大抱枕（全新，袋裝）",
+      "date": "2025-07-30",
+      "winners": [
+        "@ㄩㄣˊ"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 5,
+      "youtube": "https://www.youtube.com/shorts/M9n8CB1dGME",
+      "status": "✅ 已寄出",
+      "note": ""
+    },
+    {
+      "id": "30r4uex1",
+      "title": " 大家源 雙杯滴漏式咖啡機（300ml）",
+      "date": "2025-07-30",
+      "winners": [
+        "@ARIEL"
+      ],
+      "winnerCount": 1,
+      "totalParticipants": 1,
+      "youtube": "",
+      "status": "✅ 已寄出",
+      "note": "7/30無人參與，8/15開獎1人獨得"
+    }
+  ],
+  "pending": [],
+  "ongoing": [],
+  "shop": {
+    "items": [],
+    "people": [],
+    "logs": [
+      {
+        "id": "lajb5paf",
+        "personId": "w40uenxn",
+        "delta": -5,
+        "note": "撤銷 05odw8kv",
+        "at": "2025-09-01 02:57"
+      },
+      {
+        "id": "84cph2kh",
+        "personId": "w40uenxn",
+        "delta": -50,
+        "note": "撤銷 v4pptf9m",
+        "at": "2025-09-01 02:57"
+      },
+      {
+        "id": "v4pptf9m",
+        "personId": "w40uenxn",
+        "delta": 50,
+        "note": "撤銷 azv6zkg3",
+        "at": "2025-09-01 02:57"
+      },
+      {
+        "id": "azv6zkg3",
+        "personId": "w40uenxn",
+        "delta": -50,
+        "note": "撤銷 qiotfl6j",
+        "at": "2025-09-01 02:57"
+      },
+      {
+        "id": "qiotfl6j",
+        "personId": "w40uenxn",
+        "delta": 50,
+        "note": "撤銷 9fu0cypt",
+        "at": "2025-09-01 02:57"
+      },
+      {
+        "id": "9fu0cypt",
+        "personId": "w40uenxn",
+        "delta": -50,
+        "note": "撤銷 2w3fy4t7",
+        "at": "2025-09-01 02:57"
+      },
+      {
+        "id": "2w3fy4t7",
+        "personId": "w40uenxn",
+        "delta": 50,
+        "note": "1561",
+        "at": "2025-08-31 20:06"
+      },
+      {
+        "id": "f3hr1rhp",
+        "personId": "ii417hyu",
+        "delta": 99,
+        "note": "156",
+        "at": "2025-08-31 18:24"
+      },
+      {
+        "id": "6hldi8wi",
+        "personId": "ii417hyu",
+        "delta": 80,
+        "note": "123",
+        "at": "2025-08-31 18:23"
+      },
+      {
+        "id": "3ps3wu13",
+        "personId": "w40uenxn",
+        "delta": 20,
+        "note": "52852",
+        "at": "2025-08-31 11:32"
+      },
+      {
+        "id": "q8uysapi",
+        "personId": "w40uenxn",
+        "delta": 8,
+        "note": "252",
+        "at": "2025-08-31 11:32"
+      },
+      {
+        "id": "05odw8kv",
+        "personId": "w40uenxn",
+        "delta": 5,
+        "note": "123",
+        "at": "2025-08-31 11:32"
+      }
+    ]
+  },
+  "others": {
+    "cards": [
+      {
+        "id": "f2c70jkq",
+        "title": "💎【點數規則與獲取方式】",
+        "content": "📢【開獎所 點數制度公告】\n\n為了感謝大家對社群的支持，並增加活動的趣味性，我們正式推出「點數制度」✨\n點數是社群內的專屬回饋，可透過多種方式取得，並用於抽獎或兌換商品。\n\n🔹 如何獲得點數\n\n贊助物品\n\n提供全新／完整可用的實體商品，經管理員估值後可獲得點數。\n\n📌 範例：市價 NT$100 物品 ≈ 10 點（以實際評估為準）。\n\n購買社群商品\n\n在「點數商城」或指定管道購買商品，即可獲得點數回饋。\n\n📌 範例：消費滿 NT$100 → 回饋 5 點。\n\n限定／期間制任務\n\n不定期舉辦任務活動（如：分享群組、完成指定任務）。\n\n📌 完成後可獲得額外點數，每月約 1～2 次，避免過度膨脹。\n\n邀請好友入群\n\n成功邀請新朋友加入，並停留滿 7 天 → 1 位好友 = 1 點。\n\n📌 每人每月最多計算 5 點。\n\n互動加分\n\n活動期間，分享中獎開箱照或參與指定互動，可獲得額外點數（需經管理員審核）。\n\n🔹 點數可以用在哪裡\n\n🎟 抽獎券／加碼券\n\n使用固定點數即可兌換「一次抽獎參加機會」。\n\n📌 範例：1 張抽獎券 = 10 點（實際點數依活動公告為準）。\n\n🔒 為確保公平，所有人條件一致，不會因為有人有大量點數就能無限壓制。\n\n🛒 點數商城商品兌換\n\n點數可直接兌換商品，分為：\n\n常態商品：長期上架，可隨時兌換。\n\n期間限定商品：特定時段才會出現，數量有限。\n\n📌 範例：小型公仔 50 點、隨機盲包 80 點。\n\n🔹 注意事項\n\n❌ 點數不可折換現金，避免爭議。\n\n⏳ 點數有效期：年度清算，原則上每年 12/31 會進行歸零或部分保留（詳細規則將另行公告）。\n\n📒 點數查詢：可於「點數商城」分頁或查詢系統中隨時查看自己的餘額。\n\n🔒 公平性保障：\n\n贊助換點數設有每月上限，避免單一大戶壓制。\n\n任務／互動點數由管理員最終審核，防止灌水。\n\n✨ 小結\n\n點數制度的目標是：\n✔ 獎勵支持社群的人\n✔ 提升大家的參與感\n✔ 讓活動更公平、更好玩\n\n🎉 趕快累積點數，換取更多驚喜吧！",
+        "pin": false
+      },
+      {
+        "id": "yb2do9jf",
+        "title": "🌟【創立初衷】",
+        "content": "【開獎所｜創立初衷與理念】\n\n其實每個人家裡，多少都有一些用不到的東西，\n包括我自己也一樣。\n\n把它們拿去賣，常常不容易成交；\n擺在角落，又只會積灰塵。\n既然如此，何不讓它們變成別人的需要？\n與其閒置，不如分享出去。\n\n🔹 為什麼會有這個社群？\n\n「開獎所」的起點很單純：\n\n把大家家中閒置的東西，拿來當獎品。\n\n透過抽獎的方式，讓物品找到新主人。\n\n每個人都有機會參與，感受驚喜與樂趣。\n\n✨ 這不只是物品的流動，更是大家一起的互動。\n✨ 每一次開獎，都是一場小小的同樂會。\n\n🔹 點數系統的構想\n\n隨著人越來越多，我希望能有一個循環機制，\n讓分享的人得到回饋，讓需要的人能換到想要的。\n\n你拿出物品 → 得到點數。\n\n點數可以再用來參加抽獎，或兌換自己真正想要的東西。\n\n東西不再是閒置，而是轉化成驚喜與交流。\n\n這就像一個線上的跳蚤市場，\n不同的是：\n\n你分享的東西會立即送出，不用苦苦等買家。\n\n你得到的點數也能立即使用，不需要等待。\n\n🔹 我們的核心價值\n\n抽獎：圖個樂子，人人都能參與。\n\n分享：你的物品，也可能成為下一次的驚喜獎品。\n\n流通：點數讓分享更有價值，讓東西不再閒置。\n\n簡單：沒有複雜規則，只有純粹的互助與樂趣。\n\n🔹 最後想說\n\n「開獎所」不是一個商業平台，而是一個互助的小圈子。\n我們希望透過抽獎與點數，\n把「多的東西」變成「彼此的驚喜」。\n\n希望大家能在這裡：\n一起參與、一起分享、一起玩得開心！",
+        "pin": false
+      },
+      {
+        "id": "bhjmk5kw",
+        "title": "🎯【開獎方式】",
+        "content": "🎲【開獎所｜抽獎機制說明】\n\n為確保抽獎過程 公平、公正、公開，本群組每次抽獎將依照以下標準流程執行：\n\n1️⃣ 統計參與名單\n\n活動截止後，整理所有完成「留言報名／任務完成」的成員。\n\n經管理員確認有效後，建立最終抽獎名單。\n\n2️⃣ 使用抽獎工具\n\n將名單匯入經過驗證的隨機抽獎工具：\n👉 luckydraw.youvivid.com\n\n系統會隨機抽出得獎者，確保每位參加者機會一致。\n\n3️⃣ 抽獎全程錄影\n\n抽獎過程將全程錄影存證。\n\n抽獎影片會上傳至 YouTube，提供所有成員公開查驗。\n\n4️⃣ 公布得獎名單\n\n得獎名單會即時公告於群組，並同步標註在該場活動的記事本下方。\n\n得獎者需於公告規定時間內回覆，完成領獎流程。\n\n5️⃣ 疑問與協助\n\n📌 若對開獎流程或結果有疑問，請私訊官方帳號，管理員將盡快回覆。\n\n✨ 請大家放心參與，抽獎所承諾會持續維護透明、公開的抽獎環境。",
+        "pin": false
+      },
+      {
+        "id": "bg4xnglq",
+        "title": "📢【最新公告】",
+        "content": "親愛的大家，\n感謝你加入這個剛開始起步的小社群！\n\n目前一切都還在建立中，\n我還在慢慢學習與調整各種細節。\n如果你有任何建議或想法，\n都非常歡迎私訊或留言告訴我。\n你的聲音，對我來說都很重要。\n\n同時也歡迎你把這個群組分享給朋友，\n讓更多人一起參與、抽獎、同樂～\n有你們的支持，真的差很多！\n\n目前所有事情都是我一人處理，\n若有來不及回覆、漏看訊息的情況，\n還請大家多多包涵與體諒 🙏\n\n再次感謝你的加入與鼓勵，\n希望這裡能慢慢成為一個溫暖、有趣、\n值得期待的小角落 ❤️",
+        "pin": false
+      },
+      {
+        "id": "ey2bdxs9",
+        "title": "🌟【中獎後補寄與再抽獎規則】",
+        "content": "1. 中獎人退群\n- 開獎後至領獎前，如中獎人主動退出群組，視同放棄得獎資格，將直接重抽。\n\n2. 未領取獎品\n- 得獎者須於開獎後 7 天內 主動與管理員聯絡並確認寄送資訊。\n- 超過 7 天未聯絡者，視同放棄得獎資格，將直接重抽。\n\n3. 補寄規則\n- 得獎者若因地址錯誤、收件人未簽收等原因導致退件，可提供一次免費補寄。\n- 若補寄後仍未簽收，視同放棄得獎資格，該獎品將進行重抽。\n\n4. 再抽獎時間\n- 再抽獎將於確認失效資格後，由管理員不定時公告並進行。",
+        "pin": false
+      },
+      {
+        "id": "a4r510v1",
+        "title": "🤝【贊助者招募與感謝說明】",
+        "content": "親愛的朋友們：\n\n感謝每一位參與本群抽獎活動的你們！\n為了讓更多人感受到這份驚喜與樂趣，我們長期歡迎大家提供小禮物贊助🎁\n\n✅ 只要是全新／完整的實體物品（如小玩具、小家電、文具、雜貨等），皆可作為獎品候選\n✅ 所有贊助品項會經過簡單篩選後安排抽獎\n✅ 運費將由我們負擔，你只需提供實體商品即可\n✅ 若你有其他形式的合作或贊助想法，也歡迎一併提出！\n\n📩 有意贊助者，請私訊官方帳號聯繫！\n我們會安排後續流程，並在抽獎活動中標註感謝您的支持！\n\n🎉 謝謝所有過去曾提供獎品的朋友們！\n你們的支持讓這個群組充滿溫暖與期待，我們也會持續努力，把開獎的快樂分享給更多人 ❤️\n",
+        "pin": false
+      }
+    ]
+  },
+  "settings": {
+    "drawMaxPerRun": 500,
+    "drawPublicShowLimit": 50,
+    "drawCooldownSec": 10
+  }
+}
