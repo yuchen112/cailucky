@@ -3827,35 +3827,47 @@ function ImageInput({ label="圖片", value="", onChange }) {
 function ShopImageQuickset({ data, setData, admin }) {
   if (!admin) return null; // 只給管理模式用
 
+  // 目前商品清單
   const items = Array.isArray(data?.shop?.items) ? data.shop.items : [];
 
+  // 草稿：以 image 欄位為準
   const [drafts, setDrafts] = React.useState(() =>
-    items.map(it => ({ id: it.id || nid(), name: it.name || '', img: it.img || '' }))
+    items.map(it => ({
+      id: it.id || nid(),
+      name: it.name || '',
+      image: it.image || ''
+    }))
   );
 
   // 若外部 items 改變，草稿同步一次
   React.useEffect(() => {
-    setDrafts(items.map(it => ({ id: it.id || nid(), name: it.name || '', img: it.img || '' })));
+    setDrafts(items.map(it => ({
+      id: it.id || nid(),
+      name: it.name || '',
+      image: it.image || ''
+    })));
   }, [items]);
 
+  // 正規化：去頭尾引號與空白
   const normPath = (s) => String(s || '').trim().replace(/^"+|"+$/g, '');
 
+  // 儲存：把草稿寫回 data.shop.items[i].image
   const saveAll = () => {
     const next = items.map((it, i) => {
-      const img = normPath(drafts[i]?.img || '');
-      return { ...it, img };   // ✅ 修正：原本是 {.it, img}
+      const image = normPath(drafts[i]?.image || '');
+      return { ...it, image };
     });
-    setData({ ...data, shop: { ...(data.shop || {}), items: next } });  // ✅ 修正：原本是 {.data, ...}
+    setData({ ...data, shop: { ...(data.shop || {}), items: next } });
     alert('已儲存圖片路徑到商品。之後「匯出」即可把路徑帶出。');
   };
 
+  // 若只貼「檔名.jpg」沒有資料夾，自動補 ./assets/products/
   const applyBaseToEmpty = () => {
     const base = './assets/products/';
     setDrafts(ds => ds.map(d => {
-      const v = normPath(d.img);
+      const v = normPath(d.image);
       if (!v) return d;
-      // 若只是檔名（不含 / ），自動補上資料夾
-      if (!v.includes('/')) return { ...d, img: base + v };  // ✅ 修正：原本是 {.d, ...}
+      if (!v.includes('/')) return { ...d, image: base + v };
       return d;
     }));
   };
@@ -3888,7 +3900,7 @@ function ShopImageQuickset({ data, setData, admin }) {
       </div>
 
       {items.length === 0 ? (
-        <div className="text-sm text-slate-500">目前沒有商品項目。</div>
+        <div className="text-sm text-slate-500">目前沒有商品可設定圖片。</div>
       ) : (
         <div className="grid gap-2">
           {drafts.map((d, i) => (
@@ -3899,11 +3911,11 @@ function ShopImageQuickset({ data, setData, admin }) {
               </div>
               <input
                 className="rounded-lg border px-3 py-2 text-sm"
-                placeholder="貼上圖片路徑（可含 ./assets/products/... 或完整網址）"
-                value={d.img}
+                placeholder="貼上圖片路徑（可貼檔名、相對路徑 ./assets/products/... 或完整網址）"
+                value={d.image}
                 onChange={e => {
                   const v = e.target.value;
-                  setDrafts(ds => ds.map((x, j) => (j === i ? { ...x, img: v } : x)));
+                  setDrafts(ds => ds.map((x, j) => (j === i ? { ...x, image: v } : x)));
                 }}
               />
             </div>
@@ -3912,8 +3924,9 @@ function ShopImageQuickset({ data, setData, admin }) {
       )}
 
       <p className="mt-3 text-xs text-slate-500">
-        小提醒：上傳圖片到 <code>assets/products/</code> 後，這裡可以直接貼
-        <code> 檔名.jpg</code>，再按「檔名自動補資料夾」。或直接貼完整相對路徑：<code>./assets/products/檔名.jpg</code>。
+        小提醒：把圖片放進 <code>assets/products/</code> 後，可以只貼
+        <code> 檔名.jpg</code>，再按「檔名自動補資料夾」。或直接貼相對路徑 <code>./assets/products/檔名.jpg</code>，
+        也支援完整網址 <code>https://...</code>。
       </p>
     </section>
   );
