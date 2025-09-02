@@ -704,28 +704,77 @@ useEffect(()=>{
 }, [bg]);
 
 
-      // 匯入/匯出（JSON，供你備份搬移）
-      const exportJSON = ()=>{
-        const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `kjs_export_${new Date().toISOString().slice(0,10)}.json`;
-        a.click(); URL.revokeObjectURL(a.href);
-      };
-      const importJSON = (file)=>{
+      // 匯入/匯出（JSON，供你備份搬移）——【整段覆蓋版】
+// 本版會把「站內資料 data」與「管理員名單 admins（只含雜湊，不含明文密碼）」一起匯出；
+// 匯入時同時支援「新格式（含 data/admins）」與「舊格式（只有 data）」。
+
+const exportJSON = () => {
+  // 打包完整資料（含管理員名單的 SHA-256 雜湊）
+  const full = {
+    _meta: {
+      app: 'kjs',
+      version: 1,
+      exportedAt: new Date().toISOString()
+    },
+    data,     // 你原本的整站資料：history / pending / ongoing / shop / others / settings...
+    admins    // 管理員名單：[{ name, passwordHash }]
+  };
+
+  const blob = new Blob([JSON.stringify(full, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `kjs_full_export_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+};
+
+// （可選）僅匯出站內資料，不含管理員名單——如果你要提供給一般成員做備份，可以在某個按鈕綁這顆
+const exportDataOnly = () => {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `kjs_data_only_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+};
+
+// 匯入支援兩種格式：
+// 1) 新格式：{ _meta?, data: {...}, admins: [...] } —— 同時覆蓋站內資料與管理員名單
+// 2) 舊格式：{ ...直接就是 data 內容... } —— 只覆蓋站內資料，保留本機 admins
+const importJSON = (file) => {
   const reader = new FileReader();
-  reader.onload = (e)=>{
-    try{
-      const obj = JSON.parse(String(e.target.result||'{}'));
-      // ✅ 匯入後把 history 排序（新到舊）
-      if (Array.isArray(obj.history)) obj.history = sortHistoryDesc(obj.history);
-      setData(obj);
-      alert('匯入完成（已自動排序歷史）');
-    } catch{
+  reader.onload = (e) => {
+    try {
+      const obj = JSON.parse(String(e.target.result || '{}'));
+
+      // 判斷是否為新格式（帶 data 或 admins 任一鍵）
+      const looksNew = obj && typeof obj === 'object' && ('data' in obj || 'admins' in obj);
+
+      if (looksNew) {
+        const nextData   = obj.data  ?? {};
+        const nextAdmins = Array.isArray(obj.admins) ? obj.admins : null;
+
+        // 歷史紀錄照你的規則排序（新到舊）
+        if (Array.isArray(nextData.history)) nextData.history = sortHistoryDesc(nextData.history);
+
+        setData(nextData);
+        if (nextAdmins) setAdmins(nextAdmins);
+
+        alert(`匯入完成${nextAdmins ? '（含管理員名單）' : ''}，歷史已自動排序`);
+      } else {
+        // 舊格式：視為 data 本體
+        const nextData = obj;
+        if (Array.isArray(nextData.history)) nextData.history = sortHistoryDesc(nextData.history);
+        setData(nextData);
+        alert('匯入完成（舊格式，已自動排序歷史）');
+      }
+    } catch {
       alert('匯入失敗：不是有效 JSON');
     }
-  }; reader.readAsText(file);
+  };
+  reader.readAsText(file);
 };
+
 
 
       return (
