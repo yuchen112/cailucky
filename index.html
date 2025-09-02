@@ -604,6 +604,16 @@ React.useEffect(() => {
         console.error('app.json 結構異常：期望為物件，實得', obj);
       }
 
+// ★ 新增：把 app.json 的背景設定也灌回 state（含 url / pos / menu...）
+if (raw && typeof raw === 'object' && raw.bg) {
+  setBg(raw.bg);
+}
+
+// （可選）若你有用 ImageIO，順手把 images 也匯入
+if (raw && typeof raw === 'object' && raw.images && window.ImageIO?.importImagesJSON) {
+  try { window.ImageIO.importImagesJSON(raw.images); } catch {}
+}
+
       // ★ 新增：若 app.json 提供 admins，覆蓋本機的管理員名單，避免不同步
       if (raw && typeof raw === 'object' && Array.isArray(raw.admins)) {
         setAdmins(raw.admins);
