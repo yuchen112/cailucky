@@ -444,10 +444,11 @@ React.useEffect(() => {
   (async () => {
     try {
       const res = await fetch('./data/app.json?v=' + Date.now(), { cache: 'no-store' });
-      const obj = await res.json();
-      // 讓歷史由新到舊（你的匯入也有做同樣的事）
-      if (Array.isArray(obj.history)) obj.history = sortHistoryDesc(obj.history);
-      setData(obj);
+const raw = await res.json();
+const obj = raw && typeof raw === 'object' && 'data' in raw ? raw.data : raw; // ← 同時吃兩種格式
+if (Array.isArray(obj.history)) obj.history = sortHistoryDesc(obj.history);
+setData(obj);
+
     } catch (e) {
       console.error('讀取 data/app.json 失敗：', e);
     }
