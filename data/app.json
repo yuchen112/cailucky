@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-03T19:11:18.350Z"
+    "exportedAt": "2025-09-03T19:24:45.417Z"
   },
   "data": {
     "homepage": {
@@ -457,7 +457,23 @@
           "stock": "",
           "desc": "盲盒",
           "images": [
-            "assets/products/panda/1.jpg"
+            "assets/products/panda/1.jpg",
+            "assets/products/panda/2.jpg",
+            "assets/products/panda/3.jpg",
+            "assets/products/panda/4.jpg",
+            "assets/products/panda/5.jpg",
+            "assets/products/panda/7.jpg",
+            "assets/products/panda/8.jpg",
+            "assets/products/panda/9.jpg",
+            "assets/products/panda/10.jpg",
+            "assets/products/panda/11.jpg",
+            "assets/products/panda/12.jpg",
+            "assets/products/panda/13.jpg",
+            "assets/products/panda/14.jpg",
+            "assets/products/panda/15.jpg",
+            "assets/products/panda/16.jpg",
+            "assets/products/panda/17.jpg",
+            "assets/products/panda/18.jpg"
           ],
           "buyUrl": "待定",
           "tags": [
@@ -471,7 +487,17 @@
           "stock": "",
           "desc": "盲袋1包 (內含3個)",
           "images": [
-            "assets/products/sticth/1.jpg"
+            "assets/products/sticth/1.jpg",
+            "assets/products/sticth/2.jpg",
+            "assets/products/sticth/3.jpg",
+            "assets/products/sticth/4.jpg",
+            "assets/products/sticth/5.jpg",
+            "assets/products/sticth/6.jpg",
+            "assets/products/sticth/7.jpg",
+            "assets/products/sticth/8.jpg",
+            "assets/products/sticth/9.jpg",
+            "assets/products/sticth/10.jpg",
+            "assets/products/sticth/11.jpg"
           ],
           "buyUrl": "待定",
           "tags": [
