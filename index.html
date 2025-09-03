@@ -70,6 +70,7 @@ body::before{
 }
 
 /* === 漢堡選單背景 ======================= */
+
 .menu-pane{
   position: relative;
   overflow: hidden;
@@ -101,6 +102,64 @@ body::before{
     background-size: cover;
   }
   /* 若你要用透明度/偏移/縮放等，這裡提供通用 class（JS 會直接改 style，不會動你 class） */
+
+/* === Dark mode 增強：主頁背景與漢堡選單對比/可讀性 === */
+/* 以「媒體查詢」偵測系統深色；Tailwind 預設 darkMode: 'media' 也相容 */
+@media (prefers-color-scheme: dark) {
+
+  /* 1) 調整全站（主頁）漸層背景在深色下的觀感：更柔和、更有層次 */
+  body {
+    background-image:
+      radial-gradient(at 20% 0%, rgba(20,184,166,.12), transparent 35%),
+      radial-gradient(at 80% 10%, rgba(245,158,11,.10), transparent 35%),
+      radial-gradient(at 50% 100%, rgba(100,116,139,.18), transparent 38%); /* slate-500-ish */
+    /* 這裡不動你原本的 --bg-* 變數；若有自訂背景圖仍會照常套用 */
+  }
+
+  /* 2) 提升漢堡抽屜（menu-pane）可讀性：深底＋亮字＋柔和邊界 */
+  :root {
+    /* 若未另行指定 menu 背景，提供深色下更適合的預設 fallback */
+    --menu-fallback: rgba(2, 6, 23, 0.92); /* slate-950 近似值、帶 92% 不透明 */
+  }
+
+  .menu-pane {
+    background: var(--menu-fallback, rgba(2, 6, 23, 0.92)) !important;
+    color: #e5e7eb; /* slate-200：抽屜內一般文字 */
+    border-right-color: rgba(148, 163, 184, 0.25); /* slate-400-ish */
+  }
+
+  /* 抽屜內的分隔線/邊框，在深色下更柔和 */
+  .menu-pane .border,
+  .menu-pane .border-b,
+  .menu-pane .border-t,
+  .menu-pane .border-l,
+  .menu-pane .border-r {
+    border-color: rgba(148, 163, 184, 0.25) !important;
+  }
+
+  /* 抽屜內連結/按鈕維持繼承的亮字色，避免個別元素顏色過暗 */
+  .menu-pane a,
+  .menu-pane button,
+  .menu-pane [role="button"] {
+    color: inherit;
+  }
+
+  /* 抽屜項目的 hover/active 狀態在深色下給更淺的高亮底，對比更清楚 */
+  .menu-pane .hover\:bg-slate-100:hover,
+  .menu-pane .active\:bg-slate-100:active {
+    background-color: rgba(30, 41, 59, 0.6) !important; /* slate-800 60% */
+  }
+
+  /* 抽屜頂部工具列（你原本的 header 區塊）底色與文字也一併優化 */
+  .menu-pane .bg-white,
+  .menu-pane .bg-white\/85,
+  .menu-pane .bg-slate-50 {
+    background-color: rgba(2, 6, 23, 0.92) !important;
+    color: #e5e7eb !important;
+  }
+  .menu-pane .text-slate-500 { color: #cbd5e1 !important; } /* slate-300 近似 */
+}
+
 </style>
 <!-- [IMGIO CSS END] -->
 
@@ -4503,4 +4562,5 @@ const applyBaseToEmpty = () => {
 <!-- [IMGIO JS END] -->
 
 </body>
+
 </html>
