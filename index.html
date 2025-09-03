@@ -2188,44 +2188,57 @@ const fmtDate = React.useCallback((d) => {
   key={x.id}
   group="history"
   uid={x.id}
-  force={bulk}  // ← 保留一個就好
+  force={bulk}  // 保留
   header={(open) => <HistoryHeaderRow rec={x} />}
 >
-
-            <div className="text-sm grid sm:grid-cols-2 gap-x-6 gap-y-1">
-              <div>抽出名額：{x.winnerCount ?? (x.winners?.length||0)}</div>
-              <div>總參與人數：{x.totalParticipants ?? '-'}</div>
-              {x.youtube && (
-                <div className="sm:col-span-2 truncate">
-                  影片：<a className="text-brand underline" href={x.youtube} target="_blank" rel="noreferrer">{x.youtube}</a>
-                </div>
-              )}
-              {x.status && (
-  <div className="sm:col-span-2">
-    <StatusTag value={x.status} />
+  {/* 手機：展開後顯示完整獎品名稱 */}
+  <div className="sm:hidden mb-2">
+    <div className="text-[15px] font-medium whitespace-normal break-words">
+      <span className="mr-1" aria-hidden="true">🎁</span>
+      {x.title || "（未命名）"}
+    </div>
   </div>
-)}
 
-              {x.note && <div className="sm:col-span-2">備註：{x.note}</div>}
-            </div>
+  <div className="text-sm grid sm:grid-cols-2 gap-x-6 gap-y-1">
+    <div>抽出名額：{x.winnerCount ?? (x.winners?.length||0)}</div>
+    <div>總參與人數：{x.totalParticipants ?? '-'}</div>
 
-            <div className="mt-3">
-              <div className="text-sm text-slate-500 mb-1">得獎者：</div>
-              <pre className="whitespace-pre-wrap text-sm bg-slate-50 dark:bg-slate-800 p-3 rounded-lg max-h-48 overflow-auto">
-                {(x.winners||[]).join('\n')}
-              </pre>
-            </div>
+    {x.youtube && (
+      <div className="sm:col-span-2 truncate">
+        影片：
+        <a className="text-brand underline" href={x.youtube} target="_blank" rel="noreferrer">
+          {x.youtube}
+        </a>
+      </div>
+    )}
 
-            <div className="mt-3 flex gap-2 justify-end">
-              <button onClick={()=>copyWinners(x.winners)} className="rounded-lg border px-3 py-1.5">複製名單</button>
-              {admin && (
-                <>
-                  <button onClick={()=>editRecord(x)} className="rounded-lg border px-3 py-1.5">編輯</button>
-                  <button onClick={()=>removeRecord(x.id)} className="rounded-lg bg-red-500 text-white px-3 py-1.5">刪除</button>
-                </>
-              )}
-            </div>
-          </Collapse>
+    {x.status && (
+      <div className="sm:col-span-2">
+        <StatusTag value={x.status} />
+      </div>
+    )}
+
+    {x.note && <div className="sm:col-span-2">備註：{x.note}</div>}
+  </div>
+
+  <div className="mt-3">
+    <div className="text-sm text-slate-500 mb-1">得獎者：</div>
+    <pre className="whitespace-pre-wrap text-sm bg-slate-50 dark:bg-slate-800 p-3 rounded-lg max-h-48 overflow-auto">
+      {(x.winners||[]).join('\n')}
+    </pre>
+  </div>
+
+  <div className="mt-3 flex gap-2 justify-end">
+    <button onClick={()=>copyWinners(x.winners)} className="rounded-lg border px-3 py-1.5">複製名單</button>
+    {admin && (
+      <>
+        <button onClick={()=>editRecord(x)} className="rounded-lg border px-3 py-1.5">編輯</button>
+        <button onClick={()=>removeRecord(x.id)} className="rounded-lg bg-red-500 text-white px-3 py-1.5">刪除</button>
+      </>
+    )}
+  </div>
+</Collapse>
+
         ))}
       </div>
 
@@ -3038,16 +3051,39 @@ header={`${x.title || "未命名活動"}`} force={bulk}>
 
 function Shop({ data, admin, setData, query="" }) {
   const [bulk, setBulk] = React.useState(null); // 'open' | 'close' | null（只用在列表檢視）
-  const [draft, setDraft] = React.useState({ name:"", points:"", stock:"", desc:"", image:"", enabled:true });
+  const [draft, setDraft] = React.useState({ name:"", points:"", stock:"", desc:"", image:"", imagesText:"", enabled:true });
   const [editingId, setEditingId] = React.useState(null);
 
   // 👀 檢視模式：list | grid9 | grid16（用 localStorage 記住偏好）
   const [view, setView] = useLocalState('kjs_view_shop', 'list');
 
+  // —— 多圖相容：把單張 image → images 陣列（不覆蓋原欄位，只補上）
+  const normalizeItem = (x) => {
+    const it = { ...x };
+    if (!Array.isArray(it.images)) {
+      const one = String(it.image || "").trim();
+      it.images = one ? [one] : [];
+    }
+    return it;
+  };
+
+  // 把 textarea 內的多行網址轉成陣列，並合併單張 image（避免重複）
+  const buildImages = (image, imagesText="") => {
+    const lines = String(imagesText)
+      .split(/\r?\n/)
+      .map(s => s.trim())
+      .filter(Boolean);
+    const set = new Set(lines);
+    const first = String(image||"").trim();
+    if (first) set.add(first);        // 確保封面也在陣列
+    return Array.from(set);
+  };
+
   // 商品清單（依搜尋過濾；非管理模式會隱藏停用品）
   const items = React.useMemo(()=>{
     let list = data.shop?.items || [];
     if(!admin) list = list.filter(x => x.enabled !== false);
+    list = list.map(normalizeItem); // ★ 多圖相容
     const q = String(query).trim().toLowerCase();
     if(!q) return list;
     return list.filter(x=>{
@@ -3088,39 +3124,46 @@ function Shop({ data, admin, setData, query="" }) {
   const saveItem = () => {
     if (!admin) return alert("請進入管理模式");
     if (!draft.name) return alert("請填寫商品名稱");
+
+    const images = buildImages(draft.image, draft.imagesText);
+    const cover = images[0] || "";
+
     const rec = {
       id: editingId || Math.random().toString(36).slice(2,10),
       name: draft.name,
       points: Number(draft.points||0),
       stock: Number(draft.stock||0),
       desc: draft.desc||"",
-      image: draft.image||"",
+      image: cover,   // 舊欄位保留
+      images,         // 新欄位多圖
       enabled: !!draft.enabled
     };
     const base = data.shop?.items || [];
     const next = editingId ? base.map(x => x.id===editingId ? rec : x) : [rec, ...base];
     setData({ ...data, shop: { ...data.shop, items: next } });
     setEditingId(null);
-    setDraft({ name:"", points:"", stock:"", desc:"", image:"", enabled:true });
+    setDraft({ name:"", points:"", stock:"", desc:"", image:"", imagesText:"", enabled:true });
   };
 
   const editItem = (x) => {
     if(!admin) return;
-    setEditingId(x.id);
+    const x2 = normalizeItem(x);
+    setEditingId(x2.id);
     setDraft({
-      name:x.name||"",
-      points:String(x.points??""),
-      stock:String(x.stock??""),
-      desc:x.desc||"",
-      image:x.image||"",
-      enabled: !!x.enabled
+      name:x2.name||"",
+      points:String(x2.points??""),
+      stock:String(x2.stock??""),
+      desc:x2.desc||"",
+      image:x2.image||"",
+      imagesText:Array.isArray(x2.images) ? x2.images.join("\n") : "",
+      enabled: !!x2.enabled
     });
     window.scrollTo({top:0,behavior:"smooth"});
   };
 
   const cancelEdit = () => {
     setEditingId(null);
-    setDraft({ name:"", points:"", stock:"", desc:"", image:"", enabled:true });
+    setDraft({ name:"", points:"", stock:"", desc:"", image:"", imagesText:"", enabled:true });
   };
 
   const removeItem = (id) => {
@@ -3132,6 +3175,15 @@ function Shop({ data, admin, setData, query="" }) {
   const toggleEnabled = (id) => {
     if(!admin) return;
     setData({ ...data, shop: { ...data.shop, items: (data.shop?.items || []).map(x => x.id===id ? {...x, enabled: !x.enabled} : x) } });
+  };
+
+  const getRemain = (x) => {
+    const cand = [x?.stock, x?.qty, x?.quantity, x?.remaining];
+    for (const v of cand){
+      if (typeof v === 'number' && Number.isFinite(v)) return v;
+      if (typeof v === 'string' && v.trim()!=='' && !Number.isNaN(+v)) return +v;
+    }
+    return null;
   };
 
   // —— 畫面 —— //
@@ -3171,13 +3223,25 @@ function Shop({ data, admin, setData, query="" }) {
             <input className="rounded-lg border px-3 py-2" value={draft.stock} onChange={e=>setDraft(d=>({...d,stock:e.target.value}))} placeholder="庫存（數字）" inputMode="numeric"/>
 
             {/* 圖片上傳/連結：若有 ImageInput 元件就給直接上傳；否則維持 URL 輸入 */}
-            {HasImageInput ? (
+            {typeof ImageInput === "function" ? (
               <ImageInput value={draft.image} onChange={url=>setDraft(d=>({...d,image:url}))} className="sm:col-span-2" />
             ) : (
-              <input className="rounded-lg border px-3 py-2 sm:col-span-2" value={draft.image} onChange={e=>setDraft(d=>({...d,image:e.target.value}))} placeholder="圖片網址（或保留空白）"/>
+              <input className="rounded-lg border px-3 py-2 sm:col-span-2" value={draft.image} onChange={e=>setDraft(d=>({...d,image:e.target.value}))} placeholder="封面圖片網址（可留空）"/>
             )}
 
             <textarea className="rounded-lg border px-3 py-2 sm:col-span-2 min-h-[100px]" value={draft.desc} onChange={e=>setDraft(d=>({...d,desc:e.target.value}))} placeholder="商品描述（可空白）"></textarea>
+
+            {/* 多張圖片（每行一個網址，會與上方封面合併成 images 陣列） */}
+            <div className="grid gap-1 sm:col-span-2">
+              <label className="text-xs text-slate-500">更多圖片（每行一個網址）</label>
+              <textarea
+                className="rounded-lg border px-3 py-2 min-h-[80px]"
+                placeholder={"https://...1.jpg\nhttps://...2.png"}
+                value={draft.imagesText}
+                onChange={e=>setDraft(d=>({...d, imagesText: e.target.value}))}
+              />
+              <div className="text-xs text-slate-500">儲存時會自動合併至此商品的圖片清單。</div>
+            </div>
 
             <label className="inline-flex items-center gap-2 text-sm">
               <input type="checkbox" checked={!!draft.enabled} onChange={e=>setDraft(d=>({...d,enabled:e.target.checked}))}/>
@@ -3199,25 +3263,23 @@ function Shop({ data, admin, setData, query="" }) {
         {view === 'list' ? (
           <>
             <button
-  className="rounded-lg border px-3 py-1.5"
-  onClick={() => {
-    setBulk('open');
-    setTimeout(() => setBulk(null), 0); // 重置，恢復單項可點擊
-  }}
->
-  全部展開
-</button>
-
-<button
-  className="rounded-lg border px-3 py-1.5"
-  onClick={() => {
-    setBulk('close');
-    setTimeout(() => setBulk(null), 0); // 重置
-  }}
->
-  全部收合
-</button>
-
+              className="rounded-lg border px-3 py-1.5"
+              onClick={() => {
+                setBulk('open');
+                setTimeout(() => setBulk(null), 0);
+              }}
+            >
+              全部展開
+            </button>
+            <button
+              className="rounded-lg border px-3 py-1.5"
+              onClick={() => {
+                setBulk('close');
+                setTimeout(() => setBulk(null), 0);
+              }}
+            >
+              全部收合
+            </button>
           </>
         ) : (
           <span className="text-xs text-slate-500">（宮格檢視：點卡片才展開詳細）</span>
@@ -3237,7 +3299,6 @@ function Shop({ data, admin, setData, query="" }) {
         {shopPageItems.map(x => (
           <Collapse
             key={x.id}
-            // header：列表=只顯示名稱；宮格=完整圖片 + 名稱（圖片會等比例縮放塞滿方框）
             header={
               view === 'list' ? (
                 <div className="text-sm font-medium truncate">{x.name || '未命名'}</div>
@@ -3245,27 +3306,27 @@ function Shop({ data, admin, setData, query="" }) {
                 <div className="w-full">
                   {/* 圖片：完整圖等比縮小塞進方框，不裁切 */}
                   <div className="relative w-full aspect-square rounded-lg bg-slate-50 dark:bg-slate-800 overflow-hidden flex items-center justify-center">
-  {/* 剩餘數量徽章（未展開狀態下也可見） */}
-  {getRemain(x) !== null && (
-    <div className="absolute top-2 left-2 inline-flex items-center gap-1 rounded-full bg-white/90 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 px-2 py-0.5 text-[12px] leading-none">
-      <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500" aria-hidden="true"></span>
-      剩餘 {getRemain(x)}
-    </div>
-  )}
+                    {/* 剩餘數量徽章（未展開狀態下也可見） */}
+                    {getRemain(x) !== null && (
+                      <div className="absolute top-2 left-2 inline-flex items-center gap-1 rounded-full bg-white/90 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 px-2 py-0.5 text-[12px] leading-none">
+                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500" aria-hidden="true"></span>
+                        剩餘 {getRemain(x)}
+                      </div>
+                    )}
 
-  {/* 完整圖片（等比縮放，不裁切） */}
-  {x.image ? (
-    <img
-      src={x.image}
-      alt={x.title || '商品圖片'}
-      className="max-w-full max-h-full object-contain"
-      loading="lazy"
-      decoding="async"
-    />
-  ) : (
-    <div className="text-xs text-slate-400">無圖片</div>
-  )}
-</div>
+                    {/* 完整圖片（等比縮放，不裁切） */}
+                    {(Array.isArray(x.images) && x.images[0]) || x.image ? (
+                      <img
+                        src={(Array.isArray(x.images) && x.images[0]) ? x.images[0] : x.image}
+                        alt={x.title || '商品圖片'}
+                        className="max-w-full max-h-full object-contain"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : (
+                      <div className="text-xs text-slate-400">無圖片</div>
+                    )}
+                  </div>
 
                   {/* 名稱：未展開前過長以 **** 收斂；展開後在內容區會有完整描述 */}
                   <div className="mt-2 text-sm font-medium">
@@ -3282,6 +3343,42 @@ function Shop({ data, admin, setData, query="" }) {
             <div className="mt-2 text-sm"><b>所需點數：</b>{x.points} 點</div>
             {x.desc && <div className="mt-2 text-sm whitespace-pre-wrap">{x.desc}</div>}
 
+            {/* 多圖預覽（橫向滑動，管理可刪單張） */}
+            {Array.isArray(x.images) && x.images.length > 0 && (
+              <div className="mt-3">
+                <div className="text-xs text-slate-500 mb-1">商品圖片（{x.images.length} 張）</div>
+                <div className="no-scrollbar overflow-x-auto flex gap-2">
+                  {x.images.map((srcImg, i) => (
+                    <div key={i} className="relative shrink-0">
+                      <img
+                        src={srcImg}
+                        alt={`圖${i+1}`}
+                        className="w-28 h-28 object-cover rounded-lg border border-slate-200 dark:border-slate-700"
+                        loading="lazy"
+                      />
+                      {admin && (
+                        <button
+                          className="absolute -top-2 -right-2 bg-rose-600 text-white w-6 h-6 rounded-full text-xs"
+                          title="刪除此圖"
+                          onClick={()=>{
+                            const base = data.shop?.items || [];
+                            const next = base.map(it=>{
+                              if(it.id !== x.id) return it;
+                              const nx = normalizeItem(it);
+                              const arr = [...nx.images];
+                              arr.splice(i,1);
+                              return { ...nx, images: arr, image: (arr[0]||"") }; // 封面回退
+                            });
+                            setData({ ...data, shop: { ...data.shop, items: next } });
+                          }}
+                        >×</button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="mt-3 flex gap-2 justify-end">
               {admin && (<>
                 <button onClick={()=>editItem(x)} className="rounded-lg border px-3 py-1.5">編輯</button>
@@ -3295,7 +3392,7 @@ function Shop({ data, admin, setData, query="" }) {
         ))}
       </div>
 
-      {/* 分頁控制（Shop）—— 一定要放在清單之後，不能放在 header 內！ */}
+      {/* 分頁控制（Shop） */}
       <div className="mt-4 flex items-center justify-center gap-1 select-none">
         <button
           type="button"
@@ -3306,7 +3403,7 @@ function Shop({ data, admin, setData, query="" }) {
           上一頁
         </button>
 
-        {Array.from({ length: (shopEndPage - shopStartPage + 1) }, (_, i) => shopStartPage + i).map(p => (
+        {Array.from({ length: (Math.min(shopMaxPage, Math.max(shopStartPage, 1) + 5 - 1) - shopStartPage + 1) }, (_, i) => shopStartPage + i).map(p => (
           <button
             key={p}
             type="button"
@@ -4171,7 +4268,17 @@ function ShopImageQuickset({ data, setData, admin }) {
   // 目前商品清單
   const items = Array.isArray(data?.shop?.items) ? data.shop.items : [];
 
-  // 草稿：以 image 欄位為準
+  // —— 相容：把舊的單張 image 轉為 images 陣列（不覆蓋原欄位，只補上）——
+  const ensureImagesArr = (it) => {
+    const nx = { ...it };
+    if (!Array.isArray(nx.images)) {
+      const one = String(nx.image || "").trim();
+      nx.images = one ? [one] : [];
+    }
+    return nx;
+  };
+
+  // 草稿：以 image 欄位為準（你原本的行為保留）
   const [drafts, setDrafts] = React.useState(() =>
     items.map(it => ({
       id: it.id || nid(),
@@ -4180,7 +4287,7 @@ function ShopImageQuickset({ data, setData, admin }) {
     }))
   );
 
-  // 若外部 items 改變，草稿同步一次
+  // 若外部 items 改變，草稿同步一次（你原本的行為保留）
   React.useEffect(() => {
     setDrafts(items.map(it => ({
       id: it.id || nid(),
@@ -4189,41 +4296,95 @@ function ShopImageQuickset({ data, setData, admin }) {
     })));
   }, [items]);
 
-  // 正規化：去頭尾引號與空白（※ 只提供給「檔名自動補資料夾」那顆按鈕用；saveAll 不用它）
-const normPath = (s) => String(s || '').trim().replace(/^"+|"+$/g, '');
+  // 正規化：去頭尾引號與空白（只提供給「檔名自動補資料夾」按鈕用；saveAll 不用它）
+  const normPath = (s) => String(s || '').trim().replace(/^"+|"+$/g, '');
 
-// 儲存：把草稿寫回 data.shop.items[i].image（★ 原樣保存，不加工） 
-const saveAll = () => {
-  const next = items.map((it, i) => {
-    const image = drafts[i]?.image ?? '';   // 不做任何處理，原樣字串
-    return { ...it, image };                // ← 修正 ...it
-  });
-  setData({
-    ...data,                                // ← 修正 ...data
-    shop: { ...(data.shop || {}), items: next }  // ← 修正 ...(data.shop || {})
-  });
-  alert('已儲存圖片路徑到商品。之後「匯出」即可把路徑帶出。');
-};
+  // 儲存：把草稿寫回 data.shop.items[i].image（★ 原樣保存，不加工）
+  const saveAll = () => {
+    const next = items.map((it, i) => {
+      const image = drafts[i]?.image ?? '';   // 不做任何處理，原樣字串
+      return { ...it, image };                // ← 修正 ...it
+    });
+    setData({
+      ...data,                                // ← 修正 ...data
+      shop: { ...(data.shop || {}), items: next }  // ← 修正 ...(data.shop || {})
+    });
+    alert('已儲存圖片路徑到商品。之後「匯出」即可把路徑帶出。');
+  };
 
-// 若只貼「檔名.jpg」沒有資料夾，自動補 ./assets/products/（★ 僅在你按這顆鈕時才會變動）
-const applyBaseToEmpty = () => {
-  const base = './assets/products/';
-  setDrafts(ds => ds.map(d => {
-    const v = normPath(d.image);
-    if (!v) return d;
-    if (!v.includes('/')) return { ...d, image: base + v }; // ← 修正 ...d
-    return d;
-  }));
-};
+  // 若只貼「檔名.jpg」沒有資料夾，自動補 ./assets/products/（★ 僅在你按這顆鈕時才會變動）
+  const applyBaseToEmpty = () => {
+    const base = './assets/products/';
+    setDrafts(ds => ds.map(d => {
+      const v = normPath(d.image);
+      if (!v) return d;
+      if (!v.includes('/')) return { ...d, image: base + v }; // ← 修正 ...d
+      return d;
+    }));
+  };
 
+  // ====== 以下是「多圖管理」新增功能（不影響上面既有流程） ======
+
+  // 單張新增到 images[]
+  const addOneImage = (id, url) => {
+    const u = String(url || "").trim();
+    if (!u) return;
+    const base = data.shop?.items || [];
+    const next = base.map((it) => {
+      if ((it.id || "") !== id) return it;
+      const nx = ensureImagesArr(it);
+      if (!nx.images.includes(u)) {
+        nx.images = [...nx.images, u];
+        if (!nx.image) nx.image = u;          // 沒封面時補上
+      }
+      return { ...nx };
+    });
+    setData({ ...data, shop: { ...data.shop, items: next } });
+  };
+
+  // 多張批量（每行一個）
+  const addMultiImages = (id, text) => {
+    const lines = String(text || "")
+      .split(/\r?\n/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+    if (lines.length === 0) return;
+    const base = data.shop?.items || [];
+    const next = base.map((it) => {
+      if ((it.id || "") !== id) return it;
+      const nx = ensureImagesArr(it);
+      const set = new Set(nx.images);
+      for (const l of lines) set.add(l);
+      nx.images = Array.from(set);
+      if (!nx.image && nx.images.length > 0) nx.image = nx.images[0]; // 沒封面→第一張
+      return { ...nx };
+    });
+    setData({ ...data, shop: { ...data.shop, items: next } });
+  };
+
+  // 刪除某張圖片（並回退封面為新第一張）
+  const removeImageAt = (id, idx) => {
+    const base = data.shop?.items || [];
+    const next = base.map((it) => {
+      if ((it.id || "") !== id) return it;
+      const nx = ensureImagesArr(it);
+      const arr = [...nx.images];
+      if (idx < 0 || idx >= arr.length) return it;
+      arr.splice(idx, 1);
+      nx.images = arr;
+      nx.image = arr[0] || ""; // 封面回退
+      return { ...nx };
+    });
+    setData({ ...data, shop: { ...data.shop, items: next } });
+  };
 
   return (
     <section
       className="mt-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur p-4"
-      aria-label="商品圖片路徑快速設定"
+      aria-label="商品圖片路徑快速設定＋多圖管理"
     >
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-base font-semibold">🖼️ 商品圖片路徑（快速設定）</h3>
+        <h3 className="text-base font-semibold">🖼️ 商品圖片管理（保留舊功能＋新增多圖）</h3>
         <div className="flex gap-2">
           <button
             type="button"
@@ -4239,7 +4400,7 @@ const applyBaseToEmpty = () => {
             className="rounded-lg bg-brand text-white px-3 py-1.5 text-sm"
             title="把輸入的路徑寫回 data.shop.items"
           >
-            儲存全部
+            儲存全部（封面 image）
           </button>
         </div>
       </div>
@@ -4247,31 +4408,123 @@ const applyBaseToEmpty = () => {
       {items.length === 0 ? (
         <div className="text-sm text-slate-500">目前沒有商品可設定圖片。</div>
       ) : (
-        <div className="grid gap-2">
-          {drafts.map((d, i) => (
-            <div key={i} className="grid sm:grid-cols-2 gap-2 items-center rounded-xl border px-3 py-2">
-              <div className="text-sm">
-                <div className="font-medium">{items[i]?.name || d.name || '（未命名）'}</div>
-                {items[i]?.id && <div className="text-xs text-slate-500">ID：{items[i].id}</div>}
+        <div className="grid gap-4">
+          {items.map((raw, i) => {
+            const it = ensureImagesArr({ ...raw });
+            const d  = drafts[i] || { id: it.id, name: it.name || '', image: it.image || '' };
+            return (
+              <div key={it.id || i} className="rounded-xl border border-slate-200 dark:border-slate-700 p-3">
+                {/* 標題列 */}
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-sm">
+                    <div className="font-medium truncate">{it.name || '（未命名）'}</div>
+                    {it.id && <div className="text-xs text-slate-500">ID：{it.id}</div>}
+                  </div>
+                  <div className="text-xs text-slate-500">{(it.images || []).length} 張</div>
+                </div>
+
+                {/* 你原本的：單一封面 image 輸入（保留） */}
+                <div className="grid sm:grid-cols-2 gap-2 items-center mb-3">
+                  <label className="text-xs text-slate-500 sm:col-span-1">封面 image（單一字串）</label>
+                  <input
+                    className="rounded-lg border px-3 py-2 text-sm sm:col-span-1"
+                    placeholder="貼上封面圖片路徑或完整網址"
+                    value={d.image}
+                    onChange={e => {
+                      const v = e.target.value;
+                      setDrafts(ds => ds.map((x, j) => (j === i ? { ...x, image: v } : x)));
+                    }}
+                  />
+                </div>
+
+                {/* 新增：多圖縮圖清單（管理可刪單張） */}
+                <div>
+                  <div className="text-xs text-slate-500 mb-1">更多圖片（images[]）</div>
+                  <div className="no-scrollbar overflow-x-auto flex gap-2 mb-2">
+                    {(it.images || []).length === 0 ? (
+                      <div className="text-xs text-slate-500">尚無其他圖片</div>
+                    ) : (
+                      it.images.map((src, k) => (
+                        <div key={k} className="relative shrink-0">
+                          <img
+                            src={src}
+                            alt={`圖${k + 1}`}
+                            className="w-28 h-28 object-cover rounded-lg border border-slate-200/70 dark:border-slate-700/70"
+                            loading="lazy"
+                          />
+                          <button
+                            className="absolute -top-2 -right-2 bg-rose-600 text-white w-6 h-6 rounded-full text-xs"
+                            title="刪除此圖"
+                            onClick={() => removeImageAt(it.id, k)}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))
+                    )}
+                  </div>
+
+                  {/* 單張新增 */}
+                  <div className="flex gap-2 items-center mb-2">
+                    <input
+                      type="url"
+                      placeholder="貼上單張圖片網址..."
+                      className="flex-1 rounded-lg border px-3 py-1.5 text-sm bg-white/80 dark:bg-slate-800/70"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          addOneImage(it.id, e.currentTarget.value);
+                          e.currentTarget.value = "";
+                        }
+                      }}
+                    />
+                    <button
+                      className="rounded-lg border px-3 py-1.5 text-sm"
+                      onClick={(e) => {
+                        const input = e.currentTarget.previousElementSibling;
+                        if (input && input.value) {
+                          addOneImage(it.id, input.value);
+                          input.value = "";
+                        }
+                      }}
+                    >
+                      新增
+                    </button>
+                  </div>
+
+                  {/* 多張批量貼上（每行一張；貼上即匯入並清空） */}
+                  <div className="grid gap-2">
+                    <label className="text-xs text-slate-500">批量貼上（每行一個圖片網址）</label>
+                    <textarea
+                      rows={3}
+                      placeholder="https://...1.jpg
+https://...2.png"
+                      className="rounded-lg border px-3 py-2 text-sm bg-white/80 dark:bg-slate-800/70"
+                      onPaste={(e) => {
+                        setTimeout(() => {
+                          const v = e.currentTarget.value;
+                          if (v && v.trim()) {
+                            addMultiImages(it.id, v);
+                            e.currentTarget.value = "";
+                          }
+                        }, 0);
+                      }}
+                    />
+                    <div className="text-xs text-slate-500">
+                      貼上後會自動匯入並清空輸入框；重複網址會自動略過。
+                    </div>
+                  </div>
+                </div>
               </div>
-              <input
-                className="rounded-lg border px-3 py-2 text-sm"
-                placeholder="貼上圖片路徑（可貼檔名、相對路徑 ./assets/products/... 或完整網址）"
-                value={d.image}
-                onChange={e => {
-                  const v = e.target.value;
-                  setDrafts(ds => ds.map((x, j) => (j === i ? { ...x, image: v } : x)));
-                }}
-              />
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
       <p className="mt-3 text-xs text-slate-500">
         小提醒：把圖片放進 <code>assets/products/</code> 後，可以只貼
         <code> 檔名.jpg</code>，再按「檔名自動補資料夾」。或直接貼相對路徑 <code>./assets/products/檔名.jpg</code>，
-        也支援完整網址 <code>https://...</code>。
+        也支援完整網址 <code>https://...</code>。<br/>
+        多圖區會即時更新 <code>images[]</code> 與封面 <code>image</code>（刪除時封面自動回退）。
       </p>
     </section>
   );
