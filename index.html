@@ -336,7 +336,10 @@ function Store({ data, admin, setData, query = "" }) {
                     <div className="pt-1 grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {x._images.map((src,idx)=>(
                         <div key={idx} className="aspect-square overflow-hidden rounded-lg border bg-white/60 dark:bg-slate-900/50 grid place-content-center">
-                          <img src={src} alt="" className="w-full h-full object-contain" loading="lazy"/>
+                          <img src={src} alt="" className="w-full h-full object-contain"
+     data-zoomable data-gallery={`store-${x.id}`} data-index={idx}
+     onClick={(e)=>window.__LB__?.openFrom(e.currentTarget)} />
+
                         </div>
                       ))}
                     </div>
@@ -486,7 +489,8 @@ function StoreEditor({ data, setData, onClose }) {
       stock: it.stock ?? '',
       desc: it.desc || it.intro || '',
       images: Array.isArray(it.images) ? it.images.filter(Boolean) : [],
-      buyUrl: it.buyUrl || '',
+      imagesText: Array.isArray(it.images) ? it.images.join('\n') : '',  
+buyUrl: it.buyUrl || '',
       tags: Array.isArray(it.tags) ? it.tags.filter(Boolean) : [],
     };
   }
@@ -589,12 +593,18 @@ function StoreEditor({ data, setData, onClose }) {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <textarea
-                    className="rounded-lg border px-3 py-2"
-                    placeholder="多張圖片：每行一個 URL（images）"
-                    rows={5}
-                    value={(it.images||[]).join('\n')}
-                    onChange={e=>up(it.id, 'images', e.target.value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean))}
-                  />
+  className="rounded-lg border px-3 py-2"
+  placeholder="多張圖片：每行一個 URL（images）"
+  rows={5}
+  value={it.imagesText ?? (it.images||[]).join('\n')}
+  onChange={e=>{
+    const raw = e.target.value;                        // 原樣保留（含空白行）
+    up(it.id, 'imagesText', raw);                      // 1) 儲存原始文字
+    const imgs = raw.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+    up(it.id, 'images', imgs);                         // 2) 同步解析給預覽/儲存用
+  }}
+/>
+
                   <input
                     className="rounded-lg border px-3 py-2"
                     placeholder="標籤（逗號分隔），例如：玩具,家電"
@@ -604,15 +614,16 @@ function StoreEditor({ data, setData, onClose }) {
                 </div>
 
                 {/* 預覽縮圖列 */}
-                {Array.isArray(it.images) && it.images.length>0 && (
-                  <div className="flex gap-2 overflow-x-auto no-scrollbar pt-1">
-                    {it.images.map((src, idx)=>(
-                      <div key={src+idx} className="w-20 h-16 rounded-lg overflow-hidden border">
-                        <img src={src} alt="" className="w-full h-full object-cover" />
-                      </div>
-                    ))}
-                  </div>
-                )}
+               {Array.isArray(it.images) && it.images.length>0 && (
+  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 pt-1">
+    {it.images.map((src, idx)=>(
+      <div key={src+idx} className="aspect-square rounded-lg overflow-hidden border">
+        <img src={src} alt="" className="w-full h-full object-cover" />
+      </div>
+    ))}
+  </div>
+)}
+
 
                 <div className="flex justify-between items-center pt-1">
                   <span className="text-xs text-slate-500">ID：{it.id}</span>
@@ -2499,7 +2510,8 @@ const fmtDate = React.useCallback((d) => {
   <div className="fixed inset-0 z-50" onClick={()=>setShowCal(false)}>
     {/* 黑色遮罩（此層不再需要 onClick，維持視覺） */}
     <div className="absolute inset-0 bg-black/40" />
-    <div className="absolute inset-0 flex items-center justify-center p-4">
+    <div className="absolute inset-0 flex items-start justify-center p-4 overflow-auto sm:items-center">
+
       {/* 卡片主體：阻止冒泡，避免點擊卡片內部也被當成關閉 */}
       <div
         className="w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl p-4"
@@ -4571,6 +4583,132 @@ https://...2.png"
     </section>
   );
 }
+
+// ===== 通用燈箱（必要功能版） =====
+function LightboxRoot() {
+  const [open, setOpen] = React.useState(false);
+  const [imgs, setImgs] = React.useState([]);
+  const [idx, setIdx]   = React.useState(0);
+  const originRef = React.useRef(null);
+
+  // 影像平移/縮放（簡版）
+  const [scale, setScale] = React.useState(1);
+  const [tx, setTx] = React.useState(0);
+  const [ty, setTy] = React.useState(0);
+  const last = React.useRef({ x:0, y:0, p1:null, p2:null, dist:0 });
+
+  // 開啟 API（全域）
+  React.useEffect(()=>{
+    window.__LB__ = {
+      openFrom(el){
+        // 往上找 data-gallery
+        const node = el.closest("[data-gallery]");
+        if(!node) return;
+        const group = node.getAttribute("data-gallery");
+        const all = Array.from(document.querySelectorAll(`[data-zoomable][data-gallery="${group}"]`));
+        const sources = all.map(n => n.getAttribute("src"));
+        const start = Number(el.getAttribute("data-index") || "0");
+        originRef.current = el;
+        setImgs(sources);
+        setIdx(Math.max(0, Math.min(start, sources.length-1)));
+        setScale(1); setTx(0); setTy(0);
+        setOpen(true);
+      }
+    };
+  },[]);
+
+  // 鍵盤控制（ESC/左右鍵）
+  React.useEffect(()=>{
+    if(!open) return;
+    const onKey = (e)=>{
+      if(e.key === "Escape"){ e.preventDefault(); close(); }
+      else if(e.key === "ArrowLeft"){ setIdx(i=>Math.max(0, i-1)); resetTransform(); }
+      else if(e.key === "ArrowRight"){ setIdx(i=>Math.min(imgs.length-1, i+1)); resetTransform(); }
+    };
+    window.addEventListener("keydown", onKey);
+    return ()=>window.removeEventListener("keydown", onKey);
+  },[open, imgs.length]);
+
+  function resetTransform(){ setScale(1); setTx(0); setTy(0); }
+
+  function close(){
+    setOpen(false);
+    // 焦點回到原圖
+    setTimeout(()=>{ originRef.current?.focus?.(); }, 0);
+  }
+
+  // 滑鼠拖曳 / 觸控縮放
+  function onPointerDown(e){
+    e.preventDefault();
+    e.currentTarget.setPointerCapture(e.pointerId);
+    if(last.current.p1 && !last.current.p2) last.current.p2 = { id:e.pointerId, x:e.clientX, y:e.clientY };
+    if(!last.current.p1) last.current.p1 = { id:e.pointerId, x:e.clientX, y:e.clientY };
+    last.current.x = e.clientX; last.current.y = e.clientY;
+    if(last.current.p1 && last.current.p2){
+      const dx = last.current.p1.x - last.current.p2.x;
+      const dy = last.current.p1.y - last.current.p2.y;
+      last.current.dist = Math.hypot(dx, dy) || 1;
+    }
+  }
+  function onPointerMove(e){
+    if(!open) return;
+    if(last.current.p1 && last.current.p2){
+      // 雙指縮放
+      const p = (p)=>p?.id===e.pointerId ? { id:e.pointerId, x:e.clientX, y:e.clientY } : p;
+      last.current.p1 = p(last.current.p1);
+      last.current.p2 = p(last.current.p2);
+      const dx = (last.current.p1.x - last.current.p2.x);
+      const dy = (last.current.p1.y - last.current.p2.y);
+      const d  = Math.hypot(dx, dy) || 1;
+      const s  = Math.min(4, Math.max(1, scale * (d / (last.current.dist || d))));
+      setScale(s);
+      last.current.dist = d;
+    }else{
+      // 單指/滑鼠拖曳
+      const dx = e.clientX - last.current.x;
+      const dy = e.clientY - last.current.y;
+      setTx(t=>t+dx); setTy(t=>t+dy);
+      last.current.x = e.clientX; last.current.y = e.clientY;
+    }
+  }
+  function onPointerUp(e){
+    if(last.current.p2?.id===e.pointerId) last.current.p2=null;
+    else if(last.current.p1?.id===e.pointerId) last.current.p1=null;
+  }
+   function onDblClick(){ setScale(s => s>1 ? 1 : 2); setTx(0); setTy(0); }
+
+  if(!open) return null;
+  return (
+    <div className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm flex flex-col" role="dialog" aria-modal="true">
+      <div className="flex items-center justify-between px-3 py-2">
+        <div className="text-slate-200 text-sm">{idx+1} / {imgs.length}</div>
+        <div className="flex items-center gap-2">
+          <button className="rounded-md border border-white/30 text-white px-2 py-1 text-sm" onClick={()=>{ setIdx(i=>Math.max(0,i-1)); resetTransform(); }} disabled={idx<=0}>←</button>
+          <button className="rounded-md border border-white/30 text-white px-2 py-1 text-sm" onClick={()=>{ setIdx(i=>Math.min(imgs.length-1,i+1)); resetTransform(); }} disabled={idx>=imgs.length-1}>→</button>
+          <button className="rounded-md bg-white text-black px-2 py-1 text-sm" onClick={close}>關閉</button>
+        </div>
+      </div>
+      <div className="relative flex-1 overflow-hidden touch-pan-y">
+        <img
+          src={imgs[idx]}
+          alt=""
+          className="absolute left-1/2 top-1/2 select-none"
+          style={{
+            transform:`translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(${scale})`,
+            maxWidth:"90vw", maxHeight:"75vh"
+          }}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerUp}
+          onDoubleClick={onDblClick}
+          draggable={false}
+        />
+      </div>
+    </div>
+  );
+}
+
 
     // —— Render ——
     const root = ReactDOM.createRoot(document.getElementById('root'));
