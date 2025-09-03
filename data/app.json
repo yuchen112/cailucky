@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-02T13:28:42.555Z"
+    "exportedAt": "2025-09-03T19:11:18.350Z"
   },
   "data": {
     "homepage": {
@@ -447,6 +447,38 @@
       "drawMaxPerRun": 500,
       "drawPublicShowLimit": 50,
       "drawCooldownSec": 10
+    },
+    "store": {
+      "items": [
+        {
+          "id": "5dli6tdz",
+          "name": "52TOYS熊貓卷兒童趣味日記系列童趣日記",
+          "price": "290",
+          "stock": "",
+          "desc": "盲盒",
+          "images": [
+            "assets/products/panda/1.jpg"
+          ],
+          "buyUrl": "待定",
+          "tags": [
+            "盲盒.玩具"
+          ]
+        },
+        {
+          "id": "365z3xh4",
+          "name": "TOP TOY 迪士尼 史迪奇 mini 絨絨 系列盲袋",
+          "price": "220",
+          "stock": "",
+          "desc": "盲袋1包 (內含3個)",
+          "images": [
+            "assets/products/sticth/1.jpg"
+          ],
+          "buyUrl": "待定",
+          "tags": [
+            "玩具.盲包"
+          ]
+        }
+      ]
     }
   },
   "admins": [
