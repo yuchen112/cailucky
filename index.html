@@ -243,6 +243,7 @@ function Store({ data, admin, setData, query = "" }) {
   const React = window.React || globalThis.React;
 
   // ---------- 視圖與分頁 ----------
+  // 保留原本的狀態鍵值，但將文案對齊「9 宮格 / 16 宮格」
   const [view, setView] = React.useState("grid9"); // grid9 / grid16
   const [page, setPage] = React.useState(1);
   const PAGE_SIZE = 20;
@@ -253,9 +254,10 @@ function Store({ data, admin, setData, query = "" }) {
                  : (x?.image ? [String(x.image)] : []);
     return { ...x, _images: images };
   };
+  // 手機也能真正看到 3 / 4 欄
   const gridCols = view === "grid16"
-    ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4"
-    : "grid-cols-2 sm:grid-cols-3";
+    ? "grid-cols-4"  // 16 宮格：4 欄
+    : "grid-cols-3"; // 9  宮格：3 欄
   const HasStoreEditor = typeof StoreEditor === "function";
 
   // ---------- 資料 + 搜尋 ----------
@@ -263,12 +265,14 @@ function Store({ data, admin, setData, query = "" }) {
   const items = React.useMemo(() => {
     const q = String(query || "").trim().toLowerCase();
     let list = itemsRaw.map(normalize);
+    if (!admin) list = list.filter(it => it.enabled !== false);
     if (!q) return list;
     return list.filter(x => {
-      const hay = [x?.name, x?.desc, x?.intro].map(s => String(s || "").toLowerCase()).join(" ");
+      const hay = [x?.name, x?.desc, x?.intro, (Array.isArray(x?.tags) ? x.tags.join(" ") : "")]
+        .map(s => String(s || "").toLowerCase()).join(" ");
       return hay.includes(q);
     });
-  }, [itemsRaw, query]);
+  }, [itemsRaw, admin, query]);
 
   // ---------- 分頁 ----------
   const total = items.length;
@@ -301,70 +305,152 @@ function Store({ data, admin, setData, query = "" }) {
         )}
       </div>
 
-      {/* 檢視切換 */}
+      {/* 檢視切換：文案改為 9/16 宮格 */}
       <div className="flex items-center gap-2 text-sm">
-        <button className={`rounded-md border px-2 py-1 ${view==='grid9'?'bg-brand text-white border-brand':''}`} onClick={()=>setView('grid9')}>緊湊</button>
-        <button className={`rounded-md border px-2 py-1 ${view==='grid16'?'bg-brand text-white border-brand':''}`} onClick={()=>setView('grid16')}>大圖</button>
+        <button
+          className={`rounded-md border px-2 py-1 ${view==='grid9' ? 'bg-brand text-white border-brand' : ''}`}
+          onClick={()=>setView('grid9')}
+          aria-pressed={view==='grid9'}
+        >
+          9 宮格
+        </button>
+        <button
+          className={`rounded-md border px-2 py-1 ${view==='grid16' ? 'bg-brand text-white border-brand' : ''}`}
+          onClick={()=>setView('grid16')}
+          aria-pressed={view==='grid16'}
+        >
+          16 宮格
+        </button>
       </div>
 
-      {/* 清單 */}
-      <div className={`grid ${gridCols} gap-3`}>
-        {pageItems.map((x,i)=>{
-          const name  = x?.name || "（未命名）";
-          const price = x?.price != null ? x.price : (x?.amount != null ? x.amount : null);
-          const cover = x?._images?.[0] || "";
+      {/* 商品清單 */}
+      <div
+        className={`grid ${gridCols} gap-3`}
+        aria-label="社群商店清單"
+      >
+        {pageItems.map((x, i) => {
+          const name   = x?.name || '（未命名）';
+          const price  = (x?.price ?? '') !== '' ? x.price : null;
+          const cover  = Array.isArray(x._images) && x._images.length>0 ? x._images[0] : '';
+          const buyUrl = x?.buyUrl || x?.url || '';
+          const remain = [x?.stock, x?.qty, x?.quantity, x?.remaining]
+            .find(v => (typeof v === 'number' && Number.isFinite(v)) || (typeof v === 'string' && v.trim()!=='' && !Number.isNaN(+v)));
+          const galleryId = `store-${x.id || i}`;
+
           return (
-            <details key={x.id || i} className="rounded-2xl shadow bg-white dark:bg-neutral-900">
+            <details
+              key={x.id || i}
+              className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden"
+            >
+              {/* 摘要卡（可點擊放大、右上角就手 CTA） */}
               <summary className="list-none cursor-pointer p-3">
                 <div className="flex flex-col">
-                  <div className="aspect-square overflow-hidden rounded-xl bg-white/60 dark:bg-slate-900/50 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
+                  <div className="relative aspect-square overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
                     {cover
-                      ? <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" />
+                      ? (
+                        <img
+                          src={cover}
+                          alt=""
+                          className="w-full h-full object-contain"
+                          data-zoomable
+                          data-gallery={galleryId}
+                          data-index={0}
+                          onClick={(e)=>{ e.stopPropagation(); window.__LB__?.openFrom(e.currentTarget); }}
+                          loading="lazy"
+                        />
+                      )
                       : <div className="text-slate-400 text-sm">無圖片</div>}
+                    {/* 右上角：快速前往購買（有連結才顯示，不影響原底部 CTA） */}
+                    {buyUrl && (
+                      <a
+                        href={buyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="absolute right-2 top-2 rounded-full bg-black/60 text-white px-2 py-1 text-xs"
+                        onClick={(e)=>e.stopPropagation()}
+                        aria-label="前往購買"
+                        title="前往購買"
+                      >
+                        前往
+                      </a>
+                    )}
                   </div>
-                  <div className="mt-2 text-sm font-medium truncate" title={name}>{name}</div>
-                  {price!=null && <div className="text-xs text-slate-500">售價：{price}</div>}
+                  <div className="mt-2 text-[13px] font-medium truncate" title={name}>{name}</div>
+                  <div className="flex items-center gap-2 text-xs text-slate-500">
+                    {price!=null && <div>售價：{price}</div>}
+                    {remain!=null && <div className="ml-auto px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">庫存：{remain}</div>}
+                  </div>
                 </div>
               </summary>
 
+              {/* 詳情區塊 */}
               <div className="px-3 pb-3">
+                {/* 詳情頂部就手 CTA（保留底部原 CTA） */}
+                {buyUrl && (
+                  <div className="pt-2 pb-2">
+                    <a
+                      href={buyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center w-full rounded-lg bg-brand text-white px-4 py-2 text-sm"
+                    >
+                      前往購買
+                    </a>
+                  </div>
+                )}
+
+                {/* 文字介紹 */}
                 <div className="mt-2 text-sm space-y-2">
                   <div className="font-medium">{name}</div>
                   {price!=null && <div className="text-slate-600">售價：{price}</div>}
                   {x.desc  && <div className="whitespace-pre-wrap">{x.desc}</div>}
                   {x.intro && <div className="whitespace-pre-wrap">{x.intro}</div>}
+                </div>
 
-                  {Array.isArray(x._images) && x._images.length>0 && (
-                    <div className="pt-1 grid grid-cols-2 sm:grid-cols-3 gap-2">
-                      {x._images.map((src,idx)=>(
-                        <div key={idx} className="aspect-square rounded-xl border bg-white/60 dark:bg-slate-900/50 grid place-content-center">
-                          <img
-                            src={src}
-                            alt=""
-                            className="w-full h-full object-contain"
-                            data-zoomable
-                            data-gallery={`store-${x.id || i}`}  // 🔧 確保唯一群組鍵
-                            data-index={idx}
-                            onClick={(e)=>window.__LB__?.openFrom(e.currentTarget)}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* 🔗 有 buyUrl 才顯示《前往購買》 */}
-                  {x?.buyUrl && (
-                    <div className="pt-1">
-                      <a
-                        href={x.buyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center w-full rounded-lg bg-brand text-white px-4 py-2 text-sm shadow-soft"
-                        title="前往購買"
+                {/* 縮圖列：改為行動友善的水平滑動＋ snap，不再把頁面撐長 */}
+                {Array.isArray(x._images) && x._images.length>0 && (
+                  <div className="mt-3 -mx-1 px-1 flex overflow-x-auto gap-2 snap-x snap-mandatory">
+                    {x._images.map((src,idx)=>(
+                      <button
+                        key={idx}
+                        className="shrink-0 w-24 aspect-square rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 snap-start bg-white/60 dark:bg-slate-900/50"
+                        title={`圖片 ${idx+1}`}
+                        onClick={(e)=>{ e.preventDefault(); window.__LB__?.openFrom(e.currentTarget.querySelector('img')); }}
                       >
-                        前往購買
-                      </a>
-                    </div>
+                        <img
+                          src={src}
+                          alt=""
+                          className="w-full h-full object-contain"
+                          data-zoomable
+                          data-gallery={galleryId}
+                          data-index={idx}
+                          loading="lazy"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* 底部 CTA（原本就有，保留） */}
+                <div className="mt-3">
+                  {buyUrl ? (
+                    <a
+                      href={buyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center w-full rounded-lg bg-brand text-white px-4 py-2 text-sm"
+                      title="前往購買"
+                    >
+                      前往購買
+                    </a>
+                  ) : (
+                    <button
+                      disabled
+                      className="inline-flex items-center justify-center w-full rounded-lg border px-4 py-2 text-sm text-slate-400"
+                      title="尚未提供購買連結"
+                    >
+                      尚未提供購買連結
+                    </button>
                   )}
                 </div>
               </div>
@@ -373,11 +459,11 @@ function Store({ data, admin, setData, query = "" }) {
         })}
       </div>
 
-      {/* 分頁：一次最多 5 個頁碼 */}
+      {/* 分頁：一次最多 5 個頁碼（原樣保留） */}
       <div className="mt-4 flex items-center justify-center gap-1 select-none">
         <button className="rounded-lg border px-3 py-1.5 text-sm" disabled={page<=1} onClick={()=>setPage(p=>Math.max(1,p-1))}>上一頁</button>
         {Array.from({length:(endPage - startPage + 1)}, (_,i)=>startPage+i).map(p=>(
-          <button key={p} className={`rounded-lg border px-3 py-1.5 text-sm ${p===page?'bg-brand text-white border-brand':''}`} onClick={()=>setPage(p)}>{p}</button>
+          <button key={p} className={`rounded-lg border px-3 py-1.5 text-sm ${p===page ? 'bg-brand text-white border-brand' : ''}`} onClick={()=>setPage(p)}>{p}</button>
         ))}
         <button className="rounded-lg border px-3 py-1.5 text-sm" disabled={page>=maxPage} onClick={()=>setPage(p=>Math.min(maxPage,p+1))}>下一頁</button>
       </div>
