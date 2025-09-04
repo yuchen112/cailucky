@@ -91,6 +91,14 @@ body::before{
 }
 .menu-pane > *{ position: relative; z-index:1; }
 
+/* === Mobile tweaks (不影響桌機) === */
+@media (max-width: 640px) {
+  .toolbar-grid, .flex-wrap, .px-2 { gap: 8px; }
+  .paginator-top { display: none; }     /* 上方分頁器在手機隱藏，保留下方那組 */
+  .min-h-\[44px\] { min-height: 44px !important; }
+  .sheet-w { width: min(96vw, 560px) !important; }
+}
+
 </style>
 
 <!-- [IMGIO CSS START] -->
@@ -203,6 +211,33 @@ const HISTORY_STATUS_STYLE = {
   "待寄送":   { bg: "bg-amber-100/70 dark:bg-amber-300/15",     text: "text-amber-800 dark:text-amber-300",     ring:"ring-amber-500/20" },
   "放棄領獎": { bg: "bg-slate-200/70 dark:bg-slate-300/15",     text: "text-slate-700 dark:text-slate-300",     ring:"ring-slate-400/20" },
 };
+
+/* =========================================
+ * 全域捲動鎖：避免彈窗/檢視器異常造成整站卡住
+ * ========================================= */
+(function(){
+  const lockKey = "__BODY_SCROLL_LOCK_COUNT__";
+  if (!window[lockKey]) window[lockKey] = 0;
+  function apply() {
+    if (window[lockKey] > 0) {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+    } else {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    }
+  }
+  window.BodyScrollLock = {
+    lock() { window[lockKey] = Math.max(0, (window[lockKey]||0)) + 1; apply(); },
+    unlock() { window[lockKey] = Math.max(0, (window[lockKey]||0) - 1); apply(); },
+    reset() { window[lockKey] = 0; apply(); }
+  };
+  // 保險機制：頁面隱藏/離開時自動還原
+  window.addEventListener("pagehide", ()=>window.BodyScrollLock.reset());
+  document.addEventListener("visibilitychange", ()=>{ if (document.visibilityState !== "visible") window.BodyScrollLock.reset(); });
+})();
 
 // === 列頭：日期 / 獎品名稱(截斷) / 狀態（靠右不換行） ===
 function HistoryHeaderRow({ rec }) {
@@ -969,185 +1004,708 @@ function CardCollapse({summary, children, defaultOpen=false}) {
   );
 }
 
-/* ============================
- * 跳出式產品資訊面板（共用：社群商店 / 點數商城）
- * - 手機/桌面皆置中
- * - 點擊遮罩空白區域關閉
- * - 支援返回鍵與 ESC 關閉
- * ============================ */
-function ProductSheet({
-  open = false,
-  item = null,
-  context = "store",                 // "store" | "shop"
-  onClose = () => {},
-  onOpenViewer = () => {},
-  contactUrl = "",
-  onCopyTemplate = () => {}
-}) {
+/* =========================================
+ * 全域 Viewer（圖片查看器，供各處使用）
+ * - 點遮罩空白區域關閉
+ * - 左右點/滑切換、雙擊放大、下滑關閉
+ * - 使用 BodyScrollLock 避免整站卡住
+ * ========================================= */
+function Viewer({ state, setState }) {
   const React = window.React || globalThis.React;
-  const overlayRef = React.useRef(null);
+  const containerRef = React.useRef(null);
+  const imgRef = React.useRef(null);
 
-  const images = React.useMemo(() => {
-    const arr = Array.isArray(item?.images) ? item.images
-              : (item?.image ? [String(item.image)] : []);
-    return (arr || []).filter(Boolean);
-  }, [item]);
+  const [scale, setScale] = React.useState(1);
+  const [tx, setTx] = React.useState(0);
+  const [ty, setTy] = React.useState(0);
 
-  const tags = React.useMemo(() => {
-    if (Array.isArray(item?.tags)) return item.tags;
-    if (typeof item?.tags === "string") return item.tags.split(",").map(s => s.trim()).filter(Boolean);
-    return [];
-  }, [item]);
+  const hasImages = Array.isArray(state?.images) && state.images.length > 0;
+  const index = Math.max(0, Math.min(state?.index || 0, (state?.images?.length || 1) - 1));
+  const src = hasImages ? state.images[index] : "";
 
-  const needPoints = React.useMemo(() => {
-    const p = item?.points ?? item?.point ?? item?.needPoints ?? item?.need_point;
-    const n = (typeof p === "string" ? +p : p);
-    return (Number.isFinite(n) ? n : null);
-  }, [item]);
-
-  const buyUrl = item?.buyUrl || item?.url || "";
-  const price  = (item?.price ?? "") !== "" ? item?.price : null;
-  const remain = item?.stock ?? item?.qty ?? item?.quantity ?? item?.remaining ?? null;
-
-  const [index, setIndex] = React.useState(0);
-  React.useEffect(() => { setIndex(0); }, [item]);
-
-  // 開啟時：鎖背景捲動、pushState、監聽 ESC / popstate
+  // 鍵盤 & 鎖捲動（使用全域鎖）
   React.useEffect(() => {
-    if (!open) return;
-    const onKey = (e) => { if (e.key === "Escape") onClose(); };
-    const onPop = () => onClose();
-    document.addEventListener("keydown", onKey);
-    window.addEventListener("popstate", onPop);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    try { history.pushState({ sheet: true }, "", location.href); } catch {}
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      window.removeEventListener("popstate", onPop);
-      document.body.style.overflow = prevOverflow;
+    if (!state?.open) return;
+    BodyScrollLock.lock();
+    const onKey = (e) => {
+      if (e.key === "Escape") setState(v => ({ ...v, open: false }));
+      if (e.key === "ArrowLeft") setState(v => ({ ...v, index: (v.index - 1 + v.images.length) % v.images.length }));
+      if (e.key === "ArrowRight") setState(v => ({ ...v, index: (v.index + 1) % v.images.length }));
     };
-  }, [open]);
+    document.addEventListener("keydown", onKey);
+    return () => { document.removeEventListener("keydown", onKey); BodyScrollLock.unlock(); };
+  }, [state?.open, state?.images?.length, setState]);
 
-  // 手勢簡易左右滑
+  // 換圖時重置縮放位移
+  React.useEffect(() => { setScale(1); setTx(0); setTy(0); }, [index]);
+
+  const onOverlayClick = (e) => { if (e.target === containerRef.current) setState(v => ({ ...v, open: false })); };
+  const onDoubleClick = (e) => { e.preventDefault(); setScale(s => s === 1 ? 2 : 1); if (scale !== 1) { setTx(0); setTy(0); } };
+
+  // 手勢：左右滑換圖、下滑關閉、拖曳平移（放大時）
   let sx = 0, sy = 0, dragging = false;
   const onTouchStart = (e) => { if (e.touches.length === 1) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; dragging = true; } };
+  const onTouchMove = (e) => { if (!dragging) return; const dx = e.touches[0].clientX - sx; const dy = e.touches[0].clientY - sy; if (scale > 1) { setTx(dx / 2); setTy(dy / 2); } };
   const onTouchEnd = (e) => {
     if (!dragging) return; dragging = false;
-    const ex = e.changedTouches?.[0]?.clientX ?? sx;
-    const ey = e.changedTouches?.[0]?.clientY ?? sy;
+    const ex = e.changedTouches?.[0]?.clientX ?? sx; const ey = e.changedTouches?.[0]?.clientY ?? sy;
     const dx = ex - sx, dy = ey - sy;
-    if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) && images.length > 1) {
-      if (dx > 0) setIndex(i => (i - 1 + images.length) % images.length);
-      else setIndex(i => (i + 1) % images.length);
+    if (Math.abs(dy) > 120 && Math.abs(dy) > Math.abs(dx)) { setState(v => ({ ...v, open: false })); return; }
+    if (Math.abs(dx) > 80 && scale === 1 && hasImages) {
+      if (dx > 0) setState(v => ({ ...v, index: (v.index - 1 + v.images.length) % v.images.length }));
+      else setState(v => ({ ...v, index: (v.index + 1) % v.images.length }));
     }
+    setTx(0); setTy(0);
   };
 
-  if (!open) return null;
-
-  const title = item?.name || "（未命名）";
-
-  const handleOverlayClick = (e) => {
-    // 點到遮罩（空白區域）才關閉；點內容不關
-    if (e.target === overlayRef.current) onClose();
-  };
+  if (!state?.open) return null;
 
   return (
-    <div
-      ref={overlayRef}
-      className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center"
-      role="dialog" aria-modal="true"
-      onMouseDown={handleOverlayClick}
-      onTouchStart={(e)=>{ /* 保留觸控起點，避免誤關 */ }}
-    >
-      {/* 內容容器：手機/桌面置中；小邊距避免貼邊；內容可滾動 */}
-      <div className="w-[min(100vw-16px,44rem)] max-h-[92vh] rounded-2xl bg-white dark:bg-slate-900 shadow-elevate overflow-hidden flex flex-col">
-        {/* Header */}
-        <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
-          <div className="min-w-0">
-            <div className="font-semibold truncate">{title}</div>
-            {context === "store" && price != null && <div className="text-sm text-slate-500">售價：{price}</div>}
-            {context === "shop"  && needPoints != null && <div className="text-sm text-slate-500">需求點數：{needPoints}</div>}
-          </div>
-          <button className="rounded-full border px-3 py-1.5 text-sm" onClick={onClose} aria-label="關閉">關閉</button>
+    <div ref={containerRef} className="fixed inset-0 z-[999] bg-black/85 flex flex-col" role="dialog" aria-modal="true" onClick={onOverlayClick}>
+      <div className="flex items-center justify-between px-3 py-2 text-white text-sm">
+        <div className="truncate pr-2">{state?.title || ""}</div>
+        <div className="flex items-center gap-2">
+          {hasImages && <span>{index + 1} / {state.images.length}</span>}
+          <button className="px-2 py-1 rounded bg-white/10" onClick={() => setState(v => ({ ...v, open: false }))}>關閉</button>
         </div>
+      </div>
 
-        {/* Body：主圖 + 縮圖 + 文字 */}
-        <div className="flex-1 overflow-y-auto">
-          {/* 主圖輪播（等比置中、支援左右滑 & 點擊進 Viewer） */}
-          <div className="relative bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
-            <div className="aspect-square w-full grid place-content-center" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-              {images.length > 0
-                ? <img
-                    src={images[index]}
-                    alt=""
-                    className="w-full h-full object-contain select-none"
-                    onClick={() => onOpenViewer(images, index, title, buyUrl)}
-                  />
-                : <div className="text-slate-400 text-sm">無圖片</div>}
+      <div className="relative flex-1 flex items-center justify-center select-none"
+           onDoubleClick={onDoubleClick} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
+        {hasImages && (
+          <>
+            <button className="absolute left-0 top-0 h-full w-1/5" onClick={(e)=>{ e.stopPropagation(); setState(v => ({ ...v, index: (v.index - 1 + v.images.length) % v.images.length })); }} aria-label="上一張" />
+            <button className="absolute right-0 top-0 h-full w-1/5" onClick={(e)=>{ e.stopPropagation(); setState(v => ({ ...v, index: (v.index + 1) % v.images.length })); }} aria-label="下一張" />
+          </>
+        )}
+        {src
+          ? <img ref={imgRef} src={src} alt="" style={{ transform: `translate(${tx}px, ${ty}px) scale(${scale})`, transition: 'transform .15s ease-out' }}
+                 className="max-w-[min(100vw,1200px)] max-h-[calc(100vh-90px)] object-contain select-none" />
+          : <div className="text-white/70">無圖片</div>}
+      </div>
+
+      <div className="px-3 py-2 border-t border-white/10 text-xs text-white/70 text-center">
+        左右滑動換圖 · 雙擊放大 · 點空白關閉
+      </div>
+    </div>
+  );
+}
+
+
+/* ============================
+ * 等待開獎（清單 + 跳出式資訊 + 抽獎展示）
+ * - 不刪任何既有功能（編輯/新增/刪除/三種轉歷史/搜尋/分頁/9或16宮格…）
+ * - 點卡片：打開 ProductSheet（context="pending"）
+ * ============================ */
+function Pending({ data, admin, setData, query = "" }) {
+  const React = window.React || globalThis.React;
+  const nidSafe = (typeof nid === "function") ? nid : () => Math.random().toString(36).slice(2);
+
+  const prefKey = "pending_prefs_v2";
+  const loadPrefs = () => { try { return JSON.parse(localStorage.getItem(prefKey) || "{}"); } catch { return {}; } };
+  const savePrefs = (p) => { try { localStorage.setItem(prefKey, JSON.stringify({ ...loadPrefs(), ...p })); } catch {} };
+
+  const [view, setView] = React.useState(loadPrefs().view || "grid9"); // grid9 / grid16
+  const [pageSize, setPageSize] = React.useState(loadPrefs().pageSize || 20);
+  const [page, setPage] = React.useState(1);
+  React.useEffect(()=>savePrefs({view}),[view]);
+  React.useEffect(()=>savePrefs({pageSize}),[pageSize]);
+
+  // 兼容：pending.items 或 pending 陣列
+  const raw = Array.isArray(data?.pending?.items) ? data.pending.items :
+              (Array.isArray(data?.pending) ? data.pending : []);
+
+  const parseLinesClean = (txt) => String(txt||"").split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+
+  const normalizeItem = (it) => {
+    const images = Array.isArray(it?.images) ? it.images : (it?.image ? [String(it.image)] : []);
+    const tags   = Array.isArray(it?.tags) ? it.tags   : (typeof it?.tags === "string" ? it.tags.split(",").map(s=>s.trim()).filter(Boolean) : []);
+    let candidates = [];
+    if (Array.isArray(it?.participants)) candidates = it.participants;
+    else if (Array.isArray(it?.members)) candidates = it.members;
+    else if (Array.isArray(it?.list)) candidates = it.list;
+    else if (Array.isArray(it?.candidates)) candidates = it.candidates;
+    else if (typeof it?.listText === "string") candidates = parseLinesClean(it.listText);
+    const planned = Number.isFinite(+it?.plannedWinners) ? +it.plannedWinners : 1;
+    return { ...it, _images: images, _tags: tags, _candidates: candidates.map(String).filter(Boolean), _planned: planned };
+  };
+
+  const allItems = React.useMemo(()=> raw.map(normalizeItem), [raw]);
+
+  // 搜尋
+  const [search, setSearch] = React.useState(query || "");
+  const filtered = React.useMemo(()=>{
+    const kw = String(search||"").trim().toLowerCase();
+    return allItems.filter(x=>{
+      const hay = [x?.title, x?.name, x?.desc, x?.intro, x?._tags?.join(" ")].map(s=>String(s||"").toLowerCase()).join(" ");
+      return !kw || hay.includes(kw);
+    });
+  }, [allItems, search]);
+
+  // 排序（按更新時間）
+  const sorted = React.useMemo(()=>{
+    const arr = [...filtered];
+    arr.sort((a,b)=> (new Date(b?.updatedAt||b?.createdAt||0) - new Date(a?.updatedAt||a?.createdAt||0)));
+    return arr;
+  }, [filtered]);
+
+  // 分頁
+  const total = sorted.length;
+  const maxPage = Math.max(1, Math.ceil(total / pageSize));
+  React.useEffect(()=>{ if (page>maxPage) setPage(maxPage); }, [maxPage, page]);
+  React.useEffect(()=>{ setPage(1); }, [search, view, pageSize]);
+
+  const start = (page-1)*pageSize;
+  const end   = Math.min(start + pageSize, total);
+  const windowSize = 5;
+  const startPage = Math.max(1, Math.min(page - Math.floor(windowSize/2), maxPage - windowSize + 1));
+  const endPage   = Math.min(maxPage, startPage + windowSize - 1);
+  const pageItems = sorted.slice(start, end);
+
+  // Viewer（共用全域 Viewer）
+  const [viewer, setViewer] = React.useState({ open:false, images:[], index:0, title:"" });
+  React.useEffect(()=>{
+    if (!viewer.open) return;
+    const onKey = (e)=>{
+      if (e.key==="Escape") setViewer(v=>({ ...v, open:false }));
+      if (e.key==="ArrowLeft") setViewer(v=>({ ...v, index:(v.index-1+v.images.length)%v.images.length }));
+      if (e.key==="ArrowRight") setViewer(v=>({ ...v, index:(v.index+1)%v.images.length }));
+    };
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return ()=>{ document.removeEventListener("keydown", onKey); document.body.style.overflow = prev; };
+  }, [viewer.open, viewer.images.length]);
+
+  const openViewer = (images, index, title="")=>{
+    const list = Array.isArray(images) ? images.filter(Boolean) : (images ? [images] : []);
+    if (!list.length) return;
+    setViewer({ open:true, images:list, index: Math.max(0, Math.min(index||0, list.length-1)), title });
+  };
+
+  // 表單（新增/編輯）
+  const [draft, setDraft] = React.useState({ date:"", title:"", image:"", participantsText:"", plannedWinners:"" });
+  const [editingId, setEditingId] = React.useState(null);
+
+  function upsertFromDraft() {
+    if (!admin) return alert("請先登入管理模式");
+    const title = (draft.title || "").trim();
+    if (!title) return alert("請填寫【獎項名稱】");
+    const planned = draft.plannedWinners !== "" ? Number(draft.plannedWinners) : 1;
+    if (draft.plannedWinners !== "" && !Number.isFinite(planned)) return alert("抽出名額需為數字");
+    const rec = {
+      id: editingId || nidSafe(),
+      title,
+      date: draft.date || "",
+      image: (draft.image || "").trim(),
+      participants: parseLinesClean(draft.participantsText),
+      plannedWinners: planned
+    };
+    if (editingId) {
+      const next = raw.map(x => x.id === editingId ? rec : x);
+      const nextP = Array.isArray(data?.pending?.items) ? { ...data.pending, items: next } : next;
+      setData(s => ({ ...s, pending: nextP })); setEditingId(null); alert("已儲存修改");
+    } else {
+      const next = [rec, ...raw];
+      const nextP = Array.isArray(data?.pending?.items) ? { ...data.pending, items: next } : next;
+      setData(s => ({ ...s, pending: nextP })); alert("已新增活動");
+    }
+    setDraft({ date:"", title:"", image:"", participantsText:"", plannedWinners:"" });
+  }
+  function editItem(x) {
+    if (!admin) return;
+    setEditingId(x?.id || null);
+    setDraft({
+      date: x?.date || "",
+      title: x?.title || "",
+      image: x?.image || (Array.isArray(x?._images)&&x._images[0]) || "",
+      participantsText: Array.isArray(x?._candidates) ? x._candidates.join("\n") : (Array.isArray(x?.participants) ? x.participants.join("\n") : ""),
+      plannedWinners: Number.isFinite(+x?._planned) ? String(x._planned) : (x?.plannedWinners ?? "")
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  function cancelEdit(){
+    setEditingId(null);
+    setDraft({ date:"", title:"", image:"", participantsText:"", plannedWinners:"" });
+  }
+  function removeItemObj(x){
+    if (!admin) return;
+    if (!confirm("確定刪除此活動？")) return;
+    const next = raw.filter(it => (it.id ?? it) !== (x.id ?? x));
+    const nextP = Array.isArray(data?.pending?.items) ? { ...data.pending, items: next } : next;
+    setData(s => ({ ...s, pending: nextP }));
+  }
+
+  // 轉歷史（共用）
+  function convertToHistoryByWinners(id, winners) {
+    if (!admin) return;
+    const now = raw.find(x => x.id === id);
+    if (!now) return;
+    const rest = raw.filter(x => x.id !== id);
+    const history = Array.isArray(data?.history) ? data.history : [];
+    const rec = {
+      id: nidSafe(),
+      date: now.date || "",
+      title: now.title || "",
+      winners: Array.isArray(winners) ? winners : [],
+      status: "已抽出",
+      note: ""
+    };
+    const nextP = Array.isArray(data?.pending?.items) ? { ...data.pending, items: rest } : rest;
+    setData(s => ({ ...s, pending: nextP, history: [rec, ...history] }));
+    alert("已轉入歷史");
+  }
+
+  // 管理用：一次性模擬（不走動畫；展示動畫用 DrawSimulator）
+  function simulateOnce(list, count){
+    const names = Array.isArray(list) ? list.slice() : [];
+    const n = Math.max(1, Math.min(count || 1, names.length));
+    for (let k = names.length-1; k > 0; k--) {
+      const j = Math.floor(Math.random()*(k+1));
+      [names[k], names[j]] = [names[j], names[k]];
+    }
+    return names.slice(0, n);
+  }
+  function convertBySimulation(x){ // 用模擬結果（一次性）
+    const winners = simulateOnce(x._candidates, x._planned || 1);
+    convertToHistoryByWinners(x.id, winners);
+  }
+  function convertByChecked(x, checkedMap){
+    const names = Object.keys(checkedMap||{}).filter(k => checkedMap[k]);
+    if (!names.length) return alert("尚未勾選人員");
+    convertToHistoryByWinners(x.id, names);
+  }
+  function convertByInput(x){
+    const txt = prompt("請貼上得獎名單（每行一名）",""); 
+    if (txt==null) return;
+    const names = parseLinesClean(txt);
+    if (!names.length) return alert("沒有有效人名");
+    convertToHistoryByWinners(x.id, names);
+  }
+
+  // 一鍵複製抽獎貼文（含自動星期）
+  function copyAdText(x){
+    const planned = Number.isFinite(+x?._planned) ? +x._planned : 1;
+    const dateStr = String(x?.date || "").trim(); // 例如 2025-09-08
+    const weekday = (s) => {
+      if (!s) return "";
+      const d = new Date(s + "T00:00:00");
+      const zh = ["日","一","二","三","四","五","六"];
+      return zh[d.getDay()] || "";
+    };
+    const endW = weekday(dateStr);
+    let announceDate = "";
+    let announceW = "";
+    if (dateStr) {
+      const d = new Date(dateStr + "T00:00:00");
+      d.setDate(d.getDate()+1);
+      const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,"0"), dd = String(d.getDate()).padStart(2,"0");
+      announceDate = `${y}-${m}-${dd}`;
+      announceW = weekday(announceDate);
+    }
+    const perCount = 1; // 每人預設 1
+    const howTo = "直接在這篇留言「我要參加」即可！";
+
+    const text = [
+      "🎉【限時抽獎來啦！】🎉",
+      "這次要送出的獎品是 👇",
+      "",
+      `🎁 ${x?.title || "（獎品名稱）"}`,
+      `共抽 ${planned} 名，每人 ${perCount} ！`,
+      "",
+      `📌 抽出名額：${planned} 位幸運兒`,
+      `📅 截止時間：${dateStr ? `${dateStr}（星期${endW}）` : "（自選/填日期）"} 晚上 23:59 前`,
+      `🕰 開獎公告：${announceDate ? `${announceDate}（星期${announceW}）` : "（截止翌日）"} 晚間公布於群組`,
+      "",
+      "📣 參加方式：（可自填）",
+      howTo,
+      "",
+      "✅ 完全免費參加",
+      "✅ 得獎只需自付運費（可選貨到付款）",
+    ].join("\n");
+
+    navigator.clipboard?.writeText(text)
+      .then(()=>alert("已複製抽獎貼文"))
+      .catch(()=>alert("無法自動複製，請手動選取"));
+  }
+
+  // 內建 Viewer（保留）
+  React.useEffect(()=>{}, []);
+
+  // 跳出式資訊面板
+  const [sheet, setSheet] = React.useState({ open:false, item:null });
+
+  // 抽獎展示
+  const [draw, setDraw] = React.useState({ open:false, item:null });
+
+  const gridCols = view === "grid16" ? "grid-cols-4" : "grid-cols-3";
+
+  // 分頁器
+  const Paginator = () => (
+    <div className="mt-3 flex items-center justify-center gap-1 select-none">
+      <button className="rounded-lg border px-3 py-1.5 text-sm" disabled={page<=1} onClick={()=>setPage(p=>Math.max(1,p-1))}>上一頁</button>
+      {Array.from({length:(endPage-startPage+1)},(_,i)=>startPage+i).map(p => (
+        <button key={p} className={`rounded-lg border px-3 py-1.5 text-sm ${p===page ? 'bg-brand text-white border-brand' : ''}`} onClick={()=>setPage(p)}>{p}</button>
+      ))}
+      <button className="rounded-lg border px-3 py-1.5 text-sm" disabled={page>=maxPage} onClick={()=>setPage(p=>Math.min(maxPage,p+1))}>下一頁</button>
+    </div>
+  );
+
+  // 工具列
+  const Toolbar = () => (
+    <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
+      <div className="flex flex-wrap items-center gap-2">
+        <input className="min-h-[44px] flex-1 rounded border px-3 py-2" placeholder="搜尋活動..." value={search} onChange={e=>setSearch(e.target.value)} />
+        <label className="flex items-center gap-1">
+          版面
+          <select className="min-h-[44px] rounded border px-2 py-1" value={view} onChange={e=>setView(e.target.value)}>
+            <option value="grid9">9 宮格</option><option value="grid16">16 宮格</option>
+          </select>
+        </label>
+        <label className="flex items-center gap-1">
+          每頁
+          <select className="min-h-[44px] rounded border px-2 py-1" value={pageSize} onChange={e=>setPageSize(+e.target.value || 20)}>
+            <option value="20">20</option><option value="40">40</option><option value="80">80</option>
+          </select>
+        </label>
+        {admin && (
+          <button className="ml-auto rounded-lg border px-3 py-1.5" onClick={()=>window.scrollTo({top:0,behavior:"smooth"})}>新增/編輯</button>
+        )}
+      </div>
+    </div>
+  );
+
+  // 卡片內勾選 map（每張卡自己的 state）
+  const Card = ({ x, i }) => {
+    const title = x?.title || x?.name || '（未命名）';
+    const cover = Array.isArray(x?._images) && x._images.length>0 ? x._images[0] : (x?.image || "");
+    const images = x._images || (cover ? [cover] : []);
+    const count  = Array.isArray(x._candidates) ? x._candidates.length : 0;
+
+    const [checkedMap, setCheckedMap] = React.useState({});
+    const toggleCheck = (name) => setCheckedMap(m => ({...m, [name]: !m[name]}));
+
+    return (
+      <details key={x.id || i} className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden">
+        <summary className="list-none cursor-pointer p-3" onClick={(e)=>{ e.preventDefault(); setSheet({ open:true, item:x }); }}>
+          <div className="flex flex-col">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
+              {cover ? <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" /> : <div className="text-slate-400 text-sm">無圖片</div>}
+              <div className="absolute left-2 top-2 rounded bg-black/60 text-white text-xs px-2 py-1">候選 {count} 人</div>
             </div>
-            {images.length > 1 && (
-              <>
-                <button
-                  className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border px-2 py-1 text-sm bg-white/80 dark:bg-slate-900/70"
-                  onClick={() => setIndex(i => (i - 1 + images.length) % images.length)}
-                  aria-label="上一張"
-                >‹</button>
-                <button
-                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border px-2 py-1 text-sm bg-white/80 dark:bg-slate-900/70"
-                  onClick={() => setIndex(i => (i + 1) % images.length)}
-                  aria-label="下一張"
-                >›</button>
-              </>
-            )}
-            {images.length > 1 && (
-              <div className="absolute bottom-2 inset-x-0 flex items-center justify-center gap-1">
-                {images.map((_, i) => (
-                  <span key={i} className={"h-1.5 w-1.5 rounded-full " + (i === index ? "bg-slate-900 dark:bg-white" : "bg-slate-300 dark:bg-slate-600")}></span>
-                ))}
-              </div>
-            )}
+            <div className="mt-2 text-[13px] font-medium truncate" title={title}>{title}</div>
+            {x.date && <div className="text-xs text-slate-500">日期：{x.date}</div>}
           </div>
+        </summary>
 
-          {/* 縮圖列 */}
-          {images.length > 1 && (
-            <div className="px-4 py-3 -mx-1 flex overflow-x-auto gap-2 snap-x snap-mandatory">
-              {images.map((src, i) => (
-                <button
-                  key={src + i}
-                  className={"shrink-0 w-20 aspect-square rounded-lg overflow-hidden border snap-start " + (i === index ? "border-brand ring-2 ring-brand/40" : "border-slate-200 dark:border-slate-700")}
-                  onClick={() => setIndex(i)}
-                  title={`圖片 ${i + 1}`}
-                >
+        {/* 展開內容（保留相容；仍可展開） */}
+        <div className="px-3 pb-3">
+          {Array.isArray(images) && images.length>0 && (
+            <div className="mt-2 -mx-1 px-1 flex overflow-x-auto gap-2 snap-x snap-mandatory">
+              {images.map((src,idx)=>(
+                <button key={idx} className="shrink-0 w-24 aspect-square rounded-lg overflow-hidden border snap-start bg-white/60 dark:bg-slate-900/50" title={`圖片 ${idx+1}`} onClick={(e)=>{ e.preventDefault(); openViewer(images, idx, title); }}>
                   <img src={src} alt="" className="w-full h-full object-contain" loading="lazy" />
                 </button>
               ))}
             </div>
           )}
 
-          {/* 文字資訊 */}
+          {/* 管理員操作（保留） */}
+          {admin && (
+            <div className="mt-3 space-y-2">
+              {/* 勾選名單 */}
+              <div>
+                <div className="mb-1 text-sm font-medium">已報名（{x._candidates.length} 人）</div>
+                {x._candidates.length===0 ? <div className="text-slate-500">尚無名單</div> : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
+                    {x._candidates.map((n,ii)=>(
+                      <label key={ii} className="rounded border px-2 py-1 flex items-center gap-2">
+                        <input type="checkbox" checked={!!checkedMap[n]} onChange={()=>toggleCheck(n)} />
+                        <span>{n}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* 管理按鈕 */}
+              <div className="flex flex-wrap gap-2 justify-end">
+                <button className="rounded-lg border px-3 py-1.5" onClick={()=>editItem(x)}>編輯</button>
+                <button className="rounded-lg border px-3 py-1.5" onClick={()=>copyAdText(x)}>一鍵複製抽獎貼文</button>
+                <button className="rounded-lg border px-3 py-1.5" onClick={()=>convertBySimulation(x)}>以模擬結果轉歷史</button>
+                <button className="rounded-lg border px-3 py-1.5" onClick={()=>convertByChecked(x, checkedMap)}>以勾選名單轉歷史</button>
+                <button className="rounded-lg border px-3 py-1.5" onClick={()=>convertByInput(x)}>直接輸入名單轉歷史</button>
+                <button className="rounded-lg bg-rose-500 text-white px-3 py-1.5" onClick={()=>removeItemObj(x)}>刪除</button>
+              </div>
+            </div>
+          )}
+        </div>
+      </details>
+    );
+  };
+
+  return (
+    <section className="space-y-3">
+      {/* 新增/編輯表單（管理員可見） */}
+      {admin && (
+        <div className="rounded-xl border p-4 grid gap-3">
+          <div className="grid sm:grid-cols-2 gap-3">
+            <input className="min-h-[44px] rounded-lg border px-3 py-2" type="date" value={draft.date} onChange={e=>setDraft(d=>({...d, date:e.target.value}))} placeholder="開獎/截止日期"/>
+            <input className="min-h-[44px] rounded-lg border px-3 py-2" value={draft.title} onChange={e=>setDraft(d=>({...d, title:e.target.value}))} placeholder="獎項名稱"/>
+            <input className="min-h-[44px] rounded-lg border px-3 py-2" value={draft.plannedWinners} onChange={e=>setDraft(d=>({...d, plannedWinners:e.target.value}))} placeholder="抽出名額（可空，預設1）"/>
+            <input className="min-h-[44px] rounded-lg border px-3 py-2" value={draft.image} onChange={e=>setDraft(d=>({...d, image:e.target.value}))} placeholder="封面圖片 URL（可空）"/>
+          </div>
+          <div>
+            <label className="text-sm text-slate-500">已報名名單（每行一位）</label>
+            <textarea className="mt-1 w-full rounded-lg border p-2 h-28" value={draft.participantsText} onChange={e=>setDraft(d=>({...d, participantsText:e.target.value}))}/>
+          </div>
+          <div className="flex gap-2 justify-end">
+            {editingId && <button onClick={cancelEdit} className="rounded-lg border px-3 py-1.5">取消</button>}
+            <button onClick={upsertFromDraft} className="rounded-lg bg-brand text-white px-3 py-1.5">{editingId?"儲存修改":"新增活動"}</button>
+          </div>
+        </div>
+      )}
+
+      {/* 工具列 + 分頁器 */}
+      <div className="sticky top-0 z-10"><Toolbar /></div>
+      <div className="sm:flex"><Paginator /></div>
+
+      {/* 清單 */}
+      <div className={`grid ${gridCols} gap-3`} aria-label="等待開獎清單">
+        {pageItems.map((x, i) => <Card key={x.id || i} x={x} i={i} />)}
+      </div>
+
+      <Paginator />
+
+      {/* 內建 Viewer（共用） */}
+      <Viewer state={viewer} setState={setViewer} />
+
+      {/* 跳出式資訊面板（等待開獎） */}
+      <ProductSheet
+        open={sheet.open}
+        item={sheet.item}
+        context="pending"
+        admin={!!admin}
+        onClose={()=>setSheet({ open:false, item:null })}
+        onOpenViewer={(images, idx, title)=>openViewer(images, idx, title)}
+        onStartDraw={(it)=>setDraw({ open:true, item:it })}
+        onAdmin={{
+          onEdit:  (it)=>editItem(it),
+          onDelete:(it)=>removeItemObj(it),
+          onCopyAd:(it)=>copyAdText(it),
+          onConvertBySim:(it)=>convertBySimulation(it),
+          onConvertByChecked:(it)=>{
+            // 面板中的勾選與卡片內勾選不是同一 state；這裡提供快速全抽（用全部候選）
+            convertByChecked(it, Object.fromEntries((it?._candidates||[]).map(n=>[n,true])));
+          },
+          onConvertByInput:(it)=>convertByInput(it),
+          checkedMap:{}, toggleCheck:()=>{}
+        }}
+      />
+
+      {/* 抽獎展示（全螢幕覆蓋） */}
+      <DrawSimulator
+        open={draw.open}
+        onClose={()=>setDraw({ open:false, item:null })}
+        participants={draw.item ? normalizeItem(draw.item)._candidates : []}
+        defaultCount={draw.item ? normalizeItem(draw.item)._planned || 1 : 1}
+      />
+    </section>
+  );
+}
+
+
+/* ============================
+ * 跳出式資訊面板（社群商店 / 點數商城 / 等待開獎）
+ * - 手機/桌面置中、內容可滾動
+ * - 點遮罩空白、ESC、返回鍵可關閉
+ * - context: "store" | "shop" | "pending"
+ * - 使用 BodyScrollLock，並內建聯絡管理員連結 fallback
+ * ============================ */
+function ProductSheet({
+  open = false,
+  item = null,
+  context = "store",
+  onClose = () => {},
+  onOpenViewer = () => {},
+  contactUrl = "",               // 可不傳；會自動 fallback
+  onCopyTemplate = () => {},
+  onStartDraw = () => {},        // for pending：開展示動畫
+  admin = false,                 // for pending：是否顯示管理區塊
+  onAdmin = {}                   // for pending：{ onEdit, onDelete, onConvertBySim, onConvertByChecked, onConvertByInput, onCopyAd, checkedMap, toggleCheck }
+}) {
+  const React = window.React || globalThis.React;
+
+  // ---- hooks 皆無條件呼叫（避免 #310）----
+  const overlayRef = React.useRef(null);
+  const [index, setIndex] = React.useState(0);
+
+  // 鎖捲動 / ESC / 返回鍵（使用全域鎖）
+  React.useEffect(() => {
+    if (!open) return;
+    BodyScrollLock.lock();
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    const onPop = () => onClose();
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("popstate", onPop);
+    try { history.pushState({ sheet: true }, "", location.href); } catch {}
+    return () => { document.removeEventListener("keydown", onKey); window.removeEventListener("popstate", onPop); BodyScrollLock.unlock(); };
+  }, [open, onClose]);
+
+  // item 變動重置圖片索引
+  React.useEffect(() => { setIndex(0); }, [item]);
+
+  // ---- 非 hook 的衍生資料 ----
+  const title = (item?.title || item?.name || "（未命名）");
+  const images = (() => {
+    const arr = Array.isArray(item?.images) ? item.images : (item?.image ? [String(item.image)] : []);
+    return (arr || []).filter(Boolean);
+  })();
+  const tags = (() => {
+    if (Array.isArray(item?.tags)) return item.tags;
+    if (typeof item?.tags === "string") return item.tags.split(",").map(s => s.trim()).filter(Boolean);
+    return [];
+  })();
+  const buyUrl = item?.buyUrl || item?.url || "";
+  const price  = (item?.price ?? "") !== "" ? item?.price : null;
+  const needPoints = (() => {
+    const p = item?.points ?? item?.point ?? item?.needPoints ?? item?.need_point;
+    const n = (typeof p === "string" ? +p : p);
+    return Number.isFinite(n) ? n : null;
+  })();
+  const remain = item?.stock ?? item?.qty ?? item?.quantity ?? item?.remaining ?? null;
+
+  // pending：候選名單（不寫回資料）
+  const candidates = (() => {
+    const list = Array.isArray(item?.participants) ? item.participants
+      : Array.isArray(item?.members) ? item.members
+      : Array.isArray(item?.list) ? item.list
+      : Array.isArray(item?.candidates) ? item.candidates
+      : (typeof item?.listText === "string" ? item.listText.split(/\r?\n/).map(s=>s.trim()).filter(Boolean) : []);
+    return (list || []).map(String).filter(Boolean);
+  })();
+  const candidateCount = candidates.length;
+
+  // 觸控左右滑換圖
+  let sx = 0, sy = 0, dragging = false;
+  const onTouchStart = (e) => { if (e.touches.length === 1) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; dragging = true; } };
+  const onTouchEnd = (e) => {
+    if (!dragging) return; dragging = false;
+    const ex = e.changedTouches?.[0]?.clientX ?? sx; const ey = e.changedTouches?.[0]?.clientY ?? sy;
+    const dx = ex - sx, dy = ey - sy;
+    if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) && images.length > 1) {
+      setIndex(i => (dx > 0 ? (i - 1 + images.length) : (i + 1)) % images.length);
+    }
+  };
+
+  // ---- shop 用聯絡管理員連結（多來源 fallback）----
+  const effectiveContactUrl =
+    contactUrl ||
+    item?.contactUrl ||            // 單一商品可覆寫
+    window.__CONTACT_URL__ || "";  // 全域設定（可在初始化時設定）
+
+  if (!open) return null;
+  const handleOverlayClick = (e) => { if (e.target === overlayRef.current) onClose(); };
+
+  return (
+    <div ref={overlayRef} className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center"
+         role="dialog" aria-modal="true" onMouseDown={handleOverlayClick}>
+      <div className="w-[min(96vw,44rem)] max-h-[92vh] rounded-2xl bg-white dark:bg-slate-900 shadow-elevate overflow-hidden flex flex-col">
+        {/* header */}
+        <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+          <div className="min-w-0">
+            <div className="font-semibold truncate">{title}</div>
+            {context==="store"   && price!=null      && <div className="text-sm text-slate-500">售價：{price}</div>}
+            {context==="shop"    && needPoints!=null && <div className="text-sm text-slate-500">需求點數：{needPoints}</div>}
+            {context==="pending" && <div className="text-sm text-slate-500">候選人數：{candidateCount}</div>}
+          </div>
+          <button className="rounded-full border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
+        </div>
+
+        {/* body：主圖 + 縮圖 + 文字 */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="relative bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
+            <div className="aspect-square w-full grid place-content-center" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+              {images.length
+                ? <img src={images[index]} alt="" className="w-full h-full object-contain select-none" onClick={() => onOpenViewer(images, index, title, buyUrl)} />
+                : <div className="text-slate-400 text-sm">無圖片</div>}
+            </div>
+            {images.length>1 && (
+              <div className="absolute bottom-2 inset-x-0 flex items-center justify-center gap-1">
+                {images.map((_, i) => (
+                  <span key={i} className={"h-1.5 w-1.5 rounded-full " + (i===index ? "bg-slate-900 dark:bg-white" : "bg-slate-300 dark:bg-slate-600")}/>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {images.length>1 && (
+            <div className="px-4 py-3 -mx-1 flex overflow-x-auto gap-2 snap-x snap-mandatory">
+              {images.map((src, i) => (
+                <button key={src+i} className={"shrink-0 w-20 aspect-square rounded-lg overflow-hidden border snap-start " + (i===index ? "border-brand ring-2 ring-brand/40" : "border-slate-200 dark:border-slate-700")} onClick={()=>setIndex(i)} title={`圖片 ${i+1}`}>
+                  <img src={src} alt="" className="w-full h-full object-contain" loading="lazy" />
+                </button>
+              ))}
+            </div>
+          )}
+
           <div className="px-4 pb-4 space-y-2 text-sm">
-            {context === "store" && remain != null && <div className="text-slate-600">剩餘數量：{remain}</div>}
-            {Array.isArray(tags) && tags.length > 0 && <div className="text-slate-500">標籤：{tags.join(" / ")}</div>}
+            {context==="store" && remain!=null && <div className="text-slate-600">剩餘數量：{remain}</div>}
+            {Array.isArray(tags) && tags.length>0 && <div className="text-slate-500">標籤：{tags.join(" / ")}</div>}
             {item?.desc  && <div className="whitespace-pre-wrap">{item.desc}</div>}
             {item?.intro && <div className="whitespace-pre-wrap">{item.intro}</div>}
             {item?.extra && <div className="whitespace-pre-wrap">{String(item.extra)}</div>}
+
+            {/* pending：管理員用名單勾選（保留功能，不寫回） */}
+            {context==="pending" && admin && Array.isArray(candidates) && candidates.length>0 && (
+              <div className="mt-2">
+                <div className="mb-1 text-sm font-medium">已報名（{candidates.length} 人）</div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
+                  {candidates.map((n,i)=>(
+                    <label key={i} className="rounded border px-2 py-1 flex items-center gap-2">
+                      <input type="checkbox" checked={!!onAdmin?.checkedMap?.[n]} onChange={()=>onAdmin?.toggleCheck?.(n)} />
+                      <span>{n}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Sticky 底部 CTA */}
+        {/* footer */}
         <div className="p-3 border-t border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/90 backdrop-blur flex items-center gap-2">
-          {context === "store" ? (
+          {context==="store" ? (
             <>
               {buyUrl
                 ? <a href={buyUrl} target="_blank" rel="noopener noreferrer" className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm text-center">前往購買</a>
                 : <button className="flex-1 rounded-lg border px-4 py-2 text-sm text-slate-400" disabled>尚未提供購買連結</button>}
               <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
             </>
-          ) : (
+          ) : context==="shop" ? (
             <>
               <button className="flex-1 rounded-lg border px-4 py-2 text-sm" onClick={() => onCopyTemplate(item)}>📋 複製模板</button>
-              <button className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm" onClick={() => { if (contactUrl) window.open(contactUrl, "_blank", "noopener,noreferrer"); }}>💬 聯絡管理員</button>
+              <button className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm" onClick={() => {
+                const url = effectiveContactUrl;
+                if (url) window.open(url, "_blank", "noopener,noreferrer");
+                else alert("尚未設定『聯絡管理員』連結：可在商品 data 加上 contactUrl，或在全域設置 window.__CONTACT_URL__。");
+              }}>💬 聯絡管理員</button>
+              <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
+            </>
+          ) : (
+            // pending
+            <>
+              <button className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm" onClick={() => onStartDraw(item)}>🎰 模擬抽獎（展示）</button>
+              {admin && (
+                <div className="flex-1 flex flex-wrap gap-2 justify-end">
+                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onEdit?.(item)}>編輯</button>
+                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onCopyAd?.(item)}>一鍵複製抽獎貼文</button>
+                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onConvertBySim?.(item)}>以模擬結果轉歷史</button>
+                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onConvertByChecked?.(item)}>以勾選名單轉歷史</button>
+                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onConvertByInput?.(item)}>直接輸入名單轉歷史</button>
+                  <button className="rounded-lg bg-rose-500 text-white px-3 py-2 text-sm" onClick={()=>onAdmin?.onDelete?.(item)}>刪除</button>
+                </div>
+              )}
               <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
             </>
           )}
@@ -1156,6 +1714,134 @@ function ProductSheet({
     </div>
   );
 }
+
+/* ============================
+ * 抽獎模擬器（展示用）
+ * - 只顯示動畫與結果，不寫回資料、不提供複製/套用
+ * props:
+ *   open, onClose, participants (string[]), defaultCount (number)
+ * ============================ */
+function DrawSimulator({ open=false, onClose=()=>{}, participants=[], defaultCount=1 }) {
+  const React = window.React || globalThis.React;
+  const overlayRef = React.useRef(null);
+
+  const [count, setCount] = React.useState(Math.max(1, defaultCount||1));
+  const [duration, setDuration] = React.useState(2200); // 2.2s
+  const [running, setRunning] = React.useState(false);
+  const [displayName, setDisplayName] = React.useState("");
+  const [results, setResults] = React.useState([]);
+
+  React.useEffect(()=>{
+    if (!open) return;
+    const onKey = (e)=>{ if (e.key==="Escape") onClose(); };
+    const onPop = ()=> onClose();
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("popstate", onPop);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    try { history.pushState({ draw:true }, "", location.href); } catch {}
+    return ()=> {
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("popstate", onPop);
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  const handleOverlayClick = (e)=>{ if (e.target === overlayRef.current && !running) onClose(); };
+
+  const pickWinners = (arr, k) => {
+    const list = [...arr];
+    for (let i=list.length-1;i>0;i--) {
+      const j = Math.floor(Math.random()*(i+1));
+      [list[i], list[j]] = [list[j], list[i]];
+    }
+    return list.slice(0, Math.max(1, Math.min(k, list.length)));
+  };
+
+  const start = ()=>{
+    if (!Array.isArray(participants) || participants.length===0) { alert("沒有候選名單"); return; }
+    setResults([]);
+    setRunning(true);
+    const startTime = performance.now();
+    const total = participants.length;
+    let acc = 0, last = startTime;
+    const loop = (t)=>{
+      const dt = t - last; last = t;
+      const p = Math.min(1, (t - startTime) / Math.max(800, duration));
+      const ease = 1 - Math.pow(1 - p, 3); // easeOutCubic
+      const speed = 30 + (180 - 30) * (1 - ease);
+      acc += dt * (speed / 1000) * 20;
+      const idx = Math.floor(acc) % total;
+      setDisplayName(participants[idx] || "");
+      if (p < 1) requestAnimationFrame(loop);
+      else { setResults(pickWinners(participants, Math.max(1, +count||1))); setRunning(false); }
+    };
+    requestAnimationFrame(loop);
+  };
+
+  if (!open) return null;
+
+  return (
+    <div
+      ref={overlayRef}
+      className="fixed inset-0 z-[1000] bg-black/70 backdrop-blur flex items-center justify-center"
+      role="dialog" aria-modal="true"
+      onMouseDown={handleOverlayClick}
+    >
+      <div className="w-[min(96vw,50rem)] max-h-[92vh] rounded-2xl bg-white dark:bg-slate-900 shadow-elevate overflow-hidden flex flex-col">
+        <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <div className="font-semibold">抽獎模擬（展示）</div>
+          <button className="rounded-full border px-3 py-1.5 text-sm" onClick={onClose} disabled={running}>關閉</button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <label className="flex items-center gap-2">
+              <span className="text-sm whitespace-nowrap">抽出人數</span>
+              <input type="number" min="1" max={Math.max(1, participants.length)} value={count} onChange={e=>setCount(Math.max(1, Math.min(+e.target.value||1, participants.length||1)))} className="w-20 rounded border px-2 py-1" />
+            </label>
+            <label className="flex items-center gap-2">
+              <span className="text-sm whitespace-nowrap">動畫時長(ms)</span>
+              <input type="number" min="800" step="100" value={duration} onChange={e=>setDuration(Math.max(800, +e.target.value||2200))} className="w-28 rounded border px-2 py-1" />
+            </label>
+          </div>
+
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 p-6 min-h-[140px] grid place-content-center">
+            <div className="text-2xl md:text-3xl font-semibold text-slate-800 dark:text-white tracking-wide animate-pulse select-none">
+              {running ? (displayName || "抽選中...") : (results.length ? "抽選完成" : "準備開始")}
+            </div>
+            {!running && !results.length && (
+              <div className="mt-2 text-xs text-slate-500">名單數：{participants.length}</div>
+            )}
+          </div>
+
+          {!!results.length && (
+            <div className="space-y-2">
+              <div className="text-sm text-slate-600">中獎名單（{results.length}）</div>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {results.map((name, i)=>(
+                  <div key={name+i} className="rounded-lg border border-emerald-300/70 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-800 dark:text-emerald-200 px-3 py-2 text-sm animate-[fadeIn_.6s_ease-out]">
+                    <span className="opacity-70 mr-1">#{i+1}</span>{name}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="p-3 border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/90 backdrop-blur flex items-center gap-2">
+          {!running && <button className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm" onClick={start}>開始抽獎</button>}
+          {running && <button className="flex-1 rounded-lg border px-4 py-2 text-sm" disabled>抽選進行中...</button>}
+          <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose} disabled={running}>關閉</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* 小工具：hash/PRNG（for 種子重現） */
+function xmur3(str) { let h = 1779033703 ^ str.length; for (let i=0;i<str.length;i++) { h = Math.imul(h ^ str.charCodeAt(i), 3432918353); h = h<<13 | h>>>19; } return function() { h = Math.imul(h ^ (h>>>16), 2246822507); h = Math.imul(h ^ (h>>>13), 3266489909); return (h ^= h>>>16) >>> 0; }; }
+function mulberry32(a) { return function() { let t = a += 0x6D2B79F5; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; } }
 
 // 取得商品剩餘數量（相容多種欄位命名）
 function getRemain(x){
@@ -2630,6 +3316,7 @@ const entries = React.useMemo(() => {
 }
 
 
+
 // === History（歷史抽獎紀錄）— 可新增/編輯/刪除/複製名單（含分頁與彈層月曆） ===
 function History({ data, admin, setData, query="", queryMode="all" }) {
   const [bulk, setBulk] = useState(null); // 'open' | 'close' | null
@@ -3145,315 +3832,6 @@ function LinksPage({ data, setData, admin }) {
 }
 
 
-// === Pending（等待開獎）— 可新增/編輯/刪除/轉歷史；9/16 固定宮格，點卡片才展開 ===
-function Pending({ data, admin, setData, query = "" }) {
-  const React = window.React || globalThis.React;
-  const nidSafe = (typeof nid === "function") ? nid : () => Math.random().toString(36).slice(2);
-
-  // ---- 狀態 ----
-  const [view, setView] = React.useState("grid9"); // grid9 / grid16
-  const [page, setPage] = React.useState(1);
-  const [draft, setDraft] = React.useState({ date:"", title:"", image:"", participantsText:"", plannedWinners:"" });
-  const [editingId, setEditingId] = React.useState(null);
-
-  // 模擬抽獎狀態
-  const [rollIdx, setRollIdx] = React.useState(-1);      // 跑馬燈目前指向
-  const [rolling, setRolling] = React.useState(false);   // 動畫中
-  const [simWinners, setSimWinners] = React.useState([]);// 模擬結果（最後抽中的人）
-
-  // ---- 資料與搜尋 ----
-  const itemsAll = Array.isArray(data?.pending) ? data.pending : [];
-  const items = React.useMemo(() => {
-    const q = String(query || "").trim().toLowerCase();
-    if (!q) return itemsAll;
-    return itemsAll.filter(x => {
-      const t = String(x?.title || "").toLowerCase();
-      const p = Array.isArray(x?.participants) ? x.participants.join("\n").toLowerCase() : "";
-      return t.includes(q) || p.includes(q);
-    });
-  }, [itemsAll, query]);
-
-  // ---- 分頁：每頁 20、頁碼窗 5 ----
-  const PAGE_SIZE = 20;
-  const total = items.length;
-  const maxPage = Math.max(1, Math.ceil(total / PAGE_SIZE));
-  React.useEffect(() => { if (page > maxPage) setPage(maxPage); }, [page, maxPage]);
-  React.useEffect(() => { setPage(1); }, [query, view]);
-  const start = (page - 1) * PAGE_SIZE;
-  const end   = Math.min(start + PAGE_SIZE, total);
-  const pageItems = items.slice(start, end);
-  const windowSize = 5;
-  const startPage = Math.max(1, Math.min(page - Math.floor(windowSize/2), maxPage - windowSize + 1));
-  const endPage   = Math.min(maxPage, startPage + windowSize - 1);
-
-  // ---- 工具 ----
-  const gridCols = view === "grid16" ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4" : "grid-cols-2 sm:grid-cols-3";
-  const parseLinesClean = (txt) =>
-    String(txt||"").split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
-
-  // ---- Admin：新增/編輯/刪除 ----
-  function upsertFromDraft() {
-    if (!admin) return alert("請先登入管理模式");
-    const title = (draft.title || "").trim();
-    if (!title) return alert("請填寫【獎項名稱】");
-
-    const planned = draft.plannedWinners !== "" ? Number(draft.plannedWinners) : null;
-    if (draft.plannedWinners !== "" && !Number.isFinite(planned)) return alert("抽出名額需為數字");
-
-    const rec = {
-      id: editingId || nidSafe(),
-      title,
-      date: draft.date || "",
-      image: (draft.image || "").trim(),
-      participants: parseLinesClean(draft.participantsText),
-      plannedWinners: planned
-    };
-
-    if (editingId) {
-      const next = itemsAll.map(x => x.id === editingId ? rec : x);
-      setData(s => ({ ...s, pending: next }));
-      setEditingId(null);
-      alert("已儲存修改");
-    } else {
-      setData(s => ({ ...s, pending: [rec, ...(Array.isArray(s?.pending) ? s.pending : [])] }));
-      alert("已新增活動");
-    }
-    setDraft({ date:"", title:"", image:"", participantsText:"", plannedWinners:"" });
-  }
-  function editItem(x) {
-    if (!admin) return;
-    setEditingId(x?.id || null);
-    setDraft({
-      date: x?.date || "",
-      title: x?.title || "",
-      image: x?.image || "",
-      participantsText: Array.isArray(x?.participants) ? x.participants.join("\n") : "",
-      plannedWinners: x?.plannedWinners ?? ""
-    });
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-  function cancelEdit(){
-    setEditingId(null);
-    setDraft({ date:"", title:"", image:"", participantsText:"", plannedWinners:"" });
-  }
-  function removeItem(id){
-    if (!admin) return;
-    if (!confirm("確定刪除此活動？")) return;
-    setData(s => ({ ...s, pending: (Array.isArray(s?.pending)?s.pending:[]).filter(x=>x.id!==id) }));
-  }
-
-  // ---- 模擬抽獎（帶跑馬燈轉動感） ----
-  function simulateDraw(list, count) {
-    const names = Array.isArray(list) ? list.slice() : [];
-    const n = Math.max(1, Math.min(count || 1, names.length));
-    if (names.length === 0) return alert("沒有可抽的人員");
-    setRolling(true);
-    setSimWinners([]);
-    let i = 0;
-    const spinMs = 1800 + Math.random()*800; // 1.8~2.6 秒
-    const tickMs = 80;
-    const timer = setInterval(()=>{
-      setRollIdx(i % names.length);
-      i++;
-    }, tickMs);
-    setTimeout(()=>{
-      clearInterval(timer);
-      // 最終結果（隨機打散後取前 n 名）
-      for (let k = names.length-1; k > 0; k--) {
-        const j = Math.floor(Math.random()*(k+1));
-        [names[k], names[j]] = [names[j], names[k]];
-      }
-      const winners = names.slice(0, n);
-      setSimWinners(winners);
-      setRolling(false);
-    }, spinMs);
-  }
-
-  // ---- 轉入歷史（三種方式） ----
-  function convertToHistoryByWinners(id, winners) {
-    if (!admin) return;
-    const base = Array.isArray(data?.pending) ? data.pending : [];
-    const now = base.find(x => x.id === id);
-    if (!now) return;
-
-    const rest = base.filter(x => x.id !== id);
-    const history = Array.isArray(data?.history) ? data.history : [];
-
-    const rec = {
-      id: nidSafe(),
-      date: now.date || "",
-      title: now.title || "",
-      winners: Array.isArray(winners) ? winners : [],
-      status: "已抽出",
-      note: ""
-    };
-    setData(s => ({ ...s, pending: rest, history: [rec, ...history] }));
-    alert("已轉入歷史");
-  }
-  function convertBySimulation(id){ // 用模擬結果
-    if (!simWinners.length) return alert("尚未有模擬結果");
-    convertToHistoryByWinners(id, simWinners);
-  }
-  function convertByChecked(id, checkedMap){ // 用勾選人員
-    const names = Object.keys(checkedMap||{}).filter(k => checkedMap[k]);
-    if (!names.length) return alert("尚未勾選人員");
-    convertToHistoryByWinners(id, names);
-  }
-  function convertByInput(id){ // 直接輸入
-    const txt = prompt("請貼上得獎名單（每行一名）",""); 
-    if (txt==null) return;
-    const names = parseLinesClean(txt);
-    if (!names.length) return alert("沒有有效人名");
-    convertToHistoryByWinners(id, names);
-  }
-
-  // ---- 一鍵帶出（複製）廣告文 ----
-  function copyAdText(x){
-  const howTo = prompt("參加方式（可自行修改）","直接在這篇留言「我要參加」即可！");
-  const text = buildAnnouncementText(x, { howTo });
-  navigator.clipboard.writeText(text)
-    .then(()=>alert("已複製廣告文"))
-    .catch(()=>alert("無法自動複製，請手動貼上"));
-}
-
-
-  // ---- 畫面 ----
-  return (
-    <section className="space-y-4">
-      {/* 標題 + 檢視切換 */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-xl">⏳</span>
-          <h2 className="text-lg font-semibold">等待開獎</h2>
-          <span className="ml-2 text-sm text-slate-500">共 {total} 項</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <button className={"rounded-xl border px-3 py-1.5 text-sm "+(view==="grid9"?"bg-brand text-white border-brand":"")} onClick={()=>setView("grid9")}>9 宮格</button>
-          <button className={"rounded-xl border px-3 py-1.5 text-sm "+(view==="grid16"?"bg-brand text-white border-brand":"")} onClick={()=>setView("grid16")}>16 宮格</button>
-        </div>
-      </div>
-
-      {/* 管理員：新增/編輯表單 */}
-      {admin && (
-        <div className="rounded-xl border p-4 grid gap-3">
-          <div className="grid sm:grid-cols-2 gap-3">
-            <input className="rounded-lg border px-3 py-2" type="date" value={draft.date} onChange={e=>setDraft(d=>({...d, date:e.target.value}))} placeholder="開獎/截止日期"/>
-            <input className="rounded-lg border px-3 py-2" value={draft.title} onChange={e=>setDraft(d=>({...d, title:e.target.value}))} placeholder="獎項名稱"/>
-            <input className="rounded-lg border px-3 py-2" value={draft.plannedWinners} onChange={e=>setDraft(d=>({...d, plannedWinners:e.target.value}))} placeholder="抽出名額（可空）"/>
-            <input className="rounded-lg border px-3 py-2" value={draft.image} onChange={e=>setDraft(d=>({...d, image:e.target.value}))} placeholder="封面圖片 URL（可空）"/>
-          </div>
-          <div>
-            <label className="text-sm text-slate-500">已報名名單（每行一位）</label>
-            <textarea className="mt-1 w-full rounded-lg border p-2 h-28" value={draft.participantsText} onChange={e=>setDraft(d=>({...d, participantsText:e.target.value}))}/>
-          </div>
-          <div className="flex gap-2 justify-end">
-            {editingId && <button onClick={cancelEdit} className="rounded-lg border px-3 py-1.5">取消</button>}
-            <button onClick={upsertFromDraft} className="rounded-lg bg-brand text-white px-3 py-1.5">{editingId?"儲存修改":"新增活動"}</button>
-          </div>
-        </div>
-      )}
-
-      {/* 宮格卡片 */}
-      <div className={"grid gap-3 "+gridCols}>
-        {pageItems.map((x, idx) => {
-          const title = x?.title || "（未命名）";
-          const cover = x?.image || "";
-          const ppl   = Array.isArray(x?.participants) ? x.participants : [];
-          const planned = Number.isFinite(+x?.plannedWinners) ? +x.plannedWinners : 1;
-
-          // 勾選人員（admin 用）
-          const [checkedMap, setCheckedMap] = React.useState({});
-          const toggleCheck = (name) => setCheckedMap(m => ({...m, [name]: !m[name]}));
-
-          return (
-            <details key={x.id || idx} className="rounded-2xl shadow bg-white dark:bg-neutral-900">
-              <summary className="list-none cursor-pointer p-3">
-                {/* 收合狀態：日期 + 名稱 + 1 張完整封面（object-contain） */}
-                <div className="flex flex-col">
-                  <div className="aspect-square overflow-hidden rounded-xl border bg-white/60 dark:bg-slate-900/50 grid place-content-center">
-                    {cover
-                      ? <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" />
-                      : <div className="text-slate-400 text-sm">無圖片</div>}
-                  </div>
-                  <div className="mt-2 text-sm font-medium truncate" title={title}>{title}</div>
-                  {x.date && <div className="text-xs text-slate-500">日期：{x.date}</div>}
-                </div>
-              </summary>
-
-              {/* 展開狀態：日期 + 名稱 + 圖片 + 全部名單 */}
-              <div className="px-3 pb-3">
-                <div className="mt-2 text-sm">
-                  {x.date && <div className="mb-1"><span className="text-slate-500">日期：</span>{x.date}</div>}
-                  {cover && (
-                    <div className="mb-2 aspect-square overflow-hidden rounded-xl border bg-white/60 dark:bg-slate-900/50 grid place-content-center">
-                      <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" />
-                    </div>
-                  )}
-
-                  {/* 名單 */}
-                  <div className="mb-2 font-medium">已報名（{ppl.length} 人）</div>
-                  {ppl.length === 0 ? (
-                    <div className="text-slate-500">尚無名單</div>
-                  ) : (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
-                      {ppl.map((n,i)=>(
-                        <div key={i} className="rounded border px-2 py-1 flex items-center gap-2">
-                          {admin && <input type="checkbox" checked={!!checkedMap[n]} onChange={()=>toggleCheck(n)} />}
-                          <span>{n}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* 模擬抽獎（一般/管理員皆可） */}
-                  <div className="mt-3 rounded-lg border p-2">
-                    <div className="flex items-center gap-2">
-                      <button
-                        className="rounded-md bg-brand text-white px-3 py-1.5"
-                        onClick={()=>simulateDraw(ppl, planned)}
-                        disabled={rolling}
-                      >
-                        {rolling ? "抽獎中..." : `模擬抽獎（${planned} 名）`}
-                      </button>
-                      {simWinners.length>0 && <div className="text-sm">結果：{simWinners.join("、")}</div>}
-                    </div>
-                    {/* 跑馬燈展示 */}
-                    {rolling && (
-                      <div className="mt-2 text-sm italic opacity-80">
-                        {ppl.length>0 ? `抽取中：${ppl[(rollIdx%ppl.length+ppl.length)%ppl.length]}` : "—"}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* 管理員專用操作 */}
-                  {admin && (
-                    <div className="mt-3 flex flex-wrap gap-2 justify-end">
-                      <button className="rounded-lg border px-3 py-1.5" onClick={()=>editItem(x)}>編輯</button>
-                      <button className="rounded-lg border px-3 py-1.5" onClick={()=>copyAdText(x)}>一鍵帶出廣告文</button>
-                      <button className="rounded-lg border px-3 py-1.5" onClick={()=>convertBySimulation(x.id)}>以模擬結果轉歷史</button>
-                      <button className="rounded-lg border px-3 py-1.5" onClick={()=>convertByChecked(x.id, checkedMap)}>以勾選名單轉歷史</button>
-                      <button className="rounded-lg border px-3 py-1.5" onClick={()=>convertByInput(x.id)}>直接輸入名單轉歷史</button>
-                      <button className="rounded-lg bg-rose-500 text-white px-3 py-1.5" onClick={()=>removeItem(x.id)}>刪除</button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </details>
-          );
-        })}
-      </div>
-
-      {/* 分頁 */}
-      <div className="mt-4 flex items-center justify-center gap-1 select-none">
-        <button className="rounded-lg border px-3 py-1.5 text-sm" disabled={page<=1} onClick={()=>setPage(p=>Math.max(1,p-1))}>上一頁</button>
-        {Array.from({length:(endPage - startPage + 1)}, (_,i)=>startPage+i).map(p=>(
-          <button key={p} className={`rounded-lg border px-3 py-1.5 text-sm ${p===page?'bg-brand text-white border-brand':''}`} onClick={()=>setPage(p)}>{p}</button>
-        ))}
-        <button className="rounded-lg border px-3 py-1.5 text-sm" disabled={page>=maxPage} onClick={()=>setPage(p=>Math.min(maxPage,p+1))}>下一頁</button>
-      </div>
-    </section>
-  );
-}
 
 
 // === Ongoing（進行中活動）— 可新增/編輯/刪除/上下移動/啟用停用 ===
