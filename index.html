@@ -301,7 +301,7 @@ function Store({ data, admin, setData, query = "" }) {
 
   const sorted = React.useMemo(()=>{
     const arr = [...filtered];
-    if (sortBy==="priceAsc") arr.sort((a,b)=> ((+a?.price||Infinity) - (+b?.price||Infinity)));
+    if (sortBy==="priceAsc")  arr.sort((a,b)=> ((+a?.price||Infinity) - (+b?.price||Infinity)));
     else if (sortBy==="priceDesc") arr.sort((a,b)=> ((+b?.price||-Infinity) - (+a?.price||-Infinity)));
     else arr.sort((a,b)=> (new Date(b?.updatedAt||b?.createdAt||0) - new Date(a?.updatedAt||a?.createdAt||0)));
     return arr;
@@ -311,12 +311,13 @@ function Store({ data, admin, setData, query = "" }) {
   const maxPage = Math.max(1, Math.ceil(total / pageSize));
   React.useEffect(()=>{ if (page>maxPage) setPage(maxPage); }, [maxPage, page]);
   React.useEffect(()=>{ setPage(1); }, [search, selectedTags, sortBy, view, pageSize, onlyInStock]);
+
   const start = (page-1)*pageSize;
   const end   = Math.min(start + pageSize, total);
-  const pageItems = sorted.slice(start, end);
   const windowSize = 5;
   const startPage = Math.max(1, Math.min(page - Math.floor(windowSize/2), maxPage - windowSize + 1));
   const endPage   = Math.min(maxPage, startPage + windowSize - 1);
+  const pageItems = sorted.slice(start, end);
 
   const [viewer, setViewer] = React.useState({ open:false, images:[], index:0, title:"", buyUrl:"" });
   React.useEffect(()=>{
@@ -340,6 +341,46 @@ function Store({ data, admin, setData, query = "" }) {
     if (!list.length) return;
     setViewer({ open:true, images:list, index: Math.max(0, Math.min(index||0, list.length-1)), title, buyUrl });
   };
+
+  const Toolbar = () => (
+    <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
+      <div className="flex items-center gap-2">
+        <input className="flex-1 rounded border px-3 py-2" placeholder="搜尋商品..." value={search} onChange={e=>setSearch(e.target.value)} />
+        <select className="rounded border px-2 py-1" value={sortBy} onChange={e=>setSortBy(e.target.value)}>
+          <option value="latest">最新更新</option>
+          <option value="priceAsc">價格（低→高）</option>
+          <option value="priceDesc">價格（高→低）</option>
+        </select>
+        <label className="flex items-center gap-1"><input type="checkbox" checked={onlyInStock} onChange={e=>setOnlyInStock(e.target.checked)} />只看有貨</label>
+        <label className="flex items-center gap-1">
+          版面
+          <select className="rounded border px-2 py-1" value={view} onChange={e=>setView(e.target.value)}>
+            <option value="grid9">9 宮格</option><option value="grid16">16 宮格</option>
+          </select>
+        </label>
+        <label className="flex items-center gap-1">
+          每頁
+          <select className="rounded border px-2 py-1" value={pageSize} onChange={e=>setPageSize(+e.target.value || 20)}>
+            <option value="20">20</option><option value="40">40</option><option value="80">80</option>
+          </select>
+        </label>
+        <div className="ml-auto" />
+        {admin && HasStoreEditor && (<button className="rounded-lg border px-3 py-1.5" onClick={()=>setShowEditor(true)}>管理</button>)}
+      </div>
+    </div>
+  );
+
+  const gridCols = view === "grid16" ? "grid-cols-4" : "grid-cols-3";
+
+  const Paginator = () => (
+    <div className="mt-3 flex items-center justify-center gap-1 select-none">
+      <button className="rounded-lg border px-3 py-1.5 text-sm" disabled={page<=1} onClick={()=>setPage(p=>Math.max(1,p-1))}>上一頁</button>
+      {Array.from({length:(endPage-startPage+1)},(_,i)=>startPage+i).map(p => (
+        <button key={p} className={`rounded-lg border px-3 py-1.5 text-sm ${p===page ? 'bg-brand text-white border-brand' : ''}`} onClick={()=>setPage(p)}>{p}</button>
+      ))}
+      <button className="rounded-lg border px-3 py-1.5 text-sm" disabled={page>=maxPage} onClick={()=>setPage(p=>Math.min(maxPage,p+1))}>下一頁</button>
+    </div>
+  );
 
   const Viewer = ({state, setState})=>{
     const containerRef = React.useRef(null);
@@ -393,45 +434,6 @@ function Store({ data, admin, setData, query = "" }) {
     ) : null;
   };
 
-  const Toolbar = () => (
-    <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
-      <div className="flex items-center gap-2">
-        <input className="flex-1 rounded border px-3 py-2" placeholder="搜尋商品..." value={search} onChange={e=>setSearch(e.target.value)} />
-        <select className="rounded border px-2 py-1" value={sortBy} onChange={e=>setSortBy(e.target.value)}>
-          <option value="latest">最新更新</option><option value="priceAsc">價格（低→高）</option><option value="priceDesc">價格（高→低）</option>
-        </select>
-        <label className="flex items-center gap-1"><input type="checkbox" checked={onlyInStock} onChange={e=>setOnlyInStock(e.target.checked)} />只看有貨</label>
-        <label className="flex items-center gap-1">
-          版面
-          <select className="rounded border px-2 py-1" value={view} onChange={e=>setView(e.target.value)}>
-            <option value="grid9">9 宮格</option><option value="grid16">16 宮格</option>
-          </select>
-        </label>
-        <label className="flex items-center gap-1">
-          每頁
-          <select className="rounded border px-2 py-1" value={pageSize} onChange={e=>setPageSize(+e.target.value || 20)}>
-            <option value="20">20</option><option value="40">40</option><option value="80">80</option>
-          </select>
-        </label>
-        <div className="ml-auto" />
-        {admin && HasStoreEditor && (<button className="rounded-lg border px-3 py-1.5" onClick={()=>setShowEditor(true)}>管理</button>)}
-      </div>
-    </div>
-  );
-
-  const gridCols = view === "grid16" ? "grid-cols-4" : "grid-cols-3";
-
-  const windowSize2 = 5;
-  const Paginator = () => (
-    <div className="mt-3 flex items-center justify-center gap-1 select-none">
-      <button className="rounded-lg border px-3 py-1.5 text-sm" disabled={page<=1} onClick={()=>setPage(p=>Math.max(1,p-1))}>上一頁</button>
-      {Array.from({length:(endPage-startPage+1)},(_,i)=>startPage+i).map(p => (
-        <button key={p} className={`rounded-lg border px-3 py-1.5 text-sm ${p===page ? 'bg-brand text-white border-brand' : ''}`} onClick={()=>setPage(p)}>{p}</button>
-      ))}
-      <button className="rounded-lg border px-3 py-1.5 text-sm" disabled={page>=maxPage} onClick={()=>setPage(p=>Math.min(maxPage,p+1))}>下一頁</button>
-    </div>
-  );
-
   return (
     <section className="space-y-3">
       <Toolbar />
@@ -461,7 +463,7 @@ function Store({ data, admin, setData, query = "" }) {
                 </div>
               </summary>
 
-              {/* 展開內容（保留舊功能；仍可展開） */}
+              {/* 展開內容（保留） */}
               <div className="px-3 pb-3">
                 <div className="text-sm space-y-2">
                   {remain!=null && <div className="text-slate-600">剩餘數量：{remain}</div>}
@@ -969,34 +971,35 @@ function CardCollapse({summary, children, defaultOpen=false}) {
 
 /* ============================
  * 跳出式產品資訊面板（共用：社群商店 / 點數商城）
- * 用法：
- *   <ProductSheet
- *     open={sheet.open}
- *     item={sheet.item}
- *     context="store" | "shop"
- *     onClose={()=>setSheet({open:false,item:null})}
- *     onOpenViewer={(images, idx, title, buyUrl)=>openViewer(images, idx, title, buyUrl)}
- *     contactUrl="https://line.me/..."
- *     onCopyTemplate={(it)=>copyTemplate(it)}
- *   />
+ * - 手機/桌面皆置中
+ * - 點擊遮罩空白區域關閉
+ * - 支援返回鍵與 ESC 關閉
  * ============================ */
-function ProductSheet({ open=false, item=null, context="store", onClose=()=>{}, onOpenViewer=()=>{}, contactUrl="", onCopyTemplate=()=>{} }) {
+function ProductSheet({
+  open = false,
+  item = null,
+  context = "store",                 // "store" | "shop"
+  onClose = () => {},
+  onOpenViewer = () => {},
+  contactUrl = "",
+  onCopyTemplate = () => {}
+}) {
   const React = window.React || globalThis.React;
-  const [index, setIndex] = React.useState(0);
+  const overlayRef = React.useRef(null);
 
-  const images = React.useMemo(()=>{
+  const images = React.useMemo(() => {
     const arr = Array.isArray(item?.images) ? item.images
               : (item?.image ? [String(item.image)] : []);
     return (arr || []).filter(Boolean);
   }, [item]);
 
-  const tags = React.useMemo(()=>{
+  const tags = React.useMemo(() => {
     if (Array.isArray(item?.tags)) return item.tags;
-    if (typeof item?.tags === "string") return item.tags.split(",").map(s=>s.trim()).filter(Boolean);
+    if (typeof item?.tags === "string") return item.tags.split(",").map(s => s.trim()).filter(Boolean);
     return [];
   }, [item]);
 
-  const needPoints = React.useMemo(()=>{
+  const needPoints = React.useMemo(() => {
     const p = item?.points ?? item?.point ?? item?.needPoints ?? item?.need_point;
     const n = (typeof p === "string" ? +p : p);
     return (Number.isFinite(n) ? n : null);
@@ -1006,35 +1009,37 @@ function ProductSheet({ open=false, item=null, context="store", onClose=()=>{}, 
   const price  = (item?.price ?? "") !== "" ? item?.price : null;
   const remain = item?.stock ?? item?.qty ?? item?.quantity ?? item?.remaining ?? null;
 
-  React.useEffect(()=>{
+  const [index, setIndex] = React.useState(0);
+  React.useEffect(() => { setIndex(0); }, [item]);
+
+  // 開啟時：鎖背景捲動、pushState、監聽 ESC / popstate
+  React.useEffect(() => {
     if (!open) return;
-    const onKey = (e)=>{ if (e.key === "Escape") onClose(); };
-    const onPop = ()=> onClose();
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    const onPop = () => onClose();
     document.addEventListener("keydown", onKey);
     window.addEventListener("popstate", onPop);
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    try { history.pushState({sheet:true}, "", location.href); } catch {}
-    return ()=>{
+    try { history.pushState({ sheet: true }, "", location.href); } catch {}
+    return () => {
       document.removeEventListener("keydown", onKey);
       window.removeEventListener("popstate", onPop);
       document.body.style.overflow = prevOverflow;
     };
   }, [open]);
 
-  React.useEffect(()=>{ setIndex(0); }, [item]);
-
-  // 手勢換圖（簡化）
-  let sx=0, sy=0, dragging=false;
-  const onTouchStart = (e)=>{ if (e.touches.length===1) { sx=e.touches[0].clientX; sy=e.touches[0].clientY; dragging=true; } };
-  const onTouchEnd = (e)=>{
-    if (!dragging) return; dragging=false;
-    const ex=e.changedTouches?.[0]?.clientX ?? sx;
-    const ey=e.changedTouches?.[0]?.clientY ?? sy;
+  // 手勢簡易左右滑
+  let sx = 0, sy = 0, dragging = false;
+  const onTouchStart = (e) => { if (e.touches.length === 1) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; dragging = true; } };
+  const onTouchEnd = (e) => {
+    if (!dragging) return; dragging = false;
+    const ex = e.changedTouches?.[0]?.clientX ?? sx;
+    const ey = e.changedTouches?.[0]?.clientY ?? sy;
     const dx = ex - sx, dy = ey - sy;
-    if (Math.abs(dx)>80 && Math.abs(dx)>Math.abs(dy) && images.length>1) {
-      if (dx>0) setIndex(i => (i-1+images.length)%images.length);
-      else setIndex(i => (i+1)%images.length);
+    if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) && images.length > 1) {
+      if (dx > 0) setIndex(i => (i - 1 + images.length) % images.length);
+      else setIndex(i => (i + 1) % images.length);
     }
   };
 
@@ -1042,53 +1047,78 @@ function ProductSheet({ open=false, item=null, context="store", onClose=()=>{}, 
 
   const title = item?.name || "（未命名）";
 
+  const handleOverlayClick = (e) => {
+    // 點到遮罩（空白區域）才關閉；點內容不關
+    if (e.target === overlayRef.current) onClose();
+  };
+
   return (
-    <div className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-end md:items-center justify-center" role="dialog" aria-modal="true">
-      <div className="w-full md:max-w-2xl md:rounded-2xl bg-white dark:bg-slate-900 shadow-elevate max-h-[92vh] overflow-hidden flex flex-col">
+    <div
+      ref={overlayRef}
+      className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center"
+      role="dialog" aria-modal="true"
+      onMouseDown={handleOverlayClick}
+      onTouchStart={(e)=>{ /* 保留觸控起點，避免誤關 */ }}
+    >
+      {/* 內容容器：手機/桌面置中；小邊距避免貼邊；內容可滾動 */}
+      <div className="w-[min(100vw-16px,44rem)] max-h-[92vh] rounded-2xl bg-white dark:bg-slate-900 shadow-elevate overflow-hidden flex flex-col">
         {/* Header */}
         <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
           <div className="min-w-0">
             <div className="font-semibold truncate">{title}</div>
-            {context==="store" && price!=null && <div className="text-sm text-slate-500">售價：{price}</div>}
-            {context==="shop"  && needPoints!=null && <div className="text-sm text-slate-500">需求點數：{needPoints}</div>}
+            {context === "store" && price != null && <div className="text-sm text-slate-500">售價：{price}</div>}
+            {context === "shop"  && needPoints != null && <div className="text-sm text-slate-500">需求點數：{needPoints}</div>}
           </div>
           <button className="rounded-full border px-3 py-1.5 text-sm" onClick={onClose} aria-label="關閉">關閉</button>
         </div>
 
-        {/* Body */}
+        {/* Body：主圖 + 縮圖 + 文字 */}
         <div className="flex-1 overflow-y-auto">
-          {/* 主圖輪播 */}
+          {/* 主圖輪播（等比置中、支援左右滑 & 點擊進 Viewer） */}
           <div className="relative bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
             <div className="aspect-square w-full grid place-content-center" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-              {images.length>0
+              {images.length > 0
                 ? <img
                     src={images[index]}
                     alt=""
                     className="w-full h-full object-contain select-none"
-                    onClick={()=>onOpenViewer(images, index, title, buyUrl)}
+                    onClick={() => onOpenViewer(images, index, title, buyUrl)}
                   />
                 : <div className="text-slate-400 text-sm">無圖片</div>}
             </div>
-            {images.length>1 && (
+            {images.length > 1 && (
               <>
-                <button className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border px-2 py-1 text-sm bg-white/80 dark:bg-slate-900/70" onClick={()=>setIndex(i => (i-1+images.length)%images.length)} aria-label="上一張">‹</button>
-                <button className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border px-2 py-1 text-sm bg-white/80 dark:bg-slate-900/70" onClick={()=>setIndex(i => (i+1)%images.length)} aria-label="下一張">›</button>
+                <button
+                  className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border px-2 py-1 text-sm bg-white/80 dark:bg-slate-900/70"
+                  onClick={() => setIndex(i => (i - 1 + images.length) % images.length)}
+                  aria-label="上一張"
+                >‹</button>
+                <button
+                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border px-2 py-1 text-sm bg-white/80 dark:bg-slate-900/70"
+                  onClick={() => setIndex(i => (i + 1) % images.length)}
+                  aria-label="下一張"
+                >›</button>
               </>
             )}
-            {images.length>1 && (
+            {images.length > 1 && (
               <div className="absolute bottom-2 inset-x-0 flex items-center justify-center gap-1">
-                {images.map((_,i)=>(
-                  <span key={i} className={"h-1.5 w-1.5 rounded-full " + (i===index ? "bg-slate-900 dark:bg-white" : "bg-slate-300 dark:bg-slate-600")}></span>
+                {images.map((_, i) => (
+                  <span key={i} className={"h-1.5 w-1.5 rounded-full " + (i === index ? "bg-slate-900 dark:bg-white" : "bg-slate-300 dark:bg-slate-600")}></span>
                 ))}
               </div>
             )}
           </div>
 
           {/* 縮圖列 */}
-          {images.length>1 && (
+          {images.length > 1 && (
             <div className="px-4 py-3 -mx-1 flex overflow-x-auto gap-2 snap-x snap-mandatory">
-              {images.map((src,i)=>(
-                <button key={src+i} className={"shrink-0 w-20 aspect-square rounded-lg overflow-hidden border snap-start " + (i===index ? "border-brand ring-2 ring-brand/40" : "border-slate-200 dark:border-slate-700")} onClick={()=>setIndex(i)} title={`圖片 ${i+1}`}>
+              {images.map((src, i) => (
+                <button
+                  key={src + i}
+                  className={"shrink-0 w-20 aspect-square rounded-lg overflow-hidden border snap-start " + (i === index ? "border-brand ring-2 ring-brand/40" : "border-slate-200 dark:border-slate-700")}
+                  onClick={() => setIndex(i)}
+                  title={`圖片 ${i + 1}`}
+                >
                   <img src={src} alt="" className="w-full h-full object-contain" loading="lazy" />
                 </button>
               ))}
@@ -1097,9 +1127,9 @@ function ProductSheet({ open=false, item=null, context="store", onClose=()=>{}, 
 
           {/* 文字資訊 */}
           <div className="px-4 pb-4 space-y-2 text-sm">
-            {context==="store" && remain!=null && <div className="text-slate-600">剩餘數量：{remain}</div>}
-            {Array.isArray(tags) && tags.length>0 && <div className="text-slate-500">標籤：{tags.join(" / ")}</div>}
-            {item?.desc && <div className="whitespace-pre-wrap">{item.desc}</div>}
+            {context === "store" && remain != null && <div className="text-slate-600">剩餘數量：{remain}</div>}
+            {Array.isArray(tags) && tags.length > 0 && <div className="text-slate-500">標籤：{tags.join(" / ")}</div>}
+            {item?.desc  && <div className="whitespace-pre-wrap">{item.desc}</div>}
             {item?.intro && <div className="whitespace-pre-wrap">{item.intro}</div>}
             {item?.extra && <div className="whitespace-pre-wrap">{String(item.extra)}</div>}
           </div>
@@ -1107,7 +1137,7 @@ function ProductSheet({ open=false, item=null, context="store", onClose=()=>{}, 
 
         {/* Sticky 底部 CTA */}
         <div className="p-3 border-t border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/90 backdrop-blur flex items-center gap-2">
-          {context==="store" ? (
+          {context === "store" ? (
             <>
               {buyUrl
                 ? <a href={buyUrl} target="_blank" rel="noopener noreferrer" className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm text-center">前往購買</a>
@@ -1116,8 +1146,8 @@ function ProductSheet({ open=false, item=null, context="store", onClose=()=>{}, 
             </>
           ) : (
             <>
-              <button className="flex-1 rounded-lg border px-4 py-2 text-sm" onClick={()=>onCopyTemplate(item)}>📋 複製模板</button>
-              <button className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm" onClick={()=>{ if (contactUrl) window.open(contactUrl, "_blank", "noopener,noreferrer"); }}>💬 聯絡管理員</button>
+              <button className="flex-1 rounded-lg border px-4 py-2 text-sm" onClick={() => onCopyTemplate(item)}>📋 複製模板</button>
+              <button className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm" onClick={() => { if (contactUrl) window.open(contactUrl, "_blank", "noopener,noreferrer"); }}>💬 聯絡管理員</button>
               <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
             </>
           )}
@@ -3572,7 +3602,7 @@ function Shop({ data, admin, setData, query = "", contactUrl = "" }) {
   React.useEffect(()=>savePrefs({view}),[view]);
   React.useEffect(()=>savePrefs({pageSize}),[pageSize]);
 
-  // ✅ 補上這個：管理面板顯示狀態
+  // 管理面板開關（補上）
   const [showEditor, setShowEditor] = React.useState(false);
   const HasShopEditor = typeof ShopEditor === "function";
 
@@ -3625,12 +3655,13 @@ function Shop({ data, admin, setData, query = "", contactUrl = "" }) {
   const maxPage = Math.max(1, Math.ceil(total / pageSize));
   React.useEffect(()=>{ if (page>maxPage) setPage(maxPage); }, [maxPage, page]);
   React.useEffect(()=>{ setPage(1); }, [search, selectedTags, sortBy, view, pageSize, onlyAffordable, myPoints]);
+
   const start = (page-1)*pageSize;
   const end   = Math.min(start + pageSize, total);
-  const pageItems = sorted.slice(start, end);
   const windowSize = 5;
   const startPage = Math.max(1, Math.min(page - Math.floor(windowSize/2), maxPage - windowSize + 1));
   const endPage   = Math.min(maxPage, startPage + windowSize - 1);
+  const pageItems = sorted.slice(start, end);
 
   const [viewer, setViewer] = React.useState({ open:false, images:[], index:0, title:"" });
   React.useEffect(()=>{
@@ -3746,7 +3777,6 @@ function Shop({ data, admin, setData, query = "", contactUrl = "" }) {
           </select>
         </label>
         <div className="ml-auto" />
-        {/* ✅ 只有管理者且有編輯器時，顯示管理按鈕 */}
         {admin && HasShopEditor && (
           <button className="rounded-lg border px-3 py-1.5" onClick={()=>setShowEditor(true)}>管理</button>
         )}
@@ -3787,13 +3817,13 @@ function Shop({ data, admin, setData, query = "", contactUrl = "" }) {
                   <div className="relative aspect-square overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
                     {cover ? <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" /> : <div className="text-slate-400 text-sm">無圖片</div>}
                     {need!=null && (<div className="absolute left-2 top-2 rounded bg-black/60 text-white text-xs px-2 py-1">需要 {need} 點</div>)}
-                    {lack>0 && (<div className="absolute right-2 top-2 rounded bg-amber-500/90 text-white text-xs px-2 py-1">差 {lack} 點</div>)}
+                    {lack>0   && (<div className="absolute right-2 top-2 rounded bg-amber-500/90 text-white text-xs px-2 py-1">差 {lack} 點</div>)}
                   </div>
                   <div className="mt-2 text-[13px] font-medium truncate" title={name}>{name}</div>
                 </div>
               </summary>
 
-              {/* 展開內容（保留舊功能；仍可展開） */}
+              {/* 展開內容（保留） */}
               <div className="px-3 pb-3">
                 <div className="pt-2 grid grid-cols-2 gap-2">
                   <button className="rounded-lg border px-4 py-2 text-sm" onClick={()=>copyTemplate(x)}>📋 複製模板</button>
@@ -3829,7 +3859,7 @@ function Shop({ data, admin, setData, query = "", contactUrl = "" }) {
 
       <Paginator />
 
-      {/* 管理員編輯面板（A 案：ShopEditor） */}
+      {/* 管理員編輯面板（保留） */}
       {admin && HasShopEditor && showEditor && (
         <ShopEditor
           items={data?.shop?.items || []}
