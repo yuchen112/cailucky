@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-03T19:47:13.263Z"
+    "exportedAt": "2025-09-04T18:37:23.706Z"
   },
   "data": {
     "homepage": {
@@ -464,11 +464,36 @@
     "store": {
       "items": [
         {
+          "id": "fdrofbxn",
+          "name": " 52TOYS 奇奇怪怪的小新 蠟筆小新",
+          "price": "180",
+          "stock": "",
+          "desc": "盲盒\n預購7~14天",
+          "images": [
+            "assets/products/奇奇怪怪的小新/1.jpg",
+            "assets/products/奇奇怪怪的小新/2.jpg",
+            "assets/products/奇奇怪怪的小新/3.jpg",
+            "assets/products/奇奇怪怪的小新/4.jpg",
+            "assets/products/奇奇怪怪的小新/5.jpg",
+            "assets/products/奇奇怪怪的小新/6.jpg",
+            "assets/products/奇奇怪怪的小新/7.jpg",
+            "assets/products/奇奇怪怪的小新/8.jpg",
+            "assets/products/奇奇怪怪的小新/9.jpg",
+            "assets/products/奇奇怪怪的小新/10.jpg",
+            "assets/products/奇奇怪怪的小新/11.jpg"
+          ],
+          "buyUrl": "",
+          "tags": [
+            "盲盒，玩具"
+          ],
+          "imagesText": "assets/products/奇奇怪怪的小新/1.jpg\nassets/products/奇奇怪怪的小新/2.jpg\nassets/products/奇奇怪怪的小新/3.jpg\nassets/products/奇奇怪怪的小新/4.jpg\nassets/products/奇奇怪怪的小新/5.jpg\nassets/products/奇奇怪怪的小新/6.jpg\nassets/products/奇奇怪怪的小新/7.jpg\nassets/products/奇奇怪怪的小新/8.jpg\nassets/products/奇奇怪怪的小新/9.jpg\nassets/products/奇奇怪怪的小新/10.jpg\nassets/products/奇奇怪怪的小新/11.jpg\n\n"
+        },
+        {
           "id": "5dli6tdz",
           "name": "52TOYS熊貓卷兒童趣味日記系列童趣日記",
           "price": "290",
           "stock": "",
-          "desc": "盲盒",
+          "desc": "盲盒\n預購7~14天",
           "images": [
             "assets/products/panda/1.jpg",
             "assets/products/panda/2.jpg",
@@ -488,6 +513,7 @@
             "assets/products/panda/17.jpg",
             "assets/products/panda/18.jpg"
           ],
+          "imagesText": "assets/products/panda/1.jpg\nassets/products/panda/2.jpg\nassets/products/panda/3.jpg\nassets/products/panda/4.jpg\nassets/products/panda/5.jpg\nassets/products/panda/7.jpg\nassets/products/panda/8.jpg\nassets/products/panda/9.jpg\nassets/products/panda/10.jpg\nassets/products/panda/11.jpg\nassets/products/panda/12.jpg\nassets/products/panda/13.jpg\nassets/products/panda/14.jpg\nassets/products/panda/15.jpg\nassets/products/panda/16.jpg\nassets/products/panda/17.jpg\nassets/products/panda/18.jpg",
           "buyUrl": "待定",
           "tags": [
             "盲盒.玩具"
@@ -498,7 +524,7 @@
           "name": "TOP TOY 迪士尼 史迪奇 mini 絨絨 系列盲袋",
           "price": "220",
           "stock": "",
-          "desc": "盲袋1包 (內含3個)",
+          "desc": "盲袋1包 (內含3個)\n預購7~14天",
           "images": [
             "assets/products/sticth/1.jpg",
             "assets/products/sticth/2.jpg",
@@ -512,7 +538,8 @@
             "assets/products/sticth/10.jpg",
             "assets/products/sticth/11.jpg"
           ],
-          "buyUrl": "待定",
+          "imagesText": "assets/products/sticth/1.jpg\nassets/products/sticth/2.jpg\nassets/products/sticth/3.jpg\nassets/products/sticth/4.jpg\nassets/products/sticth/5.jpg\nassets/products/sticth/6.jpg\nassets/products/sticth/7.jpg\nassets/products/sticth/8.jpg\nassets/products/sticth/9.jpg\nassets/products/sticth/10.jpg\nassets/products/sticth/11.jpg",
+          "buyUrl": "",
           "tags": [
             "玩具.盲包"
           ]
