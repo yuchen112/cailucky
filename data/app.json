@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-04T18:37:23.706Z"
+    "exportedAt": "2025-09-04T19:07:09.470Z"
   },
   "data": {
     "homepage": {
@@ -328,8 +328,747 @@
           "enabled": true
         }
       ],
-      "people": [],
+      "people": [
+        {
+          "id": "s386tkzp",
+          "name": "@caicai",
+          "points": 1
+        },
+        {
+          "id": "pvnzeo5v",
+          "name": "@eve",
+          "points": 1
+        },
+        {
+          "id": "coz7j505",
+          "name": "@Green",
+          "points": 1
+        },
+        {
+          "id": "1kietant",
+          "name": "@habv",
+          "points": 2
+        },
+        {
+          "id": "iix4ex5h",
+          "name": "@jiun",
+          "points": 1
+        },
+        {
+          "id": "19lw6j5a",
+          "name": "@Jr",
+          "points": 2
+        },
+        {
+          "id": "bpn4zx60",
+          "name": "@kiki1990",
+          "points": 1
+        },
+        {
+          "id": "rj4c3c1j",
+          "name": "@me",
+          "points": 1
+        },
+        {
+          "id": "99ln3rqq",
+          "name": "@ray",
+          "points": 1
+        },
+        {
+          "id": "627mwcmu",
+          "name": "@Rayyy",
+          "points": 1
+        },
+        {
+          "id": "13kpvjsi",
+          "name": "@Rita",
+          "points": 1
+        },
+        {
+          "id": "7qq50axq",
+          "name": "@sara12",
+          "points": 1
+        },
+        {
+          "id": "y0hagreo",
+          "name": "@Shirley",
+          "points": 1
+        },
+        {
+          "id": "rw76039m",
+          "name": "@wolf",
+          "points": 1
+        },
+        {
+          "id": "xtkef7hf",
+          "name": "@YAHYAH",
+          "points": 1
+        },
+        {
+          "id": "kveop0n2",
+          "name": "@Yu",
+          "points": 1
+        },
+        {
+          "id": "nqclync0",
+          "name": "@Yuma",
+          "points": 1
+        },
+        {
+          "id": "gha6pc7z",
+          "name": "@₊˚̶魁柒໒",
+          "points": 1
+        },
+        {
+          "id": "pi9vwykh",
+          "name": "@✎.白白",
+          "points": 1
+        },
+        {
+          "id": "5gv7fakj",
+          "name": "@ㄩㄣˊ",
+          "points": 2
+        },
+        {
+          "id": "iut1fj38",
+          "name": "@仙貝🍘",
+          "points": 1
+        },
+        {
+          "id": "8kygsidn",
+          "name": "@二二",
+          "points": 1
+        },
+        {
+          "id": "0ps5k2s2",
+          "name": "@光",
+          "points": 1
+        },
+        {
+          "id": "psb8k7ly",
+          "name": "@吳安琪",
+          "points": 1
+        },
+        {
+          "id": "ocvcfzvy",
+          "name": "@呀哈",
+          "points": 1
+        },
+        {
+          "id": "mawdtvrb",
+          "name": "@土龍君",
+          "points": 1
+        },
+        {
+          "id": "2ic8azw0",
+          "name": "@大運衝擊波",
+          "points": 1
+        },
+        {
+          "id": "4rlulqoi",
+          "name": "@小勳",
+          "points": 1
+        },
+        {
+          "id": "l1xm5b8p",
+          "name": "@思思",
+          "points": 1
+        },
+        {
+          "id": "5u088o52",
+          "name": "@我要",
+          "points": 1
+        },
+        {
+          "id": "zgvipsm3",
+          "name": "@明珠",
+          "points": 1
+        },
+        {
+          "id": "3kg3pg75",
+          "name": "@星⭐️",
+          "points": 1
+        },
+        {
+          "id": "oltcd7hb",
+          "name": "@晴兒",
+          "points": 2
+        },
+        {
+          "id": "xvk6geis",
+          "name": "@曉莉",
+          "points": 1
+        },
+        {
+          "id": "3fz41do4",
+          "name": "@棒賽耖咪哞",
+          "points": 1
+        },
+        {
+          "id": "rz94c360",
+          "name": "@橘子",
+          "points": 1
+        },
+        {
+          "id": "1jpzcqu0",
+          "name": "@泰",
+          "points": 1
+        },
+        {
+          "id": "m9buvyqj",
+          "name": "@涂小安",
+          "points": 1
+        },
+        {
+          "id": "gjnnv2qj",
+          "name": "@玲",
+          "points": 1
+        },
+        {
+          "id": "s6sv11kl",
+          "name": "@琇",
+          "points": 1
+        },
+        {
+          "id": "xsoenuoa",
+          "name": "@瑩憂悠",
+          "points": 1
+        },
+        {
+          "id": "fwhdya38",
+          "name": "@璇",
+          "points": 1
+        },
+        {
+          "id": "cmj7yrr4",
+          "name": "@睏過頭-ㄚ嘉",
+          "points": 1
+        },
+        {
+          "id": "ivdrmzm9",
+          "name": "@秀",
+          "points": 2
+        },
+        {
+          "id": "k0p0iyjd",
+          "name": "@米寶/1m",
+          "points": 1
+        },
+        {
+          "id": "ncz2o88r",
+          "name": "@羊",
+          "points": 1
+        },
+        {
+          "id": "ird7r7bd",
+          "name": "@羊🐑",
+          "points": 1
+        },
+        {
+          "id": "h0kj1q0q",
+          "name": "@芊芊",
+          "points": 1
+        },
+        {
+          "id": "24haz7iu",
+          "name": "@苡姍",
+          "points": 1
+        },
+        {
+          "id": "2rzxkglr",
+          "name": "@薛克斌baqir",
+          "points": 1
+        },
+        {
+          "id": "7w7obl13",
+          "name": "@蘇",
+          "points": 1
+        },
+        {
+          "id": "xazs3edh",
+          "name": "@西瓜甜不甜🍉",
+          "points": 1
+        },
+        {
+          "id": "viwplkcz",
+          "name": "@貝貝",
+          "points": 1
+        },
+        {
+          "id": "ovb5rlt4",
+          "name": "@黃國維",
+          "points": 1
+        },
+        {
+          "id": "em7cfc1m",
+          "name": "@🍋！",
+          "points": 1
+        },
+        {
+          "id": "yndkfh2e",
+          "name": "@💋晴晴💋",
+          "points": 1
+        },
+        {
+          "id": "xcb3a1op",
+          "name": "@💪💪肌肉棒子",
+          "points": 1
+        },
+        {
+          "id": "ohvecc9r",
+          "name": "@ARIEL",
+          "points": 2
+        }
+      ],
       "logs": [
+        {
+          "id": "x81v7hvj",
+          "personId": "19lw6j5a",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-09-05 03:06"
+        },
+        {
+          "id": "dps3neo2",
+          "personId": "1kietant",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-09-05 03:06"
+        },
+        {
+          "id": "1jv3q13s",
+          "personId": "ohvecc9r",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-09-05 03:06"
+        },
+        {
+          "id": "15dyy0qo",
+          "personId": "5gv7fakj",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-09-05 03:05"
+        },
+        {
+          "id": "bb8g8sjf",
+          "personId": "ivdrmzm9",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-09-05 03:05"
+        },
+        {
+          "id": "e3zx9d7j",
+          "personId": "oltcd7hb",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-09-05 03:04"
+        },
+        {
+          "id": "u9vvuo7n",
+          "personId": "b8fl1kb9",
+          "delta": -1,
+          "note": "撤銷 7joe973a",
+          "at": "2025-09-05 03:03"
+        },
+        {
+          "id": "7joe973a",
+          "personId": "b8fl1kb9",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-09-05 03:03"
+        },
+        {
+          "id": "ty3y3ug6",
+          "personId": "s386tkzp",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:02"
+        },
+        {
+          "id": "38ojhchp",
+          "personId": "pvnzeo5v",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:02"
+        },
+        {
+          "id": "6vjeu1im",
+          "personId": "coz7j505",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:01"
+        },
+        {
+          "id": "l1c78sjv",
+          "personId": "1kietant",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:01"
+        },
+        {
+          "id": "inbu5mbe",
+          "personId": "iix4ex5h",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:01"
+        },
+        {
+          "id": "923ss1vz",
+          "personId": "19lw6j5a",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:01"
+        },
+        {
+          "id": "s75p5d98",
+          "personId": "bpn4zx60",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:01"
+        },
+        {
+          "id": "sj5h2c77",
+          "personId": "rj4c3c1j",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:01"
+        },
+        {
+          "id": "7klqq5xh",
+          "personId": "99ln3rqq",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:01"
+        },
+        {
+          "id": "6v6x1w4q",
+          "personId": "627mwcmu",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:00"
+        },
+        {
+          "id": "imng0t6l",
+          "personId": "13kpvjsi",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:00"
+        },
+        {
+          "id": "2rgcdufw",
+          "personId": "7qq50axq",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:00"
+        },
+        {
+          "id": "5mqaijlc",
+          "personId": "y0hagreo",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:00"
+        },
+        {
+          "id": "8ofvdq9u",
+          "personId": "rw76039m",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:00"
+        },
+        {
+          "id": "lg5po7h0",
+          "personId": "xtkef7hf",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:00"
+        },
+        {
+          "id": "ivrl7chz",
+          "personId": "kveop0n2",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:00"
+        },
+        {
+          "id": "k5lnp76v",
+          "personId": "nqclync0",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:00"
+        },
+        {
+          "id": "g0t9h5av",
+          "personId": "gha6pc7z",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 03:00"
+        },
+        {
+          "id": "odzoj00r",
+          "personId": "pi9vwykh",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:59"
+        },
+        {
+          "id": "on8irxem",
+          "personId": "5gv7fakj",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:59"
+        },
+        {
+          "id": "x4fnzeou",
+          "personId": "iut1fj38",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:59"
+        },
+        {
+          "id": "qdpp3bto",
+          "personId": "8kygsidn",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:59"
+        },
+        {
+          "id": "val0lkdx",
+          "personId": "0ps5k2s2",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:59"
+        },
+        {
+          "id": "wrmuzaj2",
+          "personId": "psb8k7ly",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:59"
+        },
+        {
+          "id": "07fffp5d",
+          "personId": "ocvcfzvy",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:59"
+        },
+        {
+          "id": "b68ef85d",
+          "personId": "mawdtvrb",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:59"
+        },
+        {
+          "id": "ilfrb962",
+          "personId": "2ic8azw0",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:59"
+        },
+        {
+          "id": "gbe1fx0b",
+          "personId": "4rlulqoi",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:59"
+        },
+        {
+          "id": "h691byp5",
+          "personId": "l1xm5b8p",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:59"
+        },
+        {
+          "id": "z49w39g1",
+          "personId": "5u088o52",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:58"
+        },
+        {
+          "id": "icynaqja",
+          "personId": "zgvipsm3",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:58"
+        },
+        {
+          "id": "qrqghegs",
+          "personId": "3kg3pg75",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:58"
+        },
+        {
+          "id": "gk6pwuq6",
+          "personId": "oltcd7hb",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:58"
+        },
+        {
+          "id": "w61lcvhu",
+          "personId": "xvk6geis",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:58"
+        },
+        {
+          "id": "3sf6d5zs",
+          "personId": "3fz41do4",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:58"
+        },
+        {
+          "id": "s02xarpz",
+          "personId": "rz94c360",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:58"
+        },
+        {
+          "id": "sn577s8p",
+          "personId": "1jpzcqu0",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:58"
+        },
+        {
+          "id": "2b3ym8eh",
+          "personId": "m9buvyqj",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:58"
+        },
+        {
+          "id": "55wzljfn",
+          "personId": "gjnnv2qj",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:58"
+        },
+        {
+          "id": "dxtbgu73",
+          "personId": "s6sv11kl",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:57"
+        },
+        {
+          "id": "f036a3co",
+          "personId": "xsoenuoa",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:57"
+        },
+        {
+          "id": "jxv1ebhe",
+          "personId": "fwhdya38",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:57"
+        },
+        {
+          "id": "lhawq2db",
+          "personId": "cmj7yrr4",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:57"
+        },
+        {
+          "id": "2knjowep",
+          "personId": "ivdrmzm9",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:57"
+        },
+        {
+          "id": "uy81q8vq",
+          "personId": "k0p0iyjd",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:57"
+        },
+        {
+          "id": "hmskwdu9",
+          "personId": "ncz2o88r",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:57"
+        },
+        {
+          "id": "vegp6fxw",
+          "personId": "ird7r7bd",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:57"
+        },
+        {
+          "id": "wi0wcsyl",
+          "personId": "h0kj1q0q",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:57"
+        },
+        {
+          "id": "cgr42ww1",
+          "personId": "24haz7iu",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:57"
+        },
+        {
+          "id": "ys584vyv",
+          "personId": "2rzxkglr",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:56"
+        },
+        {
+          "id": "u4a272zj",
+          "personId": "7w7obl13",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:56"
+        },
+        {
+          "id": "oyq7q4yr",
+          "personId": "xazs3edh",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:56"
+        },
+        {
+          "id": "gy2qohsh",
+          "personId": "viwplkcz",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:56"
+        },
+        {
+          "id": "1g0yajl8",
+          "personId": "ovb5rlt4",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:56"
+        },
+        {
+          "id": "ic0rtk8c",
+          "personId": "em7cfc1m",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:56"
+        },
+        {
+          "id": "uurkzl5v",
+          "personId": "yndkfh2e",
+          "delta": 1,
+          "note": "",
+          "at": "2025-09-05 02:56"
+        },
         {
           "id": "lajb5paf",
           "personId": "w40uenxn",
@@ -482,11 +1221,11 @@
             "assets/products/奇奇怪怪的小新/10.jpg",
             "assets/products/奇奇怪怪的小新/11.jpg"
           ],
-          "buyUrl": "",
+          "imagesText": "assets/products/奇奇怪怪的小新/1.jpg\nassets/products/奇奇怪怪的小新/2.jpg\nassets/products/奇奇怪怪的小新/3.jpg\nassets/products/奇奇怪怪的小新/4.jpg\nassets/products/奇奇怪怪的小新/5.jpg\nassets/products/奇奇怪怪的小新/6.jpg\nassets/products/奇奇怪怪的小新/7.jpg\nassets/products/奇奇怪怪的小新/8.jpg\nassets/products/奇奇怪怪的小新/9.jpg\nassets/products/奇奇怪怪的小新/10.jpg\nassets/products/奇奇怪怪的小新/11.jpg",
+          "buyUrl": "https://myship.7-11.com.tw/cart/confirm/GM2509054490280",
           "tags": [
             "盲盒，玩具"
-          ],
-          "imagesText": "assets/products/奇奇怪怪的小新/1.jpg\nassets/products/奇奇怪怪的小新/2.jpg\nassets/products/奇奇怪怪的小新/3.jpg\nassets/products/奇奇怪怪的小新/4.jpg\nassets/products/奇奇怪怪的小新/5.jpg\nassets/products/奇奇怪怪的小新/6.jpg\nassets/products/奇奇怪怪的小新/7.jpg\nassets/products/奇奇怪怪的小新/8.jpg\nassets/products/奇奇怪怪的小新/9.jpg\nassets/products/奇奇怪怪的小新/10.jpg\nassets/products/奇奇怪怪的小新/11.jpg\n\n"
+          ]
         },
         {
           "id": "5dli6tdz",
@@ -514,7 +1253,7 @@
             "assets/products/panda/18.jpg"
           ],
           "imagesText": "assets/products/panda/1.jpg\nassets/products/panda/2.jpg\nassets/products/panda/3.jpg\nassets/products/panda/4.jpg\nassets/products/panda/5.jpg\nassets/products/panda/7.jpg\nassets/products/panda/8.jpg\nassets/products/panda/9.jpg\nassets/products/panda/10.jpg\nassets/products/panda/11.jpg\nassets/products/panda/12.jpg\nassets/products/panda/13.jpg\nassets/products/panda/14.jpg\nassets/products/panda/15.jpg\nassets/products/panda/16.jpg\nassets/products/panda/17.jpg\nassets/products/panda/18.jpg",
-          "buyUrl": "待定",
+          "buyUrl": "https://myship.7-11.com.tw/cart/confirm/GM2509054490302",
           "tags": [
             "盲盒.玩具"
           ]
@@ -539,7 +1278,7 @@
             "assets/products/sticth/11.jpg"
           ],
           "imagesText": "assets/products/sticth/1.jpg\nassets/products/sticth/2.jpg\nassets/products/sticth/3.jpg\nassets/products/sticth/4.jpg\nassets/products/sticth/5.jpg\nassets/products/sticth/6.jpg\nassets/products/sticth/7.jpg\nassets/products/sticth/8.jpg\nassets/products/sticth/9.jpg\nassets/products/sticth/10.jpg\nassets/products/sticth/11.jpg",
-          "buyUrl": "",
+          "buyUrl": "https://myship.7-11.com.tw/cart/confirm/GM2509054490314",
           "tags": [
             "玩具.盲包"
           ]
