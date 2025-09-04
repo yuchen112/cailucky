@@ -282,31 +282,33 @@ function Store({ data, admin, setData, query = "" }) {
   const startPage = Math.max(1, Math.min(page - Math.floor(windowSize/2), maxPage - windowSize + 1));
   const endPage   = Math.min(maxPage, startPage + windowSize - 1);
 
-  // ---------- Admin：開啟內建商店編輯器（沿用你的 StoreEditor） ----------
+  // ---------- Admin：是否顯示編輯器 ----------
   const [showEditor, setShowEditor] = React.useState(false);
 
   return (
-    <section className="space-y-4" aria-label="社群商店">
-      {/* 標題＋9/16 切換＋編輯按鈕（管理員） */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-xl">🛒</span>
-          <h2 className="text-lg font-semibold">社群商店</h2>
-          <span className="ml-2 text-sm text-slate-500">共 {total} 項</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <button className={"rounded-xl border px-3 py-1.5 text-sm "+(view==="grid9"  ?"bg-brand text-white border-brand":"")} onClick={()=>setView("grid9")}>9 宮格</button>
-          <button className={"rounded-xl border px-3 py-1.5 text-sm "+(view==="grid16" ?"bg-brand text-white border-brand":"")} onClick={()=>setView("grid16")}>16 宮格</button>
-          {admin && HasStoreEditor && (
-            <button className="rounded-xl bg-brand text-white px-3 py-1.5 text-sm" onClick={()=>setShowEditor(true)}>
-              編輯社群商店
-            </button>
-          )}
-        </div>
+    <section className="space-y-4">
+      {/* 標題列 */}
+      <div className="flex items-center gap-2">
+        <h2 className="text-lg font-semibold">社群商店</h2>
+        <div className="ml-auto" />
+        {admin && HasStoreEditor && (
+          <button
+            className="rounded-lg border px-3 py-1.5 text-sm"
+            onClick={()=>setShowEditor(true)}
+          >
+            管理
+          </button>
+        )}
       </div>
 
-      {/* 宮格卡片（收合顯示完整封面；展開顯示詳情在上、所有圖片在下） */}
-      <div className={"grid gap-3 "+gridCols}>
+      {/* 檢視切換 */}
+      <div className="flex items-center gap-2 text-sm">
+        <button className={`rounded-md border px-2 py-1 ${view==='grid9'?'bg-brand text-white border-brand':''}`} onClick={()=>setView('grid9')}>緊湊</button>
+        <button className={`rounded-md border px-2 py-1 ${view==='grid16'?'bg-brand text-white border-brand':''}`} onClick={()=>setView('grid16')}>大圖</button>
+      </div>
+
+      {/* 清單 */}
+      <div className={`grid ${gridCols} gap-3`}>
         {pageItems.map((x,i)=>{
           const name  = x?.name || "（未命名）";
           const price = x?.price != null ? x.price : (x?.amount != null ? x.amount : null);
@@ -315,7 +317,7 @@ function Store({ data, admin, setData, query = "" }) {
             <details key={x.id || i} className="rounded-2xl shadow bg-white dark:bg-neutral-900">
               <summary className="list-none cursor-pointer p-3">
                 <div className="flex flex-col">
-                  <div className="aspect-square overflow-hidden rounded-xl border bg-white/60 dark:bg-slate-900/50 grid place-content-center">
+                  <div className="aspect-square overflow-hidden rounded-xl bg-white/60 dark:bg-slate-900/50 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
                     {cover
                       ? <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" />
                       : <div className="text-slate-400 text-sm">無圖片</div>}
@@ -335,13 +337,33 @@ function Store({ data, admin, setData, query = "" }) {
                   {Array.isArray(x._images) && x._images.length>0 && (
                     <div className="pt-1 grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {x._images.map((src,idx)=>(
-                        <div key={idx} className="aspect-square overflow-hidden rounded-lg border bg-white/60 dark:bg-slate-900/50 grid place-content-center">
-                          <img src={src} alt="" className="w-full h-full object-contain"
-     data-zoomable data-gallery={`store-${x.id}`} data-index={idx}
-     onClick={(e)=>window.__LB__?.openFrom(e.currentTarget)} />
-
+                        <div key={idx} className="aspect-square rounded-xl border bg-white/60 dark:bg-slate-900/50 grid place-content-center">
+                          <img
+                            src={src}
+                            alt=""
+                            className="w-full h-full object-contain"
+                            data-zoomable
+                            data-gallery={`store-${x.id || i}`}  // 🔧 確保唯一群組鍵
+                            data-index={idx}
+                            onClick={(e)=>window.__LB__?.openFrom(e.currentTarget)}
+                          />
                         </div>
                       ))}
+                    </div>
+                  )}
+
+                  {/* 🔗 有 buyUrl 才顯示《前往購買》 */}
+                  {x?.buyUrl && (
+                    <div className="pt-1">
+                      <a
+                        href={x.buyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center w-full rounded-lg bg-brand text-white px-4 py-2 text-sm shadow-soft"
+                        title="前往購買"
+                      >
+                        前往購買
+                      </a>
                     </div>
                   )}
                 </div>
@@ -1036,39 +1058,31 @@ function Collapse({ header, children, defaultOpen=false, force=null, group=null,
     else if (force === 'close') setOpen(false);
   }, [force]);
 
-  // 高度動畫維持原有行為
+  // 高度動畫：依 open/children 重新計算
   useEffect(() => {
     if (!ref.current) return;
     ref.current.style.height = open ? ref.current.scrollHeight + 'px' : '0px';
   }, [open, children]);
 
-  // 🔑 手風琴：監聽同群組的「有人打開」事件，若不是自己就關閉
+  // 手風琴：同群有其它項目打開 → 關閉我
   useEffect(() => {
     if (!grp) return;
-    const onPeerOpen = (e) => {
+    const onOpen = (e) => {
       const { group, uid } = e.detail || {};
-      if (group === grp && uid !== idRef.current && force == null) {
-        setOpen(false);
-      }
+      if (group === grp && uid !== idRef.current) setOpen(false);
     };
-    document.addEventListener('kjs:accordionOpen', onPeerOpen);
-    return () => document.removeEventListener('kjs:accordionOpen', onPeerOpen);
-  }, [grp, force]);
+    document.addEventListener('kjs:accordionOpen', onOpen);
+    return () => document.removeEventListener('kjs:accordionOpen', onOpen);
+  }, [grp]);
 
-  // 點擊：切換自己；若切到開啟，廣播關同群其他
   const handleToggle = () => {
-    // 若有 force（全部展開/收合中），先忽略使用者點擊
     if (force === 'open' || force === 'close') return;
-
-    setOpen(prev => {
-      const next = !prev;
-      if (next && grp) {
-        document.dispatchEvent(new CustomEvent('kjs:accordionOpen', {
-          detail: { group: grp, uid: idRef.current }
-        }));
-      }
-      return next;
-    });
+    const next = !open;
+    setOpen(next);
+    if (next && grp) {
+      const ev = new CustomEvent('kjs:accordionOpen', { detail: { group: grp, uid: idRef.current }});
+      document.dispatchEvent(ev);
+    }
   };
 
   return (
@@ -1080,18 +1094,19 @@ function Collapse({ header, children, defaultOpen=false, force=null, group=null,
         type="button"
       >
         <div className="font-medium">
-    {typeof header === 'function' ? header(open) : header}
-  </div>
+          {typeof header === 'function' ? header(open) : header}
+        </div>
         <svg className={"w-4 h-4 transition " + (open ? "rotate-180" : "")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M6 9l6 6 6-6"/>
         </svg>
       </button>
-      <div ref={ref} className="px-4 pb-4 transition-[height] duration-300 ease-in-out" style={{height: defaultOpen?'auto':'0px'}}>
+      <div ref={ref} className="px-4 pb-4 transition-[height] duration-300 ease-in-out" style={{height: open?'auto':'0px'}}>
         <div className="pt-2">{children}</div>
       </div>
     </div>
   );
 }
+
 
 /***************************************************
  * useAccordionController：手風琴控制（一次只開一個）
@@ -4711,8 +4726,10 @@ function LightboxRoot() {
 
 
     // —— Render ——
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
+    // —— Render ——
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<><App /><LightboxRoot /></>);
+
   </script>
 
 <!-- [IMGIO JS START] -->
