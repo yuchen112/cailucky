@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-04T19:29:18.140Z"
+    "exportedAt": "2025-09-05T07:16:20.052Z"
   },
   "data": {
     "homepage": {
@@ -392,7 +392,7 @@
         {
           "id": "y0hagreo",
           "name": "@Shirley",
-          "points": 1
+          "points": 2
         },
         {
           "id": "rw76039m",
@@ -621,6 +621,13 @@
         }
       ],
       "logs": [
+        {
+          "id": "obh9ayuo",
+          "personId": "y0hagreo",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-09-05 15:16"
+        },
         {
           "id": "x81v7hvj",
           "personId": "19lw6j5a",
