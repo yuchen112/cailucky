@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-05T07:16:20.052Z"
+    "exportedAt": "2025-09-05T08:24:00.839Z"
   },
   "data": {
     "homepage": {
@@ -330,6 +330,11 @@
       ],
       "people": [
         {
+          "id": "mg233n61",
+          "name": "@玄",
+          "points": 0
+        },
+        {
           "id": "s386tkzp",
           "name": "@caicai",
           "points": 1
@@ -392,7 +397,7 @@
         {
           "id": "y0hagreo",
           "name": "@Shirley",
-          "points": 2
+          "points": 3
         },
         {
           "id": "rw76039m",
@@ -617,10 +622,24 @@
         {
           "id": "ohvecc9r",
           "name": "@ARIEL",
-          "points": 2
+          "points": 3
         }
       ],
       "logs": [
+        {
+          "id": "9eyv3tzl",
+          "personId": "y0hagreo",
+          "delta": 1,
+          "note": "邀請好友 @玄",
+          "at": "2025-09-05 16:23"
+        },
+        {
+          "id": "fig3snsi",
+          "personId": "ohvecc9r",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-09-05 16:22"
+        },
         {
           "id": "obh9ayuo",
           "personId": "y0hagreo",
