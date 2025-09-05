@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-05T13:25:54.854Z"
+    "exportedAt": "2025-09-05T14:32:47.794Z"
   },
   "data": {
     "homepage": {
@@ -330,6 +330,11 @@
       ],
       "people": [
         {
+          "id": "duj2sqe6",
+          "name": "@萍萍",
+          "points": 0
+        },
+        {
           "id": "sh997687",
           "name": "@斐媽",
           "points": 0
@@ -412,7 +417,7 @@
         {
           "id": "y0hagreo",
           "name": "@Shirley",
-          "points": 5
+          "points": 6
         },
         {
           "id": "rw76039m",
@@ -641,6 +646,13 @@
         }
       ],
       "logs": [
+        {
+          "id": "nai2fc9x",
+          "personId": "y0hagreo",
+          "delta": 1,
+          "note": "邀請好友 @萍萍",
+          "at": "2025-09-05 22:32"
+        },
         {
           "id": "o1gepced",
           "personId": "y0hagreo",
