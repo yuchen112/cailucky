@@ -413,14 +413,19 @@ function Store({ data, admin, setData, query = "" }) {
               <summary className="list-none cursor-pointer p-3" onClick={(e)=>{ e.preventDefault(); setSheet({ open:true, item:x }); }}>
                 <div className="flex flex-col">
                   <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
-                    {cover ? <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" /> : <div className="text-slate-400 text-sm">無圖片</div>}
-                  </div>
-                  <div className="mt-2 flex items-center justify-between gap-2">
-                    <div className="min-w-0">
-                      <div className="font-medium text-[15px] whitespace-normal break-words" title={name}>{name}</div>
-                    </div>
-                    {price!=null && <div className="text-sm text-emerald-700 dark:text-emerald-400 whitespace-nowrap">NT$ {price}</div>}
-                  </div>
+  {cover ? (
+    <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" />
+  ) : (
+    <div className="text-slate-400 text-sm">無圖片</div>
+  )}
+
+  {price != null && (
+    <div className="absolute bottom-2 right-2 rounded-lg px-2 py-1 text-xs sm:text-sm bg-emerald-600 text-white/95 shadow">
+      NT$ {price}
+    </div>
+  )}
+</div>
+
                 </div>
               </summary>
 
@@ -4083,18 +4088,19 @@ function Shop({ data, admin, setData, query = "" }) {
             <summary className="list-none cursor-pointer p-3" onClick={(e)=>{ e.preventDefault(); setSheet({ open:true, item:x }); }}>
               <div className="flex flex-col">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
-                  {cover ? <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" /> : <div className="text-slate-400 text-sm">無圖片</div>}
-                </div>
-                <div className="mt-2 flex items-center justify-between gap-2">
-                  <div className="min-w-0">
-                    <div className="font-medium text-[15px] whitespace-normal break-words" title={name}>{name}</div>
-                  </div>
-                  {needPts!=null && (
-                    <div className={`text-sm ${myPts>=needPts ? 'text-emerald-700 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-300'} whitespace-nowrap`}>
-                      {needPts} 點
-                    </div>
-                  )}
-                </div>
+  {cover ? (
+    <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" />
+  ) : (
+    <div className="text-slate-400 text-sm">無圖片</div>
+  )}
+
+  {needPts != null && (
+    <div className="absolute bottom-2 right-2 rounded-lg px-2 py-1 text-xs sm:text-sm bg-emerald-600 text-white/95 shadow">
+      {needPts} 點
+    </div>
+  )}
+</div>
+
               </div>
             </summary>
 
