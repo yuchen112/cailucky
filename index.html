@@ -1533,12 +1533,42 @@ function ProductSheet({
           <button className="rounded-full border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
         </div>
 
+        {/* 【新增】pending 專用：參與人員名單（可捲動、顯示總數） */}
+        {context === "pending" && (
+          <div className="px-4 pt-3 pb-4">
+            <div className="flex items-center justify-between mb-2">
+              <div className="text-sm font-medium">參與人員名單</div>
+              {/* 再次顯示總數，與標題列一致 */}
+              <div className="text-xs text-slate-500">共 {candidateCount} 位</div>
+            </div>
+
+            <div className="max-h-48 sm:max-h-64 overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-900/40 p-3 text-sm leading-6">
+              {candidates && candidates.length ? (
+                candidates.map((name, i) => (
+                  <div key={i} className="truncate">
+                    {i + 1}. {name}
+                  </div>
+                ))
+              ) : (
+                <div className="text-slate-500">目前沒有參與人員</div>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* body：主圖 + 縮圖 + 文字 */}
         <div className="flex-1 overflow-y-auto">
           <div className="relative bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
             <div className="aspect-square w-full grid place-content-center" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
               {images.length
-                ? <img src={images[index]} alt="" className="w-full h-full object-contain select-none" onClick={() => onOpenViewer(images, index, title, buyUrl)} />
+                ? (
+                  <img
+                    src={images[index]}
+                    alt=""
+                    className="w-full h-full object-contain select-none"
+                    onClick={() => { if (context === "pending") onOpenViewer?.(images, index, title, buyUrl); }}
+                  />
+                )
                 : <div className="text-slate-400 text-sm">無圖片</div>}
             </div>
             {images.length>1 && (
@@ -1625,6 +1655,7 @@ function ProductSheet({
     </div>
   );
 }
+
 
 /* ============================
  * 抽獎模擬器（展示用）
