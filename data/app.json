@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-05T08:24:00.839Z"
+    "exportedAt": "2025-09-05T12:36:09.283Z"
   },
   "data": {
     "homepage": {
@@ -397,7 +397,7 @@
         {
           "id": "y0hagreo",
           "name": "@Shirley",
-          "points": 3
+          "points": 4
         },
         {
           "id": "rw76039m",
@@ -626,6 +626,13 @@
         }
       ],
       "logs": [
+        {
+          "id": "cyg4emw2",
+          "personId": "y0hagreo",
+          "delta": 1,
+          "note": "邀請好友 @蔡",
+          "at": "2025-09-05 20:36"
+        },
         {
           "id": "9eyv3tzl",
           "personId": "y0hagreo",
