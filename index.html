@@ -268,13 +268,191 @@ function HistoryHeaderRow({ rec }) {
     </div>
   );
 }
-// 社群商店（現金購買）— 固定 9/16 欄、只保留小卡詳情（不再開全螢幕圖層）
-// 管理功能（StoreEditor）與 ProductSheet 都保留，命名不變
+
+
+/*** =========================
+ * 共用：標籤彙整、標籤勾選條、選購清單（離線剪貼簿）
+ * ========================== */
+
+// 從 item 陣列自動彙整唯一標籤（跳過空字串）
+function collectUniqueTags(items, tagField='tags') {
+  const set = new Set();
+  for (const it of (items||[])) {
+    const tags = Array.isArray(it?.[tagField]) ? it[tagField] :
+                 typeof it?.[tagField] === 'string' ? it[tagField].split(',') : [];
+    for (const t of tags) {
+      const v = String(t||'').trim();
+      if (v) set.add(v);
+    }
+  }
+  return Array.from(set).sort((a,b)=>a.localeCompare(b,'zh-Hant'));
+}
+
+// HOOK：多選標籤
+function useTagFilter(allTags=[]) {
+  const [picked, setPicked] = React.useState([]);
+  const toggle = (t) => setPicked(list => (list.includes(t) ? list.filter(x=>x!==t) : [...list, t]));
+  const clear = ()=> setPicked([]);
+  return { picked, toggle, clear, allTags };
+}
+
+// 元件：標籤 Chips（可多選）
+function TagChips({ tags=[], picked=[], onToggle, onClear }) {
+  if (!tags.length) return (
+    <div className="text-xs text-slate-500">目前沒有標籤</div>
+  );
+  return (
+    <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+      {tags.map(t => {
+        const active = picked.includes(t);
+        return (
+          <button
+            key={t}
+            onClick={()=>onToggle(t)}
+            className={
+              "tap-target rounded-full border px-3 py-1 text-sm whitespace-nowrap " +
+              (active ? "bg-brand text-white border-brand" : "bg-white/70 dark:bg-slate-900/60")
+            }
+            title={active ? "取消此標籤" : "選取此標籤"}
+          >
+            {t}
+          </button>
+        );
+      })}
+      {picked.length>0 && (
+        <button onClick={onClear} className="tap-target rounded-full border px-3 py-1 text-sm whitespace-nowrap">
+          清除標籤
+        </button>
+      )}
+    </div>
+  );
+}
+
+// 共用：選購清單狀態（map: id -> {name, qty, price/points}）
+function usePickList(lsKey='kjs_picklist') {
+  const [map, setMap] = React.useState(()=>{
+    try{ return JSON.parse(localStorage.getItem(lsKey) || "{}"); }catch{return {};}
+  });
+  React.useEffect(()=>{ try{ localStorage.setItem(lsKey, JSON.stringify(map)); }catch{}; },[map, lsKey]);
+  const setQty = (key, payload, qty) => {
+    setMap(m=>{
+      const next = { ...m };
+      if (!qty || qty<=0) delete next[key];
+      else next[key] = { ...(m[key]||{}), ...payload, qty: Math.min(999, Math.max(1, Math.floor(qty))) };
+      return next;
+    });
+  };
+  const clear = ()=> setMap({});
+  const totalQty = Object.values(map).reduce((s,x)=> s + (x?.qty||0), 0);
+  return { map, setQty, clear, totalQty };
+}
+
+// 生成文字清單（現金或點數）
+function buildListText(map, mode='cash') {
+  const rows = [];
+  let sumCash = 0, sumPts = 0;
+  for (const k of Object.keys(map)) {
+    const { name, qty, price, pts } = map[k] || {};
+    const line = mode==='pts'
+      ? `- ${name} x${qty}（${pts ?? '?'} 點）`
+      : `- ${name} x${qty}（NT$ ${price ?? '?'}）`;
+    rows.push(line);
+    if (mode==='pts' && Number.isFinite(+pts)) sumPts += (+pts)*(qty||0);
+    if (mode==='cash' && Number.isFinite(+price)) sumCash += (+price)*(qty||0);
+  }
+  const head = mode==='pts' ? '[點數兌換清單]' : '[購物清單]';
+  const tail = mode==='pts'
+    ? (rows.length ? `\n合計點數：約 ${sumPts} 點` : '')
+    : (rows.length ? `\n預估金額：約 NT$ ${sumCash}` : '');
+  return [head, ...rows, tail].filter(Boolean).join('\n');
+}
+
+// 複製輔助（離線可用）
+async function copyText(s) {
+  try { await navigator.clipboard.writeText(String(s)); return true; }
+  catch { return false; }
+}
+
+// 底部浮動工具條：完成挑選/複製清單
+function FloatingPickbar({ count=0, onOpen }) {
+  if (!count) return null;
+  return (
+    <div className="fixed bottom-3 left-0 right-0 z-40 px-3">
+      <div className="mx-auto max-w-screen-sm rounded-xl2 shadow-elevate border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/90 backdrop-blur p-2">
+        <div className="flex items-center justify-between gap-3">
+          <div className="text-sm">已挑選 <span className="font-semibold">{count}</span> 項</div>
+          <button onClick={onOpen} className="tap-target rounded-lg bg-brand text-white px-4 py-2 text-sm">
+            完成挑選／複製清單
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 清單確認對話框（無輸入欄，全部勾選確認）
+function ConfirmListDialog({ open, onClose, map, mode='cash' }) {
+  if (!open) return null;
+  const keys = Object.keys(map);
+  const [checked, setChecked] = React.useState(()=> keys.reduce((o,k)=> (o[k]=true,o),{}));
+  const toggle = (k)=> setChecked(c=>({ ...c, [k]: !c[k] }));
+  const list = keys.filter(k=>checked[k]).map(k=>map[k]);
+  const text = buildListText(keys.filter(k=>checked[k]).reduce((o,k)=> (o[k]=map[k],o),{}), mode);
+  return (
+    <div className="fixed inset-0 z-[1000]" role="dialog" aria-modal="true">
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div className="absolute inset-0 flex items-center justify-center p-4">
+        <div className="sheet-w w-[min(560px,96vw)] max-h-[86vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl">
+          <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+            <div className="font-semibold">{mode==='pts' ? '點數兌換清單' : '購物清單'}</div>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
+          </div>
+          <div className="p-3 overflow-y-auto max-h-[calc(86vh-96px)] space-y-2">
+            {keys.length===0 ? (
+              <div className="text-sm text-slate-500">尚未挑選任何商品</div>
+            ) : keys.map(k=>{
+              const x = map[k]||{};
+              return (
+                <label key={k} className="flex items-center justify-between gap-3 rounded-lg border px-3 py-2">
+                  <div className="min-w-0">
+                    <div className="truncate text-sm">{x.name}</div>
+                    <div className="text-xs text-slate-500">
+                      {mode==='pts' ? `需要 ${x.pts ?? '?'} 點 × ${x.qty}` : `NT$ ${x.price ?? '?'} × ${x.qty}`}
+                    </div>
+                  </div>
+                  <input type="checkbox" checked={!!checked[k]} onChange={()=>toggle(k)} />
+                </label>
+              );
+            })}
+          </div>
+          <div className="p-3 border-t border-slate-200 dark:border-slate-700 flex items-center gap-2">
+            <button
+              className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm"
+              onClick={async ()=>{
+                if (await copyText(text)) {
+                  alert('✅ 已複製清單，請貼到官方 LINE 帳號聯絡管理員確認。');
+                  onClose();
+                } else {
+                  alert('無法自動複製，請手動選取文字複製：\n\n'+text);
+                }
+              }}
+            >
+              複製清單
+            </button>
+            <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 社群商店（現金購買）— 「搜尋改標籤」＋「一鍵購物清單」，九/十六宮格保留
 function Store({ data, admin, setData, query = "" }) {
   const React = window.React || globalThis.React;
 
   // 偏好（九/十六宮格、每頁）
-  const prefKey = "store_prefs_v2";
+  const prefKey = "store_prefs_v3";
   const loadPrefs = () => { try { return JSON.parse(localStorage.getItem(prefKey) || "{}"); } catch { return {}; } };
   const savePrefs = (p) => { try { localStorage.setItem(prefKey, JSON.stringify({ ...loadPrefs(), ...p })); } catch {} };
 
@@ -284,14 +462,14 @@ function Store({ data, admin, setData, query = "" }) {
   React.useEffect(()=>savePrefs({view}),[view]);
   React.useEffect(()=>savePrefs({pageSize}),[pageSize]);
 
-  // 管理面板
+  // 管理面板（保留）
   const [showEditor, setShowEditor] = React.useState(false);
   const HasStoreEditor = typeof StoreEditor === "function";
 
-  // 小卡詳情（沿用既有 ProductSheet）
+  // 詳情彈窗（保留）
   const [sheet, setSheet] = React.useState({ open:false, item:null });
 
-  // 工具
+  // 安全轉數字
   const safeNumber = (v) => {
     if (typeof v === "number" && Number.isFinite(v)) return v;
     if (typeof v === "string" && v.trim() !== "" && !Number.isNaN(+v)) return +v;
@@ -302,30 +480,35 @@ function Store({ data, admin, setData, query = "" }) {
     return v==null ? null : v;
   };
 
-  // 資料
+  // 原始資料
   const itemsRaw = Array.isArray(data?.store?.items) ? data.store.items : [];
   const normalizeItem = (it) => {
     const images = Array.isArray(it?.images) ? it.images : (it?.image ? [String(it.image)] : []);
-    return { ...it, _images: images.filter(Boolean) };
+    const tags   = Array.isArray(it?.tags) ? it.tags : (typeof it?.tags==='string'? it.tags.split(',').map(s=>s.trim()).filter(Boolean):[]);
+    return { ...it, _images: images.filter(Boolean), _tags: tags };
   };
   const allItems = React.useMemo(()=> itemsRaw.map(normalizeItem), [itemsRaw]);
 
-  // 搜尋 / 篩選 / 排序
-  const [search, setSearch] = React.useState(query || "");
+  // ====== 新：標籤篩選（多選） ======
+  const allTags = React.useMemo(()=> collectUniqueTags(allItems, '_tags'), [allItems]);
+  const tag = useTagFilter(allTags);
+
+  // 排序 & 只看有貨
   const [sortBy, setSortBy] = React.useState("latest"); // latest | priceAsc | priceDesc
   const [onlyInStock, setOnlyInStock] = React.useState(false);
 
+  // 套用篩選
   const filtered = React.useMemo(()=>{
-    const kw = String(search||"").trim().toLowerCase();
     return allItems.filter(x=>{
-      const hay = [x?.name, x?.desc, x?.intro].map(s=>String(s||"").toLowerCase()).join(" ");
-      const hitKW   = !kw || hay.includes(kw);
-      const remain  = getRemain(x);
-      const hitStock= !onlyInStock || (remain==null || remain>0);
-      return hitKW && hitStock;
+      // 標籤交集：若有選取標籤，item 必須同時包含所有被選的標籤
+      const okTag = !tag.picked.length || tag.picked.every(t => (x._tags||[]).includes(t));
+      const remain = getRemain(x);
+      const okStock = !onlyInStock || (remain==null || remain>0);
+      return okTag && okStock;
     });
-  }, [allItems, search, onlyInStock]);
+  }, [allItems, tag.picked, onlyInStock]);
 
+  // 排序
   const sorted = React.useMemo(()=>{
     const arr = [...filtered];
     if (sortBy==="priceAsc")       arr.sort((a,b)=> ((+a?.price||Infinity) - (+b?.price||Infinity)));
@@ -338,7 +521,7 @@ function Store({ data, admin, setData, query = "" }) {
   const total   = sorted.length;
   const maxPage = Math.max(1, Math.ceil(total / pageSize));
   React.useEffect(()=>{ if (page>maxPage) setPage(maxPage); }, [maxPage, page]);
-  React.useEffect(()=>{ setPage(1); }, [search, sortBy, view, pageSize, onlyInStock]);
+  React.useEffect(()=>{ setPage(1); }, [tag.picked, sortBy, view, pageSize, onlyInStock]);
   const start = (page-1)*pageSize;
   const end   = Math.min(start + pageSize, total);
   const windowSize = 5;
@@ -346,11 +529,21 @@ function Store({ data, admin, setData, query = "" }) {
   const endPage    = Math.min(maxPage, startPage + windowSize - 1);
   const pageItems  = sorted.slice(start, end);
 
-  // 工具列（手機可換行）
+  // 九/十六宮格
+  const gridCols = view === "grid16" ? "grid-cols-4" : "grid-cols-3";
+
+  // ====== 新：選購清單（現金） ======
+  const pick = usePickList('kjs_store_picklist');
+  const [showConfirm, setShowConfirm] = React.useState(false);
+
+  // 工具列（手機友善）：搜尋改成標籤 Chips
   const Toolbar = () => (
     <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
       <div className="flex flex-wrap items-center gap-2">
-        <input className="flex-1 min-w-[220px] rounded border px-3 py-2" placeholder="搜尋商品..." value={search} onChange={e=>setSearch(e.target.value)} />
+        {/* 標籤多選 */}
+        <TagChips tags={allTags} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} />
+
+        {/* 排序 / 只看有貨 */}
         <select className="rounded border px-2 py-2" value={sortBy} onChange={e=>setSortBy(e.target.value)}>
           <option value="latest">最新更新</option>
           <option value="priceAsc">價格（低→高）</option>
@@ -360,6 +553,8 @@ function Store({ data, admin, setData, query = "" }) {
           <input type="checkbox" checked={onlyInStock} onChange={e=>setOnlyInStock(e.target.checked)} />
           只看有貨
         </label>
+
+        {/* 版面 / 每頁 */}
         <label className="flex items-center gap-1">
           版面
           <select className="rounded border px-2 py-2" value={view} onChange={e=>setView(e.target.value)}>
@@ -373,6 +568,7 @@ function Store({ data, admin, setData, query = "" }) {
             <option value="20">20</option><option value="40">40</option><option value="80">80</option>
           </select>
         </label>
+
         <div className="grow basis-full sm:basis-auto" />
         {admin && HasStoreEditor && (
           <button className="rounded-lg border px-3 py-2" onClick={()=>setShowEditor(true)}>管理</button>
@@ -380,9 +576,6 @@ function Store({ data, admin, setData, query = "" }) {
       </div>
     </div>
   );
-
-  // 手機也固定 9/16 欄
-  const gridCols = view === "grid16" ? "grid-cols-4" : "grid-cols-3";
 
   const Paginator = () => (
     <div className="mt-3 flex items-center justify-center gap-1 select-none">
@@ -399,69 +592,80 @@ function Store({ data, admin, setData, query = "" }) {
       <Toolbar />
       <Paginator />
 
+      {/* 卡片 9/16 宮格 */}
       <div className={`grid ${gridCols} gap-3`} aria-label="社群商店清單">
         {pageItems.map((x, i) => {
+          const id     = x.id || i; // 作為 pick list key
           const name   = x?.name || '（未命名）';
-          const price  = (x?.price ?? '') !== '' ? x.price : null;
+          const price  = (x?.price ?? '') !== '' ? +x.price : null;
           const cover  = Array.isArray(x._images) && x._images.length>0 ? x._images[0] : '';
           const buyUrl = x?.buyUrl || x?.url || '';
           const remain = getRemain(x);
 
+          // 每張卡的勾選 + 數量
+          const qty = pick.map[id]?.qty || 0;
+          const setQ = (n)=> pick.setQty(String(id), { name, price }, n);
+
           return (
-            <details key={x.id || i} className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden select-none">
-              {/* 點 summary → 只開 ProductSheet（不再開第二層圖片檢視器） */}
-              <summary className="list-none cursor-pointer p-3" onClick={(e)=>{ e.preventDefault(); setSheet({ open:true, item:x }); }}>
-                <div className="flex flex-col">
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
-  {cover ? (
-    <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" />
-  ) : (
-    <div className="text-slate-400 text-sm">無圖片</div>
-  )}
-
-  {price != null && (
-    <div className="absolute bottom-2 right-2 rounded-lg px-2 py-1 text-xs sm:text-sm bg-emerald-600 text-white/95 shadow">
-      NT$ {price}
-    </div>
-  )}
-</div>
-
+            <div key={id} className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden select-none">
+              <button className="block w-full text-left p-3" onClick={()=>setSheet({ open:true, item:x })}>
+                <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
+                  {cover ? (
+                    <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" />
+                  ) : (
+                    <div className="text-slate-400 text-sm">無圖片</div>
+                  )}
+                  {price!=null && (
+                    <div className="absolute bottom-2 right-2 rounded-lg px-2 py-1 text-xs sm:text-sm bg-emerald-600 text-white/95 shadow">NT$ {price}</div>
+                  )}
                 </div>
-              </summary>
+                {/* 名稱／標籤 */}
+                <div className="mt-2 text-[13px] font-medium truncate" title={name}>{name}</div>
+                {Array.isArray(x._tags)&&x._tags.length>0 && (
+                  <div className="text-xs text-slate-500 truncate" title={x._tags.join(' / ')}>{x._tags.join(' / ')}</div>
+                )}
+              </button>
 
-              {/* 展開內容：保留可存取性（主要互動走上面的 summary 開啟 sheet） */}
-              <div className="px-3 pb-3">
-                <div className="text-sm space-y-2">
-                  {remain!=null && <div className="text-slate-600">剩餘數量：{remain}</div>}
-                  {x.desc  && <div className="whitespace-pre-wrap leading-relaxed break-words">{x.desc}</div>}
-                  {x.intro && <div className="whitespace-pre-wrap leading-relaxed break-words">{x.intro}</div>}
+              {/* 勾選＋數量（手機單手可點） */}
+              <div className="px-3 pb-3 flex items-center justify-between gap-2">
+                <div className="text-xs text-slate-600">
+                  {remain!=null ? `剩餘：${remain}` : ' '}
                 </div>
-
-                <div className="mt-3">
-                  {buyUrl
-                    ? <a href={buyUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-full rounded-lg bg-brand text-white px-4 py-2 text-sm shadow-soft" title="前往購買">前往購買</a>
-                    : <button disabled className="inline-flex items-center justify-center w-full rounded-lg border px-4 py-2 text-sm text-slate-400" title="尚未提供購買連結">尚未提供購買連結</button>}
+                <div className="flex items-center gap-1">
+                  <button className="rounded-lg border px-2 py-1" onClick={()=>setQ(Math.max(0, qty-1))} aria-label="數量-1">－</button>
+                  <input value={qty||0} onChange={e=>setQ(Math.max(0, Number(e.target.value)||0))} className="w-12 text-center rounded-lg border px-2 py-1" inputMode="numeric" />
+                  <button className="rounded-lg border px-2 py-1" onClick={()=>setQ((qty||0)+1)} aria-label="數量+1">＋</button>
                 </div>
               </div>
-            </details>
+
+              {/* 前往購買（保留） */}
+              <div className="px-3 pb-3">
+                {buyUrl
+                  ? <a href={buyUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-full rounded-lg bg-brand text-white px-4 py-2 text-sm shadow-soft" title="前往購買">前往購買</a>
+                  : <button disabled className="inline-flex items-center justify-center w-full rounded-lg border px-4 py-2 text-sm text-slate-400" title="尚未提供購買連結">尚未提供購買連結</button>}
+              </div>
+            </div>
           );
         })}
       </div>
 
       <Paginator />
 
-      {/* 管理面板：原封不動保留 */}
+      {/* 管理面板（保留） */}
       {admin && HasStoreEditor && showEditor && (
         <StoreEditor data={data} setData={setData} onClose={()=>setShowEditor(false)} />
       )}
 
-      {/* ✅ 只保留小卡詳情；不再傳 onOpenViewer，避免再開第二層圖層 */}
       <ProductSheet
         open={sheet.open}
         item={sheet.item}
         context="store"
         onClose={()=>setSheet({ open:false, item:null })}
       />
+
+      {/* 一鍵購物清單：浮動條 + 確認視窗 */}
+      <FloatingPickbar count={pick.totalQty} onOpen={()=>setShowConfirm(true)} />
+      <ConfirmListDialog open={showConfirm} onClose={()=>setShowConfirm(false)} map={pick.map} mode="cash" />
     </section>
   );
 }
@@ -3911,13 +4115,12 @@ header={`${x.title || "未命名活動"}`} force={bulk}>
   );
 }
 
-// 點數商城 — 固定 9/16 欄、只保留小卡詳情（不再開全螢幕圖層）
-// 管理功能（ShopEditor）保留；onSave 正確寫回 data.shop.items
+// 點數商城（點數兌換）— 「搜尋改標籤」＋「一鍵購物清單(點數)」，九/十六宮格保留
 function Shop({ data, admin, setData, query = "" }) {
   const React = window.React || globalThis.React;
 
   // 偏好（九/十六宮格、每頁）
-  const prefKey = "pointshop_prefs_v2";
+  const prefKey = "pointshop_prefs_v3";
   const loadPrefs = () => { try { return JSON.parse(localStorage.getItem(prefKey) || "{}"); } catch { return {}; } };
   const savePrefs = (p) => { try { localStorage.setItem(prefKey, JSON.stringify({ ...loadPrefs(), ...p })); } catch {} };
 
@@ -3927,20 +4130,20 @@ function Shop({ data, admin, setData, query = "" }) {
   React.useEffect(()=>savePrefs({view}),[view]);
   React.useEffect(()=>savePrefs({pageSize}),[pageSize]);
 
-  // 我的點數（若 data 帶有 myPoints/points.myPoints，預設帶入）
+  // 我的點數（保留原邏輯）
   const initialMyPts =
     (Number.isFinite(+data?.points?.myPoints) ? +data.points.myPoints : null) ??
     (Number.isFinite(+data?.myPoints) ? +data.myPoints : 0);
   const [myPts, setMyPts] = React.useState(initialMyPts || 0);
 
-  // 管理面板
+  // 管理面板（保留）
   const [showEditor, setShowEditor] = React.useState(false);
   const HasShopEditor = typeof ShopEditor === "function";
 
-  // 小卡詳情（沿用既有 ProductSheet）
+  // 詳情彈窗（保留）
   const [sheet, setSheet] = React.useState({ open:false, item:null });
 
-  // 工具
+  // 數值解析
   const safeNumber = (v) => {
     if (typeof v === "number" && Number.isFinite(v)) return v;
     if (typeof v === "string" && v.trim() !== "" && !Number.isNaN(+v)) return +v;
@@ -3956,82 +4159,59 @@ function Shop({ data, admin, setData, query = "" }) {
     return v==null ? null : v;
   };
 
-  // 資料
+  // 原始資料
   const itemsRaw = Array.isArray(data?.shop?.items) ? data.shop.items : [];
   const normalizeItem = (it) => {
     const images = Array.isArray(it?.images) ? it.images : (it?.image ? [String(it.image)] : []);
-    return { ...it, _images: images.filter(Boolean), _needPts: getNeedPts(it) };
+    const tags   = Array.isArray(it?.tags) ? it.tags : (typeof it?.tags==='string'? it.tags.split(',').map(s=>s.trim()).filter(Boolean):[]);
+    return { ...it, _images: images.filter(Boolean), _tags: tags, _needPts: getNeedPts(it) };
   };
   const allItems = React.useMemo(()=> itemsRaw.map(normalizeItem), [itemsRaw]);
 
-  // 搜尋 / 排序 / 過濾
-  const [search, setSearch] = React.useState(query || "");
-  const [sortBy, setSortBy] = React.useState("latest"); // latest | ptsAsc | ptsDesc
-  const [onlyInStock, setOnlyInStock] = React.useState(false);
+  // ====== 新：標籤篩選（多選） ======
+  const allTags = React.useMemo(()=> collectUniqueTags(allItems, '_tags'), [allItems]);
+  const tag = useTagFilter(allTags);
+
+  // 只看「我可兌換」
   const [onlyAffordable, setOnlyAffordable] = React.useState(false);
 
+  // 套用篩選
   const filtered = React.useMemo(()=>{
-    const kw = String(search||"").trim().toLowerCase();
     return allItems.filter(x=>{
-      const hay = [x?.name, x?.title, x?.desc, x?.intro].map(s=>String(s||"").toLowerCase()).join(" ");
-      const hitKW = !kw || hay.includes(kw);
-      const remain = getRemain(x);
-      const hitStock = !onlyInStock || (remain==null || remain>0);
-      const need = x._needPts ?? 0;
-      const hitAffordable = !onlyAffordable || (need<=myPts);
-      return hitKW && hitStock && hitAffordable;
+      const okTag = !tag.picked.length || tag.picked.every(t => (x._tags||[]).includes(t));
+      const need  = x._needPts ?? getNeedPts(x);
+      const okPts = !onlyAffordable || (need!=null && myPts>=need);
+      return (x?.enabled!==false) && okTag && okPts;
     });
-  }, [allItems, search, onlyInStock, onlyAffordable, myPts]);
-
-  const sorted = React.useMemo(()=>{
-    const arr = [...filtered];
-    if (sortBy==="ptsAsc")       arr.sort((a,b)=> ((a._needPts??Infinity) - (b._needPts??Infinity)));
-    else if (sortBy==="ptsDesc") arr.sort((a,b)=> ((b._needPts??-Infinity) - (a._needPts??-Infinity)));
-    else                         arr.sort((a,b)=> (new Date(b?.updatedAt||b?.createdAt||0) - new Date(a?.updatedAt||a?.createdAt||0)));
-    return arr;
-  }, [filtered, sortBy]);
+  }, [allItems, tag.picked, onlyAffordable, myPts]);
 
   // 分頁
-  const total   = sorted.length;
+  const total   = filtered.length;
   const maxPage = Math.max(1, Math.ceil(total / pageSize));
   React.useEffect(()=>{ if (page>maxPage) setPage(maxPage); }, [maxPage, page]);
-  React.useEffect(()=>{ setPage(1); }, [search, sortBy, view, pageSize, onlyInStock, onlyAffordable, myPts]);
+  React.useEffect(()=>{ setPage(1); }, [tag.picked, view, pageSize, onlyAffordable, myPts]);
   const start = (page-1)*pageSize;
   const end   = Math.min(start + pageSize, total);
   const windowSize = 5;
   const startPage  = Math.max(1, Math.min(page - Math.floor(windowSize/2), maxPage - windowSize + 1));
   const endPage    = Math.min(maxPage, startPage + windowSize - 1);
-  const pageItems  = sorted.slice(start, end);
+  const pageItems  = filtered.slice(start, end);
 
-  // 工具列（手機可換行）
+  // 九/十六宮格
+  const gridCols = view === "grid16" ? "grid-cols-4" : "grid-cols-3";
+
+  // ====== 新：選購清單（點數） ======
+  const pick = usePickList('kjs_pointshop_picklist');
+  const [showConfirm, setShowConfirm] = React.useState(false);
+
+  // 工具列（手機友善）：搜尋改成標籤 Chips（保留我的點數/只看我可兌換/版面/每頁）
   const Toolbar = () => (
     <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
       <div className="flex flex-wrap items-center gap-2">
-        <input className="flex-1 min-w-[220px] rounded border px-3 py-2" placeholder="搜尋活動..." value={search} onChange={e=>setSearch(e.target.value)} />
-        <select className="rounded border px-2 py-2" value={sortBy} onChange={e=>setSortBy(e.target.value)}>
-          <option value="latest">最新更新</option>
-          <option value="ptsAsc">所需點數（低→高）</option>
-          <option value="ptsDesc">所需點數（高→低）</option>
-        </select>
-        <label className="flex items-center gap-1">
-          <input type="checkbox" checked={onlyInStock} onChange={e=>setOnlyInStock(e.target.checked)} />
-          只看有貨
-        </label>
-        <label className="flex items-center gap-1">
-          版面
-          <select className="rounded border px-2 py-2" value={view} onChange={e=>setView(e.target.value)}>
-            <option value="grid9">9 宮格</option>
-            <option value="grid16">16 宮格</option>
-          </select>
-        </label>
-        <label className="flex items-center gap-1">
-          每頁
-          <select className="rounded border px-2 py-2" value={pageSize} onChange={e=>setPageSize(+e.target.value || 20)}>
-            <option value="20">20</option><option value="40">40</option><option value="80">80</option>
-          </select>
-        </label>
+        {/* 標籤多選 */}
+        <TagChips tags={allTags} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} />
 
-        {/* 我的點數 & 只看我可兌換 */}
+        {/* 我的點數 & 只看我可兌換（保留） */}
         <div className="flex items-center gap-2 ml-auto">
           <label className="flex items-center gap-1">
             我的點數
@@ -4049,6 +4229,21 @@ function Shop({ data, admin, setData, query = "" }) {
           </label>
         </div>
 
+        {/* 版面 / 每頁（保留） */}
+        <label className="flex items-center gap-1">
+          版面
+          <select className="rounded border px-2 py-2" value={view} onChange={e=>setView(e.target.value)}>
+            <option value="grid9">9 宮格</option>
+            <option value="grid16">16 宮格</option>
+          </select>
+        </label>
+        <label className="flex items-center gap-1">
+          每頁
+          <select className="rounded border px-2 py-2" value={pageSize} onChange={e=>setPageSize(+e.target.value || 20)}>
+            <option value="20">20</option><option value="40">40</option><option value="80">80</option>
+          </select>
+        </label>
+
         <div className="grow basis-full sm:basis-auto" />
         {admin && HasShopEditor && (
           <button className="rounded-lg border px-3 py-2" onClick={()=>setShowEditor(true)}>管理</button>
@@ -4056,9 +4251,6 @@ function Shop({ data, admin, setData, query = "" }) {
       </div>
     </div>
   );
-
-  // 手機也固定 9/16 欄
-  const gridCols = view === "grid16" ? "grid-cols-4" : "grid-cols-3";
 
   const Paginator = () => (
     <div className="mt-3 flex items-center justify-center gap-1 select-none">
@@ -4075,63 +4267,67 @@ function Shop({ data, admin, setData, query = "" }) {
       <Toolbar />
       <Paginator />
 
+      {/* 卡片 9/16 宮格 */}
       <div className={`grid ${gridCols} gap-3`} aria-label="點數商城清單">
         {pageItems.map((x, i) => {
+          const id      = x.id || i; // 作為 pick list key
           const name    = x?.name || x?.title || '（未命名）';
           const needPts = x._needPts ?? getNeedPts(x);
           const cover   = Array.isArray(x._images) && x._images.length>0 ? x._images[0] : '';
-          const remain  = getRemain(x);
+          const afford  = (needPts!=null && myPts>=needPts);
 
-        return (
-          <details key={x.id || i} className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden select-none">
-            {/* 點 summary → 只開 ProductSheet（不再開第二層圖片檢視器） */}
-            <summary className="list-none cursor-pointer p-3" onClick={(e)=>{ e.preventDefault(); setSheet({ open:true, item:x }); }}>
-              <div className="flex flex-col">
+          const qty = pick.map[id]?.qty || 0;
+          const setQ = (n)=> pick.setQty(String(id), { name, pts: needPts }, n);
+
+          return (
+            <div key={id} className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden select-none">
+              <button className="block w-full text-left p-3" onClick={()=>setSheet({ open:true, item:x })}>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
-  {cover ? (
-    <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" />
-  ) : (
-    <div className="text-slate-400 text-sm">無圖片</div>
-  )}
+                  {cover ? <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" /> : <div className="text-slate-400 text-sm">無圖片</div>}
+                  {needPts!=null && (
+                    <div className={`absolute bottom-2 right-2 rounded-lg px-2 py-1 text-xs sm:text-sm ${afford?'bg-emerald-600 text-white/95':'bg-slate-400 text-white/95'} shadow`}>
+                      {needPts} 點
+                    </div>
+                  )}
+                </div>
+                {/* 名稱／標籤 */}
+                <div className="mt-2 text-[13px] font-medium truncate" title={name}>{name}</div>
+                {Array.isArray(x._tags)&&x._tags.length>0 && (
+                  <div className="text-xs text-slate-500 truncate" title={x._tags.join(' / ')}>{x._tags.join(' / ')}</div>
+                )}
+              </button>
 
-  {needPts != null && (
-    <div className="absolute bottom-2 right-2 rounded-lg px-2 py-1 text-xs sm:text-sm bg-emerald-600 text-white/95 shadow">
-      {needPts} 點
-    </div>
-  )}
-</div>
-
+              {/* 勾選＋數量 */}
+              <div className="px-3 pb-3 flex items-center justify-between gap-2">
+                <div className="text-xs text-slate-600">
+                  {needPts!=null ? (afford ? '可兌換' : '點數不足') : ' '}
+                </div>
+                <div className="flex items-center gap-1">
+                  <button className="rounded-lg border px-2 py-1" onClick={()=>setQ(Math.max(0, qty-1))} aria-label="數量-1">－</button>
+                  <input value={qty||0} onChange={e=>setQ(Math.max(0, Number(e.target.value)||0))} className="w-12 text-center rounded-lg border px-2 py-1" inputMode="numeric" />
+                  <button className="rounded-lg border px-2 py-1" onClick={()=>setQ((qty||0)+1)} aria-label="數量+1">＋</button>
+                </div>
               </div>
-            </summary>
 
-            {/* 展開內容：保留可存取性（主要互動走上面的 summary 開啟 sheet） */}
-            <div className="px-3 pb-3">
-              <div className="text-sm space-y-2">
-                {remain!=null && <div className="text-slate-600">剩餘數量：{remain}</div>}
-                {needPts!=null && <div className="text-slate-600">兌換需求：{needPts} 點（你目前 {myPts} 點）</div>}
-                {x.desc  && <div className="whitespace-pre-wrap leading-relaxed break-words">{x.desc}</div>}
-                {x.intro && <div className="whitespace-pre-wrap leading-relaxed break-words">{x.intro}</div>}
-              </div>
-
-              {/* 兌換按鈕（你的流程若有，可在這裡接上） */}
-              <div className="mt-3">
+              {/* （保留你的兌換流程按鈕 wiring；若需要也能在彈窗中觸發「聯絡管理員」） */}
+              <div className="px-3 pb-3">
                 <button
-                  disabled={needPts==null || myPts<needPts}
+                  disabled={needPts==null || !afford}
                   className={`inline-flex items-center justify-center w-full rounded-lg px-4 py-2 text-sm shadow-soft
-                  ${needPts!=null && myPts>=needPts ? 'bg-brand text-white' : 'border text-slate-400'}`}
-                  title={needPts!=null && myPts>=needPts ? '可兌換' : '點數不足或未設定'}
+                  ${needPts!=null && afford ? 'bg-brand text-white' : 'border text-slate-400'}`}
+                  title={needPts!=null && afford ? '可兌換' : '點數不足或未設定'}
                 >
-                  {needPts!=null && myPts>=needPts ? '我要兌換' : '無法兌換'}
+                  {needPts!=null && afford ? '我要兌換' : '無法兌換'}
                 </button>
               </div>
             </div>
-          </details>
-        );})}
+          );
+        })}
       </div>
 
       <Paginator />
 
-      {/* 管理面板：正確 wiring — 用 items + onSave + onClose */}
+      {/* 管理面板（保留，正確寫回 data.shop.items） */}
       {admin && HasShopEditor && showEditor && (
         <ShopEditor
           items={Array.isArray(data?.shop?.items) ? data.shop.items : []}
@@ -4144,13 +4340,16 @@ function Shop({ data, admin, setData, query = "" }) {
         />
       )}
 
-      {/* ✅ 只保留小卡詳情；不再傳 onOpenViewer，避免再開第二層圖層 */}
       <ProductSheet
         open={sheet.open}
         item={sheet.item}
         context="shop"
         onClose={()=>setSheet({ open:false, item:null })}
       />
+
+      {/* 一鍵清單：浮動條 + 確認視窗（點數版） */}
+      <FloatingPickbar count={pick.totalQty} onOpen={()=>setShowConfirm(true)} />
+      <ConfirmListDialog open={showConfirm} onClose={()=>setShowConfirm(false)} map={pick.map} mode="pts" />
     </section>
   );
 }
