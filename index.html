@@ -808,8 +808,28 @@ function FullLogsDialog({ open=false, onClose=()=>{}, logs=[], people=[], person
   );
 }
 
+// 依 tagGroups 的群組順序 + 群內順序來產生扁平的標籤清單
+function orderTagsByGroups(allTags = [], groups = []) {
+  const seen = new Set();
+  const out = [];
 
-// 社群商店（現金購買）— 「搜尋改標籤」＋「一鍵購物清單」，九/十六宮格保留
+  // 先依群組內順序排
+  (Array.isArray(groups) ? groups : []).forEach(g => {
+    (g?.tags || []).forEach(t => {
+      if (allTags.includes(t) && !seen.has(t)) {
+        seen.add(t);
+        out.push(t);
+      }
+    });
+  });
+
+  // 再把剩下未分組/未涵蓋的補上（維持 allTags 原本順序）
+  allTags.forEach(t => { if (!seen.has(t)) out.push(t); });
+
+  return out;
+}
+
+
 // 社群商店（現金購買）— 「搜尋改標籤」＋「一鍵購物清單」，九/十六宮格保留
 function Store({ data, admin, setData, query = "" }) {
   const React = window.React || globalThis.React;
@@ -853,6 +873,12 @@ function Store({ data, admin, setData, query = "" }) {
   const allItems = React.useMemo(() => itemsRaw.map(normalizeItem), [itemsRaw]);
 
   const allTags = React.useMemo(() => collectUniqueTags(allItems, "_tags"), [allItems]);
+
+// ★ 新增：依群組排序的扁平 tags
+const tagsOrdered = React.useMemo(
+  () => orderTagsByGroups(allTags, tagGroups),
+  [allTags, tagGroups]
+);
   const tag = useTagFilter(allTags);
 
   const [sortBy, setSortBy] = React.useState("latest");
@@ -894,7 +920,8 @@ function Store({ data, admin, setData, query = "" }) {
   const Toolbar = () => (
     <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
       <div className="flex flex-wrap items-center gap-2">
-        <TagChips tags={allTags} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} />
+        <TagChips tags={tagsOrdered} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} />
+
 
         {/* ★ 新增：小卡式「篩選標籤」 */}
         <button className="rounded-lg border px-3 py-2" onClick={() => setTagSheetOpen(true)}>
@@ -999,7 +1026,7 @@ function Store({ data, admin, setData, query = "" }) {
 
               <div className="px-3 pb-3 mt-1">
                 {buyUrl ? (
-                  <a href={buyUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w全 rounded-lg bg-brand text-white px-4 py-2 text-sm shadow-soft" title="前往購買">
+                  <a href={buyUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-full rounded-lg bg-brand text-white px-4 py-2 text-sm shadow-soft" title="前往購買">
                     前往購買
                   </a>
                 ) : (
@@ -1154,6 +1181,15 @@ function StoreEditor({ data, setData, onClose }) {
   const [drafts, setDrafts] = React.useState(() => items.map(cloneStoreItem));
   const [filter, setFilter] = React.useState('');
 
+  // ★ 新增：群組狀態（初始化自 data.store.tagGroups）
+  const [groupsState, setGroupsState] = React.useState(() =>
+    Array.isArray(data?.store?.tagGroups)
+      ? data.store.tagGroups.map(g => ({ name: g?.name || '', tags: Array.isArray(g?.tags) ? [...g.tags] : [] }))
+      : []
+  );
+  // ★ 動態蒐集全部標籤（提供給群組編輯器）
+  const allTags = React.useMemo(() => normalizeAllTagsFromItems(drafts), [drafts]);
+
   function cloneStoreItem(it = {}) {
     return {
       id: it.id || nid(),
@@ -1206,9 +1242,11 @@ function StoreEditor({ data, setData, onClose }) {
   };
 
   const saveAll = () => {
+    // ★ 一起寫回 tagGroups（經清洗，避免重複/不存在的標籤）
+    const cleanedGroups = ensureUniqueTagsInGroups(groupsState, allTags);
     setData(s => ({
       ...s,
-      store: { ...(s.store || {}), items: drafts },
+      store: { ...(s.store || {}), items: drafts, tagGroups: cleanedGroups },
     }));
     alert('社群商店已儲存');
     onClose?.();
@@ -1238,6 +1276,21 @@ function StoreEditor({ data, setData, onClose }) {
 
           {/* body */}
           <div className="p-3 overflow-y-auto max-h-[calc(86vh-56px)] space-y-3">
+            {/* ★★★ 新增：標籤群組編輯（排序／整合） */}
+            <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+              <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div className="font-medium">標籤群組（排序／整合）</div>
+                <div className="text-xs text-slate-500">未分組標籤會自動歸入「其他」</div>
+              </div>
+              <div className="p-3">
+                <TagGroupsEditor
+                  groups={groupsState}
+                  allTags={allTags}
+                  onChange={setGroupsState}
+                />
+              </div>
+            </div>
+
             {filtered.length === 0 ? (
               <div className="text-slate-500 text-sm">沒有符合條件的草稿。</div>
             ) : (
@@ -1341,6 +1394,8 @@ function StoreEditor({ data, setData, onClose }) {
     </div>
   );
 }
+
+
 /***********************
  * 匯出 CSV（社群商店）
  ***********************/
@@ -4592,7 +4647,7 @@ function Shop({ data, admin, setData, query = "" }) {
   // 詳情
   const [sheet, setSheet] = React.useState({ open:false, item:null });
 
-  // ★ 新增：小卡式「篩選標籤」彈窗開關與群組資料
+  // ★ 小卡式「篩選標籤」彈窗開關與群組資料
   const [tagSheetOpen, setTagSheetOpen] = React.useState(false);
   const tagGroups = Array.isArray(data?.shop?.tagGroups) ? data.shop.tagGroups : [];
 
@@ -4610,8 +4665,25 @@ function Shop({ data, admin, setData, query = "" }) {
   };
   const allItems = React.useMemo(()=> itemsRaw.map(normalizeItem), [itemsRaw]);
 
-  // 標籤
+  // 標籤（收集 → 依群組順序重排）
   const allTags = React.useMemo(()=> collectUniqueTags(allItems, '_tags'), [allItems]);
+
+  // ★★★ 新增：依群組順序重排 chips（群組內的順序也會保留；未分組的放最後）
+  const tagsOrdered = React.useMemo(() => {
+    if (!Array.isArray(tagGroups) || tagGroups.length === 0) return allTags;
+    const seen = new Set();
+    const ordered = [];
+    // 先按群組順序攤平，且只收錄出現在 allTags 的項
+    tagGroups.forEach(g => {
+      (g?.tags || []).forEach(t => {
+        if (allTags.includes(t) && !seen.has(t)) { seen.add(t); ordered.push(t); }
+      });
+    });
+    // 再把沒被分組的標籤追加在後
+    allTags.forEach(t => { if (!seen.has(t)) ordered.push(t); });
+    return ordered;
+  }, [allTags, tagGroups]);
+
   const tag = useTagFilter(allTags);
 
   // 只看我可兌換
@@ -4656,9 +4728,10 @@ function Shop({ data, admin, setData, query = "" }) {
   const Toolbar = () => (
     <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
       <div className="flex flex-wrap items-center gap-2">
-        <TagChips tags={allTags} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} />
+        {/* ★ 這裡把 TagChips 的來源改成 tagsOrdered（依群組排序） */}
+        <TagChips tags={tagsOrdered} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} />
 
-        {/* ★ 新增：小卡式「篩選標籤」 */}
+        {/* 小卡式「篩選標籤」 */}
         <button className="rounded-lg border px-3 py-2" onClick={()=>setTagSheetOpen(true)}>篩選標籤</button>
 
         <div className="flex items-center gap-2 ml-auto">
@@ -4767,17 +4840,22 @@ function Shop({ data, admin, setData, query = "" }) {
       <Paginator />
 
       {/* 管理面板（保留） */}
-      {admin && HasShopEditor && showEditor && (
-        <ShopEditor
-          items={Array.isArray(data?.shop?.items) ? data.shop.items : []}
-          onSave={(nextItems) => {
-            const safeNext = Array.isArray(nextItems) ? nextItems : [];
-            setData(s => ({ ...s, shop: { ...(s.shop || {}), items: safeNext } }));
-            setShowEditor(false);
-          }}
-          onClose={()=>setShowEditor(false)}
-        />
-      )}
+     {admin && HasShopEditor && showEditor && (
+  <ShopEditor
+    items={Array.isArray(data?.shop?.items) ? data.shop.items : []}
+    groups={Array.isArray(data?.shop?.tagGroups) ? data.shop.tagGroups : []}
+    onSave={(nextItems, nextGroups) => {
+      // onSave 接 2 參數：商品、群組
+      const safeNext   = Array.isArray(nextItems)  ? nextItems  : [];
+      const safeGroups = Array.isArray(nextGroups) ? nextGroups : [];
+      setData(s => ({ ...s, shop: { ...(s.shop || {}), items: safeNext, tagGroups: safeGroups } }));
+      setShowEditor(false);
+    }}
+    onClose={() => setShowEditor(false)}
+  />
+)}
+
+
 
       {/* 詳情彈窗（保留） */}
       <ProductSheet open={sheet.open} item={sheet.item} context="shop" onClose={()=>setSheet({ open:false, item:null })} />
@@ -4787,7 +4865,7 @@ function Shop({ data, admin, setData, query = "" }) {
       {/* ★ 修復重點：串上 onSetQty，讓清單可加減/刪除 */}
       <ConfirmListDialog open={showConfirm} onClose={()=>setShowConfirm(false)} map={pick.map} mode="pts" onSetQty={(k,p,n)=>pick.setQty(k,p,n)} />
 
-      {/* ★ 新增：標籤小卡彈窗掛載點（吃 data.shop.tagGroups） */}
+      {/* ★ 標籤小卡：吃 data.shop.tagGroups */}
       <TagFilterSheet
         open={tagSheetOpen}
         onClose={()=>setTagSheetOpen(false)}
@@ -4796,6 +4874,9 @@ function Shop({ data, admin, setData, query = "" }) {
         picked={tag.picked}
         onApply={(list)=>{ tag.setPicked(list); setTagSheetOpen(false); }}
       />
+
+      {/* ★ 避免被底部挑選條遮住的空白區 */}
+      {pick.totalQty > 0 && <div className="pickbar-spacer" />}
     </section>
   );
 }
@@ -4804,10 +4885,15 @@ function Shop({ data, admin, setData, query = "" }) {
 // ============================
 // ShopEditor：專為點數商城的管理編輯器（不影響 StoreEditor）
 // ============================
-function ShopEditor({ items = [], onSave, onClose }) {
+function ShopEditor({ items = [], groups = [], onSave, onClose }) {
   const React = window.React || globalThis.React;
   const [list, setList] = React.useState(()=> (Array.isArray(items) ? items.map(x=>({ ...x })) : []));
   const [editingIndex, setEditingIndex] = React.useState(-1);
+
+  // ★ 新增：群組狀態（從 props.groups 初始化）
+  const [groupsState, setGroupsState] = React.useState(()=> Array.isArray(groups) ? groups.map(g=>({ name: g?.name||'', tags: Array.isArray(g?.tags)? [...g.tags] : [] })) : []);
+  // ★ 由當前清單動態收集所有標籤（提供給群組編輯器）
+  const allTags = React.useMemo(()=> normalizeAllTagsFromItems(list), [list]);
 
   // 預設項目：新增就有 stock 欄位；不再使用 intro
   const blankItem = () => ({
@@ -4917,7 +5003,7 @@ function ShopEditor({ items = [], onSave, onClose }) {
       }
 
       next.desc  = draft.desc;
-      // 移除 intro：確保舊資料不再繼續保存（可保留也可刪除，這裡選擇刪除）
+      // 移除 intro
       if ('intro' in next) delete next.intro;
 
       next.tags = draft.tags ? draft.tags.split(",").map(s=>s.trim()).filter(Boolean) : [];
@@ -5001,17 +5087,44 @@ function ShopEditor({ items = [], onSave, onClose }) {
           <div className="flex items-center gap-2">
             <button className="rounded border px-3 py-1.5 text-sm" onClick={exportCSV}>匯出 CSV</button>
             <button className="rounded border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
-            <button className="rounded bg-brand text-white px-3 py-1.5 text-sm" onClick={()=>onSave(list)}>儲存</button>
+            {/* ★ 儲存：多傳一個參數 groups（舊呼叫者會自動忽略第二參數） */}
+            <button
+              className="rounded bg-brand text-white px-3 py-1.5 text-sm"
+              onClick={()=>{
+                const cleaned = ensureUniqueTagsInGroups(groupsState, allTags);
+                onSave?.(list, cleaned);
+              }}
+            >
+              儲存
+            </button>
           </div>
         </div>
 
-        {/* list */}
+        {/* body */}
         <div className="flex-1 overflow-auto">
-          <div className="p-2">
-            <button className="mb-2 rounded bg-emerald-600 text-white px-3 py-1.5 text-sm" onClick={addNew}>新增項目</button>
-            <div className="rounded border overflow-hidden">
-              {list.length===0 && <div className="p-6 text-center text-slate-500 text-sm">目前沒有項目</div>}
-              {list.map((x,i)=> <ItemRow key={i} x={x} i={i} />)}
+          <div className="p-2 space-y-4">
+            {/* ★★★ 新增：標籤群組編輯器（排序／整合／去重） */}
+            <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+              <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div className="font-medium">標籤群組（排序／整合）</div>
+                <div className="text-xs text-slate-500">未分組標籤會自動歸入「其他」</div>
+              </div>
+              <div className="p-3">
+                <TagGroupsEditor
+                  groups={groupsState}
+                  allTags={allTags}
+                  onChange={setGroupsState}
+                />
+              </div>
+            </div>
+
+            {/* 原有：商品清單 */}
+            <div>
+              <button className="mb-2 rounded bg-emerald-600 text-white px-3 py-1.5 text-sm" onClick={addNew}>新增項目</button>
+              <div className="rounded border overflow-hidden">
+                {list.length===0 && <div className="p-6 text-center text-slate-500 text-sm">目前沒有項目</div>}
+                {list.map((x,i)=> <ItemRow key={i} x={x} i={i} />)}
+              </div>
             </div>
           </div>
         </div>
@@ -5019,6 +5132,156 @@ function ShopEditor({ items = [], onSave, onClose }) {
 
       {/* editor modal */}
       {editingIndex>=0 && <EditorModal x={list[editingIndex]} i={editingIndex} />}
+    </div>
+  );
+}
+
+/* ====== 小工具：從商品清單蒐集唯一標籤 ====== */
+function normalizeAllTagsFromItems(list) {
+  const set = new Set();
+  (Array.isArray(list)? list: []).forEach(it => {
+    let tags = [];
+    if (Array.isArray(it?.tags)) tags = it.tags;
+    else if (typeof it?.tags === 'string') tags = it.tags.split(',').map(s=>s.trim()).filter(Boolean);
+    tags.forEach(t => set.add(t));
+  });
+  return Array.from(set);
+}
+
+/* ====== 小工具：清洗群組，去重／過濾不存在的標籤，保留先出現的群組與順序 ====== */
+function ensureUniqueTagsInGroups(groups, allTags) {
+  const ok = new Set(allTags || []);
+  const seen = new Set();
+  const cleaned = [];
+
+  (Array.isArray(groups)? groups: []).forEach(g => {
+    const name = String(g?.name || '').trim() || '未命名群組';
+    const tags = [];
+    (Array.isArray(g?.tags)? g.tags: []).forEach(t => {
+      if (!ok.has(t)) return;     // 忽略不存在於 allTags 的標籤
+      if (seen.has(t)) return;    // 去重複：第一個出現的群組保留
+      seen.add(t);
+      tags.push(t);
+    });
+    cleaned.push({ name, tags });
+  });
+
+  return cleaned;
+}
+
+/* =========================
+ * TagGroupsEditor：群組可視化編輯器（新增／刪除／改名／排序；群內排序；從 allTags 選入）
+ * ========================= */
+function TagGroupsEditor({ groups = [], allTags = [], onChange = () => {} }) {
+  const React = window.React || globalThis.React;
+
+  const addGroup = () => onChange([ ...groups, { name: '', tags: [] } ]);
+  const removeGroup = (i) => onChange(groups.filter((_, idx) => idx !== i));
+  const moveGroup = (i, dir) => {
+    const j = i + dir;
+    if (j<0 || j>=groups.length) return;
+    const arr = [...groups];
+    const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    onChange(arr);
+  };
+  const renameGroup = (i, name) => {
+    const arr = groups.map((g, idx) => idx===i ? ({ ...g, name }) : g);
+    onChange(arr);
+  };
+
+  // 已放入群組的標籤
+  const inGroup = new Set(groups.flatMap(g => g?.tags || []));
+  // 未分組標籤（可加入任一群組）
+  const rest = (allTags || []).filter(t => !inGroup.has(t));
+
+  const addTagToGroup = (i, t) => {
+    if (!t) return;
+    // 不允許重複：若 tag 已在其他群組，先移出
+    const arr = groups.map((g, idx) => {
+      if (idx === i) return { ...g, tags: Array.from(new Set([...(g?.tags||[]), t])) };
+      return { ...g, tags: (g?.tags||[]).filter(x => x !== t) };
+    });
+    onChange(arr);
+  };
+  const removeTagFromGroup = (i, t) => {
+    const arr = groups.map((g, idx) => idx===i ? ({ ...g, tags: (g?.tags||[]).filter(x=>x!==t) }) : g);
+    onChange(arr);
+  };
+  const moveTag = (i, t, dir) => {
+    const tags = [...(groups[i]?.tags || [])];
+    const k = tags.indexOf(t);
+    const j = k + dir;
+    if (k<0 || j<0 || j>=tags.length) return;
+    const tmp = tags[k]; tags[k] = tags[j]; tags[j] = tmp;
+    const arr = groups.map((g, idx) => idx===i ? ({ ...g, tags }) : g);
+    onChange(arr);
+  };
+
+  return (
+    <div className="space-y-3">
+      {/* 未分組標籤 */}
+      <div className="rounded-lg border border-slate-200 dark:border-slate-700 p-2">
+        <div className="text-xs text-slate-500 mb-1">未分組標籤（{rest.length}）</div>
+        <div className="flex flex-wrap gap-2">
+          {rest.length ? rest.map(t => (
+            <span key={t} className="inline-flex items-center rounded-full border px-3 py-1 text-xs bg-white/70 dark:bg-slate-900/60">{t}</span>
+          )) : <span className="text-xs text-slate-400">—</span>}
+        </div>
+      </div>
+
+      {/* 群組清單 */}
+      {groups.map((g, i) => {
+        const availableToAdd = rest.concat( // 可加入的：未分組 + 不在本群組內（去重）
+          (g?.tags || []).filter(t => !rest.includes(t))
+        ).filter(Boolean);
+        return (
+          <div key={i} className="rounded-lg border border-slate-200 dark:border-slate-700 p-2 space-y-2">
+            <div className="flex items-center gap-2">
+              <input
+                className="min-w-0 flex-1 rounded border px-2 py-1 text-sm"
+                placeholder="群組名稱（例如：角色、生活用品、3C）"
+                value={g?.name || ''}
+                onChange={e=>renameGroup(i, e.target.value)}
+              />
+              <button className="rounded border px-2 py-1 text-xs" onClick={()=>moveGroup(i,-1)}>上移</button>
+              <button className="rounded border px-2 py-1 text-xs" onClick={()=>moveGroup(i, 1)}>下移</button>
+              <button className="rounded border px-2 py-1 text-xs text-rose-600" onClick={()=>removeGroup(i)}>刪除</button>
+            </div>
+
+            {/* 群內標籤 */}
+            <div className="flex flex-wrap gap-2">
+              {(g?.tags || []).map(t => (
+                <span key={t} className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs">
+                  {t}
+                  <button className="rounded border px-1 text-[10px]" title="上移" onClick={()=>moveTag(i,t,-1)}>↑</button>
+                  <button className="rounded border px-1 text-[10px]" title="下移" onClick={()=>moveTag(i,t, 1)}>↓</button>
+                  <button className="rounded border px-1 text-[10px] text-rose-600" title="移出群組" onClick={()=>removeTagFromGroup(i,t)}>×</button>
+                </span>
+              ))}
+              {(g?.tags || []).length===0 && <span className="text-xs text-slate-400">尚未加入任何標籤</span>}
+            </div>
+
+            {/* 加入標籤到此群組 */}
+            <div className="flex items-center gap-2">
+              <select className="rounded border px-2 py-1 text-sm"
+                value=""
+                onChange={e=> addTagToGroup(i, e.target.value)}
+              >
+                <option value="" disabled>＋ 從未分組標籤加入</option>
+                {availableToAdd
+                  .filter(t => !(g?.tags||[]).includes(t) && !groups.some((gg,idx)=> idx!==i && (gg?.tags||[]).includes(t)))
+                  .map(t => <option key={t} value={t}>{t}</option>)
+                }
+              </select>
+            </div>
+          </div>
+        );
+      })}
+
+      {/* 新增群組 */}
+      <div>
+        <button className="rounded bg-slate-900 text-white px-3 py-1.5 text-sm dark:bg-slate-100 dark:text-slate-900" onClick={addGroup}>新增群組</button>
+      </div>
     </div>
   );
 }
