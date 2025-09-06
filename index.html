@@ -328,6 +328,54 @@ function TagChips({ tags=[], picked=[], onToggle, onClear }) {
   );
 }
 
+/* === 詳情視窗底部：數量步進 + 加入清單（支援現金/點數） === */
+function SheetPickControls({ item, mode='cash' }) {
+  const pick = usePickList(mode==='pts' ? 'kjs_pointshop_picklist' : 'kjs_store_picklist');
+
+  // 取 id / 名稱 / 價格或點數（相容多欄位）
+  const id   = String(item?.id ?? (item?.name ?? 'item'));
+  const name = item?.name || item?.title || '（未命名）';
+  const price = mode==='cash'
+    ? (['price','cash','priceNTD','priceTWD'].map(k=>item?.[k]).find(v => v!=='' && v!=null))
+    : null;
+  const needPts = mode==='pts'
+    ? (['points','pts','need','needPoints','cost','costPts','pricePts']
+        .map(k=>+item?.[k]).find(n=>Number.isFinite(n)) ?? null)
+    : null;
+
+  const qty = pick.map[id]?.qty || 0;
+  const setQ = (n)=> pick.setQty(id, { name, price, pts: needPts }, n);
+
+  return (
+    <div className="sticky bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-900/90 backdrop-blur border-t border-slate-200 dark:border-slate-700 rounded-b-2xl px-3 py-2">
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
+          <button className="rounded-lg border px-3 py-2 min-w-[44px]" onClick={()=>setQ(Math.max(0, qty-1))}>－</button>
+          <input
+            className="w-16 text-center rounded-lg border px-2 py-2"
+            inputMode="numeric"
+            value={qty||0}
+            onChange={e=>setQ(Math.max(0, Number(e.target.value)||0))}
+          />
+          <button className="rounded-lg border px-3 py-2 min-w-[44px]" onClick={()=>setQ((qty||0)+1)}>＋</button>
+        </div>
+
+        <button
+          className="ml-auto rounded-lg bg-brand text-white px-4 py-2 shadow-soft"
+          onClick={()=>{ if ((qty||0) < 1) setQ(1); alert('✅ 已加入清單，可在底部「完成挑選／複製清單」複製傳給管理員'); }}
+        >
+          加入清單
+        </button>
+      </div>
+
+      <div className="mt-1 text-xs text-slate-500">
+        {mode==='cash' && price!=null && <>單價：NT$ {price}</>}
+        {mode==='pts'  && needPts!=null && <>每件需：{needPts} 點</>}
+      </div>
+    </div>
+  );
+}
+
 // 共用：選購清單狀態（map: id -> {name, qty, price/points}）
 function usePickList(lsKey='kjs_picklist') {
   const [map, setMap] = React.useState(()=>{
@@ -447,40 +495,34 @@ function ConfirmListDialog({ open, onClose, map, mode='cash' }) {
   );
 }
 
+
+
 // 社群商店（現金購買）— 「搜尋改標籤」＋「一鍵購物清單」，九/十六宮格保留
 function Store({ data, admin, setData, query = "" }) {
   const React = window.React || globalThis.React;
 
-  // 偏好（九/十六宮格、每頁）
-  const prefKey = "store_prefs_v3";
+  const prefKey = "store_prefs_v5";
   const loadPrefs = () => { try { return JSON.parse(localStorage.getItem(prefKey) || "{}"); } catch { return {}; } };
   const savePrefs = (p) => { try { localStorage.setItem(prefKey, JSON.stringify({ ...loadPrefs(), ...p })); } catch {} };
 
-  const [view, setView] = React.useState(loadPrefs().view || "grid9"); // grid9 / grid16
+  const [view, setView] = React.useState(loadPrefs().view || "grid9");
   const [pageSize, setPageSize] = React.useState(loadPrefs().pageSize || 20);
   const [page, setPage] = React.useState(1);
   React.useEffect(()=>savePrefs({view}),[view]);
   React.useEffect(()=>savePrefs({pageSize}),[pageSize]);
 
-  // 管理面板（保留）
   const [showEditor, setShowEditor] = React.useState(false);
   const HasStoreEditor = typeof StoreEditor === "function";
 
-  // 詳情彈窗（保留）
   const [sheet, setSheet] = React.useState({ open:false, item:null });
 
-  // 安全轉數字
   const safeNumber = (v) => {
     if (typeof v === "number" && Number.isFinite(v)) return v;
     if (typeof v === "string" && v.trim() !== "" && !Number.isNaN(+v)) return +v;
     return null;
   };
-  const getRemain = (x) => {
-    const v = [x?.stock, x?.qty, x?.quantity, x?.remaining].map(safeNumber).find(n=>n!=null);
-    return v==null ? null : v;
-  };
+  const getRemain = (x) => [x?.stock, x?.qty, x?.quantity, x?.remaining].map(safeNumber).find(n=>n!=null);
 
-  // 原始資料
   const itemsRaw = Array.isArray(data?.store?.items) ? data.store.items : [];
   const normalizeItem = (it) => {
     const images = Array.isArray(it?.images) ? it.images : (it?.image ? [String(it.image)] : []);
@@ -489,18 +531,14 @@ function Store({ data, admin, setData, query = "" }) {
   };
   const allItems = React.useMemo(()=> itemsRaw.map(normalizeItem), [itemsRaw]);
 
-  // ====== 新：標籤篩選（多選） ======
   const allTags = React.useMemo(()=> collectUniqueTags(allItems, '_tags'), [allItems]);
   const tag = useTagFilter(allTags);
 
-  // 排序 & 只看有貨
-  const [sortBy, setSortBy] = React.useState("latest"); // latest | priceAsc | priceDesc
+  const [sortBy, setSortBy] = React.useState("latest");
   const [onlyInStock, setOnlyInStock] = React.useState(false);
 
-  // 套用篩選
   const filtered = React.useMemo(()=>{
     return allItems.filter(x=>{
-      // 標籤交集：若有選取標籤，item 必須同時包含所有被選的標籤
       const okTag = !tag.picked.length || tag.picked.every(t => (x._tags||[]).includes(t));
       const remain = getRemain(x);
       const okStock = !onlyInStock || (remain==null || remain>0);
@@ -508,7 +546,6 @@ function Store({ data, admin, setData, query = "" }) {
     });
   }, [allItems, tag.picked, onlyInStock]);
 
-  // 排序
   const sorted = React.useMemo(()=>{
     const arr = [...filtered];
     if (sortBy==="priceAsc")       arr.sort((a,b)=> ((+a?.price||Infinity) - (+b?.price||Infinity)));
@@ -517,7 +554,6 @@ function Store({ data, admin, setData, query = "" }) {
     return arr;
   }, [filtered, sortBy]);
 
-  // 分頁
   const total   = sorted.length;
   const maxPage = Math.max(1, Math.ceil(total / pageSize));
   React.useEffect(()=>{ if (page>maxPage) setPage(maxPage); }, [maxPage, page]);
@@ -529,21 +565,15 @@ function Store({ data, admin, setData, query = "" }) {
   const endPage    = Math.min(maxPage, startPage + windowSize - 1);
   const pageItems  = sorted.slice(start, end);
 
-  // 九/十六宮格
   const gridCols = view === "grid16" ? "grid-cols-4" : "grid-cols-3";
 
-  // ====== 新：選購清單（現金） ======
   const pick = usePickList('kjs_store_picklist');
   const [showConfirm, setShowConfirm] = React.useState(false);
 
-  // 工具列（手機友善）：搜尋改成標籤 Chips
   const Toolbar = () => (
     <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
       <div className="flex flex-wrap items-center gap-2">
-        {/* 標籤多選 */}
         <TagChips tags={allTags} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} />
-
-        {/* 排序 / 只看有貨 */}
         <select className="rounded border px-2 py-2" value={sortBy} onChange={e=>setSortBy(e.target.value)}>
           <option value="latest">最新更新</option>
           <option value="priceAsc">價格（低→高）</option>
@@ -554,7 +584,6 @@ function Store({ data, admin, setData, query = "" }) {
           只看有貨
         </label>
 
-        {/* 版面 / 每頁 */}
         <label className="flex items-center gap-1">
           版面
           <select className="rounded border px-2 py-2" value={view} onChange={e=>setView(e.target.value)}>
@@ -565,7 +594,7 @@ function Store({ data, admin, setData, query = "" }) {
         <label className="flex items-center gap-1">
           每頁
           <select className="rounded border px-2 py-2" value={pageSize} onChange={e=>setPageSize(+e.target.value || 20)}>
-            <option value="20">20</option><option value="40">40</option><option value="80">80</option>
+            <option value="20">20</option><option value="40">40">40</option><option value="80">80</option>
           </select>
         </label>
 
@@ -592,54 +621,36 @@ function Store({ data, admin, setData, query = "" }) {
       <Toolbar />
       <Paginator />
 
-      {/* 卡片 9/16 宮格 */}
       <div className={`grid ${gridCols} gap-3`} aria-label="社群商店清單">
         {pageItems.map((x, i) => {
-          const id     = x.id || i; // 作為 pick list key
+          const id     = x.id || i;
           const name   = x?.name || '（未命名）';
           const price  = (x?.price ?? '') !== '' ? +x.price : null;
           const cover  = Array.isArray(x._images) && x._images.length>0 ? x._images[0] : '';
           const buyUrl = x?.buyUrl || x?.url || '';
           const remain = getRemain(x);
 
-          // 每張卡的勾選 + 數量
-          const qty = pick.map[id]?.qty || 0;
-          const setQ = (n)=> pick.setQty(String(id), { name, price }, n);
-
           return (
-            <div key={id} className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden select-none">
-              <button className="block w-full text-left p-3" onClick={()=>setSheet({ open:true, item:x })}>
-                <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
-                  {cover ? (
-                    <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" />
-                  ) : (
-                    <div className="text-slate-400 text-sm">無圖片</div>
-                  )}
-                  {price!=null && (
-                    <div className="absolute bottom-2 right-2 rounded-lg px-2 py-1 text-xs sm:text-sm bg-emerald-600 text-white/95 shadow">NT$ {price}</div>
-                  )}
+            <div key={id} className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden select-none flex flex-col">
+              <button className="block w-full text-left p-3 pb-2" onClick={()=>setSheet({ open:true, item:x })} title={name}>
+                <div className="aspect-[4/3] w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
+                  {cover ? <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" /> : <div className="text-slate-400 text-sm">無圖片</div>}
                 </div>
-                {/* 名稱／標籤 */}
-                <div className="mt-2 text-[13px] font-medium truncate" title={name}>{name}</div>
-                {Array.isArray(x._tags)&&x._tags.length>0 && (
-                  <div className="text-xs text-slate-500 truncate" title={x._tags.join(' / ')}>{x._tags.join(' / ')}</div>
-                )}
               </button>
 
-              {/* 勾選＋數量（手機單手可點） */}
-              <div className="px-3 pb-3 flex items-center justify-between gap-2">
-                <div className="text-xs text-slate-600">
-                  {remain!=null ? `剩餘：${remain}` : ' '}
-                </div>
-                <div className="flex items-center gap-1">
-                  <button className="rounded-lg border px-2 py-1" onClick={()=>setQ(Math.max(0, qty-1))} aria-label="數量-1">－</button>
-                  <input value={qty||0} onChange={e=>setQ(Math.max(0, Number(e.target.value)||0))} className="w-12 text-center rounded-lg border px-2 py-1" inputMode="numeric" />
-                  <button className="rounded-lg border px-2 py-1" onClick={()=>setQ((qty||0)+1)} aria-label="數量+1">＋</button>
+              <button className="px-3 text-left" onClick={()=>setSheet({ open:true, item:x })} title={name}>
+                <div className="text-[13px] font-medium truncate">{name}</div>
+                {Array.isArray(x._tags)&&x._tags.length>0 && <div className="text-xs text-slate-500 truncate">{x._tags.join(' / ')}</div>}
+              </button>
+
+              <div className="px-3 pt-2 pb-1">
+                <div className="text-sm font-semibold tabular-nums">
+                  {price!=null ? `NT$ ${price}` : '　'}
+                  {remain!=null && <span className="ml-2 text-xs font-normal text-slate-500">剩餘：{remain}</span>}
                 </div>
               </div>
 
-              {/* 前往購買（保留） */}
-              <div className="px-3 pb-3">
+              <div className="px-3 pb-3 mt-1">
                 {buyUrl
                   ? <a href={buyUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-full rounded-lg bg-brand text-white px-4 py-2 text-sm shadow-soft" title="前往購買">前往購買</a>
                   : <button disabled className="inline-flex items-center justify-center w-full rounded-lg border px-4 py-2 text-sm text-slate-400" title="尚未提供購買連結">尚未提供購買連結</button>}
@@ -651,26 +662,17 @@ function Store({ data, admin, setData, query = "" }) {
 
       <Paginator />
 
-      {/* 管理面板（保留） */}
       {admin && HasStoreEditor && showEditor && (
         <StoreEditor data={data} setData={setData} onClose={()=>setShowEditor(false)} />
       )}
 
-      <ProductSheet
-        open={sheet.open}
-        item={sheet.item}
-        context="store"
-        onClose={()=>setSheet({ open:false, item:null })}
-      />
+      <ProductSheet open={sheet.open} item={sheet.item} context="store" onClose={()=>setSheet({ open:false, item:null })} />
 
-      {/* 一鍵購物清單：浮動條 + 確認視窗 */}
       <FloatingPickbar count={pick.totalQty} onOpen={()=>setShowConfirm(true)} />
       <ConfirmListDialog open={showConfirm} onClose={()=>setShowConfirm(false)} map={pick.map} mode="cash" />
     </section>
   );
 }
-
-
 
 function StoreCard({ item }) {
   const images = Array.isArray(item?.images) ? item.images.filter(Boolean) : [];
@@ -1669,7 +1671,11 @@ function ProductSheet({
     document.addEventListener("keydown", onKey);
     window.addEventListener("popstate", onPop);
     try { history.pushState({ sheet: true }, "", location.href); } catch {}
-    return () => { document.removeEventListener("keydown", onKey); window.removeEventListener("popstate", onPop); BodyScrollLock.unlock(); };
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("popstate", onPop);
+      BodyScrollLock.unlock();
+    };
   }, [open, onClose]);
 
   // item 變動重置圖片索引
@@ -1728,8 +1734,13 @@ function ProductSheet({
   const handleOverlayClick = (e) => { if (e.target === overlayRef.current) onClose(); };
 
   return (
-    <div ref={overlayRef} className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center"
-         role="dialog" aria-modal="true" onMouseDown={handleOverlayClick}>
+    <div
+      ref={overlayRef}
+      className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+      onMouseDown={handleOverlayClick}
+    >
       <div className="w-[min(96vw,44rem)] max-h-[92vh] rounded-2xl bg-white dark:bg-slate-900 shadow-elevate overflow-hidden flex flex-col">
         {/* header */}
         <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
@@ -1742,12 +1753,11 @@ function ProductSheet({
           <button className="rounded-full border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
         </div>
 
-        {/* 【新增】pending 專用：參與人員名單（可捲動、顯示總數） */}
+        {/* 【保留】pending 專用：參與人員名單 */}
         {context === "pending" && (
           <div className="px-4 pt-3 pb-4">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm font-medium">參與人員名單</div>
-              {/* 再次顯示總數，與標題列一致 */}
               <div className="text-xs text-slate-500">共 {candidateCount} 位</div>
             </div>
 
@@ -1769,16 +1779,16 @@ function ProductSheet({
         <div className="flex-1 overflow-y-auto">
           <div className="relative bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
             <div className="aspect-square w-full grid place-content-center" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-              {images.length
-                ? (
-                  <img
-                    src={images[index]}
-                    alt=""
-                    className="w-full h-full object-contain select-none"
-                    onClick={() => { if (context === "pending") onOpenViewer?.(images, index, title, buyUrl); }}
-                  />
-                )
-                : <div className="text-slate-400 text-sm">無圖片</div>}
+              {images.length ? (
+                <img
+                  src={images[index]}
+                  alt=""
+                  className="w-full h-full object-contain select-none"
+                  onClick={() => { if (context === "pending") onOpenViewer?.(images, index, title, buyUrl); }}
+                />
+              ) : (
+                <div className="text-slate-400 text-sm">無圖片</div>
+              )}
             </div>
             {images.length>1 && (
               <div className="absolute bottom-2 inset-x-0 flex items-center justify-center gap-1">
@@ -1792,7 +1802,12 @@ function ProductSheet({
           {images.length>1 && (
             <div className="px-4 py-3 -mx-1 flex overflow-x-auto gap-2 snap-x snap-mandatory">
               {images.map((src, i) => (
-                <button key={src+i} className={"shrink-0 w-20 aspect-square rounded-lg overflow-hidden border snap-start " + (i===index ? "border-brand ring-2 ring-brand/40" : "border-slate-200 dark:border-slate-700")} onClick={()=>setIndex(i)} title={`圖片 ${i+1}`}>
+                <button
+                  key={src+i}
+                  className={"shrink-0 w-20 aspect-square rounded-lg overflow-hidden border snap-start " + (i===index ? "border-brand ring-2 ring-brand/40" : "border-slate-200 dark:border-slate-700")}
+                  onClick={()=>setIndex(i)}
+                  title={`圖片 ${i+1}`}
+                >
                   <img src={src} alt="" className="w-full h-full object-contain" loading="lazy" />
                 </button>
               ))}
@@ -1823,7 +1838,13 @@ function ProductSheet({
           </div>
         </div>
 
-        {/* footer */}
+        {/* === 新增：詳情底部的「數量步進器 + 加入清單」；位置在 body 與 footer 之間 === */}
+        {item && (context === "shop"
+          ? <SheetPickControls item={item} mode="pts" />
+          : <SheetPickControls item={item} mode="cash" />
+        )}
+
+        {/* footer（原樣保留） */}
         <div className="p-3 border-t border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/90 backdrop-blur flex items-center gap-2">
           {context==="store" ? (
             <>
@@ -1835,11 +1856,16 @@ function ProductSheet({
           ) : context==="shop" ? (
             <>
               <button className="flex-1 rounded-lg border px-4 py-2 text-sm" onClick={() => onCopyTemplate(item)}>📋 複製模板</button>
-              <button className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm" onClick={() => {
-                const url = effectiveContactUrl;
-                if (url) window.open(url, "_blank", "noopener,noreferrer");
-                else alert("尚未設定『聯絡管理員』連結：可在商品 data 加上 contactUrl，或在全域設置 window.__CONTACT_URL__。");
-              }}>💬 聯絡管理員</button>
+              <button
+                className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm"
+                onClick={() => {
+                  const url = effectiveContactUrl;
+                  if (url) window.open(url, "_blank", "noopener,noreferrer");
+                  else alert("尚未設定『聯絡管理員』連結：可在商品 data 加上 contactUrl，或在全域設置 window.__CONTACT_URL__。");
+                }}
+              >
+                💬 聯絡管理員
+              </button>
               <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
             </>
           ) : (
@@ -4120,44 +4146,33 @@ function Shop({ data, admin, setData, query = "" }) {
   const React = window.React || globalThis.React;
 
   // 偏好（九/十六宮格、每頁）
-  const prefKey = "pointshop_prefs_v3";
+  const prefKey = "pointshop_prefs_v5";
   const loadPrefs = () => { try { return JSON.parse(localStorage.getItem(prefKey) || "{}"); } catch { return {}; } };
   const savePrefs = (p) => { try { localStorage.setItem(prefKey, JSON.stringify({ ...loadPrefs(), ...p })); } catch {} };
 
-  const [view, setView] = React.useState(loadPrefs().view || "grid9"); // grid9 / grid16
+  const [view, setView] = React.useState(loadPrefs().view || "grid9");
   const [pageSize, setPageSize] = React.useState(loadPrefs().pageSize || 20);
   const [page, setPage] = React.useState(1);
   React.useEffect(()=>savePrefs({view}),[view]);
   React.useEffect(()=>savePrefs({pageSize}),[pageSize]);
 
-  // 我的點數（保留原邏輯）
+  // 我的點數（相容多欄位）
   const initialMyPts =
     (Number.isFinite(+data?.points?.myPoints) ? +data.points.myPoints : null) ??
     (Number.isFinite(+data?.myPoints) ? +data.myPoints : 0);
   const [myPts, setMyPts] = React.useState(initialMyPts || 0);
 
-  // 管理面板（保留）
+  // 管理面板
   const [showEditor, setShowEditor] = React.useState(false);
   const HasShopEditor = typeof ShopEditor === "function";
 
-  // 詳情彈窗（保留）
+  // 詳情
   const [sheet, setSheet] = React.useState({ open:false, item:null });
 
   // 數值解析
-  const safeNumber = (v) => {
-    if (typeof v === "number" && Number.isFinite(v)) return v;
-    if (typeof v === "string" && v.trim() !== "" && !Number.isNaN(+v)) return +v;
-    return null;
-  };
-  const getRemain = (x) => {
-    const v = [x?.stock, x?.qty, x?.quantity, x?.remaining].map(safeNumber).find(n=>n!=null);
-    return v==null ? null : v;
-  };
-  const getNeedPts = (x) => {
-    const v = [x?.points, x?.pts, x?.need, x?.needPoints, x?.cost, x?.costPts, x?.pricePts]
-      .map(safeNumber).find((n)=> n!=null);
-    return v==null ? null : v;
-  };
+  const safeNumber = (v) => (typeof v === "number" && Number.isFinite(v)) ? v : ((typeof v === "string" && v.trim() !== "" && !Number.isNaN(+v)) ? +v : null);
+  const getRemain = (x) => [x?.stock, x?.qty, x?.quantity, x?.remaining].map(safeNumber).find(n=>n!=null);
+  const getNeedPts = (x) => ['points','pts','need','needPoints','cost','costPts','pricePts'].map(k=>safeNumber(x?.[k])).find(n=>n!=null);
 
   // 原始資料
   const itemsRaw = Array.isArray(data?.shop?.items) ? data.shop.items : [];
@@ -4168,14 +4183,14 @@ function Shop({ data, admin, setData, query = "" }) {
   };
   const allItems = React.useMemo(()=> itemsRaw.map(normalizeItem), [itemsRaw]);
 
-  // ====== 新：標籤篩選（多選） ======
+  // 標籤
   const allTags = React.useMemo(()=> collectUniqueTags(allItems, '_tags'), [allItems]);
   const tag = useTagFilter(allTags);
 
-  // 只看「我可兌換」
+  // 只看我可兌換
   const [onlyAffordable, setOnlyAffordable] = React.useState(false);
 
-  // 套用篩選
+  // 篩選
   const filtered = React.useMemo(()=>{
     return allItems.filter(x=>{
       const okTag = !tag.picked.length || tag.picked.every(t => (x._tags||[]).includes(t));
@@ -4185,8 +4200,15 @@ function Shop({ data, admin, setData, query = "" }) {
     });
   }, [allItems, tag.picked, onlyAffordable, myPts]);
 
+  // 排序（以更新時間，沿用你原本）
+  const sorted = React.useMemo(()=>{
+    const arr = [...filtered];
+    arr.sort((a,b)=> (new Date(b?.updatedAt||b?.createdAt||0) - new Date(a?.updatedAt||a?.createdAt||0)));
+    return arr;
+  }, [filtered]);
+
   // 分頁
-  const total   = filtered.length;
+  const total   = sorted.length;
   const maxPage = Math.max(1, Math.ceil(total / pageSize));
   React.useEffect(()=>{ if (page>maxPage) setPage(maxPage); }, [maxPage, page]);
   React.useEffect(()=>{ setPage(1); }, [tag.picked, view, pageSize, onlyAffordable, myPts]);
@@ -4195,23 +4217,20 @@ function Shop({ data, admin, setData, query = "" }) {
   const windowSize = 5;
   const startPage  = Math.max(1, Math.min(page - Math.floor(windowSize/2), maxPage - windowSize + 1));
   const endPage    = Math.min(maxPage, startPage + windowSize - 1);
-  const pageItems  = filtered.slice(start, end);
+  const pageItems  = sorted.slice(start, end);
 
-  // 九/十六宮格
+  // 9/16 宮格
   const gridCols = view === "grid16" ? "grid-cols-4" : "grid-cols-3";
 
-  // ====== 新：選購清單（點數） ======
+  // 一鍵清單（點數）
   const pick = usePickList('kjs_pointshop_picklist');
   const [showConfirm, setShowConfirm] = React.useState(false);
 
-  // 工具列（手機友善）：搜尋改成標籤 Chips（保留我的點數/只看我可兌換/版面/每頁）
   const Toolbar = () => (
     <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
       <div className="flex flex-wrap items-center gap-2">
-        {/* 標籤多選 */}
         <TagChips tags={allTags} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} />
 
-        {/* 我的點數 & 只看我可兌換（保留） */}
         <div className="flex items-center gap-2 ml-auto">
           <label className="flex items-center gap-1">
             我的點數
@@ -4229,7 +4248,6 @@ function Shop({ data, admin, setData, query = "" }) {
           </label>
         </div>
 
-        {/* 版面 / 每頁（保留） */}
         <label className="flex items-center gap-1">
           版面
           <select className="rounded border px-2 py-2" value={view} onChange={e=>setView(e.target.value)}>
@@ -4267,55 +4285,46 @@ function Shop({ data, admin, setData, query = "" }) {
       <Toolbar />
       <Paginator />
 
-      {/* 卡片 9/16 宮格 */}
+      {/* 小卡：圖片 → 名稱(單行省略) → 點數（不疊在圖片上）→ 主按鈕；不顯示數量步進器 */}
       <div className={`grid ${gridCols} gap-3`} aria-label="點數商城清單">
         {pageItems.map((x, i) => {
-          const id      = x.id || i; // 作為 pick list key
+          const id      = x.id || i;
           const name    = x?.name || x?.title || '（未命名）';
           const needPts = x._needPts ?? getNeedPts(x);
           const cover   = Array.isArray(x._images) && x._images.length>0 ? x._images[0] : '';
+          const remain  = getRemain(x);
           const afford  = (needPts!=null && myPts>=needPts);
 
-          const qty = pick.map[id]?.qty || 0;
-          const setQ = (n)=> pick.setQty(String(id), { name, pts: needPts }, n);
-
           return (
-            <div key={id} className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden select-none">
-              <button className="block w-full text-left p-3" onClick={()=>setSheet({ open:true, item:x })}>
-                <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
+            <div key={id} className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden select-none flex flex-col">
+              {/* 圖片（點開詳情） */}
+              <button className="block w-full text-left p-3 pb-2" onClick={()=>setSheet({ open:true, item:x })}>
+                <div className="aspect-[4/3] w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
                   {cover ? <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" /> : <div className="text-slate-400 text-sm">無圖片</div>}
-                  {needPts!=null && (
-                    <div className={`absolute bottom-2 right-2 rounded-lg px-2 py-1 text-xs sm:text-sm ${afford?'bg-emerald-600 text-white/95':'bg-slate-400 text-white/95'} shadow`}>
-                      {needPts} 點
-                    </div>
-                  )}
                 </div>
-                {/* 名稱／標籤 */}
-                <div className="mt-2 text-[13px] font-medium truncate" title={name}>{name}</div>
-                {Array.isArray(x._tags)&&x._tags.length>0 && (
-                  <div className="text-xs text-slate-500 truncate" title={x._tags.join(' / ')}>{x._tags.join(' / ')}</div>
-                )}
               </button>
 
-              {/* 勾選＋數量 */}
-              <div className="px-3 pb-3 flex items-center justify-between gap-2">
-                <div className="text-xs text-slate-600">
-                  {needPts!=null ? (afford ? '可兌換' : '點數不足') : ' '}
-                </div>
-                <div className="flex items-center gap-1">
-                  <button className="rounded-lg border px-2 py-1" onClick={()=>setQ(Math.max(0, qty-1))} aria-label="數量-1">－</button>
-                  <input value={qty||0} onChange={e=>setQ(Math.max(0, Number(e.target.value)||0))} className="w-12 text-center rounded-lg border px-2 py-1" inputMode="numeric" />
-                  <button className="rounded-lg border px-2 py-1" onClick={()=>setQ((qty||0)+1)} aria-label="數量+1">＋</button>
+              {/* 名稱（單行省略） */}
+              <button className="px-3 text-left" onClick={()=>setSheet({ open:true, item:x })} title={name}>
+                <div className="text-[13px] font-medium truncate">{name}</div>
+                {Array.isArray(x._tags)&&x._tags.length>0 && <div className="text-xs text-slate-500 truncate">{x._tags.join(' / ')}</div>}
+              </button>
+
+              {/* 點數（不放步進器） */}
+              <div className="px-3 pt-2 pb-1">
+                <div className="text-sm font-semibold tabular-nums">
+                  {needPts!=null ? `${needPts} 點` : '　'}
+                  {remain!=null && <span className="ml-2 text-xs font-normal text-slate-500">剩餘：{remain}</span>}
+                  {needPts!=null && !afford && <span className="ml-2 text-xs text-rose-500">點數不足</span>}
                 </div>
               </div>
 
-              {/* （保留你的兌換流程按鈕 wiring；若需要也能在彈窗中觸發「聯絡管理員」） */}
-              <div className="px-3 pb-3">
+              {/* 主按鈕：我要兌換（不足則灰階） */}
+              <div className="px-3 pb-3 mt-1">
                 <button
                   disabled={needPts==null || !afford}
                   className={`inline-flex items-center justify-center w-full rounded-lg px-4 py-2 text-sm shadow-soft
-                  ${needPts!=null && afford ? 'bg-brand text-white' : 'border text-slate-400'}`}
-                  title={needPts!=null && afford ? '可兌換' : '點數不足或未設定'}
+                    ${needPts!=null && afford ? 'bg-brand text-white' : 'border text-slate-400'}`}
                 >
                   {needPts!=null && afford ? '我要兌換' : '無法兌換'}
                 </button>
@@ -4327,7 +4336,7 @@ function Shop({ data, admin, setData, query = "" }) {
 
       <Paginator />
 
-      {/* 管理面板（保留，正確寫回 data.shop.items） */}
+      {/* 管理面板（保留） */}
       {admin && HasShopEditor && showEditor && (
         <ShopEditor
           items={Array.isArray(data?.shop?.items) ? data.shop.items : []}
@@ -4340,14 +4349,10 @@ function Shop({ data, admin, setData, query = "" }) {
         />
       )}
 
-      <ProductSheet
-        open={sheet.open}
-        item={sheet.item}
-        context="shop"
-        onClose={()=>setSheet({ open:false, item:null })}
-      />
+      {/* 詳情彈窗（保留） */}
+      <ProductSheet open={sheet.open} item={sheet.item} context="shop" onClose={()=>setSheet({ open:false, item:null })} />
 
-      {/* 一鍵清單：浮動條 + 確認視窗（點數版） */}
+      {/* 一鍵清單（保留） */}
       <FloatingPickbar count={pick.totalQty} onOpen={()=>setShowConfirm(true)} />
       <ConfirmListDialog open={showConfirm} onClose={()=>setShowConfirm(false)} map={pick.map} mode="pts" />
     </section>
