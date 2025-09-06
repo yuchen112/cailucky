@@ -874,11 +874,11 @@ function Store({ data, admin, setData, query = "" }) {
 
   const allTags = React.useMemo(() => collectUniqueTags(allItems, "_tags"), [allItems]);
 
-// ★ 新增：依群組排序的扁平 tags
-const tagsOrdered = React.useMemo(
-  () => orderTagsByGroups(allTags, tagGroups),
-  [allTags, tagGroups]
-);
+  // ★ 新增：依群組排序的扁平 tags（保留；目前未在 Toolbar 顯示 chips）
+  const tagsOrdered = React.useMemo(
+    () => orderTagsByGroups(allTags, tagGroups),
+    [allTags, tagGroups]
+  );
   const tag = useTagFilter(allTags);
 
   const [sortBy, setSortBy] = React.useState("latest");
@@ -920,12 +920,12 @@ const tagsOrdered = React.useMemo(
   const Toolbar = () => (
     <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
       <div className="flex flex-wrap items-center gap-2">
-        <TagChips tags={tagsOrdered} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} />
+        {/* ⛔ 移除：整排 TagChips 不再顯示，只保留彈窗按鈕 */}
+        {/* <TagChips tags={tagsOrdered} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} /> */}
 
-
-        {/* ★ 新增：小卡式「篩選標籤」 */}
+        {/* ★ 篩選標籤按鈕（顯示已選數量） */}
         <button className="rounded-lg border px-3 py-2" onClick={() => setTagSheetOpen(true)}>
-          篩選標籤
+          {tag.picked.length > 0 ? `篩選標籤（${tag.picked.length}）` : "篩選標籤"}
         </button>
 
         <select className="rounded border px-2 py-2" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
@@ -4668,18 +4668,16 @@ function Shop({ data, admin, setData, query = "" }) {
   // 標籤（收集 → 依群組順序重排）
   const allTags = React.useMemo(()=> collectUniqueTags(allItems, '_tags'), [allItems]);
 
-  // ★★★ 新增：依群組順序重排 chips（群組內的順序也會保留；未分組的放最後）
+  // ★★★ 依群組順序重排（保留運算，不在 Toolbar 顯示 chips）
   const tagsOrdered = React.useMemo(() => {
     if (!Array.isArray(tagGroups) || tagGroups.length === 0) return allTags;
     const seen = new Set();
     const ordered = [];
-    // 先按群組順序攤平，且只收錄出現在 allTags 的項
     tagGroups.forEach(g => {
       (g?.tags || []).forEach(t => {
         if (allTags.includes(t) && !seen.has(t)) { seen.add(t); ordered.push(t); }
       });
     });
-    // 再把沒被分組的標籤追加在後
     allTags.forEach(t => { if (!seen.has(t)) ordered.push(t); });
     return ordered;
   }, [allTags, tagGroups]);
@@ -4699,7 +4697,7 @@ function Shop({ data, admin, setData, query = "" }) {
     });
   }, [allItems, tag.picked, onlyAffordable, myPts]);
 
-  // 排序（以更新時間，沿用你原本）
+  // 排序（以更新時間）
   const sorted = React.useMemo(()=>{
     const arr = [...filtered];
     arr.sort((a,b)=> (new Date(b?.updatedAt||b?.createdAt||0) - new Date(a?.updatedAt||a?.createdAt||0)));
@@ -4728,11 +4726,13 @@ function Shop({ data, admin, setData, query = "" }) {
   const Toolbar = () => (
     <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
       <div className="flex flex-wrap items-center gap-2">
-        {/* ★ 這裡把 TagChips 的來源改成 tagsOrdered（依群組排序） */}
-        <TagChips tags={tagsOrdered} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} />
+        {/* ⛔ 移除整排 TagChips，只保留彈窗按鈕 */}
+        {/* <TagChips tags={tagsOrdered} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} /> */}
 
-        {/* 小卡式「篩選標籤」 */}
-        <button className="rounded-lg border px-3 py-2" onClick={()=>setTagSheetOpen(true)}>篩選標籤</button>
+        {/* 小卡式「篩選標籤」— 顯示已選數量 */}
+        <button className="rounded-lg border px-3 py-2" onClick={()=>setTagSheetOpen(true)}>
+          {tag.picked.length > 0 ? `篩選標籤（${tag.picked.length}）` : '篩選標籤'}
+        </button>
 
         <div className="flex items-center gap-2 ml-auto">
           <label className="flex items-center gap-1">
@@ -4808,7 +4808,7 @@ function Shop({ data, admin, setData, query = "" }) {
               </button>
 
               {/* 名稱（單行省略） */}
-              <button className="px-3 text-left" onClick={()=>setSheet({ open:true, item:x })} title={name}>
+              <button className="px-3 text左" onClick={()=>setSheet({ open:true, item:x })} title={name}>
                 <div className="text-[13px] font-medium truncate">{name}</div>
                 {Array.isArray(x._tags)&&x._tags.length>0 && <div className="text-xs text-slate-500 truncate">{x._tags.join(' / ')}</div>}
               </button>
@@ -4990,20 +4990,18 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
       const next = { ...x };
       next.enabled = !!draft.enabled;
       next.name    = String(draft.name||"").trim();
-      // points 原樣字串保存（你原本就是可字串/數字）
       const n = draft.points;
       if (n==="" || n==null) { delete next.points; } else { next.points = n; }
 
-      // 新增：stock （空字串就移除）
+      // 新增：stock
       const s = String(draft.stock||"").trim();
       if (s==="") { delete next.stock; }
       else {
         const sn = +s;
-        next.stock = Number.isFinite(sn) ? sn : s; // 若非純數字也先保留原值
+        next.stock = Number.isFinite(sn) ? sn : s;
       }
 
       next.desc  = draft.desc;
-      // 移除 intro
       if ('intro' in next) delete next.intro;
 
       next.tags = draft.tags ? draft.tags.split(",").map(s=>s.trim()).filter(Boolean) : [];
@@ -5079,8 +5077,8 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[1000] bg-black/60 flex items-center justify-center" role="dialog" aria-modal="true">
-      <div className="w=[min(1024px,96vw)] max-h-[90vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 shadow-xl flex flex-col">
+    <div className="fixed inset-0 z-[1000] bg黑/60 flex items-center justify-center" role="dialog" aria-modal="true">
+      <div className="w=[min(1024px,96vw)] max-h-[90vh] overflow-hidden rounded-2xl bg白 dark:bg-slate-900 shadow-xl flex flex-col">
         {/* header */}
         <div className="flex items-center justify-between px-4 py-3 border-b">
           <div className="font-semibold">點數商城管理</div>
@@ -5103,7 +5101,7 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
         {/* body */}
         <div className="flex-1 overflow-auto">
           <div className="p-2 space-y-4">
-            {/* ★★★ 新增：標籤群組編輯器（排序／整合／去重） */}
+            {/* ★★★ 標籤群組編輯器 */}
             <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
               <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
                 <div className="font-medium">標籤群組（排序／整合）</div>
