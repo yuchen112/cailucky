@@ -1407,15 +1407,36 @@ function Pending({ data, admin, setData, query = "" }) {
 
   const allItems = React.useMemo(()=> raw.map(normalizeItem), [raw]);
 
-  // 搜尋
+  // ===== 新增：我的名字 + 參與狀態篩選 =====
+  const [myName, setMyName] = React.useState("");        // 使用者輸入的「我的名字」（精確比對）
+  const [mineFilter, setMineFilter] = React.useState("all"); // all / joined / notJoined
+
+  // 搜尋（先跑關鍵字）
   const [search, setSearch] = React.useState(query || "");
-  const filtered = React.useMemo(()=>{
+  const filteredBySearch = React.useMemo(()=>{
     const kw = String(search||"").trim().toLowerCase();
     return allItems.filter(x=>{
       const hay = [x?.title, x?.name, x?.desc, x?.intro, x?._tags?.join(" ")].map(s=>String(s||"").toLowerCase()).join(" ");
       return !kw || hay.includes(kw);
     });
   }, [allItems, search]);
+
+  // 再依「我的名字」分成 我已參加 / 我未參加 / 全部
+  const filtered = React.useMemo(()=>{
+    const name = myName.trim();
+    if (!name) return filteredBySearch; // 沒輸入名字 → 不做參與狀態切分
+    const joinedSet = new Set(
+      filteredBySearch
+        .filter(x => Array.isArray(x._candidates) && x._candidates.includes(name))
+        .map(x => x.id ?? x)
+    );
+    if (mineFilter === "joined") {
+      return filteredBySearch.filter(x => joinedSet.has(x.id ?? x));
+    } else if (mineFilter === "notJoined") {
+      return filteredBySearch.filter(x => !joinedSet.has(x.id ?? x));
+    }
+    return filteredBySearch; // all
+  }, [filteredBySearch, myName, mineFilter]);
 
   // 排序（按更新時間）
   const sorted = React.useMemo(()=>{
@@ -1428,7 +1449,8 @@ function Pending({ data, admin, setData, query = "" }) {
   const total = sorted.length;
   const maxPage = Math.max(1, Math.ceil(total / pageSize));
   React.useEffect(()=>{ if (page>maxPage) setPage(maxPage); }, [maxPage, page]);
-  React.useEffect(()=>{ setPage(1); }, [search, view, pageSize]);
+  // ★ 保留你的重置行為，並加上 myName/mineFilter 讓每次切換都回到第 1 頁
+  React.useEffect(()=>{ setPage(1); }, [search, view, pageSize, myName, mineFilter]);
 
   const start = (page-1)*pageSize;
   const end   = Math.min(start + pageSize, total);
@@ -1437,7 +1459,7 @@ function Pending({ data, admin, setData, query = "" }) {
   const endPage   = Math.min(maxPage, startPage + windowSize - 1);
   const pageItems = sorted.slice(start, end);
 
-  // Viewer（共用全域 Viewer）
+  // Viewer（保留你原本的鍵盤左右切圖與 overflow 鎖定）
   const [viewer, setViewer] = React.useState({ open:false, images:[], index:0, title:"" });
   React.useEffect(()=>{
     if (!viewer.open) return;
@@ -1451,7 +1473,6 @@ function Pending({ data, admin, setData, query = "" }) {
     document.body.style.overflow = "hidden";
     return ()=>{ document.removeEventListener("keydown", onKey); document.body.style.overflow = prev; };
   }, [viewer.open, viewer.images.length]);
-
   const openViewer = (images, index, title="")=>{
     const list = Array.isArray(images) ? images.filter(Boolean) : (images ? [images] : []);
     if (!list.length) return;
@@ -1604,9 +1625,6 @@ function Pending({ data, admin, setData, query = "" }) {
       .catch(()=>alert("無法自動複製，請手動選取"));
   }
 
-  // 內建 Viewer（保留）
-  React.useEffect(()=>{}, []);
-
   // 跳出式資訊面板
   const [sheet, setSheet] = React.useState({ open:false, item:null });
 
@@ -1615,7 +1633,7 @@ function Pending({ data, admin, setData, query = "" }) {
 
   const gridCols = view === "grid16" ? "grid-cols-4" : "grid-cols-3";
 
-  // 分頁器
+  // 分頁器（保留你的 windowSize/startPage/endPage 寫法）
   const Paginator = () => (
     <div className="mt-3 flex items-center justify-center gap-1 select-none">
       <button className="rounded-lg border px-3 py-1.5 text-sm" disabled={page<=1} onClick={()=>setPage(p=>Math.max(1,p-1))}>上一頁</button>
@@ -1626,11 +1644,22 @@ function Pending({ data, admin, setData, query = "" }) {
     </div>
   );
 
-  // 工具列
+  // 工具列（新增「我的名字」與三段式切換）
   const Toolbar = () => (
     <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
       <div className="flex flex-wrap items-center gap-2">
         <input className="min-h-[44px] flex-1 rounded border px-3 py-2" placeholder="搜尋活動..." value={search} onChange={e=>setSearch(e.target.value)} />
+
+        {/* 新增：輸入你的名字（精確比對） */}
+        <input className="min-h-[44px] rounded border px-3 py-2" style={{minWidth:220}} placeholder="輸入你的名字（精確比對）" value={myName} onChange={e=>setMyName(e.target.value)} />
+
+        {/* 新增：切換 全部 / 我已參加 / 我未參加 */}
+        <div className="inline-flex rounded-lg overflow-hidden border">
+          <button className={`px-3 py-2 text-sm ${mineFilter==='all'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('all')}>全部</button>
+          <button className={`px-3 py-2 text-sm ${mineFilter==='joined'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('joined')}>我已參加</button>
+          <button className={`px-3 py-2 text-sm ${mineFilter==='notJoined'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('notJoined')}>我未參加</button>
+        </div>
+
         <label className="flex items-center gap-1">
           版面
           <select className="min-h-[44px] rounded border px-2 py-1" value={view} onChange={e=>setView(e.target.value)}>
@@ -1650,7 +1679,7 @@ function Pending({ data, admin, setData, query = "" }) {
     </div>
   );
 
-  // 卡片內勾選 map（每張卡自己的 state）
+  // 卡片（完整保留你原本的 details + 勾選名單 + 各種管理按鈕）
   const Card = ({ x, i }) => {
     const title = x?.title || x?.name || '（未命名）';
     const cover = Array.isArray(x?._images) && x._images.length>0 ? x._images[0] : (x?.image || "");
@@ -1769,8 +1798,8 @@ function Pending({ data, admin, setData, query = "" }) {
           onDelete:(it)=>removeItemObj(it),
           onCopyAd:(it)=>copyAdText(it),
           onConvertBySim:(it)=>convertBySimulation(it),
+          // 面板與卡片的勾選 state 不同：這裡提供快速「全選轉歷史」
           onConvertByChecked:(it)=>{
-            // 面板中的勾選與卡片內勾選不是同一 state；這裡提供快速全抽（用全部候選）
             convertByChecked(it, Object.fromEntries((it?._candidates||[]).map(n=>[n,true])));
           },
           onConvertByInput:(it)=>convertByInput(it),
@@ -4525,12 +4554,13 @@ function ShopEditor({ items = [], onSave, onClose }) {
   const [list, setList] = React.useState(()=> (Array.isArray(items) ? items.map(x=>({ ...x })) : []));
   const [editingIndex, setEditingIndex] = React.useState(-1);
 
+  // 預設項目：新增就有 stock 欄位；不再使用 intro
   const blankItem = () => ({
     enabled: true,
     name: "",
     points: "",
+    stock: "",         // 新增：剩餘數量
     desc: "",
-    intro: "",
     tags: "",
     image: "",
     images: []
@@ -4557,6 +4587,7 @@ function ShopEditor({ items = [], onSave, onClose }) {
   const ItemRow = ({x, i}) => {
     const need = x?.points ?? x?.point ?? x?.needPoints ?? x?.need_point ?? "";
     const cover = Array.isArray(x?.images) && x.images.length ? x.images[0] : (x?.image || "");
+    const stock = x?.stock ?? x?.qty ?? x?.quantity ?? x?.remaining ?? "";
     return (
       <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 px-3 py-2 border-b">
         <div className="w-12 h-12 rounded bg-slate-100 overflow-hidden grid place-content-center">
@@ -4564,7 +4595,9 @@ function ShopEditor({ items = [], onSave, onClose }) {
         </div>
         <div className="min-w-0">
           <div className="font-medium truncate">{x?.name || "（未命名）"}</div>
-          <div className="text-xs text-slate-500 truncate">需要點數：{need||"—"}　標籤：{Array.isArray(x?.tags)? x.tags.join(",") : (x?.tags||"—")}</div>
+          <div className="text-xs text-slate-500 truncate">
+            需要點數：{need||"—"}　剩餘數量：{(stock===""||stock==null)?"—":stock}　標籤：{Array.isArray(x?.tags)? x.tags.join(",") : (x?.tags||"—")}
+          </div>
         </div>
         <div className="flex items-center gap-1">
           <button className={`px-2 py-1 rounded text-xs border ${x?.enabled!==false ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : ''}`} onClick={()=>toggle(i)}>
@@ -4579,107 +4612,15 @@ function ShopEditor({ items = [], onSave, onClose }) {
     );
   };
 
-  const EditorModal = ({x, i}) => {
-    const [draft, setDraft] = React.useState(()=>({
-      enabled: x?.enabled !== false,
-      name: x?.name || "",
-      points: (x?.points ?? x?.point ?? x?.needPoints ?? x?.need_point ?? ""),
-      desc: x?.desc || "",
-      intro: x?.intro || "",
-      tags: Array.isArray(x?.tags) ? x.tags.join(",") : (x?.tags || ""),
-      image: x?.image || "",
-      imagesText: (Array.isArray(x?.images) ? x.images : (x?.image ? [x.image] : [])).join("\n"),
-    }));
-
-    const save = ()=>{
-      const next = { ...x };
-      next.enabled = !!draft.enabled;
-      next.name = draft.name.trim();
-      const n = draft.points;
-      if (n==="" || n==null) { delete next.points; } else { next.points = n; }
-      next.desc = draft.desc;
-      next.intro = draft.intro;
-      next.tags = draft.tags ? draft.tags.split(",").map(s=>s.trim()).filter(Boolean) : [];
-      const imgs = parseImages(draft.imagesText);
-      next.images = imgs;
-      next.image = imgs[0] || "";
-      setList(arr => arr.map((it,k)=> k===i ? next : it));
-      setEditingIndex(-1);
-    };
-
-    return (
-      <div className="fixed inset-0 z-[1000] bg-black/60 flex items-center justify-center" role="dialog" aria-modal="true">
-        <div className="w-[min(960px,96vw)] max-h-[90vh] overflow-auto rounded-2xl bg-white dark:bg-slate-900 shadow-xl">
-          <div className="flex items-center justify-between px-4 py-3 border-b">
-            <div className="font-semibold">編輯點數商品</div>
-            <div className="flex items-center gap-2">
-              <button className="rounded border px-3 py-1.5 text-sm" onClick={()=>setEditingIndex(-1)}>取消</button>
-              <button className="rounded bg-brand text-white px-3 py-1.5 text-sm" onClick={save}>儲存</button>
-            </div>
-          </div>
-
-          <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <label className="grid gap-1 text-sm">
-              名稱
-              <input className="rounded border px-3 py-2" value={draft.name} onChange={e=>setDraft(d=>({ ...d, name:e.target.value }))}/>
-            </label>
-
-            <label className="grid gap-1 text-sm">
-              需求點數
-              <input className="rounded border px-3 py-2" type="number" min="0" value={draft.points} onChange={e=>setDraft(d=>({ ...d, points: e.target.value }))}/>
-            </label>
-
-            <label className="md:col-span-2 grid gap-1 text-sm">
-              描述（desc）
-              <textarea className="rounded border px-3 py-2 min-h-[72px]" value={draft.desc} onChange={e=>setDraft(d=>({ ...d, desc:e.target.value }))}/>
-            </label>
-
-            <label className="md:col-span-2 grid gap-1 text-sm">
-              介紹（intro）
-              <textarea className="rounded border px-3 py-2 min-h-[72px]" value={draft.intro} onChange={e=>setDraft(d=>({ ...d, intro:e.target.value }))}/>
-            </label>
-
-            <label className="grid gap-1 text-sm">
-              標籤（逗號分隔）
-              <input className="rounded border px-3 py-2" value={draft.tags} onChange={e=>setDraft(d=>({ ...d, tags:e.target.value }))}/>
-            </label>
-
-            <label className="md:col-span-2 grid gap-1 text-sm">
-              更多圖片（逐行貼上）
-              <textarea className="rounded border px-3 py-2 min-h-[160px]" placeholder="https://...jpg\nhttps://...png"
-                        value={draft.imagesText}
-                        onChange={e=>setDraft(d=>({ ...d, imagesText: e.target.value }))}/>
-              <div className="text-xs text-slate-500">第一行將作為封面（同時寫入 image 與 images[0] 以維持相容）。</div>
-            </label>
-
-            <div className="md:col-span-2">
-              <div className="text-sm mb-2">預覽</div>
-              <div className="flex gap-2 flex-wrap">
-                {parseImages(draft.imagesText).map((src, idx)=>(
-                  <div key={idx} className="w-20 h-20 rounded border overflow-hidden bg-slate-100 grid place-content-center">
-                    {src ? <img src={src} alt="" className="w-full h-full object-cover"/> : <span className="text-xs text-slate-400">無</span>}
-                  </div>
-                ))}
-                {parseImages(draft.imagesText).length===0 && <div className="text-xs text-slate-500">無圖片</div>}
-              </div>
-            </div>
-
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" checked={draft.enabled} onChange={e=>setDraft(d=>({ ...d, enabled:e.target.checked }))}/>
-              上架（enabled）
-            </label>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
+  // 匯出 CSV：移除 intro 欄位，新增 stock 欄位
   const exportCSV = ()=>{
-    const headers = ["enabled","name","points","desc","intro","tags","image","images"];
+    const headers = ["enabled","name","points","stock","desc","tags","image","images"];
     const rows = list.map(x=>{
       const tags = Array.isArray(x?.tags) ? x.tags.join(",") : (x?.tags||"");
       const images = Array.isArray(x?.images) ? x.images.join("|") : (x?.image ? String(x.image) : "");
-      return [ (x?.enabled!==false), (x?.name||""), (x?.points ?? x?.point ?? x?.needPoints ?? x?.need_point ?? ""), (x?.desc||""), (x?.intro||""), tags, (x?.image||""), images ];
+      const needPts = (x?.points ?? x?.point ?? x?.needPoints ?? x?.need_point ?? "");
+      const stock = (x?.stock ?? x?.qty ?? x?.quantity ?? x?.remaining ?? "");
+      return [ (x?.enabled!==false), (x?.name||""), needPts, stock, (x?.desc||""), tags, (x?.image||""), images ];
     });
     const csv = [headers.join(","), ...rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(","))].join("\n");
     const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
@@ -4690,9 +4631,115 @@ function ShopEditor({ items = [], onSave, onClose }) {
     URL.revokeObjectURL(a.href);
   };
 
+  const EditorModal = ({x, i}) => {
+    // 讀入時把任何舊欄位（qty/quantity/remaining）也帶成 stock 供編修
+    const initialStock = (x?.stock ?? x?.qty ?? x?.quantity ?? x?.remaining ?? "");
+    const [draft, setDraft] = React.useState(()=>({
+      enabled: x?.enabled !== false,
+      name: x?.name || "",
+      points: (x?.points ?? x?.point ?? x?.needPoints ?? x?.need_point ?? ""),
+      stock: (initialStock === null || initialStock === undefined) ? "" : String(initialStock),
+      desc: x?.desc || "",
+      tags: Array.isArray(x?.tags) ? x.tags.join(",") : (x?.tags || ""),
+      image: x?.image || "",
+      imagesText: (Array.isArray(x?.images) ? x.images : (x?.image ? [x.image] : [])).join("\n"),
+    }));
+
+    const save = ()=>{
+      const next = { ...x };
+      next.enabled = !!draft.enabled;
+      next.name    = String(draft.name||"").trim();
+      // points 原樣字串保存（你原本就是可字串/數字）
+      const n = draft.points;
+      if (n==="" || n==null) { delete next.points; } else { next.points = n; }
+
+      // 新增：stock （空字串就移除）
+      const s = String(draft.stock||"").trim();
+      if (s==="") { delete next.stock; }
+      else {
+        const sn = +s;
+        next.stock = Number.isFinite(sn) ? sn : s; // 若非純數字也先保留原值
+      }
+
+      next.desc  = draft.desc;
+      // 移除 intro：確保舊資料不再繼續保存（可保留也可刪除，這裡選擇刪除）
+      if ('intro' in next) delete next.intro;
+
+      next.tags = draft.tags ? draft.tags.split(",").map(s=>s.trim()).filter(Boolean) : [];
+      const imgs = parseImages(draft.imagesText);
+      next.images = imgs;
+      next.image  = imgs[0] || "";
+
+      setList(arr => arr.map((it,k)=> k===i ? next : it));
+      setEditingIndex(-1);
+    };
+
+    return (
+      <div className="fixed inset-0 z-[1100] bg-black/60 grid place-content-center p-3" role="dialog" aria-modal="true">
+        <div className="w-[min(720px,96vw)] max-h-[90vh] overflow-auto rounded-2xl bg-white dark:bg-slate-900 shadow-xl">
+          <div className="flex items-center justify-between px-4 py-3 border-b">
+            <div className="font-semibold">編輯項目</div>
+            <div className="flex items-center gap-2">
+              <button className="rounded border px-3 py-1.5 text-sm" onClick={()=>setEditingIndex(-1)}>關閉</button>
+              <button className="rounded bg-brand text-white px-3 py-1.5 text-sm" onClick={save}>儲存</button>
+            </div>
+          </div>
+
+          <div className="p-4 space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <label className="text-sm">
+                名稱
+                <input className="mt-1 w-full rounded-lg border px-3 py-2" value={draft.name} onChange={e=>setDraft(d=>({...d,name:e.target.value}))}/>
+              </label>
+              <label className="text-sm">
+                需要點數（points）
+                <input className="mt-1 w-full rounded-lg border px-3 py-2" value={draft.points} onChange={e=>setDraft(d=>({...d,points:e.target.value}))}/>
+              </label>
+              <label className="text-sm">
+                剩餘數量（stock）
+                <input className="mt-1 w-full rounded-lg border px-3 py-2" inputMode="numeric" value={draft.stock} onChange={e=>setDraft(d=>({...d,stock:e.target.value}))} placeholder="例如：10"/>
+              </label>
+              <label className="text-sm">
+                封面圖片（image）
+                <input className="mt-1 w-full rounded-lg border px-3 py-2" value={draft.image} onChange={e=>setDraft(d=>({...d,image:e.target.value}))}/>
+              </label>
+            </div>
+
+            <label className="text-sm block">
+              描述（desc）
+              <textarea className="mt-1 w-full rounded-lg border px-3 py-2" rows={4} value={draft.desc} onChange={e=>setDraft(d=>({...d,desc:e.target.value}))}/>
+            </label>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <label className="text-sm block">
+                多張圖片：每行一個 URL（images）
+                <textarea className="mt-1 w-full rounded-lg border px-3 py-2" rows={5} value={draft.imagesText}
+                  onChange={e=>{
+                    const raw = e.target.value;
+                    setDraft(d=>({...d, imagesText: raw}));
+                  }}/>
+              </label>
+              <label className="text-sm block">
+                標籤（逗號分隔）
+                <input className="mt-1 w-full rounded-lg border px-3 py-2" value={draft.tags} onChange={e=>setDraft(d=>({...d,tags:e.target.value}))}/>
+              </label>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <label className="text-sm inline-flex items-center gap-2">
+                <input type="checkbox" checked={!!draft.enabled} onChange={e=>setDraft(d=>({...d, enabled:e.target.checked}))}/>
+                上架（enabled）
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="fixed inset-0 z-[1000] bg-black/60 flex items-center justify-center" role="dialog" aria-modal="true">
-      <div className="w-[min(1024px,96vw)] max-h-[90vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 shadow-xl flex flex-col">
+      <div className="w=[min(1024px,96vw)] max-h-[90vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 shadow-xl flex flex-col">
         {/* header */}
         <div className="flex items-center justify-between px-4 py-3 border-b">
           <div className="font-semibold">點數商城管理</div>
