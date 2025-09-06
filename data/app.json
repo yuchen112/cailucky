@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-06T00:04:17.286Z"
+    "exportedAt": "2025-09-06T00:08:15.500Z"
   },
   "data": {
     "homepage": {
@@ -415,6 +415,11 @@
       ],
       "people": [
         {
+          "id": "a7ugph31",
+          "name": "@Phoebe",
+          "points": 0
+        },
+        {
           "id": "ru0o4ky8",
           "name": "@😀😃",
           "points": 0
@@ -517,7 +522,7 @@
         {
           "id": "y0hagreo",
           "name": "@Shirley",
-          "points": 10
+          "points": 11
         },
         {
           "id": "rw76039m",
@@ -746,6 +751,13 @@
         }
       ],
       "logs": [
+        {
+          "id": "rjk541rf",
+          "personId": "y0hagreo",
+          "delta": 1,
+          "note": " 邀請好友 @Phoebe",
+          "at": "2025-09-06 08:07"
+        },
         {
           "id": "eaxduebw",
           "personId": "y0hagreo",
