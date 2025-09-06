@@ -495,6 +495,68 @@ function ConfirmListDialog({ open, onClose, map, mode='cash' }) {
   );
 }
 
+// 管理員專用：顯示某一位成員「全部」點數異動紀錄
+function FullLogsDialog({ open=false, onClose=()=>{}, logs=[], people=[], person=null }) {
+  if (!open) return null;
+  const name = person?.name || '（未命名）';
+  const list = Array.isArray(logs) ? logs : [];
+
+  return (
+    <div className="fixed inset-0 z-[1100]" role="dialog" aria-modal="true">
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div className="absolute inset-0 flex items-center justify-center p-4">
+        <div className="w-[min(96vw,720px)] max-h-[86vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-elevate flex flex-col">
+          <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+            <div className="font-semibold">「{name}」的全部點數異動</div>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
+          </div>
+
+          <div className="p-3 overflow-y-auto text-sm">
+            {list.length === 0 ? (
+              <div className="text-slate-500">目前沒有異動紀錄</div>
+            ) : (
+              <div className="grid gap-2">
+                {list.map(l => (
+                  <div key={l.id || (l.at + String(l.delta))}
+                       className="flex items-center justify-between rounded-lg border px-3 py-2">
+                    <div className="min-w-0 truncate">
+                      <span className="font-medium">
+                        {people.find(x => x.id === l.personId)?.name || '(已刪)'}
+                      </span>
+                      <span className="mx-2">｜</span>
+                      <span className={l.delta > 0 ? 'text-emerald-600' : 'text-rose-600'}>
+                        {l.delta > 0 ? `+${l.delta}` : l.delta}
+                      </span>
+                      {l.note && <span className="mx-2 text-slate-500">｜{l.note}</span>}
+                    </div>
+                    <div className="shrink-0 text-xs text-slate-500">{l.at}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="px-3 py-3 border-t border-slate-200 dark:border-slate-700 flex items-center gap-2">
+            <button
+              className="rounded-lg bg-brand text-white px-3 py-2 text-sm"
+              onClick={async ()=>{
+                const text = list.map(l=>{
+                  const who = people.find(x=>x.id===l.personId)?.name || '(已刪)';
+                  return `${l.at}｜${who}｜${l.delta>0?`+${l.delta}`:l.delta}｜${l.note||''}`;
+                }).join('\n');
+                try { await navigator.clipboard.writeText(text); alert('✅ 已複製全部異動紀錄'); }
+                catch { alert('無法自動複製，請手動選取'); }
+              }}
+            >
+              複製全部
+            </button>
+            <button className="ml-auto rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 
 // 社群商店（現金購買）— 「搜尋改標籤」＋「一鍵購物清單」，九/十六宮格保留
@@ -4793,6 +4855,8 @@ const visibleLogs = React.useMemo(()=>{
   return personIdFilter ? logs.filter(l => l.personId === personIdFilter) : logs;
 }, [logs, personIdFilter]);
 
+const [showAllLogs, setShowAllLogs] = React.useState(false);
+
 
   return (
     <Section title="🔍 查詢點數" subtitle="公開最多顯示最近 5 筆異動；管理可看全部、加一筆/撤銷、可匯出。">
@@ -4810,6 +4874,19 @@ const visibleLogs = React.useMemo(()=>{
       {/* 公開流水：僅顯示查詢到的此人最近 5 筆 */}
 <div className="rounded-xl border border-slate-200 dark:border-slate-700 p-4 mt-3">
   <div className="text-sm font-medium mb-2">最近 5 筆點數異動（僅此人）</div>
+
+{admin && result && (
+  <div className="mt-2">
+    <button
+      className="rounded-lg border px-3 py-2 text-sm"
+      onClick={()=> setShowAllLogs(true)}
+      title="打開此人的全部點數異動紀錄"
+    >
+      查看「{result.name}」全部紀錄
+    </button>
+  </div>
+)}
+
 
   {!q.trim() ? (
     <div className="text-sm text-slate-500">請先在上方輸入姓名/暱稱進行查詢</div>
