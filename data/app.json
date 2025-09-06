@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-06T00:08:15.500Z"
+    "exportedAt": "2025-09-06T12:07:53.805Z"
   },
   "data": {
     "homepage": {
@@ -325,7 +325,11 @@
         "title": "庫洛米體重計",
         "date": "2025-09-13",
         "image": "assets/等待開獎/庫洛米體重計.jpg",
-        "participants": [],
+        "participants": [
+          "@Jr",
+          "@萍萍",
+          "@habv"
+        ],
         "plannedWinners": 1
       },
       {
@@ -333,7 +337,13 @@
         "title": "卡皮巴拉灰色毛氈布手提箱",
         "date": "2025-09-13",
         "image": "assets/等待開獎/卡皮巴拉灰色毛氈布手提箱.jpg",
-        "participants": [],
+        "participants": [
+          "@wolf",
+          "@Jr",
+          "@萍萍",
+          "@me",
+          "@habv"
+        ],
         "plannedWinners": 1
       },
       {
@@ -341,7 +351,11 @@
         "title": "角落生物  白熊抱枕娃娃",
         "date": "2025-09-13",
         "image": "assets/等待開獎/角落生物  白熊抱枕娃娃.jpg",
-        "participants": [],
+        "participants": [
+          "@wolf",
+          "@Jr",
+          "@萍萍"
+        ],
         "plannedWinners": 1
       },
       {
@@ -349,7 +363,10 @@
         "title": "Qposket 美少女戰士 Eternal 水野亞美",
         "date": "2025-09-13",
         "image": "assets/等待開獎/Qposket 美少女戰士 Eternal 水野亞美.jpg",
-        "participants": [],
+        "participants": [
+          "@Jr",
+          "@habv"
+        ],
         "plannedWinners": 1
       },
       {
@@ -357,7 +374,11 @@
         "title": "兌幣機造型藍芽喇叭",
         "date": "2025-09-13",
         "image": "assets/等待開獎/兌幣機造型藍芽喇叭.jpg",
-        "participants": [],
+        "participants": [
+          "@wolf",
+          "@Jr",
+          "@萍萍"
+        ],
         "plannedWinners": 1
       },
       {
@@ -365,7 +386,10 @@
         "title": "鬼滅之刃 景品公仔 時透無一郎",
         "date": "2025-09-13",
         "image": "assets/等待開獎/鬼滅之刃 景品公仔 時透無一郎.jpg",
-        "participants": [],
+        "participants": [
+          "@Jr",
+          "@habv"
+        ],
         "plannedWinners": 1
       },
       {
@@ -373,7 +397,10 @@
         "title": "娃娃機造型快充頭",
         "date": "2025-09-13",
         "image": "assets/等待開獎/娃娃機造型快充頭.jpg",
-        "participants": [],
+        "participants": [
+          "@Jr",
+          "@habv"
+        ],
         "plannedWinners": 1
       },
       {
@@ -381,7 +408,10 @@
         "title": "鬼滅之刃 戀柱 甘露寺蜜璃",
         "date": "2025-09-13",
         "image": "assets/等待開獎/鬼滅之刃 戀柱 甘露寺蜜璃.jpg",
-        "participants": [],
+        "participants": [
+          "@Jr",
+          "@habv"
+        ],
         "plannedWinners": 1
       }
     ],
