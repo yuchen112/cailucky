@@ -376,22 +376,66 @@ function SheetPickControls({ item, mode='cash' }) {
   );
 }
 
-// 共用：選購清單狀態（map: id -> {name, qty, price/points}）
-function usePickList(lsKey='kjs_picklist') {
-  const [map, setMap] = React.useState(()=>{
-    try{ return JSON.parse(localStorage.getItem(lsKey) || "{}"); }catch{return {};}
-  });
-  React.useEffect(()=>{ try{ localStorage.setItem(lsKey, JSON.stringify(map)); }catch{}; },[map, lsKey]);
+// ── 直接覆蓋原本的 usePickList，全域同步＋即時更新版本 ──
+function usePickList(lsKey = 'kjs_picklist') {
+  const read = () => {
+    try { return JSON.parse(localStorage.getItem(lsKey) || "{}"); }
+    catch { return {}; }
+  };
+
+  const [map, setMap] = React.useState(read);
+
+  // 封裝 write：寫入 LS 後發送自定事件，讓同頁其他 hook 也能即時收到
+  const write = (next) => {
+    try { localStorage.setItem(lsKey, JSON.stringify(next)); } catch {}
+    // 同分頁（同一個 tab）的即時同步
+    try { window.dispatchEvent(new CustomEvent('kjs:picklist:update', { detail: { key: lsKey } })); } catch {}
+  };
+
+  // 設定數量（0 或空值 = 刪除）
   const setQty = (key, payload, qty) => {
-    setMap(m=>{
-      const next = { ...m };
-      if (!qty || qty<=0) delete next[key];
-      else next[key] = { ...(m[key]||{}), ...payload, qty: Math.min(999, Math.max(1, Math.floor(qty))) };
+    setMap(prev => {
+      const next = { ...prev };
+      if (!qty || qty <= 0) {
+        delete next[key];
+      } else {
+        next[key] = {
+          ...(prev[key] || {}),
+          ...payload,
+          qty: Math.min(999, Math.max(1, Math.floor(qty)))
+        };
+      }
+      write(next);
       return next;
     });
   };
-  const clear = ()=> setMap({});
-  const totalQty = Object.values(map).reduce((s,x)=> s + (x?.qty||0), 0);
+
+  // 清空整份清單
+  const clear = () => {
+    setMap(() => {
+      const empty = {};
+      write(empty);
+      return empty;
+    });
+  };
+
+  // 跨分頁（或同分頁其他 hook）同步：storage + 自定事件
+  React.useEffect(() => {
+    const onStorage = (e) => {
+      if (e.key === lsKey) setMap(read());
+    };
+    const onCustom = (e) => {
+      if (e?.detail?.key === lsKey) setMap(read());
+    };
+    window.addEventListener('storage', onStorage);
+    window.addEventListener('kjs:picklist:update', onCustom);
+    return () => {
+      window.removeEventListener('storage', onStorage);
+      window.removeEventListener('kjs:picklist:update', onCustom);
+    };
+  }, [lsKey]);
+
+  const totalQty = Object.values(map).reduce((s, x) => s + (x?.qty || 0), 0);
   return { map, setQty, clear, totalQty };
 }
 
@@ -439,50 +483,96 @@ function FloatingPickbar({ count=0, onOpen }) {
 }
 
 // 清單確認對話框（無輸入欄，全部勾選確認）
-function ConfirmListDialog({ open, onClose, map, mode='cash' }) {
+function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
   if (!open) return null;
   const keys = Object.keys(map);
-  const [checked, setChecked] = React.useState(()=> keys.reduce((o,k)=> (o[k]=true,o),{}));
-  const toggle = (k)=> setChecked(c=>({ ...c, [k]: !c[k] }));
-  const list = keys.filter(k=>checked[k]).map(k=>map[k]);
-  const text = buildListText(keys.filter(k=>checked[k]).reduce((o,k)=> (o[k]=map[k],o),{}), mode);
+  const [checked, setChecked] = React.useState(() =>
+    keys.reduce((o, k) => ((o[k] = true), o), {})
+  );
+  const toggle = (k) => setChecked((c) => ({ ...c, [k]: !c[k] }));
+
+  const buildListText = (m) => {
+    const rows = [];
+    let sumCash = 0, sumPts = 0;
+    for (const k of Object.keys(m)) {
+      const { name, qty, price, pts } = m[k] || {};
+      if (!qty) continue;
+      const line = mode === 'pts'
+        ? `- ${name} x${qty}（${pts ?? '?'} 點）`
+        : `- ${name} x${qty}（NT$ ${price ?? '?'}）`;
+      rows.push(line);
+      if (mode === 'pts' && Number.isFinite(+pts)) sumPts += (+pts) * (qty || 0);
+      if (mode === 'cash' && Number.isFinite(+price)) sumCash += (+price) * (qty || 0);
+    }
+    const head = mode === 'pts' ? '[點數兌換清單]' : '[購物清單]';
+    const tail = mode === 'pts'
+      ? (rows.length ? `\n合計點數：約 ${sumPts} 點` : '')
+      : (rows.length ? `\n預估金額：約 NT$ ${sumCash}` : '');
+    return [head, ...rows, tail].filter(Boolean).join('\n');
+  };
+
+  const listMap = keys
+    .filter((k) => checked[k])
+    .reduce((o, k) => ((o[k] = map[k]), o), {});
+  const text = buildListText(listMap);
+
+  const qtyOf = (k) => map[k]?.qty || 0;
+  const setQtySafe = (k, n) => onSetQty?.(k, map[k] || {}, Math.max(0, n));
+
   return (
     <div className="fixed inset-0 z-[1000]" role="dialog" aria-modal="true">
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
       <div className="absolute inset-0 flex items-center justify-center p-4">
         <div className="sheet-w w-[min(560px,96vw)] max-h-[86vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl">
           <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
-            <div className="font-semibold">{mode==='pts' ? '點數兌換清單' : '購物清單'}</div>
+            <div className="font-semibold">{mode === 'pts' ? '點數兌換清單' : '購物清單'}</div>
             <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
           </div>
+
           <div className="p-3 overflow-y-auto max-h-[calc(86vh-96px)] space-y-2">
-            {keys.length===0 ? (
+            {keys.length === 0 ? (
               <div className="text-sm text-slate-500">尚未挑選任何商品</div>
-            ) : keys.map(k=>{
-              const x = map[k]||{};
+            ) : keys.map((k) => {
+              const x = map[k] || {};
               return (
-                <label key={k} className="flex items-center justify-between gap-3 rounded-lg border px-3 py-2">
-                  <div className="min-w-0">
-                    <div className="truncate text-sm">{x.name}</div>
-                    <div className="text-xs text-slate-500">
-                      {mode==='pts' ? `需要 ${x.pts ?? '?'} 點 × ${x.qty}` : `NT$ ${x.price ?? '?'} × ${x.qty}`}
+                <div key={k} className="flex items-center justify-between gap-3 rounded-lg border px-3 py-2">
+                  <label className="flex items-center gap-2 min-w-0 flex-1">
+                    <input type="checkbox" checked={!!checked[k]} onChange={() => toggle(k)} />
+                    <div className="min-w-0">
+                      <div className="truncate text-sm">{x.name}</div>
+                      <div className="text-xs text-slate-500">
+                        {mode === 'pts'
+                          ? `需要 ${x.pts ?? '?'} 點 × ${x.qty}`
+                          : `NT$ ${x.price ?? '?'} × ${x.qty}`}
+                      </div>
                     </div>
+                  </label>
+
+                  {/* 數量步進器 */}
+                  <div className="flex items-center gap-1">
+                    <button className="rounded border px-2 py-1" onClick={() => setQtySafe(k, qtyOf(k) - 1)}>－</button>
+                    <input
+                      className="w-14 text-center rounded border px-2 py-1"
+                      inputMode="numeric"
+                      value={qtyOf(k)}
+                      onChange={(e) => setQtySafe(k, Number(e.target.value) || 0)}
+                    />
+                    <button className="rounded border px-2 py-1" onClick={() => setQtySafe(k, qtyOf(k) + 1)}>＋</button>
                   </div>
-                  <input type="checkbox" checked={!!checked[k]} onChange={()=>toggle(k)} />
-                </label>
+
+                  {/* 刪除 */}
+                  <button className="rounded border px-2 py-1 text-sm" title="刪除此項" onClick={() => setQtySafe(k, 0)}>🗑</button>
+                </div>
               );
             })}
           </div>
+
           <div className="p-3 border-t border-slate-200 dark:border-slate-700 flex items-center gap-2">
             <button
               className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm"
-              onClick={async ()=>{
-                if (await copyText(text)) {
-                  alert('✅ 已複製清單，請貼到官方 LINE 帳號聯絡管理員確認。');
-                  onClose();
-                } else {
-                  alert('無法自動複製，請手動選取文字複製：\n\n'+text);
-                }
+              onClick={async () => {
+                try { await navigator.clipboard.writeText(text); alert('✅ 已複製清單，請貼到官方 LINE 帳號聯絡管理員確認。'); onClose(); }
+                catch { alert('無法自動複製，請手動選取文字複製：\n\n' + text); }
               }}
             >
               複製清單
@@ -731,7 +821,8 @@ function Store({ data, admin, setData, query = "" }) {
       <ProductSheet open={sheet.open} item={sheet.item} context="store" onClose={()=>setSheet({ open:false, item:null })} />
 
       <FloatingPickbar count={pick.totalQty} onOpen={()=>setShowConfirm(true)} />
-      <ConfirmListDialog open={showConfirm} onClose={()=>setShowConfirm(false)} map={pick.map} mode="cash" />
+      <ConfirmListDialog open={showConfirm} onClose={()=>setShowConfirm(false)} map={pick.map} mode="cash" onSetQty={(k,p,n)=>pick.setQty(k,p,n)} />
+
     </section>
   );
 }
@@ -1901,9 +1992,13 @@ function ProductSheet({
         </div>
 
         {/* === 新增：詳情底部的「數量步進器 + 加入清單」；位置在 body 與 footer 之間 === */}
-        {item && (context === "shop"
-          ? <SheetPickControls item={item} mode="pts" />
-          : <SheetPickControls item={item} mode="cash" />
+        {/* 僅商店（現金）與點數商城顯示加入清單；等待開獎不顯示 */}
+{item && (context === "store" || context === "shop") ? (
+  context === "shop"
+    ? <SheetPickControls item={item} mode="pts" />
+    : <SheetPickControls item={item} mode="cash" />
+) : null}
+
         )}
 
         {/* footer（原樣保留） */}
