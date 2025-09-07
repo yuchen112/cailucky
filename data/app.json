@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-06T22:06:58.901Z"
+    "exportedAt": "2025-09-07T14:04:08.250Z"
   },
   "data": {
     "homepage": {
@@ -332,7 +332,8 @@
           "@萍萍",
           "@habv",
           "@ARIEL",
-          "@土龍君"
+          "@土龍君",
+          "@思思"
         ],
         "plannedWinners": 1
       },
@@ -359,7 +360,8 @@
         "participants": [
           "@wolf",
           "@Jr",
-          "@萍萍"
+          "@萍萍",
+          "@₊˚̶魁柒໒"
         ],
         "plannedWinners": 1
       },
@@ -397,7 +399,8 @@
         "participants": [
           "@Jr",
           "@habv",
-          "@💪💪肌肉棒子"
+          "@💪💪肌肉棒子",
+          "@₊˚̶魁柒໒"
         ],
         "plannedWinners": 1
       },
@@ -408,7 +411,8 @@
         "image": "assets/等待開獎/娃娃機造型快充頭.jpg",
         "participants": [
           "@Jr",
-          "@habv"
+          "@habv",
+          "@me"
         ],
         "plannedWinners": 1
       },
@@ -420,7 +424,8 @@
         "participants": [
           "@Jr",
           "@habv",
-          "@💪💪肌肉棒子"
+          "@💪💪肌肉棒子",
+          "@₊˚̶魁柒໒"
         ],
         "plannedWinners": 1
       }
@@ -1590,7 +1595,7 @@
             "玩具",
             "蠟筆小新"
           ],
-          "availability": "現貨"
+          "availability": "預售"
         },
         {
           "id": "5dli6tdz",
@@ -1624,7 +1629,7 @@
             "玩具",
             "熊貓"
           ],
-          "availability": "現貨"
+          "availability": "預售"
         },
         {
           "id": "365z3xh4",
@@ -1652,7 +1657,7 @@
             "盲包",
             "史迪奇"
           ],
-          "availability": "現貨"
+          "availability": "預售"
         }
       ],
       "tagGroups": [
