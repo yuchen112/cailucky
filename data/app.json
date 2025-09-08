@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-08T11:50:01.514Z"
+    "exportedAt": "2025-09-08T17:45:24.624Z"
   },
   "data": {
     "homepage": {
@@ -334,7 +334,9 @@
           "@ARIEL",
           "@土龍君",
           "@思思",
-          "@蘇"
+          "@蘇",
+          "@泰",
+          "@Green"
         ],
         "plannedWinners": 1
       },
@@ -350,7 +352,8 @@
           "@me",
           "@habv",
           "@土龍君",
-          "@蘇"
+          "@蘇",
+          "@Green"
         ],
         "plannedWinners": 1
       },
@@ -389,7 +392,8 @@
           "@Jr",
           "@萍萍",
           "@ray",
-          "@habv"
+          "@habv",
+          "@泰"
         ],
         "plannedWinners": 1
       },
@@ -550,6 +554,11 @@
         }
       ],
       "people": [
+        {
+          "id": "5cn0w5a5",
+          "name": "@星",
+          "points": 1
+        },
         {
           "id": "zmid69xi",
           "name": "@Pius",
@@ -892,6 +901,13 @@
         }
       ],
       "logs": [
+        {
+          "id": "qfp7z8fs",
+          "personId": "5cn0w5a5",
+          "delta": 1,
+          "note": " 群組得獎回報",
+          "at": "2025-09-09 01:20"
+        },
         {
           "id": "fatnu0k8",
           "personId": "y0hagreo",
