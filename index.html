@@ -1666,6 +1666,54 @@ function Viewer({ state, setState }) {
 }
 
 
+// ============================
+// Section（完整）
+// - 新增：在區塊內有輸入聚焦時，暫停 backdrop-filter（毛玻璃）
+// ============================
+function Section({ title, subtitle, children }){
+  const React = window.React || globalThis.React;
+
+  // ★ 新增：有沒有「區塊內的輸入」正在聚焦
+  const [focusWithin, setFocusWithin] = React.useState(false);
+
+  const blurGuardStyle = focusWithin
+    ? { backdropFilter: 'none', WebkitBackdropFilter: 'none' }
+    : undefined;
+
+  return (
+    <section
+      className="animate-fadeIn"
+      onFocusCapture={() => setFocusWithin(true)}
+      onBlurCapture={(e) => {
+        // 只有整個 Section 都失去焦點，才關掉保護
+        if (!e.currentTarget.contains(e.relatedTarget)) setFocusWithin(false);
+      }}
+    >
+      <div className="mb-3">
+        <h2 className="text-[1.25rem] font-semibold tracking-tight">{title}</h2>
+        {subtitle && <p className="text-[13px] text-slate-500 mt-1">{subtitle}</p>}
+      </div>
+
+      {/* 原本的 .section-card 改為直接套工具類（保留你的樣式） */}
+      <div
+        className="
+          bg-white/80 dark:bg-slate-800/70 backdrop-blur
+          border border-slate-200/70 dark:border-slate-700/60
+          rounded-2xl
+          shadow-[0_10px_25px_-10px_rgba(0,0,0,0.25)]
+          hover:shadow-[0_12px_30px_-12px_rgba(0,0,0,0.35)]
+          transition-shadow
+          p-4 sm:p-5
+        "
+        style={blurGuardStyle} // ★ 只有輸入聚焦時才關閉毛玻璃
+      >
+        {children}
+      </div>
+    </section>
+  );
+}
+
+
 /* ============================
  * 等待開獎（清單 + 跳出式資訊 + 抽獎展示）
  * - 不刪任何既有功能（編輯/新增/刪除/三種轉歷史/搜尋/分頁/9或16宮格…）
@@ -1886,7 +1934,7 @@ function Pending({ data, admin, setData, query = "" }) {
       if (!s) return "";
       const d = new Date(s + "T00:00:00");
       const zh = ["日","一","二","三","四","五","六"];
-      return zh[d.getDay()] || "";
+      return zh[d.getDay()] || ""
     };
     const endW = weekday(dateStr);
     let announceDate = "";
@@ -1943,14 +1991,28 @@ function Pending({ data, admin, setData, query = "" }) {
     </div>
   );
 
-  // 工具列（新增「我的名字」與三段式切換）
+  // =========================
+  // 原本的 Toolbar（完整保留）
+  // ※ 會造成你遇到的「打一個字就跳出」：因為此函式每次 render 皆為新型別，導致 React 視為不同元件而重掛載 -> 輸入失焦
+  // =========================
   const Toolbar = () => (
     <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
       <div className="flex flex-wrap items-center gap-2">
-        <input className="min-h-[44px] flex-1 rounded border px-3 py-2" placeholder="搜尋活動..." value={search} onChange={e=>setSearch(e.target.value)} />
+        <input
+          className="min-h-[44px] flex-1 rounded border px-3 py-2"
+          placeholder="搜尋活動..."
+          value={search}
+          onChange={e=>setSearch(e.target.value)}
+        />
 
         {/* 新增：輸入你的名字（精確比對） */}
-        <input className="min-h-[44px] rounded border px-3 py-2" style={{minWidth:220}} placeholder="輸入你的名字（精確比對）" value={myName} onChange={e=>setMyName(e.target.value)} />
+        <input
+          className="min-h-[44px] rounded border px-3 py-2"
+          style={{minWidth:220}}
+          placeholder="輸入你的名字（精確比對）"
+          value={myName}
+          onChange={e=>setMyName(e.target.value)}
+        />
 
         {/* 新增：切換 全部 / 我已參加 / 我未參加 */}
         <div className="inline-flex rounded-lg overflow-hidden border">
@@ -1977,6 +2039,83 @@ function Pending({ data, admin, setData, query = "" }) {
       </div>
     </div>
   );
+
+  // =========================
+  // ★★ 新增：穩定版 Toolbar（不重掛載、不失焦）★★
+  // - 透過 useRef 固定元件型別；同時在聚焦時停用毛玻璃
+  // =========================
+  const [toolbarFocus, setToolbarFocus] = React.useState(false);
+  const ToolbarStable = React.useRef(null);
+  if (!ToolbarStable.current) {
+    ToolbarStable.current = function ToolbarStableComp({
+      search, setSearch,
+      myName, setMyName,
+      mineFilter, setMineFilter,
+      view, setView,
+      pageSize, setPageSize,
+      admin,
+      toolbarFocus, setToolbarFocus
+    }) {
+      return (
+        <div
+          className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700"
+          style={toolbarFocus ? { backdropFilter: 'none', WebkitBackdropFilter: 'none' } : undefined}
+          onFocusCapture={() => setToolbarFocus(true)}
+          onBlurCapture={(e) => {
+            if (!e.currentTarget.contains(e.relatedTarget)) setToolbarFocus(false);
+          }}
+        >
+          <div className="flex flex-wrap items-center gap-2">
+            {/* 搜尋活動 */}
+            <input
+              className="min-h-[44px] flex-1 rounded border px-3 py-2"
+              placeholder="搜尋活動..."
+              value={search}
+              onChange={(e)=>setSearch(e.target.value)}
+              inputMode="search"
+              enterKeyHint="search"
+              onKeyDownCapture={(e)=>{ e.stopPropagation?.(); }}
+            />
+
+            {/* 輸入你的名字（精確比對） */}
+            <input
+              className="min-h-[44px] rounded border px-3 py-2"
+              style={{minWidth:220}}
+              placeholder="輸入你的名字（精確比對）"
+              value={myName}
+              onChange={(e)=>setMyName(e.target.value)}
+              inputMode="text"
+              enterKeyHint="done"
+              onKeyDownCapture={(e)=>{ e.stopPropagation?.(); }}
+            />
+
+            {/* 切換 全部 / 我已參加 / 我未參加 */}
+            <div className="inline-flex rounded-lg overflow-hidden border">
+              <button className={`px-3 py-2 text-sm ${mineFilter==='all'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('all')}>全部</button>
+              <button className={`px-3 py-2 text-sm ${mineFilter==='joined'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('joined')}>我已參加</button>
+              <button className={`px-3 py-2 text-sm ${mineFilter==='notJoined'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('notJoined')}>我未參加</button>
+            </div>
+
+            <label className="flex items-center gap-1">
+              版面
+              <select className="min-h-[44px] rounded border px-2 py-1" value={view} onChange={e=>setView(e.target.value)}>
+                <option value="grid9">9 宮格</option><option value="grid16">16 宮格</option>
+              </select>
+            </label>
+            <label className="flex items-center gap-1">
+              每頁
+              <select className="min-h-[44px] rounded border px-2 py-1" value={pageSize} onChange={e=>setPageSize(+e.target.value || 20)}>
+                <option value="20">20</option><option value="40">40</option><option value="80">80</option>
+              </select>
+            </label>
+            {admin && (
+              <button className="ml-auto rounded-lg border px-3 py-1.5" onClick={()=>window.scrollTo({top:0,behavior:"smooth"})}>新增/編輯</button>
+            )}
+          </div>
+        </div>
+      );
+    };
+  }
 
   // 卡片（完整保留你原本的 details + 勾選名單 + 各種管理按鈕）
   const Card = ({ x, i }) => {
@@ -2070,7 +2209,19 @@ function Pending({ data, admin, setData, query = "" }) {
       )}
 
       {/* 工具列 + 分頁器 */}
-      <div className="sticky top-0 z-10"><Toolbar /></div>
+      <div className="sticky top-0 z-10">
+        {/* ★ 使用穩定版 Toolbar，避免打字重掛載；聚焦時停用毛玻璃 */}
+        <ToolbarStable.current
+          search={search} setSearch={setSearch}
+          myName={myName} setMyName={setMyName}
+          mineFilter={mineFilter} setMineFilter={setMineFilter}
+          view={view} setView={setView}
+          pageSize={pageSize} setPageSize={setPageSize}
+          admin={admin}
+          toolbarFocus={toolbarFocus} setToolbarFocus={setToolbarFocus}
+        />
+      </div>
+
       <div className="sm:flex"><Paginator /></div>
 
       {/* 清單 */}
@@ -3704,31 +3855,7 @@ function StickyBulkToggles({ onOpenAll, onCloseAll, className="" }) {
   );
 }
 
-   function Section({ title, subtitle, children }){
-  return (
-    <section className="animate-fadeIn">
-      <div className="mb-3">
-        <h2 className="text-[1.25rem] font-semibold tracking-tight">{title}</h2>
-        {subtitle && <p className="text-[13px] text-slate-500 mt-1">{subtitle}</p>}
-      </div>
-
-      {/* 原本的 .section-card 改為直接套工具類 */}
-      <div className="
-        bg-white/80 dark:bg-slate-800/70 backdrop-blur
-        border border-slate-200/70 dark:border-slate-700/60
-        rounded-2xl
-        shadow-[0_10px_25px_-10px_rgba(0,0,0,0.25)]
-        hover:shadow-[0_12px_30px_-12px_rgba(0,0,0,0.35)]
-        transition-shadow
-        p-4 sm:p-5
-      ">
-        {children}
-      </div>
-    </section>
-  );
-}
-
-
+   
 
     function EmptyCard({ text, admin }){
       return (
