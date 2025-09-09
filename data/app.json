@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-08T19:50:02.697Z"
+    "exportedAt": "2025-09-09T17:47:12.377Z"
   },
   "data": {
     "homepage": {
@@ -336,7 +336,9 @@
           "@思思",
           "@蘇",
           "@泰",
-          "@Green"
+          "@Green",
+          "@Shirley",
+          "@星⭐️"
         ],
         "plannedWinners": 1
       },
@@ -353,7 +355,8 @@
           "@habv",
           "@土龍君",
           "@蘇",
-          "@Green"
+          "@Green",
+          "@星⭐️"
         ],
         "plannedWinners": 1
       },
@@ -393,7 +396,8 @@
           "@萍萍",
           "@ray",
           "@habv",
-          "@泰"
+          "@泰",
+          "@Shirley"
         ],
         "plannedWinners": 1
       },
@@ -1588,6 +1592,23 @@
     "store": {
       "items": [
         {
+          "id": "mhku1gde",
+          "name": "B0004 英國Je活潑茄子",
+          "price": "490",
+          "stock": "",
+          "desc": "40CM\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "images": [
+            "assets/products/JELLYCAT/茄子.jpg"
+          ],
+          "buyUrl": "",
+          "tags": [
+            "娃娃",
+            "Jellycat"
+          ],
+          "availability": "預售",
+          "imagesText": "assets/products/JELLYCAT/茄子.jpg"
+        },
+        {
           "id": "fdrofbxn",
           "name": " A0003:52TOYS 奇奇怪怪的小新 蠟筆小新",
           "price": "180",
@@ -1684,7 +1705,8 @@
           "tags": [
             "史迪奇",
             "蠟筆小新",
-            "熊貓"
+            "熊貓",
+            "Jellycat"
           ]
         },
         {
@@ -1692,7 +1714,8 @@
           "tags": [
             "盲盒",
             "玩具",
-            "盲包"
+            "盲包",
+            "娃娃"
           ]
         }
       ]
