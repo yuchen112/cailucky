@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-10T07:31:10.637Z"
+    "exportedAt": "2025-09-10T19:50:05.459Z"
   },
   "data": {
     "homepage": {
@@ -313,6 +313,17 @@
     ],
     "pending": [
       {
+        "id": "23orzqmz",
+        "title": "Jellycat*1",
+        "date": "2025-09-13",
+        "image": "",
+        "participants": [
+          "@Shirley",
+          "@₊˚̶魁柒໒"
+        ],
+        "plannedWinners": 2
+      },
+      {
         "id": "efzisb3k",
         "title": "Glolux miniQ 2L 氣炸鍋",
         "date": "2025-09-13",
@@ -338,7 +349,12 @@
           "@泰",
           "@Green",
           "@Shirley",
-          "@星⭐️"
+          "@星⭐️",
+          "@黃國維",
+          "@玄",
+          "@米寶/1m",
+          "@西瓜甜不甜🍉",
+          "@Yuma"
         ],
         "plannedWinners": 1
       },
@@ -356,7 +372,12 @@
           "@土龍君",
           "@蘇",
           "@Green",
-          "@星⭐️"
+          "@星⭐️",
+          "@黃國維",
+          "@Yu",
+          "@米寶/1m",
+          "@西瓜甜不甜🍉",
+          "@Yuma"
         ],
         "plannedWinners": 1
       },
@@ -369,7 +390,10 @@
           "@wolf",
           "@Jr",
           "@萍萍",
-          "@₊˚̶魁柒໒"
+          "@₊˚̶魁柒໒",
+          "@Yu",
+          "@米寶/1m",
+          "@Yuma"
         ],
         "plannedWinners": 1
       },
@@ -381,7 +405,11 @@
         "participants": [
           "@Jr",
           "@habv",
-          "@ARIEL"
+          "@ARIEL",
+          "@黃國維",
+          "@大運衝擊波",
+          "@米寶/1m",
+          "@Yuma"
         ],
         "plannedWinners": 1
       },
@@ -397,7 +425,11 @@
           "@ray",
           "@habv",
           "@泰",
-          "@Shirley"
+          "@Shirley",
+          "@黃國維",
+          "@玄",
+          "@米寶/1m",
+          "@Yuma"
         ],
         "plannedWinners": 1
       },
@@ -410,7 +442,11 @@
           "@Jr",
           "@habv",
           "@💪💪肌肉棒子",
-          "@₊˚̶魁柒໒"
+          "@₊˚̶魁柒໒",
+          "@Shirley",
+          "@黃國維",
+          "@米寶/1m",
+          "@Yuma"
         ],
         "plannedWinners": 1
       },
@@ -422,7 +458,10 @@
         "participants": [
           "@Jr",
           "@habv",
-          "@me"
+          "@me",
+          "@黃國維",
+          "@米寶/1m",
+          "@Yuma"
         ],
         "plannedWinners": 1
       },
@@ -435,7 +474,11 @@
           "@Jr",
           "@habv",
           "@💪💪肌肉棒子",
-          "@₊˚̶魁柒໒"
+          "@₊˚̶魁柒໒",
+          "@Shirley",
+          "@黃國維",
+          "@米寶/1m",
+          "@Yuma"
         ],
         "plannedWinners": 1
       }
@@ -572,6 +615,21 @@
         }
       ],
       "people": [
+        {
+          "id": "uhhx5fii",
+          "name": "@cxr.",
+          "points": 0
+        },
+        {
+          "id": "6hjy82v7",
+          "name": "@波米米",
+          "points": 0
+        },
+        {
+          "id": "ezsesq95",
+          "name": "@團團",
+          "points": 0
+        },
         {
           "id": "5cn0w5a5",
           "name": "@星",
@@ -715,7 +773,7 @@
         {
           "id": "gha6pc7z",
           "name": "@₊˚̶魁柒໒",
-          "points": 1
+          "points": 4
         },
         {
           "id": "pi9vwykh",
@@ -919,6 +977,27 @@
         }
       ],
       "logs": [
+        {
+          "id": "hys3v6iv",
+          "personId": "gha6pc7z",
+          "delta": 1,
+          "note": "邀請好友 @cxr. ",
+          "at": "2025-09-11 02:58"
+        },
+        {
+          "id": "f6rihro4",
+          "personId": "gha6pc7z",
+          "delta": 1,
+          "note": " 邀請好友 @波米米",
+          "at": "2025-09-11 02:58"
+        },
+        {
+          "id": "cw8nxx3z",
+          "personId": "gha6pc7z",
+          "delta": 1,
+          "note": "邀請好友 @團團",
+          "at": "2025-09-11 02:57"
+        },
         {
           "id": "qfp7z8fs",
           "personId": "5cn0w5a5",
@@ -1622,323 +1701,323 @@
             "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒1.jpg",
             "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒2.jpg"
           ],
+          "imagesText": "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒0.jpg\nassets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒1.jpg\nassets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒2.jpg",
           "buyUrl": "",
           "tags": [],
-          "availability": "預售",
-          "imagesText": "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒0.jpg\nassets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒1.jpg\nassets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒2.jpg"
+          "availability": "預售"
         },
         {
           "id": "nresjrus",
           "name": "B0019:奧麗莎蘭花盆栽",
           "price": "580",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "25cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/奥丽莎兰花盆栽.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/奥丽莎兰花盆栽.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/奥丽莎兰花盆栽.jpg"
+          "availability": "預售"
         },
         {
           "id": "o5dv4tji",
           "name": "B0018:彩虹生日蛋糕",
           "price": "580",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "26cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/彩虹生日蛋糕.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/彩虹生日蛋糕.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/彩虹生日蛋糕.jpg"
+          "availability": "預售"
         },
         {
           "id": "unalq204",
           "name": "B0017:巴塞隆納熊茄子熊",
           "price": "580",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "30cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/巴塞罗熊茄子熊.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/巴塞罗熊茄子熊.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/巴塞罗熊茄子熊.jpg"
+          "availability": "預售"
         },
         {
           "id": "u9q4t54i",
           "name": "B0016:巴塞隆納熊大黃蜂",
           "price": "580",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "22cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/巴塞罗熊大黄蜂.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/巴塞罗熊大黄蜂.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/巴塞罗熊大黄蜂.jpg"
+          "availability": "預售"
         },
         {
           "id": "0uvu1crd",
           "name": "B0015:巴塞隆納南瓜小熊",
           "price": "580",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "36cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/巴塞罗南瓜小熊.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/巴塞罗南瓜小熊.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/巴塞罗南瓜小熊.jpg"
+          "availability": "預售"
         },
         {
           "id": "frs2g7od",
           "name": "B0014:抱蛋糕巴塞隆納熊",
           "price": "580",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "28cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/抱蛋糕巴塞罗熊.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/抱蛋糕巴塞罗熊.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/抱蛋糕巴塞罗熊.jpg"
+          "availability": "預售"
         },
         {
           "id": "07g24aoo",
           "name": "B0013:微笑太陽花盆栽",
           "price": "580",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "35cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/微笑太阳花盆栽.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/微笑太阳花盆栽.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/微笑太阳花盆栽.jpg"
+          "availability": "預售"
         },
         {
           "id": "zkf5tiah",
           "name": "B0001:結婚蛋糕",
           "price": "650",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "28cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/结婚蛋糕.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/结婚蛋糕.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/结婚蛋糕.jpg"
+          "availability": "預售"
         },
         {
           "id": "tbmpmj68",
           "name": "B0002:花布草莓耳朵害羞邦尼兔",
           "price": "580",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "31cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/花布草莓耳朵害羞邦尼兔.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/花布草莓耳朵害羞邦尼兔.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/花布草莓耳朵害羞邦尼兔.jpg"
+          "availability": "預售"
         },
         {
           "id": "uisfa4l9",
           "name": "B0003:橙色彩虹蛋糕",
           "price": "580",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "16cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/橙色彩虹蛋糕.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/橙色彩虹蛋糕.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/橙色彩虹蛋糕.jpg"
+          "availability": "預售"
         },
         {
           "id": "xmyfhklb",
           "name": "B0012:三明治",
           "price": "580",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "13cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/三明治.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/三明治.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/三明治.jpg"
+          "availability": "預售"
         },
         {
           "id": "j9o1hhw4",
           "name": "B0011:一品紅",
           "price": "650",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "24cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/一品紅.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/一品紅.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/一品紅.jpg"
+          "availability": "預售"
         },
         {
           "id": "lfbsgxnt",
           "name": "B0010:巴塞隆納熊泰迪",
           "price": "580",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "28cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/巴塞罗熊泰迪.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/巴塞罗熊泰迪.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/巴塞罗熊泰迪.jpg"
+          "availability": "預售"
         },
         {
           "id": "pwzsmvym",
           "name": "B0009:害羞尼伯斯邦尼兔",
           "price": "580",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "31cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/害羞尼伯斯邦尼兔.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/害羞尼伯斯邦尼兔.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/害羞尼伯斯邦尼兔.jpg"
+          "availability": "預售"
         },
         {
           "id": "vbt9ybfh",
           "name": "B0008:玉蘭妮亞拿鐵",
           "price": "650",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "22cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/玉兰妮娅拿铁.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/玉兰妮娅拿铁.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/玉兰妮娅拿铁.jpg"
+          "availability": "預售"
         },
         {
           "id": "5jkh2xee",
           "name": "B0007:草莓生日蛋糕",
           "price": "580",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "16cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/草莓生日蛋糕.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/草莓生日蛋糕.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/草莓生日蛋糕.jpg"
+          "availability": "預售"
         },
         {
           "id": "0aoj8459",
           "name": "B0006:吉利貓",
           "price": "650",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "65cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/吉利猫.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/吉利猫.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/吉利猫.jpg"
+          "availability": "預售"
         },
         {
           "id": "y0tbbuhk",
           "name": "B0005:手捧花玫瑰花束",
           "price": "650",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "31cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
           "images": [
             "assets/products/JELLYCAT/手捧花玫瑰花束.jpg"
           ],
+          "imagesText": "assets/products/JELLYCAT/手捧花玫瑰花束.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/JELLYCAT/手捧花玫瑰花束.jpg"
+          "availability": "預售"
         },
         {
           "id": "zji59wv3",
           "name": "C0001：拇指相機",
           "price": "450",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數8點\n未回報視同放棄",
+          "desc": "附贈8g記憶卡\n預購7~14天\n購買後回報得點數8點\n未回報視同放棄",
           "images": [
             "assets/products/3c/拇指相機/拇指照相机1.jpg",
             "assets/products/3c/拇指相機/拇指照相机2.jpg",
@@ -1946,12 +2025,12 @@
             "assets/products/3c/拇指相機/拇指照相机3.jpg",
             "assets/products/3c/拇指相機/拇指照相机4.jpg"
           ],
+          "imagesText": "assets/products/3c/拇指相機/拇指照相机1.jpg\nassets/products/3c/拇指相機/拇指照相机2.jpg\nassets/products/3c/拇指相機/拇指照相机2.1.jpg\nassets/products/3c/拇指相機/拇指照相机3.jpg\nassets/products/3c/拇指相機/拇指照相机4.jpg",
           "buyUrl": "",
           "tags": [
             "3C"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/3c/拇指相機/拇指照相机1.jpg\nassets/products/3c/拇指相機/拇指照相机2.jpg\nassets/products/3c/拇指相機/拇指照相机2.1.jpg\nassets/products/3c/拇指相機/拇指照相机3.jpg\nassets/products/3c/拇指相機/拇指照相机4.jpg"
+          "availability": "預售"
         },
         {
           "id": "wl8xwog8",
@@ -1965,14 +2044,14 @@
             "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁2.jpg",
             "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁3.jpg"
           ],
+          "imagesText": "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁0.jpg\nassets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁1.jpg\nassets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁2.jpg\nassets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁3.jpg",
           "buyUrl": "",
           "tags": [
             "史迪奇",
             "玩具",
             "盲包"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁0.jpg\nassets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁1.jpg\nassets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁2.jpg\nassets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁3.jpg"
+          "availability": "預售"
         },
         {
           "id": "x6khyvl0",
@@ -1983,14 +2062,14 @@
           "images": [
             "assets/products/積木/動物方城市積木.jpg"
           ],
+          "imagesText": "assets/products/積木/動物方城市積木.jpg",
           "buyUrl": "",
           "tags": [
             "動物方程式",
             "玩具",
             "積木"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/積木/動物方城市積木.jpg"
+          "availability": "預售"
         },
         {
           "id": "mzpzch4a",
@@ -2001,14 +2080,14 @@
           "images": [
             "assets/products/積木/蜡笔小新积木盲盒.jpg"
           ],
+          "imagesText": "assets/products/積木/蜡笔小新积木盲盒.jpg",
           "buyUrl": "",
           "tags": [
             "蠟筆小新",
             "玩具",
             "積木"
           ],
-          "availability": "預售",
-          "imagesText": "assets/products/積木/蜡笔小新积木盲盒.jpg"
+          "availability": "預售"
         },
         {
           "id": "mhku1gde",
