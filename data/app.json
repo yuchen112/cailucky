@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-11T20:56:55.904Z"
+    "exportedAt": "2025-09-12T08:53:22.673Z"
   },
   "data": {
     "homepage": {
@@ -938,7 +938,7 @@
         {
           "id": "7w7obl13",
           "name": "@蘇",
-          "points": 1
+          "points": 2
         },
         {
           "id": "xazs3edh",
@@ -977,6 +977,13 @@
         }
       ],
       "logs": [
+        {
+          "id": "2c7hxk9c",
+          "personId": "7w7obl13",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-09-12 16:53"
+        },
         {
           "id": "hys3v6iv",
           "personId": "gha6pc7z",
