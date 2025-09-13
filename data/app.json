@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-13T15:26:16.939Z"
+    "exportedAt": "2025-09-13T16:36:05.019Z"
   },
   "data": {
     "homepage": {
@@ -1707,7 +1707,8 @@
     "settings": {
       "drawMaxPerRun": 500,
       "drawPublicShowLimit": 50,
-      "drawCooldownSec": 10
+      "drawCooldownSec": 10,
+      "contactUrl": "https://lin.ee/kKEvNhs"
     },
     "store": {
       "items": [
