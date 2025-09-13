@@ -348,57 +348,508 @@ function TagChips({ tags=[], picked=[], onToggle, onClear }) {
   );
 }
 
-/* === 詳情視窗底部：數量步進 + 加入清單（支援現金/點數） === */
-function SheetPickControls({ item, mode='cash' }) {
+/* ============================
+ * 跳出式資訊面板（社群商店 / 點數商城 / 等待開獎）
+ * － 規格（單/雙）選擇 + 有效價格/點數/庫存 + 事件橋接（shop 移除「複製模板」）
+ * ============================ */
+function ProductSheet({
+  open = false,
+  item = null,
+  context = "store",
+  onClose = () => {},
+  onOpenViewer = () => {},
+  contactUrl = "",
+  onCopyTemplate = () => {},     // 仍保留參數相容，不在 shop 顯示
+  onStartDraw = () => {},        // for pending：開展示動畫
+  admin = false,                 // for pending：是否顯示管理區塊
+  onAdmin = {}                   // for pending：{ onEdit, onDelete, onConvertBySim, onConvertByChecked, onConvertByInput, onCopyAd, checkedMap, toggleCheck }
+}) {
   const React = window.React || globalThis.React;
-  const pick = usePickList(mode==='pts' ? 'kjs_pointshop_picklist' : 'kjs_store_picklist');
 
-  // 取 id / 名稱 / 價格或點數（相容多欄位）
-  const id    = String(item?.id ?? (item?.name ?? 'item'));
-  const name  = item?.name || item?.title || '（未命名）';
-  const price = mode==='cash'
-    ? (['price','cash','priceNTD','priceTWD'].map(k=>item?.[k]).find(v => v!=='' && v!=null))
-    : null;
-  const needPts = mode==='pts'
-    ? (['points','pts','need','needPoints','cost','costPts','pricePts']
-        .map(k=>+item?.[k]).find(n=>Number.isFinite(n)) ?? null)
-    : null;
+  // ---- hooks 皆無條件呼叫 ----
+  const overlayRef = React.useRef(null);
+  const [index, setIndex] = React.useState(0);
 
-  const qty = pick.map[id]?.qty || 0;
-  const setQ = (n)=> pick.setQty(id, { name, price, pts: needPts }, n);
+  // 規格選擇（僅 store/shop 需要）
+  const [sel1, setSel1] = React.useState(null);
+  const [sel2, setSel2] = React.useState(null);
+
+  // 鎖捲動 / ESC / 返回鍵
+  React.useEffect(() => {
+    if (!open) return;
+    BodyScrollLock.lock();
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    const onPop = () => onClose();
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("popstate", onPop);
+    try { history.pushState({ sheet: true }, "", location.href); } catch {}
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("popstate", onPop);
+      BodyScrollLock.unlock();
+    };
+  }, [open, onClose]);
+
+  // 換商品時重置圖與規格
+  React.useEffect(() => { setIndex(0); setSel1(null); setSel2(null); }, [item]);
+
+  // ---- 派生資料 ----
+  const title  = (item?.title || item?.name || "（未命名）");
+  const baseId = String(item?.id ?? (item?.name ?? "item"));
+
+  const images = (() => {
+    const arr = Array.isArray(item?.images) ? item.images : (item?.image ? [String(item.image)] : []);
+    return (arr || []).filter(Boolean);
+  })();
+  const tags = (() => {
+    if (Array.isArray(item?.tags)) return item.tags;
+    if (typeof item?.tags === "string") return item.tags.split(",").map(s => s.trim()).filter(Boolean);
+    return [];
+  })();
+  const buyUrl = item?.buyUrl || item?.url || "";
+  const price  = (item?.price ?? "") !== "" ? item?.price : null;
+  const needPoints = (() => {
+    const p = item?.points ?? item?.point ?? item?.needPoints ?? item?.need_point;
+    const n = (typeof p === "string" ? +p : p);
+    return Number.isFinite(n) ? n : null;
+  })();
+  const remain = item?.stock ?? item?.qty ?? item?.quantity ?? item?.remaining ?? null;
+
+  // pending：候選名單（不寫回資料）
+  const candidates = (() => {
+    const list = Array.isArray(item?.participants) ? item.participants
+      : Array.isArray(item?.members) ? item.members
+      : Array.isArray(item?.list) ? item.list
+      : Array.isArray(item?.candidates) ? item.candidates
+      : (typeof item?.listText === "string" ? item.listText.split(/\r?\n/).map(s=>s.trim()).filter(Boolean) : []);
+    return (list || []).map(String).filter(Boolean);
+  })();
+  const candidateCount = candidates.length;
+
+  // 觸控換圖
+  let sx = 0, sy = 0, dragging = false;
+  const onTouchStart = (e) => { if (e.touches.length === 1) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; dragging = true; } };
+  const onTouchEnd   = (e) => {
+    if (!dragging) return; dragging = false;
+    const ex = e.changedTouches?.[0]?.clientX ?? sx; const ey = e.changedTouches?.[0]?.clientY ?? sy;
+    const dx = ex - sx, dy = ey - sy;
+    if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) && images.length > 1) {
+      setIndex(i => (dx > 0 ? (i - 1 + images.length) : (i + 1)) % images.length);
+    }
+  };
+
+  // shop 用聯絡管理員（多來源 fallback）
+  const effectiveContactUrl =
+    contactUrl ||
+    item?.contactUrl ||
+    window.__CONTACT_URL__ || "";
+
+  // ---------- 規格工具 ----------
+  const normalizeVariants = (it) => {
+    const v = it?.variants;
+    if (!v || !v.mode || v.mode === "none") return { mode: "none", attrs: [], items: [] };
+    const mode  = (v.mode === "double" ? "double" : "single");
+    const attrs = Array.isArray(v.attrs)
+      ? v.attrs.slice(0, mode === "double" ? 2 : 1).map(a => ({
+          name: a?.name || "",
+          values: Array.isArray(a?.values) ? a.values.filter(Boolean) : []
+        }))
+      : [];
+    const items = Array.isArray(v.items)
+      ? v.items.map(s => ({
+          key: String(s?.key || ""),
+          stock: (s?.stock ?? s?.qty ?? s?.quantity ?? s?.remaining ?? ""),
+          price: (s?.price ?? ""),
+          points: (s?.points ?? s?.needPoints ?? ""),
+          image: s?.image || "",
+          enabled: (s?.enabled !== false)
+        }))
+      : [];
+    return { mode, attrs, items };
+  };
+  const V = normalizeVariants(item);
+
+  const buildKey = (a, b) => (V.mode === "double" ? `${a||""}|${b||""}` : `${a||""}`);
+  const skuMap = (() => {
+    const m = new Map();
+    for (const s of (V.items || [])) m.set(String(s.key || ""), s);
+    return m;
+  })();
+  const selectedDone = (V.mode === "none")
+    || (V.mode === "single" && !!sel1)
+    || (V.mode === "double" && !!sel1 && !!sel2);
+  const selectedKey = selectedDone ? buildKey(sel1, sel2) : "";
+  const selSku      = selectedDone ? (skuMap.get(selectedKey) || null) : null;
+
+  const num = (v) => { if (v === "" || v == null) return null; const n = +v; return Number.isFinite(n) ? n : null; };
+  const effStock = (() => {
+    if (selSku && selSku.enabled !== false && num(selSku.stock) != null) return num(selSku.stock);
+    return num(remain);
+  })();
+  const effPriceOrPts = (() => {
+    if (context === "store") {
+      if (selSku && selSku.enabled !== false && num(selSku.price) != null)  return num(selSku.price);
+      return num(price);
+    } else if (context === "shop") {
+      if (selSku && selSku.enabled !== false && num(selSku.points) != null) return num(selSku.points);
+      return num(needPoints);
+    }
+    return null;
+  })();
+  const specSuffix = (() => {
+    const parts = V.mode === "none" ? [] : (V.mode === "single" ? [sel1].filter(Boolean) : [sel1, sel2].filter(Boolean));
+    return parts.length ? `（${parts.join("／")}）` : "";
+  })();
+
+  // 向下方控制列廣播「規格改變」
+  const publishPick = (s1, s2) => {
+    const key = String(item?.id ?? item?._id ?? item?.name ?? "item");
+    window.__VARIANT_PICKED__ = window.__VARIANT_PICKED__ || {};
+    window.__VARIANT_PICKED__[key] = { sel1: s1 || "", sel2: s2 || "" };
+    try {
+      window.dispatchEvent(new CustomEvent("kjs:variant:picked", {
+        detail: { id: key, sel1: s1 || "", sel2: s2 || "" }
+      }));
+    } catch {}
+  };
+  React.useEffect(() => {
+    if (!open) return;
+    publishPick(null, null); // 打開或換商品時清一次
+  }, [open, item?.id]);
+
+  // 傳給步進器的派生 item（嵌入所選規格、覆寫單價/點數/庫存、並保留 baseId）
+  const controlsItem = (() => {
+    if (context !== "store" && context !== "shop") return item;
+    if (V.mode === "none") return { ...item, __baseId: baseId };
+    if (!selectedDone) return null;
+
+    const composedId   = `${baseId}::${selectedKey}`;
+    const composedName = `${title}${specSuffix}`;
+    const merged = { ...item };
+    merged.id = composedId;
+    merged.name = merged.title = composedName;
+    merged.__baseId = baseId;
+    if (context === "store") {
+      if (effPriceOrPts != null)  merged.price  = effPriceOrPts;
+    } else {
+      if (effPriceOrPts != null)  merged.points = effPriceOrPts;
+    }
+    if (effStock != null) {
+      merged.stock = merged.remaining = merged.qty = effStock;
+    }
+    merged._variant = { mode: V.mode, key: selectedKey, sel1, sel2, attrs: V.attrs };
+    return merged;
+  })();
+
+  if (!open) return null;
+  const handleOverlayClick = (e) => { if (e.target === overlayRef.current) onClose(); };
 
   return (
-    <div className="sticky bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-900/90 backdrop-blur border-t border-slate-200 dark:border-slate-700 rounded-b-2xl px-3 py-2">
-      <div className="flex items-center gap-2">
-        <div className="flex items-center gap-1">
-          <button className="rounded-lg border px-3 py-2 min-w-[44px]" onClick={()=>setQ(Math.max(0, qty-1))}>－</button>
-          <input
-            className="w-16 text-center rounded-lg border px-2 py-2"
-            inputMode="numeric"
-            value={qty||0}
-            onChange={e=>setQ(Math.max(0, Number(e.target.value)||0))}
-          />
-          <button className="rounded-lg border px-3 py-2 min-w-[44px]" onClick={()=>setQ((qty||0)+1)}>＋</button>
+    <div
+      ref={overlayRef}
+      className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+      onMouseDown={handleOverlayClick}
+    >
+      <div className="w-[min(96vw,44rem)] max-h-[92vh] rounded-2xl bg-white dark:bg-slate-900 shadow-elevate overflow-hidden flex flex-col">
+        {/* header */}
+        <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+          <div className="min-w-0">
+            <div className="font-semibold truncate">{title}{specSuffix}</div>
+            {context==="store"   && price!=null      && <div className="text-sm text-slate-500">售價：{price}</div>}
+            {context==="shop"    && needPoints!=null && <div className="text-sm text-slate-500">需求點數：{needPoints}</div>}
+            {context==="pending" && <div className="text-sm text-slate-500">候選人數：{candidateCount}</div>}
+          </div>
+          <button className="rounded-full border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
         </div>
 
-        <button
-          className="ml-auto rounded-lg bg-brand text-white px-4 py-2 shadow-soft"
-          onClick={()=>{ if ((qty||0) < 1) setQ(1); alert('✅ 已加入清單，可在底部「完成挑選／複製清單」複製傳給管理員'); }}
-        >
-          加入清單
-        </button>
-      </div>
+        {/* body：主圖 + 縮圖 + 文字 + 規格選擇 */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="relative bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
+            <div className="aspect-square w-full grid place-content-center" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+              {images.length ? (
+                <img
+                  src={images[index]}
+                  alt=""
+                  className="w-full h-full object-contain select-none"
+                  onClick={() => { if (context === "pending") onOpenViewer?.(images, index, title, buyUrl); }}
+                />
+              ) : <div className="text-slate-400 text-sm">無圖片</div>}
+            </div>
+            {images.length>1 && (
+              <div className="absolute bottom-2 inset-x-0 flex items-center justify-center gap-1">
+                {images.map((_, i) => (
+                  <span key={i} className={"h-1.5 w-1.5 rounded-full " + (i===index ? "bg-slate-900 dark:bg-white" : "bg-slate-300 dark:bg-slate-600")}/>
+                ))}
+              </div>
+            )}
+          </div>
 
-      <div className="mt-1 text-xs text-slate-500">
-        {mode==='cash' && price!=null ? <>單價：NT$ {price}</> : null}
-        {mode==='pts'  && needPts!=null ? <>每件需：{needPts} 點</> : null}
+          {images.length>1 && (
+            <div className="px-4 py-3 -mx-1 flex overflow-x-auto gap-2 snap-x snap-mandatory">
+              {images.map((src, i) => (
+                <button
+                  key={src+i}
+                  className={"shrink-0 w-20 aspect-square rounded-lg overflow-hidden border snap-start " + (i===index ? "border-brand ring-2 ring-brand/40" : "border-slate-200 dark:border-slate-700")}
+                  onClick={()=>setIndex(i)}
+                  title={`圖片 ${i+1}`}
+                >
+                  <img src={src} alt="" className="w-full h-full object-contain" loading="lazy" />
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className="px-4 pb-4 space-y-2 text-sm">
+            {context==="store" && remain!=null && <div className="text-slate-600">剩餘數量：{remain}</div>}
+            {Array.isArray(tags) && tags.length>0 && <div className="text-slate-500">標籤：{tags.join(" / ")}</div>}
+            {item?.desc  && <div className="whitespace-pre-wrap">{item.desc}</div>}
+            {item?.intro && <div className="whitespace-pre-wrap">{item.intro}</div>}
+            {item?.extra && <div className="whitespace-pre-wrap">{String(item.extra)}</div>}
+
+            {(context==="store" || context==="shop") && V.mode !== "none" && (
+              <div className="mt-3 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-700 text-sm font-medium">選擇規格</div>
+                <div className="p-3 space-y-2">
+                  {/* 規格1 */}
+                  {V.attrs[0] && (
+                    <div className="flex items-start gap-2">
+                      <div className="w-16 shrink-0 text-slate-500">{V.attrs[0].name || "規格1"}</div>
+                      <div className="flex flex-wrap gap-2">
+                        {(V.attrs[0].values||[]).map(v => (
+                          <button
+                            key={"v1-"+v}
+                            type="button"
+                            onClick={() => {
+                              const next = (v === sel1 ? null : v);
+                              setSel1(next);
+                              if (V.mode === "double") setSel2(null);
+                              try {
+                                window.dispatchEvent(new CustomEvent('kjs:variant:picked', {
+                                  detail: { id: baseId, sel1: next || '', sel2: sel2 || '' }
+                                }));
+                              } catch {}
+                            }}
+                            className={"px-3 py-1.5 rounded-full border text-sm " + (v===sel1 ? "bg-brand text-white border-brand" : "")}
+                            title={v}
+                          >{v}</button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {/* 規格2（若為雙規格） */}
+                  {V.mode === "double" && V.attrs[1] && (
+                    <div className="flex items-start gap-2">
+                      <div className="w-16 shrink-0 text-slate-500">{V.attrs[1].name || "規格2"}</div>
+                      <div className="flex flex-wrap gap-2">
+                        {(V.attrs[1].values||[]).map(v => (
+                          <button
+                            key={"v2-"+v}
+                            type="button"
+                            onClick={() => {
+                              const next = (v === sel2 ? null : v);
+                              setSel2(next);
+                              try {
+                                window.dispatchEvent(new CustomEvent('kjs:variant:picked', {
+                                  detail: { id: baseId, sel1: sel1 || '', sel2: next || '' }
+                                }));
+                              } catch {}
+                            }}
+                            className={"px-3 py-1.5 rounded-full border text-sm " + (v===sel2 ? "bg-brand text-white border-brand" : "")}
+                            title={v}
+                          >{v}</button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 即時顯示有效單價/點數與庫存 */}
+                  <div className="text-sm text-slate-600">
+                    {selectedDone ? (
+                      <>
+                        {context==="store" && <span>單價：{effPriceOrPts!=null ? `NT$ ${effPriceOrPts}` : "—"}　</span>}
+                        {context==="shop"  && <span>點數：{effPriceOrPts!=null ? `${effPriceOrPts} 點` : "—"}　</span>}
+                        <span>剩餘：{effStock!=null ? effStock : "—"}</span>
+                      </>
+                    ) : (
+                      <span className="text-slate-500">請先選擇完整規格</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* 詳情底部（數量步進 + 加入清單） */}
+        {item && (context === "store" || context === "shop") ? (
+          (V.mode !== "none" && !selectedDone)
+            ? (
+              <div className="p-3 border-t border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/90 backdrop-blur flex items-center justify-between">
+                <div className="text-sm text-amber-600">請先在上方「選擇規格」區塊完成規格選擇</div>
+                <button className="rounded-lg border px-4 py-2 text-sm text-slate-400" disabled>加入清單</button>
+              </div>
+            )
+            : (
+              context === "shop"
+                ? <SheetPickControls item={controlsItem || { ...item, __baseId: baseId }} mode="pts" />
+                : <SheetPickControls item={controlsItem || { ...item, __baseId: baseId }} mode="cash" />
+            )
+        ) : null}
+
+        {/* footer（shop 已移除「複製模板」） */}
+        <div className="p-3 border-t border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/90 backdrop-blur flex items-center gap-2">
+          {context==="store" ? (
+            <>
+              {buyUrl
+                ? <a href={buyUrl} target="_blank" rel="noopener noreferrer" className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm text-center">前往購買</a>
+                : <button className="flex-1 rounded-lg border px-4 py-2 text-sm text-slate-400" disabled>尚未提供購買連結</button>}
+              <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
+            </>
+          ) : context==="shop" ? (
+            <>
+              <button
+                className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm"
+                onClick={() => {
+                  const url = effectiveContactUrl;
+                  if (url) window.open(url, "_blank", "noopener,noreferrer");
+                  else alert("尚未設定『聯絡管理員』連結：可在商品 data 加上 contactUrl，或在全域設置 window.__CONTACT_URL__。");
+                }}
+              >
+                💬 聯絡管理員
+              </button>
+              <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
+            </>
+          ) : (
+            // pending
+            <>
+              <button className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm" onClick={() => onStartDraw(item)}>🎰 模擬抽獎（展示）</button>
+              {admin && (
+                <div className="flex-1 flex flex-wrap gap-2 justify-end">
+                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onEdit?.(item)}>編輯</button>
+                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onCopyAd?.(item)}>一鍵複製抽獎貼文</button>
+                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onConvertBySim?.(item)}>以模擬結果轉歷史</button>
+                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onConvertByChecked?.(item)}>以勾選名單轉歷史</button>
+                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onConvertByInput?.(item)}>直接輸入名單轉歷史</button>
+                  <button className="rounded-lg bg-rose-500 text-white px-3 py-2 text-sm" onClick={()=>onAdmin?.onDelete?.(item)}>刪除</button>
+                </div>
+              )}
+              <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
-// ── 直接覆蓋原本的 usePickList，全域同步＋即時更新版本 ──
+
+
+/* === 詳情視窗底部：數量步進 + 加入清單（規格由上方小卡決定；一致的 id/事件） === */
+function SheetPickControls({ item, mode='cash' }) {
+  const React = window.React || globalThis.React;
+  const pick = usePickList(mode==='pts' ? 'kjs_pointshop_picklist' : 'kjs_store_picklist');
+
+  // 🔔 事件觸發 re-render（保險用；實務上已由父層控制顯示）
+  const [variantSignal, setVariantSignal] = React.useState(0); void variantSignal;
+
+  // key 與「原始 baseId」（去掉 ::variant）
+  const id      = String(item?.id ?? item?.name ?? 'item');
+  const baseKey = String(item?.__baseId || id).split('::')[0];
+
+  // 價格/點數/庫存（父層已依規格覆寫）
+  const unitPrice = (mode==='cash')
+    ? (['price','cash','priceNTD','priceTWD'].map(k=>item?.[k]).find(v => v!=='' && v!=null))
+    : null;
+  const unitPts = (mode==='pts')
+    ? (['points','pts','need','needPoints','cost','costPts','pricePts']
+        .map(k=>+item?.[k]).find(n=>Number.isFinite(n)) ?? null)
+    : null;
+  const remain = (item?.stock ?? item?.qty ?? item?.quantity ?? item?.remaining ?? null);
+
+  // 是否已選齊（父層若有 _variant 直接視為選齊）
+  const vMode = item?._variant?.mode || item?.variants?.mode || 'none';
+  const pickedEvent = window.__VARIANT_PICKED__?.[baseKey] || null;
+  const sel1 = item?._variant?.sel1 ?? pickedEvent?.sel1 ?? '';
+  const sel2 = item?._variant?.sel2 ?? pickedEvent?.sel2 ?? '';
+  const selectionReady =
+    (vMode==='none') || !!item?._variant || (vMode==='single' && !!sel1) || (vMode==='double' && !!sel1 && !!sel2);
+
+  // 清單 key：直接用 item.id（已含 ::variant）
+  const qty = pick.map[id]?.qty || 0;
+
+  // 寫入清單 payload（包含規格資訊，供清單顯示）
+  const variantPayload = item?._variant
+    ? { _variant: item._variant }
+    : (vMode==='none' ? undefined : { _variant: { mode: vMode, sel1, sel2: vMode==='double' ? sel2 : undefined } });
+
+  const setQ = (n)=> {
+    const base = (mode==='cash')
+      ? { name: item?.name || item?.title || '（未命名）', price: unitPrice, pts: null }
+      : { name: item?.name || item?.title || '（未命名）', price: null, pts: unitPts };
+    pick.setQty(id, { ...base, ...(variantPayload||{}) }, n);
+  };
+
+  // 事件同步（保險：若父層未重新建立 controlsItem，也能即時啟用）
+  React.useEffect(() => {
+    const onPick = (e) => {
+      const d = e?.detail || {};
+      const key = baseKey;
+      if (String(d.id) !== key) return;
+      setVariantSignal(s => s + 1);
+    };
+    window.addEventListener('kjs:variant:picked', onPick);
+    return () => window.removeEventListener('kjs:variant:picked', onPick);
+  }, [baseKey]);
+
+  const variantLabel = item?._variant
+    ? (() => {
+        const a = item._variant;
+        if (a.mode==='single') return `${(a.attrs?.[0]?.name || '規格')}：${a.sel1}`;
+        if (a.mode==='double') return `${(a.attrs?.[0]?.name || '規格1')}：${a.sel1} ／ ${(a.attrs?.[1]?.name || '規格2')}：${a.sel2}`;
+        return '';
+      })()
+    : (vMode==='none' ? '' : (vMode==='single' ? `規格：${sel1||'—'}` : `規格1：${sel1||'—'} ／ 規格2：${sel2||'—'}`));
+
+  return (
+    <div className="sticky bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-900/90 backdrop-blur border-t border-slate-200 dark:border-slate-700 rounded-b-2xl px-3 py-2">
+      {vMode!=='none' && !selectionReady && (
+        <div className="mb-2 text-xs px-3 py-2 rounded-lg bg-amber-50 text-amber-800 border border-amber-200">
+          請先在上方「選擇規格」區塊完成規格選擇
+        </div>
+      )}
+
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
+          <button className="rounded-lg border px-3 py-2 min-w-[44px]" disabled={!selectionReady} onClick={()=>setQ(Math.max(0,(qty||0)-1))}>－</button>
+          <input className="w-16 text-center rounded-lg border px-2 py-2" inputMode="numeric" value={qty||0} disabled={!selectionReady} onChange={e=>setQ(Math.max(0, Number(e.target.value)||0))}/>
+          <button className="rounded-lg border px-3 py-2 min-w-[44px]" disabled={!selectionReady} onClick={()=>setQ((qty||0)+1)}>＋</button>
+        </div>
+
+        <button
+          className={`ml-auto rounded-lg px-4 py-2 shadow-soft ${selectionReady ? 'bg-brand text-white' : 'bg-slate-300 text-white cursor-not-allowed'}`}
+          disabled={!selectionReady}
+          onClick={()=>{ if (!selectionReady) return; if ((qty||0) < 1) setQ(1); alert('✅ 已加入清單，可在底部「完成挑選／複製清單」複製傳給管理員'); }}
+        >
+          加入清單
+        </button>
+      </div>
+
+      <div className="mt-1 text-xs text-slate-600 dark:text-slate-400 space-y-0.5">
+        {variantLabel && <div>規格：{variantLabel}</div>}
+        {mode==='cash' && (unitPrice!=null) && <div>單價：NT$ {unitPrice}</div>}
+        {mode==='pts'  && (unitPts!=null)   && <div>每件需：{unitPts} 點</div>}
+        {remain!=null && <div>剩餘：{remain}</div>}
+      </div>
+    </div>
+  );
+}
+
+/* ── 直接覆蓋原本的 usePickList，全域同步＋即時更新（支援複合 key 與 _variant） ── */
 function usePickList(lsKey = 'kjs_picklist') {
+  const React = window.React || globalThis.React;
+
   const read = () => {
     try { return JSON.parse(localStorage.getItem(lsKey) || "{}"); }
     catch { return {}; }
@@ -413,15 +864,21 @@ function usePickList(lsKey = 'kjs_picklist') {
     try { window.dispatchEvent(new CustomEvent('kjs:picklist:update', { detail: { key: lsKey } })); } catch {}
   };
 
-  // 設定數量（0 或空值 = 刪除）
+  /**
+   * 設定數量（0 或空值 = 刪除）
+   * key：可為複合 key（例：<itemId>|<sel1>|<sel2>）
+   * payload：{ name, price?, pts?, _variant? }
+   */
   const setQty = (key, payload, qty) => {
+    const k = String(key || '');
+    if (!k) return;
     setMap(prev => {
       const next = { ...prev };
       if (!qty || qty <= 0) {
-        delete next[key];
+        delete next[k];
       } else {
-        next[key] = {
-          ...(prev[key] || {}),
+        next[k] = {
+          ...(prev[k] || {}),
           ...payload,
           qty: Math.min(999, Math.max(1, Math.floor(qty)))
         };
@@ -460,15 +917,27 @@ function usePickList(lsKey = 'kjs_picklist') {
   return { map, setQty, clear, totalQty };
 }
 
-// 生成文字清單（現金或點數）
+/* 生成文字清單（現金或點數；若帶規格會顯示） */
 function buildListText(map, mode='cash') {
   const rows = [];
   let sumCash = 0, sumPts = 0;
-  for (const k of Object.keys(map)) {
-    const { name, qty, price, pts } = map[k] || {};
+
+  const labelOfVariant = (x) => {
+    const v = x?._variant;
+    if (!v) return '';
+    const parts = [];
+    if (v.sel1!=null && v.attrs?.[0]?.name) parts.push(`${v.attrs[0].name}: ${v.sel1||'-'}`);
+    if (v.sel2!=null && v.attrs?.[1]?.name) parts.push(`${v.attrs[1].name}: ${v.sel2||'-'}`);
+    return parts.length ? `（${parts.join('｜')}）` : '';
+  };
+
+  for (const k of Object.keys(map||{})) {
+    const x = map[k] || {};
+    const spec = labelOfVariant(x);
+    const { name, qty, price, pts } = x;
     const line = mode==='pts'
-      ? `- ${name} x${qty}（${pts ?? '?'} 點）`
-      : `- ${name} x${qty}（NT$ ${price ?? '?'}）`;
+      ? `- ${name}${spec ? ' ' + spec : ''} x${qty}（${pts ?? '?'} 點）`
+      : `- ${name}${spec ? ' ' + spec : ''} x${qty}（NT$ ${price ?? '?'}）`;
     rows.push(line);
     if (mode==='pts' && Number.isFinite(+pts)) sumPts += (+pts)*(qty||0);
     if (mode==='cash' && Number.isFinite(+price)) sumCash += (+price)*(qty||0);
@@ -624,7 +1093,7 @@ function FloatingPickbar({ count = 0, onOpen = () => {} }) {
     : node;
 }
 
-// 清單確認對話框（無輸入欄，全部勾選確認）
+// 清單確認對話框（無輸入欄，全部勾選確認）— 規格版
 function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
   const React = window.React || globalThis.React;
   if (!open) return null;
@@ -654,15 +1123,39 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
     onSetQty?.(k, map?.[k] || {}, nx);
   };
 
+  // ---------- 規格輔助：從 x._variant / x.variant 推導顯示 ----------
+  const getVariantInfo = (x) => {
+    const v = x?._variant || x?.variant || null;
+    if (!v) return { suffix: '', named: '' };
+    const names = Array.isArray(v?.attrs) ? v.attrs.map(a => a?.name || '') : [];
+    const v1 = v?.sel1 ?? v?.v1 ?? v?.first ?? v?.attr1 ?? null;
+    const v2 = v?.sel2 ?? v?.v2 ?? v?.second ?? v?.attr2 ?? null;
+    const parts = [v1, v2].filter(Boolean);
+    const suffix = parts.length ? parts.join('／') : '';
+    const named = parts.length
+      ? parts.map((val, i) => `${names[i] || `規格${i+1}`}:${val}`).join(' ・ ')
+      : '';
+    return { suffix, named };
+  };
+
+  const withVariantSuffix = (name, x) => {
+    const { suffix } = getVariantInfo(x);
+    if (!suffix) return name || '';
+    const s = String(name || '');
+    const marker = `（${suffix}）`;
+    return s.includes(marker) ? s : `${s}${marker}`;
+  };
+
   const buildListText = (m) => {
     const rows = [];
     let sumCash = 0, sumPts = 0;
     for (const k of Object.keys(m)) {
       const { name, qty, price, pts } = m[k] || {};
       if (!qty) continue;
+      const label = withVariantSuffix(name, m[k]);
       const line = mode === 'pts'
-        ? `- ${name} x${qty}（${pts ?? '?'} 點）`
-        : `- ${name} x${qty}（NT$ ${price ?? '?'}）`;
+        ? `- ${label} x${qty}（${pts ?? '?'} 點）`
+        : `- ${label} x${qty}（NT$ ${price ?? '?'}）`;
       rows.push(line);
       if (mode === 'pts' && Number.isFinite(+pts)) sumPts += (+pts) * (qty || 0);
       if (mode === 'cash' && Number.isFinite(+price)) sumCash += (+price) * (qty || 0);
@@ -694,12 +1187,15 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
               <div className="text-sm text-slate-500">尚未挑選任何商品</div>
             ) : keys.map((k) => {
               const x = map[k] || {};
+              const label = withVariantSuffix(x.name, x);
+              const vNamed = getVariantInfo(x).named;
               return (
                 <div key={k} className="flex items-center justify-between gap-3 rounded-lg border px-3 py-2">
                   <label className="flex items-center gap-2 min-w-0 flex-1">
                     <input type="checkbox" checked={!!checked[k]} onChange={() => toggle(k)} />
                     <div className="min-w-0">
-                      <div className="truncate text-sm">{x.name}</div>
+                      <div className="truncate text-sm" title={label}>{label}</div>
+                      {vNamed && <div className="text-xs text-slate-500 truncate">{vNamed}</div>}
                       <div className="text-xs text-slate-500">
                         {mode === 'pts'
                           ? `需要 ${x.pts ?? '?'} 點 × ${x.qty}`
@@ -1155,11 +1651,13 @@ function ImageStrip({ images = [], alt = '' }) {
 }
 
 /*********************************
- * 🛒 商店編輯器（Admin 專用）
+ * 🛒 商店編輯器（Admin 專用）— 規格版
  * - 多圖：一行一張 URL
  * - 匯出 CSV：含 images 陣列（以 | 串接）
  *********************************/
 function StoreEditor({ data, setData, onClose }) {
+  const React = window.React || globalThis.React;
+
   const items = Array.isArray(data?.store?.items) ? data.store.items : [];
   const [drafts, setDrafts] = React.useState(() => items.map(cloneStoreItem));
   const [filter, setFilter] = React.useState('');
@@ -1173,6 +1671,9 @@ function StoreEditor({ data, setData, onClose }) {
   // ★ 動態蒐集全部標籤（提供給群組編輯器）
   const allTags = React.useMemo(() => normalizeAllTagsFromItems(drafts), [drafts]);
 
+  // ★ 新增：規格編輯 Modal 控制
+  const [variantEditId, setVariantEditId] = React.useState(null);
+
   function cloneStoreItem(it = {}) {
     return {
       id: it.id || nid(),
@@ -1184,8 +1685,9 @@ function StoreEditor({ data, setData, onClose }) {
       imagesText: Array.isArray(it.images) ? it.images.join('\n') : '',
       buyUrl: it.buyUrl || '',
       tags: Array.isArray(it.tags) ? it.tags.filter(Boolean) : [],
-      // ★ 新增：現貨/預售欄位（預設現貨）
       availability: it.availability || '現貨',
+      // 規格沿用
+      variants: it.variants ? { ...it.variants } : undefined,
     };
   }
 
@@ -1199,6 +1701,10 @@ function StoreEditor({ data, setData, onClose }) {
 
   const up = (id, field, value) => {
     setDrafts(d => d.map(x => (x.id === id ? { ...x, [field]: value } : x)));
+  };
+
+  const upMany = (id, patch) => {
+    setDrafts(d => d.map(x => (x.id === id ? { ...x, ...patch } : x)));
   };
 
   const remove = id => {
@@ -1215,24 +1721,294 @@ function StoreEditor({ data, setData, onClose }) {
         stock: '',
         desc: '',
         images: [],
+        imagesText: '',
         buyUrl: '',
         tags: [],
-        // ★ 新增：預設現貨
         availability: '現貨',
+        variants: undefined,
       },
       ...d,
     ]);
   };
 
   const saveAll = () => {
-    // ★ 一起寫回 tagGroups（經清洗，避免重複/不存在的標籤）
     const cleanedGroups = ensureUniqueTagsInGroups(groupsState, allTags);
+    // 把 imagesText 解析回 images（保險）
+    const nextItems = drafts.map(it => ({
+      ...it,
+      images: Array.isArray(it.images) ? it.images : String(it.imagesText || '').split(/\r?\n/).map(s=>s.trim()).filter(Boolean),
+    }));
     setData(s => ({
       ...s,
-      store: { ...(s.store || {}), items: drafts, tagGroups: cleanedGroups },
+      store: { ...(s.store || {}), items: nextItems, tagGroups: cleanedGroups },
     }));
     alert('社群商店已儲存');
     onClose?.();
+  };
+
+  // ====== 規格 Modal（現金） ======
+  const VariantEditorModal = ({ it }) => {
+    if (!it) return null;
+
+    const readV = (v) => {
+      const mode = v?.mode && v.mode !== "none" ? (v.mode === "double" ? "double" : "single") : "none";
+      const a1 = Array.isArray(v?.attrs) && v.attrs[0] ? v.attrs[0] : { name: "", values: [] };
+      const a2 = Array.isArray(v?.attrs) && v.attrs[1] ? v.attrs[1] : { name: "", values: [] };
+      return {
+        vMode: mode,
+        v1Name: a1.name || "",
+        v1ValuesText: Array.isArray(a1.values) ? a1.values.join(",") : "",
+        v2Name: a2.name || "",
+        v2ValuesText: Array.isArray(a2.values) ? a2.values.join(",") : "",
+        vSkus: Array.isArray(v?.items) ? v.items.map(s => ({
+          key: String(s?.key || ""),
+          stock: s?.stock ?? "",
+          price: s?.price ?? "",
+          image: s?.image || "",
+          enabled: (s?.enabled !== false)
+        })) : []
+      };
+    };
+    const writeV = (d) => {
+      const mode = d.vMode || "none";
+      if (mode === "none") return { mode: "none", attrs: [], items: [] };
+      const v1Values = (d.v1ValuesText || "").split(",").map(s => s.trim()).filter(Boolean);
+      const v2Values = (d.v2ValuesText || "").split(",").map(s => s.trim()).filter(Boolean);
+      const attrs = mode === "single"
+        ? [{ name: d.v1Name || "規格", values: v1Values }]
+        : [{ name: d.v1Name || "規格1", values: v1Values }, { name: d.v2Name || "規格2", values: v2Values }];
+      return {
+        mode,
+        attrs,
+        items: Array.isArray(d.vSkus) ? d.vSkus.map(s => ({
+          key: String(s.key || ""),
+          stock: s.stock ?? "",
+          price: s.price ?? "",
+          image: s.image || "",
+          enabled: (s.enabled !== false)
+        })) : []
+      };
+    };
+    const buildCombos = (mode, v1, v2) => {
+      const res = [];
+      if (mode === "single") v1.forEach(a => res.push(a));
+      if (mode === "double") v1.forEach(a => v2.forEach(b => res.push(`${a}|${b}`)));
+      return res;
+    };
+
+    const [vd, setVd] = React.useState(() => readV(it.variants));
+
+    const syncSkus = () => {
+      const mode = vd.vMode || "none";
+      if (mode === "none") return;
+      const v1 = (vd.v1ValuesText || "").split(",").map(s => s.trim()).filter(Boolean);
+      const v2 = (vd.v2ValuesText || "").split(",").map(s => s.trim()).filter(Boolean);
+      const combos = buildCombos(mode, v1, v2);
+      const old = new Map((vd.vSkus || []).map(s => [String(s.key||""), s]));
+      const next = combos.map(key => old.get(key) ? { ...old.get(key) } : { key, stock:"", price:"", image:"", enabled:true });
+      setVd(d => ({ ...d, vSkus: next }));
+    };
+    const batchApply = ({ stock, price, emptyOnly=false }) => {
+      setVd(d => ({
+        ...d,
+        vSkus: (d.vSkus || []).map(s => {
+          const n = { ...s };
+          if (stock !== undefined) {
+            if (!emptyOnly || String(n.stock||"")==="") n.stock = stock;
+          }
+          if (price !== undefined) {
+            if (!emptyOnly || String(n.price||"")==="") n.price = price;
+          }
+          return n;
+        })
+      }));
+    };
+    const close = () => setVariantEditId(null);
+    const save = () => {
+      const v = writeV(vd);
+      upMany(it.id, { variants: (v.mode==="none" ? undefined : v) });
+      close();
+    };
+
+    const SingleList = () => {
+      const v1 = (vd.v1ValuesText || "").split(",").map(s => s.trim()).filter(Boolean);
+      const rows = (vd.vSkus || []).filter(s => v1.includes(s.key));
+      return (
+        <div className="space-y-2">
+          <div className="text-xs text-slate-500">選項列表（逐列填「庫存 / 價格」）</div>
+          <div className="rounded border">
+            <div className="grid grid-cols-[auto_1fr_1fr_auto_auto] items-center gap-2 px-3 py-2 border-b text-xs text-slate-500">
+              <div>#</div><div>選項</div><div>庫存</div><div>價格</div><div>啟用</div>
+            </div>
+            {rows.map((s, idx) => (
+              <div key={s.key} className="grid grid-cols-[auto_1fr_1fr_auto_auto] items-center gap-2 px-3 py-2 border-b">
+                <div className="text-xs text-slate-500">{idx+1}</div>
+                <div className="text-sm">{s.key}</div>
+                <input className="rounded border px-2 py-1 text-sm" value={s.stock} onChange={e=>{
+                  const val = e.target.value; setVd(d=>({...d, vSkus: d.vSkus.map(x=>x.key===s.key?{...x, stock:val}:x)}));
+                }} />
+                <input className="rounded border px-2 py-1 text-sm" value={s.price} onChange={e=>{
+                  const val = e.target.value; setVd(d=>({...d, vSkus: d.vSkus.map(x=>x.key===s.key?{...x, price:val}:x)}));
+                }} />
+                <label className="text-sm inline-flex items-center gap-1">
+                  <input type="checkbox" checked={!!s.enabled} onChange={e=>{
+                    const v = e.target.checked; setVd(d=>({...d, vSkus: d.vSkus.map(x=>x.key===s.key?{...x, enabled:v}:x)}));
+                  }}/> 啟用
+                </label>
+              </div>
+            ))}
+            {rows.length===0 && <div className="px-3 py-6 text-center text-sm text-slate-500">尚未產生選項，請先填完「規格名稱 / 選項」並點「生成/同步」</div>}
+          </div>
+        </div>
+      );
+    };
+    const DoubleMatrix = () => {
+      const v1 = (vd.v1ValuesText || "").split(",").map(s => s.trim()).filter(Boolean);
+      const v2 = (vd.v2ValuesText || "").split(",").map(s => s.trim()).filter(Boolean);
+      const find = (a,b) => (vd.vSkus || []).find(s => s.key === `${a}|${b}`);
+      return (
+        <div className="space-y-2">
+          <div className="text-xs text-slate-500">交叉表（每格可填「庫存 / 價格」或停用）</div>
+          <div className="overflow-auto rounded border">
+            <table className="min-w-[560px] w-full border-collapse">
+              <thead>
+                <tr className="bg-slate-50 text-xs text-slate-600">
+                  <th className="border px-2 py-1 text-left">{vd.v1Name || "規格1"}＼{vd.v2Name || "規格2"}</th>
+                  {v2.map(v => <th key={v} className="border px-2 py-1 text-left">{v}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {v1.map(a => (
+                  <tr key={a}>
+                    <th className="border px-2 py-1 text-left bg-slate-50 text-xs">{a}</th>
+                    {v2.map(b => {
+                      const s = find(a,b);
+                      if (!s) return <td key={b} className="border px-2 py-1 text-center text-xs text-slate-400">—</td>;
+                      return (
+                        <td key={b} className="border px-2 py-1">
+                          <div className="flex items-center gap-2">
+                            <input className="w-20 rounded border px-2 py-1 text-sm" placeholder="庫存" value={s.stock} onChange={e=>{
+                              const val = e.target.value; setVd(d=>({...d, vSkus: d.vSkus.map(x=>x.key===s.key?{...x, stock:val}:x)}));
+                            }} />
+                            <input className="w-24 rounded border px-2 py-1 text-sm" placeholder="價格" value={s.price} onChange={e=>{
+                              const val = e.target.value; setVd(d=>({...d, vSkus: d.vSkus.map(x=>x.key===s.key?{...x, price:val}:x)}));
+                            }} />
+                            <label className="text-xs inline-flex items-center gap-1">
+                              <input type="checkbox" checked={!!s.enabled} onChange={e=>{
+                                const v = e.target.checked; setVd(d=>({...d, vSkus: d.vSkus.map(x=>x.key===s.key?{...x, enabled:v}:x)}));
+                              }}/> 啟用
+                            </label>
+                          </div>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+                {v1.length===0 && (
+                  <tr><td className="border px-3 py-6 text-center text-sm text-slate-500" colSpan={Math.max(1, v2.length+1)}>尚未產生矩陣，請先填完兩個規格並點「生成/同步」</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      );
+    };
+
+    return (
+      <div className="fixed inset-0 z-[1000]" role="dialog" aria-modal="true">
+        <div className="absolute inset-0 bg-black/50" onClick={() => setVariantEditId(null)} />
+        <div className="absolute inset-0 flex items-center justify-center p-4">
+          <div className="w-[min(820px,96vw)] max-h-[90vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl">
+            <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+              <div className="font-semibold">編輯規格 — {it.name || '（未命名）'}</div>
+              <div className="flex items-center gap-2">
+                <button className="rounded border px-3 py-1.5 text-sm" onClick={()=>setVariantEditId(null)}>關閉</button>
+                <button className="rounded bg-brand text-white px-3 py-1.5 text-sm" onClick={save}>儲存</button>
+              </div>
+            </div>
+            <div className="p-3 space-y-3 overflow-y-auto max-h-[calc(90vh-60px)]">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
+                <label className="text-sm">
+                  模式
+                  <select className="mt-1 w-full rounded-lg border px-3 py-2" value={vd.vMode}
+                    onChange={e => setVd(d => ({ ...d, vMode: e.target.value }))}>
+                    <option value="none">無規格</option>
+                    <option value="single">單規格</option>
+                    <option value="double">雙規格</option>
+                  </select>
+                </label>
+
+                {vd.vMode !== "none" && (
+                  <label className="text-sm">
+                    {vd.vMode === "double" ? "規格1 名稱" : "規格名稱"}
+                    <input className="mt-1 w-full rounded-lg border px-3 py-2"
+                      value={vd.v1Name} onChange={e => setVd(d => ({ ...d, v1Name: e.target.value }))} placeholder="例：顏色" />
+                  </label>
+                )}
+                {vd.vMode !== "none" && (
+                  <label className="text-sm">
+                    {vd.vMode === "double" ? "規格1 選項（逗號分隔）" : "選項（逗號分隔）"}
+                    <input className="mt-1 w-full rounded-lg border px-3 py-2"
+                      value={vd.v1ValuesText} onChange={e => setVd(d => ({ ...d, v1ValuesText: e.target.value }))} placeholder="紅, 白, 藍" />
+                  </label>
+                )}
+              </div>
+
+              {vd.vMode === "double" && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
+                  <label className="text-sm">
+                    規格2 名稱
+                    <input className="mt-1 w-full rounded-lg border px-3 py-2"
+                      value={vd.v2Name} onChange={e => setVd(d => ({ ...d, v2Name: e.target.value }))} placeholder="例：尺寸" />
+                  </label>
+                  <label className="text-sm">
+                    規格2 選項（逗號分隔）
+                    <input className="mt-1 w-full rounded-lg border px-3 py-2"
+                      value={vd.v2ValuesText} onChange={e => setVd(d => ({ ...d, v2ValuesText: e.target.value }))} placeholder="S, M, L" />
+                  </label>
+                </div>
+              )}
+
+              {vd.vMode !== "none" && (
+                <div className="flex flex-wrap items-center gap-2">
+                  <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={syncSkus}>生成/同步 選項</button>
+                  <span className="text-xs text-slate-500">將依選項自動產生 SKU 列表/矩陣，保留既有資料</span>
+                </div>
+              )}
+
+              {vd.vMode === "single" && <SingleList />}
+
+              {vd.vMode === "double" && (
+                <>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-sm">批次套用：</span>
+                    <input className="w-24 rounded border px-2 py-1 text-sm" placeholder="庫存"
+                      onChange={(e) => (e.target.__v = e.target.value)} />
+                    <input className="w-28 rounded border px-2 py-1 text-sm" placeholder="價格"
+                      onChange={(e) => (e.target.__p = e.target.value)} />
+                    <button className="rounded-lg border px-3 py-1.5 text-sm"
+                      onClick={(e) => {
+                        const wrap = e.currentTarget.parentElement;
+                        const stock = wrap.querySelector('input[placeholder="庫存"]')?.__v;
+                        const price = wrap.querySelector('input[placeholder="價格"]')?.__p;
+                        batchApply({ stock, price, emptyOnly: false });
+                      }}>套用全部</button>
+                    <button className="rounded-lg border px-3 py-1.5 text-sm"
+                      onClick={(e) => {
+                        const wrap = e.currentTarget.parentElement;
+                        const stock = wrap.querySelector('input[placeholder="庫存"]')?.__v;
+                        const price = wrap.querySelector('input[placeholder="價格"]')?.__p;
+                        batchApply({ stock, price, emptyOnly: true });
+                      }}>只填空格</button>
+                  </div>
+                  <DoubleMatrix />
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -1259,7 +2035,7 @@ function StoreEditor({ data, setData, onClose }) {
 
           {/* body */}
           <div className="p-3 overflow-y-auto max-h-[calc(86vh-56px)] space-y-3">
-            {/* ★★★ 新增：標籤群組編輯（排序／整合） */}
+            {/* 標籤群組編輯（排序／整合） */}
             <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
               <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
                 <div className="font-medium">標籤群組（排序／整合）</div>
@@ -1277,103 +2053,116 @@ function StoreEditor({ data, setData, onClose }) {
             {filtered.length === 0 ? (
               <div className="text-slate-500 text-sm">沒有符合條件的草稿。</div>
             ) : (
-              filtered.map(it => (
-                <div key={it.id} className="rounded-xl border border-slate-200 dark:border-slate-700 p-3 space-y-2">
-                  {/* ★ 原本 md:grid-cols-6 -> 調成 7，容納 availability */}
-                  <div className="grid grid-cols-1 md:grid-cols-7 gap-2">
-                    <input
-                      className="md:col-span-3 rounded-lg border px-3 py-2"
-                      placeholder="商品名稱"
-                      value={it.name}
-                      onChange={e => up(it.id, 'name', e.target.value)}
-                    />
-                    <input
-                      className="md:col-span-1 rounded-lg border px-3 py-2"
-                      placeholder="售價（字串或數字）"
-                      value={it.price}
-                      onChange={e => up(it.id, 'price', e.target.value)}
-                    />
-                    <input
-                      className="md:col-span-1 rounded-lg border px-3 py-2"
-                      placeholder="庫存（可省略）"
-                      value={it.stock}
-                      onChange={e => up(it.id, 'stock', e.target.value)}
-                    />
-                    {/* ★ 新增：現貨/預售選擇 */}
-                    <select
-                      className="md:col-span-1 rounded-lg border px-3 py-2"
-                      value={it.availability}
-                      onChange={e => up(it.id, 'availability', e.target.value)}
-                    >
-                      <option value="現貨">現貨</option>
-                      <option value="預售">預售</option>
-                    </select>
-                    <input
-                      className="md:col-span-1 rounded-lg border px-3 py-2"
-                      placeholder="購買連結（buyUrl）"
-                      value={it.buyUrl}
-                      onChange={e => up(it.id, 'buyUrl', e.target.value)}
-                    />
-                  </div>
-
-                  <textarea
-                    className="w-full rounded-lg border px-3 py-2"
-                    placeholder="商品介紹（desc）"
-                    rows={3}
-                    value={it.desc}
-                    onChange={e => up(it.id, 'desc', e.target.value)}
-                  />
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    <textarea
-                      className="rounded-lg border px-3 py-2"
-                      placeholder="多張圖片：每行一個 URL（images）"
-                      rows={5}
-                      value={it.imagesText ?? (it.images || []).join('\n')}
-                      onChange={e => {
-                        const raw = e.target.value; // 原樣保留（含空白行）
-                        up(it.id, 'imagesText', raw); // 1) 儲存原始文字
-                        const imgs = raw.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
-                        up(it.id, 'images', imgs); // 2) 同步解析給預覽/儲存用
-                      }}
-                    />
-                    <input
-                      className="rounded-lg border px-3 py-2"
-                      placeholder="標籤（逗號分隔），例如：玩具,家電"
-                      value={(it.tags || []).join(',')}
-                      onChange={e =>
-                        up(
-                          it.id,
-                          'tags',
-                          e.target.value.split(',').map(s => s.trim()).filter(Boolean)
-                        )
-                      }
-                    />
-                  </div>
-
-                  {/* 預覽縮圖列 */}
-                  {Array.isArray(it.images) && it.images.length > 0 && (
-                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 pt-1">
-                      {it.images.map((src, idx) => (
-                        <div key={src + idx} className="aspect-square rounded-lg overflow-hidden border">
-                          <img src={src} alt="" className="w-full h-full object-cover" />
-                        </div>
-                      ))}
+              filtered.map(it => {
+                const hasV = !!(it?.variants && it.variants.mode && it.variants.mode!=="none");
+                return (
+                  <div key={it.id} className="rounded-xl border border-slate-200 dark:border-slate-700 p-3 space-y-2">
+                    {/* 原本 md:grid-cols-6 -> 調成 7，容納 availability */}
+                    <div className="grid grid-cols-1 md:grid-cols-7 gap-2">
+                      <input
+                        className="md:col-span-3 rounded-lg border px-3 py-2"
+                        placeholder="商品名稱"
+                        value={it.name}
+                        onChange={e => up(it.id, 'name', e.target.value)}
+                      />
+                      <input
+                        className="md:col-span-1 rounded-lg border px-3 py-2"
+                        placeholder="售價（字串或數字）"
+                        value={it.price}
+                        onChange={e => up(it.id, 'price', e.target.value)}
+                      />
+                      <input
+                        className="md:col-span-1 rounded-lg border px-3 py-2"
+                        placeholder="庫存（可省略）"
+                        value={it.stock}
+                        onChange={e => up(it.id, 'stock', e.target.value)}
+                      />
+                      <select
+                        className="md:col-span-1 rounded-lg border px-3 py-2"
+                        value={it.availability}
+                        onChange={e => up(it.id, 'availability', e.target.value)}
+                      >
+                        <option value="現貨">現貨</option>
+                        <option value="預售">預售</option>
+                      </select>
+                      <input
+                        className="md:col-span-1 rounded-lg border px-3 py-2"
+                        placeholder="購買連結（buyUrl）"
+                        value={it.buyUrl}
+                        onChange={e => up(it.id, 'buyUrl', e.target.value)}
+                      />
                     </div>
-                  )}
 
-                  <div className="flex justify-between items-center pt-1">
-                    <span className="text-xs text-slate-500">ID：{it.id}</span>
-                    <button onClick={() => remove(it.id)} className="rounded-lg border px-2 py-1 text-sm">
-                      刪除
-                    </button>
+                    <textarea
+                      className="w-full rounded-lg border px-3 py-2"
+                      placeholder="商品介紹（desc）"
+                      rows={3}
+                      value={it.desc}
+                      onChange={e => up(it.id, 'desc', e.target.value)}
+                    />
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      <textarea
+                        className="rounded-lg border px-3 py-2"
+                        placeholder="多張圖片：每行一個 URL（images）"
+                        rows={5}
+                        value={it.imagesText ?? (it.images || []).join('\n')}
+                        onChange={e => {
+                          const raw = e.target.value; // 原樣保留（含空白行）
+                          up(it.id, 'imagesText', raw); // 1) 儲存原始文字
+                          const imgs = raw.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+                          up(it.id, 'images', imgs); // 2) 同步解析給預覽/儲存用
+                        }}
+                      />
+                      <input
+                        className="rounded-lg border px-3 py-2"
+                        placeholder="標籤（逗號分隔），例如：玩具,家電"
+                        value={(it.tags || []).join(',')}
+                        onChange={e =>
+                          up(
+                            it.id,
+                            'tags',
+                            e.target.value.split(',').map(s => s.trim()).filter(Boolean)
+                          )
+                        }
+                      />
+                    </div>
+
+                    {/* 預覽縮圖列 */}
+                    {Array.isArray(it.images) && it.images.length > 0 && (
+                      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 pt-1">
+                        {it.images.map((src, idx) => (
+                          <div key={src + idx} className="aspect-square rounded-lg overflow-hidden border">
+                            <img src={src} alt="" className="w-full h-full object-cover" />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="flex justify-between items-center pt-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-slate-500">ID：{it.id}</span>
+                        {hasV && <span className="text-xs text-emerald-600">已設定規格（{it.variants.mode==='double'?'雙':'單'}）</span>}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button onClick={() => setVariantEditId(it.id)} className="rounded-lg border px-2 py-1 text-sm">
+                          編輯規格
+                        </button>
+                        <button onClick={() => remove(it.id)} className="rounded-lg border px-2 py-1 text-sm">
+                          刪除
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         </div>
       </div>
+
+      {/* 規格 Modal */}
+      {variantEditId && <VariantEditorModal it={drafts.find(d=>d.id===variantEditId)} />}
     </div>
   );
 }
@@ -2252,256 +3041,7 @@ function Pending({ data, admin, setData, query = "" }) {
 }
 
 
-/* ============================
- * 跳出式資訊面板（社群商店 / 點數商城 / 等待開獎）
- * ============================ */
-function ProductSheet({
-  open = false,
-  item = null,
-  context = "store",
-  onClose = () => {},
-  onOpenViewer = () => {},
-  contactUrl = "",
-  onCopyTemplate = () => {},
-  onStartDraw = () => {},        // for pending：開展示動畫
-  admin = false,                 // for pending：是否顯示管理區塊
-  onAdmin = {}                   // for pending：{ onEdit, onDelete, onConvertBySim, onConvertByChecked, onConvertByInput, onCopyAd, checkedMap, toggleCheck }
-}) {
-  const React = window.React || globalThis.React;
 
-  // ---- hooks 皆無條件呼叫（避免 #310）----
-  const overlayRef = React.useRef(null);
-  const [index, setIndex] = React.useState(0);
-
-  // 鎖捲動 / ESC / 返回鍵（使用全域鎖）
-  React.useEffect(() => {
-    if (!open) return;
-    BodyScrollLock.lock();
-    const onKey = (e) => { if (e.key === "Escape") onClose(); };
-    const onPop = () => onClose();
-    document.addEventListener("keydown", onKey);
-    window.addEventListener("popstate", onPop);
-    try { history.pushState({ sheet: true }, "", location.href); } catch {}
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      window.removeEventListener("popstate", onPop);
-      BodyScrollLock.unlock();
-    };
-  }, [open, onClose]);
-
-  // item 變動重置圖片索引
-  React.useEffect(() => { setIndex(0); }, [item]);
-
-  // ---- 非 hook 的衍生資料 ----
-  const title = (item?.title || item?.name || "（未命名）");
-  const images = (() => {
-    const arr = Array.isArray(item?.images) ? item.images : (item?.image ? [String(item.image)] : []);
-    return (arr || []).filter(Boolean);
-  })();
-  const tags = (() => {
-    if (Array.isArray(item?.tags)) return item.tags;
-    if (typeof item?.tags === "string") return item.tags.split(",").map(s => s.trim()).filter(Boolean);
-    return [];
-  })();
-  const buyUrl = item?.buyUrl || item?.url || "";
-  const price  = (item?.price ?? "") !== "" ? item?.price : null;
-  const needPoints = (() => {
-    const p = item?.points ?? item?.point ?? item?.needPoints ?? item?.need_point;
-    const n = (typeof p === "string" ? +p : p);
-    return Number.isFinite(n) ? n : null;
-  })();
-  const remain = item?.stock ?? item?.qty ?? item?.quantity ?? item?.remaining ?? null;
-
-  // pending：候選名單（不寫回資料）
-  const candidates = (() => {
-    const list = Array.isArray(item?.participants) ? item.participants
-      : Array.isArray(item?.members) ? item.members
-      : Array.isArray(item?.list) ? item.list
-      : Array.isArray(item?.candidates) ? item.candidates
-      : (typeof item?.listText === "string" ? item.listText.split(/\r?\n/).map(s=>s.trim()).filter(Boolean) : []);
-    return (list || []).map(String).filter(Boolean);
-  })();
-  const candidateCount = candidates.length;
-
-  // 觸控左右滑換圖
-  let sx = 0, sy = 0, dragging = false;
-  const onTouchStart = (e) => { if (e.touches.length === 1) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; dragging = true; } };
-  const onTouchEnd = (e) => {
-    if (!dragging) return; dragging = false;
-    const ex = e.changedTouches?.[0]?.clientX ?? sx; const ey = e.changedTouches?.[0]?.clientY ?? sy;
-    const dx = ex - sx, dy = ey - sy;
-    if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) && images.length > 1) {
-      setIndex(i => (dx > 0 ? (i - 1 + images.length) : (i + 1)) % images.length);
-    }
-  };
-
-  // ---- shop 用聯絡管理員連結（多來源 fallback）----
-  const effectiveContactUrl =
-    contactUrl ||
-    item?.contactUrl ||            // 單一商品可覆寫
-    window.__CONTACT_URL__ || "";  // 全域設定（可在初始化時設定）
-
-  if (!open) return null;
-  const handleOverlayClick = (e) => { if (e.target === overlayRef.current) onClose(); };
-
-  return (
-    <div
-      ref={overlayRef}
-      className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center"
-      role="dialog"
-      aria-modal="true"
-      onMouseDown={handleOverlayClick}
-    >
-      <div className="w-[min(96vw,44rem)] max-h-[92vh] rounded-2xl bg-white dark:bg-slate-900 shadow-elevate overflow-hidden flex flex-col">
-        {/* header */}
-        <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
-          <div className="min-w-0">
-            <div className="font-semibold truncate">{title}</div>
-            {context==="store"   && price!=null      && <div className="text-sm text-slate-500">售價：{price}</div>}
-            {context==="shop"    && needPoints!=null && <div className="text-sm text-slate-500">需求點數：{needPoints}</div>}
-            {context==="pending" && <div className="text-sm text-slate-500">候選人數：{candidateCount}</div>}
-          </div>
-          <button className="rounded-full border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
-        </div>
-
-        {/* 【保留】pending 專用：參與人員名單 */}
-        {context === "pending" && (
-          <div className="px-4 pt-3 pb-4">
-            <div className="flex items-center justify-between mb-2">
-              <div className="text-sm font-medium">參與人員名單</div>
-              <div className="text-xs text-slate-500">共 {candidateCount} 位</div>
-            </div>
-
-            <div className="max-h-48 sm:max-h-64 overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-900/40 p-3 text-sm leading-6">
-              {candidates && candidates.length ? (
-                candidates.map((name, i) => (
-                  <div key={i} className="truncate">
-                    {i + 1}. {name}
-                  </div>
-                ))
-              ) : (
-                <div className="text-slate-500">目前沒有參與人員</div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* body：主圖 + 縮圖 + 文字 */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="relative bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
-            <div className="aspect-square w-full grid place-content-center" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-              {images.length ? (
-                <img
-                  src={images[index]}
-                  alt=""
-                  className="w-full h-full object-contain select-none"
-                  onClick={() => { if (context === "pending") onOpenViewer?.(images, index, title, buyUrl); }}
-                />
-              ) : (
-                <div className="text-slate-400 text-sm">無圖片</div>
-              )}
-            </div>
-            {images.length>1 && (
-              <div className="absolute bottom-2 inset-x-0 flex items-center justify-center gap-1">
-                {images.map((_, i) => (
-                  <span key={i} className={"h-1.5 w-1.5 rounded-full " + (i===index ? "bg-slate-900 dark:bg-white" : "bg-slate-300 dark:bg-slate-600")}/>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {images.length>1 && (
-            <div className="px-4 py-3 -mx-1 flex overflow-x-auto gap-2 snap-x snap-mandatory">
-              {images.map((src, i) => (
-                <button
-                  key={src+i}
-                  className={"shrink-0 w-20 aspect-square rounded-lg overflow-hidden border snap-start " + (i===index ? "border-brand ring-2 ring-brand/40" : "border-slate-200 dark:border-slate-700")}
-                  onClick={()=>setIndex(i)}
-                  title={`圖片 ${i+1}`}
-                >
-                  <img src={src} alt="" className="w-full h-full object-contain" loading="lazy" />
-                </button>
-              ))}
-            </div>
-          )}
-
-          <div className="px-4 pb-4 space-y-2 text-sm">
-            {context==="store" && remain!=null && <div className="text-slate-600">剩餘數量：{remain}</div>}
-            {Array.isArray(tags) && tags.length>0 && <div className="text-slate-500">標籤：{tags.join(" / ")}</div>}
-            {item?.desc  && <div className="whitespace-pre-wrap">{item.desc}</div>}
-            {item?.intro && <div className="whitespace-pre-wrap">{item.intro}</div>}
-            {item?.extra && <div className="whitespace-pre-wrap">{String(item.extra)}</div>}
-
-            {/* pending：管理員用名單勾選（保留功能，不寫回） */}
-            {context==="pending" && admin && Array.isArray(candidates) && candidates.length>0 && (
-              <div className="mt-2">
-                <div className="mb-1 text-sm font-medium">已報名（{candidates.length} 人）</div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
-                  {candidates.map((n,i)=>(
-                    <label key={i} className="rounded border px-2 py-1 flex items-center gap-2">
-                      <input type="checkbox" checked={!!onAdmin?.checkedMap?.[n]} onChange={()=>onAdmin?.toggleCheck?.(n)} />
-                      <span>{n}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* === 詳情底部的「數量步進器 + 加入清單」 === */}
-        {item && (context === "store" || context === "shop") ? (
-          context === "shop"
-            ? <SheetPickControls item={item} mode="pts" />
-            : <SheetPickControls item={item} mode="cash" />
-        ) : null}
-
-        {/* footer（原樣保留） */}
-        <div className="p-3 border-t border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/90 backdrop-blur flex items-center gap-2">
-          {context==="store" ? (
-            <>
-              {buyUrl
-                ? <a href={buyUrl} target="_blank" rel="noopener noreferrer" className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm text-center">前往購買</a>
-                : <button className="flex-1 rounded-lg border px-4 py-2 text-sm text-slate-400" disabled>尚未提供購買連結</button>}
-              <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
-            </>
-          ) : context==="shop" ? (
-            <>
-              <button className="flex-1 rounded-lg border px-4 py-2 text-sm" onClick={() => onCopyTemplate(item)}>📋 複製模板</button>
-              <button
-                className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm"
-                onClick={() => {
-                  const url = effectiveContactUrl;
-                  if (url) window.open(url, "_blank", "noopener,noreferrer");
-                  else alert("尚未設定『聯絡管理員』連結：可在商品 data 加上 contactUrl，或在全域設置 window.__CONTACT_URL__。");
-                }}
-              >
-                💬 聯絡管理員
-              </button>
-              <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
-            </>
-          ) : (
-            // pending
-            <>
-              <button className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm" onClick={() => onStartDraw(item)}>🎰 模擬抽獎（展示）</button>
-              {admin && (
-                <div className="flex-1 flex flex-wrap gap-2 justify-end">
-                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onEdit?.(item)}>編輯</button>
-                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onCopyAd?.(item)}>一鍵複製抽獎貼文</button>
-                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onConvertBySim?.(item)}>以模擬結果轉歷史</button>
-                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onConvertByChecked?.(item)}>以勾選名單轉歷史</button>
-                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onConvertByInput?.(item)}>直接輸入名單轉歷史</button>
-                  <button className="rounded-lg bg-rose-500 text-white px-3 py-2 text-sm" onClick={()=>onAdmin?.onDelete?.(item)}>刪除</button>
-                </div>
-              )}
-              <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 
 /* ============================
@@ -4988,7 +5528,7 @@ function Shop({ data, admin, setData, query = "" }) {
 
 
 // ============================
-// ShopEditor：專為點數商城的管理編輯器（不影響 StoreEditor）— 修正版
+// ShopEditor：專為點數商城的管理編輯器（不影響 StoreEditor）— 規格版
 // ============================
 function ShopEditor({ items = [], groups = [], onSave, onClose }) {
   const React = window.React || globalThis.React;
@@ -5016,7 +5556,8 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
     desc: "",
     tags: "",
     image: "",
-    images: []
+    images: [],
+    // 可不帶 variants；儲存時若 mode=none 會刪除
   });
 
   const move = (i, dir) => {
@@ -5037,19 +5578,22 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
   const parseImages = (text) => {
     const lines = String(text || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
     return Array.from(new Set(lines));
-    };
+  };
 
   const ItemRow = ({ x, i }) => {
     const need  = x?.points ?? x?.point ?? x?.needPoints ?? x?.need_point ?? "";
     const cover = Array.isArray(x?.images) && x.images.length ? x.images[0] : (x?.image || "");
     const stock = x?.stock ?? x?.qty ?? x?.quantity ?? x?.remaining ?? "";
+    const hasVariants = !!(x?.variants && x.variants.mode && x.variants.mode !== "none");
     return (
       <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 px-3 py-2 border-b">
         <div className="w-12 h-12 rounded bg-slate-100 overflow-hidden grid place-content-center">
           {cover ? <img src={cover} alt="" className="w-full h-full object-cover" /> : <span className="text-xs text-slate-400">無</span>}
         </div>
         <div className="min-w-0">
-          <div className="font-medium truncate">{x?.name || "（未命名）"}</div>
+          <div className="font-medium truncate">
+            {x?.name || "（未命名）"}{hasVariants ? <span className="ml-2 text-xs text-emerald-600">已設定規格</span> : null}
+          </div>
           <div className="text-xs text-slate-500 truncate">
             需要點數：{need || "—"}　剩餘數量：{(stock === "" || stock == null) ? "—" : stock}　標籤：{Array.isArray(x?.tags) ? x.tags.join(",") : (x?.tags || "—")}
           </div>
@@ -5086,8 +5630,60 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
     URL.revokeObjectURL(a.href);
   };
 
+  // 共同：把 variants 轉成草稿欄位，或反之
+  const readVariantsToDraft = (v) => {
+    const mode = v?.mode && v.mode !== "none" ? (v.mode === "double" ? "double" : "single") : "none";
+    const a1 = Array.isArray(v?.attrs) && v.attrs[0] ? v.attrs[0] : { name: "", values: [] };
+    const a2 = Array.isArray(v?.attrs) && v.attrs[1] ? v.attrs[1] : { name: "", values: [] };
+    return {
+      vMode: mode,
+      v1Name: a1.name || "",
+      v1ValuesText: Array.isArray(a1.values) ? a1.values.join(",") : "",
+      v2Name: a2.name || "",
+      v2ValuesText: Array.isArray(a2.values) ? a2.values.join(",") : "",
+      vSkus: Array.isArray(v?.items) ? v.items.map(s => ({
+        key: String(s?.key || ""),
+        stock: s?.stock ?? "",
+        points: s?.points ?? s?.needPoints ?? "",
+        image: s?.image || "",
+        enabled: (s?.enabled !== false)
+      })) : []
+    };
+  };
+  const writeDraftToVariants = (d) => {
+    const mode = d.vMode || "none";
+    if (mode === "none") return { mode: "none", attrs: [], items: [] };
+    const v1Values = (d.v1ValuesText || "").split(",").map(s => s.trim()).filter(Boolean);
+    const v2Values = (d.v2ValuesText || "").split(",").map(s => s.trim()).filter(Boolean);
+    const attrs = mode === "single"
+      ? [{ name: d.v1Name || "規格", values: v1Values }]
+      : [{ name: d.v1Name || "規格1", values: v1Values }, { name: d.v2Name || "規格2", values: v2Values }];
+    return {
+      mode,
+      attrs,
+      items: Array.isArray(d.vSkus) ? d.vSkus.map(s => ({
+        key: String(s.key || ""),
+        stock: s.stock ?? "",
+        points: s.points ?? "",
+        image: s.image || "",
+        enabled: (s.enabled !== false)
+      })) : []
+    };
+  };
+  const buildCombos = (mode, v1Values, v2Values) => {
+    const combos = [];
+    if (mode === "single") {
+      v1Values.forEach(a => combos.push(a));
+    } else if (mode === "double") {
+      v1Values.forEach(a => v2Values.forEach(b => combos.push(`${a}|${b}`)));
+    }
+    return combos;
+  };
+
   const EditorModal = ({ x, i }) => {
     const initialStock = (x?.stock ?? x?.qty ?? x?.quantity ?? x?.remaining ?? "");
+    const vdraft0 = readVariantsToDraft(x?.variants);
+
     const [draft, setDraft] = React.useState(() => ({
       enabled: x?.enabled !== false,
       name: x?.name || "",
@@ -5097,7 +5693,38 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
       tags: Array.isArray(x?.tags) ? x.tags.join(",") : (x?.tags || ""),
       image: x?.image || "",
       imagesText: (Array.isArray(x?.images) ? x.images : (x?.image ? [x.image] : [])).join("\n"),
+      // 規格草稿
+      ...vdraft0
     }));
+
+    const syncSkusToValues = () => {
+      const mode = draft.vMode || "none";
+      if (mode === "none") return;
+      const v1Values = (draft.v1ValuesText || "").split(",").map(s => s.trim()).filter(Boolean);
+      const v2Values = (draft.v2ValuesText || "").split(",").map(s => s.trim()).filter(Boolean);
+      const combos = buildCombos(mode, v1Values, v2Values);
+      const old = new Map((draft.vSkus || []).map(s => [String(s.key || ""), s]));
+      const next = combos.map(key => {
+        const s = old.get(String(key));
+        return s ? { ...s } : { key, stock: "", points: "", image: "", enabled: true };
+      });
+      setDraft(d => ({ ...d, vSkus: next }));
+    };
+    const batchApply = ({ stock, points, emptyOnly = false }) => {
+      setDraft(d => ({
+        ...d,
+        vSkus: (d.vSkus || []).map(s => {
+          const n = { ...s };
+          if (stock !== undefined) {
+            if (!emptyOnly || String(n.stock || "") === "") n.stock = stock;
+          }
+          if (points !== undefined) {
+            if (!emptyOnly || String(n.points || "") === "") n.points = points;
+          }
+          return n;
+        })
+      }));
+    };
 
     const save = () => {
       const next = { ...x };
@@ -5122,13 +5749,103 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
       next.images = imgs;
       next.image = imgs[0] || "";
 
+      // 規格寫回
+      const v = writeDraftToVariants(draft);
+      if (v.mode === "none") delete next.variants;
+      else next.variants = v;
+
       setList(arr => arr.map((it, k) => (k === i ? next : it)));
       setEditingIndex(-1);
     };
 
+    // UI：規格單/雙面板（點數）
+    const SingleSpecList = () => {
+      const v1Values = (draft.v1ValuesText || "").split(",").map(s => s.trim()).filter(Boolean);
+      const rows = (draft.vSkus || []).filter(s => v1Values.includes(s.key));
+      return (
+        <div className="space-y-2">
+          <div className="text-xs text-slate-500">選項列表（逐列填「庫存 / 點數」）</div>
+          <div className="rounded border">
+            <div className="grid grid-cols-[auto_1fr_1fr_auto_auto] items-center gap-2 px-3 py-2 border-b text-xs text-slate-500">
+              <div>#</div><div>選項</div><div>庫存</div><div>點數</div><div>啟用</div>
+            </div>
+            {rows.map((s, idx) => (
+              <div key={s.key} className="grid grid-cols-[auto_1fr_1fr_auto_auto] items-center gap-2 px-3 py-2 border-b">
+                <div className="text-xs text-slate-500">{idx+1}</div>
+                <div className="text-sm">{s.key}</div>
+                <input className="rounded border px-2 py-1 text-sm" value={s.stock} onChange={e=>{
+                  const val = e.target.value; setDraft(d=>({...d, vSkus: d.vSkus.map(x=>x.key===s.key?{...x, stock:val}:x)}));
+                }} />
+                <input className="rounded border px-2 py-1 text-sm" value={s.points} onChange={e=>{
+                  const val = e.target.value; setDraft(d=>({...d, vSkus: d.vSkus.map(x=>x.key===s.key?{...x, points:val}:x)}));
+                }} />
+                <label className="text-sm inline-flex items-center gap-1">
+                  <input type="checkbox" checked={!!s.enabled} onChange={e=>{
+                    const v = e.target.checked; setDraft(d=>({...d, vSkus: d.vSkus.map(x=>x.key===s.key?{...x, enabled:v}:x)}));
+                  }}/> 啟用
+                </label>
+              </div>
+            ))}
+            {rows.length===0 && <div className="px-3 py-6 text-center text-sm text-slate-500">尚未產生選項，請先填完「規格名稱 / 選項」並點「生成/同步」</div>}
+          </div>
+        </div>
+      );
+    };
+    const DoubleSpecMatrix = () => {
+      const v1Values = (draft.v1ValuesText || "").split(",").map(s => s.trim()).filter(Boolean);
+      const v2Values = (draft.v2ValuesText || "").split(",").map(s => s.trim()).filter(Boolean);
+      const find = (a,b) => (draft.vSkus || []).find(s => s.key === `${a}|${b}`);
+      return (
+        <div className="space-y-2">
+          <div className="text-xs text-slate-500">交叉表（每格可填「庫存 / 點數」或停用）</div>
+          <div className="overflow-auto rounded border">
+            <table className="min-w-[560px] w-full border-collapse">
+              <thead>
+                <tr className="bg-slate-50 text-xs text-slate-600">
+                  <th className="border px-2 py-1 text-left">{draft.v1Name || "規格1"}＼{draft.v2Name || "規格2"}</th>
+                  {v2Values.map(v => <th key={v} className="border px-2 py-1 text-left">{v}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {v1Values.map(a => (
+                  <tr key={a}>
+                    <th className="border px-2 py-1 text-left bg-slate-50 text-xs">{a}</th>
+                    {v2Values.map(b => {
+                      const s = find(a,b);
+                      if (!s) return <td key={b} className="border px-2 py-1 text-center text-xs text-slate-400">—</td>;
+                      return (
+                        <td key={b} className="border px-2 py-1">
+                          <div className="flex items-center gap-2">
+                            <input className="w-20 rounded border px-2 py-1 text-sm" placeholder="庫存" value={s.stock} onChange={e=>{
+                              const val = e.target.value; setDraft(d=>({...d, vSkus: d.vSkus.map(x=>x.key===s.key?{...x, stock:val}:x)}));
+                            }} />
+                            <input className="w-24 rounded border px-2 py-1 text-sm" placeholder="點數" value={s.points} onChange={e=>{
+                              const val = e.target.value; setDraft(d=>({...d, vSkus: d.vSkus.map(x=>x.key===s.key?{...x, points:val}:x)}));
+                            }} />
+                            <label className="text-xs inline-flex items-center gap-1">
+                              <input type="checkbox" checked={!!s.enabled} onChange={e=>{
+                                const v = e.target.checked; setDraft(d=>({...d, vSkus: d.vSkus.map(x=>x.key===s.key?{...x, enabled:v}:x)}));
+                              }}/> 啟用
+                            </label>
+                          </div>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+                {v1Values.length===0 && (
+                  <tr><td className="border px-3 py-6 text-center text-sm text-slate-500" colSpan={Math.max(1, v2Values.length+1)}>尚未產生矩陣，請先填完兩個規格並點「生成/同步」</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      );
+    };
+
     return (
       <div className="fixed inset-0 z-[1100] bg-black/60 grid place-content-center p-3" role="dialog" aria-modal="true">
-        <div className="w-[min(720px,96vw)] max-h-[90vh] overflow-auto rounded-2xl bg-white dark:bg-slate-900 shadow-xl">
+        <div className="w-[min(820px,96vw)] max-h-[90vh] overflow-auto rounded-2xl bg-white dark:bg-slate-900 shadow-xl">
           <div className="flex items-center justify-between px-4 py-3 border-b">
             <div className="font-semibold">編輯項目</div>
             <div className="flex items-center gap-2">
@@ -5137,7 +5854,8 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
             </div>
           </div>
 
-          <div className="p-4 space-y-3">
+          <div className="p-4 space-y-4">
+            {/* 基本欄位 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <label className="text-sm">
                 名稱
@@ -5186,6 +5904,90 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
                 <input type="checkbox" checked={!!draft.enabled} onChange={e => setDraft(d => ({ ...d, enabled: e.target.checked }))} />
                 上架（enabled）
               </label>
+            </div>
+
+            {/* === 規格區塊（點數） === */}
+            <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+              <div className="px-3 py-2 border-b text-sm font-medium">規格設定（可選）</div>
+              <div className="p-3 space-y-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
+                  <label className="text-sm">
+                    模式
+                    <select className="mt-1 w-full rounded-lg border px-3 py-2" value={draft.vMode}
+                      onChange={e => setDraft(d => ({ ...d, vMode: e.target.value }))}>
+                      <option value="none">無規格</option>
+                      <option value="single">單規格</option>
+                      <option value="double">雙規格</option>
+                    </select>
+                  </label>
+
+                  {draft.vMode !== "none" && (
+                    <label className="text-sm">
+                      {draft.vMode === "double" ? "規格1 名稱" : "規格名稱"}
+                      <input className="mt-1 w-full rounded-lg border px-3 py-2"
+                        value={draft.v1Name} onChange={e => setDraft(d => ({ ...d, v1Name: e.target.value }))} placeholder="例：顏色" />
+                    </label>
+                  )}
+                  {draft.vMode !== "none" && (
+                    <label className="text-sm">
+                      {draft.vMode === "double" ? "規格1 選項（逗號分隔）" : "選項（逗號分隔）"}
+                      <input className="mt-1 w-full rounded-lg border px-3 py-2"
+                        value={draft.v1ValuesText} onChange={e => setDraft(d => ({ ...d, v1ValuesText: e.target.value }))} placeholder="紅, 白, 藍" />
+                    </label>
+                  )}
+                </div>
+
+                {draft.vMode === "double" && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
+                    <label className="text-sm">
+                      規格2 名稱
+                      <input className="mt-1 w-full rounded-lg border px-3 py-2"
+                        value={draft.v2Name} onChange={e => setDraft(d => ({ ...d, v2Name: e.target.value }))} placeholder="例：尺寸" />
+                    </label>
+                    <label className="text-sm">
+                      規格2 選項（逗號分隔）
+                      <input className="mt-1 w-full rounded-lg border px-3 py-2"
+                        value={draft.v2ValuesText} onChange={e => setDraft(d => ({ ...d, v2ValuesText: e.target.value }))} placeholder="S, M, L" />
+                    </label>
+                  </div>
+                )}
+
+                {draft.vMode !== "none" && (
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={syncSkusToValues}>生成/同步 選項</button>
+                    <span className="text-xs text-slate-500">將依選項自動產生 SKU 列表/矩陣，保留既有資料</span>
+                  </div>
+                )}
+
+                {draft.vMode === "single" && <SingleSpecList />}
+
+                {draft.vMode === "double" && (
+                  <>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-sm">批次套用：</span>
+                      <input className="w-24 rounded border px-2 py-1 text-sm" placeholder="庫存"
+                        onChange={(e) => (e.target.__v = e.target.value)} />
+                      <input className="w-28 rounded border px-2 py-1 text-sm" placeholder="點數"
+                        onChange={(e) => (e.target.__p = e.target.value)} />
+                      <button className="rounded-lg border px-3 py-1.5 text-sm"
+                        onClick={(e) => {
+                          const wrap = e.currentTarget.parentElement;
+                          const stock = wrap.querySelector('input[placeholder="庫存"]')?.__v;
+                          const points = wrap.querySelector('input[placeholder="點數"]')?.__p;
+                          batchApply({ stock, points, emptyOnly: false });
+                        }}>套用全部</button>
+                      <button className="rounded-lg border px-3 py-1.5 text-sm"
+                        onClick={(e) => {
+                          const wrap = e.currentTarget.parentElement;
+                          const stock = wrap.querySelector('input[placeholder="庫存"]')?.__v;
+                          const points = wrap.querySelector('input[placeholder="點數"]')?.__p;
+                          batchApply({ stock, points, emptyOnly: true });
+                        }}>只填空格</button>
+                    </div>
+                    <DoubleSpecMatrix />
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
