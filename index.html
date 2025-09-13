@@ -849,7 +849,7 @@ function Store({ data, admin, setData, query = "" }) {
 
   const [sheet, setSheet] = React.useState({ open: false, item: null });
 
-  // ★ 新增：標籤小卡彈窗開關 & 群組資料來源
+  // ★ 標籤小卡
   const [tagSheetOpen, setTagSheetOpen] = React.useState(false);
   const tagGroups = Array.isArray(data?.store?.tagGroups) ? data.store.tagGroups : [];
 
@@ -874,7 +874,6 @@ function Store({ data, admin, setData, query = "" }) {
 
   const allTags = React.useMemo(() => collectUniqueTags(allItems, "_tags"), [allItems]);
 
-  // ★ 新增：依群組排序的扁平 tags（保留；目前未在 Toolbar 顯示 chips）
   const tagsOrdered = React.useMemo(
     () => orderTagsByGroups(allTags, tagGroups),
     [allTags, tagGroups]
@@ -920,10 +919,7 @@ function Store({ data, admin, setData, query = "" }) {
   const Toolbar = () => (
     <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
       <div className="flex flex-wrap items-center gap-2">
-        {/* ⛔ 移除：整排 TagChips 不再顯示，只保留彈窗按鈕 */}
         {/* <TagChips tags={tagsOrdered} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} /> */}
-
-        {/* ★ 篩選標籤按鈕（顯示已選數量） */}
         <button className="rounded-lg border px-3 py-2" onClick={() => setTagSheetOpen(true)}>
           {tag.picked.length > 0 ? `篩選標籤（${tag.picked.length}）` : "篩選標籤"}
         </button>
@@ -949,7 +945,6 @@ function Store({ data, admin, setData, query = "" }) {
           每頁
           <select className="rounded border px-2 py-2" value={pageSize} onChange={(e) => setPageSize(+e.target.value || 20)}>
             <option value="20">20</option>
-            {/* ★ 修正：40 的 option 多餘字元 */}
             <option value="40">40</option>
             <option value="80">80</option>
           </select>
@@ -984,17 +979,18 @@ function Store({ data, admin, setData, query = "" }) {
           const name = x?.name || "（未命名）";
           const price = (x?.price ?? "") !== "" ? +x.price : null;
           const cover = Array.isArray(x._images) && x._images.length > 0 ? x._images[0] : "";
-          const buyUrl = x?.buyUrl || x?.url || "";
           const remain = getRemain(x);
 
           return (
             <div key={id} className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden select-none flex flex-col">
+              {/* 圖片／點擊開詳情 */}
               <button className="block w-full text-left p-3 pb-2" onClick={() => setSheet({ open: true, item: x })} title={name}>
                 <div className="aspect-[4/3] w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
                   {cover ? <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" /> : <div className="text-slate-400 text-sm">無圖片</div>}
                 </div>
               </button>
 
+              {/* 名稱 / 標籤 */}
               <button className="px-3 text-left" onClick={() => setSheet({ open: true, item: x })} title={name}>
                 <div className="text-[13px] font-medium truncate">{name}</div>
                 {Array.isArray(x._tags) && x._tags.length > 0 && (
@@ -1002,6 +998,7 @@ function Store({ data, admin, setData, query = "" }) {
                 )}
               </button>
 
+              {/* 價格 / 庫存 */}
               <div className="px-3 pt-2 pb-1">
                 <div className="text-sm font-semibold tabular-nums">
                   {price != null ? `NT$ ${price}` : "　"}
@@ -1009,31 +1006,16 @@ function Store({ data, admin, setData, query = "" }) {
                 </div>
               </div>
 
-              {(x?.availability === "預售" || x?.availability === "現貨") && (
-                <div className="px-3 pb-1">
-                  <span
-                    className={
-                      "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs " +
-                      (x.availability === "預售"
-                        ? "bg-amber-100 text-amber-800 dark:bg-amber-300/15 dark:text-amber-300"
-                        : "bg-emerald-100 text-emerald-700 dark:bg-emerald-300/15 dark:text-emerald-300")
-                    }
-                  >
-                    {x.availability === "預售" ? "⏳ 預售" : "✅ 現貨"}
-                  </span>
-                </div>
-              )}
-
-              <div className="px-3 pb-3 mt-1">
-                {buyUrl ? (
-                  <a href={buyUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-full rounded-lg bg-brand text-white px-4 py-2 text-sm shadow-soft" title="前往購買">
-                    前往購買
-                  </a>
-                ) : (
-                  <button disabled className="inline-flex items-center justify-center w-full rounded-lg border px-4 py-2 text-sm text-slate-400" title="尚未提供購買連結">
-                    尚未提供購買連結
-                  </button>
-                )}
+              {/* 底部動作列：統一右下「展開詳情」 */}
+              <div className="px-3 pb-3 mt-auto flex justify-end">
+                <button
+                  type="button"
+                  className="rounded-lg border px-3 py-1.5 text-sm"
+                  onClick={() => setSheet({ open: true, item: x })}
+                  aria-label={`展開 ${name} 詳情`}
+                >
+                  展開詳情
+                </button>
               </div>
             </div>
           );
@@ -1046,13 +1028,14 @@ function Store({ data, admin, setData, query = "" }) {
         <StoreEditor data={data} setData={setData} onClose={() => setShowEditor(false)} />
       )}
 
+      {/* 詳情彈窗（保留） */}
       <ProductSheet open={sheet.open} item={sheet.item} context="store" onClose={() => setSheet({ open: false, item: null })} />
 
-      {/* 浮動清單條＋確認清單 */}
+      {/* 浮動清單條＋確認清單（保留） */}
       <FloatingPickbar count={pick.totalQty} onOpen={() => setShowConfirm(true)} />
       <ConfirmListDialog open={showConfirm} onClose={() => setShowConfirm(false)} map={pick.map} mode="cash" onSetQty={(k, p, n) => pick.setQty(k, p, n)} />
 
-      {/* ★ 新增：標籤小卡彈窗掛載點 */}
+      {/* 標籤小卡（保留） */}
       <TagFilterSheet
         open={tagSheetOpen}
         onClose={() => setTagSheetOpen(false)}
@@ -1062,7 +1045,7 @@ function Store({ data, admin, setData, query = "" }) {
         onApply={(list) => tag.setPicked(list)}
       />
 
-      {/* ★ 避免被底部挑選條遮住的空白區 */}
+      {/* 避免被底部挑選條遮住的空白區 */}
       {pick.totalQty > 0 && <div className="pickbar-spacer" />}
     </section>
   );
@@ -4915,7 +4898,7 @@ function Shop({ data, admin, setData, query = "" }) {
       <Toolbar />
       <Paginator />
 
-      {/* 小卡：圖片 → 名稱(單行省略) → 點數（不疊在圖片上）→ 主按鈕；不顯示數量步進器 */}
+      {/* 小卡：圖片 → 名稱 → 點數 → 右下「展開詳情」 */}
       <div className={`grid ${gridCols} gap-3`} aria-label="點數商城清單">
         {pageItems.map((x, i) => {
           const id      = x.id || i;
@@ -4923,7 +4906,6 @@ function Shop({ data, admin, setData, query = "" }) {
           const needPts = x._needPts ?? getNeedPts(x);
           const cover   = Array.isArray(x._images) && x._images.length>0 ? x._images[0] : '';
           const remain  = getRemain(x);
-          const afford  = (needPts!=null && myPts>=needPts);
 
           return (
             <div key={id} className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden select-none flex flex-col">
@@ -4934,29 +4916,29 @@ function Shop({ data, admin, setData, query = "" }) {
                 </div>
               </button>
 
-              {/* 名稱（單行省略） */}
-              <button className="px-3 text左" onClick={()=>setSheet({ open:true, item:x })} title={name}>
+              {/* 名稱 */}
+              <button className="px-3 text-left" onClick={()=>setSheet({ open:true, item:x })} title={name}>
                 <div className="text-[13px] font-medium truncate">{name}</div>
                 {Array.isArray(x._tags)&&x._tags.length>0 && <div className="text-xs text-slate-500 truncate">{x._tags.join(' / ')}</div>}
               </button>
 
-              {/* 點數（不放步進器） */}
+              {/* 點數資訊 */}
               <div className="px-3 pt-2 pb-1">
                 <div className="text-sm font-semibold tabular-nums">
                   {needPts!=null ? `${needPts} 點` : '　'}
                   {remain!=null && <span className="ml-2 text-xs font-normal text-slate-500">剩餘：{remain}</span>}
-                  {needPts!=null && !afford && <span className="ml-2 text-xs text-rose-500">點數不足</span>}
                 </div>
               </div>
 
-              {/* 主按鈕：我要兌換（不足則灰階） */}
-              <div className="px-3 pb-3 mt-1">
+              {/* 底部動作列：統一右下「展開詳情」 */}
+              <div className="px-3 pb-3 mt-auto flex justify-end">
                 <button
-                  disabled={needPts==null || !afford}
-                  className={`inline-flex items-center justify-center w-full rounded-lg px-4 py-2 text-sm shadow-soft
-                    ${needPts!=null && afford ? 'bg-brand text-white' : 'border text-slate-400'}`}
+                  type="button"
+                  className="rounded-lg border px-3 py-1.5 text-sm"
+                  onClick={()=>setSheet({ open:true, item:x })}
+                  aria-label={`展開 ${name} 詳情`}
                 >
-                  {needPts!=null && afford ? '我要兌換' : '無法兌換'}
+                  展開詳情
                 </button>
               </div>
             </div>
@@ -4967,32 +4949,28 @@ function Shop({ data, admin, setData, query = "" }) {
       <Paginator />
 
       {/* 管理面板（保留） */}
-     {admin && HasShopEditor && showEditor && (
-  <ShopEditor
-    items={Array.isArray(data?.shop?.items) ? data.shop.items : []}
-    groups={Array.isArray(data?.shop?.tagGroups) ? data.shop.tagGroups : []}
-    onSave={(nextItems, nextGroups) => {
-      // onSave 接 2 參數：商品、群組
-      const safeNext   = Array.isArray(nextItems)  ? nextItems  : [];
-      const safeGroups = Array.isArray(nextGroups) ? nextGroups : [];
-      setData(s => ({ ...s, shop: { ...(s.shop || {}), items: safeNext, tagGroups: safeGroups } }));
-      setShowEditor(false);
-    }}
-    onClose={() => setShowEditor(false)}
-  />
-)}
-
-
+      {admin && HasShopEditor && showEditor && (
+        <ShopEditor
+          items={Array.isArray(data?.shop?.items) ? data.shop.items : []}
+          groups={Array.isArray(data?.shop?.tagGroups) ? data.shop.tagGroups : []}
+          onSave={(nextItems, nextGroups) => {
+            const safeNext   = Array.isArray(nextItems)  ? nextItems  : [];
+            const safeGroups = Array.isArray(nextGroups) ? nextGroups : [];
+            setData(s => ({ ...s, shop: { ...(s.shop || {}), items: safeNext, tagGroups: safeGroups } }));
+            setShowEditor(false);
+          }}
+          onClose={() => setShowEditor(false)}
+        />
+      )}
 
       {/* 詳情彈窗（保留） */}
       <ProductSheet open={sheet.open} item={sheet.item} context="shop" onClose={()=>setSheet({ open:false, item:null })} />
 
       {/* 一鍵清單（保留） */}
       <FloatingPickbar count={pick.totalQty} onOpen={()=>setShowConfirm(true)} />
-      {/* ★ 修復重點：串上 onSetQty，讓清單可加減/刪除 */}
       <ConfirmListDialog open={showConfirm} onClose={()=>setShowConfirm(false)} map={pick.map} mode="pts" onSetQty={(k,p,n)=>pick.setQty(k,p,n)} />
 
-      {/* ★ 標籤小卡：吃 data.shop.tagGroups */}
+      {/* 標籤小卡（保留） */}
       <TagFilterSheet
         open={tagSheetOpen}
         onClose={()=>setTagSheetOpen(false)}
@@ -5002,7 +4980,7 @@ function Shop({ data, admin, setData, query = "" }) {
         onApply={(list)=>{ tag.setPicked(list); setTagSheetOpen(false); }}
       />
 
-      {/* ★ 避免被底部挑選條遮住的空白區 */}
+      {/* 避免被底部挑選條遮住的空白 */}
       {pick.totalQty > 0 && <div className="pickbar-spacer" />}
     </section>
   );
@@ -5010,24 +4988,31 @@ function Shop({ data, admin, setData, query = "" }) {
 
 
 // ============================
-// ShopEditor：專為點數商城的管理編輯器（不影響 StoreEditor）
+// ShopEditor：專為點數商城的管理編輯器（不影響 StoreEditor）— 修正版
 // ============================
 function ShopEditor({ items = [], groups = [], onSave, onClose }) {
   const React = window.React || globalThis.React;
-  const [list, setList] = React.useState(()=> (Array.isArray(items) ? items.map(x=>({ ...x })) : []));
+
+  const [list, setList] = React.useState(() =>
+    Array.isArray(items) ? items.map(x => ({ ...x })) : []
+  );
   const [editingIndex, setEditingIndex] = React.useState(-1);
 
-  // ★ 新增：群組狀態（從 props.groups 初始化）
-  const [groupsState, setGroupsState] = React.useState(()=> Array.isArray(groups) ? groups.map(g=>({ name: g?.name||'', tags: Array.isArray(g?.tags)? [...g.tags] : [] })) : []);
-  // ★ 由當前清單動態收集所有標籤（提供給群組編輯器）
-  const allTags = React.useMemo(()=> normalizeAllTagsFromItems(list), [list]);
+  // 群組狀態（從 props.groups 初始化）
+  const [groupsState, setGroupsState] = React.useState(() =>
+    Array.isArray(groups)
+      ? groups.map(g => ({ name: g?.name || "", tags: Array.isArray(g?.tags) ? [...g.tags] : [] }))
+      : []
+  );
+  // 由當前清單動態收集所有標籤（提供給群組編輯器）
+  const allTags = React.useMemo(() => normalizeAllTagsFromItems(list), [list]);
 
-  // 預設項目：新增就有 stock 欄位；不再使用 intro
+  // 預設項目
   const blankItem = () => ({
     enabled: true,
     name: "",
     points: "",
-    stock: "",         // 新增：剩餘數量
+    stock: "", // 剩餘數量
     desc: "",
     tags: "",
     image: "",
@@ -5035,25 +5020,27 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
   });
 
   const move = (i, dir) => {
-    setList(arr=>{
+    setList(arr => {
       const a = [...arr];
       const j = i + dir;
-      if (j<0 || j>=a.length) return a;
-      const tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+      if (j < 0 || j >= a.length) return a;
+      const tmp = a[i];
+      a[i] = a[j];
+      a[j] = tmp;
       return a;
     });
   };
-  const remove = (i) => setList(arr => arr.filter((_,k)=>k!==i));
-  const toggle = (i) => setList(arr => arr.map((x,k)=> k===i ? ({ ...x, enabled: !(x.enabled !== false) }) : x));
+  const remove = (i) => setList(arr => arr.filter((_, k) => k !== i));
+  const toggle = (i) => setList(arr => arr.map((x, k) => (k === i ? { ...x, enabled: !(x.enabled !== false) } : x)));
   const addNew = () => { setList(arr => [...arr, blankItem()]); setEditingIndex(list.length); };
 
   const parseImages = (text) => {
-    const lines = String(text||"").split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+    const lines = String(text || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
     return Array.from(new Set(lines));
-  };
+    };
 
-  const ItemRow = ({x, i}) => {
-    const need = x?.points ?? x?.point ?? x?.needPoints ?? x?.need_point ?? "";
+  const ItemRow = ({ x, i }) => {
+    const need  = x?.points ?? x?.point ?? x?.needPoints ?? x?.need_point ?? "";
     const cover = Array.isArray(x?.images) && x.images.length ? x.images[0] : (x?.image || "");
     const stock = x?.stock ?? x?.qty ?? x?.quantity ?? x?.remaining ?? "";
     return (
@@ -5064,34 +5051,34 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
         <div className="min-w-0">
           <div className="font-medium truncate">{x?.name || "（未命名）"}</div>
           <div className="text-xs text-slate-500 truncate">
-            需要點數：{need||"—"}　剩餘數量：{(stock===""||stock==null)?"—":stock}　標籤：{Array.isArray(x?.tags)? x.tags.join(",") : (x?.tags||"—")}
+            需要點數：{need || "—"}　剩餘數量：{(stock === "" || stock == null) ? "—" : stock}　標籤：{Array.isArray(x?.tags) ? x.tags.join(",") : (x?.tags || "—")}
           </div>
         </div>
         <div className="flex items-center gap-1">
-          <button className={`px-2 py-1 rounded text-xs border ${x?.enabled!==false ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : ''}`} onClick={()=>toggle(i)}>
-            {x?.enabled!==false ? '上架中' : '已停用'}
+          <button className={`px-2 py-1 rounded text-xs border ${x?.enabled !== false ? "bg-emerald-50 border-emerald-200 text-emerald-700" : ""}`} onClick={() => toggle(i)}>
+            {x?.enabled !== false ? "上架中" : "已停用"}
           </button>
-          <button className="px-2 py-1 rounded text-xs border" onClick={()=>move(i,-1)}>上移</button>
-          <button className="px-2 py-1 rounded text-xs border" onClick={()=>move(i, 1)}>下移</button>
-          <button className="px-2 py-1 rounded text-xs border" onClick={()=>setEditingIndex(i)}>編輯</button>
-          <button className="px-2 py-1 rounded text-xs border text-rose-600" onClick={()=>remove(i)}>刪除</button>
+          <button className="px-2 py-1 rounded text-xs border" onClick={() => move(i, -1)}>上移</button>
+          <button className="px-2 py-1 rounded text-xs border" onClick={() => move(i, 1)}>下移</button>
+          <button className="px-2 py-1 rounded text-xs border" onClick={() => setEditingIndex(i)}>編輯</button>
+          <button className="px-2 py-1 rounded text-xs border text-rose-600" onClick={() => remove(i)}>刪除</button>
         </div>
       </div>
     );
   };
 
-  // 匯出 CSV：移除 intro 欄位，新增 stock 欄位
-  const exportCSV = ()=>{
+  // 匯出 CSV
+  const exportCSV = () => {
     const headers = ["enabled","name","points","stock","desc","tags","image","images"];
-    const rows = list.map(x=>{
-      const tags = Array.isArray(x?.tags) ? x.tags.join(",") : (x?.tags||"");
+    const rows = list.map(x => {
+      const tags   = Array.isArray(x?.tags) ? x.tags.join(",") : (x?.tags || "");
       const images = Array.isArray(x?.images) ? x.images.join("|") : (x?.image ? String(x.image) : "");
       const needPts = (x?.points ?? x?.point ?? x?.needPoints ?? x?.need_point ?? "");
-      const stock = (x?.stock ?? x?.qty ?? x?.quantity ?? x?.remaining ?? "");
-      return [ (x?.enabled!==false), (x?.name||""), needPts, stock, (x?.desc||""), tags, (x?.image||""), images ];
+      const stock   = (x?.stock ?? x?.qty ?? x?.quantity ?? x?.remaining ?? "");
+      return [(x?.enabled !== false), (x?.name || ""), needPts, stock, (x?.desc || ""), tags, (x?.image || ""), images];
     });
-    const csv = [headers.join(","), ...rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(","))].join("\n");
-    const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+    const csv = [headers.join(","), ...rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(","))].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = "shop_items.csv";
@@ -5099,10 +5086,9 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
     URL.revokeObjectURL(a.href);
   };
 
-  const EditorModal = ({x, i}) => {
-    // 讀入時把任何舊欄位（qty/quantity/remaining）也帶成 stock 供編修
+  const EditorModal = ({ x, i }) => {
     const initialStock = (x?.stock ?? x?.qty ?? x?.quantity ?? x?.remaining ?? "");
-    const [draft, setDraft] = React.useState(()=>({
+    const [draft, setDraft] = React.useState(() => ({
       enabled: x?.enabled !== false,
       name: x?.name || "",
       points: (x?.points ?? x?.point ?? x?.needPoints ?? x?.need_point ?? ""),
@@ -5113,30 +5099,30 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
       imagesText: (Array.isArray(x?.images) ? x.images : (x?.image ? [x.image] : [])).join("\n"),
     }));
 
-    const save = ()=>{
+    const save = () => {
       const next = { ...x };
       next.enabled = !!draft.enabled;
-      next.name    = String(draft.name||"").trim();
+      next.name = String(draft.name || "").trim();
       const n = draft.points;
-      if (n==="" || n==null) { delete next.points; } else { next.points = n; }
+      if (n === "" || n == null) { delete next.points; } else { next.points = n; }
 
-      // 新增：stock
-      const s = String(draft.stock||"").trim();
-      if (s==="") { delete next.stock; }
+      // stock
+      const s = String(draft.stock || "").trim();
+      if (s === "") { delete next.stock; }
       else {
         const sn = +s;
         next.stock = Number.isFinite(sn) ? sn : s;
       }
 
-      next.desc  = draft.desc;
-      if ('intro' in next) delete next.intro;
+      next.desc = draft.desc;
+      if ("intro" in next) delete next.intro;
 
-      next.tags = draft.tags ? draft.tags.split(",").map(s=>s.trim()).filter(Boolean) : [];
+      next.tags = draft.tags ? draft.tags.split(",").map(s => s.trim()).filter(Boolean) : [];
       const imgs = parseImages(draft.imagesText);
       next.images = imgs;
-      next.image  = imgs[0] || "";
+      next.image = imgs[0] || "";
 
-      setList(arr => arr.map((it,k)=> k===i ? next : it));
+      setList(arr => arr.map((it, k) => (k === i ? next : it)));
       setEditingIndex(-1);
     };
 
@@ -5146,7 +5132,7 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
           <div className="flex items-center justify-between px-4 py-3 border-b">
             <div className="font-semibold">編輯項目</div>
             <div className="flex items-center gap-2">
-              <button className="rounded border px-3 py-1.5 text-sm" onClick={()=>setEditingIndex(-1)}>關閉</button>
+              <button className="rounded border px-3 py-1.5 text-sm" onClick={() => setEditingIndex(-1)}>關閉</button>
               <button className="rounded bg-brand text-white px-3 py-1.5 text-sm" onClick={save}>儲存</button>
             </div>
           </div>
@@ -5155,45 +5141,49 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <label className="text-sm">
                 名稱
-                <input className="mt-1 w-full rounded-lg border px-3 py-2" value={draft.name} onChange={e=>setDraft(d=>({...d,name:e.target.value}))}/>
+                <input className="mt-1 w-full rounded-lg border px-3 py-2" value={draft.name} onChange={e => setDraft(d => ({ ...d, name: e.target.value }))} />
               </label>
               <label className="text-sm">
                 需要點數（points）
-                <input className="mt-1 w-full rounded-lg border px-3 py-2" value={draft.points} onChange={e=>setDraft(d=>({...d,points:e.target.value}))}/>
+                <input className="mt-1 w-full rounded-lg border px-3 py-2" value={draft.points} onChange={e => setDraft(d => ({ ...d, points: e.target.value }))} />
               </label>
               <label className="text-sm">
                 剩餘數量（stock）
-                <input className="mt-1 w-full rounded-lg border px-3 py-2" inputMode="numeric" value={draft.stock} onChange={e=>setDraft(d=>({...d,stock:e.target.value}))} placeholder="例如：10"/>
+                <input className="mt-1 w-full rounded-lg border px-3 py-2" inputMode="numeric" value={draft.stock} onChange={e => setDraft(d => ({ ...d, stock: e.target.value }))} placeholder="例如：10" />
               </label>
               <label className="text-sm">
                 封面圖片（image）
-                <input className="mt-1 w-full rounded-lg border px-3 py-2" value={draft.image} onChange={e=>setDraft(d=>({...d,image:e.target.value}))}/>
+                <input className="mt-1 w-full rounded-lg border px-3 py-2" value={draft.image} onChange={e => setDraft(d => ({ ...d, image: e.target.value }))} />
               </label>
             </div>
 
             <label className="text-sm block">
               描述（desc）
-              <textarea className="mt-1 w-full rounded-lg border px-3 py-2" rows={4} value={draft.desc} onChange={e=>setDraft(d=>({...d,desc:e.target.value}))}/>
+              <textarea className="mt-1 w-full rounded-lg border px-3 py-2" rows={4} value={draft.desc} onChange={e => setDraft(d => ({ ...d, desc: e.target.value }))} />
             </label>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <label className="text-sm block">
                 多張圖片：每行一個 URL（images）
-                <textarea className="mt-1 w-full rounded-lg border px-3 py-2" rows={5} value={draft.imagesText}
-                  onChange={e=>{
+                <textarea
+                  className="mt-1 w-full rounded-lg border px-3 py-2"
+                  rows={5}
+                  value={draft.imagesText}
+                  onChange={e => {
                     const raw = e.target.value;
-                    setDraft(d=>({...d, imagesText: raw}));
-                  }}/>
+                    setDraft(d => ({ ...d, imagesText: raw }));
+                  }}
+                />
               </label>
               <label className="text-sm block">
                 標籤（逗號分隔）
-                <input className="mt-1 w-full rounded-lg border px-3 py-2" value={draft.tags} onChange={e=>setDraft(d=>({...d,tags:e.target.value}))}/>
+                <input className="mt-1 w-full rounded-lg border px-3 py-2" value={draft.tags} onChange={e => setDraft(d => ({ ...d, tags: e.target.value }))} />
               </label>
             </div>
 
             <div className="flex items-center justify-between">
               <label className="text-sm inline-flex items-center gap-2">
-                <input type="checkbox" checked={!!draft.enabled} onChange={e=>setDraft(d=>({...d, enabled:e.target.checked}))}/>
+                <input type="checkbox" checked={!!draft.enabled} onChange={e => setDraft(d => ({ ...d, enabled: e.target.checked }))} />
                 上架（enabled）
               </label>
             </div>
@@ -5203,19 +5193,27 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
     );
   };
 
+  // 開啟編輯器時，鎖定背景滾動（避免背景頁被捲動）
+  React.useEffect(() => {
+    const el = document.documentElement;
+    const prev = el.style.overflow;
+    el.style.overflow = "hidden";
+    return () => { el.style.overflow = prev; };
+  }, []);
+
   return (
-    <div className="fixed inset-0 z-[1000] bg黑/60 flex items-center justify-center" role="dialog" aria-modal="true">
-      <div className="w=[min(1024px,96vw)] max-h-[90vh] overflow-hidden rounded-2xl bg白 dark:bg-slate-900 shadow-xl flex flex-col">
+    <div className="fixed inset-0 z-[1000] bg-black/60 flex items-center justify-center" role="dialog" aria-modal="true">
+      <div className="w-[min(1024px,96vw)] max-h-[90vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 shadow-xl flex flex-col">
         {/* header */}
         <div className="flex items-center justify-between px-4 py-3 border-b">
           <div className="font-semibold">點數商城管理</div>
           <div className="flex items-center gap-2">
             <button className="rounded border px-3 py-1.5 text-sm" onClick={exportCSV}>匯出 CSV</button>
             <button className="rounded border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
-            {/* ★ 儲存：多傳一個參數 groups（舊呼叫者會自動忽略第二參數） */}
+            {/* 儲存：多傳一個參數 groups（舊呼叫者會自動忽略第二參數） */}
             <button
               className="rounded bg-brand text-white px-3 py-1.5 text-sm"
-              onClick={()=>{
+              onClick={() => {
                 const cleaned = ensureUniqueTagsInGroups(groupsState, allTags);
                 onSave?.(list, cleaned);
               }}
@@ -5228,7 +5226,7 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
         {/* body */}
         <div className="flex-1 overflow-auto">
           <div className="p-2 space-y-4">
-            {/* ★★★ 標籤群組編輯器 */}
+            {/* 標籤群組編輯器 */}
             <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
               <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
                 <div className="font-medium">標籤群組（排序／整合）</div>
@@ -5243,12 +5241,12 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
               </div>
             </div>
 
-            {/* 原有：商品清單 */}
+            {/* 商品清單 */}
             <div>
               <button className="mb-2 rounded bg-emerald-600 text-white px-3 py-1.5 text-sm" onClick={addNew}>新增項目</button>
               <div className="rounded border overflow-hidden">
-                {list.length===0 && <div className="p-6 text-center text-slate-500 text-sm">目前沒有項目</div>}
-                {list.map((x,i)=> <ItemRow key={i} x={x} i={i} />)}
+                {list.length === 0 && <div className="p-6 text-center text-slate-500 text-sm">目前沒有項目</div>}
+                {list.map((x, i) => <ItemRow key={i} x={x} i={i} />)}
               </div>
             </div>
           </div>
@@ -5256,7 +5254,7 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
       </div>
 
       {/* editor modal */}
-      {editingIndex>=0 && <EditorModal x={list[editingIndex]} i={editingIndex} />}
+      {editingIndex >= 0 && <EditorModal x={list[editingIndex]} i={editingIndex} />}
     </div>
   );
 }
