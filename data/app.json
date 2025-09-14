@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-14T04:55:05.832Z"
+    "exportedAt": "2025-09-14T06:06:00.751Z"
   },
   "data": {
     "homepage": {
@@ -40,7 +40,7 @@
         "winnerCount": 2,
         "totalParticipants": 2,
         "youtube": "",
-        "status": "處理中",
+        "status": "再寄送中",
         "note": "抽出名額與參與人數一致，故不抽獎"
       },
       {
@@ -131,7 +131,7 @@
         "winnerCount": 1,
         "totalParticipants": 8,
         "youtube": "https://youtu.be/kivYCZIrD74",
-        "status": "處理中",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -1683,8 +1683,40 @@
           ],
           "imagesText": "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒0.jpg\nassets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒1.jpg\nassets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒2.jpg",
           "buyUrl": "",
-          "tags": [],
-          "availability": "預售"
+          "tags": [
+            "盲盒",
+            "卡皮巴拉",
+            "娃娃"
+          ],
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "數量",
+                "values": [
+                  "一盒",
+                  "一中盒(6盒)"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "一盒",
+                "stock": "",
+                "price": "100",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "一中盒(6盒)",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "nresjrus",
@@ -1701,7 +1733,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "25"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "25",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "o5dv4tji",
@@ -1718,7 +1770,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "26"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "26",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "unalq204",
@@ -1735,7 +1807,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "30"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "30",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "u9q4t54i",
@@ -1752,7 +1844,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "22"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "22",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "0uvu1crd",
@@ -1769,7 +1881,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "36"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "36",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "frs2g7od",
@@ -1786,7 +1918,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "28"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "28",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "07g24aoo",
@@ -1803,7 +1955,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "35"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "35",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "zkf5tiah",
@@ -1820,7 +1992,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "28"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "28",
+                "stock": "",
+                "price": "650",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "tbmpmj68",
@@ -1837,7 +2029,43 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小/31",
+                "values": [
+                  "白",
+                  "灰",
+                  "粉"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "白",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "灰",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "粉",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "uisfa4l9",
@@ -1854,7 +2082,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "16"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "16",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "xmyfhklb",
@@ -1871,7 +2119,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "13"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "13",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "j9o1hhw4",
@@ -1888,7 +2156,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "24"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "24",
+                "stock": "",
+                "price": "650",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "lfbsgxnt",
@@ -1905,7 +2193,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "28"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "28",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "pwzsmvym",
@@ -1922,7 +2230,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "31"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "31",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "vbt9ybfh",
@@ -1939,7 +2267,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "22"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "22",
+                "stock": "",
+                "price": "650",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "5jkh2xee",
@@ -1956,7 +2304,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "16"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "16",
+                "stock": "",
+                "price": "580",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "0aoj8459",
@@ -1973,7 +2341,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "65"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "65",
+                "stock": "",
+                "price": "650",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "y0tbbuhk",
@@ -1990,7 +2378,27 @@
             "Jellycat",
             "娃娃"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "31"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "31",
+                "stock": "",
+                "price": "650",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "zji59wv3",
@@ -2010,7 +2418,27 @@
           "tags": [
             "3C"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "單盒",
+                "values": [
+                  "附8g記憶卡"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "附8g記憶卡",
+                "stock": "",
+                "price": "450",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "wl8xwog8",
@@ -2031,7 +2459,35 @@
             "玩具",
             "盲包"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "數量",
+                "values": [
+                  "一袋",
+                  "一盒(12袋)"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "一袋",
+                "stock": "",
+                "price": "290",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "一盒(12袋)",
+                "stock": "",
+                "price": "3200",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "x6khyvl0",
@@ -2049,7 +2505,35 @@
             "玩具",
             "積木"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "數量",
+                "values": [
+                  "一盒",
+                  "一中盒(12盒)"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "一盒",
+                "stock": "",
+                "price": "120",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "一中盒(12盒)",
+                "stock": "",
+                "price": "1400",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "mzpzch4a",
@@ -2067,7 +2551,35 @@
             "玩具",
             "積木"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "數量",
+                "values": [
+                  "一盒",
+                  "一中盒(12盒)"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "一盒",
+                "stock": "",
+                "price": "120",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "一中盒(12盒)",
+                "stock": "",
+                "price": "1400",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "mhku1gde",
@@ -2084,7 +2596,27 @@
             "娃娃",
             "Jellycat"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "大小",
+                "values": [
+                  "40"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "40",
+                "stock": "",
+                "price": "490",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "fdrofbxn",
@@ -2112,7 +2644,35 @@
             "玩具",
             "蠟筆小新"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "數量",
+                "values": [
+                  "一盒",
+                  "一中盒(10盒)"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "一盒",
+                "stock": "",
+                "price": "180",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "一中盒(10盒)",
+                "stock": "",
+                "price": "1700",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "5dli6tdz",
@@ -2146,7 +2706,35 @@
             "玩具",
             "熊貓"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "數量",
+                "values": [
+                  "一盒",
+                  "一中盒(8盒)"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "一盒",
+                "stock": "",
+                "price": "290",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "一中盒(8盒)",
+                "stock": "",
+                "price": "2300",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         },
         {
           "id": "365z3xh4",
@@ -2174,7 +2762,35 @@
             "盲包",
             "史迪奇"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "數量",
+                "values": [
+                  "一袋",
+                  "一盒(10袋)"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "一袋",
+                "stock": "",
+                "price": "220",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "一盒(10袋)",
+                "stock": "",
+                "price": "2000",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
         }
       ],
       "tagGroups": [
@@ -2185,7 +2801,8 @@
             "蠟筆小新",
             "熊貓",
             "Jellycat",
-            "動物方程式"
+            "動物方程式",
+            "卡皮巴拉"
           ]
         },
         {
