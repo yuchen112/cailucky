@@ -369,9 +369,11 @@ function ProductSheet({
   const overlayRef = React.useRef(null);
   const [index, setIndex] = React.useState(0);
 
+  // 規格選擇
   const [sel1, setSel1] = React.useState(null);
   const [sel2, setSel2] = React.useState(null);
 
+  // 鎖捲動 / ESC / 返回鍵
   React.useEffect(() => {
     if (!open) return;
     BodyScrollLock.lock();
@@ -387,8 +389,10 @@ function ProductSheet({
     };
   }, [open, onClose]);
 
+  // 換商品時重置
   React.useEffect(() => { setIndex(0); setSel1(null); setSel2(null); }, [item]);
 
+  // ---- 派生資料 ----
   const title  = (item?.title || item?.name || "（未命名）");
   const baseId = String(item?.id ?? (item?.name ?? "item"));
 
@@ -410,6 +414,7 @@ function ProductSheet({
   })();
   const remain = item?.stock ?? item?.qty ?? item?.quantity ?? item?.remaining ?? null;
 
+  // pending：候選名單
   const candidates = (() => {
     const list = Array.isArray(item?.participants) ? item.participants
       : Array.isArray(item?.members) ? item.members
@@ -420,6 +425,7 @@ function ProductSheet({
   })();
   const candidateCount = candidates.length;
 
+  // 觸控換圖
   let sx = 0, sy = 0, dragging = false;
   const onTouchStart = (e) => { if (e.touches.length === 1) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; dragging = true; } };
   const onTouchEnd   = (e) => {
@@ -431,11 +437,13 @@ function ProductSheet({
     }
   };
 
+  // 聯絡連結
   const effectiveContactUrl =
     contactUrl ||
     item?.contactUrl ||
     window.__CONTACT_URL__ || "";
 
+  // ---------- 規格工具 ----------
   const normalizeVariants = (it) => {
     const v = it?.variants;
     if (!v || !v.mode || v.mode === "none") return { mode: "none", attrs: [], items: [] };
@@ -492,6 +500,7 @@ function ProductSheet({
     return parts.length ? `（${parts.join("／")}）` : "";
   })();
 
+  // 廣播規格變更（與外部控制列橋接）
   const publishPick = (s1, s2) => {
     const key = String(item?.id ?? item?._id ?? item?.name ?? "item");
     window.__VARIANT_PICKED__ = window.__VARIANT_PICKED__ || {};
@@ -507,6 +516,7 @@ function ProductSheet({
     publishPick(null, null);
   }, [open, item?.id]);
 
+  // 傳給步進器的派生 item（含所選規格；無規格直接沿用）
   const controlsItem = (() => {
     if (context !== "store" && context !== "shop") return item;
     if (V.mode === "none") return { ...item, __baseId: baseId };
@@ -542,6 +552,7 @@ function ProductSheet({
       onMouseDown={handleOverlayClick}
     >
       <div className="w-[min(96vw,44rem)] max-h-[92vh] rounded-2xl bg-white dark:bg-slate-900 shadow-elevate overflow-hidden flex flex-col">
+        {/* header */}
         <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
           <div className="min-w-0">
             <div className="font-semibold truncate">{title}{specSuffix}</div>
@@ -552,15 +563,13 @@ function ProductSheet({
           <button className="rounded-full border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
         </div>
 
+        {/* body */}
         <div className="flex-1 overflow-y-auto">
+          {/* 主圖 */}
           <div className="relative bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
             <div className="aspect-square w-full grid place-content-center" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
               {images.length ? (
-                <img
-                  src={images[index]}
-                  alt=""
-                  className="w-full h-full object-contain select-none"
-                />
+                <img src={images[index]} alt="" className="w-full h-full object-contain select-none" />
               ) : <div className="text-slate-400 text-sm">無圖片</div>}
             </div>
             {images.length>1 && (
@@ -572,6 +581,7 @@ function ProductSheet({
             )}
           </div>
 
+          {/* 文字與規格 */}
           <div className="px-4 pb-4 space-y-2 text-sm">
             {context==="store" && remain!=null && <div className="text-slate-600">剩餘數量：{remain}</div>}
             {Array.isArray(tags) && tags.length>0 && <div className="text-slate-500">標籤：{tags.join(" / ")}</div>}
@@ -583,6 +593,7 @@ function ProductSheet({
               <div className="mt-3 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
                 <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-700 text-sm font-medium">選擇規格</div>
                 <div className="p-3 space-y-2">
+                  {/* 規格1 */}
                   {V.attrs[0] && (
                     <div className="flex items-start gap-2">
                       <div className="w-16 shrink-0 text-slate-500">{V.attrs[0].name || "規格1"}</div>
@@ -608,6 +619,7 @@ function ProductSheet({
                       </div>
                     </div>
                   )}
+                  {/* 規格2 */}
                   {V.mode === "double" && V.attrs[1] && (
                     <div className="flex items-start gap-2">
                       <div className="w-16 shrink-0 text-slate-500">{V.attrs[1].name || "規格2"}</div>
@@ -633,6 +645,7 @@ function ProductSheet({
                     </div>
                   )}
 
+                  {/* 即時顯示有效單價/點數與庫存 */}
                   <div className="text-sm text-slate-600">
                     {selectedDone ? (
                       <>
@@ -649,6 +662,7 @@ function ProductSheet({
             )}
           </div>
 
+          {/* pending：參與名單與勾選 */}
           {context==="pending" && candidates.length > 0 && (
             <div className="px-4 pb-4">
               <div className="mb-2 text-sm font-medium flex items-center justify-between">
@@ -662,9 +676,7 @@ function ProductSheet({
 
               {!admin ? (
                 <ul className="space-y-1 text-sm text-slate-700 dark:text-slate-300">
-                  {candidates.map((name, i) => (
-                    <li key={i}>• {name}</li>
-                  ))}
+                  {candidates.map((name, i) => (<li key={i}>• {name}</li>))}
                 </ul>
               ) : (
                 <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
@@ -716,8 +728,25 @@ function ProductSheet({
               )}
             </div>
           )}
+
+          {/* ★★★ 這一段是關鍵：商店/點數商城的「加入清單」控制 ★★★ */}
+          {item && (context === "store" || context === "shop") ? (
+            (V.mode !== "none" && !selectedDone)
+              ? (
+                <div className="p-3 border-t border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/90 backdrop-blur flex items-center justify-between">
+                  <div className="text-sm text-amber-600">請先在上方「選擇規格」區塊完成規格選擇</div>
+                  <button className="rounded-lg border px-4 py-2 text-sm text-slate-400" disabled>加入清單</button>
+                </div>
+              )
+              : (
+                context === "shop"
+                  ? <SheetPickControls item={controlsItem || { ...item, __baseId: baseId }} mode="pts" />
+                  : <SheetPickControls item={controlsItem || { ...item, __baseId: baseId }} mode="cash" />
+              )
+          ) : null}
         </div>
 
+        {/* footer */}
         <div className="p-3 border-t border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/90 backdrop-blur flex items-center gap-2">
           {context==="store" ? (
             <>
@@ -741,6 +770,7 @@ function ProductSheet({
               <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
             </>
           ) : (
+            // pending
             <>
               <button className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm" onClick={() => onStartDraw(item)}>🎰 模擬抽獎（展示）</button>
               {admin && (
@@ -769,7 +799,6 @@ function ProductSheet({
     </div>
   );
 }
-
 
 
 /* === 詳情視窗底部：數量步進 + 加入清單（規格由上方小卡決定；一致的 id/事件） === */
