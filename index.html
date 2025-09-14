@@ -366,15 +366,12 @@ function ProductSheet({
 }) {
   const React = window.React || globalThis.React;
 
-  // ---- hooks 皆無條件呼叫 ----
   const overlayRef = React.useRef(null);
   const [index, setIndex] = React.useState(0);
 
-  // 規格選擇（僅 store/shop 需要）
   const [sel1, setSel1] = React.useState(null);
   const [sel2, setSel2] = React.useState(null);
 
-  // 鎖捲動 / ESC / 返回鍵
   React.useEffect(() => {
     if (!open) return;
     BodyScrollLock.lock();
@@ -390,10 +387,8 @@ function ProductSheet({
     };
   }, [open, onClose]);
 
-  // 換商品時重置圖與規格
   React.useEffect(() => { setIndex(0); setSel1(null); setSel2(null); }, [item]);
 
-  // ---- 派生資料 ----
   const title  = (item?.title || item?.name || "（未命名）");
   const baseId = String(item?.id ?? (item?.name ?? "item"));
 
@@ -415,7 +410,6 @@ function ProductSheet({
   })();
   const remain = item?.stock ?? item?.qty ?? item?.quantity ?? item?.remaining ?? null;
 
-  // pending：候選名單（不寫回資料）
   const candidates = (() => {
     const list = Array.isArray(item?.participants) ? item.participants
       : Array.isArray(item?.members) ? item.members
@@ -426,7 +420,6 @@ function ProductSheet({
   })();
   const candidateCount = candidates.length;
 
-  // 觸控換圖
   let sx = 0, sy = 0, dragging = false;
   const onTouchStart = (e) => { if (e.touches.length === 1) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; dragging = true; } };
   const onTouchEnd   = (e) => {
@@ -438,13 +431,11 @@ function ProductSheet({
     }
   };
 
-  // shop 用聯絡管理員（多來源 fallback）
   const effectiveContactUrl =
     contactUrl ||
     item?.contactUrl ||
     window.__CONTACT_URL__ || "";
 
-  // ---------- 規格工具 ----------
   const normalizeVariants = (it) => {
     const v = it?.variants;
     if (!v || !v.mode || v.mode === "none") return { mode: "none", attrs: [], items: [] };
@@ -501,7 +492,6 @@ function ProductSheet({
     return parts.length ? `（${parts.join("／")}）` : "";
   })();
 
-  // 向下方控制列廣播「規格改變」
   const publishPick = (s1, s2) => {
     const key = String(item?.id ?? item?._id ?? item?.name ?? "item");
     window.__VARIANT_PICKED__ = window.__VARIANT_PICKED__ || {};
@@ -514,10 +504,9 @@ function ProductSheet({
   };
   React.useEffect(() => {
     if (!open) return;
-    publishPick(null, null); // 打開或換商品時清一次
+    publishPick(null, null);
   }, [open, item?.id]);
 
-  // 傳給步進器的派生 item（嵌入所選規格、覆寫單價/點數/庫存、並保留 baseId）
   const controlsItem = (() => {
     if (context !== "store" && context !== "shop") return item;
     if (V.mode === "none") return { ...item, __baseId: baseId };
@@ -553,7 +542,6 @@ function ProductSheet({
       onMouseDown={handleOverlayClick}
     >
       <div className="w-[min(96vw,44rem)] max-h-[92vh] rounded-2xl bg-white dark:bg-slate-900 shadow-elevate overflow-hidden flex flex-col">
-        {/* header */}
         <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
           <div className="min-w-0">
             <div className="font-semibold truncate">{title}{specSuffix}</div>
@@ -564,7 +552,6 @@ function ProductSheet({
           <button className="rounded-full border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
         </div>
 
-        {/* body：主圖 + 縮圖 + 文字 + 規格選擇 */}
         <div className="flex-1 overflow-y-auto">
           <div className="relative bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
             <div className="aspect-square w-full grid place-content-center" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
@@ -573,7 +560,6 @@ function ProductSheet({
                   src={images[index]}
                   alt=""
                   className="w-full h-full object-contain select-none"
-                  onClick={() => { if (context === "pending") onOpenViewer?.(images, index, title, buyUrl); }}
                 />
               ) : <div className="text-slate-400 text-sm">無圖片</div>}
             </div>
@@ -586,21 +572,6 @@ function ProductSheet({
             )}
           </div>
 
-          {images.length>1 && (
-            <div className="px-4 py-3 -mx-1 flex overflow-x-auto gap-2 snap-x snap-mandatory">
-              {images.map((src, i) => (
-                <button
-                  key={src+i}
-                  className={"shrink-0 w-20 aspect-square rounded-lg overflow-hidden border snap-start " + (i===index ? "border-brand ring-2 ring-brand/40" : "border-slate-200 dark:border-slate-700")}
-                  onClick={()=>setIndex(i)}
-                  title={`圖片 ${i+1}`}
-                >
-                  <img src={src} alt="" className="w-full h-full object-contain" loading="lazy" />
-                </button>
-              ))}
-            </div>
-          )}
-
           <div className="px-4 pb-4 space-y-2 text-sm">
             {context==="store" && remain!=null && <div className="text-slate-600">剩餘數量：{remain}</div>}
             {Array.isArray(tags) && tags.length>0 && <div className="text-slate-500">標籤：{tags.join(" / ")}</div>}
@@ -612,7 +583,6 @@ function ProductSheet({
               <div className="mt-3 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
                 <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-700 text-sm font-medium">選擇規格</div>
                 <div className="p-3 space-y-2">
-                  {/* 規格1 */}
                   {V.attrs[0] && (
                     <div className="flex items-start gap-2">
                       <div className="w-16 shrink-0 text-slate-500">{V.attrs[0].name || "規格1"}</div>
@@ -638,7 +608,6 @@ function ProductSheet({
                       </div>
                     </div>
                   )}
-                  {/* 規格2（若為雙規格） */}
                   {V.mode === "double" && V.attrs[1] && (
                     <div className="flex items-start gap-2">
                       <div className="w-16 shrink-0 text-slate-500">{V.attrs[1].name || "規格2"}</div>
@@ -664,7 +633,6 @@ function ProductSheet({
                     </div>
                   )}
 
-                  {/* 即時顯示有效單價/點數與庫存 */}
                   <div className="text-sm text-slate-600">
                     {selectedDone ? (
                       <>
@@ -680,25 +648,76 @@ function ProductSheet({
               </div>
             )}
           </div>
+
+          {context==="pending" && candidates.length > 0 && (
+            <div className="px-4 pb-4">
+              <div className="mb-2 text-sm font-medium flex items-center justify-between">
+                <span>參與人員（{candidateCount}）</span>
+                {admin && (
+                  <span className="text-xs text-slate-500">
+                    已勾選 {Object.values(onAdmin?.checkedMap||{}).filter(Boolean).length} 人
+                  </span>
+                )}
+              </div>
+
+              {!admin ? (
+                <ul className="space-y-1 text-sm text-slate-700 dark:text-slate-300">
+                  {candidates.map((name, i) => (
+                    <li key={i}>• {name}</li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                  <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-700 text-sm bg-slate-50 dark:bg-slate-800 flex items-center justify-between">
+                    <div>勾選得獎者</div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        className="text-xs rounded border px-2 py-1"
+                        onClick={()=>{
+                          if (typeof onAdmin?.toggleCheck === 'function') {
+                            candidates.forEach(n => onAdmin.toggleCheck(n, true));
+                          }
+                        }}
+                        title="全選"
+                      >全選</button>
+                      <button
+                        type="button"
+                        className="text-xs rounded border px-2 py-1"
+                        onClick={()=>{
+                          if (typeof onAdmin?.toggleCheck === 'function') {
+                            candidates.forEach(n => onAdmin.toggleCheck(n, false));
+                          }
+                        }}
+                        title="全不選"
+                      >全不選</button>
+                    </div>
+                  </div>
+                  <ul className="max-h-[40vh] overflow-auto divide-y divide-slate-200 dark:divide-slate-700">
+                    {candidates.map((name, i) => {
+                      const checked = !!(onAdmin?.checkedMap && onAdmin.checkedMap[name]);
+                      return (
+                        <li key={i} className="flex items-center gap-3 px-3 py-2 text-sm">
+                          <input
+                            type="checkbox"
+                            className="h-4 w-4"
+                            checked={checked}
+                            onChange={(e)=>{
+                              const next = e.target.checked;
+                              if (typeof onAdmin?.toggleCheck === 'function') onAdmin.toggleCheck(name, next);
+                            }}
+                          />
+                          <span className="truncate">{name}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
-        {/* 詳情底部（數量步進 + 加入清單） */}
-        {item && (context === "store" || context === "shop") ? (
-          (V.mode !== "none" && !selectedDone)
-            ? (
-              <div className="p-3 border-t border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/90 backdrop-blur flex items-center justify-between">
-                <div className="text-sm text-amber-600">請先在上方「選擇規格」區塊完成規格選擇</div>
-                <button className="rounded-lg border px-4 py-2 text-sm text-slate-400" disabled>加入清單</button>
-              </div>
-            )
-            : (
-              context === "shop"
-                ? <SheetPickControls item={controlsItem || { ...item, __baseId: baseId }} mode="pts" />
-                : <SheetPickControls item={controlsItem || { ...item, __baseId: baseId }} mode="cash" />
-            )
-        ) : null}
-
-        {/* footer（shop 已移除「複製模板」） */}
         <div className="p-3 border-t border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/90 backdrop-blur flex items-center gap-2">
           {context==="store" ? (
             <>
@@ -722,7 +741,6 @@ function ProductSheet({
               <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
             </>
           ) : (
-            // pending
             <>
               <button className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm" onClick={() => onStartDraw(item)}>🎰 模擬抽獎（展示）</button>
               {admin && (
@@ -730,7 +748,15 @@ function ProductSheet({
                   <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onEdit?.(item)}>編輯</button>
                   <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onCopyAd?.(item)}>一鍵複製抽獎貼文</button>
                   <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onConvertBySim?.(item)}>以模擬結果轉歷史</button>
-                  <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onConvertByChecked?.(item)}>以勾選名單轉歷史</button>
+                  <button
+                    className="rounded-lg border px-3 py-2 text-sm"
+                    onClick={()=>{
+                      const map = (onAdmin && typeof onAdmin.checkedMap === 'object') ? onAdmin.checkedMap : {};
+                      onAdmin?.onConvertByChecked?.(item, map);
+                    }}
+                  >
+                    以勾選名單轉歷史
+                  </button>
                   <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>onAdmin?.onConvertByInput?.(item)}>直接輸入名單轉歷史</button>
                   <button className="rounded-lg bg-rose-500 text-white px-3 py-2 text-sm" onClick={()=>onAdmin?.onDelete?.(item)}>刪除</button>
                 </div>
@@ -2488,13 +2514,14 @@ function Section({ title, subtitle, children }){
 
 /* ============================
  * 等待開獎（清單 + 跳出式資訊 + 抽獎展示）
- * - 不刪任何既有功能（編輯/新增/刪除/三種轉歷史/搜尋/分頁/9或16宮格…）
- * - 點卡片：打開 ProductSheet（context="pending"）
+ * - 保留原功能：搜尋/分頁/9或16宮格/新增/編輯/刪除/三種轉歷史
+ * - 內建「勾選名單 → 轉歷史」完整串接（含彈窗內勾選 UI）
  * ============================ */
 function Pending({ data, admin, setData, query = "" }) {
   const React = window.React || globalThis.React;
   const nidSafe = (typeof nid === "function") ? nid : () => Math.random().toString(36).slice(2);
 
+  // 偏好
   const prefKey = "pending_prefs_v2";
   const loadPrefs = () => { try { return JSON.parse(localStorage.getItem(prefKey) || "{}"); } catch { return {}; } };
   const savePrefs = (p) => { try { localStorage.setItem(prefKey, JSON.stringify({ ...loadPrefs(), ...p })); } catch {} };
@@ -2505,7 +2532,7 @@ function Pending({ data, admin, setData, query = "" }) {
   React.useEffect(()=>savePrefs({view}),[view]);
   React.useEffect(()=>savePrefs({pageSize}),[pageSize]);
 
-  // 兼容：pending.items 或 pending 陣列
+  // 兼容資料來源
   const raw = Array.isArray(data?.pending?.items) ? data.pending.items :
               (Array.isArray(data?.pending) ? data.pending : []);
 
@@ -2526,11 +2553,11 @@ function Pending({ data, admin, setData, query = "" }) {
 
   const allItems = React.useMemo(()=> raw.map(normalizeItem), [raw]);
 
-  // ===== 新增：我的名字 + 參與狀態篩選 =====
-  const [myName, setMyName] = React.useState("");        // 使用者輸入的「我的名字」（精確比對）
+  // 我的名字 / 我是否有參與
+  const [myName, setMyName] = React.useState("");
   const [mineFilter, setMineFilter] = React.useState("all"); // all / joined / notJoined
 
-  // 搜尋（先跑關鍵字）
+  // 搜尋
   const [search, setSearch] = React.useState(query || "");
   const filteredBySearch = React.useMemo(()=>{
     const kw = String(search||"").trim().toLowerCase();
@@ -2540,24 +2567,20 @@ function Pending({ data, admin, setData, query = "" }) {
     });
   }, [allItems, search]);
 
-  // 再依「我的名字」分成 我已參加 / 我未參加 / 全部
   const filtered = React.useMemo(()=>{
     const name = myName.trim();
-    if (!name) return filteredBySearch; // 沒輸入名字 → 不做參與狀態切分
+    if (!name) return filteredBySearch;
     const joinedSet = new Set(
       filteredBySearch
         .filter(x => Array.isArray(x._candidates) && x._candidates.includes(name))
         .map(x => x.id ?? x)
     );
-    if (mineFilter === "joined") {
-      return filteredBySearch.filter(x => joinedSet.has(x.id ?? x));
-    } else if (mineFilter === "notJoined") {
-      return filteredBySearch.filter(x => !joinedSet.has(x.id ?? x));
-    }
-    return filteredBySearch; // all
+    if (mineFilter === "joined") return filteredBySearch.filter(x => joinedSet.has(x.id ?? x));
+    if (mineFilter === "notJoined") return filteredBySearch.filter(x => !joinedSet.has(x.id ?? x));
+    return filteredBySearch;
   }, [filteredBySearch, myName, mineFilter]);
 
-  // 排序（按更新時間）
+  // 排序
   const sorted = React.useMemo(()=>{
     const arr = [...filtered];
     arr.sort((a,b)=> (new Date(b?.updatedAt||b?.createdAt||0) - new Date(a?.updatedAt||a?.createdAt||0)));
@@ -2568,7 +2591,6 @@ function Pending({ data, admin, setData, query = "" }) {
   const total = sorted.length;
   const maxPage = Math.max(1, Math.ceil(total / pageSize));
   React.useEffect(()=>{ if (page>maxPage) setPage(maxPage); }, [maxPage, page]);
-  // ★ 保留你的重置行為，並加上 myName/mineFilter 讓每次切換都回到第 1 頁
   React.useEffect(()=>{ setPage(1); }, [search, view, pageSize, myName, mineFilter]);
 
   const start = (page-1)*pageSize;
@@ -2578,7 +2600,7 @@ function Pending({ data, admin, setData, query = "" }) {
   const endPage   = Math.min(maxPage, startPage + windowSize - 1);
   const pageItems = sorted.slice(start, end);
 
-  // Viewer（保留你原本的鍵盤左右切圖與 overflow 鎖定）
+  // Viewer
   const [viewer, setViewer] = React.useState({ open:false, images:[], index:0, title:"" });
   React.useEffect(()=>{
     if (!viewer.open) return;
@@ -2651,27 +2673,80 @@ function Pending({ data, admin, setData, query = "" }) {
     setData(s => ({ ...s, pending: nextP }));
   }
 
-  // 轉歷史（共用）
+  // ===== 勾選名單（每個活動一份 map） =====
+  const [checkedMaps, setCheckedMaps] = React.useState({}); // { [id]: { [name]: boolean } }
+  function getCheckedMap(id) { return (checkedMaps && checkedMaps[id]) ? checkedMaps[id] : {}; }
+  function makeToggleCheck(id) {
+    return function toggleCheck(name, next){
+      setCheckedMaps(prev => {
+        const curr = prev[id] || {};
+        const val = (typeof next === 'boolean') ? next : !curr[name];
+        return { ...prev, [id]: { ...curr, [name]: !!val } };
+      });
+    };
+  }
+
+  // ===== 轉歷史（勾選 → 共用） =====
+  function convertByChecked(x, checkedMap){
+    const picked = [];
+    const m = checkedMap || {};
+    for (const k in m) if (m[k]) picked.push(String(k));
+    if (!picked.length) { alert("請先勾選至少一位得獎者"); return; }
+
+    const pool = Array.isArray(x?._candidates) ? x._candidates.map(String) : [];
+    const allow = new Set(pool);
+    const winners = picked.filter(n => allow.has(n));
+    if (!winners.length) { alert("勾選的名字不在此活動的參與名單中"); return; }
+
+    convertToHistoryByWinners(x.id, winners);
+  }
+
   function convertToHistoryByWinners(id, winners) {
     if (!admin) return;
     const now = raw.find(x => x.id === id);
     if (!now) return;
     const rest = raw.filter(x => x.id !== id);
     const history = Array.isArray(data?.history) ? data.history : [];
+
+    const num = (v)=> (v===""||v==null) ? null : (Number.isFinite(+v) ? +v : null);
+
+    const deriveCandidates = (it)=>{
+      if (!it) return [];
+      if (Array.isArray(it._candidates)) return it._candidates;
+      if (Array.isArray(it.participants)) return it.participants;
+      if (Array.isArray(it.members)) return it.members;
+      if (Array.isArray(it.list)) return it.list;
+      if (Array.isArray(it.candidates)) return it.candidates;
+      if (typeof it.listText === "string") return it.listText.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+      return [];
+    };
+    const totalParticipants = deriveCandidates(now).length;
+
+    const plannedCount =
+        num(now?._planned) ??
+        num(now?.planned) ??
+        num(now?.plannedCount) ??
+        num(now?.winnersPlanned) ??
+        num(now?.winnerPlan) ?? null;
+
     const rec = {
       id: nidSafe(),
       date: now.date || "",
       title: now.title || "",
       winners: Array.isArray(winners) ? winners : [],
+      winnerCount: Array.isArray(winners) ? winners.length : 0,
+      totalParticipants,
+      plannedCount: plannedCount != null ? plannedCount : undefined,
       status: "已抽出",
       note: ""
     };
+
     const nextP = Array.isArray(data?.pending?.items) ? { ...data.pending, items: rest } : rest;
     setData(s => ({ ...s, pending: nextP, history: [rec, ...history] }));
     alert("已轉入歷史");
   }
 
-  // 管理用：一次性模擬（不走動畫；展示動畫用 DrawSimulator）
+  // 管理用：一次性模擬（不走動畫）
   function simulateOnce(list, count){
     const names = Array.isArray(list) ? list.slice() : [];
     const n = Math.max(1, Math.min(count || 1, names.length));
@@ -2682,14 +2757,19 @@ function Pending({ data, admin, setData, query = "" }) {
     return names.slice(0, n);
   }
   function convertBySimulation(x){ // 用模擬結果（一次性）
-    const winners = simulateOnce(x._candidates, x._planned || 1);
+    const store = (window.__LAST_SIM_RESULTS__ || {});
+    const direct = store[x.id];
+    const last = store.__LAST__;
+    const winners = (direct && Array.isArray(direct.winners) && direct.winners.length>0)
+      ? direct.winners
+      : (last && Array.isArray(last.winners) && last.winners.length>0 ? last.winners : null);
+    if (!winners) {
+      alert("尚未執行抽獎模擬，請先按「模擬抽獎（展示）」跑一次。");
+      return;
+    }
     convertToHistoryByWinners(x.id, winners);
   }
-  function convertByChecked(x, checkedMap){
-    const names = Object.keys(checkedMap||{}).filter(k => checkedMap[k]);
-    if (!names.length) return alert("尚未勾選人員");
-    convertToHistoryByWinners(x.id, names);
-  }
+
   function convertByInput(x){
     const txt = prompt("請貼上得獎名單（每行一名）",""); 
     if (txt==null) return;
@@ -2701,12 +2781,12 @@ function Pending({ data, admin, setData, query = "" }) {
   // 一鍵複製抽獎貼文（含自動星期）
   function copyAdText(x){
     const planned = Number.isFinite(+x?._planned) ? +x._planned : 1;
-    const dateStr = String(x?.date || "").trim(); // 例如 2025-09-08
+    const dateStr = String(x?.date || "").trim();
     const weekday = (s) => {
       if (!s) return "";
       const d = new Date(s + "T00:00:00");
       const zh = ["日","一","二","三","四","五","六"];
-      return zh[d.getDay()] || ""
+      return zh[d.getDay()] || "";
     };
     const endW = weekday(dateStr);
     let announceDate = "";
@@ -2718,7 +2798,7 @@ function Pending({ data, admin, setData, query = "" }) {
       announceDate = `${y}-${m}-${dd}`;
       announceW = weekday(announceDate);
     }
-    const perCount = 1; // 每人預設 1
+    const perCount = 1;
     const howTo = "直接在這篇留言「我要參加」即可！";
 
     const text = [
@@ -2744,10 +2824,8 @@ function Pending({ data, admin, setData, query = "" }) {
       .catch(()=>alert("無法自動複製，請手動選取"));
   }
 
-  // 跳出式資訊面板
+  // 跳出式資訊面板 / 抽獎展示
   const [sheet, setSheet] = React.useState({ open:false, item:null });
-
-  // 抽獎展示
   const [draw, setDraw] = React.useState({ open:false, item:null });
 
   const gridCols = view === "grid16" ? "grid-cols-4" : "grid-cols-3";
@@ -2763,10 +2841,7 @@ function Pending({ data, admin, setData, query = "" }) {
     </div>
   );
 
-  // =========================
-  // 原本的 Toolbar（完整保留）
-  // ※ 會造成你遇到的「打一個字就跳出」：因為此函式每次 render 皆為新型別，導致 React 視為不同元件而重掛載 -> 輸入失焦
-  // =========================
+  // 原本 Toolbar（保留）
   const Toolbar = () => (
     <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
       <div className="flex flex-wrap items-center gap-2">
@@ -2776,8 +2851,6 @@ function Pending({ data, admin, setData, query = "" }) {
           value={search}
           onChange={e=>setSearch(e.target.value)}
         />
-
-        {/* 新增：輸入你的名字（精確比對） */}
         <input
           className="min-h-[44px] rounded border px-3 py-2"
           style={{minWidth:220}}
@@ -2785,14 +2858,11 @@ function Pending({ data, admin, setData, query = "" }) {
           value={myName}
           onChange={e=>setMyName(e.target.value)}
         />
-
-        {/* 新增：切換 全部 / 我已參加 / 我未參加 */}
         <div className="inline-flex rounded-lg overflow-hidden border">
           <button className={`px-3 py-2 text-sm ${mineFilter==='all'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('all')}>全部</button>
           <button className={`px-3 py-2 text-sm ${mineFilter==='joined'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('joined')}>我已參加</button>
-          <button className={`px-3 py-2 text-sm ${mineFilter==='notJoined'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('notJoined')}>我未參加</button>
+          <button className={`px-3 py-2 text-sm ${mineFilter==='notJoined'?'bg-brand text白':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('notJoined')}>我未參加</button>
         </div>
-
         <label className="flex items-center gap-1">
           版面
           <select className="min-h-[44px] rounded border px-2 py-1" value={view} onChange={e=>setView(e.target.value)}>
@@ -2812,10 +2882,7 @@ function Pending({ data, admin, setData, query = "" }) {
     </div>
   );
 
-  // =========================
-  // ★★ 新增：穩定版 Toolbar（不重掛載、不失焦）★★
-  // - 透過 useRef 固定元件型別；同時在聚焦時停用毛玻璃
-  // =========================
+  // 穩定 Toolbar（避免失焦）
   const [toolbarFocus, setToolbarFocus] = React.useState(false);
   const ToolbarStable = React.useRef(null);
   if (!ToolbarStable.current) {
@@ -2837,8 +2904,7 @@ function Pending({ data, admin, setData, query = "" }) {
             if (!e.currentTarget.contains(e.relatedTarget)) setToolbarFocus(false);
           }}
         >
-          <div className="flex flex-wrap items-center gap-2">
-            {/* 搜尋活動 */}
+          <div className="flex flex-wrap items中心 gap-2">
             <input
               className="min-h-[44px] flex-1 rounded border px-3 py-2"
               placeholder="搜尋活動..."
@@ -2848,8 +2914,6 @@ function Pending({ data, admin, setData, query = "" }) {
               enterKeyHint="search"
               onKeyDownCapture={(e)=>{ e.stopPropagation?.(); }}
             />
-
-            {/* 輸入你的名字（精確比對） */}
             <input
               className="min-h-[44px] rounded border px-3 py-2"
               style={{minWidth:220}}
@@ -2860,14 +2924,11 @@ function Pending({ data, admin, setData, query = "" }) {
               enterKeyHint="done"
               onKeyDownCapture={(e)=>{ e.stopPropagation?.(); }}
             />
-
-            {/* 切換 全部 / 我已參加 / 我未參加 */}
             <div className="inline-flex rounded-lg overflow-hidden border">
-              <button className={`px-3 py-2 text-sm ${mineFilter==='all'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('all')}>全部</button>
-              <button className={`px-3 py-2 text-sm ${mineFilter==='joined'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('joined')}>我已參加</button>
-              <button className={`px-3 py-2 text-sm ${mineFilter==='notJoined'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('notJoined')}>我未參加</button>
+              <button className={`px-3 py-2 text-sm ${mineFilter==='all'?'bg-brand text白':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('all')}>全部</button>
+              <button className={`px-3 py-2 text-sm ${mineFilter==='joined'?'bg-brand text白':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('joined')}>我已參加</button>
+              <button className={`px-3 py-2 text-sm ${mineFilter==='notJoined'?'bg-brand text白':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('notJoined')}>我未參加</button>
             </div>
-
             <label className="flex items-center gap-1">
               版面
               <select className="min-h-[44px] rounded border px-2 py-1" value={view} onChange={e=>setView(e.target.value)}>
@@ -2889,7 +2950,7 @@ function Pending({ data, admin, setData, query = "" }) {
     };
   }
 
-  // 卡片（完整保留你原本的 details + 勾選名單 + 各種管理按鈕）
+  // 卡片
   const Card = ({ x, i }) => {
     const title = x?.title || x?.name || '（未命名）';
     const cover = Array.isArray(x?._images) && x._images.length>0 ? x._images[0] : (x?.image || "");
@@ -2900,7 +2961,7 @@ function Pending({ data, admin, setData, query = "" }) {
     const toggleCheck = (name) => setCheckedMap(m => ({...m, [name]: !m[name]}));
 
     return (
-      <details key={x.id || i} className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden">
+      <details key={x.id || i} className="rounded-2xl border border-slate-200 dark:border-slate-700 bg白/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden">
         <summary className="list-none cursor-pointer p-3" onClick={(e)=>{ e.preventDefault(); setSheet({ open:true, item:x }); }}>
           <div className="flex flex-col">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
@@ -2912,7 +2973,6 @@ function Pending({ data, admin, setData, query = "" }) {
           </div>
         </summary>
 
-        {/* 展開內容（保留相容；仍可展開） */}
         <div className="px-3 pb-3">
           {Array.isArray(images) && images.length>0 && (
             <div className="mt-2 -mx-1 px-1 flex overflow-x-auto gap-2 snap-x snap-mandatory">
@@ -2924,10 +2984,8 @@ function Pending({ data, admin, setData, query = "" }) {
             </div>
           )}
 
-          {/* 管理員操作（保留） */}
           {admin && (
             <div className="mt-3 space-y-2">
-              {/* 勾選名單 */}
               <div>
                 <div className="mb-1 text-sm font-medium">已報名（{x._candidates.length} 人）</div>
                 {x._candidates.length===0 ? <div className="text-slate-500">尚無名單</div> : (
@@ -2942,7 +3000,6 @@ function Pending({ data, admin, setData, query = "" }) {
                 )}
               </div>
 
-              {/* 管理按鈕 */}
               <div className="flex flex-wrap gap-2 justify-end">
                 <button className="rounded-lg border px-3 py-1.5" onClick={()=>editItem(x)}>編輯</button>
                 <button className="rounded-lg border px-3 py-1.5" onClick={()=>copyAdText(x)}>一鍵複製抽獎貼文</button>
@@ -2982,7 +3039,6 @@ function Pending({ data, admin, setData, query = "" }) {
 
       {/* 工具列 + 分頁器 */}
       <div className="sticky top-0 z-10">
-        {/* ★ 使用穩定版 Toolbar，避免打字重掛載；聚焦時停用毛玻璃 */}
         <ToolbarStable.current
           search={search} setSearch={setSearch}
           myName={myName} setMyName={setMyName}
@@ -3016,20 +3072,21 @@ function Pending({ data, admin, setData, query = "" }) {
         onOpenViewer={(images, idx, title)=>openViewer(images, idx, title)}
         onStartDraw={(it)=>setDraw({ open:true, item:it })}
         onAdmin={{
-          onEdit:  (it)=>editItem(it),
-          onDelete:(it)=>removeItemObj(it),
-          onCopyAd:(it)=>copyAdText(it),
-          onConvertBySim:(it)=>convertBySimulation(it),
-          // 面板與卡片的勾選 state 不同：這裡提供快速「全選轉歷史」
-          onConvertByChecked:(it)=>{
-            convertByChecked(it, Object.fromEntries((it?._candidates||[]).map(n=>[n,true])));
-          },
-          onConvertByInput:(it)=>convertByInput(it),
-          checkedMap:{}, toggleCheck:()=>{}
-        }}
+  onEdit:(it)=>editItem(it),
+  onDelete:(it)=>removeItemObj(it),
+  onCopyAd:(it)=>copyAdText(it),
+  onConvertBySim:(it)=>convertBySimulation(it),
+  // 這行要改：改成使用 map 或預設取目前 item 的 checkedMap
+  onConvertByChecked:(it, map)=>convertByChecked(it, map ?? getCheckedMap(it.id)),
+  onConvertByInput:(it)=>convertByInput(it),
+  // 這兩行要改：把勾選狀態/切換函式接上真正的 store
+  checkedMap: sheet.item ? getCheckedMap(sheet.item.id) : {},
+  toggleCheck: sheet.item ? makeToggleCheck(sheet.item.id) : ()=>{},
+}}
+
       />
 
-      {/* 抽獎展示（全螢幕覆蓋） */}
+      {/* 抽獎展示（全螢幕覆蓋，若你有 DrawSimulator） */}
       <DrawSimulator
         open={draw.open}
         onClose={()=>setDraw({ open:false, item:null })}
@@ -3042,15 +3099,14 @@ function Pending({ data, admin, setData, query = "" }) {
 
 
 
-
-
 /* ============================
  * 抽獎模擬器（展示用）
  * - 只顯示動畫與結果，不寫回資料、不提供複製/套用
  * props:
  *   open, onClose, participants (string[]), defaultCount (number)
+ *   itemId?: string  // 用於暫存最近一次模擬結果
  * ============================ */
-function DrawSimulator({ open=false, onClose=()=>{}, participants=[], defaultCount=1 }) {
+function DrawSimulator({ open=false, onClose=()=>{}, participants=[], defaultCount=1, itemId=null }) {
   const React = window.React || globalThis.React;
   const overlayRef = React.useRef(null);
 
@@ -3074,7 +3130,7 @@ function DrawSimulator({ open=false, onClose=()=>{}, participants=[], defaultCou
       window.removeEventListener("popstate", onPop);
       document.body.style.overflow = prev;
     };
-  }, [open]);
+  }, [open, onClose]);
 
   const handleOverlayClick = (e)=>{ if (e.target === overlayRef.current && !running) onClose(); };
 
@@ -3107,6 +3163,15 @@ function DrawSimulator({ open=false, onClose=()=>{}, participants=[], defaultCou
     };
     requestAnimationFrame(loop);
   };
+
+  // 快取最近一次模擬結果（依 itemId；並提供 __LAST__ 後備）
+  React.useEffect(() => {
+    if (!open) return;
+    if (!Array.isArray(results) || results.length === 0) return;
+    window.__LAST_SIM_RESULTS__ = window.__LAST_SIM_RESULTS__ || {};
+    if (itemId) window.__LAST_SIM_RESULTS__[itemId] = { winners: results, time: Date.now(), itemId };
+    window.__LAST_SIM_RESULTS__.__LAST__ = { winners: results, time: Date.now(), itemId: itemId || null };
+  }, [open, itemId, results]);
 
   if (!open) return null;
 
