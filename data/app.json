@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-14T19:37:35.231Z"
+    "exportedAt": "2025-09-15T19:12:08.341Z"
   },
   "data": {
     "homepage": {
@@ -442,7 +442,64 @@
         "note": "7/30無人參與，8/15開獎1人獨得"
       }
     ],
-    "pending": [],
+    "pending": [
+      {
+        "id": "uti59v9a",
+        "title": "飛天小女警「泡泡 」坐姿公仔存錢筒",
+        "date": "2025-09-27",
+        "image": "assets/等待開獎/9.27/飛天小女警「泡泡」坐姿公仔存錢筒.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "hti7yqdc",
+        "title": "飛天小女警「毛毛 」坐姿公仔存錢筒",
+        "date": "2025-09-27",
+        "image": "assets/等待開獎/9.27/飛天小女警「毛毛 」坐姿公仔存錢筒.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "rczq8tda",
+        "title": "我的英雄學院 峰田實",
+        "date": "2025-09-27",
+        "image": "assets/等待開獎/9.27/我的英雄學院 峰田實.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "yh1xposs",
+        "title": "海賊王 戰光絕景 RED 劇場版 耶穌布",
+        "date": "2025-09-27",
+        "image": "assets/等待開獎/9.27/海賊王 戰光絕景 RED 劇場版 耶穌布.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "gauqw4ho",
+        "title": "三角造型機械風 無線藍牙喇叭",
+        "date": "2025-09-27",
+        "image": "assets/等待開獎/9.27/三角造型機械風 無線藍牙喇叭.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "ml8wsmgu",
+        "title": "拍拍燈藍牙音箱",
+        "date": "2025-09-27",
+        "image": "assets/等待開獎/9.27/拍拍燈藍牙音箱.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "zgwrywqk",
+        "title": "數顯手持風扇",
+        "date": "2025-09-27",
+        "image": "assets/等待開獎/9.27/數顯手持風扇.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      }
+    ],
     "ongoing": [],
     "shop": {
       "items": [
