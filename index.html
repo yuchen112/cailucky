@@ -1148,7 +1148,7 @@ function FloatingPickbar({ count = 0, onOpen = () => {} }) {
     : node;
 }
 
-// 清單確認對話框（無輸入欄，全部勾選確認）— 規格版
+// 清單確認對話框（無輸入欄，全部勾選確認）— 規格版（含總金額/總點數顯示）
 function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
   const React = window.React || globalThis.React;
   if (!open) return null;
@@ -1201,6 +1201,7 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
     return s.includes(marker) ? s : `${s}${marker}`;
   };
 
+  // 產生可複製文字（含合計）
   const buildListText = (m) => {
     const rows = [];
     let sumCash = 0, sumPts = 0;
@@ -1222,9 +1223,24 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
     return [head, ...rows, tail].filter(Boolean).join('\n');
   };
 
+  // 只取已勾選的項目
   const listMap = keys
     .filter((k) => checked[k])
     .reduce((o, k) => ((o[k] = map[k]), o), {});
+
+  // UI 即時計算合計（與 buildListText 一致）
+  const { sumCash, sumPts } = React.useMemo(() => {
+    let sc = 0, sp = 0;
+    for (const k of Object.keys(listMap)) {
+      const it = listMap[k] || {};
+      const qty = it.qty || 0;
+      if (mode === 'cash' && Number.isFinite(+it.price)) sc += (+it.price) * qty;
+      if (mode === 'pts'  && Number.isFinite(+it.pts))   sp += (+it.pts) * qty;
+    }
+    return { sumCash: sc, sumPts: sp };
+  }, [listMap, mode]);
+
+  const nf = React.useMemo(() => new Intl.NumberFormat('zh-TW'), []);
   const text = buildListText(listMap);
 
   return (
@@ -1237,7 +1253,8 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
             <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
           </div>
 
-          <div className="p-3 overflow-y-auto max-h-[calc(86vh-96px)] space-y-2">
+          {/* 清單內容 */}
+          <div className="p-3 overflow-y-auto max-h-[calc(86vh-148px)] space-y-2">
             {keys.length === 0 ? (
               <div className="text-sm text-slate-500">尚未挑選任何商品</div>
             ) : keys.map((k) => {
@@ -1278,12 +1295,25 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
             })}
           </div>
 
+          {/* 合計區塊（清單下方、按鈕上方） */}
+          <div className="px-3 py-2 border-t border-slate-200 dark:border-slate-700 text-right text-sm font-semibold">
+            {mode === 'cash'
+              ? <>總金額：NT$ {nf.format(sumCash)}</>
+              : <>合計點數：約 {nf.format(sumPts)} 點</>}
+          </div>
+
+          {/* 動作列 */}
           <div className="p-3 border-t border-slate-200 dark:border-slate-700 flex items-center gap-2">
             <button
               className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm"
               onClick={async () => {
-                try { await navigator.clipboard.writeText(text); alert('✅ 已複製清單，請貼到官方 LINE 帳號聯絡管理員確認。'); onClose(); }
-                catch { alert('無法自動複製，請手動選取文字複製：\n\n' + text); }
+                try {
+                  await navigator.clipboard.writeText(text);
+                  alert('✅ 已複製清單，請貼到官方 LINE 帳號聯絡管理員確認。');
+                  onClose();
+                } catch {
+                  alert('無法自動複製，請手動選取文字複製：\n\n' + text);
+                }
               }}
             >
               複製清單
@@ -1532,11 +1562,32 @@ function Store({ data, admin, setData, query = "" }) {
           const cover = Array.isArray(x._images) && x._images.length > 0 ? x._images[0] : "";
           const remain = getRemain(x);
 
+          // ★★★★★ 狀態徽章（僅 Store 使用）—— 依 availability 顯示「現貨／預售」
+          const availability = typeof x?.availability === "string" ? x.availability.trim() : "";
+          const showBadge = availability === "現貨" || availability === "預售";
+          const badgeClass =
+            availability === "現貨"
+              ? "bg-emerald-600 text-white"
+              : "bg-amber-500 text-white";
+
           return (
             <div key={id} className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden select-none flex flex-col">
               {/* 圖片／點擊開詳情 */}
               <button className="block w-full text-left p-3 pb-2" onClick={() => setSheet({ open: true, item: x })} title={name}>
-                <div className="aspect-[4/3] w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
+                <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
+                  {/* 左上角狀態徽章（現貨／預售） */}
+                  {showBadge && (
+                    <span
+                      className={
+                        "pointer-events-none absolute left-2 top-2 z-[1] rounded-full px-2.5 py-1 text-xs font-medium shadow-soft " +
+                        badgeClass
+                      }
+                      aria-hidden="true"
+                    >
+                      {availability}
+                    </span>
+                  )}
+
                   {cover ? <img src={cover} alt="" className="w-full h-full object-contain" loading="lazy" /> : <div className="text-slate-400 text-sm">無圖片</div>}
                 </div>
               </button>
@@ -1601,6 +1652,7 @@ function Store({ data, admin, setData, query = "" }) {
     </section>
   );
 }
+
 
 function StoreCard({ item }) {
   const images = Array.isArray(item?.images) ? item.images.filter(Boolean) : [];
