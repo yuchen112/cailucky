@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-15T19:12:08.341Z"
+    "exportedAt": "2025-09-16T08:56:08.520Z"
   },
   "data": {
     "homepage": {
@@ -633,6 +633,31 @@
       ],
       "people": [
         {
+          "id": "m9wfucia",
+          "name": "@小小",
+          "points": 0
+        },
+        {
+          "id": "krv79obk",
+          "name": "@Anna Wu",
+          "points": 0
+        },
+        {
+          "id": "eccse15i",
+          "name": "@Laixi",
+          "points": 0
+        },
+        {
+          "id": "xthujfqe",
+          "name": "@cindy",
+          "points": 1
+        },
+        {
+          "id": "02quimto",
+          "name": "@238🐶🐮🐍Cindy",
+          "points": 0
+        },
+        {
           "id": "uhhx5fii",
           "name": "@cxr.",
           "points": 0
@@ -994,6 +1019,13 @@
         }
       ],
       "logs": [
+        {
+          "id": "ic2rar2y",
+          "personId": "xthujfqe",
+          "delta": 1,
+          "note": "邀請好友 @238🐶🐮🐍Cindy ",
+          "at": "2025-09-16 16:54"
+        },
         {
           "id": "2c7hxk9c",
           "personId": "7w7obl13",
