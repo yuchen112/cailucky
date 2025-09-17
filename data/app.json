@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-17T08:54:22.103Z"
+    "exportedAt": "2025-09-17T09:02:33.861Z"
   },
   "data": {
     "homepage": {
@@ -40,7 +40,7 @@
         "winnerCount": 2,
         "totalParticipants": 2,
         "youtube": "",
-        "status": "再寄送中",
+        "status": "處理中",
         "note": "抽出名額與參與人數一致，故不抽獎"
       },
       {
@@ -79,7 +79,7 @@
         "winnerCount": 1,
         "totalParticipants": 15,
         "youtube": "https://youtu.be/5BaSDVBL-xQ",
-        "status": "處理中",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -105,7 +105,7 @@
         "winnerCount": 1,
         "totalParticipants": 7,
         "youtube": "https://youtu.be/_Ydq2PNjqe0",
-        "status": "處理中",
+        "status": "已寄出",
         "note": ""
       },
       {
