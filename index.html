@@ -5,192 +5,191 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>開獎所｜官方網站</title>
   <meta name="color-scheme" content="light dark">
+
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          brand: { DEFAULT: '#14b8a6', fg: '#0f766e', amber: '#f59e0b' }
-        },
-        boxShadow: {
-          soft: '0 10px 25px -10px rgb(0 0 0 / 0.25)',
-          elevate: '0 12px 30px -12px rgba(0,0,0,.35)'
-        },
-        borderRadius: { 'xl2': '1rem' },
-        keyframes: {
-          fadeIn: { '0%': {opacity:0, transform:'translateY(6px)'},
-                    '100%': {opacity:1, transform:'translateY(0)'} },
-          pulseSoft: { '0%,100%': {opacity:.75}, '50%': {opacity:1} }
-        },
-        animation: {
-          fadeIn: 'fadeIn .35s ease-out both',
-          pulseSoft: 'pulseSoft 2.4s ease-in-out infinite'
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: '#14b8a6', fg: '#0f766e', amber: '#f59e0b' }
+          },
+          boxShadow: {
+            soft: '0 10px 25px -10px rgb(0 0 0 / 0.25)',
+            elevate: '0 12px 30px -12px rgba(0,0,0,.35)'
+          },
+          borderRadius: { 'xl2': '1rem' },
+          keyframes: {
+            fadeIn: { '0%': {opacity:0, transform:'translateY(6px)'},
+                      '100%': {opacity:1, transform:'translateY(0)'} },
+            pulseSoft: { '0%,100%': {opacity:.75}, '50%': {opacity:1} }
+          },
+          animation: {
+            fadeIn: 'fadeIn .35s ease-out both',
+            pulseSoft: 'pulseSoft 2.4s ease-in-out infinite'
+          }
         }
       }
     }
-  }
-</script>
+  </script>
 
   <!-- React 18 UMD + Babel for in-browser JSX -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- 全域樣式 -->
   <style>
- 
-/* 柔和格點背景 + 漸層基底 */
-body {
-  background-image:
-    radial-gradient(at 20% 0%, rgba(20,184,166,.08), transparent 35%),
-    radial-gradient(at 80% 10%, rgba(245,158,11,.08), transparent 35%),
-    radial-gradient(at 50% 100%, rgba(15,118,110,.08), transparent 35%);
-}
+    /* 柔和格點背景 + 漸層基底（保留） */
+    body {
+      background-image:
+        radial-gradient(at 20% 0%, rgba(20,184,166,.08), transparent 35%),
+        radial-gradient(at 80% 10%, rgba(245,158,11,.08), transparent 35%),
+        radial-gradient(at 50% 100%, rgba(15,118,110,.08), transparent 35%);
+    }
 
-   
-    .tap-target{padding:10px 12px; min-width:44px; min-height:44px}
+    /* 行動端觸控目標：更穩健的 hit area（≥44px） */
+    .tap-target { padding: 12px 14px; min-width: 44px; min-height: 44px; }
 
+    /* 自訂捲軸隱藏（保留） */
     .no-scrollbar::-webkit-scrollbar{display:none}
     .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
-  
-/* === 背景圖片（整站） ================================== */
-html, body { min-height: 100%; }
-body::before{
-  content:"";
-  position: fixed; inset: 0; z-index:-1;
-  background-image:
-    linear-gradient(var(--bg-tint, rgba(255,255,255,0.0)), var(--bg-tint, rgba(255,255,255,0.0))),
-    var(--bg-img, none);
-  background-size: var(--bg-size, cover);
-  background-position: var(--bg-pos, center);
-  background-repeat: no-repeat;
-  filter: brightness(var(--bg-brightness,1)) blur(var(--bg-blur,0px));
-  opacity: var(--bg-opacity,1);
-  transition: filter .25s ease, opacity .25s ease, background .25s ease;
-}
 
-/* === 漢堡選單背景 ======================= */
+    /* === 背景圖片（整站） ================================== */
+    html, body { min-height: 100%; }
+    body::before{
+      content:"";
+      position: fixed; inset: 0; z-index:-1;
+      background-image:
+        linear-gradient(var(--bg-tint, rgba(255,255,255,0.0)), var(--bg-tint, rgba(255,255,255,0.0))),
+        var(--bg-img, none);
+      background-size: var(--bg-size, cover);
+      background-position: var(--bg-pos, center);
+      background-repeat: no-repeat;
+      filter: brightness(var(--bg-brightness,1)) blur(var(--bg-blur,0px));
+      opacity: var(--bg-opacity,1);
+      transition: filter .25s ease, opacity .25s ease, background .25s ease;
+    }
 
-.menu-pane{
-  position: relative;
-  overflow: hidden;
-  background: var(--menu-fallback, rgba(255,255,255,.92));
-  border-right: 1px solid rgba(15,23,42,.08);
-}
-.menu-pane::before{
-  content:"";
-  position: absolute; inset: 0; z-index: 0;
-  background-image:
-    linear-gradient(var(--menu-tint, rgba(255,255,255,0.0)), var(--menu-tint, rgba(255,255,255,0.0))),
-    var(--menu-bg-img, none);
-  background-size: var(--menu-bg-size, cover);
-  background-position: var(--menu-bg-pos, center);
-  background-repeat: no-repeat;
-  filter: brightness(var(--menu-brightness,1)) blur(var(--menu-blur,0px));
-  opacity: var(--menu-opacity,1);
-}
-.menu-pane > *{ position: relative; z-index:1; }
+    /* === 漢堡選單背景 ======================= */
+    .menu-pane{
+      position: relative;
+      overflow: hidden;
+      background: var(--menu-fallback, rgba(255,255,255,.92));
+      border-right: 1px solid rgba(15,23,42,.08);
+    }
+    .menu-pane::before{
+      content:"";
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(var(--menu-tint, rgba(255,255,255,0.0)), var(--menu-tint, rgba(255,255,255,0.0))),
+        var(--menu-bg-img, none);
+      background-size: var(--menu-bg-size, cover);
+      background-position: var(--menu-bg-pos, center);
+      background-repeat: no-repeat;
+      filter: brightness(var(--menu-brightness,1)) blur(var(--menu-blur,0px));
+      opacity: var(--menu-opacity,1);
+    }
+    .menu-pane > *{ position: relative; z-index:1; }
 
-/* === Mobile tweaks (不影響桌機) === */
-@media (max-width: 640px) {
+    /* === 共用：彈窗內容容器防抖動（iOS/Safari 友好） === */
+    .modal-scroll{
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* === Mobile tweaks (不影響桌機) === */
+  @media (max-width: 640px) {
   .toolbar-grid, .flex-wrap, .px-2 { gap: 8px; }
   .paginator-top { display: none; }     /* 上方分頁器在手機隱藏，保留下方那組 */
   .min-h-\[44px\] { min-height: 44px !important; }
   .sheet-w { width: min(96vw, 560px) !important; }
+
+  /* 讓行動端整體按鈕更好點 */
+  .tap-target { padding: 12px 16px; }
+
+  /* ★ 下方分頁器：避免被 iOS 底部工具列/安全區吃掉 */
+  .paginator-bottom { padding-bottom: env(safe-area-inset-bottom); }
 }
 
-</style>
+  </style>
 
-<!-- [IMGIO CSS START] -->
-<style>
-  /* 基本：當作容器調整時會用到（背景圖等） */
-  [data-img-key]{
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-  }
-  /* 若你要用透明度/偏移/縮放等，這裡提供通用 class（JS 會直接改 style，不會動你 class） */
+  <!-- [IMGIO CSS START] -->
+  <style>
+    /* 基本：當作容器調整時會用到（背景圖等） */
+    [data-img-key]{
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+    }
 
-/* === Dark mode 增強：主頁背景與漢堡選單對比/可讀性 === */
-/* 以「媒體查詢」偵測系統深色；Tailwind 預設 darkMode: 'media' 也相容 */
-@media (prefers-color-scheme: dark) {
+    /* === Dark mode 增強：主頁背景與漢堡選單對比/可讀性 === */
+    @media (prefers-color-scheme: dark) {
+      /* 1) 調整全站（主頁）漸層背景在深色下的觀感：更柔和、更有層次 */
+      body {
+        background-image:
+          radial-gradient(at 20% 0%, rgba(20,184,166,.12), transparent 35%),
+          radial-gradient(at 80% 10%, rgba(245,158,11,.10), transparent 35%),
+          radial-gradient(at 50% 100%, rgba(100,116,139,.18), transparent 38%); /* slate-500-ish */
+      }
 
-  /* 1) 調整全站（主頁）漸層背景在深色下的觀感：更柔和、更有層次 */
-  body {
-    background-image:
-      radial-gradient(at 20% 0%, rgba(20,184,166,.12), transparent 35%),
-      radial-gradient(at 80% 10%, rgba(245,158,11,.10), transparent 35%),
-      radial-gradient(at 50% 100%, rgba(100,116,139,.18), transparent 38%); /* slate-500-ish */
-    /* 這裡不動你原本的 --bg-* 變數；若有自訂背景圖仍會照常套用 */
-  }
+      /* 2) 提升漢堡抽屜（menu-pane）可讀性：深底＋亮字＋柔和邊界 */
+      :root {
+        --menu-fallback: rgba(2, 6, 23, 0.92); /* slate-950 近似值、帶 92% 不透明 */
+      }
+      .menu-pane {
+        background: var(--menu-fallback, rgba(2, 6, 23, 0.92)) !important;
+        color: #e5e7eb; /* slate-200：抽屜內一般文字 */
+        border-right-color: rgba(148, 163, 184, 0.25); /* slate-400-ish */
+      }
+      .menu-pane .border,
+      .menu-pane .border-b,
+      .menu-pane .border-t,
+      .menu-pane .border-l,
+      .menu-pane .border-r {
+        border-color: rgba(148, 163, 184, 0.25) !important;
+      }
+      .menu-pane a,
+      .menu-pane button,
+      .menu-pane [role="button"] {
+        color: inherit;
+      }
+      .menu-pane .hover\:bg-slate-100:hover,
+      .menu-pane .active\:bg-slate-100:active {
+        background-color: rgba(30, 41, 59, 0.6) !important; /* slate-800 60% */
+      }
+      .menu-pane .bg-white,
+      .menu-pane .bg-white\/85,
+      .menu-pane .bg-slate-50 {
+        background-color: rgba(2, 6, 23, 0.92) !important;
+        color: #e5e7eb !important;
+      }
+      .menu-pane .text-slate-500 { color: #cbd5e1 !important; } /* slate-300 近似 */
+    }
 
-  /* 2) 提升漢堡抽屜（menu-pane）可讀性：深底＋亮字＋柔和邊界 */
-  :root {
-    /* 若未另行指定 menu 背景，提供深色下更適合的預設 fallback */
-    --menu-fallback: rgba(2, 6, 23, 0.92); /* slate-950 近似值、帶 92% 不透明 */
-  }
+    :root{
+      /* 若你的底部工具列高度不同，這裡改數值即可（手機常見 56~64px） */
+      --bottom-nav-height: 56px;
+    }
 
-  .menu-pane {
-    background: var(--menu-fallback, rgba(2, 6, 23, 0.92)) !important;
-    color: #e5e7eb; /* slate-200：抽屜內一般文字 */
-    border-right-color: rgba(148, 163, 184, 0.25); /* slate-400-ish */
-  }
+    /* 給浮動清單條專用，會自動避開底部工具列與安全區 */
+    .floating-pickbar {
+      position: fixed;
+      left: 0; right: 0;
+      z-index: 40;
+      padding-left: 0.75rem; padding-right: 0.75rem; /* = px-3 */
+      bottom: calc(env(safe-area-inset-bottom) + var(--bottom-nav-height) + 12px);
+    }
 
-  /* 抽屜內的分隔線/邊框，在深色下更柔和 */
-  .menu-pane .border,
-  .menu-pane .border-b,
-  .menu-pane .border-t,
-  .menu-pane .border-l,
-  .menu-pane .border-r {
-    border-color: rgba(148, 163, 184, 0.25) !important;
-  }
-
-  /* 抽屜內連結/按鈕維持繼承的亮字色，避免個別元素顏色過暗 */
-  .menu-pane a,
-  .menu-pane button,
-  .menu-pane [role="button"] {
-    color: inherit;
-  }
-
-  /* 抽屜項目的 hover/active 狀態在深色下給更淺的高亮底，對比更清楚 */
-  .menu-pane .hover\:bg-slate-100:hover,
-  .menu-pane .active\:bg-slate-100:active {
-    background-color: rgba(30, 41, 59, 0.6) !important; /* slate-800 60% */
-  }
-
-  /* 抽屜頂部工具列（你原本的 header 區塊）底色與文字也一併優化 */
-  .menu-pane .bg-white,
-  .menu-pane .bg-white\/85,
-  .menu-pane .bg-slate-50 {
-    background-color: rgba(2, 6, 23, 0.92) !important;
-    color: #e5e7eb !important;
-  }
-  .menu-pane .text-slate-500 { color: #cbd5e1 !important; } /* slate-300 近似 */
-}
-
-:root{
-  /* 若你的底部工具列高度不同，這裡改數值即可（手機常見 56~64px） */
-  --bottom-nav-height: 56px;
-}
-
-/* 給浮動清單條專用，會自動避開底部工具列與安全區 */
-.floating-pickbar {
-  position: fixed;
-  left: 0; right: 0;
-  z-index: 40;
-  padding-left: 0.75rem; padding-right: 0.75rem; /* = px-3 */
-  bottom: calc(env(safe-area-inset-bottom) + var(--bottom-nav-height) + 12px);
-}
-
-/* 有浮動條時，頁面底部留出空間避免被擋住 */
-.pickbar-spacer {
-  height: calc(var(--bottom-nav-height) + 96px);
-}
-
-</style>
-<!-- [IMGIO CSS END] -->
-
+    /* 有浮動條時，頁面底部留出空間避免被擋住 */
+    .pickbar-spacer {
+      height: calc(var(--bottom-nav-height) + 96px);
+    }
+  </style>
+  <!-- [IMGIO CSS END] -->
 </head>
+
 <body class="bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-100">
   <div id="root" class="min-h-screen"></div>
 
@@ -200,63 +199,67 @@ body::before{
     // —— LocalStorage Keys ——
     const LS = { data: 'kjs_site_data_v1', admin: 'kjs_admin_pass' };
 
-  // === Default Settings（可被管理面板覆寫） ===
-const DEFAULT_SETTINGS = {
-  drawMaxPerRun: 500,      // 單次最多抽出人數上限（名額）
-  drawPublicShowLimit: 50, // 公開結果最多顯示幾位
-  drawCooldownSec: 10,     // 同一活動重跑冷卻秒數
-  contactUrl: ""           // ★ 全域「聯絡管理員」網址（可留空）
-};
-// === History 狀態選單 ===
-const HISTORY_STATUS_OPTIONS = [
-  { value: "已寄出",   label: "✅ 已寄出" },
-  { value: "處理中",   label: "⏳ 處理中" },
-  { value: "未回覆",   label: "🔴 未回覆" },
-  { value: "再寄送中", label: "📦 再寄送中" },
-  { value: "待寄送",   label: "🟡 待寄送" },
-  { value: "放棄領獎", label: "🚫 放棄領獎" },
-];
-// 顯示用（歷史列表）
-const HISTORY_STATUS_ICON = {
-  "已寄出":"✅","處理中":"⏳","未回覆":"🔴","再寄送中":"📦","待寄送":"🟡","放棄領獎":"🚫"
-};
+    // === Default Settings（可被管理面板覆寫） ===
+    const DEFAULT_SETTINGS = {
+      drawMaxPerRun: 500,      // 單次最多抽出人數上限（名額）
+      drawPublicShowLimit: 50, // 公開結果最多顯示幾位
+      drawCooldownSec: 10,     // 同一活動重跑冷卻秒數
+      contactUrl: ""           // ★ 全域「聯絡管理員」網址（可留空）
+    };
 
-// ========== 狀態標籤樣式（柔和、不刺眼） ==========
-const HISTORY_STATUS_STYLE = {
-  "已寄出":   { bg: "bg-emerald-100/70 dark:bg-emerald-300/15", text: "text-emerald-700 dark:text-emerald-300", ring:"ring-emerald-500/20" },
-  "處理中":   { bg: "bg-sky-100/70 dark:bg-sky-300/15",         text: "text-sky-700 dark:text-sky-300",         ring:"ring-sky-500/20" },
-  "未回覆":   { bg: "bg-rose-100/70 dark:bg-rose-300/15",       text: "text-rose-700 dark:text-rose-300",       ring:"ring-rose-500/20" },
-  "再寄送中": { bg: "bg-indigo-100/70 dark:bg-indigo-300/15",   text: "text-indigo-700 dark:text-indigo-300",   ring:"ring-indigo-500/20" },
-  "待寄送":   { bg: "bg-amber-100/70 dark:bg-amber-300/15",     text: "text-amber-800 dark:text-amber-300",     ring:"ring-amber-500/20" },
-  "放棄領獎": { bg: "bg-slate-200/70 dark:bg-slate-300/15",     text: "text-slate-700 dark:text-slate-300",     ring:"ring-slate-400/20" },
-};
+    // === History 狀態選單 ===
+    const HISTORY_STATUS_OPTIONS = [
+      { value: "已寄出",   label: "✅ 已寄出" },
+      { value: "處理中",   label: "⏳ 處理中" },
+      { value: "未回覆",   label: "🔴 未回覆" },
+      { value: "再寄送中", label: "📦 再寄送中" },
+      { value: "待寄送",   label: "🟡 待寄送" },
+      { value: "放棄領獎", label: "🚫 放棄領獎" },
+    ];
 
-/* =========================================
- * 全域捲動鎖：避免彈窗/檢視器異常造成整站卡住
- * ========================================= */
-(function(){
-  const lockKey = "__BODY_SCROLL_LOCK_COUNT__";
-  if (!window[lockKey]) window[lockKey] = 0;
-  function apply() {
-    if (window[lockKey] > 0) {
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
-      document.body.style.touchAction = "none";
-    } else {
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
-      document.body.style.touchAction = "";
-    }
-  }
-  window.BodyScrollLock = {
-    lock() { window[lockKey] = Math.max(0, (window[lockKey]||0)) + 1; apply(); },
-    unlock() { window[lockKey] = Math.max(0, (window[lockKey]||0) - 1); apply(); },
-    reset() { window[lockKey] = 0; apply(); }
-  };
-  // 保險機制：頁面隱藏/離開時自動還原
-  window.addEventListener("pagehide", ()=>window.BodyScrollLock.reset());
-  document.addEventListener("visibilitychange", ()=>{ if (document.visibilityState !== "visible") window.BodyScrollLock.reset(); });
-})();
+    // 顯示用（歷史列表）
+    const HISTORY_STATUS_ICON = {
+      "已寄出":"✅","處理中":"⏳","未回覆":"🔴","再寄送中":"📦","待寄送":"🟡","放棄領獎":"🚫"
+    };
+
+    // ========== 狀態標籤樣式（柔和、不刺眼） ==========
+    const HISTORY_STATUS_STYLE = {
+      "已寄出":   { bg: "bg-emerald-100/70 dark:bg-emerald-300/15", text: "text-emerald-700 dark:text-emerald-300", ring:"ring-emerald-500/20" },
+      "處理中":   { bg: "bg-sky-100/70 dark:bg-sky-300/15",         text: "text-sky-700 dark:text-sky-300",         ring:"ring-sky-500/20" },
+      "未回覆":   { bg: "bg-rose-100/70 dark:bg-rose-300/15",       text: "text-rose-700 dark:text-rose-300",       ring:"ring-rose-500/20" },
+      "再寄送中": { bg: "bg-indigo-100/70 dark:bg-indigo-300/15",   text: "text-indigo-700 dark:text-indigo-300",   ring:"ring-indigo-500/20" },
+      "待寄送":   { bg: "bg-amber-100/70 dark:bg-amber-300/15",     text: "text-amber-800 dark:text-amber-300",     ring:"ring-amber-500/20" },
+      "放棄領獎": { bg: "bg-slate-200/70 dark:bg-slate-300/15",     text: "text-slate-700 dark:text-slate-300",     ring:"ring-slate-400/20" },
+    };
+
+    /* =========================================
+     * 全域捲動鎖：避免彈窗/檢視器異常造成整站卡住
+     * ========================================= */
+    (function(){
+      const lockKey = "__BODY_SCROLL_LOCK_COUNT__";
+      if (!window[lockKey]) window[lockKey] = 0;
+      function apply() {
+        if (window[lockKey] > 0) {
+          document.documentElement.style.overflow = "hidden";
+          document.body.style.overflow = "hidden";
+          document.body.style.touchAction = "none";
+        } else {
+          document.documentElement.style.overflow = "";
+          document.body.style.overflow = "";
+          document.body.style.touchAction = "";
+        }
+      }
+      window.BodyScrollLock = {
+        lock() { window[lockKey] = Math.max(0, (window[lockKey]||0)) + 1; apply(); },
+        unlock() { window[lockKey] = Math.max(0, (window[lockKey]||0) - 1); apply(); },
+        reset() { window[lockKey] = 0; apply(); }
+      };
+      // 保險機制：頁面隱藏/離開時自動還原
+      window.addEventListener("pagehide", ()=>window.BodyScrollLock.reset());
+      document.addEventListener("visibilitychange", ()=>{ if (document.visibilityState !== "visible") window.BodyScrollLock.reset(); });
+    })();
+
+
 
 // === 列頭：日期 / 獎品名稱(截斷) / 狀態（靠右不換行） ===
 function HistoryHeaderRow({ rec }) {
@@ -266,14 +269,14 @@ function HistoryHeaderRow({ rec }) {
 
   return (
     <div className="grid grid-cols-[94px_1fr_auto] sm:grid-cols-[110px_1fr_auto] items-center gap-2 sm:gap-3 w-full">
-      {/* 日期：等寬字體，固定寬度 */}
-      <span className="font-mono text-[13px] text-slate-500">{date}</span>
+      {/* 日期：等寬字體，固定寬度（14px） */}
+      <span className="font-mono text-sm text-slate-500">{date}</span>
 
-      {/* 名稱：單行截斷，手機限制字數更緊 */}
+      {/* 名稱：單行截斷（手機 14px / 桌機 15px） */}
       <div className="flex items-center min-w-0">
         <span className="mr-2" aria-hidden="true">🎁</span>
         <span
-          className="truncate max-w-[18ch] sm:max-w-[48ch] text-[15px]"
+          className="truncate max-w-[18ch] sm:max-w-[48ch] text-base sm:text-[15px]"
           title={title}
         >
           {title}
@@ -317,20 +320,20 @@ function useTagFilter(allTags = []) {
 }
 
 // 元件：標籤 Chips（可多選）
-function TagChips({ tags=[], picked=[], onToggle, onClear }) {
+function TagChips({ tags = [], picked = [], onToggle, onClear }) {
   if (!tags.length) return (
     <div className="text-xs text-slate-500">目前沒有標籤</div>
   );
   return (
-    <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+    <div className="flex items-center gap-2.5 overflow-x-auto no-scrollbar py-1.5">
       {tags.map(t => {
         const active = picked.includes(t);
         return (
           <button
             key={t}
-            onClick={()=>onToggle(t)}
+            onClick={() => onToggle(t)}
             className={
-              "tap-target rounded-full border px-3 py-1 text-sm whitespace-nowrap " +
+              "tap-target rounded-full border px-3.5 py-1.5 text-sm whitespace-nowrap min-h-[44px] " +
               (active ? "bg-brand text-white border-brand" : "bg-white/70 dark:bg-slate-900/60")
             }
             title={active ? "取消此標籤" : "選取此標籤"}
@@ -339,8 +342,11 @@ function TagChips({ tags=[], picked=[], onToggle, onClear }) {
           </button>
         );
       })}
-      {picked.length>0 && (
-        <button onClick={onClear} className="tap-target rounded-full border px-3 py-1 text-sm whitespace-nowrap">
+      {picked.length > 0 && (
+        <button
+          onClick={onClear}
+          className="tap-target rounded-full border px-3.5 py-1.5 text-sm whitespace-nowrap min-h-[44px]"
+        >
           清除標籤
         </button>
       )}
@@ -348,10 +354,6 @@ function TagChips({ tags=[], picked=[], onToggle, onClear }) {
   );
 }
 
-/* ============================
- * 跳出式資訊面板（社群商店 / 點數商城 / 等待開獎）
- * － 規格（單/雙）選擇 + 有效價格/點數/庫存 + 事件橋接（shop 移除「複製模板」）
- * ============================ */
 function ProductSheet({
   open = false,
   item = null,
@@ -425,17 +427,20 @@ function ProductSheet({
   })();
   const candidateCount = candidates.length;
 
-  // 觸控換圖
+  // 觸控換圖（門檻 80 -> 40，更好滑）
   let sx = 0, sy = 0, dragging = false;
   const onTouchStart = (e) => { if (e.touches.length === 1) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; dragging = true; } };
   const onTouchEnd   = (e) => {
     if (!dragging) return; dragging = false;
     const ex = e.changedTouches?.[0]?.clientX ?? sx; const ey = e.changedTouches?.[0]?.clientY ?? sy;
     const dx = ex - sx, dy = ey - sy;
-    if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) && images.length > 1) {
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) && images.length > 1) {
       setIndex(i => (dx > 0 ? (i - 1 + images.length) : (i + 1)) % images.length);
     }
   };
+
+  const gotoPrev = () => setIndex(i => (i - 1 + images.length) % images.length);
+  const gotoNext = () => setIndex(i => (i + 1) % images.length);
 
   // 聯絡連結
   const effectiveContactUrl =
@@ -563,21 +568,46 @@ function ProductSheet({
           <button className="rounded-full border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
         </div>
 
-        {/* body */}
-        <div className="flex-1 overflow-y-auto">
+       {/* body：改用共用 .modal-scroll class */}
+<div className="flex-1 overflow-y-auto modal-scroll">
+
           {/* 主圖 */}
           <div className="relative bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
-            <div className="aspect-square w-full grid place-content-center" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+            <div
+              className="aspect-square w-full grid place-content-center select-none"
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
+            >
               {images.length ? (
                 <img src={images[index]} alt="" className="w-full h-full object-contain select-none" />
               ) : <div className="text-slate-400 text-sm">無圖片</div>}
             </div>
+
+            {/* 圖片圓點 */}
             {images.length>1 && (
               <div className="absolute bottom-2 inset-x-0 flex items-center justify-center gap-1">
                 {images.map((_, i) => (
                   <span key={i} className={"h-1.5 w-1.5 rounded-full " + (i===index ? "bg-slate-900 dark:bg-white" : "bg-slate-300 dark:bg-slate-600")}/>
                 ))}
               </div>
+            )}
+
+            {/* 左右箭頭（行動端加大點擊區） */}
+            {images.length>1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={gotoPrev}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 tap-target rounded-full bg-white/80 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 shadow-soft px-3"
+                  title="上一張"
+                >‹</button>
+                <button
+                  type="button"
+                  onClick={gotoNext}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 tap-target rounded-full bg-white/80 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 shadow-soft px-3"
+                  title="下一張"
+                >›</button>
+              </>
             )}
           </div>
 
@@ -612,7 +642,7 @@ function ProductSheet({
                                 }));
                               } catch {}
                             }}
-                            className={"px-3 py-1.5 rounded-full border text-sm " + (v===sel1 ? "bg-brand text-white border-brand" : "")}
+                            className={"tap-target px-3.5 py-1.5 rounded-full border text-sm " + (v===sel1 ? "bg-brand text-white border-brand" : "")}
                             title={v}
                           >{v}</button>
                         ))}
@@ -637,7 +667,7 @@ function ProductSheet({
                                 }));
                               } catch {}
                             }}
-                            className={"px-3 py-1.5 rounded-full border text-sm " + (v===sel2 ? "bg-brand text-white border-brand" : "")}
+                            className={"tap-target px-3.5 py-1.5 rounded-full border text-sm " + (v===sel2 ? "bg-brand text-white border-brand" : "")}
                             title={v}
                           >{v}</button>
                         ))}
@@ -662,7 +692,7 @@ function ProductSheet({
             )}
           </div>
 
-          {/* pending：參與名單與勾選 */}
+          {/* pending：參與名單與勾選（維持原邏輯） */}
           {context==="pending" && candidates.length > 0 && (
             <div className="px-4 pb-4">
               <div className="mb-2 text-sm font-medium flex items-center justify-between">
@@ -729,7 +759,7 @@ function ProductSheet({
             </div>
           )}
 
-          {/* ★★★ 這一段是關鍵：商店/點數商城的「加入清單」控制 ★★★ */}
+          {/* ★★★ 商店/點數商城的「加入清單」控制（維持原邏輯） ★★★ */}
           {item && (context === "store" || context === "shop") ? (
             (V.mode !== "none" && !selectedDone)
               ? (
@@ -801,7 +831,6 @@ function ProductSheet({
 }
 
 
-/* === 詳情視窗底部：數量步進 + 加入清單（規格由上方小卡決定；一致的 id/事件） === */
 function SheetPickControls({ item, mode='cash' }) {
   const React = window.React || globalThis.React;
   const pick = usePickList(mode==='pts' ? 'kjs_pointshop_picklist' : 'kjs_store_picklist');
@@ -876,14 +905,14 @@ function SheetPickControls({ item, mode='cash' }) {
       )}
 
       <div className="flex items-center gap-2">
-        <div className="flex items-center gap-1">
-          <button className="rounded-lg border px-3 py-2 min-w-[44px]" disabled={!selectionReady} onClick={()=>setQ(Math.max(0,(qty||0)-1))}>－</button>
-          <input className="w-16 text-center rounded-lg border px-2 py-2" inputMode="numeric" value={qty||0} disabled={!selectionReady} onChange={e=>setQ(Math.max(0, Number(e.target.value)||0))}/>
-          <button className="rounded-lg border px-3 py-2 min-w-[44px]" disabled={!selectionReady} onClick={()=>setQ((qty||0)+1)}>＋</button>
+        <div className="flex items-center gap-2">
+          <button className="tap-target rounded-lg border px-3.5 py-2.5 min-w-[48px]" disabled={!selectionReady} onClick={()=>setQ(Math.max(0,(qty||0)-1))}>－</button>
+          <input className="w-20 text-center rounded-lg border px-2 py-2" inputMode="numeric" value={qty||0} disabled={!selectionReady} onChange={e=>setQ(Math.max(0, Number(e.target.value)||0))}/>
+          <button className="tap-target rounded-lg border px-3.5 py-2.5 min-w-[48px]" disabled={!selectionReady} onClick={()=>setQ((qty||0)+1)}>＋</button>
         </div>
 
         <button
-          className={`ml-auto rounded-lg px-4 py-2 shadow-soft ${selectionReady ? 'bg-brand text-white' : 'bg-slate-300 text-white cursor-not-allowed'}`}
+          className={`ml-auto rounded-lg px-4 py-2.5 shadow-soft ${selectionReady ? 'bg-brand text-white' : 'bg-slate-300 text-white cursor-not-allowed'}`}
           disabled={!selectionReady}
           onClick={()=>{ if (!selectionReady) return; if ((qty||0) < 1) setQ(1); alert('✅ 已加入清單，可在底部「完成挑選／複製清單」複製傳給管理員'); }}
         >
@@ -923,19 +952,24 @@ function usePickList(lsKey = 'kjs_picklist') {
    * 設定數量（0 或空值 = 刪除）
    * key：可為複合 key（例：<itemId>|<sel1>|<sel2>）
    * payload：{ name, price?, pts?, _variant? }
+   * 🔧 行動體驗優化：
+   * - 更嚴格的數值防呆（非數字 → 視為 0）
+   * - 上限從 999 下修為 199（避免手機誤觸狂加）
    */
   const setQty = (key, payload, qty) => {
     const k = String(key || '');
     if (!k) return;
     setMap(prev => {
       const next = { ...prev };
-      if (!qty || qty <= 0) {
+      const raw = Number.isFinite(+qty) ? +qty : 0;
+      const safe = Math.max(0, Math.floor(raw || 0));
+      if (safe <= 0) {
         delete next[k];
       } else {
         next[k] = {
           ...(prev[k] || {}),
           ...payload,
-          qty: Math.min(999, Math.max(1, Math.floor(qty)))
+          qty: Math.min(199, safe)
         };
       }
       write(next);
@@ -1100,8 +1134,6 @@ function TagFilterSheet({ open=false, onClose=()=>{}, groups=[], allTags=[], pic
 }
 
 
-
-
 /* =========================
 * ⬆️ 覆蓋：浮動挑選條（避免與底部工具列重疊 + a11y + safe-area + portal）
 * ========================= */
@@ -1115,7 +1147,7 @@ function FloatingPickbar({ count = 0, onOpen = () => {} }) {
     <div
       className="floating-pickbar"
       // 若外層沒設 safe-area，這裡補一層底部內距，避免被 iOS 導覽列吃掉
-      style={{ paddingBottom: 'max(0px, env(safe-area-inset-bottom, 0px))' }}
+      style={{ paddingBottom: 'calc(max(0px, env(safe-area-inset-bottom, 0px)) + 4px)' }}
     >
       <div className="mx-auto max-w-screen-sm rounded-xl2 shadow-elevate border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/90 backdrop-blur p-2">
         <div className="flex items-center justify-between gap-3">
@@ -1126,7 +1158,7 @@ function FloatingPickbar({ count = 0, onOpen = () => {} }) {
           <button
             type="button"
             onClick={onOpen}
-            className="tap-target rounded-lg bg-brand text-white px-4 py-2 text-sm"
+            className="tap-target rounded-lg bg-brand text-white px-4 py-2 text-sm min-h-[44px]"
             title="完成挑選／複製清單"
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
@@ -1147,6 +1179,7 @@ function FloatingPickbar({ count = 0, onOpen = () => {} }) {
     ? ReactDOM.createPortal(node, document.body)
     : node;
 }
+
 
 // 清單確認對話框（無輸入欄，全部勾選確認）— 規格版（含總金額/總點數顯示）
 function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
@@ -1169,7 +1202,6 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
   }, [keys]);
 
   const toggle = (k) => setChecked((c) => ({ ...c, [k]: !c[k] }));
-
   const qtyOf = (k) => (map?.[k]?.qty || 0);
 
   // 夾取成非負整數；0 會觸發刪除
@@ -1247,14 +1279,17 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
     <div className="fixed inset-0 z-[1000]" role="dialog" aria-modal="true">
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
       <div className="absolute inset-0 flex items-center justify-center p-4">
-        <div className="sheet-w w-[min(560px,96vw)] max-h-[86vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl">
+        <div className="sheet-w w-[min(560px,96vw)] max-h-[86vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col">
+          {/* Header */}
           <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
             <div className="font-semibold">{mode === 'pts' ? '點數兌換清單' : '購物清單'}</div>
             <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
           </div>
 
-          {/* 清單內容 */}
-          <div className="p-3 overflow-y-auto max-h-[calc(86vh-148px)] space-y-2">
+         {/* 清單內容：改用共用 .modal-scroll class */}
+<div className="p-3 overflow-y-auto max-h-[calc(86vh-148px)] space-y-2 modal-scroll">
+
+          >
             {keys.length === 0 ? (
               <div className="text-sm text-slate-500">尚未挑選任何商品</div>
             ) : keys.map((k) => {
@@ -1264,7 +1299,7 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
               return (
                 <div key={k} className="flex items-center justify-between gap-3 rounded-lg border px-3 py-2">
                   <label className="flex items-center gap-2 min-w-0 flex-1">
-                    <input type="checkbox" checked={!!checked[k]} onChange={() => toggle(k)} />
+                    <input type="checkbox" className="h-5 w-5" checked={!!checked[k]} onChange={() => toggle(k)} />
                     <div className="min-w-0">
                       <div className="truncate text-sm" title={label}>{label}</div>
                       {vNamed && <div className="text-xs text-slate-500 truncate">{vNamed}</div>}
@@ -1276,20 +1311,30 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
                     </div>
                   </label>
 
-                  {/* 數量步進器 */}
-                  <div className="flex items-center gap-1">
-                    <button className="rounded border px-2 py-1" onClick={() => setQtySafe(k, qtyOf(k) - 1)}>－</button>
+                  {/* 數量步進器：加大觸控區（≥44px） */}
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      className="tap-target rounded border px-3 py-2 min-w-[44px] min-h-[44px]"
+                      onClick={() => setQtySafe(k, qtyOf(k) - 1)}
+                    >－</button>
                     <input
-                      className="w-14 text-center rounded border px-2 py-1"
+                      className="w-16 text-center rounded border px-2 py-2"
                       inputMode="numeric"
                       value={qtyOf(k)}
                       onChange={(e) => setQtySafe(k, e.target.value)}
                     />
-                    <button className="rounded border px-2 py-1" onClick={() => setQtySafe(k, qtyOf(k) + 1)}>＋</button>
+                    <button
+                      className="tap-target rounded border px-3 py-2 min-w-[44px] min-h-[44px]"
+                      onClick={() => setQtySafe(k, qtyOf(k) + 1)}
+                    >＋</button>
                   </div>
 
-                  {/* 刪除 */}
-                  <button className="rounded border px-2 py-1 text-sm" title="刪除此項" onClick={() => setQtySafe(k, 0)}>🗑</button>
+                  {/* 刪除：加大觸控區（≥44px） */}
+                  <button
+                    className="tap-target rounded border px-3 py-2 text-sm min-w-[44px] min-h-[44px]"
+                    title="刪除此項"
+                    onClick={() => setQtySafe(k, 0)}
+                  >🗑</button>
                 </div>
               );
             })}
@@ -1305,7 +1350,7 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
           {/* 動作列 */}
           <div className="p-3 border-t border-slate-200 dark:border-slate-700 flex items-center gap-2">
             <button
-              className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm"
+              className="flex-1 rounded-lg bg-brand text-white px-4 py-2 text-sm tap-target"
               onClick={async () => {
                 try {
                   await navigator.clipboard.writeText(text);
@@ -1318,70 +1363,7 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
             >
               複製清單
             </button>
-            <button className="rounded-lg border px-3 py-2 text-sm" onClick={onClose}>取消</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// 管理員專用：顯示某一位成員「全部」點數異動紀錄
-function FullLogsDialog({ open=false, onClose=()=>{}, logs=[], people=[], person=null }) {
-  if (!open) return null;
-  const name = person?.name || '（未命名）';
-  const list = Array.isArray(logs) ? logs : [];
-
-  return (
-    <div className="fixed inset-0 z-[1100]" role="dialog" aria-modal="true">
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="absolute inset-0 flex items-center justify-center p-4">
-        <div className="w-[min(96vw,720px)] max-h-[86vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-elevate flex flex-col">
-          <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
-            <div className="font-semibold">「{name}」的全部點數異動</div>
-            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
-          </div>
-
-          <div className="p-3 overflow-y-auto text-sm">
-            {list.length === 0 ? (
-              <div className="text-slate-500">目前沒有異動紀錄</div>
-            ) : (
-              <div className="grid gap-2">
-                {list.map(l => (
-                  <div key={l.id || (l.at + String(l.delta))}
-                       className="flex items-center justify-between rounded-lg border px-3 py-2">
-                    <div className="min-w-0 truncate">
-                      <span className="font-medium">
-                        {people.find(x => x.id === l.personId)?.name || '(已刪)'}
-                      </span>
-                      <span className="mx-2">｜</span>
-                      <span className={l.delta > 0 ? 'text-emerald-600' : 'text-rose-600'}>
-                        {l.delta > 0 ? `+${l.delta}` : l.delta}
-                      </span>
-                      {l.note && <span className="mx-2 text-slate-500">｜{l.note}</span>}
-                    </div>
-                    <div className="shrink-0 text-xs text-slate-500">{l.at}</div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div className="px-3 py-3 border-t border-slate-200 dark:border-slate-700 flex items-center gap-2">
-            <button
-              className="rounded-lg bg-brand text-white px-3 py-2 text-sm"
-              onClick={async ()=>{
-                const text = list.map(l=>{
-                  const who = people.find(x=>x.id===l.personId)?.name || '(已刪)';
-                  return `${l.at}｜${who}｜${l.delta>0?`+${l.delta}`:l.delta}｜${l.note||''}`;
-                }).join('\n');
-                try { await navigator.clipboard.writeText(text); alert('✅ 已複製全部異動紀錄'); }
-                catch { alert('無法自動複製，請手動選取'); }
-              }}
-            >
-              複製全部
-            </button>
-            <button className="ml-auto rounded-lg border px-3 py-2 text-sm" onClick={onClose}>關閉</button>
+            <button className="rounded-lg border px-3 py-2 text-sm tap-target" onClick={onClose}>取消</button>
           </div>
         </div>
       </div>
