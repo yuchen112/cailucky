@@ -1474,7 +1474,11 @@ function Store({ data, admin, setData, query = "" }) {
   const endPage = Math.min(maxPage, startPage + windowSize - 1);
   const pageItems = sorted.slice(start, end);
 
-  const gridCols = view === "grid16" ? "grid-cols-4" : "grid-cols-3";
+  // ✅ 9/16 宮格 → 手機固定 2 欄；較大尺寸依選項展開
+  const gridCols =
+    view === "grid16"
+      ? "grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-6"
+      : "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5";
 
   const pick = usePickList("kjs_store_picklist");
   const [showConfirm, setShowConfirm] = React.useState(false);
@@ -1504,7 +1508,7 @@ function Store({ data, admin, setData, query = "" }) {
             <option value="grid16">16 宮格</option>
           </select>
         </label>
-        <label className="flex items-center gap-1">
+        <label className="flex items中心 gap-1">
           每頁
           <select className="rounded border px-2 py-2" value={pageSize} onChange={(e) => setPageSize(+e.target.value || 20)}>
             <option value="20">20</option>
@@ -1555,7 +1559,7 @@ function Store({ data, admin, setData, query = "" }) {
           return (
             <div key={id} className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden select-none flex flex-col">
               {/* 圖片／點擊開詳情 */}
-              <button className="block w-full text-left p-3 pb-2" onClick={() => setSheet({ open: true, item: x })} title={name}>
+              <button className="block w-full text左 p-3 pb-2" onClick={() => setSheet({ open: true, item: x })} title={name}>
                 <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
                   {/* 左上角狀態徽章（現貨／預售） */}
                   {showBadge && (
@@ -5494,8 +5498,11 @@ function Shop({ data, admin, setData, query = "" }) {
   const endPage    = Math.min(maxPage, startPage + windowSize - 1);
   const pageItems  = sorted.slice(start, end);
 
-  // 9/16 宮格
-  const gridCols = view === "grid16" ? "grid-cols-4" : "grid-cols-3";
+  // ✅ 9/16 宮格 → 手機固定 2 欄；較大尺寸依選項展開
+  const gridCols =
+    view === "grid16"
+      ? "grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-6"
+      : "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5";
 
   // 一鍵清單（點數）
   const pick = usePickList('kjs_pointshop_picklist');
