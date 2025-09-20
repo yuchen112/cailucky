@@ -364,12 +364,33 @@ function ProductSheet({
   onCopyTemplate = () => {},     // 仍保留參數相容，不在 shop 顯示
   onStartDraw = () => {},        // for pending：開展示動畫
   admin = false,                 // for pending：是否顯示管理區塊
-  onAdmin = {}                   // for pending：{ onEdit, onDelete, onConvertBySim, onConvertByChecked, onConvertByInput, onCopyAd, checkedMap, toggleCheck }
+  // onAdmin：for pending
+  // - onEdit                (既有：舊版可能拿來開編輯器，不保證落盤)
+  // - onDelete              (既有)
+  // - onConvertBySim        (既有)
+  // - onConvertByChecked    (既有)
+  // - onConvertByInput      (既有)
+  // - onCopyAd              (既有)
+  // - checkedMap, toggleCheck (既有)
+  // ★新增：onUpdateParticipants(payload)
+  //   payload: { id, item, lines, text }
+  //   父層請用它把 listText 與 participants 一起寫回、持久化、並觸發重渲染
+  onAdmin = {}
 }) {
   const React = window.React || globalThis.React;
 
   const overlayRef = React.useRef(null);
   const [index, setIndex] = React.useState(0);
+
+  // === 重複檢查（只修空白）相關的本地狀態 ===
+  const [dupOpen, setDupOpen] = React.useState(false);           // 是否顯示檢查彈窗
+  const [dupGroups, setDupGroups] = React.useState([]);          // 檢查得到的群組
+  const [dupMeta, setDupMeta] = React.useState({ groups: 0, dups: 0 }); // 統計：組數／重複筆數
+  const [lastActionMsg, setLastActionMsg] = React.useState("");  // 套用後的小提示（例如：已移除 X 筆重複）
+
+  // === 本地覆寫：為了「套用刪除」後小卡立即更新（即使父層還沒回寫） ===
+  // 若為 null 表示沿用 props.item 的原始資料；一旦使用者在小卡「套用刪除」，就改由這份本地文字驅動畫面。
+  const [localListText, setLocalListText] = React.useState(null);
 
   // 規格選擇
   const [sel1, setSel1] = React.useState(null);
@@ -392,7 +413,13 @@ function ProductSheet({
   }, [open, onClose]);
 
   // 換商品時重置
-  React.useEffect(() => { setIndex(0); setSel1(null); setSel2(null); }, [item]);
+  React.useEffect(() => {
+    setIndex(0);
+    setSel1(null);
+    setSel2(null);
+    setLastActionMsg("");
+    setLocalListText(null); // 換 item 就回到以 props 為準
+  }, [item]);
 
   // ---- 派生資料 ----
   const title  = (item?.title || item?.name || "（未命名）");
@@ -416,14 +443,36 @@ function ProductSheet({
   })();
   const remain = item?.stock ?? item?.qty ?? item?.quantity ?? item?.remaining ?? null;
 
-  // pending：候選名單
-  const candidates = (() => {
+  // pending：候選名單（原樣分行，用於顯示；不在此步驟自動去重）
+  const splitLinesRaw = (txt) => {
+    if (typeof txt !== "string") return [];
+    return txt.split(/\r?\n/); // 保留原樣（包含空白），讓檢查流程能對上索引
+  };
+
+  // 來源 listText：若有本地覆寫就用覆寫，否則用 props.item
+  const sourceListText = (
+    localListText != null
+      ? localListText
+      : (typeof item?.listText === "string" ? item.listText : null)
+  );
+
+  // rawLines：優先來自 sourceListText；若沒有，再從陣列欄位轉
+  const rawLines = React.useMemo(() => {
+    if (typeof sourceListText === "string") return splitLinesRaw(sourceListText);
     const list = Array.isArray(item?.participants) ? item.participants
       : Array.isArray(item?.members) ? item.members
       : Array.isArray(item?.list) ? item.list
       : Array.isArray(item?.candidates) ? item.candidates
-      : (typeof item?.listText === "string" ? item.listText.split(/\r?\n/).map(s=>s.trim()).filter(Boolean) : []);
-    return (list || []).map(String).filter(Boolean);
+      : [];
+    return (list || []).map(v => String(v ?? ""));
+  }, [sourceListText, item]);
+
+  const candidates = (() => {
+    // 顯示用：過濾掉完全空白的行（但檢查功能會用 rawLines 做判定）
+    return rawLines
+      .map(s => String(s ?? ""))
+      .map(s => s.trim())
+      .filter(Boolean);
   })();
   const candidateCount = candidates.length;
 
@@ -545,8 +594,255 @@ function ProductSheet({
     return merged;
   })();
 
+  // ======「只修空白」標準化：不動大小寫、不動 @，連續空白折成 1 個 ======
+  const normalizeNameSafe = (str) => {
+    if (typeof str !== "string") return "";
+    // 去除前後空白（含全形）
+    let s = str.replace(/^[\s\u3000]+|[\s\u3000]+$/g, "");
+    // 連續空白（含全形空格）折疊成 1 個半形空格
+    s = s.replace(/[\s\u3000]+/g, " ");
+    return s;
+  };
+
+  // ====== 以「只修空白」為口徑分組，並提供索引，方便精準刪除 ======
+  const groupDuplicatesSafe = (lines) => {
+    // lines：rawLines（保留原樣），我們用 index 來刪除，避免同字串難分
+    const map = new Map(); // key -> { firstIndex, firstText, others: Array<{index, text}> }
+    for (let i = 0; i < lines.length; i++) {
+      const raw = String(lines[i] ?? "");
+      const key = normalizeNameSafe(raw);
+      if (!key) continue; // 忽略空白行
+      if (!map.has(key)) {
+        map.set(key, { key, firstIndex: i, firstText: raw, others: [] });
+      } else {
+        map.get(key).others.push({ index: i, text: raw });
+      }
+    }
+    const groups = [];
+    let dupCount = 0;
+    for (const g of map.values()) {
+      if (g.others.length > 0) {
+        groups.push(g);
+        dupCount += g.others.length;
+      }
+    }
+    // 依第一個出現的順序排序，呈現更直覺
+    groups.sort((a,b) => a.firstIndex - b.firstIndex);
+    return { groups, dupCount };
+  };
+
+  // ====== 重複檢查彈窗（白話 UI） ======
+  const DuplicateCheckDialog = ({ open, groups, onCancel, onApply }) => {
+    const [checks, setChecks] = React.useState(() => {
+      // 預設：每組的 others 都建議刪除（true）
+      const init = new Map();
+      groups.forEach((g) => {
+        const m = new Map();
+        g.others.forEach(o => m.set(o.index, true));
+        init.set(g.key, m);
+      });
+      return init;
+    });
+
+    const toggleOne = (gkey, idx, val) => {
+      setChecks(prev => {
+        const next = new Map(prev);
+        const m = new Map(next.get(gkey));
+        m.set(idx, val);
+        next.set(gkey, m);
+        return next;
+      });
+    };
+
+    const checkAllOthers = (gkey, v) => {
+      setChecks(prev => {
+        const next = new Map(prev);
+        const m = new Map(next.get(gkey));
+        for (const k of m.keys()) m.set(k, v);
+        next.set(gkey, m);
+        return next;
+      });
+    };
+
+    if (!open) return null;
+    return (
+      <div className="fixed inset-0 z-[1000] bg-black/50 flex items-center justify-center p-4">
+        <div className="w-[min(92vw,44rem)] max-h-[86vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 shadow-elevate flex flex-col">
+          <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+            <div className="min-w-0">
+              <div className="font-semibold truncate">重複檢查（只修空白・最安全）</div>
+              <div className="text-xs text-slate-500 mt-0.5">
+                只處理前後空白與連續空白；不動大小寫、不動 @。請勾選要刪除的項目。
+              </div>
+            </div>
+            <button className="rounded-full border px-3 py-1.5 text-sm" onClick={onCancel}>關閉</button>
+          </div>
+
+          <div className="px-4 py-2 text-sm text-slate-600">
+            找到 <b>{groups.length}</b> 組疑似重複，共 <b>{
+              groups.reduce((acc,g)=>acc+g.others.length,0)
+            }</b> 筆可能重複。
+          </div>
+
+          <div className="flex-1 overflow-auto px-4 pb-4">
+            {groups.length === 0 ? (
+              <div className="text-sm text-slate-500 py-8 text-center">未發現重複（只修空白）</div>
+            ) : (
+              <ul className="space-y-3">
+                {groups.map((g, i) => {
+                  const m = checks.get(g.key);
+                  const allChecked = m && Array.from(m.values()).every(Boolean);
+                  const anyChecked = m && Array.from(m.values()).some(Boolean);
+                  return (
+                    <li key={g.key} className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                      <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex items-center justify-between">
+                        <div className="text-sm">
+                          第 {i+1} 組　<span className="text-slate-500">（正本 + {g.others.length} 筆重複）</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            className="text-xs rounded border px-2 py-1"
+                            title="只留第一筆（勾選其餘）"
+                            onClick={()=>checkAllOthers(g.key, true)}
+                          >只留第一筆</button>
+                          <button
+                            type="button"
+                            className="text-xs rounded border px-2 py-1"
+                            title="全部保留（清除勾選）"
+                            onClick={()=>checkAllOthers(g.key, false)}
+                          >全部保留</button>
+                          <span className={"text-xs px-2 py-1 rounded " + (anyChecked ? "bg-rose-50 text-rose-600 border border-rose-200" : "text-slate-400 border border-slate-200")}>
+                            {anyChecked ? "將刪除部分" : "不刪除"}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="p-3 text-sm">
+                        <div className="mb-2">
+                          <span className="inline-block min-w-[4em] text-slate-500">正本</span>
+                          <span className="font-medium break-all">{normalizeNameSafe(g.firstText) || g.firstText}</span>
+                          <span className="ml-2 text-xs text-slate-400">(原樣：<span className="break-all">{g.firstText || "（空行）"}</span>)</span>
+                        </div>
+                        {g.others.length > 0 && (
+                          <ul className="space-y-1">
+                            {g.others.map(o => {
+                              const checked = m ? !!m.get(o.index) : true;
+                              return (
+                                <li key={o.index} className="flex items-start gap-2">
+                                  <input
+                                    type="checkbox"
+                                    className="mt-0.5 h-4 w-4"
+                                    checked={checked}
+                                    onChange={(e)=>toggleOne(g.key, o.index, e.target.checked)}
+                                  />
+                                  <div className="flex-1">
+                                    <div className="break-all">{normalizeNameSafe(o.text) || o.text}</div>
+                                    <div className="text-xs text-slate-400">原樣：{o.text || "（空行）"}</div>
+                                  </div>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        )}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
+
+          <div className="p-3 border-t border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/90 backdrop-blur flex items-center justify-between">
+            <div className="text-xs text-slate-500">套用後會回寫名單，仍可再編輯或再次檢查。</div>
+            <div className="flex items-center gap-2">
+              <button className="rounded-lg border px-3 py-2 text-sm" onClick={onCancel}>取消</button>
+              <button
+                className="rounded-lg bg-brand text-white px-4 py-2 text-sm"
+                onClick={()=>{
+                  // 彙整要刪除的 index
+                  const toDelete = new Set();
+                  for (const g of groups) {
+                    const m = checks.get(g.key);
+                    if (!m) continue;
+                    for (const [idx, v] of m.entries()) {
+                      if (v) toDelete.add(idx);
+                    }
+                  }
+                  onApply(toDelete);
+                }}
+              >套用刪除</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   if (!open) return null;
   const handleOverlayClick = (e) => { if (e.target === overlayRef.current) onClose(); };
+
+  // 觸發檢查重複（只修空白）
+  const openDuplicateCheck = () => {
+    const { groups, dupCount } = groupDuplicatesSafe(rawLines);
+    if (groups.length === 0) {
+      alert("未發現重複（只修空白）。");
+      return;
+    }
+    setDupGroups(groups);
+    setDupMeta({ groups: groups.length, dups: dupCount });
+    setDupOpen(true);
+  };
+
+  // 套用刪除回寫（★已修正：本地立即更新 + 對外回寫/事件）
+  const applyDuplicateDeletion = (toDeleteSet) => {
+    setDupOpen(false);
+
+    // 1) 計算刪除後的新行列
+    const nextLines = rawLines.filter((_, idx) => !toDeleteSet.has(idx));
+    const nextText  = nextLines.join("\n");
+
+    // 2) 小卡本地立刻反映（不等父層）：讓畫面的人數與列表即時變少
+    setLocalListText(nextText);
+
+    // 3) 準備對外回寫 payload（父層可持久化）
+    const payload = {
+      id: (item?.id ?? baseId),
+      item,
+      lines: nextLines,
+      text: nextText
+    };
+
+    // 3a) 優先：父層明確提供的回寫接口
+    if (typeof onAdmin?.onUpdateParticipants === "function") {
+      try { onAdmin.onUpdateParticipants(payload); } catch (e) { /* ignore */ }
+    }
+
+    // 3b) 事件制：父層若有監聽也能收到
+    try {
+      window.dispatchEvent(new CustomEvent("kjs:pending:updateParticipants", { detail: payload }));
+    } catch {}
+
+    // 3c) 兼容：若只有 onEdit（舊流程），盡力把新 list 寫進去交給它
+    if (typeof onAdmin?.onEdit === "function") {
+      const nextItem = {
+        ...item,
+        listText: nextText,
+        participants: nextLines.map(s => String(s).trim()).filter(Boolean)
+      };
+      try { onAdmin.onEdit(nextItem); } catch {}
+    } else if (!onAdmin?.onUpdateParticipants) {
+      // 3d) 最後無奈：直接改 props 參考（不保證持久化，但至少資料在父層不接時也能暫時保留）
+      try {
+        item.listText = nextText;
+        item.participants = nextLines.map(s => String(s).trim()).filter(Boolean);
+      } catch {}
+    }
+
+    // 4) 成功提示（UI）
+    const removed = toDeleteSet.size;
+    setLastActionMsg(removed > 0 ? `✅ 已移除 ${removed} 筆重複（只修空白）` : "未移除任何項目");
+    setTimeout(()=>setLastActionMsg(""), 4000);
+  };
 
   return (
     <div
@@ -563,13 +859,18 @@ function ProductSheet({
             <div className="font-semibold truncate">{title}{specSuffix}</div>
             {context==="store"   && price!=null      && <div className="text-sm text-slate-500">售價：{price}</div>}
             {context==="shop"    && needPoints!=null && <div className="text-sm text-slate-500">需求點數：{needPoints}</div>}
-            {context==="pending" && <div className="text-sm text-slate-500">候選人數：{candidateCount}</div>}
+            {context==="pending" && (
+              <div className="text-sm text-slate-500 flex items-center gap-2">
+                <span>候選人數：{candidateCount}</span>
+                {lastActionMsg && <span className="text-emerald-600 text-xs">（{lastActionMsg}）</span>}
+              </div>
+            )}
           </div>
           <button className="rounded-full border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
         </div>
 
-       {/* body：改用共用 .modal-scroll class */}
-<div className="flex-1 overflow-y-auto modal-scroll">
+        {/* body：改用共用 .modal-scroll class */}
+        <div className="flex-1 overflow-y-auto modal-scroll">
 
           {/* 主圖 */}
           <div className="relative bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
@@ -692,16 +993,26 @@ function ProductSheet({
             )}
           </div>
 
-          {/* pending：參與名單與勾選（維持原邏輯） */}
-          {context==="pending" && candidates.length > 0 && (
+          {/* pending：參與名單與勾選（維持原邏輯 + 新增「檢查重複」） */}
+          {context==="pending" && (
             <div className="px-4 pb-4">
               <div className="mb-2 text-sm font-medium flex items-center justify-between">
                 <span>參與人員（{candidateCount}）</span>
-                {admin && (
-                  <span className="text-xs text-slate-500">
-                    已勾選 {Object.values(onAdmin?.checkedMap||{}).filter(Boolean).length} 人
-                  </span>
-                )}
+                <div className="flex items-center gap-2">
+                  {admin && (
+                    <button
+                      type="button"
+                      className="text-xs rounded border px-2 py-1"
+                      onClick={openDuplicateCheck}
+                      title="檢查重複（只修空白）"
+                    >檢查重複</button>
+                  )}
+                  {admin && (
+                    <span className="text-xs text-slate-500">
+                      已勾選 {Object.values(onAdmin?.checkedMap||{}).filter(Boolean).length} 人
+                    </span>
+                  )}
+                </div>
               </div>
 
               {!admin ? (
@@ -826,9 +1137,18 @@ function ProductSheet({
           )}
         </div>
       </div>
+
+      {/* 重複檢查彈窗 */}
+      <DuplicateCheckDialog
+        open={dupOpen}
+        groups={dupGroups}
+        onCancel={()=>setDupOpen(false)}
+        onApply={applyDuplicateDeletion}
+      />
     </div>
   );
 }
+
 
 
 function SheetPickControls({ item, mode='cash' }) {
@@ -2753,6 +3073,75 @@ function Pending({ data, admin, setData, query = "" }) {
     };
   }
 
+// 清理勾選殘留：把已不在名單中的勾選取消
+function pruneCheckedMap(itemId, keepSet) {
+  try {
+    const id = String(itemId || "");
+    const keep = keepSet instanceof Set ? keepSet : new Set();
+
+    const current = (typeof getCheckedMap === "function")
+      ? (getCheckedMap(id) || {})
+      : {};
+
+    const toggle = (typeof makeToggleCheck === "function")
+      ? makeToggleCheck(id)
+      : null;
+
+    for (const [name, checked] of Object.entries(current)) {
+      if (checked && !keep.has(name)) {
+        if (typeof toggle === "function") toggle(name, false);
+        else current[name] = false; // 最後防線
+      }
+    }
+  } catch (err) {
+    console.warn("[pruneCheckedMap] 例外：", err);
+  }
+}
+
+// 小卡「套用刪除」→ 真正回寫資料 + 同步編輯草稿
+function updateItemParticipants(payload) {
+  const { id, item, lines, text } = (payload || {});
+  const itemId = String(item?.id ?? id ?? "");
+  if (!itemId) return;
+
+  // 來源行列：優先用 lines，其次 text
+  const srcLines = Array.isArray(lines) ? lines : String(text || "").split(/\r?\n/);
+
+  // participants：用於顯示/抽獎；trim 後去空行（不在此再去重）
+  const participants = srcLines
+    .map(s => String(s ?? "").trim())
+    .filter(Boolean);
+
+  // listText：編輯用原樣字串（保留你在小卡套用後的樣子）
+  const nextListText = (typeof text === "string") ? text : srcLines.join("\n");
+
+  const nextItem = {
+    ...(item || {}),
+    id: itemId,
+    listText: nextListText,
+    participants
+  };
+
+  // 1) 清理勾選殘留
+  pruneCheckedMap(itemId, new Set(participants));
+
+  // 2) 真正寫回（沿用你的保存流程）
+  if (typeof editItem === "function") {
+    editItem(nextItem);
+  } else {
+    console.warn("[updateItemParticipants] 找不到 editItem(nextItem) 可呼叫。");
+  }
+
+  // 3) 若此時正在編輯同一筆活動 → 讓編輯視窗的 textarea 也立刻同步
+  try {
+    if (sheet?.item && String(sheet.item.id) === itemId && typeof setDraft === "function") {
+      setDraft(d => ({ ...d, participantsText: nextListText }));
+    }
+  } catch (e) {
+    // ignore
+  }
+}
+
   // ===== 轉歷史（勾選 → 共用） =====
   function convertByChecked(x, checkedMap){
     const picked = [];
@@ -3084,25 +3473,140 @@ function Pending({ data, admin, setData, query = "" }) {
 
   return (
     <section className="space-y-3">
-      {/* 新增/編輯表單（管理員可見） */}
-      {admin && (
-        <div className="rounded-xl border p-4 grid gap-3">
-          <div className="grid sm:grid-cols-2 gap-3">
-            <input className="min-h-[44px] rounded-lg border px-3 py-2" type="date" value={draft.date} onChange={e=>setDraft(d=>({...d, date:e.target.value}))} placeholder="開獎/截止日期"/>
-            <input className="min-h-[44px] rounded-lg border px-3 py-2" value={draft.title} onChange={e=>setDraft(d=>({...d, title:e.target.value}))} placeholder="獎項名稱"/>
-            <input className="min-h-[44px] rounded-lg border px-3 py-2" value={draft.plannedWinners} onChange={e=>setDraft(d=>({...d, plannedWinners:e.target.value}))} placeholder="抽出名額（可空，預設1）"/>
-            <input className="min-h-[44px] rounded-lg border px-3 py-2" value={draft.image} onChange={e=>setDraft(d=>({...d, image:e.target.value}))} placeholder="封面圖片 URL（可空）"/>
-          </div>
-          <div>
-            <label className="text-sm text-slate-500">已報名名單（每行一位）</label>
-            <textarea className="mt-1 w-full rounded-lg border p-2 h-28" value={draft.participantsText} onChange={e=>setDraft(d=>({...d, participantsText:e.target.value}))}/>
-          </div>
-          <div className="flex gap-2 justify-end">
-            {editingId && <button onClick={cancelEdit} className="rounded-lg border px-3 py-1.5">取消</button>}
-            <button onClick={upsertFromDraft} className="rounded-lg bg-brand text-white px-3 py-1.5">{editingId?"儲存修改":"新增活動"}</button>
-          </div>
-        </div>
+     {/* 新增/編輯表單（管理員可見） */}
+{admin && (
+  <div className="rounded-xl border p-4 grid gap-3">
+    <div className="grid sm:grid-cols-2 gap-3">
+      <input
+        className="min-h-[44px] rounded-lg border px-3 py-2"
+        type="date"
+        value={draft.date}
+        onChange={e => setDraft(d => ({ ...d, date: e.target.value }))}
+        placeholder="開獎/截止日期"
+      />
+      <input
+        className="min-h-[44px] rounded-lg border px-3 py-2"
+        value={draft.title}
+        onChange={e => setDraft(d => ({ ...d, title: e.target.value }))}
+        placeholder="獎項名稱"
+      />
+      <input
+        className="min-h-[44px] rounded-lg border px-3 py-2"
+        value={draft.plannedWinners}
+        onChange={e => setDraft(d => ({ ...d, plannedWinners: e.target.value }))}
+        placeholder="抽出名額（可空，預設1）"
+      />
+      <input
+        className="min-h-[44px] rounded-lg border px-3 py-2"
+        value={draft.image}
+        onChange={e => setDraft(d => ({ ...d, image: e.target.value }))}
+        placeholder="封面圖片 URL（可空）"
+      />
+    </div>
+
+    {/* 名單輸入區 */}
+    <div>
+      <label className="text-sm text-slate-500">已報名名單（每行一位）</label>
+      <textarea
+        className="mt-1 w-full rounded-lg border p-2 h-28 font-mono text-sm"
+        value={draft.participantsText}
+        onChange={e => setDraft(d => ({ ...d, participantsText: e.target.value }))}
+        placeholder="@name1\n@name2\n@name3"
+      />
+      {/* 新增：名單清理工具列（就在 textarea 正下方） */}
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+     
+<button
+  type="button"
+  className="rounded-lg border px-3 py-1.5 text-sm"
+  title="忽略大小寫、移除零寬字元、全形空白→半形、多重空白折成一格"
+  onClick={() => {
+    // 讀原始輸入
+    const src = String(draft?.participantsText || "").split(/\r?\n/);
+
+    // 正規化：去零寬、全形空白→半形、連續空白→單一空格、trim
+    const norm = (s) => String(s ?? "")
+      .replace(/[\u200B-\u200D\uFEFF]/g, "")
+      .replace(/\u3000/g, " ")
+      .replace(/[ \t]+/g, " ")
+      .trim();
+
+    // 忽略大小寫去重（保留第一筆的樣子，但保證兩側無雜訊）
+    const seen = new Set();
+    const out = [];
+    for (const line of src) {
+      const n = norm(line);
+      if (!n) continue;
+      const key = n.toLowerCase();
+      if (!seen.has(key)) {
+        seen.add(key);
+        out.push(n);
+      }
+    }
+
+    const before = src.map(norm).filter(Boolean).length;
+    const after  = out.length;
+    const removed = Math.max(0, before - after);
+
+    // 回填到 textarea
+    setDraft(d => ({ ...d, participantsText: out.join("\n") }));
+
+    // 可選提示：想靜默就把這行註解掉
+    if (removed > 0) {
+      try { alert(`已去除重複 ${removed} 筆`); } catch {}
+    }
+  }}
+>
+  🧹 去除重複（建議）
+</button>
+
+
+        <button
+          type="button"
+          className="rounded-lg border px-3 py-1.5 text-sm"
+          title="移除空白行、修剪每行兩側空白"
+          onClick={() => {
+            const cleaned = String(draft.participantsText || "")
+              .split(/\r?\n/)
+              .map(s => s.trim())
+              .filter(Boolean)
+              .join("\n");
+            setDraft(d => ({ ...d, participantsText: cleaned }));
+          }}
+        >
+          ✨ 清除空白行/雜訊
+        </button>
+
+        <span className="ml-auto text-sm text-slate-500">
+          目前共{" "}
+          {
+            String(draft.participantsText || "")
+              .split(/\r?\n/)
+              .map(s => s.trim())
+              .filter(Boolean).length
+          }{" "}
+          位
+        </span>
+      </div>
+    </div>
+
+    <div className="flex gap-2 justify-end">
+      {editingId && (
+        <button onClick={cancelEdit} className="rounded-lg border px-3 py-1.5">
+          取消
+        </button>
       )}
+      {/* 保持原本的儲存流程（內部已用 parseLinesClean 再寫入） */}
+      <button
+        onClick={upsertFromDraft}
+        className="rounded-lg bg-brand text-white px-3 py-1.5"
+      >
+        {editingId ? "儲存修改" : "新增活動"}
+      </button>
+    </div>
+  </div>
+)}
+
 
       {/* 工具列 + 分頁器 */}
       <div className="sticky top-0 z-10">
@@ -3143,13 +3647,16 @@ function Pending({ data, admin, setData, query = "" }) {
   onDelete:(it)=>removeItemObj(it),
   onCopyAd:(it)=>copyAdText(it),
   onConvertBySim:(it)=>convertBySimulation(it),
-  // 這行要改：改成使用 map 或預設取目前 item 的 checkedMap
   onConvertByChecked:(it, map)=>convertByChecked(it, map ?? getCheckedMap(it.id)),
   onConvertByInput:(it)=>convertByInput(it),
-  // 這兩行要改：把勾選狀態/切換函式接上真正的 store
+
   checkedMap: sheet.item ? getCheckedMap(sheet.item.id) : {},
   toggleCheck: sheet.item ? makeToggleCheck(sheet.item.id) : ()=>{},
+
+  // ★ 新增這行：小卡「套用刪除」會呼叫這裡，真正寫回與持久化
+  onUpdateParticipants: updateItemParticipants,
 }}
+
 
       />
 
