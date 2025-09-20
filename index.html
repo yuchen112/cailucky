@@ -1529,7 +1529,7 @@ function FloatingPickbar({ count = 0, onOpen = () => {} }) {
 }
 
 
-// 清單確認對話框（無輸入欄，全部勾選確認）— 規格版（含總金額/總點數顯示）
+// 清單確認對話框（保留代號，但以人性化方式呈現）
 function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
   const React = window.React || globalThis.React;
   if (!open) return null;
@@ -1541,24 +1541,20 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
   React.useEffect(() => {
     setChecked(prev => {
       const next = { ...prev };
-      // 移除不存在的 key
       Object.keys(next).forEach(k => { if (!keys.includes(k)) delete next[k]; });
-      // 新增的新 key 預設勾選
       keys.forEach(k => { if (!(k in next)) next[k] = true; });
       return next;
     });
   }, [keys]);
 
   const toggle = (k) => setChecked((c) => ({ ...c, [k]: !c[k] }));
-  const qtyOf = (k) => (map?.[k]?.qty || 0);
-
-  // 夾取成非負整數；0 會觸發刪除
+  const qtyOf  = (k) => (map?.[k]?.qty || 0);
   const setQtySafe = (k, n) => {
     const nx = Number.isFinite(+n) ? Math.max(0, Math.floor(+n)) : 0;
     onSetQty?.(k, map?.[k] || {}, nx);
   };
 
-  // ---------- 規格輔助 ----------
+  // ---------- 規格/名稱輔助 ----------
   const getVariantInfo = (x) => {
     const v = x?._variant || x?.variant || null;
     if (!v) return { suffix: '', named: '' };
@@ -1567,10 +1563,19 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
     const v2 = v?.sel2 ?? v?.v2 ?? v?.second ?? v?.attr2 ?? null;
     const parts = [v1, v2].filter(Boolean);
     const suffix = parts.length ? parts.join('／') : '';
-    const named = parts.length
+    const named  = parts.length
       ? parts.map((val, i) => `${names[i] || `規格${i+1}`}:${val}`).join(' ・ ')
       : '';
     return { suffix, named };
+  };
+
+  // 顯示友善但仍保留代號：抽出代號（放徽章）、主標只顯示純名稱
+  const splitCodeFromName = (raw = '') => {
+    const s = String(raw || '');
+    // 允許格式：F006: xxx、F006：xxx、ABC-01 xxx 等；盡量只抽前綴
+    const m = s.match(/^\s*([A-Za-z]\w{1,7}(?:[-_]\w{1,6})?)\s*[:：]?\s*(.+)$/);
+    if (m) return { code: m[1], title: m[2] };
+    return { code: '', title: s };
   };
 
   const withVariantSuffix = (name, x) => {
@@ -1581,20 +1586,21 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
     return s.includes(marker) ? s : `${s}${marker}`;
   };
 
-  // 產生可複製文字（含合計）
+  // 產生可複製文字（含合計）— 用「原始 name」（含代號），不改資料
   const buildListText = (m) => {
     const rows = [];
     let sumCash = 0, sumPts = 0;
     for (const k of Object.keys(m)) {
-      const { name, qty, price, pts } = m[k] || {};
+      const it = m[k] || {};
+      const { name, qty, price, pts } = it;
       if (!qty) continue;
-      const label = withVariantSuffix(name, m[k]);
+      const label = withVariantSuffix(name, it);
       const line = mode === 'pts'
         ? `- ${label} x${qty}（${pts ?? '?'} 點）`
         : `- ${label} x${qty}（NT$ ${price ?? '?'})`;
       rows.push(line);
-      if (mode === 'pts' && Number.isFinite(+pts)) sumPts += (+pts) * (qty || 0);
-      if (mode === 'cash' && Number.isFinite(+price)) sumCash += (+price) * (qty || 0);
+      if (mode === 'pts'  && Number.isFinite(+pts))   sumPts  += (+pts)   * qty;
+      if (mode === 'cash' && Number.isFinite(+price)) sumCash += (+price) * qty;
     }
     const head = mode === 'pts' ? '[點數兌換清單]' : '[購物清單]';
     const tail = mode === 'pts'
@@ -1604,23 +1610,19 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
   };
 
   // 只取已勾選的項目
-  const listMap = keys
-    .filter((k) => checked[k])
-    .reduce((o, k) => ((o[k] = map[k]), o), {});
-
-  // UI 即時計算合計
+  const listMap = keys.filter(k => checked[k]).reduce((o, k) => (o[k] = map[k], o), {});
   const { sumCash, sumPts } = React.useMemo(() => {
     let sc = 0, sp = 0;
     for (const k of Object.keys(listMap)) {
       const it = listMap[k] || {};
       const qty = it.qty || 0;
       if (mode === 'cash' && Number.isFinite(+it.price)) sc += (+it.price) * qty;
-      if (mode === 'pts'  && Number.isFinite(+it.pts))   sp += (+it.pts) * qty;
+      if (mode === 'pts'  && Number.isFinite(+it.pts))   sp += (+it.pts)   * qty;
     }
     return { sumCash: sc, sumPts: sp };
   }, [listMap, mode]);
 
-  const nf = React.useMemo(() => new Intl.NumberFormat('zh-TW'), []);
+  const nf   = React.useMemo(() => new Intl.NumberFormat('zh-TW'), []);
   const text = buildListText(listMap);
 
   return (
@@ -1634,84 +1636,103 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
             <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
           </div>
 
-          {/* 清單內容 */}
-          <div className="p-3 overflow-y-auto max-h-[calc(86vh-148px)] space-y-2 modal-scroll">
+          {/* 清單內容（行動友善） */}
+          <div className="p-3 overflow-y-auto max-h-[calc(86vh-148px)] space-y-3 modal-scroll">
             {keys.length === 0 ? (
               <div className="text-sm text-slate-500">尚未挑選任何商品</div>
             ) : (
               keys.map((k) => {
                 const x = map[k] || {};
                 const qty = qtyOf(k) || 0;
-                const label = withVariantSuffix(x.name, x);
-                const vNamed = (getVariantInfo(x)?.named || "");
-                const specBadges = vNamed.split(" ・ ").filter(Boolean);
 
+                // UI：抽出代號顯示徽章；主標只放純名稱
+                const { code, title } = splitCodeFromName(String(x.name || ''));
+                const shownTitle = splitCodeFromName(withVariantSuffix(x.name, x)).title; // 規格續接到名稱（顯示）
+
+                const vNamed = (getVariantInfo(x)?.named || ""); // 灰字一行
                 const subtotal =
-                  mode === "pts"
-                    ? (Number.isFinite(+x.pts) ? (+x.pts) * qty : null)
+                  mode === 'pts'
+                    ? (Number.isFinite(+x.pts)   ? (+x.pts)   * qty : null)
                     : (Number.isFinite(+x.price) ? (+x.price) * qty : null);
 
                 return (
                   <div
                     key={k}
-                    className="flex items-start gap-3 rounded-xl border border-slate-200 dark:border-slate-700 p-3 bg-white/90 dark:bg-slate-900/70"
+                    className="rounded-xl border border-slate-200 dark:border-slate-700 p-3 bg-white/90 dark:bg-slate-900/70"
                   >
-                    <input
-                      type="checkbox"
-                      className="mt-1.5 h-5 w-5 shrink-0"
-                      checked={!!checked[k]}
-                      onChange={() => toggle(k)}
-                    />
-
-                    <div className="min-w-0 flex-1">
-                      <div className="text-[15px] leading-5 font-medium break-words">{label}</div>
-                      {specBadges.length > 0 && (
-                        <div className="mt-1 flex flex-wrap gap-1.5">
-                          {specBadges.map((t, i) => (
-                            <span
-                              key={i}
-                              className="px-2 py-0.5 text-xs rounded-full border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800"
-                            >
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                      <div className="mt-1 text-xs text-slate-600 dark:text-slate-400">
-                        {mode === "pts"
-                          ? `需要 ${x.pts ?? "?"} 點 × ${qty}`
-                          : `NT$ ${x.price ?? "?"} × ${qty}`}
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-1.5">
-                      <button
-                        className="tap-target rounded border px-3 py-2 min-w-[44px] min-h-[44px]"
-                        onClick={() => setQtySafe(k, qty - 1)}
-                      >－</button>
+                    <div className="flex items-start gap-2">
                       <input
-                        className="w-16 text-center rounded border px-2 py-2"
-                        inputMode="numeric"
-                        value={qty}
-                        onChange={(e) => setQtySafe(k, e.target.value)}
+                        type="checkbox"
+                        className="mt-1.5 h-5 w-5 shrink-0"
+                        checked={!!checked[k]}
+                        onChange={() => toggle(k)}
+                        aria-label="選取此項"
                       />
-                      <button
-                        className="tap-target rounded border px-3 py-2 min-w-[44px] min-h-[44px]"
-                        onClick={() => setQtySafe(k, qty + 1)}
-                      >＋</button>
-                    </div>
 
-                    <div className="shrink-0 text-right">
-                      <div className="text-xs text-slate-500">小計</div>
-                      <div className="text-[15px] font-semibold">
-                        {mode === "pts"
-                          ? (subtotal != null ? `${subtotal} 點` : "—")
-                          : (subtotal != null ? `NT$ ${nf.format(subtotal)}` : "—")}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-start gap-2">
+                          <div className="min-w-0 flex-1">
+                            {/* 主標：純名稱（含規格後綴），不截斷 */}
+                            <div className="text-[15px] leading-5 font-medium break-words">{shownTitle}</div>
+                            {/* 規格灰字：e.g. 尺寸：大 ・ 顏色：黃色 */}
+                            {vNamed && (
+                              <div className="mt-0.5 text-xs text-slate-500 break-words">{vNamed}</div>
+                            )}
+                            {/* 單價 × 數量（更直覺） */}
+                            <div className="mt-1 text-xs text-slate-600 dark:text-slate-400">
+                              {mode === 'pts'
+                                ? `單價 ${x.pts ?? '?'} 點 / 件　×　${qty}`
+                                : `單價 NT$ ${x.price ?? '?'} / 件　×　${qty}`}
+                            </div>
+                          </div>
+
+                          {/* 代號徽章：保留代號但不搶版面 */}
+                          {code && (
+                            <span className="shrink-0 px-2 py-0.5 text-[11px] rounded-full border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                              {code}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* 步進器 + 小計 + 刪除 */}
+                        <div className="mt-2 flex items-center gap-2">
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              className="tap-target rounded border px-3 py-2 min-w-[44px] min-h-[44px]"
+                              onClick={() => setQtySafe(k, qty - 1)}
+                              aria-label="減少數量"
+                            >－</button>
+                            <input
+                              className="w-16 text-center rounded border px-2 py-2"
+                              inputMode="numeric"
+                              value={qty}
+                              onChange={(e) => setQtySafe(k, e.target.value)}
+                              aria-label="數量"
+                            />
+                            <button
+                              className="tap-target rounded border px-3 py-2 min-w-[44px] min-h-[44px]"
+                              onClick={() => setQtySafe(k, qty + 1)}
+                              aria-label="增加數量"
+                            >＋</button>
+                          </div>
+
+                          <div className="ml-auto text-right">
+                            <div className="text-xs text-slate-500">小計</div>
+                            <div className="text-[15px] font-semibold">
+                              {mode === 'pts'
+                                ? (subtotal != null ? `${subtotal} 點` : '—')
+                                : (subtotal != null ? `NT$ ${nf.format(subtotal)}` : '—')}
+                            </div>
+                          </div>
+
+                          <button
+                            className="tap-target rounded border px-3 py-2 text-sm"
+                            onClick={() => setQtySafe(k, 0)}
+                            aria-label="刪除這個項目"
+                            title="刪除"
+                          >🗑</button>
+                        </div>
                       </div>
-                      <button
-                        className="mt-2 tap-target rounded border px-3 py-2 text-sm"
-                        onClick={() => setQtySafe(k, 0)}
-                      >🗑</button>
                     </div>
                   </div>
                 );
@@ -1721,7 +1742,7 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
 
           {/* 合計區塊 */}
           <div className="px-3 py-2 border-t border-slate-200 dark:border-slate-700 text-right text-sm font-semibold">
-            {mode === "cash"
+            {mode === 'cash'
               ? <>總金額：NT$ {nf.format(sumCash)}</>
               : <>合計點數：約 {nf.format(sumPts)} 點</>}
           </div>
@@ -1733,10 +1754,10 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
               onClick={async () => {
                 try {
                   await navigator.clipboard.writeText(text);
-                  alert("✅ 已複製清單，請貼到官方 LINE 帳號聯絡管理員確認。");
+                  alert('✅ 已複製清單，請貼到官方 LINE 帳號聯絡管理員確認。');
                   onClose();
                 } catch {
-                  alert("無法自動複製，請手動選取文字複製：\n\n" + text);
+                  alert('無法自動複製，請手動選取文字複製：\n\n' + text);
                 }
               }}
             >
@@ -1749,6 +1770,7 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
     </div>
   );
 }
+
 
 
 // 社群商店（現金購買）— 「搜尋改標籤」＋「一鍵購物清單」，九/十六宮格保留
