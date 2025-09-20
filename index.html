@@ -319,6 +319,34 @@ function useTagFilter(allTags = []) {
   return { picked, toggle, clear, setPicked, allTags };
 }
 
+// 依 tagGroups 的群組順序 + 群內順序來產生扁平的標籤清單（可直接覆蓋）
+function orderTagsByGroups(allTags = [], groups = []) {
+  const seen = new Set();
+  const out = [];
+
+  // 1) 先依群組定義的順序，將群組中的標籤依序推入
+  (Array.isArray(groups) ? groups : []).forEach((g) => {
+    const tags = Array.isArray(g?.tags) ? g.tags : [];
+    tags.forEach((t) => {
+      const tag = String(t || '').trim();
+      if (!tag) return;
+      if (allTags.includes(tag) && !seen.has(tag)) {
+        seen.add(tag);
+        out.push(tag);
+      }
+    });
+  });
+
+  // 2) 再把未分組 / 未涵蓋的標籤補上（維持 allTags 原本排序）
+  (Array.isArray(allTags) ? allTags : []).forEach((t) => {
+    const tag = String(t || '').trim();
+    if (!tag) return;
+    if (!seen.has(tag)) out.push(tag);
+  });
+
+  return out;
+}
+
 // 元件：標籤 Chips（可多選）
 function TagChips({ tags = [], picked = [], onToggle, onClear }) {
   if (!tags.length) return (
@@ -1530,7 +1558,7 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
     onSetQty?.(k, map?.[k] || {}, nx);
   };
 
-  // ---------- 規格輔助：從 x._variant / x.variant 推導顯示 ----------
+  // ---------- 規格輔助 ----------
   const getVariantInfo = (x) => {
     const v = x?._variant || x?.variant || null;
     if (!v) return { suffix: '', named: '' };
@@ -1563,7 +1591,7 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
       const label = withVariantSuffix(name, m[k]);
       const line = mode === 'pts'
         ? `- ${label} x${qty}（${pts ?? '?'} 點）`
-        : `- ${label} x${qty}（NT$ ${price ?? '?'}）`;
+        : `- ${label} x${qty}（NT$ ${price ?? '?'})`;
       rows.push(line);
       if (mode === 'pts' && Number.isFinite(+pts)) sumPts += (+pts) * (qty || 0);
       if (mode === 'cash' && Number.isFinite(+price)) sumCash += (+price) * (qty || 0);
@@ -1580,7 +1608,7 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
     .filter((k) => checked[k])
     .reduce((o, k) => ((o[k] = map[k]), o), {});
 
-  // UI 即時計算合計（與 buildListText 一致）
+  // UI 即時計算合計
   const { sumCash, sumPts } = React.useMemo(() => {
     let sc = 0, sp = 0;
     for (const k of Object.keys(listMap)) {
@@ -1606,63 +1634,94 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
             <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
           </div>
 
-         {/* 清單內容：改用共用 .modal-scroll class */}
-<div className="p-3 overflow-y-auto max-h-[calc(86vh-148px)] space-y-2 modal-scroll">
-
-          >
+          {/* 清單內容 */}
+          <div className="p-3 overflow-y-auto max-h-[calc(86vh-148px)] space-y-2 modal-scroll">
             {keys.length === 0 ? (
               <div className="text-sm text-slate-500">尚未挑選任何商品</div>
-            ) : keys.map((k) => {
-              const x = map[k] || {};
-              const label = withVariantSuffix(x.name, x);
-              const vNamed = getVariantInfo(x).named;
-              return (
-                <div key={k} className="flex items-center justify-between gap-3 rounded-lg border px-3 py-2">
-                  <label className="flex items-center gap-2 min-w-0 flex-1">
-                    <input type="checkbox" className="h-5 w-5" checked={!!checked[k]} onChange={() => toggle(k)} />
-                    <div className="min-w-0">
-                      <div className="truncate text-sm" title={label}>{label}</div>
-                      {vNamed && <div className="text-xs text-slate-500 truncate">{vNamed}</div>}
-                      <div className="text-xs text-slate-500">
-                        {mode === 'pts'
-                          ? `需要 ${x.pts ?? '?'} 點 × ${x.qty}`
-                          : `NT$ ${x.price ?? '?'} × ${x.qty}`}
+            ) : (
+              keys.map((k) => {
+                const x = map[k] || {};
+                const qty = qtyOf(k) || 0;
+                const label = withVariantSuffix(x.name, x);
+                const vNamed = (getVariantInfo(x)?.named || "");
+                const specBadges = vNamed.split(" ・ ").filter(Boolean);
+
+                const subtotal =
+                  mode === "pts"
+                    ? (Number.isFinite(+x.pts) ? (+x.pts) * qty : null)
+                    : (Number.isFinite(+x.price) ? (+x.price) * qty : null);
+
+                return (
+                  <div
+                    key={k}
+                    className="flex items-start gap-3 rounded-xl border border-slate-200 dark:border-slate-700 p-3 bg-white/90 dark:bg-slate-900/70"
+                  >
+                    <input
+                      type="checkbox"
+                      className="mt-1.5 h-5 w-5 shrink-0"
+                      checked={!!checked[k]}
+                      onChange={() => toggle(k)}
+                    />
+
+                    <div className="min-w-0 flex-1">
+                      <div className="text-[15px] leading-5 font-medium break-words">{label}</div>
+                      {specBadges.length > 0 && (
+                        <div className="mt-1 flex flex-wrap gap-1.5">
+                          {specBadges.map((t, i) => (
+                            <span
+                              key={i}
+                              className="px-2 py-0.5 text-xs rounded-full border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800"
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      <div className="mt-1 text-xs text-slate-600 dark:text-slate-400">
+                        {mode === "pts"
+                          ? `需要 ${x.pts ?? "?"} 點 × ${qty}`
+                          : `NT$ ${x.price ?? "?"} × ${qty}`}
                       </div>
                     </div>
-                  </label>
 
-                  {/* 數量步進器：加大觸控區（≥44px） */}
-                  <div className="flex items-center gap-1.5">
-                    <button
-                      className="tap-target rounded border px-3 py-2 min-w-[44px] min-h-[44px]"
-                      onClick={() => setQtySafe(k, qtyOf(k) - 1)}
-                    >－</button>
-                    <input
-                      className="w-16 text-center rounded border px-2 py-2"
-                      inputMode="numeric"
-                      value={qtyOf(k)}
-                      onChange={(e) => setQtySafe(k, e.target.value)}
-                    />
-                    <button
-                      className="tap-target rounded border px-3 py-2 min-w-[44px] min-h-[44px]"
-                      onClick={() => setQtySafe(k, qtyOf(k) + 1)}
-                    >＋</button>
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        className="tap-target rounded border px-3 py-2 min-w-[44px] min-h-[44px]"
+                        onClick={() => setQtySafe(k, qty - 1)}
+                      >－</button>
+                      <input
+                        className="w-16 text-center rounded border px-2 py-2"
+                        inputMode="numeric"
+                        value={qty}
+                        onChange={(e) => setQtySafe(k, e.target.value)}
+                      />
+                      <button
+                        className="tap-target rounded border px-3 py-2 min-w-[44px] min-h-[44px]"
+                        onClick={() => setQtySafe(k, qty + 1)}
+                      >＋</button>
+                    </div>
+
+                    <div className="shrink-0 text-right">
+                      <div className="text-xs text-slate-500">小計</div>
+                      <div className="text-[15px] font-semibold">
+                        {mode === "pts"
+                          ? (subtotal != null ? `${subtotal} 點` : "—")
+                          : (subtotal != null ? `NT$ ${nf.format(subtotal)}` : "—")}
+                      </div>
+                      <button
+                        className="mt-2 tap-target rounded border px-3 py-2 text-sm"
+                        onClick={() => setQtySafe(k, 0)}
+                      >🗑</button>
+                    </div>
                   </div>
-
-                  {/* 刪除：加大觸控區（≥44px） */}
-                  <button
-                    className="tap-target rounded border px-3 py-2 text-sm min-w-[44px] min-h-[44px]"
-                    title="刪除此項"
-                    onClick={() => setQtySafe(k, 0)}
-                  >🗑</button>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
 
-          {/* 合計區塊（清單下方、按鈕上方） */}
+          {/* 合計區塊 */}
           <div className="px-3 py-2 border-t border-slate-200 dark:border-slate-700 text-right text-sm font-semibold">
-            {mode === 'cash'
+            {mode === "cash"
               ? <>總金額：NT$ {nf.format(sumCash)}</>
               : <>合計點數：約 {nf.format(sumPts)} 點</>}
           </div>
@@ -1674,10 +1733,10 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
               onClick={async () => {
                 try {
                   await navigator.clipboard.writeText(text);
-                  alert('✅ 已複製清單，請貼到官方 LINE 帳號聯絡管理員確認。');
+                  alert("✅ 已複製清單，請貼到官方 LINE 帳號聯絡管理員確認。");
                   onClose();
                 } catch {
-                  alert('無法自動複製，請手動選取文字複製：\n\n' + text);
+                  alert("無法自動複製，請手動選取文字複製：\n\n" + text);
                 }
               }}
             >
@@ -1689,27 +1748,6 @@ function ConfirmListDialog({ open, onClose, map, mode = 'cash', onSetQty }) {
       </div>
     </div>
   );
-}
-
-// 依 tagGroups 的群組順序 + 群內順序來產生扁平的標籤清單
-function orderTagsByGroups(allTags = [], groups = []) {
-  const seen = new Set();
-  const out = [];
-
-  // 先依群組內順序排
-  (Array.isArray(groups) ? groups : []).forEach(g => {
-    (g?.tags || []).forEach(t => {
-      if (allTags.includes(t) && !seen.has(t)) {
-        seen.add(t);
-        out.push(t);
-      }
-    });
-  });
-
-  // 再把剩下未分組/未涵蓋的補上（維持 allTags 原本順序）
-  allTags.forEach(t => { if (!seen.has(t)) out.push(t); });
-
-  return out;
 }
 
 
