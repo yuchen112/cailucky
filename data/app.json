@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-20T03:36:47.116Z"
+    "exportedAt": "2025-09-21T16:38:12.306Z"
   },
   "data": {
     "homepage": {
@@ -1037,7 +1037,7 @@
         {
           "id": "ivdrmzm9",
           "name": "@秀",
-          "points": 2
+          "points": 17
         },
         {
           "id": "k0p0iyjd",
@@ -1106,6 +1106,13 @@
         }
       ],
       "logs": [
+        {
+          "id": "6sr2rr5n",
+          "personId": "ivdrmzm9",
+          "delta": 15,
+          "note": "贊助 柴之助 4*6 桌上相本",
+          "at": "2025-09-22 00:38"
+        },
         {
           "id": "3skz0uja",
           "personId": "ohvecc9r",
