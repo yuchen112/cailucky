@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-23T14:49:34.190Z"
+    "exportedAt": "2025-09-23T17:18:20.752Z"
   },
   "data": {
     "homepage": {
@@ -1918,6 +1918,226 @@
     "store": {
       "items": [
         {
+          "id": "fyzcbkwc",
+          "name": "行動電源1.jpg",
+          "price": "480",
+          "stock": "",
+          "desc": "10000毫安\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "images": [
+            "assets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源1.jpg",
+            "assets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源2.jpg",
+            "assets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源3.jpg",
+            "assets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源4.jpg"
+          ],
+          "imagesText": "assets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源1.jpg\nassets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源2.jpg\nassets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源3.jpg\nassets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源4.jpg",
+          "buyUrl": "",
+          "tags": [
+            "3C",
+            "行動電源"
+          ],
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "顏色",
+                "values": [
+                  "金色",
+                  "粉色"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "金色",
+                "stock": "",
+                "price": "480",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "粉色",
+                "stock": "",
+                "price": "480",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "voqos3tl",
+          "name": "A0009:永生花蛋糕積木",
+          "price": "650",
+          "stock": "",
+          "desc": "完成高度17CM\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "images": [
+            "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木1.jpg",
+            "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木1.1.jpg",
+            "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木2.jpg",
+            "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木3.jpg"
+          ],
+          "imagesText": "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木1.jpg\nassets/products/積木/永生花蛋糕積木/永生花蛋糕積木1.1.jpg\nassets/products/積木/永生花蛋糕積木/永生花蛋糕積木2.jpg\nassets/products/積木/永生花蛋糕積木/永生花蛋糕積木3.jpg",
+          "buyUrl": "",
+          "tags": [
+            "玩具",
+            "積木",
+            "永生花"
+          ],
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "送壓克力罩",
+                "values": [
+                  "單一規格"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "單一規格",
+                "stock": "",
+                "price": "650",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "tyngck4d",
+          "name": "A0008:磚也星河遊樂園旋轉夢幻城堡",
+          "price": "320",
+          "stock": "",
+          "desc": "完成高度17CM\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "images": [
+            "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡1.jpg",
+            "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡2.jpg",
+            "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡3.jpg",
+            "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡4.jpg",
+            "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡5.jpg",
+            "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡6.jpg"
+          ],
+          "imagesText": "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡1.jpg\nassets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡2.jpg\nassets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡3.jpg\nassets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡4.jpg\nassets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡5.jpg\nassets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡6.jpg",
+          "buyUrl": "",
+          "tags": [
+            "玩具",
+            "積木"
+          ],
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "城堡",
+                "values": [
+                  "雲間摘星",
+                  "霧裡追月"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "雲間摘星",
+                "stock": "",
+                "price": "320",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "霧裡追月",
+                "stock": "",
+                "price": "320",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "l5o6gytq",
+          "name": "A0007:永生花積木旋轉音樂盒",
+          "price": "320",
+          "stock": "",
+          "desc": "完成高度16CM\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "images": [
+            "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.jpg",
+            "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.8.jpg",
+            "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.9.jpg",
+            "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒2.jpg"
+          ],
+          "imagesText": "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.jpg\nassets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.8.jpg\nassets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.9.jpg\nassets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒2.jpg",
+          "buyUrl": "",
+          "tags": [
+            "玩具",
+            "積木",
+            "永生花"
+          ],
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "音樂盒",
+                "values": [
+                  "紅色玫瑰花",
+                  "向日葵",
+                  "梔子花",
+                  "藍色玫瑰花",
+                  "蒲公英",
+                  "粉紅康乃馨"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "紅色玫瑰花",
+                "stock": "",
+                "price": "320",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "向日葵",
+                "stock": "",
+                "price": "320",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "梔子花",
+                "stock": "",
+                "price": "320",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "藍色玫瑰花",
+                "stock": "",
+                "price": "320",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "蒲公英",
+                "stock": "",
+                "price": "320",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "粉紅康乃馨",
+                "stock": "",
+                "price": "320",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
+        },
+        {
           "id": "3tteouk2",
           "name": "F0008:蠟筆小新趣味保溫杯",
           "price": "380",
@@ -3588,7 +3808,9 @@
             "3C",
             "生活",
             "杯子",
-            "保溫杯"
+            "保溫杯",
+            "永生花",
+            "行動電源"
           ]
         }
       ]
