@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-24T08:48:46.030Z"
+    "exportedAt": "2025-09-24T19:13:53.496Z"
   },
   "data": {
     "homepage": {
@@ -861,7 +861,7 @@
         {
           "id": "coz7j505",
           "name": "@Green",
-          "points": 1
+          "points": 2
         },
         {
           "id": "1kietant",
@@ -1135,6 +1135,13 @@
         }
       ],
       "logs": [
+        {
+          "id": "hp1emnzh",
+          "personId": "coz7j505",
+          "delta": 1,
+          "note": " 填寫問卷",
+          "at": "2025-09-25 03:13"
+        },
         {
           "id": "4wi4v3l4",
           "personId": "y0hagreo",
