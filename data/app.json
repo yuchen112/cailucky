@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-23T17:18:20.752Z"
+    "exportedAt": "2025-09-24T08:36:44.733Z"
   },
   "data": {
     "homepage": {
@@ -749,6 +749,11 @@
       ],
       "people": [
         {
+          "id": "ynjanol9",
+          "name": "@呆呆的",
+          "points": 1
+        },
+        {
           "id": "ullzcljb",
           "name": "@周福氣",
           "points": 0
@@ -799,11 +804,6 @@
           "points": 0
         },
         {
-          "id": "5cn0w5a5",
-          "name": "@星",
-          "points": 1
-        },
-        {
           "id": "zmid69xi",
           "name": "@Pius",
           "points": 0
@@ -831,7 +831,7 @@
         {
           "id": "duj2sqe6",
           "name": "@萍萍",
-          "points": 0
+          "points": 1
         },
         {
           "id": "26yfgu2v",
@@ -846,7 +846,7 @@
         {
           "id": "mg233n61",
           "name": "@玄",
-          "points": 0
+          "points": 1
         },
         {
           "id": "s386tkzp",
@@ -866,7 +866,7 @@
         {
           "id": "1kietant",
           "name": "@habv",
-          "points": 2
+          "points": 3
         },
         {
           "id": "iix4ex5h",
@@ -876,7 +876,7 @@
         {
           "id": "19lw6j5a",
           "name": "@Jr",
-          "points": 3
+          "points": 4
         },
         {
           "id": "bpn4zx60",
@@ -886,7 +886,7 @@
         {
           "id": "rj4c3c1j",
           "name": "@me",
-          "points": 1
+          "points": 2
         },
         {
           "id": "99ln3rqq",
@@ -911,7 +911,7 @@
         {
           "id": "y0hagreo",
           "name": "@Shirley",
-          "points": 12
+          "points": 13
         },
         {
           "id": "rw76039m",
@@ -946,7 +946,7 @@
         {
           "id": "5gv7fakj",
           "name": "@ㄩㄣˊ",
-          "points": 2
+          "points": 3
         },
         {
           "id": "iut1fj38",
@@ -981,7 +981,7 @@
         {
           "id": "2ic8azw0",
           "name": "@大運衝擊波",
-          "points": 1
+          "points": 2
         },
         {
           "id": "4rlulqoi",
@@ -1006,7 +1006,7 @@
         {
           "id": "3kg3pg75",
           "name": "@星⭐️",
-          "points": 1
+          "points": 4
         },
         {
           "id": "oltcd7hb",
@@ -1036,7 +1036,7 @@
         {
           "id": "m9buvyqj",
           "name": "@涂小安",
-          "points": 1
+          "points": 2
         },
         {
           "id": "gjnnv2qj",
@@ -1066,12 +1066,12 @@
         {
           "id": "ivdrmzm9",
           "name": "@秀",
-          "points": 17
+          "points": 18
         },
         {
           "id": "k0p0iyjd",
           "name": "@米寶/1m",
-          "points": 2
+          "points": 3
         },
         {
           "id": "ncz2o88r",
@@ -1101,7 +1101,7 @@
         {
           "id": "7w7obl13",
           "name": "@蘇",
-          "points": 3
+          "points": 4
         },
         {
           "id": "xazs3edh",
@@ -1131,10 +1131,150 @@
         {
           "id": "ohvecc9r",
           "name": "@ARIEL",
-          "points": 5
+          "points": 6
         }
       ],
       "logs": [
+        {
+          "id": "4wi4v3l4",
+          "personId": "y0hagreo",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-09-24 16:36"
+        },
+        {
+          "id": "ishekxhr",
+          "personId": "ynjanol9",
+          "delta": 1,
+          "note": " 填寫問卷",
+          "at": "2025-09-24 16:36"
+        },
+        {
+          "id": "s7cbiq24",
+          "personId": "m9buvyqj",
+          "delta": 1,
+          "note": "填寫問卷",
+          "at": "2025-09-24 16:35"
+        },
+        {
+          "id": "90xompgf",
+          "personId": "rj4c3c1j",
+          "delta": 1,
+          "note": " 填寫問卷",
+          "at": "2025-09-24 16:35"
+        },
+        {
+          "id": "cu3q6q7c",
+          "personId": "19lw6j5a",
+          "delta": 1,
+          "note": " 填寫問卷",
+          "at": "2025-09-24 16:34"
+        },
+        {
+          "id": "ao28rqfm",
+          "personId": "duj2sqe6",
+          "delta": 1,
+          "note": " 填寫問卷",
+          "at": "2025-09-24 16:34"
+        },
+        {
+          "id": "iqysdjkx",
+          "personId": "ohvecc9r",
+          "delta": 1,
+          "note": " 填寫問卷",
+          "at": "2025-09-24 16:34"
+        },
+        {
+          "id": "6idthbof",
+          "personId": "mg233n61",
+          "delta": 1,
+          "note": " 填寫問卷",
+          "at": "2025-09-24 16:33"
+        },
+        {
+          "id": "diugivem",
+          "personId": "7w7obl13",
+          "delta": 1,
+          "note": " 填寫問卷",
+          "at": "2025-09-24 16:33"
+        },
+        {
+          "id": "6jhla7ux",
+          "personId": "5gv7fakj",
+          "delta": 1,
+          "note": " 填寫問卷",
+          "at": "2025-09-24 16:32"
+        },
+        {
+          "id": "4op43593",
+          "personId": "2ic8azw0",
+          "delta": 1,
+          "note": " 填寫問卷",
+          "at": "2025-09-24 16:32"
+        },
+        {
+          "id": "dcndg8py",
+          "personId": "k0p0iyjd",
+          "delta": 1,
+          "note": " 填寫問卷",
+          "at": "2025-09-24 16:32"
+        },
+        {
+          "id": "0g7b7z7w",
+          "personId": "ivdrmzm9",
+          "delta": 1,
+          "note": " 填寫問卷",
+          "at": "2025-09-24 16:32"
+        },
+        {
+          "id": "05apwvhg",
+          "personId": "1kietant",
+          "delta": 1,
+          "note": " 填寫問卷",
+          "at": "2025-09-24 16:32"
+        },
+        {
+          "id": "oddlfxgx",
+          "personId": "3kg3pg75",
+          "delta": 1,
+          "note": "點數錯誤更正補償",
+          "at": "2025-09-24 16:31"
+        },
+        {
+          "id": "gfvc3gg7",
+          "personId": "3kg3pg75",
+          "delta": 1,
+          "note": "填寫問卷",
+          "at": "2025-09-24 16:31"
+        },
+        {
+          "id": "3zbzebli",
+          "personId": "nsvsw6db",
+          "delta": -10,
+          "note": "撤銷 vbix632j",
+          "at": "2025-09-24 16:30"
+        },
+        {
+          "id": "vbix632j",
+          "personId": "nsvsw6db",
+          "delta": 10,
+          "note": "",
+          "at": "2025-09-24 16:30"
+        },
+        {
+          "id": "d7o4d3vc",
+          "personId": "3kg3pg75",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-09-24 16:30"
+        },
+        {
+          "id": "52nbu6hx",
+          "personId": "5cn0w5a5",
+          "delta": -1,
+          "note": "撤銷 qfp7z8fs",
+          "at": "2025-09-24 16:29"
+        },
         {
           "id": "a57a50df",
           "personId": "ohvecc9r",
