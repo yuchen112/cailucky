@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-28T09:06:35.166Z"
+    "exportedAt": "2025-09-28T16:38:19.853Z"
   },
   "data": {
     "homepage": {
@@ -117,7 +117,7 @@
         "winnerCount": 1,
         "totalParticipants": 10,
         "youtube": "https://youtu.be/vMA6NWqbdgY",
-        "status": "已抽出",
+        "status": "待寄送",
         "note": ""
       },
       {
@@ -130,7 +130,7 @@
         "winnerCount": 1,
         "totalParticipants": 15,
         "youtube": "https://youtu.be/yz0VrnNhiG4",
-        "status": "已抽出",
+        "status": "待寄送",
         "note": ""
       },
       {
