@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-28T01:12:43.350Z"
+    "exportedAt": "2025-09-28T04:24:40.295Z"
   },
   "data": {
     "homepage": {
@@ -40,7 +40,7 @@
         "winnerCount": 2,
         "totalParticipants": 2,
         "youtube": "",
-        "status": "處理中",
+        "status": "已寄出",
         "note": "抽出名額與參與人數一致，故不抽獎"
       },
       {
@@ -3979,6 +3979,139 @@
           ]
         }
       ]
+    },
+    "gallery": {
+      "items": [
+        {
+          "id": "o4lmx9bdpjcmg373mrj",
+          "src": "assets/曝光牆/50052_0.jpg",
+          "prize": "",
+          "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        },
+        {
+          "id": "jxmvglhw7opmg373mrj",
+          "src": "assets/曝光牆/50051_0.jpg",
+          "prize": "",
+          "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        },
+        {
+          "id": "lolak5n5fkkmg373mrj",
+          "src": "assets/曝光牆/50050_0.jpg",
+          "prize": "",
+          "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        },
+        {
+          "id": "grkpqlnq3a7mg373mrj",
+          "src": "assets/曝光牆/50049_0.jpg",
+          "prize": "",
+          "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        },
+        {
+          "id": "jdg7ymuvlfmg373mrj",
+          "src": "assets/曝光牆/50048_0.jpg",
+          "prize": "",
+          "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        },
+        {
+          "id": "t01p05kx60dmg373mrj",
+          "src": "assets/曝光牆/50047_0.jpg",
+          "prize": "",
+          "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        },
+        {
+          "id": "0pdpkh15roblmg373mrj",
+          "src": "assets/曝光牆/50046_0.jpg",
+          "prize": "",
+          "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        },
+        {
+          "id": "22qqeou5cwbmg373mrj",
+          "src": "assets/曝光牆/50045_0.jpg",
+          "prize": "",
+          "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        },
+        {
+          "id": "bzjev84y84mg373mrj",
+          "src": "assets/曝光牆/50044_0.jpg",
+          "prize": "",
+          "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        },
+        {
+          "id": "3e3ax1r0vjnmg373mrj",
+          "src": "assets/曝光牆/50043_0.jpg",
+          "prize": "",
+          "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        },
+        {
+          "id": "gqg121kdvkjmg373mrj",
+          "src": "assets/曝光牆/50042_0.jpg",
+          "prize": "",
+          "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        },
+        {
+          "id": "sjnxanqqrk8mg373mrj",
+          "src": "assets/曝光牆/50041_0.jpg",
+          "prize": "",
+          "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        },
+        {
+          "id": "00l0lnt3b9mtomg373mrj",
+          "src": "assets/曝光牆/50040_0.jpg",
+          "prize": "",
+          "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        },
+        {
+          "id": "dev1qasofwmg373mrj",
+          "src": "assets/曝光牆/50039_0.jpg",
+          "prize": "",
+          "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        }
+      ]
+    },
+    "faq": {
+      "categories": []
     }
   },
   "admins": [
