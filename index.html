@@ -1178,6 +1178,580 @@ function ProductSheet({
 }
 
 
+/***** ========= 共用工具（ID / 初始化 / 保存）========= *****/
+function kjsNid() { return Math.random().toString(36).slice(2) + Date.now().toString(36); }
+
+const KJS_LS_KEY = 'kjs_site_data_v1'; // 與你現有資料流一致
+function kjsSaveData(data) {
+  try { localStorage.setItem(KJS_LS_KEY, JSON.stringify(data)); } catch {}
+}
+
+/* --- Gallery 初始化 --- */
+function kjsEnsureGallery(data) {
+  const d = data || {};
+  if (!d.gallery) d.gallery = {};
+  if (!Array.isArray(d.gallery.items)) d.gallery.items = [];
+  return d;
+}
+
+/* --- FAQ 初始化 --- */
+function kjsEnsureFaq(data) {
+  const d = data || {};
+  if (!d.faq) d.faq = {};
+  if (!Array.isArray(d.faq.categories)) d.faq.categories = [];
+  return d;
+}
+
+/* 小工具：安全 clone（UMD 環境） */
+function kjsClone(x){ return window.structuredClone ? structuredClone(x) : JSON.parse(JSON.stringify(x||{})); }
+
+/***** ========= Gallery Lightbox ========= *****/
+function GalleryLightbox({ open, items = [], index = 0, onClose = ()=>{}, onStep = ()=>{} }) {
+  const React = window.React || globalThis.React;
+
+  React.useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft') onStep(-1);
+      if (e.key === 'ArrowRight') onStep(+1);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open, onClose, onStep]);
+
+  if (!open) return null;
+  const item = items[index] || null;
+
+  return (
+    <div className="fixed inset-0 z-[998] bg-black/70 backdrop-blur-sm flex items-center justify-center p-3" onClick={onClose}>
+      <div className="relative w-[min(92vw,960px)]" onClick={(e)=>e.stopPropagation()}>
+        <div className="relative bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-elevate">
+          <div className="w-full max-h-[80vh] grid place-content-center bg-slate-50 dark:bg-slate-800 p-2">
+            {item?.src
+              ? <img src={item.src} alt="" className="max-h-[78vh] w-auto h-auto object-contain select-none"/>
+              : <div className="text-slate-400">無圖片</div>}
+          </div>
+          <div className="flex items-center justify-between px-3 py-2 border-t border-slate-200 dark:border-slate-700 text-sm">
+            <div className="truncate">
+              {item?.prize ? <span className="text-slate-700 dark:text-slate-200">{item.prize}</span> : <span className="text-slate-400">未填品名</span>}
+              {item?.at ? <span className="ml-2 text-slate-400">{item.at}</span> : null}
+            </div>
+            <button className="rounded-lg border px-3 py-1.5" onClick={onClose}>關閉</button>
+          </div>
+        </div>
+
+        <button className="absolute left-0 top-1/2 -translate-y-1/2 tap-target rounded-full bg-white/80 dark:bg-slate-900/70 border shadow-soft px-3" onClick={()=>onStep(-1)} title="上一張">‹</button>
+        <button className="absolute right-0 top-1/2 -translate-y-1/2 tap-target rounded-full bg-white/80 dark:bg-slate-900/70 border shadow-soft px-3" onClick={()=>onStep(+1)} title="下一張">›</button>
+      </div>
+    </div>
+  );
+}
+
+/***** ========= Gallery 前台 ========= *****/
+function GalleryWall({ data, admin=false, onOpenAdmin=()=>{} }) {
+  const React = window.React || globalThis.React;
+  const items = (data?.gallery?.items || [])
+    .filter(x => x?.visible)
+    .sort((a,b) => {
+      if ((b?.pin|0)!==(a?.pin|0)) return (b?.pin|0)-(a?.pin|0);
+      return String(b?.at||'').localeCompare(String(a?.at||''));
+    });
+
+  const [open, setOpen] = React.useState(false);
+  const [idx, setIdx] = React.useState(0);
+  const openAt = (i) => { setIdx(i); setOpen(true); };
+  const step = (d) => setIdx(i => (i + d + items.length) % items.length);
+
+  if (!items.length && !admin) return null;
+
+  return (
+  <section id="gallery" className="my-10">
+
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-lg font-semibold">🖼 中獎心得分享 / 曝光牆</h2>
+        {admin && (
+          <button className="tap-target rounded-lg bg-brand text-white px-3 py-2 text-sm" onClick={onOpenAdmin}>
+            ＋ 新增截圖
+          </button>
+        )}
+      </div>
+
+      {!items.length ? (
+        <div className="text-sm text-slate-500">目前沒有公開的截圖</div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+          {items.map((it, i) => (
+            <button key={it.id || i} className="group relative rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border" onClick={()=>openAt(i)} title={it?.prize||''}>
+              <div className="aspect-square w-full grid place-content-center">
+                {it.src ? <img src={it.src} alt="" className="w-full h-full object-cover select-none"/> : <div className="text-slate-400">無圖片</div>}
+              </div>
+              {it.prize && (
+                <div className="absolute bottom-0 inset-x-0 bg-black/40 text-white px-2 py-1 text-xs truncate">
+                  {it.prize}
+                </div>
+              )}
+              {it.pin ? <span className="absolute top-2 left-2 text-xs bg-amber-500 text-white px-1.5 py-0.5 rounded">置頂</span> : null}
+            </button>
+          ))}
+        </div>
+      )}
+
+      <GalleryLightbox open={open} items={items} index={idx} onClose={()=>setOpen(false)} onStep={step}/>
+    </section>
+  );
+}
+
+/***** ========= Gallery 後台（新增/刪除/編輯/排序） ========= *****/
+function GalleryAdmin({ data, setData, onClose=()=>{} }) {
+  const React = window.React || globalThis.React;
+  const [draft, setDraft] = React.useState(() => kjsEnsureGallery(kjsClone(data)));
+  const items = draft.gallery.items;
+
+  const [bulk, setBulk] = React.useState("");
+  const addFromBulk = () => {
+    const lines = (bulk || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+    if (!lines.length) return;
+    const existed = new Set(items.map(x => x.src));
+    const added = [];
+    for (const src of lines) {
+      if (existed.has(src)) continue;
+      existed.add(src);
+      added.push({
+        id: kjsNid(),
+        src,
+        prize: "",
+        at: new Date().toISOString().slice(0,10),
+        visible: false,
+        pin: false,
+        tags: []
+      });
+    }
+    if (added.length) {
+      setDraft(prev => ({ ...prev, gallery: { ...prev.gallery, items: [...prev.gallery.items, ...added] }}));
+      setBulk("");
+    } else {
+      alert("沒有可新增的網址（可能都重複）");
+    }
+  };
+
+  const updateItem = (id, patch) => {
+    setDraft(prev => ({ ...prev, gallery: { ...prev.gallery, items: prev.gallery.items.map(it => it.id===id ? { ...it, ...patch } : it) }}));
+  };
+
+  const removeItem = (id) => {
+    setDraft(prev => ({ ...prev, gallery: { ...prev.gallery, items: prev.gallery.items.filter(it => it.id!==id) }}));
+  };
+
+  const moveItem = (id, dir) => {
+    const arr = items.slice();
+    const i = arr.findIndex(x => x.id===id);
+    if (i<0) return;
+    const j = i + dir;
+    if (j<0 || j>=arr.length) return;
+    const tmp = arr[i]; arr[i]=arr[j]; arr[j]=tmp;
+    setDraft(prev => ({ ...prev, gallery: { ...prev.gallery, items: arr }}));
+  };
+
+  const bulkVisible = (v) => {
+    setDraft(prev => ({ ...prev, gallery: { ...prev.gallery, items: prev.gallery.items.map(it => ({ ...it, visible: !!v })) }}));
+  };
+
+  const saveAll = () => {
+    setData(draft);
+    kjsSaveData(draft);
+    onClose();
+  };
+
+  const view = items.slice().sort((a,b)=>{
+    if ((b?.pin|0)!==(a?.pin|0)) return (b?.pin|0)-(a?.pin|0);
+    return String(b?.at||'').localeCompare(String(a?.at||''));
+  });
+
+  return (
+    <div className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="w-[min(96vw,1000px)] max-h-[92vh] bg-white dark:bg-slate-900 rounded-2xl shadow-elevate overflow-hidden flex flex-col">
+        <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+          <div className="font-semibold">📁 曝光牆管理</div>
+          <div className="flex items-center gap-2">
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkVisible(false)}>全部隱藏</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkVisible(true)}>全部公開</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
+            <button className="rounded-lg bg-brand text-white px-3 py-1.5 text-sm" onClick={saveAll}>💾 儲存</button>
+          </div>
+        </div>
+
+        <div className="p-4 grid gap-4 overflow-auto modal-scroll">
+          <div className="rounded-xl border p-3">
+            <div className="text-sm font-medium mb-2">批次新增圖片網址（每行一個）</div>
+            <textarea className="w-full h-24 rounded-lg border p-2 text-sm" placeholder="https://...jpg\nhttps://...png" value={bulk} onChange={e=>setBulk(e.target.value)} />
+            <div className="mt-2 flex items-center justify-end">
+              <button className="rounded-lg bg-brand text-white px-3 py-1.5 text-sm" onClick={addFromBulk}>加入清單</button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {view.map(it => (
+              <div key={it.id} className="rounded-xl border overflow-hidden">
+                <div className="aspect-square bg-slate-100 dark:bg-slate-800 grid place-content-center">
+                  {it.src ? <img src={it.src} alt="" className="w-full h-full object-cover"/> : <div className="text-slate-400">無圖片</div>}
+                </div>
+                <div className="p-3 space-y-2 text-sm">
+                  <label className="block">
+                    <span className="text-slate-500">品名（可空）</span>
+                    <input className="w-full rounded-lg border px-2 py-1.5 mt-1" value={it.prize||""} onChange={e=>updateItem(it.id,{prize:e.target.value})}/>
+                  </label>
+                  <label className="block">
+                    <span className="text-slate-500">日期</span>
+                    <input type="date" className="w-full rounded-lg border px-2 py-1.5 mt-1" value={it.at||""} onChange={e=>updateItem(it.id,{at:e.target.value})}/>
+                  </label>
+                  <div className="flex items-center gap-3">
+                    <label className="inline-flex items-center gap-1">
+                      <input type="checkbox" checked={!!it.visible} onChange={e=>updateItem(it.id,{visible:e.target.checked})}/>
+                      <span>公開</span>
+                    </label>
+                    <label className="inline-flex items-center gap-1">
+                      <input type="checkbox" checked={!!it.pin} onChange={e=>updateItem(it.id,{pin:e.target.checked})}/>
+                      <span>置頂</span>
+                    </label>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-1">
+                    <div className="flex items-center gap-1">
+                      <button className="rounded border px-2 py-1" onClick={()=>moveItem(it.id, -1)}>上移</button>
+                      <button className="rounded border px-2 py-1" onClick={()=>moveItem(it.id, +1)}>下移</button>
+                    </div>
+                    <button className="rounded bg-rose-600 text-white px-2 py-1" onClick={()=>{ if(confirm('確定刪除這張截圖？')) removeItem(it.id); }}>刪除</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {!view.length && <div className="text-sm text-slate-500">目前沒有項目</div>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/***** ========= FAQ 前台（Accordion＋搜尋） ========= *****/
+function FaqSection({ data, admin=false, onOpenAdmin=()=>{} }) {
+  const React = window.React || globalThis.React;
+  const [q, setQ] = React.useState("");
+  const cats = (data?.faq?.categories || [])
+    .filter(c => c?.visible !== false)
+    .sort((a,b) => (a?.order|0) - (b?.order|0));
+
+  const filter = (text) => String(text||'').toLowerCase().includes(q.toLowerCase());
+  const any = cats.some(c => (c.items||[]).some(it => it?.visible!==false && (filter(it.q)||filter(it.a))));
+
+  return (
+    <section id="faq" className="my-12">
+
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-lg font-semibold">❓ FAQ 常見問題</h2>
+        {admin && <button className="tap-target rounded-lg border px-3 py-2 text-sm" onClick={onOpenAdmin}>管理 FAQ</button>}
+      </div>
+
+      <div className="mb-4">
+        <input
+          className="w-full rounded-lg border px-3 py-2 text-sm"
+          placeholder="輸入關鍵字搜尋（問題 / 答案）"
+          value={q}
+          onChange={e=>setQ(e.target.value)}
+        />
+      </div>
+
+      {!any ? (
+        <div className="text-sm text-slate-500">尚無符合的問題</div>
+      ) : (
+        <div className="space-y-6">
+          {cats.map(cat => {
+            const items = (cat.items||[])
+              .filter(it => it?.visible !== false && (filter(it.q) || filter(it.a)))
+              .sort((a,b) => (a?.order|0) - (b?.order|0));
+            if (!items.length) return null;
+            return (
+              <div key={cat.id}>
+                <div className="text-base font-semibold mb-2">{cat.name || '未命名分類'}</div>
+                <ul className="space-y-2">
+                  {items.map(it => <FaqAccordionItem key={it.id} item={it} />)}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function FaqAccordionItem({ item }) {
+  const React = window.React || globalThis.React;
+  const [open, setOpen] = React.useState(false);
+  return (
+    <li className="rounded-xl border overflow-hidden">
+      <button className="w-full text-left px-3 py-2 flex items-center justify-between" onClick={()=>setOpen(o=>!o)}>
+        <span className="text-sm font-medium">{item.q || '未命名問題'}</span>
+        <span className="text-slate-400">{open ? '－' : '＋'}</span>
+      </button>
+      {open && (
+        <div className="px-3 pb-3 text-sm text-slate-600 dark:text-slate-300 whitespace-pre-wrap">
+          {item.a || '（尚未填寫答案）'}
+        </div>
+      )}
+    </li>
+  );
+}
+
+/***** ========= FAQ 後台（分類＋題目：新增/刪除/排序/顯示） ========= *****/
+function FaqAdmin({ data, setData, onClose=()=>{} }) {
+  const React = window.React || globalThis.React;
+  const [draft, setDraft] = React.useState(() => kjsEnsureFaq(kjsClone(data)));
+
+  const cats = draft.faq.categories;
+
+  const addCategory = () => {
+    const next = { id: kjsNid(), name: "未命名分類", visible: true, order: (cats?.length||0)+1, items: [] };
+    setDraft(prev => ({ ...prev, faq: { ...prev.faq, categories: [...prev.faq.categories, next] }}));
+  };
+
+  const renameCategory = (id, name) => {
+    setDraft(prev => ({ ...prev, faq: { ...prev.faq, categories: prev.faq.categories.map(c => c.id===id? { ...c, name } : c) }}));
+  };
+
+  const removeCategory = (id) => {
+    setDraft(prev => ({ ...prev, faq: { ...prev.faq, categories: prev.faq.categories.filter(c => c.id!==id) }}));
+  };
+
+  const moveCategory = (id, dir) => {
+    const arr = cats.slice();
+    const i = arr.findIndex(x => x.id===id);
+    if (i<0) return;
+    const j = i + dir;
+    if (j<0 || j>=arr.length) return;
+    const tmp = arr[i]; arr[i]=arr[j]; arr[j]=tmp;
+    // 重排 order
+    arr.forEach((c,idx)=>c.order = idx+1);
+    setDraft(prev => ({ ...prev, faq: { ...prev.faq, categories: arr }}));
+  };
+
+  const toggleCategoryVisible = (id, v) => {
+    setDraft(prev => ({ ...prev, faq: { ...prev.faq, categories: prev.faq.categories.map(c => c.id===id? { ...c, visible: !!v } : c) }}));
+  };
+
+  const addFaqItem = (catId) => {
+    setDraft(prev => ({
+      ...prev,
+      faq: {
+        ...prev.faq,
+        categories: prev.faq.categories.map(c => c.id!==catId ? c : {
+          ...c,
+          items: [...(c.items||[]), { id: kjsNid(), q: "新問題", a: "", visible: true, order: (c.items?.length||0)+1 }]
+        })
+      }
+    }));
+  };
+
+  const updateFaqItem = (catId, itemId, patch) => {
+    setDraft(prev => ({
+      ...prev,
+      faq: {
+        ...prev.faq,
+        categories: prev.faq.categories.map(c => c.id!==catId ? c : {
+          ...c,
+          items: (c.items||[]).map(it => it.id===itemId ? { ...it, ...patch } : it)
+        })
+      }
+    }));
+  };
+
+  const removeFaqItem = (catId, itemId) => {
+    setDraft(prev => ({
+      ...prev,
+      faq: {
+        ...prev.faq,
+        categories: prev.faq.categories.map(c => c.id!==catId ? c : {
+          ...c,
+          items: (c.items||[]).filter(it => it.id!==itemId).map((it,idx)=>({ ...it, order: idx+1 }))
+        })
+      }
+    }));
+  };
+
+  const moveFaqItem = (catId, itemId, dir) => {
+    const cat = cats.find(c => c.id===catId);
+    if (!cat) return;
+    const arr = (cat.items||[]).slice();
+    const i = arr.findIndex(x => x.id===itemId);
+    if (i<0) return;
+    const j = i + dir;
+    if (j<0 || j>=arr.length) return;
+    const tmp = arr[i]; arr[i]=arr[j]; arr[j]=tmp;
+    arr.forEach((it,idx)=>it.order = idx+1);
+    setDraft(prev => ({
+      ...prev,
+      faq: { ...prev.faq, categories: prev.faq.categories.map(c => c.id===catId ? { ...c, items: arr } : c) }
+    }));
+  };
+
+  const bulkSetVisible = (level, v) => {
+    if (level === 'category') {
+      setDraft(prev => ({ ...prev, faq: { ...prev.faq, categories: prev.faq.categories.map(c => ({ ...c, visible: !!v })) }}));
+    } else {
+      setDraft(prev => ({ ...prev, faq: { ...prev.faq, categories: prev.faq.categories.map(c => ({ ...c, items: (c.items||[]).map(it => ({ ...it, visible: !!v })) })) }}));
+    }
+  };
+
+  const saveAll = () => {
+    setData(draft);
+    kjsSaveData(draft);
+    onClose();
+  };
+
+  const view = cats.slice().sort((a,b)=>(a?.order|0)-(b?.order|0));
+
+  return (
+    <div className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="w-[min(96vw,1000px)] max-h-[92vh] bg-white dark:bg-slate-900 rounded-2xl shadow-elevate overflow-hidden flex flex-col">
+        <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+          <div className="font-semibold">📚 FAQ 管理</div>
+          <div className="flex items-center gap-2">
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkSetVisible('category', true)}>全部分類顯示</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkSetVisible('category', false)}>全部分類隱藏</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkSetVisible('item', true)}>全部題目顯示</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkSetVisible('item', false)}>全部題目隱藏</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
+            <button className="rounded-lg bg-brand text-white px-3 py-1.5 text-sm" onClick={saveAll}>💾 儲存</button>
+          </div>
+        </div>
+
+        <div className="p-4 grid gap-4 overflow-auto modal-scroll">
+          <div className="flex items-center justify-between">
+            <div className="text-sm text-slate-600">分類與題目皆可排序、顯示/隱藏。</div>
+            <button className="rounded-lg bg-brand text-white px-3 py-1.5 text-sm" onClick={addCategory}>＋ 新增分類</button>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3">
+            {view.map(cat => (
+              <div key={cat.id} className="rounded-xl border overflow-hidden">
+                <div className="px-3 py-2 border-b bg-slate-50 dark:bg-slate-800 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <input className="rounded border px-2 py-1 text-sm" value={cat.name||""} onChange={e=>renameCategory(cat.id, e.target.value)} />
+                    <label className="inline-flex items-center gap-1 text-sm">
+                      <input type="checkbox" checked={cat.visible!==false} onChange={e=>toggleCategoryVisible(cat.id, e.target.checked)} />
+                      <span>顯示</span>
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button className="rounded border px-2 py-1 text-sm" onClick={()=>moveCategory(cat.id, -1)}>上移</button>
+                    <button className="rounded border px-2 py-1 text-sm" onClick={()=>moveCategory(cat.id, +1)}>下移</button>
+                    <button className="rounded bg-rose-600 text-white px-2 py-1 text-sm" onClick={()=>{ if(confirm('刪除此分類與其所有題目？')) removeCategory(cat.id) }}>刪除分類</button>
+                    <button className="rounded bg-brand text-white px-2 py-1 text-sm" onClick={()=>addFaqItem(cat.id)}>＋ 新增題目</button>
+                  </div>
+                </div>
+
+                <div className="p-3 space-y-2">
+                  {(cat.items||[]).sort((a,b)=>(a?.order|0)-(b?.order|0)).map(it => (
+                    <div key={it.id} className="rounded-lg border p-2">
+                      <div className="flex items-center justify-between">
+                        <label className="flex-1 mr-2">
+                          <span className="block text-xs text-slate-500">問題</span>
+                          <input className="w-full rounded border px-2 py-1 text-sm" value={it.q||""} onChange={e=>updateFaqItem(cat.id, it.id, { q: e.target.value })}/>
+                        </label>
+                        <label className="inline-flex items-center gap-1 text-sm shrink-0">
+                          <input type="checkbox" checked={it.visible!==false} onChange={e=>updateFaqItem(cat.id, it.id, { visible: e.target.checked })}/>
+                          <span>顯示</span>
+                        </label>
+                      </div>
+                      <label className="block mt-2">
+                        <span className="block text-xs text-slate-500">答案</span>
+                        <textarea className="w-full rounded border px-2 py-1 text-sm h-20" value={it.a||""} onChange={e=>updateFaqItem(cat.id, it.id, { a: e.target.value })}/>
+                      </label>
+                      <div className="flex items-center justify-between mt-2">
+                        <div className="flex items-center gap-1">
+                          <button className="rounded border px-2 py-1 text-sm" onClick={()=>moveFaqItem(cat.id, it.id, -1)}>上移</button>
+                          <button className="rounded border px-2 py-1 text-sm" onClick={()=>moveFaqItem(cat.id, it.id, +1)}>下移</button>
+                        </div>
+                        <button className="rounded bg-rose-600 text-white px-2 py-1 text-sm" onClick={()=>{ if(confirm('刪除此題目？')) removeFaqItem(cat.id, it.id); }}>刪除題目</button>
+                      </div>
+                    </div>
+                  ))}
+                  {(!cat.items || !cat.items.length) && <div className="text-sm text-slate-500">此分類目前沒有題目</div>}
+                </div>
+              </div>
+            ))}
+            {!view.length && <div className="text-sm text-slate-500">尚無分類，請先新增</div>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/***** ========= HomeSections（已整合進 Home；保留兼容） ========= *****/
+function HomeSections({ data, setData, admin }) {
+  // 已整合到 Home；此元件暫不渲染內容，避免重複與狀態分裂。
+  return null;
+}
+
+/* ========= 新增：曝光牆獨立頁面 ========= */
+function GalleryPage({ data, setData, admin=false }) {
+  const React = window.React || globalThis.React;
+
+  // 確保資料節點存在（避免空載時出錯）
+  React.useEffect(() => { try { kjsEnsureGallery(data); } catch {} }, [data]);
+
+  const [showAdmin, setShowAdmin] = React.useState(false);
+
+  return (
+    <main className="max-w-5xl mx-auto w-full px-4 py-6 flex-1">
+      <section className="my-2">
+        <div className="flex items-center justify-between mb-3">
+          <h1 className="text-xl font-semibold">🖼 中獎心得分享 / 曝光牆</h1>
+          {admin && (
+            <button className="tap-target rounded-lg bg-brand text-white px-3 py-2 text-sm"
+                    onClick={()=>setShowAdmin(true)}>管理曝光牆</button>
+          )}
+        </div>
+
+        <GalleryWall data={data} admin={admin} onOpenAdmin={()=>setShowAdmin(true)} />
+        {admin && showAdmin && (
+          <GalleryAdmin data={data} setData={setData} onClose={()=>setShowAdmin(false)} />
+        )}
+      </section>
+    </main>
+  );
+}
+
+/* ========= 新增：FAQ 獨立頁面 ========= */
+function FaqPage({ data, setData, admin=false }) {
+  const React = window.React || globalThis.React;
+
+  // 確保資料節點存在
+  React.useEffect(() => { try { kjsEnsureFaq(data); } catch {} }, [data]);
+
+  const [showAdmin, setShowAdmin] = React.useState(false);
+
+  return (
+    <main className="max-w-5xl mx-auto w-full px-4 py-6 flex-1">
+      <section className="my-2">
+        <div className="flex items-center justify-between mb-3">
+          <h1 className="text-xl font-semibold">❓ FAQ 常見問題</h1>
+          {admin && (
+            <button className="tap-target rounded-lg bg-brand text-white px-3 py-2 text-sm"
+                    onClick={()=>setShowAdmin(true)}>管理 FAQ</button>
+          )}
+        </div>
+
+        <FaqSection data={data} admin={admin} onOpenAdmin={()=>setShowAdmin(true)} />
+        {admin && showAdmin && (
+          <FaqAdmin data={data} setData={setData} onClose={()=>setShowAdmin(false)} />
+        )}
+      </section>
+    </main>
+  );
+}
 
 function SheetPickControls({ item, mode='cash' }) {
   const React = window.React || globalThis.React;
@@ -4624,6 +5198,8 @@ const importJSON = (file) => {
 
 {tab==='links' && <LinksPage data={data} setData={setData} admin={adminMode} />}
 
+{tab==='home' && <HomeSections data={data} setData={setData} admin={adminMode} />}
+
             {tab==='history' && <History data={data} admin={adminMode} setData={setData} query={query} queryMode={queryMode} />}
 {tab==='pending' && <Pending data={data} admin={adminMode} setData={setData} query={query} queryMode={queryMode} />}
 {tab==='ongoing' && <Ongoing data={data} admin={adminMode} setData={setData} query={query} queryMode={queryMode} />}
@@ -4698,6 +5274,9 @@ const importJSON = (file) => {
     setCurrentAdmin={setCurrentAdmin}
   />
 )}
+
+{tab==='gallery' && <GalleryPage data={data} setData={setData} admin={adminMode} />}
+{tab==='faq' && <FaqPage data={data} setData={setData} admin={adminMode} />}
 
 {/* 返回頂部（手機友善）：僅在滾到一定高度後顯示 */}
 {showBackTop && (
@@ -4939,6 +5518,18 @@ const importJSON = (file) => {
     onClick={()=>{ setTab('others'); setMenuOpen(false); }}
   />
 
+<NavItem
+  label="🖼 曝光牆"
+  active={tab==='gallery'}
+  onClick={()=>{ setTab('gallery'); setMenuOpen(false); }}
+/>
+
+<NavItem
+  label="❓ FAQ"
+  active={tab==='faq'}
+  onClick={()=>{ setTab('faq'); setMenuOpen(false); }}
+/>
+
   {/* 分隔線 */}
   <div className="my-2 h-px bg-slate-200 dark:bg-slate-700" />
 
@@ -5088,236 +5679,219 @@ function StickyBulkToggles({ onOpenAll, onCloseAll, className="" }) {
       );
     }
 
-    // === Home（主頁）：關於＋社群連結＋快捷入口 ===
+// === Home（精簡版：Hero + 右側曝光牆縮圖 + 4 顆重點按鈕 + FAQ；亮/深色模式） ===
 function Home({ setTab, data, setData, admin }) {
   const { useState, useMemo, useEffect } = React;
 
-  // === 來源資料 ===
-  const about = data.homepage?.about ?? "這裡是「開獎所」，提供歷史抽獎紀錄、等待開獎、進行中活動與點數商城等資訊。";
-  const links = data.homepage?.links ?? []; // [{id, name, url}]
-
-  // === 快捷入口（六格，固定排序） ===
-const entries = React.useMemo(() => {
-  const storeCount   = Array.isArray(data.store?.items) ? data.store.items.length : 0;
-  const linkCount    = Array.isArray(links) ? links.length : 0;
-  const shopCount    = Array.isArray(data.shop?.items) ? data.shop.items.length : 0;
-  const pendingCount = Array.isArray(data.pending) ? data.pending.length : 0;
-  const ongoingCount = Array.isArray(data.ongoing) ? data.ongoing.length : 0;
-  const historyCount = Array.isArray(data.history) ? data.history.length : 0;
-
-  return [
-    { key:'store',   icon:'🛒', label:'社群商店',       value:storeCount,   onClick:()=>setTab('store') },
-    { key:'links',   icon:'🔗', label:'社群與官方連結', value:linkCount,    onClick:()=>setTab('links') }, // 留在首頁，下方區塊
-    { key:'shop',    icon:'🛍️', label:'點數商店',       value:shopCount,    onClick:()=>setTab('shop') },
-    { key:'pending', icon:'⏳', label:'等待開獎',       value:pendingCount, onClick:()=>setTab('pending') },
-    { key:'ongoing', icon:'🔄', label:'進行中活動',     value:ongoingCount, onClick:()=>setTab('ongoing') },
-    { key:'history', icon:'📚', label:'歷史紀錄',       value:historyCount, onClick:()=>setTab('history') },
-  ];
-}, [data, links, setTab]);
-
-
-  // === 置頂公告 → 改為進站彈窗（僅當次開啟顯示一次） ===
-  const pinnedCards = useMemo(() => {
-    const list = data.others?.cards || [];
-    return list.filter(x => x.pin === true);
-  }, [data.others]);
-
-  const [showPinModal, setShowPinModal] = useState(false);
-
+  // 保障節點存在
   useEffect(() => {
-    // 使用 sessionStorage，確保同一次開啟期間只顯示一次
-    const SEEN_KEY = 'kjs_pin_modal_seen_v1';
-    const seen = sessionStorage.getItem(SEEN_KEY);
-    if (!seen && pinnedCards.length > 0) {
-      setShowPinModal(true);
-      sessionStorage.setItem(SEEN_KEY, '1');
-    }
-  }, [pinnedCards]);
+    try { kjsEnsureGallery(data); } catch {}
+    try { kjsEnsureFaq(data); } catch {}
+  }, [data]);
 
-  const closePinModal = () => setShowPinModal(false);
+  // /api/stats → 4 顆按鈕的數字（失敗回退本地）
+  const [stats, setStats] = useState(null);
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const r = await fetch('/api/stats', { headers: { accept: 'application/json' } });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const j = await r.json();
+        if (!alive) return;
+        setStats({
+          pending: Number(j.pending ?? 0),
+          history: Number(j.history ?? 0),
+          store:   Number(j.storeCount ?? j.store ?? 0),
+          shop:    Number(j.shopCount  ?? j.mall  ?? 0),
+        });
+      } catch {
+        if (!alive) return;
+        setStats(null);
+      }
+    })();
+    return () => { alive = false; };
+  }, []);
 
-  // === 主頁「關於」與「連結」草稿 ===
-  const [draft, setDraft] = useState({ about, linkName: "", linkUrl: "" });
-
-  const saveAbout = () => {
-    if (!admin) return;
-    setData({ ...data, homepage: { ...(data.homepage || {}), about: draft.about, links } });
-    alert("已更新主頁介紹");
+  // 本地計數（fallback）
+  const local = useMemo(() => ({
+    pending: Array.isArray(data.pending) ? data.pending.length : 0,
+    history: Array.isArray(data.history) ? data.history.length : 0,
+    store:   Array.isArray(data.store?.items) ? data.store.items.length : 0,
+    shop:    Array.isArray(data.shop?.items)  ? data.shop.items.length  : 0,
+  }), [data]);
+  const eff = {
+    pending: stats?.pending ?? local.pending,
+    history: stats?.history ?? local.history,
+    store:   stats?.store   ?? local.store,
+    shop:    stats?.shop    ?? local.shop,
   };
 
-  const addLink = () => {
-    if (!admin) return alert("請進入管理模式");
-    const name = (draft.linkName || "").trim();
-    const url  = (draft.linkUrl  || "").trim();
-    if (!name || !url) return alert("請輸入連結名稱與網址");
-    if (!/^https?:\/\//i.test(url)) return alert("網址需以 http:// 或 https:// 開頭");
-    const next = [...links, { id: Math.random().toString(36).slice(2, 10), name, url }];
-    setData({ ...data, homepage: { ...(data.homepage || {}), about: draft.about, links: next } });
-    setDraft(d => ({ ...d, linkName: "", linkUrl: "" }));
-  };
-
-  const removeLink = (id) => {
-    if (!admin) return;
-    if (!confirm("刪除此連結？")) return;
-    const next = links.filter(x => x.id !== id);
-    setData({ ...data, homepage: { ...(data.homepage || {}), about: draft.about, links: next } });
-  };
-
-  // === 其他資料（在首頁中以簡化列表示意，提供前往按鈕） ===
-  const otherCards = useMemo(() => {
-    const all = data.others?.cards || [];
-    // 不顯示置頂的（置頂改由彈窗顯示），僅列非置頂卡片的前 5 筆作為預覽
-    return all.filter(c => !c.pin).slice(0, 5);
-  }, [data.others]);
+  // 右側曝光牆縮圖（取前 5 張）
+  const galleryImages = useMemo(() => {
+    const items = Array.isArray(data.gallery?.items) ? data.gallery.items : [];
+    return items.map(it => it.url || it.img || it.image || it.src || '').filter(Boolean).slice(0, 5);
+  }, [data.gallery]);
 
   return (
-    <Section title="主頁：開獎所" subtitle="首頁資訊濃縮版">
-      {/* 1) 關於這個網頁（第一區） */}
-      <Collapse header="🧾 關於這個網頁（點我展開）" defaultOpen={false}>
-        {!admin && <p className="text-sm whitespace-pre-wrap">{about}</p>}
-        {admin && (
-          <div className="grid gap-3">
-            <textarea
-              className="rounded-lg border px-3 py-2 min-h-[100px]"
-              value={draft.about}
-              onChange={e => setDraft(d => ({ ...d, about: e.target.value }))}
-              placeholder="簡短介紹此網頁、用途與規則重點"
-            />
-            <div className="flex justify-end">
-              <button onClick={saveAbout} className="rounded-lg bg-brand text-white px-4 py-2">
-                儲存介紹
+    <div className="min-h-full bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-100">
+      {/* Hero */}
+      <section className="py-8 sm:py-12">
+        <div className="mx-auto max-w-6xl px-4 grid lg:grid-cols-3 gap-6 items-start">
+          <div className="lg:col-span-2 space-y-4">
+            <h1 className="text-3xl sm:text-4xl font-extrabold leading-tight">
+              每天都有驚喜 <span className="text-brand">開獎</span> ✨
+            </h1>
+            <p className="text-slate-600 dark:text-slate-300">
+              免費參加，中獎只需自付運費。透明公告、歷史紀錄、點數商城，一站掌握。
+            </p>
+
+            {/* 主行動 */}
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={() => setTab('pending')}
+                className="rounded-xl bg-brand text-white px-5 py-3 shadow-[0_10px_25px_-10px_rgba(0,0,0,0.25)]"
+              >
+                立即參加
               </button>
+              <a
+                href="https://reurl.cc/ZNGdXV"
+                target="_blank"
+                className="rounded-xl border px-5 py-3 bg-white/70 dark:bg-slate-900/60"
+              >
+                加入社群
+              </a>
+            </div>
+
+            {/* 4 顆重點按鈕（支援亮/深色） */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2" data-testid="stats">
+              <ActionTile scheme="amber"  icon="⏳" label="等待開獎" count={eff.pending} onClick={() => setTab('pending')} />
+              <ActionTile scheme="violet" icon="📚" label="歷史紀錄" count={eff.history} onClick={() => setTab('history')} />
+              <ActionTile scheme="cyan"   icon="🛒" label="社群商店" count={eff.store}   onClick={() => setTab('store')} />
+              <ActionTile scheme="rose"   icon="💎" label="點數商城" count={eff.shop}    onClick={() => setTab('shop')} />
             </div>
           </div>
-        )}
-      </Collapse>
 
-     {/* 2) 六格快捷入口（第二區） */}
-<div
-  className="
-    my-4 grid gap-2
-    grid-cols-2 sm:grid-cols-3
-  "
-  aria-label="首頁六格快捷入口"
->
-  {entries.map(s => (
-    <button
-      key={s.key}
-      onClick={s.onClick}
-      className="
-        group rounded-2xl border border-slate-200 dark:border-slate-700
-        bg-white/80 dark:bg-slate-800/70 backdrop-blur
-        px-3 py-3 text-left shadow-[0_10px_25px_-10px_rgba(0,0,0,0.25)]
-        hover:shadow-[0_12px_30px_-12px_rgba(0,0,0,0.35)]
-        transition
-        focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/50
-        active:scale-[0.99]
-      "
-      title={s.label}
-      aria-label={s.label}
-    >
-      <div className="flex items-center justify-between">
-        <div className="text-xl leading-none">{s.icon}</div>
-        <div className="text-[11px] text-slate-500 opacity-80 group-hover:opacity-100">
-          點擊前往
-        </div>
-      </div>
-      <div className="mt-1 text-[13px] text-slate-500">{s.label}</div>
-      <div className="mt-0.5 text-2xl font-semibold tabular-nums">{s.value}</div>
-    </button>
-  ))}
-</div>
-
-
-      
-
-      {/* 4) 其他資料（第四區） */}
-      <Collapse header="📌 其他資料" defaultOpen={false}>
-        {otherCards.length === 0 ? (
-          <div className="text-sm text-slate-500">目前沒有其他資料</div>
-        ) : (
-          <div className="grid gap-2">
-            {otherCards.map(c => (
-              <div key={c.id} className="rounded-lg border px-3 py-2">
-                <div className="text-sm font-medium mb-1">{c.title || "未命名"}</div>
-                <div className="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">
-                  {(c.content || "").split("\n").join(" / ")}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-        <div className="mt-3 flex justify-end">
-          <button onClick={() => setTab('others')} className="rounded-lg border px-3 py-1.5 text-sm">
-            前往「其他資料」
-          </button>
-        </div>
-      </Collapse>
-
-      {/* === 置頂公告彈窗（僅當次開啟顯示一次） === */}
-      {showPinModal && (
-        <div className="fixed inset-0 z-50">
-          {/* 背景遮罩：點擊關閉 */}
-          <div className="absolute inset-0 bg-black/40" onClick={closePinModal} />
-          {/* 視窗本體 */}
-          <div className="absolute inset-0 flex items-center justify-center p-4">
-            <div
-              className="
-                relative w-full max-w-md rounded-2xl
-                bg-white dark:bg-slate-900
-                border border-slate-200 dark:border-slate-700
-                shadow-xl p-4
-              "
-              onClick={(e) => e.stopPropagation()}
-              role="dialog"
-              aria-modal="true"
-              aria-label="置頂公告"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-base font-semibold">📣 最新公告</div>
-                <button
-                  className="tap-target rounded-lg border px-2 py-1 text-sm"
-                  onClick={closePinModal}
-                  aria-label="關閉公告"
-                  title="關閉"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <div className="grid gap-3 max-h-[60vh] overflow-auto pr-1">
-                {pinnedCards.map((c) => (
-                  <div key={c.id} className="rounded-lg border px-3 py-2">
-                    <div className="text-sm font-medium mb-1">{c.title || "未命名"}</div>
-                    <div className="text-sm whitespace-pre-wrap">{c.content || "（無內容）"}</div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-3 text-right">
-                <button className="rounded-lg bg-brand text-white px-3 py-1.5 text-sm" onClick={closePinModal}>
-                  我知道了
-                </button>
-              </div>
+          {/* 右側：曝光牆縮圖（仍顯示） */}
+          {galleryImages.length > 0 && (
+            <div className="grid grid-cols-3 gap-2">
+              {galleryImages.map((src, i) => (
+                <img
+                  key={i}
+                  loading="lazy"
+                  src={src}
+                  className={`rounded-xl w-full object-cover ${
+                    i < 3 ? 'h-28 sm:h-36' : i === 3 ? 'h-28 sm:h-36 col-span-2' : 'h-28 sm:h-36'
+                  }`}
+                  alt=""
+                />
+              ))}
             </div>
-          </div>
+          )}
         </div>
-      )}
-    </Section>
+      </section>
+
+      {/* 只保留 FAQ（其他 6 區塊已移除） */}
+      <section id="faq" className="mx-auto max-w-6xl px-4 py-10" data-testid="faq">
+        <FaqSection data={data} admin={admin} onOpenAdmin={() => setTab('faq-admin')} />
+      </section>
+    </div>
   );
 }
 
-    function HomeShortcut({ label, onClick }) {
+function ActionTile({ icon, label, count=0, onClick, scheme="cyan" }) {
+  // 依 scheme 切換一點點色彩（亮/深色都適配）
+  const map = {
+    amber:  { ring: 'ring-amber-300/40 dark:ring-amber-400/20',  chip: 'bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300' },
+    violet: { ring: 'ring-violet-300/40 dark:ring-violet-400/20', chip: 'bg-violet-100 text-violet-800 dark:bg-violet-500/20 dark:text-violet-300' },
+    cyan:   { ring: 'ring-cyan-300/40 dark:ring-cyan-400/20',     chip: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-500/20 dark:text-cyan-300' },
+    rose:   { ring: 'ring-rose-300/40 dark:ring-rose-400/20',     chip: 'bg-rose-100 text-rose-800 dark:bg-rose-500/20 dark:text-rose-300' },
+  };
+  const tone = map[scheme] || map.cyan;
+
   return (
     <button
       onClick={onClick}
-      className="rounded-xl2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-5 text-left shadow-soft hover:shadow-elevate transition-shadow"
+      className={`
+        group w-full text-left rounded-2xl border border-slate-200 dark:border-slate-700
+        bg-gradient-to-br from-white to-slate-50/60 dark:from-slate-800 dark:to-slate-800/60
+        px-4 py-4 shadow-[0_10px_25px_-12px_rgba(0,0,0,0.35)] hover:shadow-[0_16px_40px_-16px_rgba(0,0,0,0.45)]
+        transition transform active:scale-[0.98] hover:ring-2 ${tone.ring}
+      `}
+      title={`前往 ${label}`} aria-label={`前往 ${label}`}
     >
-      <div className="text-base font-medium">{label}</div>
-      <div className="text-xs text-slate-500 mt-1">點擊進入</div>
+      <div className="flex items-center justify-between">
+        <div
+          className="
+            flex items-center justify-center h-9 w-9 shrink-0 rounded-xl
+            bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-100
+            group-hover:scale-105 transition
+          "
+        >
+          <span className="text-lg leading-none">{icon}</span>
+        </div>
+        <div className={`grid place-items-center h-7 min-w-[2.25rem] px-2 rounded-full text-xs tabular-nums ${tone.chip}`}>
+          {Number(count) || 0}
+        </div>
+      </div>
+      <div className="mt-2 font-medium">{label}</div>
+      <div className="text-[11px] text-slate-500 dark:text-slate-400">點擊查看</div>
     </button>
   );
 }
+
+/* === 小元件：統計卡（加上 onClick） === */
+function StatCard({ label, value, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="text-left rounded-2xl border bg-white/80 dark:bg-slate-800/60 p-4 shadow-[0_10px_25px_-10px_rgba(0,0,0,0.25)] w-full"
+      title={`前往 ${label}`}
+      aria-label={`前往 ${label}`}
+    >
+      <div className="text-xs text-slate-500">{label}</div>
+      <div className="text-2xl font-bold tabular-nums">{Number(value)||0}</div>
+    </button>
+  );
+}
+
+/* === 小元件：可收合區塊（預設收合） === */
+function Fold({ open=false, onToggle=()=>{}, title, subtitle, onSeeAll=()=>{}, children }) {
+  return (
+    <div className="my-6 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60">
+      <button
+        className="w-full flex items-center justify-between px-4 py-3 text-left"
+        onClick={() => onToggle(!open)}
+        aria-expanded={open}
+        title={open ? '收合' : '展開'}
+      >
+        <div>
+          <div className="text-lg font-semibold">{title}</div>
+          {subtitle && <div className="text-sm text-slate-500">{subtitle}</div>}
+        </div>
+        <div className="flex items-center gap-3">
+          <span
+            className="text-sm text-brand underline underline-offset-2"
+            onClick={(e)=>{ e.stopPropagation(); onSeeAll(); }}
+          >
+            查看位置
+          </span>
+          <span className="text-slate-400">{open ? '－' : '＋'}</span>
+        </div>
+      </button>
+      {open && <div className="px-4 pb-4">{children}</div>}
+    </div>
+  );
+}
+
+/* === 已有的小元件保留 === */
+function HeaderWithCTA(){ return null } // 不再使用（Fold 取代）
+function CarouselRow({ children }) {
+  return <div className="no-scrollbar flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2">{children}</div>;
+}
+function Empty({ text }) { return <div className="text-sm text-slate-500">{text}</div>; }
+
+
 
 
 
