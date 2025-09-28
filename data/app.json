@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-28T06:19:33.729Z"
+    "exportedAt": "2025-09-28T06:27:31.064Z"
   },
   "data": {
     "homepage": {
@@ -57,13 +57,14 @@
       },
       {
         "id": "8ptode29",
-        "date": "2025-09-27",
         "title": "海賊王 戰光絕景 RED 劇場版 耶穌布",
+        "date": "2025-09-27",
         "winners": [
           "@黃國維"
         ],
         "winnerCount": 1,
         "totalParticipants": 7,
+        "youtube": "https://youtu.be/oqC3JF6NMss?si=SFQF94DGa-xpYaax",
         "status": "已抽出",
         "note": ""
       },
