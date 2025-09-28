@@ -1434,10 +1434,11 @@ function GalleryAdmin({ data, setData, onClose=()=>{} }) {
   );
 }
 
-/***** ========= FAQ 前台（分類可收合＋搜尋） ========= *****/
+/***** ========= FAQ 前台（只展開一個分類＋搜尋） ========= *****/
 function FaqSection({ data, admin=false, onOpenAdmin=()=>{} }) {
   const React = window.React || globalThis.React;
   const [q, setQ] = React.useState("");
+  const [openCatId, setOpenCatId] = React.useState(null); // ← 只開一個分類
 
   const cats = (data?.faq?.categories || [])
     .filter(c => c?.visible !== false)
@@ -1445,7 +1446,6 @@ function FaqSection({ data, admin=false, onOpenAdmin=()=>{} }) {
 
   const filter = (text) => String(text||'').toLowerCase().includes(q.toLowerCase());
 
-  // 預先過濾每個分類要顯示的題目
   const view = cats.map(cat => {
     const items = (cat.items||[])
       .filter(it => it?.visible !== false && (filter(it.q) || filter(it.a)))
@@ -1453,11 +1453,8 @@ function FaqSection({ data, admin=false, onOpenAdmin=()=>{} }) {
     return { cat, items };
   }).filter(x => x.items.length);
 
-  const any = view.length > 0;
-
   return (
     <section id="faq" className="my-10">
-      {/* 標題列 */}
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-xl font-semibold tracking-tight">❓ FAQ 常見問題</h2>
         {admin && (
@@ -1470,7 +1467,6 @@ function FaqSection({ data, admin=false, onOpenAdmin=()=>{} }) {
         )}
       </div>
 
-      {/* 搜尋框 */}
       <div className="mb-5">
         <input
           className="w-full rounded-xl border bg-white/70 dark:bg-slate-900/60 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
@@ -1480,12 +1476,18 @@ function FaqSection({ data, admin=false, onOpenAdmin=()=>{} }) {
         />
       </div>
 
-      {!any ? (
+      {!view.length ? (
         <div className="text-sm text-slate-500">尚無符合的問題</div>
       ) : (
         <div className="space-y-3">
           {view.map(({cat, items}) => (
-            <FaqCategoryAccordion key={cat.id} cat={cat} items={items} />
+            <FaqCategoryAccordion
+              key={cat.id}
+              cat={cat}
+              items={items}
+              isOpen={openCatId===cat.id}                       // ← 是否展開此分類
+              onToggle={() => setOpenCatId(openCatId===cat.id ? null : cat.id)}  // ← 切換只留一個
+            />
           ))}
         </div>
       )}
@@ -1493,17 +1495,38 @@ function FaqSection({ data, admin=false, onOpenAdmin=()=>{} }) {
   );
 }
 
-/***** ========= FAQ 分類可收合（含平滑動畫） ========= *****/
-function FaqCategoryAccordion({ cat, items }) {
+
+/***** ========= FAQ 分類（只展開一個問題＋平滑動畫） ========= *****/
+function FaqCategoryAccordion({ cat, items, isOpen, onToggle }) {
   const React = window.React || globalThis.React;
-  const [open, setOpen] = React.useState(false);
   const bodyRef = React.useRef(null);
   const [h, setH] = React.useState(0);
 
+  // 同一分類內：只展開一個問題
+  const [openItemId, setOpenItemId] = React.useState(null);
+
+  // 分類開合 → 量測高度
   React.useEffect(() => {
     if (!bodyRef.current) return;
-    setH(open ? bodyRef.current.scrollHeight : 0);
-  }, [open, items]);
+    setH(isOpen ? bodyRef.current.scrollHeight : 0);
+  }, [isOpen, items, openItemId]);
+
+  // 觀察內容尺寸（問題展開/收合時，分類容器高度要跟著更新）
+  React.useEffect(() => {
+    const recalc = () => {
+      if (!bodyRef.current) return;
+      setH(isOpen ? bodyRef.current.scrollHeight : 0);
+    };
+    const ro = new ResizeObserver(recalc);
+    if (bodyRef.current) ro.observe(bodyRef.current);
+    window.addEventListener('resize', recalc);
+    return () => { ro.disconnect(); window.removeEventListener('resize', recalc); };
+  }, [isOpen]);
+
+  // 點某一題 → 只開該題，其餘自動關
+  const handleItemToggle = (id) => {
+    setOpenItemId(prev => (prev === id ? null : id));
+  };
 
   return (
     <div
@@ -1513,13 +1536,13 @@ function FaqCategoryAccordion({ cat, items }) {
         shadow-[0_6px_18px_-10px_rgba(0,0,0,0.25)]
       "
     >
-      {/* 分類標題列（可點擊收合） */}
+      {/* 分類標題（只開一個分類） */}
       <button
-        className="w-full px-4 py-3 text-left flex items-center justify-between gap-3 hover:bg-slate-50/70 dark:hover:bg-slate-800/60 transition rounded-2xl"
-        onClick={()=>setOpen(o=>!o)}
-        aria-expanded={open}
+        className="w-full px-4 py-3 text-left flex items-center justify-between gap-3 hover:bg-slate-50/70 dark:hover:bg-slate-800/60 transition rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+        onClick={onToggle}
+        aria-expanded={isOpen}
         aria-controls={`faqc-${cat.id}`}
-        title={open ? '收合分類' : '展開分類'}
+        title={isOpen ? '收合分類' : '展開分類'}
       >
         <div className="flex items-center gap-2">
           <span className="h-5 w-1.5 rounded-full bg-brand/70"></span>
@@ -1527,18 +1550,25 @@ function FaqCategoryAccordion({ cat, items }) {
           <span className="text-xs text-slate-500">（{items.length}）</span>
         </div>
         <svg
-          className={`h-4 w-4 text-slate-400 transition-transform ${open ? 'rotate-180' : ''}`}
+          className={`h-4 w-4 text-slate-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
         >
           <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.24 4.38a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clipRule="evenodd" />
         </svg>
       </button>
 
-      {/* 題目清單（平滑高度動畫） */}
-      <div id={`faqc-${cat.id}`} style={{height: h, transition:'height 220ms ease'}} className="overflow-hidden">
+      {/* 題目列表容器（分類高度動畫） */}
+      <div id={`faqc-${cat.id}`} style={{height: h, transition:'height 240ms ease'}} className="overflow-hidden">
         <div ref={bodyRef} className="px-4 pb-4 pt-0">
           <ul className="grid gap-2">
-            {items.map(it => <FaqAccordionItem key={it.id} item={it} />)}
+            {items.map(it => (
+              <FaqAccordionItem
+                key={it.id}
+                item={it}
+                isOpen={openItemId===it.id}          // ← 是否展開該題
+                onToggle={() => handleItemToggle(it.id)} // ← 切換只留一題
+              />
+            ))}
           </ul>
         </div>
       </div>
@@ -1546,18 +1576,18 @@ function FaqCategoryAccordion({ cat, items }) {
   );
 }
 
-function FaqAccordionItem({ item }) {
+
+/***** ========= FAQ 單題（受控式＋平滑高度） ========= *****/
+function FaqAccordionItem({ item, isOpen=false, onToggle=()=>{} }) {
   const React = window.React || globalThis.React;
-  const [open, setOpen] = React.useState(false);
-  const ref = React.useRef(null);
+  const bodyRef = React.useRef(null);
   const [h, setH] = React.useState(0);
 
-  // 展開時量測內容高度，做平滑動畫
+  // 由父層控制 isOpen；這裡只管高度動畫
   React.useEffect(() => {
-    if (!ref.current) return;
-    if (open) setH(ref.current.scrollHeight);
-    else setH(0);
-  }, [open, item.a]);
+    if (!bodyRef.current) return;
+    setH(isOpen ? bodyRef.current.scrollHeight : 0);
+  }, [isOpen, item.a]);
 
   return (
     <li
@@ -1567,38 +1597,37 @@ function FaqAccordionItem({ item }) {
         shadow-[0_6px_18px_-10px_rgba(0,0,0,0.25)]
       "
     >
-      {/* 問題列 */}
+      {/* 問題列（交由父層切換，只開一題） */}
       <button
         className="
           w-full px-4 py-3 text-left flex items-center justify-between gap-3
           hover:bg-slate-50/70 dark:hover:bg-slate-800/60 transition
           focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 rounded-2xl
         "
-        onClick={()=>setOpen(o=>!o)}
-        aria-expanded={open}
+        onClick={onToggle}
+        aria-expanded={isOpen}
         aria-controls={`faqp-${item.id}`}
-        title={open ? '收合' : '展開'}
+        title={isOpen ? '收合' : '展開'}
       >
         <div className="flex items-center gap-2">
           <span className="grid place-items-center h-7 w-7 rounded-lg bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-100">Q</span>
           <span className="text-sm sm:text-[15px] font-medium">{item.q || '未命名問題'}</span>
         </div>
-        {/* 右側箭頭 */}
         <svg
-          className={`h-4 w-4 text-slate-400 transition-transform ${open ? 'rotate-180' : ''}`}
+          className={`h-4 w-4 text-slate-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
         >
           <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.24 4.38a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clipRule="evenodd" />
         </svg>
       </button>
 
-      {/* 答案面板（動畫：高度） */}
+      {/* 答案（高度動畫，長文完整展開） */}
       <div
         id={`faqp-${item.id}`}
-        style={{ height: h, transition: 'height 200ms ease' }}
+        style={{ height: h, transition: 'height 220ms ease' }}
         className="overflow-hidden"
       >
-        <div ref={ref} className="px-4 pb-4 pt-0 text-sm text-slate-600 dark:text-slate-300 whitespace-pre-wrap">
+        <div ref={bodyRef} className="px-4 pb-4 pt-0 text-sm text-slate-600 dark:text-slate-300 whitespace-pre-wrap break-words">
           {item.a || '（尚未填寫答案）'}
         </div>
       </div>
