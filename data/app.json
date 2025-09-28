@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-28T06:27:31.064Z"
+    "exportedAt": "2025-09-28T09:06:35.166Z"
   },
   "data": {
     "homepage": {
@@ -39,7 +39,7 @@
         "winnerCount": 1,
         "totalParticipants": 14,
         "youtube": "https://youtu.be/g5UZ0AfQUeY",
-        "status": "已抽出",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -145,7 +145,7 @@
         "winnerCount": 3,
         "totalParticipants": 9,
         "youtube": "https://youtu.be/hU6iSMvfEVg",
-        "status": "已抽出",
+        "status": "處理中",
         "note": ""
       },
       {
@@ -681,9 +681,14 @@
       ],
       "people": [
         {
+          "id": "jwwagcbc",
+          "name": "@美美",
+          "points": 0
+        },
+        {
           "id": "ynjanol9",
           "name": "@呆呆的",
-          "points": 1
+          "points": 2
         },
         {
           "id": "ullzcljb",
@@ -1067,6 +1072,13 @@
         }
       ],
       "logs": [
+        {
+          "id": "16idqh9l",
+          "personId": "ynjanol9",
+          "delta": 1,
+          "note": "邀請好友 @美美",
+          "at": "2025-09-28 17:06"
+        },
         {
           "id": "hp1emnzh",
           "personId": "coz7j505",
