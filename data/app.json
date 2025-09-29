@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-28T16:38:19.853Z"
+    "exportedAt": "2025-09-29T03:13:02.820Z"
   },
   "data": {
     "homepage": {
@@ -104,7 +104,7 @@
         "winnerCount": 1,
         "totalParticipants": 19,
         "youtube": "https://youtu.be/o2mHqXtOtDI",
-        "status": "已抽出",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -117,7 +117,7 @@
         "winnerCount": 1,
         "totalParticipants": 10,
         "youtube": "https://youtu.be/vMA6NWqbdgY",
-        "status": "待寄送",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -130,7 +130,7 @@
         "winnerCount": 1,
         "totalParticipants": 15,
         "youtube": "https://youtu.be/yz0VrnNhiG4",
-        "status": "待寄送",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -1063,7 +1063,7 @@
         {
           "id": "xcb3a1op",
           "name": "@💪💪肌肉棒子",
-          "points": 1
+          "points": 2
         },
         {
           "id": "ohvecc9r",
@@ -1072,6 +1072,13 @@
         }
       ],
       "logs": [
+        {
+          "id": "9tojpvfy",
+          "personId": "xcb3a1op",
+          "delta": 1,
+          "note": "填寫問卷",
+          "at": "2025-09-29 11:12"
+        },
         {
           "id": "16idqh9l",
           "personId": "ynjanol9",
