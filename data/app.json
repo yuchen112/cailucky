@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-29T09:44:15.685Z"
+    "exportedAt": "2025-09-29T10:11:51.383Z"
   },
   "data": {
     "homepage": {
@@ -2015,6 +2015,68 @@
     },
     "store": {
       "items": [
+        {
+          "id": "xp71wun7",
+          "name": "明月千里月餅盲盒",
+          "price": "150",
+          "stock": "",
+          "desc": "單隻150/一中盒(4隻)560/2中盒(8隻)1080\n預購7~14天\n購買後回報得點數1/5/10點\n未回報視同放棄\n\n",
+          "images": [
+            "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒1.jpg",
+            "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒2.jpg",
+            "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒3.jpg",
+            "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒4.jpg",
+            "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒6.jpg",
+            "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒7.jpg",
+            "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒8.jpg",
+            "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒9.jpg",
+            "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒10.jpg"
+          ],
+          "imagesText": "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒1.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒2.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒3.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒4.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒6.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒7.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒8.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒9.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒10.jpg",
+          "buyUrl": "",
+          "tags": [
+            "盲盒",
+            "擺件",
+            "玩具"
+          ],
+          "availability": "預售",
+          "variants": {
+            "mode": "single",
+            "attrs": [
+              {
+                "name": "如圖",
+                "values": [
+                  "單盒",
+                  "一中盒(4隻)",
+                  "二中盒(8隻)"
+                ]
+              }
+            ],
+            "items": [
+              {
+                "key": "單盒",
+                "stock": "",
+                "price": "150",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "一中盒(4隻)",
+                "stock": "",
+                "price": "560",
+                "image": "",
+                "enabled": true
+              },
+              {
+                "key": "二中盒(8隻)",
+                "stock": "",
+                "price": "1080",
+                "image": "",
+                "enabled": true
+              }
+            ]
+          }
+        },
         {
           "id": "xqx14y28",
           "name": "A0036: 山海九尾狐第二彈",
