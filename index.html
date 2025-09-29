@@ -2664,13 +2664,24 @@ function Store({ data, admin, setData, query = "" }) {
                 </div>
               </button>
 
-              {/* 名稱 / 標籤 */}
-              <button className="px-3 text-left" onClick={() => setSheet({ open: true, item: x })} title={name}>
-                <div className="text-[13px] font-medium truncate">{name}</div>
-                {Array.isArray(x._tags) && x._tags.length > 0 && (
-                  <div className="text-xs text-slate-500 truncate">{x._tags.join(" / ")}</div>
-                )}
-              </button>
+            {/* 名稱 / 標籤（覆蓋後） */}
+{(() => {
+  const displayName = getShownTitle(x);         // 顯示：純名稱（隱藏代碼）
+  const fullName    = String(x?.name || "");     // 提示：完整名稱（含代碼）
+  return (
+    <button
+      className="px-3 text-left"
+      onClick={() => setSheet({ open: true, item: x })}
+      title={fullName}
+    >
+      <div className="text-[13px] font-medium truncate">{displayName || '（未命名）'}</div>
+      {Array.isArray(x._tags) && x._tags.length > 0 && (
+        <div className="text-xs text-slate-500 truncate">{x._tags.join(" / ")}</div>
+      )}
+    </button>
+  );
+})()}
+
 
               {/* 價格 / 庫存 */}
               <div className="px-3 pt-2 pb-1">
@@ -2682,14 +2693,20 @@ function Store({ data, admin, setData, query = "" }) {
 
               {/* 底部動作列：統一右下「展開詳情」 */}
               <div className="px-3 pb-3 mt-auto flex justify-end">
-                <button
-                  type="button"
-                  className="rounded-lg border px-3 py-1.5 text-sm"
-                  onClick={() => setSheet({ open: true, item: x })}
-                  aria-label={`展開 ${name} 詳情`}
-                >
-                  展開詳情
-                </button>
+                {(() => {
+  const displayName = getShownTitle(x);
+  return (
+    <button
+      type="button"
+      className="rounded-lg border px-3 py-1.5 text-sm"
+      onClick={() => setSheet({ open: true, item: x })}
+      aria-label={`展開 ${displayName || '此商品'} 詳情`}
+    >
+      展開詳情
+    </button>
+  );
+})()}
+
               </div>
             </div>
           );
@@ -2726,9 +2743,43 @@ function Store({ data, admin, setData, query = "" }) {
 }
 
 
+/* =========================
+ * 品名前綴代碼 → 純名稱 拆解工具
+ * 例：
+ *  A0001: 永生花 → { code:"A0001", title:"永生花" }
+ *  F0003-蠟筆小新 → { code:"F0003", title:"蠟筆小新" }
+ *  C0002 10000毫安 → { code:"C0002", title:"10000毫安" }
+ * 無代碼時：code=""，title=原字串
+ * ========================= */
+function splitCodeFromName(raw) {
+  const s = String(raw || "").trim();
+  // 支援分隔：空白 / 冒號(:、：) / 破折號(-、–、—)
+  // 代碼樣式：英文字母開頭 + 英數
+  const m = s.match(/^(?<code>[A-Za-z][A-Za-z0-9]{1,10})\s*(?:[:：\-–—]\s*|\s+)(?<title>.+)$/);
+  if (m && m.groups) {
+    return { code: (m.groups.code || "").trim(), title: (m.groups.title || "").trim() };
+  }
+  return { code: "", title: s };
+}
+
+/* 取得前台顯示名稱（把代碼拿掉） */
+function getShownTitle(item) {
+  const rawName = String(item?.name || "");
+  return splitCodeFromName(rawName).title;
+}
+
+/* =========================
+ * 商品清單卡片（覆蓋版）
+ * ========================= */
 function StoreCard({ item }) {
   const images = Array.isArray(item?.images) ? item.images.filter(Boolean) : [];
   const thumb = images[0] || '';
+
+  // 顯示用：純名稱（自動隱藏代碼）
+  const shownName = getShownTitle(item);
+  // 提示用：完整名稱（含代碼），滑鼠 hover 會看到
+  const fullName = item?.name || '';
+
   return (
     <CardCollapse
       summary={
@@ -2740,8 +2791,9 @@ function StoreCard({ item }) {
           </div>
           <div className="flex items-center justify-between gap-2">
             <div className="min-w-0">
-              <div className="font-medium truncate" title={item?.name||''}>
-                {item?.name || '（未命名）'}
+              {/* 顯示純名稱；title 提示顯示完整（含代碼） */}
+              <div className="font-medium truncate" title={fullName}>
+                {shownName || '（未命名）'}
               </div>
               {Array.isArray(item?.tags) && item.tags.length>0 && (
                 <div className="text-xs text-slate-500 truncate" title={item.tags.join(' / ')}>
@@ -2759,7 +2811,7 @@ function StoreCard({ item }) {
       {/* 詳細內容（展開後才顯示） */}
       <div className="space-y-3">
         {/* 圖片輪播（縮圖切換） */}
-        {images.length > 0 && <ImageStrip images={images} alt={item?.name||'商品圖片'} />}
+        {images.length > 0 && <ImageStrip images={images} alt={shownName || '商品圖片'} />}
 
         {/* 介紹文字 */}
         {item?.desc && (
@@ -2794,7 +2846,7 @@ function StoreCard({ item }) {
   );
 }
 
-/* 簡易圖片縮圖帶切換 */
+/* 簡易圖片縮圖帶切換（原功能保留） */
 function ImageStrip({ images = [], alt = '' }) {
   const [idx, setIdx] = React.useState(0);
   const main = images[idx] || images[0] || '';
@@ -2807,7 +2859,7 @@ function ImageStrip({ images = [], alt = '' }) {
           : <div className="w-full aspect-[4/3] flex items-center justify-center text-slate-400">無圖片</div>}
       </div>
 
-      {/* 縮圖：改用 Grid，會自動換行成多列 */}
+      {/* 縮圖：Grid 版，自動換行 */}
       {images.length > 1 && (
         <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2">
           {images.map((src, i) => (
@@ -2828,6 +2880,7 @@ function ImageStrip({ images = [], alt = '' }) {
     </div>
   );
 }
+
 
 /*********************************
  * 🛒 商店編輯器（Admin 專用）— 規格版
