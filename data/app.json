@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-09-29T10:11:51.383Z"
+    "exportedAt": "2025-09-30T20:38:18.400Z"
   },
   "data": {
     "homepage": {
@@ -65,7 +65,7 @@
         "winnerCount": 1,
         "totalParticipants": 7,
         "youtube": "https://youtu.be/oqC3JF6NMss?si=SFQF94DGa-xpYaax",
-        "status": "已抽出",
+        "status": "已寄出",
         "note": ""
       },
       {
@@ -5369,6 +5369,15 @@
           "src": "assets/曝光牆/50039_0.jpg",
           "prize": "",
           "at": "2025-09-28",
+          "visible": true,
+          "pin": false,
+          "tags": []
+        },
+        {
+          "id": "1d6te8aay8hmg70rqh4",
+          "src": "assets/曝光牆/50283.jpg",
+          "prize": "",
+          "at": "2025-09-30",
           "visible": true,
           "pin": false,
           "tags": []
