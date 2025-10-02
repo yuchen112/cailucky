@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-10-02T11:39:51.485Z"
+    "exportedAt": "2025-10-02T13:02:59.002Z"
   },
   "data": {
     "homepage": {
@@ -690,6 +690,11 @@
       ],
       "people": [
         {
+          "id": "e4t1lgak",
+          "name": "@琪琪",
+          "points": 0
+        },
+        {
           "id": "itrsu734",
           "name": "@黃",
           "points": 0
@@ -702,7 +707,7 @@
         {
           "id": "ynjanol9",
           "name": "@呆呆的",
-          "points": 2
+          "points": 3
         },
         {
           "id": "ullzcljb",
@@ -1086,6 +1091,13 @@
         }
       ],
       "logs": [
+        {
+          "id": "j37knic5",
+          "personId": "ynjanol9",
+          "delta": 1,
+          "note": "邀請好友 @琪琪 ",
+          "at": "2025-10-02 21:02"
+        },
         {
           "id": "f9l7zer2",
           "personId": "ovb5rlt4",
