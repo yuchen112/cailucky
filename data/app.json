@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-10-02T11:14:28.172Z"
+    "exportedAt": "2025-10-02T11:34:19.110Z"
   },
   "data": {
     "homepage": {
@@ -561,7 +561,16 @@
         "note": "7/30無人參與，8/15開獎1人獨得"
       }
     ],
-    "pending": [],
+    "pending": [
+      {
+        "id": "a54o1j6o",
+        "title": "國潮風・明月千里月餅盲盒（4盒入）",
+        "date": "2025-10-18",
+        "image": "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒1.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      }
+    ],
     "ongoing": [],
     "shop": {
       "items": [
