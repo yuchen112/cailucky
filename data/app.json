@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-10-02T09:12:15.619Z"
+    "exportedAt": "2025-10-02T11:14:28.172Z"
   },
   "data": {
     "homepage": {
@@ -681,6 +681,11 @@
       ],
       "people": [
         {
+          "id": "itrsu734",
+          "name": "@黃",
+          "points": 0
+        },
+        {
           "id": "jwwagcbc",
           "name": "@美美",
           "points": 0
@@ -848,7 +853,7 @@
         {
           "id": "y0hagreo",
           "name": "@Shirley",
-          "points": 13
+          "points": 14
         },
         {
           "id": "rw76039m",
@@ -1053,7 +1058,7 @@
         {
           "id": "ovb5rlt4",
           "name": "@黃國維",
-          "points": 1
+          "points": 2
         },
         {
           "id": "yndkfh2e",
@@ -1072,6 +1077,34 @@
         }
       ],
       "logs": [
+        {
+          "id": "f9l7zer2",
+          "personId": "ovb5rlt4",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-10-02 19:14"
+        },
+        {
+          "id": "sfrrmlz6",
+          "personId": "itrsu734",
+          "delta": -1,
+          "note": "撤銷 jtsogyo0",
+          "at": "2025-10-02 19:14"
+        },
+        {
+          "id": "jtsogyo0",
+          "personId": "itrsu734",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-10-02 19:14"
+        },
+        {
+          "id": "g0fmeemk",
+          "personId": "y0hagreo",
+          "delta": 1,
+          "note": "填寫問卷",
+          "at": "2025-10-02 19:07"
+        },
         {
           "id": "9tojpvfy",
           "personId": "xcb3a1op",
