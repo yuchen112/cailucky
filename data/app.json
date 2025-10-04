@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-10-02T13:02:59.002Z"
+    "exportedAt": "2025-10-04T16:00:05.203Z"
   },
   "data": {
     "homepage": {
@@ -563,6 +563,94 @@
     ],
     "pending": [
       {
+        "id": "4u89hpe2",
+        "title": "多功能無線充音樂檯燈",
+        "date": "2025-10-18",
+        "image": "assets/等待開獎/10/18/多功能無線充音樂檯燈.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "rxw01i3v",
+        "title": "懷舊掌上型電玩機",
+        "date": "2025-10-18",
+        "image": "assets/等待開獎/10/18/懷舊掌上型電玩機.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "yrjmmo2l",
+        "title": "收納摺疊箱",
+        "date": "2025-10-18",
+        "image": "assets/等待開獎/10/18/收納摺疊箱.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "ps0utytu",
+        "title": "柴之助 桌上相本",
+        "date": "2025-10-18",
+        "image": "assets/等待開獎/10/18/柴之助 桌上相本.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "au40z5k0",
+        "title": "盆栽系列毛絨玩偶(小黃花)",
+        "date": "2025-10-18",
+        "image": "assets/等待開獎/10/18/盆栽系列毛絨玩偶(小黃花).jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "f5wr9c0c",
+        "title": "盆栽系列毛絨玩偶(勿忘我)",
+        "date": "2025-10-18",
+        "image": "assets/等待開獎/10/18/盆栽系列毛絨玩偶(勿忘我).jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "l8o7gfkt",
+        "title": "盆栽系列毛絨玩偶(仙人球)",
+        "date": "2025-10-18",
+        "image": "assets/等待開獎/10/18/盆栽系列毛絨玩偶(仙人球).jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "kqiyfwl0",
+        "title": "瑪麗蓮夢露 小新",
+        "date": "2025-10-18",
+        "image": "assets/等待開獎/10/18/瑪麗蓮夢露 小新.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "kx2j5otu",
+        "title": "海賊王 鷹眼",
+        "date": "2025-10-18",
+        "image": "assets/等待開獎/10/18/海賊王 鷹眼.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "3qvkysve",
+        "title": "海賊王 DXF 羅",
+        "date": "2025-10-18",
+        "image": "assets/等待開獎/10/18/海賊王 DXF 羅.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
+        "id": "b92tqpxy",
+        "title": "Qposket × 美少女戰士",
+        "date": "2025-10-18",
+        "image": "assets/等待開獎/10/18/Qposket × 美少女戰士.jpg",
+        "participants": [],
+        "plannedWinners": 1
+      },
+      {
         "id": "a54o1j6o",
         "title": "國潮風・明月千里月餅盲盒（4盒入）",
         "date": "2025-10-18",
@@ -802,7 +890,7 @@
         {
           "id": "mg233n61",
           "name": "@玄",
-          "points": 1
+          "points": 2
         },
         {
           "id": "s386tkzp",
@@ -1091,6 +1179,13 @@
         }
       ],
       "logs": [
+        {
+          "id": "59khv9lj",
+          "personId": "mg233n61",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-10-04 23:48"
+        },
         {
           "id": "j37knic5",
           "personId": "ynjanol9",
