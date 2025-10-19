@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-10-19T02:27:48.652Z"
+    "exportedAt": "2025-10-19T20:07:35.298Z"
   },
   "data": {
     "homepage": {
@@ -29,6 +29,32 @@
       ]
     },
     "history": [
+      {
+        "id": "pgtkut8c",
+        "title": "柴之助 桌上相本",
+        "date": "2025-10-18",
+        "winners": [
+          "@Yu"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 10,
+        "youtube": "https://youtu.be/dkpR9I5lVPY",
+        "status": "已寄出",
+        "note": ""
+      },
+      {
+        "id": "bgyo4b5f",
+        "title": "盆栽系列毛絨玩偶(仙人球)",
+        "date": "2025-10-18",
+        "winners": [
+          "@ray"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 9,
+        "youtube": "https://youtu.be/xsleTDv0qt8",
+        "status": "已寄出",
+        "note": ""
+      },
       {
         "id": "03yedysi",
         "title": "飛天小女警「毛毛 」坐姿公仔存錢筒",
@@ -644,25 +670,6 @@
         "plannedWinners": 1
       },
       {
-        "id": "ps0utytu",
-        "title": "柴之助 桌上相本",
-        "date": "2025-10-18",
-        "image": "assets/等待開獎/10/18/柴之助 桌上相本.jpg",
-        "participants": [
-          "@Yu",
-          "@Blue",
-          "@Rita",
-          "@7",
-          "@西瓜甜不甜🍉",
-          "@黃國維",
-          "@玄",
-          "@Yuma",
-          "@Jr",
-          "@米寶/1m"
-        ],
-        "plannedWinners": 1
-      },
-      {
         "id": "au40z5k0",
         "title": "盆栽系列毛絨玩偶(小黃花)",
         "date": "2025-10-18",
@@ -697,24 +704,6 @@
           "@周福氣",
           "@ARIEL",
           "@米寶/1m"
-        ],
-        "plannedWinners": 1
-      },
-      {
-        "id": "l8o7gfkt",
-        "title": "盆栽系列毛絨玩偶(仙人球)",
-        "date": "2025-10-18",
-        "image": "assets/等待開獎/10/18/盆栽系列毛絨玩偶(仙人球).jpg",
-        "participants": [
-          "@Blue",
-          "@7",
-          "@ray",
-          "@Yuma",
-          "@Jr",
-          "@米寶/1m",
-          "@me",
-          "@周福氣",
-          "@ARIEL"
         ],
         "plannedWinners": 1
       },
@@ -798,14 +787,6 @@
           "@周福氣",
           "@呆呆的"
         ],
-        "plannedWinners": 1
-      },
-      {
-        "id": "a54o1j6o",
-        "title": "國潮風・明月千里月餅盲盒（4盒入）",
-        "date": "2025-10-18",
-        "image": "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒1.jpg",
-        "participants": [],
         "plannedWinners": 1
       }
     ],
