@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-10-19T20:07:35.298Z"
+    "exportedAt": "2025-10-20T20:35:59.399Z"
   },
   "data": {
     "homepage": {
@@ -29,6 +29,58 @@
       ]
     },
     "history": [
+      {
+        "id": "ouxe3upk",
+        "title": "盆栽系列毛絨玩偶(小黃花)",
+        "date": "2025-10-18",
+        "winners": [
+          "@思思"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 10,
+        "youtube": "https://youtu.be/Fp_ZFdVcWCs",
+        "status": "已寄出",
+        "note": ""
+      },
+      {
+        "id": "f7v07ndf",
+        "title": "海賊王 DXF 羅",
+        "date": "2025-10-18",
+        "winners": [
+          "@Laixi"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 13,
+        "youtube": "https://youtu.be/RecHamltWwc",
+        "status": "已寄出",
+        "note": ""
+      },
+      {
+        "id": "1724pt1t",
+        "title": "瑪麗蓮夢露 小新",
+        "date": "2025-10-18",
+        "winners": [
+          "@呆呆的"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 11,
+        "youtube": "https://youtu.be/GJ_R_NwY64w",
+        "status": "已寄出",
+        "note": ""
+      },
+      {
+        "id": "kvod47cr",
+        "title": "收納摺疊箱",
+        "date": "2025-10-18",
+        "winners": [
+          "@ARIEL"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 20,
+        "youtube": "https://youtu.be/vJezhXa876I",
+        "status": "已寄出",
+        "note": ""
+      },
       {
         "id": "pgtkut8c",
         "title": "柴之助 桌上相本",
@@ -641,54 +693,6 @@
         "plannedWinners": 1
       },
       {
-        "id": "yrjmmo2l",
-        "title": "收納摺疊箱",
-        "date": "2025-10-18",
-        "image": "assets/等待開獎/10/18/收納摺疊箱.jpg",
-        "participants": [
-          "@Blue",
-          "@7",
-          "@思思",
-          "@Laixi",
-          "@明珠",
-          "@Shirley",
-          "@黃國維",
-          "@西瓜甜不甜🍉",
-          "@ARIEL",
-          "@呆呆的",
-          "@琪琪",
-          "@萍萍",
-          "@💋晴晴💋",
-          "@Yuma",
-          "@ㄩㄣˊ",
-          "@cai cai",
-          "@呀哈",
-          "@Jr",
-          "@米寶/1m",
-          "@土龍君"
-        ],
-        "plannedWinners": 1
-      },
-      {
-        "id": "au40z5k0",
-        "title": "盆栽系列毛絨玩偶(小黃花)",
-        "date": "2025-10-18",
-        "image": "assets/等待開獎/10/18/盆栽系列毛絨玩偶(小黃花).jpg",
-        "participants": [
-          "@Yu",
-          "@Blue",
-          "@7",
-          "@思思",
-          "@Yuma",
-          "@Jr",
-          "@周福氣",
-          "@ARIEL",
-          "@ray",
-          "@me"
-        ],
-        "plannedWinners": 1
-      },
-      {
         "id": "f5wr9c0c",
         "title": "盆栽系列毛絨玩偶(勿忘我)",
         "date": "2025-10-18",
@@ -708,26 +712,6 @@
         "plannedWinners": 1
       },
       {
-        "id": "kqiyfwl0",
-        "title": "瑪麗蓮夢露 小新",
-        "date": "2025-10-18",
-        "image": "assets/等待開獎/10/18/瑪麗蓮夢露 小新.jpg",
-        "participants": [
-          "@Blue",
-          "@habv",
-          "@7",
-          "@思思",
-          "@Yuma",
-          "@ㄩㄣˊ",
-          "@Jr",
-          "@米寶/1m",
-          "@黃國維",
-          "@呆呆的",
-          "@琪琪"
-        ],
-        "plannedWinners": 1
-      },
-      {
         "id": "kx2j5otu",
         "title": "海賊王 鷹眼",
         "date": "2025-10-18",
@@ -735,28 +719,6 @@
         "participants": [
           "@Blue",
           "@habv",
-          "@7",
-          "@Shirley",
-          "@Laixi",
-          "@黃國維",
-          "@周福氣",
-          "@ARIEL",
-          "@Yuma",
-          "@Jr",
-          "@米寶/1m",
-          "@💪💪肌肉棒子"
-        ],
-        "plannedWinners": 1
-      },
-      {
-        "id": "3qvkysve",
-        "title": "海賊王 DXF 羅",
-        "date": "2025-10-18",
-        "image": "assets/等待開獎/10/18/海賊王 DXF 羅.jpg",
-        "participants": [
-          "@Blue",
-          "@habv",
-          "@Rita",
           "@7",
           "@Shirley",
           "@Laixi",
