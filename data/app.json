@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-10-20T20:35:59.399Z"
+    "exportedAt": "2025-10-24T20:30:44.925Z"
   },
   "data": {
     "homepage": {
@@ -29,6 +29,58 @@
       ]
     },
     "history": [
+      {
+        "id": "izmynw9b",
+        "title": "海賊王 鷹眼",
+        "date": "2025-10-18",
+        "winners": [
+          "@Yuma"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 12,
+        "youtube": "https://www.youtube.com/watch?v=86Ta-p-s3N8",
+        "status": "已寄出",
+        "note": ""
+      },
+      {
+        "id": "drddf4rb",
+        "title": "Qposket × 美少女戰士",
+        "date": "2025-10-18",
+        "winners": [
+          "@米寶/1m"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 10,
+        "youtube": "https://www.youtube.com/watch?v=D6cLfJ6SXj0",
+        "status": "已寄出",
+        "note": ""
+      },
+      {
+        "id": "8g7zrdr7",
+        "title": "盆栽系列毛絨玩偶(勿忘我)",
+        "date": "2025-10-18",
+        "winners": [
+          "@米寶/1m"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 10,
+        "youtube": "https://www.youtube.com/watch?v=c8uSkIMsyrQ",
+        "status": "已寄出",
+        "note": ""
+      },
+      {
+        "id": "wz6qbn2e",
+        "title": "多功能無線充音樂檯燈",
+        "date": "2025-10-18",
+        "winners": [
+          "@琪琪"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 17,
+        "youtube": "https://www.youtube.com/watch?v=nM3VNcWcwnc",
+        "status": "已寄出",
+        "note": "原中獎者表示： 等待期間已偶然獲得相同功能的物品，因此希望將機會讓給其他有緣人，故進行重抽"
+      },
       {
         "id": "ouxe3upk",
         "title": "盆栽系列毛絨玩偶(小黃花)",
@@ -641,32 +693,6 @@
     ],
     "pending": [
       {
-        "id": "4u89hpe2",
-        "title": "多功能無線充音樂檯燈",
-        "date": "2025-10-18",
-        "image": "assets/等待開獎/10/18/多功能無線充音樂檯燈.jpg",
-        "participants": [
-          "@Blue",
-          "@7",
-          "@思思",
-          "@Laixi",
-          "@玄",
-          "@Yuma",
-          "@cai cai",
-          "@呀哈",
-          "@💪💪肌肉棒子",
-          "@Jr",
-          "@米寶/1m",
-          "@Shirley",
-          "@黃國維",
-          "@西瓜甜不甜🍉",
-          "@呆呆的",
-          "@琪琪",
-          "@Virginia"
-        ],
-        "plannedWinners": 1
-      },
-      {
         "id": "rxw01i3v",
         "title": "懷舊掌上型電玩機",
         "date": "2025-10-18",
@@ -689,65 +715,6 @@
           "@💪💪肌肉棒子",
           "@Jr",
           "@米寶/1m"
-        ],
-        "plannedWinners": 1
-      },
-      {
-        "id": "f5wr9c0c",
-        "title": "盆栽系列毛絨玩偶(勿忘我)",
-        "date": "2025-10-18",
-        "image": "assets/等待開獎/10/18/盆栽系列毛絨玩偶(勿忘我).jpg",
-        "participants": [
-          "@7",
-          "@Blue",
-          "@思思",
-          "@Yuma",
-          "@Jr",
-          "@ray",
-          "@me",
-          "@周福氣",
-          "@ARIEL",
-          "@米寶/1m"
-        ],
-        "plannedWinners": 1
-      },
-      {
-        "id": "kx2j5otu",
-        "title": "海賊王 鷹眼",
-        "date": "2025-10-18",
-        "image": "assets/等待開獎/10/18/海賊王 鷹眼.jpg",
-        "participants": [
-          "@Blue",
-          "@habv",
-          "@7",
-          "@Shirley",
-          "@Laixi",
-          "@黃國維",
-          "@周福氣",
-          "@ARIEL",
-          "@Yuma",
-          "@Jr",
-          "@米寶/1m",
-          "@💪💪肌肉棒子"
-        ],
-        "plannedWinners": 1
-      },
-      {
-        "id": "b92tqpxy",
-        "title": "Qposket × 美少女戰士",
-        "date": "2025-10-18",
-        "image": "assets/等待開獎/10/18/Qposket × 美少女戰士.jpg",
-        "participants": [
-          "@Blue",
-          "@7",
-          "@Yuma",
-          "@Jr",
-          "@米寶/1m",
-          "@ARIEL",
-          "@大運衝擊波",
-          "@黃國維",
-          "@周福氣",
-          "@呆呆的"
         ],
         "plannedWinners": 1
       }
