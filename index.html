@@ -1191,6 +1191,8 @@ function kjsEnsureGallery(data) {
   const d = data || {};
   if (!d.gallery) d.gallery = {};
   if (!Array.isArray(d.gallery.items)) d.gallery.items = [];
+  // ★ 新增：首頁曝光牆選擇清單（僅影響首頁）
+  if (!Array.isArray(d.gallery.homepage_showcase)) d.gallery.homepage_showcase = [];
   return d;
 }
 
@@ -3722,6 +3724,7 @@ function Section({ title, subtitle, children }){
  * 等待開獎（清單 + 跳出式資訊 + 抽獎展示）
  * - 保留原功能：搜尋/分頁/9或16宮格/新增/編輯/刪除/三種轉歷史
  * - 內建「勾選名單 → 轉歷史」完整串接（含彈窗內勾選 UI）
+ * - ★ 新增：同一視窗「逐卡貼名單」批次面板（追加/覆蓋、清雜訊、去重）
  * ============================ */
 function Pending({ data, admin, setData, query = "" }) {
   const React = window.React || globalThis.React;
@@ -3742,7 +3745,7 @@ function Pending({ data, admin, setData, query = "" }) {
   const raw = Array.isArray(data?.pending?.items) ? data.pending.items :
               (Array.isArray(data?.pending) ? data.pending : []);
 
-  const parseLinesClean = (txt) => String(txt||"").split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  const parseLinesClean = (txt) => String(txt||"").split(/\r?\n|,|、|\s+/).map(s=>s.trim()).filter(Boolean);
 
   const normalizeItem = (it) => {
     const images = Array.isArray(it?.images) ? it.images : (it?.image ? [String(it.image)] : []);
@@ -3752,7 +3755,7 @@ function Pending({ data, admin, setData, query = "" }) {
     else if (Array.isArray(it?.members)) candidates = it.members;
     else if (Array.isArray(it?.list)) candidates = it.list;
     else if (Array.isArray(it?.candidates)) candidates = it.candidates;
-    else if (typeof it?.listText === "string") candidates = parseLinesClean(it.listText);
+    else if (typeof it?.listText === "string") candidates = String(it.listText).split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
     const planned = Number.isFinite(+it?.plannedWinners) ? +it.plannedWinners : 1;
     return { ...it, _images: images, _tags: tags, _candidates: candidates.map(String).filter(Boolean), _planned: planned };
   };
@@ -3892,63 +3895,84 @@ function Pending({ data, admin, setData, query = "" }) {
     };
   }
 
-// 清理勾選殘留：把已不在名單中的勾選取消
-function pruneCheckedMap(itemId, keepSet) {
-  try {
-    const id = String(itemId || "");
-    const keep = keepSet instanceof Set ? keepSet : new Set();
-
-    const current = (typeof getCheckedMap === "function")
-      ? (getCheckedMap(id) || {})
-      : {};
-
-    const toggle = (typeof makeToggleCheck === "function")
-      ? makeToggleCheck(id)
-      : null;
-
-    for (const [name, checked] of Object.entries(current)) {
-      if (checked && !keep.has(name)) {
-        if (typeof toggle === "function") toggle(name, false);
-        else current[name] = false; // 最後防線
+  // 清理勾選殘留
+  function pruneCheckedMap(itemId, keepSet) {
+    try {
+      const id = String(itemId || "");
+      const keep = keepSet instanceof Set ? keepSet : new Set();
+      const current = getCheckedMap ? (getCheckedMap(id) || {}) : {};
+      const toggle = makeToggleCheck ? makeToggleCheck(id) : null;
+      for (const [name, checked] of Object.entries(current)) {
+        if (checked && !keep.has(name)) {
+          if (typeof toggle === "function") toggle(name, false);
+          else current[name] = false;
+        }
       }
-    }
-  } catch (err) {
-    console.warn("[pruneCheckedMap] 例外：", err);
+    } catch (err) { console.warn("[pruneCheckedMap] 例外：", err); }
   }
-}
 
-// 小卡「套用刪除」→ 真正回寫資料 + 同步編輯草稿
+  // 小卡「套用刪除」→ 真正回寫資料 + 同步編輯草稿（修正版：直接持久化）
 function updateItemParticipants(payload) {
   const { id, item, lines, text } = (payload || {});
   const itemId = String(item?.id ?? id ?? "");
   if (!itemId) return;
 
-  // 來源行列：優先用 lines，其次 text
+  // 來源行列：優先 lines，其次 text
   const srcLines = Array.isArray(lines) ? lines : String(text || "").split(/\r?\n/);
 
-  // participants：用於顯示/抽獎；trim 後去空行（不在此再去重）
+  // participants：用於顯示/抽獎；trim 後去空行（批次面板已去重，這裡不再去重）
   const participants = srcLines
     .map(s => String(s ?? "").trim())
     .filter(Boolean);
 
-  // listText：編輯用原樣字串（保留你在小卡套用後的樣子）
+  // listText：編輯用原樣字串（保留小卡/批次面板套用後的樣子）
   const nextListText = (typeof text === "string") ? text : srcLines.join("\n");
 
-  const nextItem = {
-    ...(item || {}),
-    id: itemId,
-    listText: nextListText,
-    participants
-  };
-
-  // 1) 清理勾選殘留
+  // 1) 清理勾選殘留（避免名單變更後，勾選還留在已刪名字上）
   pruneCheckedMap(itemId, new Set(participants));
 
-  // 2) 真正寫回（沿用你的保存流程）
-  if (typeof editItem === "function") {
-    editItem(nextItem);
-  } else {
-    console.warn("[updateItemParticipants] 找不到 editItem(nextItem) 可呼叫。");
+  // 2) 直接持久化到 pending（相容 {pending:{items:[]}} 與 pending 為陣列）
+  try {
+    if (typeof setData === "function") {
+      setData(prev => {
+        const prevPending = prev?.pending;
+        const items = Array.isArray(prevPending?.items)
+          ? prevPending.items
+          : (Array.isArray(prevPending) ? prevPending : []);
+
+        const idx = items.findIndex(x => String(x?.id ?? x) === itemId);
+        const base = idx >= 0 ? items[idx] : (item || { id: itemId });
+
+        // 只覆蓋需要的欄位，其餘維持原樣
+        const updated = {
+          ...base,
+          id: itemId,
+          listText: nextListText,
+          participants
+        };
+
+        const nextItems = idx >= 0
+          ? [...items.slice(0, idx), updated, ...items.slice(idx + 1)]
+          : [updated, ...items];
+
+        // 回寫時保留原結構型態
+        const nextPending = Array.isArray(prevPending?.items)
+          ? { ...prevPending, items: nextItems }
+          : nextItems;
+
+        return { ...prev, pending: nextPending };
+      });
+    } else {
+      // 若你的環境沒有 setData，仍退回舊邏輯（不建議、但保底）
+      if (typeof editItem === "function") {
+        const nextItem = { ...(item || {}), id: itemId, listText: nextListText, participants };
+        editItem(nextItem);
+      } else {
+        console.warn("[updateItemParticipants] setData 不存在，且找不到 editItem 可用。");
+      }
+    }
+  } catch (e) {
+    console.warn("[updateItemParticipants] 寫回資料例外：", e);
   }
 
   // 3) 若此時正在編輯同一筆活動 → 讓編輯視窗的 textarea 也立刻同步
@@ -3959,9 +3983,21 @@ function updateItemParticipants(payload) {
   } catch (e) {
     // ignore
   }
+
+  // （可選）發出事件，若外層有監聽可同步
+  try {
+    const evtPayload = {
+      id: itemId,
+      item,
+      lines: participants,
+      text: nextListText
+    };
+    window.dispatchEvent(new CustomEvent("kjs:pending:updateParticipants", { detail: evtPayload }));
+  } catch {}
 }
 
-  // ===== 轉歷史（勾選 → 共用） =====
+
+  // ===== 轉歷史（保留原流程） =====
   function convertByChecked(x, checkedMap){
     const picked = [];
     const m = checkedMap || {};
@@ -4021,7 +4057,7 @@ function updateItemParticipants(payload) {
     alert("已轉入歷史");
   }
 
-  // 管理用：一次性模擬（不走動畫）
+  // 管理用：一次性模擬（保留）
   function simulateOnce(list, count){
     const names = Array.isArray(list) ? list.slice() : [];
     const n = Math.max(1, Math.min(count || 1, names.length));
@@ -4031,7 +4067,7 @@ function updateItemParticipants(payload) {
     }
     return names.slice(0, n);
   }
-  function convertBySimulation(x){ // 用模擬結果（一次性）
+  function convertBySimulation(x){
     const store = (window.__LAST_SIM_RESULTS__ || {});
     const direct = store[x.id];
     const last = store.__LAST__;
@@ -4053,7 +4089,7 @@ function updateItemParticipants(payload) {
     convertToHistoryByWinners(x.id, names);
   }
 
-  // 一鍵複製抽獎貼文（含自動星期）
+  // 一鍵複製抽獎貼文（保留）
   function copyAdText(x){
     const planned = Number.isFinite(+x?._planned) ? +x._planned : 1;
     const dateStr = String(x?.date || "").trim();
@@ -4099,13 +4135,13 @@ function updateItemParticipants(payload) {
       .catch(()=>alert("無法自動複製，請手動選取"));
   }
 
-  // 跳出式資訊面板 / 抽獎展示
+  // 跳出式資訊面板 / 抽獎展示（保留）
   const [sheet, setSheet] = React.useState({ open:false, item:null });
   const [draw, setDraw] = React.useState({ open:false, item:null });
 
   const gridCols = view === "grid16" ? "grid-cols-4" : "grid-cols-3";
 
-  // 分頁器（保留你的 windowSize/startPage/endPage 寫法）
+  // 分頁器（保留）
   const Paginator = () => (
     <div className="mt-3 flex items-center justify-center gap-1 select-none">
       <button className="rounded-lg border px-3 py-1.5 text-sm" disabled={page<=1} onClick={()=>setPage(p=>Math.max(1,p-1))}>上一頁</button>
@@ -4116,48 +4152,10 @@ function updateItemParticipants(payload) {
     </div>
   );
 
-  // 原本 Toolbar（保留）
-  const Toolbar = () => (
-    <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
-      <div className="flex flex-wrap items-center gap-2">
-        <input
-          className="min-h-[44px] flex-1 rounded border px-3 py-2"
-          placeholder="搜尋活動..."
-          value={search}
-          onChange={e=>setSearch(e.target.value)}
-        />
-        <input
-          className="min-h-[44px] rounded border px-3 py-2"
-          style={{minWidth:220}}
-          placeholder="輸入你的名字（精確比對）"
-          value={myName}
-          onChange={e=>setMyName(e.target.value)}
-        />
-        <div className="inline-flex rounded-lg overflow-hidden border">
-          <button className={`px-3 py-2 text-sm ${mineFilter==='all'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('all')}>全部</button>
-          <button className={`px-3 py-2 text-sm ${mineFilter==='joined'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('joined')}>我已參加</button>
-          <button className={`px-3 py-2 text-sm ${mineFilter==='notJoined'?'bg-brand text白':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('notJoined')}>我未參加</button>
-        </div>
-        <label className="flex items-center gap-1">
-          版面
-          <select className="min-h-[44px] rounded border px-2 py-1" value={view} onChange={e=>setView(e.target.value)}>
-            <option value="grid9">9 宮格</option><option value="grid16">16 宮格</option>
-          </select>
-        </label>
-        <label className="flex items-center gap-1">
-          每頁
-          <select className="min-h-[44px] rounded border px-2 py-1" value={pageSize} onChange={e=>setPageSize(+e.target.value || 20)}>
-            <option value="20">20</option><option value="40">40</option><option value="80">80</option>
-          </select>
-        </label>
-        {admin && (
-          <button className="ml-auto rounded-lg border px-3 py-1.5" onClick={()=>window.scrollTo({top:0,behavior:"smooth"})}>新增/編輯</button>
-        )}
-      </div>
-    </div>
-  );
+  // ★ 新增：批次面板開關
+  const [batchOpen, setBatchOpen] = React.useState(false);
 
-  // 穩定 Toolbar（避免失焦）
+  // 穩定 Toolbar（加上新按鈕：批次編輯參加名單）
   const [toolbarFocus, setToolbarFocus] = React.useState(false);
   const ToolbarStable = React.useRef(null);
   if (!ToolbarStable.current) {
@@ -4168,18 +4166,17 @@ function updateItemParticipants(payload) {
       view, setView,
       pageSize, setPageSize,
       admin,
-      toolbarFocus, setToolbarFocus
+      toolbarFocus, setToolbarFocus,
+      onOpenBatchEditor, // ★ 新增
     }) {
       return (
         <div
           className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700"
           style={toolbarFocus ? { backdropFilter: 'none', WebkitBackdropFilter: 'none' } : undefined}
           onFocusCapture={() => setToolbarFocus(true)}
-          onBlurCapture={(e) => {
-            if (!e.currentTarget.contains(e.relatedTarget)) setToolbarFocus(false);
-          }}
+          onBlurCapture={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setToolbarFocus(false); }}
         >
-          <div className="flex flex-wrap items中心 gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <input
               className="min-h-[44px] flex-1 rounded border px-3 py-2"
               placeholder="搜尋活動..."
@@ -4200,9 +4197,9 @@ function updateItemParticipants(payload) {
               onKeyDownCapture={(e)=>{ e.stopPropagation?.(); }}
             />
             <div className="inline-flex rounded-lg overflow-hidden border">
-              <button className={`px-3 py-2 text-sm ${mineFilter==='all'?'bg-brand text白':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('all')}>全部</button>
-              <button className={`px-3 py-2 text-sm ${mineFilter==='joined'?'bg-brand text白':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('joined')}>我已參加</button>
-              <button className={`px-3 py-2 text-sm ${mineFilter==='notJoined'?'bg-brand text白':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('notJoined')}>我未參加</button>
+              <button className={`px-3 py-2 text-sm ${mineFilter==='all'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('all')}>全部</button>
+              <button className={`px-3 py-2 text-sm ${mineFilter==='joined'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('joined')}>我已參加</button>
+              <button className={`px-3 py-2 text-sm ${mineFilter==='notJoined'?'bg-brand text-white':'bg-white dark:bg-slate-900'}`} onClick={()=>setMineFilter('notJoined')}>我未參加</button>
             </div>
             <label className="flex items-center gap-1">
               版面
@@ -4217,7 +4214,11 @@ function updateItemParticipants(payload) {
               </select>
             </label>
             {admin && (
-              <button className="ml-auto rounded-lg border px-3 py-1.5" onClick={()=>window.scrollTo({top:0,behavior:"smooth"})}>新增/編輯</button>
+              <div className="ml-auto flex items-center gap-2">
+                <button className="rounded-lg border px-3 py-1.5" onClick={()=>window.scrollTo({top:0,behavior:"smooth"})}>新增/編輯</button>
+                {/* ★ 新增：批次編輯參加名單 */}
+                <button className="rounded-lg border px-3 py-1.5" onClick={onOpenBatchEditor} title="同一視窗，逐卡貼入不同名單">批次編輯參加名單</button>
+              </div>
             )}
           </div>
         </div>
@@ -4225,7 +4226,7 @@ function updateItemParticipants(payload) {
     };
   }
 
-  // 卡片
+  // 卡片（保留）
   const Card = ({ x, i }) => {
     const title = x?.title || x?.name || '（未命名）';
     const cover = Array.isArray(x?._images) && x._images.length>0 ? x._images[0] : (x?.image || "");
@@ -4236,7 +4237,7 @@ function updateItemParticipants(payload) {
     const toggleCheck = (name) => setCheckedMap(m => ({...m, [name]: !m[name]}));
 
     return (
-      <details key={x.id || i} className="rounded-2xl border border-slate-200 dark:border-slate-700 bg白/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden">
+      <details key={x.id || i} className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur overflow-hidden">
         <summary className="list-none cursor-pointer p-3" onClick={(e)=>{ e.preventDefault(); setSheet({ open:true, item:x }); }}>
           <div className="flex flex-col">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/70 dark:border-slate-700/70 grid place-content-center">
@@ -4290,142 +4291,165 @@ function updateItemParticipants(payload) {
     );
   };
 
-  return (
-    <section className="space-y-3">
-     {/* 新增/編輯表單（管理員可見） */}
-{admin && (
-  <div className="rounded-xl border p-4 grid gap-3">
-    <div className="grid sm:grid-cols-2 gap-3">
-      <input
-        className="min-h-[44px] rounded-lg border px-3 py-2"
-        type="date"
-        value={draft.date}
-        onChange={e => setDraft(d => ({ ...d, date: e.target.value }))}
-        placeholder="開獎/截止日期"
-      />
-      <input
-        className="min-h-[44px] rounded-lg border px-3 py-2"
-        value={draft.title}
-        onChange={e => setDraft(d => ({ ...d, title: e.target.value }))}
-        placeholder="獎項名稱"
-      />
-      <input
-        className="min-h-[44px] rounded-lg border px-3 py-2"
-        value={draft.plannedWinners}
-        onChange={e => setDraft(d => ({ ...d, plannedWinners: e.target.value }))}
-        placeholder="抽出名額（可空，預設1）"
-      />
-      <input
-        className="min-h-[44px] rounded-lg border px-3 py-2"
-        value={draft.image}
-        onChange={e => setDraft(d => ({ ...d, image: e.target.value }))}
-        placeholder="封面圖片 URL（可空）"
-      />
-    </div>
+  // ★ 新增：逐卡貼名單（批次）面板
+  function BatchParticipantsDialog({ open, onClose }) {
+    const [modeMap, setModeMap] = React.useState({});     // { [id]: 'append' | 'replace' }
+    const [textMap, setTextMap] = React.useState({});     // { [id]: '...\n...' }
 
-    {/* 名單輸入區 */}
-    <div>
-      <label className="text-sm text-slate-500">已報名名單（每行一位）</label>
-      <textarea
-        className="mt-1 w-full rounded-lg border p-2 h-28 font-mono text-sm"
-        value={draft.participantsText}
-        onChange={e => setDraft(d => ({ ...d, participantsText: e.target.value }))}
-        placeholder="@name1\n@name2\n@name3"
-      />
-      {/* 新增：名單清理工具列（就在 textarea 正下方） */}
-      <div className="mt-2 flex flex-wrap items-center gap-2">
-     
-<button
-  type="button"
-  className="rounded-lg border px-3 py-1.5 text-sm"
-  title="忽略大小寫、移除零寬字元、全形空白→半形、多重空白折成一格"
-  onClick={() => {
-    // 讀原始輸入
-    const src = String(draft?.participantsText || "").split(/\r?\n/);
-
-    // 正規化：去零寬、全形空白→半形、連續空白→單一空格、trim
     const norm = (s) => String(s ?? "")
-      .replace(/[\u200B-\u200D\uFEFF]/g, "")
-      .replace(/\u3000/g, " ")
+      .replace(/[\u200B-\u200D\uFEFF]/g, "") // 零寬
+      .replace(/\u3000/g, " ")               // 全形空白→半形
       .replace(/[ \t]+/g, " ")
       .trim();
 
-    // 忽略大小寫去重（保留第一筆的樣子，但保證兩側無雜訊）
-    const seen = new Set();
-    const out = [];
-    for (const line of src) {
-      const n = norm(line);
-      if (!n) continue;
-      const key = n.toLowerCase();
-      if (!seen.has(key)) {
-        seen.add(key);
-        out.push(n);
+    const dedupeLines = (arr=[]) => {
+      const seen = new Set(); const out = [];
+      for (const line of arr) {
+        const n = norm(line);
+        if (!n) continue;
+        const key = n.toLowerCase();
+        if (!seen.has(key)) { seen.add(key); out.push(n); }
       }
-    }
+      return out;
+    };
 
-    const before = src.map(norm).filter(Boolean).length;
-    const after  = out.length;
-    const removed = Math.max(0, before - after);
+    const handleClean = (id) => {
+      const raw = String(textMap[id] || "");
+      const cleaned = raw.split(/\r?\n|,|、|\s+/).map(s=>s.trim()).filter(Boolean).join("\n");
+      setTextMap(m => ({ ...m, [id]: cleaned }));
+    };
+    const handleDedupe = (id) => {
+      const raw = String(textMap[id] || "");
+      const out = dedupeLines(raw.split(/\r?\n/));
+      setTextMap(m => ({ ...m, [id]: out.join("\n") }));
+      // 可選提示
+      // alert(`已去除重複 ${Math.max(0, raw.split(/\r?\n/).filter(Boolean).length - out.length)} 筆`);
+    };
 
-    // 回填到 textarea
-    setDraft(d => ({ ...d, participantsText: out.join("\n") }));
+    const applyToItem = (item) => {
+      const id = String(item.id);
+      const incoming = dedupeLines(String(textMap[id] || "").split(/\r?\n/));
+      const mode = modeMap[id] || "append";
+      const current = Array.isArray(item._candidates) ? item._candidates.slice() : [];
 
-    // 可選提示：想靜默就把這行註解掉
-    if (removed > 0) {
-      try { alert(`已去除重複 ${removed} 筆`); } catch {}
-    }
-  }}
->
-  🧹 去除重複（建議）
-</button>
+      let merged = current.slice();
+      if (mode === "replace") {
+        merged = incoming.slice();
+      } else {
+        // 追加：保留現有樣貌，僅把不存在的（忽略大小寫/空白差異）加入尾端
+        const exist = new Set(current.map(c => norm(c).toLowerCase()));
+        for (const n of incoming) {
+          const key = n.toLowerCase();
+          if (!exist.has(key)) { merged.push(n); exist.add(key); }
+        }
+      }
+      updateItemParticipants({
+        id,
+        item,
+        lines: merged,
+        text: merged.join("\n"),
+      });
+    };
 
+    if (!open) return null;
+    return (
+      <div className="fixed inset-0 z-[1000] bg-black/50 backdrop-blur-sm flex">
+        <div className="m-auto w-[min(1000px,96vw)] max-h-[92vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col">
+          <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+            <div className="font-semibold">批次編輯參加名單（逐卡各貼各的）</div>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
+          </div>
 
-        <button
-          type="button"
-          className="rounded-lg border px-3 py-1.5 text-sm"
-          title="移除空白行、修剪每行兩側空白"
-          onClick={() => {
-            const cleaned = String(draft.participantsText || "")
-              .split(/\r?\n/)
-              .map(s => s.trim())
-              .filter(Boolean)
-              .join("\n");
-            setDraft(d => ({ ...d, participantsText: cleaned }));
-          }}
-        >
-          ✨ 清除空白行/雜訊
-        </button>
+          <div className="flex-1 overflow-y-auto p-3 grid gap-3">
+            {allItems.length === 0 && <div className="text-sm text-slate-500">目前沒有【等待開獎】活動</div>}
 
-        <span className="ml-auto text-sm text-slate-500">
-          目前共{" "}
-          {
-            String(draft.participantsText || "")
-              .split(/\r?\n/)
-              .map(s => s.trim())
-              .filter(Boolean).length
-          }{" "}
-          位
-        </span>
+            {allItems.map((it) => (
+              <div key={it.id} className="rounded-xl border border-slate-200 dark:border-slate-700 p-3 bg-white/70 dark:bg-slate-900/60">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="font-medium truncate" title={it.title || "（未命名）"}>🎁 {it.title || "（未命名）"}</div>
+                  <div className="text-xs text-slate-500">目前：{it._candidates.length} 位</div>
+                </div>
+
+                <textarea
+                  className="mt-2 w-full rounded-lg border p-2 h-28 font-mono text-sm"
+                  placeholder="一行一位，可貼 @name 或以空白/逗號分隔；此區僅影響本卡"
+                  value={textMap[it.id] ?? ""}
+                  onChange={(e)=>setTextMap(m => ({ ...m, [it.id]: e.target.value }))}
+                />
+
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>handleClean(it.id)} title="移除空白行、修剪兩側空白、逗號/空白也會分行">✨ 清除空白行/雜訊</button>
+                  <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>handleDedupe(it.id)} title="忽略大小寫/多空白 → 去重；保留第一筆樣式">🧹 去除重複</button>
+
+                  <label className="ml-auto text-sm flex items-center gap-1">
+                    套用模式
+                    <select
+                      className="rounded border px-2 py-1"
+                      value={modeMap[it.id] || "append"}
+                      onChange={(e)=>setModeMap(m => ({ ...m, [it.id]: e.target.value }))}
+                    >
+                      <option value="append">追加（保留原名單）</option>
+                      <option value="replace">覆蓋（以此為新名單）</option>
+                    </select>
+                  </label>
+                  <button className="rounded-lg bg-brand text-white px-3 py-1.5 text-sm" onClick={()=>applyToItem(it)}>套用到此卡</button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="p-3 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-500">
+            貼心提醒：只有按下「套用到此卡」的活動才會寫入；關閉視窗不會自動套用。
+          </div>
+        </div>
       </div>
-    </div>
+    );
+  }
 
-    <div className="flex gap-2 justify-end">
-      {editingId && (
-        <button onClick={cancelEdit} className="rounded-lg border px-3 py-1.5">
-          取消
-        </button>
+  return (
+    <section className="space-y-3">
+      {/* 新增/編輯表單（管理員可見） */}
+      {admin && (
+        <div className="rounded-xl border p-4 grid gap-3">
+          <div className="grid sm:grid-cols-2 gap-3">
+            <input className="min-h-[44px] rounded-lg border px-3 py-2" type="date" value={draft.date} onChange={e => setDraft(d => ({ ...d, date: e.target.value }))} placeholder="開獎/截止日期" />
+            <input className="min-h-[44px] rounded-lg border px-3 py-2" value={draft.title} onChange={e => setDraft(d => ({ ...d, title: e.target.value }))} placeholder="獎項名稱" />
+            <input className="min-h-[44px] rounded-lg border px-3 py-2" value={draft.plannedWinners} onChange={e => setDraft(d => ({ ...d, plannedWinners: e.target.value }))} placeholder="抽出名額（可空，預設1）" />
+            <input className="min-h-[44px] rounded-lg border px-3 py-2" value={draft.image} onChange={e => setDraft(d => ({ ...d, image: e.target.value }))} placeholder="封面圖片 URL（可空）" />
+          </div>
+
+          {/* 名單輸入區（保留） */}
+          <div>
+            <label className="text-sm text-slate-500">已報名名單（每行一位）</label>
+            <textarea className="mt-1 w-full rounded-lg border p-2 h-28 font-mono text-sm" value={draft.participantsText} onChange={e => setDraft(d => ({ ...d, participantsText: e.target.value }))} placeholder="@name1\n@name2\n@name3" />
+            <div className="mt-2 flex flex-wrap items-center gap-2">
+              <button type="button" className="rounded-lg border px-3 py-1.5 text-sm" title="忽略大小寫、移除零寬字元、全形空白→半形、多重空白折成一格" onClick={() => {
+                const src = String(draft?.participantsText || "").split(/\r?\n/);
+                const norm = (s) => String(s ?? "").replace(/[\u200B-\u200D\uFEFF]/g, "").replace(/\u3000/g, " ").replace(/[ \t]+/g, " ").trim();
+                const seen = new Set(); const out = [];
+                for (const line of src) { const n = norm(line); if (!n) continue; const key = n.toLowerCase(); if (!seen.has(key)) { seen.add(key); out.push(n); } }
+                const before = src.map(norm).filter(Boolean).length; const after  = out.length; const removed = Math.max(0, before - after);
+                setDraft(d => ({ ...d, participantsText: out.join("\n") }));
+                if (removed > 0) { try { alert(`已去除重複 ${removed} 筆`); } catch {} }
+              }}>🧹 去除重複（建議）</button>
+
+              <button type="button" className="rounded-lg border px-3 py-1.5 text-sm" title="移除空白行、修剪每行兩側空白" onClick={() => {
+                const cleaned = String(draft.participantsText || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean).join("\n");
+                setDraft(d => ({ ...d, participantsText: cleaned }));
+              }}>✨ 清除空白行/雜訊</button>
+
+              <span className="ml-auto text-sm text-slate-500">
+                目前共 {String(draft.participantsText || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean).length} 位
+              </span>
+            </div>
+          </div>
+
+          <div className="flex gap-2 justify-end">
+            {editingId && (<button onClick={cancelEdit} className="rounded-lg border px-3 py-1.5">取消</button>)}
+            <button onClick={upsertFromDraft} className="rounded-lg bg-brand text-white px-3 py-1.5">{editingId ? "儲存修改" : "新增活動"}</button>
+          </div>
+        </div>
       )}
-      {/* 保持原本的儲存流程（內部已用 parseLinesClean 再寫入） */}
-      <button
-        onClick={upsertFromDraft}
-        className="rounded-lg bg-brand text-white px-3 py-1.5"
-      >
-        {editingId ? "儲存修改" : "新增活動"}
-      </button>
-    </div>
-  </div>
-)}
-
 
       {/* 工具列 + 分頁器 */}
       <div className="sticky top-0 z-10">
@@ -4437,6 +4461,7 @@ function updateItemParticipants(payload) {
           pageSize={pageSize} setPageSize={setPageSize}
           admin={admin}
           toolbarFocus={toolbarFocus} setToolbarFocus={setToolbarFocus}
+          onOpenBatchEditor={()=>setBatchOpen(true)} // ★
         />
       </div>
 
@@ -4462,30 +4487,29 @@ function updateItemParticipants(payload) {
         onOpenViewer={(images, idx, title)=>openViewer(images, idx, title)}
         onStartDraw={(it)=>setDraw({ open:true, item:it })}
         onAdmin={{
-  onEdit:(it)=>editItem(it),
-  onDelete:(it)=>removeItemObj(it),
-  onCopyAd:(it)=>copyAdText(it),
-  onConvertBySim:(it)=>convertBySimulation(it),
-  onConvertByChecked:(it, map)=>convertByChecked(it, map ?? getCheckedMap(it.id)),
-  onConvertByInput:(it)=>convertByInput(it),
-
-  checkedMap: sheet.item ? getCheckedMap(sheet.item.id) : {},
-  toggleCheck: sheet.item ? makeToggleCheck(sheet.item.id) : ()=>{},
-
-  // ★ 新增這行：小卡「套用刪除」會呼叫這裡，真正寫回與持久化
-  onUpdateParticipants: updateItemParticipants,
-}}
-
-
+          onEdit:(it)=>editItem(it),
+          onDelete:(it)=>removeItemObj(it),
+          onCopyAd:(it)=>copyAdText(it),
+          onConvertBySim:(it)=>convertBySimulation(it),
+          onConvertByChecked:(it, map)=>convertByChecked(it, map ?? getCheckedMap(it.id)),
+          onConvertByInput:(it)=>convertByInput(it),
+          checkedMap: sheet.item ? getCheckedMap(sheet.item.id) : {},
+          toggleCheck: sheet.item ? makeToggleCheck(sheet.item.id) : ()=>{},
+          // ★ 保留：小卡「套用刪除」回寫
+          onUpdateParticipants: updateItemParticipants,
+        }}
       />
 
-      {/* 抽獎展示（全螢幕覆蓋，若你有 DrawSimulator） */}
+      {/* 抽獎展示（全螢幕覆蓋） */}
       <DrawSimulator
         open={draw.open}
         onClose={()=>setDraw({ open:false, item:null })}
         participants={draw.item ? normalizeItem(draw.item)._candidates : []}
         defaultCount={draw.item ? normalizeItem(draw.item)._planned || 1 : 1}
       />
+
+      {/* ★ 新增：同一視窗逐卡貼名單（批次） */}
+      <BatchParticipantsDialog open={!!batchOpen} onClose={()=>setBatchOpen(false)} />
     </section>
   );
 }
@@ -5864,17 +5888,17 @@ function StickyBulkToggles({ onOpenAll, onCloseAll, className="" }) {
       );
     }
 
-// === Home（精簡版：Hero + 右側曝光牆縮圖 + 4 顆重點按鈕 + FAQ；亮/深色模式） ===
+// === Home（Hero + 右側曝光牆縮圖 + 4 顆重點按鈕 + FAQ） ===
 function Home({ setTab, data, setData, admin }) {
   const { useState, useMemo, useEffect } = React;
 
-  // 保障節點存在
+  // 保障節點存在（延用你的初始化）
   useEffect(() => {
     try { kjsEnsureGallery(data); } catch {}
     try { kjsEnsureFaq(data); } catch {}
   }, [data]);
 
-  // /api/stats → 4 顆按鈕的數字（失敗回退本地）
+  // /api/stats → 4 顆按鈕數字（失敗回退本地）
   const [stats, setStats] = useState(null);
   useEffect(() => {
     let alive = true;
@@ -5912,11 +5936,47 @@ function Home({ setTab, data, setData, admin }) {
     shop:    stats?.shop    ?? local.shop,
   };
 
-  // 右側曝光牆縮圖（取前 5 張）
+  // ★ 首頁曝光牆：若已選擇（homepage_showcase）→ 依選擇顯示；否則回退取前 5 張
+  const showcase = Array.isArray(data?.gallery?.homepage_showcase) ? data.gallery.homepage_showcase : [];
   const galleryImages = useMemo(() => {
+    if (Array.isArray(showcase) && showcase.length > 0) {
+      return showcase.filter(Boolean).slice(0, 5);
+    }
     const items = Array.isArray(data.gallery?.items) ? data.gallery.items : [];
     return items.map(it => it.url || it.img || it.image || it.src || '').filter(Boolean).slice(0, 5);
-  }, [data.gallery]);
+  }, [data.gallery, showcase]);
+
+  // ★ 管理介面：編輯首頁曝光
+  const [editOpen, setEditOpen] = useState(false);
+  const allGallery = useMemo(() => (Array.isArray(data.gallery?.items) ? data.gallery.items : []), [data.gallery]);
+  const [pick, setPick] = useState(showcase); // 暫存選擇（URL 陣列）
+
+  useEffect(()=>{ setPick(showcase); }, [editOpen]); // 開啟時載入
+
+  const togglePick = (url) => {
+    setPick(prev => prev.includes(url) ? prev.filter(u=>u!==url) : [...prev, url]);
+  };
+  const movePick = (url, dir) => {
+    setPick(prev => {
+      const arr = prev.slice();
+      const i = arr.indexOf(url);
+      if (i<0) return prev;
+      const j = i + (dir==='up'?-1:+1);
+      if (j<0 || j>=arr.length) return prev;
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+      return arr;
+    });
+  };
+  const savePick = () => {
+    setData(s => {
+      const next = { ...(s||{}) };
+      next.gallery = next.gallery || {};
+      next.gallery.homepage_showcase = (pick||[]).filter(Boolean);
+      return next;
+    });
+    setEditOpen(false);
+    alert("已更新首頁曝光牆顯示");
+  };
 
   return (
     <div className="min-h-full bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-100">
@@ -5946,9 +6006,18 @@ function Home({ setTab, data, setData, admin }) {
               >
                 加入社群
               </a>
+              {admin && (
+                <button
+                  onClick={()=>setEditOpen(true)}
+                  className="rounded-xl border px-5 py-3 bg-white/70 dark:bg-slate-900/60"
+                  title="只影響首頁右側曝光牆；分頁曝光牆維持原設定"
+                >
+                  編輯首頁曝光
+                </button>
+              )}
             </div>
 
-            {/* 4 顆重點按鈕（支援亮/深色） */}
+            {/* 4 顆重點按鈕 */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2" data-testid="stats">
               <ActionTile scheme="amber"  icon="⏳" label="等待開獎" count={eff.pending} onClick={() => setTab('pending')} />
               <ActionTile scheme="violet" icon="📚" label="歷史紀錄" count={eff.history} onClick={() => setTab('history')} />
@@ -5957,7 +6026,7 @@ function Home({ setTab, data, setData, admin }) {
             </div>
           </div>
 
-          {/* 右側：曝光牆縮圖（仍顯示） */}
+          {/* 右側：首頁曝光牆縮圖（依選擇或自動取前 5 張） */}
           {galleryImages.length > 0 && (
             <div className="grid grid-cols-3 gap-2">
               {galleryImages.map((src, i) => (
@@ -5976,13 +6045,78 @@ function Home({ setTab, data, setData, admin }) {
         </div>
       </section>
 
-      {/* 只保留 FAQ（其他 6 區塊已移除） */}
+      {/* FAQ */}
       <section id="faq" className="mx-auto max-w-6xl px-4 py-10" data-testid="faq">
         <FaqSection data={data} admin={admin} onOpenAdmin={() => setTab('faq-admin')} />
       </section>
+
+      {/* ★ 編輯首頁曝光：只影響首頁 */}
+      {admin && editOpen && (
+        <div className="fixed inset-0 z-[1000] bg-black/40 backdrop-blur-sm flex">
+          <div className="m-auto w-[min(1000px,96vw)] max-h-[92vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col">
+            <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+              <div className="font-semibold">編輯首頁曝光（僅首頁顯示順序與範圍）</div>
+              <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>setEditOpen(false)}>關閉</button>
+            </div>
+
+            <div className="flex-1 grid md:grid-cols-2 gap-3 p-3 overflow-y-auto">
+              {/* 左：圖庫（全） */}
+              <div className="rounded-xl border p-3">
+                <div className="text-sm font-medium mb-2">圖庫（全部曝光牆來源）</div>
+                <div className="grid grid-cols-3 gap-2">
+                  {allGallery.map((g, idx) => {
+                    const url = g.url || g.img || g.image || g.src || "";
+                    if (!url) return null;
+                    const picked = pick.includes(url);
+                    return (
+                      <button
+                        key={idx}
+                        className={`relative rounded-lg overflow-hidden border ${picked ? 'ring-2 ring-brand' : ''}`}
+                        onClick={()=>togglePick(url)}
+                        title={picked ? '取消勾選' : '加入首頁曝光'}
+                      >
+                        <img src={url} alt="" className="w-full h-24 object-cover" loading="lazy" />
+                        {picked && <div className="absolute inset-0 bg-brand/20" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* 右：已選（可排序） */}
+              <div className="rounded-xl border p-3">
+                <div className="text-sm font-medium mb-2">已選（拖換順序：用上下鍵）</div>
+                {pick.length === 0 && <div className="text-sm text-slate-500">尚未選擇任何圖片</div>}
+                <div className="grid gap-2">
+                  {pick.map((url, i)=>(
+                    <div key={url+i} className="flex items-center gap-2 rounded-lg border p-2 bg-white/70 dark:bg-slate-900/60">
+                      <img src={url} alt="" className="w-16 h-12 object-cover rounded" />
+                      <div className="text-xs text-slate-500 truncate flex-1">{url}</div>
+                      <div className="flex items-center gap-1">
+                        <button className="rounded border px-2 py-1 text-xs" onClick={()=>movePick(url,'up')} disabled={i===0}>上</button>
+                        <button className="rounded border px-2 py-1 text-xs" onClick={()=>movePick(url,'down')} disabled={i===pick.length-1}>下</button>
+                        <button className="rounded border px-2 py-1 text-xs" onClick={()=>togglePick(url)}>移除</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="p-3 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between">
+              <div className="text-xs text-slate-500">提示：只會影響首頁右側縮圖牆；曝光牆分頁仍照原本全公開顯示。</div>
+              <div className="flex items-center gap-2">
+                <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>setPick([])}>清空</button>
+                <button className="rounded-lg bg-brand text-white px-3 py-1.5 text-sm" onClick={savePick}>儲存</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
 
 function ActionTile({ icon, label, count=0, onClick, scheme="cyan" }) {
   // 依 scheme 切換一點點色彩（亮/深色都適配）
