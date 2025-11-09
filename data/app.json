@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-11-07T20:23:22.284Z"
+    "exportedAt": "2025-11-09T13:33:19.942Z"
   },
   "data": {
     "homepage": {
@@ -1120,6 +1120,11 @@
       ],
       "people": [
         {
+          "id": "o8cx6tv2",
+          "name": "@J",
+          "points": 2
+        },
+        {
           "id": "e4t1lgak",
           "name": "@琪琪",
           "points": 0
@@ -1452,7 +1457,7 @@
         {
           "id": "ivdrmzm9",
           "name": "@秀",
-          "points": 18
+          "points": 70
         },
         {
           "id": "k0p0iyjd",
@@ -1521,6 +1526,27 @@
         }
       ],
       "logs": [
+        {
+          "id": "36igaa2o",
+          "personId": "ivdrmzm9",
+          "delta": 52,
+          "note": "贊助 磨刀器/娃娃數個",
+          "at": "2025-11-09 21:33"
+        },
+        {
+          "id": "bk1bhjcb",
+          "personId": "o8cx6tv2",
+          "delta": 1,
+          "note": "邀請 @曦",
+          "at": "2025-11-09 21:32"
+        },
+        {
+          "id": "8dxmptch",
+          "personId": "o8cx6tv2",
+          "delta": 1,
+          "note": "邀請 @L",
+          "at": "2025-11-09 21:31"
+        },
         {
           "id": "tfxlxujy",
           "personId": "ohvecc9r",
