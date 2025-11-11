@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-11-09T17:30:46.819Z"
+    "exportedAt": "2025-11-11T14:41:46.875Z"
   },
   "data": {
     "homepage": {
@@ -29,6 +29,58 @@
       ]
     },
     "history": [
+      {
+        "id": "01r3dw1k",
+        "title": "寶可夢 小火龍 絨毛玩偶",
+        "date": "2025-11-07",
+        "winners": [
+          "@Blue"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 7,
+        "youtube": "https://youtu.be/5ejHs8LiU0o",
+        "status": "已寄出",
+        "note": ""
+      },
+      {
+        "id": "505y4gri",
+        "title": "鬼滅之刃 猗窩座 公仔",
+        "date": "2025-11-07",
+        "winners": [
+          "@黃國維"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 17,
+        "youtube": "https://youtu.be/sf_mWvYCe7w",
+        "status": "已寄出",
+        "note": ""
+      },
+      {
+        "id": "8n9e3v7i",
+        "title": "日系帆布包",
+        "date": "2025-11-07",
+        "winners": [
+          "@琪琪"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 14,
+        "youtube": "https://youtu.be/ZxpM0W1eo_I",
+        "status": "已寄出",
+        "note": ""
+      },
+      {
+        "id": "rrwjguyh",
+        "title": "菈菈 公仔",
+        "date": "2025-11-07",
+        "winners": [
+          "@Jr"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 6,
+        "youtube": "https://youtu.be/gp2wSqoQ1Bo",
+        "status": "已寄出",
+        "note": ""
+      },
       {
         "id": "zk4i5vy8",
         "title": "娃三歲 盲盒杯子",
@@ -799,73 +851,6 @@
     ],
     "pending": [
       {
-        "id": "beaanzce",
-        "title": "鬼滅之刃 猗窩座 公仔",
-        "date": "2025-11-07",
-        "image": "assets/等待開獎/1108/鬼滅之刃 猗窩座 公仔.jpg",
-        "participants": [
-          "@黃國維",
-          "@Shirley",
-          "@Yuma",
-          "@J",
-          "@Laixi",
-          "@💪💪肌肉棒子",
-          "@Jr",
-          "@米寶/1m",
-          "@₊˚̶魁柒໒",
-          "@Virginia",
-          "@呆呆的",
-          "@琪琪",
-          "@仙女潘潘",
-          "@Jimmmy",
-          "@habv",
-          "@L",
-          "@Blue"
-        ],
-        "plannedWinners": 1,
-        "listText": "@黃國維\n@Shirley\n@Yuma\n@J\n@Laixi\n@💪💪肌肉棒子\n@Jr\n@米寶/1m\n@₊˚̶魁柒໒\n@Virginia\n@呆呆的\n@琪琪\n@仙女潘潘\n@Jimmmy\n@habv\n@L\n@Blue"
-      },
-      {
-        "id": "eag5xff9",
-        "title": "菈菈 公仔",
-        "date": "2025-11-07",
-        "image": "assets/等待開獎/1108/菈菈 公仔.jpg",
-        "participants": [
-          "@Jr",
-          "@米寶/1m",
-          "@Yuma",
-          "@Laixi",
-          "@黃國維",
-          "@Blue"
-        ],
-        "plannedWinners": 1,
-        "listText": "@Jr\n@米寶/1m\n@Yuma\n@Laixi\n@黃國維\n@Blue"
-      },
-      {
-        "id": "qk16c8cw",
-        "title": "日系帆布包",
-        "date": "2025-11-07",
-        "image": "assets/等待開獎/1108/日系帆布包.jpg",
-        "participants": [
-          "@Lelele",
-          "@土龍君",
-          "@Yuma",
-          "@萍萍",
-          "@玄",
-          "@思思",
-          "@星⭐️",
-          "@Jr",
-          "@me",
-          "@米寶/1m",
-          "@琪琪",
-          "@Jimmmy",
-          "@Blue",
-          "@周福氣"
-        ],
-        "plannedWinners": 1,
-        "listText": "@Lelele\n@土龍君\n@Yuma\n@萍萍\n@玄\n@思思\n@星⭐️\n@Jr\n@me\n@米寶/1m\n@琪琪\n@Jimmmy\n@Blue\n@周福氣"
-      },
-      {
         "id": "dpp0mvss",
         "title": "小小兵 公仔",
         "date": "2025-11-07",
@@ -892,23 +877,6 @@
         ],
         "plannedWinners": 1,
         "listText": "@黃國維\n@Shirley\n@土龍君\n@玄\n@Jr\n@米寶/1m\n@Virginia\n@Yuma\n@ARIEL\n@萍萍\n@J\n@Laixi\n@琪琪\n@Jimmmy\n@habv\n@L\n@Blue\n@周福氣"
-      },
-      {
-        "id": "pyqgc737",
-        "title": "寶可夢 小火龍 絨毛玩偶",
-        "date": "2025-11-07",
-        "image": "assets/等待開獎/1108/寶可夢 小火龍 絨毛玩偶.jpg",
-        "participants": [
-          "@Jr",
-          "@米寶/1m",
-          "@Yuma",
-          "@琪琪",
-          "@黃國維",
-          "@habv",
-          "@Blue"
-        ],
-        "plannedWinners": 1,
-        "listText": "@Jr\n@米寶/1m\n@Yuma\n@琪琪\n@黃國維\n@habv\n@Blue"
       }
     ],
     "ongoing": [],
@@ -1132,7 +1100,7 @@
         {
           "id": "duj2sqe6",
           "name": "@萍萍",
-          "points": 1
+          "points": 2
         },
         {
           "id": "26yfgu2v",
@@ -1436,6 +1404,13 @@
         }
       ],
       "logs": [
+        {
+          "id": "0dbqbuvl",
+          "personId": "duj2sqe6",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-11-11 22:41"
+        },
         {
           "id": "36igaa2o",
           "personId": "ivdrmzm9",
