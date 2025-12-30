@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-11-11T14:41:46.875Z"
+    "exportedAt": "2025-12-30T10:28:26.888Z"
   },
   "data": {
     "homepage": {
@@ -29,6 +29,19 @@
       ]
     },
     "history": [
+      {
+        "id": "zzil6pql",
+        "title": "小小兵 公仔",
+        "date": "2025-11-07",
+        "winners": [
+          "@Laixi"
+        ],
+        "winnerCount": 1,
+        "totalParticipants": 18,
+        "youtube": "https://www.youtube.com/watch?v=XEq0IKbdq-4",
+        "status": "已寄出",
+        "note": ""
+      },
       {
         "id": "01r3dw1k",
         "title": "寶可夢 小火龍 絨毛玩偶",
@@ -849,36 +862,7 @@
         "note": "7/30無人參與，8/15開獎1人獨得"
       }
     ],
-    "pending": [
-      {
-        "id": "dpp0mvss",
-        "title": "小小兵 公仔",
-        "date": "2025-11-07",
-        "image": "assets/等待開獎/1108/小小兵 公仔.jpg",
-        "participants": [
-          "@黃國維",
-          "@Shirley",
-          "@土龍君",
-          "@玄",
-          "@Jr",
-          "@米寶/1m",
-          "@Virginia",
-          "@Yuma",
-          "@ARIEL",
-          "@萍萍",
-          "@J",
-          "@Laixi",
-          "@琪琪",
-          "@Jimmmy",
-          "@habv",
-          "@L",
-          "@Blue",
-          "@周福氣"
-        ],
-        "plannedWinners": 1,
-        "listText": "@黃國維\n@Shirley\n@土龍君\n@玄\n@Jr\n@米寶/1m\n@Virginia\n@Yuma\n@ARIEL\n@萍萍\n@J\n@Laixi\n@琪琪\n@Jimmmy\n@habv\n@L\n@Blue\n@周福氣"
-      }
-    ],
+    "pending": [],
     "ongoing": [],
     "shop": {
       "items": [
@@ -998,9 +982,24 @@
       ],
       "people": [
         {
+          "id": "9e3xcigq",
+          "name": "@L",
+          "points": 1
+        },
+        {
+          "id": "dkikhk4k",
+          "name": "@Blue",
+          "points": 1
+        },
+        {
+          "id": "6zyt51c1",
+          "name": "@默默",
+          "points": 3
+        },
+        {
           "id": "o8cx6tv2",
           "name": "@J",
-          "points": 2
+          "points": 3
         },
         {
           "id": "e4t1lgak",
@@ -1100,7 +1099,7 @@
         {
           "id": "duj2sqe6",
           "name": "@萍萍",
-          "points": 2
+          "points": 0
         },
         {
           "id": "26yfgu2v",
@@ -1145,7 +1144,7 @@
         {
           "id": "19lw6j5a",
           "name": "@Jr",
-          "points": 5
+          "points": 6
         },
         {
           "id": "bpn4zx60",
@@ -1160,7 +1159,7 @@
         {
           "id": "99ln3rqq",
           "name": "@ray",
-          "points": 1
+          "points": 2
         },
         {
           "id": "627mwcmu",
@@ -1180,7 +1179,7 @@
         {
           "id": "y0hagreo",
           "name": "@Shirley",
-          "points": 14
+          "points": 15
         },
         {
           "id": "rw76039m",
@@ -1275,7 +1274,7 @@
         {
           "id": "3kg3pg75",
           "name": "@星⭐️",
-          "points": 4
+          "points": 5
         },
         {
           "id": "oltcd7hb",
@@ -1385,7 +1384,7 @@
         {
           "id": "ovb5rlt4",
           "name": "@黃國維",
-          "points": 2
+          "points": 3
         },
         {
           "id": "yndkfh2e",
@@ -1404,6 +1403,83 @@
         }
       ],
       "logs": [
+        {
+          "id": "r2ll32g5",
+          "personId": "3kg3pg75",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-12-30 18:25"
+        },
+        {
+          "id": "k48ico8k",
+          "personId": "y0hagreo",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-12-30 18:24"
+        },
+        {
+          "id": "4vvuki6t",
+          "personId": "o8cx6tv2",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-12-30 18:24"
+        },
+        {
+          "id": "8u3dgbbt",
+          "personId": "9e3xcigq",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-12-30 18:24"
+        },
+        {
+          "id": "2nb9gv5e",
+          "personId": "ovb5rlt4",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-12-30 18:24"
+        },
+        {
+          "id": "t2dvh31a",
+          "personId": "dkikhk4k",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-12-30 18:23"
+        },
+        {
+          "id": "3mammnxy",
+          "personId": "19lw6j5a",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-12-30 18:23"
+        },
+        {
+          "id": "gg3hhqsz",
+          "personId": "99ln3rqq",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-12-30 18:23"
+        },
+        {
+          "id": "otzkqft5",
+          "personId": "6zyt51c1",
+          "delta": 1,
+          "note": "群組得獎回報",
+          "at": "2025-12-30 18:23"
+        },
+        {
+          "id": "sz8czkkz",
+          "personId": "duj2sqe6",
+          "delta": -2,
+          "note": "更名  @默默",
+          "at": "2025-12-30 18:22"
+        },
+        {
+          "id": "o4fhm72l",
+          "personId": "6zyt51c1",
+          "delta": 2,
+          "note": " @萍萍 更名",
+          "at": "2025-12-30 18:22"
+        },
         {
           "id": "0dbqbuvl",
           "personId": "duj2sqe6",
