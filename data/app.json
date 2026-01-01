@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2025-12-30T10:42:35.609Z"
+    "exportedAt": "2026-01-01T17:21:36.992Z"
   },
   "data": {
     "homepage": {
@@ -2529,8 +2529,53 @@
     "store": {
       "items": [
         {
+          "id": "4ijuf9xm",
+          "name": "A0039:萌萌小派對",
+          "price": "150",
+          "stock": "",
+          "desc": "單隻150/一中盒(8隻)1080\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "images": [
+            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-1.jpg",
+            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-2.jpg",
+            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-3.jpg",
+            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-4.jpg",
+            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-5.jpg",
+            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-6.jpg"
+          ],
+          "imagesText": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-1.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-2.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-3.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-4.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-5.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-6.jpg",
+          "buyUrl": "",
+          "tags": [
+            "盲盒",
+            "玩具",
+            "擺件"
+          ],
+          "availability": "預售"
+        },
+        {
+          "id": "h55f4zlt",
+          "name": "A0038:喵見好運吊飾盲盒",
+          "price": "480",
+          "stock": "",
+          "desc": "單隻90 / 一中盒(6隻) 480\n預購7~14天\n購買一中盒後回報得點數1點\n未回報視同放棄",
+          "images": [
+            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky1.jpg",
+            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky2.jpg",
+            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky3.jpg",
+            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky4.jpg",
+            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky5.jpg"
+          ],
+          "imagesText": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky1.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky2.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky3.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky4.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky5.jpg",
+          "buyUrl": "",
+          "tags": [
+            "貓咪",
+            "盲盒",
+            "吊飾"
+          ],
+          "availability": "預售"
+        },
+        {
           "id": "xp71wun7",
-          "name": "明月千里月餅盲盒",
+          "name": "A0037:國潮風明月千里月餅盲盒",
           "price": "150",
           "stock": "",
           "desc": "單隻150/一中盒(4隻)560/2中盒(8隻)1080\n預購7~14天\n購買後回報得點數1/5/10點\n未回報視同放棄\n\n",
@@ -5736,7 +5781,8 @@
             "小葵",
             "九尾狐",
             "狗狗",
-            "水晶"
+            "水晶",
+            "貓咪"
           ]
         },
         {
@@ -5753,7 +5799,8 @@
             "保溫杯",
             "永生花",
             "行動電源",
-            "擺件"
+            "擺件",
+            "吊飾"
           ]
         }
       ]
