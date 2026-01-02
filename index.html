@@ -2491,9 +2491,15 @@ function Store({ data, admin, setData, query = "" }) {
 
   const [view, setView] = React.useState(loadPrefs().view || "grid9");
   const [pageSize, setPageSize] = React.useState(loadPrefs().pageSize || 20);
+
+  // ★ 新增：狀態篩選（全部/現貨/預售）— 取代「只看有貨」
+  // 值：all | instock | presale
+  const [statusFilter, setStatusFilter] = React.useState(loadPrefs().statusFilter || "all");
+
   const [page, setPage] = React.useState(1);
   React.useEffect(() => savePrefs({ view }), [view]);
   React.useEffect(() => savePrefs({ pageSize }), [pageSize]);
+  React.useEffect(() => savePrefs({ statusFilter }), [statusFilter]);
 
   const [showEditor, setShowEditor] = React.useState(false);
   const HasStoreEditor = typeof StoreEditor === "function";
@@ -2532,16 +2538,25 @@ function Store({ data, admin, setData, query = "" }) {
   const tag = useTagFilter(allTags);
 
   const [sortBy, setSortBy] = React.useState("latest");
-  const [onlyInStock, setOnlyInStock] = React.useState(false);
 
+  // ★ 狀態篩選：依 availability（現貨/預售）過濾
   const filtered = React.useMemo(() => {
     return allItems.filter((x) => {
       const okTag = !tag.picked.length || tag.picked.every((t) => (x._tags || []).includes(t));
-      const remain = getRemain(x);
-      const okStock = !onlyInStock || remain == null || remain > 0;
-      return okTag && okStock;
+
+      const availability = typeof x?.availability === "string" ? x.availability.trim() : "";
+      const okStatus =
+        statusFilter === "all"
+          ? true
+          : statusFilter === "instock"
+          ? availability === "現貨"
+          : statusFilter === "presale"
+          ? availability === "預售"
+          : true;
+
+      return okTag && okStatus;
     });
-  }, [allItems, tag.picked, onlyInStock]);
+  }, [allItems, tag.picked, statusFilter]);
 
   const sorted = React.useMemo(() => {
     const arr = [...filtered];
@@ -2554,7 +2569,10 @@ function Store({ data, admin, setData, query = "" }) {
   const total = sorted.length;
   const maxPage = Math.max(1, Math.ceil(total / pageSize));
   React.useEffect(() => { if (page > maxPage) setPage(maxPage); }, [maxPage, page]);
-  React.useEffect(() => { setPage(1); }, [tag.picked, sortBy, view, pageSize, onlyInStock]);
+
+  // ★ 篩選/排序/版面/每頁/狀態變動 → 回到第 1 頁
+  React.useEffect(() => { setPage(1); }, [tag.picked, sortBy, view, pageSize, statusFilter]);
+
   const start = (page - 1) * pageSize;
   const end = Math.min(start + pageSize, total);
   const windowSize = 5;
@@ -2571,34 +2589,81 @@ function Store({ data, admin, setData, query = "" }) {
   const pick = usePickList("kjs_store_picklist");
   const [showConfirm, setShowConfirm] = React.useState(false);
 
+  // ★ 手機友善：三段式狀態切換（全部/現貨/預售），點擊區加大、可換行
+  const StatusSegment = () => {
+    const base =
+      "tap-target rounded-lg px-3 py-2 text-sm whitespace-nowrap min-h-[44px] " +
+      "transition-colors";
+    const wrap =
+      "flex items-center gap-1 rounded-xl border border-slate-200 dark:border-slate-700 " +
+      "bg-white/70 dark:bg-slate-900/60 p-1";
+    const on = "bg-brand text-white border-brand";
+    const off = "bg-transparent";
+
+    return (
+      <div className={wrap} role="tablist" aria-label="販售狀態篩選">
+        <button
+          type="button"
+          className={base + " " + (statusFilter === "all" ? on : off)}
+          onClick={() => setStatusFilter("all")}
+          role="tab"
+          aria-selected={statusFilter === "all"}
+          title="顯示全部（現貨＋預售）"
+        >
+          全部
+        </button>
+        <button
+          type="button"
+          className={base + " " + (statusFilter === "instock" ? on : off)}
+          onClick={() => setStatusFilter("instock")}
+          role="tab"
+          aria-selected={statusFilter === "instock"}
+          title="只顯示現貨"
+        >
+          現貨
+        </button>
+        <button
+          type="button"
+          className={base + " " + (statusFilter === "presale" ? on : off)}
+          onClick={() => setStatusFilter("presale")}
+          role="tab"
+          aria-selected={statusFilter === "presale"}
+          title="只顯示預售"
+        >
+          預售
+        </button>
+      </div>
+    );
+  };
+
   const Toolbar = () => (
     <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
       <div className="flex flex-wrap items-center gap-2">
         {/* <TagChips tags={tagsOrdered} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} /> */}
-        <button className="rounded-lg border px-3 py-2" onClick={() => setTagSheetOpen(true)}>
+        <button className="tap-target rounded-lg border px-3 py-2 min-h-[44px]" onClick={() => setTagSheetOpen(true)}>
           {tag.picked.length > 0 ? `篩選標籤（${tag.picked.length}）` : "篩選標籤"}
         </button>
 
-        <select className="rounded border px-2 py-2" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+        <select className="tap-target rounded border px-2 py-2 min-h-[44px]" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
           <option value="latest">最新更新</option>
           <option value="priceAsc">價格（低→高）</option>
           <option value="priceDesc">價格（高→低）</option>
         </select>
-        <label className="flex items-center gap-1">
-          <input type="checkbox" checked={onlyInStock} onChange={(e) => setOnlyInStock(e.target.checked)} />
-          只看有貨
-        </label>
+
+        {/* ★ 新增：狀態篩選（取代只看有貨） */}
+        <StatusSegment />
 
         <label className="flex items-center gap-1">
           版面
-          <select className="rounded border px-2 py-2" value={view} onChange={(e) => setView(e.target.value)}>
+          <select className="tap-target rounded border px-2 py-2 min-h-[44px]" value={view} onChange={(e) => setView(e.target.value)}>
             <option value="grid9">9 宮格</option>
             <option value="grid16">16 宮格</option>
           </select>
         </label>
-        <label className="flex items中心 gap-1">
+
+        <label className="flex items-center gap-1">
           每頁
-          <select className="rounded border px-2 py-2" value={pageSize} onChange={(e) => setPageSize(+e.target.value || 20)}>
+          <select className="tap-target rounded border px-2 py-2 min-h-[44px]" value={pageSize} onChange={(e) => setPageSize(+e.target.value || 20)}>
             <option value="20">20</option>
             <option value="40">40</option>
             <option value="80">80</option>
@@ -2607,7 +2672,7 @@ function Store({ data, admin, setData, query = "" }) {
 
         <div className="grow basis-full sm:basis-auto" />
         {admin && HasStoreEditor && (
-          <button className="rounded-lg border px-3 py-2" onClick={() => setShowEditor(true)}>管理</button>
+          <button className="tap-target rounded-lg border px-3 py-2 min-h-[44px]" onClick={() => setShowEditor(true)}>管理</button>
         )}
       </div>
     </div>
@@ -2666,24 +2731,23 @@ function Store({ data, admin, setData, query = "" }) {
                 </div>
               </button>
 
-            {/* 名稱 / 標籤（覆蓋後） */}
-{(() => {
-  const displayName = getShownTitle(x);         // 顯示：純名稱（隱藏代碼）
-  const fullName    = String(x?.name || "");     // 提示：完整名稱（含代碼）
-  return (
-    <button
-      className="px-3 text-left"
-      onClick={() => setSheet({ open: true, item: x })}
-      title={fullName}
-    >
-      <div className="text-[13px] font-medium truncate">{displayName || '（未命名）'}</div>
-      {Array.isArray(x._tags) && x._tags.length > 0 && (
-        <div className="text-xs text-slate-500 truncate">{x._tags.join(" / ")}</div>
-      )}
-    </button>
-  );
-})()}
-
+              {/* 名稱 / 標籤（覆蓋後） */}
+              {(() => {
+                const displayName = getShownTitle(x);         // 顯示：純名稱（隱藏代碼）
+                const fullName    = String(x?.name || "");     // 提示：完整名稱（含代碼）
+                return (
+                  <button
+                    className="px-3 text-left"
+                    onClick={() => setSheet({ open: true, item: x })}
+                    title={fullName}
+                  >
+                    <div className="text-[13px] font-medium truncate">{displayName || '（未命名）'}</div>
+                    {Array.isArray(x._tags) && x._tags.length > 0 && (
+                      <div className="text-xs text-slate-500 truncate">{x._tags.join(" / ")}</div>
+                    )}
+                  </button>
+                );
+              })()}
 
               {/* 價格 / 庫存 */}
               <div className="px-3 pt-2 pb-1">
@@ -2696,19 +2760,18 @@ function Store({ data, admin, setData, query = "" }) {
               {/* 底部動作列：統一右下「展開詳情」 */}
               <div className="px-3 pb-3 mt-auto flex justify-end">
                 {(() => {
-  const displayName = getShownTitle(x);
-  return (
-    <button
-      type="button"
-      className="rounded-lg border px-3 py-1.5 text-sm"
-      onClick={() => setSheet({ open: true, item: x })}
-      aria-label={`展開 ${displayName || '此商品'} 詳情`}
-    >
-      展開詳情
-    </button>
-  );
-})()}
-
+                  const displayName = getShownTitle(x);
+                  return (
+                    <button
+                      type="button"
+                      className="rounded-lg border px-3 py-1.5 text-sm"
+                      onClick={() => setSheet({ open: true, item: x })}
+                      aria-label={`展開 ${displayName || '此商品'} 詳情`}
+                    >
+                      展開詳情
+                    </button>
+                  );
+                })()}
               </div>
             </div>
           );
@@ -2743,6 +2806,7 @@ function Store({ data, admin, setData, query = "" }) {
     </section>
   );
 }
+
 
 
 /* =========================
