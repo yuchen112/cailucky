@@ -3,7 +3,7 @@
 <head>
    
   <link rel="icon" href="/cailucky/favicon.ico" type="image/x-icon">
-<link rel="apple-touch-icon" href="/cailucky/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="/cailucky/apple-touch-icon.png">
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -6059,8 +6059,8 @@ function Home({ setTab, data, setData, admin }) {
     <div className="min-h-full bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-100">
       {/* Hero */}
       <section className="py-8 sm:py-12">
-        <div className="mx-auto max-w-6xl px-4 grid lg:grid-cols-3 gap-6 items-start">
-          <div className="lg:col-span-2 space-y-4">
+        <div className="mx-auto max-w-6xl px-4 grid lg:grid-cols-2 gap-6 items-start">
+          <div className="space-y-4">
             <h1 className="text-3xl sm:text-4xl font-extrabold leading-[1.15] tracking-tight">
               CxQ開獎所｜官方平台
             </h1>
@@ -6075,13 +6075,13 @@ function Home({ setTab, data, setData, admin }) {
                 target="_blank"
                 className="rounded-xl bg-brand text-white px-4 py-2.5 text-sm shadow-[0_10px_25px_-12px_rgba(0,0,0,0.28)] active:scale-[0.99] transition"
               >
-                加入賴群
+                加入社群
               </a>
               {admin && (
                 <button
                   onClick={()=>setEditOpen(true)}
                   className="rounded-xl bg-brand text-white px-4 py-2.5 text-sm shadow-[0_10px_25px_-12px_rgba(0,0,0,0.28)] active:scale-[0.99] transition"
-                  title="只影響首頁右側回報區；分頁回報區維持原設定"
+                  title="只影響首頁回報區；分頁回報區維持原設定"
                 >
                   編輯首頁回報
                 </button>
@@ -6096,25 +6096,42 @@ function Home({ setTab, data, setData, admin }) {
               <ActionTile scheme="rose"   icon="💎" label="點數商城" count={eff.shop}    onClick={() => setTab('shop')} />
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* 右側：首頁客人/群友回報區縮圖（依選擇或自動取前 5 張） */}
-          {galleryImages.length > 0 && (
-            <div className="grid grid-cols-3 gap-2">
+
+      {/* 客人/群友回報區（證據牆） */}
+      {galleryImages.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 pb-10">
+          <div className="rounded-2xl border border-slate-200/70 dark:border-slate-700/70 bg-slate-50/70 dark:bg-slate-800/40 p-4 shadow-sm">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <div className="font-semibold text-base">客人/群友回報區</div>
+                <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">圖片為群友回報截圖，僅作為紀錄與分享</div>
+              </div>
+              <button
+                className="shrink-0 rounded-xl border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm hover:bg-white/60 dark:hover:bg-slate-800/60 active:scale-[0.99] transition"
+                onClick={() => setTab('gallery')}
+              >
+                查看全部
+              </button>
+            </div>
+
+            <div className="mt-4 flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory">
               {galleryImages.map((src, i) => (
                 <img
                   key={i}
                   loading="lazy"
                   src={src}
-                  className={`rounded-xl w-full object-cover ${
-                    i < 3 ? 'h-28 sm:h-36' : i === 3 ? 'h-28 sm:h-36 col-span-2' : 'h-28 sm:h-36'
-                  }`}
+                  className="snap-start rounded-xl h-28 w-28 sm:h-32 sm:w-32 md:h-36 md:w-36 object-cover border border-slate-200/60 dark:border-slate-700/60"
                   alt=""
+                  onClick={() => setTab('gallery')}
                 />
               ))}
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* FAQ */}
       <section id="faq" className="mx-auto max-w-6xl px-4 py-10" data-testid="faq">
