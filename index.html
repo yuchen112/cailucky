@@ -208,7 +208,8 @@
       drawMaxPerRun: 500,      // 單次最多抽出人數上限（名額）
       drawPublicShowLimit: 50, // 公開結果最多顯示幾位
       drawCooldownSec: 10,     // 同一活動重跑冷卻秒數
-      contactUrl: ""           // ★ 全域「聯絡管理員」網址（可留空）
+      contactUrl: "",          // ★ 全域「官方LINE／聯絡管理員」網址（可留空）
+      lineGroupUrl: ""         // ★ 全域「加入LINE群」網址（可留空）
     };
 
     // === History 狀態選單 ===
@@ -5975,6 +5976,11 @@ function Home({ setTab, data, setData, admin }) {
     try { kjsEnsureFaq(data); } catch {}
   }, [data]);
 
+  // 系統連結（主頁按鈕使用，可由「管理員設定」調整）
+  const settings = (data && data.settings) ? data.settings : DEFAULT_SETTINGS;
+  const lineGroupUrl = String(settings.lineGroupUrl || "").trim() || "https://reurl.cc/ZNGdXV";
+  const officialLineUrl = String(settings.contactUrl || "").trim();
+
   // /api/stats → 4 顆按鈕數字（失敗回退本地）
   const [stats, setStats] = useState(null);
   useEffect(() => {
@@ -6080,13 +6086,22 @@ function Home({ setTab, data, setData, admin }) {
 
             {/* 主行動 */}
             <div className="flex flex-wrap gap-3">
-<a
-                href="https://reurl.cc/ZNGdXV"
+              <a
+                href={lineGroupUrl}
                 target="_blank"
                 className="rounded-xl bg-brand text-white px-4 py-2.5 text-sm shadow-[0_10px_25px_-12px_rgba(0,0,0,0.28)] active:scale-[0.99] transition"
               >
-                加入社群
+                加入LINE群
               </a>
+              {officialLineUrl && (
+                <a
+                  href={officialLineUrl}
+                  target="_blank"
+                  className="rounded-xl border border-slate-200 bg-white/70 px-4 py-2.5 text-sm text-slate-700 shadow-sm backdrop-blur hover:bg-white active:scale-[0.99] transition dark:bg-slate-900/40 dark:border-slate-700 dark:text-slate-100"
+                >
+                  官方LINE
+                </a>
+              )}
               {admin && (
                 <button
                   onClick={()=>setEditOpen(true)}
@@ -8341,18 +8356,20 @@ function SettingsPanel({ data, setData, bg, setBg }) {
   const DEFAULTS = DEFAULT_SETTINGS;
   const s = (data && data.settings) ? data.settings : DEFAULTS;
 
-  // 表單暫存（抽獎參數 + 聯絡管理員連結）
+  // 表單暫存（抽獎參數 + 官方LINE/聯絡管理員 + LINE群連結）
   const [draft, setDraft] = React.useState({
     drawMaxPerRun:       s.drawMaxPerRun       ?? DEFAULTS.drawMaxPerRun,
     drawPublicShowLimit: s.drawPublicShowLimit ?? DEFAULTS.drawPublicShowLimit,
     drawCooldownSec:     s.drawCooldownSec     ?? DEFAULTS.drawCooldownSec,
-    contactUrl:          s.contactUrl          ?? ""
+    contactUrl:          s.contactUrl          ?? "",
+    lineGroupUrl:        s.lineGroupUrl        ?? ""
   });
 
-  // 讓彈窗可直接讀到全域聯絡連結（商品未覆寫時使用）
+  // 讓彈窗/首頁可直接讀到全域連結（商品未覆寫時使用）
   React.useEffect(() => {
-    window.__CONTACT_URL__ = draft.contactUrl || s.contactUrl || "";
-  }, [draft.contactUrl, s.contactUrl]);
+    window.__CONTACT_URL__ = (draft.contactUrl || s.contactUrl || "").trim();
+    window.__LINE_GROUP_URL__ = (draft.lineGroupUrl || s.lineGroupUrl || "").trim();
+  }, [draft.contactUrl, s.contactUrl, draft.lineGroupUrl, s.lineGroupUrl]);
 
   const onNum  = (key) => (e) => setDraft(d => ({ ...d, [key]: e.target.value }));
   const onText = (key) => (e) => setDraft(d => ({ ...d, [key]: e.target.value }));
@@ -8362,12 +8379,14 @@ function SettingsPanel({ data, setData, bg, setBg }) {
     const b = Math.max(1, parseInt(draft.drawPublicShowLimit, 10) || DEFAULTS.drawPublicShowLimit);
     const c = Math.max(0, parseInt(draft.drawCooldownSec, 10)     || DEFAULTS.drawCooldownSec);
     const contact = String(draft.contactUrl || "").trim();
+    const group  = String(draft.lineGroupUrl || "").trim();
 
     const nextSettings = {
       drawMaxPerRun: a,
       drawPublicShowLimit: b,
       drawCooldownSec: c,
-      contactUrl: contact
+      contactUrl: contact,
+      lineGroupUrl: group
     };
 
     setData(prev => {
@@ -8375,6 +8394,7 @@ function SettingsPanel({ data, setData, bg, setBg }) {
       return { ...prevObj, settings: nextSettings };
     });
     window.__CONTACT_URL__ = contact;
+    window.__LINE_GROUP_URL__ = group;
     alert("已更新系統設定");
   };
 
@@ -8411,6 +8431,18 @@ function SettingsPanel({ data, setData, bg, setBg }) {
           onChange={onText("contactUrl")}
         />
         <div className="text-xs text-slate-500">商品未自訂時，彈窗的「聯絡管理員」按鈕將使用此連結。</div>
+      </div>
+
+      {/* 加入LINE群（全域外部連結） */}
+      <div className="mt-4 grid gap-1">
+        <label className="text-sm text-slate-500">加入LINE群·外部連結（可空）</label>
+        <input
+          className="rounded-lg border px-3 py-2 w-full"
+          placeholder="https://..."
+          value={draft.lineGroupUrl}
+          onChange={onText("lineGroupUrl")}
+        />
+        <div className="text-xs text-slate-500">首頁的「加入LINE群」按鈕將使用此連結。</div>
       </div>
 
       {/* 背景管理（主畫面 / 漢堡選單） */}
