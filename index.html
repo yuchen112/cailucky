@@ -1196,7 +1196,7 @@ function kjsEnsureGallery(data) {
   const d = data || {};
   if (!d.gallery) d.gallery = {};
   if (!Array.isArray(d.gallery.items)) d.gallery.items = [];
-  // ★ 新增：首頁客人/群友回報區選擇清單（僅影響首頁）
+  // ★ 新增：首頁開箱/到貨實拍選擇清單（僅影響首頁）
   if (!Array.isArray(d.gallery.homepage_showcase)) d.gallery.homepage_showcase = [];
   return d;
 }
@@ -1276,7 +1276,7 @@ function GalleryWall({ data, admin=false, onOpenAdmin=()=>{} }) {
   <section id="gallery" className="my-10">
 
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-lg font-semibold">🖼 中獎心得分享 / 客人/群友回報區</h2>
+        <h2 className="text-lg font-semibold">🖼 開箱/到貨實拍</h2>
         {admin && (
           <button className="tap-target rounded-lg bg-brand text-white px-3 py-2 text-sm" onClick={onOpenAdmin}>
             ＋ 新增截圖
@@ -1379,7 +1379,7 @@ function GalleryAdmin({ data, setData, onClose=()=>{} }) {
     <div className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
       <div className="w-[min(96vw,1000px)] max-h-[92vh] bg-white dark:bg-slate-900 rounded-2xl shadow-elevate overflow-hidden flex flex-col">
         <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
-          <div className="font-semibold">📁 客人/群友回報區管理</div>
+          <div className="font-semibold">📁 開箱/到貨實拍管理</div>
           <div className="flex items-center gap-2">
             <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkVisible(false)}>全部隱藏</button>
             <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkVisible(true)}>全部公開</button>
@@ -1834,7 +1834,7 @@ function HomeSections({ data, setData, admin }) {
   return null;
 }
 
-/* ========= 新增：客人/群友回報區獨立頁面 ========= */
+/* ========= 新增：開箱/到貨實拍獨立頁面 ========= */
 function GalleryPage({ data, setData, admin=false }) {
   const React = window.React || globalThis.React;
 
@@ -1847,10 +1847,10 @@ function GalleryPage({ data, setData, admin=false }) {
     <main className="max-w-5xl mx-auto w-full px-4 py-6 flex-1">
       <section className="my-2">
         <div className="flex items-center justify-between mb-3">
-          <h1 className="text-xl font-semibold">🖼 中獎心得分享 / 客人/群友回報區</h1>
+          <h1 className="text-xl font-semibold">🖼 開箱/到貨實拍</h1>
           {admin && (
             <button className="tap-target rounded-lg bg-brand text-white px-3 py-2 text-sm"
-                    onClick={()=>setShowAdmin(true)}>管理客人/群友回報區</button>
+                    onClick={()=>setShowAdmin(true)}>管理開箱/到貨實拍</button>
           )}
         </div>
 
@@ -5756,6 +5756,7 @@ const importJSON = (file) => {
         </button>
       </div>
       <nav className="p-2 grid gap-1">
+        <div className="h-px bg-slate-200/70 dark:bg-slate-700/70 my-1"></div>
   {/* —— 主導覽 —— */}
   <NavItem
     label="🏠 首頁"
@@ -5806,7 +5807,7 @@ const importJSON = (file) => {
   />
 
 <NavItem
-  label="🖼 客人/群友回報區"
+  label="🖼 開箱/到貨實拍"
   active={tab==='gallery'}
   onClick={()=>{ setTab('gallery'); setMenuOpen(false); }}
 />
@@ -5966,7 +5967,7 @@ function StickyBulkToggles({ onOpenAll, onCloseAll, className="" }) {
       );
     }
 
-// === Home（Hero + 右側客人/群友回報區縮圖 + 4 顆重點按鈕 + FAQ） ===
+// === Home（Hero + 右側開箱/到貨實拍縮圖 + 4 顆重點按鈕 + FAQ） ===
 function Home({ setTab, data, setData, admin }) {
   const { useState, useMemo, useEffect } = React;
 
@@ -6019,7 +6020,7 @@ function Home({ setTab, data, setData, admin }) {
     shop:    stats?.shop    ?? local.shop,
   };
 
- // ★ 首頁客人/群友回報區：若已選擇（homepage_showcase）→ 完整依選擇順序顯示；否則回退取前 5 張
+ // ★ 首頁開箱/到貨實拍：若已選擇（homepage_showcase）→ 完整依選擇順序顯示；否則回退取前 5 張
   const showcase = Array.isArray(data?.gallery?.homepage_showcase)
     ? data.gallery.homepage_showcase
     : [];
@@ -6068,7 +6069,7 @@ function Home({ setTab, data, setData, admin }) {
       return next;
     });
     setEditOpen(false);
-    alert("已更新首頁客人/群友回報區顯示");
+    alert("已更新首頁開箱/到貨實拍顯示");
   };
 
   return (
@@ -6115,23 +6116,23 @@ function Home({ setTab, data, setData, admin }) {
 
             {/* 4 顆重點按鈕 */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2" data-testid="stats">
-              <ActionTile scheme="amber"  icon="⏳" label="等待開獎" count={eff.pending} onClick={() => setTab('pending')} />
-              <ActionTile scheme="violet" icon="📚" label="歷史紀錄" count={eff.history} onClick={() => setTab('history')} />
-              <ActionTile scheme="cyan"   icon="🛒" label="社群商店" count={eff.store}   onClick={() => setTab('store')} />
-              <ActionTile scheme="rose"   icon="💎" label="點數商城" count={eff.shop}    onClick={() => setTab('shop')} />
+              <ActionTile scheme="muted"  emphasis="muted" icon="⏳" label="等待開獎" count={eff.pending} onClick={() => setTab('pending')} />
+              <ActionTile scheme="muted"  emphasis="muted" icon="📚" label="歷史紀錄" count={eff.history} onClick={() => setTab('history')} />
+              <ActionTile scheme="brand"  emphasis="primary" icon="🛒" label="社群商店" count={eff.store}   onClick={() => setTab('store')} />
+              <ActionTile scheme="cyan"   emphasis="secondary" icon="💎" label="點數商城" count={eff.shop}    onClick={() => setTab('shop')} />
             </div>
           </div>
         </div>
       </section>
 
 
-      {/* 客人/群友回報區（證據牆） */}
+      {/* 開箱/到貨實拍（證據牆） */}
       {galleryImages.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 pb-10">
           <div className="rounded-2xl border border-slate-200/70 dark:border-slate-700/70 bg-slate-50/70 dark:bg-slate-800/40 p-4 shadow-sm">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <div className="font-semibold text-base">客人/群友回報區</div>
+                <div className="font-semibold text-base">開箱/到貨實拍</div>
                 <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">圖片為群友回報截圖，僅作為紀錄與分享</div>
               </div>
               <button
@@ -6175,7 +6176,7 @@ function Home({ setTab, data, setData, admin }) {
             <div className="flex-1 grid md:grid-cols-2 gap-3 p-3 overflow-y-auto">
               {/* 左：圖庫（全） */}
               <div className="rounded-xl border p-3">
-                <div className="text-sm font-medium mb-2">圖庫（全部客人/群友回報區來源）</div>
+                <div className="text-sm font-medium mb-2">圖庫（全部開箱/到貨實拍來源）</div>
                 <div className="grid grid-cols-3 gap-2">
                   {allGallery.map((g, idx) => {
                     const url = g.url || g.img || g.image || g.src || "";
@@ -6217,7 +6218,7 @@ function Home({ setTab, data, setData, admin }) {
             </div>
 
             <div className="p-3 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between">
-              <div className="text-xs text-slate-500">提示：只會影響首頁右側縮圖牆；客人/群友回報區分頁仍照原本全公開顯示。</div>
+              <div className="text-xs text-slate-500">提示：只會影響首頁右側縮圖牆；開箱/到貨實拍分頁仍照原本全公開顯示。</div>
               <div className="flex items-center gap-2">
                 <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>setPick([])}>清空</button>
                 <button className="rounded-lg bg-brand text-white px-3 py-1.5 text-sm" onClick={savePick}>儲存</button>
@@ -6231,34 +6232,62 @@ function Home({ setTab, data, setData, admin }) {
 }
 
 
-function ActionTile({ icon, label, count=0, onClick, scheme="cyan" }) {
+function ActionTile({ icon, label, count=0, onClick, scheme="cyan", emphasis="normal" }) {
   // 依 scheme 切換一點點色彩（亮/深色都適配）
   const map = {
     amber:  { ring: 'ring-amber-300/40 dark:ring-amber-400/20',  chip: 'bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300' },
     violet: { ring: 'ring-violet-300/40 dark:ring-violet-400/20', chip: 'bg-violet-100 text-violet-800 dark:bg-violet-500/20 dark:text-violet-300' },
-    cyan:   { ring: 'ring-cyan-300/40 dark:ring-cyan-400/20',     chip: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-500/20 dark:text-cyan-300' },
-    rose:   { ring: 'ring-rose-300/40 dark:ring-rose-400/20',     chip: 'bg-rose-100 text-rose-800 dark:bg-rose-500/20 dark:text-rose-300' },
+    cyan:   { ring: 'ring-cyan-300/40 dark:ring-cyan-400/20',    chip: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-500/20 dark:text-cyan-300' },
+    rose:   { ring: 'ring-rose-300/40 dark:ring-rose-400/20',    chip: 'bg-rose-100 text-rose-800 dark:bg-rose-500/20 dark:text-rose-300' },
+    brand:  { ring: 'ring-brand/45 dark:ring-brand/25',          chip: 'bg-brand/10 text-brand-fg dark:bg-brand/20 dark:text-brand' },
+    muted:  { ring: 'ring-slate-200/60 dark:ring-slate-600/35',   chip: 'bg-slate-100 text-slate-700 dark:bg-slate-700/40 dark:text-slate-200' },
   };
   const tone = map[scheme] || map.cyan;
+
+  // 視覺層級：不改功能，只改首頁「四卡」的權重呈現
+  const emph = {
+    primary:   {
+      wrap: 'border-brand/30 dark:border-brand/25 bg-gradient-to-br from-white to-brand/5 dark:from-slate-800 dark:to-brand/10 shadow-[0_14px_34px_-18px_rgba(0,0,0,0.55)] hover:shadow-[0_18px_44px_-20px_rgba(0,0,0,0.65)]',
+      icon: 'bg-brand/10 text-brand-fg dark:bg-brand/20 dark:text-brand',
+      ring: 'hover:ring-2 ring-brand/40',
+    },
+    secondary: {
+      wrap: 'bg-gradient-to-br from-white to-slate-50/60 dark:from-slate-800 dark:to-slate-800/60 shadow-[0_10px_26px_-16px_rgba(0,0,0,0.38)] hover:shadow-[0_14px_34px_-18px_rgba(0,0,0,0.48)]',
+      icon: 'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-100',
+      ring: '',
+    },
+    muted:     {
+      wrap: 'bg-slate-50/60 dark:bg-slate-800/40 shadow-[0_8px_18px_-14px_rgba(0,0,0,0.26)] hover:shadow-[0_10px_22px_-16px_rgba(0,0,0,0.32)] opacity-95',
+      icon: 'bg-slate-100/80 text-slate-700 dark:bg-slate-700/60 dark:text-slate-100',
+      ring: '',
+    },
+    normal:    {
+      wrap: 'bg-gradient-to-br from-white to-slate-50/60 dark:from-slate-800 dark:to-slate-800/60 shadow-[0_10px_24px_-14px_rgba(0,0,0,0.32)] hover:shadow-[0_16px_36px_-18px_rgba(0,0,0,0.42)]',
+      icon: 'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-100',
+      ring: '',
+    }
+  }[emphasis] || { wrap:'', icon:'', ring:'' };
+
+  const ringClass = emphasis === "primary" ? emph.ring : `hover:ring-2 ${tone.ring}`;
 
   return (
     <button
       onClick={onClick}
       className={`
         group w-full text-left rounded-2xl border border-slate-200 dark:border-slate-700
-        bg-gradient-to-br from-white to-slate-50/60 dark:from-slate-800 dark:to-slate-800/60
-        px-4 py-3.5 shadow-[0_10px_24px_-14px_rgba(0,0,0,0.32)] hover:shadow-[0_16px_36px_-18px_rgba(0,0,0,0.42)]
-        transition transform active:scale-[0.98] hover:ring-2 ${tone.ring}
+        ${emph.wrap}
+        px-4 py-3.5 transition transform active:scale-[0.98]
+        ${ringClass}
       `}
       title={`前往 ${label}`} aria-label={`前往 ${label}`}
     >
       <div className="flex items-center justify-between">
         <div
-          className="
+          className={`
             flex items-center justify-center h-9 w-9 shrink-0 rounded-xl
-            bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-100
+            ${emph.icon}
             group-hover:scale-105 transition
-          "
+          `}
         >
           <span className="text-lg leading-none">{icon}</span>
         </div>
@@ -6267,7 +6296,6 @@ function ActionTile({ icon, label, count=0, onClick, scheme="cyan" }) {
         </div>
       </div>
       <div className="mt-2 font-medium">{label}</div>
-      <div className="mt-0.5 text-[10px] text-slate-500/90 dark:text-slate-400/90">點擊查看</div>
     </button>
   );
 }
