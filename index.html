@@ -6013,15 +6013,25 @@ function Home({ setTab, data, setData, admin }) {
     shop:    stats?.shop    ?? local.shop,
   };
 
-  // ★ 首頁客人/群友回報區：若已選擇（homepage_showcase）→ 依選擇顯示；否則回退取前 5 張
-  const showcase = Array.isArray(data?.gallery?.homepage_showcase) ? data.gallery.homepage_showcase : [];
+ // ★ 首頁客人/群友回報區：若已選擇（homepage_showcase）→ 完整依選擇順序顯示；否則回退取前 5 張
+  const showcase = Array.isArray(data?.gallery?.homepage_showcase)
+    ? data.gallery.homepage_showcase
+    : [];
+
   const galleryImages = useMemo(() => {
+    // 你有「已選清單」→ 首頁完整照你排序顯示（不再限制 5 張）
     if (Array.isArray(showcase) && showcase.length > 0) {
-      return showcase.filter(Boolean).slice(0, 5);
+      return showcase.filter(Boolean);
     }
+
+    // 沒有選 → 用資料庫 items 回退顯示前 5 張（避免首頁過長）
     const items = Array.isArray(data.gallery?.items) ? data.gallery.items : [];
-    return items.map(it => it.url || it.img || it.image || it.src || '').filter(Boolean).slice(0, 5);
+    return items
+      .map(it => it.url || it.img || it.image || it.src || '')
+      .filter(Boolean)
+      .slice(0, 5);
   }, [data.gallery, showcase]);
+
 
   // ★ 管理介面：編輯首頁回報
   const [editOpen, setEditOpen] = useState(false);
