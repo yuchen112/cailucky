@@ -221,7 +221,7 @@ button{
   transition: transform .08s ease, box-shadow .12s ease, background .12s ease;
   touch-action: manipulation;
 }
-button:hover{ box-shadow: var(--shadow-md); }
+@media (hover:hover){ button:hover{ box-shadow: var(--shadow-md); } }
 button:active{ transform: translateY(1px) scale(.995); }
 button[disabled]{ opacity:.55; cursor:not-allowed; box-shadow:none; }
 
@@ -263,6 +263,43 @@ select, input, textarea{
   .game-stage, .game-shell, .game-view{
     -webkit-tap-highlight-color: transparent;
   }
+}
+
+
+button{
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+button.is-pressed{
+  transform: translateY(1px) scale(.995);
+}
+/* Glass header for in-game HUD on busy backgrounds */
+.game-head{
+  padding: 10px 12px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--panel-border);
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+}
+.dark .game-head{
+  background: rgba(2,6,23,.55);
+  border-color: var(--panel-border-dark);
+}
+.game-subtitle{ color: rgba(15,23,42,.78); font-size: 0.9rem; line-height: 1.25rem; }
+.dark .game-subtitle{ color: rgba(226,232,240,.78); }
+/* Tighter, clearer control row */
+.game-controls{
+  padding: 10px 12px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--panel-border);
+  background: rgba(255,255,255,.70);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+}
+.dark .game-controls{
+  background: rgba(2,6,23,.50);
+  border-color: var(--panel-border-dark);
 }
 
 </style>
@@ -346,6 +383,20 @@ select, input, textarea{
   <div id="root" class="min-h-screen"></div>
 
   <script type="text/babel">
+
+// Global "pressed" state fix for mobile: prevents sticky active/hover visuals
+(() => {
+  const press = (el) => { if (el && el.tagName === 'BUTTON') el.classList.add('is-pressed'); };
+  const releaseAll = () => { document.querySelectorAll('button.is-pressed').forEach(b=>b.classList.remove('is-pressed')); };
+  document.addEventListener('pointerdown', (e)=>{
+    const b = e.target && e.target.closest ? e.target.closest('button') : null;
+    if (b) press(b);
+  }, {passive:true});
+  document.addEventListener('pointerup', releaseAll, {passive:true});
+  document.addEventListener('pointercancel', releaseAll, {passive:true});
+  document.addEventListener('blur', releaseAll);
+})();
+
     const { useEffect, useState } = React;
 
     // —— LocalStorage Keys ——
@@ -2949,7 +3000,7 @@ function Store({ data, admin, setData, query = "" }) {
 
   const Toolbar = () => (
     <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/70 dark:bg-slate-900/60 backdrop-blur border-b border-slate-200 dark:border-slate-700">
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="game-controls flex flex-wrap items-center gap-2">
         {/* <TagChips tags={tagsOrdered} picked={tag.picked} onToggle={tag.toggle} onClear={tag.clear} /> */}
         <button className="tap-target rounded-lg border px-3 py-2 min-h-[44px]" onClick={() => setTagSheetOpen(true)}>
           {tag.picked.length > 0 ? `篩選標籤（${tag.picked.length}）` : "篩選標籤"}
@@ -9769,10 +9820,10 @@ function GameShell({ title, subtitle, children, onReset }){
       }}
     >
       <div className="max-w-5xl mx-auto">
-        <div className="flex items-start justify-between gap-3 mb-3">
+        <div className="game-head flex items-start justify-between gap-3 mb-4">
           <div>
             <div className="text-lg font-semibold">{title}</div>
-            {subtitle ? <div className="text-sm text-slate-500 dark:text-slate-400 mt-1">{subtitle}</div> : null}
+            {subtitle ? <div className="game-subtitle mt-1">{subtitle}</div> : null}
           </div>
           {typeof onReset==='function' ? (
             <button className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
