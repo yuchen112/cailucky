@@ -69,6 +69,9 @@
       /* Optional in-game controls bar (e.g., Tetris buttons) */
       --game-controls-h: 0px;
 
+      /* In-game HUD bar height (GameShell top bar) */
+      --game-hud-h: 0px;
+
       /* Default paddings */
       --game-shell-bottom-pad: 96px;
     }
@@ -85,8 +88,8 @@
 
     /* Game stage uses usable viewport (minus header/nav/controls/safe-area) */
     .game-stage{
-      height: calc(var(--vvh, 100vh) - var(--app-header-h, 0px) - var(--app-bottom-nav-h, 0px) - var(--game-controls-h, 0px) - var(--sat, 0px) - var(--sab, 0px));
-      max-height: calc(var(--vvh, 100vh) - var(--app-header-h, 0px) - var(--app-bottom-nav-h, 0px) - var(--game-controls-h, 0px) - var(--sat, 0px) - var(--sab, 0px));
+      height: calc(var(--vvh, 100vh) - var(--app-header-h, 0px) - var(--app-bottom-nav-h, 0px) - var(--game-controls-h, 0px) - var(--game-hud-h, 0px) - var(--sat, 0px) - var(--sab, 0px));
+      max-height: calc(var(--vvh, 100vh) - var(--app-header-h, 0px) - var(--app-bottom-nav-h, 0px) - var(--game-controls-h, 0px) - var(--game-hud-h, 0px) - var(--sat, 0px) - var(--sab, 0px));
       overflow: hidden;
     }
 
@@ -196,10 +199,46 @@
   --bg-0: rgba(255,255,255,.66);
   --bg-1: rgba(255,255,255,.86);
   --bg-2: rgba(255,255,255,.95);
+
+  --hud-bg: #ffffff;
+  --hud-border: rgba(15, 23, 42, .12);
+  --hud-bg-2: #f8fafc;
   --accent: #14b8a6;
   --danger: #ef4444;
 }
 html, body{ font-family: var(--font-sans); }
+
+/* ============================
+   In-game HUD (opaque, high-contrast, stable)
+   ============================ */
+.game-hud{
+  background: var(--hud-bg);
+  border: 1px solid var(--hud-border);
+  border-radius: var(--radius-lg);
+  padding: 10px 12px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 10px;
+}
+.game-subtitle{
+  color: var(--text-2);
+}
+.game-controls{
+  background: var(--hud-bg);
+  border: 1px solid var(--hud-border);
+  border-radius: var(--radius-lg);
+  padding: 10px 12px;
+  box-shadow: var(--shadow-sm);
+  margin-top: 10px;
+}
+
+/* In immersive game mode, force HUD/controls to remain fully opaque (no glass) */
+html[data-kjs-game="1"] .game-hud,
+html[data-kjs-game="1"] .game-controls{
+  background: var(--hud-bg);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
 
 /* Focus & selection */
 :where(button, a, input, select, textarea):focus-visible{
@@ -274,14 +313,108 @@ button.is-pressed{
   transform: translateY(1px) scale(.995);
 }
 /* Glass header for in-game HUD on busy backgrounds */
-.game-head{
-  padding: 10px 12px;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--panel-border);
-  background: rgba(255,255,255,.72);
-  backdrop-filter: blur(10px);
+.game-head{ }
+
+/* ---------- Mobile-first Game Scene Overrides (App-like) ---------- */
+html[data-kjs-game="1"] body{
+  background: var(--hud-bg);
+}
+
+/* GameShell: remove web-page paddings, make true full-scene */
+.kjs-game-shell{
+  padding-left: calc(12px + var(--sal, env(safe-area-inset-left)));
+  padding-right: calc(12px + var(--sar, env(safe-area-inset-right)));
+  padding-top: calc(10px + var(--sat, env(safe-area-inset-top)));
+  padding-bottom: calc(10px + var(--sab, env(safe-area-inset-bottom)));
+}
+html[data-kjs-game="1"] .kjs-game-shell{
+  padding-left: calc(10px + var(--sal, env(safe-area-inset-left)));
+  padding-right: calc(10px + var(--sar, env(safe-area-inset-right)));
+  padding-top: calc(10px + var(--sat, env(safe-area-inset-top)));
+  padding-bottom: calc(0px + var(--sab, env(safe-area-inset-bottom)));
+}
+.kjs-game-inner{
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Opaque HUD: never let background bleed through */
+html[data-kjs-game="1"] .game-head,
+html[data-kjs-game="1"] .game-controls{
+  background: var(--hud-bg) !important;
+  border-color: var(--hud-border) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   box-shadow: var(--shadow-sm);
 }
+
+/* Stage: the playable area must fit usable height (no overlap) */
+.game-stage{
+  height: calc(var(--vvh, 100vh) - var(--app-header-h, 0px) - var(--app-bottom-nav-h, 0px) - var(--game-controls-h, 0px) - var(--sat, 0px) - var(--sab, 0px));
+  max-height: calc(var(--vvh, 100vh) - var(--app-header-h, 0px) - var(--app-bottom-nav-h, 0px) - var(--game-controls-h, 0px) - var(--sat, 0px) - var(--sab, 0px));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Bottom controls bar (layout-reserved, not floating) */
+.game-controls{
+  border: 1px solid var(--hud-border);
+  border-radius: 16px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+/* 2048: centered, symmetric, minimal padding, app-like */
+.g2048-scene{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.g2048-panel{
+  width: min(92vw, 420px);
+  margin: 0 auto;
+}
+html[data-kjs-game="1"] .g2048-panel{
+  width: min(94vw, 420px);
+}
+
+/* Tetris: stage centered, controls at bottom */
+.tetris-stage-wrap{
+  height: 100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.tetris-controls-grid{
+  display:grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  align-items: center;
+}
+.tetris-controls-grid .touch-btn{
+  min-height: 52px;
+  font-weight: 700;
+}
+@media (min-width: 768px){
+  .tetris-controls-grid .touch-btn{ min-height: 44px; }
+}
+
+/* Pressed feel: ensure all touch buttons bounce */
+.touch-btn{
+  transition: transform .06s ease, filter .06s ease;
+}
+.touch-btn:active,
+.touch-btn.is-pressed{
+  transform: translateY(1px) scale(.99);
+  filter: brightness(.96);
+}
+
+
 .dark .game-head{
   background: rgba(2,6,23,.55);
   border-color: var(--panel-border-dark);
@@ -603,7 +736,7 @@ body.kjs-game-lock{
      Viewport / Safe-Area Manager
      - Uses visualViewport when available (iOS address bar aware)
      - Measures header + bottom nav heights
-     - Exposes CSS vars: --vvh, --vvw, --app-header-h, --app-bottom-nav-h, --game-controls-h
+     - Exposes CSS vars: --vvh, --vvw, --app-header-h, --app-bottom-nav-h, --game-controls-h, --game-hud-h
      ============================ */
   const KJSViewport = (function(){
     const doc = document.documentElement;
@@ -614,14 +747,17 @@ body.kjs-game-lock{
       const header = document.querySelector('[data-app-header="1"]');
       const bottomNav = document.querySelector('[data-app-bottomnav="1"]');
       const gameControls = document.querySelector('[data-game-controls="1"]');
+      const gameHud = document.querySelector('[data-game-hud="1"]');
 
       const headerH = header ? header.getBoundingClientRect().height : 0;
       const bottomH = bottomNav ? bottomNav.getBoundingClientRect().height : 0;
       const controlsH = gameControls ? gameControls.getBoundingClientRect().height : 0;
+      const hudH = gameHud ? gameHud.getBoundingClientRect().height : 0;
 
       doc.style.setProperty('--app-header-h', px(headerH));
       doc.style.setProperty('--app-bottom-nav-h', px(bottomH));
       doc.style.setProperty('--game-controls-h', px(controlsH));
+      doc.style.setProperty('--game-hud-h', px(hudH));
     }
 
     function update(){
@@ -9966,35 +10102,65 @@ function useIsTouch(){
   return touch;
 }
 
-function GameShell({ title, subtitle, children, onReset }){
+function GameShell({ title, subtitle, children, onReset, controls, onBack, topRight, stageScrollable=false, compactSubtitle=false }){
+  // GameShell renders an App-like scene:
+  // - A stable, opaque HUD (non-glass) that never overlaps the playfield
+  // - A stage area that fits the usable viewport height (via CSS vars)
+  // - Optional bottom controls bar that consumes layout height (Tetris)
   return (
-    <div className="px-4 pb-24 md:pb-6"
+    <div className="kjs-game-shell"
       data-game-shell="1"
       style={{
-        paddingBottom: 'calc(var(--game-shell-bottom-pad, 96px) + var(--sab, env(safe-area-inset-bottom)) + var(--app-bottom-nav-h, 0px))',
-        paddingLeft: 'calc(16px + var(--sal, env(safe-area-inset-left)))',
-        paddingRight:'calc(16px + var(--sar, env(safe-area-inset-right)))',
-        paddingTop: 'calc(0px + var(--sat, env(safe-area-inset-top)))',
+        paddingLeft: 'calc(12px + var(--sal, env(safe-area-inset-left)))',
+        paddingRight:'calc(12px + var(--sar, env(safe-area-inset-right)))',
+        paddingTop: 'calc(10px + var(--sat, env(safe-area-inset-top)))',
+        paddingBottom: 'calc(10px + var(--sab, env(safe-area-inset-bottom)))',
       }}
     >
-      <div className="max-w-5xl mx-auto">
-        <div className="game-head flex items-start justify-between gap-3 mb-4">
-          <div>
-            <div className="text-lg font-semibold">{title}</div>
-            {subtitle ? <div className="game-subtitle mt-1">{subtitle}</div> : null}
+      <div className="kjs-game-inner">
+        <div className="game-hud" data-game-hud="1">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 min-w-0">
+                {onBack ? (
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-sm shrink-0"
+                    onClick={onBack}
+                    title="返回"
+                  >← 返回</button>
+                ) : null}
+                <div className="text-lg font-semibold truncate">{title}</div>
+              </div>
+              {subtitle ? (
+                <div className={("game-subtitle mt-1 " + (compactSubtitle ? "text-xs" : ""))}>{subtitle}</div>
+              ) : null}
+            </div>
+
+            <div className="shrink-0 flex items-center gap-2">
+              {topRight ? topRight : null}
+              {onReset ? (
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={onReset}
+                >重置</button>
+              ) : null}
+            </div>
           </div>
-          {typeof onReset==='function' ? (
-            <button className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
-              onClick={onReset}
-              type="button"
-            >重置</button>
-          ) : null}
         </div>
 
-        {/* Stage wrapper: provides a consistent gesture surface and usable-height contract */}
-        <div className="game-gesture-surface">
+        {/* Stage wrapper: the playable area must fit the usable viewport height */}
+        <div className={"game-stage game-gesture-surface" + (stageScrollable ? " game-scroll" : "")}>
           {children}
         </div>
+
+        {/* Optional in-game controls bar (e.g., Tetris touch buttons). Must consume layout height. */}
+        {controls ? (
+          <div className="game-controls" data-game-controls="1">
+            {controls}
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -10005,6 +10171,7 @@ function GameShell({ title, subtitle, children, onReset }){
 function GamesHub({ data, setData }){
   const games = (data && data.games) ? data.games : {};
   const [active, setActive] = React.useState(null); // null | memory | mole | g2048 | luck | tetris
+
   // Immersive mode: mobile-first game screen (hide app chrome, maximize playfield)
   React.useEffect(()=>{
     const doc = document.documentElement;
@@ -10027,7 +10194,6 @@ function GamesHub({ data, setData }){
     };
   }, [active]);
 
-
   React.useEffect(()=>{ try{ kjsEnsureGames(data); }catch{} }, [data]);
 
   const items = [
@@ -10037,17 +10203,17 @@ function GamesHub({ data, setData }){
     { id:'luck', title:'今天手氣', sub:'純亂數占卜' },
     { id:'tetris', title:'俄羅斯方塊', sub:'Tetris' },
   ];
-
   const activeMeta = active ? (items.find(x=>x.id===active) || null) : null;
 
-  return (
-    <GameShell
-      title="🎮 小遊戲"
-      subtitle="純娛樂模組：不發獎、不連線、不回傳、不防刷。"
-    >
-      {/* Game Picker：僅在未進入遊戲時顯示，避免影響遊戲觀感 */}
-      {active===null ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
+  // Home: show picker as a scrollable stage (so it never gets clipped)
+  if(active===null){
+    return (
+      <GameShell
+        title="🎮 小遊戲"
+        subtitle="純娛樂模組：不發獎、不連線、不回傳、不防刷。"
+        stageScrollable={true}
+      >
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {items.map(it=>(
             <button
               key={it.id}
@@ -10060,26 +10226,18 @@ function GamesHub({ data, setData }){
             </button>
           ))}
         </div>
-      ) : (
-        <div className="flex items-center justify-between mb-3">
-          <div className="min-w-0">
-            <div className="text-base font-semibold truncate">{activeMeta ? activeMeta.title : "遊戲"}</div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 truncate">{activeMeta ? activeMeta.sub : ""}</div>
-          </div>
-          <div className="shrink-0 flex items-center gap-2">
-            <button
-              type="button"
-              className="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
-              onClick={()=>setActive(null)}
-              title="返回遊戲列表"
-            >
-              ← 返回
-            </button>
-          </div>
-        </div>
-      )}
+      </GameShell>
+    );
+  }
 
-      {/* Active Game：進入遊戲後只渲染單一遊戲，避免同時出現多個入口卡片 */}
+  // In-game scene: only render the active game; HUD provides a stable Back button.
+  return (
+    <GameShell
+      title={activeMeta ? activeMeta.title : "遊戲"}
+      subtitle={activeMeta ? activeMeta.sub : ""}
+      compactSubtitle={true}
+      onBack={()=>setActive(null)}
+    >
       {active==='memory' && <GameMemory data={data} setData={setData} />}
       {active==='mole'   && <GameMole data={data} setData={setData} />}
       {active==='g2048'  && <Game2048 data={data} setData={setData} />}
@@ -10907,7 +11065,8 @@ function Game2048({ data, setData }){
       subtitle={isTouch ? "手機：滑動即可移動" : "電腦：使用方向鍵"}
       onReset={()=>setSeed(s=>s+1)}
     >
-      <div className="grid gap-3">
+      <div className="g2048-scene"><div className="g2048-panel">
+        <div className="grid gap-3">
         <div className="flex items-center gap-3 flex-wrap">
           <div className="flex items-center gap-2">
             <div className="text-sm font-medium">目標</div>
@@ -10973,6 +11132,7 @@ function Game2048({ data, setData }){
           </div>
         </div>
       </div>
+      </div></div>
     </GameShell>
   );
 }
@@ -11815,45 +11975,34 @@ function GameTetris({ data, setData }){
     );
   };
 
-const touchHud = (
-    <>
-      <div className="tetris-hud" aria-label="Tetris controls">
-        <div className="tetris-pad left">
-          <div className="tetris-pad-inner">
-            <TouchBtn label="←" onDown={()=>startHold(()=>moveX(-1), 200, 55)} onUp={stopHold}/>
-            <TouchBtn label="→" onDown={()=>startHold(()=>moveX(1), 200, 55)} onUp={stopHold}/>
-          </div>
-        </div>
+const touchControls = (
+    <div className="tetris-controls-grid">
+      <TouchBtn label="←" onDown={()=>startHold(()=>move(-1,0))} onUp={stopHold}/>
+      <TouchBtn label="→" onDown={()=>startHold(()=>move(1,0))} onUp={stopHold}/>
+      <TouchBtn label="⟳" onDown={()=>rotate()} onUp={()=>{}}/>
+      <TouchBtn label="↓" onDown={()=>startHold(()=>move(0,1))} onUp={stopHold}/>
+      <TouchBtn label="⤓" onDown={()=>hardDrop()} onUp={()=>{}}/>
 
-        <div className="tetris-center">
-          {status==="idle" ? (
-            <button type="button" className="tetris-mini primary" onClick={()=>{ start(); }}>開始</button>
-          ) : status==="running" ? (
-            <button type="button" className="tetris-mini" onClick={()=>{ pauseToggle(); }}>暫停</button>
-          ) : status==="paused" ? (
-            <button type="button" className="tetris-mini primary" onClick={()=>{ pauseToggle(); }}>繼續</button>
-          ) : (
-            <button type="button" className="tetris-mini primary" onClick={()=>{ start(); }}>重玩</button>
-          )}
-          {status!=="idle" ? (
-            <button type="button" className="tetris-mini" onClick={()=>{ reset(); }}>重置</button>
-          ) : null}
-        </div>
+      {/* Start / Pause / Resume */}
+      {status==="idle" ? (
+        <TouchBtn label="開始" onDown={()=>{ start(); }} onUp={()=>{}}/>
+      ) : status==="running" ? (
+        <TouchBtn label="暫停" onDown={()=>{ setStatus("paused"); }} onUp={()=>{}}/>
+      ) : status==="paused" ? (
+        <TouchBtn label="繼續" onDown={()=>{ setStatus("running"); }} onUp={()=>{}}/>
+      ) : (
+        <TouchBtn label="重來" onDown={()=>{ reset(); start(); }} onUp={()=>{}}/>
+      )}
 
-        <div className="tetris-pad right">
-          <div className="tetris-pad-inner">
-            <TouchBtn label="⟳" onDown={()=>rot()} onUp={()=>{}}/>
-            <TouchBtn label="↓" onDown={()=>startHold(()=>softDown(), 140, 55)} onUp={stopHold}/>
-            <TouchBtn label="⤓" onDown={()=>hardDrop()} onUp={()=>{}}/>
-          </div>
-        </div>
+      <div className="col-span-4 text-xs opacity-80 select-none">
+        提示：長按 ←/→/↓ 可連續移動
       </div>
-      <div className="tetris-hint">長按 ←/→/↓ 可連續移動</div>
-    </>
+    </div>
   );
 
   return (
     <GameShell
+      controls={isTouch ? touchControls : null}
       title="俄羅斯方塊"
       subtitle={isTouch ? "手機：使用底部觸控按鈕操作（按開始後才會掉落）" : "電腦：方向鍵移動、↑旋轉、空白鍵直接落下、Esc 暫停"}
       onReset={reset}
@@ -11902,7 +12051,6 @@ const touchHud = (
           </div> : null}
         </div>
 
-        {isTouch ? touchHud : null}
       </div>
     </GameShell>
   );
