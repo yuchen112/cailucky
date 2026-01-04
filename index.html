@@ -45,6 +45,62 @@
 
   <!-- 全域樣式 -->
   <style>
+
+    /* ============================
+       Global Game UX / Viewport Core
+       - Safe-area governance
+       - VisualViewport-based height
+       - Consistent game stage sizing
+       ============================ */
+    :root{
+      --sat: env(safe-area-inset-top);
+      --sab: env(safe-area-inset-bottom);
+      --sal: env(safe-area-inset-left);
+      --sar: env(safe-area-inset-right);
+
+      /* Visual viewport (iOS address bar aware) */
+      --vvh: 100vh;
+      --vvw: 100vw;
+
+      /* Measured chrome (header / bottom nav) */
+      --app-header-h: 0px;
+      --app-bottom-nav-h: 0px;
+
+      /* Optional in-game controls bar (e.g., Tetris buttons) */
+      --game-controls-h: 0px;
+
+      /* Default paddings */
+      --game-shell-bottom-pad: 96px;
+    }
+
+    /* Prefer visualViewport height when available */
+    .app-min-vvh{ min-height: var(--vvh, 100vh); }
+
+    /* Prevent iOS overscroll bounce inside game-only surfaces */
+    .game-gesture-surface{
+      overscroll-behavior: contain;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* Game stage uses usable viewport (minus header/nav/controls/safe-area) */
+    .game-stage{
+      height: calc(var(--vvh, 100vh) - var(--app-header-h, 0px) - var(--app-bottom-nav-h, 0px) - var(--game-controls-h, 0px) - var(--sat, 0px) - var(--sab, 0px));
+      max-height: calc(var(--vvh, 100vh) - var(--app-header-h, 0px) - var(--app-bottom-nav-h, 0px) - var(--game-controls-h, 0px) - var(--sat, 0px) - var(--sab, 0px));
+      overflow: hidden;
+    }
+
+    /* Allow scroll only where explicitly intended */
+    .game-scroll{
+      height: auto;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Touch behavior: only game area blocks page scroll */
+    .game-touch-lock{
+      touch-action: none;
+    }
     /* 柔和格點背景 + 漸層基底（保留） */
     body {
       background-image:
@@ -117,7 +173,99 @@
   .paginator-bottom { padding-bottom: env(safe-area-inset-bottom); }
 }
 
-  </style>
+  
+/* ============================
+   Product-grade UI tokens + controls
+   - unified typography, buttons, inputs, panels
+   ============================ */
+:root{
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow-md: 0 10px 26px rgba(0,0,0,.08);
+  --panel-border: rgba(15, 23, 42, .10);
+  --panel-border-dark: rgba(148, 163, 184, .18);
+  --focus: rgba(20,184,166,.35);
+  --btn-h: 40px;
+  --btn-h-sm: 34px;
+  --btn-pad: 0 14px;
+  --text-1: #0f172a;
+  --text-2: rgba(15,23,42,.70);
+  --bg-0: rgba(255,255,255,.66);
+  --bg-1: rgba(255,255,255,.86);
+  --bg-2: rgba(255,255,255,.95);
+  --accent: #14b8a6;
+  --danger: #ef4444;
+}
+html, body{ font-family: var(--font-sans); }
+
+/* Focus & selection */
+:where(button, a, input, select, textarea):focus-visible{
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+::selection{ background: rgba(20,184,166,.20); }
+
+/* Unified controls */
+button{
+  min-height: var(--btn-h);
+  padding: var(--btn-pad);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--panel-border);
+  background: var(--bg-2);
+  color: var(--text-1);
+  box-shadow: var(--shadow-sm);
+  transition: transform .08s ease, box-shadow .12s ease, background .12s ease;
+  touch-action: manipulation;
+}
+button:hover{ box-shadow: var(--shadow-md); }
+button:active{ transform: translateY(1px) scale(.995); }
+button[disabled]{ opacity:.55; cursor:not-allowed; box-shadow:none; }
+
+select, input, textarea{
+  min-height: var(--btn-h);
+  padding: 0 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--panel-border);
+  background: var(--bg-2);
+  color: var(--text-1);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Panels/cards refinement */
+.kjs-card, .card, .panel, .game-panel{
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--panel-border);
+  background: var(--bg-1);
+  box-shadow: var(--shadow-sm);
+}
+.kjs-card:hover{ box-shadow: var(--shadow-md); }
+
+/* Dark mode alignment (works with existing dark classes) */
+@media (prefers-color-scheme: dark){
+  :root{
+    --text-1: rgba(248,250,252,.95);
+    --text-2: rgba(248,250,252,.72);
+    --bg-0: rgba(2,6,23,.55);
+    --bg-1: rgba(2,6,23,.70);
+    --bg-2: rgba(15,23,42,.85);
+  }
+  button, select, input, textarea{
+    border-color: var(--panel-border-dark);
+  }
+}
+
+/* Mobile comfort: keep game stage clean, reduce accidental scroll */
+@media (max-width: 820px){
+  .game-stage, .game-shell, .game-view{
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+</style>
 
   <!-- [IMGIO CSS START] -->
   <style>
@@ -241,6 +389,91 @@
      * 全域捲動鎖：避免彈窗/檢視器異常造成整站卡住
      * ========================================= */
     (function(){
+
+  /* ============================
+     Viewport / Safe-Area Manager
+     - Uses visualViewport when available (iOS address bar aware)
+     - Measures header + bottom nav heights
+     - Exposes CSS vars: --vvh, --vvw, --app-header-h, --app-bottom-nav-h, --game-controls-h
+     ============================ */
+  const KJSViewport = (function(){
+    const doc = document.documentElement;
+
+    function px(n){ return (Number.isFinite(n) ? Math.max(0, n) : 0) + 'px'; }
+
+    function measureHeights(){
+      const header = document.querySelector('[data-app-header="1"]');
+      const bottomNav = document.querySelector('[data-app-bottomnav="1"]');
+      const gameControls = document.querySelector('[data-game-controls="1"]');
+
+      const headerH = header ? header.getBoundingClientRect().height : 0;
+      const bottomH = bottomNav ? bottomNav.getBoundingClientRect().height : 0;
+      const controlsH = gameControls ? gameControls.getBoundingClientRect().height : 0;
+
+      doc.style.setProperty('--app-header-h', px(headerH));
+      doc.style.setProperty('--app-bottom-nav-h', px(bottomH));
+      doc.style.setProperty('--game-controls-h', px(controlsH));
+    }
+
+    function update(){
+      const vv = window.visualViewport;
+      const h = vv && vv.height ? vv.height : window.innerHeight;
+      const w = vv && vv.width ? vv.width : window.innerWidth;
+
+      doc.style.setProperty('--vvh', px(h));
+      doc.style.setProperty('--vvw', px(w));
+
+      measureHeights();
+    }
+
+    let rafId = 0;
+    function schedule(){
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(()=>{ rafId = 0; update(); });
+    }
+
+    function bind(){
+      // Initial
+      schedule();
+
+      // Resize / orientation
+      window.addEventListener('resize', schedule, { passive: true });
+      window.addEventListener('orientationchange', schedule, { passive: true });
+
+      // visualViewport (iOS Safari)
+      if (window.visualViewport){
+        window.visualViewport.addEventListener('resize', schedule, { passive: true });
+        window.visualViewport.addEventListener('scroll', schedule, { passive: true });
+      }
+
+      // DOM mutations (route changes / bottom nav visibility)
+      const mo = new MutationObserver(schedule);
+      mo.observe(document.body, { childList: true, subtree: true, attributes: true });
+
+      // Font loading can change measured heights
+      if (document.fonts && document.fonts.ready){
+        document.fonts.ready.then(schedule).catch(()=>{});
+      }
+
+      return ()=>{ mo.disconnect(); };
+    }
+
+    return { update: schedule, bind };
+  })();
+
+  KJSViewport.bind();
+
+  /* ============================
+     Page Visibility → Game Pause Signal
+     Dispatches: window 'kjs:visibility' with detail { hidden: boolean }
+     ============================ */
+  document.addEventListener('visibilitychange', ()=>{
+    try{
+      window.dispatchEvent(new CustomEvent('kjs:visibility', { detail: { hidden: document.hidden } }));
+    }catch{}
+  }, { passive: true });
+
+
       const lockKey = "__BODY_SCROLL_LOCK_COUNT__";
       if (!window[lockKey]) window[lockKey] = 0;
       function apply() {
@@ -1209,8 +1442,81 @@ function kjsEnsureFaq(data) {
   return d;
 }
 
+/* --- Games 初始化（純娛樂、不連線、不回傳、不防刷、不發獎） --- */
+function kjsEnsureGames(data) {
+  const d = data || {};
+  if (!d.games) d.games = {};
+
+  // 共用：確保陣列
+  const arr = (v)=>Array.isArray(v)?v:[];
+
+  // Memory Match
+  if (!d.games.memory) d.games.memory = {};
+  d.games.memory.themes = arr(d.games.memory.themes);
+  if (!d.games.memory.themes.length) {
+    d.games.memory.themes = [
+      { id: kjsNid(), name: "動物", imagesText: "", images: [] },
+      { id: kjsNid(), name: "風景", imagesText: "", images: [] },
+    ];
+  }
+  if (!d.games.memory.defaultThemeId) d.games.memory.defaultThemeId = d.games.memory.themes[0]?.id || "";
+
+  // Whack-a-mole
+  if (!d.games.mole) d.games.mole = {};
+  d.games.mole.themes = arr(d.games.mole.themes);
+  if (!d.games.mole.themes.length) {
+    d.games.mole.themes = [
+      { id: kjsNid(), name: "老鼠", imagesText: "", images: [] },
+      { id: kjsNid(), name: "表情", imagesText: "", images: [] },
+    ];
+  }
+  if (!d.games.mole.defaultThemeId) d.games.mole.defaultThemeId = d.games.mole.themes[0]?.id || "";
+
+  // 2048
+  if (!d.games.g2048) d.games.g2048 = {};
+  if (!d.games.g2048.tileImages) d.games.g2048.tileImages = {}; // {2:{src,opacity},4:{...}}
+  if (d.games.g2048.defaultTileOpacity == null) d.games.g2048.defaultTileOpacity = 0.22;
+
+  // Luck today
+  if (!d.games.luck) d.games.luck = {};
+  d.games.luck.items = arr(d.games.luck.items);
+  if (!d.games.luck.items.length) {
+    d.games.luck.items = [
+      { id: kjsNid(), emoji:"🍀", title:"手氣不錯", content:"今天適合把想做的事推進一點點", image:"", weight: 3 },
+      { id: kjsNid(), emoji:"🌤️", title:"平穩日", content:"維持節奏就會有收穫", image:"", weight: 5 },
+      { id: kjsNid(), emoji:"🧊", title:"放慢一點", content:"別硬撐，做必要的就好", image:"", weight: 2 },
+    ];
+  }
+
+  // Tetris
+  if (!d.games.tetris) d.games.tetris = {};
+  if (!d.games.tetris.style) d.games.tetris.style = { mode: "color", imagesText: "", images: [] }; // mode: color|image
+  return d;
+}
+
 /* 小工具：安全 clone（UMD 環境） */
 function kjsClone(x){ return window.structuredClone ? structuredClone(x) : JSON.parse(JSON.stringify(x||{})); }
+
+/* 小工具：依權重抽選（weight 預設 1） */
+function pickWeighted(items){
+  const arr = Array.isArray(items) ? items.filter(Boolean) : [];
+  if (!arr.length) return null;
+  let total = 0;
+  const weights = arr.map(it=>{
+    const w = Number(it.weight);
+    const ww = (Number.isFinite(w) && w > 0) ? w : 1;
+    total += ww;
+    return ww;
+  });
+  if (total <= 0) return arr[0] || null;
+  let r = Math.random() * total;
+  for (let i=0;i<arr.length;i++){
+    r -= weights[i];
+    if (r <= 0) return arr[i];
+  }
+  return arr[arr.length-1] || null;
+}
+
 
 /***** ========= Gallery Lightbox ========= *****/
 function GalleryLightbox({ open, items = [], index = 0, onClose = ()=>{}, onStep = ()=>{} }) {
@@ -3519,6 +3825,8 @@ const cx = (...xs) => xs.filter(Boolean).join(' ');
 const nid = () => Math.random().toString(36).slice(2,10);
 
 function useLocalState(key, initial){
+  const store = (globalThis.__kjs_ls_debounce ||= { t:{}, last:{} });
+
   const [state, setState] = React.useState(()=>{
     try{
       const raw = localStorage.getItem(key);
@@ -3527,11 +3835,92 @@ function useLocalState(key, initial){
       return initial;
     }
   });
+
+  // 寫入節流：避免頻繁 setItem 造成卡頓（尤其手機）
   React.useEffect(()=>{
-    localStorage.setItem(key, JSON.stringify(state));
+    let serialized = "";
+    try{ serialized = JSON.stringify(state); }catch{ serialized = ""; }
+
+    // 若序列化結果未變更，跳過寫入
+    if (store.last[key] === serialized) return;
+
+    // 清掉舊的排程
+    if (store.t[key]) { try{ clearTimeout(store.t[key]); }catch{} }
+
+    store.t[key] = setTimeout(()=>{
+      try{
+        // 可能遇到 quota 或私密模式限制，這裡做保底不讓流程中斷
+        localStorage.setItem(key, serialized);
+        store.last[key] = serialized;
+      }catch{}
+      store.t[key] = null;
+    }, 180);
   },[key, state]);
+
   return [state, setState];
 }
+
+
+
+/* =========================
+   Toast / 通知（全域）
+   - 目的：提供一致、非阻斷式的「已儲存」提示，避免 toast 未定義造成儲存流程中斷
+   ========================= */
+function toast(message, opts){
+  try{
+    const cfg = (opts && typeof opts==='object') ? opts : {};
+    const ms = Number.isFinite(cfg.ms) ? cfg.ms : 1600;
+    const type = cfg.type || "info"; // info|success|warning|error
+    const id = "kjs-toast-root";
+    let root = document.getElementById(id);
+    if(!root){
+      root = document.createElement("div");
+      root.id = id;
+      root.style.position = "fixed";
+      root.style.left = "0";
+      root.style.right = "0";
+      root.style.bottom = "16px";
+      root.style.zIndex = "2147483647";
+      root.style.display = "flex";
+      root.style.justifyContent = "center";
+      root.style.pointerEvents = "none";
+      document.body.appendChild(root);
+    }
+    const el = document.createElement("div");
+    const bg =
+      type==="success" ? "rgba(16,185,129,.92)" :
+      type==="warning" ? "rgba(245,158,11,.92)" :
+      type==="error"   ? "rgba(244,63,94,.92)" :
+                         "rgba(15,23,42,.92)";
+    el.textContent = String(message ?? "");
+    el.style.maxWidth = "min(92vw, 560px)";
+    el.style.padding = "10px 14px";
+    el.style.borderRadius = "14px";
+    el.style.color = "white";
+    el.style.fontSize = "14px";
+    el.style.lineHeight = "18px";
+    el.style.background = bg;
+    el.style.boxShadow = "0 10px 30px rgba(0,0,0,.22)";
+    el.style.pointerEvents = "none";
+    el.style.opacity = "0";
+    el.style.transform = "translateY(6px)";
+    el.style.transition = "opacity 140ms ease, transform 140ms ease";
+    root.appendChild(el);
+    requestAnimationFrame(()=>{
+      el.style.opacity = "1";
+      el.style.transform = "translateY(0)";
+    });
+    window.setTimeout(()=>{
+      el.style.opacity = "0";
+      el.style.transform = "translateY(6px)";
+      window.setTimeout(()=>{ el.remove(); }, 220);
+    }, ms);
+  }catch(err){
+    // 保底：toast 不應再中斷主流程
+    console.warn("toast failed:", err);
+  }
+}
+window.toast = toast;
 
 // 文字名單清洗：去空白、全/半形空白、連續空白、大小寫不敏感去重
 function parseLinesClean(txt="") {
@@ -3621,6 +4010,47 @@ function exportCSV(filename, rows){
   a.click();
   URL.revokeObjectURL(a.href);
 }
+
+
+/* =========================
+   Input Guards（全域）
+   - 防止手機雙擊放大 / 捏合縮放打斷遊戲
+   - 只在遊戲互動區域鎖定 touchmove，避免頁面誤滾
+   ========================= */
+function installGlobalInputGuards(){
+  try{
+    if (globalThis.__kjs_input_guard_installed) return;
+    globalThis.__kjs_input_guard_installed = true;
+
+    // iOS Safari: prevent double-tap zoom
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', (e)=>{
+      const now = Date.now();
+      if (now - lastTouchEnd <= 260) {
+        // only prevent when interacting inside game containers
+        if (e.target && (e.target.closest?.('.game-touch-lock') || e.target.closest?.('[data-game-root]'))) {
+          e.preventDefault();
+        }
+      }
+      lastTouchEnd = now;
+    }, { passive: false });
+
+    // Prevent gesture zoom inside game views
+    document.addEventListener('gesturestart', (e)=>{
+      if (e.target && (e.target.closest?.('.game-touch-lock') || e.target.closest?.('[data-game-root]'))) e.preventDefault();
+    }, { passive: false });
+
+    // Lock scrolling while touching inside game areas
+    document.addEventListener('touchmove', (e)=>{
+      if (e.target && (e.target.closest?.('.game-touch-lock') || e.target.closest?.('[data-game-root]'))) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+  }catch{}
+}
+
+
+
 
 /* === Grid 工具（9/16 宮格切換） === */
 function useGridSize(lsKey='kjs_grid_cols', defaultCols=3){
@@ -5017,6 +5447,9 @@ function useAccordionController() {
     function App(){
       const [data, setData] = useLocalState(LS.data, EMPTY);
 
+      // install global input guards once (mobile UX)
+      React.useEffect(()=>{ installGlobalInputGuards(); }, []);
+
 // 進站時自動抓 ./data/app.json，覆蓋本機資料，並同步管理員名單（admins）
 React.useEffect(() => {
   (async () => {
@@ -5034,7 +5467,16 @@ React.useEffect(() => {
 
       // 寫入資料本體
       if (obj && typeof obj === 'object') {
-        setData(obj);
+        // 遠端 app.json 作為「基底資料」，本機作為「使用者偏好/設定」
+        // 重要：保留本機 games 設定（樣式、操作偏好等），避免刷新後被覆蓋
+        setData(prev=>{
+          const p = (prev && typeof prev === 'object') ? prev : {};
+          const merged = { ...obj };
+          if (p.games && typeof p.games === 'object') {
+            merged.games = { ...(obj.games||{}), ...(p.games||{}) };
+          }
+          return merged;
+        });
       } else {
         console.error('app.json 結構異常：期望為物件，實得', obj);
       }
@@ -5394,9 +5836,9 @@ const importJSON = (file) => {
 
 
       return (
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col app-min-vvh" data-app-root="1">
           {/* Header */}
-          <header className="sticky top-0 z-30 bg-white/85 dark:bg-slate-900/85 backdrop-blur border-b border-slate-200/60 dark:border-slate-800">
+          <header data-app-header="1" className="sticky top-0 z-30 bg-white/85 dark:bg-slate-900/85 backdrop-blur border-b border-slate-200/60 dark:border-slate-800">
             <div className="max-w-5xl mx-auto px-4 py-3 flex items-center gap-2">
              <button
   ref={menuButtonRef}
@@ -5541,6 +5983,10 @@ const importJSON = (file) => {
 
 
 {tab==='others' && <Others data={data} admin={adminMode} setData={setData} query={query} queryMode={queryMode} />}
+
+{tab==='games' && <GamesHub data={data} setData={setData} />}
+
+{tab==='games_admin' && adminMode && <GamesAdmin data={data} setData={setData} />}
 
 {tab==='system' && adminMode && (
   <SystemSettings
@@ -5721,7 +6167,7 @@ const importJSON = (file) => {
 </div>
 
 {/* 底部工具列（手機） */}
-<nav className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-900/80 border-t border-slate-200 dark:border-slate-700 backdrop-blur">
+<nav data-app-bottomnav="1" className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-900/80 border-t border-slate-200 dark:border-slate-700 backdrop-blur">
   <div className="max-w-5xl mx-auto grid grid-cols-5">
     <button className={"tap-target flex items-center justify-center py-2 " + (tab==='home'?'text-brand':'')} onClick={()=>setTab('home')} title="首頁">🏠</button>
     <button className={"tap-target flex items-center justify-center py-2 " + (tab==='pending'?'text-brand':'')} onClick={()=>setTab('pending')} title="等待開獎">⏳</button>
@@ -5806,6 +6252,12 @@ const importJSON = (file) => {
     onClick={()=>{ setTab('others'); setMenuOpen(false); }}
   />
 
+  <NavItem
+    label="🎮 小遊戲"
+    active={tab==='games'}
+    onClick={()=>{ setTab('games'); setMenuOpen(false); }}
+  />
+
 <NavItem
   label="🖼 開箱/到貨實拍"
   active={tab==='gallery'}
@@ -5839,7 +6291,13 @@ const importJSON = (file) => {
         onClick={()=>{ setTab('system'); setMenuOpen(false); }}
       />
 
-      {/* 管理常用工具 */}
+            <NavItem
+        label="🎮 小遊戲設定"
+        active={tab==='games_admin'}
+        onClick={()=>{ setTab('games_admin'); setMenuOpen(false); }}
+      />
+
+{/* 管理常用工具 */}
       <div className="grid grid-cols-2 gap-2 p-2">
   <button
     onClick={exportJSON}
@@ -5975,6 +6433,7 @@ function Home({ setTab, data, setData, admin }) {
   useEffect(() => {
     try { kjsEnsureGallery(data); } catch {}
     try { kjsEnsureFaq(data); } catch {}
+    try { kjsEnsureGames(data); } catch {}
   }, [data]);
 
   // 系統連結（主頁按鈕使用，可由「管理員設定」調整）
@@ -9241,7 +9700,7 @@ function LightboxRoot() {
           <button className="rounded-md bg-white text-black px-2 py-1 text-sm" onClick={close}>關閉</button>
         </div>
       </div>
-      <div className="relative flex-1 overflow-hidden touch-pan-y">
+      <div className="relative flex-1 overflow-hidden game-touch-lock touch-pan-y">
         <img
           src={imgs[idx]}
           alt=""
@@ -9261,6 +9720,2146 @@ function LightboxRoot() {
     </div>
   );
 }
+
+/* =========================
+   🎮 小遊戲系統（純娛樂）
+   - 不發獎、不連線、不回傳、不防刷
+   - 手機優先：避開 header / 底部導覽 / iOS safe-area
+   ========================= */
+
+function parseLinesToList(text){
+  return String(text||"")
+    .split(/[\r\n,]+/g)
+    .map(s=>s.trim())
+    .filter(Boolean);
+}
+
+function clamp(n,min,max){ return Math.max(min, Math.min(max, n)); }
+
+function envSafeBottom(){
+  // 在部分瀏覽器無法直接讀 env(safe-area-inset-bottom) 的數值時，至少回傳 0
+  // 這裡主要用於計算可用高度，避免被 iOS 手勢條/底部導覽遮擋
+  try{
+    // 有些環境支援 CSS env 但 JS 取不到；以視覺/布局保守處理
+    return 0;
+  }catch(e){
+    return 0;
+  }
+}
+
+
+function useIsTouch(){
+  const [touch, setTouch] = React.useState(false);
+  React.useEffect(()=>{
+    const ok = ('ontouchstart' in window) || (navigator.maxTouchPoints>0);
+    setTouch(!!ok);
+  },[]);
+  return touch;
+}
+
+function GameShell({ title, subtitle, children, onReset }){
+  return (
+    <div className="px-4 pb-24 md:pb-6"
+      data-game-shell="1"
+      style={{
+        paddingBottom: 'calc(var(--game-shell-bottom-pad, 96px) + var(--sab, env(safe-area-inset-bottom)) + var(--app-bottom-nav-h, 0px))',
+        paddingLeft: 'calc(16px + var(--sal, env(safe-area-inset-left)))',
+        paddingRight:'calc(16px + var(--sar, env(safe-area-inset-right)))',
+        paddingTop: 'calc(0px + var(--sat, env(safe-area-inset-top)))',
+      }}
+    >
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <div>
+            <div className="text-lg font-semibold">{title}</div>
+            {subtitle ? <div className="text-sm text-slate-500 dark:text-slate-400 mt-1">{subtitle}</div> : null}
+          </div>
+          {typeof onReset==='function' ? (
+            <button className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+              onClick={onReset}
+              type="button"
+            >重置</button>
+          ) : null}
+        </div>
+
+        {/* Stage wrapper: provides a consistent gesture surface and usable-height contract */}
+        <div className="game-gesture-surface">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+/* ---------- GamesHub（玩家入口） ---------- */
+function GamesHub({ data, setData }){
+  const games = (data && data.games) ? data.games : {};
+  const [active, setActive] = React.useState(null); // null | memory | mole | g2048 | luck | tetris
+
+  React.useEffect(()=>{ try{ kjsEnsureGames(data); }catch{} }, [data]);
+
+  const items = [
+    { id:'memory', title:'記憶翻牌', sub:'Memory Match' },
+    { id:'mole', title:'打地鼠', sub:'Whack-a-mole' },
+    { id:'g2048', title:'2048', sub:'2048' },
+    { id:'luck', title:'今天手氣', sub:'純亂數占卜' },
+    { id:'tetris', title:'俄羅斯方塊', sub:'Tetris' },
+  ];
+
+  const activeMeta = active ? (items.find(x=>x.id===active) || null) : null;
+
+  return (
+    <GameShell
+      title="🎮 小遊戲"
+      subtitle="純娛樂模組：不發獎、不連線、不回傳、不防刷。"
+    >
+      {/* Game Picker：僅在未進入遊戲時顯示，避免影響遊戲觀感 */}
+      {active===null ? (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
+          {items.map(it=>(
+            <button
+              key={it.id}
+              type="button"
+              onClick={()=>setActive(it.id)}
+              className={"text-left rounded-2xl border p-4 hover:bg-slate-50 dark:hover:bg-slate-800 transition border-slate-200 dark:border-slate-700"}
+            >
+              <div className="font-semibold">{it.title}</div>
+              <div className="text-sm text-slate-500 dark:text-slate-400">{it.sub}</div>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div className="flex items-center justify-between mb-3">
+          <div className="min-w-0">
+            <div className="text-base font-semibold truncate">{activeMeta ? activeMeta.title : "遊戲"}</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400 truncate">{activeMeta ? activeMeta.sub : ""}</div>
+          </div>
+          <div className="shrink-0 flex items-center gap-2">
+            <button
+              type="button"
+              className="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
+              onClick={()=>setActive(null)}
+              title="返回遊戲列表"
+            >
+              ← 返回
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Active Game：進入遊戲後只渲染單一遊戲，避免同時出現多個入口卡片 */}
+      {active==='memory' && <GameMemory data={data} setData={setData} />}
+      {active==='mole'   && <GameMole data={data} setData={setData} />}
+      {active==='g2048'  && <Game2048 data={data} setData={setData} />}
+      {active==='luck'   && <GameLuck data={data} setData={setData} />}
+      {active==='tetris' && <GameTetris data={data} setData={setData} />}
+    </GameShell>
+  );
+}
+
+
+/* ---------- GamesAdmin（管理入口：獨立設定頁 + 草稿模式） ---------- */
+function GamesAdmin({ data, setData }){
+  React.useEffect(()=>{ try{ kjsEnsureGames(data); }catch{} }, [data]);
+  const [page, setPage] = React.useState('list'); // list | memory | mole | g2048 | luck | tetris
+
+  const go = (id)=>setPage(id);
+  const back = ()=>setPage('list');
+
+  return (
+    <GameShell
+      title="🎮 小遊戲設定"
+      subtitle="無腦設定：各遊戲獨立頁，草稿模式，按「儲存」才寫回正式資料。"
+    >
+      {page==='list' ? (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <GameAdminCard title="記憶翻牌" sub="主題圖片管理" onOpen={()=>go('memory')} />
+          <GameAdminCard title="打地鼠" sub="目標主題 + 難度" onOpen={()=>go('mole')} />
+          <GameAdminCard title="2048" sub="數字格底圖 + 透明度" onOpen={()=>go('g2048')} />
+          <GameAdminCard title="今天手氣" sub="emoji/標題/內容/圖片/權重 + 批次" onOpen={()=>go('luck')} />
+          <GameAdminCard title="俄羅斯方塊" sub="方塊樣式（純色/圖片）" onOpen={()=>go('tetris')} />
+        </div>
+      ) : null}
+
+      {page==='memory' && <AdminMemory data={data} setData={setData} onBack={back} />}
+      {page==='mole'   && <AdminMole data={data} setData={setData} onBack={back} />}
+      {page==='g2048'  && <Admin2048 data={data} setData={setData} onBack={back} />}
+      {page==='luck'   && <AdminLuck data={data} setData={setData} onBack={back} />}
+      {page==='tetris' && <AdminTetris data={data} setData={setData} onBack={back} />}
+    </GameShell>
+  );
+}
+
+function GameAdminCard({ title, sub, onOpen }){
+  return (
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
+      <div className="font-semibold">{title}</div>
+      <div className="text-sm text-slate-500 dark:text-slate-400 mt-1">{sub}</div>
+      <div className="mt-3">
+        <button type="button" onClick={onOpen}
+          className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+        >設定</button>
+      </div>
+    </div>
+  );
+}
+
+/* =========================
+   1) Memory Match
+   ========================= */
+function GameMemory({ data, setData }){
+  const cfg = data?.games?.memory || {};
+  const themes = Array.isArray(cfg.themes)?cfg.themes:[];
+  const [themeId, setThemeId] = React.useState(()=>themes[0]?.id || "default");
+  const [level, setLevel] = React.useState("easy"); // easy=4, medium=8, hard=16
+  const size = (level==="easy"?4:(level==="medium"?8:16));
+  const theme = themes.find(t=>t.id===themeId) || themes[0] || { id:"default", name:"預設", imagesText:"" };
+  const imgs = parseLinesToList(theme.imagesText||"");
+  const pairs = (size*size)/2;
+
+  const makeDeck = React.useCallback(()=>{
+    const fallbackEmoji = [
+      "😀","😎","🥳","🤖","👻","🐶","🐱","🐼","🦊","🐸","🐵","🐤","🐙","🦄","🍎","🍋","🍇","🍉",
+      "🍔","🍟","🍕","🍣","🍩","🍪","🍰","⚽","🏀","🎾","🎯","🎹","🎷","🎻","🚗","🚕","🚀","✈️",
+      "⭐","🌙","☀️","⚡","🔥","💧","🍀","🌸","🌈","❄️","🎈","🎁","🎮","🎲","🧩","🎧","📌","📎","🔑","💡"
+    ];
+
+    const isImg = (s)=>{
+      if(!s) return false;
+      const t = String(s).trim();
+      return /^data:image\//i.test(t) || /^https?:\/\//i.test(t) || /^\//.test(t) || /\.(png|jpe?g|webp|gif|svg)(\?|#|$)/i.test(t);
+    };
+
+    // 若主題圖片不足：先重複圖片補齊；若完全沒有圖片，使用 emoji 補齊（避免空白 / 破圖）
+    const pool = imgs.filter(Boolean);
+    const pick = [];
+    for(let i=0;i<pairs;i++){
+      const raw = pool.length ? pool[i % pool.length] : fallbackEmoji[i % fallbackEmoji.length];
+      if(isImg(raw)){
+        pick.push({ id: `p${i}`, src: raw, emoji: "" });
+      }else{
+        pick.push({ id: `p${i}`, src: "", emoji: String(raw) });
+      }
+    }
+
+    const cards = [];
+    for(const p of pick){
+      cards.push({ key: p.id+"a", pid: p.id, src: p.src, emoji: p.emoji });
+      cards.push({ key: p.id+"b", pid: p.id, src: p.src, emoji: p.emoji });
+    }
+    // shuffle（可視為公平洗牌；如需可測 RNG，可在此改成 seedable RNG）
+    for(let i=cards.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [cards[i],cards[j]]=[cards[j],cards[i]];
+    }
+    return cards;
+  }, [pairs, themeId, theme.imagesText]);
+
+  const [seed, setSeed] = React.useState(0);
+  const [cards, setCards] = React.useState(()=>makeDeck());
+  const [open, setOpen] = React.useState([]); // indices
+  const [matched, setMatched] = React.useState(()=>new Set());
+
+  React.useEffect(()=>{
+    setCards(makeDeck());
+    setOpen([]);
+    setMatched(new Set());
+  }, [seed, level, themeId]);
+
+  // responsive cell size
+  const wrapRef = React.useRef(null);
+  const [cellPx, setCellPx] = React.useState(64);
+
+  const recalc = React.useCallback(()=>{
+    const w = wrapRef.current?.clientWidth || Math.min(window.innerWidth*0.92, 560);
+    const topReserve = 160; // 估算 header/選單與說明
+    const h = Math.max(220, window.innerHeight - topReserve - (envSafeBottom()+120));
+    const cell = Math.floor(Math.min((w - 8)/size, (h - 8)/size));
+    setCellPx(Math.max(14, cell));
+  }, [size]);
+
+  React.useEffect(()=>{
+    recalc();
+    window.addEventListener('resize', recalc);
+    return ()=>window.removeEventListener('resize', recalc);
+  }, [recalc]);
+
+  const flip = (i)=>{
+    if(matched.has(i)) return;
+    if(open.includes(i)) return;
+    if(open.length>=2) return;
+    setOpen(o=>[...o,i]);
+  };
+
+  React.useEffect(()=>{
+    if(open.length!==2) return;
+    const [a,b]=open;
+    const ca=cards[a], cb=cards[b];
+    if(!ca || !cb) return;
+    const same = ca.pid===cb.pid;
+    const t = setTimeout(()=>{
+      if(same){
+        setMatched(ms=>{
+          const nx = new Set(ms);
+          nx.add(a); nx.add(b);
+          return nx;
+        });
+      }
+      setOpen([]);
+    }, 420);
+    return ()=>clearTimeout(t);
+  }, [open, cards]);
+
+  const done = matched.size === cards.length && cards.length>0;
+
+  return (
+    <GameShell
+      title="記憶翻牌"
+      subtitle="手機：點擊翻牌；電腦：滑鼠點擊"
+      onReset={()=>setSeed(s=>s+1)}
+    >
+      <div className="grid gap-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <label className="text-sm text-slate-600 dark:text-slate-300">主題</label>
+          <select className="rounded-xl border px-3 py-2 text-sm"
+            value={themeId}
+            onChange={(e)=>setThemeId(e.target.value)}
+          >
+            {(themes.length?themes:[{id:"default",name:"預設"}]).map(t=>(
+              <option key={t.id} value={t.id}>{t.name||"未命名"}</option>
+            ))}
+          </select>
+
+          <label className="text-sm text-slate-600 dark:text-slate-300 ml-2">難度</label>
+          <select className="rounded-xl border px-3 py-2 text-sm"
+            value={level}
+            onChange={(e)=>setLevel(e.target.value)}
+          >
+            <option value="easy">普通（4×4）</option>
+            <option value="medium">中等（8×8）</option>
+            <option value="hard">困難（16×16）</option>
+          </select>
+
+          <div className="text-sm text-slate-600 dark:text-slate-300 ml-auto">
+            {done ? "完成" : `已配對：${matched.size/2}/${cards.length/2}`}
+          </div>
+        </div>
+
+        <div ref={wrapRef} className="rounded-2xl border border-slate-200 dark:border-slate-700 p-2 overflow-auto"
+          style={{
+            maxHeight: `calc(100vh - 220px - ${envSafeBottom()}px)`,
+          }}
+        >
+          <div className="grid gap-1 mx-auto"
+            style={{
+              gridTemplateColumns: `repeat(${size}, ${cellPx}px)`,
+              width: `${cellPx*size + (size-1)*4}px`,
+            }}
+          >
+            {cards.map((c, i)=>{
+              const isOpen = open.includes(i) || matched.has(i);
+              return (
+                <button key={c.key} type="button"
+                  className={"rounded-lg border flex items-center justify-center overflow-hidden select-none " +
+                    (matched.has(i) ? "border-emerald-400/60" : "border-slate-200 dark:border-slate-700") +
+                    " bg-white dark:bg-slate-900"}
+                  style={{ width: cellPx, height: cellPx, touchAction:"manipulation" }}
+                  onClick={()=>flip(i)}
+                >
+                  {isOpen ? (
+                    c.src ? <img src={c.src} alt="" className="w-full h-full object-cover" draggable={false}/> :
+                    c.emoji ? <span className="text-3xl leading-none">{c.emoji}</span> :
+                    <div className="w-full h-full" style={{ background: `hsl(${(i*29)%360} 70% 70%)` }} />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-xs text-slate-500"
+                      style={{ background:"linear-gradient(135deg, rgba(148,163,184,.25), rgba(148,163,184,.05))" }}
+                    >
+                      ?
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {done ? (
+          <div className="rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-900 p-3 text-sm">
+            已完成本局。可按右上角「重置」再來一局。
+          </div>
+        ) : null}
+      </div>
+    </GameShell>
+  );
+}
+
+
+function AdminMemory({ data, setData, onBack }){
+  const base = data?.games?.memory || {};
+  const [draft, setDraft] = React.useState(()=>JSON.parse(JSON.stringify(base||{})));
+
+  React.useEffect(()=>{ setDraft(JSON.parse(JSON.stringify(base||{}))); }, [base]); // 進頁時載入
+
+  const themes = Array.isArray(draft.themes)?draft.themes:[];
+
+  const addTheme = ()=>{
+    const t = { id: kjsNid(), name:"新主題", imagesText:"", images:[] };
+    setDraft(d=>({ ...d, themes: [...(d.themes||[]), t] }));
+  };
+  const delTheme = (id)=>{
+    setDraft(d=>({ ...d, themes: (d.themes||[]).filter(t=>t.id!==id) }));
+  };
+  const upd = (id, patch)=>{
+    setDraft(d=>({ ...d, themes: (d.themes||[]).map(t=>t.id===id?{...t, ...patch}:t) }));
+  };
+
+  const save = ()=>{
+    setData(prev=>{
+      const next = { ...(prev||{}) };
+      kjsEnsureGames(next);
+      next.games.memory = {
+        ...next.games.memory,
+        themes: (draft.themes||[]).map(t=>({
+          ...t,
+          images: parseLinesToList(t.imagesText||t.images?.join("\n")||""),
+        })),
+        defaultThemeId: draft.defaultThemeId || (draft.themes?.[0]?.id||""),
+      };
+      return next;
+    });
+    alert("已儲存：記憶翻牌設定");
+  };
+
+  return (
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
+      <div className="flex items-center justify-between gap-3 mb-3">
+        <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" onClick={onBack}>返回</button>
+        <div className="flex items-center gap-2">
+          <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" onClick={addTheme}>新增主題</button>
+          <button type="button" className="rounded-xl bg-slate-900 text-white px-3 py-2 text-sm hover:opacity-90" onClick={save}>儲存</button>
+        </div>
+      </div>
+
+      <div className="grid gap-4">
+        {themes.map(t=>(
+          <div key={t.id} className="rounded-2xl border border-slate-200 dark:border-slate-700 p-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <input className="rounded-xl border px-3 py-2 text-sm w-56"
+                  value={t.name||""}
+                  onChange={(e)=>upd(t.id,{name:e.target.value})}
+                />
+                <label className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                  <input type="radio" name="mm_default" checked={(draft.defaultThemeId||"")===t.id}
+                    onChange={()=>setDraft(d=>({ ...d, defaultThemeId: t.id }))}
+                  />
+                  預設
+                </label>
+              </div>
+              <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+                onClick={()=>delTheme(t.id)}
+              >刪除</button>
+            </div>
+
+            <div className="mt-2 grid md:grid-cols-2 gap-3">
+              <div className="grid gap-1">
+                <div className="text-sm text-slate-600 dark:text-slate-300">圖片清單（每行一張或用逗號分隔）</div>
+                <textarea className="rounded-xl border px-3 py-2 text-sm min-h-[140px]"
+                  value={t.imagesText||""}
+                  onChange={(e)=>upd(t.id,{imagesText:e.target.value})}
+                />
+              </div>
+              <div className="grid gap-1">
+                <div className="text-sm text-slate-600 dark:text-slate-300">即時預覽</div>
+                <div className="grid grid-cols-4 gap-2 rounded-2xl border border-slate-200 dark:border-slate-700 p-2">
+                  {parseLinesToList(t.imagesText||"").slice(0,12).map((src,i)=>(
+                    <img key={src+i} src={src} alt="" className="w-full aspect-square object-cover rounded-xl border border-slate-200 dark:border-slate-700" draggable={false}/>
+                  ))}
+                  {parseLinesToList(t.imagesText||"").length===0 ? (
+                    <div className="col-span-4 text-sm text-slate-500 dark:text-slate-400 p-2">尚未設定圖片</div>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* =========================
+   2) Whack-a-mole
+   ========================= */
+function GameMole({ data, setData }){
+  const cfg = data?.games?.mole || {};
+  const themes = Array.isArray(cfg.themes)?cfg.themes:[];
+  const [themeId, setThemeId] = React.useState(()=>themes[0]?.id || "default");
+  const [level, setLevel] = React.useState("easy"); // easy must be relaxed
+  const theme = themes.find(t=>t.id===themeId) || themes[0] || { id:"default", name:"預設", imagesText:"" };
+  const imgs = parseLinesToList(theme.imagesText||"");
+
+  const isTouch = useIsTouch();
+  const [running, setRunning] = React.useState(false);
+  const [timeLeft, setTimeLeft] = React.useState(60);
+  const [score, setScore] = React.useState(0);
+  const [active, setActive] = React.useState(-1);
+  const holes = 9;
+
+  const params = React.useMemo(()=>{
+    if(level==="easy") return { spawn: 850, show: 720 };     // 放鬆、看得到、來得及點
+    if(level==="medium") return { spawn: 520, show: 470 };   // 緊湊
+    return { spawn: 340, show: 310 };                        // 手速挑戰
+  }, [level]);
+
+  const start = ()=>{
+    setScore(0);
+    setTimeLeft(60);
+    setActive(-1);
+    setRunning(true);
+  };
+
+  const stop = ()=>{
+    setRunning(false);
+    setActive(-1);
+  };
+
+  React.useEffect(()=>{
+    if(!running) return;
+    const t = setInterval(()=>{
+      setTimeLeft(s=>{
+        if(s<=1){
+          stop();
+          return 0;
+        }
+        return s-1;
+      });
+    }, 1000);
+    return ()=>clearInterval(t);
+  }, [running]);
+
+  React.useEffect(()=>{
+    if(!running) return;
+    let hideTimer = null;
+    const spawn = ()=>{
+      const idx = Math.floor(Math.random()*holes);
+      setActive(idx);
+      if(hideTimer) clearTimeout(hideTimer);
+      hideTimer = setTimeout(()=>setActive(-1), params.show);
+    };
+    spawn();
+    const it = setInterval(spawn, params.spawn);
+    return ()=>{
+      clearInterval(it);
+      if(hideTimer) clearTimeout(hideTimer);
+    };
+  }, [running, params.spawn, params.show]);
+
+  const hit = (i)=>{
+    if(!running) return;
+    if(i!==active) return;
+    setScore(s=>s+1);
+    setActive(-1);
+  };
+
+  const renderTarget = ()=>{
+    // 若有圖片主題，使用圖片；否則預設顯示🐭
+    if(imgs.length){
+      const src = imgs[Math.floor(Math.random()*imgs.length)];
+      return <img src={src} alt="" className="w-full h-full object-cover" draggable={false}/>;
+    }
+    return <div className="text-3xl leading-none">🐭</div>;
+  };
+
+  return (
+    <GameShell
+      title="打地鼠"
+      subtitle={isTouch ? "手機：點擊地鼠" : "電腦：滑鼠點擊"}
+      onReset={start}
+    >
+      <div className="grid gap-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <label className="text-sm text-slate-600 dark:text-slate-300">主題</label>
+          <select className="rounded-xl border px-3 py-2 text-sm"
+            value={themeId}
+            onChange={(e)=>setThemeId(e.target.value)}
+          >
+            {(themes.length?themes:[{id:"default",name:"預設"}]).map(t=>(
+              <option key={t.id} value={t.id}>{t.name||"未命名"}</option>
+            ))}
+          </select>
+
+          <label className="text-sm text-slate-600 dark:text-slate-300 ml-2">難度</label>
+          <select className="rounded-xl border px-3 py-2 text-sm"
+            value={level}
+            onChange={(e)=>setLevel(e.target.value)}
+          >
+            <option value="easy">普通（放鬆）</option>
+            <option value="medium">中等（緊湊）</option>
+            <option value="hard">困難（手速挑戰）</option>
+          </select>
+
+          <div className="ml-auto flex items-center gap-3">
+            <div className="text-sm font-medium">剩餘 {timeLeft}s</div>
+            <div className="text-sm font-medium">得分 {score}</div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {!running ? (
+            <button type="button" className="rounded-xl border px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+              onClick={start}
+            >開始（60 秒）</button>
+          ) : (
+            <button type="button" className="rounded-xl border px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+              onClick={stop}
+            >停止</button>
+          )}
+          <div className="text-sm text-slate-500 dark:text-slate-400">普通難度刻意放慢，適合大眾。</div>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-3"
+          style={{ touchAction:"manipulation" }}
+        >
+          <div className="grid grid-cols-3 gap-3 max-w-[520px] mx-auto">
+            {Array.from({length:holes}).map((_,i)=>(
+              <button key={i} type="button"
+                className={"relative rounded-2xl border overflow-hidden bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 " +
+                  "aspect-square"}
+                onClick={()=>hit(i)}
+              >
+                <div className="absolute inset-0 flex items-center justify-center">
+                  {running && i===active ? renderTarget() : <div className="w-10 h-10 rounded-full bg-slate-200/60 dark:bg-slate-700/40" />}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {!running && timeLeft===0 ? (
+          <div className="rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-3 text-sm">
+            本局結束。得分：{score}
+          </div>
+        ) : null}
+      </div>
+    </GameShell>
+  );
+}
+
+
+function AdminMole({ data, setData, onBack }){
+  const base = data?.games?.mole || {};
+  const [draft, setDraft] = React.useState(()=>JSON.parse(JSON.stringify(base||{})));
+
+  React.useEffect(()=>{ setDraft(JSON.parse(JSON.stringify(base||{}))); }, [base]); // 進頁時載入
+
+  const themes = Array.isArray(draft.themes)?draft.themes:[];
+
+  const addTheme = ()=>{
+    const t = { id: kjsNid(), name:"新主題", imagesText:"", images:[] };
+    setDraft(d=>({ ...d, themes: [...(d.themes||[]), t] }));
+  };
+  const delTheme = (id)=>{
+    setDraft(d=>({ ...d, themes: (d.themes||[]).filter(t=>t.id!==id) }));
+  };
+  const upd = (id, patch)=>{
+    setDraft(d=>({ ...d, themes: (d.themes||[]).map(t=>t.id===id?{...t, ...patch}:t) }));
+  };
+
+  const save = ()=>{
+    setData(prev=>{
+      const next = { ...(prev||{}) };
+      kjsEnsureGames(next);
+      next.games.mole = {
+        ...next.games.mole,
+        themes: (draft.themes||[]).map(t=>({
+          ...t,
+          images: parseLinesToList(t.imagesText||t.images?.join("\n")||""),
+        })),
+        defaultThemeId: draft.defaultThemeId || (draft.themes?.[0]?.id||""),
+      };
+      return next;
+    });
+    alert("已儲存：打地鼠設定");
+  };
+
+  return (
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
+      <div className="flex items-center justify-between gap-3 mb-3">
+        <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" onClick={onBack}>返回</button>
+        <div className="flex items-center gap-2">
+          <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" onClick={addTheme}>新增主題</button>
+          <button type="button" className="rounded-xl bg-slate-900 text-white px-3 py-2 text-sm hover:opacity-90" onClick={save}>儲存</button>
+        </div>
+      </div>
+
+      <div className="grid gap-4">
+        {themes.map(t=>(
+          <div key={t.id} className="rounded-2xl border border-slate-200 dark:border-slate-700 p-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <input className="rounded-xl border px-3 py-2 text-sm w-56"
+                  value={t.name||""}
+                  onChange={(e)=>upd(t.id,{name:e.target.value})}
+                />
+                <label className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                  <input type="radio" name="mole_default" checked={(draft.defaultThemeId||"")===t.id}
+                    onChange={()=>setDraft(d=>({ ...d, defaultThemeId: t.id }))}
+                  />
+                  預設
+                </label>
+              </div>
+              <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+                onClick={()=>delTheme(t.id)}
+              >刪除</button>
+            </div>
+
+            <div className="mt-2 grid md:grid-cols-2 gap-3">
+              <div className="grid gap-1">
+                <div className="text-sm text-slate-600 dark:text-slate-300">目標圖片（每行一張或逗號分隔）</div>
+                <textarea className="rounded-xl border px-3 py-2 text-sm min-h-[140px]"
+                  value={t.imagesText||""}
+                  onChange={(e)=>upd(t.id,{imagesText:e.target.value})}
+                />
+              </div>
+              <div className="grid gap-1">
+                <div className="text-sm text-slate-600 dark:text-slate-300">即時預覽</div>
+                <div className="grid grid-cols-4 gap-2 rounded-2xl border border-slate-200 dark:border-slate-700 p-2">
+                  {parseLinesToList(t.imagesText||"").slice(0,12).map((src,i)=>(
+                    <img key={src+i} src={src} alt="" className="w-full aspect-square object-cover rounded-xl border border-slate-200 dark:border-slate-700" draggable={false}/>
+                  ))}
+                  {parseLinesToList(t.imagesText||"").length===0 ? (
+                    <div className="col-span-4 text-sm text-slate-500 dark:text-slate-400 p-2">尚未設定圖片</div>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* =========================
+   3) 2048
+   ========================= */
+function Game2048({ data, setData }){
+  const cfg = data?.games?.g2048 || {};
+
+  // 支援「多套樣式」：styles[ ] + activeStyleId；若舊資料只有 tileImages，會自動視為預設樣式
+  const legacyDefaultOpacity = (cfg.defaultTileOpacity==null?0.22:cfg.defaultTileOpacity);
+  const styles = Array.isArray(cfg.styles) && cfg.styles.length
+    ? cfg.styles
+    : [{ id:"default", name:"預設", defaultOpacity: legacyDefaultOpacity, tileImages: (cfg.tileImages||{}) }];
+
+  const savedStyleId = cfg.activeStyleId || styles[0].id;
+
+  // 使用者可在遊戲內切換樣式（與「記憶翻牌/打地鼠」一致的體驗），並持久化到本機
+  const [styleId, setStyleId] = React.useState(savedStyleId);
+  React.useEffect(()=>{ setStyleId(savedStyleId); }, [savedStyleId]);
+
+  const effectiveStyleId = (typeof styleId==="string" && styleId) ? styleId : savedStyleId;
+  const activeStyle = styles.find(s=>s.id===effectiveStyleId) || styles[0];
+  const tileImages = activeStyle.tileImages || {};
+  const defaultOpacity = (activeStyle.defaultOpacity==null ? legacyDefaultOpacity : activeStyle.defaultOpacity);
+
+  const applyStyle = (id)=>{
+    setStyleId(id);
+    setData(prev=>{
+      const next = { ...(prev||{}) };
+      kjsEnsureGames(next);
+      const cur = next.games.g2048 || {};
+      next.games.g2048 = {
+        ...cur,
+        // 保留既有 styles；若不存在則使用當前解析到的 styles 作為 fallback
+        styles: (Array.isArray(cur.styles) && cur.styles.length) ? cur.styles : styles,
+        activeStyleId: id,
+        targetTile: cur.targetTile
+      };
+      return next;
+    });
+  };
+
+
+  const applyTarget = (v)=>{
+    const n = Number(v);
+    const targetTile = (n===2048 || n===4096 || n===8192) ? n : 2048;
+    setData(prev=>{
+      const next = { ...(prev||{}) };
+      kjsEnsureGames(next);
+      const cur = next.games.g2048 || {};
+      next.games.g2048 = {
+        ...cur,
+        styles: (Array.isArray(cur.styles) && cur.styles.length) ? cur.styles : styles,
+        activeStyleId: (cur.activeStyleId || savedStyleId || styles[0].id),
+        targetTile
+      };
+      return next;
+    });
+  };
+
+  const target = (cfg.targetTile===2048 || cfg.targetTile===4096 || cfg.targetTile===8192) ? cfg.targetTile : 2048;
+
+  const isTouch = useIsTouch();
+
+  const emptyBoard = ()=>Array.from({length:4},()=>Array(4).fill(0));
+
+  const randEmpty = (b)=>{
+    const cells=[];
+    for(let r=0;r<4;r++) for(let c=0;c<4;c++) if(!b[r][c]) cells.push([r,c]);
+    if(!cells.length) return null;
+    return cells[Math.floor(Math.random()*cells.length)];
+  };
+
+  const addRandom = (b)=>{
+    const p = randEmpty(b);
+    if(!p) return b;
+    const [r,c]=p;
+    const v = Math.random()<0.9?2:4;
+    const nb = b.map(row=>row.slice());
+    nb[r][c]=v;
+    return nb;
+  };
+
+  const canMove = (b)=>{
+    for(let r=0;r<4;r++) for(let c=0;c<4;c++){
+      const v=b[r][c];
+      if(v===0) return true;
+      if(r<3 && b[r+1][c]===v) return true;
+      if(c<3 && b[r][c+1]===v) return true;
+    }
+    return false;
+  };
+
+  const slideLine = (line)=>{
+    const arr = line.filter(x=>x!==0);
+    let scoreAdd=0;
+    for(let i=0;i<arr.length-1;i++){
+      if(arr[i]===arr[i+1]){
+        arr[i]*=2;
+        scoreAdd+=arr[i];
+        arr[i+1]=0;
+      }
+    }
+    const merged = arr.filter(x=>x!==0);
+    while(merged.length<4) merged.push(0);
+    return { line: merged, scoreAdd };
+  };
+
+  const move = (b, dir)=>{
+    // dir: 'L','R','U','D'
+    let moved=false;
+    let scoreAdd=0;
+    const nb = emptyBoard();
+    const get = (r,c)=>b[r][c];
+
+    const setRow = (r, line)=>{ for(let c=0;c<4;c++) nb[r][c]=line[c]; };
+    const setCol = (c, line)=>{ for(let r=0;r<4;r++) nb[r][c]=line[r]; };
+
+    if(dir==='L' || dir==='R'){
+      for(let r=0;r<4;r++){
+        const line = [0,1,2,3].map(c=>get(r,c));
+        const src = (dir==='R')?line.slice().reverse():line;
+        const { line:out, scoreAdd:sa } = slideLine(src);
+        const res = (dir==='R')?out.slice().reverse():out;
+        setRow(r,res);
+        if(res.some((v,i)=>v!==line[i])) moved=true;
+        scoreAdd+=sa;
+      }
+    }else{
+      for(let c=0;c<4;c++){
+        const line = [0,1,2,3].map(r=>get(r,c));
+        const src = (dir==='D')?line.slice().reverse():line;
+        const { line:out, scoreAdd:sa } = slideLine(src);
+        const res = (dir==='D')?out.slice().reverse():out;
+        setCol(c,res);
+        if(res.some((v,i)=>v!==line[i])) moved=true;
+        scoreAdd+=sa;
+      }
+    }
+    return { board: nb, moved, scoreAdd };
+  };
+
+  const [seed, setSeed] = React.useState(0);
+  const [board, setBoard] = React.useState(()=>addRandom(addRandom(emptyBoard())));
+  const [score, setScore] = React.useState(0);
+  const [won, setWon] = React.useState(false);
+  const [over, setOver] = React.useState(false);
+
+  React.useEffect(()=>{
+    setBoard(addRandom(addRandom(emptyBoard())));
+    setScore(0);
+    setWon(false);
+    setOver(false);
+  }, [seed, target]);
+
+  const applyMove = (dir)=>{
+    if(over) return;
+    setBoard(b=>{
+      const { board:nb, moved, scoreAdd } = move(b, dir);
+      if(!moved) return b;
+      const added = addRandom(nb);
+      // check
+      const maxv = Math.max(...added.flat());
+      if(maxv>=target) setWon(true);
+      if(!canMove(added)) setOver(true);
+      setScore(s=>s+scoreAdd);
+      return added;
+    });
+  };
+
+  // keyboard
+  React.useEffect(()=>{
+    const onKey=(e)=>{
+      if(e.key==='ArrowLeft'){ e.preventDefault(); applyMove('L'); }
+      else if(e.key==='ArrowRight'){ e.preventDefault(); applyMove('R'); }
+      else if(e.key==='ArrowUp'){ e.preventDefault(); applyMove('U'); }
+      else if(e.key==='ArrowDown'){ e.preventDefault(); applyMove('D'); }
+    };
+    window.addEventListener('keydown', onKey, { passive:false });
+    return ()=>window.removeEventListener('keydown', onKey);
+  }, [over]);
+
+  // swipe
+  const touch = React.useRef({ x:0, y:0, on:false });
+  const onTouchStart = (e)=>{
+    if(!e.touches?.length) return;
+    const t = e.touches[0];
+    touch.current = { x:t.clientX, y:t.clientY, on:true };
+  };
+  const onTouchEnd = (e)=>{
+    if(!touch.current.on) return;
+    touch.current.on=false;
+    const t = e.changedTouches?.[0];
+    if(!t) return;
+    const dx = t.clientX - touch.current.x;
+    const dy = t.clientY - touch.current.y;
+    const adx = Math.abs(dx), ady = Math.abs(dy);
+    if(Math.max(adx,ady)<22) return;
+    if(adx>ady) applyMove(dx>0?'R':'L');
+    else applyMove(dy>0?'D':'U');
+  };
+
+  // responsive tile size
+  const wrapRef = React.useRef(null);
+  const [tilePx, setTilePx] = React.useState(72);
+  React.useEffect(()=>{
+    const recalc=()=>{
+      const w = Math.min(wrapRef.current?.clientWidth||window.innerWidth*0.92, 520);
+      const topReserve = 190;
+      const h = Math.max(240, window.innerHeight - topReserve - (envSafeBottom()+120));
+      const cell = Math.floor(Math.min((w-24)/4, (h-24)/4));
+      setTilePx(Math.max(48, cell));
+    };
+    recalc();
+    window.addEventListener('resize', recalc);
+    return ()=>window.removeEventListener('resize', recalc);
+  }, []);
+
+  const tileBg = (v)=>{
+    const item = tileImages?.[String(v)];
+    const src = item?.src || "";
+    const op = item?.opacity;
+    const opacity = (op==null?defaultOpacity:op);
+    return { src, opacity };
+  };
+
+  return (
+    <GameShell
+      title="2048"
+      subtitle={isTouch ? "手機：滑動即可移動" : "電腦：使用方向鍵"}
+      onReset={()=>setSeed(s=>s+1)}
+    >
+      <div className="grid gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex items-center gap-2">
+            <div className="text-sm font-medium">目標</div>
+            <select className="rounded-xl border px-3 py-2 text-sm bg-white dark:bg-slate-900"
+              value={target}
+              onChange={(e)=>applyTarget(e.target.value)}
+              title="選擇通關目標（達成後會顯示達成）"
+            >
+              <option value="2048">2048</option>
+              <option value="4096">4096</option>
+              <option value="8192">8192</option>
+            </select>
+          </div>
+          <div className="text-sm font-medium">分數：{score}</div>
+          {won ? <div className="text-sm rounded-full px-3 py-1 border border-emerald-300 bg-emerald-50 dark:bg-emerald-900/20">達成</div> : null}
+          {over ? <div className="text-sm rounded-full px-3 py-1 border border-rose-300 bg-rose-50 dark:bg-rose-900/20">結束</div> : null}
+          <div className="flex items-center gap-2">
+            <label className="text-sm text-slate-600 dark:text-slate-300">樣式</label>
+            <select className="rounded-xl border px-3 py-2 text-sm bg-white dark:bg-slate-900"
+              value={styleId}
+              onChange={(e)=>applyStyle(e.target.value)}
+            >
+              {(styles.length?styles:[{id:"default",name:"預設"}]).map(s=>(
+                <option key={s.id} value={s.id}>{s.name||"未命名"}</option>
+              ))}
+            </select>
+          </div>
+          <div className="ml-auto text-sm text-slate-500 dark:text-slate-400">格子固定對齊，手機支援滑動操作</div>
+        </div>
+
+        <div ref={wrapRef} className="rounded-2xl border border-slate-200 dark:border-slate-700 p-3 mx-auto"
+          style={{ width: (tilePx*4 + 12*3 + 24) }}
+        >
+          <div
+            className="grid gap-3"
+            style={{
+              gridTemplateColumns:`repeat(4, ${tilePx}px)`,
+              touchAction:"none",
+            }}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
+            {board.flatMap((row,r)=>row.map((v,c)=>{
+              const { src, opacity } = tileBg(v);
+              return (
+                <div key={`${r}-${c}`}
+                  className="relative rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 flex items-center justify-center overflow-hidden"
+                  style={{ width: tilePx, height: tilePx }}
+                >
+                  {src ? (
+                    <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover"
+                      style={{ opacity: opacity, pointerEvents:"none" }} draggable={false}
+                    />
+                  ) : null}
+                  <div className="relative font-bold select-none"
+                    style={{ fontSize: Math.max(16, Math.floor(tilePx*0.28)) }}
+                  >
+                    {v?String(v):""}
+                  </div>
+                </div>
+              );
+            }))}
+          </div>
+        </div>
+      </div>
+    </GameShell>
+  );
+}
+
+
+function Admin2048({ data, setData, onBack }){
+  const base = data?.games?.g2048 || {};
+  const [draft, setDraft] = React.useState(()=>JSON.parse(JSON.stringify(base||{})));
+  const [styleId, setStyleId] = React.useState(()=> (base.activeStyleId || (Array.isArray(base.styles)&&base.styles[0]?.id) || "default"));
+  const [tileKey, setTileKey] = React.useState("2");
+
+  // 只在 base 真正改變時同步（避免草稿被反覆覆蓋造成「無法選擇/無法新增」）
+  React.useEffect(()=>{
+    setDraft(JSON.parse(JSON.stringify(base||{})));
+    const initStyles = (Array.isArray(base.styles)&&base.styles.length)?base.styles:[];
+    setStyleId(base.activeStyleId || initStyles[0]?.id || "default");
+  }, [base]);
+
+  const legacyDefaultOpacity = (draft.defaultTileOpacity==null?0.22:draft.defaultTileOpacity);
+  const styles = (Array.isArray(draft.styles) && draft.styles.length)
+    ? draft.styles
+    : [{ id:"default", name:"預設", defaultOpacity: legacyDefaultOpacity, tileImages: (draft.tileImages||{}) }];
+
+  const active = styles.find(s=>s.id===styleId) || styles[0];
+
+  const ensureStylesOnDraft = (nx)=>{
+    if(!Array.isArray(nx.styles) || !nx.styles.length){
+      nx.styles = [{ id:"default", name:"預設", defaultOpacity: legacyDefaultOpacity, tileImages: (nx.tileImages||{}) }];
+    }
+    // 清掉 legacy 欄位避免混亂（仍保留相容讀取，但存檔以 styles 為準）
+    if(nx.tileImages) delete nx.tileImages;
+    if(nx.defaultTileOpacity!=null) delete nx.defaultTileOpacity;
+    return nx;
+  };
+
+  const addStyle = ()=>{
+    setDraft(d=>{
+      const nx = ensureStylesOnDraft(JSON.parse(JSON.stringify(d||{})));
+      const id = "s_"+Date.now().toString(36);
+      nx.styles.push({ id, name:`樣式 ${nx.styles.length+1}`, defaultOpacity: 0.22, tileImages: {} });
+      return nx;
+    });
+    // setStyleId 需在 state 更新後再切換，這裡用 microtask
+    Promise.resolve().then(()=>setStyleId("s_"+Date.now().toString(36)));
+  };
+
+  const addStyleStable = ()=>{
+    const id = "s_"+Date.now().toString(36);
+    setDraft(d=>{
+      const nx = ensureStylesOnDraft(JSON.parse(JSON.stringify(d||{})));
+      nx.styles.push({ id, name:`樣式 ${nx.styles.length+1}`, defaultOpacity: 0.22, tileImages: {} });
+      return nx;
+    });
+    setStyleId(id);
+  };
+
+  const renameStyle = (name)=>{
+    setDraft(d=>{
+      const nx = ensureStylesOnDraft(JSON.parse(JSON.stringify(d||{})));
+      nx.styles = nx.styles.map(s=> s.id===styleId ? { ...s, name } : s);
+      return nx;
+    });
+  };
+
+  const deleteStyle = ()=>{
+    setDraft(d=>{
+      const nx = ensureStylesOnDraft(JSON.parse(JSON.stringify(d||{})));
+      if(nx.styles.length<=1) return nx;
+      const rest = nx.styles.filter(s=>s.id!==styleId);
+      nx.styles = rest;
+      const nextId = rest[0]?.id || "default";
+      setStyleId(nextId);
+      return nx;
+    });
+  };
+
+  const setActivePatch = (patch)=>{
+    setDraft(d=>{
+      const nx = ensureStylesOnDraft(JSON.parse(JSON.stringify(d||{})));
+      nx.styles = nx.styles.map(s=> s.id===styleId ? { ...s, ...patch } : s);
+      return nx;
+    });
+  };
+
+  const tileImages = active.tileImages || {};
+  const cur = tileImages[tileKey] || { src:"", opacity: (active.defaultOpacity==null?0.22:active.defaultOpacity) };
+
+  const setCur = (patch)=>{
+    setDraft(d=>{
+      const nx = ensureStylesOnDraft(JSON.parse(JSON.stringify(d||{})));
+      nx.styles = nx.styles.map(s=>{
+        if(s.id!==styleId) return s;
+        const ti = { ...(s.tileImages||{}) };
+        const prev = ti[tileKey] || { src:"", opacity: (s.defaultOpacity==null?0.22:s.defaultOpacity) };
+        ti[tileKey] = { ...prev, ...patch };
+        return { ...s, tileImages: ti };
+      });
+      return nx;
+    });
+  };
+
+  const save = ()=>{
+    setData(prev=>{
+      const next = { ...(prev||{}) };
+      kjsEnsureGames(next);
+      const nx = ensureStylesOnDraft(JSON.parse(JSON.stringify(draft||{})));
+      next.games.g2048 = {
+        ...nx,
+        styles: (nx.styles||styles),
+        activeStyleId: styleId,
+        // targetTile 保留
+        targetTile: nx.targetTile
+      };
+      return next;
+    });
+    toast("2048 設定已儲存");
+  };
+
+  const tileKeys = ["2","4","8","16","32","64","128","256","512","1024","2048","4096","8192"];
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <div className="font-semibold">2048 設定</div>
+        <div className="flex gap-2">
+          <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+            onClick={onBack}
+          >返回</button>
+          <button type="button" className="rounded-xl bg-indigo-600 text-white px-3 py-2 text-sm hover:bg-indigo-700"
+            onClick={save}
+          >儲存</button>
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4 space-y-3">
+        <div className="font-medium">勝利目標</div>
+        <div className="flex flex-wrap gap-2">
+          {[2048,4096,8192].map(v=>(
+            <button key={v} type="button"
+              className={"rounded-xl border px-3 py-2 text-sm " + ((draft.targetTile||2048)===v ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900" : "hover:bg-slate-50 dark:hover:bg-slate-800")}
+              onClick={()=>setDraft(d=>({...(d||{}), targetTile:v}))}
+            >{v}</button>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4 space-y-3">
+        <div className="flex items-center justify-between gap-2">
+          <div className="font-medium">樣式</div>
+          <div className="flex gap-2">
+            <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+              onClick={addStyleStable}
+            >新增樣式</button>
+            <button type="button" className={"rounded-xl border px-3 py-2 text-sm " + (styles.length<=1 ? "opacity-50 cursor-not-allowed" : "hover:bg-slate-50 dark:hover:bg-slate-800")}
+              disabled={styles.length<=1}
+              onClick={deleteStyle}
+            >刪除</button>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-3">
+          <label className="text-sm">
+            <div className="text-slate-500 mb-1">選擇樣式</div>
+            <select className="w-full rounded-xl border px-3 py-2 bg-white dark:bg-slate-900"
+              value={styleId}
+              onChange={(e)=>setStyleId(e.target.value)}
+            >
+              {styles.map(s=>(<option key={s.id} value={s.id}>{s.name||s.id}</option>))}
+            </select>
+          </label>
+
+          <label className="text-sm md:col-span-2">
+            <div className="text-slate-500 mb-1">樣式名稱</div>
+            <input className="w-full rounded-xl border px-3 py-2 bg-white dark:bg-slate-900"
+              value={active.name||""}
+              onChange={(e)=>renameStyle(e.target.value)}
+              placeholder="例如：可愛風、IP 圖、透明底等"
+            />
+          </label>
+        </div>
+
+        <label className="text-sm">
+          <div className="text-slate-500 mb-1">預設圖片透明度（未單獨設定時）</div>
+          <input type="range" min="0" max="0.6" step="0.02"
+            value={(active.defaultOpacity==null?0.22:active.defaultOpacity)}
+            onChange={(e)=>setActivePatch({ defaultOpacity: Number(e.target.value) })}
+            className="w-full"
+          />
+          <div className="text-xs text-slate-500 mt-1">{(active.defaultOpacity==null?0.22:active.defaultOpacity).toFixed(2)}</div>
+        </label>
+      </div>
+
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4 space-y-4">
+        <div className="font-medium">方塊圖片（2~8192）</div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <label className="text-sm">
+            <div className="text-slate-500 mb-1">選擇數字</div>
+            <select className="w-full rounded-xl border px-3 py-2 bg-white dark:bg-slate-900"
+              value={tileKey}
+              onChange={(e)=>setTileKey(e.target.value)}
+            >
+              {tileKeys.map(k=>(<option key={k} value={k}>{k}</option>))}
+            </select>
+          </label>
+
+          <label className="text-sm sm:col-span-1 lg:col-span-3">
+            <div className="text-slate-500 mb-1">圖片 URL（或貼上 dataURL）</div>
+            <input className="w-full rounded-xl border px-3 py-2 bg-white dark:bg-slate-900"
+              value={cur.src||""}
+              onChange={(e)=>setCur({ src: e.target.value })}
+              placeholder="https://... 或 data:image/..."
+            />
+          </label>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-3 items-end">
+          <label className="text-sm">
+            <div className="text-slate-500 mb-1">透明度（此數字）</div>
+            <input type="range" min="0" max="0.6" step="0.02"
+              value={(cur.opacity==null?(active.defaultOpacity==null?0.22:active.defaultOpacity):cur.opacity)}
+              onChange={(e)=>setCur({ opacity: Number(e.target.value) })}
+              className="w-full"
+            />
+            <div className="text-xs text-slate-500 mt-1">{(cur.opacity==null?(active.defaultOpacity==null?0.22:active.defaultOpacity):cur.opacity).toFixed(2)}</div>
+          </label>
+
+          <div className="md:col-span-2">
+            <div className="text-sm text-slate-500 mb-1">預覽</div>
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-3 flex items-center gap-3">
+              <div className="w-20 h-20 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex items-center justify-center">
+                {cur.src ? <img src={cur.src} alt="" className="w-full h-full object-cover" style={{ opacity: (cur.opacity==null?(active.defaultOpacity==null?0.22:active.defaultOpacity):cur.opacity) }} /> : <div className="text-slate-400 text-sm">無</div>}
+              </div>
+              <div className="text-sm">
+                <div>數字：<span className="font-semibold">{tileKey}</span></div>
+                <div className="text-xs text-slate-500 mt-1">未填圖片時會顯示預設底色 + 數字</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-xs text-slate-500">
+          建議：圖片用透明 PNG/WebP，或在圖片上保留足夠留白；數字會保持在最上層以確保可讀性。
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+function GameLuck({ data, setData }){
+  const cfg = data?.games?.luck || {};
+  const items = Array.isArray(cfg.items)?cfg.items:[];
+  const [result, setResult] = React.useState(null);
+
+  const draw = ()=>{
+    const it = pickWeighted(items);
+    setResult(it || null);
+  };
+
+  return (
+    <GameShell title="今天手氣" subtitle="純亂數占卜：點一下就出結果。">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
+        <div className="flex items-center gap-2">
+          <button type="button" className="rounded-xl bg-slate-900 text-white px-4 py-2 text-sm hover:opacity-90" onClick={draw}>抽一下</button>
+          <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" onClick={()=>setResult(null)}>清除</button>
+        </div>
+
+        <div className="mt-4">
+          {result ? (
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
+              <div className="text-3xl">{result.emoji||"🎲"}</div>
+              <div className="text-lg font-semibold mt-2">{result.title||"結果"}</div>
+              <div className="text-slate-600 dark:text-slate-300 mt-2 whitespace-pre-wrap">{result.content||""}</div>
+              {result.image ? (
+                <img src={result.image} alt="" className="mt-3 w-full max-w-md rounded-2xl border border-slate-200 dark:border-slate-700 object-cover" draggable={false}/>
+              ) : null}
+            </div>
+          ) : (
+            <div className="text-sm text-slate-500 dark:text-slate-400">尚未抽取</div>
+          )}
+        </div>
+      </div>
+    </GameShell>
+  );
+}
+
+function AdminLuck({ data, setData, onBack }){
+  const base = data?.games?.luck || {};
+  const [draft, setDraft] = React.useState(()=>JSON.parse(JSON.stringify(base||{})));
+  const [batch, setBatch] = React.useState("");
+
+  React.useEffect(()=>{ setDraft(JSON.parse(JSON.stringify(base||{}))); }, [base]);
+
+  const items = Array.isArray(draft.items)?draft.items:[];
+
+  const upd = (id, patch)=>{
+    setDraft(d=>({ ...d, items: (d.items||[]).map(it=>it.id===id?{...it, ...patch}:it) }));
+  };
+  const addOne = ()=>{
+    const it = { id:kjsNid(), emoji:"🎲", title:"新結果", content:"", image:"", weight:1 };
+    setDraft(d=>({ ...d, items:[...(d.items||[]), it] }));
+  };
+  const delOne = (id)=>{
+    setDraft(d=>({ ...d, items:(d.items||[]).filter(it=>it.id!==id) }));
+  };
+
+  // 批次模式：每行一筆
+  // 格式：emoji | 標題 | 內容 | 圖片(可空) | 權重
+  const applyBatch = ()=>{
+    const lines = String(batch||"").split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+    const next = [];
+    for(const ln of lines){
+      const parts = ln.split("|").map(s=>s.trim());
+      const emoji = parts[0] || "🎲";
+      const title = parts[1] || "結果";
+      const content = parts[2] || "";
+      const image = parts[3] || "";
+      const weight = Number(parts[4] || 1);
+      next.push({ id:kjsNid(), emoji, title, content, image, weight: isFinite(weight)?weight:1 });
+    }
+    setDraft(d=>({ ...d, items: next }));
+    alert("已套用批次內容（草稿）");
+  };
+
+  const save = ()=>{
+    setData(prev=>{
+      const next = { ...(prev||{}) };
+      kjsEnsureGames(next);
+      next.games.luck = {
+        ...next.games.luck,
+        items: (draft.items||[]).map(it=>({
+          ...it,
+          emoji: String(it.emoji||"").trim(),
+          title: String(it.title||"").trim(),
+          content: String(it.content||""),
+          image: String(it.image||"").trim(),
+          weight: Math.max(0, Number(it.weight||0))
+        }))
+      };
+      return next;
+    });
+    alert("已儲存：今天手氣設定");
+  };
+
+  return (
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
+      <div className="flex items-center justify-between gap-3 mb-3">
+        <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" onClick={onBack}>返回</button>
+        <div className="flex items-center gap-2">
+          <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" onClick={addOne}>新增一筆</button>
+          <button type="button" className="rounded-xl bg-slate-900 text-white px-3 py-2 text-sm hover:opacity-90" onClick={save}>儲存</button>
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-4">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-3">
+          <div className="font-semibold">批次編輯模式</div>
+          <div className="text-sm text-slate-500 dark:text-slate-400 mt-1">每行一筆：emoji | 標題 | 內容 | 圖片(可空) | 權重</div>
+          <textarea className="rounded-xl border px-3 py-2 text-sm min-h-[200px] w-full mt-3"
+            value={batch}
+            onChange={(e)=>setBatch(e.target.value)}
+            placeholder="例：🍀 | 手氣不錯 | 今天適合推進計畫 | https://...jpg | 3"
+          />
+          <div className="mt-3">
+            <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" onClick={applyBatch}>一鍵套用到草稿</button>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-3">
+          <div className="font-semibold">單筆編輯（草稿）</div>
+          <div className="grid gap-3 mt-3">
+            {items.map(it=>(
+              <div key={it.id} className="rounded-2xl border border-slate-200 dark:border-slate-700 p-3">
+                <div className="grid grid-cols-2 gap-2">
+                  <input className="rounded-xl border px-3 py-2 text-sm" value={it.emoji||""} onChange={(e)=>upd(it.id,{emoji:e.target.value})} placeholder="emoji"/>
+                  <input className="rounded-xl border px-3 py-2 text-sm" value={it.title||""} onChange={(e)=>upd(it.id,{title:e.target.value})} placeholder="標題"/>
+                </div>
+                <textarea className="rounded-xl border px-3 py-2 text-sm w-full min-h-[90px] mt-2"
+                  value={it.content||""}
+                  onChange={(e)=>upd(it.id,{content:e.target.value})}
+                  placeholder="內容"
+                />
+                <div className="grid grid-cols-2 gap-2 mt-2">
+                  <input className="rounded-xl border px-3 py-2 text-sm" value={it.image||""} onChange={(e)=>upd(it.id,{image:e.target.value})} placeholder="圖片 URL（可空）"/>
+                  <input className="rounded-xl border px-3 py-2 text-sm" type="number" min="0" step="1"
+                    value={it.weight==null?0:it.weight}
+                    onChange={(e)=>upd(it.id,{weight:e.target.value})}
+                    placeholder="權重"
+                  />
+                </div>
+                <div className="mt-2 flex items-center justify-between">
+                  <div className="text-xs text-slate-500 dark:text-slate-400">id: {it.id}</div>
+                  <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+                    onClick={()=>delOne(it.id)}
+                  >刪除</button>
+                </div>
+              </div>
+            ))}
+            {items.length===0 ? <div className="text-sm text-slate-500 dark:text-slate-400">尚無資料</div> : null}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* =========================
+   5) Tetris（Canvas + 手機按鈕）
+   ========================= */
+function GameTetris({ data, setData }){
+  const cfg = data?.games?.tetris || {};
+
+  // 支援多套樣式：styles[] + activeStyleId；若舊資料只有 style，視為預設樣式
+  const styles = (Array.isArray(cfg.styles) && cfg.styles.length)
+    ? cfg.styles
+    : [{ id:"default", name:"預設", mode:(cfg.style?.mode||"color"), imagesText:(cfg.style?.imagesText||""), pieceImages:(cfg.style?.pieceImages||{}), tileOpacity:(cfg.style?.tileOpacity==null?0.22:cfg.style?.tileOpacity) }];
+
+  const savedStyleId = cfg.activeStyleId || styles[0].id;
+
+  // 使用者可在遊戲內切換樣式，並持久化到本機
+  const [styleId, setStyleId] = React.useState(savedStyleId);
+  React.useEffect(()=>{ setStyleId(savedStyleId); }, [savedStyleId]);
+
+  const effectiveStyleId = (typeof styleId==="string" && styleId) ? styleId : savedStyleId;
+  const style = styles.find(s=>s.id===effectiveStyleId) || styles[0];
+
+  const applyStyle = (id)=>{
+    setStyleId(id);
+    setData(prev=>{
+      const next = { ...(prev||{}) };
+      kjsEnsureGames(next);
+      const cur = next.games.tetris || {};
+      next.games.tetris = {
+        ...cur,
+        styles: (Array.isArray(cur.styles) && cur.styles.length) ? cur.styles : styles,
+        activeStyleId: id,
+        style: cur.style // 兼容舊欄位
+      };
+      return next;
+    });
+  };
+
+
+  const isTouch = useIsTouch();
+
+  const canvasRef = React.useRef(null);
+
+  // status: idle -> running -> paused / over
+  const [status, setStatus] = React.useState("idle"); // "idle" | "running" | "paused" | "over"
+  const [score, setScore] = React.useState(0);
+
+  const COLS=10, ROWS=20;
+
+  const SHAPES = [
+    { k:'I', c:1, m:[[1,1,1,1]] },
+    { k:'O', c:2, m:[[1,1],[1,1]] },
+    { k:'T', c:3, m:[[0,1,0],[1,1,1]] },
+    { k:'S', c:4, m:[[0,1,1],[1,1,0]] },
+    { k:'Z', c:5, m:[[1,1,0],[0,1,1]] },
+    { k:'J', c:6, m:[[1,0,0],[1,1,1]] },
+    { k:'L', c:7, m:[[0,0,1],[1,1,1]] },
+  ];
+
+  const emptyBoard = ()=>Array.from({length:ROWS}, ()=>Array(COLS).fill(0));
+
+  const rotateM = (m)=>{
+    const r=m.length, c=m[0].length;
+    const out = Array.from({length:c}, ()=>Array(r).fill(0));
+    for(let i=0;i<r;i++) for(let j=0;j<c;j++) out[j][r-1-i]=m[i][j];
+    return out;
+  };
+
+  const collide = (board, piece, pos)=>{
+    for(let r=0;r<piece.m.length;r++){
+      for(let c=0;c<piece.m[0].length;c++){
+        if(!piece.m[r][c]) continue;
+        const x=pos.x+c, y=pos.y+r;
+        if(x<0||x>=COLS||y>=ROWS) return true;
+        if(y>=0 && board[y][x]) return true;
+      }
+    }
+    return false;
+  };
+
+  const merge = (board, piece, pos)=>{
+    const nb = board.map(row=>row.slice());
+    for(let r=0;r<piece.m.length;r++){
+      for(let c=0;c<piece.m[0].length;c++){
+        if(!piece.m[r][c]) continue;
+        const x=pos.x+c, y=pos.y+r;
+        if(y>=0 && y<ROWS && x>=0 && x<COLS) nb[y][x]=piece.c;
+      }
+    }
+    return nb;
+  };
+
+  const clearLines = (board)=>{
+    const keep = board.filter(row=>row.some(v=>v===0));
+    const cleared = ROWS - keep.length;
+    while(keep.length<ROWS) keep.unshift(Array(COLS).fill(0));
+    return { board: keep, cleared };
+  };
+
+  const randPiece = ()=>{
+    const p = SHAPES[Math.floor(Math.random()*SHAPES.length)];
+    return { ...p, m: p.m.map(row=>row.slice()) };
+  };
+
+  const [board, setBoard] = React.useState(()=>emptyBoard());
+  const [piece, setPiece] = React.useState(()=>randPiece());
+  const [pos, setPos] = React.useState({ x:3, y:-2 });
+
+  const isRunning = status==="running";
+
+  const reset = ()=>{
+    setScore(0);
+    setBoard(emptyBoard());
+    setPiece(randPiece());
+    setPos({ x:3, y:-2 });
+    setStatus("idle");
+  };
+
+  const start = ()=>{
+    setScore(0);
+    setBoard(emptyBoard());
+    const p = randPiece();
+    const ppos = { x:3, y:-2 };
+    setPiece(p);
+    setPos(ppos);
+    // 若起手即碰撞，直接換一顆（極少數情況，保底）
+    setStatus("running");
+  };
+
+  const pauseToggle = ()=>{
+    setStatus(s=>{
+      if(s==="running") return "paused";
+      if(s==="paused") return "running";
+      return s;
+    });
+  };
+
+  // auto pause when tab hidden
+  React.useEffect(()=>{
+    const onVis=()=>{
+      if(document.hidden){
+        setStatus(s=> s==="running" ? "paused" : s);
+      }
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return ()=>document.removeEventListener("visibilitychange", onVis);
+  }, []);
+
+  const stepDown = React.useCallback(()=>{
+    if(!isRunning) return;
+
+    setPos(ps=>{
+      const np = { x: ps.x, y: ps.y+1 };
+      if(!collide(board, piece, np)) return np;
+
+      // lock
+      const merged = merge(board, piece, ps);
+      const { board: cleared, cleared: n } = clearLines(merged);
+      setBoard(cleared);
+      if(n>0) setScore(s=>s + n*100);
+
+      const npiece = randPiece();
+      const npos = { x:3, y:-2 };
+      if(collide(cleared, npiece, npos)){
+        setStatus("over");
+        return ps;
+      }
+      setPiece(npiece);
+      return npos;
+    });
+  }, [isRunning, board, piece]);
+
+  // gravity tick（避免 setInterval 漂移過大：paused/over 不跑）
+  React.useEffect(()=>{
+    if(!isRunning) return;
+    const id = setInterval(()=>stepDown(), 520);
+    return ()=>clearInterval(id);
+  }, [isRunning, stepDown]);
+
+  const moveX = (dx)=>{
+    if(!isRunning) return;
+    setPos(ps=>{
+      const np = { x: ps.x+dx, y: ps.y };
+      if(collide(board, piece, np)) return ps;
+      return np;
+    });
+  };
+
+  const rot = ()=>{
+    if(!isRunning) return;
+    const rm = rotateM(piece.m);
+    const np = { ...piece, m: rm };
+
+    // 簡化 wall kick（靠牆仍可轉）
+    const kicks = [0, -1, 1, -2, 2];
+    for(const k of kicks){
+      const test = { x: pos.x + k, y: pos.y };
+      if(!collide(board, np, test)){
+        setPiece(np);
+        if(k!==0) setPos(p=>({ ...p, x: p.x + k }));
+        return;
+      }
+    }
+  };
+
+  const softDrop = ()=>stepDown();
+
+  const hardDrop = ()=>{
+    if(!isRunning) return;
+    for(let i=0;i<ROWS+2;i++){
+      let blocked=false;
+      setPos(ps=>{
+        const np = { x: ps.x, y: ps.y+1 };
+        if(collide(board, piece, np)){ blocked=true; return ps; }
+        return np;
+      });
+      if(blocked){ stepDown(); break; }
+    }
+  };
+
+  // keyboard
+  React.useEffect(()=>{
+    const onKey=(e)=>{
+      // 只在遊戲進行/暫停時接鍵盤，避免干擾管理頁輸入
+      if(!(status==="running" || status==="paused")) return;
+
+      if(e.key==='Escape'){ e.preventDefault(); pauseToggle(); return; }
+      if(status!=="running") return;
+
+      if(e.key==='ArrowLeft'){ e.preventDefault(); moveX(-1); }
+      else if(e.key==='ArrowRight'){ e.preventDefault(); moveX(1); }
+      else if(e.key==='ArrowDown'){ e.preventDefault(); softDrop(); }
+      else if(e.key==='ArrowUp'){ e.preventDefault(); rot(); }
+      else if(e.key===' '){ e.preventDefault(); hardDrop(); }
+    };
+    window.addEventListener('keydown', onKey, { passive:false });
+    return ()=>window.removeEventListener('keydown', onKey);
+  }, [status, board, piece, pos]);
+
+  // fit canvas using GameViewport contract + measured control bar (avoid covering / overflow)
+  const controlBarRef = React.useRef(null);
+
+  const fit = React.useCallback(()=>{
+    const canvas = canvasRef.current;
+    if(!canvas) return { w:300,h:600,cell:30 };
+
+    const rootStyle = getComputedStyle(document.documentElement);
+    const usableW = Number(rootStyle.getPropertyValue('--game-usable-w')||0) || window.innerWidth;
+    const usableH = Number(rootStyle.getPropertyValue('--game-usable-h')||0) || (window.visualViewport?.height || window.innerHeight);
+
+    // 以實際控制列高度為準（不再猜 170），避免在小螢幕縮放時被蓋住
+    const controlBar = isTouch ? (controlBarRef.current?.offsetHeight || 0) : 0;
+
+    const pad = 18; // shell padding + safe breathing room
+    const w = Math.max(240, Math.min(560, usableW - pad));
+    const h = Math.max(320, Math.min(900, usableH - pad - controlBar));
+
+    // 10x20
+    const cell = Math.max(10, Math.floor(Math.min(w/COLS, h/ROWS)));
+    const cw = cell*COLS;
+    const ch = cell*ROWS;
+
+    const dpr = (window.devicePixelRatio||1);
+    canvas.width = cw * dpr;
+    canvas.height = ch * dpr;
+    canvas.style.width = cw + "px";
+    canvas.style.height = ch + "px";
+    const ctx = canvas.getContext("2d");
+    if(ctx) ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    return { w:cw, h:ch, cell };
+  }, [isTouch]);
+
+  React.useEffect(()=>{
+    const canvas = canvasRef.current;
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if(!ctx) return;
+
+    let last = fit();
+    const onResize=()=>{ last = fit(); draw(); };
+    window.addEventListener('resize', onResize);
+
+    const palette = ["#00000000","#60a5fa","#f59e0b","#34d399","#fb7185","#a78bfa","#f97316","#22c55e"];
+
+    // 舊版：imagesText 以「每行一張」順序套用；新版：pieceImages 以 I/J/L/O/S/T/Z 指定
+    const imgList = parseLinesToList(style.imagesText||"");
+    const pieceOrder = ["","I","J","L","O","S","T","Z"];
+    const imgCache = {};
+
+    const getImg = (v)=>{
+      if(style.mode!=="image") return null;
+
+      const k = pieceOrder[v] || "";
+      const byPiece = style.pieceImages && k ? (style.pieceImages[k]||"") : "";
+      const src = byPiece || imgList[(v-1)%Math.max(1,imgList.length)] || "";
+      if(!src) return null;
+
+      if(imgCache[src]) return imgCache[src];
+      const im = new Image();
+      im.src = src;
+      imgCache[src]=im;
+      return im;
+    };
+
+    const draw = ()=>{
+      const { w, h, cell } = last;
+      ctx.clearRect(0,0,w,h);
+
+      // grid background
+      ctx.fillStyle = "#00000008";
+      for(let r=0;r<ROWS;r++){
+        for(let c=0;c<COLS;c++){
+          ctx.fillRect(c*cell, r*cell, cell-1, cell-1);
+        }
+      }
+
+      // board
+      for(let r=0;r<ROWS;r++){
+        for(let c=0;c<COLS;c++){
+          const v = board[r][c];
+          if(!v) continue;
+          const x=c*cell, y=r*cell;
+          if(style.mode==="image"){
+            const im=getImg(v);
+            if(im && im.complete) ctx.drawImage(im,x,y,cell,cell);
+            else{
+              ctx.fillStyle=palette[v%palette.length];
+              ctx.fillRect(x,y,cell-1,cell-1);
+            }
+          }else{
+            ctx.fillStyle=palette[v%palette.length];
+            ctx.fillRect(x,y,cell-1,cell-1);
+          }
+        }
+      }
+
+      // piece
+      for(let r=0;r<piece.m.length;r++){
+        for(let c=0;c<piece.m[0].length;c++){
+          if(!piece.m[r][c]) continue;
+          const x=(pos.x+c)*cell, y=(pos.y+r)*cell;
+          if(y<0) continue;
+          const v=piece.c;
+          if(style.mode==="image"){
+            const im=getImg(v);
+            if(im && im.complete) ctx.drawImage(im,x,y,cell,cell);
+            else{
+              ctx.fillStyle=palette[v%palette.length];
+              ctx.fillRect(x,y,cell-1,cell-1);
+            }
+          }else{
+            ctx.fillStyle=palette[v%palette.length];
+            ctx.fillRect(x,y,cell-1,cell-1);
+          }
+        }
+      }
+
+      // overlay when idle/paused/over
+      if(status!=="running"){
+        ctx.fillStyle = "rgba(0,0,0,0.25)";
+        ctx.fillRect(0,0,w,h);
+        ctx.fillStyle = "rgba(255,255,255,0.92)";
+        ctx.fillRect(w*0.12,h*0.38,w*0.76,h*0.24);
+
+        ctx.fillStyle = "#111827";
+        ctx.font = `bold ${Math.max(14, Math.floor(cell*0.75))}px system-ui`;
+        ctx.textAlign = "center";
+        const msg = status==="idle" ? "按開始開始遊戲" : (status==="paused" ? "已暫停" : "結束");
+        ctx.fillText(msg, w/2, h*0.48);
+        ctx.font = `${Math.max(12, Math.floor(cell*0.45))}px system-ui`;
+        const sub = status==="idle" ? (isTouch ? "使用下方按鍵操作" : "方向鍵操作，Esc 暫停") : (status==="paused" ? "按繼續恢復" : "按重玩重新開始");
+        ctx.fillText(sub, w/2, h*0.58);
+      }
+    };
+
+    let raf=0;
+    const loop=()=>{
+      draw();
+      raf=requestAnimationFrame(loop);
+    };
+    loop();
+
+    return ()=>{
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [board, piece, pos, status, style.mode, style.imagesText, JSON.stringify(style.pieceImages||{}), isTouch, fit]);
+
+  // Touch controls (with press-and-hold repeat for left/right/down)
+  const holdRef = React.useRef({ id:0, action:null });
+
+  const stopHold = ()=>{
+    if(holdRef.current.id){
+      clearInterval(holdRef.current.id);
+      holdRef.current.id=0;
+    }
+  };
+
+  const startHold = (fn, delay=200, interval=55)=>{
+    stopHold();
+    fn();
+    let started=false;
+    const t0 = setTimeout(()=>{
+      started=true;
+      holdRef.current.id = setInterval(fn, interval);
+    }, delay);
+    holdRef.current.id = t0;
+  };
+
+  React.useEffect(()=>()=>stopHold(), []);
+
+  // 觸控按鈕（手機）：支援 pointer 事件、長按連發；避免 TouchBtn 未定義
+  const TouchBtn = ({ label, onDown, onUp })=>{
+    const handleDown = (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      if(!isRunning) return;
+      if(typeof onDown==="function") onDown();
+    };
+    const handleUp = (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      if(typeof onUp==="function") onUp();
+    };
+    return (
+      <button
+        type="button"
+        className="rounded-xl border px-3 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 select-none"
+        onPointerDown={handleDown}
+        onPointerUp={handleUp}
+        onPointerCancel={handleUp}
+        onPointerLeave={handleUp}
+      >{label}</button>
+    );
+  };
+
+const touchBar = (
+    <div ref={controlBarRef} className="mt-3">
+      <div className="max-w-[560px] mx-auto px-3">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur p-2">
+          <div className="grid grid-cols-5 gap-2">
+            <TouchBtn label="←" onDown={()=>startHold(()=>moveX(-1), 200, 55)} onUp={stopHold}/>
+            <TouchBtn label="→" onDown={()=>startHold(()=>moveX(1), 200, 55)} onUp={stopHold}/>
+            <TouchBtn label="⟳" onDown={()=>rot()} onUp={()=>{}}/>
+            <TouchBtn label="↓" onDown={()=>startHold(()=>softDown(), 140, 55)} onUp={stopHold}/>
+            <TouchBtn label="⤓" onDown={()=>hardDrop()} onUp={()=>{}}/>
+          </div>
+          <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-2">
+            長按 ←/→/↓ 可連續移動
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <GameShell
+      title="俄羅斯方塊"
+      subtitle={isTouch ? "手機：使用底部觸控按鈕操作（按開始後才會掉落）" : "電腦：方向鍵移動、↑旋轉、空白鍵直接落下、Esc 暫停"}
+      onReset={reset}
+    >
+      <div className="flex flex-col" style={{ height: "calc(var(--game-usable-h) * 1px)" }}>
+        <div className="relative flex-1 flex justify-center items-start">
+          <canvas
+            ref={canvasRef}
+            className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
+            style={{ touchAction:"none" }}
+          />
+
+          <div className="absolute top-3 left-3 flex items-center gap-2">
+            <div className="text-sm font-medium bg-white/80 dark:bg-slate-900/70 backdrop-blur rounded-xl px-3 py-2 border border-slate-200 dark:border-slate-700">
+              分數：{score}
+            </div>
+            <div className="flex items-center gap-2 bg-white/80 dark:bg-slate-900/70 rounded-xl px-3 py-2 border border-slate-200 dark:border-slate-700">
+              <label className="text-sm text-slate-600 dark:text-slate-300">樣式</label>
+              <select className="rounded-xl border px-2 py-1 text-sm bg-white dark:bg-slate-900"
+                value={styleId}
+                onChange={(e)=>applyStyle(e.target.value)}
+              >
+                {(styles.length?styles:[{id:"default",name:"預設"}]).map(s=>(
+                  <option key={s.id} value={s.id}>{s.name||"未命名"}</option>
+                ))}
+              </select>
+            </div>
+
+            {status==="paused" ? <div className="text-sm rounded-full px-3 py-1 border border-amber-300 bg-amber-50 dark:bg-amber-900/20">暫停</div> : null}
+            {status==="over" ? <div className="text-sm rounded-full px-3 py-1 border border-rose-300 bg-rose-50 dark:bg-rose-900/20">結束</div> : null}
+          </div>
+
+          <div className="absolute top-3 right-3 flex items-center gap-2">
+            {status==="idle" ? (
+              <button type="button" className="rounded-xl bg-indigo-600 text-white px-3 py-2 text-sm hover:bg-indigo-700" onClick={()=>{ start(); }}>開始</button>
+            ) : status==="running" ? (
+              <button type="button" className="rounded-xl border px-3 py-2 text-sm bg-white/80 dark:bg-slate-900/70 backdrop-blur hover:bg-white dark:hover:bg-slate-800" onClick={()=>{ pauseToggle(); }}>暫停</button>
+            ) : status==="paused" ? (
+              <button type="button" className="rounded-xl bg-indigo-600 text-white px-3 py-2 text-sm hover:bg-indigo-700" onClick={()=>{ pauseToggle(); }}>繼續</button>
+            ) : (
+              <button type="button" className="rounded-xl bg-indigo-600 text-white px-3 py-2 text-sm hover:bg-indigo-700" onClick={()=>{ start(); }}>重玩</button>
+            )}
+            {status!=="idle" ? (
+              <button type="button" className="rounded-xl border px-3 py-2 text-sm bg-white/80 dark:bg-slate-900/70 backdrop-blur hover:bg-white dark:hover:bg-slate-800" onClick={()=>{ reset(); }}>重置</button>
+            ) : null}
+          </div>
+        </div>
+
+        {isTouch ? touchBar : null}
+      </div>
+    </GameShell>
+  );
+}
+
+
+function AdminTetris({ data, setData, onBack }){
+  const base = data?.games?.tetris || {};
+  const [draft, setDraft] = React.useState(()=>JSON.parse(JSON.stringify(base||{})));
+  const [styleId, setStyleId] = React.useState(()=> (base.activeStyleId || (Array.isArray(base.styles)&&base.styles[0]?.id) || "default"));
+  const [pieceKey, setPieceKey] = React.useState("I");
+
+  React.useEffect(()=>{
+    setDraft(JSON.parse(JSON.stringify(base||{})));
+    const initStyles = (Array.isArray(base.styles)&&base.styles.length)?base.styles:[];
+    setStyleId(base.activeStyleId || initStyles[0]?.id || "default");
+  }, [base]);
+
+  const styles = (Array.isArray(draft.styles) && draft.styles.length)
+    ? draft.styles
+    : [{ id:"default", name:"預設", mode:(draft.style?.mode||"color"), imagesText:(draft.style?.imagesText||""), pieceImages:(draft.style?.pieceImages||{}), tileOpacity:(draft.style?.tileOpacity==null?0.22:draft.style?.tileOpacity) }];
+
+  const active = styles.find(s=>s.id===styleId) || styles[0];
+
+  const ensureStylesOnDraft = (nx)=>{
+    if(!Array.isArray(nx.styles) || !nx.styles.length){
+      nx.styles = [{ id:"default", name:"預設", mode:(nx.style?.mode||"color"), imagesText:(nx.style?.imagesText||""), pieceImages:(nx.style?.pieceImages||{}), tileOpacity:(nx.style?.tileOpacity==null?0.22:nx.style?.tileOpacity) }];
+    }
+    if(nx.style) delete nx.style; // legacy
+    return nx;
+  };
+
+  const addStyle = ()=>{
+    const id = "s_"+Date.now().toString(36);
+    setDraft(d=>{
+      const nx = ensureStylesOnDraft(JSON.parse(JSON.stringify(d||{})));
+      nx.styles.push({ id, name:`樣式 ${nx.styles.length+1}`, mode:"color", imagesText:"", pieceImages:{}, tileOpacity:0.22 });
+      return nx;
+    });
+    setStyleId(id);
+  };
+
+  const renameStyle = (name)=>{
+    setDraft(d=>{
+      const nx = ensureStylesOnDraft(JSON.parse(JSON.stringify(d||{})));
+      nx.styles = nx.styles.map(s=> s.id===styleId ? { ...s, name } : s);
+      return nx;
+    });
+  };
+
+  const deleteStyle = ()=>{
+    setDraft(d=>{
+      const nx = ensureStylesOnDraft(JSON.parse(JSON.stringify(d||{})));
+      if(nx.styles.length<=1) return nx;
+      const rest = nx.styles.filter(s=>s.id!==styleId);
+      nx.styles = rest;
+      const nextId = rest[0]?.id || "default";
+      setStyleId(nextId);
+      return nx;
+    });
+  };
+
+  const setActivePatch = (patch)=>{
+    setDraft(d=>{
+      const nx = ensureStylesOnDraft(JSON.parse(JSON.stringify(d||{})));
+      nx.styles = nx.styles.map(s=> s.id===styleId ? { ...s, ...patch } : s);
+      return nx;
+    });
+  };
+
+  const pieceImages = active.pieceImages || {};
+  const curSrc = pieceImages[pieceKey] || "";
+
+  const setPieceSrc = (src)=>{
+    setDraft(d=>{
+      const nx = ensureStylesOnDraft(JSON.parse(JSON.stringify(d||{})));
+      nx.styles = nx.styles.map(s=>{
+        if(s.id!==styleId) return s;
+        const pi = { ...(s.pieceImages||{}) };
+        if(src) pi[pieceKey]=src; else delete pi[pieceKey];
+        return { ...s, pieceImages: pi };
+      });
+      return nx;
+    });
+  };
+
+  const save = ()=>{
+    setData(prev=>{
+      const next = { ...(prev||{}) };
+      kjsEnsureGames(next);
+      const nx = ensureStylesOnDraft(JSON.parse(JSON.stringify(draft||{})));
+      next.games.tetris = {
+        ...nx,
+        styles: (nx.styles||styles),
+        activeStyleId: styleId
+      };
+      return next;
+    });
+    toast("俄羅斯方塊設定已儲存");
+  };
+
+  const pieces = ["I","J","L","O","S","T","Z"];
+
+  return (
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4 space-y-4">
+      <div className="flex items-center justify-between gap-3">
+        <div className="font-semibold">俄羅斯方塊（樣式設定）</div>
+        <div className="flex gap-2">
+          <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" onClick={onBack}>返回</button>
+          <button type="button" className="rounded-xl bg-indigo-600 text-white px-3 py-2 text-sm hover:bg-indigo-700" onClick={save}>儲存</button>
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4 space-y-3">
+        <div className="flex items-center justify-between gap-2">
+          <div className="font-medium">樣式</div>
+          <div className="flex gap-2">
+            <button type="button" className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800" onClick={addStyle}>新增樣式</button>
+            <button type="button" className={"rounded-xl border px-3 py-2 text-sm " + (styles.length<=1 ? "opacity-50 cursor-not-allowed" : "hover:bg-slate-50 dark:hover:bg-slate-800")}
+              disabled={styles.length<=1}
+              onClick={deleteStyle}
+            >刪除</button>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-3">
+          <label className="text-sm">
+            <div className="text-slate-500 mb-1">選擇樣式</div>
+            <select className="w-full rounded-xl border px-3 py-2 bg-white dark:bg-slate-900"
+              value={styleId}
+              onChange={(e)=>setStyleId(e.target.value)}
+            >
+              {styles.map(s=>(<option key={s.id} value={s.id}>{s.name||s.id}</option>))}
+            </select>
+          </label>
+
+          <label className="text-sm md:col-span-2">
+            <div className="text-slate-500 mb-1">樣式名稱</div>
+            <input className="w-full rounded-xl border px-3 py-2 bg-white dark:bg-slate-900"
+              value={active.name||""}
+              onChange={(e)=>renameStyle(e.target.value)}
+              placeholder="例如：IP 方塊、透明底、黑白等"
+            />
+          </label>
+        </div>
+
+        <label className="text-sm">
+          <div className="text-slate-500 mb-1">方塊顯示模式</div>
+          <select className="w-full rounded-xl border px-3 py-2 bg-white dark:bg-slate-900"
+            value={active.mode||"color"}
+            onChange={(e)=>setActivePatch({ mode: e.target.value })}
+          >
+            <option value="color">純色</option>
+            <option value="image">圖片（依 I/J/L/O/S/T/Z）</option>
+          </select>
+          <div className="text-xs text-slate-500 mt-1">
+            若用圖片：建議透明 PNG/WebP，圖內保留留白，避免方塊邊界不清。
+          </div>
+        </label>
+      </div>
+
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4 space-y-4">
+        <div className="font-medium">圖片對應（I/J/L/O/S/T/Z）</div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <label className="text-sm">
+            <div className="text-slate-500 mb-1">選擇方塊</div>
+            <select className="w-full rounded-xl border px-3 py-2 bg-white dark:bg-slate-900"
+              value={pieceKey}
+              onChange={(e)=>setPieceKey(e.target.value)}
+            >
+              {pieces.map(k=>(<option key={k} value={k}>{k}</option>))}
+            </select>
+          </label>
+
+          <label className="text-sm sm:col-span-1 lg:col-span-3">
+            <div className="text-slate-500 mb-1">圖片 URL（或 dataURL）</div>
+            <input className="w-full rounded-xl border px-3 py-2 bg-white dark:bg-slate-900"
+              value={curSrc}
+              onChange={(e)=>setPieceSrc(e.target.value)}
+              placeholder="https://... 或 data:image/..."
+            />
+          </label>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-3 items-end">
+          <div className="md:col-span-2">
+            <div className="text-sm text-slate-500 mb-1">預覽</div>
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-3 flex items-center gap-3">
+              <div className="w-20 h-20 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex items-center justify-center">
+                {curSrc ? <img src={curSrc} alt="" className="w-full h-full object-cover" /> : <div className="text-slate-400 text-sm">無</div>}
+              </div>
+              <div className="text-sm">
+                <div>方塊：<span className="font-semibold">{pieceKey}</span></div>
+                <div className="text-xs text-slate-500 mt-1">圖片模式下，會以此圖片鋪滿每個小方塊</div>
+              </div>
+            </div>
+          </div>
+
+          <button type="button"
+            className="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+            onClick={()=>setPieceSrc("")}
+          >清除此方塊圖片</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 
 
     // —— Render ——
