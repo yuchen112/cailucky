@@ -286,8 +286,14 @@ button.is-pressed{
   background: rgba(2,6,23,.55);
   border-color: var(--panel-border-dark);
 }
-.game-subtitle{ color: rgba(15,23,42,.78); font-size: 0.9rem; line-height: 1.25rem; }
-.dark .game-subtitle{ color: rgba(226,232,240,.78); }
+.game-subtitle{
+  font-size: 13px;
+  line-height: 1.35;
+ color: rgba(15,23,42,.78); font-size: 0.9rem; line-height: 1.25rem; }
+.dark .game-subtitle{
+  font-size: 13px;
+  line-height: 1.35;
+ color: rgba(226,232,240,.78); }
 /* Tighter, clearer control row */
 .game-controls{
   padding: 10px 12px;
@@ -325,6 +331,9 @@ html[data-kjs-game="1"] .game-head{
   box-shadow: 0 10px 24px rgba(2,6,23,.14);
 }
 html[data-kjs-game="1"] .game-subtitle{
+  font-size: 13px;
+  line-height: 1.35;
+
   color: rgba(2,6,23,.88);
   text-shadow: 0 1px 0 rgba(255,255,255,.35);
 }
@@ -334,12 +343,18 @@ html[data-kjs-game="1"] .game-subtitle{
   box-shadow: 0 14px 28px rgba(0,0,0,.35);
 }
 .dark html[data-kjs-game="1"] .game-subtitle{
+  font-size: 13px;
+  line-height: 1.35;
+
   color: rgba(226,232,240,.92);
   text-shadow: 0 1px 0 rgba(0,0,0,.25);
 }
 /* Reduce bottom padding while immersive (bottom nav hidden) */
 html[data-kjs-game="1"] [data-game-shell="1"]{
   padding-bottom: calc(20px + var(--sab, env(safe-area-inset-bottom))) !important;
+}
+html[data-kjs-game="1"] .game-gesture-surface{
+  padding-bottom: calc(150px + var(--sab, env(safe-area-inset-bottom))) !important;
 }
 
 body.kjs-game-lock{
@@ -394,6 +409,52 @@ body.kjs-game-lock{
   color: rgba(226, 232, 240, 0.92);
   pointer-events: none;
 }
+
+.tetris-hud{
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.tetris-center{
+  pointer-events: auto;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 12px;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.tetris-mini{
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: rgba(2, 6, 23, 0.15);
+  color: rgba(226, 232, 240, 0.95);
+  padding: 10px 12px;
+  min-width: 64px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+.tetris-mini.primary{
+  background: rgba(99, 102, 241, 0.88);
+  border-color: rgba(99, 102, 241, 0.22);
+}
+.tetris-mini:active{
+  transform: translateY(1px);
+}
+@media (max-width: 380px){
+  .tetris-mini{ padding: 9px 10px; min-width: 58px; font-size: 12px; }
+  .tetris-center{ padding: 9px 10px; }
+}
+
 /* Keep HUD only on touch devices */
 @media (hover:hover) and (pointer:fine){
   .tetris-hud, .tetris-hint{ display:none !important; }
@@ -11763,6 +11824,22 @@ const touchHud = (
             <TouchBtn label="→" onDown={()=>startHold(()=>moveX(1), 200, 55)} onUp={stopHold}/>
           </div>
         </div>
+
+        <div className="tetris-center">
+          {status==="idle" ? (
+            <button type="button" className="tetris-mini primary" onClick={()=>{ start(); }}>開始</button>
+          ) : status==="running" ? (
+            <button type="button" className="tetris-mini" onClick={()=>{ pauseToggle(); }}>暫停</button>
+          ) : status==="paused" ? (
+            <button type="button" className="tetris-mini primary" onClick={()=>{ pauseToggle(); }}>繼續</button>
+          ) : (
+            <button type="button" className="tetris-mini primary" onClick={()=>{ start(); }}>重玩</button>
+          )}
+          {status!=="idle" ? (
+            <button type="button" className="tetris-mini" onClick={()=>{ reset(); }}>重置</button>
+          ) : null}
+        </div>
+
         <div className="tetris-pad right">
           <div className="tetris-pad-inner">
             <TouchBtn label="⟳" onDown={()=>rot()} onUp={()=>{}}/>
@@ -11809,7 +11886,7 @@ const touchHud = (
             {status==="over" ? <div className="text-sm rounded-full px-3 py-1 border border-rose-300 bg-rose-50 dark:bg-rose-900/20">結束</div> : null}
           </div>
 
-          <div className="absolute top-3 right-3 flex items-center gap-2">
+          {!isTouch ? <div className="absolute top-3 right-3 flex items-center gap-2">
             {status==="idle" ? (
               <button type="button" className="rounded-xl bg-indigo-600 text-white px-3 py-2 text-sm hover:bg-indigo-700" onClick={()=>{ start(); }}>開始</button>
             ) : status==="running" ? (
@@ -11822,7 +11899,7 @@ const touchHud = (
             {status!=="idle" ? (
               <button type="button" className="rounded-xl border px-3 py-2 text-sm bg-white/80 dark:bg-slate-900/70 backdrop-blur hover:bg-white dark:hover:bg-slate-800" onClick={()=>{ reset(); }}>重置</button>
             ) : null}
-          </div>
+          </div> : null}
         </div>
 
         {isTouch ? touchHud : null}
