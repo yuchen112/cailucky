@@ -1,0 +1,1041 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Flappy Bird | Platform Edition</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:rgba(255,255,255,.10);
+      --panel2:rgba(255,255,255,.14);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.70);
+      --accent:#60a5fa;
+      --danger:#fb7185;
+      --ok:#34d399;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --pad: 14px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans TC", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    html,body{height:100%; margin:0; background:var(--bg); color:var(--text); font-family:var(--font);}
+    body{overflow:hidden; touch-action:manipulation;}
+    #wrap{position:fixed; inset:0; display:flex; align-items:center; justify-content:center;}
+    canvas{width:100%; height:100%; display:block; background:#000;}
+    /* Overlay UI */
+    .hud{
+      position:fixed; inset:0;
+      pointer-events:none;
+    }
+    .topbar{
+      position:absolute; top: max(10px, env(safe-area-inset-top)); left: max(10px, env(safe-area-inset-left));
+      right: max(10px, env(safe-area-inset-right));
+      display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+      pointer-events:none;
+    }
+    .pill{
+      pointer-events:none;
+      backdrop-filter: blur(10px);
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: var(--shadow);
+      border-radius: 999px;
+      padding: 8px 12px;
+      display:flex; align-items:center; gap:10px;
+      color:var(--text);
+      user-select:none;
+    }
+    .pill small{color:var(--muted);}
+    .score{
+      font-weight:800; letter-spacing:.5px; font-size:18px;
+    }
+    .center{
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+      padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    }
+    .card{
+      width:min(560px, 92vw);
+      background:rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: calc(var(--pad) + 2px);
+      backdrop-filter: blur(12px);
+      pointer-events:auto;
+    }
+    .title{
+      display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+      margin-bottom: 10px;
+    }
+    .title h1{margin:0; font-size:20px; letter-spacing:.2px;}
+    .title .tag{color:var(--muted); font-size:12px;}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+      margin: 10px 0 12px;
+    }
+    @media (min-width:520px){
+      .grid{grid-template-columns: 1fr 1fr;}
+    }
+    label{display:block; font-size:12px; color:var(--muted); margin-bottom:6px;}
+    select, button{
+      width:100%;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.25);
+      color: var(--text);
+      padding: 12px 12px;
+      font-size: 14px;
+      outline:none;
+    }
+    select:focus, button:focus{border-color: rgba(96,165,250,.55); box-shadow: 0 0 0 3px rgba(96,165,250,.18);}
+    .btnrow{display:grid; grid-template-columns: 1fr; gap:10px;}
+    @media (min-width:520px){
+      .btnrow{grid-template-columns: 1fr 1fr;}
+    }
+    button{
+      cursor:pointer;
+      background: rgba(96,165,250,.18);
+    }
+    button.secondary{background: rgba(255,255,255,.10);}
+    button.danger{background: rgba(251,113,133,.16);}
+    button:active{transform: translateY(1px);}
+    .meta{
+      display:flex; flex-wrap:wrap; gap:10px;
+      color: var(--muted);
+      font-size:12px;
+      margin-top:8px;
+      line-height:1.45;
+    }
+    .meta b{color:var(--text); font-weight:700;}
+    .hint{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.55;
+    }
+    .hint kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 2px 6px;
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 12px;
+    }
+    .toast{
+      position:fixed;
+      bottom: max(14px, env(safe-area-inset-bottom)); left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.58);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity .22s ease;
+      pointer-events:none;
+      max-width: min(680px, 92vw);
+      text-align:center;
+    }
+    .toast.show{opacity:1;}
+    .sr{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;}
+  </style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="game" aria-label="Flappy Bird 遊戲畫布" role="img"></canvas>
+</div>
+
+<div class="hud" id="hud">
+  <div class="topbar">
+    <div class="pill" id="pillLeft"><span class="score" id="scoreText">0</span><small id="modeText">中等</small></div>
+    <div class="pill" id="pillRight"><small>最高分</small><span class="score" id="bestText">0</span></div>
+  </div>
+
+  <div class="center" id="menuOverlay">
+    <div class="card" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
+      <div class="title">
+        <h1 id="menuTitle">Flappy Bird｜Platform Edition</h1>
+        <div class="tag" id="buildTag">F2 自動適配 · 單機 · localStorage</div>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label for="styleSel">視覺風格</label>
+          <select id="styleSel">
+            <option value="cute">可愛風</option>
+            <option value="minimal">極簡風</option>
+            <option value="classic">原版風</option>
+          </select>
+        </div>
+        <div>
+          <label for="difficultySel">難度</label>
+          <select id="difficultySel">
+            <option value="easy">簡單</option>
+            <option value="normal">中等</option>
+            <option value="hard">困難</option>
+          </select>
+        </div>
+        <div style="grid-column: 1 / -1;">
+          <label for="bgSel">背景</label>
+          <select id="bgSel">
+            <option value="__built_in__">內建背景（不需圖片）</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <button id="startBtn">開始遊戲</button>
+        <button id="practiceBtn" class="secondary">練習模式（不計最高分）</button>
+      </div>
+
+      <div class="btnrow" style="margin-top:10px;">
+        <button id="resetBtn" class="danger">重置本機紀錄</button>
+        <button id="aboutBtn" class="secondary">操作說明</button>
+      </div>
+
+      <div class="meta" id="metaLine">
+        <span>遊玩次數：<b id="playCountText">0</b></span>
+        <span>累積距離：<b id="distanceText">0</b></span>
+      </div>
+
+      <div class="hint" id="hintBox" style="display:none;">
+        手機：點擊螢幕任意位置即可拍翅。桌機：滑鼠點擊或按 <kbd>Space</kbd>。<br/>
+        你可以把此檔案放進 <kbd>/games/</kbd>，並用 iframe 內嵌。背景可由 <kbd>flappy_backgrounds.json</kbd> 擴充。
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" aria-live="polite"></div>
+
+<script>
+(() => {
+  "use strict";
+
+  /* ============================
+   * Storage Keys (平台規格)
+   * ============================ */
+  const LS = {
+    best_easy: "flappy_best_easy",
+    best_normal: "flappy_best_normal",
+    best_hard: "flappy_best_hard",
+    play_count: "flappy_play_count",
+    total_distance: "flappy_total_distance",
+    last_style: "flappy_last_style",
+    last_bg: "flappy_last_bg",
+    last_difficulty: "flappy_last_difficulty",
+  };
+
+  const DIFF_LABEL = { easy: "簡單", normal: "中等", hard: "困難" };
+  const STYLE_LABEL = { cute: "可愛風", minimal: "極簡風", classic: "原版風" };
+
+  const DEFAULTS = {
+    style: "cute",
+    difficulty: "normal",
+    bg: "__built_in__",
+  };
+
+  /* ============================
+   * Difficulty Tuning
+   * (手機優先、可用性優先)
+   * ============================ */
+  const DIFF = {
+    easy:   { gravity: 1500, flap: -520, speed: 210, gap: 200, spacing: 320, pipeW: 72 },
+    normal: { gravity: 1700, flap: -560, speed: 250, gap: 170, spacing: 290, pipeW: 72 },
+    hard:   { gravity: 2000, flap: -600, speed: 295, gap: 145, spacing: 265, pipeW: 72 },
+  };
+
+  /* ============================
+   * Canvas & Resize (F2 自動適配)
+   * - 內嵌 iframe：等比縮放、不裁切
+   * - 手機：直式全畫面
+   * ============================ */
+  const canvas = document.getElementById("game");
+  const ctx = canvas.getContext("2d", { alpha: false, desynchronized: true });
+
+  // "Virtual" game resolution for stable physics/UI sizing
+  const VIRTUAL = { w: 480, h: 800 };
+
+  let dpr = 1;
+  let scale = 1;
+  let viewW = VIRTUAL.w, viewH = VIRTUAL.h;
+
+  function fitCanvas() {
+    dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+
+    const w = Math.max(1, window.innerWidth);
+    const h = Math.max(1, window.innerHeight);
+
+    // Keep aspect ratio of virtual resolution; fit inside viewport without cropping
+    const sx = w / VIRTUAL.w;
+    const sy = h / VIRTUAL.h;
+    scale = Math.min(sx, sy);
+
+    viewW = Math.floor(VIRTUAL.w * scale);
+    viewH = Math.floor(VIRTUAL.h * scale);
+
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  window.addEventListener("resize", fitCanvas, { passive: true });
+  fitCanvas();
+
+  /* ============================
+   * UI Elements
+   * ============================ */
+  const menuOverlay = document.getElementById("menuOverlay");
+  const scoreText = document.getElementById("scoreText");
+  const bestText = document.getElementById("bestText");
+  const modeText = document.getElementById("modeText");
+
+  const styleSel = document.getElementById("styleSel");
+  const difficultySel = document.getElementById("difficultySel");
+  const bgSel = document.getElementById("bgSel");
+
+  const startBtn = document.getElementById("startBtn");
+  const practiceBtn = document.getElementById("practiceBtn");
+  const resetBtn = document.getElementById("resetBtn");
+  const aboutBtn = document.getElementById("aboutBtn");
+  const hintBox = document.getElementById("hintBox");
+
+  const playCountText = document.getElementById("playCountText");
+  const distanceText = document.getElementById("distanceText");
+
+  const toast = document.getElementById("toast");
+  let toastTimer = null;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+  }
+
+  function lsGetInt(key, def=0){
+    const v = localStorage.getItem(key);
+    if (v === null || v === undefined || v === "") return def;
+    const n = parseInt(v, 10);
+    return Number.isFinite(n) ? n : def;
+  }
+  function lsGetStr(key, def=""){
+    const v = localStorage.getItem(key);
+    return (v === null || v === undefined || v === "") ? def : String(v);
+  }
+  function lsSet(key, val){
+    localStorage.setItem(key, String(val));
+  }
+
+  function bestKeyFor(diff){
+    if (diff === "easy") return LS.best_easy;
+    if (diff === "hard") return LS.best_hard;
+    return LS.best_normal;
+  }
+
+  function updateMeta() {
+    playCountText.textContent = lsGetInt(LS.play_count, 0);
+    distanceText.textContent = formatDistance(lsGetInt(LS.total_distance, 0));
+  }
+
+  function formatDistance(px){
+    // 以 100px ≈ 1m 做簡單轉換，僅作「成就感」用途
+    const meters = px / 100;
+    if (meters < 1000) return meters.toFixed(1) + " m";
+    return (meters/1000).toFixed(2) + " km";
+  }
+
+  /* ============================
+   * Background Loader (JSON)
+   * 管理員可擴充：/games/flappy_backgrounds.json
+   * ============================ */
+  const BG = {
+    items: [{ name: "內建背景（不需圖片）", url: "__built_in__" }],
+    images: new Map(),
+    selectedUrl: DEFAULTS.bg,
+  };
+
+  async function loadBackgroundList(){
+    // Same directory as HTML by default
+    const url = "flappy_backgrounds.json?ts=" + Date.now();
+    try{
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const list = await res.json();
+      if (!Array.isArray(list)) throw new Error("JSON format error");
+      // Merge with built-in
+      const merged = [{ name: "內建背景（不需圖片）", url: "__built_in__" }];
+      for (const it of list){
+        if (!it || typeof it !== "object") continue;
+        const name = (it.name ?? "").toString().trim();
+        const u = (it.url ?? "").toString().trim();
+        if (!name || !u) continue;
+        merged.push({ name, url: u });
+      }
+      BG.items = merged;
+      rebuildBgSelect();
+    }catch(e){
+      // JSON missing is acceptable
+      rebuildBgSelect(true);
+    }
+  }
+
+  function rebuildBgSelect(usingFallback=false){
+    const cur = BG.selectedUrl;
+    bgSel.innerHTML = "";
+    for (const it of BG.items){
+      const opt = document.createElement("option");
+      opt.value = it.url;
+      opt.textContent = it.name + (usingFallback && it.url === "__built_in__" ? "（未找到 JSON，已使用內建）" : "");
+      bgSel.appendChild(opt);
+    }
+    // Restore selection if possible
+    const found = BG.items.some(x => x.url === cur);
+    bgSel.value = found ? cur : "__built_in__";
+  }
+
+  async function ensureBgImage(url){
+    if (url === "__built_in__") return null;
+    if (BG.images.has(url)) return BG.images.get(url);
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => { BG.images.set(url, img); resolve(img); };
+      img.onerror = () => { BG.images.set(url, null); resolve(null); };
+      img.src = url;
+    });
+  }
+
+  /* ============================
+   * Game State
+   * ============================ */
+  let state = "menu"; // menu | ready | play | over
+  let practice = false;
+
+  const bird = { x: 160, y: 400, vy: 0, r: 18, rot: 0 };
+  const pipes = [];
+  let score = 0;
+  let distancePx = 0;
+  let lastTime = 0;
+
+  let style = DEFAULTS.style;
+  let difficulty = DEFAULTS.difficulty;
+  let bgUrl = DEFAULTS.bg;
+
+  function resetRun(){
+    bird.x = 160;
+    bird.y = 380;
+    bird.vy = 0;
+    bird.rot = 0;
+    pipes.length = 0;
+    score = 0;
+    distancePx = 0;
+    spawnPipe(true);
+    spawnPipe(true);
+    spawnPipe(true);
+  }
+
+  function spawnPipe(initial=false){
+    const t = DIFF[difficulty];
+    const maxTop = VIRTUAL.h - 180 - t.gap; // leave ground/ceiling margin
+    const topH = randInt(90, Math.max(91, maxTop));
+    const x = initial ? (VIRTUAL.w + pipes.length * t.spacing) : (VIRTUAL.w + t.spacing);
+    pipes.push({
+      x,
+      w: t.pipeW,
+      topH,
+      passed: false,
+    });
+  }
+
+  function randInt(a,b){ return (Math.random()*(b-a+1) + a) | 0; }
+
+  function showMenu(show=true){
+    menuOverlay.style.display = show ? "flex" : "none";
+  }
+
+  function setHUD(){
+    scoreText.textContent = String(score);
+    modeText.textContent = DIFF_LABEL[difficulty] + (practice ? "（練習）" : "");
+    const best = lsGetInt(bestKeyFor(difficulty), 0);
+    bestText.textContent = String(best);
+  }
+
+  function loadPrefs(){
+    style = lsGetStr(LS.last_style, DEFAULTS.style);
+    difficulty = lsGetStr(LS.last_difficulty, DEFAULTS.difficulty);
+    bgUrl = lsGetStr(LS.last_bg, DEFAULTS.bg);
+
+    if (!STYLE_LABEL[style]) style = DEFAULTS.style;
+    if (!DIFF_LABEL[difficulty]) difficulty = DEFAULTS.difficulty;
+
+    BG.selectedUrl = bgUrl;
+    styleSel.value = style;
+    difficultySel.value = difficulty;
+    bgSel.value = bgUrl;
+
+    setHUD();
+    updateMeta();
+  }
+
+  function savePrefs(){
+    lsSet(LS.last_style, style);
+    lsSet(LS.last_difficulty, difficulty);
+    lsSet(LS.last_bg, bgUrl);
+  }
+
+  function incPlayCount(){
+    lsSet(LS.play_count, lsGetInt(LS.play_count, 0) + 1);
+  }
+
+  function addTotalDistance(px){
+    lsSet(LS.total_distance, lsGetInt(LS.total_distance, 0) + Math.max(0, px|0));
+  }
+
+  /* ============================
+   * Visual Styles
+   * - cute: round, toy-like
+   * - minimal: flat geometry
+   * - classic: retro-ish
+   * ============================ */
+  function drawBuiltInBackground(){
+    // Draw full viewport (actual canvas size in CSS pixels)
+    const w = window.innerWidth, h = window.innerHeight;
+
+    // Letterboxed game area inside viewport
+    const gw = viewW, gh = viewH;
+    const gx = (w - gw) / 2;
+    const gy = (h - gh) / 2;
+
+    // Background behind letterbox
+    ctx.save();
+    ctx.fillStyle = "#050812";
+    ctx.fillRect(0,0,w,h);
+    ctx.restore();
+
+    // Game background in game area based on style
+    ctx.save();
+    ctx.translate(gx, gy);
+
+    const g = ctx.createLinearGradient(0,0,0,gh);
+    if (style === "cute"){
+      g.addColorStop(0, "#7dd3fc");
+      g.addColorStop(1, "#1e3a8a");
+    } else if (style === "minimal"){
+      g.addColorStop(0, "#0f172a");
+      g.addColorStop(1, "#111827");
+    } else {
+      g.addColorStop(0, "#93c5fd");
+      g.addColorStop(1, "#1f2937");
+    }
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,gw,gh);
+
+    // Some clouds / shapes
+    if (style === "cute"){
+      ctx.globalAlpha = 0.75;
+      for (let i=0;i<6;i++){
+        const cx = (i*90 + ((performance.now()/50)%(gw+200))) % (gw+200) - 100;
+        const cy = 120 + (i%3)*40;
+        drawCloud(cx, cy, 55 + (i%3)*12);
+      }
+      ctx.globalAlpha = 1;
+    } else if (style === "classic"){
+      ctx.globalAlpha = 0.25;
+      for (let i=0;i<10;i++){
+        ctx.fillStyle = i%2? "rgba(255,255,255,.20)" : "rgba(255,255,255,.10)";
+        ctx.fillRect((i*60 + (performance.now()/12))%(gw+120)-60, 120 + (i%4)*48, 36, 10);
+      }
+      ctx.globalAlpha = 1;
+    } else {
+      // minimal: subtle grid
+      ctx.globalAlpha = 0.12;
+      ctx.strokeStyle = "rgba(255,255,255,.25)";
+      ctx.lineWidth = 1;
+      const step = 40;
+      for (let x=0;x<=gw;x+=step){
+        ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,gh); ctx.stroke();
+      }
+      for (let y=0;y<=gh;y+=step){
+        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(gw,y); ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    // Ground hint (no actual ground object, collision uses gh)
+    const groundH = 120;
+    if (style === "minimal"){
+      ctx.fillStyle = "rgba(255,255,255,.08)";
+      ctx.fillRect(0, gh-groundH, gw, groundH);
+    } else if (style === "cute"){
+      const gg = ctx.createLinearGradient(0, gh-groundH, 0, gh);
+      gg.addColorStop(0, "rgba(34,197,94,.55)");
+      gg.addColorStop(1, "rgba(22,101,52,.85)");
+      ctx.fillStyle = gg;
+      ctx.fillRect(0, gh-groundH, gw, groundH);
+      // dotted flowers
+      ctx.globalAlpha = 0.35;
+      for (let i=0;i<30;i++){
+        ctx.fillStyle = i%2 ? "rgba(255,255,255,.7)" : "rgba(255,255,255,.45)";
+        const px = (i*27 + (performance.now()/6))%(gw+40)-20;
+        const py = gh-groundH + 30 + (i%3)*22;
+        ctx.beginPath(); ctx.arc(px, py, 2.2, 0, Math.PI*2); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    } else {
+      ctx.fillStyle = "rgba(16,185,129,.18)";
+      ctx.fillRect(0, gh-groundH, gw, groundH);
+      ctx.globalAlpha = 0.25;
+      ctx.fillStyle = "rgba(255,255,255,.35)";
+      for (let i=0;i<20;i++){
+        ctx.fillRect((i*40 + (performance.now()/8))%(gw+80)-40, gh-groundH+18, 18, 3);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    ctx.restore();
+    return { gx, gy, gw, gh };
+  }
+
+  function drawCloud(x,y,r){
+    ctx.fillStyle = "rgba(255,255,255,.65)";
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI*2);
+    ctx.arc(x+r*0.9, y+r*0.1, r*0.8, 0, Math.PI*2);
+    ctx.arc(x-r*0.9, y+r*0.2, r*0.75, 0, Math.PI*2);
+    ctx.arc(x+r*0.2, y-r*0.65, r*0.6, 0, Math.PI*2);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawImageCover(img, gx, gy, gw, gh){
+    // Cover game area; keep aspect ratio, no distortion
+    const iw = img.naturalWidth || img.width || 1;
+    const ih = img.naturalHeight || img.height || 1;
+    const scale = Math.max(gw/iw, gh/ih);
+    const dw = iw * scale;
+    const dh = ih * scale;
+    const dx = gx + (gw - dw)/2;
+    const dy = gy + (gh - dh)/2;
+    ctx.drawImage(img, dx, dy, dw, dh);
+  }
+
+  function mapGameToView(x,y,gx,gy,gw,gh){
+    // Virtual -> view pixels within game area
+    const sx = gw / VIRTUAL.w;
+    const sy = gh / VIRTUAL.h;
+    return { x: gx + x*sx, y: gy + y*sy, sx, sy };
+  }
+
+  /* ============================
+   * Draw Entities
+   * ============================ */
+  function drawBird(gx,gy,gw,gh){
+    const m = mapGameToView(bird.x, bird.y, gx, gy, gw, gh);
+    const r = bird.r * m.sx;
+
+    ctx.save();
+    ctx.translate(m.x, m.y);
+    ctx.rotate(bird.rot);
+
+    if (style === "minimal"){
+      ctx.fillStyle = "rgba(255,255,255,.92)";
+      ctx.beginPath();
+      ctx.roundRect(-r*0.95, -r*0.75, r*1.9, r*1.5, r*0.5);
+      ctx.fill();
+      ctx.fillStyle = "rgba(0,0,0,.55)";
+      ctx.beginPath(); ctx.arc(r*0.25, -r*0.15, r*0.12, 0, Math.PI*2); ctx.fill();
+    } else if (style === "classic"){
+      ctx.fillStyle = "#fde047";
+      ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle = "rgba(0,0,0,.55)";
+      ctx.beginPath(); ctx.arc(r*0.25, -r*0.2, r*0.14, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = "#f97316";
+      ctx.beginPath();
+      ctx.moveTo(r*0.9, 0);
+      ctx.lineTo(r*1.45, r*0.15);
+      ctx.lineTo(r*1.45, -r*0.15);
+      ctx.closePath();
+      ctx.fill();
+    } else { // cute
+      const grad = ctx.createLinearGradient(-r, -r, r, r);
+      grad.addColorStop(0, "#fde68a");
+      grad.addColorStop(1, "#f59e0b");
+      ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2); ctx.fill();
+
+      ctx.fillStyle = "rgba(255,255,255,.85)";
+      ctx.beginPath(); ctx.arc(-r*0.25, -r*0.25, r*0.38, 0, Math.PI*2); ctx.fill();
+
+      ctx.fillStyle = "rgba(0,0,0,.55)";
+      ctx.beginPath(); ctx.arc(r*0.25, -r*0.18, r*0.14, 0, Math.PI*2); ctx.fill();
+
+      ctx.fillStyle = "#fb7185";
+      ctx.globalAlpha = 0.55;
+      ctx.beginPath(); ctx.arc(-r*0.15, r*0.25, r*0.20, 0, Math.PI*2); ctx.fill();
+      ctx.globalAlpha = 1;
+
+      ctx.fillStyle = "#f97316";
+      ctx.beginPath();
+      ctx.roundRect(r*0.72, -r*0.14, r*0.95, r*0.28, r*0.12);
+      ctx.fill();
+    }
+
+    ctx.restore();
+  }
+
+  function drawPipes(gx,gy,gw,gh){
+    const t = DIFF[difficulty];
+    const sx = gw / VIRTUAL.w;
+    const sy = gh / VIRTUAL.h;
+
+    for (const p of pipes){
+      const px = gx + p.x * sx;
+      const pw = p.w * sx;
+      const topH = p.topH * sy;
+      const gap = t.gap * sy;
+      const bottomY = gy + topH + gap;
+      const bottomH = (VIRTUAL.h * sy) - (topH + gap);
+
+      if (style === "minimal"){
+        ctx.fillStyle = "rgba(255,255,255,.22)";
+        ctx.fillRect(px, gy, pw, topH);
+        ctx.fillRect(px, bottomY, pw, bottomH);
+      } else if (style === "classic"){
+        ctx.fillStyle = "#22c55e";
+        ctx.fillRect(px, gy, pw, topH);
+        ctx.fillRect(px, bottomY, pw, bottomH);
+        ctx.fillStyle = "rgba(0,0,0,.18)";
+        ctx.fillRect(px+pw*0.12, gy, pw*0.18, topH);
+        ctx.fillRect(px+pw*0.12, bottomY, pw*0.18, bottomH);
+      } else {
+        // cute
+        const g1 = ctx.createLinearGradient(px, 0, px+pw, 0);
+        g1.addColorStop(0, "rgba(34,197,94,.95)");
+        g1.addColorStop(1, "rgba(16,185,129,.95)");
+        ctx.fillStyle = g1;
+        ctx.beginPath();
+        ctx.roundRect(px, gy, pw, topH, pw*0.22);
+        ctx.roundRect(px, bottomY, pw, bottomH, pw*0.22);
+        ctx.fill();
+
+        ctx.globalAlpha = 0.18;
+        ctx.fillStyle = "white";
+        ctx.fillRect(px+pw*0.18, gy+10, pw*0.14, Math.max(0, topH-20));
+        ctx.fillRect(px+pw*0.18, bottomY+10, pw*0.14, Math.max(0, bottomH-20));
+        ctx.globalAlpha = 1;
+      }
+    }
+  }
+
+  function drawCenterText(gx,gy,gw,gh, title, subtitle){
+    ctx.save();
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    const cx = gx + gw/2;
+    const cy = gy + gh*0.35;
+
+    ctx.font = "800 34px " + getComputedStyle(document.documentElement).getPropertyValue("--font");
+    ctx.fillStyle = "rgba(0,0,0,.40)";
+    ctx.fillText(title, cx+2, cy+3);
+    ctx.fillStyle = "rgba(255,255,255,.92)";
+    ctx.fillText(title, cx, cy);
+
+    if (subtitle){
+      ctx.font = "600 14px " + getComputedStyle(document.documentElement).getPropertyValue("--font");
+      ctx.fillStyle = "rgba(255,255,255,.70)";
+      ctx.fillText(subtitle, cx, cy + 44);
+    }
+    ctx.restore();
+  }
+
+  /* ============================
+   * Physics & Collision
+   * ============================ */
+  function step(dt){
+    const t = DIFF[difficulty];
+    // Bird
+    bird.vy += t.gravity * dt;
+    bird.y += bird.vy * dt;
+
+    // Rotation
+    const target = Math.max(-0.65, Math.min(1.15, bird.vy / 520));
+    bird.rot += (target - bird.rot) * Math.min(1, dt*10);
+
+    // Pipes move
+    const dx = t.speed * dt;
+    for (const p of pipes){
+      p.x -= dx;
+    }
+    distancePx += dx;
+
+    // Recycle / spawn
+    while (pipes.length && pipes[0].x + pipes[0].w < -40){
+      pipes.shift();
+      spawnPipe(false);
+    }
+
+    // Score & collision
+    const bx = bird.x;
+    const by = bird.y;
+    const br = bird.r;
+
+    // Ceiling / floor collision
+    if (by - br < 0) {
+      bird.y = br;
+      bird.vy = 0;
+    }
+    if (by + br > VIRTUAL.h) {
+      gameOver();
+      return;
+    }
+
+    for (const p of pipes){
+      // scoring when pass center
+      if (!p.passed && (p.x + p.w) < bx){
+        p.passed = true;
+        score += 1;
+        setHUD();
+      }
+      // collision check
+      const tcfg = DIFF[difficulty];
+      const gapTop = p.topH;
+      const gapBottom = p.topH + tcfg.gap;
+
+      const inX = (bx + br > p.x) && (bx - br < p.x + p.w);
+      if (inX){
+        const hitTop = (by - br) < gapTop;
+        const hitBottom = (by + br) > gapBottom;
+        if (hitTop || hitBottom){
+          gameOver();
+          return;
+        }
+      }
+    }
+  }
+
+  function flap(){
+    if (state === "menu") return;
+    if (state === "over"){
+      // quick restart from tap (mobile friendly)
+      startGame(practice);
+      return;
+    }
+    if (state === "ready"){
+      state = "play";
+    }
+    if (state === "play"){
+      const t = DIFF[difficulty];
+      bird.vy = t.flap;
+    }
+  }
+
+  function gameOver(){
+    state = "over";
+    // record stats
+    addTotalDistance(distancePx);
+    if (!practice){
+      const k = bestKeyFor(difficulty);
+      const best = lsGetInt(k, 0);
+      if (score > best) lsSet(k, score);
+    }
+    setHUD();
+    updateMeta();
+    showMenu(true);
+    showToast("遊戲結束：點擊可重新開始");
+  }
+
+  /* ============================
+   * Game Loop (high FPS)
+   * ============================ */
+  async function render(ts){
+    requestAnimationFrame(render);
+
+    const w = window.innerWidth, h = window.innerHeight;
+    ctx.clearRect(0,0,w,h);
+
+    // Background
+    const rect = drawBuiltInBackground();
+    const { gx, gy, gw, gh } = rect;
+
+    // Optional custom background image
+    if (bgUrl && bgUrl !== "__built_in__"){
+      const img = await ensureBgImage(bgUrl);
+      if (img){
+        ctx.save();
+        ctx.globalAlpha = 0.92;
+        drawImageCover(img, gx, gy, gw, gh);
+        // subtle dark overlay for readability
+        ctx.fillStyle = "rgba(0,0,0,.18)";
+        ctx.fillRect(gx, gy, gw, gh);
+        ctx.restore();
+      } else {
+        // If image fails, fall back to built-in silently
+      }
+    }
+
+    // Letterbox mask (keep edges clean)
+    ctx.save();
+    ctx.strokeStyle = "rgba(255,255,255,.08)";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(gx+0.5, gy+0.5, gw-1, gh-1);
+    ctx.restore();
+
+    // Physics update
+    if (!lastTime) lastTime = ts;
+    const dt = Math.min(0.032, (ts - lastTime) / 1000);
+    lastTime = ts;
+
+    if (state === "play"){
+      step(dt);
+      setHUD();
+    }
+
+    // Draw game world inside gx/gy box
+    drawPipes(gx,gy,gw,gh);
+    drawBird(gx,gy,gw,gh);
+
+    // Center text for ready/over
+    if (state === "ready"){
+      drawCenterText(gx,gy,gw,gh, "點一下開始", "手機點擊 / 桌機 Space");
+    } else if (state === "over"){
+      const sub = practice ? "練習模式不記最高分" : "點一下重新開始";
+      drawCenterText(gx,gy,gw,gh, "Game Over", sub);
+    }
+  }
+
+  /* ============================
+   * Start / Menu Actions
+   * ============================ */
+  function startGame(isPractice){
+    practice = !!isPractice;
+
+    style = styleSel.value;
+    difficulty = difficultySel.value;
+    bgUrl = bgSel.value;
+
+    if (!STYLE_LABEL[style]) style = DEFAULTS.style;
+    if (!DIFF_LABEL[difficulty]) difficulty = DEFAULTS.difficulty;
+    if (!bgUrl) bgUrl = "__built_in__";
+
+    BG.selectedUrl = bgUrl;
+    savePrefs();
+
+    incPlayCount();
+    updateMeta();
+
+    resetRun();
+    state = "ready";
+    setHUD();
+    showMenu(false);
+    showToast("開始：點一下拍翅");
+  }
+
+  function resetAll(){
+    for (const k of Object.values(LS)){
+      localStorage.removeItem(k);
+    }
+    style = DEFAULTS.style;
+    difficulty = DEFAULTS.difficulty;
+    bgUrl = DEFAULTS.bg;
+    BG.selectedUrl = bgUrl;
+
+    styleSel.value = style;
+    difficultySel.value = difficulty;
+    bgSel.value = bgUrl;
+
+    setHUD();
+    updateMeta();
+    showToast("已重置本機紀錄");
+  }
+
+  /* ============================
+   * Input (手機優先)
+   * ============================ */
+  function onPointer(e){
+    // Avoid click on menu controls
+    if (menuOverlay.style.display !== "none"){
+      // only treat as flap if clicking outside card
+      const card = menuOverlay.querySelector(".card");
+      if (card && card.contains(e.target)) return;
+    }
+    e.preventDefault();
+    flap();
+  }
+
+  window.addEventListener("pointerdown", onPointer, { passive: false });
+  window.addEventListener("keydown", (e) => {
+    if (e.code === "Space"){
+      e.preventDefault();
+      flap();
+    }
+    if (e.code === "Escape"){
+      // Toggle menu overlay
+      if (state !== "menu"){
+        showMenu(true);
+        state = (state === "play") ? "over" : state;
+      }
+    }
+  }, { passive: false });
+
+  /* ============================
+   * Menu Events
+   * ============================ */
+  startBtn.addEventListener("click", () => startGame(false));
+  practiceBtn.addEventListener("click", () => startGame(true));
+
+  resetBtn.addEventListener("click", () => {
+    if (confirm("確定要重置本機最高分與設定嗎？")){
+      resetAll();
+    }
+  });
+
+  aboutBtn.addEventListener("click", () => {
+    hintBox.style.display = (hintBox.style.display === "none") ? "block" : "none";
+  });
+
+  styleSel.addEventListener("change", () => {
+    style = styleSel.value;
+    lsSet(LS.last_style, style);
+  });
+  difficultySel.addEventListener("change", () => {
+    difficulty = difficultySel.value;
+    lsSet(LS.last_difficulty, difficulty);
+    setHUD();
+  });
+  bgSel.addEventListener("change", () => {
+    bgUrl = bgSel.value;
+    BG.selectedUrl = bgUrl;
+    lsSet(LS.last_bg, bgUrl);
+  });
+
+  /* ============================
+   * Boot
+   * ============================ */
+  loadPrefs();
+  loadBackgroundList().finally(() => {
+    // ensure selection restored if present in JSON list
+    bgSel.value = BG.selectedUrl;
+  });
+
+  state = "menu";
+  showMenu(true);
+  setHUD();
+  updateMeta();
+
+  requestAnimationFrame(render);
+})();
+</script>
+</body>
+</html>
