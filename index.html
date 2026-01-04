@@ -302,6 +302,51 @@ button.is-pressed{
   border-color: var(--panel-border-dark);
 }
 
+
+/* =========================
+   Immersive Mobile Game Mode
+   - When a game is active, hide site chrome and maximize playfield
+   ========================= */
+html[data-kjs-game="1"] [data-app-header="1"],
+html[data-kjs-game="1"] [data-app-bottomnav="1"]{
+  display: none !important;
+}
+html[data-kjs-game="1"] body{
+  overscroll-behavior: none;
+}
+/* Make in-game HUD stick and remain readable */
+html[data-kjs-game="1"] .game-head{
+  position: sticky;
+  top: calc(var(--sat, env(safe-area-inset-top)) + 8px);
+  z-index: 30;
+  margin-top: 8px;
+  background: rgba(255,255,255,.82);
+  border-color: rgba(15,23,42,.18);
+  box-shadow: 0 10px 24px rgba(2,6,23,.14);
+}
+html[data-kjs-game="1"] .game-subtitle{
+  color: rgba(2,6,23,.88);
+  text-shadow: 0 1px 0 rgba(255,255,255,.35);
+}
+.dark html[data-kjs-game="1"] .game-head{
+  background: rgba(2,6,23,.70);
+  border-color: rgba(148,163,184,.18);
+  box-shadow: 0 14px 28px rgba(0,0,0,.35);
+}
+.dark html[data-kjs-game="1"] .game-subtitle{
+  color: rgba(226,232,240,.92);
+  text-shadow: 0 1px 0 rgba(0,0,0,.25);
+}
+/* Reduce bottom padding while immersive (bottom nav hidden) */
+html[data-kjs-game="1"] [data-game-shell="1"]{
+  padding-bottom: calc(20px + var(--sab, env(safe-area-inset-bottom))) !important;
+}
+
+body.kjs-game-lock{
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 </style>
 
   <!-- [IMGIO CSS START] -->
@@ -9847,6 +9892,28 @@ function GameShell({ title, subtitle, children, onReset }){
 function GamesHub({ data, setData }){
   const games = (data && data.games) ? data.games : {};
   const [active, setActive] = React.useState(null); // null | memory | mole | g2048 | luck | tetris
+  // Immersive mode: mobile-first game screen (hide app chrome, maximize playfield)
+  React.useEffect(()=>{
+    const doc = document.documentElement;
+    if(active!==null){
+      doc.dataset.kjsGame = "1";
+      // Override measured chrome heights (header/bottom nav) while hidden
+      doc.style.setProperty('--app-header-h', '0px');
+      doc.style.setProperty('--app-bottom-nav-h', '0px');
+      // Prevent accidental scroll-jank during play
+      document.body.classList.add('kjs-game-lock');
+    }else{
+      delete doc.dataset.kjsGame;
+      document.body.classList.remove('kjs-game-lock');
+      // Trigger a re-measure on next frame
+      requestAnimationFrame(()=>window.dispatchEvent(new Event('resize')));
+    }
+    return ()=>{
+      delete doc.dataset.kjsGame;
+      document.body.classList.remove('kjs-game-lock');
+    };
+  }, [active]);
+
 
   React.useEffect(()=>{ try{ kjsEnsureGames(data); }catch{} }, [data]);
 
@@ -9961,6 +10028,7 @@ function GameAdminCard({ title, sub, onOpen }){
    ========================= */
 function GameMemory({ data, setData }){
   const cfg = data?.games?.memory || {};
+  const isTouch = useIsTouch();
   const themes = Array.isArray(cfg.themes)?cfg.themes:[];
   const [themeId, setThemeId] = React.useState(()=>themes[0]?.id || "default");
   const [level, setLevel] = React.useState("easy"); // easy=4, medium=8, hard=16
@@ -10026,9 +10094,12 @@ function GameMemory({ data, setData }){
     const w = wrapRef.current?.clientWidth || Math.min(window.innerWidth*0.92, 560);
     const topReserve = 160; // 估算 header/選單與說明
     const h = Math.max(220, window.innerHeight - topReserve - (envSafeBottom()+120));
-    const cell = Math.floor(Math.min((w - 8)/size, (h - 8)/size));
+    const byW = Math.floor((w - 8)/size);
+    const byH = Math.floor((h - 8)/size);
+    // Mobile 16x16: prioritize tap target size; allow scrolling rather than squeezing to fit
+    const cell = (isTouch && size===16) ? byW : Math.floor(Math.min(byW, byH));
     setCellPx(Math.max(14, cell));
-  }, [size]);
+  }, [size, isTouch]);
 
   React.useEffect(()=>{
     recalc();
@@ -10120,7 +10191,7 @@ function GameMemory({ data, setData }){
                 >
                   {isOpen ? (
                     c.src ? <img src={c.src} alt="" className="w-full h-full object-cover" draggable={false}/> :
-                    c.emoji ? <span className="text-3xl leading-none">{c.emoji}</span> :
+                    c.emoji ? <span className="leading-none" style={{ fontSize: Math.max(12, Math.floor(cellPx*0.55)) }}>{c.emoji}</span> :
                     <div className="w-full h-full" style={{ background: `hsl(${(i*29)%360} 70% 70%)` }} />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-xs text-slate-500"
