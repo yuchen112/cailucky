@@ -347,6 +347,58 @@ body.kjs-game-lock{
   -webkit-user-select: none;
 }
 
+
+/* ===== Mobile game mode: Tetris floating HUD (does not consume layout height) ===== */
+.tetris-hud{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(env(safe-area-inset-bottom) + 12px);
+  z-index: 60;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 12px;
+  pointer-events: none; /* only buttons receive events */
+}
+.tetris-hud .tetris-pad{
+  pointer-events: auto;
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 18px;
+  padding: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+.tetris-hud .tetris-pad-inner{
+  display: flex;
+  gap: 10px;
+}
+.tetris-hud .tetris-pad.right .tetris-pad-inner{
+  gap: 10px;
+}
+.tetris-hud .tetris-hint{
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(env(safe-area-inset-bottom) + 86px);
+  z-index: 59;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 11px;
+  color: rgba(226, 232, 240, 0.92);
+  pointer-events: none;
+}
+/* Keep HUD only on touch devices */
+@media (hover:hover) and (pointer:fine){
+  .tetris-hud, .tetris-hint{ display:none !important; }
+}
+
 </style>
 
   <!-- [IMGIO CSS START] -->
@@ -11702,23 +11754,25 @@ function GameTetris({ data, setData }){
     );
   };
 
-const touchBar = (
-    <div ref={controlBarRef} className="mt-3">
-      <div className="max-w-[560px] mx-auto px-3">
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur p-2">
-          <div className="grid grid-cols-5 gap-2">
+const touchHud = (
+    <>
+      <div className="tetris-hud" aria-label="Tetris controls">
+        <div className="tetris-pad left">
+          <div className="tetris-pad-inner">
             <TouchBtn label="←" onDown={()=>startHold(()=>moveX(-1), 200, 55)} onUp={stopHold}/>
             <TouchBtn label="→" onDown={()=>startHold(()=>moveX(1), 200, 55)} onUp={stopHold}/>
+          </div>
+        </div>
+        <div className="tetris-pad right">
+          <div className="tetris-pad-inner">
             <TouchBtn label="⟳" onDown={()=>rot()} onUp={()=>{}}/>
             <TouchBtn label="↓" onDown={()=>startHold(()=>softDown(), 140, 55)} onUp={stopHold}/>
             <TouchBtn label="⤓" onDown={()=>hardDrop()} onUp={()=>{}}/>
           </div>
-          <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-2">
-            長按 ←/→/↓ 可連續移動
-          </div>
         </div>
       </div>
-    </div>
+      <div className="tetris-hint">長按 ←/→/↓ 可連續移動</div>
+    </>
   );
 
   return (
@@ -11771,7 +11825,7 @@ const touchBar = (
           </div>
         </div>
 
-        {isTouch ? touchBar : null}
+        {isTouch ? touchHud : null}
       </div>
     </GameShell>
   );
