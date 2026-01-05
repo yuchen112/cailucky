@@ -746,6 +746,99 @@
       .pileCard{width:52px; height:72px; border-radius:12px; padding:7px}
     }
     
+
+    /* ====== Smart hand layout (mobile) ====== */
+    .fan{position:relative; height:100%;}
+    .fan.flat,
+    .fan.overlap,
+    .fan.scroll{
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      gap:6px;
+      padding:0 6px 0;
+      overflow:hidden;
+    }
+    .fan.scroll{
+      justify-content:flex-start;
+      overflow-x:auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .fan.scroll::-webkit-scrollbar{display:none}
+
+    .fan.flat .card,
+    .fan.overlap .card,
+    .fan.scroll .card{
+      position:relative;
+      bottom:auto;
+      left:auto;
+      transform:none;
+      flex:0 0 auto;
+    }
+    .fan.overlap .card:not(:first-child){
+      margin-left:-18px;
+    }
+    .fan.flat .card.selected,
+    .fan.overlap .card.selected,
+    .fan.scroll .card.selected{
+      transform: translateY(-14px) scale(1.04);
+      z-index:999;
+    }
+
+    /* Make cards slightly smaller on narrow phones when using flat layouts */
+    @media (max-width: 420px){
+      .fan.flat .card,
+      .fan.overlap .card,
+      .fan.scroll .card{width:58px;height:82px;border-radius:12px}
+      .fan.overlap .card:not(:first-child){margin-left:-16px}
+    }
+
+
+    /* ====== Smart hand layouts (mobile) ====== */
+    .fan.flat,
+    .fan.overlap,
+    .fan.scroll{
+      position:relative;
+      left:auto;
+      bottom:auto;
+      transform:none;
+      height:100%;
+      width:100%;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      gap:6px;
+      padding:0 6px 0;
+      pointer-events:auto;
+    }
+    .fan.scroll{
+      justify-content:flex-start;
+      overflow-x:auto;
+      overflow-y:hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .fan.scroll::-webkit-scrollbar{display:none}
+    .fan.flat .card,
+    .fan.overlap .card,
+    .fan.scroll .card{
+      position:relative;
+      left:auto;
+      bottom:auto;
+      transform:none !important;
+      flex:0 0 auto;
+    }
+    /* Overlap density: JS also sets margin-left; this ensures the first card isn't clipped */
+    .fan.overlap{padding-left:10px}
+    /* Selected card lift for non-fan layouts */
+    .fan.flat .card.selected,
+    .fan.overlap .card.selected,
+    .fan.scroll .card.selected{
+      transform: translateY(-10px) !important;
+      box-shadow: 0 18px 30px rgba(0,0,0,.26);
+    }
+
 </style>
 </head>
 <body>
@@ -1511,6 +1604,18 @@
     }
 
     const n = hand.length;
+
+    // ===== Smart hand layout on mobile (avoid fan overlap) =====
+    const isMobile = window.matchMedia && window.matchMedia("(max-width: 520px)").matches;
+    let handLayout = "fan"; // fan | flat | overlap | scroll
+    if(isMobile){
+      if(n<=10) handLayout = "flat";
+      else if(n<=13) handLayout = "overlap";
+      else handLayout = "scroll";
+    }
+    elFan.classList.remove("flat","overlap","scroll");
+    if(handLayout!=="fan") elFan.classList.add(handLayout);
+
     const mid = (n-1)/2;
     const maxSpread = Math.min(520, Math.max(240, n*26));
     const step = n<=1 ? 0 : (maxSpread / (n-1));
@@ -1520,16 +1625,24 @@
       const s = suitObj(c.s);
       const d = document.createElement("div");
       d.className = "card" + (s.color==="red" ? " red" : "");
-      const x = (i * step) - (maxSpread/2);
-      const rot = (i - mid) * Math.min(3.6, 46/n);
-      const y = Math.abs(i-mid) * 0.35;
-
-      d.style.setProperty("--x", `${x}px`);
-      d.style.setProperty("--y", `${-y}px`);
-      d.style.setProperty("--rot", `${rot}deg`);
-
+      let x=0, rot=0, y=0;
       const isSel = VSTATE.selected.has(i);
-      d.style.transform = `translateX(-50%) translate(${x}px, ${-y}px) rotate(${rot}deg)`;
+
+      if(handLayout==="fan"){
+        x = (i * step) - (maxSpread/2);
+        rot = (i - mid) * Math.min(3.6, 46/n);
+        y = Math.abs(i-mid) * 0.35;
+
+        d.style.setProperty("--x", `${x}px`);
+        d.style.setProperty("--y", `${-y}px`);
+        d.style.setProperty("--rot", `${rot}deg`);
+
+        d.style.transform = `translateX(-50%) translate(${x}px, ${-y}px) rotate(${rot}deg)`;
+      }else{
+        // flat/overlap/scroll: no fan transforms; allow CSS to lay out
+        if(handLayout==="overlap" && i>0) d.style.marginLeft = "-18px";
+        d.style.zIndex = String(100 + i);
+      }
       if(isSel) d.classList.add("selected");
 
       d.innerHTML = `
