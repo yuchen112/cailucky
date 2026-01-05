@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2026-01-05T20:23:07.616Z"
+    "exportedAt": "2026-01-05T21:10:18.258Z"
   },
   "data": {
     "homepage": {
@@ -6313,6 +6313,15 @@
         "note": "",
         "updatedAt": 1767643612801,
         "createdAt": 1767643612801
+      },
+      {
+        "id": "048f7997-c0a7-4438-837b-3f77b00e175c",
+        "title": "連連看",
+        "url": "games/emoji_linkgame.html",
+        "thumb": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/emoji_linkgame.png",
+        "note": "輕鬆連線，眼睛舒服，專注配對的純粹樂趣",
+        "updatedAt": 1767647415754,
+        "createdAt": 1767647415754
       }
     ]
   },
