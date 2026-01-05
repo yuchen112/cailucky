@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2026-01-05T06:14:11.120Z"
+    "exportedAt": "2026-01-05T14:34:10.559Z"
   },
   "data": {
     "homepage": {
@@ -6295,6 +6295,15 @@
         "note": "翻開卡牌，記住位置，用最少步數完成所有配對",
         "updatedAt": 1767591160095,
         "createdAt": 1767591160095
+      },
+      {
+        "id": "9192da68-327d-4259-86be-9b385000fc1f",
+        "title": "大老二",
+        "url": "games/big2.html",
+        "thumb": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/big2.png",
+        "note": "經典撲克遊戲大老二，支援存檔",
+        "updatedAt": 1767623646591,
+        "createdAt": 1767623646591
       }
     ]
   },
