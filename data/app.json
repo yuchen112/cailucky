@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2026-01-05T14:34:10.559Z"
+    "exportedAt": "2026-01-05T20:23:07.616Z"
   },
   "data": {
     "homepage": {
@@ -6304,6 +6304,15 @@
         "note": "經典撲克遊戲大老二，支援存檔",
         "updatedAt": 1767623646591,
         "createdAt": 1767623646591
+      },
+      {
+        "id": "ba3bbb1c-3eee-4384-b4ba-3777b86ff769",
+        "title": "拉霸機",
+        "url": "games/slot_ultra.html",
+        "thumb": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/slot_ultra.png",
+        "note": "",
+        "updatedAt": 1767643612801,
+        "createdAt": 1767643612801
       }
     ]
   },
