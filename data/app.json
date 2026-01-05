@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2026-01-05T03:20:08.698Z"
+    "exportedAt": "2026-01-05T06:14:11.120Z"
   },
   "data": {
     "homepage": {
@@ -6286,6 +6286,15 @@
         "note": "選好風格與難度後開始遊戲，所有最高分與設定都會自動儲存在本機。",
         "updatedAt": 1767580734040,
         "createdAt": 1767561847686
+      },
+      {
+        "id": "4b9a467c-70a2-4a9d-a0d1-686405761e62",
+        "title": "記憶翻牌",
+        "url": "games/memory_match.json.html",
+        "thumb": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/memory_match.json.png",
+        "note": "翻開卡牌，記住位置，用最少步數完成所有配對",
+        "updatedAt": 1767591160095,
+        "createdAt": 1767591160095
       }
     ]
   },
