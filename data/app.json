@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2026-01-04T21:24:14.526Z"
+    "exportedAt": "2026-01-05T03:20:08.698Z"
   },
   "data": {
     "homepage": {
@@ -6282,9 +6282,9 @@
         "id": "ef3daf78-f641-4479-a393-afe1c64b1213",
         "title": "flappy_bird",
         "url": "games/flappy_bird.html",
-        "thumb": "",
+        "thumb": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/flappy_bird.png",
         "note": "選好風格與難度後開始遊戲，所有最高分與設定都會自動儲存在本機。",
-        "updatedAt": 1767561847686,
+        "updatedAt": 1767580734040,
         "createdAt": 1767561847686
       }
     ]
