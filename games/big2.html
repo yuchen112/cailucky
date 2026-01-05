@@ -771,6 +771,54 @@
       100%{ filter: brightness(1) saturate(1); transform: translate(-50%, -50%) scale(1); }
     }
 
+
+    .settBox{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      padding:10px;
+      border-radius:14px;
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+    }
+    .settLine{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+
+
+    .settBox{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      padding:12px;
+      border-radius:16px;
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+    }
+    .settLine{
+      display:grid;
+      grid-template-columns: 1fr auto auto;
+      gap:10px;
+      align-items:center;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .settDelta{
+      padding:2px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      font-variant-numeric: tabular-nums;
+    }
+    .settDelta.pos{ box-shadow: 0 0 0 2px rgba(90,170,255,.22) inset; }
+    .settDelta.neg{ box-shadow: 0 0 0 2px rgba(255,120,120,.18) inset; }
+
 </style>
 </head>
 <body>
@@ -1049,8 +1097,7 @@
       });
     }catch(e){}
   }
-
-  function animateCardsToPile(indices){
+  function animateCardsToPile(indices, cards){
     try{
       const fan = document.getElementById("fan");
       const pile = document.getElementById("pile");
@@ -1067,12 +1114,24 @@
 
       if(!nodes.length) return Promise.resolve();
 
+      // Map index -> card object (cards are in hand order indices)
+      const idxToCard = new Map();
+      if(Array.isArray(cards)){
+        indices.forEach((idx, k)=>{
+          if(cards[k]) idxToCard.set(idx, cards[k]);
+        });
+      }
+
       // Hide originals during animation to avoid "double card" feeling
       nodes.forEach(n=>{ n.style.visibility = "hidden"; });
 
-      const clones = nodes.map((n, idx)=>{
+      const clones = nodes.map((n, order)=>{
+        const idx = Number(n.dataset.i);
         const r = n.getBoundingClientRect();
-        const c = n.cloneNode(true);
+        const face = idxToCard.get(idx);
+        // Build consistent DOM for both human/AI animations
+        const c = face ? makeCardFace(face) : n.cloneNode(true);
+
         c.style.position = "fixed";
         c.style.left = r.left + "px";
         c.style.top = r.top + "px";
@@ -1080,38 +1139,39 @@
         c.style.height = r.height + "px";
         c.style.margin = "0";
         c.style.pointerEvents = "none";
-        c.style.zIndex = String(7000 + idx);
+        c.style.zIndex = String(7200 + order);
         c.style.transform = "none";
+        c.style.willChange = "transform, opacity";
+        c.style.backfaceVisibility = "hidden";
         c.classList.remove("selected");
+        // lighter shadow for smoother FPS
+        c.style.boxShadow = "0 10px 18px rgba(0,0,0,.22), 0 0 16px rgba(90,170,255,.24)";
         document.body.appendChild(c);
 
-        const off = (idx - (nodes.length-1)/2) * 12; // landing fan
-        const tx = (destX - r.width/2 + off) - r.left;
+        const spread = (order - (nodes.length-1)/2) * 14;
+        const tx = (destX - r.width/2 + spread) - r.left;
         const ty = (destY - r.height/2) - r.top;
 
-        // Arc: lift slightly before landing, plus small rotation
-        const lift = Math.max(18, Math.min(46, Math.abs(tx) * 0.12 + 22));
-        const rot0 = (idx - (nodes.length-1)/2) * 2.8;  // initial slight fan
-        const rot1 = rot0 * 0.65;
-        const rot2 = rot0 * 0.25;
+        const hover = 34;
+        const rot = (order - (nodes.length-1)/2) * 3.0;
 
-        const delay = idx * 28; // nice stagger
-        const dur = 360;
+        const delay = order * 20;
+        const dur = 460;
 
         const anim = c.animate([
-          { transform: `translate(0px,0px) rotate(${rot0}deg) scale(1)`, opacity: 1, filter:"brightness(1.02)" },
-          { transform: `translate(${tx*0.55}px,${ty*0.55 - lift}px) rotate(${rot1}deg) scale(0.98)`, opacity: 0.98 },
-          { transform: `translate(${tx*0.92}px,${ty*0.92 + 6}px) rotate(${rot2}deg) scale(0.94)`, opacity: 0.95 },
-          { transform: `translate(${tx}px,${ty}px) rotate(${rot2}deg) scale(0.92)`, opacity: 0.92 }
-        ], { duration: dur, delay, easing: "cubic-bezier(.2,.9,.2,1)", fill: "forwards" });
+          { transform: `translate3d(0px,0px,0) rotate(${rot}deg) scale(1)`, opacity: 1 },
+          { transform: `translate3d(${tx*0.16}px,${-hover}px,0) rotate(${rot*0.85}deg) scale(1.03)`, opacity: 0.99 },
+          { transform: `translate3d(${tx*0.36}px,${ty*0.36 - hover*0.55}px,0) rotate(${rot*0.58}deg) scale(1.01)`, opacity: 0.97 },
+          { transform: `translate3d(${tx*0.66}px,${ty*0.66 - 10}px,0) rotate(${rot*0.32}deg) scale(0.97)`, opacity: 0.95 },
+          { transform: `translate3d(${tx}px,${ty}px,0) rotate(${rot*0.18}deg) scale(0.93)`, opacity: 0.92 }
+        ], { duration: dur, delay, easing: "cubic-bezier(.16,.9,.18,1)", fill: "forwards" });
 
-        // Small "settle" bounce at destination
         anim.finished.then(()=>{
           c.animate([
-            { transform: `translate(${tx}px,${ty}px) rotate(${rot2}deg) scale(0.92)` },
-            { transform: `translate(${tx}px,${ty - 5}px) rotate(${rot2}deg) scale(0.92)` },
-            { transform: `translate(${tx}px,${ty}px) rotate(${rot2}deg) scale(0.92)` }
-          ], { duration: 140, easing: "cubic-bezier(.2,.7,.2,1)", fill:"forwards" });
+            { transform: `translate3d(${tx}px,${ty}px,0) rotate(${rot*0.18}deg) scale(0.93)` },
+            { transform: `translate3d(${tx+1}px,${ty-6}px,0) rotate(${rot*0.18}deg) scale(0.93)` },
+            { transform: `translate3d(${tx}px,${ty}px,0) rotate(${rot*0.18}deg) scale(0.93)` }
+          ], { duration: 120, easing: "cubic-bezier(.2,.7,.2,1)", fill:"forwards" });
         });
 
         return { c, anim };
@@ -1125,10 +1185,75 @@
       return Promise.resolve();
     }
   }
+function animateGhostPlayFromSeat(pid, cards){
+    try{
+      const seat = document.getElementById("seat"+pid);
+      const pile = document.getElementById("pile");
+      if(!seat || !pile) return Promise.resolve();
 
+      const sr = seat.getBoundingClientRect();
+      const pileRect = pile.getBoundingClientRect();
+      const destX = pileRect.left + pileRect.width/2;
+      const destY = pileRect.top + pileRect.height/2;
 
+      const startX = sr.left + sr.width/2;
+      const startY = sr.top + sr.height/2;
 
-  function toast(msg){
+      const clones = cards.map((card, idx)=>{
+        // Use the same DOM builder as pile cards to avoid visual glitches
+        const c = makeCardFace(card);
+        const w = 56, h = 78;
+        c.style.position = "fixed";
+        c.style.left = (startX - w/2) + "px";
+        c.style.top = (startY - h/2) + "px";
+        c.style.width = w + "px";
+        c.style.height = h + "px";
+        c.style.margin = "0";
+        c.style.pointerEvents = "none";
+        c.style.zIndex = String(6800 + idx);
+        c.style.transform = "none";
+        c.style.boxShadow = "0 16px 30px rgba(0,0,0,.30)";
+        document.body.appendChild(c);
+
+        const spread = (idx - (cards.length-1)/2) * 14;
+        const tx = (destX - w/2 + spread) - (startX - w/2);
+        const ty = (destY - h/2) - (startY - h/2);
+
+        const hover = 38;
+        const rot = (idx - (cards.length-1)/2) * 3.2;
+
+        const delay = idx * 22;
+        const dur = 520;
+
+        const anim = c.animate([
+          { transform: `translate3d(0px,0px,0) rotate(${rot}deg) scale(1)`, opacity: 0.98, filter:"brightness(1.03)" },
+          { transform: `translate3d(${tx*0.16}px,${-hover}px,0) rotate(${rot*0.85}deg) scale(1.04)`, opacity: 0.97 },
+          { transform: `translate3d(${tx*0.36}px,${ty*0.36 - hover*0.55}px,0) rotate(${rot*0.58}deg) scale(1.02)`, opacity: 0.96 },
+          { transform: `translate3d(${tx*0.62}px,${ty*0.62 - 12}px,0) rotate(${rot*0.32}deg) scale(0.98)`, opacity: 0.95 },
+          { transform: `translate3d(${tx*0.86}px,${ty*0.86 + 10}px,0) rotate(${rot*0.22}deg) scale(0.95)`, opacity: 0.94 },
+          { transform: `translate3d(${tx}px,${ty}px,0) rotate(${rot*0.18}deg) scale(0.93)`, opacity: 0.92 }
+        ], { duration: dur, delay, easing: "cubic-bezier(.16,.9,.18,1)", fill: "forwards" });
+
+        anim.finished.then(()=>{
+          c.animate([
+            { transform: `translate3d(${tx}px,${ty}px,0) rotate(${rot*0.18}deg) scale(0.93)` },
+            { transform: `translate3d(${tx+2}px,${ty-8}px,0) rotate(${rot*0.18}deg) scale(0.93)` },
+            { transform: `translate3d(${tx}px,${ty}px,0) rotate(${rot*0.18}deg) scale(0.93)` }
+          ], { duration: 150, easing: "cubic-bezier(.2,.7,.2,1)", fill:"forwards" });
+        });
+
+        return { c, anim };
+      });
+
+      return Promise.allSettled(clones.map(x=>x.anim.finished)).then(()=>{
+        clones.forEach(x=>x.c.remove());
+      });
+    }catch(e){
+      return Promise.resolve();
+    }
+  }
+
+function toast(msg){
     if(!elToast) return;
     elToast.textContent = msg;
     elToast.classList.add("show");
@@ -1573,7 +1698,9 @@
     }
   }
 
-  const VSTATE = { selected: new Set() };
+  const VSTATE = { selected: new Set() ,
+  animating:false
+};
   function selectedCards(){
     const hand = MATCH.players[0].hand;
     const idxs = [...VSTATE.selected].sort((a,b)=>a-b);
@@ -1714,6 +1841,7 @@
     MATCH.passesSinceLastPlay = 0;
     clearPassFlags();
     MATCH.leader = pid;
+    MATCH.turn = pid; // strict: lead must act next
     logMsg(`本輪結束，${MATCH.players[pid].name} 取得領出權`);
   }
 
@@ -1764,6 +1892,19 @@
   }
 
   function doPass(pid){
+    // Rule: when table is empty (free lead), passing is not allowed
+    if(!MATCH.tableLastPlay || !MATCH.tableLastEval){
+      const who = (pid===0 ? "你" : MATCH.players[pid].name);
+      toast("領出時不能過牌");
+      logMsg(`${who} 試圖過牌（領出時禁止）`);
+      // If somehow turn belongs to this player, force them to lead (AI will act via pumpAI, human must choose)
+      MATCH.turn = pid;
+      persist();
+      renderAll();
+      pumpAI();
+      return;
+    }
+
     MATCH.players[pid].passed = true;
     MATCH.passesSinceLastPlay += 1;
 
@@ -1772,9 +1913,8 @@
 
     if(MATCH.passesSinceLastPlay >= 3){
       const lastPid = MATCH.tableLastPlay.pid;
-      clearTableAndGiveLead(lastPid);
+      clearTableAndGiveLead(lastPid); // also sets MATCH.turn = lastPid
       toast("清桌");
-      MATCH.turn = lastPid;
     }else{
       MATCH.turn = nextPlayer(pid);
     }
@@ -1784,18 +1924,25 @@
   }
 
   async function humanPlay(){
+  return (async ()=>{
+
+    if(VSTATE.animating) return;
     const cards = selectedCards();
     const v = validateMove(cards);
     if(!v.ok){ toast(v.msg); logMsg(`提示：${v.msg}`); return; }
-    // play animation before committing the move
-    const idxs = Array.from(VSTATE.selected);
+
+    // Use the same "ghost fly" animation as AI for consistency
+    VSTATE.animating = true;
     disableTableControls(true);
-    await animateCardsToPile(idxs);
-    try{ const pile=document.getElementById('pile'); if(pile){ pile.classList.remove('pilePulse'); void pile.offsetWidth; pile.classList.add('pilePulse'); } }catch(e){}
+    await animateGhostPlayFromSeat(0, cards);
     disableTableControls(false);
+    VSTATE.animating = false;
+
     VSTATE.selected.clear();
     playCards(0, cards, v.ev);
-  }
+  
+  })();
+}
 
   function humanPass(){
     if(!isHumanTurn()){ toast("目前不是你的回合"); return; }
@@ -1969,8 +2116,13 @@
       }
 
       setTimeout(()=>{
-        playCards(pid, play.cards, play.ev);
-        setTimeout(step, 560);
+        disableTableControls(true);
+        animateGhostPlayFromSeat(pid, play.cards).then(()=>{
+          disableTableControls(false);
+    VSTATE.animating = false;
+          playCards(pid, play.cards, play.ev);
+          setTimeout(step, 560);
+        });
       }, 620);
     };
 
@@ -2042,6 +2194,11 @@
     if(!winner) return;
 
     const winPid = winner.id;
+
+    // Snapshot chips BEFORE settlement
+    const beforeMap = new Map(MATCH.players.map(p=>[p.id, p.chips]));
+    const deltaMap = new Map(MATCH.players.map(p=>[p.id, 0]));
+
     let gain = 0;
     for(const p of MATCH.players){
       if(p.id===winPid) continue;
@@ -2049,8 +2206,24 @@
       const actual = Math.min(p.chips, pay);
       p.chips -= actual;
       gain += actual;
+      deltaMap.set(p.id, -actual);
     }
     winner.chips += gain;
+    deltaMap.set(winPid, gain);
+
+    // store settlement snapshot for UI (ROUND_END)
+    MATCH.lastSettlement = {
+      winnerId: winPid,
+      winnerName: (winPid===0 ? "你" : winner.name),
+      gain,
+      rows: MATCH.players.map(p=>{
+        const name = (p.id===0 ? "你" : p.name);
+        const before = beforeMap.get(p.id) ?? p.chips;
+        const after  = p.chips;
+        const delta  = deltaMap.get(p.id) ?? (after - before);
+        return { id:p.id, name, before, after, delta };
+      })
+    };
 
     const who = (winPid===0 ? "你" : winner.name);
     logMsg(`本局結束：${who} 先出完，獲得 +${gain} 籌碼`);
@@ -2206,7 +2379,25 @@
     }
     else if(state===MENU_STATE.ROUND_END){
       elMenuTitle.textContent = "本局結算";
-      elMenuDesc.textContent = "本局已結束。你可「下一局」延續目前籌碼，或「刷新 AI（開新局）」重抽 AI 並重置 AI 籌碼；玩家籌碼不變。";
+      if(MATCH.lastSettlement){
+        const s = MATCH.lastSettlement;
+        const rows = (s.rows||[]).map(r=>{
+          const sign = r.delta>=0 ? "+" : "−";
+          const cls = r.delta>=0 ? "pos" : "neg";
+          return `<div class="settLine">
+            <span class="settName">${r.name}</span>
+            <span class="settChips">${r.before} → ${r.after}</span>
+            <span class="settDelta ${cls}">${sign}${Math.abs(r.delta)}</span>
+          </div>`;
+        }).join("");
+        elMenuDesc.innerHTML = `
+          <div style="margin-bottom:8px;">勝者：<b>${s.winnerName}</b></div>
+          <div class="settBox">${rows}</div>
+          <div style="margin-top:10px;opacity:.9;">按「下一局」開始下一局。</div>
+        `;
+      }else{
+        elMenuDesc.textContent = "本局已結束。按「下一局」開始下一局。";
+      }
       btnCloseMenu.textContent = "主選單";
       btnLoad.textContent = "下一局";
       btnNew.textContent = "刷新AI（開新局）";
