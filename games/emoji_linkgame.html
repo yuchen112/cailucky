@@ -1,0 +1,1654 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>Emoji 連連看｜單局挑戰</title>
+<style>
+  :root{
+    --cell:44px;
+    --gap:6px;
+    --emoji:24px;
+    --cell: clamp(32px, 7.2vw, 52px);
+    --gap: clamp(4px, 1.1vw, 8px);
+
+    --bg:#0b0f16; --panel:#101a2a; --panel2:#0f1724; --text:#e8f0ff; --muted:#9fb1d6;
+    --accent:#59f; --good:#2dd4bf; --bad:#fb7185; --warn:#fbbf24;
+    --shadow: rgba(0,0,0,.35); --line: rgba(140,180,255,.65);
+  }
+  body.light{
+    --bg:#f5f7fb; --panel:#ffffff; --panel2:#f2f5fb; --text:#0b1220; --muted:#4b5b7b;
+    --accent:#2563eb; --good:#0f766e; --bad:#e11d48; --warn:#b45309;
+    --shadow: rgba(0,0,0,.10); --line: rgba(37,99,235,.55);
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background: radial-gradient(1200px 900px at 20% 10%, rgba(80,140,255,.18), transparent 55%),
+                radial-gradient(900px 700px at 85% 20%, rgba(45,212,191,.14), transparent 55%),
+                radial-gradient(900px 700px at 35% 85%, rgba(251,113,133,.10), transparent 55%),
+                var(--bg);
+    color:var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button{ font-family:inherit; }
+  .app{ max-width:1100px; margin:0 auto; padding:18px 14px 28px; }
+  .topbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+  .brand{ display:flex; flex-direction:column; gap:2px; }
+  .brand .title{ font-size:18px; font-weight:800; letter-spacing:.5px; }
+  .brand .sub{ font-size:12px; color:var(--muted); }
+  .pillrow{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:flex-end; }
+  .btn{
+    cursor:pointer;
+    border:1px solid rgba(140,180,255,.25);
+    background: linear-gradient(180deg, rgba(100,160,255,.18), rgba(40,80,160,.05));
+    color:var(--text);
+    padding:10px 12px;
+    border-radius:14px;
+    box-shadow: 0 10px 24px var(--shadow);
+    transition: transform .08s ease, filter .12s ease;
+    user-select:none;
+  }
+  .btn:active{ transform: translateY(1px) scale(.99); filter: brightness(.98); }
+  .btn.small{ padding:8px 10px; border-radius:12px; font-size:12px; }
+  .btn.ghost{ background: transparent; border-color: rgba(160,180,210,.25); }
+  .btn.primary{
+    border-color: rgba(90,150,255,.55);
+    background: linear-gradient(180deg, rgba(90,150,255,.45), rgba(30,70,160,.10));
+  }
+  body.light .btn.primary{ background: linear-gradient(180deg, rgba(37,99,235,.20), rgba(37,99,235,.05)); }
+  .panel{
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
+    border:1px solid rgba(140,180,255,.20);
+    border-radius:18px;
+    box-shadow: 0 18px 50px var(--shadow);
+    overflow:hidden;
+  }
+  body.light .panel{ background: linear-gradient(180deg, rgba(37,99,235,.04), rgba(37,99,235,0)); border-color: rgba(37,99,235,.16); }
+  .screen{ display:none; padding:16px; }
+  .screen.active{ display:block; }
+  .grid2{ display:grid; grid-template-columns: 1.2fr .8fr; gap:14px; }
+  @media (max-width: 980px){ .grid2{ grid-template-columns: 1fr; } }
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
+    border: 1px solid rgba(140,180,255,.20);
+    border-radius:16px;
+    padding:14px;
+  }
+  body.light .card{ background: linear-gradient(180deg, rgba(37,99,235,.04), rgba(37,99,235,0)); border-color: rgba(37,99,235,.14); }
+  .card h3{ margin:0 0 8px 0; font-size:14px; letter-spacing:.2px; }
+  .card p{ margin:6px 0; color:var(--muted); font-size:12px; line-height:1.45; }
+  .optrow{ display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+  .seg{ display:flex; gap:8px; flex-wrap:wrap; }
+  .seg .chip{
+    cursor:pointer; padding:9px 12px; border-radius:14px;
+    border:1px solid rgba(140,180,255,.24); background: rgba(255,255,255,.04);
+    color:var(--text); font-weight:700; font-size:12px; user-select:none;
+  }
+  body.light .seg .chip{ background: rgba(37,99,235,.05); border-color: rgba(37,99,235,.16); }
+  .seg .chip.active{ border-color: rgba(90,150,255,.85); background: rgba(90,150,255,.18); box-shadow: 0 12px 30px var(--shadow); transform: translateY(-1px); }
+  .hud{
+    display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    padding:12px 14px; border-bottom: 1px solid rgba(140,180,255,.16); background: rgba(0,0,0,.12);
+  }
+  body.light .hud{ background: rgba(37,99,235,.04); border-bottom-color: rgba(37,99,235,.12); }
+  .hud .left, .hud .right{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .stat{ display:flex; flex-direction:column; gap:2px; min-width:90px; }
+  .stat .k{ font-size:11px; color:var(--muted); }
+  .stat .v{ font-size:14px; font-weight:900; letter-spacing:.2px; }
+  .bar{ width:220px; height:10px; border-radius:999px; overflow:hidden; background: rgba(255,255,255,.10); border:1px solid rgba(140,180,255,.16); }
+  body.light .bar{ background: rgba(37,99,235,.08); border-color: rgba(37,99,235,.14); }
+  .bar > i{ display:block; height:100%; width:100%; background: linear-gradient(90deg, rgba(45,212,191,.95), rgba(90,150,255,.95)); }
+  .playWrap{ position:relative; padding:14px; display:flex; justify-content:center; align-items:center; overflow:hidden; }
+  .board{
+    position:relative; z-index:1; display:grid; gap:var(--gap); justify-content:center; align-content:center;
+    user-select:none; touch-action: manipulation; margin: 0 auto;
+  }
+  .cell{
+    width:var(--cell); height:var(--cell); border-radius:14px; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+    border:1px solid rgba(140,180,255,.18); box-shadow: 0 14px 26px var(--shadow);
+    font-size:24px; line-height:1; cursor:pointer; position:relative;
+  }
+  body.light .cell{ background: linear-gradient(180deg, rgba(37,99,235,.05), rgba(37,99,235,.02)); border-color: rgba(37,99,235,.14); }
+  .cell.empty{ background: transparent; border: 1px dashed rgba(160,180,210,.18); box-shadow:none; cursor:default; }
+  body.light .cell.empty{ border-color: rgba(60,90,140,.18); }
+  .cell.block{ background: rgba(0,0,0,.08); border: 1px solid rgba(160,180,210,.10); box-shadow:none; cursor:default; opacity:.65; }
+  body.light .cell.block{ background: rgba(37,99,235,.03); }
+  .cell.sel{ outline: 3px solid rgba(90,150,255,.95); outline-offset: 2px; transform: translateY(-1px); filter: brightness(1.12); }
+  .cell.hint{ animation: pulse 800ms ease-in-out infinite; outline: 3px solid rgba(45,212,191,.95); outline-offset: 2px; }
+  @keyframes pulse{ 0%,100%{ filter: brightness(1); transform: translateY(0); } 50%{ filter: brightness(1.15); transform: translateY(-1px); } }
+  canvas#line{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:50; }
+  .footerBtns{
+    padding:12px 14px 14px; display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between;
+    border-top:1px solid rgba(140,180,255,.16); background: rgba(0,0,0,.08);
+  }
+  body.light .footerBtns{ background: rgba(37,99,235,.03); border-top-color: rgba(37,99,235,.12); }
+  .toast{
+    position:fixed; left:50%; bottom:18px; transform: translateX(-50%);
+    background: rgba(10,18,32,.92); color: var(--text);
+    border:1px solid rgba(140,180,255,.22); border-radius: 999px;
+    padding:10px 14px; font-size:12px; box-shadow: 0 18px 50px var(--shadow);
+    opacity:0; pointer-events:none; transition: opacity .18s ease, transform .18s ease;
+    z-index: 9999; max-width: 92vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  body.light .toast{ background: rgba(255,255,255,.95); color: var(--text); }
+  .toast.show{ opacity:1; transform: translateX(-50%) translateY(-2px); }
+  .table{ width:100%; border-collapse: collapse; font-size:12px; overflow:hidden; border-radius:14px; border:1px solid rgba(140,180,255,.18); }
+  body.light .table{ border-color: rgba(37,99,235,.14); }
+  .table th, .table td{ padding:10px 10px; border-bottom:1px solid rgba(140,180,255,.12); text-align:left; }
+  body.light .table th, body.light .table td{ border-bottom-color: rgba(37,99,235,.10); }
+  .table th{ color: var(--muted); font-weight:800; background: rgba(0,0,0,.10); }
+  body.light .table th{ background: rgba(37,99,235,.04); }
+  .table tr:last-child td{ border-bottom:none; }
+  .rightAlign{ text-align:right; }
+  .mono{ font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+  .nameInput{
+    width:100%; padding:10px 12px; border-radius:14px; border:1px solid rgba(140,180,255,.22);
+    background: rgba(255,255,255,.06); color:var(--text); outline:none;
+  }
+  body.light .nameInput{ background: rgba(37,99,235,.04); border-color: rgba(37,99,235,.14); }
+  .muted{ color:var(--muted); }
+
+/* Leaderboard modal: make it readable on mobile */
+#lbModal .panel{
+  background: rgba(10,18,32,.96);
+  border-color: rgba(140,180,255,.30);
+}
+body.light #lbModal .panel{
+  background: rgba(255,255,255,.96);
+  border-color: rgba(37,99,235,.22);
+}
+#lbModal .card{
+  background: rgba(0,0,0,.22);
+  border-color: rgba(140,180,255,.22);
+}
+body.light #lbModal .card{
+  background: rgba(37,99,235,.06);
+  border-color: rgba(37,99,235,.18);
+}
+#lbModal .table th{
+  background: rgba(0,0,0,.22);
+}
+body.light #lbModal .table th{
+  background: rgba(37,99,235,.08);
+}
+
+
+/* Mobile-first: keep board fully in view */
+.main{ min-height: 100dvh; }
+.playWrap{ width:100%; }
+
+
+/* Mobile-first layout: keep board fully visible */
+.main{ min-height: 100dvh; display:flex; flex-direction:column; }
+.hud{ flex:0 0 auto; }
+.footerBtns{ flex:0 0 auto; }
+.playWrap{ flex:1 1 auto; min-height:0; width:100%; }
+#boardStage{ position:relative; transform-origin:center center; will-change:transform; }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="brand">
+      <div class="title">Emoji 連連看</div>
+      <div class="sub">單局挑戰 · 3難度 · 一般/道具 · 排行 · 無解自動整理（位置不變，圖案重排）</div>
+    </div>
+    <div class="pillrow">
+      <button id="btnTheme" class="btn small ghost">切換明暗</button>
+      <button id="btnHome" class="btn small ghost">主選單</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div id="screenHome" class="screen active">
+      <div class="grid2">
+        <div class="card">
+          <h3>開始遊戲</h3>
+          <p>規則：相同 Emoji 兩兩消除。連線路徑只能水平/垂直，最多兩次轉彎，且可繞到棋盤外圈。無解時將自動整理牌面（保持原位，只重排剩餘圖案）。</p>
+
+          <div class="optrow">
+            <div class="stat">
+              <div class="k">模式</div>
+              <div class="seg" id="segMode"></div>
+            </div>
+            <div class="stat">
+              <div class="k">難度</div>
+              <div class="seg" id="segDiff"></div>
+            </div>
+          </div>
+
+          <div class="optrow" style="margin-top:14px;">
+            <button id="btnStart" class="btn primary">開始單局挑戰</button>
+            <button id="btnLeader" class="btn">查看排行榜</button>
+            <button id="btnHow" class="btn ghost">規則與說明</button>
+          </div>
+
+          <p class="muted" style="margin-top:10px;">
+            盤型：每局從 10 種盤型中隨機挑選（不是固定方形）。<br/>
+            一般模式：提示/洗牌可用（扣分）。道具模式：新增炸彈/時間包（扣分）。<br/>
+            排行榜：依「模式 × 難度」分榜。
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>本機設定</h3>
+          <p>資料存放於此瀏覽器的 LocalStorage。清除瀏覽器資料會清空排行榜。</p>
+          <div class="optrow">
+            <button id="btnResetRank" class="btn ghost">清空排行榜</button>
+            <button id="btnSeed" class="btn ghost">重骰 Emoji 池</button>
+          </div>
+          <p class="muted" id="seedInfo"></p>
+        </div>
+      </div>
+    </div>
+
+    <div id="screenHow" class="screen">
+      <div class="card">
+        <h3>規則（標準嚴格版）</h3>
+        <p>
+          1) 目標：在時間內清空棋盤。<br/>
+          2) 選兩張相同 Emoji。若存在連線路徑（水平/垂直）且最多兩次轉彎（0/1/2 轉），即可消除。<br/>
+          3) 連線路徑不能穿過仍有牌的格子，且不能穿過盤型的「封鎖格」。<br/>
+          4) 允許繞到棋盤外圈（外圈視為空格），因此可從外面繞回來。<br/>
+          5) 無解：若找不到任何可消配對，將自動整理牌面（保持格子位置，只重排剩餘圖案）。<br/>
+          6) 一般/道具：一般模式以提示/洗牌輔助；道具模式增加炸彈與時間包，但排行榜分開統計。<br/>
+        </p>
+        <div class="optrow">
+          <button class="btn" onclick="APP.show('screenHome')">返回</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="screenPlay" class="screen">
+      <div class="hud">
+        <div class="left">
+          <div class="stat">
+            <div class="k">模式 / 難度</div>
+            <div class="v" id="hudMode">-</div>
+          </div>
+          <div class="stat">
+            <div class="k">盤型</div>
+            <div class="v" id="hudShape">-</div>
+          </div>
+          <div class="stat">
+            <div class="k">時間</div>
+            <div class="v mono" id="hudTime">0.0</div>
+          </div>
+          <div class="bar" title="剩餘時間"><i id="timeBar"></i></div>
+        </div>
+        <div class="right">
+          <div class="stat">
+            <div class="k">分數</div>
+            <div class="v mono" id="hudScore">0</div>
+          </div>
+          <div class="stat">
+            <div class="k">連消</div>
+            <div class="v mono" id="hudCombo">x1</div>
+          </div>
+          <div class="stat">
+            <div class="k">剩餘對數</div>
+            <div class="v mono" id="hudPairs">0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="playWrap">
+        <div id="boardStage"><div id="board" class="board"></div><canvas id="line"></canvas></div>
+      </div>
+
+      <div class="footerBtns">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button id="btnHint" class="btn">提示（-30）</button>
+          <button id="btnShuffle" class="btn">洗牌（-60）</button>
+          <button id="btnBomb" class="btn">炸彈（-80）</button>
+          <button id="btnTimePlus" class="btn">時間包（-120）</button>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button id="btnPause" class="btn ghost">暫停</button>
+          <button id="btnRestart" class="btn ghost">重開本局</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="screenPause" class="screen">
+      <div class="card">
+        <h3>已暫停</h3>
+        <p class="muted">你可以繼續、重開或回主選單。</p>
+        <div class="optrow">
+          <button id="btnResume" class="btn primary">繼續</button>
+          <button id="btnRestart2" class="btn">重開本局</button>
+          <button id="btnHome2" class="btn ghost">回主選單</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="screenResult" class="screen">
+      <div class="grid2">
+        <div class="card">
+          <h3>結算</h3>
+          <p id="resultTitle" style="margin-top:8px;"></p>
+          <table class="table">
+            <tbody>
+              <tr><th>分數</th><td class="rightAlign mono" id="rScore">0</td></tr>
+              <tr><th>剩餘時間</th><td class="rightAlign mono" id="rTime">0.0</td></tr>
+              <tr><th>最大連消</th><td class="rightAlign mono" id="rMaxCombo">1</td></tr>
+              <tr><th>消除對數</th><td class="rightAlign mono" id="rClears">0</td></tr>
+              <tr><th>提示 / 洗牌</th><td class="rightAlign mono" id="rHS">0 / 0</td></tr>
+              <tr><th>道具使用</th><td class="rightAlign mono" id="rItems">0</td></tr>
+              <tr><th>自動整理</th><td class="rightAlign mono" id="rAuto">0</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:12px;">
+            <div class="muted" style="font-size:12px; margin-bottom:6px;">若進榜可輸入名稱（留空則使用「玩家」）</div>
+            <input id="nameInput" class="nameInput" maxlength="16" placeholder="玩家名稱（可留空）"/>
+          </div>
+          <div class="optrow" style="margin-top:12px;">
+            <button id="btnSaveRank" class="btn primary">儲存到排行榜</button>
+            <button id="btnPlayAgain" class="btn">再玩一局</button>
+            <button id="btnResultHome" class="btn ghost">回主選單</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>本模式排行榜（Top 20）</h3>
+          <p class="muted" id="rankKeyInfo"></p>
+          <div id="rankTableWrap"></div>
+          <div class="optrow" style="margin-top:12px;">
+            <button class="btn ghost" onclick="openLeaderboardModal()">切換排行榜</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="screenLeader" class="screen">
+      <div class="grid2">
+        <div class="card">
+          <h3>排行榜</h3>
+          <p class="muted">依「模式 × 難度」分榜。排序：分數 → 剩餘時間 → 最大連消 → 時間戳。</p>
+          <div class="optrow">
+            <div class="stat">
+              <div class="k">模式</div>
+              <div class="seg" id="segRankMode"></div>
+            </div>
+            <div class="stat">
+              <div class="k">難度</div>
+              <div class="seg" id="segRankDiff"></div>
+            </div>
+          </div>
+          <div class="optrow" style="margin-top:12px;">
+            <button class="btn ghost" onclick="APP.show('screenHome')">返回</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 id="leaderTitle">-</h3>
+          <div id="leaderWrap"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="toast" class="toast">-</div>
+
+<script>
+
+(() => {
+  const $ = (id)=>document.getElementById(id);
+
+  const DIFFS = [
+    { id:"E", name:"Easy", rows:8, cols:10, time:120 },
+    { id:"N", name:"Normal", rows:10, cols:14, time:150 },
+    { id:"H", name:"Hard", rows:12, cols:16, time:180 },
+  ];
+  const MODES = [
+    { id:"normal", name:"一般模式" },
+    { id:"item", name:"道具模式" },
+  ];
+
+  const EMOJI_BANK = [
+    "🍎","🍌","🍇","🍉","🍒","🍓","🥝","🍍","🥑","🥕","🌽","🥦","🍄","🧀",
+    "🍔","🍟","🍕","🌭","🍿","🥨","🍪","🍩","🍰","🧁","🍫",
+    "🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐨","🐯","🦁",
+    "🐸","🐵","🐔","🐧","🐤","🦄","🐝","🦋","🐢","🐙","🐠",
+    "⚽","🏀","🏈","🎾","🎲","🎯","🎮","🎹","🎺","🥁","🎧",
+    "🌙","⭐","⚡","🔥","❄️","🌈","🍀","🌸","🍁","🌵","🌊"
+  ];
+  let EMOJI_SEED = Math.floor(Math.random()*1e9);
+  
+
+function updateSeedInfo(){
+  const el = $("seedInfo");
+  if(!el) return;
+  // 顯示目前的隨機種子，方便重現同一組 Emoji 池
+  el.textContent = `Emoji Seed：${EMOJI_SEED}（點「重骰 Emoji 池」可更換）`;
+}
+
+function seededRand(){
+    let x = EMOJI_SEED | 0;
+    x ^= x << 13; x ^= x >>> 17; x ^= x << 5;
+    EMOJI_SEED = x >>> 0;
+    return (EMOJI_SEED % 1_000_000) / 1_000_000;
+  }
+  function pickEmojiPool(size){
+    const arr = EMOJI_BANK.slice();
+    for(let i=arr.length-1;i>0;i--){
+      const j = Math.floor(seededRand()*(i+1));
+      [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+    return arr.slice(0, Math.max(12, Math.min(size, arr.length)));
+  }
+
+  const SHAPES = [
+    { id:"RECT", name:"矩形", mask:(r,c,y,x)=>true },
+    { id:"DIAMOND", name:"菱形", mask:(r,c,y,x)=>{
+        const cy=(r-1)/2, cx=(c-1)/2;
+        const dy=Math.abs(y-cy)/(r/2), dx=Math.abs(x-cx)/(c/2);
+        return (dx+dy) <= 0.95;
+      }},
+    { id:"DONUT", name:"甜甜圈", mask:(r,c,y,x)=>{
+        const cy=(r-1)/2, cx=(c-1)/2;
+        const dy=(y-cy)/(r/2), dx=(x-cx)/(c/2);
+        const d=Math.sqrt(dx*dx+dy*dy);
+        return d<=0.95 && d>=0.35;
+      }},
+    { id:"CROSS", name:"十字", mask:(r,c,y,x)=>{
+        const bandY = Math.abs(y-(r-1)/2) <= Math.max(1, Math.floor(r*0.14));
+        const bandX = Math.abs(x-(c-1)/2) <= Math.max(1, Math.floor(c*0.14));
+        return bandX || bandY;
+      }},
+    { id:"X", name:"X 形", mask:(r,c,y,x)=>{
+        const d1 = Math.abs(y - x*(r-1)/(c-1));
+        const d2 = Math.abs(y - ((c-1-x)*(r-1)/(c-1)));
+        const th = Math.max(0.9, Math.min(r,c)*0.10);
+        return (d1<=th) || (d2<=th);
+      }},
+    { id:"FRAME", name:"相框", mask:(r,c,y,x)=>{
+        const mY = Math.max(1, Math.floor(r*0.12));
+        const mX = Math.max(1, Math.floor(c*0.10));
+        const inner = (y>=mY && y<r-mY && x>=mX && x<c-mX);
+        return !inner;
+      }},
+    { id:"TWO_ISLANDS", name:"雙島", mask:(r,c,y,x)=>{
+        const left = x < c*0.42;
+        const right = x > c*0.58;
+        const midBand = y < r*0.72 && y > r*0.18;
+        return midBand && (left || right);
+      }},
+    { id:"STAIRS", name:"階梯", mask:(r,c,y,x)=>{
+        const t = (y/(r-1)) * (c-1);
+        return x <= t + (c*0.18) && x >= t - (c*0.18);
+      }},
+    { id:"HOURGLASS", name:"沙漏", mask:(r,c,y,x)=>{
+        const top = y <= (r-1)/2;
+        const k = top ? y : (r-1-y);
+        const pad = Math.floor((k/(r/2))*(c*0.38));
+        return x>=pad && x<=(c-1-pad);
+      }},
+    { id:"WAVES", name:"波浪", mask:(r,c,y,x)=>{
+        const t = Math.sin((x/(c-1))*Math.PI*2) * (r*0.18) + (r-1)/2;
+        return Math.abs(y - t) <= Math.max(1, Math.floor(r*0.14));
+      }},
+  ];
+
+  const LB_KEY = "llk_leaderboards_v1";
+  function loadLB(){ try{ return JSON.parse(localStorage.getItem(LB_KEY) || "{}"); }catch(e){ return {}; } }
+  function saveLB(data){ localStorage.setItem(LB_KEY, JSON.stringify(data)); }
+  function lbKey(modeId, diffId){ return `${modeId}_${diffId}`; }
+  function getLBList(modeId, diffId){
+    const all = loadLB(); const key = lbKey(modeId, diffId);
+    return Array.isArray(all[key]) ? all[key] : [];
+  }
+  function pushLB(modeId, diffId, rec){
+    const all = loadLB(); const key = lbKey(modeId, diffId);
+    const arr = Array.isArray(all[key]) ? all[key] : [];
+    arr.push(rec);
+    arr.sort((a,b)=>{
+      if(b.score!==a.score) return b.score-a.score;
+      if(b.timeLeft!==a.timeLeft) return b.timeLeft-a.timeLeft;
+      if(b.maxCombo!==a.maxCombo) return b.maxCombo-a.maxCombo;
+      return (a.createdAt||0) - (b.createdAt||0);
+    });
+    all[key] = arr.slice(0,20);
+    saveLB(all);
+  }
+
+  let toastTimer = null;
+  function toast(msg){
+    const el = $("toast");
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>el.classList.remove("show"), 1200);
+  }
+
+  function setChips(containerId, items, onPick, activeId){
+    const el = $(containerId);
+    el.innerHTML = "";
+    items.forEach(it=>{
+      const b = document.createElement("div");
+      b.className = "chip" + (it.id===activeId ? " active" : "");
+      b.textContent = it.name;
+      b.addEventListener("click", ()=>onPick(it.id));
+      el.appendChild(b);
+    });
+  }
+
+  const G = {
+    modeId: "normal",
+    diffId: "N",
+    shapeId: "RECT",
+    running: false,
+    paused: false,
+    rows: 10, cols: 14,
+    timeMax: 150,
+    timeLeft: 150,
+    score: 0,
+    combo: 1,
+    maxCombo: 1,
+    lastClearAt: 0,
+    clears: 0,
+    pairsLeft: 0,
+    hintCount: 0,
+    shuffleCount: 0,
+    itemUseCount: 0,
+    autoRefreshCount: 0,
+    bombArmed: false,
+    selected: null,
+    hintCells: null,
+    blocked: null,
+    board: null,
+    tickHandle: null,
+    idleNoClearAt: 0,
+  };
+
+  function modeObj(){ return MODES.find(x=>x.id===G.modeId) || MODES[0]; }
+  function diffObj(){ return DIFFS.find(x=>x.id===G.diffId) || DIFFS[1]; }
+  function shapeObj(){ return SHAPES.find(x=>x.id===G.shapeId) || SHAPES[0]; }
+
+  function resetRoundState(){
+    G.running=false; G.paused=false;
+    G.score=0; G.combo=1; G.maxCombo=1;
+    G.lastClearAt=0; G.clears=0;
+    G.hintCount=0; G.shuffleCount=0;
+    G.itemUseCount=0; G.autoRefreshCount=0;
+    G.bombArmed=false;
+    G.selected=null; G.hintCells=null;
+    G.idleNoClearAt=performance.now();
+  }
+
+  function buildMask(rows, cols){
+    const idx = Math.floor(Math.random()*SHAPES.length);
+    const sh = SHAPES[idx];
+    G.shapeId = sh.id;
+
+    const blocked = Array.from({length:rows}, ()=>Array(cols).fill(false));
+    let cells = [];
+    for(let y=0;y<rows;y++){
+      for(let x=0;x<cols;x++){
+        const ok = sh.mask(rows, cols, y, x);
+        blocked[y][x] = !ok;
+        if(ok) cells.push([y,x]);
+      }
+    }
+    if(cells.length % 2 === 1){
+      const cand = cells.filter(([y,x])=> (y===0||x===0||y===rows-1||x===cols-1));
+      const pick = (cand.length? cand : cells)[Math.floor(Math.random()*((cand.length||cells.length)))];
+      blocked[pick[0]][pick[1]] = true;
+      cells = cells.filter(p=> !(p[0]===pick[0] && p[1]===pick[1]));
+    }
+    return { blocked, cells, shapeName: sh.name };
+  }
+
+  function shuffleInPlace(arr){
+    for(let i=arr.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+  }
+
+  function reshuffleEmojisNoCost(clearSelection){
+    const slots = [];
+    const icons = [];
+    for(let y=0;y<G.rows;y++){
+      for(let x=0;x<G.cols;x++){
+        if(G.blocked[y][x]) continue;
+        const v = G.board[y][x];
+        if(v){
+          slots.push([y,x]);
+          icons.push(v);
+        }
+      }
+    }
+    shuffleInPlace(icons);
+    for(let i=0;i<slots.length;i++){
+      const [y,x]=slots[i];
+      G.board[y][x]=icons[i];
+    }
+    if(clearSelection){
+      G.selected=null;
+      G.hintCells=null;
+      G.bombArmed=false;
+    }
+  }
+
+  function ensureSolvableOrReshuffle(maxTry){
+    for(let t=0;t<maxTry;t++){
+      const mv = findAnyMove();
+      if(mv) return true;
+      reshuffleEmojisNoCost(false);
+    }
+    return false;
+  }
+
+  function generateBoard(){
+    const d = diffObj();
+    G.rows = d.rows; G.cols = d.cols;
+    G.timeMax = d.time; G.timeLeft = d.time;
+
+    const { blocked, cells, shapeName } = buildMask(G.rows, G.cols);
+    G.blocked = blocked;
+    $("hudShape").textContent = shapeName;
+
+    const N = cells.length;
+    const K = Math.max(12, Math.min(28, Math.floor(N/5)));
+    const pool = pickEmojiPool(K);
+
+    const icons = [];
+    for(let i=0;i<N/2;i++){
+      const e = pool[i % pool.length];
+      icons.push(e,e);
+    }
+    shuffleInPlace(icons);
+
+    const board = Array.from({length:G.rows}, ()=>Array(G.cols).fill(null));
+    for(let i=0;i<cells.length;i++){
+      const [y,x] = cells[i];
+      board[y][x] = icons[i];
+    }
+    G.board = board;
+    G.pairsLeft = N/2;
+
+    ensureSolvableOrReshuffle(30);
+  }
+
+  function renderHUD(){
+    $("hudMode").textContent = `${modeObj().name} / ${diffObj().name}`;
+    $("hudTime").textContent = G.timeLeft.toFixed(1);
+    $("hudScore").textContent = String(G.score);
+    $("hudCombo").textContent = `x${G.combo}`;
+    $("hudPairs").textContent = String(G.pairsLeft);
+    const pct = Math.max(0, Math.min(1, G.timeLeft / G.timeMax));
+    $("timeBar").style.width = (pct*100).toFixed(1) + "%";
+    const itemMode = (G.modeId==="item");
+    $("btnBomb").style.display = itemMode ? "" : "none";
+    $("btnTimePlus").style.display = itemMode ? "" : "none";
+  }
+
+  function renderBoard(){
+  computeCellMetrics();
+  resizeCanvas();
+    // After layout, scale board to fit viewport
+    requestAnimationFrame(()=>{ fitBoardToViewport(); resizeCanvas(); });
+  const el = $("board");
+  el.style.gridTemplateColumns = `repeat(${G.cols}, var(--cell))`;
+  el.innerHTML = "";
+  for(let y=0;y<G.rows;y++){
+    for(let x=0;x<G.cols;x++){
+      const isBlocked = G.blocked?.[y]?.[x];
+      const emoji = G.board?.[y]?.[x];
+
+      const d = document.createElement("div");
+      d.className = "cell";
+      d.dataset.y = String(y);
+      d.dataset.x = String(x);
+
+      if(isBlocked){
+        d.classList.add("empty"); d.style.opacity = "0.55"; d.style.pointerEvents="none";
+      }else if(!emoji){
+        d.classList.add("empty");
+      }else{
+        d.textContent = emoji;
+        if(G.selected && G.selected.y===y && G.selected.x===x) d.classList.add("sel");
+        if(G.hintCells && G.hintCells.some(p=>p[0]===y && p[1]===x)) d.classList.add("hint");
+      }
+
+      d.addEventListener("click", ()=>onCellClick(y,x));
+      el.appendChild(d);
+    }
+  }
+  resizeCanvas();
+    // After layout, scale board to fit viewport
+    requestAnimationFrame(()=>{ fitBoardToViewport(); resizeCanvas(); });
+}
+
+
+  function computeCellMetrics(){
+  const hud = document.querySelector(".hud");
+  const footer = document.querySelector(".footerBtns");
+  const topbar = document.querySelector(".topbar");
+
+  const vw = Math.max(320, (window.visualViewport?.width || window.innerWidth));
+                 const vh = Math.max(480, (window.visualViewport?.height || window.innerHeight));
+
+  const hudH = hud ? hud.getBoundingClientRect().height : 0;
+  const footerH = footer ? footer.getBoundingClientRect().height : 0;
+  const topbarH = topbar ? topbar.getBoundingClientRect().height : 0;
+
+  // keep some breathing room so board never clips
+  const safeW = vw - 20;
+  const safeH = vh - topbarH - hudH - footerH - 44;
+
+  // Determine cell and gap under constraints
+  let cell = 44;
+  let gap = 6;
+
+  // iterate a bit because gap depends on cell
+  for(let iter=0; iter<4; iter++){
+    gap = Math.max(3, Math.min(8, Math.round(cell*0.14)));
+    const cellByW = Math.floor((safeW - (G.cols-1)*gap) / G.cols);
+    const cellByH = Math.floor((safeH - (G.rows-1)*gap) / G.rows);
+    cell = Math.min(cellByW, cellByH);
+    cell = Math.max(20, Math.min(56, cell));
+  }
+  const emoji = Math.max(16, Math.min(30, Math.round(cell*0.56)));
+
+  document.documentElement.style.setProperty("--cell", cell + "px");
+  document.documentElement.style.setProperty("--gap", gap + "px");
+  document.documentElement.style.setProperty("--emoji", emoji + "px");
+  return {cell, gap, emoji};
+}
+function fitBoardToViewport(){
+  const wrap = document.querySelector(".playWrap");
+  const stage = $("boardStage");
+  const board = $("board");
+  if(!wrap || !stage || !board) return;
+
+  // natural (unscaled) board size
+  const bw = board.offsetWidth || 1;
+  const bh = board.offsetHeight || 1;
+
+  // available size inside playWrap (minus small padding)
+  const pad = 8;
+  const aw = Math.max(1, wrap.clientWidth - pad*2);
+  const ah = Math.max(1, wrap.clientHeight - pad*2);
+
+  const scale = Math.min(1, aw / bw, ah / bh);
+  APP.boardScale = scale;
+  stage.style.transform = `scale(${scale})`;
+}
+
+
+function resizeCanvas(){
+  const stage = $("boardStage");
+  const cvs = $("line");
+  if(!stage || !cvs) return;
+  const rect = stage.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  cvs.width = Math.max(1, Math.floor(rect.width * dpr));
+  cvs.height = Math.max(1, Math.floor(rect.height * dpr));
+  cvs.style.width = rect.width + "px";
+  cvs.style.height = rect.height + "px";
+  const ctx = cvs.getContext("2d");
+  ctx.setTransform(dpr,0,0,dpr,0,0); // draw in CSS pixels
+  clearLine();
+}
+
+
+  window.addEventListener("resize", ()=>{ if(G.board){ computeCellMetrics(); renderBoard(); } else { computeCellMetrics(); } fitBoardToViewport();
+  resizeCanvas(); });
+function clearLine(){ const cvs=$('line'); const ctx=cvs.getContext('2d'); ctx.save(); ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,cvs.width,cvs.height); ctx.restore(); }
+
+  function getCellElByBoardCoord(by,bx){
+  return document.querySelector(`.cell[data-y="${by}"][data-x="${bx}"]`);
+}
+function pointFromExpanded(p){
+  const wrap = document.querySelector(".playWrap");
+  const wrapRect = wrap.getBoundingClientRect();
+  const boardEl = $("board");
+  const boardRect = boardEl.getBoundingClientRect();
+  const R = G.rows, C = G.cols;
+
+  if(p.y>=1 && p.y<=R && p.x>=1 && p.x<=C){
+    const el = getCellElByBoardCoord(p.y-1, p.x-1);
+    const r = el ? el.getBoundingClientRect() : boardRect;
+    return {x:(r.left+r.width/2)-wrapRect.left, y:(r.top+r.height/2)-wrapRect.top};
+  }
+
+  const cellRect = getCellElByBoardCoord(0,0)?.getBoundingClientRect();
+  const cellH = cellRect ? cellRect.height : 40;
+  const cellW = cellRect ? cellRect.width : 40;
+  const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--gap")) || 6;
+  const stepX = cellW + gap;
+  const stepY = cellH + gap;
+
+  const colIndex = Math.min(C, Math.max(1, p.x));
+  const rowIndex = Math.min(R, Math.max(1, p.y));
+  const cx = (boardRect.left + (colIndex-1)*stepX + cellW/2) - wrapRect.left;
+  const cy = (boardRect.top + (rowIndex-1)*stepY + cellH/2) - wrapRect.top;
+
+  if(p.y===0) return {x: cx, y: (boardRect.top - gap - cellH/2) - wrapRect.top};
+  if(p.y===R+1) return {x: cx, y: (boardRect.bottom + gap + cellH/2) - wrapRect.top};
+  if(p.x===0) return {x: (boardRect.left - gap - cellW/2) - wrapRect.left, y: cy};
+  if(p.x===C+1) return {x: (boardRect.right + gap + cellW/2) - wrapRect.left, y: cy};
+  return {x: cx, y: cy};
+}
+
+function drawPath(path){
+  const stage = $("boardStage");
+  const boardEl = $("board");
+  if(!stage || !boardEl) return;
+
+  const stageRect = stage.getBoundingClientRect();
+  const boardRect = boardEl.getBoundingClientRect();
+
+  // Measure actual cell step in pixels (after scaling)
+  const first = document.querySelector('.cell[data-y="0"][data-x="0"]');
+  let cellW = first ? first.getBoundingClientRect().width : 32;
+  let cellH = first ? first.getBoundingClientRect().height : 32;
+
+  // estimate gap by probing neighbor if exists
+  let gapX = 4, gapY = 4;
+  const n1 = document.querySelector('.cell[data-y="0"][data-x="1"]');
+  if(first && n1){
+    const r0 = first.getBoundingClientRect();
+    const r1 = n1.getBoundingClientRect();
+    gapX = Math.max(0, (r1.left - r0.right));
+  }
+  const n2 = document.querySelector('.cell[data-y="1"][data-x="0"]');
+  if(first && n2){
+    const r0 = first.getBoundingClientRect();
+    const r2 = n2.getBoundingClientRect();
+    gapY = Math.max(0, (r2.top - r0.bottom));
+  }
+
+  function cellCenter(by,bx){
+    const el = document.querySelector(`.cell[data-y="${by}"][data-x="${bx}"]`);
+    if(!el){
+      return {x: boardRect.left + boardRect.width/2, y: boardRect.top + boardRect.height/2};
+    }
+    const r = el.getBoundingClientRect();
+    return {x: r.left + r.width/2, y: r.top + r.height/2};
+  }
+
+  function pointFromExpanded(p){
+    const R = G.rows, C = G.cols;
+
+    // inside board
+    if(p.y>=1 && p.y<=R && p.x>=1 && p.x<=C){
+      const c = cellCenter(p.y-1, p.x-1);
+      return {x: c.x - stageRect.left, y: c.y - stageRect.top};
+    }
+
+    // Border/corridor points: align to nearest row/col center then extend outside board
+    const col = Math.min(C, Math.max(1, p.x));
+    const row = Math.min(R, Math.max(1, p.y));
+
+    // base center inside board for this row/col
+    const base = cellCenter(row-1, col-1);
+
+    let x = base.x, y = base.y;
+
+    if(p.y===0)    y = boardRect.top - gapY - cellH/2;
+    if(p.y===R+1)  y = boardRect.bottom + gapY + cellH/2;
+    if(p.x===0)    x = boardRect.left - gapX - cellW/2;
+    if(p.x===C+1)  x = boardRect.right + gapX + cellW/2;
+
+    return {x: x - stageRect.left, y: y - stageRect.top};
+  }
+
+  const pts = path.map(pointFromExpanded);
+
+  const cvs = $("line");
+  const ctx = cvs.getContext("2d");
+
+  // clear in CSS pixel space (ctx is dpr-scaled in resizeCanvas)
+  clearLine();
+
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.lineWidth = Math.max(4, Math.round(cellW * 0.16));
+  ctx.lineJoin = "round";
+  ctx.lineCap = "round";
+  ctx.strokeStyle = "rgba(160,210,255,0.95)";
+  ctx.shadowBlur = 12;
+  ctx.shadowColor = "rgba(120,190,255,0.9)";
+
+  ctx.beginPath();
+  ctx.moveTo(pts[0].x, pts[0].y);
+  for(let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x, pts[i].y);
+  ctx.stroke();
+  ctx.restore();
+
+  setTimeout(()=>clearLine(), 200);
+}
+
+
+
+  function onCellClick(y,x){
+    if(!G.running || G.paused) return;
+    if(G.blocked[y][x]) return;
+    const emoji = G.board[y][x];
+    if(!emoji) return;
+
+    if(G.modeId==="item" && G.bombArmed){
+      G.bombArmed = false;
+      useBombAt(y,x);
+      return;
+    }
+
+    G.hintCells = null;
+
+    if(!G.selected){
+      G.selected = {y,x};
+      renderBoard();
+      return;
+    }
+    if(G.selected.y===y && G.selected.x===x){
+      G.selected = null;
+      renderBoard();
+      return;
+    }
+
+    const a = G.selected;
+    const b = {y,x};
+    const ea = G.board[a.y][a.x];
+    const eb = G.board[b.y][b.x];
+
+    if(ea !== eb){
+      G.selected = b;
+      renderBoard();
+      return;
+    }
+
+    const res = canLink(a, b);
+    if(res.ok){
+      commitClear(a,b,res);
+    }else{
+      toast("不可連線");
+      G.selected = b;
+      renderBoard();
+    }
+  }
+
+  function commitClear(a,b,linkRes){
+    const now = performance.now();
+    const dt = now - (G.lastClearAt || 0);
+    if(G.lastClearAt && dt <= 3000) G.combo = Math.min(12, G.combo + 1);
+    else G.combo = 1;
+    G.maxCombo = Math.max(G.maxCombo, G.combo);
+    G.lastClearAt = now;
+    G.idleNoClearAt = now;
+
+    const base = 10;
+    const turnBonus = (linkRes.turns===0 ? 0 : (linkRes.turns===1 ? 2 : 5));
+    const mult = Math.min(3, 1 + 0.25*(G.combo-1));
+    const add = Math.round((base + turnBonus) * mult);
+    G.score += add;
+    G.clears += 1;
+
+    const tadd = (G.diffId==="H") ? 0.5 : 0.8;
+    G.timeLeft = Math.min(G.timeMax, G.timeLeft + tadd);
+
+    G.board[a.y][a.x] = null;
+    G.board[b.y][b.x] = null;
+    G.pairsLeft -= 1;
+    G.selected = null;
+
+    if(linkRes.path && linkRes.path.length>=2) drawPath(linkRes.path);
+
+    renderHUD();
+    renderBoard();
+
+    if(G.pairsLeft<=0){ endGame(true); return; }
+    maybeAutoRefresh();
+  }
+
+  function endGame(win){
+    stopTick();
+    G.running=false;
+    const title = win ? "勝利：已清空棋盤" : "失敗：時間歸零";
+    $("resultTitle").innerHTML = `<strong>${title}</strong> <span class="muted">（${modeObj().name} / ${diffObj().name}）</span>`;
+    $("rScore").textContent = String(G.score);
+    $("rTime").textContent = G.timeLeft.toFixed(1);
+    $("rMaxCombo").textContent = String(G.maxCombo);
+    $("rClears").textContent = String(G.clears);
+    $("rHS").textContent = `${G.hintCount} / ${G.shuffleCount}`;
+    $("rItems").textContent = String(G.itemUseCount);
+    $("rAuto").textContent = String(G.autoRefreshCount);
+
+    const key = lbKey(G.modeId, G.diffId);
+    $("rankKeyInfo").textContent = `榜別：${key}（${modeObj().name} / ${diffObj().name}）`;
+    renderRankTable($("rankTableWrap"), getLBList(G.modeId, G.diffId));
+
+    APP.show("screenResult");
+    APP.lastResultRankKey = key;
+  }
+
+  function startTick(){
+    stopTick();
+    G.running=true;
+    G.paused=false;
+    let last = performance.now();
+    G.tickHandle = setInterval(()=>{
+      if(!G.running || G.paused) return;
+      const now = performance.now();
+      const dt = (now-last)/1000;
+      last = now;
+      G.timeLeft -= dt;
+      if(G.timeLeft <= 0){
+        G.timeLeft = 0;
+        renderHUD();
+        endGame(false);
+        return;
+      }
+      renderHUD();
+      if(now - G.idleNoClearAt >= 8000){
+        if(!findAnyMove()){
+          autoRefresh("無解，已自動整理牌面");
+        }
+        G.idleNoClearAt = now;
+      }
+    }, 100);
+  }
+  function stopTick(){
+    if(G.tickHandle){ clearInterval(G.tickHandle); G.tickHandle=null; }
+  }
+
+  function pauseGame(){
+    if(!G.running) return;
+    G.paused = true;
+    APP.show("screenPause");
+  }
+  function resumeGame(){
+    if(!G.running) return;
+    G.paused = false;
+    APP.show("screenPlay");
+    renderHUD(); renderBoard();
+  }
+
+  function penalize(scoreCost, timeCost){
+    if(scoreCost) G.score = Math.max(0, G.score - scoreCost);
+    if(timeCost) G.timeLeft = Math.max(0, G.timeLeft - timeCost);
+  }
+
+  function useHint(){
+    if(!G.running || G.paused) return;
+    const mv = findAnyMove();
+    if(!mv){ autoRefresh("無解，已自動整理牌面"); return; }
+    G.hintCells = [[mv.a.y,mv.a.x],[mv.b.y,mv.b.x]];
+    G.selected = null;
+    G.hintCount += 1;
+    penalize(30, 0);
+    renderHUD(); renderBoard();
+    toast("提示：已標記一組可消");
+  }
+
+  function useShuffle(manual=true){
+    if(!G.running || G.paused) return;
+    if(manual){
+      G.shuffleCount += 1;
+      penalize(60, 0);
+      toast("洗牌：已重排剩餘圖案");
+    }
+    reshuffleEmojisNoCost(true);
+    renderHUD(); renderBoard();
+    ensureSolvableOrReshuffle(20);
+  }
+
+  function maybeAutoRefresh(){
+    const mv = findAnyMove();
+    if(mv) return;
+    autoRefresh("無解，已自動整理牌面");
+  }
+
+  function autoRefresh(msg){
+    G.autoRefreshCount += 1;
+    if(G.modeId==="item"){
+      G.shuffleCount += 1;
+      penalize(60, 0);
+    }
+    for(let i=0;i<30;i++){
+      reshuffleEmojisNoCost(true);
+      if(findAnyMove()) break;
+    }
+    renderHUD(); renderBoard();
+    toast(msg);
+  }
+
+  function armBomb(){
+    if(!G.running || G.paused) return;
+    if(G.modeId!=="item") return;
+    G.bombArmed = true;
+    toast("炸彈：請點選一張牌");
+  }
+
+  function useBombAt(y,x){
+    if(!G.running || G.paused) return;
+    if(G.modeId!=="item") return;
+    const e = G.board[y][x];
+    if(!e) return;
+    let other = null;
+    for(let yy=0;yy<G.rows;yy++){
+      for(let xx=0;xx<G.cols;xx++){
+        if(yy===y && xx===x) continue;
+        if(G.board[yy][xx]===e){ other={y:yy,x:xx}; break; }
+      }
+      if(other) break;
+    }
+    if(!other){ toast("炸彈：找不到配對"); return; }
+    G.itemUseCount += 1;
+    penalize(80, 0);
+
+    G.board[y][x]=null;
+    G.board[other.y][other.x]=null;
+    G.pairsLeft -= 1;
+    G.clears += 1;
+    G.selected = null;
+    G.hintCells = null;
+    G.idleNoClearAt = performance.now();
+
+    renderHUD(); renderBoard();
+    toast("炸彈：已消除一對");
+
+    if(G.pairsLeft<=0){ endGame(true); return; }
+    maybeAutoRefresh();
+  }
+
+  function useTimePlus(){
+    if(!G.running || G.paused) return;
+    if(G.modeId!=="item") return;
+    G.itemUseCount += 1;
+    penalize(120, 0);
+    const add = (G.diffId==="H") ? 8 : 10;
+    G.timeLeft = Math.min(G.timeMax, G.timeLeft + add);
+    renderHUD();
+    toast(`時間包：+${add} 秒`);
+  }
+
+  const DIRS = [
+    {dx:1, dy:0, id:0},
+    {dx:-1,dy:0, id:1},
+    {dx:0, dy:1, id:2},
+    {dx:0, dy:-1,id:3},
+  ];
+
+  function canLink(a,b){
+  if(a.y===b.y && a.x===b.x) return {ok:false};
+  const ea = G.board[a.y][a.x], eb = G.board[b.y][b.x];
+  if(!ea || !eb || ea!==eb) return {ok:false};
+
+  const R = G.rows, C = G.cols;
+  const S = {y:a.y+1, x:a.x+1};
+  const T = {y:b.y+1, x:b.x+1};
+  const maxTurns = 2;
+
+  const dirs = [
+    {dx:1, dy:0, id:0},
+    {dx:-1,dy:0, id:1},
+    {dx:0, dy:1, id:2},
+    {dx:0, dy:-1,id:3},
+  ];
+
+  function isPassable(y,x){
+    if(y<0 || x<0 || y>R+1 || x>C+1) return false;
+    if(y===S.y && x===S.x) return true;
+    if(y===T.y && x===T.x) return true;
+    if(y===0 || x===0 || y===R+1 || x===C+1) return true; // outer ring always open
+    const by=y-1, bx=x-1;
+    // blocked cells are empty corridors (unclickable but passable)
+    return G.board[by][bx]===null;
+  }
+
+  // visited[y][x][dirIndex] = min turns to reach (dirIndex 0..3, plus 4 = none)
+  const INF = 99;
+  const visited = Array.from({length:R+2}, ()=>Array.from({length:C+2}, ()=>Array(5).fill(INF)));
+  const prev = Array.from({length:R+2}, ()=>Array.from({length:C+2}, ()=>Array(5).fill(null)));
+
+  const q = [];
+  const NONE = 4;
+  visited[S.y][S.x][NONE] = 0;
+  q.push({y:S.y,x:S.x,dir:NONE,turns:0});
+
+  let end = null;
+
+  while(q.length){
+    const cur = q.shift();
+    if(cur.turns>maxTurns) continue;
+
+    if(cur.y===T.y && cur.x===T.x){
+      end = cur;
+      break;
+    }
+
+    for(const d of dirs){
+      const nt = cur.turns + ((cur.dir===NONE || cur.dir===d.id) ? 0 : 1);
+      if(nt>maxTurns) continue;
+      const ny = cur.y + d.dy;
+      const nx = cur.x + d.dx;
+      if(!isPassable(ny,nx)) continue;
+
+      if(visited[ny][nx][d.id] <= nt) continue;
+      visited[ny][nx][d.id] = nt;
+      prev[ny][nx][d.id] = {y:cur.y,x:cur.x,dir:cur.dir};
+      q.push({y:ny,x:nx,dir:d.id,turns:nt});
+    }
+  }
+
+  if(!end) return {ok:false};
+
+  // pick best end direction if end landed with NONE (rare) else keep
+  let endDir = end.dir;
+  if(endDir===NONE){
+    // choose any dir with best turns at T
+    let best = INF, bestDir = 0;
+    for(let d=0; d<4; d++){
+      if(visited[T.y][T.x][d] < best){
+        best = visited[T.y][T.x][d];
+        bestDir = d;
+      }
+    }
+    endDir = bestDir;
+  }
+
+  // Reconstruct step path in expanded grid
+  const steps = [];
+  let node = {y:T.y,x:T.x,dir:endDir};
+  // If we didn't reach T with a concrete dir (shouldn't), fall back to first found
+  if(prev[node.y][node.x][node.dir]===null && !(node.y===S.y && node.x===S.x)){
+    // attempt to locate any dir that has a predecessor
+    for(let d=0; d<4; d++){
+      if(prev[T.y][T.x][d]){ node.dir=d; break; }
+    }
+  }
+
+  while(node){
+    steps.push({y:node.y,x:node.x,dir:node.dir});
+    node = prev[node.y][node.x][node.dir];
+  }
+  // ensure include start
+  steps.push({y:S.y,x:S.x,dir:NONE});
+  steps.reverse();
+
+  // Convert to points (y,x) and compress collinear
+  const pts = [];
+  for(const s0 of steps){
+    const last = pts[pts.length-1];
+    if(!last || last.y!==s0.y || last.x!==s0.x) pts.push({y:s0.y,x:s0.x});
+  }
+  // compress collinear segments
+  const comp = [];
+  for(const p of pts){
+    if(comp.length<2){ comp.push(p); continue; }
+    const a0 = comp[comp.length-2];
+    const b0 = comp[comp.length-1];
+    const c0 = p;
+    const collinear = (a0.y===b0.y && b0.y===c0.y) || (a0.x===b0.x && b0.x===c0.x);
+    if(collinear){
+      comp[comp.length-1] = c0;
+    }else{
+      comp.push(c0);
+    }
+  }
+  const turns = Math.max(0, comp.length-2);
+  if(turns>maxTurns) return {ok:false};
+  return {ok:true, turns, path: comp};
+}
+
+
+function reconstructPath(prev, S, T, endDir, R, C){
+    // Follow predecessor pointers and then compress to corner points
+    let y=T.y, x=T.x, dir=endDir;
+    const nodes = [];
+    while(true){
+      nodes.push({y,x,dir});
+      const p = prev[y][x][dir];
+      if(!p) break;
+      y=p.y; x=p.x; dir=p.dir;
+      if(y===S.y && x===S.x) { nodes.push({y,x,dir}); break; }
+    }
+    nodes.reverse();
+
+    // Expand to just coordinates and keep only turning points + endpoints
+    const coords = [];
+    for(const n of nodes){
+      if(coords.length===0 || coords[coords.length-1].y!==n.y || coords[coords.length-1].x!==n.x){
+        coords.push({y:n.y, x:n.x});
+      }
+    }
+    // Now keep corners based on direction changes between consecutive segments
+    const corners = [];
+    corners.push(coords[0]);
+    for(let i=1;i<coords.length-1;i++){
+      const a=coords[i-1], b=coords[i], c=coords[i+1];
+      const abx=b.x-a.x, aby=b.y-a.y;
+      const bcx=c.x-b.x, bcy=c.y-b.y;
+      const abH = aby===0, bcH = bcy===0;
+      if(abH !== bcH) corners.push(b);
+    }
+    corners.push(coords[coords.length-1]);
+    return corners;
+}
+
+  function findAnyMove(){
+    const buckets = new Map();
+    for(let y=0;y<G.rows;y++){
+      for(let x=0;x<G.cols;x++){
+        if(G.blocked[y][x]) continue;
+        const e = G.board[y][x];
+        if(!e) continue;
+        if(!buckets.has(e)) buckets.set(e, []);
+        buckets.get(e).push({y,x});
+      }
+    }
+    for(const [e, list] of buckets){
+      if(list.length<2) continue;
+      for(let i=0;i<list.length;i++){
+        for(let j=i+1;j<list.length;j++){
+          const a=list[i], b=list[j];
+          const res = canLink(a,b);
+          if(res.ok) return {a,b,res};
+        }
+      }
+    }
+    return null;
+  }
+
+  function fmtDate(ts){
+    try{
+      const d = new Date(ts);
+      const mm = String(d.getMonth()+1).padStart(2,"0");
+      const dd = String(d.getDate()).padStart(2,"0");
+      const hh = String(d.getHours()).padStart(2,"0");
+      const mi = String(d.getMinutes()).padStart(2,"0");
+      return `${mm}/${dd} ${hh}:${mi}`;
+    }catch(e){ return ""; }
+  }
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, (m)=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+  }
+  function renderRankTable(container, list){
+    if(!list || list.length===0){
+      container.innerHTML = `<p class="muted">尚無紀錄。</p>`;
+      return;
+    }
+    const rows = list.map((r, idx)=>`
+      <tr>
+        <td class="mono">${idx+1}</td>
+        <td>${escapeHtml(r.name||"玩家")}</td>
+        <td class="rightAlign mono">${r.score}</td>
+        <td class="rightAlign mono">${(r.timeLeft||0).toFixed(1)}</td>
+        <td class="rightAlign mono">${r.maxCombo||1}</td>
+        <td class="rightAlign mono">${r.clears||0}</td>
+      </tr>
+    `).join("");
+    container.innerHTML = `
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="width:56px;">#</th>
+            <th>名稱</th>
+            <th class="rightAlign">分數</th>
+            <th class="rightAlign">剩餘秒</th>
+            <th class="rightAlign">MaxC</th>
+            <th class="rightAlign">對數</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+  
+function renderTop5(container, list){
+  const top = (list||[]).slice(0,5);
+  if(!top.length){
+    container.innerHTML = `<p class="muted">尚無紀錄。</p>`;
+    return;
+  }
+  const rows = top.map((r, idx)=>`
+    <tr>
+      <td class="mono">${idx+1}</td>
+      <td>${escapeHtml(r.name||"玩家")}</td>
+      <td class="rightAlign mono">${r.score}</td>
+      <td class="rightAlign mono">${(r.timeLeft||0).toFixed(1)}</td>
+      <td class="rightAlign mono">${r.maxCombo||1}</td>
+    </tr>
+  `).join("");
+  container.innerHTML = `
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width:52px;">#</th>
+          <th>玩家</th>
+          <th class="rightAlign">分數</th>
+          <th class="rightAlign">剩餘秒</th>
+          <th class="rightAlign">MaxC</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+function ensureLbHandlers(){
+  if(APP._lbBound) return;
+  const close = $("lbClose");
+  const back = $("lbBackdrop");
+  const modal = $("lbModal");
+  if(close) close.addEventListener("click", ()=>{ modal.style.display="none"; });
+  if(back) back.addEventListener("click", ()=>{ modal.style.display="none"; });
+  APP._lbBound = true;
+}
+
+function openLeaderboardModal(){
+  ensureLbHandlers();
+  const m = $("lbModal");
+  m.style.display = "flex";
+  // chips
+  const seg = $("lbModeSeg");
+  seg.innerHTML = "";
+  MODES.forEach(it=>{
+    const b = document.createElement("div");
+    b.className = "chip" + (APP.rankModeId===it.id ? " active" : "");
+    b.textContent = it.name;
+    b.addEventListener("click", ()=>{
+      APP.rankModeId = it.id;
+      openLeaderboardModal(); // re-render
+    });
+    seg.appendChild(b);
+  });
+
+  const listE = getLBList(APP.rankModeId, "E");
+  const listN = getLBList(APP.rankModeId, "N");
+  const listH = getLBList(APP.rankModeId, "H");
+  renderTop5($("lbEasy"), listE);
+  renderTop5($("lbNormal"), listN);
+  renderTop5($("lbHard"), listH);
+}
+
+function renderLeaderBoard(){
+    const m = APP.rankModeId || "normal";
+    const d = APP.rankDiffId || "N";
+    const list = getLBList(m,d);
+    $("leaderTitle").textContent = `榜別：${lbKey(m,d)}（${(MODES.find(x=>x.id===m)||MODES[0]).name} / ${(DIFFS.find(x=>x.id===d)||DIFFS[1]).name}）`;
+    const wrap = $("leaderWrap");
+    if(!list || list.length===0){
+      wrap.innerHTML = `<p class="muted">尚無紀錄。</p>`;
+      return;
+    }
+    const rows = list.map((r, idx)=>`
+      <tr>
+        <td class="mono">${idx+1}</td>
+        <td>${escapeHtml(r.name||"玩家")}<div class="muted" style="font-size:11px;">${fmtDate(r.createdAt||0)}</div></td>
+        <td class="rightAlign mono">${r.score}</td>
+        <td class="rightAlign mono">${(r.timeLeft||0).toFixed(1)}</td>
+        <td class="rightAlign mono">${r.maxCombo||1}</td>
+        <td class="rightAlign mono">${r.clears||0}</td>
+      </tr>
+    `).join("");
+    wrap.innerHTML = `
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="width:56px;">#</th>
+            <th>玩家</th>
+            <th class="rightAlign">分數</th>
+            <th class="rightAlign">剩餘秒</th>
+            <th class="rightAlign">MaxC</th>
+            <th class="rightAlign">對數</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+
+  const APP = {
+    lastResultRankKey: null,
+    rankModeId: "normal",
+    rankDiffId: "N",
+    show(id){
+      document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+      $(id).classList.add("active");
+      if(id==="screenPlay"){ requestAnimationFrame(()=>{ resizeCanvas(); }); }
+      else{ clearLine(); }
+    },
+    showLeaderboard(){
+      this.show("screenLeader");
+      renderLeaderBoard();
+    },
+  };
+  window.APP = APP;
+
+  updateSeedInfo();
+
+  function startGame(){
+    resetRoundState();
+    generateBoard();
+    $("hudMode").textContent = `${modeObj().name} / ${diffObj().name}`;
+    $("hudShape").textContent = shapeObj().name;
+    renderHUD();
+    renderBoard();
+    APP.show("screenPlay");
+    startTick();
+    toast("開始！");
+  }
+  function restartGame(){ startGame(); }
+
+  function setMode(id){
+    G.modeId = id;
+    setChips("segMode", MODES, setMode, G.modeId);
+    APP.rankModeId = G.modeId;
+    setChips("segRankMode", MODES, (x)=>{ APP.rankModeId=x; setChips("segRankMode", MODES, arguments.callee, APP.rankModeId); renderLeaderBoard(); }, APP.rankModeId);
+  }
+  function setDiff(id){
+    G.diffId = id;
+    setChips("segDiff", DIFFS.map(d=>({id:d.id,name:d.name})), setDiff, G.diffId);
+    APP.rankDiffId = G.diffId;
+    setChips("segRankDiff", DIFFS.map(d=>({id:d.id,name:d.name})), (x)=>{ APP.rankDiffId=x; setChips("segRankDiff", DIFFS.map(d=>({id:d.id,name:d.name})), arguments.callee, APP.rankDiffId); renderLeaderBoard(); }, APP.rankDiffId);
+  }
+
+  setMode(G.modeId);
+  setDiff(G.diffId);
+  setChips("segRankMode", MODES, (id)=>{ APP.rankModeId=id; setChips("segRankMode", MODES, arguments.callee, APP.rankModeId); renderLeaderBoard(); }, APP.rankModeId);
+  setChips("segRankDiff", DIFFS.map(d=>({id:d.id,name:d.name})), (id)=>{ APP.rankDiffId=id; setChips("segRankDiff", DIFFS.map(d=>({id:d.id,name:d.name})), arguments.callee, APP.rankDiffId); renderLeaderBoard(); }, APP.rankDiffId);
+
+  $("btnTheme").addEventListener("click", ()=>document.body.classList.toggle("light"));
+
+    $("btnHome").addEventListener("click", ()=>{ if(G.running){ pauseGame(); } APP.show("screenHome"); });
+
+  $("btnHow").addEventListener("click", ()=>APP.show("screenHow"));
+  $("btnLeader").addEventListener("click", ()=>openLeaderboardModal());
+  $("btnStart").addEventListener("click", ()=>startGame());
+
+  $("btnHint").addEventListener("click", ()=>useHint());
+  $("btnShuffle").addEventListener("click", ()=>useShuffle(true));
+  $("btnBomb").addEventListener("click", ()=>armBomb());
+  $("btnTimePlus").addEventListener("click", ()=>useTimePlus());
+
+  $("btnPause").addEventListener("click", ()=>pauseGame());
+  $("btnRestart").addEventListener("click", ()=>restartGame());
+
+  $("btnResume").addEventListener("click", ()=>resumeGame());
+  $("btnRestart2").addEventListener("click", ()=>restartGame());
+  $("btnHome2").addEventListener("click", ()=>{ stopTick(); G.running=false; APP.show("screenHome"); });
+
+  $("btnPlayAgain").addEventListener("click", ()=>startGame());
+  $("btnResultHome").addEventListener("click", ()=>APP.show("screenHome"));
+
+  $("btnSaveRank").addEventListener("click", ()=>{
+    const name = ($("nameInput").value || "").trim() || "玩家";
+    const rec = {
+      name,
+      score: G.score,
+      timeLeft: G.timeLeft,
+      maxCombo: G.maxCombo,
+      clears: G.clears,
+      hintCount: G.hintCount,
+      shuffleCount: G.shuffleCount,
+      itemUseCount: G.itemUseCount,
+      autoRefreshCount: G.autoRefreshCount,
+      createdAt: Date.now(),
+    };
+    pushLB(G.modeId, G.diffId, rec);
+    toast("已儲存排行榜");
+    renderRankTable($("rankTableWrap"), getLBList(G.modeId, G.diffId));
+  });
+
+  $("btnResetRank").addEventListener("click", ()=>{ localStorage.removeItem(LB_KEY); toast("已清空排行榜"); });
+
+  $("btnSeed").addEventListener("click", ()=>{
+    EMOJI_SEED = Math.floor(Math.random()*1e9);
+    updateSeedInfo();
+    toast("已重骰 Emoji 池");
+  });
+
+  document.addEventListener("keydown", (e)=>{
+    if(e.key==="Escape"){
+      if($("screenPlay").classList.contains("active")) pauseGame();
+      else if($("screenPause").classList.contains("active")) resumeGame();
+    }
+  });
+})();
+
+</script>
+
+<div id="lbModal" style="position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:99999;">
+  <div id="lbBackdrop" style="position:absolute; inset:0; background:rgba(0,0,0,.55);"></div>
+  <div class="panel" style="position:relative; width:min(920px, 94vw); max-height:86vh; overflow:auto; padding:14px;">
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:8px 6px 12px;">
+      <div>
+        <div style="font-weight:900; font-size:16px;">排行榜</div>
+        <div class="muted" style="font-size:12px;">選擇模式後，顯示各難度 Top 5（分數優先，其次剩餘時間、Max 連消、時間戳）</div>
+      </div>
+      <button id="lbClose" class="btn small ghost">關閉</button>
+    </div>
+
+    <div class="card" style="margin:0 6px 12px;">
+      <h3 style="margin-bottom:10px;">模式</h3>
+      <div class="seg" id="lbModeSeg"></div>
+    </div>
+
+    <div class="grid2" style="grid-template-columns: 1fr 1fr; padding:0 6px 10px;">
+      <div class="card">
+        <h3>Easy Top 5</h3>
+        <div id="lbEasy"></div>
+      </div>
+      <div class="card">
+        <h3>Normal Top 5</h3>
+        <div id="lbNormal"></div>
+      </div>
+      <div class="card">
+        <h3>Hard Top 5</h3>
+        <div id="lbHard"></div>
+      </div>
+      <div class="card"><h3>如何遊玩</h3><p class="muted">點兩個相同圖案，若可在「最多 2 折」內連線就會消除。可用提示/洗牌/暫停/重開。</p></div></div></div>
+</div>
+
+</body>
+</html>
