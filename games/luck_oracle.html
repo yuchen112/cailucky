@@ -1217,6 +1217,29 @@
   linear-gradient(180deg, rgba(200,160,255,.18), rgba(255,255,255,.04)),
   radial-gradient(180px 110px at 50% 20%, rgba(255,255,255,.10), rgba(0,0,0,0) 60%); }
 .rw-wheel .wheel{ filter: drop-shadow(0 18px 34px rgba(0,0,0,.45)); }
+
+/* === Sheet responsiveness fix (v12) === */
+.overlay{ align-items: center; }
+.sheet{
+  max-height: calc(100vh - 28px - env(safe-area-inset-bottom));
+  display:flex;
+  flex-direction:column;
+}
+.sheetTop{ flex-wrap:wrap; }
+.sheetTop .meta{ white-space:normal; }
+.sheetBody{
+  overflow:auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+.toggleRow{ flex-wrap:wrap; gap:10px; }
+.toggleRow .lbl{ min-width: 220px; }
+@media (max-width:420px){
+  .overlay{ padding: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+  .sheet{ border-radius: 18px; }
+  .sheetBody{ padding: 12px; }
+  .resultTitle{ font-size: 15px; }
+}
 </style>
 </head>
 <body>
@@ -1945,8 +1968,8 @@ function openResult(gameId, result){
     // add game-specific class to the reveal layer for CSS-only variations
     layer.classList.add(`fx-${gameId}`);
 
-    setTimeout(()=>{ layer.classList.add("hide"); }, Math.max(250, total-520));
-    setTimeout(()=>{ main.style.opacity = "1"; main.style.transform = "translateY(0px)"; }, Math.max(450, total-420));
+    setTimeout(()=>{ layer.classList.add("hide"); }, Math.max(200, total-220));
+    setTimeout(()=>{ main.style.opacity = "1"; main.style.transform = "translateY(0px)"; }, total);
     setTimeout(()=>{ try{ layer.remove(); }catch(e){} }, total);
   }
 
