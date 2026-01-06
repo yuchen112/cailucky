@@ -1,0 +1,2460 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>射龍門（中門）V4</title>
+  <style>
+
+    :root{
+      --bg1:#06101f;
+      --bg2:#0b1a33;
+      --felt:#0d3b2a;
+      --felt2:#0a2f22;
+      --panel:rgba(10,18,32,.55);
+      --panel2:rgba(16,31,58,.55);
+      --text:#eaf1ff;
+      --muted:#a8b6d8;
+      --accent:#6aa9ff;
+      --good:#42d392;
+      --warn:#ffcc66;
+      --bad:#ff6b6b;
+      --card:#f7f8fb;
+      --cardText:#10131a;
+      --shadow: 0 14px 38px rgba(0,0,0,.40);
+      --r:16px;
+      --r2:22px;
+
+      --controlBg: rgba(0,0,0,.20);
+      --controlBorder: rgba(255,255,255,.12);
+    
+      /* Layout helpers */
+      --safeTop: env(safe-area-inset-top, 0px);
+      --safeRight: env(safe-area-inset-right, 0px);
+      --safeBottom: env(safe-area-inset-bottom, 0px);
+      --safeLeft: env(safe-area-inset-left, 0px);
+      --handH: 110px;
+      --topbarH: 0px;
+}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 25% 0%, #173a7a 0%, var(--bg2) 55%),
+        radial-gradient(900px 650px at 80% 90%, #0c3a2a 0%, var(--bg1) 55%);
+      overflow:hidden;
+    }
+
+    /* ====== Layout ====== */
+    .app{
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      padding:calc(12px + var(--safeTop)) calc(12px + var(--safeRight)) calc(12px + var(--safeBottom)) calc(12px + var(--safeLeft));
+      gap:10px;
+    }
+
+    .topbar{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:var(--shadow);
+      min-width:0;
+      width:min(520px, 100%);
+    }
+    .brand .title{
+      font-weight:900;
+      letter-spacing:.2px;
+      font-size:14px;
+      white-space:nowrap;
+    }
+    .brand .sub{
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .topActions{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+      min-width:0;
+    }
+    .chipPill{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.06);
+      font-size:12px;
+      color:var(--text);
+      white-space:nowrap;
+    }
+    .btn{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:999px;
+      font-size:14px;
+      cursor:pointer;
+      user-select:none;
+      touch-action:manipulation;
+      box-shadow: 0 10px 26px rgba(0,0,0,.22);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn.primary{
+      background:linear-gradient(180deg, rgba(106,169,255,.40), rgba(106,169,255,.18));
+      border-color:rgba(106,169,255,.55);
+    }
+    .btn.good{
+      background:linear-gradient(180deg, rgba(66,211,146,.34), rgba(66,211,146,.14));
+      border-color:rgba(66,211,146,.55);
+    }
+    .btn.bad{
+      background:linear-gradient(180deg, rgba(255,107,107,.30), rgba(255,107,107,.12));
+      border-color:rgba(255,107,107,.55);
+    }
+    .btn:disabled{opacity:.45; cursor:not-allowed; transform:none}
+    .btn.big{
+      padding:12px 14px;
+      border-radius:16px;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+
+    .arenaWrap{
+      flex:1;
+      min-height:0;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding-bottom:calc(var(--dockH, 170px) + env(safe-area-inset-bottom));
+    }
+
+    /* ====== Arena (table) ====== */
+    .arena{
+      flex:1;
+      min-height:0;
+      position:relative;
+      border-radius:var(--r2);
+      background:
+        radial-gradient(1200px 700px at 50% 35%, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 55%),
+        radial-gradient(900px 600px at 50% 60%, rgba(0,0,0,.30) 0%, rgba(0,0,0,0) 55%),
+        linear-gradient(180deg, rgba(13,59,42,.92), rgba(10,47,34,.92));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      padding:14px;
+      padding-bottom: calc(var(--dockH) + var(--safeBottom) + 14px); /* reserve for bottom dock + safe area */
+    }
+
+    .seat{
+      position:relative;
+      width:100%;
+      max-width:none;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
+      border-radius:999px;
+      background:rgba(0,0,0,.28);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(6px);
+    }
+    .seat.active{
+      border-color:rgba(106,169,255,.70);
+      box-shadow: 0 0 0 2px rgba(106,169,255,.12), 0 18px 35px rgba(0,0,0,.30);
+    }
+    .avatar{
+      width:42px; height:42px;
+      border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), rgba(255,255,255,.08));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: 0 10px 22px rgba(0,0,0,.22);
+      position:relative;
+      flex:0 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+      line-height:1;
+      text-shadow: 0 8px 18px rgba(0,0,0,.25);
+    }
+    .seat .info{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      flex:1 1 auto;
+    }
+    .seat .name{
+      font-weight:900;
+      font-size:13px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .seat .meta{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      align-items:center;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .badge{
+      padding:2px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .badge.good{border-color:rgba(66,211,146,.45); background:rgba(66,211,146,.12)}
+    .badge.warn{border-color:rgba(255,204,102,.45); background:rgba(255,204,102,.12)}
+    .badge.bad{border-color:rgba(255,107,107,.45); background:rgba(255,107,107,.12)}
+    .badge.pass{border-color:rgba(255,255,255,.18); background:rgba(0,0,0,.18)}
+
+    /* Seat positions */
+    #seat1{left:12px; top:12px; justify-content:flex-start}
+    #seat2{left:50%; top:12px; transform:translateX(-50%); justify-content:center}
+    #seat3{right:12px; top:12px; justify-content:flex-end}
+    #seat0{left:12px; bottom:12px; transform:none; justify-content:flex-start; width:auto; max-width:min(260px, 70vw)}
+
+    @media (max-width: 520px){
+      .seat{padding:8px 10px}
+      .avatar{width:38px; height:38px; font-size:20px}
+      .seat .name{font-size:12px}
+      .seat .meta{font-size:11px}
+      #seat0{left:10px; bottom:10px; transform:none; justify-content:flex-start; max-width:min(240px, 72vw)}
+    }
+
+    
+    /* ====== Seat0 compact (player info) ====== */
+    #seat0.seat{padding:8px 10px; border-radius:16px}
+    #seat0 .avatar{width:34px; height:34px; font-size:18px}
+    #seat0 .name{font-size:12px}
+    #seat0 .meta{font-size:11px}
+
+
+    /* ====== Center pile + message log ====== */
+    .center{
+      position:relative;
+      left:50%;
+      top:52%;
+      transform:translate(-50%,-50%);
+      width:min(660px, 92vw);
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:center;
+      pointer-events:none;
+    }
+    .centerTop{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      flex-wrap:wrap;
+      width:100%;
+    }
+    .centerTag{
+      pointer-events:none;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.22);
+      font-size:12px;
+      color:var(--text);
+      box-shadow: 0 12px 24px rgba(0,0,0,.22);
+    }
+    .pile{
+      width:100%;
+      padding:12px;
+      border-radius:var(--r2);
+      border:1px dashed rgba(255,255,255,.16);
+      background:rgba(0,0,0,.20);
+      min-height:108px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .msgLog{
+      width:100%;
+      padding:10px 12px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.18);
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      pointer-events:none;
+    }
+    .msg{
+      font-size:12px;
+      color:var(--text);
+      opacity:.95;
+      display:flex;
+      gap:6px;
+      align-items:flex-start;
+      line-height:1.35;
+    }
+    .msg .t{
+      color:var(--muted);
+      min-width:46px;
+      text-align:right;
+      flex:0 0 auto;
+      opacity:.9;
+    }
+    .msg .c{
+      flex:1 1 auto;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .pileCard{
+      width:56px; height:76px;
+      border-radius:14px;
+      background:linear-gradient(180deg, rgba(247,248,251,.96), rgba(247,248,251,.88));
+      border:1px solid rgba(255,255,255,.55);
+      box-shadow: 0 14px 26px rgba(0,0,0,.20);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      padding:6px;
+      font-weight:900;
+      color:#0b1a33;
+    }
+    .pileCard.red{color:#b11226}
+    .pileCard .small{
+      font-size:12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .pileCard .big{
+      font-size:22px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      opacity:.92;
+    }
+
+    /* ====== Bottom hand (fan) ====== */
+    .handBar{
+      position:relative;
+      height:var(--handH);
+      border-radius:var(--r2);
+      background:linear-gradient(180deg, rgba(0,0,0,.26), rgba(0,0,0,.10));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      padding:10px 10px 12px;
+    }
+    .handTitleRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:2px 2px 8px;
+    }
+    .hint{
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:58vw;
+    }
+
+    .fan{
+      position:relative;
+      height:92px;
+      width:100%;
+      pointer-events:auto;
+      overflow:visible;
+    }
+    .card{
+      position:relative;
+      bottom:0;
+      width:62px; height:88px;
+      border-radius:14px;
+      background:
+        linear-gradient(180deg, rgba(247,248,251,.98), rgba(247,248,251,.88)),
+        radial-gradient(16px 18px at 18% 20%, rgba(0,0,0,.04), rgba(0,0,0,0) 70%),
+        radial-gradient(18px 20px at 82% 78%, rgba(0,0,0,.04), rgba(0,0,0,0) 72%);
+      border:1px solid rgba(255,255,255,.55);
+      box-shadow: 0 14px 26px rgba(0,0,0,.20);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      padding:8px;
+      font-weight:900;
+      color:#0b1a33;
+      user-select:none;
+      touch-action:manipulation;
+      transition: transform .10s ease, box-shadow .10s ease, border-color .10s ease;
+      cursor:pointer;
+    }
+    .card.red{color:#b11226}
+    .card .small{
+      font-size:12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .card .big{
+      font-size:22px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      opacity:.92;
+    }
+    .card.selected{
+      transform: translateY(-16px) !important;
+      box-shadow:
+        0 16px 26px rgba(0,0,0,.28),
+        0 0 0 2px rgba(90,170,255,.75),
+        0 0 18px rgba(90,170,255,.45);
+      outline: 2px solid rgba(90,170,255,.85);
+      outline-offset: -2px;
+      filter: saturate(1.08) brightness(1.03);
+    }
+
+/* ====== Floating card animation ====== */
+    .fly{
+      position:fixed;
+      z-index:80;
+      pointer-events:none;
+      transition: transform .42s cubic-bezier(.2,.85,.2,1), opacity .42s ease;
+      opacity:1;
+    }
+    .fly.out{opacity:0}
+    .fly .pileCard{box-shadow: 0 20px 40px rgba(0,0,0,.35)}
+
+    /* ====== Toast ====== */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:140px;
+      transform:translateX(-50%);
+      background:rgba(0,0,0,.70);
+      color:#fff;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      font-size:13px;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .18s ease, transform .18s ease;
+      z-index:90;
+      max-width: calc(100vw - 28px);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(-6px);
+    }
+
+    /* ====== Home Menu Overlay ====== */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      z-index:100;
+    }
+    .overlay.show{display:flex}
+    .panel{
+      width:min(900px, 100%);
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(16,31,58,.92), rgba(16,31,58,.82));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:var(--shadow);
+      padding:14px;
+      max-height: calc(100vh - 32px);
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .panel h2{margin:0; font-size:16px; font-weight:900}
+    .panel p{margin:0; font-size:13px; color:var(--muted); line-height:1.5}
+
+    .homeGrid{
+      display:grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap:12px;
+      align-items:start;
+    }
+    @media (max-width:860px){
+      .homeGrid{grid-template-columns:1fr}
+    }
+
+    .slotList{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .slotBtn{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18);
+      padding:12px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      cursor:pointer;
+      user-select:none;
+      box-shadow: 0 12px 26px rgba(0,0,0,.22);
+    }
+    .slotBtn.active{
+      border-color:rgba(106,169,255,.70);
+      box-shadow: 0 0 0 2px rgba(106,169,255,.12), 0 18px 35px rgba(0,0,0,.30);
+      background:rgba(0,0,0,.24);
+    }
+    .slotIcon{
+      width:44px;height:44px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      flex:0 0 auto;
+    }
+    .slotMain{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      flex:1 1 auto;
+    }
+    .slotTitle{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .slotName{
+      font-weight:900;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .slotMeta{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      align-items:center;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .field label{font-size:12px; color:var(--muted)}
+    .field input, .field select{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 10px;
+      border-radius:14px;
+      font-size:14px;
+      outline:none;
+    }
+    .field input:focus, .field select:focus{
+      border-color:rgba(106,169,255,.55);
+      box-shadow:0 0 0 2px rgba(106,169,255,.12);
+    }
+    .row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+    }
+    .hr{height:1px; background:rgba(255,255,255,.10)}
+    /* ====== Home actions (HOME state) ====== */
+    .homeActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+      margin-top:6px;
+    }
+    .homeActions .btn{
+      border-radius:16px;
+      padding:10px 12px;
+    }
+    @media (max-width:520px){
+      .homeActions{justify-content:stretch}
+      .homeActions .btn{flex:1 1 auto}
+    }
+
+
+    /* ====== Table Control Panel (embedded, not floating glass) ====== */
+    .tableControl{
+      position:relative;
+      right:14px;
+      bottom: 12px; /* on table bottom-right */
+      width:min(280px, 40vw);
+      max-width:280px;
+      border-radius:18px;
+      border:1px solid var(--controlBorder);
+      background:
+        radial-gradient(260px 200px at 50% 40%, rgba(255,255,255,.08), rgba(255,255,255,0) 60%),
+        linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.12));
+      box-shadow: 0 18px 42px rgba(0,0,0,.30);
+      padding:8px;
+      z-index:40;
+      pointer-events:auto;
+    }
+    .tableControl .r1, .tableControl .r2{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:6px;
+    }
+    .tableControl .r2{
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top:6px;
+    }
+    .tableControl .btn{
+      width:100%;
+      border-radius:12px;
+      padding:8px 9px;
+      font-size:13px;
+      line-height:1.1;
+      box-shadow:none;
+    }
+    .tableControl .btn.big{
+      padding:9px 10px;
+      font-size:14px;
+    }
+
+    @media (max-width:520px){
+      .tableControl{right:10px; bottom:10px; width:min(270px, 52vw); max-width:270px; width:min(320px, 46vw); padding:9px}
+      .tableControl .btn{padding:11px 10px}
+    }
+
+    /* ====== Better select dropdown readability ====== */
+    .field select, .field input{
+      color: var(--text);
+      background: rgba(255,255,255,.08);
+    }
+    .field select option{
+      background: #0f213f;
+      color: #eaf1ff;
+    }
+
+    /* ====== Light theme ====== */
+    body.light{
+      --bg1:#e7efff;
+      --bg2:#cfe0ff;
+      --felt:#cfe7db;
+      --felt2:#bfe0d0;
+      --panel:rgba(255,255,255,.62);
+      --panel2:rgba(255,255,255,.54);
+      --text:#0b1730;
+      --muted:#415175;
+      --accent:#2a63ff;
+      --shadow: 0 14px 38px rgba(0,0,0,.18);
+      --controlBg: rgba(255,255,255,.62);
+      --controlBorder: rgba(0,0,0,.10);
+    }
+    body.light .arena{
+      background:
+        radial-gradient(1200px 700px at 50% 35%, rgba(255,255,255,.30) 0%, rgba(255,255,255,0) 55%),
+        radial-gradient(900px 600px at 50% 60%, rgba(0,0,0,.10) 0%, rgba(0,0,0,0) 55%),
+        linear-gradient(180deg, rgba(207,231,219,.92), rgba(191,224,208,.92));
+      border-color: rgba(0,0,0,.10);
+    }
+    body.light .seat,
+    body.light .centerTag,
+    body.light .panel,
+    body.light .handBar,
+    body.light .brand,
+    body.light .slotBtn,
+    body.light .msgLog,
+    body.light .tableControl{
+      background: rgba(255,255,255,.70);
+      border-color: rgba(0,0,0,.10);
+      color: var(--text);
+    }
+    body.light .slotBtn{background: rgba(255,255,255,.70)}
+    body.light .slotBtn.active{background: rgba(255,255,255,.78)}
+    body.light .badge{
+      border-color: rgba(0,0,0,.10);
+      background: rgba(0,0,0,.04);
+      color: var(--text);
+    }
+    body.light .toast{
+      background: rgba(0,0,0,.70);
+      color:#fff;
+      border-color: rgba(255,255,255,.16);
+    }
+    body.light .field select option{
+      background:#ffffff;
+      color:#0b1730;
+    }
+
+    /* ====== Hand layout tweaks ====== */
+    .card{ transform-origin: 50% 100%; }
+/* ====== Short viewport optimizations ====== */
+    @media (max-height: 720px){
+      .app{gap:8px}
+      .arenaWrap{gap:8px}
+      .handBar{height:calc(var(--handH) - 10px)}
+      :root{ --handH: 100px; }
+    }
+    @media (max-height: 640px){
+      :root{ --handH: 92px; }
+      .handBar{padding:8px 8px 10px}
+      .card{width:58px; height:82px; border-radius:12px; padding:7px}
+      .pileCard{width:52px; height:72px; border-radius:12px; padding:7px}
+    }
+    
+
+    .card.selected::after{
+      content:"";
+      position:relative;
+      left:12%;
+      right:12%;
+      bottom:-8px;
+      height:10px;
+      border-radius:999px;
+      background: rgba(0,0,0,.22);
+      filter: blur(4px);
+      pointer-events:none;
+    }
+
+
+    /* Pile pulse feedback */
+    #pile.pilePulse{
+      animation: pilePulse 220ms ease-out;
+    }
+    @keyframes pilePulse{
+      0%{ filter: brightness(1) saturate(1); transform: translate(-50%, -50%) scale(1); }
+      60%{ filter: brightness(1.12) saturate(1.08); transform: translate(-50%, -50%) scale(1.03); }
+      100%{ filter: brightness(1) saturate(1); transform: translate(-50%, -50%) scale(1); }
+    }
+
+
+    .settBox{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      padding:10px;
+      border-radius:14px;
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+    }
+    .settLine{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+
+
+    .settBox{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      padding:12px;
+      border-radius:16px;
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+    }
+    .settLine{
+      display:grid;
+      grid-template-columns: 1fr auto auto;
+      gap:10px;
+      align-items:center;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .settDelta{
+      padding:2px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      font-variant-numeric: tabular-nums;
+    }
+    .settDelta.pos{ box-shadow: 0 0 0 2px rgba(90,170,255,.22) inset; }
+    .settDelta.neg{ box-shadow: 0 0 0 2px rgba(255,120,120,.18) inset; }
+
+
+/* ==== Shoot Gate layout (mobile-first) ==== */
+    .arena{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .aiRow{
+      display:flex;
+      gap:10px;
+      align-items:stretch;
+    }
+    .aiRow .seat{
+      flex:1;
+      border-radius:16px;
+      padding:10px 10px;
+      background:rgba(0,0,0,.20);
+    }
+    .dealerStrip{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:16px;
+      background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .dealerStrip .avatar{
+      width:42px;height:42px;border-radius:999px;
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      flex:0 0 auto;
+    }
+    .dealerName{font-weight:800}
+    .dealerBadges{display:flex; gap:8px; flex-wrap:wrap}
+
+    .center{
+            flex:0 0 auto;
+      margin-top:2px;
+position:relative;
+
+      min-height:0;
+    }
+    .msgLogCompact{
+      height: calc(5 * 1.35em + 12px);
+      overflow: hidden;
+    }
+
+    .humanRow{
+      display:flex;
+      align-items:stretch;
+    }
+    .seatHuman{
+      width:100%;
+      border-radius:18px;
+      padding:12px 12px;
+      background:rgba(0,0,0,.24);
+    }
+
+    /* Compact seat text */
+    .seatCompact .name{font-size:14px}
+    .seatCompact .avatar{width:38px;height:38px}
+    .seatCompact .meta .badge{font-size:12px}
+
+    /* Floating delta */
+    .floatDelta{
+      position:absolute;
+      right:10px;
+      top:10px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:13px;
+      background:rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.18);
+      transform: translateY(0);
+      opacity:0;
+      pointer-events:none;
+      animation: floatUp 900ms ease-out forwards;
+    }
+    .floatDelta.good{ box-shadow: 0 0 0 2px rgba(120,255,190,.18) inset; }
+    .floatDelta.bad{ box-shadow: 0 0 0 2px rgba(255,120,120,.18) inset; }
+
+    @keyframes floatUp{
+      0%{ opacity:0; transform: translateY(8px) scale(.98); }
+      20%{ opacity:1; transform: translateY(0) scale(1); }
+      100%{ opacity:0; transform: translateY(-18px) scale(1.02); }
+    }
+
+    @media (max-width: 640px){
+      .aiRow{ gap:8px; }
+      .aiRow .seat{ padding:9px 8px; }
+      .centerTop{ flex-wrap:wrap; }      #humanRow{display:none;}
+
+    }
+
+@media (max-width: 520px){
+  #seatP1{left:10px; top:96px}
+  #seatP2{right:10px; top:96px}
+  #seatD{top:10px}
+  #seatP0{left:10px; bottom:10px}
+  #seatP3{right:10px; bottom:10px}
+}
+.gateBoard{
+  width:100%;
+  padding:14px 12px;
+  border-radius:var(--r2);
+  border:1px dashed rgba(255,255,255,.16);
+  background:rgba(0,0,0,.20);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:nowrap;
+  min-height:120px;
+}
+.gateSlot{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+}
+.gateLabel{
+  font-size:12px;
+  color:var(--muted);
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.18);
+}
+.gateMidHint{
+  font-size:12px;
+  color:var(--muted);
+  text-align:center;
+  width:100%;
+}
+.bottomDock{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  transform:none;
+  width:100%;
+  max-width:none;
+  border-radius:0;
+  padding:10px 10px calc(env(safe-area-inset-bottom) + 10px);
+  background:linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.35));
+  border-top:1px solid rgba(255,255,255,.12);
+  box-shadow:0 -12px 30px rgba(0,0,0,.35);
+  z-index:80;
+}
+.bottomDock .row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+}
+.betBox{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.betAmount{
+  padding:8px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.18);
+  font-weight:900;
+  min-width:112px;
+  text-align:center;
+}
+.quickBtns{display:flex; gap:6px; flex-wrap:wrap}
+.choiceRow{display:none; gap:8px; margin-top:8px}
+.choiceRow.show{display:flex}
+.choiceRow .btn{flex:1 1 0}
+
+  
+/* ===== V4 Mobile layout overrides ===== */
+.seatsWrap{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:10px;
+  margin:12px 0 4px;
+}
+.seat{
+  position:static !important;
+  width:auto !important;
+  max-width:none !important;
+}
+#seatP0,#seatP1,#seatP2,#seatP3{left:auto !important; right:auto !important; top:auto !important; bottom:auto !important;}
+/* Dealer panel stays above seats */
+.dealerSeat{position:static !important; margin:8px 0 0;}
+/* Keep table content visible above dock */
+.arena{padding-bottom:calc(var(--dockH) + 18px) !important;}
+/* Decision row */
+.decisionRow{display:none; gap:10px; margin-top:10px; flex-wrap:wrap; justify-content:flex-end}
+.decisionRow.show{display:flex;}
+
+
+    @media (max-width: 520px){
+      /* Prioritize table visibility when 3 AIs are shown */
+      .aiRow{flex-wrap:wrap; gap:8px;}
+      .aiRow .seat{flex:1 1 calc(50% - 8px); padding:8px 8px;}
+      .aiRow .seat:nth-child(3){flex:1 1 100%;}
+      .seatCompact .avatar{width:34px;height:34px;font-size:18px}
+      .seatCompact .name{font-size:12px}
+      .seatCompact .meta{font-size:11px}
+
+      /* Shrink gate board and cards */
+      .gateBoard{padding:10px 8px; gap:10px; min-height:104px;}
+      .pileCard{width:48px; height:66px; border-radius:12px; padding:6px;}
+      .pileCard .big{font-size:18px;}
+      .pileCard .small{font-size:11px;}
+      .centerTag{font-size:11px; padding:5px 8px;}
+      .gateLabel{font-size:11px; padding:3px 8px;}
+      .gateMidHint{font-size:11px;}
+      /* Hide big human panel on very small screens; rely on top pills instead */
+      #humanRow{display:none;}
+
+    }
+
+
+/* ===== End overlays ===== */
+.endOverlay{
+  position:fixed; inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+  background: radial-gradient(1200px 700px at 50% 40%, rgba(0,0,0,.25), rgba(0,0,0,.72));
+  backdrop-filter: blur(6px);
+}
+.endOverlay.show{display:flex;}
+.endCard{
+  width:min(520px, 96vw);
+  border-radius:22px;
+  padding:18px 16px 16px;
+  background: rgba(20,22,26,.88);
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: 0 18px 60px rgba(0,0,0,.45);
+  transform: translateY(10px) scale(.98);
+  opacity:0;
+  animation: endPop 320ms ease-out forwards;
+}
+.endCard h2{
+  margin:0 0 6px;
+  font-size:22px;
+  letter-spacing:.5px;
+}
+.endCard p{
+  margin:0 0 14px;
+  opacity:.9;
+  line-height:1.55;
+}
+.endRow{display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap;}
+.endBadge{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  font-weight:800;
+  border:1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.08);
+  margin-bottom:12px;
+}
+.endBadge.good{ box-shadow: 0 0 0 2px rgba(120,255,190,.16) inset; }
+.endBadge.bad{ box-shadow: 0 0 0 2px rgba(255,120,120,.16) inset; }
+
+@keyframes endPop{
+  to{ transform: translateY(0) scale(1); opacity:1; }
+}
+@keyframes loseShake{
+  0%,100%{ transform: translateX(0); }
+  15%{ transform: translateX(-8px); }
+  30%{ transform: translateX(8px); }
+  45%{ transform: translateX(-6px); }
+  60%{ transform: translateX(6px); }
+  75%{ transform: translateX(-3px); }
+  90%{ transform: translateX(3px); }
+}
+.endCard.lose{ animation: endPop 280ms ease-out forwards, loseShake 520ms ease-in-out 120ms; }
+
+</style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="title">射龍門（中門）</div>
+        <div class="sub" id="statusLine">—</div>
+      </div>
+      <div class="topActions">
+        <div class="chipPill" id="pillChips">籌碼：-</div>
+        <div class="chipPill" id="pillBetPill">下注：-</div>
+        <div class="chipPill" id="pillRound">局數：-</div>
+        <button class="btn" id="btnTheme">亮/暗</button>
+        <button class="btn" id="btnMenu">主選單</button>
+      </div>
+    </div>
+
+    <div class="arenaWrap">
+      <div class="arena" id="arena">
+
+        <div class="aiRow" id="aiRow" aria-label="AI 玩家">
+          <div class="seat seatCompact" id="seatP1">
+            <div class="avatar" id="pemo1">😎</div>
+            <div class="info">
+              <div class="name" id="pname1">AI</div>
+              <div class="meta">
+                <span class="badge" id="pchips1">籌碼 -</span>
+                <span class="badge" id="pbet1">下注 -</span>
+                <span class="badge pass" id="pres1" style="display:none">—</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="seat seatCompact" id="seatP2">
+            <div class="avatar" id="pemo2">🤖</div>
+            <div class="info">
+              <div class="name" id="pname2">AI</div>
+              <div class="meta">
+                <span class="badge" id="pchips2">籌碼 -</span>
+                <span class="badge" id="pbet2">下注 -</span>
+                <span class="badge pass" id="pres2" style="display:none">—</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="seat seatCompact" id="seatP3">
+            <div class="avatar" id="pemo3">😤</div>
+            <div class="info">
+              <div class="name" id="pname3">AI</div>
+              <div class="meta">
+                <span class="badge" id="pchips3">籌碼 -</span>
+                <span class="badge" id="pbet3">下注 -</span>
+                <span class="badge pass" id="pres3" style="display:none">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dealerStrip" id="dealerStrip" aria-label="莊家狀態">
+          <div class="avatar" id="demo">🎲</div>
+          <div class="dealerInfo">
+            <div class="dealerName" id="dname">莊家</div>
+            <div class="dealerBadges">
+              <span class="badge" id="dstate">待機</span>
+              <span class="badge" id="dgate">門：-</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="center">
+          <div class="centerTop">
+            <div class="centerTag" id="pillPhase">狀態：-</div>
+            <div class="centerTag" id="pillGate">中門：-</div>
+            <div class="centerTag" id="pillPenalty">撞柱：2倍｜超級：3倍</div>
+          </div>
+
+          <div class="gateBoard" id="gateBoard">
+            <div class="gateSlot">
+              <div class="gateLabel">門柱 A</div>
+              <div id="cardA"></div>
+            </div>
+            <div class="gateSlot">
+              <div class="gateLabel">射門 C</div>
+              <div id="cardC"></div>
+            </div>
+            <div class="gateSlot">
+              <div class="gateLabel">門柱 B</div>
+              <div id="cardB"></div>
+            </div>
+          </div>
+
+          <div class="gateMidHint" id="midHint">下注後自動開門</div>
+
+          <div class="msgLog msgLogCompact" id="msgLog" aria-label="訊息區"></div>
+        </div>
+
+        <div class="humanRow" id="humanRow" aria-label="你的狀態">
+          <div class="seat seatHuman" id="seatP0">
+            <div class="avatar" id="pemo0">🙂</div>
+            <div class="info">
+              <div class="name" id="pname0">你</div>
+              <div class="meta">
+                <span class="badge" id="pchips0">籌碼 -</span>
+                <span class="badge" id="pbet0">下注 -</span>
+                <span class="badge pass" id="pres0" style="display:none">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+<!-- Bottom Dock (mobile-first) -->
+        
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- End overlay (win/lose) -->
+  <div class="endOverlay" id="endOverlay" role="dialog" aria-modal="true" aria-label="結算畫面">
+    <div class="endCard" id="endCard">
+      <div class="endBadge" id="endBadge">—</div>
+      <h2 id="endTitle">—</h2>
+      <p id="endDesc">—</p>
+      <div class="endRow">
+        <button class="btn" id="endBtnPrimary">確定</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottomDock" id="dock" aria-label="下注控制">
+          <div class="row">
+            <div class="betBox">
+              <button class="btn" id="btnBetMinus">-</button>
+              <div class="betAmount" id="betAmount">下注：0</div>
+              <button class="btn" id="btnBetPlus">+</button>
+            </div>
+            <div class="quickBtns">
+              <button class="btn" id="btnQ10">+10</button>
+              <button class="btn" id="btnQ50">+50</button>
+              <button class="btn" id="btnQ100">+100</button>
+              <button class="btn" id="btnMax">MAX</button>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end">
+              <button class="btn" id="btnClearBet">清空</button>
+              <button class="btn primary" id="btnConfirmBet">下注</button>
+              <button class="btn good" id="btnNext" style="display:none">下一局</button>
+            </div>
+          </div>
+
+          <div class="decisionRow" id="decisionRow">
+            <button class="btn" id="btnAddPillar">加柱</button>
+            <button class="btn good" id="btnSkipPillar">跳過</button>
+          </div>
+
+          <div class="choiceRow" id="choiceRow">
+            <button class="btn good" id="btnChooseUpper">選上</button>
+            <button class="btn good" id="btnChooseLower">選下</button>
+          </div>
+        </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Home Menu -->
+  <div class="overlay" id="menu">
+    <div class="panel">
+      <h2 id="menuTitle">主選單</h2>
+      <p id="menuDesc">選擇存檔槽位後載入。此版本為「公莊 + 4 玩家（你 + 3 AI）」射龍門：只押中門；撞柱 2 倍、對門可選上/下、對門開到同點超級撞柱 3 倍。</p>
+
+      <div class="hr"></div>
+
+      <div class="homeGrid">
+        <div class="slotList" id="slotList"></div>
+
+        <div class="slotDetail">
+          <div class="field">
+            <label for="playerName">你的名稱（此槽位）</label>
+            <input id="playerName" maxlength="16" placeholder="例如：宇辰" />
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px">
+            <div class="field">
+              <label for="difficulty">AI 難度（此槽位）</label>
+              <select id="difficulty">
+                <option value="easy">簡單</option>
+                <option value="normal">普通</option>
+                <option value="hard">困難</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="startChips">起始籌碼（新局）</label>
+              <select id="startChips">
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="500">500</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="hr" style="margin-top:12px"></div>
+
+          <p id="slotSummary" style="margin:0;font-size:13px;color:var(--muted);line-height:1.6"></p>
+
+          <div class="row" style="margin-top:10px">
+            <button class="btn" id="btnCloseMenu">關閉</button>
+            <button class="btn" id="btnLoad">載入</button>
+            <button class="btn good" id="btnNew">開新局</button>
+            <button class="btn bad" id="btnResetSlot">重置此槽位</button>
+          </div>
+
+          <p style="font-size:12px;color:var(--muted);margin:0">
+            備註：槽位內容存於 localStorage。主選單停留時不會自動開局；載入後可隨時回主選單。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  "use strict";
+
+  /* =========================
+     射龍門（中門）V4 - 公莊 + 4 玩家（你 + 3 AI）
+     規則（依你的描述）：
+     - A,B 為門柱；只賭「C 是否在中門」：
+       * 若 A!=B：A < C < B 才算贏；C 在外則輸
+       * C==A 或 C==B：撞柱，扣 2 倍下注
+     - 若 A==B（對門）：
+       * 玩家需選「上」或「下」
+       * C==A：超級撞柱，扣 3 倍下注
+       * C 在所選區：贏；否則輸
+     ========================= */
+
+  const LS_BASE = "shoot_gate_v1_";
+  const SLOT_COUNT = 3;
+
+  const SUITS = [
+    { key:"C", sym:"♣", color:"black" },
+    { key:"D", sym:"♦", color:"red"   },
+    { key:"H", sym:"♥", color:"red"   },
+    { key:"S", sym:"♠", color:"black" }
+  ];
+  // 使用標準點數：A(1) ~ K(13)
+  const RANKS = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+  const rankToValue = {"A":1,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8,"9":9,"10":10,"J":11,"Q":12,"K":13};
+  const valueToRank = Object.fromEntries(Object.entries(rankToValue).map(([r,v])=>[v,r]));
+
+  const NAME_POOL = [
+    "子豪","宇辰","俊傑","冠宇","柏翰","承翰","志豪","家豪","家瑋","建宏","哲瑋","哲銘","浩然","浩宇","柏宇","彥廷","彥宏","文傑","文豪",
+    "承恩","承澤","承昊","偉哲","偉倫","煜城","梓軒","昱辰","昱廷","曜廷","宥翔","宥廷","宥辰","品丞","品皓","品宇",
+    "雅雯","雅婷","怡君","怡婷","怡萱","婉婷","詩涵","詩雅","子晴","子瑜","子涵","思妤","思穎","佳穎","佳蓉","佩珊","佩琪","品妍",
+    "Harper","Avery","Riley","Morgan","Jordan","Taylor","Cameron","Casey","Quinn","Skyler","Parker","Reese","Rowan","Hayden","Blake"
+  ];
+  const EMOJI_POOL = ["😎","😤","🤖","🐯","🦊","🦁","🐼","🦉","👾","🧠","🦈","🐲","🦖","😈","🥶","😺","🧑‍🚀","🕵️","🦾","🫠"];
+
+  const DIFFICULTY = {
+    easy:   { betAggro: 0.35, pairBias: 0.50 },
+    normal: { betAggro: 0.55, pairBias: 0.52 },
+    hard:   { betAggro: 0.80, pairBias: 0.56 }
+  };
+
+  const $ = (id)=>document.getElementById(id);
+
+  // ===== UI refs =====
+  const elStatusLine = $("statusLine");
+  const elPillChips  = $("pillChips");
+  const elPillBetPill = $("pillBetPill");
+  const elPillRound  = $("pillRound");
+  const elPillPhase  = $("pillPhase");
+  const elPillGate   = $("pillGate");
+  const elMidHint    = $("midHint");
+  const elMsgLog     = $("msgLog");
+  const elToast      = $("toast");
+
+  const elCardA = $("cardA");
+  const elCardB = $("cardB");
+  const elCardC = $("cardC");
+
+  const btnTheme = $("btnTheme");
+  const btnMenu  = $("btnMenu");
+
+  // Dock controls
+  const elBetAmount = $("betAmount");
+  const btnBetMinus = $("btnBetMinus");
+  const btnBetPlus  = $("btnBetPlus");
+  const btnQ10      = $("btnQ10");
+  const btnQ50      = $("btnQ50");
+  const btnQ100     = $("btnQ100");
+  const btnMax      = $("btnMax");
+  const btnClearBet = $("btnClearBet");
+  const btnConfirm  = $("btnConfirmBet");
+  const btnNext     = $("btnNext");
+  const decisionRow = $("decisionRow");
+  const btnAddPillar = $("btnAddPillar");
+  const btnSkipPillar = $("btnSkipPillar");
+
+  const choiceRow = $("choiceRow");
+  const btnUpper  = $("btnChooseUpper");
+  const btnLower  = $("btnChooseLower");
+
+  // Menu refs
+  const menu = $("menu");
+  const slotList = $("slotList");
+  const inputPlayerName = $("playerName");
+  const selDifficulty   = $("difficulty");
+  const selStartChips   = $("startChips");
+
+  const elSlotSummary = $("slotSummary");
+  const btnCloseMenu = $("btnCloseMenu");
+  const btnLoad      = $("btnLoad");
+  const btnNew       = $("btnNew");
+  const btnResetSlot = $("btnResetSlot");
+
+  // ===== Helpers =====
+  function nowISO(){ return new Date().toISOString(); }
+  function pad2(n){ return String(n).padStart(2,"0"); }
+  function stamp(){
+    const d = new Date();
+    return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+  }
+  const sleep = (ms)=> new Promise(res=>setTimeout(res, ms));
+  function deepClone(x){ return JSON.parse(JSON.stringify(x)); }
+  function toast(msg){
+    if(!elToast) return;
+    elToast.textContent = msg;
+    elToast.classList.add("show");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(()=>elToast.classList.remove("show"), 1400);
+  }
+  function randName(exceptSet){
+    for(let t=0;t<80;t++){ const n = NAME_POOL[Math.floor(Math.random()*NAME_POOL.length)]; if(!exceptSet.has(n)) return n; }
+    return "玩家";
+  }
+  function randEmoji(exceptSet){
+    for(let t=0;t<80;t++){ const e = EMOJI_POOL[Math.floor(Math.random()*EMOJI_POOL.length)]; if(!exceptSet.has(e)) return e; }
+    return "🤖";
+  }
+
+  function suitObj(k){ return SUITS.find(s=>s.key===k); }
+
+  function makeCardFace(card){
+    if(!card) return document.createElement("div");
+    const s = suitObj(card.s);
+    const red = (s.color==="red");
+    const div = document.createElement("div");
+    div.className = "pileCard" + (red ? " red" : "");
+    const top = document.createElement("div");
+    top.className = "small";
+    top.innerHTML = `<span>${card.r}</span><span>${s.sym}</span>`;
+    const mid = document.createElement("div");
+    mid.className = "big";
+    mid.textContent = s.sym;
+    const bot = document.createElement("div");
+    bot.className = "small";
+    bot.innerHTML = `<span>${s.sym}</span><span>${card.r}</span>`;
+    div.appendChild(top); div.appendChild(mid); div.appendChild(bot);
+    return div;
+  }
+
+  function newDeck(){
+    const deck = [];
+    for(const r of RANKS) for(const s of ["C","D","H","S"]) deck.push({ r, s });
+    return deck;
+  }
+  function shuffle(arr){
+    for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+    return arr;
+  }
+  function draw(deck){ return deck.pop(); }
+  function val(card){ return rankToValue[card.r]; }
+
+  // ===== Save slots =====
+  function slotKey(slotId){ return `${LS_BASE}${slotId}`; }
+
+  function defaultSlotSave(){
+    return {
+      meta:{ version:1, updatedAt: nowISO() },
+      settings:{ difficulty:"normal", startChips:300, theme:"dark" },
+      profile:{ playerName:"你", chips: 300, round:0 },
+      ai:{ names:["AI-1","AI-2","AI-3"], emojis:["😎","🤖","😤"] },
+      game:null
+    };
+  }
+
+  function loadSlot(slotId){
+    try{
+      const raw = localStorage.getItem(slotKey(slotId));
+      if(!raw) return defaultSlotSave();
+      const parsed = JSON.parse(raw);
+      if(!parsed || !parsed.profile || !parsed.settings || !parsed.ai) return defaultSlotSave();
+      parsed.meta = parsed.meta || {version:1, updatedAt: nowISO()};
+      parsed.settings.theme = parsed.settings.theme || "dark";
+      parsed.settings.difficulty = parsed.settings.difficulty || "normal";
+      parsed.settings.startChips = Number(parsed.settings.startChips || 300);
+      parsed.profile.playerName = parsed.profile.playerName || "你";
+      if(typeof parsed.profile.chips !== "number") parsed.profile.chips = parsed.settings.startChips;
+      if(typeof parsed.profile.round !== "number") parsed.profile.round = 0;
+      parsed.ai.names = parsed.ai.names || ["AI-1","AI-2","AI-3"];
+      parsed.ai.emojis = parsed.ai.emojis || ["😎","🤖","😤"];
+      return parsed;
+    }catch{
+      return defaultSlotSave();
+    }
+  }
+
+  function saveSlot(slotId, saveObj){
+    saveObj.meta = saveObj.meta || {};
+    saveObj.meta.updatedAt = nowISO();
+    localStorage.setItem(slotKey(slotId), JSON.stringify(saveObj));
+  }
+
+  function rerollAI(saveObj){
+    const usedN = new Set([saveObj.profile.playerName || "你"]);
+    const usedE = new Set(["🙂","🎲"]);
+    const n1 = randName(usedN); usedN.add(n1);
+    const n2 = randName(usedN); usedN.add(n2);
+    const n3 = randName(usedN); usedN.add(n3);
+    const e1 = randEmoji(usedE); usedE.add(e1);
+    const e2 = randEmoji(usedE); usedE.add(e2);
+    const e3 = randEmoji(usedE); usedE.add(e3);
+    saveObj.ai.names  = [n1,n2,n3];
+    saveObj.ai.emojis = [e1,e2,e3];
+  }
+
+  function ensureAllSlots(){
+    for(let i=1;i<=SLOT_COUNT;i++){
+      const raw = localStorage.getItem(slotKey(i));
+      if(!raw){
+        const s = defaultSlotSave();
+        if(i===1) s.profile.playerName = "宇辰";
+        if(i===2) s.profile.playerName = "阿修";
+        if(i===3) s.profile.playerName = "你";
+        rerollAI(s);
+        saveSlot(i, s);
+      }
+    }
+  }
+
+  // ===== Game model =====
+  const PHASE = {
+    WAIT_BET: "下注中",
+    AI_BET: "等待其他玩家下注",
+    REVEAL_GATE: "開門",
+    POST_GATE: "加柱/跳過",
+    CHOOSE_PAIR: "對門選擇",
+    REVEAL_THIRD: "射門",
+    SETTLE: "結算",
+    DONE: "完成"
+  };
+
+  function newGame(save, {reset=true}={}){
+    const start = Number(save.settings.startChips || 300);
+    if(reset) {
+      save.profile.chips = start;
+      save.profile.round = 0;
+      rerollAI(save);
+    }
+    const g = {
+      id: "g_"+Math.random().toString(16).slice(2),
+      createdAt: nowISO(),
+      deck: [],
+      phase: PHASE.WAIT_BET,
+      gateA: null,
+      gateB: null,
+      cardC: null,
+      isPair: false,
+      // players: 0 human, 1..3 ai
+      players: [
+        { id:0, isHuman:true,  name: save.profile.playerName || "你", emoji:"🙂", chips: save.profile.chips, bet:0, choice:null, result:null, postGate:null },
+        { id:1, isHuman:false, name: save.ai.names[0] || "AI-1", emoji: save.ai.emojis[0] || "😎", chips: start, bet:0, choice:null, result:null, postGate:null },
+        { id:2, isHuman:false, name: save.ai.names[1] || "AI-2", emoji: save.ai.emojis[1] || "🤖", chips: start, bet:0, choice:null, result:null, postGate:null },
+        { id:3, isHuman:false, name: save.ai.names[2] || "AI-3", emoji: save.ai.emojis[2] || "😤", chips: start, bet:0, choice:null, result:null, postGate:null },
+      ],
+      log: [{ t: stamp(), c: "待機中：請下注開始" }]
+    };
+    g.deck = shuffle(newDeck());
+    return g;
+  }
+
+  function restoreGame(save){
+    const g = save.game;
+    if(!g || !g.players || g.players.length!==4) return null;
+
+    // sync profile/name/theme
+    g.players[0].name = save.profile.playerName || g.players[0].name || "你";
+    g.players[0].emoji = g.players[0].emoji || "🙂";
+    g.players[1].name = save.ai.names[0] || g.players[1].name || "AI-1";
+    g.players[2].name = save.ai.names[1] || g.players[2].name || "AI-2";
+    g.players[3].name = save.ai.names[2] || g.players[3].name || "AI-3";
+    g.players[1].emoji = save.ai.emojis[0] || g.players[1].emoji || "😎";
+    g.players[2].emoji = save.ai.emojis[1] || g.players[2].emoji || "🤖";
+    g.players[3].emoji = save.ai.emojis[2] || g.players[3].emoji || "😤";
+
+    // chips fallback
+    const start = Number(save.settings.startChips || 300);
+    if(typeof g.players[0].chips !== "number") g.players[0].chips = (typeof save.profile.chips === "number") ? save.profile.chips : start;
+    for(let i=1;i<=3;i++) if(typeof g.players[i].chips !== "number") g.players[i].chips = start;
+
+    g.log = g.log || [];
+    if(!Array.isArray(g.deck) || g.deck.length<10) g.deck = shuffle(newDeck());
+
+    return g;
+  }
+
+  let CURRENT_SLOT = 1;
+  let SAVE = null;
+  let GAME = null;
+
+  function persist(){
+    if(!SAVE || !GAME) return;
+    SAVE.profile.chips = GAME.players[0].chips;
+    SAVE.profile.round = SAVE.profile.round || 0;
+    SAVE.game = deepClone(GAME);
+    saveSlot(CURRENT_SLOT, SAVE);
+  }
+
+  function logMsg(text){
+    GAME.log = GAME.log || [];
+    GAME.log.push({ t: stamp(), c: text });
+    if(GAME.log.length > 5) GAME.log.splice(0, GAME.log.length - 5);
+  }
+
+
+  // ===== Win/Lose overlays =====
+  const endOverlay = document.getElementById("endOverlay");
+  const endCard    = document.getElementById("endCard");
+  const endBadge   = document.getElementById("endBadge");
+  const endTitle   = document.getElementById("endTitle");
+  const endDesc    = document.getElementById("endDesc");
+  const endBtnPrimary = document.getElementById("endBtnPrimary");
+
+  let _endLock = false;
+
+  function showEndOverlay({type, title, desc}){
+    if(!endOverlay || !endCard) return;
+    _endLock = true;
+    endCard.classList.remove("lose");
+    endBadge.className = "endBadge " + (type==="win" ? "good" : "bad");
+    endBadge.textContent = (type==="win") ? "勝利結算" : "失敗結算";
+    endTitle.textContent = title || "—";
+    endDesc.textContent  = desc  || "—";
+    if(type==="lose") endCard.classList.add("lose");
+    endOverlay.classList.add("show");
+  }
+
+  function hideEndOverlay(){
+    if(!endOverlay) return;
+    endOverlay.classList.remove("show");
+    _endLock = false;
+  }
+
+  if(endBtnPrimary){
+    endBtnPrimary.addEventListener("click", ()=>{ hideEndOverlay(); });
+  }
+
+  function resetCurrentSlotAndRestart(){
+    // 玩家輸光：自動重整此存檔（重置）並立刻回到可下注狀態
+    resetSlot(CURRENT_SLOT);
+    SAVE = loadSlot(CURRENT_SLOT);
+    applyTheme(SAVE.settings.theme || "dark");
+    GAME = newGame(SAVE, {reset:false}); // slot 已是預設值
+    // 關閉主選單（若還開著）
+    menu.classList.remove("show");
+    setPendingBet(0);
+    renderAll();
+    persist();
+  }
+
+  function rerollAIKeepPlayer(){
+    // AI 全滅：勝利結算 → 換一批 AI、AI 籌碼重置、玩家籌碼保留、存檔不重置
+    const start = Number(SAVE.settings.startChips || 300);
+    rerollAI(SAVE);
+
+    // 更新遊戲內 AI 名稱/表情與籌碼
+    for(let i=1;i<=3;i++){
+      GAME.players[i].name  = SAVE.ai.names[i-1]  || GAME.players[i].name;
+      GAME.players[i].emoji = SAVE.ai.emojis[i-1] || GAME.players[i].emoji;
+      GAME.players[i].chips = start;
+      GAME.players[i].bet = 0;
+      GAME.players[i].choice = null;
+      GAME.players[i].result = null;
+      GAME.players[i].postGate = null;
+    }
+    // 清場回下注
+    resetRoundFields();
+    GAME.phase = PHASE.WAIT_BET;
+    logMsg("勝利結算：AI 已換一批，開始下一輪下注");
+    setPendingBet(0);
+    renderAll();
+    persist();
+  }
+
+  function checkEndConditions(){
+    const humanDead = (GAME.players[0].chips<=0);
+    const allAIDead = (GAME.players.slice(1).every(p=>p.chips<=0));
+    if(humanDead){
+      showEndOverlay({
+        type:"lose",
+        title:"你輸了",
+        desc:"籌碼歸零，已自動重整此存檔，回到初始狀態。"
+      });
+      // 讓動畫先跑一下再重置
+      setTimeout(()=>{ resetCurrentSlotAndRestart(); hideEndOverlay(); }, 1200);
+      return "lose";
+    }
+    if(allAIDead){
+      showEndOverlay({
+        type:"win",
+        title:"你贏了",
+        desc:"AI 全部歸零，已換一批新的 AI，玩家籌碼保留。"
+      });
+      setTimeout(()=>{ rerollAIKeepPlayer(); hideEndOverlay(); }, 1200);
+      return "win";
+    }
+    return null;
+  }
+
+  // ===== UI Rendering =====
+  function badgeClassByDelta(delta){
+    if(delta>0) return "good";
+    if(delta<0) return "bad";
+    return "pass";
+  }
+
+  // ===== Chip tween + floating delta (mobile game feel) =====
+  function seatEl(pid){ return document.getElementById("seatP"+pid); }
+
+  function animateNumberText(el, from, to, ms=520){
+    if(!el) return;
+    const t0 = performance.now();
+    const d = Math.max(180, ms);
+    const step = (t)=>{
+      const k = Math.min(1, (t - t0) / d);
+      const v = Math.round(from + (to-from) * (1 - Math.pow(1-k,3)));
+      el.textContent = `籌碼 ${v}`;
+      if(k<1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  function floatDelta(pid, delta){
+    if(!delta) return;
+    const s = seatEl(pid);
+    if(!s) return;
+    const div = document.createElement("div");
+    div.className = "floatDelta " + (delta>0 ? "good" : "bad");
+    div.textContent = (delta>0?`+${delta}`:`${delta}`);
+    s.appendChild(div);
+    setTimeout(()=> div.remove(), 950);
+  }
+
+  function transientResultBadge(pid, text, delta){
+    const el = document.getElementById("pres"+pid);
+    if(!el) return;
+    el.style.display = "inline-flex";
+    el.textContent = text;
+    el.className = "badge " + badgeClassByDelta(delta);
+    clearTimeout(transientResultBadge._t?.[pid]);
+    transientResultBadge._t = transientResultBadge._t || {};
+    transientResultBadge._t[pid] = setTimeout(()=>{ el.style.display="none"; }, 1200);
+  }
+
+  function renderPlayers(){
+    // Map players to DOM seats: P0 bottom-left, P1 top-left, P2 top-right, P3 bottom-right
+    const map = [
+      {pid:0, seat:"P0"},
+      {pid:1, seat:"P1"},
+      {pid:2, seat:"P2"},
+      {pid:3, seat:"P3"},
+    ];
+    for(const m of map){
+      const p = GAME.players[m.pid];
+      $("pname"+m.pid).textContent = p.name;
+      $("pemo"+m.pid).textContent = p.emoji || (p.isHuman ? "🙂" : "🤖");
+      const chipEl = $("pchips"+m.pid);
+      const dispChips = (p._dispChips!=null)?p._dispChips:p.chips;
+      chipEl.textContent = `籌碼 ${dispChips}`;
+      chipEl.className = "badge " + (p.chips<=0 ? "bad" : (p.chips<=20 ? "warn" : "good"));
+      $("pbet"+m.pid).textContent = `下注 ${p.bet||0}`;
+
+      const resEl = $("pres"+m.pid);
+      if(p.result && p.result.label){
+        resEl.style.display = "inline-flex";
+        resEl.textContent = p.result.label;
+        resEl.className = "badge " + badgeClassByDelta(p.result.delta);
+      } else {
+        resEl.style.display = "none";
+      }
+    }
+  }
+
+  function setCard(el, card){
+    el.innerHTML = "";
+    if(card) el.appendChild(makeCardFace(card));
+  }
+
+  function renderCenter(){
+    setCard(elCardA, GAME.gateA);
+    setCard(elCardB, GAME.gateB);
+    setCard(elCardC, GAME.cardC);
+
+    // Gate hint
+    if(!GAME.gateA || !GAME.gateB){
+      elPillGate.textContent = "中門：-";
+    } else {
+      const a = val(GAME.gateA), b = val(GAME.gateB);
+      if(a===b){
+        elPillGate.textContent = `對門：${GAME.gateA.r}｜需選上/下`;
+      } else {
+        const lo = Math.min(a,b), hi = Math.max(a,b);
+        const width = Math.max(0, hi-lo-1);
+        const midLo = (width>0) ? valueToRank[lo+1] : "-";
+        const midHi = (width>0) ? valueToRank[hi-1] : "-";
+        elPillGate.textContent = (width>0) ? `中門：${midLo}~${midHi}（${width}張）` : `無中門（相鄰）`;
+      }
+    }
+
+    elPillPhase.textContent = `狀態：${GAME.phase}`;
+  }
+
+  function renderTop(){
+    elPillChips.textContent = `籌碼：${GAME.players[0].chips}`;
+    if(elPillBetPill){
+      const h = GAME.players[0];
+      const b = (GAME.phase===PHASE.WAIT_BET) ? pendingBet : (h.bet||0);
+      elPillBetPill.textContent = `下注：${b}`;
+    }
+    const round = (SAVE.profile.round||0);
+    elPillRound.textContent = `局數：${round}`;
+    elStatusLine.textContent = (GAME.phase===PHASE.WAIT_BET) ? "請下注開始" :
+                               (GAME.phase===PHASE.AI_BET) ? (`${GAME.aiTurn||"其他玩家"} 下注中`) :
+                               (GAME.phase===PHASE.REVEAL_GATE) ? "莊家開門中" :
+                               (GAME.phase===PHASE.POST_GATE) ? "可加柱或跳過" :
+                               (GAME.phase===PHASE.CHOOSE_PAIR) ? "對門：請選上/下" :
+                               (GAME.phase===PHASE.DONE) ? "本局完成，可下一局" : "進行中";
+  }
+
+  function renderLog(){
+    elMsgLog.innerHTML = "";
+    const logs = (GAME.log||[]).slice(-5);
+    for(const item of logs){
+      const div = document.createElement("div");
+      div.className = "msg";
+      div.innerHTML = `<div class="t">${item.t}</div><div class="c">${item.c}</div>`;
+      elMsgLog.appendChild(div);
+    }
+  }
+
+  function renderDealer(){
+    const map = {
+      [PHASE.WAIT_BET]: "等待下注",
+      [PHASE.AI_BET]: "玩家下注中",
+      [PHASE.POST_GATE]: "等待加柱",
+      [PHASE.REVEAL_GATE]: "開門中",
+      [PHASE.CHOOSE_PAIR]: "等待選擇",
+      [PHASE.REVEAL_THIRD]: "射門中",
+      [PHASE.SETTLE]: "結算中",
+      [PHASE.DONE]: "待機"
+    };
+    $("dstate").textContent = map[GAME.phase] || GAME.phase;
+    if(GAME.gateA && GAME.gateB) {
+      $("dgate").textContent = `門：${GAME.gateA.r} / ${GAME.gateB.r}`;
+    } else {
+      $("dgate").textContent = "門：-";
+    }
+  }
+
+  function renderAll(){
+    renderTop();
+    renderDealer();
+    renderPlayers();
+    renderCenter();
+    renderLog();
+    renderDock();
+  }
+
+  // ===== Betting UI =====
+  let pendingBet = 0;
+
+  function clampBet(x){
+    const chips = GAME.players[0].chips;
+    return Math.max(0, Math.min(chips, x));
+  }
+
+  function setPendingBet(x){
+    pendingBet = clampBet(x);
+    elBetAmount.textContent = `下注：${pendingBet}`;
+    renderDock();
+    syncDockSpace();
+  }
+
+  function renderDock(){
+    // Decision row (after gate A/B revealed)
+    const needDecision = (GAME.phase===PHASE.POST_GATE) && (GAME.players[0].bet>0) && (GAME.players[0].postGate==null);
+    decisionRow.classList.toggle("show", !!needDecision);
+
+    // choiceRow only on pair-choice and if human bet>0
+    const needChoice = (GAME.phase===PHASE.CHOOSE_PAIR) && (GAME.players[0].bet>0) && (GAME.players[0].choice==null);
+    choiceRow.classList.toggle("show", !!needChoice);
+
+    // confirm bet disabled if not in betting
+    const inBetting = (GAME.phase===PHASE.WAIT_BET);
+    btnConfirm.disabled = !inBetting || pendingBet<=0;
+    btnBetMinus.disabled = !inBetting;
+    btnBetPlus.disabled  = !inBetting;
+    btnQ10.disabled      = !inBetting;
+    btnQ50.disabled      = !inBetting;
+    btnQ100.disabled     = !inBetting;
+    btnMax.disabled      = !inBetting;
+    btnClearBet.disabled = !inBetting;
+
+    const inDecision = (GAME.phase===PHASE.POST_GATE);
+    btnAddPillar.disabled = !inDecision;
+    btnSkipPillar.disabled = !inDecision;
+
+    btnNext.style.display = (GAME.phase===PHASE.DONE) ? "inline-flex" : "none";
+    syncDockSpace();
+  }
+
+
+  function syncDockSpace(){
+    // Reserve space for fixed bottom dock (responsive)
+    const h = dock ? dock.offsetHeight : 0;
+    document.documentElement.style.setProperty("--dockH", (h||0) + "px");
+  }
+
+  // ===== Game mechanics =====
+  function aiPickBet(p){
+    const cfg = DIFFICULTY[SAVE.settings.difficulty] || DIFFICULTY.normal;
+    const chips = p.chips;
+    if(chips<=0) return 0;
+    // bet between 5% and 18% of chips, scaled by aggro
+    const lo = Math.max(1, Math.floor(chips * 0.04 * cfg.betAggro));
+    const hi = Math.max(lo, Math.floor(chips * (0.10 + 0.12*cfg.betAggro)));
+    let bet = Math.min(chips, Math.floor(lo + Math.random()*(hi-lo+1)));
+    // Force 10-multiple (mobile-friendly chips); keep within remaining chips
+    if(chips >= 10){
+      bet = Math.floor(bet/10)*10;
+      if(bet < 10) bet = 10;
+      if(bet > chips) bet = Math.floor(chips/10)*10;
+      if(bet < 10) bet = 0;
+    } else {
+      // If chips < 10, just all-in (or 0)
+      bet = chips;
+    }
+    return bet;
+  }
+
+  function aiPickChoice(p, aVal){
+    const cfg = DIFFICULTY[SAVE.settings.difficulty] || DIFFICULTY.normal;
+    // simple bias: slightly prefer "上" (higher) by pairBias
+    return (Math.random() < cfg.pairBias) ? "upper" : "lower";
+  }
+
+  function resetRoundFields(){
+    for(const p of GAME.players){
+      p.bet = 0;
+      p.choice = null;
+      p.result = null;
+    p.postGate = null;
+    }
+    GAME.gateA = null;
+    GAME.gateB = null;
+    GAME.cardC = null;
+    GAME.isPair = false;
+  }
+
+  function ensureDeck(){
+    if(!Array.isArray(GAME.deck) || GAME.deck.length < 12) {
+      GAME.deck = shuffle(newDeck());
+    }
+  }
+
+  function openGate(){
+    ensureDeck();
+    GAME.gateA = draw(GAME.deck);
+    GAME.gateB = draw(GAME.deck);
+    // Normalize: always show left smaller, right larger
+    if(val(GAME.gateA) > val(GAME.gateB)){
+      const tmp = GAME.gateA; GAME.gateA = GAME.gateB; GAME.gateB = tmp;
+    }
+    GAME.isPair = (val(GAME.gateA) === val(GAME.gateB));
+  }
+
+  function revealThird(){
+    ensureDeck();
+    GAME.cardC = draw(GAME.deck);
+  }
+
+  function settle(){
+    const a = val(GAME.gateA), b = val(GAME.gateB);
+    const c = val(GAME.cardC);
+
+    for(const p of GAME.players){
+      const pid = p.id;
+      const bet = p.bet || 0;
+      const before = p.chips;
+
+      if(bet<=0) {
+        p.result = null;
+        continue;
+      }
+
+      let delta = 0;
+      let short = "";
+
+      if(a===b){
+        // Pair gate (對門): C==A => super collision (3x)
+        if(c===a){
+          delta = -3*bet;
+          short = "超級撞柱";
+        } else {
+          const isUpper = (c>a);
+          const wantUpper = (p.choice==="upper");
+          const win = (wantUpper && isUpper) || (!wantUpper && !isUpper);
+          if(win){
+            delta = +bet;
+            short = "贏";
+          } else {
+            delta = -bet;
+            short = "輸";
+          }
+        }
+      } else {
+        const lo = Math.min(a,b), hi = Math.max(a,b);
+        if(c===lo || c===hi){
+          delta = -2*bet;
+          short = "撞柱";
+        } else if(c>lo && c<hi){
+          delta = +bet;
+          short = "中門";
+        } else {
+          delta = -bet;
+          short = "未中";
+        }
+      }
+
+      const after = Math.max(0, before + delta);
+      p.chips = after;
+      p._dispChips = before;
+
+      // Animated chips + floating delta + transient badge
+      const chipEl = document.getElementById("pchips"+pid);
+      animateNumberText(chipEl, before, after, 520);
+      if(pid===0){
+        // top pill
+        const pill = document.getElementById("pillChips");
+        if(pill) {
+          const from = before;
+          const to = after;
+          const t0 = performance.now();
+          const d = 520;
+          const step = (t)=>{
+            const k = Math.min(1, (t - t0)/d);
+            const v = Math.round(from + (to-from)*(1 - Math.pow(1-k,3)));
+            pill.textContent = `籌碼：${v}`;
+            if(k<1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        }
+      }
+
+      floatDelta(pid, delta);
+      transientResultBadge(pid, short, delta);
+
+      // clear disp after animation
+      setTimeout(()=>{ p._dispChips = null; }, 560);
+    }
+
+    // sync profile chips to human
+    SAVE.profile.chips = GAME.players[0].chips;
+  }
+
+async function runAIBettingThenGate(){
+    // AI betting sequence (turn-feel)
+    GAME.phase = PHASE.AI_BET;
+    renderAll();
+
+    for(let i=1;i<=3;i++){
+      const ai = GAME.players[i];
+      GAME.aiTurn = ai.name;
+      ai.result = null;
+      ai.choice = null;
+      ai.postGate = null;
+      await sleep(450 + Math.random()*550);
+      ai.bet = aiPickBet(ai);
+      logMsg(`${ai.name} 下注：${ai.bet}`);
+      renderAll();
+    }
+
+    GAME.aiTurn = null;
+    await proceedAfterAllBets();
+  }
+
+  async function proceedAfterAllBets(){
+    // Open gate (A/B)
+    GAME.phase = PHASE.REVEAL_GATE;
+    openGate();
+    logMsg(`莊家開門：${GAME.gateA.r} / ${GAME.gateB.r}`);
+    renderAll();
+
+    // After both pillars revealed, allow 加柱/跳過
+    GAME.phase = PHASE.POST_GATE;
+
+    // AI decisions immediately, but still with slight stagger for feel
+    (async ()=>{
+      const a = val(GAME.gateA), b = val(GAME.gateB);
+      const lo = Math.min(a,b), hi = Math.max(a,b);
+      const width = (a===b) ? 0 : Math.max(0, hi-lo-1);
+      for(let i=1;i<=3;i++){
+        const p = GAME.players[i];
+        if((p.bet||0)<=0) { p.postGate = "skip"; continue; }
+        await sleep(220 + Math.random()*380);
+        const wantAdd = (!GAME.isPair) ? (width>=5 && Math.random()<0.55) : (Math.random()<0.35);
+        if(wantAdd){
+          // add pillar = increase stake (try to double; otherwise all-in)
+          const target = Math.min(p.chips, p.bet*2);
+          if(target>p.bet){ p.bet = target; p.postGate="add"; logMsg(`${p.name} 加柱：下注→${p.bet}`); }
+          else { p.postGate="skip"; }
+        } else {
+          p.postGate="skip";
+        }
+        renderAll();
+      }
+    })();
+
+    logMsg("可選擇加柱或跳過");
+    renderAll();
+
+    // Wait for human decision if human bet>0
+    if(GAME.players[0].bet>0 && GAME.players[0].postGate==null){
+      return; // continue after decision
+    }
+
+    // proceed
+    await runGateAndMaybePair();
+  }
+
+  async function runGateAndMaybePair(){
+    // If pair -> choices
+    if(GAME.isPair){
+      GAME.phase = PHASE.CHOOSE_PAIR;
+      // AI choose immediately if they bet
+      const aVal = val(GAME.gateA);
+      for(let i=1;i<=3;i++){
+        if(GAME.players[i].bet>0) GAME.players[i].choice = aiPickChoice(GAME.players[i], aVal);
+      }
+      logMsg("對門：已開啟選上/下");
+      renderAll();
+      // Wait for human choice if human bet>0
+      if(GAME.players[0].bet>0 && GAME.players[0].choice==null){
+        return; // will continue after choice
+      }
+    }
+
+    // Reveal third
+    await continueAfterChoices();
+  }
+
+  async function continueAfterChoices(){
+    GAME.phase = PHASE.REVEAL_THIRD;
+    revealThird();
+    logMsg(`射門：${GAME.cardC.r}`);
+
+    // 判定資訊（便於核對規則與除錯）
+    const aVal = val(GAME.gateA), bVal = val(GAME.gateB), cVal = val(GAME.cardC);
+    if(aVal!==bVal){
+      const lo=Math.min(aVal,bVal), hi=Math.max(aVal,bVal);
+      const inMid = (cVal>lo && cVal<hi);
+      const hitPillar = (cVal===lo || cVal===hi);
+      logMsg(`判定：門=${valueToRank[lo]}-${valueToRank[hi]}｜C=${GAME.cardC.r}｜${hitPillar?"撞柱":(inMid?"中門":"龍門外")}`);
+    } else {
+      logMsg(`判定：對門=${GAME.gateA.r}｜C=${GAME.cardC.r}`);
+    }
+
+    renderAll();
+
+    // settle
+    GAME.phase = PHASE.SETTLE;
+    settle();
+    SAVE.profile.round = (SAVE.profile.round||0) + 1;
+    logMsg("結算完成");
+    renderAll();
+
+    // win/lose check (may auto reset / reroll)
+    const endState = checkEndConditions();
+    if(endState){
+      persist();
+      return;
+    }
+
+    GAME.phase = PHASE.DONE;
+    renderAll();
+    persist();
+  }
+
+
+  function startNextRound(){
+    resetRoundFields();
+    GAME.phase = PHASE.WAIT_BET;
+    GAME.log = GAME.log || [];
+    logMsg("新一局開始：請下注");
+    // reset pending bet
+    setPendingBet(0);
+    renderAll();
+    persist();
+  }
+
+  // ===== Player actions =====
+  function confirmHumanBet(){
+    if(GAME.phase !== PHASE.WAIT_BET) return;
+    if(pendingBet<=0) return toast("請先下注");
+
+    const human = GAME.players[0];
+    human.bet = pendingBet;
+    human.postGate = null;
+    human.choice = null;
+    human.result = null;
+
+    logMsg(`你下注：${human.bet}`);
+    setPendingBet(0);
+
+    // lock human betting, run AI betting with turn-feel
+    runAIBettingThenGate();
+    persist();
+  }
+
+
+  function choosePostGate(action){
+    if(GAME.phase !== PHASE.POST_GATE) return;
+    const human = GAME.players[0];
+    if(human.bet<=0) return toast("你本局未下注");
+    if(human.postGate!=null) return;
+
+    if(action==="add"){
+      const target = Math.min(human.chips, human.bet*2);
+      if(target>human.bet){
+        human.bet = target;
+        logMsg(`你加柱：下注→${human.bet}`);
+      } else {
+        logMsg("籌碼不足，無法加柱");
+      }
+      human.postGate = "add";
+    } else {
+      human.postGate = "skip";
+      logMsg("你跳過加柱");
+    }
+
+    renderAll();
+    // proceed to next stage
+    runGateAndMaybePair();
+  }
+
+  function chooseHuman(choice){
+    if(GAME.phase !== PHASE.CHOOSE_PAIR) return;
+    const human = GAME.players[0];
+    if(human.bet<=0) return toast("你本局未下注");
+    human.choice = choice;
+    logMsg(`你選擇：${choice==="upper" ? "上" : "下"}`);
+    renderAll();
+    continueAfterChoices();
+  }
+
+  // ===== Theme + Menu =====
+  function setTheme(theme){
+    document.body.classList.toggle("light", theme==="light");
+    SAVE.settings.theme = theme;
+    persist();
+  }
+
+  function openMenu(){
+    menu.classList.add("show");
+    renderSlots();
+    syncMenuFieldsFromSave();
+  }
+  function closeMenu(){
+    menu.classList.remove("show");
+  }
+
+  function syncMenuFieldsFromSave(){
+    inputPlayerName.value = SAVE.profile.playerName || "你";
+    selDifficulty.value = SAVE.settings.difficulty || "normal";
+    selStartChips.value = String(SAVE.settings.startChips || 300);
+    const start = Number(SAVE.settings.startChips || 300);
+    elSlotSummary.textContent =
+      `起始籌碼：${start}｜難度：${selDifficulty.value}\n` +
+      `你的籌碼：${SAVE.profile.chips}｜局數：${SAVE.profile.round||0}`;
+  }
+
+  function renderSlots(){
+    slotList.innerHTML = "";
+    for(let i=1;i<=SLOT_COUNT;i++){
+      const s = loadSlot(i);
+      const btn = document.createElement("div");
+      btn.className = "slotBtn" + (i===CURRENT_SLOT ? " active" : "");
+      btn.innerHTML = `
+        <div class="slotIcon">💾</div>
+        <div class="slotMain">
+          <div class="slotTitle">
+            <div class="slotName">槽位 ${i}</div>
+            <div class="badge">籌碼 ${(s.profile && typeof s.profile.chips==="number") ? s.profile.chips : "-"}</div>
+          </div>
+          <div class="slotMeta">
+            <span>玩家：${(s.profile && s.profile.playerName) ? s.profile.playerName : "你"}</span>
+            <span>難度：${(s.settings && s.settings.difficulty) ? s.settings.difficulty : "normal"}</span>
+            <span>局數：${(s.profile && s.profile.round) ? s.profile.round : 0}</span>
+          </div>
+        </div>
+      `;
+      btn.addEventListener("click", ()=>{
+        CURRENT_SLOT = i;
+        SAVE = loadSlot(CURRENT_SLOT);
+        GAME = restoreGame(SAVE) || newGame(SAVE, {reset:false});
+        setTheme(SAVE.settings.theme==="light" ? "light" : "dark");
+        renderSlots();
+        syncMenuFieldsFromSave();
+      });
+      slotList.appendChild(btn);
+    }
+  }
+
+  function applyMenuChangesToSave(){
+    SAVE.profile.playerName = (inputPlayerName.value || "你").slice(0,16);
+    SAVE.settings.difficulty = selDifficulty.value;
+    SAVE.settings.startChips = Number(selStartChips.value || 300);
+
+    // sync to game human name
+    if(GAME && GAME.players && GAME.players[0]) GAME.players[0].name = SAVE.profile.playerName;
+    persist();
+  }
+
+  function resetSlot(slotId){
+    const s = defaultSlotSave();
+    rerollAI(s);
+    saveSlot(slotId, s);
+  }
+
+  // ===== Wire events =====
+  btnTheme.addEventListener("click", ()=>{
+    const isLight = document.body.classList.contains("light");
+    setTheme(isLight ? "dark" : "light");
+    renderAll();
+  });
+
+  btnMenu.addEventListener("click", ()=> openMenu());
+  btnCloseMenu.addEventListener("click", ()=> closeMenu());
+
+  btnLoad.addEventListener("click", ()=>{
+    // Close menu first so the UI returns to the table immediately
+    closeMenu();
+
+    applyMenuChangesToSave();
+
+    // Restore or create if missing; keep player campaign chips/round
+    GAME = restoreGame(SAVE) || newGame(SAVE, {reset:false});
+
+    // Always return to a pre-round betting state after load
+    GAME.phase = PHASE.WAIT_BET;
+    GAME.players.forEach(p=>{
+      p.bet = 0;
+      p.choice = null;
+      p.postGate = null;
+      p.result = null;
+    });
+    GAME.gateA = null; GAME.gateB = null; GAME.cardC = null;
+    pendingBet = 0;
+    elBetAmount.textContent = `下注：${pendingBet}`;
+    logMsg("已載入：請下注開始");
+
+    setTheme(SAVE.settings.theme==="light" ? "light" : "dark");
+    persist();
+
+    // Let the browser paint the menu close first
+    requestAnimationFrame(()=> renderAll());
+  });
+
+
+  btnNew.addEventListener("click", ()=>{
+    // Close menu first so the UI returns to the table immediately
+    closeMenu();
+
+    applyMenuChangesToSave();
+
+    // Reset whole campaign for this slot (player + AI reset to start chips)
+    SAVE.profile.chips = Number(SAVE.settings.startChips || 300);
+    SAVE.profile.round = 0;
+    GAME = newGame(SAVE, {reset:true});
+
+    // Always start in a pre-round betting state
+    GAME.phase = PHASE.WAIT_BET;
+    pendingBet = 0;
+    elBetAmount.textContent = `下注：${pendingBet}`;
+    logMsg("新局開始：請下注");
+
+    setTheme(SAVE.settings.theme==="light" ? "light" : "dark");
+    persist();
+
+    requestAnimationFrame(()=> renderAll());
+  });
+
+
+  btnResetSlot.addEventListener("click", ()=>{
+    resetSlot(CURRENT_SLOT);
+    SAVE = loadSlot(CURRENT_SLOT);
+    GAME = newGame(SAVE, {reset:false});
+    setTheme(SAVE.settings.theme==="light" ? "light" : "dark");
+    renderSlots();
+    syncMenuFieldsFromSave();
+    toast("已重置槽位");
+  });
+
+  // Betting controls
+  btnBetMinus.addEventListener("click", ()=> setPendingBet(pendingBet - 10));
+  btnBetPlus.addEventListener("click", ()=> setPendingBet(pendingBet + 10));
+  btnQ10.addEventListener("click", ()=> setPendingBet(pendingBet + 10));
+  btnQ50.addEventListener("click", ()=> setPendingBet(pendingBet + 50));
+  btnQ100.addEventListener("click", ()=> setPendingBet(pendingBet + 100));
+  btnMax.addEventListener("click", ()=> setPendingBet(GAME.players[0].chips));
+  btnClearBet.addEventListener("click", ()=> setPendingBet(0));
+  btnConfirm.addEventListener("click", ()=> confirmHumanBet());
+  btnAddPillar.addEventListener("click", ()=> choosePostGate("add"));
+  btnSkipPillar.addEventListener("click", ()=> choosePostGate("skip"));
+
+  btnUpper.addEventListener("click", ()=> chooseHuman("upper"));
+  btnLower.addEventListener("click", ()=> chooseHuman("lower"));
+
+  btnNext.addEventListener("click", ()=> startNextRound());
+  window.addEventListener("resize", ()=> syncDockSpace());
+
+  // ===== Init =====
+  function init(){
+    ensureAllSlots();
+    CURRENT_SLOT = 1;
+    SAVE = loadSlot(CURRENT_SLOT);
+    GAME = restoreGame(SAVE) || newGame(SAVE, {reset:false});
+    setTheme(SAVE.settings.theme==="light" ? "light" : "dark");
+    setPendingBet(0);
+    renderAll();
+    syncDockSpace();
+    openMenu();
+    syncDockSpace();
+  }
+
+  init();
+
+})();
+</script>
+</body>
+</html>
