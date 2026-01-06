@@ -107,6 +107,12 @@
       color:var(--text);
       white-space:nowrap;
     }
+    .chipPillPlayer{
+      font-weight:900;
+      letter-spacing:.2px;
+      background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      border-color: rgba(255,255,255,.16);
+    }
     .btn{
       border:1px solid rgba(255,255,255,.12);
       background:rgba(255,255,255,.08);
@@ -1118,6 +1124,7 @@ position:relative;
         <div class="sub" id="statusLine">—</div>
       </div>
       <div class="topActions">
+        <div class="chipPill chipPillPlayer" id="pillPlayer">🙂 你</div>
         <div class="chipPill" id="pillChips">籌碼：-</div>
         <div class="chipPill" id="pillBetPill">下注：-</div>
         <div class="chipPill" id="pillRound">局數：-</div>
@@ -1374,6 +1381,7 @@ position:relative;
 
   // ===== UI refs =====
   const elStatusLine = $("statusLine");
+  const elPillPlayer = $("pillPlayer");
   const elPillChips  = $("pillChips");
   const elPillBetPill = $("pillBetPill");
   const elPillRound  = $("pillRound");
@@ -1830,6 +1838,12 @@ position:relative;
   }
 
   function renderTop(){
+    if(elPillPlayer){
+      const h = GAME.players[0] || {};
+      const emo = h.emoji || "🙂";
+      const nm  = h.name  || "你";
+      elPillPlayer.textContent = `${emo} ${nm}`;
+    }
     elPillChips.textContent = `籌碼：${GAME.players[0].chips}`;
     if(elPillBetPill){
       const h = GAME.players[0];
@@ -2244,14 +2258,34 @@ async function runAIBettingThenGate(){
     if(human.postGate!=null) return;
 
     if(action==="add"){
-      const target = Math.min(human.chips, human.bet*2);
-      if(target>human.bet){
-        human.bet = target;
-        logMsg(`你加柱：下注→${human.bet}`);
-      } else {
-        logMsg("籌碼不足，無法加柱");
+      // 加注規則：預設「加注=再押一次原本下注額」，也就是總下注×2
+      // 1) 先提示是否加注（押注金額）
+      // 2) 錢不夠時：提示是否改為全押
+      // 3) 若本來就已全押：只提醒「沒錢了無法加注」，不要直接結束，也不要強制進下一步
+      const chips = human.chips;
+      const cur = human.bet;
+
+      if(cur >= chips){
+        toast("沒錢了無法加注（已全押）");
+        return;
       }
-      human.postGate = "add";
+
+      // 目標：一般加注 = 總下注×2（再押一次原本下注額）
+      // 若籌碼不足以×2，則提示是否改為全押
+      if(chips >= cur * 2){
+        const okAdd = window.confirm(`是否加注（+${cur}，總下注將變為 ${cur*2}）？`);
+        if(!okAdd) return;
+        human.bet = cur * 2;
+        human.postGate = "add";
+        logMsg(`你加注：下注→${human.bet}`);
+      }else{
+        // 籌碼不夠：直接問是否全押
+        const okAllIn = window.confirm(`籌碼不足（需要 ${cur*2} 才能加注）。是否改為全押（總下注 ${chips}）？`);
+        if(!okAllIn) return;
+        human.bet = chips;
+        human.postGate = "add";
+        logMsg(`籌碼不足，改為全押：下注→${human.bet}`);
+      }
     } else {
       human.postGate = "skip";
       logMsg("你跳過加柱");
