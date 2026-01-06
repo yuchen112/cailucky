@@ -1535,7 +1535,8 @@ function getPoolFor(gameId, rng){
 function pickPhrase(gameId, scope){
   const rng = getRng(scope||gameId);
   const {tone, pool, meta} = getPoolFor(gameId, rng);
-  const text = pickOne(pool, rng);
+  const key = gameId + ':' + tone;
+  const text = pickWithCooldown(pool, key, rng);
   return { tone, text, meta };
 }
 
@@ -1763,6 +1764,25 @@ function pickTodoPair(scope){
      Helpers
   ============================ */
   function pickOne(list, rng){ return list[Math.floor(rng() * list.length)]; }
+
+// --- phrase cooldown pools ---
+const recentPhrases = {};
+const RECENT_LIMIT = 20;
+/**
+ * Pick an item from pool while avoiding recently used items (per key).
+ * Falls back to full pool when everything is in cooldown.
+ */
+function pickWithCooldown(pool, key, rng){
+  if(!recentPhrases[key]) recentPhrases[key] = [];
+  const recent = recentPhrases[key];
+  const available = pool.filter(p => !recent.includes(p));
+  const source = available.length ? available : pool;
+  const pick = source[Math.floor(rng() * source.length)];
+  recent.push(pick);
+  if(recent.length > RECENT_LIMIT) recent.shift();
+  return pick;
+}
+
   function vibeClass(v){ if(v==="good") return "good"; if(v==="bad") return "bad"; return "warn"; }
   function vibeBanner(v){ if(v==="good") return "【順】"; if(v==="bad") return "【雷】"; return "【平】"; }
 
