@@ -117,7 +117,21 @@
   .paginator-bottom { padding-bottom: env(safe-area-inset-bottom); }
 }
 
-  </style>
+  
+/* === GameCenter: compact grid (like Shop) === */
+.gc-grid{
+  display:grid;
+  gap:12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 520px){
+  .gc-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 820px){
+  .gc-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+</style>
 
   <!-- [IMGIO CSS START] -->
   <style>
@@ -6018,6 +6032,17 @@ function GameCenter({ data, setData, admin }) {
 
   const openPlay = (id) => {
     if (!id) return;
+
+    // 一般使用者：直接新視窗/新分頁開啟遊玩（同頁不內嵌顯示）
+    if (!admin) {
+      const g = games.find(x => x.id === id);
+      const url = (g && g.url) ? String(g.url).trim() : '';
+      if (!url) return;
+      window.open(url, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    // 管理員：保留站內預覽（Modal + iframe），以利測試與除錯
     setActiveId(id);
     setMountedIds(prev => (prev.includes(id) ? prev : [...prev, id]));
     setPlayOpen(true);
@@ -6147,8 +6172,7 @@ function GameCenter({ data, setData, admin }) {
           <section className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur p-3">
             <div className="text-sm font-semibold mb-2">遊戲清單</div>
 
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {games.map(g => {
+            <div className="gc-grid">{games.map(g => {
                 const active = activeGame?.id === g.id;
                 const thumbSrc = String(g.thumb || '').trim();
                 return (
@@ -6164,7 +6188,7 @@ function GameCenter({ data, setData, admin }) {
                       onClick={() => openPlay(g.id)}
                       title={g.title}
                     >
-                      <div className="aspect-[16/9] bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
+                      <div className="bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden" style={{ aspectRatio: "1 / 1" }}>
                         {thumbSrc ? (
                           <img
                             src={thumbSrc}
@@ -6220,7 +6244,7 @@ function GameCenter({ data, setData, admin }) {
           </section>
 
           {/* 遊玩視窗（點卡片才開啟；關閉時保留 iframe，不卸載） */}
-          {mountedIds.length > 0 && (
+          {admin && mountedIds.length > 0 && (
             <div
               className={`fixed inset-0 z-50 ${playOpen ? '' : 'pointer-events-none'}`}
               aria-hidden={playOpen ? 'false' : 'true'}
