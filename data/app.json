@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2026-01-06T08:56:50.099Z"
+    "exportedAt": "2026-01-06T22:10:31.901Z"
   },
   "data": {
     "homepage": {
@@ -6331,6 +6331,24 @@
         "note": "",
         "updatedAt": 1767689808739,
         "createdAt": 1767680105641
+      },
+      {
+        "id": "48b55ae2-26ef-4aa9-93a2-20c210581525",
+        "title": "運氣占卜",
+        "url": "games/luck_oracle.html",
+        "thumb": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/luck_oracle.png",
+        "note": "純單機 · 純娛樂 · 不連網",
+        "updatedAt": 1767736376031,
+        "createdAt": 1767736376031
+      },
+      {
+        "id": "4bfcbeb2-fa05-4952-a088-e54c2f78ae09",
+        "title": "21點(暫未實裝)",
+        "url": "1",
+        "thumb": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/21Black_Jack.png",
+        "note": "",
+        "updatedAt": 1767737428821,
+        "createdAt": 1767737428821
       }
     ]
   },
