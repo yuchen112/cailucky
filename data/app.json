@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2026-01-07T12:21:29.385Z"
+    "exportedAt": "2026-01-07T18:39:27.898Z"
   },
   "data": {
     "homepage": {
@@ -6334,11 +6334,11 @@
       },
       {
         "id": "48b55ae2-26ef-4aa9-93a2-20c210581525",
-        "title": "運氣占卜",
+        "title": "運氣占卜(未完善)",
         "url": "games/luck_oracle.html",
         "thumb": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/luck_oracle.png",
         "note": "純單機 · 純娛樂 · 不連網",
-        "updatedAt": 1767736376031,
+        "updatedAt": 1767811124986,
         "createdAt": 1767736376031
       },
       {
@@ -6349,6 +6349,15 @@
         "note": "",
         "updatedAt": 1767785658605,
         "createdAt": 1767737428821
+      },
+      {
+        "id": "bb63a28a-a88c-4060-abab-0ca5a407c9b0",
+        "title": "打地鼠",
+        "url": "games/whack_a_mole.html",
+        "thumb": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/whack_a_mole.png",
+        "note": "",
+        "updatedAt": 1767811056490,
+        "createdAt": 1767811056490
       }
     ]
   },
