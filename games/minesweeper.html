@@ -1,0 +1,2407 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=yes" />
+  <meta name="color-scheme" content="light dark" />
+  <title>離線踩地雷（手機單機排行・單檔）</title>
+  <style>
+    :root{
+      --bg0:#070a16;
+      --bg1:#0b1230;
+      --bg2:#0c1a42;
+
+      --panel:#0f1a3f;
+      --panel2:#0b1433;
+      --card:#0d1738;
+
+      --stroke:rgba(255,255,255,.12);
+      --stroke2:rgba(255,255,255,.08);
+
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.68);
+
+      --accent:#7c5cff;
+      --accent2:#00d6ff;
+      --danger:#ff4d6d;
+      --ok:#30d158;
+      --warn:#ffd60a;
+
+      --shadow: 0 18px 56px rgba(0,0,0,.48);
+      --shadow2: 0 10px 26px rgba(0,0,0,.38);
+
+      --cell: 34px;         /* computed by JS (auto-fit) */
+      --gap: 6px;
+      --radius: 18px;
+      --cellRadius: 11px;
+      --scale: 1;           /* boardWrap scale (pinch only) */
+      --safeTop: env(safe-area-inset-top, 0px);
+      --safeBottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root{
+        --bg0:#eef2ff;
+        --bg1:#f8fafc;
+        --bg2:#ffffff;
+
+        --panel:#ffffff;
+        --panel2:#f7f8ff;
+        --card:#ffffff;
+
+        --stroke:rgba(2,6,23,.10);
+        --stroke2:rgba(2,6,23,.06);
+
+        --text:rgba(2,6,23,.92);
+        --muted:rgba(2,6,23,.62);
+
+        --accent:#5b5cff;
+        --accent2:#00a7ff;
+        --danger:#ff2d55;
+        --ok:#30d158;
+        --warn:#ffcc00;
+
+        --shadow: 0 18px 46px rgba(2,6,23,.14);
+        --shadow2: 0 10px 26px rgba(2,6,23,.10);
+      }
+    }
+
+    html[data-theme="dark"]{
+      --bg0:#070a16; --bg1:#0b1230; --bg2:#0c1a42;
+      --panel:#0f1a3f; --panel2:#0b1433; --card:#0d1738;
+      --stroke:rgba(255,255,255,.12); --stroke2:rgba(255,255,255,.08);
+      --text:rgba(255,255,255,.92); --muted:rgba(255,255,255,.68);
+      --accent:#7c5cff; --accent2:#00d6ff; --danger:#ff4d6d; --ok:#30d158; --warn:#ffd60a;
+      --shadow: 0 18px 56px rgba(0,0,0,.48); --shadow2: 0 10px 26px rgba(0,0,0,.38);
+    }
+    html[data-theme="light"]{
+      --bg0:#eef2ff; --bg1:#f8fafc; --bg2:#ffffff;
+      --panel:#ffffff; --panel2:#f7f8ff; --card:#ffffff;
+      --stroke:rgba(2,6,23,.10); --stroke2:rgba(2,6,23,.06);
+      --text:rgba(2,6,23,.92); --muted:rgba(2,6,23,.62);
+      --accent:#5b5cff; --accent2:#00a7ff; --danger:#ff2d55; --ok:#30d158; --warn:#ffcc00;
+      --shadow: 0 18px 46px rgba(2,6,23,.14); --shadow2: 0 10px 26px rgba(2,6,23,.10);
+    }
+
+    *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1000px 740px at 12% -10%, color-mix(in srgb, var(--accent) 34%, transparent), transparent 60%),
+        radial-gradient(1100px 800px at 90% -8%, color-mix(in srgb, var(--accent2) 26%, transparent), transparent 62%),
+        radial-gradient(900px 700px at 50% 115%, color-mix(in srgb, var(--danger) 12%, transparent), transparent 64%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 45%, var(--bg2));
+      overflow:hidden;
+    }
+
+    .app{
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      padding: calc(12px + var(--safeTop)) 12px calc(12px + var(--safeBottom));
+    }
+
+    .topbar{
+      background:
+        radial-gradient(700px 240px at 20% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 62%),
+        radial-gradient(700px 240px at 80% 0%, color-mix(in srgb, var(--accent2) 18%, transparent), transparent 64%),
+        linear-gradient(180deg, color-mix(in srgb, var(--panel) 92%, transparent), color-mix(in srgb, var(--panel2) 92%, transparent));
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow2);
+      border-radius: var(--radius);
+      padding: 12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .topGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .statRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border:1px solid var(--stroke2);
+      border-radius: 16px;
+      background: color-mix(in srgb, var(--card) 90%, transparent);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.10);
+    }
+    .stat{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 0;
+    }
+    .pillIcon{
+      width:38px; height:38px;
+      border-radius: 14px;
+      border:1px solid var(--stroke);
+      background:
+        radial-gradient(20px 20px at 30% 22%, rgba(255,255,255,.18), transparent 60%),
+        linear-gradient(180deg, color-mix(in srgb, var(--panel) 94%, transparent), color-mix(in srgb, var(--panel2) 94%, transparent));
+      box-shadow: 0 10px 22px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.12);
+      display:grid; place-items:center;
+      flex: 0 0 auto;
+    }
+    .statLabel{
+      font-size:12px;
+      color:var(--muted);
+      letter-spacing:.4px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .statValue{
+      font-variant-numeric: tabular-nums;
+      font-size:18px;
+      font-weight: 900;
+      letter-spacing:.2px;
+    }
+
+    .btnRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--stroke);
+      background:
+        radial-gradient(24px 24px at 30% 20%, rgba(255,255,255,.14), transparent 62%),
+        linear-gradient(180deg, color-mix(in srgb, var(--panel) 94%, transparent), color-mix(in srgb, var(--panel2) 94%, transparent));
+      color:var(--text);
+      box-shadow: 0 12px 22px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.12);
+      border-radius: 16px;
+      padding: 11px 14px;
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing:.2px;
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      user-select:none;
+      touch-action: manipulation;
+    }
+    .btn:active{ transform: translateY(1px); filter: brightness(1.03); box-shadow: 0 10px 18px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.12); }
+    .btn.primary{
+      border-color: color-mix(in srgb, var(--accent) 70%, var(--stroke));
+      background:
+        radial-gradient(26px 26px at 28% 20%, rgba(255,255,255,.16), transparent 60%),
+        linear-gradient(180deg, color-mix(in srgb, var(--accent) 26%, var(--panel)), color-mix(in srgb, var(--accent2) 16%, var(--panel2)));
+      box-shadow: 0 16px 30px rgba(0,0,0,.22), 0 0 56px color-mix(in srgb, var(--accent) 22%, transparent);
+    }
+    .btn.danger{
+      border-color: color-mix(in srgb, var(--danger) 60%, var(--stroke));
+      background:
+        radial-gradient(26px 26px at 28% 20%, rgba(255,255,255,.12), transparent 60%),
+        linear-gradient(180deg, color-mix(in srgb, var(--danger) 18%, var(--panel)), color-mix(in srgb, var(--danger) 10%, var(--panel2)));
+    }
+    .btn.ghost{
+      background: color-mix(in srgb, var(--card) 70%, transparent);
+      box-shadow: none;
+    }
+
+    .select{
+      border:1px solid var(--stroke);
+      border-radius: 16px;
+      padding: 11px 12px;
+      background: color-mix(in srgb, var(--card) 84%, transparent);
+      color: var(--text);
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing:.2px;
+      outline:none;
+      min-height: 44px;
+      touch-action: manipulation;
+      appearance:none;
+    }
+
+    .boardShell{
+      flex: 1 1 auto;
+      min-height: 0;
+      background:
+        radial-gradient(900px 560px at 18% 10%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 62%),
+        radial-gradient(1000px 660px at 82% 0%, color-mix(in srgb, var(--accent2) 12%, transparent), transparent 64%),
+        linear-gradient(180deg, color-mix(in srgb, var(--panel) 82%, transparent), color-mix(in srgb, var(--panel2) 82%, transparent));
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    #boardWrap{
+      height:100%;
+      width:100%;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 14px;
+      touch-action: pan-x pan-y;
+    }
+    #boardWrapInner{
+      transform: scale(var(--scale));
+      transform-origin: 0 0;
+      width: fit-content;
+      height: fit-content;
+      will-change: transform;
+    }
+
+    #board{
+      display:grid;
+      gap: var(--gap);
+      background:
+        radial-gradient(380px 240px at 25% 20%, rgba(255,255,255,.06), transparent 60%),
+        radial-gradient(420px 260px at 80% 10%, rgba(255,255,255,.05), transparent 62%),
+        color-mix(in srgb, var(--panel2) 56%, transparent);
+      padding: 10px;
+      border:1px solid var(--stroke2);
+      border-radius: 18px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+      user-select:none;
+      -webkit-user-select:none;
+      -webkit-touch-callout:none;
+    }
+
+    .cell{
+      width: var(--cell);
+      height: var(--cell);
+      display:grid;
+      place-items:center;
+      border-radius: var(--cellRadius);
+      border: 1px solid var(--stroke);
+      font-weight: 950;
+      font-size: calc(var(--cell) * 0.54);
+      line-height: 1;
+      letter-spacing: .1px;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+      touch-action: none;
+      transition: transform .07s ease, filter .12s ease, background .16s ease, box-shadow .16s ease;
+    }
+
+    .cell.hidden{
+      background:
+        radial-gradient(120% 90% at 24% 0%, rgba(255,255,255,.14), transparent 55%),
+        radial-gradient(120% 90% at 85% 0%, rgba(255,255,255,.08), transparent 62%),
+        linear-gradient(180deg,
+          color-mix(in srgb, var(--panel) 96%, transparent),
+          color-mix(in srgb, var(--panel2) 96%, transparent)
+        );
+      box-shadow:
+        0 12px 20px rgba(0,0,0,.20),
+        inset 0 1px 0 rgba(255,255,255,.14),
+        inset 0 -1px 0 rgba(0,0,0,.22);
+    }
+    .cell.hidden:active{
+      transform: translateY(1px) scale(.99);
+      filter: brightness(1.05);
+    }
+
+    .cell.revealed{
+      background:
+        radial-gradient(120% 90% at 24% 0%, rgba(255,255,255,.10), transparent 56%),
+        color-mix(in srgb, var(--card) 88%, transparent);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.12);
+      border-color: var(--stroke2);
+    }
+
+    .cell.flagged{
+      background:
+        radial-gradient(120% 90% at 24% 0%, rgba(255,255,255,.12), transparent 56%),
+        linear-gradient(180deg,
+          color-mix(in srgb, var(--accent) 24%, var(--panel)),
+          color-mix(in srgb, var(--accent2) 14%, var(--panel2))
+        );
+      border-color: color-mix(in srgb, var(--accent) 60%, var(--stroke));
+      box-shadow:
+        0 12px 22px rgba(0,0,0,.20),
+        0 0 40px color-mix(in srgb, var(--accent) 16%, transparent),
+        inset 0 1px 0 rgba(255,255,255,.12);
+    }
+
+    .cell.mine{
+      background:
+        radial-gradient(120% 90% at 24% 0%, rgba(255,255,255,.10), transparent 56%),
+        linear-gradient(180deg,
+          color-mix(in srgb, var(--danger) 14%, var(--card)),
+          color-mix(in srgb, var(--danger) 8%, var(--card))
+        );
+      border-color: color-mix(in srgb, var(--danger) 44%, var(--stroke));
+    }
+
+    .cell.exploded{
+      background:
+        radial-gradient(120% 90% at 24% 0%, rgba(255,255,255,.12), transparent 56%),
+        linear-gradient(180deg,
+          color-mix(in srgb, var(--danger) 30%, var(--panel)),
+          color-mix(in srgb, var(--danger) 18%, var(--panel2))
+        );
+      border-color: color-mix(in srgb, var(--danger) 78%, var(--stroke));
+      box-shadow:
+        0 22px 40px rgba(0,0,0,.26),
+        0 0 70px color-mix(in srgb, var(--danger) 30%, transparent);
+      animation: pop .22s ease-out;
+    }
+    @keyframes pop {
+      from { transform: scale(.92); filter: brightness(1.10); }
+      to   { transform: scale(1);   filter: brightness(1.00); }
+    }
+
+    .cell.wrongflag{
+      background:
+        radial-gradient(120% 90% at 24% 0%, rgba(255,255,255,.10), transparent 56%),
+        linear-gradient(180deg,
+          color-mix(in srgb, var(--warn) 18%, var(--card)),
+          color-mix(in srgb, var(--warn) 10%, var(--card))
+        );
+      border-color: color-mix(in srgb, var(--warn) 52%, var(--stroke));
+    }
+
+    /* Classic number colors */
+    .n1{ color:#007aff; }
+    .n2{ color:#34c759; }
+    .n3{ color:#ff3b30; }
+    .n4{ color:#5856d6; }
+    .n5{ color:#af52de; }
+    .n6{ color:#00c7be; }
+    .n7{ color:#ff9500; }
+    .n8{ color:#8e8e93; }
+
+    .footerHint{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 11px 12px;
+      border-radius: var(--radius);
+      border:1px solid var(--stroke);
+      background:
+        radial-gradient(520px 160px at 22% 0%, rgba(255,255,255,.06), transparent 62%),
+        linear-gradient(180deg, color-mix(in srgb, var(--panel) 74%, transparent), color-mix(in srgb, var(--panel2) 74%, transparent));
+      box-shadow: var(--shadow2);
+    }
+    .hintText{
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+      user-select:none;
+    }
+    .mini{
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    /* Modal */
+    .modalBackdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.58);
+      display: none;
+      /* Desktop / large screens: true center */
+      align-items: center;
+      justify-content: center;
+      padding: 14px 12px calc(14px + var(--safeBottom));
+      z-index: 50;
+    }
+    .modalBackdrop.show{ display:flex; }
+    .modal{
+      width: min(720px, 100%);
+      background:
+        radial-gradient(720px 240px at 22% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 64%),
+        radial-gradient(720px 240px at 78% 0%, color-mix(in srgb, var(--accent2) 14%, transparent), transparent 66%),
+        linear-gradient(180deg, color-mix(in srgb, var(--panel) 94%, transparent), color-mix(in srgb, var(--panel2) 94%, transparent));
+      border: 1px solid var(--stroke);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      transform: translateY(8px);
+      animation: slideUp .16s ease-out forwards;
+    }
+    @keyframes slideUp{ to{ transform: translateY(0); } }
+    .modalHeader{
+      padding: 14px 14px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      border-bottom: 1px solid var(--stroke2);
+    }
+    .modalTitle{
+      font-size: 16px;
+      font-weight: 950;
+      letter-spacing: .2px;
+    }
+    .modalBody{
+      padding: 14px;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+      max-height: min(72vh, 720px);
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .row{
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+      flex: 1 1 170px;
+      min-width: 170px;
+    }
+    .label{
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 900;
+      letter-spacing: .2px;
+    }
+    .input{
+      width:100%;
+      border:1px solid var(--stroke);
+      border-radius: 16px;
+      padding: 11px 12px;
+      background: color-mix(in srgb, var(--card) 84%, transparent);
+      color: var(--text);
+      font-weight: 950;
+      font-size: 14px;
+      outline:none;
+      min-height: 44px;
+    }
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .card{
+      border:1px solid var(--stroke2);
+      border-radius: 18px;
+      padding: 12px;
+      background:
+        radial-gradient(420px 220px at 28% 0%, rgba(255,255,255,.06), transparent 62%),
+        color-mix(in srgb, var(--card) 88%, transparent);
+    }
+    .scoreLine{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 10px 10px;
+      border-radius: 16px;
+      border:1px solid var(--stroke2);
+      background:
+        radial-gradient(420px 160px at 24% 0%, rgba(255,255,255,.06), transparent 62%),
+        color-mix(in srgb, var(--panel) 56%, transparent);
+      font-variant-numeric: tabular-nums;
+    }
+    .scoreLeft{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .badge{
+      width: 34px;
+      height: 34px;
+      border-radius: 13px;
+      border:1px solid var(--stroke);
+      display:grid;
+      place-items:center;
+      font-weight: 950;
+      background:
+        radial-gradient(20px 20px at 30% 22%, rgba(255,255,255,.12), transparent 60%),
+        color-mix(in srgb, var(--panel2) 64%, transparent);
+      flex: 0 0 auto;
+    }
+    .scoreMeta{
+      display:flex;
+      flex-direction:column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .scoreMeta b{
+      font-size: 14px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .scoreMeta span{
+      font-size: 12px;
+      color: var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .scoreTime{
+      font-size: 16px;
+      font-weight: 950;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      border:1px solid var(--stroke2);
+      background: color-mix(in srgb, var(--panel2) 60%, transparent);
+      color: var(--muted);
+      display:inline-block;
+      line-height: 1.3;
+    }
+
+    @media (max-width: 420px){
+      .topGrid{ grid-template-columns: 1fr; }
+      .btnRow{ justify-content: flex-start; }
+      .grid2{ grid-template-columns: 1fr; }
+      .field{ min-width: 0; }
+    }
+  
+    /* ===== Visual Upgrade Pack (v1.3) ===== */
+    .topbar::before,
+    .boardShell::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      pointer-events:none;
+      background:
+        radial-gradient(900px 240px at 18% -10%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 60%),
+        radial-gradient(900px 260px at 86% -18%, color-mix(in srgb, var(--accent2) 22%, transparent), transparent 62%),
+        radial-gradient(1200px 520px at 50% 120%, rgba(255,255,255,.06), transparent 60%);
+      opacity:.95;
+      filter: blur(0px);
+      mix-blend-mode: screen;
+    }
+    .topbar::after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      pointer-events:none;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.08), transparent 30%),
+        linear-gradient(315deg, rgba(255,255,255,.06), transparent 28%);
+      opacity:.7;
+      mask-image: radial-gradient(700px 240px at 50% 0%, #000 35%, transparent 72%);
+    }
+
+    /* animated ambience */
+    .app::before{
+      content:"";
+      position:fixed;
+      inset:-30%;
+      background:
+        radial-gradient(900px 600px at 10% 20%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
+        radial-gradient(900px 600px at 90% 10%, color-mix(in srgb, var(--accent2) 18%, transparent), transparent 62%),
+        radial-gradient(900px 700px at 50% 90%, color-mix(in srgb, var(--danger) 10%, transparent), transparent 66%);
+      opacity:.55;
+      filter: blur(18px);
+      animation: floatGlow 10s ease-in-out infinite alternate;
+      pointer-events:none;
+      z-index:-1;
+    }
+    @keyframes floatGlow{
+      from{ transform: translate3d(-1.5%, -1.0%, 0) scale(1.02); }
+      to  { transform: translate3d( 1.8%,  1.2%, 0) scale(1.06); }
+    }
+
+    /* stronger “machine” edges */
+    .boardShell{
+      border-color: color-mix(in srgb, var(--stroke) 92%, rgba(255,255,255,.10));
+      box-shadow:
+        0 28px 70px rgba(0,0,0,.46),
+        0 0 0 1px rgba(255,255,255,.04) inset,
+        inset 0 1px 0 rgba(255,255,255,.10);
+    }
+
+    #board{
+      position:relative;
+      background:
+        radial-gradient(420px 280px at 22% 0%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(420px 280px at 82% 10%, rgba(255,255,255,.06), transparent 62%),
+        radial-gradient(900px 520px at 50% 110%, rgba(255,255,255,.05), transparent 64%),
+        color-mix(in srgb, var(--panel2) 56%, transparent);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08),
+        inset 0 -1px 0 rgba(0,0,0,.22);
+    }
+    #board::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        repeating-linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.03) 1px, transparent 1px, transparent 8px);
+      opacity:.35;
+      mix-blend-mode: overlay;
+      border-radius: 18px;
+      mask-image: radial-gradient(1200px 700px at 50% 0%, #000 55%, transparent 86%);
+    }
+
+    /* cells: premium bevel + micro grain */
+    .cell{
+      box-shadow:
+        0 16px 26px rgba(0,0,0,.16),
+        inset 0 1px 0 rgba(255,255,255,.12),
+        inset 0 -1px 0 rgba(0,0,0,.22);
+    }
+    .cell::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(140% 90% at 20% 0%, rgba(255,255,255,.16), transparent 58%),
+        radial-gradient(120% 90% at 90% 10%, rgba(255,255,255,.08), transparent 64%);
+      opacity:.9;
+      transform: translateZ(0);
+    }
+    .cell::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.03), rgba(255,255,255,.03) 1px, transparent 1px, transparent 6px);
+      opacity:.18;
+      mix-blend-mode: overlay;
+    }
+    .cell.hidden{
+      box-shadow:
+        0 18px 30px rgba(0,0,0,.20),
+        inset 0 1px 0 rgba(255,255,255,.18),
+        inset 0 -2px 0 rgba(0,0,0,.28);
+    }
+    .cell.hidden:active{
+      transform: translateY(2px) scale(.985);
+      box-shadow:
+        0 12px 22px rgba(0,0,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.18),
+        inset 0 -1px 0 rgba(0,0,0,.26);
+    }
+    .cell.revealed{
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.14),
+        inset 0 -1px 0 rgba(0,0,0,.10);
+    }
+    .cell.flagged{
+      animation: flagPulse .26s ease-out;
+    }
+    @keyframes flagPulse{
+      from{ transform: scale(.94); filter: brightness(1.15); }
+      to{ transform: scale(1); filter: brightness(1); }
+    }
+
+    /* richer exploded */
+    .cell.exploded{
+      animation: boom .28s ease-out;
+    }
+    @keyframes boom{
+      0%{ transform: scale(.90) rotate(-2deg); filter: brightness(1.22) saturate(1.2); }
+      55%{ transform: scale(1.03) rotate(1deg); }
+      100%{ transform: scale(1) rotate(0deg); filter: brightness(1) saturate(1); }
+    }
+
+    /* Modal polish */
+    .modal{
+      position:relative;
+    }
+    .modal::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      pointer-events:none;
+      background:
+        radial-gradient(520px 180px at 30% 0%, rgba(255,255,255,.12), transparent 64%),
+        radial-gradient(520px 180px at 78% 0%, rgba(255,255,255,.08), transparent 66%);
+      opacity:.7;
+      border-radius: 24px;
+      mix-blend-mode: screen;
+    }
+
+    /* Win confetti canvas */
+    #fxCanvas{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index: 60;
+      display:none;
+    }
+
+  
+    /* ===== Visual Upgrade Pack (v1.4) ===== */
+    /* stronger “premium glass” highlight */
+    .topbar, .boardShell, .footerHint{
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    /* animated sheen on primary button */
+    .btn.primary{
+      position:relative;
+      overflow:hidden;
+    }
+    .btn.primary::after{
+      content:"";
+      position:absolute;
+      inset:-40% -60%;
+      background: linear-gradient(120deg, transparent 42%, rgba(255,255,255,.20), transparent 58%);
+      transform: translateX(-30%);
+      opacity:.9;
+      animation: sheen 2.9s ease-in-out infinite;
+      pointer-events:none;
+      mix-blend-mode: screen;
+    }
+    @keyframes sheen{
+      0%{ transform: translateX(-45%) rotate(8deg); opacity:.0; }
+      30%{ opacity:.55; }
+      55%{ opacity:.12; }
+      100%{ transform: translateX(55%) rotate(8deg); opacity:0; }
+    }
+
+    /* cell reveal pop */
+    .cell.revealed{
+      animation: revealPop .14s ease-out;
+    }
+    @keyframes revealPop{
+      from{ transform: scale(.985); filter: brightness(1.06); }
+      to{ transform: scale(1); filter: brightness(1); }
+    }
+
+    /* number glow for readability */
+    .cell.revealed.n1,.cell.revealed.n2,.cell.revealed.n3,.cell.revealed.n4,
+    .cell.revealed.n5,.cell.revealed.n6,.cell.revealed.n7,.cell.revealed.n8{
+      text-shadow: 0 8px 18px rgba(0,0,0,.22);
+    }
+
+    /* premium footer hint */
+    .footerHint{
+      position:relative;
+      overflow:hidden;
+    }
+    .footerHint::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      pointer-events:none;
+      background:
+        radial-gradient(520px 180px at 20% 0%, rgba(255,255,255,.10), transparent 62%),
+        radial-gradient(520px 180px at 82% 0%, rgba(255,255,255,.08), transparent 64%);
+      opacity:.55;
+      mix-blend-mode: screen;
+    }
+
+    /* modal win/lose hero glow */
+    .card{
+      position:relative;
+      overflow:hidden;
+    }
+    .card::after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      pointer-events:none;
+      background:
+        radial-gradient(520px 240px at 20% 0%, rgba(255,255,255,.08), transparent 62%),
+        radial-gradient(520px 240px at 86% 0%, rgba(255,255,255,.06), transparent 64%);
+      opacity:.55;
+      mix-blend-mode: overlay;
+    }
+
+  
+    /* ===== Mobile-first Modal & Contrast Pack (v1.7) ===== */
+
+    /* Slightly tighter topbar */
+    .topbar{ padding: 10px; }
+    .statRow{ padding: 9px 11px; }
+    .pillIcon{ width:34px; height:34px; border-radius: 13px; }
+    .statValue{ font-size:17px; }
+    .btn{ padding: 10px 12px; border-radius: 15px; font-size: 13px; }
+    .select{ padding: 10px 11px; border-radius: 15px; font-size: 13px; min-height: 42px; }
+    .input{ min-height: 42px; border-radius: 15px; padding: 10px 11px; font-size: 13px; }
+
+    /* Make hidden vs revealed unmistakable (especially light theme) */
+    .cell.hidden{
+      background:
+        radial-gradient(120% 90% at 24% 0%, rgba(255,255,255,.24), transparent 55%),
+        radial-gradient(120% 90% at 85% 0%, rgba(255,255,255,.14), transparent 62%),
+        linear-gradient(180deg,
+          color-mix(in srgb, var(--panel) 99%, transparent),
+          color-mix(in srgb, var(--panel2) 99%, transparent)
+        );
+      box-shadow:
+        0 18px 30px rgba(0,0,0,.22),
+        inset 0 1px 0 rgba(255,255,255,.22),
+        inset 0 -2px 0 rgba(0,0,0,.34);
+      border-color: color-mix(in srgb, var(--stroke) 92%, rgba(255,255,255,.20));
+    }
+    .cell.revealed{
+      background:
+        radial-gradient(120% 90% at 24% 0%, rgba(255,255,255,.06), transparent 56%),
+        linear-gradient(180deg,
+          color-mix(in srgb, var(--card) 90%, transparent),
+          color-mix(in srgb, var(--card) 78%, transparent)
+        );
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.16),
+        inset 0 -1px 0 rgba(0,0,0,.10);
+      border-color: color-mix(in srgb, var(--stroke2) 82%, rgba(0,0,0,.10));
+      filter: saturate(1.02);
+    }
+    .cell.revealed::after{ opacity:.10; }
+
+    /* Modal: ALWAYS centered and responsive; mobile becomes bottom-sheet full width */
+    .modalBackdrop{
+      align-items:center;
+      justify-content:center;
+      padding: 14px 12px calc(14px + var(--safeBottom));
+    }
+    .modal{
+      width: min(720px, calc(100vw - 24px));
+      border-radius: 24px;
+      max-height: min(78vh, 760px);
+      overflow:hidden;
+    }
+    .modalHeader{
+      position: sticky;
+      top: 0;
+      background: inherit;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 1;
+    }
+    @media (max-width: 520px){
+      .modalBackdrop{ align-items:flex-end; }
+      .modal{
+        width: 100%;
+        border-radius: 24px 24px 0 0;
+        max-height: min(82vh, 820px);
+      }
+    }
+
+  
+    /* Premium micro-animations */
+    .btn.primary{ position:relative; overflow:hidden; }
+    .btn.primary::after{
+      content:"";
+      position:absolute;
+      inset:-40% -60%;
+      background: linear-gradient(120deg, transparent 42%, rgba(255,255,255,.20), transparent 58%);
+      transform: translateX(-30%);
+      opacity:.0;
+      animation: sheen 3.0s ease-in-out infinite;
+      pointer-events:none;
+      mix-blend-mode: screen;
+    }
+    @keyframes sheen{
+      0%{ transform: translateX(-55%) rotate(8deg); opacity:0; }
+      22%{ opacity:.50; }
+      45%{ opacity:.10; }
+      100%{ transform: translateX(60%) rotate(8deg); opacity:0; }
+    }
+    .cell.revealed{ animation: revealPop .14s ease-out; }
+    @keyframes revealPop{
+      from{ transform: scale(.985); filter: brightness(1.06); }
+      to{ transform: scale(1); filter: brightness(1); }
+    }
+
+  
+    /* ===== Modal Centering Override (v1.8) ===== */
+    .modalBackdrop{
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .modal{
+      width: min(720px, calc(100vw - 24px)) !important;
+      margin: 0 auto !important;
+      border-radius: 24px !important;
+      max-height: min(78vh, 760px) !important;
+    }
+    @media (max-width: 520px){
+      .modalBackdrop{
+        align-items: flex-end !important;
+        justify-content: center !important;
+      }
+      .modal{
+        width: 100% !important;
+        margin: 0 !important;
+        border-radius: 24px 24px 0 0 !important;
+        max-height: min(82vh, 820px) !important;
+      }
+    }
+
+  
+    /* ===== Modal Definitive Centering (v1.9) ===== */
+    .modalBackdrop.show{
+      display: grid !important;
+      place-items: center !important;
+      padding: 14px 12px calc(14px + var(--safeBottom)) !important;
+    }
+    .modal{
+      width: min(720px, calc(100vw - 24px)) !important;
+      max-width: 720px !important;
+      margin: 0 !important;
+    }
+    @media (max-width: 520px){
+      .modalBackdrop.show{
+        place-items: end center !important;
+        padding: 14px 12px 0 !important;
+      }
+      .modal{
+        width: 100% !important;
+        max-width: 100% !important;
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+      }
+      .modalBody{ max-height: min(78vh, 760px) !important; }
+    }
+
+  
+    /* ===== Modal Size & Layout Refinement (v2.0) ===== */
+    .modal{
+      width: min(560px, calc(100vw - 28px)) !important;
+      max-width: 560px !important;
+    }
+    .modalBody{
+      padding: 14px 14px 16px !important;
+      overflow: auto !important;
+    }
+    .modalHeader{
+      padding: 14px 14px 10px !important;
+    }
+    .modalHeader h2{ font-size: 16px !important; }
+    @media (max-width: 700px){
+      .modal{
+        width: min(520px, calc(100vw - 24px)) !important;
+        max-width: 520px !important;
+      }
+    }
+    @media (max-width: 520px){
+      .modalBackdrop.show{
+        place-items: end center !important;
+      }
+      .modal{
+        width: 100% !important;
+        max-width: 100% !important;
+        border-radius: 22px 22px 0 0 !important;
+        margin: 0 !important;
+      }
+      .modalHeader{ padding: 14px 14px 10px !important; }
+      .modalBody{ padding: 14px 14px 16px !important; }
+    }
+
+    /* Make settings/scores header rows wrap nicely */
+    .grid2{
+      grid-template-columns: 1fr 1fr !important;
+    }
+    @media (max-width: 520px){
+      .grid2{
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* Score header row: keep tidy */
+    .scoreTopRow{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .scoreTopRow .select{ flex: 1 1 220px; }
+    .scoreTopRow .btn.danger{ flex: 0 0 auto; }
+
+  
+    /* ===== Modal Always Center (v2.1) ===== */
+    .modalBackdrop.show{
+      display: grid !important;
+      place-items: center !important;
+      padding: 16px 12px !important;
+    }
+    /* remove bottom-sheet behavior on small screens by overriding */
+    @media (max-width: 520px){
+      .modalBackdrop.show{
+        place-items: center !important;
+        padding: 16px 12px !important;
+      }
+      .modal{
+        width: min(560px, calc(100vw - 24px)) !important;
+        max-width: 560px !important;
+        border-radius: 24px !important;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <!-- Top Toolbar -->
+    <div class="topbar" aria-label="工具列">
+      <div class="topGrid">
+        <div class="statRow">
+          <div class="stat" title="剩餘雷數">
+            <div class="pillIcon" aria-hidden="true">💣</div>
+            <div>
+              <div class="statLabel">剩餘雷數</div>
+              <div class="statValue" id="uiMinesLeft">0</div>
+            </div>
+          </div>
+
+          <div class="stat" title="計時">
+            <div class="pillIcon" aria-hidden="true">⏱️</div>
+            <div>
+              <div class="statLabel">計時</div>
+              <div class="statValue" id="uiTimer">00:00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btnRow">
+          <button class="btn primary" id="btnNew" type="button" title="新局">新局</button>
+          <select class="select" id="selMineSkin" title="地雷圖案"></select>
+          <button class="btn ghost" id="btnScores" type="button" title="排行榜">排行榜</button>
+          <button class="btn ghost" id="btnSettings" type="button" title="設定（含難度）">設定</button>
+          <button class="btn" id="btnChord" type="button" title="按住此鍵後點數字格=Chord">Chord</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Board Area -->
+    <div class="boardShell" aria-label="盤面">
+      <div id="boardWrap">
+        <div id="boardWrapInner">
+          <div id="board" aria-label="踩地雷盤面"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom hint -->
+    <div class="footerHint" aria-label="操作提示">
+      <div class="hintText" id="uiHint">
+        點一下開格，長按插旗，按住 Chord 再點數字可掃開
+      </div>
+      <div class="mini">
+        盤面縮放 <span class="kbd">雙指</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- One Modal (content switches) -->
+  <div class="modalBackdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <div class="modalHeader">
+        <div class="modalTitle" id="modalTitle">視窗</div>
+        <button class="btn ghost" id="btnModalClose" type="button">關閉</button>
+      </div>
+      <div class="modalBody" id="modalBody"></div>
+    </div>
+
+  </div>
+
+  <canvas id="fxCanvas" width=\"1\" height=\"1\"></canvas>
+
+<script>
+(() => {
+  'use strict';
+
+
+
+  /* =========================
+   * FX (Confetti / Sparkles)
+   * ========================= */
+  const FX = (() => {
+    const canvas = () => document.getElementById('fxCanvas');
+    let ctx = null;
+    let w = 0, h = 0;
+    let raf = 0;
+    let pieces = [];
+
+    function resize(){
+      const c = canvas();
+      if(!c) return;
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      w = Math.floor(window.innerWidth * dpr);
+      h = Math.floor(window.innerHeight * dpr);
+      c.width = w; c.height = h;
+      c.style.width = window.innerWidth + 'px';
+      c.style.height = window.innerHeight + 'px';
+      ctx = c.getContext('2d');
+      ctx.scale(1,1);
+    }
+
+    function show(){
+      const c = canvas();
+      if(!c) return;
+      c.style.display = 'block';
+    }
+    function hide(){
+      const c = canvas();
+      if(!c) return;
+      c.style.display = 'none';
+    }
+
+    function rand(a,b){ return a + Math.random()*(b-a); }
+
+    function burst(){
+      resize(); show();
+      pieces = [];
+      const count = 140;
+      for(let i=0;i<count;i++){
+        pieces.push({
+          x: rand(w*0.15, w*0.85),
+          y: rand(-h*0.1, h*0.2),
+          vx: rand(-2.6, 2.6),
+          vy: rand(2.2, 6.6),
+          rot: rand(0, Math.PI*2),
+          vr: rand(-0.16, 0.16),
+          size: rand(6, 14),
+          life: rand(70, 120),
+          kind: Math.random() < .55 ? 'rect' : 'tri'
+        });
+      }
+      stop();
+      loop();
+      // auto stop
+      window.setTimeout(() => stop(true), 1600);
+    }
+
+    function sparkleAt(clientX, clientY){
+      const c = canvas();
+      if(!c) return;
+      resize(); show();
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const x = clientX * dpr;
+      const y = clientY * dpr;
+      for(let i=0;i<18;i++){
+        pieces.push({
+          x, y,
+          vx: rand(-3.4, 3.4),
+          vy: rand(-4.2, 1.8),
+          rot: rand(0, Math.PI*2),
+          vr: rand(-0.24, 0.24),
+          size: rand(3.5, 8.5),
+          life: rand(18, 34),
+          kind: 'spark'
+        });
+      }
+      if(!raf) loop();
+      window.setTimeout(() => { if(pieces.length===0) stop(true); }, 700);
+    }
+
+    function draw(){
+      if(!ctx) return;
+      ctx.clearRect(0,0,w,h);
+      for(const p of pieces){
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.10; // gravity
+        p.rot += p.vr;
+        p.life -= 1;
+
+        const alpha = Math.max(0, Math.min(1, p.life / 40));
+        ctx.save();
+        ctx.globalAlpha = alpha * 0.95;
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+
+        // Colors derived from CSS-like palette
+        const palette = [
+          [124,92,255],
+          [0,214,255],
+          [48,209,88],
+          [255,77,109],
+          [255,214,10]
+        ];
+        const cidx = (p.kind==='spark') ? 1 : (Math.floor((p.x+p.y) % palette.length));
+        const [r,g,b] = palette[cidx];
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
+
+        if(p.kind === 'rect'){
+          ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size*0.65);
+        }else if(p.kind === 'tri'){
+          ctx.beginPath();
+          ctx.moveTo(-p.size/2, p.size/2);
+          ctx.lineTo(0, -p.size/2);
+          ctx.lineTo(p.size/2, p.size/2);
+          ctx.closePath();
+          ctx.fill();
+        }else{
+          // spark
+          ctx.beginPath();
+          ctx.arc(0,0, p.size/2, 0, Math.PI*2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+      pieces = pieces.filter(p => p.life > 0 && p.y < h*1.15);
+      if(pieces.length === 0){
+        stop(true);
+      }
+    }
+
+    function loop(){
+      raf = requestAnimationFrame(loop);
+      draw();
+    }
+
+    function stop(hideCanvas=false){
+      if(raf){
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+      if(hideCanvas) hide();
+      if(hideCanvas) pieces = [];
+    }
+
+    window.addEventListener('resize', () => { if(raf) resize(); });
+
+    return { burst, sparkleAt, stop };
+  })();
+
+  /* =========================
+   * CONFIG (Mobile-friendly sizes only; no custom)
+   * ========================= */
+  const CONFIG = {
+    version: '2.1.0',
+    scoreTopN: 10,
+    defaultHoldMs: 280,
+    // Sizes are chosen to avoid mobile "can't see whole board" problems.
+    // Auto-fit cell size makes them fit; pinch zoom still available.
+    difficulties: [
+      { id:'easy',    name:'Easy',    short:'9×9 · 10',     w:9,  h:9,  mines:10 },
+      { id:'normal',  name:'Normal',  short:'12×12 · 25',   w:12, h:12, mines:25 },
+      { id:'hard',    name:'Hard',    short:'16×16 · 45',   w:16, h:16, mines:45 },
+      { id:'extreme', name:'Extreme', short:'20×20 · 80',   w:20, h:20, mines:80 }
+    ],
+    mineSkins: [
+      { id:'bomb',  name:'💣 經典', emoji:'💣' },
+      { id:'poop',  name:'💩 惡趣', emoji:'💩' },
+      { id:'skull', name:'💀 骷髏', emoji:'💀' },
+      { id:'alien', name:'👾 外星', emoji:'👾' },
+      { id:'spark', name:'✨ 魔法', emoji:'✨' },
+      { id:'nuke',  name:'☢️ 輻射', emoji:'☢️' },
+      { id:'beetle',name:'🪲 甲蟲', emoji:'🪲' },
+      { id:'ghost', name:'👻 鬼魂', emoji:'👻' }
+    ],
+    flagEmoji: '🚩',
+    wrongFlagEmoji: '❌'
+  };
+
+  /* =========================
+   * STORAGE
+   * ========================= */
+  const STORAGE = {
+    kPrefs: 'ms_prefs_v1',
+    kScores: 'ms_scores_v1',
+    loadPrefs(){
+      try{
+        const raw = localStorage.getItem(this.kPrefs);
+        if(!raw) return null;
+        return JSON.parse(raw);
+      }catch(e){ return null; }
+    },
+    savePrefs(prefs){
+      try{ localStorage.setItem(this.kPrefs, JSON.stringify(prefs)); }catch(e){}
+    },
+    loadScores(){
+      try{
+        const raw = localStorage.getItem(this.kScores);
+        if(!raw) return {};
+        return JSON.parse(raw) || {};
+      }catch(e){ return {}; }
+    },
+    saveScores(scores){
+      try{ localStorage.setItem(this.kScores, JSON.stringify(scores)); }catch(e){}
+    }
+  };
+
+  /* =========================
+   * STATE
+   * ========================= */
+  const STATE = {
+    board: null,
+    game: null,
+    prefs: null,
+    scores: null,
+    ui: {},
+    timerRAF: 0,
+    chordHeld: false,
+    hold: {
+      active: false,
+      pointerId: null,
+      startMs: 0,
+      startX: 0,
+      startY: 0,
+      targetIndex: -1,
+      triggered: false
+    },
+    pinch: {
+      active: false,
+      startDist: 0,
+      startScale: 1
+    }
+  };
+
+  function defaultPrefs(){
+    return {
+      difficultyId: 'normal',
+      mineSkinId: 'bomb',
+      holdMs: CONFIG.defaultHoldMs,
+      theme: 'auto',      // auto | light | dark
+      scale: 1            // persist board scale (pinch)
+    };
+  }
+
+  /* =========================
+   * ENGINE helpers
+   * ========================= */
+  const idx = (x,y,w) => y*w + x;
+  const xy = (i,w) => ({ x: i % w, y: Math.floor(i / w) });
+  const inBounds = (x,y,w,h) => x>=0 && y>=0 && x<w && y<h;
+
+  function neighbors(i, board){
+    const {w,h} = board;
+    const p = xy(i,w);
+    const out = [];
+    for(let dy=-1; dy<=1; dy++){
+      for(let dx=-1; dx<=1; dx++){
+        if(dx===0 && dy===0) continue;
+        const nx = p.x + dx, ny = p.y + dy;
+        if(inBounds(nx,ny,w,h)) out.push(idx(nx,ny,w));
+      }
+    }
+    return out;
+  }
+
+  function makeBoard(w,h,mines){
+    const cells = Array.from({length:w*h}, () => ({
+      isMine:false,
+      isRevealed:false,
+      isFlagged:false,
+      adj:0,
+      wasExploded:false,
+      isWrongFlag:false
+    }));
+    return { w,h,mines, cells, generated:false };
+  }
+
+  function makeGame(){
+    return {
+      status: 'ready', // ready | playing | won | lost
+      startMs: 0,
+      elapsedMs: 0,
+      revealedCount: 0,
+      flagCount: 0,
+      firstClickIndex: -1
+    };
+  }
+
+  function randomInt(n){ return Math.floor(Math.random()*n); }
+
+  function generateMines(board, safeIndex, safeRadius1=true){
+    const {mines,cells} = board;
+    const forbidden = new Set();
+    forbidden.add(safeIndex);
+    if(safeRadius1){
+      for(const n of neighbors(safeIndex, board)) forbidden.add(n);
+    }
+
+    const free = [];
+    for(let i=0;i<cells.length;i++){
+      if(!forbidden.has(i)) free.push(i);
+    }
+    // Shuffle
+    for(let i=free.length-1; i>0; i--){
+      const j = randomInt(i+1);
+      const tmp = free[i]; free[i] = free[j]; free[j] = tmp;
+    }
+    const placeN = Math.min(mines, free.length);
+    for(let k=0;k<placeN;k++){
+      cells[free[k]].isMine = true;
+    }
+
+    // compute adj
+    for(let i=0;i<cells.length;i++){
+      if(cells[i].isMine){ cells[i].adj = 0; continue; }
+      let c=0;
+      for(const n of neighbors(i, board)){
+        if(cells[n].isMine) c++;
+      }
+      cells[i].adj = c;
+    }
+
+    board.generated = true;
+  }
+
+  function ensurePlaying(){
+    if(STATE.game.status === 'ready'){
+      STATE.game.status = 'playing';
+      STATE.game.startMs = performance.now();
+      try{ navigator.vibrate && navigator.vibrate(10); }catch(_){}
+    }
+  }
+
+  function reveal(index){
+    const board = STATE.board;
+    const game = STATE.game;
+    const cells = board.cells;
+    const changed = [];
+
+    if(game.status === 'lost' || game.status === 'won') return changed;
+
+    const cell = cells[index];
+    if(cell.isFlagged || cell.isRevealed) return changed;
+
+    if(!board.generated){
+      game.firstClickIndex = index;
+      generateMines(board, index, true); // first-click safe (+8 neighbors)
+    }
+
+    ensurePlaying();
+
+    if(cell.isMine){
+      cell.isRevealed = true;
+      cell.wasExploded = true;
+      changed.push(index);
+      lose();
+      return changed;
+    }
+
+    // BFS stack for 0 flood
+    const stack = [index];
+    while(stack.length){
+      const i = stack.pop();
+      const c = cells[i];
+      if(c.isRevealed || c.isFlagged) continue;
+      c.isRevealed = true;
+      game.revealedCount++;
+      changed.push(i);
+
+      if(c.adj === 0){
+        for(const n of neighbors(i, board)){
+          const nc = cells[n];
+          if(!nc.isRevealed && !nc.isFlagged && !nc.isMine){
+            stack.push(n);
+          }
+        }
+      }
+    }
+
+    checkWin();
+    return changed;
+  }
+
+  function toggleFlag(index){
+    const board = STATE.board;
+    const game = STATE.game;
+    const cell = board.cells[index];
+    const changed = [];
+
+    if(game.status === 'lost' || game.status === 'won') return changed;
+    if(cell.isRevealed) return changed;
+
+    ensurePlaying();
+
+    cell.isFlagged = !cell.isFlagged;
+    game.flagCount += cell.isFlagged ? 1 : -1;
+    changed.push(index);
+
+    try{ navigator.vibrate && navigator.vibrate(cell.isFlagged ? 14 : 8); }catch(_){}
+
+    checkWin();
+    return changed;
+  }
+
+  function chord(index){
+    const board = STATE.board;
+    const game = STATE.game;
+    const cells = board.cells;
+    const changed = [];
+
+    if(game.status === 'lost' || game.status === 'won') return changed;
+
+    const cell = cells[index];
+    if(!cell.isRevealed) return changed;
+    if(cell.adj <= 0) return changed;
+
+    ensurePlaying();
+
+    const neigh = neighbors(index, board);
+    let flags = 0;
+    for(const n of neigh){
+      if(cells[n].isFlagged) flags++;
+    }
+    if(flags !== cell.adj) return changed;
+
+    try{ navigator.vibrate && navigator.vibrate(12); }catch(_){}
+
+    for(const n of neigh){
+      const nc = cells[n];
+      if(!nc.isRevealed && !nc.isFlagged){
+        const sub = reveal(n);
+        for(const t of sub) changed.push(t);
+        if(game.status === 'lost') break;
+      }
+    }
+    return changed;
+  }
+
+  function lose(){
+    const board = STATE.board;
+    const game = STATE.game;
+    const cells = board.cells;
+
+    game.status = 'lost';
+
+    for(let i=0;i<cells.length;i++){
+      const c = cells[i];
+      if(c.isFlagged && !c.isMine) c.isWrongFlag = true;
+      if(c.isMine) c.isRevealed = true;
+    }
+
+    stopTimer();
+    renderAll();
+    openWinLoseModal(false);
+    try{ navigator.vibrate && navigator.vibrate([40,30,40]); }catch(_){}
+  }
+
+  function checkWin(){
+    const board = STATE.board;
+    const game = STATE.game;
+    if(game.status !== 'playing' && game.status !== 'ready') return;
+
+    const totalSafe = board.w * board.h - board.mines;
+    if(game.revealedCount >= totalSafe){
+      win();
+    }
+  }
+
+  function win(){
+    const game = STATE.game;
+    if(game.status === 'won') return;
+    game.status = 'won';
+    stopTimer();
+
+    try{ FX.burst(); }catch(_){ }
+
+    const board = STATE.board;
+    for(const c of board.cells){
+      if(c.isMine && !c.isFlagged) c.isFlagged = true;
+    }
+    renderAll();
+    persistScore();
+    openWinLoseModal(true);
+    try{ navigator.vibrate && navigator.vibrate([18,20,18]); }catch(_){}
+  }
+
+  /* =========================
+   * RENDER
+   * ========================= */
+  function setBoardGrid(){
+    const board = STATE.board;
+    STATE.ui.board.style.gridTemplateColumns = `repeat(${board.w}, var(--cell))`;
+  }
+
+  function formatTime(ms){
+    const totalSec = Math.floor(ms / 1000);
+    const m = Math.floor(totalSec / 60);
+    const s = totalSec % 60;
+    const mm = String(m).padStart(2,'0');
+    const ss = String(s).padStart(2,'0');
+    return `${mm}:${ss}`;
+  }
+
+  function minesLeft(){
+    const board = STATE.board;
+    const game = STATE.game;
+    return Math.max(0, board.mines - game.flagCount);
+  }
+
+  function renderHUD(){
+    STATE.ui.minesLeft.textContent = String(minesLeft());
+    const game = STATE.game;
+    const t = (game.status === 'playing') ? (performance.now() - game.startMs) : game.elapsedMs;
+    STATE.ui.timer.textContent = formatTime(t);
+  }
+
+  function getMineEmoji(){
+    const skin = CONFIG.mineSkins.find(s => s.id === STATE.prefs.mineSkinId) || CONFIG.mineSkins[0];
+    return skin.emoji;
+  }
+
+  function cellText(i){
+    const c = STATE.board.cells[i];
+    if(!c.isRevealed){
+      return c.isFlagged ? CONFIG.flagEmoji : '';
+    }
+    if(c.isMine){
+      if(c.isWrongFlag) return CONFIG.wrongFlagEmoji;
+      return getMineEmoji();
+    }
+    if(c.isWrongFlag) return CONFIG.wrongFlagEmoji;
+    if(c.adj === 0) return '';
+    return String(c.adj);
+  }
+
+  function ariaLabelForCell(i){
+    const c = STATE.board.cells[i];
+    if(!c.isRevealed){
+      if(c.isFlagged) return '已插旗';
+      return '未開';
+    }
+    if(c.isMine){
+      if(c.wasExploded) return '踩到地雷';
+      return '地雷';
+    }
+    if(c.adj === 0) return '空白';
+    return `數字 ${c.adj}`;
+  }
+
+  function updateCell(i){
+    const c = STATE.board.cells[i];
+    const el = STATE.ui.cellEls[i];
+
+    el.className = 'cell';
+    if(c.isRevealed) el.classList.add('revealed');
+    else el.classList.add('hidden');
+
+    if(c.isFlagged && !c.isRevealed) el.classList.add('flagged');
+    if(c.isMine && c.isRevealed) el.classList.add('mine');
+    if(c.wasExploded) el.classList.add('exploded');
+    if(c.isWrongFlag) el.classList.add('wrongflag');
+
+    for(let k=1;k<=8;k++) el.classList.remove('n'+k);
+    if(c.isRevealed && !c.isMine && c.adj>=1 && c.adj<=8) el.classList.add('n'+c.adj);
+
+    el.textContent = cellText(i);
+    el.setAttribute('aria-label', ariaLabelForCell(i));
+  }
+
+  function renderChanges(indices){
+    for(const i of indices) updateCell(i);
+    renderHUD();
+  }
+
+  function renderAll(){
+    for(let i=0;i<STATE.board.cells.length;i++) updateCell(i);
+    renderHUD();
+  }
+
+  /* =========================
+   * TIMER
+   * ========================= */
+  function startTimer(){
+    stopTimer();
+    const tick = () => {
+      if(STATE.game.status === 'playing'){
+        renderHUD();
+        STATE.timerRAF = requestAnimationFrame(tick);
+      }else{
+        renderHUD();
+      }
+    };
+    STATE.timerRAF = requestAnimationFrame(tick);
+  }
+  function stopTimer(){
+    if(STATE.timerRAF){
+      cancelAnimationFrame(STATE.timerRAF);
+      STATE.timerRAF = 0;
+    }
+    // Capture elapsed time reliably even if status has already changed to won/lost.
+    const g = STATE.game;
+    if(!g) return;
+    if(g.startMs && (g.status === 'playing' || g.elapsedMs === 0)){
+      g.elapsedMs = Math.max(0, performance.now() - g.startMs);
+    }
+  }
+
+  /* =========================
+   * INPUT / PINCH SCALE
+   * ========================= */
+  function getScale(){
+    const v = getComputedStyle(document.documentElement).getPropertyValue('--scale').trim();
+    const n = Number(v || '1');
+    return isFinite(n) ? n : 1;
+  }
+  function setScale(s){
+    document.documentElement.style.setProperty('--scale', String(s));
+    STATE.prefs.scale = s;
+    STORAGE.savePrefs(STATE.prefs);
+  }
+  function clampScale(s){ return Math.max(0.65, Math.min(1.9, s)); }
+  function touchDistance(t1, t2){
+    const dx = t1.clientX - t2.clientX;
+    const dy = t1.clientY - t2.clientY;
+    return Math.hypot(dx, dy);
+  }
+
+  function onTouchStartPinch(e){
+    if(e.touches && e.touches.length === 2){
+      STATE.pinch.active = true;
+      STATE.pinch.startDist = touchDistance(e.touches[0], e.touches[1]);
+      STATE.pinch.startScale = getScale();
+      e.preventDefault();
+    }
+  }
+  function onTouchMovePinch(e){
+    if(STATE.pinch.active && e.touches && e.touches.length === 2){
+      const d = touchDistance(e.touches[0], e.touches[1]);
+      const ratio = d / STATE.pinch.startDist;
+      setScale(clampScale(STATE.pinch.startScale * ratio));
+      e.preventDefault();
+    }
+  }
+  function onTouchEndPinch(e){
+    if(STATE.pinch.active && (!e.touches || e.touches.length < 2)){
+      STATE.pinch.active = false;
+    }
+  }
+
+  /* =========================
+   * UI / DOM
+   * ========================= */
+  function bindUI(){
+    STATE.ui = {
+      boardWrap: document.getElementById('boardWrap'),
+      board: document.getElementById('board'),
+      minesLeft: document.getElementById('uiMinesLeft'),
+      timer: document.getElementById('uiTimer'),
+      hint: document.getElementById('uiHint'),
+
+      btnNew: document.getElementById('btnNew'),
+      btnScores: document.getElementById('btnScores'),
+      btnSettings: document.getElementById('btnSettings'),
+      btnChord: document.getElementById('btnChord'),
+
+      selMineSkin: document.getElementById('selMineSkin'),
+
+      modalBackdrop: document.getElementById('modalBackdrop'),
+      modalTitle: document.getElementById('modalTitle'),
+      modalBody: document.getElementById('modalBody'),
+      btnModalClose: document.getElementById('btnModalClose')
+    };
+
+    // skins
+    STATE.ui.selMineSkin.innerHTML = '';
+    for(const s of CONFIG.mineSkins){
+      const opt = document.createElement('option');
+      opt.value = s.id;
+      opt.textContent = s.name;
+      STATE.ui.selMineSkin.appendChild(opt);
+    }
+    STATE.ui.selMineSkin.value = STATE.prefs.mineSkinId;
+
+    // buttons
+    STATE.ui.btnNew.addEventListener('click', () => newGameFromPrefs(true));
+    STATE.ui.btnScores.addEventListener('click', () => openScoresModal());
+    STATE.ui.btnSettings.addEventListener('click', () => openSettingsModal());
+    STATE.ui.btnModalClose.addEventListener('click', () => closeModal());
+    STATE.ui.modalBackdrop.addEventListener('click', (e) => {
+      if(e.target === STATE.ui.modalBackdrop) closeModal();
+    });
+
+    STATE.ui.selMineSkin.addEventListener('change', () => {
+      STATE.prefs.mineSkinId = STATE.ui.selMineSkin.value;
+      STORAGE.savePrefs(STATE.prefs);
+      renderAll();
+    });
+
+    // chord held
+    const chordDown = () => {
+      STATE.chordHeld = true;
+      STATE.ui.btnChord.classList.add('primary');
+      STATE.ui.hint.textContent = 'Chord 模式：點已開數字格可掃開（放開恢復）';
+      try{ navigator.vibrate && navigator.vibrate(10); }catch(_){}
+    };
+    const chordUp = () => {
+      STATE.chordHeld = false;
+      STATE.ui.btnChord.classList.remove('primary');
+      STATE.ui.hint.textContent = '點一下開格，長按插旗，按住 Chord 再點數字可掃開';
+    };
+    STATE.ui.btnChord.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      STATE.ui.btnChord.setPointerCapture(e.pointerId);
+      chordDown();
+    });
+    STATE.ui.btnChord.addEventListener('pointerup', (e) => { e.preventDefault(); chordUp(); });
+    STATE.ui.btnChord.addEventListener('pointercancel', (e) => { e.preventDefault(); chordUp(); });
+
+    // pinch zoom on boardWrap
+    STATE.ui.boardWrap.addEventListener('touchstart', onTouchStartPinch, {passive:false});
+    STATE.ui.boardWrap.addEventListener('touchmove', onTouchMovePinch, {passive:false});
+    STATE.ui.boardWrap.addEventListener('touchend', onTouchEndPinch, {passive:false});
+    STATE.ui.boardWrap.addEventListener('touchcancel', onTouchEndPinch, {passive:false});
+  }
+
+  function buildBoardDOM(){
+    const board = STATE.board;
+    const el = STATE.ui.board;
+    el.innerHTML = '';
+    setBoardGrid();
+    STATE.ui.cellEls = [];
+
+    const frag = document.createDocumentFragment();
+    for(let i=0;i<board.cells.length;i++){
+      const c = document.createElement('div');
+      c.className = 'cell hidden';
+      c.dataset.i = String(i);
+      c.textContent = '';
+      c.setAttribute('role', 'button');
+      c.setAttribute('tabindex', '0');
+      c.setAttribute('aria-label', '未開');
+
+      c.addEventListener('pointerdown', onCellPointerDown);
+      c.addEventListener('pointerup', onCellPointerUp);
+      c.addEventListener('pointercancel', onCellPointerCancel);
+      c.addEventListener('pointermove', onCellPointerMove);
+
+      // desktop right click
+      c.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        renderChanges(toggleFlag(i));
+      });
+
+      // keyboard
+      c.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          renderChanges(reveal(i));
+        }else if(e.key.toLowerCase() === 'f'){
+          e.preventDefault();
+          renderChanges(toggleFlag(i));
+        }
+      });
+
+      frag.appendChild(c);
+      STATE.ui.cellEls.push(c);
+    }
+    el.appendChild(frag);
+
+    autoFitCellSize();
+  }
+
+  function autoFitCellSize(){
+    const board = STATE.board;
+    const wrap = STATE.ui.boardWrap;
+    const rect = wrap.getBoundingClientRect();
+
+    const pad = 14 + 10; // wrap padding + board padding (approx)
+    const availW = Math.max(220, rect.width - pad*2);
+    const availH = Math.max(220, rect.height - pad*2);
+
+    const gap = getGap();
+    const cellW = Math.floor((availW - (board.w-1)*gap) / board.w);
+    const cellH = Math.floor((availH - (board.h-1)*gap) / board.h);
+
+    // Keep touch friendly; allow smaller on extreme; always fit screen first.
+    const cell = clamp(Math.min(cellW, cellH), 16, 48);
+    document.documentElement.style.setProperty('--cell', cell + 'px');
+  }
+
+  function getGap(){
+    const v = getComputedStyle(document.documentElement).getPropertyValue('--gap').trim();
+    const n = parseFloat(v || '6');
+    return isFinite(n) ? n : 6;
+  }
+  function clamp(x, lo, hi){ return Math.max(lo, Math.min(hi, x)); }
+
+  // Long press => flag; Tap => reveal/chord
+  let lastPX = 0, lastPY = 0;
+
+  function onCellPointerDown(e){
+    if(e.pointerType === 'mouse' && e.button !== 0) return;
+    if(STATE.pinch.active) return;
+
+    const el = e.currentTarget;
+    const i = Number(el.dataset.i);
+
+    el.setPointerCapture(e.pointerId);
+
+    STATE.hold.active = true;
+    STATE.hold.pointerId = e.pointerId;
+    STATE.hold.startMs = performance.now();
+    STATE.hold.startX = e.clientX;
+    STATE.hold.startY = e.clientY;
+    STATE.hold.targetIndex = i;
+    STATE.hold.triggered = false;
+
+    lastPX = e.clientX;
+    lastPY = e.clientY;
+
+    const holdMs = Math.max(160, Math.min(800, Number(STATE.prefs.holdMs) || CONFIG.defaultHoldMs));
+    window.setTimeout(() => {
+      if(!STATE.hold.active) return;
+      if(STATE.hold.pointerId !== e.pointerId) return;
+      if(STATE.hold.triggered) return;
+
+      const dx = Math.abs(STATE.hold.startX - lastPX);
+      const dy = Math.abs(STATE.hold.startY - lastPY);
+      if(dx > 10 || dy > 10) return;
+
+      STATE.hold.triggered = true;
+      renderChanges(toggleFlag(STATE.hold.targetIndex));
+
+      try{ FX.sparkleAt(STATE.hold.startX, STATE.hold.startY); }catch(_){ }
+    }, holdMs);
+
+    e.preventDefault();
+  }
+
+  function onCellPointerMove(e){
+    if(!STATE.hold.active) return;
+    lastPX = e.clientX;
+    lastPY = e.clientY;
+  }
+
+  function onCellPointerUp(e){
+    if(!STATE.hold.active) return;
+    const el = e.currentTarget;
+    const i = Number(el.dataset.i);
+
+    const wasLong = STATE.hold.triggered;
+    STATE.hold.active = false;
+
+    if(wasLong) return;
+
+
+    try{ FX.sparkleAt(e.clientX, e.clientY); }catch(_){ }
+
+    if(STATE.chordHeld){
+      renderChanges(chord(i));
+      return;
+    }
+
+    renderChanges(reveal(i));
+  }
+
+  function onCellPointerCancel(){
+    STATE.hold.active = false;
+  }
+
+  /* =========================
+   * MODALS
+   * ========================= */
+  function openModal(title, bodyEl){
+    STATE.ui.modalTitle.textContent = title;
+    STATE.ui.modalBody.innerHTML = '';
+    STATE.ui.modalBody.appendChild(bodyEl);
+    STATE.ui.modalBackdrop.classList.add('show');
+    STATE.ui.modalBackdrop.setAttribute('aria-hidden','false');
+  }
+  function closeModal(){
+    STATE.ui.modalBackdrop.classList.remove('show');
+    STATE.ui.modalBackdrop.setAttribute('aria-hidden','true');
+    STATE.ui.modalBody.innerHTML = '';
+  }
+
+  function openWinLoseModal(isWin){
+    const wrap = document.createElement('div');
+    wrap.style.display = 'flex';
+    wrap.style.flexDirection = 'column';
+    wrap.style.gap = '12px';
+
+    const hero = document.createElement('div');
+    hero.className = 'card';
+    hero.style.display = 'flex';
+    hero.style.flexDirection = 'column';
+    hero.style.gap = '8px';
+
+    const big = document.createElement('div');
+    big.style.fontSize = '22px';
+    big.style.fontWeight = '950';
+    big.style.letterSpacing = '.2px';
+    big.textContent = isWin ? '勝利' : '失敗';
+    big.style.color = isWin ? 'var(--ok)' : 'var(--danger)';
+
+    const t = document.createElement('div');
+    t.className = 'mini';
+    t.textContent = `時間：${formatTime(STATE.game.elapsedMs)}，難度：${difficultyName(STATE.prefs.difficultyId)}，地雷：${getMineEmoji()}`;
+
+    hero.appendChild(big);
+    hero.appendChild(t);
+
+    const row = document.createElement('div');
+    row.className = 'row';
+
+    const btnAgain = document.createElement('button');
+    btnAgain.className = 'btn primary';
+    btnAgain.type = 'button';
+    btnAgain.textContent = '再來一局';
+    btnAgain.addEventListener('click', () => {
+      closeModal();
+      newGameFromPrefs(true);
+    });
+
+    const btnScore = document.createElement('button');
+    btnScore.className = 'btn';
+    btnScore.type = 'button';
+    btnScore.textContent = '看排行榜';
+    btnScore.addEventListener('click', () => openScoresModal());
+
+    row.appendChild(btnAgain);
+    row.appendChild(btnScore);
+
+    wrap.appendChild(hero);
+    wrap.appendChild(row);
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="label">操作提示</div>
+      <div class="mini" style="line-height:1.55">
+        點一下開格，長按插旗（約 ${STATE.prefs.holdMs}ms），按住 Chord 再點已開數字可掃開；盤面支援雙指縮放
+      </div>
+    `;
+    wrap.appendChild(card);
+
+    openModal(isWin ? '結算：勝利' : '結算：失敗', wrap);
+  }
+
+  function openScoresModal(){
+    const body = document.createElement('div');
+    body.style.display = 'flex';
+    body.style.flexDirection = 'column';
+    body.style.gap = '12px';
+
+    const top = document.createElement('div');
+    top.className = 'row';
+
+    const sel = document.createElement('select');
+    sel.className = 'select';
+    for(const d of CONFIG.difficulties){
+      const opt = document.createElement('option');
+      opt.value = d.id;
+      opt.textContent = `${d.name} · ${d.short}`;
+      sel.appendChild(opt);
+    }
+    sel.value = STATE.prefs.difficultyId;
+
+    const btnClear = document.createElement('button');
+    btnClear.className = 'btn danger';
+    btnClear.type = 'button';
+    btnClear.textContent = '清空此難度排行';
+    btnClear.addEventListener('click', () => {
+      const did = sel.value;
+      const ok = confirm('確定要清空此難度的排行榜？');
+      if(!ok) return;
+      STATE.scores[did] = [];
+      STORAGE.saveScores(STATE.scores);
+      renderList(did);
+    });
+
+    top.appendChild(sel);
+    top.appendChild(btnClear);
+
+    const listWrap = document.createElement('div');
+    listWrap.className = 'card';
+
+    const list = document.createElement('div');
+    list.style.display = 'flex';
+    list.style.flexDirection = 'column';
+    list.style.gap = '10px';
+    listWrap.appendChild(list);
+
+    const foot = document.createElement('div');
+    foot.className = 'mini';
+    foot.style.marginTop = '6px';
+    foot.textContent = '只會在勝利時寫入排行，並依難度分開保存。';
+
+    body.appendChild(top);
+    body.appendChild(listWrap);
+    body.appendChild(foot);
+
+    function renderList(did){
+      list.innerHTML = '';
+      const arr = (STATE.scores[did] || []);
+      if(arr.length === 0){
+        const empty = document.createElement('div');
+        empty.className = 'mini';
+        empty.textContent = '目前沒有紀錄。';
+        list.appendChild(empty);
+        return;
+      }
+      arr.slice(0, CONFIG.scoreTopN).forEach((s, idx) => {
+        const line = document.createElement('div');
+        line.className = 'scoreLine';
+
+        const left = document.createElement('div');
+        left.className = 'scoreLeft';
+
+        const badge = document.createElement('div');
+        badge.className = 'badge';
+        badge.textContent = String(idx+1);
+
+        const meta = document.createElement('div');
+        meta.className = 'scoreMeta';
+
+        const b = document.createElement('b');
+        b.textContent = `${difficultyName(did)} · ${skinEmojiById(s.mineSkinId)}`;
+
+        const date = document.createElement('span');
+        date.textContent = new Date(s.dateISO).toLocaleString();
+
+        meta.appendChild(b);
+        meta.appendChild(date);
+
+        left.appendChild(badge);
+        left.appendChild(meta);
+
+        const time = document.createElement('div');
+        time.className = 'scoreTime';
+        time.textContent = formatTime(s.timeMs);
+
+        line.appendChild(left);
+        line.appendChild(time);
+
+        list.appendChild(line);
+      });
+    }
+
+    sel.addEventListener('change', () => renderList(sel.value));
+    renderList(sel.value);
+
+    openModal('排行榜', body);
+  }
+
+  function openSettingsModal(){
+    const body = document.createElement('div');
+    body.style.display = 'flex';
+    body.style.flexDirection = 'column';
+    body.style.gap = '12px';
+
+    // Card: Core settings
+    const card1 = document.createElement('div');
+    card1.className = 'card';
+
+    const grid = document.createElement('div');
+    grid.className = 'grid2';
+
+    // Difficulty (fixed set; affects leaderboard grouping)
+    const diffSel = document.createElement('select');
+    diffSel.className = 'select';
+    for(const d of CONFIG.difficulties){
+      const opt = document.createElement('option');
+      opt.value = d.id;
+      opt.textContent = `${d.name} · ${d.short}`;
+      diffSel.appendChild(opt);
+    }
+    diffSel.value = STATE.prefs.difficultyId;
+    const diffField = makeField('難度（排行榜分組）', diffSel);
+
+    // Theme
+    const themeSel = makeSelect([
+      ['auto','自動（跟隨系統）'],
+      ['light','亮色'],
+      ['dark','暗色']
+    ], STATE.prefs.theme);
+    const themeField = makeField('主題', themeSel);
+
+    // Hold (seconds; intuitive)
+    const holdSel = makeSelect([
+      ['220','0.22 秒（快）'],
+      ['280','0.28 秒（推薦）'],
+      ['360','0.36 秒（穩）'],
+      ['450','0.45 秒（更穩）'],
+      ['600','0.60 秒（很穩）']
+    ], String(STATE.prefs.holdMs || CONFIG.defaultHoldMs));
+    const holdField = makeField('長按插旗（秒）', holdSel);
+
+    grid.appendChild(diffField);
+    grid.appendChild(themeField);
+    grid.appendChild(holdField);
+    card1.appendChild(grid);
+
+    // Card: Zoom
+    const card2 = document.createElement('div');
+    card2.className = 'card';
+    card2.innerHTML = `<div class="label">盤面縮放</div><div class="mini" style="line-height:1.55">雙指縮放盤面，如需回到預設，可按下重置。</div>`;
+    const resetZoom = document.createElement('button');
+    resetZoom.className = 'btn';
+    resetZoom.type = 'button';
+    resetZoom.textContent = '重置盤面縮放';
+    resetZoom.addEventListener('click', () => setScale(1));
+    card2.appendChild(resetZoom);
+
+    // Card: Gameplay only
+    const card3 = document.createElement('div');
+    card3.className = 'card';
+    card3.innerHTML = `
+      <div class="label">玩法</div>
+      <div class="mini" style="line-height:1.6">
+        點一下開格，長按插旗<br>
+        按住 Chord 再點已開數字格可掃開<br>
+        雙指可縮放盤面
+      </div>
+    `;
+
+    body.appendChild(card1);
+    body.appendChild(card2);
+    body.appendChild(card3);
+
+    // Wire settings (apply immediately)
+    diffSel.addEventListener('change', () => {
+      STATE.prefs.difficultyId = diffSel.value;
+      STORAGE.savePrefs(STATE.prefs);
+      closeModal();
+      newGameFromPrefs(true);
+    });
+
+    themeSel.addEventListener('change', () => {
+      STATE.prefs.theme = themeSel.value;
+      applyTheme();
+      STORAGE.savePrefs(STATE.prefs);
+    });
+
+    const applyHoldLabel = () => {
+      const ms = Number(STATE.prefs.holdMs) || CONFIG.defaultHoldMs;
+      STATE.ui.hint.textContent = `點一下開格，長按插旗（約 ${Math.round(ms)}ms），按住 Chord 再點數字可掃開`;
+    };
+    holdSel.addEventListener('change', () => {
+      STATE.prefs.holdMs = Number(holdSel.value) || CONFIG.defaultHoldMs;
+      STORAGE.savePrefs(STATE.prefs);
+      applyHoldLabel();
+    });
+
+    openModal('設定', body);
+  }
+
+  function makeField(labelText, controlEl){
+    const f = document.createElement('div');
+    f.className = 'field';
+    const label = document.createElement('div');
+    label.className = 'label';
+    label.textContent = labelText;
+    f.appendChild(label);
+    f.appendChild(controlEl);
+    return f;
+  }
+  function makeSelect(options, value){
+    const s = document.createElement('select');
+    s.className = 'select';
+    for(const [v,t] of options){
+      const o = document.createElement('option');
+      o.value = v; o.textContent = t;
+      s.appendChild(o);
+    }
+    s.value = value;
+    return s;
+  }
+  function makeNumber(value, min, max, step){
+    const i = document.createElement('input');
+    i.className = 'input';
+    i.type = 'number';
+    i.value = String(value);
+    i.min = String(min);
+    i.max = String(max);
+    i.step = String(step);
+    return i;
+  }
+
+  /* =========================
+   * SCORE (per difficulty)
+   * ========================= */
+  function persistScore(){
+    const did = STATE.prefs.difficultyId;
+    const entry = {
+      timeMs: Math.max(0, Math.floor(STATE.game.elapsedMs)),
+      dateISO: new Date().toISOString(),
+      mineSkinId: STATE.prefs.mineSkinId
+    };
+    const scores = STATE.scores;
+    const arr = scores[did] ? scores[did].slice() : [];
+    arr.push(entry);
+    arr.sort((a,b) => a.timeMs - b.timeMs);
+    scores[did] = arr.slice(0, CONFIG.scoreTopN);
+    STORAGE.saveScores(scores);
+  }
+
+  /* =========================
+   * BOOT / NEW GAME
+   * ========================= */
+  function difficultyName(id){
+    const d = CONFIG.difficulties.find(x => x.id === id);
+    return d ? `${d.name} (${d.short})` : id;
+  }
+  function skinEmojiById(id){
+    const s = CONFIG.mineSkins.find(x => x.id === id);
+    return s ? s.emoji : '💣';
+  }
+
+  function applyTheme(){
+    const t = STATE.prefs.theme;
+    if(t === 'light' || t === 'dark'){
+      document.documentElement.setAttribute('data-theme', t);
+    }else{
+      document.documentElement.removeAttribute('data-theme');
+    }
+  }
+
+  function newGameFromPrefs(resetScroll){
+    closeModal();
+    const d = CONFIG.difficulties.find(x => x.id === STATE.prefs.difficultyId) || CONFIG.difficulties[1];
+
+    STATE.board = makeBoard(d.w, d.h, d.mines);
+    STATE.game = makeGame();
+
+    // restore last scale (pinch)
+    const s = clampScale(Number(STATE.prefs.scale) || 1);
+    document.documentElement.style.setProperty('--scale', String(s));
+
+    STATE.ui.selMineSkin.value = STATE.prefs.mineSkinId;
+
+    buildBoardDOM();
+    renderAll();
+    startTimer();
+
+    if(resetScroll){
+      STATE.ui.boardWrap.scrollTo({left:0, top:0, behavior:'instant'});
+    }
+
+    STATE.ui.hint.textContent = '點一下開格，長按插旗，按住 Chord 再點數字可掃開';
+    STATE.chordHeld = false;
+    STATE.ui.btnChord.classList.remove('primary');
+  }
+
+  function boot(){
+    STATE.prefs = Object.assign(defaultPrefs(), STORAGE.loadPrefs() || {});
+    // guard: if old prefs had unsupported difficulty, fallback
+    if(!CONFIG.difficulties.some(d => d.id === STATE.prefs.difficultyId)){
+      STATE.prefs.difficultyId = 'normal';
+    }
+    STATE.scores = STORAGE.loadScores();
+    applyTheme();
+
+    bindUI();
+    STATE.ui.selMineSkin.value = STATE.prefs.mineSkinId;
+
+    newGameFromPrefs(true);
+
+    window.addEventListener('resize', () => autoFitCellSize());
+  }
+
+  boot();
+})();
+</script>
+</body>
+</html>
