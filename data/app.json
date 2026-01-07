@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2026-01-07T18:39:27.898Z"
+    "exportedAt": "2026-01-07T19:32:22.589Z"
   },
   "data": {
     "homepage": {
@@ -6358,6 +6358,15 @@
         "note": "",
         "updatedAt": 1767811056490,
         "createdAt": 1767811056490
+      },
+      {
+        "id": "d3733966-5937-454f-befa-23225c8c4d73",
+        "title": "踩地雷",
+        "url": "games/minesweeper.html",
+        "thumb": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/minesweeper.png",
+        "note": "",
+        "updatedAt": 1767814301065,
+        "createdAt": 1767814301065
       }
     ]
   },
