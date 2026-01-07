@@ -1,0 +1,1818 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#0b1220" />
+  <title>打地鼠｜單機手機版</title>
+  <style>
+    :root{
+      --bg0:#070b14;
+      --bg1:#0b1220;
+      --text:#e9eefc;
+      --muted:#a9b6db;
+      --good:#4ee3a7;
+      --warn:#ffd166;
+      --bad:#ff5c7a;
+      --accent:#6aa8ff;
+      --shadow: 0 12px 40px rgba(0,0,0,.35);
+      --radius: 18px;
+
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+
+      --ui: clamp(14px, 2.1vw, 18px);
+      --h1: clamp(18px, 3.2vw, 26px);
+      --h2: clamp(16px, 2.8vw, 22px);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", Arial, "PingFang TC", "Heiti TC", sans-serif;
+      --tap: 46px;
+
+      --card: rgba(255,255,255,.075);
+      --card2: rgba(255,255,255,.035);
+      --stroke: rgba(255,255,255,.16);
+
+      --primary1: #3b82ff;
+      --primary2: #7c3bff;
+      --danger1: #ff2d55;
+      --danger2: #ff7a3d;
+
+      --btn: rgba(255,255,255,.10);
+      --btn2: rgba(255,255,255,.04);
+      --btnStroke: rgba(255,255,255,.18);
+      --btnText: rgba(233,238,252,.98);
+      --btnShadow: 0 10px 26px rgba(0,0,0,.28);
+
+      --focus: rgba(106,168,255,.55);
+    }
+    /* Light theme override */
+    html[data-theme="light"]{
+      --bg0:#f5f7ff;
+      --bg1:#eef2ff;
+      --text:#0b1220;
+      --muted:#33406a;
+      --good:#0b8a5a;
+      --warn:#9a5b00;
+      --bad:#b0122d;
+      --accent:#2d63ff;
+      --shadow: 0 16px 44px rgba(10,20,40,.12);
+
+      --card: rgba(255,255,255,.82);
+      --card2: rgba(255,255,255,.62);
+      --stroke: rgba(10,20,40,.14);
+
+      --btn: rgba(10,20,40,.06);
+      --btn2: rgba(10,20,40,.02);
+      --btnStroke: rgba(10,20,40,.16);
+      --btnText: rgba(11,18,32,.96);
+      --btnShadow: 0 12px 26px rgba(10,20,40,.14);
+
+      --primary1:#1f5dff;
+      --primary2:#6d28ff;
+      --danger1:#e11d48;
+      --danger2:#fb923c;
+
+      --focus: rgba(45,99,255,.40);
+    }
+    html[data-theme="light"] body{
+      background: radial-gradient(1200px 700px at 15% 10%, rgba(31,93,255,.14), transparent 60%),
+                  radial-gradient(900px 600px at 85% 25%, rgba(109,40,255,.10), transparent 55%),
+                  radial-gradient(800px 500px at 45% 90%, rgba(11,138,90,.08), transparent 60%),
+                  linear-gradient(180deg, var(--bg0), var(--bg1));
+    }
+
+    /* Neon arcade accents (dark theme default) */
+    html[data-theme="dark"]{
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.02);
+      --stroke: rgba(120, 90, 255, .25);
+      --btnStroke: rgba(120, 90, 255, .35);
+      --btnShadow: 0 12px 30px rgba(0,0,0,.36);
+      --focus: rgba(120,90,255,.55);
+    }
+    html[data-theme="dark"] body{
+      background:
+        radial-gradient(900px 600px at 18% 18%, rgba(59,130,255,.30), transparent 60%),
+        radial-gradient(900px 600px at 82% 22%, rgba(124,59,255,.26), transparent 62%),
+        radial-gradient(900px 600px at 50% 85%, rgba(255,45,85,.14), transparent 60%),
+        radial-gradient(900px 600px at 50% 115%, rgba(78,227,167,.14), transparent 62%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+    }
+    html[data-theme="dark"] .card{
+      box-shadow: 0 16px 60px rgba(0,0,0,.44);
+      position: relative;
+    }
+    html[data-theme="dark"] .card::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      border-radius: var(--radius);
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(59,130,255,.55), rgba(124,59,255,.55), rgba(255,45,85,.35));
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events:none;
+      opacity:.75;
+    }
+    html[data-theme="dark"] .board{
+      border-color: rgba(59,130,255,.30);
+      box-shadow: 0 18px 70px rgba(0,0,0,.48);
+    }
+    html[data-theme="dark"] .board::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      border-radius: 24px;
+      background: radial-gradient(500px 220px at 50% 0%, rgba(59,130,255,.25), transparent 60%),
+                  radial-gradient(520px 240px at 50% 110%, rgba(78,227,167,.16), transparent 65%),
+                  radial-gradient(520px 240px at 10% 60%, rgba(255,45,85,.10), transparent 60%);
+      pointer-events:none;
+      mix-blend-mode: screen;
+      opacity:.9;
+    }
+    html[data-theme="dark"] .hole{
+      border-color: rgba(255,255,255,.16);
+      box-shadow: inset 0 0 0 1px rgba(59,130,255,.10);
+    }
+    html[data-theme="dark"] .btn{
+      text-shadow: 0 6px 18px rgba(0,0,0,.35);
+    }
+    html[data-theme="dark"] .btn.primary{
+      border-color: rgba(59,130,255,.70);
+      box-shadow: 0 14px 36px rgba(59,130,255,.28), 0 0 0 1px rgba(124,59,255,.10);
+    }
+    html[data-theme="dark"] .btn.danger{
+      border-color: rgba(255,45,85,.70);
+      box-shadow: 0 14px 36px rgba(255,45,85,.22), 0 0 0 1px rgba(255,122,61,.10);
+    }
+    html[data-theme="dark"] .btn:hover{
+      box-shadow: 0 16px 42px rgba(0,0,0,.40);
+    }
+
+    /* Light mode text visibility fixes */
+    html[data-theme="light"] .value{ color: rgba(11,18,32,.78) !important; }
+    html[data-theme="light"] .note{ color: rgba(11,18,32,.88) !important; }
+    html[data-theme="light"] .table{ background: rgba(255,255,255,.72); border-color: rgba(10,20,40,.14); }
+    html[data-theme="light"] .table th{ color: rgba(33,45,78,.75); }
+    html[data-theme="light"] .table td{ color: rgba(11,18,32,.92); }
+    html[data-theme="light"] .pill{ background: rgba(255,255,255,.60); border-color: rgba(10,20,40,.14); }
+    html[data-theme="light"] .stat{ background: rgba(255,255,255,.62); border-color: rgba(10,20,40,.14); }
+    html[data-theme="light"] .chip small{ color: rgba(33,45,78,.72); }
+
+    
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background: radial-gradient(1200px 700px at 15% 10%, rgba(106,168,255,.22), transparent 60%),
+                  radial-gradient(900px 600px at 85% 25%, rgba(155,123,255,.18), transparent 55%),
+                  radial-gradient(800px 500px at 45% 90%, rgba(78,227,167,.14), transparent 60%),
+                  linear-gradient(180deg, var(--bg0), var(--bg1));
+      overscroll-behavior: none;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      padding: calc(10px + var(--safe-top)) calc(10px + var(--safe-right)) calc(12px + var(--safe-bottom)) calc(10px + var(--safe-left));
+    }
+
+    .app{
+      max-width: 980px;
+      margin: 0 auto;
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: calc(100vh - (10px + var(--safe-top)) - (12px + var(--safe-bottom)));
+    }
+
+    header{
+      display:flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .logo{
+      width: 42px; height:42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(106,168,255,.95), rgba(155,123,255,.95));
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+      flex: 0 0 auto;
+    }
+    .logo:before{
+      content:"";
+      position:absolute; inset:-30%;
+      background: radial-gradient(circle at 30% 35%, rgba(255,255,255,.65), transparent 60%);
+      transform: rotate(18deg);
+    }
+    .brand h1{
+      margin:0;
+      font-size: var(--h1);
+      letter-spacing:.4px;
+      line-height:1.1;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+    .sub{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+
+    .topActions{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      height: var(--tap);
+      min-width: var(--tap);
+      padding: 0 14px;
+      border: 1px solid var(--btnStroke);
+      background: linear-gradient(180deg, var(--btn), var(--btn2));
+      color: var(--btnText);
+      border-radius: 14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      font-size: var(--ui);
+      font-weight: 900;
+      letter-spacing: .2px;
+      user-select:none;
+      cursor:pointer;
+      box-shadow: var(--btnShadow);
+      backdrop-filter: none;
+    }
+    .btn:hover{ filter: brightness(1.04); }
+    .btn:active{ transform: translateY(1px) scale(.99); filter: brightness(.98); }
+    .btn:focus-visible{
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+    .btn.primary{
+      border-color: rgba(59,130,255,.55);
+      background: linear-gradient(180deg, rgba(59,130,255,.52), rgba(124,59,255,.22));
+      box-shadow: 0 12px 30px rgba(45,99,255,.22);
+    }
+    html[data-theme="light"] .btn.primary{
+      border-color: rgba(31,93,255,.45);
+      background: linear-gradient(180deg, rgba(31,93,255,.32), rgba(109,40,255,.14));
+      box-shadow: 0 12px 28px rgba(31,93,255,.16);
+    }
+    .btn.danger{
+      border-color: rgba(255,45,85,.55);
+      background: linear-gradient(180deg, rgba(255,45,85,.44), rgba(255,122,61,.18));
+      box-shadow: 0 12px 30px rgba(255,45,85,.18);
+    }
+    html[data-theme="light"] .btn.danger{
+      border-color: rgba(225,29,72,.40);
+      background: linear-gradient(180deg, rgba(225,29,72,.26), rgba(251,146,60,.14));
+      box-shadow: 0 12px 28px rgba(225,29,72,.12);
+    }
+    .btn.ghost{
+      background: transparent;
+      border-color: rgba(255,255,255,.18);
+      box-shadow:none;
+    }
+    html[data-theme="light"] .btn.ghost{
+      border-color: rgba(10,20,40,.18);
+    }
+    .btn.small{
+      height: 40px;
+      border-radius: 12px;
+      padding: 0 12px;
+      font-size: 14px;
+    }
+
+    main{
+      flex: 1 1 auto;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+    @media (max-width: 880px){
+      main{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background: linear-gradient(180deg, var(--card), var(--card2));
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .cardHeader{
+      padding: 14px 14px 10px 14px;
+      display:flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,.10), transparent);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    .cardHeader h2{
+      margin:0;
+      font-size: var(--h2);
+      letter-spacing:.3px;
+    }
+    .cardHeader .hint{
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .cardBody{ padding: 12px 14px 14px 14px; }
+
+    .grid{ display:grid; gap: 10px; }
+    .grid.two{ grid-template-columns: 1fr 1fr; }
+    @media (max-width: 520px){
+      .grid.two{ grid-template-columns: 1fr; }
+    }
+
+    .field{ display:flex; flex-direction: column; gap: 6px; }
+    .labelRow{ display:flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+    label{ font-size: 13px; color: var(--muted); font-weight: 800; }
+    .value{ font-family: var(--mono); font-size: 12px; color: rgba(233,238,252,.85); }
+    select, input[type="text"]{
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      padding: 10px 12px;
+      font-size: var(--ui);
+      outline:none;
+    }
+
+    .seg{ display:flex; gap: 8px; flex-wrap: wrap; }
+    .chip{
+      border-radius: 999px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: linear-gradient(180deg, rgba(0,0,0,.16), rgba(0,0,0,.08));
+      color: var(--text);
+      font-weight: 900;
+      font-size: 16px;
+      cursor:pointer;
+      user-select:none;
+      min-height: 42px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+    }
+    .chip small{ font-size: 12px; color: var(--muted); font-weight: 800; }
+    html[data-theme="light"] .chip{
+      border: 1px solid rgba(10,20,40,.16);
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.60));
+      box-shadow: 0 10px 22px rgba(10,20,40,.10);
+    }
+    
+    .chip.active{
+      border-color: rgba(106,168,255,.55);
+      background: rgba(106,168,255,.16);
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 520px){
+      .stats{ grid-template-columns: repeat(2, 1fr); }
+    }
+    .stat{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.14);
+      padding: 10px 10px;
+      min-height: 70px;
+      display:flex;
+      flex-direction: column;
+      justify-content:center;
+      gap: 6px;
+    }
+    .stat .k{ color: var(--muted); font-size: 12px; font-weight: 900; letter-spacing:.2px; }
+    .stat .v{ font-family: var(--mono); font-size: 18px; font-weight: 900; letter-spacing:.2px; }
+
+    .playWrap{ display:flex; flex-direction: column; gap: 12px; }
+
+    .hud{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .hudLeft{ display:flex; gap: 10px; flex-wrap: wrap; align-items:center; }
+    .pill{
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.14);
+      padding: 10px 12px;
+      display:flex;
+      gap: 10px;
+      align-items: baseline;
+      min-height: 42px;
+    }
+    .pill .t{ color: var(--muted); font-size: 12px; font-weight: 900; }
+    .pill .n{ font-family: var(--mono); font-size: 15px; font-weight: 900; }
+    .pill .n.good{ color: var(--good); }
+    .pill .n.warn{ color: var(--warn); }
+    .pill .n.bad{ color: var(--bad); }
+
+    .board{
+      aspect-ratio: 1.25/1;
+      width: 100%;
+      max-height: 62vh;
+      border-radius: 22px;
+      border: 1px solid var(--stroke);
+      background: radial-gradient(900px 520px at 50% 10%, rgba(255,255,255,.10), transparent 55%),
+                  radial-gradient(800px 500px at 50% 110%, rgba(78,227,167,.12), transparent 55%),
+                  rgba(0,0,0,.22);
+      position: relative;
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+      padding: 10px;
+      touch-action: manipulation;
+      user-select:none;
+    }
+    html[data-theme="light"] .board{
+      background: radial-gradient(900px 520px at 50% 10%, rgba(10,20,40,.06), transparent 55%),
+                  radial-gradient(800px 500px at 50% 110%, rgba(11,138,90,.08), transparent 55%),
+                  rgba(255,255,255,.55);
+    }
+
+    .holes{
+      width: 100%;
+      height: 100%;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: clamp(10px, 1.8vw, 14px);
+      padding: clamp(8px, 1.5vw, 14px);
+    }
+
+    .hole{
+      position: relative;
+      border-radius: 22px;
+      background: radial-gradient(110px 64px at 50% 74%, rgba(0,0,0,.55), rgba(0,0,0,.18) 62%, transparent 76%),
+                  linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.14);
+      overflow:hidden;
+      display:grid;
+      place-items:end center;
+      padding-bottom: 10px;
+      transform: translateZ(0);
+    }
+    html[data-theme="light"] .hole{
+      background: radial-gradient(110px 64px at 50% 74%, rgba(10,20,40,.22), rgba(10,20,40,.06) 62%, transparent 76%),
+                  linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.62));
+      border: 1px solid rgba(10,20,40,.14);
+    }
+
+    .rim{
+      position:absolute;
+      left: 10%;
+      right: 10%;
+      bottom: 18%;
+      height: 18%;
+      border-radius: 999px;
+      background: radial-gradient(80px 30px at 50% 30%, rgba(255,255,255,.10), rgba(255,255,255,0) 70%),
+                  linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0));
+      opacity:.75;
+      pointer-events:none;
+    }
+
+    .target{
+      width: 78%;
+      max-width: 180px;
+      aspect-ratio: 1/1;
+      position:absolute;
+      left: 50%;
+      transform: translateX(-50%) translateY(65%);
+      bottom: 12%;
+      border-radius: 24px;
+      display:grid;
+      place-items:center;
+      opacity:0;
+      pointer-events:none;
+      transition: transform .12s ease, opacity .12s ease;
+    }
+    .target.show{
+      opacity:1;
+      pointer-events:auto;
+      transform: translateX(-50%) translateY(0%);
+    }
+    .target.hit{
+      transform: translateX(-50%) translateY(10%) scale(.94);
+      opacity:.0;
+      transition: transform .10s ease, opacity .10s ease;
+    }
+
+    /* v3: emoji-only target (no tile background) */
+    .tFace{ background: transparent !important; border: none !important; box-shadow: none !important; width:100%; height:100%; display:grid; place-items:center; }
+    .tFace:before{ display:none !important; }
+
+    .emoji{
+      font-size: clamp(34px, 7vw, 56px);
+      filter: drop-shadow(0 10px 22px rgba(0,0,0,.35));
+      transform: translateZ(0);
+      position: relative;
+      z-index: 2;
+    }
+    .floatText{
+      position:absolute;
+      left: 50%;
+      top: 55%;
+      transform: translate(-50%, -50%);
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 900;
+      opacity:0;
+      pointer-events:none;
+      text-shadow: 0 8px 20px rgba(0,0,0,.35);
+      white-space:nowrap;
+      z-index: 3;
+    }
+    .floatText.show{
+      animation: floatUp .55s ease forwards;
+      opacity:1;
+    }
+    @keyframes floatUp{
+      0%{ transform: translate(-50%,-10%); opacity:0; }
+      20%{ opacity:1; }
+      100%{ transform: translate(-50%,-70%); opacity:0; }
+    }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: calc(14px + var(--safe-bottom));
+      transform: translateX(-50%);
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.35);
+      color: rgba(233,238,252,.95);
+      box-shadow: 0 16px 60px rgba(0,0,0,.45);
+      font-size: 13px;
+      display:none;
+      z-index: 70;
+      max-width: min(820px, calc(100vw - 24px));
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .toast.show{ display:block; animation: toastIn .2s ease; }
+    @keyframes toastIn{ from{ transform: translateX(-50%) translateY(6px); opacity:.0;} to{ transform: translateX(-50%) translateY(0); opacity:1;} }
+
+    .overlay{
+      position: fixed;
+      inset:0;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: calc(16px + var(--safe-top)) calc(16px + var(--safe-right)) calc(16px + var(--safe-bottom)) calc(16px + var(--safe-left));
+      z-index: 50;
+    }
+    .overlay.show{ display:flex; }
+    .modal{
+      width: min(720px, 100%);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      box-shadow: 0 18px 70px rgba(0,0,0,.50);
+      overflow:hidden;
+    }
+    html[data-theme="light"] .modal{
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.74));
+      border: 1px solid rgba(10,20,40,.14);
+    }
+    
+    .modalHeader{
+      padding: 14px 16px;
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), transparent);
+    }
+    .modalHeader h3{ margin:0; font-size: 18px; letter-spacing:.2px; }
+    .modalBody{ padding: 14px 16px 16px 16px; }
+    .modalFooter{
+      padding: 12px 16px 14px 16px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+      background: linear-gradient(180deg, transparent, rgba(0,0,0,.14));
+    }
+
+    .table{
+      width:100%;
+      border-collapse: collapse;
+      overflow:hidden;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.12);
+    }
+    .table th, .table td{
+      padding: 10px 10px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      font-size: 13px;
+      text-align:left;
+      vertical-align: middle;
+    }
+    .table th{ color: var(--muted); font-size: 12px; letter-spacing:.2px; }
+    .table tr:last-child td{ border-bottom:none; }
+    .rankNum{ font-family: var(--mono); font-weight: 900; opacity:.92; }
+    .muted{ color: var(--muted); }
+    .note{ font-size: 13px; color: rgba(233,238,252,.85); line-height: 1.45; margin: 0; }
+    .hr{ height:1px; background: rgba(255,255,255,.10); margin: 12px 0; }
+    .kbd{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.15);
+    }
+  
+    html[data-theme="light"] .modalBody .note[style*="background:rgba(0,0,0,.12)"]{
+      background: rgba(255,255,255,.70) !important;
+      border-color: rgba(10,20,40,.14) !important;
+    }
+
+
+    html[data-theme="light"] #configLockNote{
+      background: rgba(255,255,255,.72) !important;
+      border-color: rgba(10,20,40,.14) !important;
+      color: rgba(11,18,32,.90) !important;
+    }
+
+
+    /* ===== Mobile modal fit ===== */
+    .modal{
+      width: min(720px, 94vw);
+      max-height: 92dvh;
+      display:flex;
+      flex-direction: column;
+    }
+    .modalHeader{ flex: 0 0 auto; }
+    .modalBody{
+      flex: 1 1 auto;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    }
+    .modalFooter{
+      flex: 0 0 auto;
+      position: sticky;
+      bottom: 0;
+      padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+      backdrop-filter: blur(10px);
+    }
+    /* Prevent the close button from shrinking on tiny screens */
+    .modalHeader .btn{ white-space: nowrap; }
+
+    /* ===== Light theme: clearer selection states ===== */
+    html[data-theme="light"] .chip{
+      border-color: rgba(10,20,40,.16);
+    }
+    html[data-theme="light"] .chip.active{
+      border-color: rgba(31,93,255,.52) !important;
+      background: linear-gradient(180deg, rgba(31,93,255,.22), rgba(109,40,255,.10)) !important;
+      box-shadow: 0 12px 26px rgba(31,93,255,.14) !important;
+    }
+    html[data-theme="light"] .chip.active small{ color: rgba(11,18,32,.78) !important; }
+
+    /* Make selected mouse chip stand out more */
+    html[data-theme="dark"] .chip.active{
+      border-color: rgba(59,130,255,.70);
+      background: linear-gradient(180deg, rgba(59,130,255,.20), rgba(124,59,255,.10));
+    }
+
+    /* Improve select clarity on mobile */
+    select{
+      font-weight: 900;
+    }
+    html[data-theme="light"] select{
+      border-color: rgba(10,20,40,.16);
+      background: rgba(255,255,255,.78);
+      color: rgba(11,18,32,.96);
+    }
+
+</style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div style="min-width:0">
+          <h1>打地鼠｜單機手機版</h1>
+          <div class="sub">單機離線 · 霓虹街機風 · 三模式排行榜</div>
+        </div>
+      </div>
+      <div class="topActions">
+        <button class="btn ghost small" id="btnHow">玩法</button>
+        <button class="btn ghost small" id="btnBoard">排行榜</button>
+        <button class="btn ghost small" id="btnSettings">設定</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <div class="cardHeader">
+          <h2>遊戲</h2>
+          <div class="hint"><span class="kbd">點擊</span> 打地鼠 · <span class="kbd">長按</span> 暫停</div>
+        </div>
+
+        <div class="cardBody playWrap">
+          <div class="hud" id="hudGlow">
+            <div class="hudLeft">
+              <div class="pill"><span class="t">時間</span><span class="n" id="hudTime">60.0</span></div>
+              <div class="pill"><span class="t">分數</span><span class="n good" id="hudScore">0</span></div>
+              <div class="pill"><span class="t">連擊</span><span class="n" id="hudCombo">0</span></div>
+              <div class="pill"><span class="t">倍率</span><span class="n" id="hudMult">x1.00</span></div>
+            </div>
+            <div class="hudRight" style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+              <button class="btn primary" id="btnStart">開始</button>
+              <button class="btn" id="btnPause" disabled>暫停</button>
+              <button class="btn danger" id="btnStop" disabled>結束</button>
+            </div>
+          </div>
+
+          <div class="board" id="board" aria-label="遊戲板">
+            <div class="holes" id="holes"></div>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><div class="k">命中 / 出現</div><div class="v" id="stHit">0 / 0</div></div>
+            <div class="stat"><div class="k">命中率</div><div class="v" id="stAcc">0%</div></div>
+            <div class="stat"><div class="k">最長連擊</div><div class="v" id="stMaxCombo">0</div></div>
+            <div class="stat"><div class="k">空打 / 漏打</div><div class="v" id="stMiss">0</div></div>
+          </div>
+        </div>
+      </section>
+</main>
+  </div>
+
+  <div class="overlay" id="ovHow" role="dialog" aria-modal="true" aria-label="玩法">
+    <div class="modal">
+      <div class="modalHeader">
+        <h3>玩法</h3>
+        <button class="btn small" data-close="how">關閉</button>
+      </div>
+      <div class="modalBody">
+        <p class="note">
+          點擊冒出的老鼠即可得分。連續命中會提升倍率；空打或漏打會斷連擊。<br/>
+          本遊戲完全單機：不連線、不回傳，排行榜只存本機瀏覽器。
+        </p>
+        <div class="hr"></div>
+        <p class="note"><b>模式備註</b></p>
+        <ul class="note" style="margin:10px 0 0 18px;">
+          <li><b>限時衝分</b>：節奏固定，適合拼紀錄</li>
+          <li><b>長局衝分</b>：更吃穩定度與體力</li>
+          <li><b>生存</b>：錯 5 次直接結束</li>
+        </ul>
+      </div>
+      <div class="modalFooter">
+        <button class="btn primary" data-close="how">我懂了</button>
+      </div>
+    </div>
+  </div>
+
+  
+<div class="overlay" id="ovSettings" role="dialog" aria-modal="true" aria-label="設定">
+  <div class="modal">
+    <div class="modalHeader">
+      <h3>設定</h3>
+      <button class="btn small" data-close="settings">關閉</button>
+    </div>
+    <div class="modalBody">
+      <div class="grid two">
+        <div class="field">
+          <div class="labelRow"><label>玩家名稱（排行榜用）</label><span class="value">最多 10 字</span></div>
+          <input type="text" id="playerName" maxlength="10" placeholder="例如：玩家" />
+        </div>
+        <div class="field">
+          <div class="labelRow"><label>音效</label><span class="value" id="sndDesc">關</span></div>
+          <select id="sound">
+            <option value="off" selected>關</option>
+            <option value="on">開</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-top:8px;">
+        <div class="field">
+          <div class="labelRow"><label>主題</label><span class="value" id="themeDesc">暗</span></div>
+          <select id="theme">
+            <option value="dark" selected>暗</option>
+            <option value="light">亮</option>
+          </select>
+        </div>
+        <div class="field">
+          <div class="labelRow"><label>震動回饋</label><span class="value" id="vibDesc">開</span></div>
+          <select id="vibration">
+            <option value="on" selected>開</option>
+            <option value="off">關</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="field">
+        <div class="labelRow"><label>開局配置</label><span class="value">開始後鎖定，結束後才可調整</span></div>
+        <div class="note" id="configLockNote" style="padding:10px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.18);">
+          先在這裡選好模式、難度與造型，再按「開始」。
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-top:8px;">
+        <div class="field">
+          <div class="labelRow"><label>模式</label><span class="value" id="modeNote">60 秒，節奏穩，拼紀錄</span></div>
+          <select id="mode">
+            <option value="timed" selected>60 秒</option>
+            <option value="timed90">90 秒</option>
+            <option value="survival">生存</option>
+          </select>
+        </div>
+        <div class="field">
+          <div class="labelRow"><label>難度</label><span class="value" id="diffNote">標準手感</span></div>
+          <select id="difficulty">
+            <option value="easy">簡單</option>
+            <option value="normal" selected>普通</option>
+            <option value="hard">困難</option>
+            <option value="hell">地獄</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:8px;">
+        <div class="labelRow"><label>老鼠造型</label><span class="value" id="mouseNote">選你喜歡的造型</span></div>
+        <div class="seg" id="mouseSeg" aria-label="老鼠造型"></div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="field">
+        <div class="labelRow"><label>提示</label><span class="value">單機</span></div>
+        <div class="note" style="padding:10px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.18);">
+          排行榜只存本機 LocalStorage（不連網、不回傳）。
+        </div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <button class="btn danger" id="btnClearData">清除排行榜</button>
+      <button class="btn primary" data-close="settings">完成</button>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="ovBoard" role="dialog" aria-modal="true" aria-label="排行榜">
+    <div class="modal">
+      <div class="modalHeader">
+        <h3>本機排行榜（Top 20）</h3>
+        <button class="btn small" data-close="board">關閉</button>
+      </div>
+      <div class="modalBody">
+        <div class="seg" id="lbSeg" style="margin-bottom:10px; justify-content:flex-start;"></div>
+        <table class="table" id="lbTable" aria-label="排行榜表格">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>玩家</th>
+              <th>分數</th>
+              <th>模式/難度</th>
+              <th>命中率</th>
+              <th>連擊</th>
+              <th>時間</th>
+            </tr>
+          </thead>
+          <tbody id="lbBody"></tbody>
+        </table>
+        <div class="hr"></div>
+        <p class="note muted">提示：無痕模式或清除瀏覽資料會清空本機排行榜。</p>
+      </div>
+      <div class="modalFooter">
+        <button class="btn" id="btnExport">匯出 JSON</button>
+        <button class="btn primary" data-close="board">完成</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="ovResult" role="dialog" aria-modal="true" aria-label="結算">
+    <div class="modal">
+      <div class="modalHeader">
+        <h3>結算</h3>
+        <button class="btn small" data-close="result">關閉</button>
+      </div>
+      <div class="modalBody">
+        <div class="stats" style="grid-template-columns: repeat(3, 1fr);">
+          <div class="stat"><div class="k">本局分數</div><div class="v" id="rScore">0</div></div>
+          <div class="stat"><div class="k">命中率</div><div class="v" id="rAcc">0%</div></div>
+          <div class="stat"><div class="k">最長連擊</div><div class="v" id="rMaxCombo">0</div></div>
+        </div>
+        <div class="hr"></div>
+        <p class="note" id="rMeta"></p>
+        <p class="note muted" style="margin-top:8px;" id="rHint"></p>
+      </div>
+      <div class="modalFooter">
+        <button class="btn" id="btnAgain">再來一局</button>
+        <button class="btn primary" id="btnViewBoard">看排行榜</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  "use strict";
+
+  const $ = (sel, el=document) => el.querySelector(sel);
+  const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const now = () => performance.now();
+  const fmtPct = (x) => (isFinite(x) ? (x*100).toFixed(0) : "0") + "%";
+  const fmtTime = (ms) => (ms/1000).toFixed(1);
+
+  function rand(){
+    let t = rand.seed += 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  }
+  rand.seed = (Date.now() ^ (Math.random()*1e9)) >>> 0;
+  function choice(arr){ return arr[Math.floor(rand()*arr.length)]; }
+
+  const STORE_KEY = "wam_offline_leaderboard_simple_v1";
+  const SETTINGS_KEY = "wam_offline_settings_simple_v1";
+
+  function loadJSON(key, fallback){
+    try{
+      const raw = localStorage.getItem(key);
+      if(!raw) return fallback;
+      const v = JSON.parse(raw);
+      return (v ?? fallback);
+    }catch(e){
+      return fallback;
+    }
+  }
+  function saveJSON(key, value){
+    try{
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+
+  // ===== Audio (simple) =====
+  let audioCtx = null;
+  function getAudioCtx(){
+    if(!audioCtx){
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if(Ctx) audioCtx = new Ctx();
+    }
+    return audioCtx;
+  }
+  function beep({freq=440, dur=0.06, type="sine", gain=0.06} = {}){
+    const ctx = getAudioCtx();
+    if(!ctx) return;
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = type;
+    o.frequency.value = freq;
+    g.gain.value = gain;
+    o.connect(g);
+    g.connect(ctx.destination);
+    const t0 = ctx.currentTime;
+    o.start(t0);
+    g.gain.setValueAtTime(gain, t0);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.stop(t0 + dur + 0.01);
+  }
+
+  // ===== Elements =====
+  const holesEl = $("#holes");
+  const boardEl = $("#board");
+
+  const hudTime = $("#hudTime");
+  const hudScore = $("#hudScore");
+  const hudCombo = $("#hudCombo");
+  const hudMult = $("#hudMult");
+
+  const stHit = $("#stHit");
+  const stAcc = $("#stAcc");
+  const stMaxCombo = $("#stMaxCombo");
+  const stMiss = $("#stMiss");
+
+  const btnStart = $("#btnStart");
+  const btnPause = $("#btnPause");
+  const btnStop  = $("#btnStop");
+
+  const modeSel = $("#mode");
+  const diffSel = $("#difficulty");
+  const modeNote = $("#modeNote");
+  const diffNote = $("#diffNote");
+
+  const btnHow = $("#btnHow");
+  const btnBoard = $("#btnBoard");
+  const btnSettings = $("#btnSettings");
+
+  const ovHow = $("#ovHow");
+  const ovBoard = $("#ovBoard");
+  const ovSettings = $("#ovSettings");
+  const ovResult = $("#ovResult");
+
+  const lbBody = $("#lbBody");
+  const btnClearData = $("#btnClearData");
+  const btnExport = $("#btnExport");
+
+  const playerName = $("#playerName");
+  const soundSel = $("#sound");
+  const vibSel = $("#vibration");
+  const themeSel = $("#theme");
+  const sndDesc = $("#sndDesc");
+  const vibDesc = $("#vibDesc");
+  const themeDesc = $("#themeDesc");
+
+  const rScore = $("#rScore");
+  const rAcc = $("#rAcc");
+  const rMaxCombo = $("#rMaxCombo");
+  const rMeta = $("#rMeta");
+  const rHint = $("#rHint");
+  const btnAgain = $("#btnAgain");
+  const btnViewBoard = $("#btnViewBoard");
+
+  // ===== Toast =====
+  const toastEl = $("#toast");
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(()=>toastEl.classList.remove("show"), 1600);
+  }
+
+  // ===== Overlay helpers =====
+  function openOverlay(ov){ ov.classList.add("show"); }
+  function closeOverlay(ov){ ov.classList.remove("show"); }
+  $$("[data-close]").forEach(btn => { if(!btn) return;
+    btn.addEventListener("click", () => {
+      const which = btn.getAttribute("data-close");
+      if(which === "how") closeOverlay(ovHow);
+      if(which === "board") closeOverlay(ovBoard);
+      if(which === "settings") closeOverlay(ovSettings);
+      if(which === "result") closeOverlay(ovResult);
+    }, {passive:true});
+  });
+
+  if(btnHow) btnHow.addEventListener("click", ()=>openOverlay(ovHow), {passive:true});
+  if(btnBoard) btnBoard.addEventListener("click", ()=>{
+    lbMode = (modeSel.value || "timed");
+    renderLbSeg();
+    refreshLeaderboardUI();
+    openOverlay(ovBoard);
+  }, {passive:true});
+  if(btnSettings) btnSettings.addEventListener("click", ()=>openOverlay(ovSettings), {passive:true});
+  if(btnViewBoard) btnViewBoard.addEventListener("click", ()=>{ closeOverlay(ovResult); refreshLeaderboardUI(); openOverlay(ovBoard); }, {passive:true});
+
+  // ===== Mouse skins (emoji) =====
+  const MICE = [
+    { id:"mouse", emoji:"🐭", name:"小鼠" },
+    { id:"hamster", emoji:"🐹", name:"倉鼠" },
+    { id:"rat", emoji:"🐀", name:"大鼠" },
+  ];
+  let selectedMouse = MICE[0].id;
+
+  const mouseSeg = $("#mouseSeg");
+  function renderMouseSeg(){
+    mouseSeg.innerHTML = "";
+    for(const m of MICE){
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip" + (m.id === selectedMouse ? " active" : "");
+      b.innerHTML = `<span style="font-size:20px">${m.emoji}</span><span>${m.name}</span><small>（外觀）</small>`;
+      b.addEventListener("click", ()=>{
+        if(game.state !== "idle"){ toast("遊戲中不可更換"); return; }
+        selectedMouse = m.id;
+        saveSettings();
+        renderMouseSeg();
+        toast(`已選：${m.emoji} ${m.name}`);
+      }, {passive:true});
+      mouseSeg.appendChild(b);
+    }
+  }
+  function getMouse(){
+    return MICE.find(m => m.id === selectedMouse) || MICE[0];
+  }
+
+  // ===== Difficulty params =====
+  const DIFF = {
+    easy:   { sim: 1, spawn: 760, dwell: 920, missPenalty: 4 },
+    normal: { sim: 2, spawn: 540, dwell: 720, missPenalty: 6 },
+    hard:   { sim: 3, spawn: 420, dwell: 560, missPenalty: 8 },
+    hell:   { sim: 4, spawn: 320, dwell: 460, missPenalty: 10 },
+  };
+
+  function updateModeNote(){
+    const v = modeSel.value;
+    const note = v === "timed" ? "60 秒，節奏穩，拼紀錄" :
+                 v === "timed90" ? "90 秒，更吃穩定度" :
+                 "錯 5 次結束，壓力最大";
+    modeNote.textContent = note;
+  }
+  function updateDiffNote(){
+    const v = diffSel.value;
+    const map = {easy:"較慢、較好打", normal:"標準手感", hard:"更快、更吃反應", hell:"節奏極緊，拼操作"};
+    diffNote.textContent = map[v] || "參數自動套用";
+  }
+  modeSel.addEventListener("change", ()=>{ updateModeNote(); saveSettings(); }, {passive:true});
+  diffSel.addEventListener("change", ()=>{ updateDiffNote(); saveSettings(); }, {passive:true});
+
+  // ===== Settings =====
+  let settings = loadJSON(SETTINGS_KEY, null);
+  if(!settings){
+    settings = {
+      playerName: "玩家",
+      sound: "off",
+      vibration: "on",
+      theme: "dark",
+      mode: "timed",
+      difficulty: "normal",
+      selectedMouse: "mouse"
+    };
+    saveJSON(SETTINGS_KEY, settings);
+  }
+
+  
+  function applyTheme(theme){
+      const t = (theme === "light") ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", t);
+      if(themeSel) themeSel.value = t;
+      if(themeDesc) themeDesc.textContent = (t === "light") ? "亮" : "暗";
+    }
+function applySettingsToUI(){
+    playerName.value = settings.playerName || "玩家";
+    soundSel.value = settings.sound || "off";
+    vibSel.value = settings.vibration || "on";
+    if(themeSel) themeSel.value = settings.theme || "dark";
+    modeSel.value = settings.mode || "timed";
+    diffSel.value = settings.difficulty || "normal";
+    selectedMouse = settings.selectedMouse || "mouse";
+
+    updateModeNote();
+    updateDiffNote();
+    renderMouseSeg();
+    updateSettingsBadges();
+    applyTheme(settings.theme || "dark");
+  }
+
+  function saveSettings(){
+    settings.playerName = (playerName.value || "玩家").trim().slice(0,10) || "玩家";
+    settings.sound = soundSel.value;
+    settings.vibration = vibSel.value;
+    settings.theme = (themeSel ? themeSel.value : (settings.theme || "dark"));
+    settings.mode = modeSel.value;
+    settings.difficulty = diffSel.value;
+    settings.selectedMouse = selectedMouse;
+    saveJSON(SETTINGS_KEY, settings);
+    updateSettingsBadges();
+    applyTheme(settings.theme || "dark");
+  }
+
+  function updateSettingsBadges(){
+    sndDesc.textContent = (soundSel.value === "on") ? "開" : "關";
+    vibDesc.textContent = (vibSel.value === "on") ? "開" : "關";
+    if(themeDesc && themeSel) themeDesc.textContent = (themeSel.value === "light") ? "亮" : "暗";
+  }
+
+  [playerName, soundSel, vibSel, themeSel].filter(Boolean).forEach(el=>{
+    el.addEventListener("change", saveSettings, {passive:true});
+    el.addEventListener("input", ()=>{ if(el===playerName) saveSettings(); }, {passive:true});
+  });
+
+  // ===== Game state =====
+  const HOLE_COUNT = 9;
+  const holes = [];
+
+  const game = {
+    state: "idle",        // idle | running | paused | over
+    mode: "timed",
+    difficulty: "normal",
+    tLast: 0,
+    timeLeft: 60_000,
+    score: 0,
+    combo: 0,
+    maxCombo: 0,
+    mult: 1.0,
+    spawns: 0,
+    hits: 0,
+    miss: 0,
+    lives: 5,
+    nextSpawnAt: 0,
+    activeCount: 0,
+    timers: new Set(),
+    lastHole: -1,
+  };
+
+  function resetStats(){
+    game.score = 0;
+    game.combo = 0;
+    game.maxCombo = 0;
+    game.mult = 1.0;
+    game.spawns = 0;
+    game.hits = 0;
+    game.miss = 0;
+    game.lives = 5;
+
+    stHit.textContent = "0 / 0";
+    stAcc.textContent = "0%";
+    stMaxCombo.textContent = "0";
+    stMiss.textContent = "0";
+    hudScore.textContent = "0";
+    hudCombo.textContent = "0";
+    hudMult.textContent = "x1.00";
+  }
+
+  function updateHUD(){
+    if(game.mode === "survive"){
+      hudTime.textContent = `❤${game.lives} · ${fmtTime(game.timeLeft)}`;
+      hudTime.className = "";
+      if(game.lives <= 1) hudTime.classList.add("bad");
+      else if(game.lives <= 2) hudTime.classList.add("warn");
+    }else{
+      hudTime.textContent = fmtTime(game.timeLeft);
+      hudTime.className = "";
+      if(game.timeLeft < 8_000) hudTime.classList.add("bad");
+      else if(game.timeLeft < 18_000) hudTime.classList.add("warn");
+    }
+
+    hudScore.textContent = String(Math.max(0, Math.round(game.score)));
+    hudCombo.textContent = String(game.combo);
+    hudMult.textContent = "x" + game.mult.toFixed(2);
+
+    stHit.textContent = `${game.hits} / ${game.spawns}`;
+    const acc = game.spawns ? (game.hits / game.spawns) : 0;
+    stAcc.textContent = fmtPct(acc);
+    stMaxCombo.textContent = String(game.maxCombo);
+    stMiss.textContent = String(game.miss);
+  }
+
+  function schedule(fn, ms){
+    const id = setTimeout(()=>{ game.timers.delete(id); fn(); }, ms);
+    game.timers.add(id);
+    return id;
+  }
+  function clearAllTimers(){
+    for(const id of game.timers) clearTimeout(id);
+    game.timers.clear();
+  }
+
+  function vibrate(pattern){
+    if(vibSel.value !== "on") return;
+    if(navigator.vibrate) navigator.vibrate(pattern);
+  }
+  function soundHit(){
+    if(soundSel.value !== "on") return;
+    beep({freq: 680, dur: 0.05, type:"sine", gain:0.04});
+  }
+  function soundMiss(){
+    if(soundSel.value !== "on") return;
+    beep({freq: 240, dur: 0.06, type:"sine", gain:0.03});
+  }
+
+  function updateMultiplier(){
+    const c = game.combo;
+    const base = 1 + (Math.sqrt(c) * 0.12) + (c * 0.007);
+    game.mult = clamp(base, 1.0, 4.00);
+  }
+  function breakCombo(){
+    game.combo = 0;
+    updateMultiplier();
+  }
+  function addCombo(){
+    game.combo += 1;
+    if(game.combo > game.maxCombo) game.maxCombo = game.combo;
+    updateMultiplier();
+  }
+  function addScore(delta){ game.score += delta; }
+
+  function setButtons(){
+    const running = game.state === "running";
+    const idle = game.state === "idle";
+    btnStart.disabled = !idle;
+    btnPause.disabled = !(running || game.state === "paused");
+    btnStop.disabled  = !(running || game.state === "paused");
+
+    // Config is in Settings; hide it during play
+    btnSettings.disabled = !idle;
+    btnPause.textContent = (game.state === "paused") ? "繼續" : "暫停";
+
+    const lock = !idle;
+    modeSel.disabled = lock;
+    diffSel.disabled = lock;
+  }
+
+  // ===== Board / holes =====
+  function buildHoles(){
+    holesEl.innerHTML = "";
+    holes.length = 0;
+
+    for(let i=0;i<HOLE_COUNT;i++){
+      const hole = document.createElement("div");
+      hole.className = "hole";
+      hole.setAttribute("data-idx", String(i));
+
+      const rim = document.createElement("div");
+      rim.className = "rim";
+      hole.appendChild(rim);
+
+      const target = document.createElement("div");
+      target.className = "target";
+      target.setAttribute("data-active", "0");
+
+      const face = document.createElement("div");
+      face.className = "tFace";
+
+      const emoji = document.createElement("div");
+      emoji.className = "emoji";
+      emoji.textContent = "🐭";
+
+      const floatText = document.createElement("div");
+      floatText.className = "floatText";
+
+      face.appendChild(emoji);
+      target.appendChild(face);
+      target.appendChild(floatText);
+      hole.appendChild(target);
+      holesEl.appendChild(hole);
+
+      const h = {
+        idx: i,
+        holeEl: hole,
+        targetEl: target,
+        emojiEl: emoji,
+        floatEl: floatText,
+        active: false,
+      };
+      holes.push(h);
+
+      target.addEventListener("pointerdown", (ev)=>{
+        ev.preventDefault();
+        ev.stopPropagation();
+        if(game.state !== "running") return;
+        if(!h.active) return;
+        handleHit(h);
+      }, {passive:false});
+
+      hole.addEventListener("pointerdown", ()=>{
+        if(game.state !== "running") return;
+        if(h.active) return;
+        applyMissPenalty();
+      }, {passive:true});
+    }
+
+    // long press pause on board
+    let pressTimer = null;
+    boardEl.addEventListener("pointerdown", ()=>{
+      if(game.state !== "running") return;
+      pressTimer = setTimeout(()=>{ if(game.state === "running") togglePause(); }, 520);
+    }, {passive:true});
+    const clearPress = ()=>{ if(pressTimer) clearTimeout(pressTimer); pressTimer=null; };
+    boardEl.addEventListener("pointerup", clearPress, {passive:true});
+    boardEl.addEventListener("pointercancel", clearPress, {passive:true});
+  }
+
+  function showTarget(h, dwellMs){
+    h.active = true;
+    h.emojiEl.textContent = getMouse().emoji;
+    h.targetEl.classList.remove("hit");
+    h.targetEl.classList.add("show");
+    h.targetEl.setAttribute("data-active", "1");
+
+    game.activeCount += 1;
+    game.spawns += 1;
+    updateHUD();
+
+    schedule(()=>{
+      if(h.active){
+        hideTarget(h, false);
+        applyMissPenalty();
+      }
+    }, dwellMs);
+  }
+
+  function hideTarget(h, wasHit){
+    if(!h.active) return;
+    h.active = false;
+    h.targetEl.setAttribute("data-active", "0");
+    h.targetEl.classList.remove("show");
+    if(wasHit){
+      h.targetEl.classList.add("hit");
+      schedule(()=>h.targetEl.classList.remove("hit"), 120);
+    }
+    game.activeCount = Math.max(0, game.activeCount - 1);
+  }
+
+  function showFloat(h, text, tone="good"){
+    h.floatEl.textContent = text;
+    h.floatEl.style.color = tone === "bad" ? "rgba(255,92,122,.95)" :
+                            tone === "warn"? "rgba(255,209,102,.96)" :
+                            "rgba(78,227,167,.95)";
+    h.floatEl.classList.remove("show");
+    void h.floatEl.offsetWidth;
+    h.floatEl.classList.add("show");
+    schedule(()=>h.floatEl.classList.remove("show"), 620);
+  }
+
+  function applyMissPenalty(){
+    const p = DIFF[diffSel.value] || DIFF.normal;
+    game.miss += 1;
+    breakCombo();
+    soundMiss();
+    vibrate([12]);
+    addScore(-p.missPenalty);
+
+    if(game.mode === "survive"){
+      game.lives -= 1;
+      if(game.lives <= 0){
+        endGame("生存失敗：錯誤次數用完");
+        return;
+      }
+    }
+    updateHUD();
+  }
+
+  function handleHit(h){
+    if(game.state !== "running") return;
+    if(!h.active) return;
+
+    game.hits += 1;
+    addCombo();
+
+    const base = 12;
+    const delta = base * game.mult;
+    addScore(delta);
+
+    soundHit();
+    vibrate([10]);
+    showFloat(h, `+${Math.round(delta)}`, (game.mult >= 2.6) ? "warn" : "good");
+
+    hideTarget(h, true);
+    updateHUD();
+  }
+
+  function spawnLoop(t){
+    if(game.state !== "running") return;
+
+    const dt = t - game.tLast;
+    game.tLast = t;
+
+    if(game.mode === "timed") game.timeLeft = Math.max(0, game.timeLeft - dt);
+    if(game.mode === "timed90") game.timeLeft = Math.max(0, game.timeLeft - dt);
+    if(game.mode === "survive"){
+      game.timeLeft = Math.max(0, game.timeLeft - dt);
+      if(game.timeLeft <= 0){
+        game.timeLeft = 30_000;
+        toast("生存加速");
+      }
+    }
+
+    if((game.mode === "timed" || game.mode === "timed90") && game.timeLeft <= 0){
+      endGame("時間到");
+      return;
+    }
+
+    const p = DIFF[diffSel.value] || DIFF.normal;
+    if(t >= game.nextSpawnAt){
+      if(game.activeCount < p.sim){
+        const candidates = holes.filter(x => !x.active && x.idx !== game.lastHole);
+        const pick = candidates.length ? choice(candidates) : (holes.find(x => !x.active) || null);
+        if(pick){
+          game.lastHole = pick.idx;
+          showTarget(pick, p.dwell);
+          game.nextSpawnAt = t + p.spawn;
+        }else{
+          game.nextSpawnAt = t + 50;
+        }
+      }else{
+        game.nextSpawnAt = t + 40;
+      }
+    }
+
+    updateHUD();
+    requestAnimationFrame(spawnLoop);
+  }
+
+  function startGame(){
+    if(game.state !== "idle") return;
+
+    saveSettings();
+    game.mode = modeSel.value;
+    game.difficulty = diffSel.value;
+
+    resetStats();
+    clearAllTimers();
+
+    if(game.mode === "timed") game.timeLeft = 60_000;
+    if(game.mode === "timed90") game.timeLeft = 90_000;
+    if(game.mode === "survive"){
+      game.timeLeft = 30_000;
+      game.lives = 5;
+    }
+
+    for(const h of holes){
+      h.active = false;
+      h.targetEl.classList.remove("show","hit");
+      h.targetEl.setAttribute("data-active","0");
+      h.emojiEl.textContent = getMouse().emoji;
+    }
+    game.activeCount = 0;
+
+    game.state = "running";
+    game.tLast = now();
+    game.nextSpawnAt = game.tLast + 160;
+    setButtons();
+
+    if(soundSel.value === "on"){
+      const ctx = getAudioCtx();
+      if(ctx && ctx.state === "suspended") ctx.resume().catch(()=>{});
+    }
+
+    toast("開始！");
+    requestAnimationFrame(spawnLoop);
+  }
+
+  function togglePause(){
+    if(game.state === "idle" || game.state === "over") return;
+
+    if(game.state === "paused"){
+      game.state = "running";
+      game.tLast = now();
+      game.nextSpawnAt = game.tLast + 160;
+      setButtons();
+      toast("繼續");
+      requestAnimationFrame(spawnLoop);
+    }else if(game.state === "running"){
+      game.state = "paused";
+      clearAllTimers();
+      setButtons();
+      toast("已暫停");
+    }
+  }
+
+  function stopGame(){
+    if(game.state === "idle") return;
+    endGame("手動結束");
+  }
+
+  function endGame(reason){
+    if(game.state === "over" || game.state === "idle") return;
+
+    // mark over to stop raf loop & inputs
+    game.state = "over";
+    clearAllTimers();
+    setButtons();
+
+    // hide all active targets
+    for(const h of holes){
+      if(h.active) hideTarget(h, false);
+    }
+
+    const acc = game.spawns ? (game.hits / game.spawns) : 0;
+
+    const rec = {
+      name: (playerName.value || "玩家").trim().slice(0,10) || "玩家",
+      score: Math.max(0, Math.round(game.score)),
+      mode: game.mode,
+      difficulty: game.difficulty,
+      mouse: selectedMouse,
+      hits: game.hits,
+      spawns: game.spawns,
+      acc: Number(acc.toFixed(4)),
+      maxCombo: game.maxCombo,
+      ts: Date.now()
+    };
+    pushLeaderboard(rec);
+
+    rScore.textContent = String(rec.score);
+    rAcc.textContent = fmtPct(acc);
+    rMaxCombo.textContent = String(rec.maxCombo);
+
+    const modeName = modeSel.options[modeSel.selectedIndex]?.textContent || game.mode;
+    const diffName = diffSel.options[diffSel.selectedIndex]?.textContent || game.difficulty;
+    const mouseName = getMouse().emoji + " " + getMouse().name;
+
+    const dt = new Date(rec.ts);
+    const timeStr = dt.toLocaleString("zh-Hant", {hour12:false});
+    rMeta.textContent = `原因：${reason}｜模式：${modeName}｜難度：${diffName}｜老鼠：${mouseName}｜時間：${timeStr}`;
+
+    let hint = "";
+    if(rec.acc < 0.45) hint = "命中率偏低：可先用「簡單」練手感，再上難度。";
+    else if(rec.maxCombo < 10) hint = "連擊偏短：優先避免空打，穩定倍率才會上去。";
+    else hint = "狀態不錯：想破紀錄就盡量維持連擊倍率。";
+    rHint.textContent = hint;
+
+    // show result modal, then return UI to idle
+    openOverlay(ovResult);
+    game.state = "idle";
+    setButtons();
+    updateHUD();
+  }
+
+  btnStart.addEventListener("click", startGame, {passive:true});
+  btnPause.addEventListener("click", togglePause, {passive:true});
+  btnStop.addEventListener("click", stopGame, {passive:true});
+
+  btnAgain.addEventListener("click", ()=>{
+    closeOverlay(ovResult);
+    // ensure UI is idle before starting
+    game.state = "idle";
+    setButtons();
+    startGame();
+  }, {passive:true});
+
+  // ===== Leaderboard (per-mode) =====
+  const LB_MODES = [
+    { id:"timed",   label:"60 秒" },
+    { id:"timed90", label:"90 秒" },
+    { id:"survive", label:"生存" },
+  ];
+  let lbMode = "timed";
+
+  const lbSeg = $("#lbSeg");
+
+  function normalizeLB(obj){
+    const base = { timed: [], timed90: [], survive: [] };
+    if(!obj || typeof obj !== "object") return base;
+    for(const k of Object.keys(base)){
+      const arr = Array.isArray(obj[k]) ? obj[k] : [];
+      base[k] = arr;
+    }
+    return base;
+  }
+
+  function loadLeaderboard(){
+    return normalizeLB(loadJSON(STORE_KEY, null));
+  }
+  function saveLeaderboard(data){ saveJSON(STORE_KEY, data); }
+
+  function modeLabel(id){
+    const m = LB_MODES.find(x=>x.id===id);
+    return m ? m.label : id;
+  }
+
+  function renderLbSeg(){
+    if(!lbSeg) return;
+    lbSeg.innerHTML = "";
+    for(const m of LB_MODES){
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip" + (m.id === lbMode ? " active" : "");
+      b.innerHTML = `<span>${m.label}</span><small>排行榜</small>`;
+      b.addEventListener("click", ()=>{
+        lbMode = m.id;
+        renderLbSeg();
+        refreshLeaderboardUI();
+      }, {passive:true});
+      lbSeg.appendChild(b);
+    }
+  }
+
+  function pushLeaderboard(rec){
+    const data = loadLeaderboard();
+    const key = (rec.mode in data) ? rec.mode : "timed";
+    const arr = data[key];
+
+    arr.push(rec);
+    arr.sort((a,b)=> (b.score - a.score) || (b.ts - a.ts));
+    data[key] = arr.slice(0, 20);
+
+    saveLeaderboard(data);
+    toast("已寫入本機排行榜");
+  }
+
+  function mapDiff(d){ return d==="easy" ? "簡單" : d==="normal" ? "普通" : d==="hard" ? "困難" : "地獄"; }
+  function mapMouse(id){
+    const m = MICE.find(x=>x.id===id);
+    return m ? (m.emoji + " " + m.name) : id;
+  }
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[c]));
+  }
+
+  function refreshLeaderboardUI(){
+    const data = loadLeaderboard();
+    const lb = data[lbMode] || [];
+    lbBody.innerHTML = "";
+
+    if(lb.length === 0){
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="7" class="muted">此模式尚無紀錄，先玩一局吧。</td>`;
+      lbBody.appendChild(tr);
+      return;
+    }
+
+    lb.forEach((r, idx)=>{
+      const dt = new Date(r.ts);
+      const timeStr = dt.toLocaleString("zh-Hant", {month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit", hour12:false});
+      const acc = r.spawns ? (r.hits / r.spawns) : (r.acc ?? 0);
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="rankNum">${idx+1}</td>
+        <td>${escapeHtml(r.name)} <span class="muted">(${escapeHtml(mapMouse(r.mouse))})</span></td>
+        <td><span class="rankNum">${r.score}</span></td>
+        <td><span class="muted">${escapeHtml(modeLabel(r.mode))} / ${escapeHtml(mapDiff(r.difficulty))}</span></td>
+        <td>${fmtPct(acc)}</td>
+        <td>${r.maxCombo ?? 0}</td>
+        <td class="muted">${timeStr}</td>
+      `;
+      lbBody.appendChild(tr);
+    });
+  }
+
+  if(btnClearData) btnClearData.addEventListener("click", ()=>{
+    const ok = confirm("確定清除本機排行榜？（此操作不可復原）");
+    if(!ok) return;
+    localStorage.removeItem(STORE_KEY);
+    refreshLeaderboardUI();
+    toast("已清除排行榜");
+  });
+
+  if(btnExport) btnExport.addEventListener("click", ()=>{
+    const data = loadLeaderboard();
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "whack-a-mole_leaderboard.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    toast("已匯出 JSON");
+  }, {passive:true});
+
+  // ===== init =====
+  buildHoles();
+  applySettingsToUI();
+  setButtons();
+  updateHUD();
+
+  lbMode = (modeSel.value || "timed");
+  renderLbSeg();
+  refreshLeaderboardUI();
+
+  // prevent scroll while running
+  document.addEventListener("touchmove", (e)=>{
+    if(game.state === "running") e.preventDefault();
+  }, {passive:false});
+
+  // iOS double-tap zoom guard
+  let lastTouchEnd = 0;
+  document.addEventListener("touchend", (e)=>{
+    const nowT = Date.now();
+    if(nowT - lastTouchEnd <= 300) e.preventDefault();
+    lastTouchEnd = nowT;
+  }, {passive:false});
+})();
+</script>
+</body>
+</html>
+  
+
