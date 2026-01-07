@@ -1,0 +1,2665 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Blackjack Campaign（手機三段式）- Final</title>
+  <style>
+    :root{
+      --bg1:#06101f; --bg2:#0b1a33;
+      --felt1:#0d3b2a; --felt2:#0a2f22;
+      --panel:rgba(10,18,32,.55);
+      --text:#eaf1ff; --muted:#a8b6d8;
+      --accent:#6aa9ff; --good:#42d392; --warn:#ffcc66; --bad:#ff6b6b;
+      --shadow: 0 14px 38px rgba(0,0,0,.40);
+      --r:16px; --r2:22px;
+      --safeTop: env(safe-area-inset-top, 0px);
+      --safeRight: env(safe-area-inset-right, 0px);
+      --safeBottom: env(safe-area-inset-bottom, 0px);
+      --safeLeft: env(safe-area-inset-left, 0px);
+
+      /* sizes */
+      --hudH: 52px;
+      --ctrlH: 136px; /* JS will set actual */
+      --cardW: 56px;
+      --cardH: 78px;
+      --cardW_small: 44px;
+      --cardH_small: 62px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 25% 0%, #173a7a 0%, var(--bg2) 55%),
+        radial-gradient(900px 650px at 80% 90%, #0c3a2a 0%, var(--bg1) 55%);
+      overflow:hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body.light{
+      --bg1:#e7efff; --bg2:#cfe0ff;
+      --felt1:#cfe7db; --felt2:#bfe0d0;
+      --panel:rgba(255,255,255,.72);
+      --text:#0b1730; --muted:#415175;
+      --accent:#2a63ff;
+      --shadow: 0 14px 38px rgba(0,0,0,.18);
+    }
+
+    .app{
+      height:100%;
+      padding:calc(10px + var(--safeTop)) calc(10px + var(--safeRight)) calc(10px + var(--safeBottom)) calc(10px + var(--safeLeft));
+      display:flex; flex-direction:column; gap:10px;
+    }
+
+    /* ===== HUD (single row) ===== */
+    .hud{
+      height:var(--hudH);
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      box-shadow:var(--shadow);
+      padding:10px 12px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      min-width:0;
+    }
+    body.light .hud{background:rgba(255,255,255,.82); border-color:rgba(0,0,0,.10)}
+    .hudLeft{
+      min-width:0;
+      display:flex; flex-direction:column; gap:2px;
+    }
+    .hudTitle{font-weight:1000; letter-spacing:.2px; font-size:14px; line-height:1.1}
+    .hudStatus{font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:min(62vw, 520px);}
+    .hudRight{display:flex; gap:6px; align-items:center; flex:0 0 auto;}
+    .pill{
+      padding:6px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    body.light .pill{background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.10)}
+    .iconBtn{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      width:38px; height:38px;
+      border-radius:999px;
+      display:inline-flex; align-items:center; justify-content:center;
+      cursor:pointer; user-select:none; touch-action:manipulation;
+    }
+    body.light .iconBtn{background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.10)}
+    .iconBtn:active{transform:translateY(1px)}
+    .iconBtn span{font-size:16px}
+
+    /* ===== Arena: 3 sections ===== */
+    .arena{
+      flex:1; min-height:0;
+      border-radius:var(--r2);
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(1000px 620px at 50% 0%, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 60%),
+        radial-gradient(900px 600px at 50% 80%, rgba(0,0,0,.30) 0%, rgba(0,0,0,0) 60%),
+        linear-gradient(180deg, rgba(13,59,42,.92), rgba(10,47,34,.92));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+      padding:10px;
+      padding-bottom:calc(var(--ctrlH) + 54px + var(--safeBottom)); /* reserve for controls + msgbar */
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    body.light .arena{
+      background:
+        radial-gradient(1000px 620px at 50% 0%, rgba(255,255,255,.30) 0%, rgba(255,255,255,0) 60%),
+        radial-gradient(900px 600px at 50% 80%, rgba(0,0,0,.10) 0%, rgba(0,0,0,0) 60%),
+        linear-gradient(180deg, rgba(207,231,219,.92), rgba(191,224,208,.92));
+      border-color:rgba(0,0,0,.10);
+    }
+
+    .section{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.14);
+      padding:10px;
+      box-shadow: 0 12px 26px rgba(0,0,0,.18);
+      position:relative;
+    }
+    body.light .section{background:rgba(255,255,255,.70); border-color:rgba(0,0,0,.10)}
+
+    .section.active{
+      border-color:rgba(106,169,255,.70);
+      box-shadow: 0 0 0 2px rgba(106,169,255,.12), 0 18px 35px rgba(0,0,0,.26);
+      background:rgba(0,0,0,.18);
+    }
+    body.light .section.active{background:rgba(255,255,255,.85)}
+
+    .dealerArea{flex:0 0 auto;}
+    .aiArea{flex:1 1 auto; min-height:0; display:flex; flex-direction:column; gap:8px;}
+    .playerArea{flex:0 0 auto;}
+
+    .areaLabel{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:8px;
+    }
+    .labelLeft{display:flex; align-items:center; gap:8px; min-width:0;}
+    .avatar{
+      width:38px; height:38px; border-radius:16px;
+      display:flex; align-items:center; justify-content:center;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.08);
+      box-shadow:0 10px 18px rgba(0,0,0,.14);
+      font-size:18px;
+      flex:0 0 auto;
+    }
+    body.light .avatar{background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.10)}
+    .nameBlock{min-width:0; display:flex; flex-direction:column; gap:2px;}
+    .who{font-weight:1000; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .metaLine{font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .badges{display:flex; flex-wrap:wrap; gap:6px; justify-content:flex-end; align-items:center;}
+    .badge{
+      padding:3px 8px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      white-space:nowrap;
+    }
+    body.light .badge{background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.10)}
+    .badge.dealer{border-color:rgba(106,169,255,.55)}
+    .badge.good{border-color:rgba(66,211,146,.55)}
+    .badge.warn{border-color:rgba(255,204,102,.55)}
+    .badge.bad{border-color:rgba(255,107,107,.55)}
+
+    .cardsRow{
+      display:flex; gap:8px;
+      overflow-x:auto;
+      padding-bottom:2px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .cardsRow::-webkit-scrollbar{height:6px}
+    .cardsRow::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12); border-radius:999px}
+    body.light .cardsRow::-webkit-scrollbar-thumb{background:rgba(0,0,0,.10)}
+
+    .card{
+      width:var(--cardW); height:var(--cardH);
+      border-radius:14px;
+      background:linear-gradient(180deg, rgba(247,248,251,.98), rgba(247,248,251,.88));
+      border:1px solid rgba(255,255,255,.55);
+      box-shadow: 0 12px 22px rgba(0,0,0,.16);
+      display:flex; flex-direction:column; justify-content:space-between;
+      padding:6px;
+      font-weight:1000;
+      color:#0b1a33;
+      flex:0 0 auto;
+    }
+    .card.small{width:var(--cardW_small); height:var(--cardH_small); border-radius:12px; padding:5px}
+    .card.red{color:#b11226}
+    .card .smallTxt{font-size:11px; display:flex; justify-content:space-between; align-items:center;}
+    .card.small .smallTxt{font-size:10px}
+    .card .bigTxt{font-size:20px; display:flex; justify-content:center; align-items:center; opacity:.92;}
+    .card.small .bigTxt{font-size:16px}
+    .card.back{
+      background:linear-gradient(180deg, rgba(106,169,255,.42), rgba(106,169,255,.18));
+      border-color:rgba(106,169,255,.55);
+      color:rgba(255,255,255,.95);
+    }
+    .card.dealIn{ animation: dealIn .28s ease-out both; }
+    @keyframes dealIn{
+      from{ transform: translateY(-10px) scale(.96); opacity:0; filter: blur(1px); }
+      to{ transform: translateY(0) scale(1); opacity:1; filter: blur(0); }
+    }
+    .card.flipIn{ animation: flipIn .42s ease-out both; transform-style:preserve-3d; }
+    @keyframes flipIn{
+      0%{ transform: rotateY(90deg); opacity:.2; }
+      60%{ transform: rotateY(-8deg); opacity:1; }
+      100%{ transform: rotateY(0deg); opacity:1; }
+    }
+
+    /* AI row (horizontal) */
+    .aiRow{
+      flex:1; min-height:0;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:8px;
+      align-content:start;
+    }
+    @media (max-width: 420px){
+      .aiRow{grid-template-columns: repeat(3, minmax(0,1fr));}
+    }
+    .aiCard{
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      padding:8px;
+      display:flex; flex-direction:column; gap:6px;
+      min-width:0;
+    }
+    body.light .aiCard{background:rgba(0,0,0,.03); border-color:rgba(0,0,0,.10)}
+    .aiCard.active{
+      border-color:rgba(106,169,255,.70);
+      box-shadow: 0 0 0 2px rgba(106,169,255,.12);
+    }
+    .aiTop{
+      display:flex; align-items:center; justify-content:space-between; gap:6px;
+      min-width:0;
+    }
+    .aiTopLeft{display:flex; align-items:center; gap:6px; min-width:0;}
+    .aiAvatar{width:30px;height:30px;border-radius:12px;font-size:16px}
+    .aiName{font-weight:1000; font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .aiChips{font-size:11px; color:var(--muted); white-space:nowrap;}
+    .aiBadges{display:flex; gap:4px; flex-wrap:wrap; justify-content:flex-end;}
+    .aiBadge{font-size:10px; padding:2px 6px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06)}
+    body.light .aiBadge{background:rgba(0,0,0,.03); border-color:rgba(0,0,0,.10)}
+    .aiCards{display:flex; gap:6px; overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:1px;}
+    .aiCards::-webkit-scrollbar{height:5px}
+    .aiCards::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12); border-radius:999px}
+    body.light .aiCards::-webkit-scrollbar-thumb{background:rgba(0,0,0,.10)}
+
+    /* ===== Message bar + drawer ===== */
+    .msgBar{
+      position:fixed;
+      left:calc(10px + var(--safeLeft));
+      right:calc(10px + var(--safeRight));
+      bottom:calc(var(--ctrlH) + 10px + var(--safeBottom));
+      z-index:60;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.28);
+      padding:10px 12px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      max-width:980px;
+      margin:0 auto;
+      cursor:pointer;
+      user-select:none;
+    }
+    body.light .msgBar{background:rgba(255,255,255,.82); border-color:rgba(0,0,0,.10)}
+    .msgBarText{
+      font-size:12px;
+      color:var(--text);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      min-width:0;
+      opacity:.95;
+    }
+    .msgBarHint{font-size:12px; color:var(--muted); white-space:nowrap; flex:0 0 auto;}
+
+    .drawerOverlay{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.55);
+      display:none;
+      z-index:120;
+      align-items:flex-end;
+      justify-content:center;
+      padding:0 10px calc(10px + var(--safeBottom)) 10px;
+    }
+    .drawerOverlay.show{display:flex}
+    .drawer{
+      width:min(980px, 100%);
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(16,31,58,.94), rgba(16,31,58,.86));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      max-height:min(60vh, 520px);
+      display:flex;
+      flex-direction:column;
+    }
+    body.light .drawer{background:rgba(255,255,255,.90); border-color:rgba(0,0,0,.10)}
+    .drawerHead{
+      padding:10px 12px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    body.light .drawerHead{border-bottom:1px solid rgba(0,0,0,.10)}
+    .drawerTitle{font-weight:1000; font-size:14px}
+    .drawerClose{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      border-radius:999px;
+      padding:8px 10px;
+      cursor:pointer;
+      user-select:none;
+    }
+    body.light .drawerClose{background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.10)}
+    .drawerList{
+      padding:10px 12px;
+      overflow:auto;
+      -webkit-overflow-scrolling:touch;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .logRow{display:flex; gap:8px; align-items:flex-start; font-size:12px; line-height:1.35}
+    .logT{color:var(--muted); min-width:46px; text-align:right; flex:0 0 auto}
+    .logC{flex:1 1 auto}
+
+    /* ===== Controls (mobile game) ===== */
+    .controls{
+      position:fixed;
+      left:calc(10px + var(--safeLeft));
+      right:calc(10px + var(--safeRight));
+      bottom:calc(10px + var(--safeBottom));
+      z-index:70;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.12));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      padding:10px;
+      max-width:980px;
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    body.light .controls{background:rgba(255,255,255,.82); border-color:rgba(0,0,0,.10)}
+
+    .ctrlTop{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      min-width:0;
+    }
+    .ctrlTop .smallHint{
+      font-size:12px; color:var(--muted);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      min-width:0;
+    }
+    .ctrlTopBtns{display:flex; gap:6px; flex:0 0 auto;}
+    .sbtn{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:16px;
+      font-size:13px;
+      font-weight:900;
+      cursor:pointer;
+      user-select:none;
+      touch-action:manipulation;
+    }
+    body.light .sbtn{background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.10)}
+    .sbtn:active{transform:translateY(1px)}
+    .sbtn:disabled{opacity:.45; cursor:not-allowed; transform:none}
+
+    .mainBtns{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .mbtn{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      border-radius:18px;
+      padding:16px 12px;
+      font-size:17px;
+      font-weight:1000;
+      cursor:pointer;
+      user-select:none;
+      touch-action:manipulation;
+    }
+    body.light .mbtn{background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.10)}
+    .mbtn.primary{background:linear-gradient(180deg, rgba(106,169,255,.40), rgba(106,169,255,.18)); border-color:rgba(106,169,255,.55);}
+    .mbtn:active{transform:translateY(1px)}
+    .mbtn:disabled{opacity:.45; cursor:not-allowed; transform:none}
+
+    /* ===== Menu (same as previous, but mobile friendly) ===== */
+    .overlay{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.55);
+      display:none;
+      z-index:150;
+      align-items:center;
+      justify-content:center;
+      padding:14px;
+    }
+    .overlay.show{display:flex}
+    .panel{
+      width:min(920px, 100%);
+      border-radius:22px;
+      background:linear-gradient(180deg, rgba(16,31,58,.94), rgba(16,31,58,.84));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:var(--shadow);
+      padding:14px;
+      max-height: calc(100vh - 28px);
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    body.light .panel{background:rgba(255,255,255,.90); border-color:rgba(0,0,0,.10)}
+    .panel h2{margin:0; font-size:16px; font-weight:1000}
+    .panel p{margin:0; font-size:13px; color:var(--muted); line-height:1.5}
+
+    .homeGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+    @media (min-width: 860px){
+      .homeGrid{grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);}
+    }
+
+    .slotList{display:flex; flex-direction:column; gap:10px;}
+    .slotBtn{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18);
+      padding:12px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      cursor:pointer;
+      user-select:none;
+      box-shadow: 0 12px 26px rgba(0,0,0,.22);
+    }
+    body.light .slotBtn{background:rgba(0,0,0,.03); border-color:rgba(0,0,0,.10)}
+    .slotBtn.active{
+      border-color:rgba(106,169,255,.70);
+      box-shadow: 0 0 0 2px rgba(106,169,255,.12), 0 18px 35px rgba(0,0,0,.30);
+    }
+    .slotIcon{
+      width:44px;height:44px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+      display:flex; align-items:center; justify-content:center;
+      font-size:20px;
+      flex:0 0 auto;
+    }
+    body.light .slotIcon{background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.10)}
+    .slotMain{min-width:0; display:flex; flex-direction:column; gap:6px; flex:1 1 auto;}
+    .slotTitle{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+    .slotName{font-weight:1000; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+    .slotMeta{display:flex; gap:6px; flex-wrap:wrap; align-items:center; color:var(--muted); font-size:12px;}
+
+    .field{display:flex; flex-direction:column; gap:6px;}
+    .field label{font-size:12px; color:var(--muted)}
+    .field input, .field select{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:12px 10px;
+      border-radius:14px;
+      font-size:14px;
+      outline:none;
+    }
+    body.light .field input, body.light .field select{background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.10); color:var(--text)}
+    .field input:focus, .field select:focus{
+      border-color:rgba(106,169,255,.55);
+      box-shadow:0 0 0 2px rgba(106,169,255,.12);
+    }
+    .field select option{background:#0f213f; color:#eaf1ff;}
+    body.light .field select option{background:#ffffff; color:#0b1730;}
+    .row{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; align-items:center;}
+    .hr{height:1px; background:rgba(255,255,255,.10)}
+    body.light .hr{background:rgba(0,0,0,.10)}
+    .btn{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:12px 12px;
+      border-radius:16px;
+      font-size:14px;
+      font-weight:1000;
+      cursor:pointer;
+      user-select:none;
+      touch-action:manipulation;
+    }
+    body.light .btn{background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.10)}
+    .btn.good{border-color:rgba(66,211,146,.55)}
+    .btn.bad{border-color:rgba(255,107,107,.55)}
+    .btn:active{transform:translateY(1px)}
+    .btn:disabled{opacity:.45; cursor:not-allowed; transform:none}
+
+    .resultBox{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18);
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    body.light .resultBox{background:rgba(0,0,0,.03); border-color:rgba(0,0,0,.10)}
+    .resultTitle{font-weight:1000; font-size:16px;}
+    .resultDesc{font-size:13px; color:var(--muted); line-height:1.5;}
+  
+    /* packed cards for small areas (dealer/AI) */
+    .cardsRow.packed{gap:4px}
+    .cardsRow.packed .card{margin-left:-16px}
+    .cardsRow.packed .card:first-child{margin-left:0}
+    @media (max-width: 420px){
+      .cardsRow.packed .card{margin-left:-18px}
+    }
+
+  
+    /* packed overlap style (for dealer & AI hands on mobile) */
+    .cardsRow.packed{gap:0}
+    .cardsRow.packed .card{margin-left:-22px}
+    .cardsRow.packed .card:first-child{margin-left:0}
+    .aiCards.packed{gap:0}
+    .aiCards.packed .card{margin-left:-16px}
+    .aiCards.packed .card:first-child{margin-left:0}
+    @media (max-width: 420px){
+      .cardsRow.packed .card{margin-left:-24px}
+      .aiCards.packed .card{margin-left:-18px}
+    }
+
+  
+    .betPanel{display:none; flex-direction:column; gap:8px; padding:10px; border-top:1px solid rgba(255,255,255,.10);}
+    .betRow{display:flex; flex-wrap:wrap; align-items:center; gap:8px; justify-content:space-between;}
+    .betLabel{font-weight:1000; font-size:13px; opacity:.9}
+    .betValue{font-weight:1100; font-size:18px; padding:4px 10px; border-radius:999px; background:rgba(255,255,255,.08); min-width:64px; text-align:center;}
+    .chipRow{display:flex; gap:8px; overflow-x:auto; padding-bottom:2px;}
+    .chip{border:1px solid rgba(255,255,255,.20); background:rgba(255,255,255,.08); color:var(--txt); border-radius:999px; padding:8px 12px; font-weight:1000; min-width:56px;}
+    .chip:active{transform:scale(.98)}
+    body.light .chip{border-color:rgba(0,0,0,.12); background:rgba(0,0,0,.05);}
+
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- HUD single row -->
+    <div class="hud">
+      <div class="hudLeft">
+        <div class="hudTitle">Blackjack</div>
+        <div class="hudStatus" id="statusLine">—</div>
+      </div>
+      <div class="hudRight">
+        <div class="pill" id="pillChips">籌碼 -</div>
+        <div class="pill" id="pillRound">局 -</div>
+        <button class="iconBtn" id="btnTheme" aria-label="亮暗"><span>◐</span></button>
+        <button class="iconBtn" id="btnMenu" aria-label="主選單"><span>☰</span></button>
+      </div>
+    </div>
+
+    <!-- 3-section arena -->
+    <div class="arena" id="arena">
+      <div class="section dealerArea" id="dealerSection"></div>
+      <div class="section aiArea" id="aiSection">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+          <div style="font-weight:1000;font-size:13px">AI</div>
+          <div class="badge" id="pillDealer">莊家 -</div>
+        </div>
+        <div class="aiRow" id="aiRow" aria-label="AI 區"></div>
+      </div>
+      <div class="section playerArea" id="playerSection"></div>
+    </div>
+  </div>
+
+  <!-- message bar -->
+  <div class="msgBar" id="msgBar" aria-label="訊息（點擊展開）">
+    <div class="msgBarText" id="msgBarText">—</div>
+    <div class="msgBarHint">點擊查看</div>
+  </div>
+
+  <!-- message drawer -->
+  <div class="drawerOverlay" id="drawerOverlay" aria-hidden="true">
+    <div class="drawer">
+      <div class="drawerHead">
+        <div class="drawerTitle">本局訊息</div>
+        <div class="drawerClose" id="drawerClose">關閉</div>
+      </div>
+      <div class="drawerList" id="drawerList"></div>
+    </div>
+  </div>
+
+  <!-- controls -->
+  <div class="controls" id="controls">
+    <div class="ctrlTop">
+      <div class="smallHint" id="handHint">在你的回合按 Hit / Stand</div>
+      <div class="ctrlTopBtns">
+        <button class="sbtn" id="btnHint">提示</button>
+        <button class="sbtn" id="btnNext">下一局</button>
+      </div>
+    </div>
+
+    <div class="betPanel" id="betPanel">
+      <div class="betRow">
+        <div class="betLabel">下注</div>
+        <div class="betValue"><span id="betValue">0</span></div>
+        <button class="sbtn" id="btnBetClear">清除</button>
+        <button class="sbtn" id="btnBetHalf">一半</button>
+        <button class="sbtn" id="btnBetAll">全下</button>
+        <button class="sbtn" id="btnBetConfirm">確認並發牌</button>
+      </div>
+      <div class="chipRow" id="chipRow">
+        <button class="chip" data-chip="5">5</button>
+        <button class="chip" data-chip="10">10</button>
+        <button class="chip" data-chip="25">25</button>
+        <button class="chip" data-chip="50">50</button>
+        <button class="chip" data-chip="100">100</button>
+      </div>
+      <div class="smallHint" id="betHint">提示：只有在新一局開始時可下注，確認後才會發牌</div>
+    </div>
+
+    <div class="mainBtns">
+      <button class="mbtn primary" id="btnHit">Hit（要牌）</button>
+      <button class="mbtn" id="btnStand">Stand（停牌）</button>
+    </div>
+  </div>
+
+  <!-- Menu overlay -->
+  <div class="overlay" id="menu">
+    <div class="panel">
+      <h2>主選單</h2>
+      <p id="menuDesc">選擇存檔槽位後按「載入」或「開新局」。開新局會依設定產生新陪玩 AI（1~3）並重置 AI 籌碼；玩家籌碼只在「過關」或「失敗」後重置。</p>
+
+      <div class="hr"></div>
+
+      <div class="homeGrid">
+        <div class="slotList" id="slotList"></div>
+
+        <div class="slotDetail">
+          <div class="field">
+            <label for="playerName">玩家名稱（此槽位）</label>
+            <input id="playerName" maxlength="16" placeholder="例如：宇辰" />
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px">
+            <div class="field">
+              <label for="aiCount">AI 陪玩數量（1~3）</label>
+              <select id="aiCount">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="difficulty">AI 難度（此槽位）</label>
+              <select id="difficulty">
+                <option value="easy">簡單</option>
+                <option value="normal">普通</option>
+                <option value="hard">困難</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px">
+            <div class="field">
+              <label for="startChips">起始籌碼（新局）</label>
+              <select id="startChips">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="150">150</option>
+                <option value="200">200</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="naturalBJ">自然 21（兩張 21）</label>
+              <select id="naturalBJ">
+                <option value="on">直接勝利（Push 例外）</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="hr" style="margin-top:12px"></div>
+
+          <p id="slotSummary" style="margin:0;font-size:13px;color:var(--muted);line-height:1.6"></p>
+
+          <div class="row" style="margin-top:10px">
+            <button class="btn" id="btnCloseMenu">關閉</button>
+            <button class="btn" id="btnLoad">載入</button>
+            <button class="btn good" id="btnNew">開新局</button>
+            <button class="btn bad" id="btnResetSlot">重置此槽位</button>
+          </div>
+
+          <p style="font-size:12px;color:var(--muted);margin:0">
+            規則摘要：輪流做莊家（每局換一位）；A 只有在兩張牌時算 11，超過兩張一律算 1；兩張 21 視為自然 21 直接勝（若莊家也自然 21 則 Push）。
+          </p>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="resultBox" id="resultBox" style="display:none">
+        <div class="resultTitle" id="resultTitle">—</div>
+        <div class="resultDesc" id="resultDesc">—</div>
+        <div class="row">
+          <button class="btn good" id="btnResultNext">開始下一段</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+(() => {
+  "use strict";
+
+  const LS_BASE = "bj_campaign_mobile_slot_";
+  const SLOT_COUNT = 3;
+
+  const SUITS = [
+    { key:"C", sym:"♣", color:"black" },
+    { key:"D", sym:"♦", color:"red"   },
+    { key:"H", sym:"♥", color:"red"   },
+    { key:"S", sym:"♠", color:"black" }
+  ];
+  const RANKS = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+
+  const NAME_POOL = [
+    "子豪","宇辰","俊傑","冠宇","柏翰","承翰","志豪","家豪","家瑋","建宏","哲瑋","哲銘","浩然","浩宇","柏宇","彥廷","彥宏","文傑","文豪",
+    "承恩","承澤","承昊","偉哲","偉倫","煜城","梓軒","昱辰","昱廷","曜廷","宥翔","宥廷","宥辰","品丞","品皓","品宇",
+    "雅雯","雅婷","怡君","怡婷","怡萱","婉婷","詩涵","詩雅","子晴","子瑜","子涵","思妤","思穎","佳穎","佳蓉","佩珊","佩琪","品妍",
+    "Harper","Avery","Riley","Morgan","Jordan","Taylor","Cameron","Casey","Quinn","Skyler","Parker","Reese","Rowan","Hayden","Blake"
+  ];
+  const EMOJI_POOL = ["😎","😤","🤖","🐯","🦊","🦁","🐼","🦉","👾","🧠","🦈","🐲","🦖","😈","🥶","😺","🧑‍🚀","🕵️","🦾","🫠"];
+
+  const DIFFICULTY = {
+    easy:   { hitBelow: 15 },
+    normal: { hitBelow: 17 },
+    hard:   { hitBelow: 18 }
+  };
+
+  const $ = (id)=>document.getElementById(id);
+
+  // HUD
+  const elStatusLine = $("statusLine");
+  const elPillChips  = $("pillChips");
+  const elPillRound  = $("pillRound");
+  const elPillDealer = $("pillDealer");
+  const btnTheme = $("btnTheme");
+  const btnMenu  = $("btnMenu");
+
+  // Sections
+  const dealerSection = $("dealerSection");
+  const playerSection = $("playerSection");
+  const aiRow = $("aiRow");
+
+  // Msg
+  const msgBar = $("msgBar");
+  const msgBarText = $("msgBarText");
+  const drawerOverlay = $("drawerOverlay");
+  const drawerClose = $("drawerClose");
+  const drawerList = $("drawerList");
+
+  // Controls
+  const controls = $("controls");
+  const elHandHint = $("handHint");
+  const btnHint  = $("btnHint");
+  const btnNext  = $("btnNext");
+  const btnHit   = $("btnHit");
+  const btnStand = $("btnStand");
+
+  // Menu
+  const menu = $("menu");
+  const slotList = $("slotList");
+  const inputPlayerName = $("playerName");
+  const selAiCount = $("aiCount");
+  const selDifficulty = $("difficulty");
+  const selStartChips = $("startChips");
+  const selNaturalBJ = $("naturalBJ");
+  const elSlotSummary = $("slotSummary");
+
+  const btnCloseMenu = $("btnCloseMenu");
+  const btnLoad      = $("btnLoad");
+  const btnNew       = $("btnNew");
+  const btnResetSlot = $("btnResetSlot");
+
+  const resultBox = $("resultBox");
+  const resultTitle = $("resultTitle");
+  const resultDesc = $("resultDesc");
+  const btnResultNext = $("btnResultNext");
+
+  // Helpers
+  function nowISO(){ return new Date().toISOString(); }
+  function pad2(n){ return String(n).padStart(2,"0"); }
+  function stamp(){ const d=new Date(); return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`; }
+  function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
+  function deepClone(x){ return JSON.parse(JSON.stringify(x)); }
+
+  function suitObj(k){ return SUITS.find(s=>s.key===k); }
+  function isRedSuit(k){ return suitObj(k).color==="red"; }
+
+  function randName(exceptSet){
+    for(let t=0;t<120;t++){
+      const n = NAME_POOL[Math.floor(Math.random()*NAME_POOL.length)];
+      if(!exceptSet.has(n)) return n;
+    }
+    return "玩家";
+  }
+  function randEmoji(exceptSet){
+    for(let t=0;t<120;t++){
+      const e = EMOJI_POOL[Math.floor(Math.random()*EMOJI_POOL.length)];
+      if(!exceptSet.has(e)) return e;
+    }
+    return "🤖";
+  }
+
+  // Storage
+  function slotKey(slotId){ return `${LS_BASE}${slotId}`; }
+
+  function defaultSlotSave(){
+    return {
+      meta:{ version:1, updatedAt: nowISO() },
+      settings:{
+        theme:"dark",
+        difficulty:"normal",
+        startChips:100,
+        aiCount:2,
+        naturalBJ:true
+      },
+      profile:{
+        playerName:"你",
+        chips: 100,
+        rounds: 0,
+        wins: 0,
+        losses: 0,
+        pushes: 0,
+        lastResult: null
+      },
+      ai:{
+        names:["AI-1","AI-2","AI-3"],
+        emojis:["😎","🤖","😤"]
+      },
+      campaign:{
+        aiChips:[100,100,100],
+        aiAlive:[true,true,true],
+        dealerIndex:0
+      },
+      match:null
+    };
+  }
+
+  function loadSlot(slotId){
+    try{
+      const raw = localStorage.getItem(slotKey(slotId));
+      if(!raw) return defaultSlotSave();
+      const parsed = JSON.parse(raw);
+      if(!parsed || !parsed.settings || !parsed.profile || !parsed.ai) return defaultSlotSave();
+
+      parsed.meta = parsed.meta || {version:1, updatedAt: nowISO()};
+      parsed.settings.theme = parsed.settings.theme || "dark";
+      parsed.settings.difficulty = parsed.settings.difficulty || "normal";
+      parsed.settings.startChips = Number(parsed.settings.startChips || 100);
+      parsed.settings.aiCount = Math.max(1, Math.min(3, Number(parsed.settings.aiCount || 2)));
+      parsed.settings.naturalBJ = (parsed.settings.naturalBJ !== false);
+
+      parsed.profile.playerName = parsed.profile.playerName || "你";
+      if(typeof parsed.profile.chips !== "number") parsed.profile.chips = parsed.settings.startChips;
+      parsed.profile.rounds = Number(parsed.profile.rounds || 0);
+      parsed.profile.wins = Number(parsed.profile.wins || 0);
+      parsed.profile.losses = Number(parsed.profile.losses || 0);
+      parsed.profile.pushes = Number(parsed.profile.pushes || 0);
+
+      parsed.ai.names = parsed.ai.names || ["AI-1","AI-2","AI-3"];
+      parsed.ai.emojis = parsed.ai.emojis || ["😎","🤖","😤"];
+
+      parsed.campaign = parsed.campaign || {};
+      if(!Array.isArray(parsed.campaign.aiChips)) parsed.campaign.aiChips = [parsed.settings.startChips, parsed.settings.startChips, parsed.settings.startChips];
+      if(!Array.isArray(parsed.campaign.aiAlive)) parsed.campaign.aiAlive = [true,true,true];
+      if(typeof parsed.campaign.dealerIndex !== "number") parsed.campaign.dealerIndex = 0;
+
+      return parsed;
+    }catch{
+      return defaultSlotSave();
+    }
+  }
+
+  function saveSlot(slotId, saveObj){
+    saveObj.meta = saveObj.meta || {};
+    saveObj.meta.updatedAt = nowISO();
+    localStorage.setItem(slotKey(slotId), JSON.stringify(saveObj));
+  }
+
+  function rerollAI(saveObj){
+    const usedN = new Set([saveObj.profile.playerName || "你"]);
+    const usedE = new Set(["🙂"]);
+    const n1 = randName(usedN); usedN.add(n1);
+    const n2 = randName(usedN); usedN.add(n2);
+    const n3 = randName(usedN); usedN.add(n3);
+    const e1 = randEmoji(usedE); usedE.add(e1);
+    const e2 = randEmoji(usedE); usedE.add(e2);
+    const e3 = randEmoji(usedE); usedE.add(e3);
+    saveObj.ai.names  = [n1,n2,n3];
+    saveObj.ai.emojis = [e1,e2,e3];
+  }
+
+  function ensureAllSlots(){
+    for(let i=1;i<=SLOT_COUNT;i++){
+      const raw = localStorage.getItem(slotKey(i));
+      if(!raw){
+        const s = defaultSlotSave();
+        if(i===1) s.profile.playerName = "宇辰";
+        if(i===2) s.profile.playerName = "阿修";
+        if(i===3) s.profile.playerName = "你";
+        rerollAI(s);
+        saveSlot(i, s);
+      }
+    }
+  }
+
+  // Cards
+  function newDeck(){
+    const deck = [];
+    for(const r of RANKS){
+      for(const s of ["C","D","H","S"]) deck.push({ r, s });
+    }
+    return deck;
+  }
+  function shuffle(arr){
+    for(let i=arr.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]] = [arr[j],arr[i]];
+    }
+    return arr;
+  }
+
+  function cardValue(card){
+    if(card.r==="A") return 1;
+    if(card.r==="K" || card.r==="Q" || card.r==="J") return 10;
+    return Number(card.r);
+  }
+
+  function handTotal(hand){
+    // Proper blackjack total with soft-A handling (A = 1 or 11)
+    let total = 0;
+    let aces = 0;
+    for(const c of hand){
+      if(c.r==="A") aces++;
+      else total += cardValue(c);
+    }
+    // All aces as 1 first
+    total += aces;
+    // Upgrade some aces to 11 where beneficial
+    while(aces > 0 && total + 10 <= 21){
+      total += 10;
+      aces--;
+    }
+    return total;
+  }
+
+  function isNaturalBJ(hand){
+    if(hand.length !== 2) return false;
+    let hasA = false;
+    let hasTen = false;
+    for(const c of hand){
+      if(c.r==="A") hasA = true;
+      else if(c.r==="K" || c.r==="Q" || c.r==="J" || c.r==="10") hasTen = true;
+      else if(Number(c.r)===10) hasTen = true;
+    }
+    return hasA && hasTen && handTotal(hand)===21;
+  }
+
+  function isFiveCardCharlie(hand){
+    return (hand.length >= 5 && handTotal(hand) <= 21);
+  }
+
+  // Game state
+  let CURRENT_SLOT = 1;
+  let SELECTED_SLOT = 1; // currently selected slot in menu
+  let SAVE = null;
+  let MATCH = null;
+  let BUSY = false;
+
+  function activePlayerIds(players){ return players.filter(p=>p.alive).map(p=>p.id); }
+
+  function resolveDealerIdFromIndex(dealerIndex, players){
+    const act = activePlayerIds(players).sort((a,b)=>a-b);
+    if(!act.length) return 0;
+    const safe = Math.max(0, Math.min(act.length-1, Number(dealerIndex||0)));
+    return act[safe];
+  }
+
+
+  function advanceDealerIndexAfterRound(save, match){
+    // Rotate dealer among currently alive players (human + alive AI), in ascending id order.
+    const players = match.players;
+    const act = players.filter(p=>p.alive).map(p=>p.id).sort((a,b)=>a-b);
+    if(!act.length) return 0;
+    const curId = match.dealerId;
+    let curIdx = act.indexOf(curId);
+    if(curIdx === -1) curIdx = 0;
+    const nextIdx = (curIdx + 1) % act.length;
+    // dealerIndex is an index into the sorted active-id list
+    return nextIdx;
+  }
+
+  function buildPlayers(save){
+    const start = Number(save.settings.startChips || 100);
+    const aiCount = Math.max(1, Math.min(3, Number(save.settings.aiCount || 2)));
+    const players = [];
+
+    const pChips = (typeof save.profile.chips === "number") ? save.profile.chips : start;
+    players.push({
+      id:0, kind:"human", name: save.profile.playerName || "你", emoji:"🙂",
+      chips:pChips, alive:(pChips>0),
+      hand:[], stood:false, busted:false, blackjack:false,
+      isDealer:false
+    });
+
+    for(let i=1;i<=aiCount;i++){
+      const idx = i-1;
+      const chips = (typeof save.campaign.aiChips?.[idx] === "number") ? save.campaign.aiChips[idx] : start;
+      const alive = (save.campaign.aiAlive?.[idx] !== false) && (chips>0);
+      players.push({
+        id:i, kind:"ai",
+        name: save.ai.names[idx] || ("AI-"+i),
+        emoji: save.ai.emojis[idx] || "🤖",
+        chips, alive,
+        hand:[], stood:false, busted:false, blackjack:false,
+        isDealer:false
+      });
+    }
+    return players;
+  }
+
+  function newMatch(save){
+    const players = buildPlayers(save);
+    players[0].alive = players[0].chips > 0;
+    for(let i=1;i<players.length;i++) players[i].alive = players[i].alive && players[i].chips>0;
+
+    const dealerIndex = Math.max(0, Math.min(activePlayerIds(players).length-1, Number(save.campaign.dealerIndex||0)));
+    const dealerId = resolveDealerIdFromIndex(dealerIndex, players);
+
+    return {
+      id:"m_"+Math.random().toString(16).slice(2),
+      createdAt: nowISO(),
+      players,
+      round: Number(save.profile.rounds || 0) + 1,
+      phase:"paused",
+      turnId: 0,
+      dealerId,
+      dealerIndex,
+      deck: [],
+      revealDealer:false,
+      justRevealed:false,
+      log:[{ t: stamp(), c: "待機中：請從主選單載入或開新局" }],
+      result:null,
+      roundEnded:false
+    };
+  }
+
+  function persist(){
+    if(!SAVE || !MATCH) return;
+    SAVE.profile.chips = MATCH.players[0].chips;
+
+    const aiCount = SAVE.settings.aiCount;
+    for(let i=1;i<=aiCount;i++){
+      const aiIndex = i-1;
+      const p = MATCH.players[i];
+      if(!p) continue;
+      SAVE.campaign.aiChips[aiIndex] = p.chips;
+      SAVE.campaign.aiAlive[aiIndex] = p.alive;
+    }
+
+    SAVE.campaign.dealerIndex = MATCH.dealerIndex; // keep current dealer until 下一局 // advance dealer on 下一局 // keep current dealer until user presses 下一局
+    SAVE.profile.rounds = MATCH.round;
+    SAVE.match = deepClone(MATCH);
+    saveSlot(CURRENT_SLOT, SAVE);
+  }
+
+  function logMsg(text){
+    MATCH.log = MATCH.log || [];
+    MATCH.log.push({ t: stamp(), c: text });
+    if(MATCH.log.length > 16) MATCH.log.splice(0, MATCH.log.length - 16);
+  }
+
+  function seatChipClass(chips){
+    if(chips<=0) return "bad";
+    if(chips<=15) return "warn";
+    return "good";
+  }
+
+  function makeCardFace(card, opts={}){
+    const s = suitObj(card.s);
+    const div = document.createElement("div");
+    const extra = (card && card._new) ? " dealIn" : "";
+    const flip  = opts.flip ? " flipIn" : "";
+    div.className = "card" + (opts.small ? " small" : "") + (isRedSuit(card.s) ? " red" : "") + extra + flip;
+
+    const top = document.createElement("div");
+    top.className = "smallTxt";
+    top.innerHTML = `<span>${card.r}</span><span>${s.sym}</span>`;
+
+    const mid = document.createElement("div");
+    mid.className = "bigTxt";
+    mid.textContent = s.sym;
+
+    const bot = document.createElement("div");
+    bot.className = "smallTxt";
+    bot.innerHTML = `<span>${s.sym}</span><span>${card.r}</span>`;
+
+    div.appendChild(top); div.appendChild(mid); div.appendChild(bot);
+
+    if(card && card._new) card._new = false;
+    return div;
+  }
+
+  function makeCardBack(opts={}){
+    const div = document.createElement("div");
+    div.className = "card back" + (opts.small ? " small" : "");
+    const top = document.createElement("div");
+    top.className = "smallTxt";
+    top.innerHTML = `<span>★</span><span>★</span>`;
+    const mid = document.createElement("div");
+    mid.className = "bigTxt";
+    mid.textContent = "★";
+    const bot = document.createElement("div");
+    bot.className = "smallTxt";
+    bot.innerHTML = `<span>★</span><span>★</span>`;
+    div.appendChild(top); div.appendChild(mid); div.appendChild(bot);
+    return div;
+  }
+
+  function makeAreaSection(p, opts = {}){
+    const { active=false, titleLabel="", showCards=true, packed=false } = opts;
+
+    const isDealer = p.isDealer;
+    const showTotal = (!isDealer) || MATCH.revealDealer || MATCH.roundEnded || MATCH.phase==="settle";
+    const totalText = showTotal ? `${handTotal(p.hand)}` : "？";
+
+    const wrap = document.createElement("div");
+    wrap.className = "areaLabel";
+
+    const left = document.createElement("div");
+    left.className = "labelLeft";
+
+    const av = document.createElement("div");
+    av.className = "avatar";
+    av.textContent = p.emoji || (p.id===0 ? "🙂" : "🤖");
+
+    const nameBlock = document.createElement("div");
+    nameBlock.className = "nameBlock";
+
+    const who = document.createElement("div");
+    who.className = "who";
+    who.textContent = `${p.name}${p.alive ? "" : "（出局）"}`;
+
+    const meta = document.createElement("div");
+    meta.className = "metaLine";
+    meta.textContent = titleLabel;
+
+    nameBlock.appendChild(who);
+    nameBlock.appendChild(meta);
+
+    left.appendChild(av);
+    left.appendChild(nameBlock);
+
+    const badges = document.createElement("div");
+    badges.className = "badges";
+
+    const role = document.createElement("div");
+    role.className = "badge " + (isDealer ? "dealer" : "");
+    role.textContent = isDealer ? "DEALER" : (p.kind==="ai" ? "AI" : "PLAYER");
+
+    const chips = document.createElement("div");
+    chips.className = "badge " + seatChipClass(p.chips);
+    chips.textContent = `籌碼 ${p.chips}`;
+
+    const state = document.createElement("div");
+    state.className = "badge";
+    let st = "—";
+    if(!p.alive) st="OUT";
+    else if(p.blackjack) st="BJ";
+    else if(p.busted) st="BUST";
+    else if(p.stood) st="STAND";
+    state.textContent = st;
+
+    const pts = document.createElement("div");
+    pts.className = "badge";
+    pts.textContent = `點數 ${totalText}`;
+
+    badges.appendChild(role);
+    badges.appendChild(state);
+    badges.appendChild(pts);
+    badges.appendChild(chips);
+
+    wrap.appendChild(left);
+    wrap.appendChild(badges);
+
+    const cards = document.createElement("div");
+    cards.className = "cardsRow" + (packed ? " packed" : "");
+
+    if(showCards){
+      // Dealer hidden card logic
+      if(isDealer && p.id!==0 && p.hand.length>=2 && !MATCH.revealDealer && !MATCH.roundEnded){
+        cards.appendChild(makeCardFace(p.hand[0]));
+        cards.appendChild(makeCardBack());
+        for(let i=2;i<p.hand.length;i++) cards.appendChild(makeCardBack());
+      }else{
+        for(let i=0;i<p.hand.length;i++){
+          const c = p.hand[i];
+          const flip = (isDealer && i===1 && MATCH.justRevealed);
+          cards.appendChild(makeCardFace(c, {flip}));
+        }
+        MATCH.justRevealed = false;
+      }
+    }
+
+    return { head: wrap, cards };
+  }
+
+  function makeAiCard(p, {active=false}={}){
+    const showTotal = false; // AI total not critical; keep minimal
+    const wrap = document.createElement("div");
+    wrap.className = "aiCard" + (active ? " active" : "");
+
+    const top = document.createElement("div");
+    top.className = "aiTop";
+
+    const left = document.createElement("div");
+    left.className = "aiTopLeft";
+
+    const av = document.createElement("div");
+    av.className = "avatar aiAvatar";
+    av.textContent = p.emoji || "🤖";
+
+    const nm = document.createElement("div");
+    nm.className = "aiName";
+    nm.textContent = p.name;
+
+    left.appendChild(av);
+    left.appendChild(nm);
+
+    const right = document.createElement("div");
+    right.className = "aiChips";
+    right.textContent = `籌碼 ${p.chips}`;
+
+    top.appendChild(left);
+    top.appendChild(right);
+
+    const badges = document.createElement("div");
+    badges.className = "aiBadges";
+
+    const bRole = document.createElement("div");
+    bRole.className = "aiBadge";
+    bRole.textContent = p.isDealer ? "DEALER" : "AI";
+
+    const bState = document.createElement("div");
+    bState.className = "aiBadge";
+    let st="—";
+    if(!p.alive) st="OUT";
+    else if(p.blackjack) st="BJ";
+    else if(p.busted) st="BUST";
+    else if(p.stood) st="STAND";
+    bState.textContent = st;
+
+    badges.appendChild(bRole);
+    badges.appendChild(bState);
+
+    const cards = document.createElement("div");
+    cards.className = "aiCards packed";
+
+    if(p.isDealer && p.hand.length>=2 && !MATCH.revealDealer && !MATCH.roundEnded){
+      cards.appendChild(makeCardFace(p.hand[0], {small:true}));
+      cards.appendChild(makeCardBack({small:true}));
+      for(let i=2;i<p.hand.length;i++) cards.appendChild(makeCardBack({small:true}));
+    }else{
+      for(let i=0;i<p.hand.length;i++){
+        const c = p.hand[i];
+        const flip = (p.isDealer && i===1 && MATCH.justRevealed);
+        cards.appendChild(makeCardFace(c, {small:true, flip}));
+      }
+      MATCH.justRevealed = false;
+    }
+
+    wrap.appendChild(top);
+    wrap.appendChild(badges);
+    wrap.appendChild(cards);
+
+    return wrap;
+  }
+
+  function renderLogs(){
+    drawerList.innerHTML = "";
+    const logs = MATCH?.log || [];
+    for(const m of logs){
+      const row = document.createElement("div");
+      row.className = "logRow";
+      const t = document.createElement("div");
+      t.className = "logT";
+      t.textContent = m.t;
+      const c = document.createElement("div");
+      c.className = "logC";
+      c.textContent = m.c;
+      row.appendChild(t);
+      row.appendChild(c);
+      drawerList.appendChild(row);
+    }
+    drawerList.scrollTop = drawerList.scrollHeight;
+
+    const last = logs[logs.length-1];
+    msgBarText.textContent = last ? `${last.t}  ${last.c}` : "—";
+  }
+
+  function renderBoard(){
+    dealerSection.innerHTML = "";
+    playerSection.innerHTML = "";
+    aiRow.innerHTML = "";
+
+    if(!MATCH) return;
+
+    const dealer = MATCH.players.find(p=>p.id===MATCH.dealerId);
+    const human = MATCH.players[0];
+
+    const isActive = (p)=>{
+      return (MATCH.phase==="turns" && MATCH.turnId===p.id) || (MATCH.phase==="dealer" && p.id===MATCH.dealerId);
+    };
+
+    // Dealer section (top)
+    if(dealer){
+      dealerSection.classList.toggle("active", isActive(dealer));
+      const {head, cards} = makeAreaSection(dealer, {
+        active:isActive(dealer),
+        titleLabel: "莊家",
+        packed: (dealer.id!==0),
+        showCards: (dealer.id!==0) // if player is dealer, show via player section
+      });
+
+      dealerSection.appendChild(head);
+
+      if(dealer.id===0){
+        const note = document.createElement("div");
+        note.className = "metaLine";
+        note.style.marginTop = "6px";
+        note.textContent = "你本局為莊家：莊家手牌顯示在下方玩家區。";
+        dealerSection.appendChild(note);
+      }else{
+        dealerSection.appendChild(cards);
+      }
+    }
+
+    // AI row (middle): show all AI (alive and out) up to aiCount
+    const aiCount = SAVE.settings.aiCount;
+    for(let i=1;i<=aiCount;i++){
+      const p = MATCH.players[i];
+      if(!p){
+        const placeholder = document.createElement("div");
+        placeholder.className = "aiCard";
+        placeholder.style.opacity = ".6";
+        placeholder.textContent = "—";
+        aiRow.appendChild(placeholder);
+        continue;
+      }
+      const card = makeAiCard(p, {active:isActive(p)});
+      aiRow.appendChild(card);
+    }
+    // fill empty slots to keep 3 columns stable
+    for(let k=aiCount;k<3;k++){
+      const ghost = document.createElement("div");
+      ghost.className = "aiCard";
+      ghost.style.opacity = ".35";
+      ghost.innerHTML = `<div style="font-size:12px;color:var(--muted)">（空位）</div>`;
+      aiRow.appendChild(ghost);
+    }
+
+    // Player section (bottom): always show player's cards
+    if(human){
+      playerSection.classList.toggle("active", isActive(human));
+      const titleLabel = (human.id===MATCH.dealerId) ? "你（莊家）" : "你（玩家）";
+      const {head, cards} = makeAreaSection(human, {active:isActive(human), titleLabel, packed:false, showCards:true});
+      playerSection.appendChild(head);
+      playerSection.appendChild(cards);
+    }
+
+    renderLogs();
+  }
+
+  function phaseLabel(phase){
+    if(phase==="paused") return "待機";
+    if(phase==="dealing") return "發牌";
+    if(phase==="turns") return "行動";
+    if(phase==="dealer") return "莊家";
+    if(phase==="settle") return "結算";
+    return phase;
+  }
+  function resultLabel(r){
+    if(r==="victory") return "過關";
+    if(r==="failure") return "失敗";
+    if(r==="continue") return "繼續";
+    return "—";
+  }
+
+  function updateTopUI(){
+    if(!SAVE || !MATCH) return;
+    const human = MATCH.players[0];
+    elPillChips.textContent = `籌碼 ${human.chips}`;
+    elPillRound.textContent = `局 ${MATCH.round}`;
+    const dealer = MATCH.players.find(p=>p.id===MATCH.dealerId);
+    elPillDealer.textContent = `莊家 ${dealer ? dealer.name : "-"}`;
+
+    const turnP = MATCH.players.find(p=>p.id===MATCH.turnId);
+    if(MATCH.phase==="turns" && turnP){
+      elStatusLine.textContent = `回合：${turnP.name}${turnP.id===0 ? "（你）" : "（AI）"}`;
+    }else if(MATCH.phase==="dealer" && dealer){
+      elStatusLine.textContent = `莊家補牌：${dealer.name}`;
+    }else if(MATCH.phase==="settle"){
+      elStatusLine.textContent = `結算完成：${resultLabel(MATCH.result)}`;
+    }else{
+      elStatusLine.textContent = `狀態：${phaseLabel(MATCH.phase)}`;
+    }
+  }
+
+  function syncHeights(){
+    const h = controls.getBoundingClientRect().height;
+    document.documentElement.style.setProperty("--ctrlH", Math.round(h) + "px");
+  }
+
+  function updateControls(){
+    const canAct = (MATCH && MATCH.phase==="turns" && MATCH.turnId===0 && !BUSY);
+    btnHit.disabled = !canAct;
+    btnStand.disabled = !canAct;
+
+    btnNext.disabled = !(MATCH && MATCH.roundEnded && !BUSY);
+    btnHint.disabled = BUSY;
+
+    if(!MATCH){
+      elHandHint.textContent = "請從主選單開始";
+      return;
+    }
+    if(MATCH.phase==="turns" && MATCH.turnId===0){
+      elHandHint.textContent = "你的回合：Hit 要牌 / Stand 停牌";
+    }else if(MATCH.phase==="turns"){
+      elHandHint.textContent = "等待其他人行動…";
+    }else if(MATCH.phase==="dealer"){
+      elHandHint.textContent = "莊家補牌中…";
+    }else if(MATCH.phase==="settle"){
+      elHandHint.textContent = "本局結算完成，按「下一局」";
+    }else{
+      elHandHint.textContent = "準備開始";
+    }
+  }
+
+  function updateUI(){
+    // betting panel visibility
+    try{ showBetPanel(!!MATCH && (MATCH.phase==="bet") && !BET_LOCKED); }catch(e){}
+    syncHeights();
+    updateTopUI();
+    renderBoard();
+    updateControls();
+  }
+
+  // Game flow
+  function nextTurnFrom(currentId){
+    const act = activePlayerIds(MATCH.players).sort((a,b)=>a-b);
+    if(!act.length) return 0;
+    const dealerId = MATCH.dealerId;
+    const candidates = act.filter(id=>id!==dealerId);
+    if(!candidates.length) return dealerId;
+
+    if(currentId===-1) return candidates[0];
+    const idx = candidates.indexOf(currentId);
+    if(idx===-1) return candidates[0];
+    const next = candidates[idx+1];
+    return (next===undefined) ? dealerId : next;
+  }
+
+  function allNonDealersDone(){
+    const dealerId = MATCH.dealerId;
+    for(const p of MATCH.players){
+      if(!p.alive) continue;
+      if(p.id===dealerId) continue;
+      if(!(p.stood || p.busted)) return false;
+    }
+    return true;
+  }
+
+  async function dealRound(force=false){
+    if(BUSY && !force) return;
+    BUSY = true;
+
+    MATCH.phase = "dealing";
+    MATCH.revealDealer = (MATCH.dealerId===0);
+    MATCH.justRevealed = false;
+    MATCH.roundEnded = false;
+    MATCH.result = null;
+    MATCH.log = [{ t: stamp(), c: `開始第 ${MATCH.round} 局` }];
+
+    MATCH.deck = shuffle(newDeck());
+
+    for(const p of MATCH.players){
+      p.hand = [];
+      p.stood = false;
+      p.busted = false;
+      p.blackjack = false;
+      p.charlie = false;
+      p.isDealer = (p.id===MATCH.dealerId);
+    }
+
+    updateUI();
+    await sleep(120);
+
+    const actIds = activePlayerIds(MATCH.players).sort((a,b)=>a-b);
+
+    for(let k=0;k<2;k++){
+      for(const pid of actIds){
+        const p = MATCH.players.find(x=>x.id===pid);
+        const card = MATCH.deck.pop();
+        card._new = true;
+        p.hand.push(card);
+        updateUI();
+        await sleep(240);
+      }
+    }
+
+    const dealer = MATCH.players.find(p=>p.id===MATCH.dealerId);
+    const dealerBJ = isNaturalBJ(dealer.hand);
+    if(dealerBJ){
+      dealer.blackjack = true;
+      dealer.stood = true;
+    }
+    for(const pid of actIds){
+      const p = MATCH.players.find(x=>x.id===pid);
+      if(isNaturalBJ(p.hand)){
+        p.blackjack = true;
+        p.stood = true;
+      }
+    }
+
+    if(dealerBJ){
+      MATCH.revealDealer = true;
+      MATCH.justRevealed = true;
+      logMsg(`莊家 ${dealer.name} 自然 21！`);
+      updateUI();
+      await sleep(420);
+      settleRound();
+      BUSY = false;
+      return;
+    }
+
+    MATCH.phase = "turns";
+    MATCH.turnId = nextTurnFrom(-1);
+    logMsg("發牌完成，開始行動。");
+    updateUI();
+
+    BUSY = false;
+    pumpTurns();
+  }
+
+  async function pumpTurns(){
+    if(BUSY) return;
+    if(!MATCH || MATCH.phase!=="turns") return;
+
+    if(MATCH.turnId===MATCH.dealerId){
+      // Dealer acts only after all non-dealers have finished.
+      if(!allNonDealersDone()){
+        MATCH.turnId = nextTurnFrom(-1);
+        updateUI();
+        await sleep(80);
+        return pumpTurns();
+      }
+      // Human dealer: let human decide Hit/Stand.
+      if(MATCH.dealerId===0){
+        const dealer = MATCH.players.find(p=>p.id===MATCH.dealerId);
+        // If human is the dealer and already busted/stood, do NOT wait for input; settle immediately.
+        if(dealer && (dealer.busted || dealer.stood)){
+          MATCH.revealDealer = true;
+          settleRound();
+          updateUI();
+          return;
+        }
+        updateUI();
+        return;
+      }
+      MATCH.phase = "dealer";
+      updateUI();
+      await dealerPlay();
+      settleRound();
+      updateUI();
+      return;
+    }
+
+    const p = MATCH.players.find(x=>x.id===MATCH.turnId);
+    if(!p || !p.alive){
+
+      MATCH.turnId = nextTurnFrom(MATCH.turnId);
+      updateUI();
+      return pumpTurns();
+    }
+    // Skip players already resolved (e.g., natural 21 / five-card / stood / busted)
+    if(p.stood || p.busted || p.blackjack || p.charlie){
+      if(allNonDealersDone()) MATCH.turnId = MATCH.dealerId;
+      else MATCH.turnId = nextTurnFrom(p.id);
+      updateUI();
+      await sleep(80);
+      return pumpTurns();
+    }
+
+
+    if(p.blackjack){
+      logMsg(`${p.name} 自然 21（自動停牌）`);
+      p.stood = true;
+      MATCH.turnId = nextTurnFrom(p.id);
+      updateUI();
+      await sleep(220);
+      return pumpTurns();
+    }
+
+    if(p.kind==="ai"){
+      BUSY = true;
+      updateUI();
+      await sleep(320);
+      await aiPlay(p.id);
+      BUSY = false;
+
+      if(allNonDealersDone()) MATCH.turnId = MATCH.dealerId;
+      else MATCH.turnId = nextTurnFrom(p.id);
+
+      updateUI();
+      await sleep(160);
+      return pumpTurns();
+    }
+
+    updateUI(); // human turn
+  }
+
+  async function aiPlay(pid){
+    const p = MATCH.players.find(x=>x.id===pid);
+    if(!p || !p.alive || p.busted || p.stood) return;
+
+    const diff = DIFFICULTY[SAVE.settings.difficulty] || DIFFICULTY.normal;
+
+    let guard = 0;
+    while(guard++ < 12){
+      const total = handTotal(p.hand);
+      if(isFiveCardCharlie(p.hand)){
+        p.charlie = true;
+        p.stood = true;
+        logMsg(`${p.name} 過五關（5張不爆）直接勝利`);
+        updateUI();
+        await sleep(260);
+        return;
+      }
+      if(total>21){
+        p.busted = true;
+        p.stood = true;
+        logMsg(`${p.name} 爆牌（${total}）`);
+        updateUI();
+        await sleep(220);
+        return;
+      }
+      if(total < diff.hitBelow){
+        const card = MATCH.deck.pop();
+        card._new = true;
+        p.hand.push(card);
+        logMsg(`${p.name} 要牌`);
+        updateUI();
+        await sleep(460);
+        continue;
+      }
+      p.stood = true;
+      logMsg(`${p.name} 停牌（${total}）`);
+      updateUI();
+      await sleep(220);
+      return;
+    }
+    p.stood = true;
+  }
+
+  async function dealerPlay(){
+    const dealer = MATCH.players.find(p=>p.id===MATCH.dealerId);
+    if(!dealer || !dealer.alive) return;
+
+    // Reveal dealer hole card before dealer acts
+    MATCH.revealDealer = true;
+    updateUI();
+    await sleep(320);
+
+    // AI dealer uses the same difficulty threshold but must obey: total <= 11 cannot stand.
+    const diff = DIFFICULTY[SAVE.settings.difficulty] || DIFFICULTY.normal;
+    let guard = 0;
+
+    while(guard++ < 16){
+      const total = handTotal(dealer.hand);
+
+      if(isFiveCardCharlie(dealer.hand)){
+        dealer.charlie = true;
+        dealer.stood = true;
+        logMsg(`${dealer.name} 過五關（5張不爆）`);
+        updateUI();
+        await sleep(260);
+        return;
+      }
+
+      if(total > 21){
+        dealer.busted = true;
+        dealer.stood = true;
+        logMsg(`${dealer.name} 爆牌（${total}）`);
+        updateUI();
+        await sleep(260);
+        return;
+      }
+
+      // Dealer constraint (player-type dealer): <=11 must hit
+      if(total <= 11){
+        const card = MATCH.deck.pop();
+        card._new = true;
+        dealer.hand.push(card);
+        logMsg(`${dealer.name}（莊）要牌`);
+        updateUI();
+        await sleep(520);
+        continue;
+      }
+
+      // Otherwise follow a conservative AI policy
+      if(total < diff.hitBelow){
+        const card = MATCH.deck.pop();
+        card._new = true;
+        dealer.hand.push(card);
+        logMsg(`${dealer.name}（莊）要牌`);
+        updateUI();
+        await sleep(520);
+        continue;
+      }
+
+      dealer.stood = true;
+      logMsg(`${dealer.name}（莊）停牌（${total}）`);
+      updateUI();
+      await sleep(260);
+      return;
+    }
+    dealer.stood = true;
+  }
+
+  function showResult(title, desc){
+    // Use round overlay instead of forcing user back to main menu
+    showRoundOverlay(title, desc);
+  }
+
+  let endOverlay = null;
+  let endTitle = null;
+  let endDesc = null;
+  let endAnim = null;
+  let btnRestart = null;
+  let _restartBound = false;
+
+  // Bind restart button lazily (endOverlay DOM is after <script> in this single-file build)
+  function bindRestartOnce(){
+    if(_restartBound) return;
+    if(!btnRestart) return;
+    btnRestart.addEventListener("click", async ()=>{
+      if(BUSY) return;
+      BUSY = true;
+      // Reset CURRENT_SLOT save completely and start a new game (fresh record)
+      const startSave = defaultSlotSave();
+      startSave.profile.playerName = (inputPlayerName.value || loadSlot(CURRENT_SLOT).profile.playerName || "你").trim().slice(0,16) || "你";
+      // Apply current menu settings to new save
+      startSave.settings.aiCount = Math.max(1, Math.min(3, Number(selAiCount.value || 2)));
+      startSave.settings.difficulty = selDifficulty.value || "normal";
+      startSave.settings.startChips = Number(selStartChips.value || 100);
+      startSave.settings.naturalBJ = (selNaturalBJ.value !== "off");
+      startSave.settings.theme = (SAVE && SAVE.settings && SAVE.settings.theme) ? SAVE.settings.theme : "dark";
+      rerollAI(startSave);
+      const start = Number(startSave.settings.startChips || 100);
+      startSave.profile.chips = start;
+      startSave.campaign.aiChips = [start,start,start];
+      startSave.campaign.aiAlive = [true,true,true];
+      startSave.campaign.dealerIndex = 0;
+      saveSlot(CURRENT_SLOT, startSave);
+      SAVE = loadSlot(CURRENT_SLOT);
+      SAVE = normalizeForPlay(SAVE);
+      applyTheme(SAVE.settings.theme);
+      MATCH = newMatch(SAVE);
+      persist();
+      hideEndOverlay();
+      openMenu(false);
+      resetBetState();
+      MATCH.phase = "bet";
+      showBetPanel(true);
+      ensureBetDefaults();
+      updateUI();
+      persist();
+      BUSY = false;
+    }, { once: false });
+    _restartBound = true;
+  }
+
+  function showEndOverlay(kind, title, desc){
+    if(!endOverlay){ endOverlay = $("endOverlay"); endTitle = $("endTitle"); endDesc = $("endDesc"); endAnim = $("endAnim"); btnRestart = $("btnRestart"); bindRestartOnce(); }
+    if(!btnRestart) { btnRestart = $("btnRestart"); bindRestartOnce(); }
+    if(!endOverlay || !endTitle || !endDesc || !endAnim){
+      console.warn("End overlay DOM missing; falling back to menu result.");
+      showResult(title, desc);
+      return;
+    }
+    endTitle.textContent = title;
+    endDesc.textContent = desc;
+    endAnim.textContent = (kind==="victory") ? "🎉" : "💥";
+    endOverlay.style.display = "flex";
+  }
+  function hideEndOverlay(){
+    if(endOverlay) endOverlay.style.display = "none";
+  }
+
+  // Round settle overlay (always shown at end of each hand to avoid "一臉懵")
+  let roundOverlayEl = null;
+  let roundTitleEl = null;
+  let roundDescEl = null;
+  let btnRoundNext = null;
+
+  function ensureRoundOverlay(){
+    if(roundOverlayEl) return;
+    roundOverlayEl = document.createElement("div");
+    roundOverlayEl.id = "roundOverlay";
+    roundOverlayEl.style.cssText = [
+      "position:fixed","left:0","top:0","right:0","bottom:0",
+      "display:none","align-items:center","justify-content:center",
+      "background:rgba(0,0,0,.55)","z-index:9999","padding:16px"
+    ].join(";");
+    const card = document.createElement("div");
+    card.style.cssText = [
+      "width:min(520px, 100%)","border-radius:18px",
+      "background:rgba(10,20,24,.92)","border:1px solid rgba(255,255,255,.12)",
+      "box-shadow:0 20px 60px rgba(0,0,0,.45)","padding:16px"
+    ].join(";");
+    roundTitleEl = document.createElement("div");
+    roundTitleEl.style.cssText = "font-size:18px;font-weight:800;margin-bottom:8px;";
+    roundDescEl = document.createElement("div");
+    roundDescEl.style.cssText = "white-space:pre-wrap;line-height:1.45;opacity:.95;font-size:14px;margin-bottom:14px;";
+    btnRoundNext = document.createElement("button");
+    btnRoundNext.type = "button";
+    btnRoundNext.textContent = "下一局";
+    btnRoundNext.style.cssText = "width:100%;height:44px;border-radius:14px;border:0;font-weight:800;";
+    btnRoundNext.addEventListener("click", ()=>{
+      // reuse the same flow
+      startNextRound();
+    });
+    card.appendChild(roundTitleEl);
+    card.appendChild(roundDescEl);
+    card.appendChild(btnRoundNext);
+    roundOverlayEl.appendChild(card);
+    roundOverlayEl.addEventListener("click", (e)=>{ if(e.target===roundOverlayEl) hideRoundOverlay(); });
+    document.body.appendChild(roundOverlayEl);
+  }
+
+  function showRoundOverlay(title, desc){
+    ensureRoundOverlay();
+    roundTitleEl.textContent = title || "本局結算";
+    roundDescEl.textContent = desc || "";
+    roundOverlayEl.style.display = "flex";
+  }
+  function hideRoundOverlay(){
+    if(roundOverlayEl) roundOverlayEl.style.display = "none";
+  }
+  function hideResult(){ resultBox.style.display = "none"; }
+
+  function settleRound(){
+    MATCH.phase = "settle";
+    MATCH.roundEnded = true;
+
+    const dealer = MATCH.players.find(p=>p.id===MATCH.dealerId);
+    if(!dealer) return;
+
+    const dealerTotal = handTotal(dealer.hand);
+    const dealerBJ = !!dealer.blackjack;
+    const dealerCharlie = !!dealer.charlie;
+    const dealerBust = !!dealer.busted || dealerTotal>21;
+
+    const outcomes = new Map();
+
+    for(const p of MATCH.players){
+      if(!p.alive) continue;
+      if(p.id===dealer.id) continue;
+
+      const pt = handTotal(p.hand);
+      const pBJ = !!p.blackjack;
+      const pCharlie = !!p.charlie;
+      const pBust = !!p.busted || pt>21;
+
+      let outcome = "push";
+      let reason = "";
+
+      if(pBust){
+        outcome="lose"; reason="爆牌";
+      }else if(pCharlie){
+        outcome="win"; reason="過五關直接勝";
+      }else if(pBJ && dealerBJ){
+        outcome="push"; reason="雙方自然21";
+      }else if(pBJ){
+        outcome="win"; reason="自然21";
+      }else if(dealerCharlie){
+        outcome="lose"; reason="莊家過五關";
+      }else if(dealerBust){
+        outcome="win"; reason="莊家爆牌";
+      }else{
+        if(pt>dealerTotal){ outcome="win"; reason=`點數較大（${pt} > ${dealerTotal}）`; }
+        else if(pt<dealerTotal){ outcome="lose"; reason=`點數較小（${pt} < ${dealerTotal}）`; }
+        else { outcome="push"; reason=`點數相同（${pt}）`; }
+      }
+
+      outcomes.set(p.id, { outcome, reason });
+    }
+
+    // Apply wagering payouts (free betting)
+    const wagers = MATCH.wagers || {};
+    for(const p of MATCH.players){
+      if(!p.alive) continue;
+      if(p.id===dealer.id) continue;
+
+      const w = Math.max(0, Math.floor(wagers[p.id] ?? 0));
+      if(w<=0){ continue; }
+      const maxPay = Math.min(w, p.chips);
+      const maxDealerPay = Math.min(w, dealer.chips);
+      const { outcome } = outcomes.get(p.id) || { outcome: "push" };
+
+      if(outcome==="win"){
+        const pay = Math.max(0, maxDealerPay);
+        p.chips += pay;
+        dealer.chips = Math.max(0, dealer.chips - pay);
+      }else if(outcome==="lose"){
+        const pay = Math.max(0, maxPay);
+        p.chips = Math.max(0, p.chips - pay);
+        dealer.chips += pay;
+      }else{
+        // push: no change
+      }
+
+      if(p.chips<=0) p.alive = false;
+    }
+    if(dealer.chips<=0) dealer.alive = false;
+
+    // Log short results
+    for(const p of MATCH.players){
+      if(!p.alive) continue;
+      if(p.id===dealer.id) continue;
+      const r = outcomes.get(p.id);
+      if(r) logMsg(`${p.name}：${r.outcome.toUpperCase()}（${r.reason}）`);
+    }
+
+    // Determine stage result (campaign)
+    const human = MATCH.players[0];
+    const aiAlive = MATCH.players.filter(p=>p.kind==="ai" && p.alive);
+    if(human.chips<=0){
+      MATCH.result = "failure";
+      SAVE.profile.lastResult = "failure";
+      SAVE.profile.chips = 0;
+      logMsg("你籌碼歸零：失敗。");
+      showEndOverlay("failure","你輸了","你籌碼歸零。按下「重新開始」會清空此槽位並重開新局。");
+    }else if(aiAlive.length===0){
+      MATCH.result = "victory";
+      SAVE.profile.lastResult = "victory";
+      SAVE.profile.chips = human.chips;
+      logMsg("AI 全部籌碼歸零：過關。");
+      showEndOverlay("victory","過關！","桌上所有 AI 籌碼歸零。");
+    }else{
+      MATCH.result = "continue";
+      SAVE.profile.chips = human.chips;
+    }
+
+    // Persist per-player chips into save slots for continuity
+    if(!SAVE.campaign) SAVE.campaign = {};
+    SAVE.campaign.aiChips = [];
+    for(const p of MATCH.players){
+      if(p.kind==="ai") SAVE.campaign.aiChips.push(p.chips);
+    }
+
+    // Keep current dealer until user presses 下一局
+    SAVE.campaign.dealerIndex = MATCH.dealerIndex;
+
+    
+      // Normal round end: always show a per-hand settlement overlay (to avoid "一臉懵")
+  if(MATCH.result!=="victory" && MATCH.result!=="failure"){
+    const dealerName = (dealer && dealer.name) ? dealer.name : "莊家";
+    const dealerShown = `${dealerName}（${dealerTotal}${dealerBust?" 爆":""}${dealerBJ?" BJ":""}${dealerCharlie?" 五關":""}）`;
+    showRoundOverlay("本局結算", `本局莊家：${dealerShown}
+
+按「下一局」換莊並開始下一局`);
+  }
+  openMenu(false);
+  BUSY = false;
+  persist();
+}
+
+
+  async function startNextRound(){
+    if(BUSY) return;
+    hideRoundOverlay();
+    hideRoundOverlay();
+    if(!MATCH || !SAVE) return;
+    if(!MATCH.roundEnded) return;
+
+    BUSY = true;
+
+    const start = Number(SAVE.settings.startChips || 100);
+
+    if(MATCH.result==="victory" || MATCH.result==="failure"){
+      // End states: wait for user to press Restart (clears slot and starts fresh)
+      BUSY = false;
+      return;
+    }
+
+    const aiCount = SAVE.settings.aiCount;
+    for(let i=1;i<=aiCount;i++){
+      const p = MATCH.players[i];
+      if(!p) continue;
+      SAVE.campaign.aiChips[i-1] = p.chips;
+      SAVE.campaign.aiAlive[i-1] = p.alive;
+    }
+    SAVE.profile.chips = MATCH.players[0].chips;
+    SAVE.campaign.dealerIndex = advanceDealerIndexAfterRound(SAVE, MATCH); // advance dealer on 下一局
+
+    MATCH = newMatch(SAVE);
+    resetBetState();
+    MATCH.phase="bet";
+    showBetPanel(true);
+    ensureBetDefaults();
+    updateUI();
+    persist();
+    BUSY = false;
+  }
+
+  // Human actions
+  async function humanHit(){
+    if(BUSY) return;
+    if(!MATCH || MATCH.phase!=="turns" || MATCH.turnId!==0) return;
+    const p = MATCH.players[0];
+    if(!p.alive || p.stood || p.busted) return;
+
+    BUSY = true;
+    const card = MATCH.deck.pop();
+    card._new = true;
+    p.hand.push(card);
+
+    const total = handTotal(p.hand);
+    logMsg(`你要牌（${total}）`);
+    updateUI();
+    await sleep(220);
+
+    // Five-card charlie (過五關): 5 cards without bust => immediate win condition for this hand
+    if(isFiveCardCharlie(p.hand)){
+      p.charlie = true;
+      p.stood = true;
+      logMsg(`你過五關（5張不爆）直接勝利`);
+      updateUI();
+      await sleep(220);
+    }
+
+    if(total>21){
+      p.busted = true;
+      p.stood = true;
+      logMsg(`你爆牌（${total}）`);
+      updateUI();
+      await sleep(200);
+    }
+
+    if(p.stood || p.busted){
+      if(allNonDealersDone()) MATCH.turnId = MATCH.dealerId;
+      else MATCH.turnId = nextTurnFrom(p.id);
+
+      updateUI();
+      BUSY = false;
+      await sleep(140);
+      return pumpTurns();
+    }
+
+    BUSY = false;
+    updateUI();
+  }
+
+
+function endTurn(fromId=0){
+  // Advance turn order and continue the game loop.
+  // Used after a human action like Stand (and can be reused elsewhere).
+  if(!MATCH) return;
+  if(MATCH.phase!=="turns") return;
+
+  // If everyone except dealer is done, move to dealer turn.
+  if(allNonDealersDone()){
+    MATCH.turnId = MATCH.dealerId;
+  }else{
+    // Otherwise, move to the next active non-dealer (or dealer if appropriate).
+    MATCH.turnId = nextTurnFrom(fromId);
+    // In rare cases nextTurnFrom may return dealerId even though not all are done; keep going anyway.
+  }
+
+  updateUI();
+
+  // Continue the turn pump on next tick (so BUSY flags can be cleared by caller).
+  setTimeout(()=>{ try{ pumpTurns(); }catch(e){} }, 60);
+}
+
+  async function humanStand(){
+    if(BUSY) return;
+    if(!MATCH || MATCH.phase!=="turns" || MATCH.turnId!==0) return;
+    const p = MATCH.players[0];
+    if(!p || !p.alive || p.stood || p.busted) return;
+
+    BUSY = true;
+    p.stood = true;
+    logMsg(`你停牌（${handTotal(p.hand)}）`);
+    updateUI();
+    await sleep(200);
+
+    // If you are the dealer, your turn should only happen after all non-dealers are done.
+    // When you stand as dealer, settle immediately.
+    if(p.id===MATCH.dealerId){
+      if(allNonDealersDone()){
+        MATCH.revealDealer = true; // no hole card for human dealer, but keep consistent
+        settleRound();
+        updateUI();
+        BUSY = false;
+        return;
+      }else{
+        // Safety: if called early, just keep the game running.
+        BUSY = false;
+        return;
+      }
+    }
+
+    endTurn();
+    BUSY = false;
+  }
+
+
+  function openMenu(show){
+    if(show) menu.classList.add("show");
+    else { menu.classList.remove("show"); hideResult(); }
+  }
+
+  function slotSummaryText(save){
+    const s = save.settings;
+    const p = save.profile;
+    const aiCount = s.aiCount;
+    const aliveAI = (save.campaign.aiAlive || []).slice(0, aiCount).filter(Boolean).length;
+    return [
+      `玩家：${p.playerName}（籌碼 ${p.chips}）`,
+      `AI：${aiCount} 位（存活 ${aliveAI}）`,
+      `難度：${labelDifficulty(s.difficulty)}，起始籌碼：${s.startChips}`,
+      `戰績：勝 ${p.wins} / 負 ${p.losses} / 平 ${p.pushes}，局數 ${p.rounds}`
+    ].join("  ·  ");
+  }
+
+  function labelDifficulty(d){
+    if(d==="easy") return "簡單";
+    if(d==="normal") return "普通";
+    if(d==="hard") return "困難";
+    return d;
+  }
+
+  function renderSlotButtons(){
+    slotList.innerHTML = "";
+    for(let i=1;i<=SLOT_COUNT;i++){
+      const save = loadSlot(i);
+      const btn = document.createElement("div");
+      btn.className = "slotBtn" + (i===SELECTED_SLOT ? " active" : "");
+      const icon = document.createElement("div");
+      icon.className = "slotIcon";
+      icon.textContent = (i===1 ? "Ⅰ" : i===2 ? "Ⅱ" : "Ⅲ");
+
+      const main = document.createElement("div");
+      main.className = "slotMain";
+
+      const t = document.createElement("div");
+      t.className = "slotTitle";
+      const name = document.createElement("div");
+      name.className = "slotName";
+      name.textContent = `槽位 ${i}`;
+      const meta = document.createElement("div");
+      meta.className = "slotMeta";
+      meta.textContent = `${save.profile.playerName} · AI ${save.settings.aiCount}`;
+
+      t.appendChild(name);
+      t.appendChild(meta);
+
+      const summary = document.createElement("div");
+      summary.className = "slotMeta";
+      summary.textContent = slotSummaryText(save);
+
+      main.appendChild(t);
+      main.appendChild(summary);
+
+      btn.appendChild(icon);
+      btn.appendChild(main);
+
+      btn.addEventListener("click", ()=>{
+        SELECTED_SLOT = i;
+        renderSlotButtons();
+        syncDetailFromSlot(i);
+      });
+
+      slotList.appendChild(btn);
+    }
+  }
+
+  function syncDetailFromSlot(slotId){
+    const save = loadSlot(slotId);
+    inputPlayerName.value = save.profile.playerName || "你";
+    selAiCount.value = String(save.settings.aiCount || 2);
+    selDifficulty.value = save.settings.difficulty || "normal";
+    selStartChips.value = String(save.settings.startChips || 100);
+    selNaturalBJ.value = (save.settings.naturalBJ===false) ? "off" : "on";
+    elSlotSummary.textContent = slotSummaryText(save);
+  }
+
+  function applyDetailToSlot(slotId){
+    const save = loadSlot(slotId);
+    save.profile.playerName = (inputPlayerName.value || "你").trim().slice(0,16) || "你";
+    save.settings.aiCount = Math.max(1, Math.min(3, Number(selAiCount.value || 2)));
+    save.settings.difficulty = selDifficulty.value || "normal";
+    save.settings.startChips = Number(selStartChips.value || 100);
+    save.settings.naturalBJ = (selNaturalBJ.value !== "off");
+    saveSlot(slotId, save);
+    return save;
+  }
+
+  
+  function normalizeForPlay(save){
+    const start = Number(save.settings.startChips || 100);
+    // If player chips <= 0 (e.g., loaded after failure), auto-reset so the game can deal.
+    if(!(typeof save.profile.chips === "number") || save.profile.chips <= 0){
+      save.profile.chips = start;
+    }
+    // Ensure AI arrays exist & normalize length
+    save.campaign = save.campaign || {};
+    if(!Array.isArray(save.campaign.aiChips)) save.campaign.aiChips = [start,start,start];
+    if(!Array.isArray(save.campaign.aiAlive)) save.campaign.aiAlive = [true,true,true];
+    for(let i=0;i<3;i++){
+      if(!(typeof save.campaign.aiChips[i] === "number")) save.campaign.aiChips[i] = start;
+      if(save.campaign.aiChips[i] <= 0){ save.campaign.aiChips[i] = 0; save.campaign.aiAlive[i] = false; }
+      if(save.campaign.aiAlive[i] !== false && save.campaign.aiChips[i] > 0) save.campaign.aiAlive[i] = true;
+    }
+    return save;
+  }
+
+function applyTheme(theme){
+    if(theme==="light") document.body.classList.add("light");
+    else document.body.classList.remove("light");
+  }
+
+  function bootToSlot(slotId){
+    CURRENT_SLOT = slotId;
+    SAVE = loadSlot(CURRENT_SLOT);
+    SAVE = normalizeForPlay(SAVE);
+    applyTheme(SAVE.settings.theme);
+    MATCH = newMatch(SAVE);
+    persist();
+    updateUI();
+  }
+
+  async function doLoad(){
+    if(BUSY) return;
+    const save = applyDetailToSlot(SELECTED_SLOT);
+
+    CURRENT_SLOT = SELECTED_SLOT;
+    SAVE = normalizeForPlay(save);
+    applyTheme(SAVE.settings.theme);
+
+    MATCH = newMatch(SAVE);
+    persist();
+
+    openMenu(false);
+
+    resetBetState();
+    MATCH.phase="bet";
+    showBetPanel(true);
+    ensureBetDefaults();
+    updateUI();
+    persist();
+  }
+
+  async function doNewGame(){
+    if(BUSY) return;
+
+    const save = applyDetailToSlot(SELECTED_SLOT);
+
+    const start = Number(save.settings.startChips || 100);
+    rerollAI(save);
+    save.campaign.aiChips = [start,start,start];
+    save.campaign.aiAlive = [true,true,true];
+    save.campaign.dealerIndex = 0;
+
+    saveSlot(SELECTED_SLOT, save);
+
+    CURRENT_SLOT = SELECTED_SLOT;
+    SAVE = loadSlot(CURRENT_SLOT);
+    SAVE = normalizeForPlay(SAVE);
+    applyTheme(SAVE.settings.theme);
+
+    MATCH = newMatch(SAVE);
+    persist();
+
+    openMenu(false);
+    resetBetState();
+    MATCH.phase = "bet";
+    showBetPanel(true);
+    ensureBetDefaults();
+    updateUI();
+    persist();
+  }
+
+  function doResetSlot(){
+    if(BUSY) return;
+    const s = defaultSlotSave();
+    if(SELECTED_SLOT===1) s.profile.playerName = "宇辰";
+    if(SELECTED_SLOT===2) s.profile.playerName = "阿修";
+    if(SELECTED_SLOT===3) s.profile.playerName = "你";
+    rerollAI(s);
+    saveSlot(SELECTED_SLOT, s);
+    renderSlotButtons();
+    syncDetailFromSlot(SELECTED_SLOT);
+  }
+
+  // Msg drawer
+  function openDrawer(show){
+    if(show){
+      drawerOverlay.classList.add("show");
+      drawerOverlay.setAttribute("aria-hidden","false");
+    }else{
+      drawerOverlay.classList.remove("show");
+      drawerOverlay.setAttribute("aria-hidden","true");
+    }
+  }
+
+  msgBar.addEventListener("click", ()=>openDrawer(true));
+  drawerClose.addEventListener("click", ()=>openDrawer(false));
+  drawerOverlay.addEventListener("click", (e)=>{ if(e.target===drawerOverlay) openDrawer(false); });
+
+  // Events
+  btnTheme.addEventListener("click", ()=>{
+    if(!SAVE) return;
+    SAVE.settings.theme = (SAVE.settings.theme==="light") ? "dark" : "light";
+    applyTheme(SAVE.settings.theme);
+    persist();
+    renderSlotButtons();
+    syncDetailFromSlot(SELECTED_SLOT);
+  });
+
+  btnMenu.addEventListener("click", ()=>{
+    renderSlotButtons();
+    syncDetailFromSlot(SELECTED_SLOT);
+    openMenu(true);
+  });
+
+  btnCloseMenu.addEventListener("click", ()=>openMenu(false));
+  menu.addEventListener("click", (e)=>{ if(e.target===menu) openMenu(false); });
+
+  btnLoad.addEventListener("click", doLoad);
+  btnNew.addEventListener("click", doNewGame);
+  btnResetSlot.addEventListener("click", doResetSlot);
+
+  btnHit.addEventListener("click", humanHit);
+  btnStand.addEventListener("click", humanStand);
+  
+  // Betting UI
+  const betPanel = $("betPanel");
+  const betValue = $("betValue");
+  const betHint = $("betHint");
+  const chipRow = $("chipRow");
+  const btnBetClear = $("btnBetClear");
+  const btnBetHalf = $("btnBetHalf");
+  const btnBetAll = $("btnBetAll");
+  const btnBetConfirm = $("btnBetConfirm");
+
+  let PENDING_BET = 0;
+  let BET_LOCKED = false;
+
+  function canBetNow(){
+    // Allow betting only when a round is not in progress and we are about to deal
+    return (!!MATCH && (MATCH.phase==="bet" || MATCH.phase==="predeal" || MATCH.phase==="idle"));
+  }
+
+  function showBetPanel(show){
+    betPanel.style.display = show ? "flex" : "none";
+    if(!show) return;
+
+    const humanIsDealer = (MATCH && MATCH.dealerId===0);
+
+    // Reset controls to default (non-dealer)
+    chipRow.style.pointerEvents = "auto";
+    chipRow.style.opacity = "1";
+    btnBetClear.disabled = false;
+    btnBetHalf.disabled = false;
+    btnBetAll.disabled = false;
+    btnBetConfirm.textContent = "確認並發牌";
+    betHint.textContent = "提示：只有在新一局開始時可下注，確認後才會發牌";
+
+    if(humanIsDealer){
+      // Dealer never bets
+      setPendingBet(0);
+      chipRow.style.pointerEvents = "none";
+      chipRow.style.opacity = ".45";
+      btnBetClear.disabled = true;
+      btnBetHalf.disabled = true;
+      btnBetAll.disabled = true;
+      btnBetConfirm.textContent = "開始發牌";
+      betHint.textContent = "你是莊家，本局不下注，按「開始發牌」即可";
+    }
+  }
+
+  function clampBet(v){
+    const dealer = MATCH?.players?.find(p=>p.id===MATCH.dealerId);
+    const me = MATCH?.players?.find(p=>p.id===0);
+    const maxByMe = me ? me.chips : 0;
+    const maxByDealer = dealer ? dealer.chips : 0;
+    const max = Math.max(0, Math.min(maxByMe, maxByDealer));
+    v = Math.floor(v);
+    if(v<0) v=0;
+    if(v>max) v=max;
+    return v;
+  }
+
+  function setPendingBet(v){
+    PENDING_BET = clampBet(v);
+    betValue.textContent = String(PENDING_BET);
+  }
+
+  function resetBetState(){
+    BET_LOCKED = false;
+    PENDING_BET = 0;
+    setPendingBet(0);
+  }
+
+  function ensureBetDefaults(){
+    // If you are the dealer, you do NOT bet.
+    if(MATCH && MATCH.dealerId===0){
+      setPendingBet(0);
+      return;
+    }
+    // Default bet baseline: 0 (you can raise manually)
+    setPendingBet(0);
+  }
+
+  chipRow.addEventListener("click", (e)=>{
+    const b = e.target.closest(".chip");
+    if(!b) return;
+    if(!canBetNow() || BET_LOCKED) return;
+    const add = Number(b.dataset.chip || 0);
+    setPendingBet(PENDING_BET + add);
+  });
+
+  btnBetClear.addEventListener("click", ()=>{
+    if(!canBetNow() || BET_LOCKED) return;
+    setPendingBet(0);
+  });
+  btnBetHalf.addEventListener("click", ()=>{
+    if(!canBetNow() || BET_LOCKED) return;
+    setPendingBet(Math.floor(PENDING_BET/2));
+  });
+  btnBetAll.addEventListener("click", ()=>{
+    if(!canBetNow() || BET_LOCKED) return;
+    if(MATCH && MATCH.dealerId===0) return;
+    const me = MATCH.players.find(p=>p.id===0);
+    const dealer = MATCH.players.find(p=>p.id===MATCH.dealerId);
+    setPendingBet(Math.min(me?.chips||0, dealer?.chips||0));
+  });
+
+  btnBetConfirm.addEventListener("click", async ()=>{
+    if(!canBetNow() || BET_LOCKED) return;
+    const humanIsDealer = (MATCH && MATCH.dealerId===0);
+    if(!humanIsDealer && PENDING_BET<=0){
+      toast("請先下注（至少 1）");
+      return;
+    }
+    BET_LOCKED = true;
+    MATCH.wagers = MATCH.wagers || {};
+    // Human wager (dealer never bets)
+    MATCH.wagers[0] = humanIsDealer ? 0 : PENDING_BET;
+
+    // AI wagers: simple heuristic (10% chips, min 5, max 50% chips, capped by dealer chips)
+    const dealer = MATCH.players.find(p=>p.id===MATCH.dealerId);
+    for(const p of MATCH.players){
+      if(!p.alive) continue;
+      if(p.id===MATCH.dealerId) continue;
+      if(p.id===0) continue;
+      const cap = Math.min(p.chips, dealer?.chips||0);
+      let w = Math.floor(p.chips * 0.1);
+      if(w < 5) w = 5;
+      const maxW = Math.floor(p.chips * 0.5);
+      if(w > maxW) w = maxW;
+      if(w > cap) w = cap;
+      if(w < 1) w = 1;
+      MATCH.wagers[p.id] = w;
+    }
+
+    showBetPanel(false);
+    MATCH.phase = "predeal";
+    await dealRound(true);
+    updateUI();
+    persist();
+  });
+
+btnNext.addEventListener("click", startNextRound);
+  if(btnResultNext) btnResultNext.addEventListener("click", startNextRound);
+
+  if(btnRestart) btnRestart.addEventListener("click", async ()=>{
+    if(BUSY) return;
+    BUSY = true;
+    // Reset CURRENT_SLOT save completely and start a new game (fresh record)
+    const startSave = defaultSlotSave();
+    startSave.profile.playerName = (inputPlayerName.value || loadSlot(CURRENT_SLOT).profile.playerName || "你").trim().slice(0,16) || "你";
+    // Apply current menu settings to new save
+    startSave.settings.aiCount = Math.max(1, Math.min(3, Number(selAiCount.value || 2)));
+    startSave.settings.difficulty = selDifficulty.value || "normal";
+    startSave.settings.startChips = Number(selStartChips.value || 100);
+    startSave.settings.naturalBJ = (selNaturalBJ.value !== "off");
+    startSave.settings.theme = (SAVE && SAVE.settings && SAVE.settings.theme) ? SAVE.settings.theme : "dark";
+    rerollAI(startSave);
+    const start = Number(startSave.settings.startChips || 100);
+    startSave.profile.chips = start;
+    startSave.campaign.aiChips = [start,start,start];
+    startSave.campaign.aiAlive = [true,true,true];
+    startSave.campaign.dealerIndex = 0;
+    saveSlot(CURRENT_SLOT, startSave);
+    SAVE = loadSlot(CURRENT_SLOT);
+    SAVE = normalizeForPlay(SAVE);
+    applyTheme(SAVE.settings.theme);
+    MATCH = newMatch(SAVE);
+    persist();
+    hideEndOverlay();
+    openMenu(false);
+    resetBetState();
+    MATCH.phase = "bet";
+    showBetPanel(true);
+    ensureBetDefaults();
+    updateUI();
+    persist();
+    BUSY = false;
+  });
+
+  btnHint.addEventListener("click", ()=>{
+    const lines = [
+      "規則：A 只有在兩張牌時算 11，超過兩張一律算 1",
+      "自然 21：兩張 21 直接勝（莊家也自然 21 → Push）",
+      "戰役：你贏 → 當局莊家 -1；你輸 → 你 -1；平手不扣",
+      "你當莊家：本局不扣血，只推進輪莊與局數"
+    ];
+    const msg = lines[Math.floor(Math.random()*lines.length)];
+    logMsg(msg);
+    updateUI();
+    openDrawer(true);
+  });
+
+  // live summary update
+  const detailInputs = [inputPlayerName, selAiCount, selDifficulty, selStartChips, selNaturalBJ];
+  for(const el of detailInputs){
+    el.addEventListener("input", ()=>{
+      const tmp = applyDetailToSlot(SELECTED_SLOT);
+      elSlotSummary.textContent = slotSummaryText(tmp);
+      renderSlotButtons();
+    });
+    el.addEventListener("change", ()=>{
+      const tmp = applyDetailToSlot(SELECTED_SLOT);
+      elSlotSummary.textContent = slotSummaryText(tmp);
+      renderSlotButtons();
+    });
+  }
+
+  // boot
+  function init(){
+    ensureAllSlots();
+    SELECTED_SLOT = 1;
+    renderSlotButtons();
+    syncDetailFromSlot(SELECTED_SLOT);
+    bootToSlot(1);
+    openMenu(true);
+
+    const ro = new ResizeObserver(()=>updateUI());
+    ro.observe(document.body);
+  }
+
+  window.addEventListener("DOMContentLoaded", init);
+ })();
+</script>
+
+  
+  <!-- Round settle overlay -->
+  <div class="overlay" id="roundOverlay" style="display:none;align-items:center;justify-content:center;z-index:190">
+    <div class="panel" style="max-width:720px;text-align:center;gap:14px">
+      <h2 id="roundTitle" style="font-size:20px">本局結算</h2>
+      <p id="roundDesc">—</p>
+      <div class="row" style="justify-content:center">
+        <button class="btn good" id="btnRoundNext">下一局</button>
+      </div>
+    </div>
+  </div>
+
+<!-- End overlay (Victory / Defeat) -->
+  <div class="overlay" id="endOverlay" style="display:none;align-items:center;justify-content:center;z-index:200">
+    <div class="panel" style="max-width:720px;text-align:center;gap:14px">
+      <h2 id="endTitle" style="font-size:20px">—</h2>
+      <p id="endDesc">—</p>
+      <div class="resultBox" style="display:block">
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center">
+          <div id="endAnim" style="font-size:56px;line-height:1">—</div>
+          <div style="font-size:13px;color:var(--muted)">按下「重新開始」會清空此槽位紀錄並重開新局</div>
+        </div>
+      </div>
+      <div class="row" style="justify-content:center">
+        <button class="btn good" id="btnRestart">重新開始</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>let res = "push";
+      let reason = "";
+
+      // Immediate loss if bust
+      if(pBust){
+        res = "lose";
+        reason = "爆牌";
+      }else if(pCharlie){
+        // Five Card Charlie: treat as direct win (stronger than BJ, no push)
+        res = "win";
+        reason = "過五關直接勝";
+      }else if(pBJ && dealerBJ){
+        res = "push";
+        reason = "雙方自然21";
+      }else if(pBJ){
+        res = "win";
+        reason = "自然21";
+      }else if(dealerCharlie){
+        // Dealer achieved five-card charlie: dealer wins unless player has BJ/Charlie (handled above)
+        res = "lose";
+        reason = "莊家過五關";
+      }else if(dealerBust){
+        res = "win";
+        reason = "莊家爆牌";
+      }else{
+        if(pt > dealerTotal){
+          res = "win"; reason = `點數較大（${pt} > ${dealerTotal}）`;
+        }else if(pt < dealerTotal){
+          res = "lose"; reason = `點數較小（${pt} < ${dealerTotal}）`;
+        }else{
+          res = "push"; reason = `點數相同（${pt}）`;
+        }
+      }
