@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Big Two V4 (Slots)</title>
+  <title>Big Two｜大老二美化版</title>
   <style>
     :root{
       --bg1:#06101f;
@@ -819,13 +819,77 @@
     .settDelta.pos{ box-shadow: 0 0 0 2px rgba(90,170,255,.22) inset; }
     .settDelta.neg{ box-shadow: 0 0 0 2px rgba(255,120,120,.18) inset; }
 
+
+    /* ====== Premium visual polish pack ====== */
+    :root{ --glass: rgba(255,255,255,.075); --glass2: rgba(255,255,255,.035); --gold:#ffd36a; --cyan:#70d7ff; --ease:cubic-bezier(.2,.8,.2,1); }
+    body::before, body::after{ content:""; position:fixed; inset:auto; pointer-events:none; z-index:-1; filter: blur(8px); opacity:.72; }
+    body::before{ width:460px;height:460px;left:-160px;top:-150px; background:radial-gradient(circle, rgba(106,169,255,.38), transparent 64%); }
+    body::after{ width:520px;height:520px;right:-190px;bottom:-210px; background:radial-gradient(circle, rgba(66,211,146,.28), transparent 66%); }
+    .app{ max-width:1180px; margin:0 auto; }
+    .brand{ position:relative; overflow:hidden; isolation:isolate; box-shadow: 0 18px 48px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.10); }
+    .brand::before{ content:""; width:42px;height:42px; border-radius:16px; flex:0 0 auto; background:radial-gradient(circle at 35% 28%, rgba(255,255,255,.48), transparent 33%), linear-gradient(145deg, rgba(106,169,255,.88), rgba(66,211,146,.52)); box-shadow:0 14px 24px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.30); }
+    .brand::after{ content:""; position:absolute; inset:-80px auto auto -80px; width:180px;height:180px; background:radial-gradient(circle, rgba(255,255,255,.14), transparent 65%); z-index:-1; }
+    .brand .title{ font-size:15px; text-shadow:0 10px 24px rgba(0,0,0,.35); }
+    .chipPill,.centerTag,.badge,.btn{ backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .chipPill{ box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 12px 24px rgba(0,0,0,.18); }
+    .btn{ position:relative; overflow:hidden; transition: transform .14s var(--ease), border-color .18s ease, filter .18s ease, box-shadow .18s ease; }
+    .btn::before{ content:""; position:absolute; inset:0; background:linear-gradient(120deg, transparent 0 34%, rgba(255,255,255,.16) 50%, transparent 66%); transform:translateX(-120%); transition:transform .45s var(--ease); pointer-events:none; }
+    .btn:hover:not(:disabled){ filter:brightness(1.08); border-color:rgba(255,255,255,.22); box-shadow:0 14px 30px rgba(0,0,0,.28), 0 0 0 1px rgba(255,255,255,.04) inset; }
+    .btn:hover:not(:disabled)::before{ transform:translateX(120%); }
+    .btn.primary,.btn.good{ font-weight:850; }
+    .arena{ isolation:isolate; box-shadow:0 28px 70px rgba(0,0,0,.46), inset 0 1px 0 rgba(255,255,255,.13), inset 0 -60px 110px rgba(0,0,0,.22); }
+    .tableAura,.tableRing,.tableTexture{ position:absolute; inset:0; pointer-events:none; z-index:0; }
+    .tableAura{ background:radial-gradient(520px 280px at 50% 44%, rgba(255,255,255,.16), transparent 64%), radial-gradient(720px 440px at 50% 58%, rgba(106,169,255,.13), transparent 68%), radial-gradient(680px 420px at 45% 55%, rgba(66,211,146,.12), transparent 72%); mix-blend-mode:screen; opacity:.95; }
+    .tableRing{ inset:13%; border-radius:999px; border:1px solid rgba(255,255,255,.13); box-shadow:inset 0 0 0 1px rgba(255,255,255,.045), 0 0 90px rgba(0,0,0,.18); opacity:.78; }
+    .tableTexture{ opacity:.16; background-image:linear-gradient(45deg, rgba(255,255,255,.10) 25%, transparent 25%), linear-gradient(-45deg, rgba(255,255,255,.08) 25%, transparent 25%); background-size:18px 18px; mask-image:radial-gradient(ellipse at center, black 0 48%, transparent 76%); }
+    .arena > :not(.tableAura):not(.tableRing):not(.tableTexture){ z-index:1; }
+    .seat{ box-shadow:0 18px 34px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.08); transition: transform .18s var(--ease), box-shadow .18s ease, border-color .18s ease, background .18s ease; }
+    .seat.active{ transform:translateY(-2px); background:linear-gradient(180deg, rgba(106,169,255,.22), rgba(0,0,0,.26)); }
+    #seat2.active{ transform:translateX(-50%) translateY(-2px); }
+    .avatar{ box-shadow:0 14px 28px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.18); }
+    .seat.active .avatar{ animation: avatarPulse 1.2s ease-in-out infinite alternate; }
+    @keyframes avatarPulse{ from{ box-shadow:0 14px 28px rgba(0,0,0,.26), 0 0 0 rgba(106,169,255,0); } to{ box-shadow:0 14px 28px rgba(0,0,0,.26), 0 0 22px rgba(106,169,255,.38); } }
+    .center{ z-index:5 !important; }
+    .pile{ position:relative; min-height:122px; background:radial-gradient(360px 110px at 50% 50%, rgba(255,255,255,.12), transparent 70%), linear-gradient(180deg, rgba(0,0,0,.24), rgba(0,0,0,.14)); box-shadow:inset 0 1px 0 rgba(255,255,255,.09), inset 0 -22px 48px rgba(0,0,0,.18); }
+    .pile::before{ content:"出牌區"; position:absolute; top:8px;left:12px; font-size:11px; letter-spacing:.18em; color:rgba(255,255,255,.34); font-weight:900; }
+    .msgLog{ max-height:126px; overflow:hidden; box-shadow:inset 0 1px 0 rgba(255,255,255,.07); }
+    .msg{ padding:2px 0; }
+    .card,.pileCard{ border-color:rgba(255,255,255,.72); box-shadow:0 16px 28px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.92); background:radial-gradient(26px 34px at 16% 12%, rgba(255,255,255,.95), transparent 62%), radial-gradient(42px 42px at 78% 84%, rgba(0,0,0,.055), transparent 72%), linear-gradient(180deg, rgba(255,255,255,.99), rgba(235,239,248,.94)); }
+    .card::before,.pileCard::before{ content:""; position:absolute; inset:4px; border-radius:10px; border:1px solid rgba(0,0,0,.055); pointer-events:none; }
+    .card:hover{ filter:brightness(1.04) saturate(1.05); box-shadow:0 18px 32px rgba(0,0,0,.30), 0 0 0 1px rgba(106,169,255,.18), inset 0 1px 0 rgba(255,255,255,.94); }
+    .card .big,.pileCard .big{ text-shadow:0 8px 14px rgba(0,0,0,.10); }
+    .card.selected{ transform: translateY(-19px) scale(1.03) !important; border-color:rgba(112,215,255,.95); }
+    .handBar{ box-shadow:0 22px 54px rgba(0,0,0,.36), inset 0 1px 0 rgba(255,255,255,.08); background:radial-gradient(460px 120px at 50% 100%, rgba(106,169,255,.13), transparent 72%), linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,.13)); }
+    .handTitleRow::before{ content:"你的手牌"; font-size:12px; font-weight:950; letter-spacing:.12em; color:rgba(255,255,255,.78); white-space:nowrap; }
+    .hint{ text-align:right; margin-left:auto; }
+    .tableControl{ box-shadow:0 22px 48px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.09); }
+    .overlay{ backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .panel{ border-radius:28px; box-shadow:0 30px 90px rgba(0,0,0,.48), inset 0 1px 0 rgba(255,255,255,.12); }
+    .panel h2{ font-size:20px; letter-spacing:.04em; }
+    .slotBtn{ transition:transform .16s var(--ease), border-color .18s ease, background .18s ease, box-shadow .18s ease; }
+    .slotBtn:hover{ transform:translateY(-2px); border-color:rgba(106,169,255,.44); }
+    .slotIcon{ box-shadow:inset 0 1px 0 rgba(255,255,255,.14), 0 14px 24px rgba(0,0,0,.22); }
+    .field input,.field select{ transition:border-color .16s ease, box-shadow .16s ease, background .16s ease; }
+    body.light::before{ background:radial-gradient(circle, rgba(42,99,255,.22), transparent 66%); }
+    body.light::after{ background:radial-gradient(circle, rgba(44,190,136,.18), transparent 66%); }
+    body.light .brand::before{ background:linear-gradient(145deg, rgba(42,99,255,.88), rgba(44,190,136,.48)); }
+    body.light .tableAura{ opacity:.6; }
+    body.light .tableRing{ border-color:rgba(0,0,0,.08); }
+    body.light .tableTexture{ opacity:.10; }
+    body.light .pile::before{ color:rgba(0,0,0,.28); }
+    body.light .handTitleRow::before{ color:rgba(0,0,0,.62); }
+    body.light .card,body.light .pileCard{ box-shadow:0 15px 24px rgba(0,0,0,.15), inset 0 1px 0 rgba(255,255,255,.92); }
+    @media (max-width:720px){ .app{padding:calc(8px + var(--safeTop)) calc(8px + var(--safeRight)) calc(8px + var(--safeBottom)) calc(8px + var(--safeLeft)); gap:8px;} .brand{width:100%; padding:9px 10px;} .brand::before{width:36px;height:36px;border-radius:14px;} .topActions{width:100%; display:grid; grid-template-columns:repeat(2,minmax(0,1fr));} .topActions .chipPill,.topActions .btn{width:100%; justify-content:center;} .arena{border-radius:20px;} .center{top:50%; width:min(620px, 94vw);} .pile{min-height:100px; padding:10px; gap:7px;} .pileCard{width:48px;height:68px;border-radius:12px;padding:6px;} .pileCard .big{font-size:19px;} .msgLog{display:none;} .seat{width:min(178px, 41vw); gap:7px; padding:7px 8px;} #seat1{left:8px;top:8px;} #seat2{top:8px;} #seat3{right:8px;top:8px;} #seat0{left:8px;bottom:8px; max-width:min(210px, 56vw);} .tableControl{right:8px; bottom:8px; width:min(300px, 44vw);} .tableControl .btn{font-size:12px; padding:9px 7px;} .handBar{height:108px; padding:8px;} .handTitleRow{padding-bottom:4px;} .handTitleRow::before{display:none;} .hint{max-width:100%; text-align:left;} .panel{border-radius:22px; padding:12px;} }
+    @media (max-width:420px){ .brand .title{font-size:14px;} .brand .sub{font-size:11px;} .chipPill,.btn{font-size:12px; padding:9px 10px;} .seat .meta .badge:nth-child(2){display:none;} .centerTop{gap:6px;} .centerTag{font-size:11px; padding:5px 8px;} .tableControl{width:min(300px, 48vw); padding:7px;} .tableControl .r1{grid-template-columns:1fr;} .tableControl .r2{grid-template-columns:1fr;} .tableControl .btn{padding:8px 6px; min-height:33px;} .homeGrid{gap:10px;} .row .btn{flex:1 1 auto;} }
+    @media (prefers-reduced-motion: reduce){ *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.001ms !important; } }
+
 </style>
 </head>
 <body>
   <div class="app">
     <div class="topbar">
       <div class="brand">
-        <div class="title">Big Two</div>
+        <div class="title">♠ Big Two</div>
         <div class="sub" id="statusLine">—</div>
       </div>
       <div class="topActions">
@@ -838,6 +902,9 @@
 
     <div class="arenaWrap">
       <div class="arena" id="arena">
+        <div class="tableAura" aria-hidden="true"></div>
+        <div class="tableRing" aria-hidden="true"></div>
+        <div class="tableTexture" aria-hidden="true"></div>
 
         <div class="seat" id="seat1">
           <div class="avatar" id="pemo1">😎</div>
@@ -969,6 +1036,7 @@
                 <option value="100">100</option>
                 <option value="150">150</option>
                 <option value="200">200</option>
+                <option value="300">300</option>
               </select>
             </div>
           </div>
@@ -2629,6 +2697,26 @@ function toast(msg){
     SAVE.settings.theme = next;
     persist();
     toast(next==="light" ? "已切換亮色" : "已切換暗色");
+  });
+
+
+  // ===== Extra UI polish: dynamic viewport + keyboard shortcuts =====
+  function syncViewportHeight(){
+    document.documentElement.style.setProperty("--vh", (window.innerHeight * 0.01) + "px");
+  }
+  window.addEventListener("resize", syncViewportHeight, { passive:true });
+  window.addEventListener("orientationchange", syncViewportHeight, { passive:true });
+  syncViewportHeight();
+
+  window.addEventListener("keydown", (e)=>{
+    if(e.target && ["INPUT","SELECT","TEXTAREA"].includes(e.target.tagName)) return;
+    if(e.key === "Escape"){
+      if(menu.classList.contains("show")) btnCloseMenu.click();
+      else btnMenu.click();
+    }
+    if(e.key === "Enter" && !menu.classList.contains("show")) btnPlay.click();
+    if((e.key || "").toLowerCase() === "p" && !menu.classList.contains("show")) btnPass.click();
+    if((e.key || "").toLowerCase() === "h" && !menu.classList.contains("show")) btnHint.click();
   });
 
   // ===== Boot =====
