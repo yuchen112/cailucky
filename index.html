@@ -8,7 +8,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CxQ開獎所｜官方平台</title>
-  <!-- build: admin-flow-optimized-v1 -->
+  <!-- build: display-ux-optimized-v3-strict-collapse -->
   <meta name="color-scheme" content="light dark">
   <meta name="description" content="CxQ開獎所官方平台：抽獎紀錄、等待開獎、社群商店、點數商城、開箱實拍與常見問題管理。">
   <meta property="og:title" content="CxQ開獎所｜官方平台">
@@ -476,6 +476,283 @@
   </style>
   <!-- [KJS ADMIN FLOW OPTIMIZE END] -->
 
+
+
+
+  <!-- [KJS DISPLAY UX OPTIMIZE START]
+       顯示/使用再優化：初始收合、摘要優先、管理工具收斂、手機密度優化、圖片載入穩定。
+       保留所有原功能與 LocalStorage 單機資料結構。
+  -->
+  <style id="kjs-display-ux-optimize-v2">
+    :root{
+      --kjs-compact-gap: .75rem;
+      --kjs-control-h: 42px;
+      --kjs-muted: rgb(100 116 139);
+    }
+
+    /* 全站閱讀密度：摘要清楚、間距更穩 */
+    .kjs-unified :where(section.animate-fadeIn){ scroll-margin-top: 82px; }
+    .kjs-unified :where(section.animate-fadeIn > .mb-3){
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .kjs-unified :where(section.animate-fadeIn h2){
+      line-height:1.25;
+    }
+    .kjs-unified :where(section.animate-fadeIn p.text-\[13px\]){
+      max-width:72ch;
+      line-height:1.55;
+    }
+
+    /* 卡片摘要優先：長文字不在列表階段撐爆畫面 */
+    .kjs-unified :where(.line-clamp-1){
+      display:-webkit-box;
+      -webkit-line-clamp:1;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+    }
+    .kjs-unified :where(.line-clamp-2){
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+    }
+    .kjs-unified :where(.kjs-card-compact){
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .kjs-unified :where(.kjs-card-compact:hover){
+      transform: translateY(-1px);
+      border-color: rgba(20,184,166,.35) !important;
+    }
+
+    /* Collapse 更像正式摘要列：初始收合時只看重點 */
+    .kjs-unified :where([aria-expanded]) svg{
+      flex:none;
+    }
+    .kjs-unified :where(.rounded-xl.overflow-hidden > button[aria-expanded]){
+      min-height:54px;
+    }
+    .kjs-unified :where(.rounded-xl.overflow-hidden > button[aria-expanded='false']){
+      background:rgba(255,255,255,.38);
+    }
+    @media (prefers-color-scheme: dark){
+      .kjs-unified :where(.rounded-xl.overflow-hidden > button[aria-expanded='false']){
+        background:rgba(15,23,42,.28);
+      }
+    }
+
+    /* 管理批次列：預設只露出標題/選取數，要用時再展開 */
+    .kjs-admin-bulkbar.kjs-ux-bulkbar{
+      position:relative;
+      align-items:center;
+      min-height:52px;
+      transition:max-height .22s ease, padding .18s ease, opacity .18s ease;
+    }
+    .kjs-admin-bulkbar.kjs-ux-bulkbar .kjs-ux-bulk-toggle{
+      order:-1000;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      min-height:36px;
+      border-radius:999px;
+      border:1px solid var(--kjs-line);
+      background:rgba(255,255,255,.76);
+      padding:7px 12px;
+      font-size:13px;
+      font-weight:750;
+      white-space:nowrap;
+      box-shadow:0 8px 22px -18px rgba(15,23,42,.5);
+    }
+    @media (prefers-color-scheme: dark){
+      .kjs-admin-bulkbar.kjs-ux-bulkbar .kjs-ux-bulk-toggle{
+        background:rgba(15,23,42,.72);
+      }
+    }
+    .kjs-admin-bulkbar.kjs-ux-bulkbar.kjs-ux-collapsed{
+      max-height:58px;
+      overflow:hidden;
+    }
+    .kjs-admin-bulkbar.kjs-ux-bulkbar.kjs-ux-collapsed > :not(.kjs-ux-bulk-toggle):not(.kjs-bulk-title):not(.kjs-bulk-count){
+      display:none !important;
+    }
+    .kjs-admin-bulkbar.kjs-ux-bulkbar.kjs-ux-collapsed .kjs-bulk-title{
+      max-width:52vw;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .kjs-admin-bulkbar.kjs-ux-bulkbar:not(.kjs-ux-collapsed){
+      max-height:620px;
+    }
+
+    /* 卡片內管理動作：不再視覺過重 */
+    .kjs-unified :where(.kjs-admin-lite-actions),
+    .kjs-unified :where(.mt-3.flex.gap-2.justify-end){
+      row-gap:6px;
+    }
+    .kjs-unified :where(.kjs-admin-lite-actions button),
+    .kjs-unified :where(.mt-3.flex.gap-2.justify-end button){
+      min-height:36px;
+      padding:.42rem .7rem;
+      font-size:13px;
+    }
+
+    /* 長表單/管理表單密度優化：欄位不擠但也不鋪滿整頁 */
+    .kjs-unified :where(#custom-edit-form, [id$='edit-form']){
+      scroll-margin-top:82px;
+    }
+    .kjs-unified :where(#custom-edit-form textarea, textarea.min-h-\[120px\]){
+      min-height:96px !important;
+    }
+    .kjs-unified :where(input::placeholder, textarea::placeholder){
+      color:rgb(148 163 184);
+    }
+
+    /* 搜尋/工具區更精簡 */
+    .kjs-unified :where(input[type='search'], input[placeholder*='搜尋'], input[placeholder*='查詢']){
+      background:linear-gradient(180deg, var(--kjs-surface-strong), var(--kjs-surface)) !important;
+    }
+
+    /* 圖片穩定：列表圖片更快、更不跳版 */
+    .kjs-unified img.kjs-img-error{
+      opacity:.45;
+      filter:grayscale(1);
+    }
+    .kjs-img-fallback-note{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:44px;
+      border:1px dashed var(--kjs-line);
+      border-radius:12px;
+      padding:8px 10px;
+      color:var(--kjs-muted);
+      font-size:12px;
+      background:rgba(148,163,184,.08);
+    }
+
+    /* 手機：預設更像卡片摘要，管理工具需要時再展開 */
+    @media (max-width:640px){
+      .kjs-unified :where(section.animate-fadeIn > .mb-3){
+        align-items:flex-start;
+      }
+      .kjs-admin-bulkbar.kjs-ux-bulkbar.kjs-ux-collapsed{
+        max-height:112px;
+      }
+      .kjs-admin-bulkbar.kjs-ux-bulkbar.kjs-ux-collapsed > :not(.kjs-ux-bulk-toggle):not(.kjs-bulk-title):not(.kjs-bulk-count){
+        display:none !important;
+      }
+      .kjs-admin-bulkbar.kjs-ux-bulkbar .kjs-ux-bulk-toggle,
+      .kjs-admin-bulkbar.kjs-ux-bulkbar .kjs-bulk-title,
+      .kjs-admin-bulkbar.kjs-ux-bulkbar .kjs-bulk-count{
+        width:100%;
+      }
+      .kjs-unified :where(.rounded-xl.overflow-hidden > button[aria-expanded]){
+        min-height:50px;
+        padding-left:12px;
+        padding-right:12px;
+      }
+      .kjs-unified :where(.mt-3.flex.gap-2.justify-end){
+        justify-content:flex-start;
+      }
+      .kjs-unified :where(.mt-3.flex.gap-2.justify-end button){
+        flex:1 1 auto;
+      }
+    }
+  </style>
+  <!-- [KJS DISPLAY UX OPTIMIZE END] -->
+
+
+  <!-- [KJS STRICT COLLAPSE UX FIX START]
+       修正：收合時完整隱藏內容，不露出半行文字；同時再收斂列表顯示密度。
+  -->
+  <style id="kjs-strict-collapse-ux-fix-v3">
+    /* 1) 新版 Collapse：收合時完全不保留內容節點；展開時只在 panel 內加 padding */
+    .kjs-strict-collapse.is-closed .kjs-strict-collapse-panel{
+      display:none !important;
+      height:0 !important;
+      max-height:0 !important;
+      padding:0 !important;
+      margin:0 !important;
+      border:0 !important;
+      overflow:hidden !important;
+    }
+    .kjs-strict-collapse-trigger{
+      min-height:54px;
+    }
+    .kjs-strict-collapse.is-closed .kjs-strict-collapse-trigger{
+      background:rgba(255,255,255,.42);
+    }
+    @media (prefers-color-scheme: dark){
+      .kjs-strict-collapse.is-closed .kjs-strict-collapse-trigger{
+        background:rgba(15,23,42,.30);
+      }
+    }
+    .kjs-strict-collapse-inner{
+      overflow:visible;
+    }
+
+    /* 2) 向下相容：舊式 aria-expanded=false 的相鄰內容區也強制完整收合 */
+    .kjs-unified :where(.rounded-xl.overflow-hidden, .rounded-2xl.overflow-hidden) > button[aria-expanded="false"] + div{
+      height:0 !important;
+      max-height:0 !important;
+      min-height:0 !important;
+      padding-top:0 !important;
+      padding-bottom:0 !important;
+      margin-top:0 !important;
+      margin-bottom:0 !important;
+      border-top-width:0 !important;
+      overflow:hidden !important;
+      opacity:0 !important;
+      pointer-events:none !important;
+    }
+
+    /* 3) 原生 details：未展開時只允許 summary 顯示，避免內容殘留 */
+    .kjs-unified details:not([open]) > :not(summary){
+      display:none !important;
+    }
+    .kjs-unified details > summary{
+      min-height:52px;
+    }
+
+    /* 4) FAQ / 量測高度型收合：收合時不露 padding 造成的半行 */
+    .kjs-unified :where([id^="faqc-"], [id^="faqp-"])[style*="height: 0"] > *,
+    .kjs-unified :where([id^="faqc-"], [id^="faqp-"])[style*="height:0"] > *{
+      padding-top:0 !important;
+      padding-bottom:0 !important;
+      margin-top:0 !important;
+      margin-bottom:0 !important;
+    }
+
+    /* 5) 列表摘要更穩：標題列不要因過長文字撐高 */
+    .kjs-unified .kjs-strict-collapse-trigger .truncate,
+    .kjs-unified .kjs-strict-collapse-trigger [title]{
+      min-width:0;
+    }
+    .kjs-unified .kjs-strict-collapse-trigger > div:first-child{
+      min-width:0;
+      width:100%;
+    }
+
+    /* 6) 行動端再壓縮：收合列只留乾淨標題，不露第二行 */
+    @media (max-width:640px){
+      .kjs-strict-collapse-trigger{
+        min-height:50px;
+        padding-left:12px !important;
+        padding-right:12px !important;
+      }
+      .kjs-strict-collapse-inner{
+        padding:12px !important;
+      }
+      .kjs-unified details > summary{
+        min-height:50px;
+      }
+    }
+  </style>
+  <!-- [KJS STRICT COLLAPSE UX FIX END] -->
 
 </head>
 
@@ -5498,27 +5775,21 @@ function plusDays(ymd, days){
   return `${y}-${m}-${dd}`;
 }
 
-// === Collapse（強化版，向下相容）===
+// === Collapse（完整收合版，向下相容）===
 // 保留原：header, children, defaultOpen=false, force=null
 // 新增：group（同一群手風琴 id），uid（該項唯一 id）
+// v3 修正：收合時不再保留 padding / pt / 子內容高度，避免露出半行內容。
 function Collapse({ header, children, defaultOpen=false, force=null, group=null, uid=null }) {
   const { useState, useRef, useEffect } = React;
   const [open, setOpen] = useState(!!defaultOpen);
-  const ref = useRef(null);
   const idRef = useRef(uid || Math.random().toString(36).slice(2,10));
   const grp = group || null;
 
-  // force 覆寫（配合你的「全部展開／收合」）
+  // force 覆寫（配合「全部展開／全部收合」）
   useEffect(() => {
     if (force === 'open') setOpen(true);
     else if (force === 'close') setOpen(false);
   }, [force]);
-
-  // 高度動畫：依 open/children 重新計算
-  useEffect(() => {
-    if (!ref.current) return;
-    ref.current.style.height = open ? ref.current.scrollHeight + 'px' : '0px';
-  }, [open, children]);
 
   // 手風琴：同群有其它項目打開 → 關閉我
   useEffect(() => {
@@ -5542,23 +5813,27 @@ function Collapse({ header, children, defaultOpen=false, force=null, group=null,
   };
 
   return (
-    <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden bg-white/70 dark:bg-slate-900/40">
+    <div className={("kjs-strict-collapse rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden bg-white/70 dark:bg-slate-900/40 " + (open ? "is-open" : "is-closed"))}>
       <button
-        className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition"
+        className="kjs-strict-collapse-trigger w-full flex items-center justify-between px-4 py-3 text-left hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition"
         onClick={handleToggle}
         aria-expanded={open ? 'true' : 'false'}
         type="button"
       >
-        <div className="font-medium">
+        <div className="font-medium min-w-0">
           {typeof header === 'function' ? header(open) : header}
         </div>
-        <svg className={"w-4 h-4 transition " + (open ? "rotate-180" : "")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg className={"w-4 h-4 shrink-0 transition " + (open ? "rotate-180" : "")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M6 9l6 6 6-6"/>
         </svg>
       </button>
-      <div ref={ref} className="px-4 pb-4 transition-[height] duration-300 ease-in-out" style={{height: open?'auto':'0px'}}>
-        <div className="pt-2">{children}</div>
-      </div>
+      {open && (
+        <div className="kjs-strict-collapse-panel border-t border-slate-200/70 dark:border-slate-700/70" aria-hidden="false">
+          <div className="kjs-strict-collapse-inner px-4 py-4">
+            {children}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -10674,6 +10949,166 @@ root.render(<><App /><LightboxRoot /></>);
 </script>
 <!-- [IMGIO JS END] -->
 
+
+
+<!-- [KJS DISPLAY UX OPTIMIZE JS START]
+     DOM 輔助層：將既有管理批次列預設收合、圖片 lazy/錯誤提示、管理列狀態記憶。
+     不改 React 資料流、不移除任何原功能。
+-->
+<script>
+(function(){
+  const LS_OPEN = 'kjs_ux_open_bulkbars_v2';
+  const LS_DENSITY = 'kjs_ux_density_v2';
+  const opened = new Set();
+  try { JSON.parse(localStorage.getItem(LS_OPEN) || '[]').forEach(x => opened.add(x)); } catch {}
+
+  function saveOpened(){
+    try { localStorage.setItem(LS_OPEN, JSON.stringify(Array.from(opened).slice(0,80))); } catch {}
+  }
+
+  function textKey(el){
+    const section = el.closest('section');
+    const title = section ? (section.querySelector('h2')?.textContent || '') : '';
+    const own = el.querySelector('.kjs-bulk-title')?.textContent || el.textContent || '';
+    return (title + '|' + own).replace(/\s+/g,' ').trim().slice(0,120) || 'bulkbar';
+  }
+
+  function ensureBulkbar(el){
+    if (!el || el.dataset.kjsUxReady === '1') return;
+    el.dataset.kjsUxReady = '1';
+    el.classList.add('kjs-ux-bulkbar');
+    const key = textKey(el);
+    el.dataset.kjsUxKey = key;
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'kjs-ux-bulk-toggle';
+    btn.setAttribute('aria-expanded', opened.has(key) ? 'true' : 'false');
+    btn.innerHTML = opened.has(key) ? '收合管理工具 ▲' : '展開管理工具 ▼';
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      const willOpen = el.classList.contains('kjs-ux-collapsed');
+      el.classList.toggle('kjs-ux-collapsed', !willOpen);
+      btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      btn.innerHTML = willOpen ? '收合管理工具 ▲' : '展開管理工具 ▼';
+      if (willOpen) opened.add(key); else opened.delete(key);
+      saveOpened();
+    });
+
+    el.insertBefore(btn, el.firstChild);
+    if (!opened.has(key)) el.classList.add('kjs-ux-collapsed');
+  }
+
+  function enhanceImages(root=document){
+    root.querySelectorAll('img:not([data-kjs-img-ux])').forEach(img => {
+      img.dataset.kjsImgUx = '1';
+      if (!img.hasAttribute('loading')) img.setAttribute('loading','lazy');
+      if (!img.hasAttribute('decoding')) img.setAttribute('decoding','async');
+      img.addEventListener('error', function(){
+        if (img.dataset.kjsImgError === '1') return;
+        img.dataset.kjsImgError = '1';
+        img.classList.add('kjs-img-error');
+        const note = document.createElement('div');
+        note.className = 'kjs-img-fallback-note';
+        note.textContent = '圖片載入失敗，請檢查網址';
+        if (img.parentElement && !img.parentElement.querySelector('.kjs-img-fallback-note')) {
+          img.parentElement.appendChild(note);
+        }
+      });
+    });
+  }
+
+  function enhanceActionRows(root=document){
+    root.querySelectorAll('.kjs-admin-lite-actions, .mt-3.flex.gap-2.justify-end').forEach(row => {
+      if (row.dataset.kjsUxActions === '1') return;
+      row.dataset.kjsUxActions = '1';
+      row.classList.add('kjs-ux-actions-ready');
+    });
+  }
+
+  function enhance(root=document){
+    root.querySelectorAll('.kjs-admin-bulkbar').forEach(ensureBulkbar);
+    enhanceImages(root);
+    enhanceActionRows(root);
+  }
+
+  function boot(){
+    enhance(document);
+    const obs = new MutationObserver(muts => {
+      let need = false;
+      for (const m of muts) {
+        if (m.addedNodes && m.addedNodes.length) { need = true; break; }
+      }
+      if (need) window.requestAnimationFrame(() => enhance(document));
+    });
+    obs.observe(document.body, {childList:true, subtree:true});
+
+    // 快捷：Esc 關閉目前展開的管理工具列（不影響既有彈窗 Esc）
+    document.addEventListener('keydown', function(e){
+      if (e.key !== 'Escape') return;
+      document.querySelectorAll('.kjs-admin-bulkbar.kjs-ux-bulkbar:not(.kjs-ux-collapsed)').forEach(el => {
+        const key = el.dataset.kjsUxKey;
+        el.classList.add('kjs-ux-collapsed');
+        const btn = el.querySelector('.kjs-ux-bulk-toggle');
+        if (btn) { btn.setAttribute('aria-expanded','false'); btn.innerHTML = '展開管理工具 ▼'; }
+        if (key) opened.delete(key);
+      });
+      saveOpened();
+    }, true);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+<!-- [KJS DISPLAY UX OPTIMIZE JS END] -->
+
+
+
+<!-- [KJS STRICT COLLAPSE UX JS START]
+     輔助保險：每次 DOM 更新後，替收合項目加上狀態 class，並清掉可能殘留的可視高度。
+-->
+<script>
+(function(){
+  function syncCollapsed(root=document){
+    root.querySelectorAll('.kjs-strict-collapse').forEach(box => {
+      const btn = box.querySelector('button[aria-expanded]');
+      const open = btn && btn.getAttribute('aria-expanded') === 'true';
+      box.classList.toggle('is-open', !!open);
+      box.classList.toggle('is-closed', !open);
+    });
+
+    root.querySelectorAll('button[aria-expanded="false"]').forEach(btn => {
+      const next = btn.nextElementSibling;
+      if (!next) return;
+      const parent = btn.parentElement;
+      const likelyPanel = parent && (parent.classList.contains('overflow-hidden') || parent.classList.contains('rounded-xl') || parent.classList.contains('rounded-2xl'));
+      if (!likelyPanel) return;
+      next.setAttribute('aria-hidden','true');
+      next.dataset.kjsCollapsedHard = '1';
+    });
+
+    root.querySelectorAll('button[aria-expanded="true"]').forEach(btn => {
+      const next = btn.nextElementSibling;
+      if (!next) return;
+      if (next.dataset.kjsCollapsedHard === '1') {
+        next.removeAttribute('aria-hidden');
+        delete next.dataset.kjsCollapsedHard;
+      }
+    });
+  }
+
+  function boot(){
+    syncCollapsed(document);
+    const obs = new MutationObserver(() => requestAnimationFrame(() => syncCollapsed(document)));
+    obs.observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:['aria-expanded','style','open']});
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+<!-- [KJS STRICT COLLAPSE UX JS END] -->
 </body>
 
 </html>
