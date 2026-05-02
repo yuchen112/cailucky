@@ -8,6 +8,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CxQ開獎所｜官方平台</title>
+  <!-- build: admin-flow-optimized-v1 -->
   <meta name="color-scheme" content="light dark">
   <meta name="description" content="CxQ開獎所官方平台：抽獎紀錄、等待開獎、社群商店、點數商城、開箱實拍與常見問題管理。">
   <meta property="og:title" content="CxQ開獎所｜官方平台">
@@ -380,6 +381,101 @@
     }
   </style>
   <!-- [KJS UNIFIED UI PATCH END] -->
+
+
+  <!-- [KJS ADMIN FLOW OPTIMIZE START]
+       編輯模式優化：集中式工具列、勾選批次、一次套用、精簡卡片管理視覺。
+  -->
+  <style id="kjs-admin-flow-optimize">
+    .kjs-admin-bulkbar{
+      border:1px solid var(--kjs-line);
+      border-radius:18px;
+      background:linear-gradient(180deg, var(--kjs-surface-strong), var(--kjs-surface));
+      box-shadow:var(--kjs-shadow-soft);
+      padding:12px;
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:8px;
+    }
+    .kjs-admin-bulkbar .kjs-bulk-title{
+      font-weight:750;
+      margin-right:4px;
+      white-space:nowrap;
+    }
+    .kjs-admin-bulkbar .kjs-bulk-count{
+      font-size:12px;
+      color:rgb(100 116 139);
+      border:1px solid var(--kjs-line);
+      border-radius:999px;
+      padding:4px 8px;
+      background:rgba(255,255,255,.55);
+    }
+    @media (prefers-color-scheme: dark){
+      .kjs-admin-bulkbar .kjs-bulk-count{ background:rgba(15,23,42,.55); color:rgb(203 213 225); }
+    }
+    .kjs-admin-check{
+      width:20px;
+      height:20px;
+      accent-color:var(--kjs-brand);
+      flex:none;
+    }
+    .kjs-admin-card-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      padding-bottom:8px;
+      border-bottom:1px solid var(--kjs-line);
+      margin-bottom:8px;
+    }
+    .kjs-admin-card-head label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:13px;
+      color:rgb(71 85 105);
+    }
+    @media (prefers-color-scheme: dark){
+      .kjs-admin-card-head label{ color:rgb(203 213 225); }
+    }
+    .kjs-admin-lite-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      justify-content:flex-end;
+    }
+    .kjs-admin-help{
+      font-size:12px;
+      color:rgb(100 116 139);
+      line-height:1.55;
+    }
+    .kjs-admin-section-title{
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .kjs-admin-section-title::before{
+      content:"";
+      width:7px;
+      height:18px;
+      border-radius:999px;
+      background:linear-gradient(180deg,var(--kjs-brand),var(--kjs-brand-2));
+      display:inline-block;
+    }
+    @media (max-width:640px){
+      .kjs-admin-bulkbar{ align-items:stretch; }
+      .kjs-admin-bulkbar > *{ min-height:42px; }
+      .kjs-admin-bulkbar input,
+      .kjs-admin-bulkbar select,
+      .kjs-admin-bulkbar button{ width:100%; }
+      .kjs-admin-bulkbar .kjs-bulk-title,
+      .kjs-admin-bulkbar .kjs-bulk-count{ width:100%; display:flex; align-items:center; }
+    }
+  </style>
+  <!-- [KJS ADMIN FLOW OPTIMIZE END] -->
+
 
 </head>
 
@@ -1513,6 +1609,22 @@ function GalleryAdmin({ data, setData, onClose=()=>{} }) {
   const items = draft.gallery.items;
 
   const [bulk, setBulk] = React.useState("");
+  const [selectedMap, setSelectedMap] = React.useState({});
+  const selectedIds = React.useMemo(() => Object.keys(selectedMap).filter(k => selectedMap[k]), [selectedMap]);
+  const selectedCount = selectedIds.length;
+  const toggleSelected = (id, v) => setSelectedMap(m => ({ ...m, [id]: v ?? !m[id] }));
+  const clearSelected = () => setSelectedMap({});
+  const selectAllGallery = () => { const next = {}; items.forEach(it => { if (it.id) next[it.id] = true; }); setSelectedMap(next); };
+  const bulkPatchSelected = (patch) => {
+    if (!selectedCount) return alert('請先勾選圖片');
+    setDraft(prev => ({ ...prev, gallery: { ...prev.gallery, items: prev.gallery.items.map(it => selectedMap[it.id] ? { ...it, ...patch } : it) }}));
+  };
+  const bulkDeleteSelected = () => {
+    if (!selectedCount) return alert('請先勾選圖片');
+    if (!confirm(`確定刪除已勾選的 ${selectedCount} 張圖片？`)) return;
+    setDraft(prev => ({ ...prev, gallery: { ...prev.gallery, items: prev.gallery.items.filter(it => !selectedMap[it.id]) }}));
+    clearSelected();
+  };
   const addFromBulk = () => {
     const lines = (bulk || "").split(/\r?\n/).map(s => s.trim()).filter(Boolean);
     if (!lines.length) return;
@@ -1561,6 +1673,36 @@ function GalleryAdmin({ data, setData, onClose=()=>{} }) {
     setDraft(prev => ({ ...prev, gallery: { ...prev.gallery, items: prev.gallery.items.map(it => ({ ...it, visible: !!v })) }}));
   };
 
+  const bulkFaqPatchSelected = (patch) => {
+    if (!selectedFaqCount) return alert('請先勾選題目');
+    setDraft(prev => ({
+      ...prev,
+      faq: { ...prev.faq, categories: prev.faq.categories.map(c => ({
+        ...c,
+        items: (c.items||[]).map(it => selectedFaqMap[`${c.id}::${it.id}`] ? { ...it, ...patch } : it)
+      }))}
+    }));
+  };
+
+  const bulkFaqDeleteSelected = () => {
+    if (!selectedFaqCount) return alert('請先勾選題目');
+    if (!confirm(`確定刪除已勾選的 ${selectedFaqCount} 個題目？`)) return;
+    setDraft(prev => ({
+      ...prev,
+      faq: { ...prev.faq, categories: prev.faq.categories.map(c => ({
+        ...c,
+        items: (c.items||[]).filter(it => !selectedFaqMap[`${c.id}::${it.id}`]).map((it,idx)=>({ ...it, order: idx+1 }))
+      }))}
+    }));
+    clearFaqSelected();
+  };
+
+  const selectAllFaqItems = () => {
+    const next = {};
+    cats.forEach(c => (c.items||[]).forEach(it => next[`${c.id}::${it.id}`] = true));
+    setSelectedFaqMap(next);
+  };
+
   const saveAll = () => {
     setData(draft);
     kjsSaveData(draft);
@@ -1586,6 +1728,17 @@ function GalleryAdmin({ data, setData, onClose=()=>{} }) {
         </div>
 
         <div className="p-4 grid gap-4 overflow-auto modal-scroll">
+          <div className="kjs-admin-bulkbar">
+            <span className="kjs-bulk-title">批次管理</span>
+            <span className="kjs-bulk-count">已勾選 {selectedCount} / 全部 {items.length}</span>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={selectAllGallery}>全選</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={clearSelected}>取消勾選</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkPatchSelected({ visible: true })}>公開勾選</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkPatchSelected({ visible: false })}>隱藏勾選</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkPatchSelected({ pin: true })}>置頂勾選</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkPatchSelected({ pin: false })}>取消置頂</button>
+            <button className="rounded-lg bg-rose-600 text-white px-3 py-1.5 text-sm" onClick={bulkDeleteSelected}>刪除勾選</button>
+          </div>
           <div className="rounded-xl border p-3">
             <div className="text-sm font-medium mb-2">批次新增圖片網址（每行一個）</div>
             <textarea className="w-full h-24 rounded-lg border p-2 text-sm" placeholder="https://...jpg\nhttps://...png" value={bulk} onChange={e=>setBulk(e.target.value)} />
@@ -1597,6 +1750,13 @@ function GalleryAdmin({ data, setData, onClose=()=>{} }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {view.map(it => (
               <div key={it.id} className="rounded-xl border overflow-hidden">
+                <div className="px-3 py-2 border-b bg-white/70 dark:bg-slate-900/60 flex items-center justify-between">
+                  <label className="inline-flex items-center gap-2 text-sm">
+                    <input className="kjs-admin-check" type="checkbox" checked={!!selectedMap[it.id]} onChange={e=>toggleSelected(it.id, e.target.checked)} />
+                    選取
+                  </label>
+                  <span className="text-xs text-slate-500">{it.visible ? '公開' : '隱藏'}{it.pin ? '・置頂' : ''}</span>
+                </div>
                 <div className="aspect-square bg-slate-100 dark:bg-slate-800 grid place-content-center">
                   {it.src ? <img src={it.src} alt="" className="w-full h-full object-cover"/> : <div className="text-slate-400">無圖片</div>}
                 </div>
@@ -1844,6 +2004,11 @@ function FaqAccordionItem({ item, isOpen=false, onToggle=()=>{} }) {
 function FaqAdmin({ data, setData, onClose=()=>{} }) {
   const React = window.React || globalThis.React;
   const [draft, setDraft] = React.useState(() => kjsEnsureFaq(kjsClone(data)));
+  const [selectedFaqMap, setSelectedFaqMap] = React.useState({}); // key: catId::itemId
+  const selectedFaqKeys = React.useMemo(() => Object.keys(selectedFaqMap).filter(k => selectedFaqMap[k]), [selectedFaqMap]);
+  const selectedFaqCount = selectedFaqKeys.length;
+  const toggleFaqSelected = (key, v) => setSelectedFaqMap(m => ({ ...m, [key]: v ?? !m[key] }));
+  const clearFaqSelected = () => setSelectedFaqMap({});
 
   const cats = draft.faq.categories;
 
@@ -1963,9 +2128,16 @@ function FaqAdmin({ data, setData, onClose=()=>{} }) {
         </div>
 
         <div className="p-4 grid gap-4 overflow-auto modal-scroll">
-          <div className="flex items-center justify-between">
-            <div className="text-sm text-slate-600">分類與題目皆可排序、顯示/隱藏。</div>
+          <div className="kjs-admin-bulkbar">
+            <span className="kjs-bulk-title">題目批次管理</span>
+            <span className="kjs-bulk-count">已勾選 {selectedFaqCount}</span>
             <button className="rounded-lg bg-brand text-white px-3 py-1.5 text-sm" onClick={addCategory}>＋ 新增分類</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={selectAllFaqItems}>全選題目</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={clearFaqSelected}>取消勾選</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkFaqPatchSelected({ visible: true })}>顯示勾選</button>
+            <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkFaqPatchSelected({ visible: false })}>隱藏勾選</button>
+            <button className="rounded-lg bg-rose-600 text-white px-3 py-1.5 text-sm" onClick={bulkFaqDeleteSelected}>刪除勾選</button>
+            <div className="kjs-admin-help">分類仍保留原本上移、下移、顯示/隱藏與刪除；題目可改用勾選後一次套用。</div>
           </div>
 
           <div className="grid grid-cols-1 gap-3">
@@ -1990,6 +2162,13 @@ function FaqAdmin({ data, setData, onClose=()=>{} }) {
                 <div className="p-3 space-y-2">
                   {(cat.items||[]).sort((a,b)=>(a?.order|0)-(b?.order|0)).map(it => (
                     <div key={it.id} className="rounded-lg border p-2">
+                      <div className="kjs-admin-card-head">
+                        <label>
+                          <input className="kjs-admin-check" type="checkbox" checked={!!selectedFaqMap[`${cat.id}::${it.id}`]} onChange={e=>toggleFaqSelected(`${cat.id}::${it.id}`, e.target.checked)} />
+                          選取此題目
+                        </label>
+                        <span className="text-xs text-slate-500">{it.visible!==false ? '顯示' : '隱藏'}</span>
+                      </div>
                       <div className="flex items-center justify-between">
                         <label className="flex-1 mr-2">
                           <span className="block text-xs text-slate-500">問題</span>
@@ -3182,6 +3361,40 @@ function StoreEditor({ data, setData, onClose }) {
   const [drafts, setDrafts] = React.useState(() => items.map(cloneStoreItem));
   const [filter, setFilter] = React.useState('');
 
+  // 編輯模式優化：勾選多筆後一次套用（不影響原本逐筆編輯）
+  const [selectedMap, setSelectedMap] = React.useState({});
+  const [bulkTagText, setBulkTagText] = React.useState('');
+  const selectedIds = React.useMemo(() => Object.keys(selectedMap).filter(k => selectedMap[k]), [selectedMap]);
+  const selectedCount = selectedIds.length;
+  const toggleSelected = (id, v) => setSelectedMap(m => ({ ...m, [id]: v ?? !m[id] }));
+  const clearSelected = () => setSelectedMap({});
+  const selectFiltered = () => {
+    const next = {};
+    filtered.forEach(x => { if (x?.id) next[x.id] = true; });
+    setSelectedMap(next);
+  };
+  const bulkDeleteSelected = () => {
+    if (!selectedCount) return alert('請先勾選要刪除的商品');
+    if (!confirm(`確定刪除已勾選的 ${selectedCount} 個商品？`)) return;
+    setDrafts(d => d.filter(x => !selectedMap[x.id]));
+    clearSelected();
+  };
+  const bulkSetAvailability = (availability) => {
+    if (!selectedCount) return alert('請先勾選商品');
+    setDrafts(d => d.map(x => selectedMap[x.id] ? { ...x, availability } : x));
+  };
+  const bulkAddTags = () => {
+    const tags = String(bulkTagText || '').split(',').map(s=>s.trim()).filter(Boolean);
+    if (!selectedCount) return alert('請先勾選商品');
+    if (!tags.length) return alert('請輸入要加入的標籤');
+    setDrafts(d => d.map(x => {
+      if (!selectedMap[x.id]) return x;
+      const oldTags = Array.isArray(x.tags) ? x.tags : String(x.tags || '').split(',').map(s=>s.trim()).filter(Boolean);
+      return { ...x, tags: Array.from(new Set([...oldTags, ...tags])) };
+    }));
+    setBulkTagText('');
+  };
+
   // ★ 新增：群組狀態（初始化自 data.store.tagGroups）
   const [groupsState, setGroupsState] = React.useState(() =>
     Array.isArray(data?.store?.tagGroups)
@@ -3538,7 +3751,7 @@ function StoreEditor({ data, setData, onClose }) {
         <div className="w-full max-w-4xl max-h-[86vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl">
           {/* header */}
           <div className="px-4 py-3 flex items-center justify-between border-b border-slate-200 dark:border-slate-700">
-            <div className="font-semibold">編輯社群商店</div>
+            <div><div className="font-semibold">編輯社群商店</div><div className="text-xs text-slate-500">集中管理：可逐筆編輯，也可勾選多筆後一次套用。</div></div>
             <div className="flex items-center gap-2">
               <input
                 value={filter}
@@ -3555,6 +3768,18 @@ function StoreEditor({ data, setData, onClose }) {
 
           {/* body */}
           <div className="p-3 overflow-y-auto max-h-[calc(86vh-56px)] space-y-3">
+            <div className="kjs-admin-bulkbar">
+              <span className="kjs-bulk-title">批次管理</span>
+              <span className="kjs-bulk-count">已勾選 {selectedCount} / 篩選結果 {filtered.length}</span>
+              <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={selectFiltered}>全選目前結果</button>
+              <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={clearSelected}>取消勾選</button>
+              <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkSetAvailability('現貨')}>套用現貨</button>
+              <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkSetAvailability('預售')}>套用預售</button>
+              <input className="rounded-lg border px-3 py-1.5 text-sm" value={bulkTagText} onChange={e=>setBulkTagText(e.target.value)} placeholder="批次加入標籤，逗號分隔" />
+              <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={bulkAddTags}>加入標籤</button>
+              <button className="rounded-lg bg-rose-600 text-white px-3 py-1.5 text-sm" onClick={bulkDeleteSelected}>刪除勾選</button>
+            </div>
+
             {/* 標籤群組編輯（排序／整合） */}
             <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
               <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
@@ -3577,6 +3802,13 @@ function StoreEditor({ data, setData, onClose }) {
                 const hasV = !!(it?.variants && it.variants.mode && it.variants.mode!=="none");
                 return (
                   <div key={it.id} className="rounded-xl border border-slate-200 dark:border-slate-700 p-3 space-y-2">
+                    <div className="kjs-admin-card-head">
+                      <label>
+                        <input className="kjs-admin-check" type="checkbox" checked={!!selectedMap[it.id]} onChange={e=>toggleSelected(it.id, e.target.checked)} />
+                        選取此商品
+                      </label>
+                      <span className="text-xs text-slate-500 truncate">{it.name || '未命名商品'}</span>
+                    </div>
                     {/* 原本 md:grid-cols-6 -> 調成 7，容納 availability */}
                     <div className="grid grid-cols-1 md:grid-cols-7 gap-2">
                       <input
@@ -5034,6 +5266,9 @@ const EMPTY = {
   // 📌 其他資料卡片集合（這行後面一定要逗號）
   others: { cards: [] },
 
+  // 🧵 手作/訂製區：服務項目與區塊說明
+  custom: { intro: '可放手作商品、客製訂製、合作插畫與其他可詢問服務。', items: [] },
+
   settings: { ...DEFAULT_SETTINGS },
 };
 
@@ -5090,7 +5325,12 @@ function normalizeSiteData(input){
 
   d.links = { items: [], ...kjsObj(d.links) };
   d.links.items = kjsArray(d.links.items).map(x => kjsEnsureId({ ...kjsObj(x) }, 'link'));
-  d.games = kjsArray(d.games).map(x => kjsEnsureId({ ...kjsObj(x) }, 'game'));
+
+  d.custom = { intro: EMPTY.custom.intro, items: [], ...kjsObj(d.custom) };
+  d.custom.items = kjsArray(d.custom.items).map(x => kjsEnsureId({ visible: true, pinned: false, images: [], tags: [], ...kjsObj(x) }, 'custom'));
+
+  // 遊戲中心已移除：不再建立或使用 games 資料節點。
+  if ('games' in d) delete d.games;
 
   d.settings = { ...DEFAULT_SETTINGS, ...kjsObj(d.settings) };
   return d;
@@ -5404,22 +5644,17 @@ React.useEffect(() => {
 // === PointsPanel 展開狀態（預設展開，會記住使用者選擇） ===
 const [pointsOpen, setPointsOpen] = useLocalState('kjs_points_open', false);
       
-const [tab, setTab] = useState('home'); // home | history | pending | ongoing | shop | store | games | others | system | gallery | faq | links | custom
+const [tab, setTab] = useState('home'); // home | history | pending | ongoing | shop | store | others | system | gallery | faq | links | custom
       const [menuOpen, setMenuOpen] = useState(false);
       const [adminMode, setAdminMode] = useState(false);
       const [query, setQuery] = useState('');
 const [queryMode, setQueryMode] = useLocalState('kjs_query_mode', 'all'); // all | prize | winner | note
 
-// === Games：遊戲清單與入口顯示規則 ===
-const gamesList = Array.isArray(data?.games) ? data.games : [];
-const showGameCenter = adminMode || gamesList.length > 0;
-
-// 若目前不應顯示遊戲中心（非管理者且尚無遊戲），但使用者仍停留在 games 分頁，則自動導回首頁（避免透過手動改網址進入）
+// === Games：遊戲中心已移除 ===
+// 若舊版資料或舊狀態仍停在 games 分頁，直接導回首頁。
 React.useEffect(() => {
-  if (tab === 'games' && !showGameCenter) {
-    setTab('home');
-  }
-}, [tab, showGameCenter]);
+  if (tab === 'games') setTab('home');
+}, [tab]);
 
 
 
@@ -5830,7 +6065,7 @@ const importJSON = (file) => {
 
 {tab==='links' && <LinksPage data={data} setData={setData} admin={adminMode} />}
 
-{tab==='custom' && <CustomPage />}
+{tab==='custom' && <CustomPage data={data} setData={setData} admin={adminMode} />}
 
 {tab==='home' && <HomeSections data={data} setData={setData} admin={adminMode} />}
 
@@ -5895,8 +6130,6 @@ const importJSON = (file) => {
 
 
 {tab==='others' && <Others data={data} admin={adminMode} setData={setData} query={query} queryMode={queryMode} />}
-
-{tab==='games' && showGameCenter && <GameCenter data={data} setData={setData} admin={adminMode} />}
 
 
 {tab==='system' && adminMode && (
@@ -6134,13 +6367,6 @@ const importJSON = (file) => {
   onClick={()=>{ setTab('custom'); setMenuOpen(false); }}
 />
 
-{showGameCenter && (
-  <NavItem
-    label="🎮 遊戲中心"
-    active={tab==='games'}
-    onClick={()=>{ setTab('games'); setMenuOpen(false); }}
-  />
-)}
 
   <NavItem
     label="🛍️ 點數商城"
@@ -6332,395 +6558,8 @@ function StickyBulkToggles({ onOpenAll, onCloseAll, className="" }) {
       );
     }
 
-// === GameCenter：🎮 遊戲中心（依「空白邏輯」控制入口） ===
-function GameCenter({ data, setData, admin }) {
-  const { useEffect, useMemo, useState } = React;
+// === GameCenter 已移除：此處保留空白，避免舊版遊戲功能再被渲染。 ===
 
-  const games = useMemo(() => (Array.isArray(data?.games) ? data.games : []), [data]);
-
-  // 只記住「上次玩哪個」：不存進 data，避免污染公開資料
-  const [activeId, setActiveId] = useLocalState('kjs_game_active', '');
-  const activeGame = useMemo(() => games.find(g => g.id === activeId) || games[0] || null, [games, activeId]);
-
-  // 若清單變動導致 activeId 失效，自動切到第一個
-  useEffect(() => {
-    if (!games.length) {
-      if (activeId) setActiveId('');
-      return;
-    }
-    const ok = games.some(g => g.id === activeId);
-    if (!ok) setActiveId(games[0].id);
-  }, [games, activeId, setActiveId]);
-
-  // Play Modal：點卡片才開啟，關閉時保留 iframe（不卸載），以保留進度
-  const [playOpen, setPlayOpen] = useState(false);
-  const [mountedIds, setMountedIds] = useState([]); // 已開啟過的遊戲 id（用於保留各遊戲 iframe 狀態）
-  const [iframeRev, setIframeRev] = useState({});   // 重新開始用：id -> rev
-
-  const openPlay = (id) => {
-    if (!id) return;
-    setActiveId(id);
-    setMountedIds(prev => (prev.includes(id) ? prev : [...prev, id]));
-    setPlayOpen(true);
-  };
-
-  const closePlay = () => setPlayOpen(false);
-
-  const restartPlay = () => {
-    if (!activeId) return;
-    setMountedIds(prev => (prev.includes(activeId) ? prev : [...prev, activeId]));
-    setIframeRev(prev => ({ ...(prev || {}), [activeId]: ((prev && prev[activeId]) || 0) + 1 }));
-  };
-
-  // 若遊戲清單清空，關閉遊玩視窗並清掉暫存 iframe
-  useEffect(() => {
-    if (!games.length) {
-      setPlayOpen(false);
-      setMountedIds([]);
-    }
-  }, [games.length]);
-
-  // Admin：新增/編輯 Modal
-  const [openEditor, setOpenEditor] = useState(false);
-  const [editingId, setEditingId] = useState(null);
-  const [title, setTitle] = useState('');
-  const [url, setUrl] = useState('');
-  const [note, setNote] = useState('');
-  const [thumb, setThumb] = useState('');
-
-  const resetEditor = () => {
-    setEditingId(null);
-    setTitle('');
-    setUrl('');
-    setNote('');
-    setThumb('');
-  };
-
-  const openAdd = () => {
-    resetEditor();
-    setOpenEditor(true);
-  };
-
-  const openEdit = (g) => {
-    setEditingId(g.id);
-    setTitle(String(g.title || ''));
-    setUrl(String(g.url || ''));
-    setNote(String(g.note || ''));
-    setThumb(String(g.thumb || ''));
-    setOpenEditor(true);
-  };
-
-  const normalizeUrl = (u) => String(u || '').trim();
-
-  const saveGame = () => {
-    const t = String(title || '').trim();
-    const u = normalizeUrl(url);
-    const n = String(note || '').trim();
-    const th = String(thumb || '').trim();
-
-    if (!t) { alert('請輸入遊戲名稱'); return; }
-    if (!u) { alert('請輸入遊戲網址（可填相對路徑或 https://...）'); return; }
-
-    const now = Date.now();
-    const makeId = () => (crypto?.randomUUID ? crypto.randomUUID() : ('g_' + now + '_' + Math.random().toString(16).slice(2)));
-
-    const next = { id: editingId || makeId(), title: t, url: u, thumb: th, note: n, updatedAt: now, createdAt: editingId ? undefined : now };
-
-    const nextGames = editingId
-      ? games.map(g => g.id === editingId ? ({ ...g, ...next, createdAt: g.createdAt ?? now }) : g)
-      : [...games, next];
-
-    setData(prev => ({ ...(prev || {}), games: nextGames }));
-
-    // 新增第一個遊戲時：自動切到它
-    if (!editingId) setActiveId(next.id);
-
-    setOpenEditor(false);
-    resetEditor();
-  };
-
-  const removeGame = (id) => {
-    const g = games.find(x => x.id === id);
-    if (!g) return;
-    if (!confirm(`確定刪除「${g.title}」？`)) return;
-
-    const nextGames = games.filter(x => x.id !== id);
-    setData(prev => ({ ...(prev || {}), games: nextGames }));
-
-    if (activeId === id) {
-      setActiveId(nextGames[0]?.id || '');
-    }
-  };
-
-  // 非管理者且沒有遊戲：入口已隱藏，且上層會自動導回首頁；此處再做防呆
-  if (!admin && games.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className="space-y-4">
-      <section className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur p-4">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <div className="text-lg font-semibold">🎮 遊戲中心</div>
-            <div className="text-sm text-slate-500 mt-1">
-              {games.length ? '從左側清單選擇遊戲，右側直接內嵌遊玩' : '尚未新增任何遊戲'}
-            </div>
-          </div>
-
-          {admin && (
-            <button
-              onClick={openAdd}
-              className="tap-target rounded-xl bg-brand text-white px-3 py-2 text-sm shadow-soft"
-              title="新增遊戲"
-            >
-              新增遊戲
-            </button>
-          )}
-        </div>
-      </section>
-
-      {games.length === 0 ? (
-        <EmptyCard text="尚未新增任何遊戲" admin={true} />
-      ) : (
-        <>
-          {/* 卡片清單：所有人可見（有遊戲時） */}
-          <section className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur p-3">
-            <div className="text-sm font-semibold mb-2">遊戲清單</div>
-
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {games.map(g => {
-                const active = activeGame?.id === g.id;
-                const thumbSrc = String(g.thumb || '').trim();
-                return (
-                  <div
-                    key={g.id}
-                    className={cx(
-                      "rounded-2xl border overflow-hidden bg-white/70 dark:bg-slate-900/40",
-                      active ? "border-brand/60 ring-2 ring-brand/20" : "border-slate-200/70 dark:border-slate-700"
-                    )}
-                  >
-                    <button
-                      className="w-full text-left"
-                      onClick={() => openPlay(g.id)}
-                      title={g.title}
-                    >
-                      <div className="aspect-[16/9] bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
-                        {thumbSrc ? (
-                          <img
-                            src={thumbSrc}
-                            alt={g.title}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="text-4xl opacity-70">🎮</div>
-                        )}
-                      </div>
-
-                      <div className="p-3">
-                        <div className="font-semibold line-clamp-1">{g.title}</div>
-                        {!!g.note && <div className="text-xs text-slate-500 mt-1 line-clamp-2">{g.note}</div>}
-                      </div>
-                    </button>
-
-                    <div className="px-3 pb-3 flex items-center justify-between gap-2">
-                      <a
-                        href={g.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-xs underline text-slate-500 hover:text-slate-700 dark:hover:text-slate-200"
-                        title="新視窗開啟（可選）"
-                      >
-                        新視窗開啟
-                      </a>
-
-                      {admin && (
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => openEdit(g)}
-                            className="rounded-lg border px-2 py-1 text-xs"
-                            title="編輯"
-                          >
-                            編輯
-                          </button>
-                          <button
-                            onClick={() => removeGame(g.id)}
-                            className="rounded-lg border px-2 py-1 text-xs"
-                            title="刪除"
-                          >
-                            刪除
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-
-          {/* 遊玩視窗（點卡片才開啟；關閉時保留 iframe，不卸載） */}
-          {mountedIds.length > 0 && (
-            <div
-              className={`fixed inset-0 z-50 ${playOpen ? '' : 'pointer-events-none'}`}
-              aria-hidden={playOpen ? 'false' : 'true'}
-            >
-              <div
-                className={`absolute inset-0 bg-black/50 transition-opacity duration-200 ${playOpen ? 'opacity-100' : 'opacity-0'}`}
-                onClick={closePlay}
-              />
-              <div className="absolute inset-0 flex items-center justify-center p-4">
-                <div
-                  className={`w-full max-w-5xl rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden transition-all duration-200 ${playOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
-                  onClick={(e)=>e.stopPropagation()}
-                >
-                  <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3">
-                    <div className="font-semibold line-clamp-1">
-                      {activeGame ? `🎮 ${activeGame.title}` : '🎮 遊戲'}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {activeGame?.url && (
-                        <a
-                          href={activeGame.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="rounded-lg border px-3 py-1.5 text-sm"
-                          title="新分頁開啟"
-                        >
-                          新分頁
-                        </a>
-                      )}
-                      <button
-                        type="button"
-                        onClick={restartPlay}
-                        className="rounded-lg border px-3 py-1.5 text-sm"
-                        title="重新開始（重新載入遊戲）"
-                        disabled={!activeGame}
-                      >
-                        重新開始
-                      </button>
-                      <button
-                        type="button"
-                        onClick={closePlay}
-                        className="rounded-lg border px-3 py-1.5 text-sm"
-                        title="關閉（保留進度）"
-                      >
-                        關閉
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="p-3">
-                    <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-black/5">
-                      <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
-                        {mountedIds.map((id) => {
-                          const g = games.find(x => x.id === id);
-                          if (!g) return null;
-                          const isActive = id === activeId;
-                          const rev = (iframeRev && iframeRev[id]) || 0;
-                          return (
-                            <iframe
-                              key={`${id}:${rev}`}
-                              title={g.title}
-                              src={g.url}
-                              className={`absolute inset-0 w-full h-full bg-white ${isActive ? '' : 'hidden'}`}
-                              loading="lazy"
-                              allow="fullscreen; gamepad; autoplay"
-                              sandbox="allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-popups"
-                            />
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {activeGame?.note && (
-                      <div className="mt-3 text-sm text-slate-600 dark:text-slate-300">
-                        {activeGame.note}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-        </>
-      )}{openEditor && (
-        <div className="fixed inset-0 z-50">
-          <div className="absolute inset-0 bg-black/40" onClick={() => { setOpenEditor(false); resetEditor(); }} />
-          <div className="absolute inset-0 flex items-center justify-center p-4">
-            <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl p-4 modal-scroll" onClick={(e)=>e.stopPropagation()}>
-              <div className="text-base font-semibold">{editingId ? '編輯遊戲' : '新增遊戲'}</div>
-              <div className="mt-3 grid gap-3">
-                <div>
-                  <label className="text-sm text-slate-600 dark:text-slate-300">遊戲名稱</label>
-                  <input
-                    value={title}
-                    onChange={(e)=>setTitle(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-2 bg-white/70 dark:bg-slate-800/70"
-                    placeholder="例如：Flappy Bird"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm text-slate-600 dark:text-slate-300">遊戲網址</label>
-                  <input
-                    value={url}
-                    onChange={(e)=>setUrl(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-2 bg-white/70 dark:bg-slate-800/70"
-                    placeholder="例如：./games/flappy/index.html 或 https://..."
-                  />
-                  <div className="text-xs text-slate-500 mt-1">
-                    建議使用同站相對路徑，才能符合「不聯機」的本機部署情境
-                  </div>
-                </div>
-                <div>
-                  <label className="text-sm text-slate-600 dark:text-slate-300">縮圖網址（可選）</label>
-                  <input
-                    value={thumb}
-                    onChange={(e)=>setThumb(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-2 bg-white/70 dark:bg-slate-800/70"
-                    placeholder="例如：./assets/games/flappy_thumb.png 或 https://..."
-                  />
-                  <div className="text-xs text-slate-500 mt-1">
-                    若不填，卡片會顯示預設圖示；建議同站相對路徑
-                  </div>
-                </div>
-                <div>
-                  <label className="text-sm text-slate-600 dark:text-slate-300">備註（可選）</label>
-                  <textarea
-                    value={note}
-                    onChange={(e)=>setNote(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-2 bg-white/70 dark:bg-slate-800/70"
-                    rows={3}
-                    placeholder="例如：操作方式、關卡說明等"
-                  />
-                </div>
-
-                <div className="flex items-center justify-end gap-2 pt-2">
-                  <button
-                    onClick={() => { setOpenEditor(false); resetEditor(); }}
-                    className="tap-target rounded-xl border px-3 py-2 text-sm"
-                  >
-                    取消
-                  </button>
-                  <button
-                    onClick={saveGame}
-                    className="tap-target rounded-xl bg-brand text-white px-3 py-2 text-sm shadow-soft"
-                  >
-                    儲存
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// === Home（Hero + 右側開箱/到貨實拍縮圖 + 4 顆重點按鈕 + FAQ） ===
 function Home({ setTab, data, setData, admin }) {
   const { useState, useMemo, useEffect } = React;
 
@@ -7114,6 +6953,12 @@ function History({ data, admin, setData, query="", queryMode="all" }) {
   const [draft, setDraft] = useState({ date:'', title:'', winnersText:'', winnerCount:'', totalParticipants:'', youtube:'', status:'', note:'' });
   const [editingId, setEditingId] = useState(null);
   const [showCal, setShowCal] = useState(false);
+  const [selectedMap, setSelectedMap] = useState({});
+  const [bulkStatus, setBulkStatus] = useState('');
+  const selectedIds = React.useMemo(() => Object.keys(selectedMap).filter(k => selectedMap[k]), [selectedMap]);
+  const selectedCount = selectedIds.length;
+  const toggleSelected = (id, v) => setSelectedMap(m => ({ ...m, [id]: v ?? !m[id] }));
+  const clearSelected = () => setSelectedMap({});
 
   // 📅 月曆：目前檢視的年月（UTC）與被篩選日期
   const [cal, setCal] = useState(()=>{
@@ -7270,6 +7115,22 @@ const fmtDate = React.useCallback((d) => {
   };
 
   const copyWinners = (arr=[]) => navigator.clipboard.writeText((arr||[]).join('\n')).then(()=>alert('已複製得獎者名單'));
+
+  const selectHistoryPage = () => { const next = {}; historyPageItems.forEach(x => { if (x.id) next[x.id] = true; }); setSelectedMap(next); };
+  const bulkApplyHistoryStatus = () => {
+    if (!admin) return;
+    if (!selectedCount) return alert('請先勾選歷史紀錄');
+    if (!bulkStatus) return alert('請先選擇要套用的狀態');
+    setData({ ...data, history: (data.history || []).map(x => selectedMap[x.id] ? { ...x, status: bulkStatus } : x) });
+    clearSelected();
+  };
+  const bulkDeleteHistory = () => {
+    if (!admin) return;
+    if (!selectedCount) return alert('請先勾選歷史紀錄');
+    if (!confirm(`確定刪除已勾選的 ${selectedCount} 筆歷史紀錄？`)) return;
+    setData({ ...data, history: (data.history || []).filter(x => !selectedMap[x.id]) });
+    clearSelected();
+  };
 
   // —— 畫面 —— //
   return (
@@ -7431,6 +7292,21 @@ const fmtDate = React.useCallback((d) => {
         </div>
       )}
 
+      {admin && (
+        <div className="kjs-admin-bulkbar mt-4">
+          <span className="kjs-bulk-title">歷史紀錄批次管理</span>
+          <span className="kjs-bulk-count">已勾選 {selectedCount} / 本頁 {historyPageItems.length}</span>
+          <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={selectHistoryPage}>全選本頁</button>
+          <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={clearSelected}>取消勾選</button>
+          <select className="rounded-lg border px-3 py-1.5 text-sm" value={bulkStatus} onChange={e=>setBulkStatus(e.target.value)}>
+            <option value="">選擇批次狀態</option>
+            {HISTORY_STATUS_OPTIONS.map(opt=><option key={opt.value} value={opt.value}>{opt.label}</option>)}
+          </select>
+          <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={bulkApplyHistoryStatus}>套用狀態</button>
+          <button className="rounded-lg bg-rose-600 text-white px-3 py-1.5 text-sm" onClick={bulkDeleteHistory}>刪除勾選</button>
+        </div>
+      )}
+
       {items.length===0 && <EmptyCard text="目前沒有資料" admin={admin} />}
 
       {/* 全展/全收（僅對當頁有效） */}
@@ -7467,6 +7343,16 @@ const fmtDate = React.useCallback((d) => {
   force={bulk}  // 保留
   header={(open) => <HistoryHeaderRow rec={x} />}
 >
+  {admin && (
+    <div className="mb-2 flex items-center justify-between gap-2">
+      <label className="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+        <input className="kjs-admin-check" type="checkbox" checked={!!selectedMap[x.id]} onChange={e=>toggleSelected(x.id, e.target.checked)} />
+        選取此紀錄
+      </label>
+      <span className="text-xs text-slate-500">批次修改狀態 / 刪除用</span>
+    </div>
+  )}
+
   {/* 手機：展開後顯示完整獎品名稱 */}
   <div className="sm:hidden mb-2">
     <div className="text-[15px] font-medium whitespace-normal break-words">
@@ -7554,17 +7440,385 @@ const fmtDate = React.useCallback((d) => {
 }
 
 
-function CustomPage() {
+function CustomPage({ data, setData, admin=false }) {
+  const React = window.React || globalThis.React;
+  const custom = (data && data.custom && typeof data.custom === 'object') ? data.custom : { intro: '', items: [] };
+  const rawItems = Array.isArray(custom.items) ? custom.items : [];
+  const defaultDraft = () => ({
+    id: '',
+    title: '',
+    type: '手作商品',
+    status: '開放中',
+    price: '',
+    leadTime: '',
+    cover: '',
+    imagesText: '',
+    summary: '',
+    detail: '',
+    options: '',
+    notes: '',
+    contactUrl: '',
+    tagsText: '',
+    visible: true,
+    pinned: false
+  });
+
+  const [introDraft, setIntroDraft] = React.useState(String(custom.intro || ''));
+  const [editingId, setEditingId] = React.useState('');
+  const [draft, setDraft] = React.useState(defaultDraft);
+  const [viewer, setViewer] = React.useState(null);
+  const [showForm, setShowForm] = React.useState(false);
+  const [selectedMap, setSelectedMap] = React.useState({});
+  const selectedIds = React.useMemo(() => Object.keys(selectedMap).filter(k => selectedMap[k]), [selectedMap]);
+  const selectedCount = selectedIds.length;
+  const toggleSelected = (id, v) => setSelectedMap(m => ({ ...m, [id]: v ?? !m[id] }));
+  const clearSelected = () => setSelectedMap({});
+  const selectAllCustom = () => { const next = {}; rawItems.forEach(it => { if (it.id) next[it.id] = true; }); setSelectedMap(next); };
+
+  React.useEffect(() => {
+    setIntroDraft(String(custom.intro || ''));
+  }, [custom.intro]);
+
+  const splitLines = (text) => String(text || '').split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+  const splitTags = (text) => String(text || '').split(/[，,\n]/).map(s => s.trim()).filter(Boolean);
+  const saveCustom = (nextCustom, message='已儲存手作/訂製區') => {
+    setData(prev => {
+      const base = prev && typeof prev === 'object' ? prev : {};
+      return normalizeSiteData({ ...base, custom: nextCustom });
+    });
+    if (typeof kjsToast === 'function') kjsToast(message);
+  };
+  const normalizeItem = (item) => {
+    const obj = item && typeof item === 'object' ? item : {};
+    const images = Array.isArray(obj.images) ? obj.images.map(x => String(x || '').trim()).filter(Boolean) : [];
+    const cover = String(obj.cover || obj.image || images[0] || '').trim();
+    const tags = Array.isArray(obj.tags) ? obj.tags.map(x => String(x || '').trim()).filter(Boolean) : [];
+    return {
+      id: obj.id || `custom_${Date.now().toString(36)}_${Math.random().toString(36).slice(2,8)}`,
+      title: String(obj.title || obj.name || '').trim(),
+      type: String(obj.type || '手作商品').trim(),
+      status: String(obj.status || '開放中').trim(),
+      price: String(obj.price || '').trim(),
+      leadTime: String(obj.leadTime || obj.period || '').trim(),
+      cover,
+      images,
+      summary: String(obj.summary || obj.desc || '').trim(),
+      detail: String(obj.detail || obj.intro || '').trim(),
+      options: String(obj.options || '').trim(),
+      notes: String(obj.notes || obj.note || '').trim(),
+      contactUrl: String(obj.contactUrl || '').trim(),
+      tags,
+      visible: obj.visible !== false,
+      pinned: !!obj.pinned,
+      updatedAt: obj.updatedAt || Date.now(),
+      createdAt: obj.createdAt || Date.now()
+    };
+  };
+
+  const items = rawItems.map(normalizeItem).sort((a,b) => {
+    if ((b.pinned|0) !== (a.pinned|0)) return (b.pinned|0) - (a.pinned|0);
+    return (b.updatedAt || 0) - (a.updatedAt || 0);
+  });
+  const visibleItems = admin ? items : items.filter(x => x.visible);
+  const statusOptions = ['開放中','暫停接單','已額滿','即將開放','展示作品'];
+  const typeOptions = ['手作商品','客製訂製','合作插畫','委託服務','其他'];
+  const contactFallback = String(data?.settings?.contactUrl || window.__CONTACT_URL__ || '').trim();
+
+  const startAdd = () => {
+    setEditingId('');
+    setDraft(defaultDraft());
+    setShowForm(true);
+    setTimeout(() => document.getElementById('custom-edit-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
+  };
+  const startEdit = (item) => {
+    setEditingId(item.id);
+    setDraft({
+      ...defaultDraft(),
+      ...item,
+      imagesText: (Array.isArray(item.images) ? item.images : []).join('\n'),
+      tagsText: (Array.isArray(item.tags) ? item.tags : []).join('，')
+    });
+    setShowForm(true);
+    setTimeout(() => document.getElementById('custom-edit-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
+  };
+  const cancelEdit = () => {
+    setEditingId('');
+    setDraft(defaultDraft());
+    setShowForm(false);
+  };
+  const saveIntro = () => {
+    if (!admin) return;
+    saveCustom({ ...custom, intro: String(introDraft || '').trim(), items: rawItems }, '已更新手作/訂製區說明');
+  };
+  const saveItem = () => {
+    if (!admin) return;
+    const title = String(draft.title || '').trim();
+    if (!title) { alert('請輸入項目名稱'); return; }
+    const images = splitLines(draft.imagesText);
+    const cover = String(draft.cover || images[0] || '').trim();
+    const now = Date.now();
+    const nextItem = normalizeItem({
+      ...draft,
+      id: editingId || draft.id || `custom_${now.toString(36)}_${Math.random().toString(36).slice(2,8)}`,
+      title,
+      cover,
+      images,
+      tags: splitTags(draft.tagsText),
+      updatedAt: now,
+      createdAt: editingId ? (items.find(x => x.id === editingId)?.createdAt || now) : now
+    });
+    const nextItems = editingId
+      ? rawItems.map(x => (x.id === editingId ? nextItem : x))
+      : [nextItem, ...rawItems];
+    saveCustom({ ...custom, intro: introDraft, items: nextItems }, editingId ? '已更新訂製項目' : '已新增訂製項目');
+    cancelEdit();
+  };
+  const removeItem = (id) => {
+    if (!admin) return;
+    const item = items.find(x => x.id === id);
+    if (!item) return;
+    if (!confirm(`確定刪除「${item.title}」？`)) return;
+    saveCustom({ ...custom, intro: introDraft, items: rawItems.filter(x => x.id !== id) }, '已刪除訂製項目');
+    if (editingId === id) cancelEdit();
+  };
+  const patchItem = (id, patch, message='已更新項目') => {
+    if (!admin) return;
+    const nextItems = rawItems.map(x => x.id === id ? normalizeItem({ ...x, ...patch, updatedAt: Date.now() }) : x);
+    saveCustom({ ...custom, intro: introDraft, items: nextItems }, message);
+  };
+  const moveItem = (id, dir) => {
+    if (!admin) return;
+    const arr = rawItems.slice();
+    const i = arr.findIndex(x => x.id === id);
+    if (i < 0) return;
+    const j = i + dir;
+    if (j < 0 || j >= arr.length) return;
+    const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    saveCustom({ ...custom, intro: introDraft, items: arr }, '已調整排序');
+  };
+  const bulkPatchCustom = (patch) => {
+    if (!admin) return;
+    if (!selectedCount) return alert('請先勾選項目');
+    const nextItems = rawItems.map(x => selectedMap[x.id] ? normalizeItem({ ...x, ...patch, updatedAt: Date.now() }) : x);
+    saveCustom({ ...custom, intro: introDraft, items: nextItems }, `已批次更新 ${selectedCount} 個項目`);
+  };
+  const bulkDeleteCustom = () => {
+    if (!admin) return;
+    if (!selectedCount) return alert('請先勾選項目');
+    if (!confirm(`確定刪除已勾選的 ${selectedCount} 個手作/訂製項目？`)) return;
+    saveCustom({ ...custom, intro: introDraft, items: rawItems.filter(x => !selectedMap[x.id]) }, `已刪除 ${selectedCount} 個項目`);
+    clearSelected();
+  };
+  const copyInquiry = async (item) => {
+    const text = [
+      '您好，我想詢問手作/訂製項目：',
+      `項目：${item.title}`,
+      item.type ? `類型：${item.type}` : '',
+      item.price ? `價格說明：${item.price}` : '',
+      item.leadTime ? `製作時間：${item.leadTime}` : '',
+      '',
+      '想詢問內容：'
+    ].filter(Boolean).join('\n');
+    try {
+      await navigator.clipboard.writeText(text);
+      if (typeof kjsToast === 'function') kjsToast('已複製詢問模板');
+    } catch {
+      prompt('請手動複製詢問模板', text);
+    }
+  };
+
+  const StatusBadge = ({ value }) => {
+    const v = String(value || '').trim() || '開放中';
+    const cls = v === '開放中' ? 'bg-emerald-100/80 text-emerald-700 dark:bg-emerald-300/15 dark:text-emerald-300'
+      : v === '暫停接單' ? 'bg-amber-100/80 text-amber-800 dark:bg-amber-300/15 dark:text-amber-300'
+      : v === '已額滿' ? 'bg-rose-100/80 text-rose-700 dark:bg-rose-300/15 dark:text-rose-300'
+      : v === '即將開放' ? 'bg-sky-100/80 text-sky-700 dark:bg-sky-300/15 dark:text-sky-300'
+      : 'bg-slate-100/80 text-slate-700 dark:bg-slate-300/15 dark:text-slate-300';
+    return <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${cls}`}>{v}</span>;
+  };
+
   return (
-    <Section>
-      <h2 className="text-xl font-bold">🧵 手作/訂製區</h2>
-      <p className="text-slate-600 dark:text-slate-300 mt-2">
-        此區先預留空間，後續將規劃為訂製服務入口（合作插畫家、可訂製商品等）。
-      </p>
-      <div className="mt-4 rounded-2xl border bg-white/70 dark:bg-slate-900/60 p-4">
-        <div className="text-sm text-slate-500">
-          目前尚未開放，敬請期待。
+    <Section title="🧵 手作/訂製區" subtitle="展示手作商品、客製訂製、合作插畫與可詢問服務。">
+      <div className="space-y-4">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/50 p-4">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+            <div className="min-w-0">
+              <div className="text-base font-semibold">訂製服務說明</div>
+              {!admin ? (
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 whitespace-pre-wrap">
+                  {String(custom.intro || '').trim() || '目前手作/訂製服務尚未開放，敬請期待。'}
+                </p>
+              ) : (
+                <textarea
+                  className="mt-2 w-full min-h-[90px] rounded-lg border p-3 text-sm"
+                  value={introDraft}
+                  onChange={e=>setIntroDraft(e.target.value)}
+                  placeholder="輸入手作/訂製區的前台說明，例如接單範圍、報價方式、聯絡方式等。"
+                />
+              )}
+            </div>
+            {admin && (
+              <div className="flex flex-wrap gap-2 shrink-0">
+                <button type="button" className="rounded-lg border px-3 py-2 text-sm" onClick={saveIntro}>儲存說明</button>
+                <button type="button" className="rounded-lg bg-brand text-white px-3 py-2 text-sm" onClick={startAdd}>＋ 新增項目</button>
+              </div>
+            )}
+          </div>
         </div>
+
+        {admin && (
+          <div className="kjs-admin-bulkbar">
+            <span className="kjs-bulk-title">手作/訂製批次管理</span>
+            <span className="kjs-bulk-count">已勾選 {selectedCount} / 全部 {rawItems.length}</span>
+            <button className="rounded-lg border px-3 py-2 text-sm" onClick={selectAllCustom}>全選</button>
+            <button className="rounded-lg border px-3 py-2 text-sm" onClick={clearSelected}>取消勾選</button>
+            <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>bulkPatchCustom({ visible: true })}>公開勾選</button>
+            <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>bulkPatchCustom({ visible: false })}>隱藏勾選</button>
+            <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>bulkPatchCustom({ pinned: true })}>置頂勾選</button>
+            <button className="rounded-lg border px-3 py-2 text-sm" onClick={()=>bulkPatchCustom({ pinned: false })}>取消置頂</button>
+            <button className="rounded-lg bg-rose-600 text-white px-3 py-2 text-sm" onClick={bulkDeleteCustom}>刪除勾選</button>
+          </div>
+        )}
+
+        {admin && showForm && (
+          <div id="custom-edit-form" className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/60 p-4 space-y-3">
+            <div className="flex items-center justify-between gap-3">
+              <div className="font-semibold">{editingId ? '編輯訂製項目' : '新增訂製項目'}</div>
+              <button type="button" className="rounded-lg border px-3 py-1.5 text-sm" onClick={cancelEdit}>取消</button>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <input className="rounded-lg border px-3 py-2" value={draft.title} onChange={e=>setDraft(d=>({...d,title:e.target.value}))} placeholder="項目名稱，例如：手作吊飾 / 客製貼紙" />
+              <select className="rounded-lg border px-3 py-2" value={draft.type} onChange={e=>setDraft(d=>({...d,type:e.target.value}))}>
+                {typeOptions.map(x => <option key={x} value={x}>{x}</option>)}
+              </select>
+              <select className="rounded-lg border px-3 py-2" value={draft.status} onChange={e=>setDraft(d=>({...d,status:e.target.value}))}>
+                {statusOptions.map(x => <option key={x} value={x}>{x}</option>)}
+              </select>
+              <input className="rounded-lg border px-3 py-2" value={draft.price} onChange={e=>setDraft(d=>({...d,price:e.target.value}))} placeholder="價格說明，例如：NT$299 起 / 依需求報價" />
+              <input className="rounded-lg border px-3 py-2" value={draft.leadTime} onChange={e=>setDraft(d=>({...d,leadTime:e.target.value}))} placeholder="製作時間，例如：約 7～14 天" />
+              <input className="rounded-lg border px-3 py-2" value={draft.cover} onChange={e=>setDraft(d=>({...d,cover:e.target.value}))} placeholder="封面圖片 URL（可空，會自動取第一張作品圖）" />
+              <input className="rounded-lg border px-3 py-2 sm:col-span-2" value={draft.contactUrl} onChange={e=>setDraft(d=>({...d,contactUrl:e.target.value}))} placeholder="專屬聯絡連結（可空，預設使用系統官方 LINE）" />
+              <input className="rounded-lg border px-3 py-2 sm:col-span-2" value={draft.tagsText} onChange={e=>setDraft(d=>({...d,tagsText:e.target.value}))} placeholder="標籤，用逗號分隔，例如：吊飾，客製，手作" />
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <textarea className="rounded-lg border p-3 min-h-[120px]" value={draft.summary} onChange={e=>setDraft(d=>({...d,summary:e.target.value}))} placeholder="簡短介紹，會顯示在卡片上" />
+              <textarea className="rounded-lg border p-3 min-h-[120px]" value={draft.imagesText} onChange={e=>setDraft(d=>({...d,imagesText:e.target.value}))} placeholder="作品圖片 URL，每行一張" />
+              <textarea className="rounded-lg border p-3 min-h-[120px]" value={draft.detail} onChange={e=>setDraft(d=>({...d,detail:e.target.value}))} placeholder="詳細說明：材質、尺寸、流程、可調整項目等" />
+              <textarea className="rounded-lg border p-3 min-h-[120px]" value={draft.options} onChange={e=>setDraft(d=>({...d,options:e.target.value}))} placeholder="可訂製內容：顏色、名字、角色、尺寸、包裝等" />
+              <textarea className="rounded-lg border p-3 min-h-[100px] sm:col-span-2" value={draft.notes} onChange={e=>setDraft(d=>({...d,notes:e.target.value}))} placeholder="注意事項：不可取消、色差說明、付款方式、交期變動等" />
+            </div>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={!!draft.visible} onChange={e=>setDraft(d=>({...d,visible:e.target.checked}))} /> 前台公開</label>
+              <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={!!draft.pinned} onChange={e=>setDraft(d=>({...d,pinned:e.target.checked}))} /> 置頂</label>
+              <div className="flex flex-wrap gap-2 ml-auto">
+                <button type="button" className="rounded-lg border px-4 py-2 text-sm" onClick={cancelEdit}>取消</button>
+                <button type="button" className="rounded-lg bg-brand text-white px-4 py-2 text-sm" onClick={saveItem}>儲存項目</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {visibleItems.length === 0 ? (
+          <EmptyCard text="目前手作/訂製服務尚未開放，敬請期待。" admin={admin} />
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {visibleItems.map(item => {
+              const imgs = [item.cover, ...(Array.isArray(item.images) ? item.images : [])].map(x=>String(x||'').trim()).filter(Boolean);
+              const contact = String(item.contactUrl || contactFallback || '').trim();
+              return (
+                <article key={item.id} className={`rounded-2xl border overflow-hidden bg-white/80 dark:bg-slate-900/60 ${!item.visible ? 'opacity-60' : ''}`}>
+                  {admin && (
+                    <div className="px-3 py-2 border-b bg-white/70 dark:bg-slate-900/60 flex items-center justify-between">
+                      <label className="inline-flex items-center gap-2 text-sm">
+                        <input className="kjs-admin-check" type="checkbox" checked={!!selectedMap[item.id]} onChange={e=>toggleSelected(item.id, e.target.checked)} />
+                        選取
+                      </label>
+                      <span className="text-xs text-slate-500">{item.visible ? '公開' : '隱藏'}{item.pinned ? '・置頂' : ''}</span>
+                    </div>
+                  )}
+                  <button type="button" className="block w-full text-left" onClick={()=>setViewer(item)} title="查看詳情">
+                    <div className="aspect-square bg-slate-100 dark:bg-slate-800 grid place-content-center overflow-hidden">
+                      {imgs[0] ? <img src={imgs[0]} alt="" className="w-full h-full object-cover" loading="lazy" /> : <div className="text-slate-400 text-sm">無圖片</div>}
+                    </div>
+                    <div className="p-3 space-y-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <div className="font-semibold truncate">{item.title}</div>
+                          <div className="text-xs text-slate-500 mt-0.5">{item.type}</div>
+                        </div>
+                        <StatusBadge value={item.status} />
+                      </div>
+                      {item.summary && <p className="text-sm text-slate-600 dark:text-slate-300 line-clamp-3 whitespace-pre-wrap">{item.summary}</p>}
+                      <div className="text-sm grid gap-1 text-slate-600 dark:text-slate-300">
+                        {item.price && <div>💰 {item.price}</div>}
+                        {item.leadTime && <div>⏱ {item.leadTime}</div>}
+                      </div>
+                      {Array.isArray(item.tags) && item.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5">
+                          {item.tags.slice(0,4).map(t => <span key={t} className="rounded-full border px-2 py-0.5 text-xs text-slate-500">{t}</span>)}
+                        </div>
+                      )}
+                    </div>
+                  </button>
+                  <div className="px-3 pb-3 flex flex-wrap gap-2">
+                    <button type="button" className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>setViewer(item)}>詳情</button>
+                    <button type="button" className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>copyInquiry(item)}>複製詢問</button>
+                    {contact && <a href={contact} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-brand text-white px-3 py-1.5 text-sm">聯絡</a>}
+                  </div>
+                  {admin && (
+                    <div className="border-t border-slate-200 dark:border-slate-700 p-3 flex flex-wrap gap-2 text-sm">
+                      <button type="button" className="rounded-lg border px-3 py-1.5" onClick={()=>startEdit(item)}>編輯</button>
+                      <button type="button" className="rounded-lg border px-3 py-1.5" onClick={()=>patchItem(item.id,{visible:!item.visible}, item.visible ? '已隱藏項目' : '已公開項目')}>{item.visible ? '隱藏' : '公開'}</button>
+                      <button type="button" className="rounded-lg border px-3 py-1.5" onClick={()=>patchItem(item.id,{pinned:!item.pinned}, item.pinned ? '已取消置頂' : '已置頂')}>{item.pinned ? '取消置頂' : '置頂'}</button>
+                      <button type="button" className="rounded-lg border px-3 py-1.5" onClick={()=>moveItem(item.id,-1)}>上移</button>
+                      <button type="button" className="rounded-lg border px-3 py-1.5" onClick={()=>moveItem(item.id,1)}>下移</button>
+                      <button type="button" className="rounded-lg bg-rose-500 text-white px-3 py-1.5" onClick={()=>removeItem(item.id)}>刪除</button>
+                    </div>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        )}
+
+        {viewer && (() => {
+          const item = viewer;
+          const imgs = [item.cover, ...(Array.isArray(item.images) ? item.images : [])].map(x=>String(x||'').trim()).filter(Boolean);
+          const contact = String(item.contactUrl || contactFallback || '').trim();
+          return (
+            <div className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" role="dialog" aria-modal="true" onClick={()=>setViewer(null)}>
+              <div className="w-[min(96vw,48rem)] max-h-[92vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 shadow-elevate flex flex-col" onClick={e=>e.stopPropagation()}>
+                <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="font-semibold truncate">{item.title}</div>
+                    <div className="mt-1 flex flex-wrap gap-2 items-center text-xs text-slate-500"><span>{item.type}</span><StatusBadge value={item.status} /></div>
+                  </div>
+                  <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>setViewer(null)}>關閉</button>
+                </div>
+                <div className="overflow-auto modal-scroll p-4 space-y-4">
+                  {imgs.length > 0 && (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      {imgs.map((src,i)=><div key={src+i} className="aspect-square rounded-xl overflow-hidden border bg-slate-100 dark:bg-slate-800"><img src={src} alt="" className="w-full h-full object-cover" loading="lazy" /></div>)}
+                    </div>
+                  )}
+                  <div className="grid sm:grid-cols-2 gap-3 text-sm">
+                    {item.price && <div className="rounded-xl border p-3"><div className="text-slate-500 text-xs">價格說明</div><div className="mt-1">{item.price}</div></div>}
+                    {item.leadTime && <div className="rounded-xl border p-3"><div className="text-slate-500 text-xs">製作時間</div><div className="mt-1">{item.leadTime}</div></div>}
+                  </div>
+                  {item.summary && <div><div className="font-semibold mb-1">簡介</div><p className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">{item.summary}</p></div>}
+                  {item.detail && <div><div className="font-semibold mb-1">詳細說明</div><p className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">{item.detail}</p></div>}
+                  {item.options && <div><div className="font-semibold mb-1">可訂製內容</div><p className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">{item.options}</p></div>}
+                  {item.notes && <div><div className="font-semibold mb-1">注意事項</div><p className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">{item.notes}</p></div>}
+                </div>
+                <div className="p-3 border-t border-slate-200 dark:border-slate-700 flex flex-wrap gap-2 justify-end">
+                  <button type="button" className="rounded-lg border px-3 py-2 text-sm" onClick={()=>copyInquiry(item)}>複製詢問模板</button>
+                  {contact && <a href={contact} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-brand text-white px-4 py-2 text-sm">聯絡管理員</a>}
+                  {admin && <button type="button" className="rounded-lg border px-3 py-2 text-sm" onClick={()=>{ setViewer(null); startEdit(item); }}>編輯</button>}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
       </div>
     </Section>
   );
@@ -7583,6 +7837,12 @@ function LinksPage({ data, setData, admin }) {
   const endPage   = Math.min(maxPage, startPage + windowSize - 1);
 
   const [draft, setDraft] = React.useState({ name: '', url: '' });
+  const [selectedMap, setSelectedMap] = React.useState({});
+  const selectedIds = React.useMemo(() => Object.keys(selectedMap).filter(k => selectedMap[k]), [selectedMap]);
+  const selectedCount = selectedIds.length;
+  const toggleSelected = (id, v) => setSelectedMap(m => ({ ...m, [id]: v ?? !m[id] }));
+  const clearSelected = () => setSelectedMap({});
+  const selectPageLinks = () => { const next = {}; links.slice(start, end).forEach(x => { if (x.id) next[x.id] = true; }); setSelectedMap(next); };
 
   const addLink = () => {
     if (!admin) return;
@@ -7595,6 +7855,13 @@ function LinksPage({ data, setData, admin }) {
     if (!admin) return;
     if (!confirm('刪除此連結？')) return;
     setData(s => ({ ...s, homepage: { ...(s.homepage||{}), links: (s.homepage?.links||[]).filter(x=>x.id!==id) } }));
+  };
+  const bulkDeleteLinks = () => {
+    if (!admin) return;
+    if (!selectedCount) return alert('請先勾選連結');
+    if (!confirm(`確定刪除已勾選的 ${selectedCount} 個連結？`)) return;
+    setData(s => ({ ...s, homepage: { ...(s.homepage||{}), links: (s.homepage?.links||[]).filter(x=>!selectedMap[x.id]) } }));
+    clearSelected();
   };
 
   return (
@@ -7609,6 +7876,16 @@ function LinksPage({ data, setData, admin }) {
         </div>
       )}
 
+      {admin && (
+        <div className="kjs-admin-bulkbar mb-3">
+          <span className="kjs-bulk-title">連結批次管理</span>
+          <span className="kjs-bulk-count">已勾選 {selectedCount} / 本頁 {links.slice(start, end).length}</span>
+          <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={selectPageLinks}>全選本頁</button>
+          <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={clearSelected}>取消勾選</button>
+          <button className="rounded-lg bg-rose-600 text-white px-3 py-1.5 text-sm" onClick={bulkDeleteLinks}>刪除勾選</button>
+        </div>
+      )}
+
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {links.slice(start, end).map(x => (
           <a key={x.id} href={x.url} target="_blank" rel="noreferrer"
@@ -7616,7 +7893,11 @@ function LinksPage({ data, setData, admin }) {
             <div className="font-medium truncate">{x.name || x.url}</div>
             <div className="text-xs text-slate-500 truncate">{x.url}</div>
             {admin && (
-              <div className="mt-2 text-right">
+              <div className="mt-2 flex items-center justify-between gap-2" onClick={e=>e.preventDefault()}>
+                <label className="inline-flex items-center gap-1 text-xs">
+                  <input className="kjs-admin-check" type="checkbox" checked={!!selectedMap[x.id]} onChange={e=>toggleSelected(x.id, e.target.checked)} />
+                  選取
+                </label>
                 <button className="rounded-lg border px-2 py-1 text-xs"
                         onClick={(e)=>{e.preventDefault(); removeLink(x.id);}}>刪除</button>
               </div>
@@ -7647,6 +7928,11 @@ function Ongoing({ data, admin, setData, query="" }) {
   const [bulk, setBulk] = useState(null);
   const [draft, setDraft] = useState({ title:"", desc:"", rules:"", link:"", image:"", enabled:true });
   const [editingId, setEditingId] = useState(null);
+  const [selectedMap, setSelectedMap] = useState({});
+  const selectedIds = React.useMemo(() => Object.keys(selectedMap).filter(k => selectedMap[k]), [selectedMap]);
+  const selectedCount = selectedIds.length;
+  const toggleSelected = (id, v) => setSelectedMap(m => ({ ...m, [id]: v ?? !m[id] }));
+  const clearSelected = () => setSelectedMap({});
 
   const items = React.useMemo(()=>{
   let list = data.ongoing || [];
@@ -7694,6 +7980,20 @@ const next = editingId ? base.map(x => x.id===editingId ? rec : x) : [rec, ...ba
 
   const moveUp = (id) => move(id, 'up');
   const moveDown = (id) => move(id, 'down');
+  const selectOngoingPage = () => { const next = {}; items.forEach(x => { if (x.id) next[x.id] = true; }); setSelectedMap(next); };
+  const bulkSetOngoingEnabled = (enabled) => {
+    if (!admin) return;
+    if (!selectedCount) return alert('請先勾選活動');
+    setData({ ...data, ongoing: (data.ongoing || []).map(x => selectedMap[x.id] ? { ...x, enabled } : x) });
+    clearSelected();
+  };
+  const bulkDeleteOngoing = () => {
+    if (!admin) return;
+    if (!selectedCount) return alert('請先勾選活動');
+    if (!confirm(`確定刪除已勾選的 ${selectedCount} 個進行中活動？`)) return;
+    setData({ ...data, ongoing: (data.ongoing || []).filter(x => !selectedMap[x.id]) });
+    clearSelected();
+  };
 
   return (
     <Section title="🔄 進行中活動" subtitle="卡片式展示（可上下移動、啟用/停用、編輯）。">
@@ -7715,6 +8015,18 @@ const next = editingId ? base.map(x => x.id===editingId ? rec : x) : [rec, ...ba
             {editingId && <button onClick={cancelEdit} className="rounded-lg border px-4 py-2">取消</button>}
             <button onClick={saveOngoing} className="rounded-lg bg-brand text-white px-4 py-2">{editingId ? "儲存修改" : "新增卡片"}</button>
           </div>
+        </div>
+      )}
+
+      {admin && (
+        <div className="kjs-admin-bulkbar mt-4">
+          <span className="kjs-bulk-title">活動批次管理</span>
+          <span className="kjs-bulk-count">已勾選 {selectedCount} / 全部 {items.length}</span>
+          <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={selectOngoingPage}>全選</button>
+          <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={clearSelected}>取消勾選</button>
+          <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkSetOngoingEnabled(true)}>啟用勾選</button>
+          <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkSetOngoingEnabled(false)}>停用勾選</button>
+          <button className="rounded-lg bg-rose-600 text-white px-3 py-1.5 text-sm" onClick={bulkDeleteOngoing}>刪除勾選</button>
         </div>
       )}
 
@@ -7751,6 +8063,15 @@ const next = editingId ? base.map(x => x.id===editingId ? rec : x) : [rec, ...ba
   uid={x.id}             // ★ 新增
   force={bulk}           // 你原本就有，留著
 header={`${x.title || "未命名活動"}`} force={bulk}>
+            {admin && (
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <label className="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                  <input className="kjs-admin-check" type="checkbox" checked={!!selectedMap[x.id]} onChange={e=>toggleSelected(x.id, e.target.checked)} />
+                  選取此活動
+                </label>
+                <span className="text-xs text-slate-500">{x.enabled !== false ? '啟用中' : '已停用'}</span>
+              </div>
+            )}
             {x.image && <img src={x.image} alt="活動圖片" className="rounded-lg max-h-56 object-contain w-full bg-slate-50 dark:bg-slate-800 mb-2"/>}
             {x.link && <div className="text-sm mb-2">連結：<a className="underline text-brand" href={x.link} target="_blank" rel="noreferrer">{x.link}</a></div>}
             {x.desc && <div className="text-sm whitespace-pre-wrap mb-2">{x.desc}</div>}
@@ -8044,6 +8365,43 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
   );
   const [editingIndex, setEditingIndex] = React.useState(-1);
 
+  // 編輯模式優化：勾選項目後集中批次處理
+  const [selectedMap, setSelectedMap] = React.useState({});
+  const [bulkTagText, setBulkTagText] = React.useState('');
+  const [bulkPointsText, setBulkPointsText] = React.useState('');
+  const [bulkStockText, setBulkStockText] = React.useState('');
+  const selectedIndexes = React.useMemo(() => Object.keys(selectedMap).filter(k => selectedMap[k]).map(k=>+k).filter(n=>Number.isFinite(n)), [selectedMap]);
+  const selectedCount = selectedIndexes.length;
+  const toggleSelected = (i, v) => setSelectedMap(m => ({ ...m, [i]: v ?? !m[i] }));
+  const clearSelected = () => setSelectedMap({});
+  const selectAllItems = () => { const next = {}; list.forEach((_, i) => next[i] = true); setSelectedMap(next); };
+  const bulkRemoveSelected = () => {
+    if (!selectedCount) return alert('請先勾選項目');
+    if (!confirm(`確定刪除已勾選的 ${selectedCount} 個點數商品？`)) return;
+    setList(arr => arr.filter((_, i) => !selectedMap[i]));
+    clearSelected();
+  };
+  const bulkSetEnabled = (enabled) => {
+    if (!selectedCount) return alert('請先勾選項目');
+    setList(arr => arr.map((x, i) => selectedMap[i] ? { ...x, enabled } : x));
+  };
+  const bulkApplyFields = () => {
+    if (!selectedCount) return alert('請先勾選項目');
+    const tags = String(bulkTagText || '').split(',').map(s=>s.trim()).filter(Boolean);
+    setList(arr => arr.map((x, i) => {
+      if (!selectedMap[i]) return x;
+      const next = { ...x };
+      if (bulkPointsText !== '') next.points = bulkPointsText;
+      if (bulkStockText !== '') next.stock = bulkStockText;
+      if (tags.length) {
+        const oldTags = Array.isArray(next.tags) ? next.tags : String(next.tags || '').split(',').map(s=>s.trim()).filter(Boolean);
+        next.tags = Array.from(new Set([...oldTags, ...tags]));
+      }
+      return next;
+    }));
+    setBulkTagText(''); setBulkPointsText(''); setBulkStockText('');
+  };
+
   // 群組狀態（從 props.groups 初始化）
   const [groupsState, setGroupsState] = React.useState(() =>
     Array.isArray(groups)
@@ -8092,7 +8450,8 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
     const stock = x?.stock ?? x?.qty ?? x?.quantity ?? x?.remaining ?? "";
     const hasVariants = !!(x?.variants && x.variants.mode && x.variants.mode !== "none");
     return (
-      <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 px-3 py-2 border-b">
+      <div className="grid grid-cols-[auto_auto_1fr_auto] items-center gap-3 px-3 py-2 border-b">
+        <input className="kjs-admin-check" type="checkbox" checked={!!selectedMap[i]} onChange={e=>toggleSelected(i, e.target.checked)} title="勾選此項目" />
         <div className="w-12 h-12 rounded bg-slate-100 overflow-hidden grid place-content-center">
           {cover ? <img src={cover} alt="" className="w-full h-full object-cover" /> : <span className="text-xs text-slate-400">無</span>}
         </div>
@@ -8514,7 +8873,7 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
       <div className="w-[min(1024px,96vw)] max-h-[90vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 shadow-xl flex flex-col">
         {/* header */}
         <div className="flex items-center justify-between px-4 py-3 border-b">
-          <div className="font-semibold">點數商城管理</div>
+          <div><div className="font-semibold">點數商城管理</div><div className="text-xs text-slate-500">集中管理：可逐筆編輯，也可勾選多筆後一次套用。</div></div>
           <div className="flex items-center gap-2">
             <button className="rounded border px-3 py-1.5 text-sm" onClick={exportCSV}>匯出 CSV</button>
             <button className="rounded border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button>
@@ -8550,8 +8909,21 @@ function ShopEditor({ items = [], groups = [], onSave, onClose }) {
             </div>
 
             {/* 商品清單 */}
-            <div>
-              <button className="mb-2 rounded bg-emerald-600 text-white px-3 py-1.5 text-sm" onClick={addNew}>新增項目</button>
+            <div className="space-y-3">
+              <div className="kjs-admin-bulkbar">
+                <span className="kjs-bulk-title">批次管理</span>
+                <span className="kjs-bulk-count">已勾選 {selectedCount} / 全部 {list.length}</span>
+                <button className="rounded-lg bg-emerald-600 text-white px-3 py-1.5 text-sm" onClick={addNew}>新增項目</button>
+                <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={selectAllItems}>全選</button>
+                <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={clearSelected}>取消勾選</button>
+                <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkSetEnabled(true)}>批次上架</button>
+                <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={()=>bulkSetEnabled(false)}>批次停用</button>
+                <input className="rounded-lg border px-3 py-1.5 text-sm" value={bulkPointsText} onChange={e=>setBulkPointsText(e.target.value)} placeholder="批次點數" />
+                <input className="rounded-lg border px-3 py-1.5 text-sm" value={bulkStockText} onChange={e=>setBulkStockText(e.target.value)} placeholder="批次庫存" />
+                <input className="rounded-lg border px-3 py-1.5 text-sm" value={bulkTagText} onChange={e=>setBulkTagText(e.target.value)} placeholder="批次標籤，逗號分隔" />
+                <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={bulkApplyFields}>套用欄位</button>
+                <button className="rounded-lg bg-rose-600 text-white px-3 py-1.5 text-sm" onClick={bulkRemoveSelected}>刪除勾選</button>
+              </div>
               <div className="rounded border overflow-hidden">
                 {list.length === 0 && <div className="p-6 text-center text-slate-500 text-sm">目前沒有項目</div>}
                 {list.map((x, i) => <ItemRow key={i} x={x} i={i} />)}
