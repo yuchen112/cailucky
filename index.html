@@ -9,6 +9,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CxQ開獎所｜官方平台</title>
   <meta name="color-scheme" content="light dark">
+  <meta name="description" content="CxQ開獎所官方平台：抽獎紀錄、等待開獎、社群商店、點數商城、開箱實拍與常見問題管理。">
+  <meta property="og:title" content="CxQ開獎所｜官方平台">
+  <meta property="og:description" content="抽獎透明公開、社群商店、點數商城與歷史紀錄整合平台。">
+  <meta property="og:type" content="website">
+
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -117,21 +122,7 @@
   .paginator-bottom { padding-bottom: env(safe-area-inset-bottom); }
 }
 
-  
-/* === GameCenter: compact grid (like Shop) === */
-.gc-grid{
-  display:grid;
-  gap:12px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-@media (min-width: 520px){
-  .gc-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-@media (min-width: 820px){
-  .gc-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
-
-</style>
+  </style>
 
   <!-- [IMGIO CSS START] -->
   <style>
@@ -206,9 +197,193 @@
     }
   </style>
   <!-- [IMGIO CSS END] -->
+
+
+  <!-- [KJS UNIFIED UI PATCH START]
+       版面整改：統一前台/後台卡片、彈窗、表單、按鈕、手機版間距。
+       只改視覺與安全互動，不改資料結構、不改 LocalStorage 單機架構。
+  -->
+  <style id="kjs-unified-ui-patch">
+    :root{
+      --kjs-brand:#14b8a6;
+      --kjs-brand-2:#0f766e;
+      --kjs-warn:#f59e0b;
+      --kjs-danger:#ef4444;
+      --kjs-radius:18px;
+      --kjs-radius-sm:12px;
+      --kjs-line:rgba(148,163,184,.26);
+      --kjs-surface:rgba(255,255,255,.78);
+      --kjs-surface-strong:rgba(255,255,255,.94);
+      --kjs-shadow:0 18px 42px -26px rgba(15,23,42,.55);
+      --kjs-shadow-soft:0 12px 28px -22px rgba(15,23,42,.5);
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --kjs-line:rgba(148,163,184,.22);
+        --kjs-surface:rgba(15,23,42,.66);
+        --kjs-surface-strong:rgba(15,23,42,.92);
+        --kjs-shadow:0 18px 42px -26px rgba(0,0,0,.72);
+        --kjs-shadow-soft:0 12px 28px -22px rgba(0,0,0,.68);
+      }
+    }
+
+    .kjs-unified{
+      letter-spacing:.01em;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    .kjs-unified *{ box-sizing:border-box; }
+    .kjs-unified ::selection{ background:rgba(20,184,166,.22); }
+
+    /* 固定頂欄：更像正式平台 */
+    .kjs-unified header.sticky{
+      box-shadow:0 12px 28px -26px rgba(15,23,42,.65);
+    }
+    .kjs-unified header h1{ letter-spacing:.02em; }
+
+    /* 統一可互動元件 */
+    .kjs-unified :where(button,a,input,select,textarea){
+      -webkit-tap-highlight-color:transparent;
+    }
+    .kjs-unified :where(button,a[href]){
+      transition:transform .16s ease, box-shadow .16s ease, background-color .16s ease, border-color .16s ease, opacity .16s ease;
+    }
+    .kjs-unified :where(button:not(:disabled),a[href]):active{ transform:translateY(1px) scale(.992); }
+    .kjs-unified :where(button:disabled){ opacity:.52; cursor:not-allowed; }
+    .kjs-unified :where(button,a[href],input,select,textarea):focus-visible{
+      outline:3px solid rgba(20,184,166,.28);
+      outline-offset:2px;
+    }
+
+    /* 統一按鈕視覺，不硬改功能 */
+    .kjs-unified :where(button).rounded-lg,
+    .kjs-unified :where(button).rounded-xl,
+    .kjs-unified :where(a).rounded-lg,
+    .kjs-unified :where(a).rounded-xl{
+      font-weight:650;
+      border-color:var(--kjs-line);
+    }
+    .kjs-unified :where(.bg-brand){
+      background:linear-gradient(135deg,var(--kjs-brand),var(--kjs-brand-2)) !important;
+      box-shadow:0 10px 24px -16px rgba(20,184,166,.8);
+    }
+    .kjs-unified :where(.bg-rose-500,.bg-red-500){
+      box-shadow:0 10px 24px -18px rgba(239,68,68,.85);
+    }
+
+    /* 表單統一：所有後台編輯區一致 */
+    .kjs-unified :where(input:not([type="checkbox"]):not([type="radio"]),select,textarea){
+      border-radius:14px !important;
+      border:1px solid var(--kjs-line) !important;
+      background:var(--kjs-surface-strong) !important;
+      color:inherit;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .kjs-unified :where(input:not([type="checkbox"]):not([type="radio"]),select){
+      min-height:42px;
+    }
+    .kjs-unified :where(textarea){
+      line-height:1.65;
+      resize:vertical;
+    }
+    .kjs-unified :where(label){
+      font-weight:650;
+    }
+
+    /* 卡片、管理面板、折疊區統一 */
+    .kjs-unified :where(.rounded-2xl.border,.rounded-xl.border){
+      border-color:var(--kjs-line) !important;
+      box-shadow:var(--kjs-shadow-soft);
+    }
+    .kjs-unified :where(section.rounded-2xl,.rounded-2xl.bg-white\/70,.rounded-2xl.bg-white\/80,.rounded-2xl.bg-white\/90){
+      backdrop-filter:blur(14px);
+    }
+    .kjs-unified :where(.shadow-soft,.shadow-elevate){
+      box-shadow:var(--kjs-shadow) !important;
+    }
+
+    /* 彈窗統一：商品、抽獎、FAQ、實拍管理都同一組骨架 */
+    .kjs-unified :where([role="dialog"],.fixed.inset-0.z-\[999\],.fixed.inset-0.z-\[998\],.fixed.inset-0.z-\[1000\]) > :where(div){
+      border:1px solid var(--kjs-line);
+    }
+    .kjs-unified :where(.modal-scroll){
+      scrollbar-gutter:stable both-edges;
+    }
+
+    /* 漢堡選單：前台導覽與管理工具分區更清楚 */
+    .kjs-unified .menu-pane{
+      box-shadow:18px 0 42px -28px rgba(15,23,42,.75);
+    }
+    .kjs-unified .menu-pane :where(button,a){
+      border-radius:14px;
+    }
+
+    /* 狀態/標籤 chips */
+    .kjs-unified :where(.rounded-full){
+      letter-spacing:.01em;
+    }
+
+    /* 圖片牆與商品圖，避免變形、閃動 */
+    .kjs-unified :where(img){
+      image-rendering:auto;
+    }
+    .kjs-unified :where(.aspect-square img){
+      transform:translateZ(0);
+    }
+
+    /* Toast */
+    #kjs-toast-root{
+      position:fixed;
+      right:14px;
+      bottom:calc(env(safe-area-inset-bottom) + 18px);
+      z-index:2147483647;
+      display:grid;
+      gap:10px;
+      pointer-events:none;
+    }
+    .kjs-toast{
+      pointer-events:auto;
+      max-width:min(92vw,360px);
+      border:1px solid var(--kjs-line);
+      border-radius:16px;
+      padding:11px 14px;
+      background:var(--kjs-surface-strong);
+      color:inherit;
+      box-shadow:var(--kjs-shadow);
+      font-size:14px;
+      line-height:1.45;
+      animation:kjsToastIn .22s ease-out both;
+      backdrop-filter:blur(14px);
+    }
+    .kjs-toast[data-type="success"]{ border-left:4px solid var(--kjs-brand); }
+    .kjs-toast[data-type="warn"]{ border-left:4px solid var(--kjs-warn); }
+    .kjs-toast[data-type="error"]{ border-left:4px solid var(--kjs-danger); }
+    @keyframes kjsToastIn{ from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)} }
+
+    /* 手機端：管理按鈕不擠壓，彈窗更穩 */
+    @media (max-width:640px){
+      .kjs-unified{ font-size:15px; }
+      .kjs-unified :where(.max-w-5xl){ width:100%; }
+      .kjs-unified :where(button,a).tap-target{ min-height:46px; }
+      .kjs-unified :where(.fixed.inset-0) > :where(.rounded-2xl){
+        width:min(96vw,44rem) !important;
+        max-height:92dvh !important;
+      }
+      .kjs-unified :where(.grid){ gap:.75rem; }
+      .kjs-unified :where(.p-4){ padding:1rem; }
+      .kjs-unified :where(.flex.flex-wrap){ gap:.5rem; }
+      #kjs-toast-root{
+        left:12px; right:12px;
+        bottom:calc(env(safe-area-inset-bottom) + 74px);
+      }
+      .kjs-toast{ max-width:100%; }
+    }
+  </style>
+  <!-- [KJS UNIFIED UI PATCH END] -->
+
 </head>
 
-<body class="bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-100">
+<body class="kjs-unified bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-100">
   <div id="root" class="min-h-screen"></div>
 
   <script type="text/babel">
@@ -1202,7 +1377,15 @@ function kjsNid() { return Math.random().toString(36).slice(2) + Date.now().toSt
 
 const KJS_LS_KEY = 'kjs_site_data_v1'; // 與你現有資料流一致
 function kjsSaveData(data) {
-  try { localStorage.setItem(KJS_LS_KEY, JSON.stringify(data)); } catch {}
+  try {
+    const next = (typeof normalizeSiteData === 'function') ? normalizeSiteData(data) : data;
+    localStorage.setItem(KJS_LS_KEY, JSON.stringify(next));
+    return true;
+  } catch (err) {
+    console.error('kjsSaveData failed:', err);
+    if (typeof kjsToast === 'function') kjsToast('儲存失敗：瀏覽器儲存空間可能不足，請先匯出備份。', 'error', 5200);
+    return false;
+  }
 }
 
 /* --- Gallery 初始化 --- */
@@ -2113,10 +2296,30 @@ function buildListText(map, mode='cash') {
   return [head, ...rows, tail].filter(Boolean).join('\n');
 }
 
-// 複製輔助（離線可用）
+// 複製輔助（離線可用）：Clipboard API 失敗時改用 textarea fallback
 async function copyText(s) {
-  try { await navigator.clipboard.writeText(String(s)); return true; }
-  catch { return false; }
+  const text = String(s ?? '');
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      if (typeof kjsToast === 'function') kjsToast('已複製到剪貼簿');
+      return true;
+    }
+  } catch {}
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    ta.style.top = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand('copy');
+    ta.remove();
+    if (ok && typeof kjsToast === 'function') kjsToast('已複製到剪貼簿');
+    return !!ok;
+  } catch { return false; }
 }
 
 /* =========================
@@ -3528,24 +3731,78 @@ function StatusTag({ value }) {
 }
 
 
-// —— 小工具 ——（你剛剛不小心刪掉的）
+// —— 小工具 ——（統一整改版：保留原功能，增加儲存防呆與提示）
 const cx = (...xs) => xs.filter(Boolean).join(' ');
 const nid = () => Math.random().toString(36).slice(2,10);
 
+function kjsToast(message, type='success', ms=2600){
+  try{
+    const text = String(message || '').trim();
+    if(!text) return;
+    let root = document.getElementById('kjs-toast-root');
+    if(!root){
+      root = document.createElement('div');
+      root.id = 'kjs-toast-root';
+      root.setAttribute('aria-live','polite');
+      root.setAttribute('aria-atomic','true');
+      document.body.appendChild(root);
+    }
+    const node = document.createElement('div');
+    node.className = 'kjs-toast';
+    node.dataset.type = type || 'success';
+    node.textContent = text;
+    node.addEventListener('click', ()=>node.remove());
+    root.appendChild(node);
+    setTimeout(()=>{ node.style.opacity='0'; node.style.transform='translateY(6px)'; }, Math.max(900, ms-260));
+    setTimeout(()=>node.remove(), ms);
+  }catch{}
+}
+window.kjsToast = kjsToast;
+
+function kjsSafeParseJSON(raw, fallback){
+  try { return raw ? JSON.parse(raw) : fallback; }
+  catch { return fallback; }
+}
+
 function useLocalState(key, initial){
-  const [state, setState] = React.useState(()=>{
+  const readInitial = () => {
     try{
       const raw = localStorage.getItem(key);
-      return raw ? JSON.parse(raw) : initial;
-    }catch{
-      return initial;
+      const parsed = raw ? JSON.parse(raw) : initial;
+      return key === LS.data && typeof normalizeSiteData === 'function' ? normalizeSiteData(parsed) : parsed;
+    }catch(err){
+      console.warn('LocalStorage 讀取失敗，已使用預設值：', key, err);
+      return key === LS.data && typeof normalizeSiteData === 'function' ? normalizeSiteData(initial) : initial;
     }
-  });
+  };
+
+  const [state, setRawState] = React.useState(readInitial);
+
+  const setState = React.useCallback((next) => {
+    setRawState(prev => {
+      const value = (typeof next === 'function') ? next(prev) : next;
+      return key === LS.data && typeof normalizeSiteData === 'function' ? normalizeSiteData(value) : value;
+    });
+  }, [key]);
+
   React.useEffect(()=>{
-    localStorage.setItem(key, JSON.stringify(state));
+    try{
+      const value = key === LS.data && typeof normalizeSiteData === 'function' ? normalizeSiteData(state) : state;
+      localStorage.setItem(key, JSON.stringify(value));
+    }catch(err){
+      console.error('LocalStorage 儲存失敗：', key, err);
+      kjsToast('儲存失敗：瀏覽器儲存空間可能不足，請先匯出備份。', 'error', 5200);
+    }
   },[key, state]);
   return [state, setState];
 }
+
+window.addEventListener('error', (e)=>{
+  console.error('KJS runtime error:', e?.error || e?.message || e);
+});
+window.addEventListener('unhandledrejection', (e)=>{
+  console.error('KJS promise error:', e?.reason || e);
+});
 
 // 文字名單清洗：去空白、全/半形空白、連續空白、大小寫不敏感去重
 function parseLinesClean(txt="") {
@@ -3626,14 +3883,17 @@ function nowISO(){
 
 function exportCSV(filename, rows){
   const csv = rows
-    .map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(','))
+    .map(r => r.map(v => `"${String(v ?? '').replace(/"/g,'""')}"`).join(','))
     .join('\n');
-  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  // 加 BOM，避免 Excel 開啟中文 CSV 亂碼
+  const blob = new Blob(['\ufeff' + csv], {type:'text/csv;charset=utf-8;'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = filename;
+  a.download = filename || `export_${new Date().toISOString().slice(0,10)}.csv`;
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(a.href);
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 0);
 }
 
 /* === Grid 工具（9/16 宮格切換） === */
@@ -4778,6 +5038,68 @@ const EMPTY = {
 };
 
 
+/* === Site Data Normalizer（單機完整整改版）===
+ * 目的：修正缺欄位、匯入舊資料、局部 setData 時造成的資料形狀不一致。
+ * 原則：不改使用者原資料、不改 LocalStorage key、不改功能，只補齊必要容器。
+ */
+function kjsDeepClone(obj){
+  try { return structuredClone(obj); }
+  catch { return JSON.parse(JSON.stringify(obj ?? {})); }
+}
+function kjsArray(v){ return Array.isArray(v) ? v : []; }
+function kjsObj(v){ return (v && typeof v === 'object' && !Array.isArray(v)) ? v : {}; }
+function kjsEnsureId(item, prefix='item'){
+  if(!item || typeof item !== 'object') return item;
+  if(!item.id) item.id = `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2,8)}`;
+  return item;
+}
+function normalizeSiteData(input){
+  const source = kjsObj(input);
+  const d = { ...kjsDeepClone(EMPTY), ...kjsDeepClone(source) };
+
+  d.homepage = { ...(EMPTY.homepage || {}), ...kjsObj(source.homepage || d.homepage) };
+  d.homepage.announcements = kjsArray(d.homepage.announcements);
+
+  d.history = sortHistoryDesc(kjsArray(d.history).map(x => kjsEnsureId({ ...kjsObj(x) }, 'history')));
+  d.pending = kjsArray(d.pending).map(x => kjsEnsureId({ ...kjsObj(x) }, 'pending'));
+  d.ongoing = kjsArray(d.ongoing).map(x => kjsEnsureId({ ...kjsObj(x) }, 'ongoing'));
+
+  d.shop = { items: [], people: [], logs: [], tagGroups: [], ...kjsObj(d.shop) };
+  d.shop.items = kjsArray(d.shop.items).map(x => kjsEnsureId({ ...kjsObj(x) }, 'shop'));
+  d.shop.people = kjsArray(d.shop.people).map(x => kjsEnsureId({ ...kjsObj(x) }, 'person'));
+  d.shop.logs = kjsArray(d.shop.logs).map(x => kjsEnsureId({ ...kjsObj(x) }, 'log'));
+  d.shop.tagGroups = kjsArray(d.shop.tagGroups);
+
+  d.store = { items: [], tagGroups: [], ...kjsObj(d.store) };
+  d.store.items = kjsArray(d.store.items).map(x => kjsEnsureId({ ...kjsObj(x) }, 'store'));
+  d.store.tagGroups = kjsArray(d.store.tagGroups);
+
+  d.others = { cards: [], ...kjsObj(d.others) };
+  d.others.cards = kjsArray(d.others.cards).map(x => kjsEnsureId({ ...kjsObj(x) }, 'card'));
+
+  d.gallery = { items: [], homepage_showcase: [], ...kjsObj(d.gallery) };
+  d.gallery.items = kjsArray(d.gallery.items).map(x => kjsEnsureId({ ...kjsObj(x) }, 'gallery'));
+  d.gallery.homepage_showcase = kjsArray(d.gallery.homepage_showcase);
+
+  d.faq = { categories: [], ...kjsObj(d.faq) };
+  d.faq.categories = kjsArray(d.faq.categories).map(cat => {
+    const c = kjsEnsureId({ visible: true, ...kjsObj(cat) }, 'faqcat');
+    c.items = kjsArray(c.items).map(it => kjsEnsureId({ visible: true, ...kjsObj(it) }, 'faq'));
+    return c;
+  });
+
+  d.links = { items: [], ...kjsObj(d.links) };
+  d.links.items = kjsArray(d.links.items).map(x => kjsEnsureId({ ...kjsObj(x) }, 'link'));
+  d.games = kjsArray(d.games).map(x => kjsEnsureId({ ...kjsObj(x) }, 'game'));
+
+  d.settings = { ...DEFAULT_SETTINGS, ...kjsObj(d.settings) };
+  return d;
+}
+function kjsHadLocalDataBeforeApp(){
+  try { return localStorage.getItem(LS.data) !== null; } catch { return false; }
+}
+
+
 
 function normName(s=""){ return s.replace(/\u3000/g," ").replace(/\s+/g," ").trim().toLowerCase(); }
 function parseISODate(d=""){ // 專吃 YYYY-MM-DD（空字串回 NaN）
@@ -5029,46 +5351,51 @@ function useAccordionController() {
 
     // —— 主 App（Part 1：骨架/導覽/雙模式/匯入匯出，未含編輯器） ——
     function App(){
+      // 記錄進入 App 前是否已有本機資料，避免預設 EMPTY 被 useLocalState 寫入後誤判。
+      const hadLocalDataRef = React.useRef(kjsHadLocalDataBeforeApp());
       const [data, setData] = useLocalState(LS.data, EMPTY);
 
-// 進站時自動抓 ./data/app.json，覆蓋本機資料，並同步管理員名單（admins）
+// 進站資料策略（單機整改版）：
+// - 預設保留本機 LocalStorage，不再每次開啟都被 ./data/app.json 覆蓋。
+// - 第一次沒有本機資料時，仍會嘗試讀 ./data/app.json 作為初始資料。
+// - 若需要手動強制載入 app.json，可在網址加 ?loadAppJson=1。
 React.useEffect(() => {
   (async () => {
     try {
+      const params = new URLSearchParams(window.location.search || '');
+      const forceLoad = params.get('loadAppJson') === '1';
+      if (hadLocalDataRef.current && !forceLoad) return;
+
       const res = await fetch('./data/app.json?v=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) return;
       const raw = await res.json();
 
       // 同時相容兩種格式：扁平 { ... } 或 包一層 { _meta, data, admins }
       const obj = raw && typeof raw === 'object' && 'data' in raw ? raw.data : raw;
-
-      // 歷史由新到舊
-      if (obj && Array.isArray(obj.history)) {
-        obj.history = sortHistoryDesc(obj.history);
-      }
-
-      // 寫入資料本體
       if (obj && typeof obj === 'object') {
-        setData(obj);
+        setData(normalizeSiteData(obj));
+        if (forceLoad && typeof kjsToast === 'function') kjsToast('已強制載入 app.json 初始資料');
       } else {
         console.error('app.json 結構異常：期望為物件，實得', obj);
       }
 
-// ★ 新增：把 app.json 的背景設定也灌回 state（含 url / pos / menu...）
-if (raw && typeof raw === 'object' && raw.bg) {
-  setBg(raw.bg);
-}
+      // 背景設定
+      if (raw && typeof raw === 'object' && raw.bg) {
+        setBg(raw.bg);
+      }
 
-// （可選）若你有用 ImageIO，順手把 images 也匯入
-if (raw && typeof raw === 'object' && raw.images && window.ImageIO?.importImagesJSON) {
-  try { window.ImageIO.importImagesJSON(raw.images); } catch {}
-}
+      // ImageIO 圖片設定
+      if (raw && typeof raw === 'object' && raw.images && window.ImageIO?.importImagesJSON) {
+        try { window.ImageIO.importImagesJSON(raw.images); } catch {}
+      }
 
-      // ★ 新增：若 app.json 提供 admins，覆蓋本機的管理員名單，避免不同步
+      // 管理員名單
       if (raw && typeof raw === 'object' && Array.isArray(raw.admins)) {
         setAdmins(raw.admins);
       }
     } catch (e) {
-      console.error('讀取 data/app.json 失敗：', e);
+      // 單機模式沒有 data/app.json 很正常，不打擾使用者。
+      console.info('未載入 data/app.json，已使用本機資料。', e?.message || e);
     }
   })();
 }, []);
@@ -5351,7 +5678,7 @@ const exportJSON = () => {
       version: 2, // 升級一下版本號，方便之後辨識
       exportedAt: new Date().toISOString()
     },
-    data,            // 站內資料
+    data: normalizeSiteData(data), // 站內資料（已補齊欄位）
     admins,          // 管理員名單（hash）
     images,          // ← 新增：全站圖片路徑與調整（images.v1 結構）
     bg               // ← 新增：背景設定（主畫面 / 漢堡選單）
@@ -5367,7 +5694,7 @@ const exportJSON = () => {
 
 // （可選）僅匯出站內資料，不含管理員名單——如果要給一般成員備份，可以綁這顆
 const exportDataOnly = () => {
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const blob = new Blob([JSON.stringify(normalizeSiteData(data), null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = `kjs_data_only_${new Date().toISOString().slice(0,10)}.json`;
@@ -6032,17 +6359,6 @@ function GameCenter({ data, setData, admin }) {
 
   const openPlay = (id) => {
     if (!id) return;
-
-    // 一般使用者：直接新視窗/新分頁開啟遊玩（同頁不內嵌顯示）
-    if (!admin) {
-      const g = games.find(x => x.id === id);
-      const url = (g && g.url) ? String(g.url).trim() : '';
-      if (!url) return;
-      window.open(url, "_blank", "noopener,noreferrer");
-      return;
-    }
-
-    // 管理員：保留站內預覽（Modal + iframe），以利測試與除錯
     setActiveId(id);
     setMountedIds(prev => (prev.includes(id) ? prev : [...prev, id]));
     setPlayOpen(true);
@@ -6172,7 +6488,8 @@ function GameCenter({ data, setData, admin }) {
           <section className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur p-3">
             <div className="text-sm font-semibold mb-2">遊戲清單</div>
 
-            <div className="gc-grid">{games.map(g => {
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {games.map(g => {
                 const active = activeGame?.id === g.id;
                 const thumbSrc = String(g.thumb || '').trim();
                 return (
@@ -6188,7 +6505,7 @@ function GameCenter({ data, setData, admin }) {
                       onClick={() => openPlay(g.id)}
                       title={g.title}
                     >
-                      <div className="bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden" style={{ aspectRatio: "1 / 1" }}>
+                      <div className="aspect-[16/9] bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
                         {thumbSrc ? (
                           <img
                             src={thumbSrc}
@@ -6244,7 +6561,7 @@ function GameCenter({ data, setData, admin }) {
           </section>
 
           {/* 遊玩視窗（點卡片才開啟；關閉時保留 iframe，不卸載） */}
-          {admin && mountedIds.length > 0 && (
+          {mountedIds.length > 0 && (
             <div
               className={`fixed inset-0 z-50 ${playOpen ? '' : 'pointer-events-none'}`}
               aria-hidden={playOpen ? 'false' : 'true'}
