@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>球球融合</title>
+<style>
+:root{
+  --bg:#070a14; --panel:rgba(255,255,255,.085); --panel2:rgba(255,255,255,.14);
+  --line:rgba(255,255,255,.16); --text:#f8fbff; --muted:#b8c3da; --accent:#85e8ff;
+  --good:#8affbc; --warn:#ffd36b; --danger:#ff5d82; --shadow:0 24px 80px rgba(0,0,0,.42);
+  --cardText:#f8fbff; --cardMuted:#c4cee4; --panelSolid:rgba(12,16,30,.94); --overlay:rgba(2,4,10,.54);
+  --controlBg:rgba(255,255,255,.10); --controlText:#ffffff; --buttonText:#ffffff;
+  --radius:24px;
+}
+body[data-appearance="light"]{
+  --bg:#f3f7ff; --panel:rgba(255,255,255,.62); --panel2:rgba(255,255,255,.86);
+  --line:rgba(26,48,86,.18); --text:#10213a; --muted:#52647f; --cardText:#10213a; --cardMuted:#536884;
+  --panelSolid:rgba(255,255,255,.93); --overlay:rgba(224,234,255,.54); --controlBg:rgba(16,33,58,.07); --controlText:#10213a; --buttonText:#10213a;
+  --shadow:0 24px 80px rgba(45,72,110,.24);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif;}
+body{display:flex;align-items:center;justify-content:center;padding:env(safe-area-inset-top) 10px env(safe-area-inset-bottom);background:radial-gradient(circle at 50% 0%,rgba(111,226,255,.16),transparent 32%),var(--bg);}
+button,select{font-family:inherit}
+.app{width:min(100%,560px);height:100dvh;max-height:1000px;display:grid;grid-template-rows:auto 1fr auto;gap:8px;padding:8px 0;position:relative;}
+.topbar{display:grid;grid-template-columns:1fr 1fr 1fr 1.05fr auto;gap:7px;z-index:4;}
+.glass{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);box-shadow:0 10px 28px rgba(0,0,0,.22);backdrop-filter:blur(18px);}
+.stat{border-radius:18px;padding:8px 9px;min-width:0;}
+.label{font-size:10.5px;color:var(--muted);line-height:1.1;white-space:nowrap;}
+.value{font-weight:950;font-size:17px;line-height:1.25;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.preview{border-radius:18px;padding:6px 8px;display:flex;align-items:center;gap:7px;justify-content:space-between;min-width:0;}
+.previewOrb{width:34px;height:34px;border-radius:999px;display:grid;place-items:center;font-size:20px;line-height:1;box-shadow:inset -8px -8px 16px rgba(0,0,0,.30),inset 6px 6px 10px rgba(255,255,255,.30),0 8px 18px rgba(0,0,0,.24);flex:none;}
+.iconBtn{border:0;color:var(--text);border-radius:18px;width:44px;font-size:20px;display:grid;place-items:center;cursor:pointer;}
+.iconBtn:active,.toolBtn:active,.primary:active,.miniBtn:active{transform:translateY(1px) scale(.99)}
+.gameFrame{position:relative;min-height:0;border-radius:30px;overflow:hidden;border:1px solid rgba(255,255,255,.16);box-shadow:var(--shadow);background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.035));}
+canvas{display:block;width:100%;height:100%;touch-action:none;user-select:none;}
+.hudLayer{position:absolute;inset:0;pointer-events:none;z-index:3;}
+.missions{position:absolute;left:10px;top:10px;right:10px;display:grid;gap:6px;}
+.mission{display:flex;align-items:center;gap:7px;width:max-content;max-width:100%;padding:6px 9px;border-radius:999px;background:rgba(7,10,20,.38);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(12px);font-size:11px;color:rgba(255,255,255,.86);box-shadow:0 8px 24px rgba(0,0,0,.16);}
+.mission.done{color:#0e1f18;background:linear-gradient(135deg,rgba(139,255,188,.92),rgba(135,232,255,.82));border-color:rgba(255,255,255,.36);font-weight:900;}
+.dangerBadge{position:absolute;left:50%;transform:translateX(-50%);top:74px;padding:8px 12px;border-radius:999px;background:rgba(255,70,105,.19);border:1px solid rgba(255,110,140,.42);color:#ffd5de;font-weight:950;font-size:12px;display:none;backdrop-filter:blur(14px);box-shadow:0 0 28px rgba(255,71,106,.18);}
+.dangerBadge.show{display:block;animation:pulse .5s infinite alternate;}
+.toolBar{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;z-index:4;}
+.toolBtn{min-height:51px;border:1px solid var(--line);border-radius:19px;color:var(--text);font-weight:950;font-size:13px;background:linear-gradient(180deg,var(--panel2),var(--panel));box-shadow:0 10px 28px rgba(0,0,0,.22);backdrop-filter:blur(18px);cursor:pointer;position:relative;overflow:hidden;}
+.toolBtn small{display:block;font-size:10px;color:var(--muted);font-weight:800;margin-top:1px;}
+.toolBtn.active{border-color:rgba(133,232,255,.72);box-shadow:0 0 0 2px rgba(133,232,255,.16),0 14px 36px rgba(0,0,0,.24);}
+.toolBtn[disabled]{opacity:.44;filter:saturate(.5);cursor:not-allowed;}
+.modal{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:var(--overlay);backdrop-filter:blur(16px);z-index:20;padding:14px;}
+.modal.show{display:flex;}
+.panel{width:min(100%,520px);max-height:min(92dvh,900px);overflow:auto;border-radius:30px;border:1px solid rgba(255,255,255,.16);background:linear-gradient(180deg,var(--panelSolid),color-mix(in srgb,var(--panelSolid) 92%,var(--accent) 8%));box-shadow:0 28px 100px rgba(0,0,0,.55);padding:18px;}
+.panel::-webkit-scrollbar{width:0;height:0}
+.titleRow{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px;}
+h1,h2,h3,p{margin:0} h1{font-size:30px;letter-spacing:.5px;font-weight:1000} h2{font-size:21px;font-weight:1000} h3{font-size:14px;font-weight:1000;color:var(--cardText);margin-bottom:8px}.sub{color:var(--muted);font-size:13px;line-height:1.45;margin-top:4px;}.close{width:40px;height:40px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.08);color:var(--buttonText);font-weight:1000;font-size:20px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.section{margin-top:15px}.card{border:1px solid rgba(255,255,255,.13);border-radius:20px;background:rgba(255,255,255,.065);padding:11px;cursor:pointer;position:relative;overflow:hidden;}.card.selected{border-color:rgba(133,232,255,.72);box-shadow:0 0 0 2px rgba(133,232,255,.12),inset 0 0 32px rgba(133,232,255,.06)}.cardTitle{font-size:14px;font-weight:1000;margin-bottom:4px;display:flex;align-items:center;gap:6px;color:var(--cardText)}.cardDesc{font-size:11.5px;color:var(--cardMuted);line-height:1.35}.emojiLine{font-size:19px;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:7px;}
+.primary{width:100%;min-height:52px;border:none;border-radius:20px;background:linear-gradient(135deg,#86eaff,#a88bff 55%,#ff90c6);color:#07101c;font-size:16px;font-weight:1000;box-shadow:0 14px 36px rgba(99,205,255,.25);margin-top:16px;cursor:pointer;}.secondary{width:100%;min-height:47px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.08);color:var(--buttonText);font-weight:950;margin-top:8px;}
+.row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08)}.row:last-child{border-bottom:0}.rowLabel b{font-size:13px;color:var(--cardText)}.rowLabel span{display:block;color:var(--cardMuted);font-size:11.5px;line-height:1.35;margin-top:2px}.switch{position:relative;width:48px;height:28px}.switch input{display:none}.slider{position:absolute;inset:0;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14)}.slider:before{content:"";position:absolute;width:22px;height:22px;left:3px;top:2px;border-radius:50%;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.28);transition:.18s}.switch input:checked + .slider{background:linear-gradient(135deg,#7ee9ff,#a58cff)}.switch input:checked + .slider:before{transform:translateX(19px)}select{border:1px solid rgba(255,255,255,.16);border-radius:14px;background:var(--controlBg);color:var(--controlText);padding:9px 10px;font-weight:850;outline:0;min-width:118px}option{background:var(--panelSolid);color:var(--controlText)}.miniBtn{border:1px solid rgba(255,255,255,.16);border-radius:14px;background:var(--controlBg);color:var(--buttonText);font-weight:950;padding:9px 11px;}
+.resultGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.resultCard{border:1px solid rgba(255,255,255,.12);border-radius:18px;background:rgba(255,255,255,.065);padding:11px}.resultCard .k{font-size:11px;color:var(--cardMuted)}.resultCard .v{font-size:19px;font-weight:1000;margin-top:3px}.grade{font-size:34px;font-weight:1000;background:linear-gradient(135deg,#fff,#85e8ff,#ffc2e2);-webkit-background-clip:text;background-clip:text;color:transparent}.toast{position:absolute;left:50%;bottom:72px;transform:translateX(-50%) translateY(12px);z-index:30;background:rgba(9,13,25,.78);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:10px 14px;color:#fff;font-weight:950;font-size:13px;opacity:0;pointer-events:none;backdrop-filter:blur(16px);box-shadow:0 14px 46px rgba(0,0,0,.35);transition:.22s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.collapse{margin-top:12px;border:1px solid rgba(255,255,255,.13);border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.04));overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.collapse summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;font-weight:1000;color:var(--cardText);user-select:none;}
+.collapse summary::-webkit-details-marker{display:none}.collapse summary::after{content:"⌄";width:26px;height:26px;border-radius:10px;display:grid;place-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);transition:.18s}.collapse[open] summary::after{transform:rotate(180deg)}
+.collapseHint{font-size:11.5px;color:var(--cardMuted);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:58%;}.collapseBody{padding:0 12px 13px}.settingHeader{display:flex;align-items:center;gap:8px;min-width:0}.settingHeader span:first-child{font-size:18px}.themeBadge{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border-radius:999px;background:var(--controlBg);border:1px solid var(--line);font-size:11.5px;color:var(--cardMuted);font-weight:900}
+.panel{position:relative}.panel:before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(circle at 18% 0%,var(--accent)22,transparent 34%),radial-gradient(circle at 100% 16%,rgba(255,255,255,.08),transparent 30%);opacity:.9}.panel>*{position:relative}.gameFrame:before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;background:linear-gradient(90deg,rgba(255,255,255,.08),transparent 18%,transparent 82%,rgba(255,255,255,.05)),linear-gradient(180deg,rgba(255,255,255,.10),transparent 16%,transparent 78%,rgba(0,0,0,.18));mix-blend-mode:screen}.gameFrame:after{content:"";position:absolute;inset:1px;border-radius:28px;pointer-events:none;z-index:2;border:1px solid rgba(255,255,255,.10);box-shadow:inset 0 0 42px rgba(255,255,255,.05)}
+
+
+body[data-appearance="light"] .glass{background:linear-gradient(180deg,rgba(255,255,255,.90),rgba(255,255,255,.62));box-shadow:0 12px 32px rgba(55,86,130,.18)}
+body[data-appearance="light"] .gameFrame{background:linear-gradient(180deg,rgba(255,255,255,.64),rgba(255,255,255,.34));border-color:rgba(28,56,92,.18)}
+body[data-appearance="light"] .modal{backdrop-filter:blur(18px) saturate(1.1)}
+body[data-appearance="light"] .card,body[data-appearance="light"] .resultCard,body[data-appearance="light"] .collapse{background:rgba(255,255,255,.58);border-color:rgba(24,49,82,.16)}
+body[data-appearance="light"] .card.selected{border-color:color-mix(in srgb,var(--accent) 70%,#10213a 30%);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 24%,transparent),inset 0 0 32px rgba(255,255,255,.42)}
+body[data-appearance="light"] .mission{background:rgba(255,255,255,.66);color:#10213a;border-color:rgba(24,49,82,.17)}
+body[data-appearance="light"] .mission.done{color:#0a2a1d;background:linear-gradient(135deg,rgba(116,235,170,.94),rgba(126,220,255,.86))}
+body[data-appearance="light"] .toast{background:rgba(255,255,255,.88);color:#10213a;border-color:rgba(24,49,82,.16)}
+body[data-appearance="light"] .dangerBadge{background:rgba(255,76,120,.18);color:#7a0b27;border-color:rgba(190,0,52,.24)}
+
+body[data-appearance="light"] .panel{box-shadow:0 28px 90px rgba(50,78,115,.22);border-color:rgba(24,49,82,.16)}
+body[data-appearance="light"] .grade{background:linear-gradient(135deg,#14345e,#358bd8,#9a4dba);-webkit-background-clip:text;background-clip:text;color:transparent}
+body[data-appearance="light"] .secondary,body[data-appearance="light"] .close{background:rgba(16,33,58,.06)}
+body[data-appearance="light"] .collapse summary::after{background:rgba(16,33,58,.06);border-color:rgba(24,49,82,.14)}
+
+@keyframes pulse{from{opacity:.68;transform:translateX(-50%) scale(.98)}to{opacity:1;transform:translateX(-50%) scale(1.02)}}
+@media(max-width:420px){body{padding-left:6px;padding-right:6px}.app{gap:7px;padding:6px 0}.topbar{grid-template-columns:1fr 1fr 1fr auto}.preview{grid-column:span 1}.hideSmall{display:none}.value{font-size:15px}.toolBtn{font-size:12px;min-height:49px}.grid2{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}.panel{padding:15px;border-radius:25px}h1{font-size:26px}.missions{top:8px}.mission{font-size:10.5px;padding:5px 8px}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="topbar">
+    <div class="stat glass"><div class="label">分數</div><div class="value" id="scoreText">0</div></div>
+    <div class="stat glass"><div class="label">最高</div><div class="value" id="bestText">0</div></div>
+    <div class="stat glass"><div class="label">COMBO</div><div class="value" id="comboText">0</div></div>
+    <div class="preview glass"><div><div class="label">下一顆</div><div class="value" id="nextName">-</div></div><div class="previewOrb" id="nextOrb">●</div></div>
+    <button class="iconBtn glass" id="pauseBtn" aria-label="暫停">Ⅱ</button>
+  </div>
+
+  <div class="gameFrame" id="gameFrame">
+    <canvas id="game"></canvas>
+    <div class="hudLayer">
+      <div class="missions" id="missionList"></div>
+      <div class="dangerBadge" id="dangerBadge">危險倒數</div>
+    </div>
+  </div>
+
+  <div class="toolBar">
+    <button class="toolBtn" id="removeBtn">🪄 消除<small id="removeCount">0</small></button>
+    <button class="toolBtn" id="bombBtn">💥 清場<small id="bombCount">0</small></button>
+    <button class="toolBtn" id="swapBtn">🔁 換球<small id="swapCount">0</small></button>
+    <button class="toolBtn" id="settingBtn">⚙️ 設定<small>輔助</small></button>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="modal show" id="menuModal">
+    <div class="panel">
+      <div class="titleRow"><div><h1>球球融合</h1><p class="sub">拖曳決定落點，放開落球。相同等級碰撞後融合，超過危險線太久會結算。</p></div></div>
+      <details class="collapse" id="menuModeCollapse">
+        <summary><span class="settingHeader"><span>🎮</span><span>遊戲模式</span></span><span class="collapseHint" id="menuModeSummary">目前模式</span></summary>
+        <div class="collapseBody"><div class="grid2" id="modeCards"></div></div>
+      </details>
+      <details class="collapse" id="menuThemeCollapse">
+        <summary><span class="settingHeader"><span>🎨</span><span>主題套組</span></span><span class="collapseHint" id="menuThemeSummary">目前主題</span></summary>
+        <div class="collapseBody"><div class="grid2" id="themeCards"></div></div>
+      </details>
+      <button class="primary" id="startBtn">開始遊戲</button>
+      <button class="secondary" id="openSettingsFromMenu">輔助設定</button>
+    </div>
+  </div>
+
+  <div class="modal" id="settingsModal">
+    <div class="panel">
+      <div class="titleRow"><div><h2>設定</h2><p class="sub">所有輔助功能可調整，畫面與效能會即時套用。</p></div><button class="close" id="closeSettings">×</button></div>
+      <details class="collapse" id="modeCollapse">
+        <summary><span class="settingHeader"><span>🎮</span><span>遊戲模式</span></span><span class="collapseHint" id="modeSummary">目前模式</span></summary>
+        <div class="collapseBody"><div class="grid2" id="modeCardsSettings"></div></div>
+      </details>
+      <details class="collapse" id="themeCollapse">
+        <summary><span class="settingHeader"><span>🎨</span><span>主題套組</span></span><span class="collapseHint" id="themeSummary">目前主題</span></summary>
+        <div class="collapseBody"><div class="grid2" id="themeCardsSettings"></div></div>
+      </details>
+      <div class="section"><h3>畫面顯示</h3>
+        <div class="row"><div class="rowLabel"><b>亮暗模式</b><span>深色更沉浸，亮色更清爽；所有文字會同步調整成高對比。</span></div><select id="appearanceSelect"><option value="dark">深色模式</option><option value="light">亮色模式</option></select></div>
+      </div>
+      <div class="section"><h3>背景氣氛</h3><div class="row"><div class="rowLabel"><b>背景</b><span>跟隨套組或指定糖果、宇宙、霓虹、海底、夜市氣氛。</span></div><select id="bgSelect"></select></div></div>
+      <div class="section"><h3>輔助與效能</h3>
+        <div class="row"><div class="rowLabel"><b>特效強度</b><span>低：省效能｜中：平衡｜高：粒子、震動與光效更完整。</span></div><select id="fxSelect"><option value="low">低</option><option value="mid">中</option><option value="high">高</option></select></div>
+        <div class="row"><div class="rowLabel"><b>道具次數</b><span>每局消除、清場、換球的可用次數。</span></div><select id="toolChargeSelect"><option value="0">關閉</option><option value="2">2 次</option><option value="3">3 次</option><option value="5">5 次</option></select></div>
+        <div class="row"><div class="rowLabel"><b>音效</b><span>落球、融合、任務完成與結算提示。</span></div><label class="switch"><input type="checkbox" id="soundToggle"><span class="slider"></span></label></div>
+        <div class="row"><div class="rowLabel"><b>震動回饋</b><span>手機支援時，融合、危險與結算會有觸感提示。</span></div><label class="switch"><input type="checkbox" id="vibrateToggle"><span class="slider"></span></label></div>
+        <div class="row"><div class="rowLabel"><b>輔助線</b><span>顯示落點線與落點陰影，提升放球精準度。</span></div><label class="switch"><input type="checkbox" id="aimToggle"><span class="slider"></span></label></div>
+        <div class="row"><div class="rowLabel"><b>危險倒數</b><span>球超線時顯示倒數提示，回到安全區會取消。</span></div><label class="switch"><input type="checkbox" id="dangerToggle"><span class="slider"></span></label></div>
+        <div class="row"><div class="rowLabel"><b>背景動畫</b><span>開啟星點、泡泡、燈光等動態背景細節。</span></div><label class="switch"><input type="checkbox" id="bgAnimToggle"><span class="slider"></span></label></div>
+        <div class="row"><div class="rowLabel"><b>畫面震動</b><span>大型融合與爆裂會有輕微鏡頭震動。</span></div><label class="switch"><input type="checkbox" id="shakeToggle"><span class="slider"></span></label></div>
+        <div class="row"><div class="rowLabel"><b>低效能模式</b><span>降低粒子、背景動畫與運算壓力，適合舊手機。</span></div><label class="switch"><input type="checkbox" id="lowPowerToggle"><span class="slider"></span></label></div>
+      </div>
+      <button class="primary" id="applySettings">套用並返回</button>
+      <button class="secondary" id="newGameFromSettings">重新開始本局</button>
+    </div>
+  </div>
+
+  <div class="modal" id="resultModal">
+    <div class="panel">
+      <div class="titleRow"><div><h2>結算</h2><p class="sub" id="resultSub">本局完成</p></div></div>
+      <div class="resultGrid" id="resultGrid"></div>
+      <div class="section"><h3>任務加成</h3><div id="resultMissions"></div></div>
+      <button class="primary" id="againBtn">再玩一次</button>
+      <button class="secondary" id="backMenuBtn">回主畫面</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const canvas = $('game'), ctx = canvas.getContext('2d');
+const app = $('app'), frame = $('gameFrame');
+const rand = (a,b)=>a+Math.random()*(b-a), clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const fmt = n => Math.round(n).toLocaleString('zh-TW');
+
+const MODES = {
+  easy:{name:'輕鬆', icon:'🌤️', desc:'容器較寬、球較穩、危險倒數較長，適合熟悉手感。', gravity:.42, rest:.20, friction:.986, danger:4.8, score:.85, spawnMaxBonus:0, wall:.03},
+  normal:{name:'標準', icon:'🎯', desc:'平衡手感與分數倍率，最接近主要玩法。', gravity:.48, rest:.24, friction:.984, danger:3.7, score:1, spawnMaxBonus:0, wall:0},
+  hard:{name:'挑戰', icon:'🔥', desc:'球更活躍、容錯較低、分數倍率較高。', gravity:.52, rest:.28, friction:.982, danger:2.8, score:1.28, spawnMaxBonus:1, wall:-.015},
+  fever:{name:'狂熱', icon:'⚡', desc:'Combo 成長更快，連續融合分數更高，但節奏更緊。', gravity:.50, rest:.26, friction:.983, danger:3.1, score:1.12, spawnMaxBonus:1, fever:true, wall:0}
+};
+const THEMES = {
+  candy:{name:'糖果樂園', icon:'🍬', desc:'甜色球體、泡泡光點、柔和彈跳感。', bg:'candy', accent:'#ff9fd8', line:'#ffb7e6',
+    levels:[['糖豆','🍬','#ff6fb5',2],['布丁','🍮','#ffc35b',5],['甜甜圈','🍩','#d88cff',10],['冰棒','🍦','#8be9ff',20],['蛋糕','🍰','#ff8c8c',40],['蜂蜜','🍯','#ffd35e',80],['糖罐','🧁','#b98cff',160],['派對糖','🍭','#ff76df',320],['夢幻甜點','🎂','#fff0a8',640],['糖果核心','🌈','#b7fff0',1280]]},
+  space:{name:'宇宙星球', icon:'🪐', desc:'星空、星雲與星球階級，融合感最直覺。', bg:'space', accent:'#89e8ff', line:'#8fdfff',
+    levels:[['隕石','☄️','#9c7b65',2],['月球','🌕','#d7d2bd',5],['火星','🔴','#d56a44',10],['地球','🌍','#4db8ff',20],['海王星','🔵','#527aff',40],['木星','🟤','#c58c55',80],['土星','🪐','#d5ba72',160],['太陽','☀️','#ffd45b',320],['黑洞','⚫','#6f55ff',640],['宇宙核心','🌌','#aeefff',1280]]},
+  neon:{name:'霓虹都市', icon:'🌃', desc:'深色高對比、發光邊緣與科技感背景。', bg:'neon', accent:'#9d8cff', line:'#ff7bd4',
+    levels:[['藍光','💠','#4de8ff',2],['紫光','🔮','#a783ff',5],['桃光','💗','#ff62bd',10],['晶片','💎','#60fff1',20],['電能','⚡','#fff06a',40],['光環','🌀','#7e95ff',80],['城市','🌆','#ff9a66',160],['夜城','🌃','#7794ff',320],['星爆','✨','#f4eeff',640],['霓虹核','🌐','#80ffe7',1280]]},
+  ocean:{name:'海底泡泡', icon:'🌊', desc:'水波、泡泡與柔藍氣氛，視覺較舒緩。', bg:'ocean', accent:'#68ddff', line:'#79f4ff',
+    levels:[['水滴','💧','#76e0ff',2],['貝殼','🐚','#ffd6b5',5],['小魚','🐟','#5fd3ff',10],['珊瑚','🪸','#ff7a98',20],['海星','⭐','#ffd75f',40],['水母','🪼','#bf93ff',80],['海豚','🐬','#6ebfff',160],['鯨魚','🐳','#4f8cff',320],['深海','🌊','#295bff',640],['海洋核心','🫧','#c2fff6',1280]]},
+  night:{name:'夜市遊戲攤', icon:'🏮', desc:'暖色燈光、遊戲攤氛圍，爽感更強。', bg:'night', accent:'#ffd06e', line:'#ff9f5e',
+    levels:[['彈珠','🔴','#ff5b5b',2],['金幣','🪙','#ffd45e',5],['汽球','🎈','#ff82b8',10],['獎牌','🏅','#f5b948',20],['骰子','🎲','#f8f8ff',40],['煙火','🎆','#9b86ff',80],['禮物','🎁','#ff6978',160],['燈籠','🏮','#ff7e46',320],['大獎','🏆','#fff06f',640],['夜市王','🎰','#ffc14f',1280]]}
+};
+const BG_OPTIONS = [
+  ['auto','跟隨套組'],['candy','糖果樂園'],['space','宇宙星空'],['neon','霓虹都市'],['ocean','海底世界'],['night','夜市遊戲攤']
+];
+
+const state = {
+  W:0,H:0,dpr:1, running:false, paused:false, gameOver:false, last:0, time:0, pointerConsumed:false,
+  mode:'normal', theme:'space', bg:'auto', appearance:'dark', fx:'high', sound:true, vibrate:true, aim:true, dangerCountdown:true, bgAnim:true, shake:true, lowPower:false, toolCharge:3,
+  balls:[], particles:[], bgDots:[], score:0, missionBonus:0, best:0, combo:0, comboTimer:0, maxCombo:0, maxLevel:0, mergeCount:0, cleared:0, toolUses:0, startAt:0,
+  currentLevel:0, nextLevel:0, pointerX:0, pointerY:0, canDrop:true, activeTool:null, charges:{remove:3,bomb:3,swap:3}, missions:[], dangerTime:0, shakeT:0, audio:null
+};
+
+function mode(){return MODES[state.mode]} function theme(){return THEMES[state.theme]} function levels(){return theme().levels}
+function levelData(l){return levels()[clamp(l,0,levels().length-1)]}
+function baseScale(){return Math.max(.82, Math.min(1.2, state.W/390))}
+function radiusFor(l){const base=[13.5,17,21.5,27,34,42,51,61,72,84][l]||92; return base*baseScale()*(state.mode==='easy'?.92:state.mode==='hard'?1.02:1)}
+function bestKey(){return 'ballFusionBest_'+state.mode}
+function saveSettings(){localStorage.setItem('ballFusionSettingsV2', JSON.stringify({mode:state.mode,theme:state.theme,bg:state.bg,appearance:state.appearance,fx:state.fx,sound:state.sound,vibrate:state.vibrate,aim:state.aim,dangerCountdown:state.dangerCountdown,bgAnim:state.bgAnim,shake:state.shake,lowPower:state.lowPower,toolCharge:state.toolCharge}))}
+function loadSettings(){try{Object.assign(state, JSON.parse(localStorage.getItem('ballFusionSettingsV2')||'{}'))}catch(e){} state.best=Number(localStorage.getItem(bestKey())||0)}
+
+function buildCards(target, source, selected, cb){
+  target.innerHTML='';
+  Object.entries(source).forEach(([id,it])=>{
+    const card=document.createElement('div'); card.className='card'+(id===selected?' selected':''); card.dataset.id=id;
+    const emojis = it.levels ? `<div class="emojiLine">${it.levels.map(x=>x[1]).join(' ')}</div>` : '';
+    card.innerHTML=`${emojis}<div class="cardTitle"><span>${it.icon}</span>${it.name}</div><div class="cardDesc">${it.desc}</div>`;
+    card.onclick=()=>cb(id); target.appendChild(card);
+  });
+}
+function updateCollapseLabels(){
+  if($('modeSummary')) $('modeSummary').textContent = `${MODES[state.mode].icon} ${MODES[state.mode].name}｜${MODES[state.mode].desc}`;
+  if($('themeSummary')) $('themeSummary').textContent = `${THEMES[state.theme].icon} ${THEMES[state.theme].name}｜${THEMES[state.theme].desc}`;
+  if($('menuModeSummary')) $('menuModeSummary').textContent = `${MODES[state.mode].icon} ${MODES[state.mode].name}｜${MODES[state.mode].desc}`;
+  if($('menuThemeSummary')) $('menuThemeSummary').textContent = `${THEMES[state.theme].icon} ${THEMES[state.theme].name}｜${THEMES[state.theme].desc}`;
+}
+function applyThemeVars(){
+  document.documentElement.style.setProperty('--accent', theme().accent);
+  document.documentElement.style.setProperty('--line', theme().line+'55');
+}
+function applyAppearance(){
+  document.body.dataset.appearance = state.appearance === 'light' ? 'light' : 'dark';
+}
+function refreshUIBuild(){
+  const setMode=id=>{state.mode=id; state.best=Number(localStorage.getItem(bestKey())||0); refreshUIBuild(); updateHUD(); saveSettings();};
+  const setTheme=id=>{state.theme=id; applyThemeVars(); initBackground(); refreshUIBuild(); updateNextPreview(); saveSettings();};
+  applyThemeVars(); applyAppearance();
+  buildCards($('modeCards'), MODES, state.mode, setMode); buildCards($('modeCardsSettings'), MODES, state.mode, setMode);
+  buildCards($('themeCards'), THEMES, state.theme, setTheme); buildCards($('themeCardsSettings'), THEMES, state.theme, setTheme);
+  updateCollapseLabels();
+  $('bgSelect').innerHTML = BG_OPTIONS.map(([v,n])=>`<option value="${v}">${n}</option>`).join('');
+  $('bgSelect').value=state.bg; if($('appearanceSelect')) $('appearanceSelect').value=state.appearance; $('fxSelect').value=state.fx; $('toolChargeSelect').value=String(state.toolCharge);
+  $('soundToggle').checked=state.sound; $('vibrateToggle').checked=state.vibrate; $('aimToggle').checked=state.aim; $('dangerToggle').checked=state.dangerCountdown; $('bgAnimToggle').checked=state.bgAnim; $('shakeToggle').checked=state.shake; $('lowPowerToggle').checked=state.lowPower;
+}
+function applySettingInputs(){
+  state.bg=$('bgSelect').value; state.appearance=$('appearanceSelect') ? $('appearanceSelect').value : state.appearance; state.fx=$('fxSelect').value; state.toolCharge=Number($('toolChargeSelect').value);
+  state.sound=$('soundToggle').checked; state.vibrate=$('vibrateToggle').checked; state.aim=$('aimToggle').checked; state.dangerCountdown=$('dangerToggle').checked; state.bgAnim=$('bgAnimToggle').checked; state.shake=$('shakeToggle').checked; state.lowPower=$('lowPowerToggle').checked;
+  applyAppearance(); saveSettings(); initBackground(); updateToolButtons();
+}
+
+function resize(){
+  const r=frame.getBoundingClientRect(); state.dpr=Math.min(window.devicePixelRatio||1,2.5); state.W=Math.max(300,r.width); state.H=Math.max(420,r.height);
+  canvas.width=Math.floor(state.W*state.dpr); canvas.height=Math.floor(state.H*state.dpr); canvas.style.width=state.W+'px'; canvas.style.height=state.H+'px'; ctx.setTransform(state.dpr,0,0,state.dpr,0,0);
+  state.pointerX=state.pointerX||state.W/2; state.pointerY=46; initBackground();
+}
+window.addEventListener('resize', resize, {passive:true});
+
+function activeBg(){return state.bg==='auto'?theme().bg:state.bg}
+function initBackground(){
+  const n=state.lowPower?28:state.bgAnim?70:34; state.bgDots=[];
+  for(let i=0;i<n;i++){state.bgDots.push({x:rand(0,state.W),y:rand(0,state.H),r:rand(.8,3.6),a:rand(.18,.76),v:rand(.08,.42),p:rand(0,Math.PI*2)})}
+}
+function bgGradient(bg){
+  const g=ctx.createLinearGradient(0,0,0,state.H), light=state.appearance==='light';
+  if(light){
+    if(bg==='candy'){g.addColorStop(0,'#fff1fb');g.addColorStop(.50,'#ffd9ef');g.addColorStop(1,'#fff8df')}
+    else if(bg==='neon'){g.addColorStop(0,'#f0f4ff');g.addColorStop(.52,'#e5e8ff');g.addColorStop(1,'#fff1fb')}
+    else if(bg==='ocean'){g.addColorStop(0,'#ddfbff');g.addColorStop(.55,'#b8ecff');g.addColorStop(1,'#eefbff')}
+    else if(bg==='night'){g.addColorStop(0,'#fff2d2');g.addColorStop(.55,'#ffd6b7');g.addColorStop(1,'#f3ecff')}
+    else {g.addColorStop(0,'#eef7ff');g.addColorStop(.55,'#dbe7ff');g.addColorStop(1,'#f8fbff')}
+  } else {
+    if(bg==='candy'){g.addColorStop(0,'#33152f');g.addColorStop(.48,'#4a224c');g.addColorStop(1,'#171427')}
+    else if(bg==='neon'){g.addColorStop(0,'#07091b');g.addColorStop(.55,'#15102c');g.addColorStop(1,'#050710')}
+    else if(bg==='ocean'){g.addColorStop(0,'#062947');g.addColorStop(.55,'#083c63');g.addColorStop(1,'#061421')}
+    else if(bg==='night'){g.addColorStop(0,'#271112');g.addColorStop(.55,'#21172a');g.addColorStop(1,'#080813')}
+    else {g.addColorStop(0,'#080d25');g.addColorStop(.55,'#11142e');g.addColorStop(1,'#050713')}
+  }
+  return g;
+}
+function drawBackground(){
+  const bg=activeBg(), light=state.appearance==='light';
+  ctx.save();
+  ctx.fillStyle=bgGradient(bg); ctx.fillRect(0,0,state.W,state.H);
+  const t=state.time*.001;
+
+  // premium layered atmosphere per background
+  const halo1=ctx.createRadialGradient(state.W*.22,state.H*.06,0,state.W*.22,state.H*.06,state.W*.78);
+  halo1.addColorStop(0,theme().accent+(light?'55':'42')); halo1.addColorStop(.45,light?'rgba(255,255,255,.30)':'rgba(255,255,255,.035)'); halo1.addColorStop(1,'rgba(255,255,255,0)'); ctx.fillStyle=halo1; ctx.fillRect(0,0,state.W,state.H);
+  const halo2=ctx.createRadialGradient(state.W*.86,state.H*.72,0,state.W*.86,state.H*.72,state.W*.72);
+  halo2.addColorStop(0,theme().line+(light?'42':'30')); halo2.addColorStop(1,'rgba(255,255,255,0)'); ctx.fillStyle=halo2; ctx.fillRect(0,0,state.W,state.H);
+
+  if(bg==='space'){
+    ctx.save();
+    for(let i=0;i<5;i++){
+      const x=state.W*(.12+i*.21), y=state.H*(.18+.07*Math.sin(t*.35+i));
+      const neb=ctx.createRadialGradient(x,y,0,x,y,state.W*(.22+.03*i));
+      neb.addColorStop(0,i%2?'rgba(167,130,255,.16)':'rgba(111,232,255,.15)'); neb.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.fillStyle=neb; ctx.fillRect(0,0,state.W,state.H);
+    }
+    ctx.globalAlpha=.8; ctx.strokeStyle='rgba(168,232,255,.18)'; ctx.lineWidth=1;
+    for(let i=0;i<4;i++){ctx.beginPath(); ctx.ellipse(state.W*(.2+i*.22),state.H*(.25+i*.08),90+i*20,22+i*4,Math.sin(t*.18+i)*.25,0,Math.PI*2); ctx.stroke();}
+    ctx.restore();
+  } else if(bg==='candy'){
+    ctx.save();
+    for(let i=0;i<9;i++){
+      const x=state.W*((i*.17)%1), y=state.H*(.16+(i%4)*.18)+(state.bgAnim?Math.sin(t+i)*7:0);
+      ctx.globalAlpha=.10; ctx.fillStyle=i%2?'#fff1fb':'#ffe08a'; ctx.beginPath(); ctx.arc(x,y,24+i%3*8,0,Math.PI*2); ctx.fill();
+      ctx.globalAlpha=.16; ctx.strokeStyle=i%2?'#ffb0dc':'#fff2a3'; ctx.lineWidth=3; ctx.beginPath(); ctx.arc(x,y,11+i%3*4,0,Math.PI*1.65); ctx.stroke();
+    }
+    ctx.restore();
+  } else if(bg==='neon'){
+    ctx.save();
+    ctx.globalAlpha=.34; ctx.strokeStyle=theme().accent; ctx.lineWidth=1;
+    const horizon=state.H*.50;
+    for(let i=0;i<12;i++){let y=horizon+i*i*1.6+(state.bgAnim?Math.sin(t+i)*2:0); ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(state.W,y); ctx.stroke();}
+    for(let i=-7;i<=7;i++){const x=state.W*.5+i*state.W*.095; ctx.beginPath(); ctx.moveTo(x,horizon); ctx.lineTo(state.W*.5+i*state.W*.22,state.H); ctx.stroke();}
+    ctx.globalAlpha=.26; ctx.strokeStyle='#ff7bd4'; ctx.lineWidth=2; for(let i=0;i<4;i++){ctx.strokeRect(state.W*(.08+i*.22),state.H*(.14+(i%2)*.05),44,66+i*12)}
+    ctx.restore();
+  } else if(bg==='ocean'){
+    ctx.save();
+    for(let i=0;i<8;i++){ctx.globalAlpha=.16; ctx.strokeStyle=i%2?'#bdfcff':'#6fe7ff'; ctx.lineWidth=1.5; ctx.beginPath(); let y=state.H*(.14+i*.10); for(let x=0;x<=state.W;x+=14){let yy=y+Math.sin(x*.023+t*.9+i)*7; if(x===0)ctx.moveTo(x,yy); else ctx.lineTo(x,yy)} ctx.stroke();}
+    ctx.globalAlpha=.10; ctx.fillStyle='#d8ffff'; for(let i=0;i<7;i++){ctx.beginPath(); ctx.arc(state.W*(.07+i*.15),state.H*(.84-.06*(i%3)),30+i%2*10,0,Math.PI*2); ctx.fill();}
+    ctx.restore();
+  } else if(bg==='night'){
+    ctx.save();
+    ctx.globalAlpha=.9;
+    for(let i=0;i<12;i++){let x=i*state.W/11, y=30+Math.sin(t+i)*4; ctx.fillStyle=i%2?'rgba(255,210,95,.33)':'rgba(255,95,130,.30)'; ctx.beginPath(); ctx.arc(x,y,10,0,Math.PI*2); ctx.fill(); ctx.strokeStyle='rgba(255,230,170,.18)'; ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,y-10); ctx.stroke();}
+    ctx.globalAlpha=.16; ctx.fillStyle='#ffd07a'; for(let i=0;i<10;i++){ctx.beginPath(); ctx.roundRect?.(state.W*((i*.19)%1)-18,state.H*(.18+(i%5)*.13),36,52,12); if(!ctx.roundRect){ctx.rect(state.W*((i*.19)%1)-18,state.H*(.18+(i%5)*.13),36,52)} ctx.fill();}
+    ctx.restore();
+  }
+
+  if(state.bgAnim || !state.lowPower){
+    state.bgDots.forEach((d,i)=>{
+      if(state.bgAnim){d.y-=d.v; d.x+=Math.sin(t+d.p)*.09; if(d.y<-12){d.y=state.H+12; d.x=rand(0,state.W)}}
+      ctx.globalAlpha=d.a*(state.lowPower?.42:1);
+      ctx.fillStyle=bg==='night'?'#ffd07a':bg==='ocean'?'#a7f7ff':bg==='candy'?'#fff1fb':bg==='neon'?(i%2?'#ff7bd4':'#8be9ff'):theme().accent;
+      ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2); ctx.fill();
+    });
+  }
+
+
+
+  // refined foreground atmosphere: soft silhouettes and theme-specific depth
+  ctx.save();
+  if(bg==='space'){
+    ctx.globalAlpha=light ? .18 : .24; ctx.strokeStyle=light?'rgba(70,105,170,.36)':'rgba(180,226,255,.28)'; ctx.lineWidth=1;
+    for(let i=0;i<18;i++){const x=state.W*((i*37)%101)/101, y=state.H*(.10+((i*19)%70)/100); ctx.beginPath(); ctx.moveTo(x-6,y); ctx.lineTo(x+6,y); ctx.moveTo(x,y-6); ctx.lineTo(x,y+6); ctx.stroke();}
+  } else if(bg==='candy'){
+    for(let i=0;i<7;i++){const x=state.W*(.05+i*.16), y=state.H*(.78+.03*Math.sin(t+i)); const w=46+i%2*22; const grd=ctx.createLinearGradient(x-w/2,y-30,x+w/2,y+42); grd.addColorStop(0,light?'rgba(255,255,255,.46)':'rgba(255,255,255,.13)'); grd.addColorStop(1,light?'rgba(255,145,205,.25)':'rgba(255,145,205,.08)'); ctx.fillStyle=grd; ctx.beginPath(); ctx.roundRect?.(x-w/2,y-30,w,72,18); if(!ctx.roundRect) ctx.rect(x-w/2,y-30,w,72); ctx.fill();}
+  } else if(bg==='neon'){
+    ctx.globalAlpha=light ? .26 : .38; for(let i=0;i<9;i++){const x=state.W*(i/8), h=38+((i*23)%70); ctx.fillStyle=i%2?(light?'rgba(155,120,255,.22)':'rgba(155,120,255,.20)'):(light?'rgba(255,105,205,.18)':'rgba(255,105,205,.14)'); ctx.fillRect(x-18,state.H*.62-h,36,h);}
+  } else if(bg==='ocean'){
+    ctx.globalAlpha=light ? .36 : .24; const grd=ctx.createLinearGradient(0,state.H*.78,0,state.H); grd.addColorStop(0,light?'rgba(100,210,235,.10)':'rgba(100,210,235,.07)'); grd.addColorStop(1,light?'rgba(23,105,138,.24)':'rgba(0,20,32,.28)'); ctx.fillStyle=grd; ctx.fillRect(0,state.H*.74,state.W,state.H*.26);
+  } else if(bg==='night'){
+    ctx.globalAlpha=light ? .30 : .22; ctx.fillStyle=light?'rgba(150,82,28,.24)':'rgba(255,166,72,.12)'; for(let i=0;i<8;i++){ctx.beginPath(); ctx.roundRect?.(state.W*(i/7)-26,state.H*.70,52,86,10); if(!ctx.roundRect)ctx.rect(state.W*(i/7)-26,state.H*.70,52,86); ctx.fill();}
+  }
+  ctx.restore();
+
+  // container depth lighting
+  const vign=ctx.createRadialGradient(state.W*.5,state.H*.48,state.W*.12,state.W*.5,state.H*.54,state.W*.86);
+  vign.addColorStop(0,'rgba(255,255,255,0)'); vign.addColorStop(.72,light?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)'); vign.addColorStop(1,light?'rgba(70,95,130,.16)':'rgba(0,0,0,.36)');
+  ctx.fillStyle=vign; ctx.fillRect(0,0,state.W,state.H);
+  ctx.restore();
+}
+
+function randomLevel(){
+  let max=2; if(state.score>2200) max=3; if(state.score>7000) max=4; if(state.score>15000) max=4+mode().spawnMaxBonus; return Math.floor(rand(0,clamp(max,1,5)+1));
+}
+function resetGame(){
+  state.balls=[]; state.particles=[]; state.score=0; state.missionBonus=0; state.combo=0; state.comboTimer=0; state.maxCombo=0; state.maxLevel=0; state.mergeCount=0; state.cleared=0; state.toolUses=0; state.time=0; state.startAt=performance.now(); state.dangerTime=0; state.gameOver=false; state.paused=false; state.running=true; state.canDrop=true; state.activeTool=null;
+  state.best=Number(localStorage.getItem(bestKey())||0); state.currentLevel=randomLevel(); state.nextLevel=randomLevel(); state.pointerX=state.W/2;
+  state.charges={remove:state.toolCharge,bomb:state.toolCharge,swap:state.toolCharge};
+  makeMissions(); updateMissionUI(); updateHUD(); updateNextPreview(); updateToolButtons(); $('resultModal').classList.remove('show'); $('menuModal').classList.remove('show'); $('settingsModal').classList.remove('show');
+  requestAnimationFrame(loop); toast('開始！拖曳後放開落球');
+}
+function missionPool(){
+  const base = Math.max(900, 1600 * (state.mode==='easy'?.8:state.mode==='hard'?1.4:1));
+  return [
+    {type:'score', text:`分數達到 ${fmt(base*2)}`, target:base*2, reward:700},
+    {type:'merge', text:'完成 12 次融合', target:12, reward:600},
+    {type:'merge', text:'完成 20 次融合', target:20, reward:1000},
+    {type:'level', text:`合成 ${levelData(5)[1]} ${levelData(5)[0]}`, target:5, reward:900},
+    {type:'level', text:`合成 ${levelData(6)[1]} ${levelData(6)[0]}`, target:6, reward:1400},
+    {type:'combo', text:'達成 Combo 5', target:5, reward:800},
+    {type:'combo', text:'達成 Combo 8', target:8, reward:1300},
+    {type:'clear', text:'用道具清除 3 顆球', target:3, reward:650, needTool:true},
+    {type:'fewTool', text:'道具使用不超過 2 次', target:2, reward:800, endOnly:true}
+  ].filter(m=>state.toolCharge>0 || !m.needTool);
+}
+function makeMissions(){
+  const pool=missionPool().sort(()=>Math.random()-.5); state.missions=pool.slice(0,3).map((m,i)=>({...m,id:i,done:false,paid:false,progress:0}));
+}
+function progressMission(m){
+  if(m.type==='score') return Math.min(state.score,m.target);
+  if(m.type==='merge') return Math.min(state.mergeCount,m.target);
+  if(m.type==='level') return Math.min(state.maxLevel,m.target);
+  if(m.type==='combo') return Math.min(state.maxCombo,m.target);
+  if(m.type==='clear') return Math.min(state.cleared,m.target);
+  if(m.type==='fewTool') return Math.max(0,m.target-state.toolUses);
+  return 0;
+}
+function checkMissions(end=false){
+  let changed=false;
+  state.missions.forEach(m=>{
+    m.progress=progressMission(m);
+    let ok=false;
+    if(m.type==='fewTool') ok=end && state.toolUses<=m.target;
+    else ok=m.progress>=m.target;
+    if(ok && !m.done){m.done=true; changed=true; toast(`任務完成 +${m.reward}`); vib([35,20,35]); sound(760,.08,'triangle',.04)}
+  });
+  if(changed) updateMissionUI();
+}
+function updateMissionUI(){
+  $('missionList').innerHTML = state.missions.map(m=>{
+    const prog = m.type==='fewTool' ? `≤${m.target}` : `${Math.floor(m.progress||0)}/${m.target}`;
+    return `<div class="mission ${m.done?'done':''}">${m.done?'✓':'◇'} ${m.text} <b>${m.done?'+'+m.reward:prog}</b></div>`;
+  }).join('');
+}
+
+function updateHUD(){
+  $('scoreText').textContent=fmt(state.score); $('bestText').textContent=fmt(Math.max(state.best,state.score)); $('comboText').textContent=state.combo;
+  checkMissions(false); updateMissionUI();
+}
+function updateNextPreview(){
+  const d=levelData(state.nextLevel); const el=$('nextOrb'); el.textContent=d[1]; el.style.background=orbStyle(d[2]); el.style.fontSize='20px'; $('nextName').textContent=d[0];
+}
+function updateToolButtons(){
+  const enabled = state.toolCharge>0 && state.running && !state.gameOver;
+  [['remove','removeBtn','removeCount'],['bomb','bombBtn','bombCount'],['swap','swapBtn','swapCount']].forEach(([k,b,c])=>{
+    const btn=$(b); btn.disabled = !enabled || state.charges[k]<=0; btn.classList.toggle('active', state.activeTool===k); $(c).textContent = enabled ? `剩 ${state.charges[k]}` : '關閉';
+  });
+}
+function orbStyle(color){return `radial-gradient(circle at 32% 24%, rgba(255,255,255,.86), ${color} 30%, ${color} 58%, rgba(0,0,0,.45) 116%)`}
+
+function createBall(level,x,y){
+  const d=levelData(level), r=radiusFor(level);
+  state.balls.push({id:Math.random().toString(36).slice(2),x,y,vx:rand(-.08,.08),vy:.7,r,level,color:d[2],emoji:d[1],name:d[0],dead:false,cool:.08,age:0});
+}
+function dropBall(){
+  if(!state.running||state.paused||state.gameOver||!state.canDrop||state.activeTool) return;
+  const r=radiusFor(state.currentLevel); const x=clamp(state.pointerX,r+8,state.W-r-8); createBall(state.currentLevel,x,46+r*.35); sound(220,.045,'sine',.028); state.currentLevel=state.nextLevel; state.nextLevel=randomLevel(); state.canDrop=false; updateNextPreview();
+  setTimeout(()=>{if(!state.gameOver) state.canDrop=true}, state.mode==='fever'?330:420);
+}
+
+function activateTool(k){
+  if(state.toolCharge<=0 || state.charges[k]<=0 || state.gameOver) return;
+  if(k==='swap'){state.charges.swap--; state.toolUses++; state.currentLevel=randomLevel(); state.nextLevel=randomLevel(); updateNextPreview(); updateToolButtons(); toast('已更換目前球'); sound(560,.07,'square',.035); vib(25); checkMissions(false); return;}
+  state.activeTool = state.activeTool===k?null:k; updateToolButtons(); toast(k==='remove'?'點選一顆球消除':'點選位置小範圍清除');
+}
+function useToolAt(x,y){
+  if(!state.activeTool) return false;
+  const k=state.activeTool;
+  if(k==='remove'){
+    let hit=null, best=9999; state.balls.forEach(b=>{const d=Math.hypot(b.x-x,b.y-y); if(d<b.r && d<best){hit=b; best=d}});
+    if(hit){removeBall(hit,true); state.charges.remove--; state.toolUses++; state.activeTool=null; toast('已消除一顆球'); sound(480,.08,'triangle',.038); vib(30);}
+    else toast('沒有點到球');
+  } else if(k==='bomb'){
+    let count=0; const range=56*baseScale(); state.balls.forEach(b=>{if(Math.hypot(b.x-x,b.y-y)<range+b.r*.45){b.dead=true; count++; burst(b.x,b.y,b.color,10)}});
+    if(count){state.balls=state.balls.filter(b=>!b.dead); state.cleared+=count; state.charges.bomb--; state.toolUses++; state.activeTool=null; state.shakeT=.16; toast(`清除 ${count} 顆球`); sound(120,.12,'sawtooth',.035); vib([40,20,40]);}
+    else toast('範圍內沒有球');
+  }
+  updateToolButtons(); updateHUD(); checkMissions(false); return true;
+}
+function removeBall(b,byTool=false){b.dead=true; burst(b.x,b.y,b.color,10); state.balls=state.balls.filter(x=>!x.dead); if(byTool) state.cleared++;}
+
+function mergeTolerance(a,b){return Math.max(7, Math.min(14,(a.r+b.r)*.065));}
+function canMergePair(a,b,dist){
+  if(a.dead||b.dead||a.level!==b.level) return false;
+  if(a.cool>0||b.cool>0) return false;
+  if(a.level>=levels().length) return false;
+  const min=a.r+b.r, tol=mergeTolerance(a,b);
+  if(dist>min+tol) return false;
+  const rv=Math.hypot(a.vx-b.vx,a.vy-b.vy);
+  // Same level balls should merge on reliable contact, even if physics resolution leaves them almost tangent.
+  return (dist<=min+tol && (rv<9 || dist<min+tol*.45));
+}
+function resolveMergePairs(){
+  const pairs=[];
+  for(let i=0;i<state.balls.length;i++) for(let j=i+1;j<state.balls.length;j++){
+    const a=state.balls[i], b=state.balls[j]; if(a.dead||b.dead||a.level!==b.level) continue;
+    const dist=Math.hypot(b.x-a.x,b.y-a.y)||.001;
+    if(canMergePair(a,b,dist)) pairs.push([dist,a,b]);
+  }
+  if(!pairs.length) return 0;
+  pairs.sort((p,q)=>p[0]-q[0]);
+  let merged=0;
+  for(const [,a,b] of pairs){
+    if(!a.dead&&!b.dead&&canMergePair(a,b,Math.hypot(b.x-a.x,b.y-a.y)||.001)){ mergeBalls(a,b); merged++; }
+    if(merged>=3) break;
+  }
+  if(merged) state.balls=state.balls.filter(b=>!b.dead);
+  return merged;
+}
+function physics(dt){
+  const m=mode(), steps=Math.ceil(dt/(1/90)), step=dt/steps, wallPad=10 + Math.max(0,m.wall*state.W);
+  for(let s=0;s<steps;s++){
+    state.balls.forEach(b=>{b.age+=step; b.cool=Math.max(0,b.cool-step); b.vy+=m.gravity*step*60; b.vx*=Math.pow(m.friction,step*60); b.vy*=Math.pow(.996,step*60); b.x+=b.vx*step*60; b.y+=b.vy*step*60;
+      if(b.x-b.r<wallPad){b.x=wallPad+b.r; b.vx=Math.abs(b.vx)*(1-m.rest)} if(b.x+b.r>state.W-wallPad){b.x=state.W-wallPad-b.r; b.vx=-Math.abs(b.vx)*(1-m.rest)} if(b.y+b.r>state.H-12){b.y=state.H-12-b.r; b.vy=-Math.abs(b.vy)*m.rest; b.vx*=.965} if(b.y-b.r<0){b.y=b.r; b.vy=Math.abs(b.vy)*.2}
+    });
+
+    // Merge pass BEFORE separation: fixes cases where equal balls touch but are pushed apart by collision resolution.
+    if(resolveMergePairs()) continue;
+
+    for(let i=0;i<state.balls.length;i++) for(let j=i+1;j<state.balls.length;j++){
+      const a=state.balls[i], b=state.balls[j]; if(a.dead||b.dead) continue; const dx=b.x-a.x, dy=b.y-a.y, dist=Math.hypot(dx,dy)||.001, min=a.r+b.r;
+      if(dist<min){
+        const nx=dx/dist, ny=dy/dist, overlap=min-dist, total=a.r+b.r;
+        a.x-=nx*overlap*(b.r/total); a.y-=ny*overlap*(b.r/total); b.x+=nx*overlap*(a.r/total); b.y+=ny*overlap*(a.r/total);
+        const rvx=b.vx-a.vx, rvy=b.vy-a.vy, vel=rvx*nx+rvy*ny;
+        if(vel<0){const imp=-(1+m.rest)*vel/2; a.vx-=imp*nx; a.vy-=imp*ny; b.vx+=imp*nx; b.vy+=imp*ny;}
+        // Damp equal-level contact slightly so they do not jitter apart before merge cooldown ends.
+        if(a.level===b.level && (a.cool>0||b.cool>0)){a.vx*=.985; b.vx*=.985; a.vy*=.992; b.vy*=.992;}
+      }
+    }
+
+    // Merge pass AFTER separation: catches tangent/near-tangent balls once cooldown expires.
+    resolveMergePairs();
+    state.balls=state.balls.filter(b=>!b.dead);
+  }
+  dangerCheck(dt);
+  if(state.balls.length>86) { state.balls.sort((a,b)=>a.level-b.level); for(let i=0;i<4;i++) removeBall(state.balls[i],false); }
+}
+function mergeBalls(a,b){
+  a.dead=b.dead=true; const nl=a.level+1, x=(a.x+b.x)/2, y=(a.y+b.y)/2; burst(x,y,a.color, particleCount(nl)); state.mergeCount++; state.combo++; state.comboTimer=2.1; state.maxCombo=Math.max(state.maxCombo,state.combo);
+  if(nl>=levels().length){
+    const gain=2600*mode().score*(state.combo>1?1+state.combo*.07:1); state.score+=Math.round(gain); explodeMax(x,y); toast('最大球爆裂！'); vib([50,30,70]); state.shakeT=.28; sound(90,.18,'sawtooth',.05);
+  } else {
+    const d=levelData(nl), r=radiusFor(nl); state.balls.push({id:Math.random().toString(36).slice(2),x,y:y-r*.08,vx:(a.vx+b.vx)*.16,vy:-1.8-r*.015,r,level:nl,color:d[2],emoji:d[1],name:d[0],dead:false,cool:.12,age:0});
+    const comboMul=1+(state.combo-1)*(state.mode==='fever'?.16:.09); const gain=d[3]*mode().score*comboMul; state.score+=Math.round(gain); state.maxLevel=Math.max(state.maxLevel,nl); sound(360+nl*55,.07,'triangle',.045); if(nl>=6){state.shakeT=.12; vib([25,15,35])} else vib(18);
+  }
+  updateHUD(); checkMissions(false);
+}
+function explodeMax(x,y){
+  const range=120*baseScale(); let count=0; state.balls.forEach(o=>{if(Math.hypot(o.x-x,o.y-y)<range){o.dead=true; count++; burst(o.x,o.y,o.color,8)}}); state.cleared+=count;
+}
+function particleCount(level){const base=state.fx==='low'?7:state.fx==='mid'?14:24; return state.lowPower?Math.ceil(base*.55):base+Math.min(8,level)}
+function burst(x,y,color,n=12){
+  const cap=state.lowPower?45:state.fx==='low'?60:state.fx==='mid'?100:150;
+  for(let i=0;i<n && state.particles.length<cap;i++) state.particles.push({x,y,vx:rand(-2.2,2.2),vy:rand(-2.6,1.8),r:rand(1.2,3.8),life:rand(.34,.8),max:1,color});
+}
+function dangerCheck(dt){
+  const lineY=92; let danger=false;
+  for(const b of state.balls){ if(b.age>.8 && b.y-b.r<lineY && Math.abs(b.vy)<2.8){danger=true; break;} }
+  if(danger) state.dangerTime+=dt; else state.dangerTime=Math.max(0,state.dangerTime-dt*2.2);
+  if(state.dangerCountdown && state.dangerTime>0.22){const left=Math.max(0,mode().danger-state.dangerTime); $('dangerBadge').textContent=`危險倒數 ${left.toFixed(1)}s`; $('dangerBadge').classList.add('show'); if(left<1.2) vib(10);} else $('dangerBadge').classList.remove('show');
+  if(state.dangerTime>=mode().danger) endGame();
+}
+
+function render(){
+  ctx.save(); if(state.shake && state.shakeT>0){ctx.translate(rand(-5,5)*state.shakeT*5, rand(-4,4)*state.shakeT*5)}
+  drawBackground();
+  const lineY=92; ctx.save(); ctx.globalAlpha=.86; ctx.strokeStyle=theme().line; ctx.setLineDash([9,9]); ctx.lineWidth=2; ctx.shadowColor=theme().line; ctx.shadowBlur=8; ctx.beginPath(); ctx.moveTo(12,lineY); ctx.lineTo(state.W-12,lineY); ctx.stroke(); ctx.setLineDash([]); ctx.restore();
+  if(state.aim && state.canDrop && !state.gameOver && !state.paused){ drawAim(); }
+  state.balls.forEach(drawBall); drawParticles(); ctx.restore();
+}
+function drawAim(){
+  const r=radiusFor(state.currentLevel), x=clamp(state.pointerX,r+12,state.W-r-12), y=46+r*.35, d=levelData(state.currentLevel);
+  ctx.save(); ctx.globalAlpha=.7; ctx.strokeStyle=theme().accent; ctx.lineWidth=1.5; ctx.setLineDash([5,7]); ctx.beginPath(); ctx.moveTo(x,20); ctx.lineTo(x,state.H-18); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha=.18; ctx.fillStyle='#fff'; ctx.beginPath(); ctx.ellipse(x,state.H-16,r*.75,5,0,0,Math.PI*2); ctx.fill(); ctx.globalAlpha=.92; drawGhostBall(x,y,r,d); ctx.restore();
+}
+function drawGhostBall(x,y,r,d){ctx.save(); ctx.globalAlpha=.8; const g=ctx.createRadialGradient(x-r*.35,y-r*.42,r*.1,x,y,r*1.12); g.addColorStop(0,'rgba(255,255,255,.90)'); g.addColorStop(.28,d[2]); g.addColorStop(.72,d[2]); g.addColorStop(1,'rgba(0,0,0,.42)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill(); ctx.font=`${Math.max(15,r*1.02)}px Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif`; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(d[1],x,y+1); ctx.restore();}
+function drawBall(b){
+  ctx.save(); ctx.translate(b.x,b.y); const r=b.r;
+  const g=ctx.createRadialGradient(-r*.35,-r*.42,r*.1,0,0,r*1.15); g.addColorStop(0,'rgba(255,255,255,.92)'); g.addColorStop(.20,b.color); g.addColorStop(.68,b.color); g.addColorStop(1,'rgba(0,0,0,.48)'); ctx.fillStyle=g; ctx.shadowColor=b.color; ctx.shadowBlur=state.fx==='high'?Math.min(18,r*.22):state.fx==='mid'?8:0; ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2); ctx.fill();
+  ctx.shadowBlur=0; ctx.strokeStyle='rgba(255,255,255,.36)'; ctx.lineWidth=Math.max(1.2,r*.035); ctx.beginPath(); ctx.arc(0,0,r-ctx.lineWidth,0,Math.PI*2); ctx.stroke();
+  ctx.globalAlpha=.27; ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(-r*.30,-r*.35,r*.26,0,Math.PI*2); ctx.fill(); ctx.globalAlpha=1;
+  ctx.font=`${Math.max(15,r*1.05)}px Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif`; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(b.emoji,0,1);
+  ctx.restore();
+}
+function drawParticles(){
+  for(let i=state.particles.length-1;i>=0;i--){const p=state.particles[i]; p.life-=1/60; p.vy+=.04; p.x+=p.vx; p.y+=p.vy; if(p.life<=0){state.particles.splice(i,1); continue;} ctx.globalAlpha=clamp(p.life/.8,0,1); ctx.fillStyle=p.color; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();}
+  ctx.globalAlpha=1;
+}
+
+function loop(ts){
+  if(!state.running) return; if(!state.last) state.last=ts; let dt=Math.min((ts-state.last)/1000,.033); state.last=ts;
+  if(!state.paused&&!state.gameOver){state.time+=dt*1000; if(state.comboTimer>0){state.comboTimer-=dt; if(state.comboTimer<=0){state.combo=0; updateHUD()}} if(state.shakeT>0) state.shakeT=Math.max(0,state.shakeT-dt); physics(dt);}
+  render(); requestAnimationFrame(loop);
+}
+function endGame(){
+  if(state.gameOver) return; state.gameOver=true; state.running=false; state.paused=false; $('dangerBadge').classList.remove('show'); checkMissions(true); state.missionBonus=state.missions.filter(m=>m.done).reduce((s,m)=>s+m.reward,0); const final=state.score+state.missionBonus; if(final>state.best){state.best=final; localStorage.setItem(bestKey(),String(final));}
+  vib([80,35,100]); sound(150,.18,'sawtooth',.04); showResult(final);
+}
+function grade(final){if(final>=26000)return['SS','宇宙融合王']; if(final>=16000)return['S','合成大師']; if(final>=8500)return['A','球球高手']; if(final>=3800)return['B','穩定玩家']; return['C','再挑戰'];}
+function showResult(final){
+  const [g,t]=grade(final), usedTime=Math.max(1,Math.round((performance.now()-state.startAt)/1000)); const max=levelData(state.maxLevel);
+  $('resultSub').innerHTML=`<span class="grade">${g}</span>　${t}`;
+  const data=[['本局分數',fmt(state.score)],['任務加成','+'+fmt(state.missionBonus)],['最終總分',fmt(final)],['最高合成',`${max[1]} ${max[0]}`],['最大 Combo',state.maxCombo],['融合次數',state.mergeCount],['道具使用',state.toolUses],['時間',`${Math.floor(usedTime/60)}:${String(usedTime%60).padStart(2,'0')}`]];
+  $('resultGrid').innerHTML=data.map(([k,v])=>`<div class="resultCard"><div class="k">${k}</div><div class="v">${v}</div></div>`).join('');
+  $('resultMissions').innerHTML=state.missions.map(m=>`<div class="mission ${m.done?'done':''}" style="margin:6px 0;width:100%">${m.done?'✓':'×'} ${m.text}<b style="margin-left:auto">${m.done?'+'+fmt(m.reward):'+0'}</b></div>`).join('');
+  $('resultModal').classList.add('show'); updateHUD(); updateToolButtons();
+}
+
+function pointerPos(e){
+  const r=canvas.getBoundingClientRect(); const t=e.touches?e.touches[0]:(e.changedTouches?e.changedTouches[0]:e); return {x:clamp(t.clientX-r.left,10,state.W-10), y:clamp(t.clientY-r.top,0,state.H)};
+}
+function movePointer(e){const p=pointerPos(e); state.pointerX=p.x; state.pointerY=p.y; if(e.cancelable) e.preventDefault();}
+canvas.addEventListener('pointermove', e=>{movePointer(e)},{passive:false});
+canvas.addEventListener('pointerdown', e=>{movePointer(e); if(state.activeTool){state.pointerConsumed=true; useToolAt(state.pointerX,state.pointerY);}}, {passive:false});
+canvas.addEventListener('pointerup', e=>{movePointer(e); if(state.pointerConsumed){state.pointerConsumed=false; return;} if(!state.activeTool) dropBall();}, {passive:false});
+if(!window.PointerEvent){
+  canvas.addEventListener('touchmove', e=>movePointer(e),{passive:false});
+  canvas.addEventListener('touchend', e=>{movePointer(e); if(state.pointerConsumed){state.pointerConsumed=false; return;} if(!state.activeTool) dropBall();},{passive:false});
+}
+
+function sound(freq=440,dur=.06,type='sine',gain=.035){
+  if(!state.sound) return; try{state.audio=state.audio||new (window.AudioContext||window.webkitAudioContext)(); const ac=state.audio, o=ac.createOscillator(), g=ac.createGain(); o.type=type; o.frequency.value=freq; g.gain.setValueAtTime(gain,ac.currentTime); g.gain.exponentialRampToValueAtTime(.0001, ac.currentTime+dur); o.connect(g); g.connect(ac.destination); o.start(); o.stop(ac.currentTime+dur);}catch(e){}
+}
+function vib(pattern){if(state.vibrate && navigator.vibrate) navigator.vibrate(pattern)}
+let toastTimer; function toast(msg){const el=$('toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),1600)}
+
+$('startBtn').onclick=()=>resetGame(); $('againBtn').onclick=()=>resetGame(); $('backMenuBtn').onclick=()=>{$('resultModal').classList.remove('show');$('menuModal').classList.add('show'); if($('menuModeCollapse')) $('menuModeCollapse').open=false; if($('menuThemeCollapse')) $('menuThemeCollapse').open=false;};
+$('settingBtn').onclick=()=>{$('settingsModal').classList.add('show'); refreshUIBuild(); if($('modeCollapse')) $('modeCollapse').open=false; if($('themeCollapse')) $('themeCollapse').open=false; state.paused=true;}; $('openSettingsFromMenu').onclick=()=>{$('settingsModal').classList.add('show'); refreshUIBuild(); if($('modeCollapse')) $('modeCollapse').open=false; if($('themeCollapse')) $('themeCollapse').open=false;};
+$('closeSettings').onclick=()=>{$('settingsModal').classList.remove('show'); if(state.running&&!state.gameOver) state.paused=false;};
+$('applySettings').onclick=()=>{applySettingInputs(); $('settingsModal').classList.remove('show'); if(state.running&&!state.gameOver) state.paused=false;};
+$('newGameFromSettings').onclick=()=>{applySettingInputs(); resetGame();};
+$('pauseBtn').onclick=()=>{if(!state.running||state.gameOver)return; state.paused=!state.paused; $('pauseBtn').textContent=state.paused?'▶':'Ⅱ'; toast(state.paused?'已暫停':'繼續');};
+$('removeBtn').onclick=()=>activateTool('remove'); $('bombBtn').onclick=()=>activateTool('bomb'); $('swapBtn').onclick=()=>activateTool('swap');
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&state.running) state.paused=true});
+
+loadSettings(); applyThemeVars(); applyAppearance(); resize(); refreshUIBuild(); state.currentLevel=randomLevel(); state.nextLevel=randomLevel(); updateNextPreview(); updateHUD(); updateToolButtons();
+})();
+</script>
+</body>
+</html>
