@@ -8,7 +8,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CxQ開獎所｜官方平台</title>
-  <!-- build: display-ux-optimized-v3-strict-collapse -->
+  <!-- build: display-ux-optimized-v7-games-play-modal-fixed -->
   <meta name="color-scheme" content="light dark">
   <meta name="description" content="CxQ開獎所官方平台：抽獎紀錄、等待開獎、社群商店、點數商城、開箱實拍與常見問題管理。">
   <meta property="og:title" content="CxQ開獎所｜官方平台">
@@ -753,6 +753,214 @@
     }
   </style>
   <!-- [KJS STRICT COLLAPSE UX FIX END] -->
+
+
+  <!-- [KJS GAME CENTER RESTORE START]
+       小遊戲中心：前台精簡卡片、管理員批次管理、iframe 延遲載入/保留進度。
+  -->
+  <style id="kjs-game-center-restore-v4">
+    .kjs-game-card{
+      overflow:hidden;
+      position:relative;
+    }
+    .kjs-game-cover{
+      aspect-ratio:16/10;
+      border-radius:16px;
+      overflow:hidden;
+      background:linear-gradient(135deg, rgba(20,184,166,.12), rgba(245,158,11,.12));
+      display:grid;
+      place-items:center;
+      border:1px solid var(--kjs-line);
+    }
+    .kjs-game-cover img{
+      width:100%; height:100%; object-fit:cover; display:block;
+    }
+    .kjs-game-cover .kjs-game-cover-empty{
+      font-size:38px; opacity:.8;
+    }
+    .kjs-game-badge{
+      display:inline-flex; align-items:center; gap:4px;
+      border:1px solid var(--kjs-line);
+      border-radius:999px;
+      padding:3px 8px;
+      font-size:12px;
+      background:rgba(255,255,255,.68);
+      color:rgb(71 85 105);
+      white-space:nowrap;
+    }
+    @media (prefers-color-scheme: dark){
+      .kjs-game-badge{ background:rgba(15,23,42,.68); color:rgb(203 213 225); }
+    }
+    .kjs-game-modal-shell{
+      width:min(96vw,980px);
+      height:min(90dvh,720px);
+    }
+    .kjs-game-frame-wrap{
+      min-height:360px;
+      background:rgba(15,23,42,.06);
+    }
+    .kjs-game-frame-wrap iframe{
+      width:100%; height:100%; min-height:360px; border:0; background:white;
+    }
+    @media (max-width:640px){
+      .kjs-game-modal-shell{ width:100vw; height:100dvh; max-height:100dvh; border-radius:0 !important; }
+      .kjs-game-frame-wrap{ min-height:calc(100dvh - 168px); }
+      .kjs-game-frame-wrap iframe{ min-height:calc(100dvh - 168px); }
+    }
+
+    /* 小遊戲編輯表單：基本資料永遠在最上方，長內容分段，底部固定儲存 */
+    .kjs-game-edit-backdrop{
+      align-items:flex-start !important;
+      padding-top:max(16px, env(safe-area-inset-top));
+      padding-bottom:max(16px, env(safe-area-inset-bottom));
+    }
+    .kjs-game-edit-shell{
+      width:min(96vw,820px);
+      max-height:calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    }
+    .kjs-game-edit-scroll{
+      scroll-behavior:smooth;
+    }
+    .kjs-game-edit-section{
+      border:1px solid var(--kjs-line);
+      border-radius:18px;
+      background:linear-gradient(180deg, var(--kjs-surface-strong), var(--kjs-surface));
+      padding:14px;
+      box-shadow:var(--kjs-shadow-soft);
+    }
+    .kjs-game-edit-section-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font-weight:800;
+      margin-bottom:10px;
+    }
+    .kjs-game-edit-section-title small{
+      font-weight:500;
+      color:rgb(100 116 139);
+      font-size:12px;
+    }
+    .kjs-game-edit-help{
+      font-size:12px;
+      color:rgb(100 116 139);
+      line-height:1.55;
+      margin-top:4px;
+    }
+    .kjs-game-cover-preview{
+      min-height:126px;
+      border:1px dashed var(--kjs-line);
+      border-radius:16px;
+      background:rgba(148,163,184,.08);
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      color:rgb(100 116 139);
+      font-size:13px;
+      text-align:center;
+    }
+    .kjs-game-cover-preview img{
+      width:100%;
+      height:100%;
+      max-height:220px;
+      object-fit:cover;
+      display:block;
+    }
+    .kjs-game-edit-footer{
+      position:sticky;
+      bottom:0;
+      z-index:2;
+      backdrop-filter:blur(14px);
+    }
+    .kjs-game-edit-segment{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .kjs-game-edit-segment button{
+      min-height:42px;
+      border-radius:999px;
+      border:1px solid var(--kjs-line);
+      padding:8px 13px;
+      font-size:13px;
+      font-weight:750;
+      background:var(--kjs-surface-strong);
+    }
+    .kjs-game-edit-segment button.is-active{
+      background:linear-gradient(135deg,var(--kjs-brand),var(--kjs-brand-2));
+      color:#fff;
+      border-color:transparent;
+    }
+    @media (max-width:640px){
+      .kjs-game-edit-backdrop{ padding:0 !important; }
+      .kjs-game-edit-shell{ width:100vw; max-height:100dvh; height:100dvh; border-radius:0 !important; }
+      .kjs-game-edit-section{ padding:12px; border-radius:16px; }
+      .kjs-game-edit-footer{ padding-bottom:max(12px, env(safe-area-inset-bottom)) !important; }
+    }
+
+
+
+    /* 小遊戲遊玩視窗修正：避免頂部被瀏覽器/固定欄遮住，關閉鍵永遠可見 */
+    .kjs-game-play-backdrop{
+      align-items:flex-start !important;
+      justify-content:center !important;
+      overflow:auto !important;
+      padding-top:max(72px, calc(env(safe-area-inset-top) + 16px)) !important;
+      padding-left:12px !important;
+      padding-right:12px !important;
+      padding-bottom:max(16px, env(safe-area-inset-bottom)) !important;
+    }
+    .kjs-game-play-backdrop .kjs-game-modal-shell{
+      width:min(96vw,980px);
+      height:min(720px, calc(100dvh - 96px - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
+      max-height:calc(100dvh - 96px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+      border-radius:20px !important;
+    }
+    .kjs-game-play-header{
+      position:sticky;
+      top:0;
+      z-index:10;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(14px);
+    }
+    @media (prefers-color-scheme: dark){
+      .kjs-game-play-header{ background:rgba(15,23,42,.96); }
+    }
+    .kjs-game-play-backdrop .kjs-game-frame-wrap{
+      height:100%;
+      min-height:0;
+    }
+    .kjs-game-play-backdrop .kjs-game-frame-wrap iframe{
+      height:100%;
+      min-height:0;
+    }
+    @media (max-width:640px){
+      .kjs-game-play-backdrop{
+        padding-top:max(58px, calc(env(safe-area-inset-top) + 10px)) !important;
+        padding-left:8px !important;
+        padding-right:8px !important;
+        padding-bottom:max(10px, env(safe-area-inset-bottom)) !important;
+      }
+      .kjs-game-play-backdrop .kjs-game-modal-shell{
+        width:100%;
+        height:calc(100dvh - 72px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        max-height:calc(100dvh - 72px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        border-radius:18px !important;
+      }
+      .kjs-game-play-header{
+        padding-left:12px !important;
+        padding-right:12px !important;
+      }
+      .kjs-game-play-header .flex.items-center.gap-2{
+        flex-wrap:wrap;
+        justify-content:flex-end;
+      }
+      .kjs-game-play-header button{
+        min-height:38px;
+      }
+    }
+  </style>
+  <!-- [KJS GAME CENTER RESTORE END] -->
 
 </head>
 
@@ -5546,6 +5754,9 @@ const EMPTY = {
   // 🧵 手作/訂製區：服務項目與區塊說明
   custom: { intro: '可放手作商品、客製訂製、合作插畫與其他可詢問服務。', items: [] },
 
+  // 🎮 小遊戲中心：單機保存遊戲卡片，支援外部連結/iframe/說明模式
+  games: [],
+
   settings: { ...DEFAULT_SETTINGS },
 };
 
@@ -5606,8 +5817,36 @@ function normalizeSiteData(input){
   d.custom = { intro: EMPTY.custom.intro, items: [], ...kjsObj(d.custom) };
   d.custom.items = kjsArray(d.custom.items).map(x => kjsEnsureId({ visible: true, pinned: false, images: [], tags: [], ...kjsObj(x) }, 'custom'));
 
-  // 遊戲中心已移除：不再建立或使用 games 資料節點。
-  if ('games' in d) delete d.games;
+  // 🎮 小遊戲中心：相容舊版 data.games 陣列，也相容可能被包成 {items:[]} 的格式。
+  const rawGames = Array.isArray(d.games) ? d.games : kjsArray(kjsObj(d.games).items);
+  d.games = rawGames.map(x => {
+    const g = kjsEnsureId({
+      title: '',
+      type: '休閒',
+      cover: '',
+      mode: 'link',       // link | embed | info
+      url: '',
+      embedUrl: '',
+      desc: '',
+      howToPlay: '',
+      note: '',
+      tags: [],
+      visible: true,
+      pinned: false,
+      status: '公開',
+      buttonText: '開始遊玩',
+      createdAt: new Date().toISOString().slice(0,10),
+      ...kjsObj(x)
+    }, 'game');
+    // 舊欄位相容
+    if (!g.title && g.name) g.title = g.name;
+    if (!g.url && g.gameUrl) g.url = g.gameUrl;
+    if (!g.embedUrl && g.iframeUrl) g.embedUrl = g.iframeUrl;
+    if (!g.cover && g.image) g.cover = g.image;
+    if (typeof g.tags === 'string') g.tags = g.tags.split(',').map(t=>t.trim()).filter(Boolean);
+    if (!Array.isArray(g.tags)) g.tags = [];
+    return g;
+  });
 
   d.settings = { ...DEFAULT_SETTINGS, ...kjsObj(d.settings) };
   return d;
@@ -5919,17 +6158,19 @@ React.useEffect(() => {
 // === PointsPanel 展開狀態（預設展開，會記住使用者選擇） ===
 const [pointsOpen, setPointsOpen] = useLocalState('kjs_points_open', false);
       
-const [tab, setTab] = useState('home'); // home | history | pending | ongoing | shop | store | others | system | gallery | faq | links | custom
+const [tab, setTab] = useState('home'); // home | history | pending | ongoing | shop | store | others | system | gallery | faq | links | custom | games
       const [menuOpen, setMenuOpen] = useState(false);
       const [adminMode, setAdminMode] = useState(false);
       const [query, setQuery] = useState('');
 const [queryMode, setQueryMode] = useLocalState('kjs_query_mode', 'all'); // all | prize | winner | note
 
-// === Games：遊戲中心已移除 ===
-// 若舊版資料或舊狀態仍停在 games 分頁，直接導回首頁。
+// === Games：小遊戲中心顯示邏輯 ===
+// 管理員永遠可見；一般訪客只有在有公開遊戲時才顯示。
+const gamesList = Array.isArray(data?.games) ? data.games : (Array.isArray(data?.games?.items) ? data.games.items : []);
+const showGameCenter = adminMode || gamesList.some(g => g && g.visible !== false);
 React.useEffect(() => {
-  if (tab === 'games') setTab('home');
-}, [tab]);
+  if (tab === 'games' && !showGameCenter) setTab('home');
+}, [tab, showGameCenter]);
 
 
 
@@ -6342,6 +6583,8 @@ const importJSON = (file) => {
 
 {tab==='custom' && <CustomPage data={data} setData={setData} admin={adminMode} />}
 
+{tab==='games' && showGameCenter && <GameCenter data={data} setData={setData} admin={adminMode} query={query} />}
+
 {tab==='home' && <HomeSections data={data} setData={setData} admin={adminMode} />}
 
             {tab==='history' && <History data={data} admin={adminMode} setData={setData} query={query} queryMode={queryMode} />}
@@ -6642,6 +6885,14 @@ const importJSON = (file) => {
   onClick={()=>{ setTab('custom'); setMenuOpen(false); }}
 />
 
+{showGameCenter && (
+  <NavItem
+    label="🎮 小遊戲"
+    active={tab==='games'}
+    onClick={()=>{ setTab('games'); setMenuOpen(false); }}
+  />
+)}
+
 
   <NavItem
     label="🛍️ 點數商城"
@@ -6833,7 +7084,538 @@ function StickyBulkToggles({ onOpenAll, onCloseAll, className="" }) {
       );
     }
 
-// === GameCenter 已移除：此處保留空白，避免舊版遊戲功能再被渲染。 ===
+// === GameCenter：小遊戲中心（新版精簡版面 + 原先 iframe 保留進度邏輯） ===
+function GameCenter({ data, setData, admin=false, query='' }) {
+  const React = window.React || globalThis.React;
+  const [localQ, setLocalQ] = React.useState('');
+  const [selected, setSelected] = React.useState(() => new Set());
+  const [editing, setEditing] = React.useState(null);
+  const [playOpen, setPlayOpen] = React.useState(false);
+  const [activeId, setActiveId] = React.useState(() => {
+    try { return localStorage.getItem('kjs_game_active') || ''; } catch { return ''; }
+  });
+  const [mountedIds, setMountedIds] = React.useState(() => new Set(activeId ? [activeId] : []));
+  const [iframeRev, setIframeRev] = React.useState({});
+  const editScrollRef = React.useRef(null);
+  React.useEffect(() => {
+    if (!editing) return;
+    const t = setTimeout(() => {
+      try { editScrollRef.current?.scrollTo({ top: 0, behavior: 'auto' }); } catch {}
+    }, 0);
+    return () => clearTimeout(t);
+  }, [editing?.id]);
+
+  const games = React.useMemo(() => {
+    const arr = Array.isArray(data?.games) ? data.games : (Array.isArray(data?.games?.items) ? data.games.items : []);
+    return arr.map((g, idx) => ({ ...g, __index: idx }));
+  }, [data]);
+
+  const visibleGames = React.useMemo(() => {
+    const q = String(localQ || query || '').trim().toLowerCase();
+    return games
+      .filter(g => admin || g.visible !== false)
+      .filter(g => {
+        if (!q) return true;
+        const bag = [g.title, g.name, g.type, g.desc, g.howToPlay, g.note, ...(Array.isArray(g.tags) ? g.tags : [])].join(' ').toLowerCase();
+        return bag.includes(q);
+      })
+      .sort((a,b) => (b.pinned?1:0)-(a.pinned?1:0) || (a.__index-b.__index));
+  }, [games, admin, localQ, query]);
+
+  const updateGames = (next) => {
+    setData(prev => normalizeSiteData({ ...(prev || {}), games: next }));
+  };
+
+  const emptyDraft = () => ({
+    id: kjsNid(),
+    title: '',
+    type: '休閒',
+    cover: '',
+    mode: 'link',
+    url: '',
+    embedUrl: '',
+    desc: '',
+    howToPlay: '',
+    note: '',
+    tags: [],
+    visible: true,
+    pinned: false,
+    status: '公開',
+    buttonText: '開始遊玩',
+    createdAt: new Date().toISOString().slice(0,10)
+  });
+
+  const normalizeDraft = (d) => {
+    const x = { ...emptyDraft(), ...(d || {}) };
+    if (!x.id) x.id = kjsNid();
+    if (!x.title && x.name) x.title = x.name;
+    if (!x.cover && x.image) x.cover = x.image;
+    if (!x.url && x.gameUrl) x.url = x.gameUrl;
+    if (!x.embedUrl && x.iframeUrl) x.embedUrl = x.iframeUrl;
+    if (typeof x.tags === 'string') x.tags = x.tags.split(',').map(t=>t.trim()).filter(Boolean);
+    if (!Array.isArray(x.tags)) x.tags = [];
+    return x;
+  };
+
+  const saveGame = () => {
+    const d = normalizeDraft(editing);
+    d.title = String(d.title || '').trim();
+    d.type = String(d.type || '休閒').trim() || '休閒';
+    d.mode = d.mode || 'link';
+    d.buttonText = String(d.buttonText || (d.mode === 'info' ? '查看說明' : '開始遊玩')).trim() || (d.mode === 'info' ? '查看說明' : '開始遊玩');
+    if (d.status === '隱藏') d.visible = false;
+    if (d.visible === false) d.status = '隱藏';
+    if (d.visible !== false && d.status === '隱藏') d.status = '公開';
+    if (!d.title) { alert('請先輸入遊戲名稱'); editScrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (d.mode === 'embed' && !String(d.embedUrl || d.url || '').trim()) { alert('內嵌模式請填入 iframe / 內嵌網址'); return; }
+    if (d.mode === 'link' && !String(d.url || d.embedUrl || '').trim()) { alert('外部連結模式請填入外部遊戲網址'); return; }
+    // 舊版相容：舊資料可能只有 url；新版 iframe 可能只有 embedUrl。儲存時補齊對應欄位，避免播放時讀不到。
+    if (d.mode === 'embed' && !String(d.embedUrl || '').trim() && String(d.url || '').trim()) d.embedUrl = d.url;
+    if (d.mode === 'link' && !String(d.url || '').trim() && String(d.embedUrl || '').trim()) d.url = d.embedUrl;
+    const exists = games.some(g => g.id === d.id);
+    const next = exists ? games.map(g => g.id === d.id ? d : g) : [d, ...games];
+    updateGames(next.map(({__index, ...g}) => g));
+    setEditing(null);
+    if (typeof kjsToast === 'function') kjsToast(exists ? '已更新小遊戲' : '已新增小遊戲');
+  };
+
+  const deleteGame = (id) => {
+    const g = games.find(x => x.id === id);
+    if (!confirmKeyword({ label: `刪除小遊戲：${g?.title || '未命名'}`, keyword: '刪除' })) return;
+    updateGames(games.filter(x => x.id !== id).map(({__index, ...x}) => x));
+    setSelected(prev => { const n = new Set(prev); n.delete(id); return n; });
+  };
+
+  const patchGame = (id, patch) => {
+    updateGames(games.map(g => g.id === id ? { ...g, ...patch } : g).map(({__index, ...x}) => x));
+  };
+
+  const moveGame = (id, dir) => {
+    const arr = games.map(({__index, ...x}) => x);
+    const i = arr.findIndex(x => x.id === id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= arr.length) return;
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    updateGames(arr);
+  };
+
+  const toggleSelected = (id, checked) => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (checked) next.add(id); else next.delete(id);
+      return next;
+    });
+  };
+
+  const selectedIds = Array.from(selected);
+  const applyBulk = (action) => {
+    if (!selectedIds.length) { alert('請先勾選要處理的小遊戲'); return; }
+    if (action === 'delete' && !confirmKeyword({ label: `批次刪除 ${selectedIds.length} 個小遊戲`, keyword: '刪除' })) return;
+    let next = games.map(g => {
+      if (!selected.has(g.id)) return g;
+      if (action === 'show') return { ...g, visible: true, status: g.status === '隱藏' ? '公開' : g.status };
+      if (action === 'hide') return { ...g, visible: false, status: '隱藏' };
+      if (action === 'pin') return { ...g, pinned: true };
+      if (action === 'unpin') return { ...g, pinned: false };
+      return g;
+    });
+    if (action === 'delete') next = next.filter(g => !selected.has(g.id));
+    updateGames(next.map(({__index, ...x}) => x));
+    setSelected(new Set());
+    if (typeof kjsToast === 'function') kjsToast('批次操作已套用');
+  };
+
+  const startGame = (g) => {
+    const id = g.id;
+    setActiveId(id);
+    try { localStorage.setItem('kjs_game_active', id); } catch {}
+    const mode = g.mode || 'link';
+    const playUrl = resolveGameUrl(getGameRawUrl(g, mode));
+    if (mode === 'link' && playUrl) {
+      window.open(playUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
+    // iframe / 說明展示才掛載在站內；外部連結不需要預先掛 iframe。
+    if (mode !== 'link') setMountedIds(prev => new Set([...Array.from(prev), id]));
+    setPlayOpen(true);
+  };
+
+  const restartGame = (id) => {
+    setIframeRev(prev => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
+  };
+
+  const activeGame = games.find(g => g.id === activeId) || null;
+
+  // 解析小遊戲實際網址：修正 GitHub Pages 子路徑與本機 file:// 測試路徑。
+  // 說明：
+  // - 網站正式放在 https://yuchen112.github.io/cailucky/ 時，games/xxx.html 會解析到 /cailucky/games/xxx.html
+  // - 若你直接用本機 HTML 測試，file:// 無法知道 GitHub repo 位置，因此預設會指向正式 GitHub Pages base。
+  const GAME_SITE_BASE_URL = 'https://yuchen112.github.io/cailucky/';
+  const getGameBaseUrl = () => {
+    try {
+      if (window.location.protocol === 'file:') return GAME_SITE_BASE_URL;
+      let path = window.location.pathname || '/';
+      const last = path.split('/').pop() || '';
+      if (!path.endsWith('/')) {
+        path = /\.[a-z0-9]+$/i.test(last) ? path.replace(/[^/]*$/, '') : `${path}/`;
+      }
+      return `${window.location.origin}${path}`;
+    } catch (err) {
+      return GAME_SITE_BASE_URL;
+    }
+  };
+  const resolveGameUrl = (raw) => {
+    const v = String(raw || '').trim();
+    if (!v) return '';
+    if (/^(https?:|data:|blob:)/i.test(v)) return v;
+    if (v.startsWith('//')) return `${window.location.protocol === 'file:' ? 'https:' : window.location.protocol}${v}`;
+    if (v.startsWith('#')) return v;
+    try {
+      const base = getGameBaseUrl();
+      // /cailucky/games/xxx.html 在本機測試時也轉回 GitHub Pages；正式站則照絕對路徑開。
+      if (v.startsWith('/')) {
+        if (window.location.protocol === 'file:') {
+          const cleaned = v.replace(/^\/cailucky\//, '').replace(/^\//, '');
+          return new URL(cleaned, GAME_SITE_BASE_URL).href;
+        }
+        return new URL(v, window.location.origin).href;
+      }
+      return new URL(v.replace(/^\.\//, ''), base).href;
+    } catch (err) {
+      return v;
+    }
+  };
+
+  const getGameRawUrl = (g, preferredMode) => {
+    const mode = preferredMode || g?.mode || 'link';
+    if (mode === 'embed') return String(g?.embedUrl || g?.url || '').trim();
+    if (mode === 'link') return String(g?.url || g?.embedUrl || '').trim();
+    return String(g?.url || g?.embedUrl || '').trim();
+  };
+
+  const tagString = (g) => Array.isArray(g.tags) ? g.tags.join(', ') : String(g.tags || '');
+  const setDraftField = (field, value) => setEditing(d => ({ ...(d || emptyDraft()), [field]: value }));
+  const editMode = editing?.mode || 'link';
+  const isEditingExisting = !!editing && games.some(g => g.id === editing.id);
+  const coverPreview = String(editing?.cover || '').trim();
+  const editRawUrl = editing ? getGameRawUrl(editing, editMode) : '';
+  const editResolvedUrl = editRawUrl ? resolveGameUrl(editRawUrl) : '';
+
+  return (
+    <section className="animate-fadeIn">
+      <div className="mb-3">
+        <div>
+          <h2 className="text-lg font-semibold">🎮 小遊戲</h2>
+          <p className="text-[13px] text-slate-500 mt-1">休閒小遊戲與互動工具集中在這裡。遊戲只會在點擊時載入，關閉後仍可保留進度。</p>
+        </div>
+        {admin && (
+          <button className="rounded-xl bg-brand text-white px-4 py-2 text-sm" onClick={() => setEditing(emptyDraft())}>＋ 新增小遊戲</button>
+        )}
+      </div>
+
+      <div className="mb-3 flex flex-wrap gap-2 items-center">
+        <input
+          className="rounded-xl border px-3 py-2 text-sm flex-1 min-w-[180px]"
+          placeholder="搜尋遊戲名稱、類型、標籤..."
+          value={localQ}
+          onChange={e=>setLocalQ(e.target.value)}
+        />
+        <span className="text-xs text-slate-500">{visibleGames.length} 個遊戲</span>
+      </div>
+
+      {admin && (
+        <div className="kjs-admin-bulkbar mb-4" data-kjs-ux-key="games-bulkbar">
+          <span className="kjs-bulk-title">小遊戲批次管理</span>
+          <span className="kjs-bulk-count">已選 {selectedIds.length}</span>
+          <button className="rounded-lg border px-3 py-2 text-sm" onClick={() => setSelected(new Set(visibleGames.map(g=>g.id)))}>全選目前列表</button>
+          <button className="rounded-lg border px-3 py-2 text-sm" onClick={() => setSelected(new Set())}>取消勾選</button>
+          <button className="rounded-lg border px-3 py-2 text-sm" onClick={() => applyBulk('show')}>公開</button>
+          <button className="rounded-lg border px-3 py-2 text-sm" onClick={() => applyBulk('hide')}>隱藏</button>
+          <button className="rounded-lg border px-3 py-2 text-sm" onClick={() => applyBulk('pin')}>置頂</button>
+          <button className="rounded-lg border px-3 py-2 text-sm" onClick={() => applyBulk('unpin')}>取消置頂</button>
+          <button className="rounded-lg bg-rose-500 text-white px-3 py-2 text-sm" onClick={() => applyBulk('delete')}>刪除</button>
+        </div>
+      )}
+
+      {visibleGames.length === 0 ? (
+        <EmptyCard text={admin ? '目前沒有小遊戲，請新增第一個遊戲。' : '目前尚未開放小遊戲。'} admin={admin} />
+      ) : (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {visibleGames.map(g => {
+            const mode = g.mode || 'link';
+            const status = g.visible === false ? '隱藏' : (g.status || '公開');
+            return (
+              <article key={g.id} className="kjs-game-card kjs-card-compact rounded-2xl border bg-white/75 dark:bg-slate-900/60 p-3 shadow-soft">
+                {admin && (
+                  <div className="kjs-admin-card-head">
+                    <label><input type="checkbox" className="kjs-admin-check" checked={selected.has(g.id)} onChange={e=>toggleSelected(g.id, e.target.checked)} />選取</label>
+                    <div className="kjs-admin-lite-actions">
+                      <button className="rounded-lg border px-2 py-1 text-xs" onClick={() => setEditing(normalizeDraft(g))}>編輯</button>
+                      <button className="rounded-lg border px-2 py-1 text-xs" onClick={() => patchGame(g.id, { visible: g.visible === false })}>{g.visible === false ? '公開' : '隱藏'}</button>
+                    </div>
+                  </div>
+                )}
+                <div className="kjs-game-cover mb-3">
+                  {g.cover ? <img src={g.cover} alt="" loading="lazy" /> : <div className="kjs-game-cover-empty">🎮</div>}
+                </div>
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <h3 className="font-semibold truncate" title={g.title || g.name || '未命名遊戲'}>{g.title || g.name || '未命名遊戲'}</h3>
+                    <div className="mt-1 flex flex-wrap gap-1.5">
+                      <span className="kjs-game-badge">{g.type || '休閒'}</span>
+                      <span className="kjs-game-badge">{mode === 'embed' ? '內嵌遊玩' : mode === 'info' ? '說明展示' : '外部連結'}</span>
+                      {g.pinned && <span className="kjs-game-badge">📌 置頂</span>}
+                      {admin && <span className="kjs-game-badge">{status}</span>}
+                    </div>
+                  </div>
+                </div>
+                {g.desc && <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 line-clamp-2">{g.desc}</p>}
+                {Array.isArray(g.tags) && g.tags.length > 0 && <div className="mt-2 text-xs text-slate-500 truncate">#{g.tags.join(' #')}</div>}
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button className="rounded-xl bg-brand text-white px-3 py-2 text-sm flex-1" onClick={() => startGame(g)}>{g.buttonText || (mode === 'info' ? '查看說明' : '開始遊玩')}</button>
+                  {mode !== 'link' && <button className="rounded-xl border px-3 py-2 text-sm" onClick={() => { setActiveId(g.id); setMountedIds(prev=>new Set([...Array.from(prev), g.id])); setPlayOpen(true); }}>詳情</button>}
+                </div>
+                {admin && (
+                  <div className="mt-3 flex flex-wrap gap-2 justify-end">
+                    <button className="rounded-lg border px-2 py-1 text-xs" onClick={() => moveGame(g.id, -1)}>上移</button>
+                    <button className="rounded-lg border px-2 py-1 text-xs" onClick={() => moveGame(g.id, 1)}>下移</button>
+                    <button className="rounded-lg border px-2 py-1 text-xs" onClick={() => patchGame(g.id, { pinned: !g.pinned })}>{g.pinned ? '取消置頂' : '置頂'}</button>
+                    <button className="rounded-lg bg-rose-500 text-white px-2 py-1 text-xs" onClick={() => deleteGame(g.id)}>刪除</button>
+                  </div>
+                )}
+              </article>
+            );
+          })}
+        </div>
+      )}
+
+      {editing && (
+        <div className="kjs-game-edit-backdrop fixed inset-0 z-[999] bg-black/50 backdrop-blur-sm flex justify-center p-4" role="dialog" aria-modal="true">
+          <div className="kjs-game-edit-shell rounded-2xl bg-white dark:bg-slate-900 shadow-elevate overflow-hidden flex flex-col border border-slate-200 dark:border-slate-700">
+            <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur">
+              <div className="min-w-0">
+                <div className="font-semibold truncate">{isEditingExisting ? '編輯小遊戲' : '新增小遊戲'}</div>
+                <div className="text-xs text-slate-500 mt-0.5">先填遊戲名稱與遊玩模式，再依模式填對應網址。</div>
+              </div>
+              <button className="rounded-full border px-3 py-1.5 text-sm shrink-0" onClick={() => setEditing(null)}>關閉</button>
+            </div>
+
+            <div ref={editScrollRef} className="kjs-game-edit-scroll flex-1 p-4 overflow-auto modal-scroll grid gap-4">
+              <div className="kjs-game-edit-section">
+                <div className="kjs-game-edit-section-title">
+                  <span>① 基本資料</span>
+                  <small>必填</small>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  <label className="grid gap-1 text-sm sm:col-span-2">
+                    遊戲名稱
+                    <input
+                      autoFocus
+                      className="rounded-lg border px-3 py-2"
+                      placeholder="例如：21點、踩地雷、抽籤小工具"
+                      value={editing.title || ''}
+                      onChange={e=>setDraftField('title', e.target.value)}
+                    />
+                  </label>
+                  <label className="grid gap-1 text-sm">
+                    類型
+                    <input className="rounded-lg border px-3 py-2" placeholder="休閒 / 益智 / 反應..." value={editing.type || ''} onChange={e=>setDraftField('type', e.target.value)} />
+                  </label>
+                  <label className="grid gap-1 text-sm">
+                    狀態
+                    <select
+                      className="rounded-lg border px-3 py-2"
+                      value={editing.status || (editing.visible === false ? '隱藏' : '公開')}
+                      onChange={e=>{
+                        const v = e.target.value;
+                        setEditing(d => ({ ...(d || emptyDraft()), status: v, visible: v === '隱藏' ? false : (d?.visible === false ? true : d?.visible) }));
+                      }}
+                    >
+                      <option>公開</option>
+                      <option>維護中</option>
+                      <option>即將開放</option>
+                      <option>隱藏</option>
+                    </select>
+                  </label>
+                </div>
+
+                <div className="mt-3">
+                  <div className="text-sm font-medium mb-2">遊玩模式</div>
+                  <div className="kjs-game-edit-segment" role="group" aria-label="遊玩模式">
+                    {[
+                      ['link','外部連結'],
+                      ['embed','iframe 內嵌'],
+                      ['info','說明展示']
+                    ].map(([value,label]) => (
+                      <button
+                        key={value}
+                        type="button"
+                        className={(editMode === value ? 'is-active ' : '')}
+                        onClick={() => setDraftField('mode', value)}
+                      >{label}</button>
+                    ))}
+                  </div>
+                  <div className="kjs-game-edit-help">
+                    外部連結會開新分頁；iframe 內嵌會在站內開遊戲視窗並保留進度；說明展示只顯示介紹內容。
+                  </div>
+                </div>
+
+                <div className="mt-3 grid sm:grid-cols-2 gap-3">
+                  <label className="grid gap-1 text-sm">
+                    按鈕文字
+                    <input className="rounded-lg border px-3 py-2" placeholder={editMode === 'info' ? '查看說明' : '開始遊玩'} value={editing.buttonText || ''} onChange={e=>setDraftField('buttonText', e.target.value)} />
+                  </label>
+                  <div className="flex flex-wrap gap-4 items-center text-sm pt-6">
+                    <label className="inline-flex items-center gap-2"><input type="checkbox" checked={editing.visible !== false} onChange={e=>setEditing(d=>({ ...(d || emptyDraft()), visible: e.target.checked, status: e.target.checked && d?.status === '隱藏' ? '公開' : (!e.target.checked ? '隱藏' : d?.status) }))} />公開顯示</label>
+                    <label className="inline-flex items-center gap-2"><input type="checkbox" checked={!!editing.pinned} onChange={e=>setDraftField('pinned', e.target.checked)} />置頂</label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="kjs-game-edit-section">
+                <div className="kjs-game-edit-section-title">
+                  <span>② 封面圖片</span>
+                  <small>選填</small>
+                </div>
+                <div className="grid sm:grid-cols-[1fr_220px] gap-3 items-start">
+                  <label className="grid gap-1 text-sm">
+                    封面圖片網址
+                    <input className="rounded-lg border px-3 py-2" placeholder="https://...jpg / .png" value={editing.cover || ''} onChange={e=>setDraftField('cover', e.target.value)} />
+                    <span className="kjs-game-edit-help">可填 GitHub raw 圖片網址；空白時前台會用預設遊戲圖示。</span>
+                  </label>
+                  <div className="kjs-game-cover-preview">
+                    {coverPreview ? <img src={coverPreview} alt="封面預覽" onError={e=>{ e.currentTarget.style.display='none'; }} /> : <span>尚未設定封面</span>}
+                  </div>
+                </div>
+              </div>
+
+              <div className="kjs-game-edit-section">
+                <div className="kjs-game-edit-section-title">
+                  <span>③ 遊玩設定</span>
+                  <small>{editMode === 'info' ? '說明展示不需網址' : '依模式填寫'}</small>
+                </div>
+                {editMode === 'link' && (
+                  <label className="grid gap-1 text-sm">
+                    外部遊戲網址
+                    <input className="rounded-lg border px-3 py-2" placeholder="https://... 或 games/xxx.html" value={editing.url || ''} onChange={e=>setDraftField('url', e.target.value)} />
+                    <span className="kjs-game-edit-help">使用者點「開始遊玩」後會開新分頁。相對路徑可填：games/21Black_Jack.html</span>
+                  </label>
+                )}
+                {editMode === 'embed' && (
+                  <label className="grid gap-1 text-sm">
+                    iframe / 內嵌網址
+                    <input className="rounded-lg border px-3 py-2" placeholder="games/xxx.html 或允許 iframe 的網址" value={editing.embedUrl || ''} onChange={e=>setDraftField('embedUrl', e.target.value)} />
+                    <span className="kjs-game-edit-help">內嵌模式會在站內開啟遊戲視窗，關閉後保留 iframe 進度；可按「重新開始」重載。</span>
+                  </label>
+                )}
+                {editMode === 'info' && (
+                  <div className="rounded-xl border border-dashed p-3 text-sm text-slate-500">目前為說明展示模式，不需要填外部網址或 iframe 網址。</div>
+                )}
+                {editMode !== 'info' && (
+                  <div className="mt-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/50 p-3 text-sm">
+                    <div className="font-medium mb-1">實際開啟路徑</div>
+                    <div className="break-all text-slate-600 dark:text-slate-300">{editResolvedUrl || '尚未填寫網址'}</div>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        className="rounded-lg border px-3 py-1.5 text-xs"
+                        disabled={!editResolvedUrl}
+                        onClick={() => editResolvedUrl && window.open(editResolvedUrl, '_blank', 'noopener,noreferrer')}
+                      >測試開啟</button>
+                      <span className="kjs-game-edit-help">相對路徑會依照目前網站位置解析；例如在 GitHub Pages 的 /cailucky/ 下，games/21Black_Jack.html 會開到 /cailucky/games/21Black_Jack.html。</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <details className="kjs-game-edit-section" open>
+                <summary className="cursor-pointer font-bold">④ 內容說明</summary>
+                <div className="grid gap-3 pt-3">
+                  <label className="grid gap-1 text-sm">
+                    簡短介紹
+                    <textarea className="rounded-lg border px-3 py-2" rows="3" placeholder="顯示在遊戲卡片上的介紹，建議 1～2 句。" value={editing.desc || ''} onChange={e=>setDraftField('desc', e.target.value)} />
+                  </label>
+                  <label className="grid gap-1 text-sm">
+                    操作方式
+                    <textarea className="rounded-lg border px-3 py-2" rows="3" placeholder="例如：點擊下注、長按插旗、方向鍵移動..." value={editing.howToPlay || ''} onChange={e=>setDraftField('howToPlay', e.target.value)} />
+                  </label>
+                  <label className="grid gap-1 text-sm">
+                    注意事項
+                    <textarea className="rounded-lg border px-3 py-2" rows="2" placeholder="例如：手機建議橫向、若無法載入請改外部開啟。" value={editing.note || ''} onChange={e=>setDraftField('note', e.target.value)} />
+                  </label>
+                </div>
+              </details>
+
+              <details className="kjs-game-edit-section">
+                <summary className="cursor-pointer font-bold">⑤ 標籤與進階</summary>
+                <div className="grid sm:grid-cols-2 gap-3 pt-3">
+                  <label className="grid gap-1 text-sm">
+                    標籤（逗號分隔）
+                    <input className="rounded-lg border px-3 py-2" placeholder="撲克牌, 休閒, 手機可玩" value={tagString(editing)} onChange={e=>setDraftField('tags', e.target.value.split(',').map(t=>t.trim()).filter(Boolean))} />
+                  </label>
+                  <label className="grid gap-1 text-sm">
+                    建立日期
+                    <input className="rounded-lg border px-3 py-2" value={editing.createdAt || ''} onChange={e=>setDraftField('createdAt', e.target.value)} />
+                  </label>
+                </div>
+              </details>
+            </div>
+
+            <div className="kjs-game-edit-footer p-3 border-t border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/90 flex items-center justify-between gap-2">
+              <button className="rounded-lg border px-3 py-2 text-sm" onClick={() => setEditing(null)}>取消</button>
+              <div className="flex items-center gap-2">
+                {isEditingExisting && <button className="rounded-lg bg-rose-500 text-white px-3 py-2 text-sm" onClick={() => deleteGame(editing.id)}>刪除</button>}
+                <button className="rounded-lg bg-brand text-white px-4 py-2 text-sm" onClick={saveGame}>儲存</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className={(playOpen ? '' : 'hidden ') + 'kjs-game-play-backdrop fixed inset-0 z-[998] bg-black/70 backdrop-blur-sm flex'} role="dialog" aria-modal="true">
+        <div className="kjs-game-modal-shell rounded-2xl bg-white dark:bg-slate-900 shadow-elevate overflow-hidden flex flex-col border border-slate-200 dark:border-slate-700">
+          <div className="kjs-game-play-header px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between gap-2">
+            <div className="min-w-0">
+              <div className="font-semibold truncate">{activeGame?.title || '小遊戲'}</div>
+              {activeGame?.howToPlay && <div className="text-xs text-slate-500 truncate">{activeGame.howToPlay}</div>}
+            </div>
+            <div className="flex items-center gap-2">
+              {activeGame && (activeGame.mode || 'link') === 'embed' && <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={() => restartGame(activeGame.id)}>重新開始</button>}
+              <button className="rounded-lg border px-3 py-1.5 text-sm" onClick={() => setPlayOpen(false)}>關閉</button>
+            </div>
+          </div>
+          <div className="flex-1 overflow-auto modal-scroll">
+            {activeGame && (activeGame.mode || 'link') === 'info' ? (
+              <div className="p-4 space-y-3">
+                {activeGame.desc && <p className="whitespace-pre-wrap text-sm">{activeGame.desc}</p>}
+                {activeGame.howToPlay && <div className="rounded-xl border p-3 text-sm"><div className="font-medium mb-1">操作方式</div><div className="whitespace-pre-wrap">{activeGame.howToPlay}</div></div>}
+                {activeGame.note && <div className="rounded-xl border p-3 text-sm text-slate-600 dark:text-slate-300"><div className="font-medium mb-1">注意事項</div><div className="whitespace-pre-wrap">{activeGame.note}</div></div>}
+              </div>
+            ) : (
+              <div className="kjs-game-frame-wrap h-full">
+                {Array.from(mountedIds).map(id => {
+                  const g = games.find(x => x.id === id);
+                  if (!g) return null;
+                  const src = resolveGameUrl(getGameRawUrl(g, 'embed'));
+                  if (!src) return <div key={id} className="p-6 text-center text-slate-500">尚未設定遊戲網址</div>;
+                  return (
+                    <iframe
+                      key={`${id}-${iframeRev[id] || 0}`}
+                      src={src}
+                      title={g.title || 'game'}
+                      className={id === activeId ? '' : 'hidden'}
+                      allow="fullscreen; autoplay; clipboard-read; clipboard-write"
+                    />
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function Home({ setTab, data, setData, admin }) {
   const { useState, useMemo, useEffect } = React;
