@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>能量核心</title>
+  <style>
+    :root{
+      --bg:#05070d;
+      --panel:rgba(12,18,31,.68);
+      --panel2:rgba(15,24,42,.78);
+      --line:rgba(125,211,252,.2);
+      --line2:rgba(168,85,247,.24);
+      --text:#eef7ff;
+      --muted:#8fa6bc;
+      --cyan:#5eead4;
+      --blue:#38bdf8;
+      --purple:#a78bfa;
+      --pink:#f472b6;
+      --gold:#facc15;
+      --danger:#fb7185;
+      --ok:#34d399;
+      --shadow:0 20px 80px rgba(0,0,0,.45);
+      --radius:22px;
+    }
+
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+    html,body{width:100%;min-height:100%;margin:0;overflow-x:hidden;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",Arial,sans-serif;}
+    body{
+      min-height:100svh;
+      background:
+        radial-gradient(circle at 50% 24%, rgba(56,189,248,.20), transparent 34%),
+        radial-gradient(circle at 18% 78%, rgba(167,139,250,.14), transparent 35%),
+        radial-gradient(circle at 88% 82%, rgba(94,234,212,.10), transparent 32%),
+        linear-gradient(180deg,#03050a 0%,#07101d 48%,#03050a 100%);
+      user-select:none;
+    }
+
+    canvas#bgCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.9;}
+    .app{position:relative;z-index:1;min-height:100svh;padding:calc(14px + env(safe-area-inset-top)) 14px calc(90px + env(safe-area-inset-bottom));max-width:780px;margin:0 auto;}
+
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;}
+    .brand{display:flex;flex-direction:column;gap:2px;}
+    .brand h1{font-size:22px;letter-spacing:.18em;margin:0;font-weight:800;text-shadow:0 0 18px rgba(94,234,212,.28);}
+    .brand span{font-size:12px;color:var(--muted);letter-spacing:.16em;}
+    .iconBtns{display:flex;gap:8px;}
+    button{font:inherit;color:inherit;border:0;cursor:pointer;}
+    .ghostBtn{width:42px;height:42px;border-radius:15px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.12);box-shadow:0 10px 30px rgba(0,0,0,.22);display:grid;place-items:center;color:#dffaff;}
+    .ghostBtn:active{transform:scale(.96)}
+
+    .statsGrid{display:grid;grid-template-columns:1.3fr .7fr;gap:10px;margin-bottom:12px;}
+    .statCard{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.10);border-radius:var(--radius);background:linear-gradient(145deg,rgba(15,23,42,.72),rgba(6,12,23,.54));box-shadow:var(--shadow);padding:14px;backdrop-filter:blur(18px);}
+    .statCard:before{content:"";position:absolute;inset:-1px;background:linear-gradient(110deg,transparent,rgba(94,234,212,.12),transparent);opacity:.8;pointer-events:none;}
+    .label{font-size:11px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;margin-bottom:7px;}
+    .energyValue{font-size:clamp(28px,8vw,46px);font-weight:900;letter-spacing:-.05em;line-height:1;word-break:break-all;}
+    .subStat{display:flex;align-items:end;justify-content:space-between;gap:8px;margin-top:10px;color:var(--muted);font-size:13px;}
+    .subStat b{color:var(--cyan);font-weight:800;}
+    .smallValue{font-size:18px;font-weight:850;color:#e9fbff;line-height:1.1;}
+
+    .coreStage{position:relative;border-radius:32px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg,rgba(8,15,30,.76),rgba(3,8,16,.62));box-shadow:0 25px 95px rgba(0,0,0,.56), inset 0 0 80px rgba(56,189,248,.05);padding:18px;margin-bottom:12px;overflow:hidden;backdrop-filter:blur(20px);}
+    .coreStage:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 47%,rgba(94,234,212,.16),transparent 38%),linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);pointer-events:none;}
+    .coreWrap{position:relative;height:min(50svh,420px);min-height:330px;display:flex;align-items:center;justify-content:center;}
+    .rings{position:absolute;width:min(76vw,390px);height:min(76vw,390px);border-radius:50%;border:1px solid rgba(94,234,212,.18);filter:drop-shadow(0 0 24px rgba(56,189,248,.20));animation:spin 18s linear infinite;}
+    .rings:before,.rings:after{content:"";position:absolute;inset:9%;border-radius:50%;border:1px dashed rgba(167,139,250,.22);}
+    .rings:after{inset:21%;border-color:rgba(94,234,212,.22);animation:spin 8s linear reverse infinite;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .coreBtn{position:relative;width:min(58vw,260px);height:min(58vw,260px);border-radius:50%;background:transparent;display:grid;place-items:center;isolation:isolate;filter:drop-shadow(0 0 50px rgba(56,189,248,.35));transition:.12s transform;}
+    .coreBtn:active{transform:scale(.965)}
+    .coreOrb{position:absolute;inset:8%;border-radius:50%;background:
+      radial-gradient(circle at 42% 36%,rgba(255,255,255,.95) 0 4%,rgba(224,242,254,.55) 7%,transparent 18%),
+      radial-gradient(circle at 50% 50%,rgba(94,234,212,.96) 0 10%,rgba(56,189,248,.9) 24%,rgba(76,29,149,.82) 47%,rgba(2,6,23,.92) 72%);
+      box-shadow:inset 0 0 28px rgba(255,255,255,.34), inset 0 -22px 55px rgba(2,6,23,.72), 0 0 30px rgba(94,234,212,.56), 0 0 90px rgba(56,189,248,.42);
+      animation:breathe 2.8s ease-in-out infinite;
+    }
+    .coreOrb:before{content:"";position:absolute;inset:-14%;border-radius:50%;background:conic-gradient(from 120deg,transparent,rgba(94,234,212,.62),transparent,rgba(167,139,250,.45),transparent);filter:blur(12px);opacity:.72;animation:spin 7s linear infinite;}
+    .coreOrb:after{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.92),rgba(125,211,252,.34) 28%,transparent 62%);mix-blend-mode:screen;}
+    @keyframes breathe{0%,100%{transform:scale(.985);filter:brightness(1)}50%{transform:scale(1.025);filter:brightness(1.22)}}
+    .coreText{position:relative;z-index:2;text-align:center;text-shadow:0 0 18px rgba(0,0,0,.8);pointer-events:none;}
+    .coreText strong{display:block;font-size:15px;letter-spacing:.22em;}
+    .coreText span{display:block;margin-top:6px;font-size:12px;color:#d5fbff;opacity:.9;}
+    .pulse{position:absolute;border-radius:50%;border:1px solid rgba(94,234,212,.7);width:40px;height:40px;pointer-events:none;animation:pulse .72s ease-out forwards;z-index:5;}
+    @keyframes pulse{to{opacity:0;transform:scale(7)}}
+    .floatGain{position:absolute;z-index:6;color:#dffcff;font-weight:900;text-shadow:0 0 16px rgba(94,234,212,.9);animation:floatGain 1s ease-out forwards;pointer-events:none;}
+    @keyframes floatGain{to{opacity:0;transform:translateY(-46px) scale(1.08)}}
+
+    .overloadPanel{display:flex;align-items:center;gap:12px;margin-top:4px;position:relative;z-index:3;}
+    .barBox{flex:1;height:14px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;border:1px solid rgba(255,255,255,.08);}
+    .barFill{height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--blue),var(--purple));box-shadow:0 0 18px rgba(94,234,212,.55);transition:width .2s;}
+    .primaryBtn{padding:13px 16px;border-radius:17px;background:linear-gradient(135deg,rgba(94,234,212,.95),rgba(56,189,248,.9),rgba(167,139,250,.9));color:#03111d;font-weight:950;box-shadow:0 12px 34px rgba(56,189,248,.25);white-space:nowrap;}
+    .primaryBtn:disabled{opacity:.44;filter:grayscale(.5);box-shadow:none;}
+
+    .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0;}
+    .tab{height:43px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);color:var(--muted);font-weight:800;}
+    .tab.active{color:#07111f;background:linear-gradient(135deg,#d9ffff,#7dd3fc,#c4b5fd);box-shadow:0 12px 34px rgba(56,189,248,.18);}
+    .section{display:none;}
+    .section.active{display:block;}
+
+    .upgradeList,.taskList{display:grid;gap:10px;}
+    .upgrade,.task{position:relative;overflow:hidden;border-radius:21px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(145deg,rgba(15,23,42,.78),rgba(2,8,20,.58));box-shadow:0 14px 42px rgba(0,0,0,.28);padding:13px;backdrop-filter:blur(16px);}
+    .upgrade{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;}
+    .upgrade h3,.task h3{font-size:15px;margin:0 0 5px;font-weight:900;letter-spacing:.04em;}
+    .upgrade p,.task p{font-size:12px;color:var(--muted);margin:0;line-height:1.45;}
+    .lvl{font-size:11px;color:#c7f9ff;margin-top:6px;}
+    .buyBtn{min-width:110px;padding:11px 10px;border-radius:16px;background:rgba(255,255,255,.08);border:1px solid rgba(94,234,212,.25);color:#dffcff;font-weight:900;}
+    .buyBtn.afford{background:linear-gradient(135deg,rgba(94,234,212,.95),rgba(56,189,248,.92));color:#04101b;}
+    .buyBtn:disabled{opacity:.42;}
+    .taskTop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+    .claimBtn{padding:10px 13px;border-radius:14px;background:rgba(250,204,21,.14);border:1px solid rgba(250,204,21,.32);color:#fff4b7;font-weight:900;white-space:nowrap;}
+    .claimBtn.ready{background:linear-gradient(135deg,#fde68a,#facc15);color:#241a00;}
+    .progress{margin-top:10px;height:8px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;}
+    .progress span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--cyan));border-radius:99px;}
+
+    .infoGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+    .infoBox{border-radius:20px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.055);padding:13px;}
+    .infoBox b{display:block;font-size:18px;margin-bottom:5px;}
+    .infoBox span{font-size:12px;color:var(--muted);}
+
+    .bottomNav{position:fixed;z-index:20;left:50%;bottom:calc(12px + env(safe-area-inset-bottom));transform:translateX(-50%);width:min(94vw,520px);display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:9px;border-radius:24px;background:rgba(3,8,18,.72);border:1px solid rgba(255,255,255,.10);box-shadow:0 20px 80px rgba(0,0,0,.48);backdrop-filter:blur(22px);}
+    .navBtn{height:48px;border-radius:17px;background:rgba(255,255,255,.06);color:#cce3f4;font-weight:850;font-size:12px;border:1px solid rgba(255,255,255,.06);}
+    .navBtn.active{background:linear-gradient(135deg,rgba(94,234,212,.95),rgba(56,189,248,.9));color:#03111d;}
+
+    .modal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.62);display:none;align-items:flex-end;justify-content:center;padding:14px;}
+    .modal.show{display:flex;}
+    .sheet{width:min(100%,560px);max-height:86svh;overflow:auto;border-radius:28px 28px 22px 22px;background:linear-gradient(180deg,rgba(15,23,42,.96),rgba(2,6,23,.96));border:1px solid rgba(255,255,255,.12);box-shadow:0 28px 110px rgba(0,0,0,.7);padding:16px;}
+    .sheetHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;}
+    .sheetHead h2{margin:0;font-size:18px;letter-spacing:.08em;}
+    textarea{width:100%;min-height:120px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--text);padding:12px;resize:vertical;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;}
+    .settingBtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+    .dangerBtn,.softBtn{padding:13px;border-radius:16px;font-weight:900;border:1px solid rgba(255,255,255,.10);}
+    .softBtn{background:rgba(255,255,255,.08);color:#ddf8ff;}
+    .dangerBtn{background:rgba(251,113,133,.14);color:#ffd7de;border-color:rgba(251,113,133,.28);}
+    .toast{position:fixed;z-index:80;left:50%;bottom:calc(78px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;background:rgba(7,14,26,.92);border:1px solid rgba(94,234,212,.25);color:#e8fdff;border-radius:18px;padding:12px 15px;font-size:13px;box-shadow:0 14px 50px rgba(0,0,0,.45);transition:.25s;backdrop-filter:blur(14px);}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+    body:before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.86) 0 1px,transparent 1.5px),radial-gradient(circle,rgba(125,211,252,.72) 0 1px,transparent 1.6px),radial-gradient(circle,rgba(167,139,250,.55) 0 1px,transparent 1.4px);background-size:78px 78px,126px 126px,174px 174px;background-position:12px 18px,44px 68px,88px 32px;opacity:.34;filter:drop-shadow(0 0 4px rgba(125,211,252,.55));}
+    .coreStage:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.9) 0 1px,transparent 1.8px),radial-gradient(circle,rgba(94,234,212,.75) 0 1px,transparent 1.8px),radial-gradient(circle,rgba(167,139,250,.65) 0 1px,transparent 1.7px);background-size:58px 58px,92px 92px,134px 134px;background-position:8px 12px,34px 44px,70px 20px;opacity:.28;mix-blend-mode:screen;}
+    .moduleLayer{position:absolute;inset:0;z-index:2;pointer-events:none;filter:drop-shadow(0 0 10px color-mix(in srgb, var(--core-a, #5eead4), transparent 35%));}
+    .moduleOrbit{position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate(var(--a));transform-origin:0 0;}
+    .moduleItem{position:absolute;left:var(--r);top:0;transform:translate(-50%,-50%) rotate(calc(-1 * var(--a)));opacity:.92;}
+    .moduleItem:before,.moduleItem:after{content:"";position:absolute;inset:0;border-radius:inherit;}
+    .module-stabilizer{width:13px;height:26px;border-radius:9px;background:linear-gradient(180deg,rgba(255,255,255,.85),var(--core-a),rgba(2,6,23,.72));box-shadow:0 0 16px var(--core-a),inset 0 0 9px rgba(255,255,255,.28);}
+    .module-pulse{width:21px;height:21px;border-radius:50%;border:2px solid var(--core-a);background:radial-gradient(circle,rgba(255,255,255,.85),var(--core-b) 40%,rgba(2,6,23,.45) 70%);box-shadow:0 0 18px var(--core-b);}
+    .module-flow{width:54px;height:54px;border-radius:50%;border:1px solid color-mix(in srgb,var(--core-a),white 12%);background:conic-gradient(from 90deg,transparent,var(--core-a),transparent,var(--core-c),transparent);opacity:.55;filter:blur(.1px);}
+    .module-compressor{width:28px;height:18px;border-radius:8px;background:linear-gradient(90deg,rgba(2,6,23,.85),var(--core-c),var(--core-a),rgba(2,6,23,.85));border:1px solid rgba(255,255,255,.38);box-shadow:0 0 20px var(--core-c);}
+    .module-coil{width:38px;height:38px;border-radius:50%;border:3px double var(--core-hot);background:radial-gradient(circle,transparent 46%,rgba(255,255,255,.28) 48%,transparent 55%);box-shadow:0 0 22px var(--core-hot);}
+    .module-resonance{width:42px;height:42px;border-radius:14px;transform:translate(-50%,-50%) rotate(calc(45deg - var(--a)));background:linear-gradient(135deg,var(--core-c),rgba(255,255,255,.85),var(--core-a));box-shadow:0 0 26px var(--core-c);opacity:.82;}
+    .cursorRing{position:absolute;left:50%;top:50%;width:min(76vw,390px);height:min(76vw,390px);transform:translate(-50%,-50%);border-radius:50%;animation:spin 11s linear infinite;z-index:3;}
+    .cursorArm{position:absolute;left:50%;top:50%;width:34px;height:42px;transform:rotate(var(--a)) translateX(var(--r)) rotate(18deg);transform-origin:0 0;}
+    .cursorArm:before{content:"";position:absolute;left:0;top:-2px;width:0;height:0;border-left:12px solid var(--core-a);border-top:9px solid transparent;border-bottom:9px solid transparent;filter:drop-shadow(0 0 10px var(--core-a));}
+    .cursorArm:after{content:"";position:absolute;left:10px;top:10px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,#fff,var(--core-b) 42%,transparent 72%);box-shadow:0 0 14px var(--core-b);}
+    .coreStage.stage-1{--core-a:#5eead4;--core-b:#38bdf8;--core-c:#a78bfa;--core-hot:#f472b6;}
+    .coreStage.stage-2{--core-a:#38bdf8;--core-b:#60a5fa;--core-c:#818cf8;--core-hot:#22d3ee;}
+    .coreStage.stage-3{--core-a:#a78bfa;--core-b:#c084fc;--core-c:#f472b6;--core-hot:#f0abfc;}
+    .coreStage.stage-4{--core-a:#fb7185;--core-b:#f97316;--core-c:#facc15;--core-hot:#fff7ed;}
+    .coreStage.stage-5{--core-a:#c084fc;--core-b:#6366f1;--core-c:#0f172a;--core-hot:#f472b6;}
+    .coreStage.stage-6{--core-a:#f8fafc;--core-b:#a78bfa;--core-c:#38bdf8;--core-hot:#facc15;}
+    .coreStage.stage-2 .coreOrb{background:radial-gradient(circle at 42% 36%,rgba(255,255,255,.96) 0 4%,rgba(224,242,254,.58) 7%,transparent 18%),radial-gradient(circle at 50% 50%,#38bdf8 0 12%,#2563eb 30%,#312e81 52%,#020617 74%);}
+    .coreStage.stage-3 .coreOrb{background:radial-gradient(circle at 42% 36%,rgba(255,255,255,.96) 0 4%,rgba(250,232,255,.58) 7%,transparent 18%),radial-gradient(circle at 50% 50%,#c084fc 0 12%,#a855f7 30%,#831843 54%,#020617 76%);}
+    .coreStage.stage-4 .coreOrb{background:radial-gradient(circle at 42% 36%,rgba(255,255,255,.98) 0 4%,rgba(254,243,199,.62) 7%,transparent 18%),radial-gradient(circle at 50% 50%,#facc15 0 11%,#fb7185 28%,#7f1d1d 54%,#020617 76%);}
+    .coreStage.stage-5 .coreOrb{background:radial-gradient(circle at 42% 36%,rgba(255,255,255,.82) 0 4%,rgba(216,180,254,.42) 7%,transparent 18%),radial-gradient(circle at 50% 50%,#020617 0 16%,#4c1d95 35%,#7c3aed 52%,#01020a 78%);}
+    .coreStage.stage-6 .coreOrb{background:radial-gradient(circle at 42% 36%,rgba(255,255,255,1) 0 5%,rgba(255,255,255,.72) 8%,transparent 18%),radial-gradient(circle at 50% 50%,#ffffff 0 10%,#a78bfa 25%,#38bdf8 42%,#020617 75%);}
+
+    .overloading .coreStage{box-shadow:0 25px 110px rgba(56,189,248,.38), inset 0 0 120px rgba(244,114,182,.10);}
+    .overloading .coreOrb{animation:breathe .55s ease-in-out infinite;filter:brightness(1.35);}
+    .overloading .rings{animation-duration:3.5s;}
+
+
+    .settingBlock{margin:14px 0;padding:13px;border-radius:22px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);}
+    .settingBlock h3{margin:0 0 10px;font-size:14px;letter-spacing:.08em;color:#e7fbff;}
+    .choiceGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;}
+    .choiceBtn{position:relative;min-height:54px;text-align:left;padding:11px 12px;border-radius:17px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.10);color:#d8f7ff;font-weight:900;overflow:hidden;}
+    .choiceBtn span{display:block;margin-top:3px;color:var(--muted);font-size:11px;font-weight:700;line-height:1.3;}
+    .choiceBtn.active{border-color:var(--core-a,#5eead4);box-shadow:0 0 0 1px color-mix(in srgb,var(--core-a,#5eead4),transparent 45%),0 14px 36px color-mix(in srgb,var(--core-a,#5eead4),transparent 80%);background:linear-gradient(135deg,color-mix(in srgb,var(--core-a,#5eead4),transparent 70%),rgba(255,255,255,.055));}
+    .paletteDot{width:18px;height:18px;border-radius:50%;display:inline-block;vertical-align:-4px;margin-right:7px;background:linear-gradient(135deg,var(--p1),var(--p2),var(--p3));box-shadow:0 0 18px var(--p1);}
+    .toggleRow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid rgba(255,255,255,.08);}
+    .toggleRow:first-of-type{border-top:0;}
+    .toggleRow b{font-size:13px;}.toggleRow span{font-size:12px;color:var(--muted);display:block;margin-top:2px;}
+    .switch{width:54px;height:30px;border-radius:99px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.12);position:relative;flex:0 0 auto;}
+    .switch:before{content:"";position:absolute;width:22px;height:22px;border-radius:50%;left:4px;top:3px;background:#9ca3af;transition:.18s;box-shadow:0 6px 18px rgba(0,0,0,.35);}
+    .switch.on{background:color-mix(in srgb,var(--core-a,#5eead4),transparent 68%);border-color:color-mix(in srgb,var(--core-a,#5eead4),transparent 40%);}
+    .switch.on:before{left:26px;background:#fff;box-shadow:0 0 16px var(--core-a,#5eead4);}
+
+    body.palette-cyan .coreStage{--core-a:#5eead4;--core-b:#38bdf8;--core-c:#a78bfa;--core-hot:#f472b6;}
+    body.palette-blue .coreStage{--core-a:#38bdf8;--core-b:#2563eb;--core-c:#818cf8;--core-hot:#22d3ee;}
+    body.palette-violet .coreStage{--core-a:#c084fc;--core-b:#a855f7;--core-c:#f472b6;--core-hot:#f0abfc;}
+    body.palette-gold .coreStage{--core-a:#facc15;--core-b:#f97316;--core-c:#fb7185;--core-hot:#fff7ed;}
+    body.palette-emerald .coreStage{--core-a:#34d399;--core-b:#5eead4;--core-c:#22c55e;--core-hot:#bbf7d0;}
+    body.palette-white .coreStage{--core-a:#f8fafc;--core-b:#a78bfa;--core-c:#38bdf8;--core-hot:#facc15;}
+
+    body .coreOrb{background:radial-gradient(circle at 42% 36%,rgba(255,255,255,.95) 0 4%,rgba(224,242,254,.55) 7%,transparent 18%),radial-gradient(circle at 50% 50%,var(--core-a) 0 10%,var(--core-b) 25%,var(--core-c) 48%,rgba(2,6,23,.92) 74%) !important;}
+    body.skin-orb .coreOrb{border-radius:50%;}
+    body.skin-reactor .coreOrb{border-radius:50%;clip-path:polygon(50% 0%,61% 21%,85% 15%,79% 39%,100% 50%,79% 61%,85% 85%,61% 79%,50% 100%,39% 79%,15% 85%,21% 61%,0% 50%,21% 39%,15% 15%,39% 21%);}
+    body.skin-crystal .coreOrb{border-radius:34%;clip-path:polygon(50% 0%,86% 18%,100% 56%,74% 100%,26% 100%,0% 56%,14% 18%);}
+    body.skin-void .coreOrb{border-radius:50%;background:radial-gradient(circle at 44% 36%,rgba(255,255,255,.68) 0 4%,transparent 15%),radial-gradient(circle at 50% 50%,#020617 0 20%,var(--core-c) 36%,var(--core-a) 54%,#01020a 78%) !important;}
+    body.skin-nexus .coreOrb{border-radius:42%;clip-path:polygon(50% 3%,68% 31%,97% 31%,75% 52%,83% 92%,50% 70%,17% 92%,25% 52%,3% 31%,32% 31%);}
+    body.skin-reactor .rings:before, body.skin-crystal .rings:before, body.skin-nexus .rings:before{border-style:solid;}
+    body.hide-modules .moduleLayer{display:none;}
+    body.low-fx canvas#bgCanvas{opacity:.48;} body.low-fx .rings{animation-duration:30s;} body.low-fx .coreOrb:before{filter:blur(18px);opacity:.38;}
+
+
+
+    /* Enhanced premium depth: 星空流動、核心質感、更多模組安裝樣式 */
+    body:before{animation:starDrift 42s linear infinite, starPulse 6s ease-in-out infinite;}
+    .coreStage:before{animation:stageStars 28s linear infinite;}
+    @keyframes starDrift{to{background-position:90px 132px,166px 194px,236px 158px;}}
+    @keyframes stageStars{to{background-position:86px 78px,148px 132px,204px 94px;}}
+    @keyframes starPulse{0%,100%{opacity:.28}50%{opacity:.44}}
+    .coreStage{
+      background:
+        radial-gradient(circle at 50% 46%, color-mix(in srgb,var(--core-a,#5eead4),transparent 84%), transparent 36%),
+        radial-gradient(circle at 24% 16%, rgba(255,255,255,.07), transparent 24%),
+        linear-gradient(180deg,rgba(9,18,34,.84),rgba(2,7,16,.68));
+    }
+    .coreStage:after{
+      background:
+        radial-gradient(circle at 50% 47%,color-mix(in srgb,var(--core-a,#5eead4),transparent 78%),transparent 38%),
+        radial-gradient(circle at 50% 47%,transparent 34%,rgba(255,255,255,.035) 35%,transparent 56%),
+        linear-gradient(115deg,transparent,rgba(255,255,255,.055),transparent);
+    }
+    .coreOrb{
+      box-shadow:
+        inset 10px 14px 35px rgba(255,255,255,.22),
+        inset -18px -28px 70px rgba(0,0,0,.78),
+        inset 0 0 48px color-mix(in srgb,var(--core-a,#5eead4),transparent 25%),
+        0 0 34px color-mix(in srgb,var(--core-a,#5eead4),transparent 24%),
+        0 0 105px color-mix(in srgb,var(--core-b,#38bdf8),transparent 45%),
+        0 34px 90px rgba(0,0,0,.56) !important;
+    }
+    .coreOrb:before{opacity:.88;filter:blur(10px) saturate(1.18);}
+    .coreOrb:after{
+      inset:13%;
+      background:
+        radial-gradient(circle at 35% 28%,rgba(255,255,255,.98),rgba(255,255,255,.42) 12%,transparent 24%),
+        radial-gradient(circle at 58% 54%,rgba(255,255,255,.50),rgba(125,211,252,.22) 29%,transparent 64%);
+    }
+    .rings{box-shadow:inset 0 0 34px color-mix(in srgb,var(--core-a,#5eead4),transparent 86%),0 0 36px color-mix(in srgb,var(--core-a,#5eead4),transparent 78%);}
+    .moduleItem{transition:opacity .2s, filter .2s;}
+    .module-orbiter{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle,#fff 0 10%,var(--core-a) 32%,rgba(2,6,23,.45) 72%);box-shadow:0 0 18px var(--core-a),0 0 32px color-mix(in srgb,var(--core-b),transparent 30%);}
+    .module-lens{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.42);background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.85),var(--core-b) 24%,transparent 60%);box-shadow:inset 0 0 15px rgba(255,255,255,.22),0 0 22px var(--core-b);}
+    .module-anchor{width:22px;height:38px;border-radius:12px 12px 5px 5px;background:linear-gradient(180deg,rgba(255,255,255,.88),var(--core-c),rgba(2,6,23,.72));border:1px solid rgba(255,255,255,.24);box-shadow:0 0 20px var(--core-c);}
+    .module-prism{width:32px;height:32px;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);background:linear-gradient(135deg,var(--core-a),#fff,var(--core-c));box-shadow:0 0 24px var(--core-a);opacity:.88;}
+    .module-gate{width:64px;height:18px;border-radius:999px;border:1px solid color-mix(in srgb,var(--core-a),white 18%);background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--core-a),transparent 45%),transparent);box-shadow:0 0 20px color-mix(in srgb,var(--core-a),transparent 22%);opacity:.72;}
+    .module-battery{width:18px;height:34px;border-radius:7px;background:linear-gradient(180deg,var(--core-hot),var(--core-a),rgba(2,6,23,.72));border:1px solid rgba(255,255,255,.34);box-shadow:0 0 22px var(--core-hot);}
+    .module-crown{width:36px;height:26px;clip-path:polygon(0% 100%,14% 28%,34% 62%,50% 0%,66% 62%,86% 28%,100% 100%);background:linear-gradient(135deg,var(--core-hot),#fff,var(--core-a));box-shadow:0 0 26px var(--core-hot);opacity:.88;}
+    .energyStream{position:absolute;left:50%;top:50%;width:min(85vw,430px);height:min(85vw,430px);transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;z-index:1;opacity:.6;animation:spin 20s linear infinite;}
+    .energyStream:before,.energyStream:after{content:"";position:absolute;inset:4%;border-radius:50%;border:1px solid transparent;border-top-color:color-mix(in srgb,var(--core-a),transparent 25%);border-right-color:color-mix(in srgb,var(--core-c),transparent 55%);filter:blur(.2px);}
+    .energyStream:after{inset:17%;animation:spin 9s linear reverse infinite;border-top-color:color-mix(in srgb,var(--core-hot),transparent 25%);}
+    .overloading .energyStream{animation-duration:3.2s;opacity:.95;}
+
+
+
+    /* True mounted module system: 內層貼附、中層環繞、外層支架 */
+    .moduleLayer{z-index:4;overflow:visible;contain:layout paint style;}
+    .mountLayer{position:absolute;inset:0;left:50%;top:50%;width:0;height:0;pointer-events:none;}
+    .mountLayer.inner{z-index:5}.mountLayer.mid{z-index:4}.mountLayer.outer{z-index:3}.mountLayer.crownLayer{z-index:6}
+    .moduleMount{position:absolute;left:0;top:0;width:0;height:0;transform:rotate(var(--a)) translateX(var(--r));transform-origin:0 0;animation:moduleBreathe 3.4s ease-in-out infinite;animation-delay:var(--d,0s);}
+    .moduleMount:before{content:"";position:absolute;right:0;top:50%;width:var(--line,34px);height:1px;transform:translateY(-50%) translateX(calc(-1 * var(--line)));background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--core-a),white 18%),transparent);box-shadow:0 0 10px color-mix(in srgb,var(--core-a),transparent 20%);opacity:.55;}
+    .moduleMount:after{content:"";position:absolute;left:-7px;top:-7px;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,#fff 0 12%,var(--core-a) 32%,rgba(2,6,23,.78) 74%);box-shadow:0 0 16px var(--core-a),0 0 28px color-mix(in srgb,var(--core-b),transparent 34%);}
+    .moduleMount.inner:before{width:18px;--line:18px;opacity:.75}.moduleMount.outer:before{opacity:.7;height:2px}.moduleMount.gateMount:before,.moduleMount.anchorMount:before{height:2px;opacity:.82}.moduleMount.crownMount:before{height:2px;opacity:.9;background:linear-gradient(90deg,transparent,var(--core-hot),var(--core-a));}
+    .moduleMount .moduleItem{left:0;top:0;transform:translate(-50%,-50%) rotate(calc(-1 * var(--a)));}
+    .moduleMount.orbiterMount{animation:orbitalSweep var(--dur,14s) linear infinite;}
+    .moduleMount.orbiterMount:before{opacity:.25}.moduleMount.orbiterMount:after{width:10px;height:10px;left:-5px;top:-5px;}
+    .mountArc{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;border:1px solid color-mix(in srgb,var(--core-a),transparent 70%);box-shadow:inset 0 0 28px color-mix(in srgb,var(--core-a),transparent 88%),0 0 18px color-mix(in srgb,var(--core-a),transparent 82%);opacity:.62;}
+    .mountArc.innerArc{width:var(--innerArc);height:var(--innerArc);border-style:solid;}
+    .mountArc.midArc{width:var(--midArc);height:var(--midArc);border-style:dashed;animation:spin 22s linear infinite;}
+    .mountArc.outerArc{width:var(--outerArc);height:var(--outerArc);border-style:solid;opacity:.38;}
+    @keyframes moduleBreathe{0%,100%{filter:brightness(1);opacity:.86}50%{filter:brightness(1.22);opacity:1}}
+    @keyframes orbitalSweep{to{transform:rotate(calc(var(--a) + 360deg)) translateX(var(--r));}}
+    .moduleItem{will-change:transform,filter;}
+    .module-stabilizer{width:17px;height:36px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,.96),var(--core-a) 44%,rgba(2,6,23,.86));border:1px solid rgba(255,255,255,.34);box-shadow:0 0 18px var(--core-a),inset 0 0 12px rgba(255,255,255,.30);}
+    .module-stabilizer:after{content:"";position:absolute;left:50%;bottom:-11px;width:2px;height:12px;transform:translateX(-50%);background:linear-gradient(var(--core-a),transparent);box-shadow:0 0 10px var(--core-a);}
+    .module-pulse{width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.48);background:radial-gradient(circle,#fff 0 12%,var(--core-b) 38%,rgba(2,6,23,.62) 76%);box-shadow:0 0 20px var(--core-b),inset 0 0 10px rgba(255,255,255,.25);}
+    .module-pulse:after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1px solid color-mix(in srgb,var(--core-a),transparent 20%);opacity:.55;animation:pulseNode 1.8s ease-out infinite;}
+    @keyframes pulseNode{to{transform:scale(1.8);opacity:0}}
+    .module-flow{width:62px;height:62px;border-radius:50%;border:1px solid color-mix(in srgb,var(--core-a),white 18%);background:conic-gradient(from 90deg,transparent,var(--core-a),transparent,var(--core-c),transparent);opacity:.62;box-shadow:0 0 18px color-mix(in srgb,var(--core-a),transparent 35%);}
+    .module-flow:after{content:"";position:absolute;inset:42%;border-radius:50%;background:#fff;box-shadow:0 0 15px var(--core-a);}
+    .module-compressor{width:36px;height:22px;border-radius:10px;background:linear-gradient(90deg,rgba(2,6,23,.9),var(--core-c),#fff,var(--core-a),rgba(2,6,23,.9));border:1px solid rgba(255,255,255,.45);box-shadow:0 0 22px var(--core-c);}
+    .module-compressor:after{content:"";position:absolute;inset:5px 7px;border-radius:9px;border-left:1px solid #fff;border-right:1px solid #fff;opacity:.65;}
+    .module-coil{width:44px;height:44px;border-radius:50%;border:4px double var(--core-hot);background:radial-gradient(circle,rgba(255,255,255,.20) 0 24%,transparent 26% 46%,rgba(255,255,255,.22) 48%,transparent 55%);box-shadow:0 0 24px var(--core-hot),inset 0 0 16px color-mix(in srgb,var(--core-hot),transparent 50%);}
+    .module-resonance{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--core-c),rgba(255,255,255,.94),var(--core-a));box-shadow:0 0 30px var(--core-c),inset 0 0 18px rgba(255,255,255,.28);opacity:.9;}
+    .module-resonance:after{content:"";position:absolute;inset:9px;border-radius:10px;background:rgba(2,6,23,.42);border:1px solid rgba(255,255,255,.32);}
+    .module-orbiter{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,#fff 0 10%,var(--core-a) 32%,rgba(2,6,23,.45) 72%);box-shadow:0 0 18px var(--core-a),0 0 32px color-mix(in srgb,var(--core-b),transparent 30%);}
+    .module-lens{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.50);background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.95),var(--core-b) 24%,rgba(2,6,23,.30) 62%);box-shadow:inset 0 0 18px rgba(255,255,255,.22),0 0 24px var(--core-b);}
+    .module-lens:after{content:"";position:absolute;left:50%;top:-12px;width:1px;height:62px;background:linear-gradient(transparent,#fff,transparent);opacity:.35;transform:translateX(-50%) rotate(35deg);}
+    .module-anchor{width:26px;height:46px;border-radius:13px 13px 6px 6px;background:linear-gradient(180deg,rgba(255,255,255,.92),var(--core-c),rgba(2,6,23,.78));border:1px solid rgba(255,255,255,.32);box-shadow:0 0 24px var(--core-c);}
+    .module-anchor:after{content:"";position:absolute;left:50%;bottom:-16px;width:20px;height:16px;transform:translateX(-50%);clip-path:polygon(50% 0,100% 100%,0 100%);background:linear-gradient(180deg,var(--core-c),transparent);opacity:.8;}
+    .module-prism{width:36px;height:36px;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);background:linear-gradient(135deg,var(--core-a),#fff,var(--core-c));box-shadow:0 0 26px var(--core-a);opacity:.9;}
+    .module-prism:after{content:"";position:absolute;inset:7px;clip-path:inherit;background:rgba(2,6,23,.35);}
+    .module-gate{width:76px;height:22px;border-radius:999px;border:1px solid color-mix(in srgb,var(--core-a),white 22%);background:linear-gradient(90deg,rgba(2,6,23,.1),color-mix(in srgb,var(--core-a),transparent 42%),rgba(2,6,23,.1));box-shadow:0 0 24px color-mix(in srgb,var(--core-a),transparent 18%);opacity:.78;}
+    .module-gate:after{content:"";position:absolute;left:12%;right:12%;top:50%;height:2px;transform:translateY(-50%);background:linear-gradient(90deg,transparent,#fff,transparent);box-shadow:0 0 12px #fff;}
+    .module-battery{width:22px;height:42px;border-radius:8px;background:linear-gradient(180deg,var(--core-hot),var(--core-a),rgba(2,6,23,.78));border:1px solid rgba(255,255,255,.38);box-shadow:0 0 24px var(--core-hot);}
+    .module-battery:after{content:"";position:absolute;left:50%;top:-7px;width:10px;height:7px;border-radius:4px 4px 0 0;background:#fff;transform:translateX(-50%);box-shadow:0 0 12px var(--core-hot);}
+    .module-crown{width:42px;height:32px;clip-path:polygon(0% 100%,14% 28%,34% 62%,50% 0%,66% 62%,86% 28%,100% 100%);background:linear-gradient(135deg,var(--core-hot),#fff,var(--core-a));box-shadow:0 0 30px var(--core-hot);opacity:.94;}
+    body.skin-reactor .moduleMount.inner{--skinBend:1} body.skin-reactor .module-stabilizer, body.skin-reactor .module-anchor{border-radius:8px;}
+    body.skin-crystal .moduleItem{clip-path:polygon(50% 0%,100% 50%,50% 100%,0 50%);} body.skin-crystal .module-flow, body.skin-crystal .module-lens, body.skin-crystal .module-coil{clip-path:none;}
+    body.skin-void .moduleMount:before{opacity:.45} body.skin-void .moduleItem{filter:saturate(1.15) contrast(1.08);}
+    body.skin-nexus .moduleMount.crownMount .moduleItem{transform:translate(-50%,-50%) rotate(calc(-1 * var(--a))) scale(1.08);}
+    body.low-fx .moduleMount{animation:none;} body.low-fx .module-pulse:after{display:none;} body.low-fx .energyStream{opacity:.3;animation-duration:40s;}
+
+
+
+    /* Auto production feedback: 模組自動注入核心的可視化回饋 */
+    .coreBtn.autoHit .coreOrb{filter:brightness(1.42) saturate(1.22);}
+    .autoPulse{position:absolute;border-radius:50%;border:1px solid color-mix(in srgb,var(--core-a,#5eead4),white 22%);width:34px;height:34px;pointer-events:none;z-index:8;box-shadow:0 0 18px color-mix(in srgb,var(--core-a,#5eead4),transparent 18%);animation:autoPulse .86s ease-out forwards;}
+    @keyframes autoPulse{to{opacity:0;transform:scale(5.2)}}
+    .autoGain{position:absolute;z-index:9;color:#e9ffff;font-size:12px;font-weight:950;text-shadow:0 0 14px var(--core-a,#5eead4),0 0 24px rgba(255,255,255,.35);animation:autoGain .95s ease-out forwards;pointer-events:none;white-space:nowrap;}
+    @keyframes autoGain{to{opacity:0;transform:translateY(-34px) scale(1.05)}}
+    .energyBeam{position:absolute;left:50%;top:50%;height:2px;width:var(--beamLen);transform-origin:0 50%;transform:rotate(var(--beamAngle));z-index:7;pointer-events:none;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--core-a,#5eead4),white 20%),rgba(255,255,255,.96),color-mix(in srgb,var(--core-b,#38bdf8),transparent 18%),transparent);box-shadow:0 0 12px var(--core-a,#5eead4),0 0 22px color-mix(in srgb,var(--core-b,#38bdf8),transparent 24%);border-radius:99px;animation:beamFade .46s ease-out forwards;}
+    @keyframes beamFade{0%{opacity:0;filter:blur(2px)}18%{opacity:1;filter:blur(0)}100%{opacity:0;filter:blur(4px)}}
+    .autoSpark{position:absolute;width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff,0 0 22px var(--core-a,#5eead4);pointer-events:none;z-index:8;animation:autoSpark .7s ease-out forwards;}
+    @keyframes autoSpark{to{opacity:0;transform:translate(var(--sx),var(--sy)) scale(.35)}}
+    body.low-fx .autoGain{display:none;} body.low-fx .autoPulse{animation-duration:.65s;} body.low-fx .energyBeam{opacity:.55;}
+
+    @media (max-width:520px){
+      .module-gate{width:58px;height:18px}.module-flow{width:48px;height:48px}.module-coil{width:34px;height:34px}.module-resonance{width:36px;height:36px}.module-crown{width:32px;height:25px}
+    }
+    @media (max-width:520px){
+      .app{padding-left:10px;padding-right:10px;}
+      .statsGrid{grid-template-columns:1fr 1fr;}
+      .energyValue{font-size:31px;}
+      .smallValue{font-size:16px;}
+      .coreWrap{min-height:305px;height:44svh;}
+      .upgrade{grid-template-columns:1fr;}
+      .buyBtn{width:100%;}
+      .infoGrid{grid-template-columns:1fr;}
+      .brand h1{font-size:20px;}
+      .bottomNav{width:calc(100vw - 18px);}
+    }
+
+  </style>
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+  <main class="app" id="app">
+    <div class="topbar">
+      <div class="brand">
+        <h1>能量核心</h1>
+        <span>ENERGY CORE SYSTEM</span>
+      </div>
+      <div class="iconBtns">
+        <button class="ghostBtn" id="saveBtn" title="儲存">⟲</button>
+        <button class="ghostBtn" id="settingsBtn" title="設定">⚙</button>
+      </div>
+    </div>
+
+    <section class="statsGrid">
+      <div class="statCard">
+        <div class="label">TOTAL ENERGY</div>
+        <div class="energyValue" id="energyText">0</div>
+        <div class="subStat"><span>核心階段</span><b id="stageText">微光核心</b></div>
+      </div>
+      <div class="statCard">
+        <div class="label">OUTPUT</div>
+        <div class="smallValue"><span id="epsText">0</span> / 秒</div>
+        <div class="subStat"><span>點擊</span><b id="clickText">+1</b></div>
+      </div>
+    </section>
+
+    <section class="coreStage">
+      <div class="coreWrap" id="coreWrap">
+        <div class="rings"></div>
+        <div class="moduleLayer" id="moduleLayer"></div>
+        <button class="coreBtn" id="coreBtn" aria-label="啟動核心">
+          <span class="coreOrb"></span>
+          <span class="coreText"><strong>CORE</strong><span>點擊注入脈衝</span></span>
+        </button>
+      </div>
+      <div class="overloadPanel">
+        <div class="barBox"><div class="barFill" id="overloadFill"></div></div>
+        <button class="primaryBtn" id="overloadBtn" disabled>過載</button>
+      </div>
+    </section>
+
+    <div class="tabs">
+      <button class="tab active" data-section="upgrades">模組</button>
+      <button class="tab" data-section="tasks">任務</button>
+      <button class="tab" data-section="status">狀態</button>
+    </div>
+
+    <section id="upgrades" class="section active"><div class="upgradeList" id="upgradeList"></div></section>
+    <section id="tasks" class="section"><div class="taskList" id="taskList"></div></section>
+    <section id="status" class="section">
+      <div class="infoGrid">
+        <div class="infoBox"><b id="totalClicks">0</b><span>核心點擊</span></div>
+        <div class="infoBox"><b id="totalEarned">0</b><span>累積能量</span></div>
+        <div class="infoBox"><b id="overloadCount">0</b><span>過載啟動</span></div>
+        <div class="infoBox"><b id="taskCount">0</b><span>任務完成</span></div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottomNav">
+    <button class="navBtn active" data-section="upgrades">模組</button>
+    <button class="navBtn" data-section="tasks">任務</button>
+    <button class="navBtn" data-section="status">狀態</button>
+    <button class="navBtn" id="quickOverload">過載</button>
+  </nav>
+
+  <div class="modal" id="settingsModal">
+    <div class="sheet">
+      <div class="sheetHead">
+        <h2>核心設定</h2>
+        <button class="ghostBtn" id="closeSettings">×</button>
+      </div>
+      <div class="infoGrid" style="margin-bottom:12px">
+        <div class="infoBox"><b>自動存檔</b><span>每 8 秒儲存一次</span></div>
+        <div class="infoBox"><b>離線收益</b><span>最高累積 8 小時</span></div>
+      </div>
+      <div class="settingBlock">
+        <h3>核心外觀</h3>
+        <div class="choiceGrid" id="skinChoices"></div>
+      </div>
+      <div class="settingBlock">
+        <h3>核心顏色樣式</h3>
+        <div class="choiceGrid" id="paletteChoices"></div>
+      </div>
+      <div class="settingBlock">
+        <h3>畫面顯示</h3>
+        <div class="toggleRow"><div><b>顯示已安裝模組</b><span>關閉後只保留收益，不顯示核心周圍裝置。</span></div><button class="switch" id="moduleToggle" aria-label="顯示模組"></button></div>
+        <div class="toggleRow"><div><b>低效能模式</b><span>降低粒子與光效，手機較順。</span></div><button class="switch" id="fxToggle" aria-label="低效能模式"></button></div>
+      </div>
+      <textarea id="saveData" placeholder="匯出或貼上存檔資料"></textarea>
+      <div class="settingBtns">
+        <button class="softBtn" id="exportBtn">匯出存檔</button>
+        <button class="softBtn" id="importBtn">匯入存檔</button>
+        <button class="softBtn" id="manualSaveBtn">立即儲存</button>
+        <button class="dangerBtn" id="resetBtn">重置核心</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="offlineModal">
+    <div class="sheet">
+      <div class="sheetHead"><h2>離線收益</h2></div>
+      <p id="offlineText" style="color:var(--muted);line-height:1.7;margin:0 0 14px"></p>
+      <button class="primaryBtn" id="offlineClose" style="width:100%">接收能量</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  const STORAGE_KEY = 'energy_core_save_v1';
+  const $ = id => document.getElementById(id);
+  const app = $('app');
+  const palettes = [
+    {id:'cyan', name:'青藍原核', desc:'乾淨科技光', colors:['#5eead4','#38bdf8','#a78bfa']},
+    {id:'blue', name:'深藍反應', desc:'冷色高亮', colors:['#38bdf8','#2563eb','#818cf8']},
+    {id:'violet', name:'紫域脈衝', desc:'高能霓虹', colors:['#c084fc','#a855f7','#f472b6']},
+    {id:'gold', name:'裂變金焰', desc:'高溫能量', colors:['#facc15','#f97316','#fb7185']},
+    {id:'emerald', name:'翡翠矩陣', desc:'穩定流光', colors:['#34d399','#5eead4','#22c55e']},
+    {id:'white', name:'奇點白核', desc:'終端光源', colors:['#f8fafc','#a78bfa','#38bdf8']}
+  ];
+  const skins = [
+    {id:'orb', name:'圓核', desc:'圓滑高質感，最穩定'},
+    {id:'reactor', name:'反應爐', desc:'多節點外殼，適合模組環繞'},
+    {id:'crystal', name:'晶體核', desc:'切面外觀，科技結晶感'},
+    {id:'void', name:'黑域核', desc:'中心暗化，外圈高能發光'},
+    {id:'nexus', name:'星樞核', desc:'尖角星核，後期感更強'}
+  ];
+
+  const stages = [
+    {name:'微光核心', need:0, mult:1},
+    {name:'藍焰核心', need:2500, mult:1.12},
+    {name:'脈衝核心', need:25000, mult:1.28},
+    {name:'裂變核心', need:250000, mult:1.55},
+    {name:'黑域核心', need:2500000, mult:2.05},
+    {name:'奇點核心', need:25000000, mult:3.1}
+  ];
+
+  const upgrades = [
+    {id:'stabilizer', name:'核心穩定器', desc:'提高基礎自動產能，讓核心持續輸出。', base:18, grow:1.18, eps:1, click:0},
+    {id:'pulse', name:'脈衝增幅器', desc:'提高點擊注入收益，適合主動遊玩。', base:35, grow:1.2, eps:0, click:1},
+    {id:'flow', name:'粒子導流環', desc:'建立穩定粒子流，提高每秒產能。', base:130, grow:1.22, eps:6, click:0},
+    {id:'compressor', name:'能量壓縮器', desc:'壓縮能量密度，提供更高收益。', base:720, grow:1.25, eps:30, click:2},
+    {id:'coil', name:'過載線圈', desc:'加快過載條蓄積，強化爆發節奏。', base:2100, grow:1.28, eps:75, click:4},
+    {id:'resonance', name:'黑域共振', desc:'後期核心共鳴模組，帶來高倍率輸出。', base:15000, grow:1.32, eps:460, click:12},
+    {id:'orbiter', name:'軌道採集球', desc:'小型能量球沿核心外圈採集，形成穩定環繞層。', base:52000, grow:1.24, eps:950, click:8},
+    {id:'lens', name:'折射透鏡', desc:'將核心光束折射成多段輸出，提高整體效率。', base:160000, grow:1.26, eps:2600, click:18},
+    {id:'anchor', name:'星錨支架', desc:'固定核心外層能量場，讓大型模組安裝更穩定。', base:520000, grow:1.27, eps:7600, click:35},
+    {id:'prism', name:'稜鏡矩陣', desc:'把溢散能量切分成高密度流束，提升中後期產能。', base:1800000, grow:1.29, eps:24000, click:80},
+    {id:'gate', name:'環域閘門', desc:'在核心外圍展開大型閘門，導入星域能量流。', base:7200000, grow:1.31, eps:82000, click:180},
+    {id:'battery', name:'超導電容艙', desc:'儲存過載殘餘能量，提供長時間穩定收益。', base:32000000, grow:1.33, eps:260000, click:420},
+    {id:'crown', name:'奇點冠層', desc:'最高階核心冠層，讓整座核心系統進入奇點態。', base:150000000, grow:1.36, eps:1200000, click:1200}
+  ];
+
+  const tasks = [
+    {id:'e1', title:'累積 1,000 EN', type:'earned', target:1000, reward:350},
+    {id:'c1', title:'點擊核心 50 次', type:'clicks', target:50, reward:500},
+    {id:'u1', title:'模組總等級達 15', type:'levels', target:15, reward:1200},
+    {id:'o1', title:'啟動過載 1 次', type:'overloads', target:1, reward:1800},
+    {id:'s1', title:'每秒產能達 500', type:'eps', target:500, reward:8000},
+    {id:'e2', title:'累積 100,000 EN', type:'earned', target:100000, reward:28000},
+    {id:'u2', title:'模組總等級達 60', type:'levels', target:60, reward:90000},
+    {id:'s2', title:'每秒產能達 10,000', type:'eps', target:10000, reward:350000},
+    {id:'e3', title:'累積 10,000,000 EN', type:'earned', target:10000000, reward:1600000},
+    {id:'u3', title:'模組總等級達 150', type:'levels', target:150, reward:4200000},
+    {id:'s3', title:'每秒產能達 500,000', type:'eps', target:500000, reward:18000000},
+    {id:'o2', title:'啟動過載 10 次', type:'overloads', target:10, reward:35000000}
+  ];
+
+  let state = {
+    energy:0,
+    totalEarned:0,
+    clicks:0,
+    overload:0,
+    overloadActiveUntil:0,
+    overloadCooldownUntil:0,
+    overloads:0,
+    completedTasks:[],
+    upgrades:Object.fromEntries(upgrades.map(u => [u.id,0])),
+    skin:'orb',
+    palette:'cyan',
+    showModules:true,
+    lowFx:false,
+    lastSave:Date.now()
+  };
+
+  function fmt(n){
+    n = Math.max(0, Number(n)||0);
+    if(n < 1000) return Math.floor(n).toString();
+    const units=['K','M','B','T','Qa','Qi','Sx','Sp','Oc'];
+    let i=-1;
+    while(n>=1000 && i<units.length-1){n/=1000;i++;}
+    return (n>=100 ? n.toFixed(0) : n>=10 ? n.toFixed(1) : n.toFixed(2)) + units[i];
+  }
+  function toast(msg){
+    const t=$('toast'); t.textContent=msg; t.classList.add('show');
+    clearTimeout(toast.timer); toast.timer=setTimeout(()=>t.classList.remove('show'),1800);
+  }
+  function upgradeCost(u){ return Math.floor(u.base * Math.pow(u.grow, state.upgrades[u.id])); }
+  function totalLevels(){ return Object.values(state.upgrades).reduce((a,b)=>a+b,0); }
+  function stage(){
+    let s = stages[0];
+    for(const x of stages) if(state.totalEarned >= x.need) s = x;
+    return s;
+  }
+  function rawEps(){
+    let eps = 0;
+    for(const u of upgrades) eps += state.upgrades[u.id] * u.eps;
+    eps *= stage().mult;
+    eps *= 1 + Math.floor(totalLevels()/25) * .08;
+    if(isOverloading()) eps *= 5;
+    return eps;
+  }
+  function clickPower(){
+    let p = 1;
+    for(const u of upgrades) p += state.upgrades[u.id] * u.click;
+    p *= stage().mult;
+    if(isOverloading()) p *= 3;
+    return p;
+  }
+  function isOverloading(){ return Date.now() < state.overloadActiveUntil; }
+  function addEnergy(amount){
+    state.energy += amount;
+    state.totalEarned += amount;
+  }
+  function gainOverload(amount){
+    const coil = state.upgrades.coil || 0;
+    state.overload = Math.min(100, state.overload + amount * (1 + coil * .04));
+  }
+
+  function save(){ state.lastSave = Date.now(); localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  function load(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return;
+      const data = JSON.parse(raw);
+      state = {...state, ...data, upgrades:{...state.upgrades, ...(data.upgrades||{})}};
+      safePrefs();
+      const away = Math.max(0, Date.now() - (state.lastSave || Date.now()));
+      const capped = Math.min(away, 8*60*60*1000);
+      const offlineGain = rawEps() * capped/1000;
+      if(offlineGain >= 10){
+        addEnergy(offlineGain);
+        $('offlineText').textContent = `核心離線運轉 ${formatDuration(capped)}，已凝聚 ${fmt(offlineGain)} EN。`;
+        $('offlineModal').classList.add('show');
+      }
+    }catch(e){ console.warn(e); }
+  }
+  function formatDuration(ms){
+    const s=Math.floor(ms/1000), h=Math.floor(s/3600), m=Math.floor((s%3600)/60);
+    if(h) return `${h} 小時 ${m} 分`;
+    if(m) return `${m} 分鐘`;
+    return `${s} 秒`;
+  }
+
+  function safePrefs(){
+    if(!skins.some(x=>x.id===state.skin)) state.skin = 'orb';
+    if(!palettes.some(x=>x.id===state.palette)) state.palette = 'cyan';
+    if(typeof state.showModules !== 'boolean') state.showModules = true;
+    if(typeof state.lowFx !== 'boolean') state.lowFx = false;
+  }
+  function applyAppearance(){
+    safePrefs();
+    document.body.classList.remove(...palettes.map(p=>'palette-'+p.id), ...skins.map(s=>'skin-'+s.id), 'hide-modules', 'low-fx');
+    document.body.classList.add('palette-'+state.palette, 'skin-'+state.skin);
+    document.body.classList.toggle('hide-modules', !state.showModules);
+    document.body.classList.toggle('low-fx', !!state.lowFx);
+  }
+  function renderSettings(){
+    const skinBox = $('skinChoices');
+    if(skinBox){
+      skinBox.innerHTML = skins.map(s=>`<button class="choiceBtn ${state.skin===s.id?'active':''}" data-skin="${s.id}">${s.name}<span>${s.desc}</span></button>`).join('');
+    }
+    const palBox = $('paletteChoices');
+    if(palBox){
+      palBox.innerHTML = palettes.map(p=>`<button class="choiceBtn ${state.palette===p.id?'active':''}" data-palette="${p.id}"><i class="paletteDot" style="--p1:${p.colors[0]};--p2:${p.colors[1]};--p3:${p.colors[2]}"></i>${p.name}<span>${p.desc}</span></button>`).join('');
+    }
+    $('moduleToggle')?.classList.toggle('on', !!state.showModules);
+    $('fxToggle')?.classList.toggle('on', !!state.lowFx);
+  }
+
+  function renderUpgrades(){
+    $('upgradeList').innerHTML = upgrades.map(u=>{
+      const lv = state.upgrades[u.id];
+      const cost = upgradeCost(u);
+      const afford = state.energy >= cost;
+      return `<div class="upgrade">
+        <div><h3>${u.name}</h3><p>${u.desc}</p><div class="lvl">等級 ${lv}　${u.eps?`+${fmt(u.eps)} / 秒 `:''}${u.click?`點擊 +${fmt(u.click)}`:''}</div></div>
+        <button class="buyBtn ${afford?'afford':''}" data-buy="${u.id}">${fmt(cost)} EN</button>
+      </div>`;
+    }).join('');
+  }
+
+  function taskValue(t){
+    if(t.type==='earned') return state.totalEarned;
+    if(t.type==='clicks') return state.clicks;
+    if(t.type==='levels') return totalLevels();
+    if(t.type==='overloads') return state.overloads;
+    if(t.type==='eps') return rawEps();
+    return 0;
+  }
+  function renderTasks(){
+    $('taskList').innerHTML = tasks.map(t=>{
+      const done = state.completedTasks.includes(t.id);
+      const v = taskValue(t);
+      const pct = Math.min(100, v/t.target*100);
+      const ready = !done && v >= t.target;
+      return `<div class="task">
+        <div class="taskTop"><div><h3>${t.title}</h3><p>獎勵 ${fmt(t.reward)} EN　進度 ${fmt(v)} / ${fmt(t.target)}</p></div>
+        <button class="claimBtn ${ready?'ready':''}" data-claim="${t.id}" ${ready?'':'disabled'}>${done?'已完成':'領取'}</button></div>
+        <div class="progress"><span style="width:${done?100:pct}%"></span></div>
+      </div>`;
+    }).join('');
+  }
+
+
+  function stageIndex(){
+    let idx = 0;
+    for(let i=0;i<stages.length;i++) if(state.totalEarned >= stages[i].need) idx = i;
+    return idx;
+  }
+
+  function renderModules(){
+    const layer = $('moduleLayer');
+    const wrap = $('coreWrap');
+    if(!layer || !wrap) return;
+    const specs = {
+      stabilizer:{max:50, step:1, cls:'module-stabilizer', zone:'inner', offset:0, connect:22},
+      pulse:{max:28, step:1, cls:'module-pulse', zone:'inner', offset:10, connect:18},
+      battery:{max:12, step:2, cls:'module-battery', zone:'inner', offset:22, connect:24},
+      orbiter:{max:36, step:1, cls:'module-orbiter', zone:'mid', offset:7, connect:10, orbit:true},
+      flow:{max:12, step:3, cls:'module-flow', zone:'mid', offset:16, connect:34},
+      lens:{max:16, step:2, cls:'module-lens', zone:'mid', offset:25, connect:38},
+      compressor:{max:18, step:2, cls:'module-compressor', zone:'mid', offset:34, connect:42},
+      coil:{max:12, step:2, cls:'module-coil', zone:'outer', offset:42, connect:64},
+      resonance:{max:10, step:3, cls:'module-resonance', zone:'outer', offset:55, connect:72},
+      anchor:{max:14, step:2, cls:'module-anchor', zone:'outer', offset:68, connect:80, mount:'anchorMount'},
+      prism:{max:12, step:2, cls:'module-prism', zone:'outer', offset:82, connect:88},
+      gate:{max:8, step:3, cls:'module-gate', zone:'outer', offset:95, connect:96, mount:'gateMount'},
+      crown:{max:6, step:4, cls:'module-crown', zone:'crownLayer', offset:-90, connect:102, mount:'crownMount'}
+    };
+    const rect = wrap.getBoundingClientRect();
+    const size = Math.min(rect.width || 390, rect.height || 390);
+    const scale = Math.max(.70, Math.min(1.08, size / 390));
+    const coreButton = Math.min(rect.width * .58, 260);
+    const coreSurface = Math.max(92, coreButton * .46);
+    const skinAdjust = {
+      orb:{inner:0, mid:0, outer:0},
+      reactor:{inner:8, mid:8, outer:10},
+      crystal:{inner:12, mid:10, outer:8},
+      void:{inner:-2, mid:4, outer:8},
+      nexus:{inner:14, mid:12, outer:14}
+    }[state.skin] || {inner:0, mid:0, outer:0};
+    const radii = {
+      inner:(coreSurface + 12 + skinAdjust.inner) * scale,
+      mid:(coreSurface + 52 + skinAdjust.mid) * scale,
+      outer:(coreSurface + 96 + skinAdjust.outer) * scale,
+      crownLayer:(coreSurface + 132 + skinAdjust.outer) * scale
+    };
+    let html = `<span class="energyStream"></span>
+      <span class="mountArc innerArc" style="--innerArc:${radii.inner*2}px"></span>
+      <span class="mountArc midArc" style="--midArc:${radii.mid*2}px"></span>
+      <span class="mountArc outerArc" style="--outerArc:${radii.outer*2}px"></span>
+      <span class="mountLayer inner">`;
+    const zones = {inner:'', mid:'', outer:'', crownLayer:''};
+    for(const u of upgrades){
+      const spec = specs[u.id];
+      if(!spec) continue;
+      const lv = state.upgrades[u.id] || 0;
+      const count = Math.min(spec.max, Math.floor(lv / spec.step));
+      if(!count) continue;
+      const zone = spec.zone;
+      const radius = radii[zone];
+      const stageOffset = stageIndex() * 9;
+      const offset = (spec.offset + stageOffset) % 360;
+      const spread = zone === 'crownLayer' ? 88 : 360;
+      const start = zone === 'crownLayer' ? -90 - spread/2 : offset;
+      for(let i=0;i<count;i++){
+        const angle = start + (count === 1 ? spread/2 : (spread / count) * i);
+        const delay = ((i % 7) * .13).toFixed(2);
+        const dur = (12 + (i % 5) * 1.6).toFixed(1);
+        const line = Math.max(10, spec.connect * scale).toFixed(1);
+        const mountClass = `${zone === 'inner' ? 'inner' : zone === 'outer' || zone === 'crownLayer' ? 'outer' : 'mid'} ${spec.mount || ''} ${spec.orbit ? 'orbiterMount' : ''}`;
+        zones[zone] += `<span class="moduleMount ${mountClass}" style="--a:${angle}deg;--r:${radius}px;--line:${line}px;--d:${delay}s;--dur:${dur}s"><span class="moduleItem ${spec.cls}" style="--a:${angle}deg"></span></span>`;
+      }
+    }
+    html += zones.inner + `</span><span class="mountLayer mid">` + zones.mid + `</span><span class="mountLayer outer">` + zones.outer + `</span><span class="mountLayer crownLayer">` + zones.crownLayer + `</span>`;
+    const cursors = Math.min(18, Math.floor((state.upgrades.pulse || 0) / 2));
+    if(cursors){
+      const radius = (coreSurface + 34) * scale;
+      html += '<span class="cursorRing">';
+      for(let i=0;i<cursors;i++){
+        const angle = (360 / cursors) * i;
+        html += `<span class="cursorArm" style="--a:${angle}deg;--r:${radius}px"></span>`;
+      }
+      html += '</span>';
+    }
+    layer.innerHTML = html;
+  }
+
+  function render(){
+    applyAppearance();
+    const eps = rawEps();
+    const cp = clickPower();
+    $('energyText').textContent = fmt(state.energy);
+    $('epsText').textContent = fmt(eps);
+    $('clickText').textContent = '+' + fmt(cp);
+    $('stageText').textContent = stage().name;
+    document.querySelector('.coreStage')?.classList.remove('stage-1','stage-2','stage-3','stage-4','stage-5','stage-6');
+    document.querySelector('.coreStage')?.classList.add('stage-' + (stageIndex()+1));
+    $('overloadFill').style.width = state.overload + '%';
+    const now = Date.now();
+    const canOverload = state.overload >= 100 && now >= state.overloadCooldownUntil && !isOverloading();
+    $('overloadBtn').disabled = !canOverload;
+    $('quickOverload').disabled = !canOverload;
+    document.body.classList.toggle('overloading', isOverloading());
+    $('totalClicks').textContent = fmt(state.clicks);
+    $('totalEarned').textContent = fmt(state.totalEarned);
+    $('overloadCount').textContent = fmt(state.overloads);
+    $('taskCount').textContent = `${state.completedTasks.length} / ${tasks.length}`;
+    renderUpgrades();
+    renderTasks();
+    renderModules();
+    renderSettings();
+  }
+
+  function switchSection(id){
+    document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active', s.id===id));
+    document.querySelectorAll('.tab,.navBtn').forEach(b=>{
+      if(b.dataset.section) b.classList.toggle('active', b.dataset.section===id);
+    });
+  }
+
+  function createEnergyHit(x, y, amount, mode='manual', sourceAngle=null, sourceRadius=null){
+    const wrap = $('coreWrap');
+    const coreBtn = $('coreBtn');
+    if(!wrap) return;
+    const rect = wrap.getBoundingClientRect();
+    const isAuto = mode === 'auto';
+    const pulseEl = document.createElement('span');
+    pulseEl.className = isAuto ? 'autoPulse autoFx' : 'pulse';
+    pulseEl.style.left = (x - (isAuto ? 17 : 20)) + 'px';
+    pulseEl.style.top = (y - (isAuto ? 17 : 20)) + 'px';
+    wrap.appendChild(pulseEl);
+    setTimeout(()=>pulseEl.remove(), isAuto ? 900 : 760);
+
+    const gainEl = document.createElement('span');
+    gainEl.className = isAuto ? 'autoGain autoFx' : 'floatGain';
+    gainEl.textContent = '+' + fmt(amount);
+    gainEl.style.left = Math.min(rect.width - 72, Math.max(18, x - 22)) + 'px';
+    gainEl.style.top = Math.max(38, y - 12) + 'px';
+    wrap.appendChild(gainEl);
+    setTimeout(()=>gainEl.remove(), isAuto ? 980 : 1000);
+
+    if(isAuto && sourceAngle !== null && sourceRadius !== null){
+      const rad = sourceAngle * Math.PI / 180;
+      const cx = rect.width / 2, cy = rect.height / 2;
+      const sx = cx + Math.cos(rad) * sourceRadius;
+      const sy = cy + Math.sin(rad) * sourceRadius;
+      const beam = document.createElement('span');
+      beam.className = 'energyBeam autoFx';
+      beam.style.setProperty('--beamLen', Math.max(40, sourceRadius - 20) + 'px');
+      beam.style.setProperty('--beamAngle', (sourceAngle + 180) + 'deg');
+      beam.style.left = sx + 'px';
+      beam.style.top = sy + 'px';
+      wrap.appendChild(beam);
+      setTimeout(()=>beam.remove(), 520);
+      if(!state.lowFx){
+        for(let i=0;i<2;i++){
+          const spark = document.createElement('span');
+          spark.className = 'autoSpark autoFx';
+          spark.style.left = (sx - 4) + 'px';
+          spark.style.top = (sy - 4) + 'px';
+          spark.style.setProperty('--sx', (Math.cos(rad + Math.PI) * (24 + i*18)) + 'px');
+          spark.style.setProperty('--sy', (Math.sin(rad + Math.PI) * (24 + i*18)) + 'px');
+          wrap.appendChild(spark);
+          setTimeout(()=>spark.remove(), 760);
+        }
+      }
+    }
+
+    if(coreBtn){
+      coreBtn.classList.add('autoHit');
+      clearTimeout(createEnergyHit.hitTimer);
+      createEnergyHit.hitTimer = setTimeout(()=>coreBtn.classList.remove('autoHit'), isAuto ? 180 : 120);
+    }
+    const fx = wrap.querySelectorAll('.autoFx');
+    const limit = state.lowFx ? 16 : 34;
+    if(fx.length > limit){
+      [...fx].slice(0, fx.length - limit).forEach(n=>n.remove());
+    }
+  }
+
+  function clickCore(e){
+    const amount = clickPower();
+    addEnergy(amount); state.clicks++; gainOverload(.9);
+    const wrap = $('coreWrap');
+    const rect = wrap.getBoundingClientRect();
+    const x = (e.clientX || rect.left+rect.width/2) - rect.left;
+    const y = (e.clientY || rect.top+rect.height/2) - rect.top;
+    createEnergyHit(x, y, amount, 'manual');
+    render();
+  }
+  function startOverload(){
+    if(state.overload < 100 || Date.now() < state.overloadCooldownUntil || isOverloading()) return;
+    state.overload = 0; state.overloads++;
+    state.overloadActiveUntil = Date.now() + 10000;
+    state.overloadCooldownUntil = Date.now() + 24000;
+    toast('過載啟動：輸出倍率提升'); render(); save();
+  }
+
+  document.addEventListener('click', e=>{
+    const skinPick = e.target.closest('[data-skin]');
+    if(skinPick){ state.skin = skinPick.dataset.skin; render(); save(); toast('核心外觀已套用'); return; }
+    const palPick = e.target.closest('[data-palette]');
+    if(palPick){ state.palette = palPick.dataset.palette; render(); save(); toast('顏色樣式已套用'); return; }
+    if(e.target.closest('#moduleToggle')){ state.showModules = !state.showModules; render(); save(); toast(state.showModules?'已顯示模組':'已隱藏模組'); return; }
+    if(e.target.closest('#fxToggle')){ state.lowFx = !state.lowFx; render(); save(); toast(state.lowFx?'低效能模式已開啟':'低效能模式已關閉'); return; }
+    const buy = e.target.closest('[data-buy]');
+    if(buy){
+      const u = upgrades.find(x=>x.id===buy.dataset.buy); const cost = upgradeCost(u);
+      if(state.energy >= cost){ state.energy -= cost; state.upgrades[u.id]++; gainOverload(2.5); render(); save(); }
+      return;
+    }
+    const claim = e.target.closest('[data-claim]');
+    if(claim){
+      const t = tasks.find(x=>x.id===claim.dataset.claim);
+      if(t && !state.completedTasks.includes(t.id) && taskValue(t) >= t.target){
+        state.completedTasks.push(t.id); addEnergy(t.reward); toast('任務完成，能量已注入'); render(); save();
+      }
+      return;
+    }
+    const sec = e.target.closest('[data-section]');
+    if(sec) switchSection(sec.dataset.section);
+  });
+
+  $('coreBtn').addEventListener('click', clickCore);
+  $('overloadBtn').addEventListener('click', startOverload);
+  $('quickOverload').addEventListener('click', startOverload);
+  $('settingsBtn').addEventListener('click', ()=>$('settingsModal').classList.add('show'));
+  $('closeSettings').addEventListener('click', ()=>$('settingsModal').classList.remove('show'));
+  $('offlineClose').addEventListener('click', ()=>$('offlineModal').classList.remove('show'));
+  $('saveBtn').addEventListener('click', ()=>{save();toast('核心資料已儲存');});
+  $('manualSaveBtn').addEventListener('click', ()=>{save();toast('已立即儲存');});
+  $('exportBtn').addEventListener('click', ()=>{$('saveData').value = btoa(unescape(encodeURIComponent(JSON.stringify(state)))); toast('存檔已匯出');});
+  $('importBtn').addEventListener('click', ()=>{
+    try{
+      const data = JSON.parse(decodeURIComponent(escape(atob($('saveData').value.trim()))));
+      state = {...state, ...data, upgrades:{...state.upgrades, ...(data.upgrades||{})}};
+      safePrefs();
+      save(); render(); toast('存檔已匯入');
+    }catch(err){ toast('存檔格式無法讀取'); }
+  });
+  $('resetBtn').addEventListener('click', ()=>{
+    if(confirm('確定重置能量核心？')){ localStorage.removeItem(STORAGE_KEY); localStorage.removeItem('energy_core_save_v2'); localStorage.removeItem('energy_core_save_v1'); location.reload(); }
+  });
+
+
+  let lastAutoFeedback = 0;
+  let autoFeedbackIndex = 0;
+  const autoFeedbackModules = ['stabilizer','pulse','orbiter','flow','lens','compressor','coil','resonance','anchor','prism','gate','battery','crown'];
+  function autoProductionFeedback(now){
+    if(!state.showModules || rawEps() <= 0) return;
+    const levels = totalLevels();
+    if(levels <= 0) return;
+    const baseInterval = state.lowFx ? 1500 : 760;
+    const speedBonus = Math.min(420, levels * 5);
+    const overloadBonus = isOverloading() ? 260 : 0;
+    const interval = Math.max(state.lowFx ? 920 : 330, baseInterval - speedBonus - overloadBonus);
+    if(now - lastAutoFeedback < interval) return;
+    lastAutoFeedback = now;
+
+    const active = autoFeedbackModules.filter(id => (state.upgrades[id] || 0) > 0);
+    if(!active.length) return;
+    const id = active[autoFeedbackIndex % active.length];
+    autoFeedbackIndex++;
+    const wrap = $('coreWrap');
+    if(!wrap) return;
+    const rect = wrap.getBoundingClientRect();
+    const cx = rect.width / 2, cy = rect.height / 2;
+    const coreButton = Math.min(rect.width * .58, 260);
+    const scale = Math.max(.70, Math.min(1.08, Math.min(rect.width || 390, rect.height || 390) / 390));
+    const baseSurface = Math.max(92, coreButton * .46);
+    const zonePad = {stabilizer:18,pulse:24,battery:20,orbiter:40,flow:52,lens:58,compressor:62,coil:92,resonance:98,anchor:108,prism:116,gate:126,crown:138}[id] || 58;
+    const angleSeed = (autoFeedbackIndex * 47 + id.length * 19 + stageIndex() * 11) % 360;
+    const radius = (baseSurface + zonePad) * scale;
+    const hitRadius = Math.max(32, baseSurface * .46 * scale);
+    const rad = angleSeed * Math.PI / 180;
+    const hitX = cx + Math.cos(rad + Math.PI) * hitRadius * .18;
+    const hitY = cy + Math.sin(rad + Math.PI) * hitRadius * .18;
+    const amount = Math.max(1, rawEps() * interval / 1000);
+    createEnergyHit(hitX, hitY, amount, 'auto', angleSeed, radius);
+  }
+
+  let last = performance.now();
+  function loop(now){
+    const dt = Math.min(0.25,(now-last)/1000); last=now;
+    const gain = rawEps()*dt;
+    if(gain>0){ addEnergy(gain); gainOverload(.035*dt*(1+rawEps()/200)); }
+    autoProductionFeedback(now);
+    renderLight();
+    requestAnimationFrame(loop);
+  }
+  function tick(){ render(); }
+  setInterval(tick, 700);
+  setInterval(save, 8000);
+  window.addEventListener('beforeunload', save);
+
+  const canvas=$('bgCanvas'), ctx=canvas.getContext('2d');
+  let particles=[];
+  function resize(){
+    const dpr=Math.min(2,window.devicePixelRatio||1);
+    canvas.width=Math.floor(innerWidth*dpr); canvas.height=Math.floor(innerHeight*dpr);
+    canvas.style.width=innerWidth+'px'; canvas.style.height=innerHeight+'px'; ctx.setTransform(dpr,0,0,dpr,0,0);
+    const count=Math.min(state.lowFx?120:260,Math.max(state.lowFx?70:120,Math.floor(innerWidth*innerHeight/(state.lowFx?6500:3900))));
+    particles=Array.from({length:count},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.55+.25,vx:(Math.random()-.5)*.26,vy:(Math.random()-.5)*.26,trail:Math.random()*70+30,a:Math.random()*.55+.10,tw:Math.random()*Math.PI*2}));
+  }
+  function renderLight(){
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    const active = isOverloading();
+    const g = ctx.createRadialGradient(innerWidth*.5, innerHeight*.36, 0, innerWidth*.5, innerHeight*.36, Math.max(innerWidth,innerHeight)*.72);
+    g.addColorStop(0, active ? 'rgba(94,234,212,.12)' : 'rgba(56,189,248,.075)');
+    g.addColorStop(.42, 'rgba(167,139,250,.045)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g; ctx.fillRect(0,0,innerWidth,innerHeight);
+    for(const p of particles){
+      p.x+=p.vx*(active?4:1); p.y+=p.vy*(active?4:1);
+      if(p.x<0)p.x=innerWidth; if(p.x>innerWidth)p.x=0; if(p.y<0)p.y=innerHeight; if(p.y>innerHeight)p.y=0;
+      p.tw += .025;
+      const twinkle = .65 + Math.sin(p.tw) * .35;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r*(active?1.55:1)*twinkle,0,Math.PI*2);
+      ctx.fillStyle=`rgba(210,238,255,${p.a*twinkle*(active?1.55:1)})`; ctx.fill();
+    }
+    ctx.strokeStyle= active ? 'rgba(94,234,212,.12)' : 'rgba(125,211,252,.055)';
+    ctx.lineWidth=1;
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const a=particles[i], b=particles[j], dx=a.x-b.x, dy=a.y-b.y, dist=Math.hypot(dx,dy);
+        if(dist<105){ ctx.globalAlpha=(1-dist/105)*(active?.9:.45); ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+      }
+    }
+    ctx.globalAlpha=1;
+  }
+  window.addEventListener('resize', resize);
+  resize(); load(); render(); requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
