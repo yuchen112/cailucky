@@ -8,7 +8,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CxQ開獎所｜官方平台</title>
-  <!-- build: display-ux-optimized-v7-games-play-modal-fixed -->
+  <!-- build: appjson-auto-sync-v1 -->
   <meta name="color-scheme" content="light dark">
   <meta name="description" content="CxQ開獎所官方平台：抽獎紀錄、等待開獎、社群商店、點數商城、開箱實拍與常見問題管理。">
   <meta property="og:title" content="CxQ開獎所｜官方平台">
@@ -6109,47 +6109,68 @@ function useAccordionController() {
       const hadLocalDataRef = React.useRef(kjsHadLocalDataBeforeApp());
       const [data, setData] = useLocalState(LS.data, EMPTY);
 
-// 進站資料策略（單機整改版）：
-// - 預設保留本機 LocalStorage，不再每次開啟都被 ./data/app.json 覆蓋。
-// - 第一次沒有本機資料時，仍會嘗試讀 ./data/app.json 作為初始資料。
-// - 若需要手動強制載入 app.json，可在網址加 ?loadAppJson=1。
+// 進站資料策略（GitHub app.json 主資料版）：
+// - 預設每次開啟都讀取 ./data/app.json，成功後覆蓋本機 LocalStorage，符合公開網站同步流程。
+// - 若需要暫時使用本機資料測試，可在網址加 ?local=1。
+// - ?loadAppJson=1 仍保留為手動強制讀取提示，但現在預設就會讀取 app.json。
+// - 若 app.json 讀取失敗，才退回目前本機資料，避免網站空白。
 React.useEffect(() => {
   (async () => {
-    try {
-      const params = new URLSearchParams(window.location.search || '');
-      const forceLoad = params.get('loadAppJson') === '1';
-      if (hadLocalDataRef.current && !forceLoad) return;
+    const params = new URLSearchParams(window.location.search || '');
+    const useLocalOnly = params.get('local') === '1';
+    const forceLoad = params.get('loadAppJson') === '1';
 
-      const res = await fetch('./data/app.json?v=' + Date.now(), { cache: 'no-store' });
-      if (!res.ok) return;
+    if (useLocalOnly) {
+      try {
+        localStorage.setItem('kjs_data_source', 'local');
+        localStorage.setItem('kjs_last_app_json_status', 'skipped_by_local_param');
+      } catch {}
+      if (typeof kjsToast === 'function') kjsToast('目前使用本機資料（?local=1），不自動覆蓋 app.json。', 'warn', 3600);
+      return;
+    }
+
+    try {
+      const appJsonUrl = './data/app.json?v=' + Date.now();
+      const res = await fetch(appJsonUrl, { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status + '：找不到或無法讀取 data/app.json');
+
       const raw = await res.json();
 
-      // 同時相容兩種格式：扁平 { ... } 或 包一層 { _meta, data, admins }
+      // 同時相容兩種格式：扁平 { ... } 或 包一層 { _meta, data, admins, bg, images }
       const obj = raw && typeof raw === 'object' && 'data' in raw ? raw.data : raw;
       if (obj && typeof obj === 'object') {
-        setData(normalizeSiteData(obj));
-        if (forceLoad && typeof kjsToast === 'function') kjsToast('已強制載入 app.json 初始資料');
+        const normalized = normalizeSiteData(obj);
+        setData(normalized);
+        try {
+          localStorage.setItem('kjs_data_source', 'app.json');
+          localStorage.setItem('kjs_last_app_json_loaded_at', new Date().toISOString());
+          localStorage.setItem('kjs_last_app_json_status', 'success');
+        } catch {}
+        if (forceLoad && typeof kjsToast === 'function') kjsToast('已重新載入 data/app.json 公開資料。');
       } else {
-        console.error('app.json 結構異常：期望為物件，實得', obj);
+        throw new Error('app.json 結構異常：期望為物件，實得 ' + (typeof obj));
       }
 
-      // 背景設定
-      if (raw && typeof raw === 'object' && raw.bg) {
-        setBg(raw.bg);
+      // 背景設定：優先使用包裝層 raw.bg；若未提供，再相容 obj.bg。
+      const nextBg = raw && typeof raw === 'object' && raw.bg ? raw.bg : (obj && obj.bg ? obj.bg : null);
+      if (nextBg) setBg(nextBg);
+
+      // ImageIO 圖片設定：優先使用包裝層 raw.images；若未提供，再相容 obj.images。
+      const nextImages = raw && typeof raw === 'object' && raw.images ? raw.images : (obj && obj.images ? obj.images : null);
+      if (nextImages && window.ImageIO?.importImagesJSON) {
+        try { window.ImageIO.importImagesJSON(nextImages); } catch (err) { console.warn('ImageIO 匯入失敗：', err); }
       }
 
-      // ImageIO 圖片設定
-      if (raw && typeof raw === 'object' && raw.images && window.ImageIO?.importImagesJSON) {
-        try { window.ImageIO.importImagesJSON(raw.images); } catch {}
-      }
-
-      // 管理員名單
-      if (raw && typeof raw === 'object' && Array.isArray(raw.admins)) {
-        setAdmins(raw.admins);
-      }
+      // 管理員名單：優先使用包裝層 raw.admins；若未提供，再相容 obj.admins。
+      const nextAdmins = raw && typeof raw === 'object' && Array.isArray(raw.admins) ? raw.admins : (obj && Array.isArray(obj.admins) ? obj.admins : null);
+      if (nextAdmins) setAdmins(nextAdmins);
     } catch (e) {
-      // 單機模式沒有 data/app.json 很正常，不打擾使用者。
-      console.info('未載入 data/app.json，已使用本機資料。', e?.message || e);
+      try {
+        localStorage.setItem('kjs_data_source', 'local_fallback');
+        localStorage.setItem('kjs_last_app_json_status', String(e?.message || e));
+      } catch {}
+      console.warn('讀取 data/app.json 失敗，已使用本機資料：', e?.message || e);
+      if (forceLoad && typeof kjsToast === 'function') kjsToast('讀取 data/app.json 失敗，已改用本機資料。', 'error', 5200);
     }
   })();
 }, []);
@@ -7225,12 +7246,27 @@ function GameCenter({ data, setData, admin=false, query='' }) {
     if (typeof kjsToast === 'function') kjsToast('批次操作已套用');
   };
 
+  const isMobileGameClient = () => {
+    try {
+      const ua = navigator.userAgent || '';
+      return /iPhone|iPad|iPod|Android|Mobile|Line\//i.test(ua) || window.innerWidth <= 768;
+    } catch { return false; }
+  };
+
   const startGame = (g) => {
     const id = g.id;
     setActiveId(id);
     try { localStorage.setItem('kjs_game_active', id); } catch {}
     const mode = g.mode || 'link';
     const playUrl = resolveGameUrl(getGameRawUrl(g, mode));
+
+    // 手機 / iPhone / LINE 內建瀏覽器：優先直接跳轉到遊戲頁。
+    // 這樣瀏覽器下方「返回」鍵會有上一頁紀錄，可回到網站；避免 iframe 全螢幕蓋住返回操作。
+    if (mode !== 'info' && playUrl && isMobileGameClient()) {
+      window.location.assign(playUrl);
+      return;
+    }
+
     if (mode === 'link' && playUrl) {
       window.open(playUrl, '_blank', 'noopener,noreferrer');
       return;
@@ -7306,7 +7342,7 @@ function GameCenter({ data, setData, admin=false, query='' }) {
       <div className="mb-3">
         <div>
           <h2 className="text-lg font-semibold">🎮 小遊戲</h2>
-          <p className="text-[13px] text-slate-500 mt-1">休閒小遊戲與互動工具集中在這裡。遊戲只會在點擊時載入，關閉後仍可保留進度。</p>
+          <p className="text-[13px] text-slate-500 mt-1">休閒小遊戲與互動工具集中在這裡。桌機可站內遊玩；手機/iPhone 會直接開啟遊戲頁，方便使用瀏覽器返回鍵回網站。</p>
         </div>
         {admin && (
           <button className="rounded-xl bg-brand text-white px-4 py-2 text-sm" onClick={() => setEditing(emptyDraft())}>＋ 新增小遊戲</button>
@@ -7505,7 +7541,7 @@ function GameCenter({ data, setData, admin=false, query='' }) {
                   <label className="grid gap-1 text-sm">
                     iframe / 內嵌網址
                     <input className="rounded-lg border px-3 py-2" placeholder="games/xxx.html 或允許 iframe 的網址" value={editing.embedUrl || ''} onChange={e=>setDraftField('embedUrl', e.target.value)} />
-                    <span className="kjs-game-edit-help">內嵌模式會在站內開啟遊戲視窗，關閉後保留 iframe 進度；可按「重新開始」重載。</span>
+                    <span className="kjs-game-edit-help">桌機會在站內開啟並保留 iframe 進度；手機/iPhone 會直接跳轉到此網址，方便用瀏覽器返回鍵回網站。</span>
                   </label>
                 )}
                 {editMode === 'info' && (
@@ -7522,7 +7558,7 @@ function GameCenter({ data, setData, admin=false, query='' }) {
                         disabled={!editResolvedUrl}
                         onClick={() => editResolvedUrl && window.open(editResolvedUrl, '_blank', 'noopener,noreferrer')}
                       >測試開啟</button>
-                      <span className="kjs-game-edit-help">相對路徑會依照目前網站位置解析；例如在 GitHub Pages 的 /cailucky/ 下，games/21Black_Jack.html 會開到 /cailucky/games/21Black_Jack.html。</span>
+                      <span className="kjs-game-edit-help">相對路徑會依照目前網站位置解析；例如在 GitHub Pages 的 /cailucky/ 下，games/21Black_Jack.html 會開到 /cailucky/games/21Black_Jack.html。手機會直接跳轉到此實際路徑，讓瀏覽器返回鍵可回網站。</span>
                     </div>
                   </div>
                 )}
