@@ -762,7 +762,261 @@
         aspect-ratio: 16 / 6.7;
       }
     }
-  </style>
+  
+/* ===== 手機瀏覽器高度 / 底部按鍵自動適配修正 ===== */
+:root{
+  --app-height: 100dvh;
+  --browser-bottom: 0px;
+  --control-gap: clamp(6px, 1.3dvh, 10px);
+  --control-h: clamp(54px, 9.5dvh, 74px);
+}
+
+@supports (height: 100svh){
+  :root{ --app-height: 100svh; }
+}
+
+@media (max-width: 760px){
+  html,
+  body{
+    height: var(--app-height);
+    min-height: var(--app-height);
+    overflow: hidden;
+  }
+
+  .app{
+    width: 100vw;
+    height: var(--app-height);
+    min-height: var(--app-height);
+    padding:
+      max(6px, env(safe-area-inset-top))
+      max(8px, env(safe-area-inset-right))
+      calc(max(6px, env(safe-area-inset-bottom)) + var(--browser-bottom))
+      max(8px, env(safe-area-inset-left));
+    align-items: stretch;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .shell{
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    max-height: none;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: var(--control-gap);
+    overflow: hidden;
+  }
+
+  .topbar{
+    position: absolute !important;
+    z-index: 30;
+    top: calc(8px + env(safe-area-inset-top));
+    left: 8px;
+    right: 8px;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    pointer-events: none;
+  }
+
+  .topbar .brand{
+    display: none !important;
+  }
+
+  .hud{
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto 38px 38px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    pointer-events: auto;
+  }
+
+  .chip{
+    min-height: 30px;
+    max-width: 118px;
+    padding: 5px 9px;
+    border-color: rgba(255,255,255,.22);
+    background: rgba(0,0,0,.28);
+    color: rgba(255,255,255,.96);
+    backdrop-filter: blur(10px);
+    text-shadow: 0 1px 4px rgba(0,0,0,.25);
+    font-size: 11px;
+  }
+
+  .chip.extra-mobile{
+    display: none !important;
+  }
+
+  .icon-btn{
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    border: 1px solid rgba(255,255,255,.22);
+    box-shadow: 0 8px 18px rgba(0,0,0,.18);
+  }
+
+  .game-area{
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .game-card{
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: var(--game-ratio, 820 / 580);
+  }
+
+  .bottom-controls{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    height: var(--control-h);
+    min-height: var(--control-h);
+    max-height: 78px;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 35;
+    touch-action: none;
+  }
+
+  .control-btn{
+    height: 100%;
+    min-height: 0;
+    border-radius: clamp(15px, 4vw, 22px);
+    font-size: clamp(14px, 3.8vw, 17px);
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: none;
+  }
+
+  .modal{
+    max-height: calc(var(--app-height) - 24px);
+  }
+}
+
+@media (max-width: 420px){
+  .hud{
+    grid-template-columns: auto auto 36px 36px;
+    gap: 5px;
+  }
+
+  .chip{
+    max-width: 94px;
+    padding-inline: 8px;
+  }
+
+  .icon-btn{
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+  }
+
+  .bottom-controls{
+    gap: 7px;
+  }
+}
+
+@media (max-height: 640px) and (orientation: portrait){
+  :root{
+    --control-h: clamp(50px, 8.4dvh, 62px);
+    --control-gap: 5px;
+  }
+
+  .chip{
+    min-height: 28px;
+    font-size: 10.5px;
+    padding: 4px 7px;
+  }
+
+  .icon-btn{
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 560px) and (pointer: coarse){
+  .app{
+    padding:
+      max(5px, env(safe-area-inset-top))
+      max(7px, env(safe-area-inset-right))
+      calc(max(5px, env(safe-area-inset-bottom)) + var(--browser-bottom))
+      max(7px, env(safe-area-inset-left));
+  }
+
+  .shell{
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .bottom-controls{
+    display: grid !important;
+    position: fixed;
+    right: max(8px, env(safe-area-inset-right));
+    bottom: calc(max(8px, env(safe-area-inset-bottom)) + var(--browser-bottom));
+    width: min(280px, 42vw);
+    height: 44px;
+    min-height: 44px;
+    max-height: 48px;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    opacity: .92;
+  }
+
+  .control-btn{
+    font-size: 12px;
+    border-radius: 14px;
+  }
+
+  .game-area{
+    padding: 0;
+  }
+}
+
+
+/* ===== 底部操作按鈕顯示時機修正 ===== */
+.bottom-controls{
+  display: none !important;
+}
+
+@media (max-width: 760px){
+  body.is-playing .bottom-controls{
+    display: grid !important;
+  }
+
+  body:not(.is-playing) .shell{
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  body:not(.is-playing) .game-area{
+    padding-bottom: 0;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 560px) and (pointer: coarse){
+  body.is-playing .bottom-controls{
+    display: grid !important;
+  }
+
+  body:not(.is-playing) .bottom-controls{
+    display: none !important;
+  }
+}
+
+</style>
 </head>
 <body>
   <div class="app">
@@ -1181,6 +1435,15 @@
         toast.tid = setTimeout(() => ui.toast.classList.remove("show"), 1200);
       }
 
+
+      function syncPlayUiState() {
+        const isPlaying = state && state.status === "running";
+        document.body.classList.toggle("is-playing", isPlaying);
+        document.body.classList.toggle("is-paused", state && state.status === "paused");
+        document.body.classList.toggle("is-menu", state && (state.status === "menu" || state.status === "ready"));
+        document.body.classList.toggle("is-gameover", state && state.status === "gameover");
+      }
+
       function show(el) { el.classList.add("show"); }
       function hide(el) { el.classList.remove("show"); }
 
@@ -1260,14 +1523,46 @@
         document.body.classList.toggle("dark-ui", dark);
       }
 
+
+      function updateViewportVars() {
+        const root = document.documentElement;
+        const vv = window.visualViewport;
+        const visibleW = vv ? vv.width : window.innerWidth;
+        const visibleH = vv ? vv.height : window.innerHeight;
+        const bottomOverlap = vv
+          ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop)
+          : 0;
+
+        root.style.setProperty("--app-height", `${Math.round(visibleH)}px`);
+        root.style.setProperty("--browser-bottom", `${Math.round(Math.min(90, bottomOverlap))}px`);
+
+        const isPortraitPhone = visibleW <= 760 && visibleH >= visibleW;
+        const isShort = visibleH < 650;
+        const controlH = isPortraitPhone
+          ? Math.max(isShort ? 50 : 56, Math.min(isShort ? 64 : 76, visibleH * (isShort ? 0.085 : 0.095)))
+          : Math.max(42, Math.min(58, visibleH * 0.105));
+
+        root.style.setProperty("--control-h", `${Math.round(controlH)}px`);
+      }
+
+      function viewportSize() {
+        const vv = window.visualViewport;
+        return {
+          w: vv ? vv.width : window.innerWidth,
+          h: vv ? vv.height : window.innerHeight
+        };
+      }
+
       function configureCanvasSize() {
+        updateViewportVars();
         const oldGround = GROUND;
-        const isPortraitPhone = window.innerWidth <= 760 && window.innerHeight >= window.innerWidth;
-        const isShortLandscape = window.innerHeight <= 560 && window.innerWidth > window.innerHeight;
+        const vp = viewportSize();
+        const isPortraitPhone = vp.w <= 760 && vp.h >= vp.w;
+        const isShortLandscape = vp.h <= 560 && vp.w > vp.h;
 
         if (isPortraitPhone) {
           W = 820;
-          H = 580;
+          H = vp.h < 650 ? 540 : 580;
           state.layout = "mobilePortrait";
         } else if (isShortLandscape) {
           W = 960;
@@ -1381,6 +1676,7 @@
         configureCanvasSize();
         const m = modeConfig();
         state.status = "ready";
+        syncPlayUiState();
         state.last = performance.now();
         state.time = 0;
         state.score = 0;
@@ -1421,6 +1717,7 @@
         hide(ui.resultOverlay);
         resetGame();
         state.status = "running";
+        syncPlayUiState();
         state.last = performance.now();
         beep("point");
         clearTimeout(state.hintTimer);
@@ -1434,6 +1731,7 @@
         hide(ui.resultOverlay);
         resetGame();
         state.status = "running";
+        syncPlayUiState();
         state.last = performance.now();
         clearTimeout(state.hintTimer);
         state.hintTimer = setTimeout(() => {
@@ -1444,6 +1742,7 @@
 
       function openSettings() {
         if (state.status === "running") pauseGame();
+        syncPlayUiState();
         syncUIFromSettings();
         show(ui.settingsOverlay);
       }
@@ -1451,6 +1750,7 @@
       function pauseGame() {
         if (state.status !== "running") return;
         state.status = "paused";
+        syncPlayUiState();
         player.duck = false;
         state.duckHeldByButton = false;
         state.duckHeldByCanvas = false;
@@ -1466,6 +1766,7 @@
       function resumeGame() {
         if (state.status !== "paused") return;
         state.status = "running";
+        syncPlayUiState();
         state.last = performance.now();
         ui.pauseBtn.textContent = "⏸";
         ui.hintText.textContent = "";
@@ -1606,6 +1907,7 @@
       function finish(won) {
         if (state.status === "gameover") return;
         state.status = "gameover";
+        syncPlayUiState();
         player.dead = true;
         player.duck = false;
         state.duckHeldByButton = false;
@@ -2779,7 +3081,7 @@
         }
 
         let resizeTid = null;
-        window.addEventListener("resize", () => {
+        const onViewportChange = () => {
           clearTimeout(resizeTid);
           resizeTid = setTimeout(() => {
             const wasRunning = state.status === "running";
@@ -2787,11 +3089,19 @@
             if (!wasRunning) {
               resetGame();
               state.status = "menu";
+              syncPlayUiState();
             } else {
               applySettings();
             }
-          }, 120);
-        });
+          }, 80);
+        };
+
+        window.addEventListener("resize", onViewportChange, { passive: true });
+        window.addEventListener("orientationchange", onViewportChange, { passive: true });
+        if (window.visualViewport) {
+          window.visualViewport.addEventListener("resize", onViewportChange, { passive: true });
+          window.visualViewport.addEventListener("scroll", onViewportChange, { passive: true });
+        }
       }
 
       function loop(now) {
@@ -2803,10 +3113,12 @@
       }
 
       function init() {
+        updateViewportVars();
         configureCanvasSize();
         syncUIFromSettings();
         resetGame();
         state.status = "menu";
+        syncPlayUiState();
         bind();
         requestAnimationFrame(loop);
       }
