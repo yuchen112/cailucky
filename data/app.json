@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2026-05-03T01:34:13.749Z"
+    "exportedAt": "2026-05-03T05:58:32.001Z"
   },
   "data": {
     "homepage": {
@@ -5811,6 +5811,60 @@
       "items": []
     },
     "games": [
+      {
+        "title": "點擊核心",
+        "type": "休閒",
+        "cover": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/energy_core_auto_feedback.png",
+        "mode": "link",
+        "url": "games/energy_core_auto_feedback.html",
+        "embedUrl": "",
+        "desc": "",
+        "howToPlay": "",
+        "note": "",
+        "tags": [],
+        "visible": true,
+        "pinned": false,
+        "status": "公開",
+        "buttonText": "開始遊玩",
+        "createdAt": "2026-05-03",
+        "id": "x4cfjmjqzxmopclfl6"
+      },
+      {
+        "title": "打磚塊",
+        "type": "休閒",
+        "cover": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/energy_core_breakout_v4_styles.png",
+        "mode": "link",
+        "url": "games/energy_core_breakout_v4_styles.html",
+        "embedUrl": "",
+        "desc": "",
+        "howToPlay": "",
+        "note": "",
+        "tags": [],
+        "visible": true,
+        "pinned": false,
+        "status": "公開",
+        "buttonText": "開始遊玩",
+        "createdAt": "2026-05-03",
+        "id": "3nye21jurxrmopbxqkr"
+      },
+      {
+        "title": "俄羅斯方塊",
+        "type": "休閒",
+        "cover": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/tetris_.png",
+        "mode": "link",
+        "url": "games/tetris_.html",
+        "embedUrl": "",
+        "desc": "",
+        "howToPlay": "",
+        "note": "",
+        "tags": [],
+        "visible": true,
+        "pinned": false,
+        "status": "公開",
+        "buttonText": "開始遊玩",
+        "createdAt": "2026-05-03",
+        "id": "x856qq03xlmopbwsl7"
+      },
       {
         "title": "命運占卜",
         "type": "休閒",
