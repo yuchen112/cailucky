@@ -215,6 +215,102 @@ button{border:0;cursor:pointer}
 .settleModalSummary b{font-size:15px}.settleModalSummary .deltaFloat{font-size:16px;color:var(--accent)}
 @media (max-width:430px){.settleModalSummary{padding:9px;border-radius:15px}.modal{width:min(94vw,560px);padding:13px;border-radius:22px}.modalActions{grid-template-columns:1fr}.settleModalSummary b{font-size:13px}}
 
+
+
+/* 手機手牌觸控優化：牌面放大、可橫向滑動、降低重疊比例 */
+:root{
+  --handCardW:var(--cardW);
+  --handCardH:var(--cardH);
+}
+.handPanel .card:not(.small){
+  width:var(--handCardW);
+  height:var(--handCardH);
+}
+.handPanel .card:not(.small) .rank{font-size:clamp(18px,5vw,32px)}
+.handPanel .card:not(.small) .suit{font-size:clamp(17px,4.8vw,30px)}
+.handPanel .card:not(.small) .corner{font-size:clamp(9px,2.5vw,12px)}
+.handScroll{
+  touch-action:pan-x;
+  -webkit-overflow-scrolling:touch;
+}
+@media (hover:none) and (pointer:coarse){
+  .handScroll .card:active{
+    z-index:30;
+    transform:translateY(-8px) scale(1.055) rotate(0deg) !important;
+  }
+}
+@media (max-width:430px){
+  :root{
+    --handCardW:clamp(52px,15.8vw,66px);
+    --handCardH:calc(var(--handCardW) * 1.38);
+  }
+  .handPanel{
+    padding:7px 7px 8px;
+  }
+  .handTop{
+    margin-bottom:0;
+  }
+  .handTop span{
+    font-size:10.5px;
+  }
+  .handScroll{
+    justify-content:flex-start !important;
+    overflow-x:auto !important;
+    overflow-y:visible !important;
+    gap:0 !important;
+    padding:18px 14px 11px !important;
+    min-height:calc(var(--handCardH) + 34px) !important;
+    scroll-snap-type:x proximity !important;
+    scroll-padding-left:14px;
+    overscroll-behavior-x:contain;
+  }
+  .handScroll .card{
+    scroll-snap-align:center !important;
+    flex:0 0 auto;
+    border-radius:12px;
+  }
+  .handScroll .card + .card{
+    margin-left:calc(var(--handCardW) * -0.30) !important;
+  }
+  .handScroll .card.selected{
+    transform:translateY(-16px) rotate(0deg) scale(1.04) !important;
+    outline-width:3px;
+  }
+  .handScroll .card:nth-child(odd),
+  .handScroll .card:nth-child(even){
+    transform:rotate(0deg);
+  }
+}
+@media (max-width:370px){
+  :root{
+    --handCardW:clamp(48px,15.2vw,59px);
+    --handCardH:calc(var(--handCardW) * 1.38);
+  }
+  .handScroll{
+    padding-left:12px !important;
+    padding-right:12px !important;
+  }
+  .handScroll .card + .card{
+    margin-left:calc(var(--handCardW) * -0.34) !important;
+  }
+}
+@media (orientation:landscape) and (max-height:560px){
+  :root{
+    --handCardW:clamp(46px,8.8vw,62px);
+    --handCardH:calc(var(--handCardW) * 1.38);
+  }
+  .handScroll{
+    overflow-x:auto !important;
+    justify-content:flex-start !important;
+    padding-top:12px !important;
+    padding-bottom:8px !important;
+    min-height:calc(var(--handCardH) + 24px) !important;
+  }
+  .handScroll .card + .card{
+    margin-left:calc(var(--handCardW) * -0.28) !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -398,7 +494,7 @@ const App={
 window.App=App;
 const Big2={
   newGame(keepChips=false){const players=makePlayers(keepChips?currentChipsFor('big2'):null);resetRoundState(players);let deck=shuffle(newDeck());for(let r=0;r<13;r++)for(const p of players)p.hand.push(deck.pop());players.forEach(p=>sortBig2(p.hand));let starter=players.findIndex(p=>p.hand.some(c=>c.suit==='C'&&c.rank==='3'));S.selected.clear();S.game={type:'big2',players,turn:starter,last:null,lastPlayer:null,passes:0,message:`${players[starter].name} 持有梅花 3，先出牌。`,roundLead:starter,finished:false,roundNo:(keepChips&&S.game?.type==='big2'?(S.game.roundNo||1)+1:1)};setTitles('大老二','玩家 + AI 3 人');log(`${keepChips?'下一局':'新桌'}開始：梅花 3 先出。`);this.render();if(!players[starter].human)this.aiLoop()},
-  render(){const g=S.game;const center=g.last?`<div class="centerPile">${g.last.cards.map(c=>cardHTML(c)).join('')}</div><div class="statusRow" style="justify-content:center"><span class="statusChip">上家：${g.players[g.lastPlayer].name}</span><span class="statusChip">牌型：${g.last.eval.name}</span><span class="statusChip">第 ${g.roundNo||1} 局</span></div>`:`<div class="centerPile"><span class="tag">目前清桌，可自由出牌</span></div>`;const ai=`<div class="aiRow">${g.players.slice(1).map((p,i)=>`<div class="aiBadge"><div class="avatar">${i+1}</div><div class="t"><div class="n">${p.name}</div><div class="s">${p.hand.length} 張｜籌碼 ${Math.round(p.chips)}</div></div></div>`).join('')}</div>`;const body=`${ai}${big2CompactStats()}${center}${logHTML(false)}`;const handCards=g.players[0].hand.map(c=>cardHTML(c,{selected:S.selected.has(c.id),onclick:`Big2.toggle('${c.id}')`})).join('');const hand=`<div class="handPanel"><div class="handTop"><h3>你的手牌</h3><span>壓縮完整顯示・點牌選取</span></div><div class="handScroll">${handCards}</div></div>`;const humanTurn=g.turn===0&&!g.finished;const actions=g.finished?`<div class="actionBar cols3"><button class="primary" onclick="App.tableEnded()?Big2.newGame(false):Big2.newGame(true)">${App.tableEnded()?'開新局':'下一局'}</button><button class="ghost" onclick="Big2.newGame(false)">重開桌</button><button class="danger" onclick="App.goLobby()">大廳</button></div>`:`<div class="actionBar"><button class="primary" ${!humanTurn?'disabled':''} onclick="Big2.playHuman()">出牌</button><button class="ghost" ${!humanTurn?'disabled':''} onclick="Big2.passHuman()">跳過</button><button class="ghost" ${!humanTurn?'disabled':''} onclick="Big2.hint()">提示</button><button class="ghost" onclick="Big2.sort()">整理</button><button class="danger" onclick="App.help()">說明</button></div>`;App.render(gameShell(body,actions,hand,g.message))},
+  render(){const g=S.game;const center=g.last?`<div class="centerPile">${g.last.cards.map(c=>cardHTML(c)).join('')}</div><div class="statusRow" style="justify-content:center"><span class="statusChip">上家：${g.players[g.lastPlayer].name}</span><span class="statusChip">牌型：${g.last.eval.name}</span><span class="statusChip">第 ${g.roundNo||1} 局</span></div>`:`<div class="centerPile"><span class="tag">目前清桌，可自由出牌</span></div>`;const ai=`<div class="aiRow">${g.players.slice(1).map((p,i)=>`<div class="aiBadge"><div class="avatar">${i+1}</div><div class="t"><div class="n">${p.name}</div><div class="s">${p.hand.length} 張｜籌碼 ${Math.round(p.chips)}</div></div></div>`).join('')}</div>`;const body=`${ai}${big2CompactStats()}${center}${logHTML(false)}`;const handCards=g.players[0].hand.map(c=>cardHTML(c,{selected:S.selected.has(c.id),onclick:`Big2.toggle('${c.id}')`})).join('');const hand=`<div class="handPanel"><div class="handTop"><h3>你的手牌</h3><span>左右滑動・點牌選取</span></div><div class="handScroll">${handCards}</div></div>`;const humanTurn=g.turn===0&&!g.finished;const actions=g.finished?`<div class="actionBar cols3"><button class="primary" onclick="App.tableEnded()?Big2.newGame(false):Big2.newGame(true)">${App.tableEnded()?'開新局':'下一局'}</button><button class="ghost" onclick="Big2.newGame(false)">重開桌</button><button class="danger" onclick="App.goLobby()">大廳</button></div>`:`<div class="actionBar"><button class="primary" ${!humanTurn?'disabled':''} onclick="Big2.playHuman()">出牌</button><button class="ghost" ${!humanTurn?'disabled':''} onclick="Big2.passHuman()">跳過</button><button class="ghost" ${!humanTurn?'disabled':''} onclick="Big2.hint()">提示</button><button class="ghost" onclick="Big2.sort()">整理</button><button class="danger" onclick="App.help()">說明</button></div>`;App.render(gameShell(body,actions,hand,g.message))},
   toggle(id){if(S.game.turn!==0||S.game.finished)return;if(S.selected.has(id))S.selected.delete(id);else S.selected.add(id);this.render()},
   sort(){sortBig2(S.game.players[0].hand);this.render()},
   selectedCards(){return S.game.players[0].hand.filter(c=>S.selected.has(c.id))},
