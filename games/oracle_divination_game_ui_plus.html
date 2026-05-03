@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>命運占卜室</title>
+  <style>
+    :root {
+      --bg: #090914;
+      --bg2: #111124;
+      --panel: rgba(23, 22, 43, 0.78);
+      --panel-strong: rgba(31, 29, 58, 0.94);
+      --card: rgba(255,255,255,.075);
+      --card2: rgba(255,255,255,.12);
+      --text: #f7f3ff;
+      --muted: #c9c0df;
+      --soft: #9e93ba;
+      --line: rgba(255,255,255,.16);
+      --gold: #f1c36d;
+      --gold2: #fff0b7;
+      --violet: #9a78ff;
+      --violet2: #d4c3ff;
+      --blue: #83d9ff;
+      --danger: #ff7f9f;
+      --ok: #9ff0c7;
+      --shadow: 0 22px 60px rgba(0,0,0,.42);
+      --radius: 24px;
+      --radius2: 16px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    body[data-theme="light"] {
+      --bg: #f9f3ff;
+      --bg2: #efe3ff;
+      --panel: rgba(255,255,255,.78);
+      --panel-strong: rgba(255,255,255,.95);
+      --card: rgba(73, 44, 111, .08);
+      --card2: rgba(73, 44, 111, .13);
+      --text: #241831;
+      --muted: #554369;
+      --soft: #76688b;
+      --line: rgba(53, 30, 80, .18);
+      --gold: #a97418;
+      --gold2: #5d3f08;
+      --violet: #6c43d5;
+      --violet2: #351e66;
+      --blue: #006c9e;
+      --danger: #a21a43;
+      --ok: #087b4f;
+      --shadow: 0 18px 44px rgba(88, 61, 128, .20);
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(154,120,255,.28), transparent 34%),
+        radial-gradient(circle at 86% 18%, rgba(241,195,109,.18), transparent 30%),
+        radial-gradient(circle at 50% 100%, rgba(131,217,255,.16), transparent 34%),
+        linear-gradient(135deg, var(--bg), var(--bg2));
+      overflow-x: hidden;
+      transition: color .25s ease, background .25s ease;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+    }
+    body::before {
+      opacity: .68;
+      background-image:
+        radial-gradient(circle at 15% 18%, rgba(255,255,255,.42) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 42% 68%, rgba(255,255,255,.32) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 73% 28%, rgba(255,255,255,.34) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 88% 82%, rgba(255,255,255,.30) 0 1px, transparent 1.5px);
+      background-size: 220px 220px, 260px 260px, 300px 300px, 360px 360px;
+      animation: starDrift 22s linear infinite;
+    }
+    body::after {
+      z-index: -1;
+      background: radial-gradient(ellipse at center, transparent 18%, rgba(0,0,0,.22) 100%);
+      opacity: .7;
+    }
+    body[data-theme="light"]::before { opacity: .36; }
+    body[data-theme="light"]::after { opacity: .18; }
+
+    body.bg-forest {
+      background:
+        radial-gradient(circle at 20% 18%, rgba(148, 218, 180, .24), transparent 32%),
+        radial-gradient(circle at 84% 16%, rgba(199, 224, 255, .20), transparent 28%),
+        linear-gradient(135deg, #061512, #142130 58%, #1a1130);
+    }
+    body[data-theme="light"].bg-forest {
+      background:
+        radial-gradient(circle at 18% 18%, rgba(93, 161, 128, .22), transparent 32%),
+        radial-gradient(circle at 84% 10%, rgba(121, 106, 196, .18), transparent 30%),
+        linear-gradient(135deg, #f2fff8, #eef5ff 60%, #faf0ff);
+    }
+    body.bg-table {
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255, 215, 139, .18), transparent 30%),
+        radial-gradient(circle at 15% 85%, rgba(154, 120, 255, .20), transparent 32%),
+        linear-gradient(135deg, #130d0b, #231526 54%, #0b0b18);
+    }
+    body[data-theme="light"].bg-table {
+      background:
+        radial-gradient(circle at 50% 14%, rgba(201, 128, 31, .16), transparent 30%),
+        linear-gradient(135deg, #fff8ed, #f5e8ff 54%, #eef4ff);
+    }
+    body.bg-crystal {
+      background:
+        radial-gradient(circle at 22% 20%, rgba(87, 244, 255, .20), transparent 32%),
+        radial-gradient(circle at 78% 30%, rgba(185, 114, 255, .26), transparent 34%),
+        linear-gradient(135deg, #071223, #16153c 54%, #071522);
+    }
+    body[data-theme="light"].bg-crystal {
+      background:
+        radial-gradient(circle at 22% 18%, rgba(0, 145, 185, .16), transparent 32%),
+        radial-gradient(circle at 80% 22%, rgba(122, 72, 199, .16), transparent 34%),
+        linear-gradient(135deg, #effbff, #f7f1ff 58%, #f2ffff);
+    }
+    body.bg-temple {
+      background:
+        radial-gradient(circle at 20% 14%, rgba(255, 74, 74, .16), transparent 32%),
+        radial-gradient(circle at 84% 20%, rgba(241, 195, 109, .18), transparent 32%),
+        linear-gradient(135deg, #130708, #24121d 56%, #0f0c19);
+    }
+    body[data-theme="light"].bg-temple {
+      background:
+        radial-gradient(circle at 20% 14%, rgba(218, 51, 58, .10), transparent 32%),
+        radial-gradient(circle at 84% 20%, rgba(176, 115, 21, .14), transparent 32%),
+        linear-gradient(135deg, #fff7f0, #fff8df 56%, #f9efff);
+    }
+
+    @keyframes starDrift {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-80px); }
+    }
+
+    .app-shell {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      padding: calc(14px + var(--safe-top)) 14px calc(22px + var(--safe-bottom));
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 0 12px;
+      backdrop-filter: blur(16px);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .sigil {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, rgba(154,120,255,.95), rgba(241,195,109,.82));
+      box-shadow: 0 12px 30px rgba(154,120,255,.26);
+      color: #fff;
+      font-size: 23px;
+      flex: 0 0 auto;
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(20px, 4.6vw, 34px);
+      line-height: 1.05;
+      letter-spacing: .04em;
+    }
+    .brand p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .top-actions { display: flex; gap: 8px; flex: 0 0 auto; }
+
+    button, select, textarea, input {
+      font-family: inherit;
+      color: inherit;
+    }
+    .btn {
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 14px;
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: none;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, opacity .18s ease;
+      font-weight: 700;
+    }
+    .btn:active { transform: scale(.97); }
+    .btn:hover { background: var(--card2); border-color: rgba(241,195,109,.38); }
+    .btn.primary {
+      background: linear-gradient(135deg, rgba(154,120,255,.94), rgba(241,195,109,.86));
+      color: #fff;
+      border-color: rgba(255,255,255,.20);
+      box-shadow: 0 14px 34px rgba(154,120,255,.22);
+    }
+    .btn.gold {
+      background: linear-gradient(135deg, rgba(241,195,109,.92), rgba(255,230,171,.72));
+      color: #221608;
+      border-color: rgba(255,255,255,.20);
+    }
+    .btn.ghost { background: transparent; }
+    .btn.danger { color: var(--danger); border-color: rgba(255,127,159,.38); }
+    .btn.small { min-height: 34px; padding: 7px 11px; font-size: 13px; }
+    .btn.square { width: 42px; padding: 0; }
+    .btn[disabled] { opacity: .48; cursor: not-allowed; }
+
+    .hero {
+      margin-top: 8px;
+      padding: clamp(18px, 5vw, 34px);
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.09), transparent),
+        var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      backdrop-filter: blur(24px);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      right: -70px;
+      top: -70px;
+      background: radial-gradient(circle, rgba(241,195,109,.30), rgba(154,120,255,.12) 46%, transparent 70%);
+      filter: blur(1px);
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero h2 {
+      margin: 0;
+      font-size: clamp(26px, 7vw, 58px);
+      letter-spacing: .04em;
+      line-height: 1.08;
+    }
+    .hero .lead {
+      margin: 14px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 720px;
+      font-size: 15px;
+    }
+    .hero-stats {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .mini-stat {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.055);
+      border-radius: 18px;
+      padding: 12px;
+      min-height: 72px;
+    }
+    .mini-stat b { display: block; font-size: 20px; color: var(--gold2); }
+    body[data-theme="light"] .mini-stat b { color: var(--gold2); }
+    .mini-stat span { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+
+    .section-title {
+      margin: 22px 4px 12px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .section-title h3 { margin: 0; font-size: 18px; letter-spacing: .04em; }
+    .section-title p { margin: 0; font-size: 12px; color: var(--muted); }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .mode-card {
+      position: relative;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(255,255,255,.10), rgba(255,255,255,.045));
+      border-radius: 22px;
+      padding: 16px;
+      min-height: 152px;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: 0 14px 38px rgba(0,0,0,.14);
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+      backdrop-filter: blur(18px);
+    }
+    .mode-card:hover { transform: translateY(-3px); border-color: rgba(241,195,109,.46); }
+    .mode-card:active { transform: scale(.985); }
+    .mode-card::before {
+      content: "";
+      position: absolute;
+      inset: -40% -20% auto auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(154,120,255,.28), transparent 70%);
+    }
+    .mode-icon { font-size: 34px; margin-bottom: 12px; }
+    .mode-card h4 { margin: 0; font-size: 18px; }
+    .mode-card p { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .mode-card .tag {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      color: var(--gold2);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(24px);
+      overflow: hidden;
+    }
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+    }
+    .panel-title h2 { margin: 0; font-size: 22px; }
+    .panel-title p { margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; }
+    .panel-body { padding: 16px; }
+    .soft-card {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 20px;
+      padding: 15px;
+      margin-bottom: 12px;
+    }
+    .soft-card:last-child { margin-bottom: 0; }
+
+    .form-grid { display: grid; gap: 12px; }
+    .field label {
+      display: block;
+      margin: 0 0 7px 2px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    textarea, input, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      outline: none;
+      border-radius: 18px;
+      background: rgba(255,255,255,.07);
+      color: var(--text);
+      padding: 13px 14px;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+    body[data-theme="light"] textarea,
+    body[data-theme="light"] input,
+    body[data-theme="light"] select { background: rgba(255,255,255,.70); }
+    textarea { min-height: 96px; resize: vertical; }
+    select option { color: #1d1528; background: #fff; }
+
+    .action-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 11px;
+      color: var(--muted);
+      background: rgba(255,255,255,.045);
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .pill.active { color: #fff; background: rgba(154,120,255,.84); border-color: rgba(255,255,255,.22); }
+    body[data-theme="light"] .pill.active { color: #fff; }
+
+    .result-card {
+      position: relative;
+      border: 1px solid rgba(241,195,109,.34);
+      background:
+        linear-gradient(145deg, rgba(241,195,109,.12), rgba(154,120,255,.10)),
+        var(--panel-strong);
+      border-radius: 26px;
+      padding: clamp(16px, 4.4vw, 26px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: fadeUp .32s ease both;
+    }
+    .result-card::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      right: -80px;
+      top: -80px;
+      background: radial-gradient(circle, rgba(241,195,109,.22), transparent 70%);
+    }
+    .result-card h3 { margin: 0 0 8px; font-size: 24px; position: relative; }
+    .result-card .sub { margin: 0 0 14px; color: var(--muted); line-height: 1.55; position: relative; }
+    .result-block { position: relative; border-top: 1px solid var(--line); padding-top: 12px; margin-top: 12px; }
+    .result-block h4 { margin: 0 0 7px; color: var(--gold2); font-size: 15px; }
+    .result-block p { margin: 0; line-height: 1.72; color: var(--text); }
+    .result-list { display: grid; gap: 10px; margin-top: 12px; }
+    .result-item {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.052);
+      border-radius: 18px;
+      padding: 12px;
+    }
+    .result-item b { color: var(--gold2); }
+    .result-item p { margin: 6px 0 0; color: var(--muted); line-height: 1.62; }
+
+    .meter {
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      margin: 9px 0 0;
+    }
+    .meter span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--violet), var(--gold));
+      width: 0%;
+      transition: width .55s ease;
+    }
+
+    .tarot-table {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .tarot-back,
+    .tarot-reveal {
+      aspect-ratio: 3/4.2;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px;
+      min-height: 118px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    }
+    .tarot-back {
+      background:
+        radial-gradient(circle at 50% 28%, rgba(241,195,109,.26), transparent 34%),
+        linear-gradient(155deg, rgba(93,67,167,.92), rgba(19,17,43,.96));
+      color: #fff;
+      transition: transform .22s ease, filter .18s ease, opacity .2s ease, background .25s ease;
+      transform-style: preserve-3d;
+    }
+    .tarot-back::before {
+      content: "✦";
+      font-size: 34px;
+      color: rgba(255,240,183,.95);
+      text-shadow: 0 0 18px rgba(241,195,109,.45);
+    }
+    .tarot-back::after {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 14px;
+      pointer-events: none;
+    }
+    .tarot-back:hover { transform: translateY(-4px); filter: brightness(1.06); }
+    .tarot-back.used:not(.flipped) { opacity: .22; pointer-events: none; }
+    .tarot-back.flipped {
+      pointer-events: none;
+      color: var(--text);
+      border-color: rgba(241,195,109,.46);
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255,240,183,.30), transparent 34%),
+        linear-gradient(155deg, rgba(255,255,255,.16), rgba(255,255,255,.055));
+      box-shadow: 0 14px 34px rgba(241,195,109,.10), inset 0 0 0 1px rgba(255,255,255,.08);
+      animation: tarotFlip .42s ease both;
+    }
+    .tarot-back.flipped::before { content: none; }
+    .tarot-table.done .tarot-back:not(.flipped) { display: none; }
+    .tarot-card-label { font-size: 11px; color: var(--gold2); font-weight: 900; line-height: 1.2; }
+    .tarot-card-face { font-size: 30px; line-height: 1.05; margin: 5px 0 3px; }
+    .tarot-card-name { font-size: 13px; font-weight: 900; line-height: 1.22; }
+    .tarot-card-key { margin-top: 4px; font-size: 11px; color: var(--muted); line-height: 1.25; }
+    .tarot-reveal {
+      background: linear-gradient(155deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+    }
+    .tarot-reveal .face { font-size: 32px; }
+    .tarot-reveal b { margin-top: 8px; font-size: 13px; }
+    .tarot-reveal span { margin-top: 4px; color: var(--muted); font-size: 12px; }
+    @keyframes tarotFlip {
+      0% { transform: rotateY(0deg) scale(.98); filter: brightness(.9); }
+      48% { transform: rotateY(88deg) scale(1.02); }
+      100% { transform: rotateY(0deg) scale(1); filter: brightness(1); }
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .choice-card {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 20px;
+      padding: 14px;
+      cursor: pointer;
+      min-height: 92px;
+    }
+    .choice-card:hover { background: var(--card2); border-color: rgba(241,195,109,.42); }
+    .choice-card b { display: block; font-size: 16px; }
+    .choice-card span { display: block; margin-top: 6px; color: var(--muted); font-size: 13px; line-height: 1.4; }
+
+    .oracle-stage {
+      display: grid;
+      place-items: center;
+      min-height: 230px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 50% 40%, rgba(154,120,255,.24), transparent 36%),
+        rgba(255,255,255,.045);
+      margin: 12px 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .crystal {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 28%, rgba(255,255,255,.85), transparent 16%),
+        radial-gradient(circle at 50% 58%, rgba(131,217,255,.42), transparent 48%),
+        linear-gradient(145deg, rgba(154,120,255,.76), rgba(241,195,109,.38));
+      border: 1px solid rgba(255,255,255,.34);
+      box-shadow: 0 0 48px rgba(154,120,255,.35), inset 0 0 32px rgba(255,255,255,.16);
+      animation: float 3.4s ease-in-out infinite;
+    }
+    .lot-stick {
+      width: 70px;
+      height: 170px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(241,195,109,.92), rgba(135,76,34,.95));
+      border: 1px solid rgba(255,255,255,.26);
+      box-shadow: 0 22px 40px rgba(0,0,0,.20);
+      transform: rotate(-8deg);
+      display: grid;
+      place-items: center;
+      color: #321b08;
+      font-size: 26px;
+      font-weight: 900;
+    }
+    .shake { animation: shake .72s ease both; }
+    .dice-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .dice {
+      width: 82px;
+      height: 82px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, rgba(255,255,255,.14), rgba(255,255,255,.05));
+      border: 1px solid var(--line);
+      font-size: 31px;
+      box-shadow: 0 14px 34px rgba(0,0,0,.12);
+    }
+    .rolling { animation: roll .74s ease both; }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes shake {
+      0%,100% { transform: rotate(-8deg) translateX(0); }
+      20% { transform: rotate(8deg) translateX(7px); }
+      40% { transform: rotate(-14deg) translateX(-6px); }
+      60% { transform: rotate(10deg) translateX(6px); }
+      80% { transform: rotate(-10deg) translateX(-4px); }
+    }
+    @keyframes roll {
+      0% { transform: rotate(0deg) scale(1); }
+      45% { transform: rotate(18deg) scale(1.08); }
+      75% { transform: rotate(-14deg) scale(.98); }
+      100% { transform: rotate(0deg) scale(1); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .record-list { display: grid; gap: 10px; }
+    .record-card {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 18px;
+      padding: 12px;
+    }
+    .record-card header {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: start;
+      margin-bottom: 8px;
+    }
+    .record-card h4 { margin: 0; font-size: 15px; }
+    .record-card small { color: var(--soft); display: block; margin-top: 3px; }
+    .record-card p { margin: 0; color: var(--muted); line-height: 1.55; font-size: 13px; }
+    .record-actions { display: flex; gap: 7px; flex-shrink: 0; }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      align-items: end;
+      justify-content: center;
+      padding: 14px;
+      background: rgba(0,0,0,.48);
+      backdrop-filter: blur(14px);
+    }
+    .modal.show { display: flex; }
+    .modal-box {
+      width: min(760px, 100%);
+      max-height: min(84vh, 820px);
+      overflow: auto;
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      animation: fadeUp .22s ease both;
+    }
+    .modal-head {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+      background: var(--panel-strong);
+      backdrop-filter: blur(14px);
+    }
+    .modal-head h3 { margin: 0; font-size: 18px; }
+    .modal-body { padding: 14px; }
+    details {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 18px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+    summary { cursor: pointer; font-weight: 900; color: var(--text); }
+    details .inside { padding-top: 12px; }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+    .theme-tile {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      min-height: 78px;
+      padding: 10px;
+      cursor: pointer;
+      background: var(--card);
+      display: flex;
+      align-items: end;
+      font-weight: 900;
+      font-size: 12px;
+    }
+    .theme-tile.active { outline: 2px solid rgba(241,195,109,.75); }
+    .tile-stars { background: linear-gradient(135deg, #111124, #4a328d); color:#fff; }
+    .tile-forest { background: linear-gradient(135deg, #09231b, #3f557d); color:#fff; }
+    .tile-table { background: linear-gradient(135deg, #1e0f0b, #563250); color:#fff; }
+    .tile-crystal { background: linear-gradient(135deg, #0a2035, #5b4db7); color:#fff; }
+    .tile-temple { background: linear-gradient(135deg, #2a0e12, #8a6330); color:#fff; }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(16px + var(--safe-bottom));
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 300;
+      background: rgba(20,18,32,.92);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.16);
+      padding: 10px 14px;
+      border-radius: 999px;
+      box-shadow: 0 14px 38px rgba(0,0,0,.25);
+      transition: opacity .2s ease, transform .2s ease;
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    .hidden { display: none !important; }
+    .muted { color: var(--muted); }
+    .gold-text { color: var(--gold2); }
+    .danger-text { color: var(--danger); }
+    .ok-text { color: var(--ok); }
+
+    @media (max-width: 900px) {
+      .mode-grid { grid-template-columns: repeat(2, 1fr); }
+      .choice-grid { grid-template-columns: repeat(2, 1fr); }
+      .theme-grid { grid-template-columns: repeat(2, 1fr); }
+      .tarot-table { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .app-shell { padding-left: 10px; padding-right: 10px; }
+      .topbar { align-items: flex-start; }
+      .brand p { max-width: 220px; }
+      .top-actions .label { display: none; }
+      .hero-stats { grid-template-columns: 1fr; }
+      .mode-grid { grid-template-columns: 1fr; }
+      .mode-card { min-height: 124px; }
+      .panel-head { align-items: flex-start; }
+      .choice-grid { grid-template-columns: 1fr; }
+      .tarot-table { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .tarot-back, .tarot-reveal { border-radius: 14px; min-height: 106px; padding: 7px; }
+      .tarot-card-face { font-size: 26px; }
+      .tarot-card-name { font-size: 12px; }
+      .tarot-card-key { font-size: 10px; }
+      .tarot-back::after { inset: 8px; border-radius: 10px; }
+      .modal { align-items: end; padding: 9px; }
+      .modal-box { border-radius: 24px; max-height: 88vh; }
+      .dice { width: 72px; height: 72px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body data-theme="dark" class="bg-stars">
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand" onclick="renderHome()" role="button" aria-label="回首頁">
+        <div class="sigil">✦</div>
+        <div>
+          <h1>命運占卜室</h1>
+          <p>每日運勢・塔羅・靈籤・符文・命運骰子</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="btn square" onclick="renderHome()" title="首頁">⌂</button>
+        <button class="btn square" onclick="openRecords()" title="紀錄">☰</button>
+        <button class="btn square" onclick="openSettings()" title="設定">⚙</button>
+      </div>
+    </header>
+
+    <main id="app"></main>
+  </div>
+
+  <div class="modal" id="modal" onclick="modalBackdrop(event)">
+    <div class="modal-box" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <h3 id="modalTitle">視窗</h3>
+        <button class="btn square" onclick="closeModal()">×</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">已完成</div>
+
+  <script>
+    const STORE_KEY = 'oracle_divination_room_state';
+    const DAILY_KEY = 'oracle_divination_room_daily';
+
+    const modes = [
+      { id: 'daily', icon: '☀️', title: '每日運勢', desc: '抽取今日整體、愛情、工作與財運能量。', tag: '每日' },
+      { id: 'tarot', icon: '🃏', title: '塔羅占卜', desc: '支援單張、三張與五張牌，含正逆位解讀。', tag: '核心' },
+      { id: 'love', icon: '💗', title: '愛情占卜', desc: '曖昧、復合、告白、關係走向都能問。', tag: '人氣' },
+      { id: 'career', icon: '💼', title: '工作金錢', desc: '工作選擇、財運、行動時機與避雷提醒。', tag: '實用' },
+      { id: 'yesno', icon: '🔮', title: '是 / 否占卜', desc: '輸入問題後取得傾向答案與一句提醒。', tag: '快速' },
+      { id: 'lot', icon: '🎋', title: '靈籤占卜', desc: '抽籤號、籤詩、吉凶與白話建議。', tag: '東方' },
+      { id: 'rune', icon: 'ᚱ', title: '符文占卜', desc: '抽取三枚符文，解析現況、阻礙與建議。', tag: '神秘' },
+      { id: 'dice', icon: '🎲', title: '命運骰子', desc: '三顆骰子組合出主題、狀態與行動方向。', tag: '遊戲感' }
+    ];
+
+    const tarotCards = [
+      { name:'愚者', emoji:'🌄', keywords:['開始','冒險','未知'], up:'新的路正在打開，適合用輕盈的心態嘗試。你不需要把一切想完才開始。', rev:'衝動或準備不足會讓事情變得不穩，先確認基本條件再行動。' },
+      { name:'魔術師', emoji:'✨', keywords:['創造','資源','表達'], up:'你手上已有能推動局面的工具，關鍵是把想法落地。', rev:'能力分散或說太多做太少，會讓能量無法集中。' },
+      { name:'女祭司', emoji:'🌙', keywords:['直覺','秘密','觀察'], up:'答案還沒有完全浮現，直覺比表面訊息更可靠。', rev:'你可能忽略了重要訊號，別急著替對方或局勢下定論。' },
+      { name:'皇后', emoji:'🌹', keywords:['滋養','魅力','成果'], up:'關係與成果正在累積，溫柔而穩定的投入會帶來回饋。', rev:'過度付出或過度依賴舒適圈，會讓自己失去主導感。' },
+      { name:'皇帝', emoji:'👑', keywords:['秩序','掌控','責任'], up:'需要建立規則與界線。穩定、務實、清楚的安排會更有利。', rev:'太想控制結果反而會造成僵局，放下部分掌控會更順。' },
+      { name:'教皇', emoji:'📜', keywords:['傳統','指引','信任'], up:'尋求可靠建議、照規矩走，會比單打獨鬥更安全。', rev:'不必盲從舊方法，現在需要重新判斷什麼才適合你。' },
+      { name:'戀人', emoji:'💞', keywords:['選擇','吸引','連結'], up:'這件事牽涉真心選擇。關係、合作或價值觀正在被看見。', rev:'吸引存在，但共識不足。先釐清彼此要的是不是同一件事。' },
+      { name:'戰車', emoji:'🛡️', keywords:['推進','勝利','意志'], up:'只要方向明確，就能靠執行力突破。適合主動出擊。', rev:'急著前進卻沒有掌控節奏，容易因分心或情緒而失衡。' },
+      { name:'力量', emoji:'🦁', keywords:['耐心','勇氣','馴服'], up:'真正的力量來自穩住情緒。柔中帶剛會比硬碰硬有效。', rev:'你可能正在壓抑或消耗自己，先恢復能量再談突破。' },
+      { name:'隱者', emoji:'🕯️', keywords:['沉澱','獨處','洞察'], up:'先退一步觀察。答案會在安靜整理後變清楚。', rev:'想太多或封閉太久會錯失交流機會，適度打開窗口。' },
+      { name:'命運之輪', emoji:'☸️', keywords:['轉機','循環','變動'], up:'局勢正在轉動，意外變化可能帶來新的入口。', rev:'變化還沒到位，不宜強推。等待下一個明確訊號。' },
+      { name:'正義', emoji:'⚖️', keywords:['公平','決定','因果'], up:'結果取決於事實與選擇。用理性判斷會比情緒反應更準。', rev:'資訊不對稱或判斷偏差存在，先查清楚再做決定。' },
+      { name:'吊人', emoji:'🪢', keywords:['等待','換位','犧牲'], up:'暫停不是失敗，而是換角度。現在適合調整策略。', rev:'卡住的原因可能是你不願放掉舊想法。' },
+      { name:'死神', emoji:'🦋', keywords:['結束','轉化','重生'], up:'某個階段正在結束，清掉舊狀態才能迎來新局面。', rev:'你知道該改變，但還在拖延。抗拒會延長不舒服的時間。' },
+      { name:'節制', emoji:'🍷', keywords:['平衡','修復','整合'], up:'慢慢調和比一次到位更有效。保持穩定節奏。', rev:'過度、失衡或節奏混亂，需要重新安排優先順序。' },
+      { name:'惡魔', emoji:'⛓️', keywords:['執著','誘惑','束縛'], up:'看見慾望與依賴，才能避免被它牽著走。', rev:'你正在擺脫一個消耗你的模式，雖不輕鬆但方向正確。' },
+      { name:'高塔', emoji:'⚡', keywords:['衝擊','揭露','重建'], up:'突發變化會打破假象，但也讓真正問題浮出來。', rev:'你已感覺到不穩，越早修補越能降低衝擊。' },
+      { name:'星星', emoji:'⭐', keywords:['希望','療癒','願景'], up:'情況正在恢復，保持信念與長期視角會帶來好轉。', rev:'不是沒有希望，而是你現在太疲憊，需要先補回信心。' },
+      { name:'月亮', emoji:'🌘', keywords:['迷霧','情緒','潛意識'], up:'表面不一定是真相，先不要被恐懼或想像牽動。', rev:'迷霧正在散去，真相會逐漸清楚。' },
+      { name:'太陽', emoji:'☀️', keywords:['成功','明朗','喜悅'], up:'能量明亮，適合曝光、表達與推進，成功率偏高。', rev:'好事仍在，但可能因自信不足或細節疏忽而打折。' },
+      { name:'審判', emoji:'📯', keywords:['覺醒','回應','總結'], up:'過去累積正在迎來回應。適合做重要整理與決定。', rev:'你可能逃避面對結果，誠實檢視才能進入下一階段。' },
+      { name:'世界', emoji:'🌍', keywords:['完成','整合','圓滿'], up:'一個循環接近完成，成果能被看見，也適合開啟新篇章。', rev:'離完成只差最後整合，別在收尾階段鬆散。' }
+    ];
+
+    const colors = ['紫色','金色','銀白色','靛藍色','玫瑰粉','墨綠色','天空藍','米白色','酒紅色','深海藍'];
+    const keywords = ['轉機','沉澱','主動','觀察','修復','選擇','清理','等待','勇氣','界線','溝通','穩定','成長','保守','突破','重整'];
+    const dailyAdvice = [
+      '今天適合把複雜的事情拆小處理，先完成最容易推進的一步。',
+      '不要被一時情緒帶著走，先觀察再回應會更有利。',
+      '你會遇到一個可以調整方向的訊號，別忽略小細節。',
+      '今天適合整理、收尾、修正，不適合衝動做重大承諾。',
+      '保持彈性會比堅持原計畫更順，意外變化可能不是壞事。',
+      '把話說清楚，但不用說太滿；留一點餘地會保護你。'
+    ];
+    const dailyAvoid = [
+      '避免臨時大額支出。', '避免過度解讀別人的一句話。', '避免拖延重要回覆。', '避免在疲憊時做決定。', '避免用情緒測試關係。', '避免一口氣接太多任務。'
+    ];
+
+    const loveTopics = ['曖昧發展','對方想法','復合可能','告白時機','目前關係','桃花運勢'];
+    const loveResults = [
+      { tendency:'偏正面', text:'這段關係有升溫空間，但需要自然互動，不適合逼問或過度測試。', action:'用輕鬆方式增加接觸，讓對方感覺舒服。' },
+      { tendency:'觀察期', text:'對方並非完全無感，但目前行動力不足，關係還在試探。', action:'先看對方是否願意主動回應，再決定要不要推進。' },
+      { tendency:'需溝通', text:'關鍵不在有沒有感覺，而是雙方對關係期待不同。', action:'找一個不帶壓力的時機，把界線與期待說清楚。' },
+      { tendency:'暫緩', text:'近期情緒與誤會容易放大，太快行動可能造成反效果。', action:'先穩住自己，不要用焦慮換取答案。' },
+      { tendency:'新機會', text:'新的互動機會正在靠近，對外展現真實狀態會更有吸引力。', action:'不要把注意力全部放在單一人身上。' }
+    ];
+
+    const careerTopics = ['今日工作運','是否適合換工作','財運走向','投資/花費判斷','職場人際','是否該主動爭取'];
+    const careerResults = [
+      { tendency:'穩中有進', text:'適合處理累積任務，雖不一定爆發，但會看見穩定成果。', action:'先完成可控事項，再談新的挑戰。' },
+      { tendency:'保守較佳', text:'目前資訊還不夠完整，太快投入可能讓成本變高。', action:'先查資料、列風險，不要只看表面好處。' },
+      { tendency:'可主動', text:'你的能見度有機會提高，主動表達會比等待安排更有利。', action:'把需求、能力與條件講清楚。' },
+      { tendency:'人際避雷', text:'近期容易遇到話語模糊或責任不清的狀況。', action:'重要事項留下紀錄，避免只靠口頭承諾。' },
+      { tendency:'財務調整', text:'財運不是沒有，但需要控管流出，避免小額累積成壓力。', action:'先守住預算，再考慮額外支出。' }
+    ];
+
+    const yesNoAnswers = [
+      { ans:'是，但要慢一點', weight:12, text:'方向偏可行，但現在不宜急推。先補齊條件，成功率會更高。' },
+      { ans:'偏向是', weight:16, text:'目前能量支持前進，可以嘗試，但要保留調整空間。' },
+      { ans:'還不明朗', weight:18, text:'關鍵資訊尚未出現。與其猜答案，不如先觀察下一個訊號。' },
+      { ans:'不是現在', weight:14, text:'時機尚未成熟。延後處理反而能避開不必要的阻力。' },
+      { ans:'偏向否', weight:12, text:'目前阻礙比助力明顯，若硬做容易消耗更多成本。' },
+      { ans:'需要你主動才會成', weight:16, text:'這件事不會自然發生，必須靠你提出、推進或改變策略。' },
+      { ans:'先放下執念', weight:12, text:'答案不只在結果，也在你為什麼如此在意。先把情緒放低。' }
+    ];
+
+    const lots = [
+      { no:1, grade:'大吉', poem:'雲開月現照前程，萬事逢春步步明。', meaning:'阻礙正在退散，適合主動把握機會。', advice:'保持清楚目標，不要因小雜音分心。' },
+      { no:3, grade:'中吉', poem:'一舟穩過浪中行，遠路終逢岸上燈。', meaning:'過程有波動，但整體能安全推進。', advice:'用耐心換穩定，不必急著求快。' },
+      { no:5, grade:'小吉', poem:'花未全開香已近，靜待東風入院庭。', meaning:'好事正在醞釀，仍需等待成熟。', advice:'先準備自己，別催促結果。' },
+      { no:8, grade:'平', poem:'路逢岔口莫心驚，問清方向再前行。', meaning:'目前沒有絕對吉凶，重點在選擇。', advice:'多比較資訊，避免被單一說法影響。' },
+      { no:12, grade:'中吉', poem:'舊雨新晴添暖意，門前草木漸欣欣。', meaning:'舊問題有修復機會，人際也會轉暖。', advice:'主動釋出善意，但保留界線。' },
+      { no:16, grade:'小凶', poem:'夜行山路雲遮月，慢步提燈莫急奔。', meaning:'近期不宜冒進，容易看錯方向。', advice:'延後重大決策，先做風險檢查。' },
+      { no:18, grade:'中吉', poem:'風停雲散月初明，舊事漸遠路漸清。', meaning:'混亂會慢慢變清楚，適合整理過去。', advice:'把不必要的負擔放下。' },
+      { no:21, grade:'大吉', poem:'龍門一躍乘風起，金光照路貴人迎。', meaning:'有突破與被看見的機會，貴人運佳。', advice:'大方展現能力，別過度低調。' },
+      { no:24, grade:'平', poem:'杯中水滿宜先止，再添恐溢失分明。', meaning:'現在需要節制，過多反而不利。', advice:'減少消耗，保留資源。' },
+      { no:27, grade:'小吉', poem:'一點星光穿暗夜，心中有路自能明。', meaning:'希望不大聲，但確實存在。', advice:'專注一個小進展，別否定自己。' },
+      { no:31, grade:'中吉', poem:'門外春聲催客醒，舊枝新葉正相生。', meaning:'改變會帶來新機會，適合更新計畫。', advice:'接受調整，不要守著舊方法。' },
+      { no:36, grade:'小凶', poem:'急水難行舟易側，回頭整槳待潮平。', meaning:'急進會失衡，需先穩住局面。', advice:'先停止加碼，重新評估。' }
+    ];
+
+    const runes = [
+      { symbol:'ᚠ', name:'Fehu', key:'資源', meaning:'資源正在流動，重點是管理與分配。' },
+      { symbol:'ᚢ', name:'Uruz', key:'力量', meaning:'你有突破體力與意志，但要避免硬撐。' },
+      { symbol:'ᚦ', name:'Thurisaz', key:'防禦', meaning:'阻礙不是壞事，它提醒你先建立保護。' },
+      { symbol:'ᚨ', name:'Ansuz', key:'訊息', meaning:'關鍵答案會透過溝通、文字或提醒出現。' },
+      { symbol:'ᚱ', name:'Raidho', key:'旅程', meaning:'事情正在移動，順著節奏調整方向。' },
+      { symbol:'ᚲ', name:'Kenaz', key:'火光', meaning:'靈感、真相或解法會被點亮。' },
+      { symbol:'ᚷ', name:'Gebo', key:'交換', meaning:'關係與合作需要平衡付出與回收。' },
+      { symbol:'ᚹ', name:'Wunjo', key:'喜悅', meaning:'正向回饋會出現，保持簡單快樂的心。' },
+      { symbol:'ᚺ', name:'Hagalaz', key:'突變', meaning:'外在變化不可控，但能清掉不穩結構。' },
+      { symbol:'ᛁ', name:'Isa', key:'停滯', meaning:'暫停是保護，不是結束。等待冰面融化。' },
+      { symbol:'ᛃ', name:'Jera', key:'收成', meaning:'過去累積將逐步回報，急不得。' },
+      { symbol:'ᛇ', name:'Eihwaz', key:'轉化', meaning:'你正在跨過一個心理或現實門檻。' },
+      { symbol:'ᛈ', name:'Perthro', key:'未知', meaning:'命運仍有變數，保持彈性。' },
+      { symbol:'ᛉ', name:'Algiz', key:'保護', meaning:'有保護力在，但仍要留意界線。' },
+      { symbol:'ᛋ', name:'Sowilo', key:'太陽', meaning:'清晰、成功與行動力正在增強。' },
+      { symbol:'ᛏ', name:'Tiwaz', key:'勝負', meaning:'用正直與紀律面對挑戰，會更有勝算。' },
+      { symbol:'ᛒ', name:'Berkano', key:'生長', meaning:'新事物正在萌芽，需要照顧與耐心。' },
+      { symbol:'ᛗ', name:'Mannaz', key:'自我', meaning:'回到自身定位，別讓外界定義你。' }
+    ];
+
+    const dicePools = {
+      topic: ['愛情','金錢','工作','人際','心情','機會'],
+      status: ['上升','停滯','混亂','轉機','穩定','隱藏'],
+      action: ['等待','主動','溝通','放下','嘗試','保守']
+    };
+
+
+    const tarotContextLines = [
+      '現在最重要的是看清真正的需求，而不是只追求表面結果。',
+      '局勢並非不能改變，但需要用更細膩的方式推動。',
+      '你已經握有部分答案，下一步是把感覺轉成具體選擇。',
+      '不要急著把事情定型，保留觀察空間反而更準。',
+      '這張牌提醒你先整理內在狀態，再處理外在變化。',
+      '若能降低情緒雜訊，真正的線索會更容易浮現。',
+      '這不是單純好壞，而是在提醒你調整節奏與界線。',
+      '目前適合小步驗證，不適合一次押上全部期待。',
+      '事情的關鍵可能藏在你反覆忽略的細節裡。',
+      '先穩住能掌控的部分，剩下的會隨時間慢慢明朗。'
+    ];
+    const tarotActionAdvice = [
+      '先處理最明確的阻礙，不要一次解決全部問題。',
+      '把感覺轉成具體行動，越清楚越能推進。',
+      '這次占卜提醒你保留餘地，別把答案想得太絕對。',
+      '先穩住自己的節奏，再觀察外界是否配合。',
+      '用一天時間整理資訊，再做下一步決定。',
+      '不要用焦慮換答案，先確認自己真正想要的是什麼。',
+      '可以主動，但不要逼迫；可以等待，但不要逃避。',
+      '讓行動變小、變清楚，會比一直想像結果更有效。',
+      '若出現重複訊號，優先相信事實，不要只相信期待。',
+      '先保護界線，再談推進，這會讓結果更穩。'
+    ];
+
+    dailyAdvice.push(
+      '今天適合把想法寫下來，越具體越能看出真正的優先順序。',
+      '適合主動完成一件拖延很久的小事，會帶動整體氣勢。',
+      '今天不必追求完美，先讓事情開始流動就有價值。',
+      '適合清理環境或整理資料，外在秩序會帶動內在清明。',
+      '可能會遇到臨時變動，保持柔軟反而能避開麻煩。',
+      '今天適合低調累積，不必急著證明自己。',
+      '適合聯絡一位你想到的人，簡單問候可能打開新的互動。',
+      '注意身體與休息，能量不足時判斷容易變得悲觀。',
+      '把複雜選擇縮成兩個選項，你會更容易做決定。',
+      '今天適合以穩為主，少說重話，多留餘地。'
+    );
+    dailyAvoid.push(
+      '避免在還沒查證前相信片面消息。', '避免因為不好意思而答應過多請求。', '避免一直重複檢查同一件事。', '避免在情緒高點傳出重要訊息。', '避免把短暫低潮當成最後結果。', '避免忽略身體疲勞訊號。', '避免把錢花在只是想轉換心情的東西上。', '避免為了求快省略確認步驟。'
+    );
+    loveResults.push(
+      { tendency:'慢熱升溫', text:'感情能量不是沒有，而是需要靠穩定互動累積信任。太快逼近會讓對方退後。', action:'把互動頻率維持自然，先建立舒服感。' },
+      { tendency:'界線重整', text:'你們之間有吸引，也有不安。真正的課題是界線與期待是否清楚。', action:'少一點試探，多一點直接但溫和的表達。' },
+      { tendency:'訊號混雜', text:'對方的態度可能時冷時熱，不代表完全沒機會，但目前不適合單方面加碼。', action:'觀察行動是否一致，不要只聽甜言蜜語。' },
+      { tendency:'自我優先', text:'這段關係目前最需要的不是追答案，而是找回你自己的節奏與魅力。', action:'把注意力拉回生活安排，吸引力會更自然。' },
+      { tendency:'適合破冰', text:'如果已經僵住一段時間，輕鬆開啟對話比嚴肅談判更有效。', action:'用短訊息或共同話題測試互動溫度。' },
+      { tendency:'緣分轉向', text:'近期可能出現新的選擇或重新評估舊關係的契機。', action:'不要把所有可能性鎖死，保留選擇權。' },
+      { tendency:'需要確認', text:'你感受到的曖昧可能存在，但對方是否願意承擔關係還需要確認。', action:'別只看情緒，留意對方是否有實際投入。' },
+      { tendency:'修復可能', text:'若曾有誤會，近期有修復空間，但前提是雙方都願意放低防備。', action:'先承認感受，再討論問題，不要一開始就追究對錯。' }
+    );
+    careerResults.push(
+      { tendency:'適合整頓', text:'目前最有利的是重新整理流程、資料或財務結構，先把底盤穩住。', action:'列出三個最耗能的問題，逐一修正。' },
+      { tendency:'機會浮現', text:'新的機會可能不會包裝得很漂亮，但其中有可累積的價值。', action:'先試算成本與時間，再決定要不要接。' },
+      { tendency:'慎防分心', text:'你可能同時想做太多事，導致真正重要的進度被稀釋。', action:'今天只鎖定一個主目標，完成後再加碼。' },
+      { tendency:'可談條件', text:'若涉及合作、薪資或分工，現在適合把條件講明白。', action:'用數字、時間與責任範圍說話。' },
+      { tendency:'壓力轉折', text:'近期壓力不低，但它也在逼你找到更有效率的方法。', action:'不要只靠硬撐，優先改善工具與流程。' },
+      { tendency:'收入守成', text:'財務面有穩定基礎，但不適合高風險操作或衝動購買。', action:'先保留現金流，再評估額外支出。' },
+      { tendency:'貴人協助', text:'有人能提供資訊或引路，但你仍需要自己做最後判斷。', action:'主動詢問有經驗的人，並交叉比對。' },
+      { tendency:'延後較佳', text:'某個決定看起來急，其實可以再等更多資訊。', action:'設定一個重新評估時間，不要被當下氣氛推著走。' }
+    );
+    yesNoAnswers.push(
+      { ans:'可以試，但先小步', weight:13, text:'方向有機會，但不要一次投入太多。用小測試確認回饋會更安全。' },
+      { ans:'答案偏向等待', weight:12, text:'現在不是沒有可能，而是缺少關鍵條件。等訊號更明確再行動。' },
+      { ans:'有條件成立', weight:13, text:'這件事不是單純 yes 或 no，而是取決於你是否願意補足某個缺口。' },
+      { ans:'先不要', weight:10, text:'目前能量偏亂，行動後可能需要花更多力氣收拾。先暫停會比較穩。' },
+      { ans:'可以，但要說清楚', weight:11, text:'事情本身可行，真正的風險在誤解與期待落差。先溝通清楚。' },
+      { ans:'不建議硬推', weight:10, text:'若需要靠勉強才能成立，後續壓力會變大。調整方法比硬推更重要。' },
+      { ans:'機會正在靠近', weight:11, text:'現在還未完全到位，但趨勢正在往可行方向移動。保持準備。' }
+    );
+    lots.push(
+      { no:39, grade:'中吉', poem:'春水初生魚躍影，東風一至滿池明。', meaning:'機會正在冒頭，雖未成熟但方向轉好。', advice:'先把準備做好，時機到時自然能接住。' },
+      { no:42, grade:'平', poem:'半山雲霧遮前路，坐看風移見日光。', meaning:'目前資訊不全，急著判斷會失準。', advice:'等待局勢再清楚一些，不必現在定案。' },
+      { no:46, grade:'小吉', poem:'舊門輕啟人聲近，一句溫言解宿憂。', meaning:'溝通能化解部分誤會，也會帶來轉圜。', advice:'先釋出善意，但不要一次說太滿。' },
+      { no:50, grade:'大吉', poem:'金風吹過千山亮，久困之人遇貴鄉。', meaning:'卡住的局面有明顯突破機會。', advice:'把握有人協助或資源到位的時刻。' },
+      { no:54, grade:'小凶', poem:'燈火搖搖風未定，夜深行路莫貪程。', meaning:'周圍變數較多，不宜貪快。', advice:'先守住安全範圍，避免冒險加碼。' },
+      { no:58, grade:'中吉', poem:'枯枝得雨芽初醒，莫問花期且護根。', meaning:'恢復與新生正在開始，但仍需照顧根基。', advice:'穩定投入，不要頻繁更換方向。' },
+      { no:63, grade:'平', poem:'棋到中盤須細算，勝負未分莫語終。', meaning:'事情還在中段，不適合過早下結論。', advice:'重新盤點條件，再決定攻守。' },
+      { no:68, grade:'大吉', poem:'旭日升時雲自散，門前喜氣入重關。', meaning:'好消息與正向回饋靠近，整體運勢轉亮。', advice:'主動迎接機會，別因害怕而退縮。' }
+    );
+    runes.push(
+      { symbol:'ᛚ', name:'Laguz', key:'流動', meaning:'情緒與直覺正在帶路，順勢而為比強控更好。' },
+      { symbol:'ᛜ', name:'Ingwaz', key:'孕育', meaning:'成果尚在內部成形，先保護它，不急著公開。' },
+      { symbol:'ᛞ', name:'Dagaz', key:'黎明', meaning:'新的理解正在打開，轉折會比想像中明亮。' },
+      { symbol:'ᛟ', name:'Othala', key:'歸屬', meaning:'安全感、家庭或長期基礎是這件事的核心。' },
+      { symbol:'ᛖ', name:'Ehwaz', key:'協力', meaning:'進展來自配合與節奏一致，不適合單方面硬拉。' },
+      { symbol:'ᚾ', name:'Nauthiz', key:'需求', meaning:'限制會逼你看見真正需求，也提醒你節制資源。' }
+    );
+    dicePools.topic.push('家庭','健康','學習','選擇','合作','創作');
+    dicePools.status.push('明朗','低潮','醞釀','突破','拉扯','修復');
+    dicePools.action.push('整理','確認','拒絕','加速','休息','規劃');
+
+    let state = loadState();
+    let tarotSession = null;
+
+    function loadState() {
+      const base = { theme:'dark', bg:'stars', records:[], motion:true };
+      try {
+        return { ...base, ...(JSON.parse(localStorage.getItem(STORE_KEY)) || {}) };
+      } catch (e) { return base; }
+    }
+    function saveState() {
+      localStorage.setItem(STORE_KEY, JSON.stringify(state));
+    }
+    function applyState() {
+      document.body.dataset.theme = state.theme || 'dark';
+      document.body.className = 'bg-' + (state.bg || 'stars');
+      document.documentElement.style.scrollBehavior = state.motion === false ? 'auto' : 'smooth';
+    }
+    function todayKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+    function nowText() {
+      const d = new Date();
+      return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    }
+    function escapeHTML(str='') {
+      return String(str).replace(/[&<>'"]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[s]));
+    }
+    function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+    function sample(arr, n) {
+      const copy = [...arr];
+      const out = [];
+      while (copy.length && out.length < n) out.push(copy.splice(Math.floor(Math.random() * copy.length), 1)[0]);
+      return out;
+    }
+    function weightedPick(items) {
+      const total = items.reduce((sum, it) => sum + it.weight, 0);
+      let r = Math.random() * total;
+      for (const it of items) { r -= it.weight; if (r <= 0) return it; }
+      return items[items.length - 1];
+    }
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(showToast.t);
+      showToast.t = setTimeout(() => el.classList.remove('show'), 1600);
+    }
+    function setApp(html) {
+      document.getElementById('app').innerHTML = html;
+      window.scrollTo({ top: 0, behavior: state.motion === false ? 'auto' : 'smooth' });
+    }
+    function makeRecord(mode, title, summary, detail) {
+      const rec = {
+        id: 'r' + Date.now() + Math.random().toString(16).slice(2),
+        mode, title, summary, detail,
+        time: nowText(),
+        favorite: false
+      };
+      state.records.unshift(rec);
+      state.records = state.records.slice(0, 160);
+      saveState();
+      return rec;
+    }
+
+    function renderHome() {
+      const records = state.records || [];
+      const favs = records.filter(r => r.favorite).length;
+      const daily = getDailyCache()[todayKey()];
+      setApp(`
+        <section class="hero">
+          <div class="hero-content">
+            <h2>抽一份今天的命運訊號</h2>
+            <p class="lead">選擇你想問的方向，讓牌、籤、符文或骰子給你一個傾向。結果會自動存在本機紀錄，方便之後回看。</p>
+            <div class="action-row">
+              <button class="btn primary" onclick="renderDaily()">開始今日占卜</button>
+              <button class="btn" onclick="renderTarot()">抽塔羅牌</button>
+              <button class="btn" onclick="openRecords()">查看紀錄</button>
+            </div>
+            <div class="hero-stats">
+              <div class="mini-stat"><b>${daily ? '已完成' : '未占卜'}</b><span>今日運勢</span></div>
+              <div class="mini-stat"><b>${records.length}</b><span>占卜紀錄</span></div>
+              <div class="mini-stat"><b>${favs}</b><span>收藏結果</span></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="section-title">
+          <div>
+            <h3>占卜模式</h3>
+            <p>每種模式都有不同的互動與結果格式</p>
+          </div>
+        </div>
+        <section class="mode-grid">
+          ${modes.map(m => `
+            <article class="mode-card" onclick="openMode('${m.id}')">
+              <div class="mode-icon">${m.icon}</div>
+              <h4>${m.title}</h4>
+              <p>${m.desc}</p>
+              <span class="tag">${m.tag}</span>
+            </article>
+          `).join('')}
+        </section>
+      `);
+    }
+
+    function openMode(id) {
+      if (id === 'daily') return renderDaily();
+      if (id === 'tarot') return renderTarot();
+      if (id === 'love') return renderTopicMode('love');
+      if (id === 'career') return renderTopicMode('career');
+      if (id === 'yesno') return renderYesNo();
+      if (id === 'lot') return renderLot();
+      if (id === 'rune') return renderRune();
+      if (id === 'dice') return renderDice();
+    }
+
+    function panelTemplate(title, sub, body, extraActions='') {
+      return `
+        <section class="panel">
+          <div class="panel-head">
+            <div class="panel-title"><h2>${title}</h2><p>${sub}</p></div>
+            <div class="action-row" style="margin:0">${extraActions}<button class="btn" onclick="renderHome()">回首頁</button></div>
+          </div>
+          <div class="panel-body">${body}</div>
+        </section>`;
+    }
+
+    function getDailyCache() {
+      try { return JSON.parse(localStorage.getItem(DAILY_KEY)) || {}; }
+      catch(e) { return {}; }
+    }
+    function setDailyCache(obj) { localStorage.setItem(DAILY_KEY, JSON.stringify(obj)); }
+
+    function renderDaily() {
+      const key = todayKey();
+      const cache = getDailyCache();
+      const existing = cache[key];
+      const body = `
+        <div class="oracle-stage"><div class="crystal"></div></div>
+        ${existing ? renderDailyResultHTML(existing, false) : `<div class="soft-card"><p class="muted" style="margin:0; line-height:1.7">今日尚未占卜。點擊下方按鈕後，系統會抽出今日能量、幸運色、幸運數字與四項運勢。</p></div>`}
+        <div class="action-row">
+          <button class="btn primary" onclick="drawDaily(${existing ? 'true' : 'false'})">${existing ? '重新抽今日' : '抽今日運勢'}</button>
+          ${existing ? `<button class="btn" onclick="saveDailyAgain()">存入紀錄</button>` : ''}
+        </div>`;
+      setApp(panelTemplate('每日運勢', '每天可以抽一次，也可以重新抽取今日結果。', body));
+      animateMeters();
+    }
+
+    function drawDaily(force=false) {
+      const key = todayKey();
+      if (force && !confirm('重新抽取會覆蓋今日運勢，確定要重新抽嗎？')) return;
+      const data = {
+        date: key,
+        energy: 48 + Math.floor(Math.random()*52),
+        love: 38 + Math.floor(Math.random()*62),
+        career: 38 + Math.floor(Math.random()*62),
+        money: 38 + Math.floor(Math.random()*62),
+        color: pick(colors),
+        number: 1 + Math.floor(Math.random()*9),
+        words: sample(keywords, 3),
+        advice: pick(dailyAdvice),
+        avoid: pick(dailyAvoid)
+      };
+      const cache = getDailyCache();
+      cache[key] = data;
+      setDailyCache(cache);
+      makeRecord('每日運勢', `每日運勢｜${key}`, `今日能量 ${data.energy}/100，幸運色 ${data.color}，幸運數字 ${data.number}`, dailyText(data));
+      renderDaily();
+      showToast('今日運勢已完成');
+    }
+
+    function dailyText(d) {
+      return `今日能量 ${d.energy}/100。愛情 ${d.love}/100，工作 ${d.career}/100，財運 ${d.money}/100。關鍵字：${d.words.join('、')}。建議：${d.advice} 避雷：${d.avoid}`;
+    }
+    function renderDailyResultHTML(d, compact=true) {
+      return `
+        <div class="result-card">
+          <h3>今日能量：${d.energy} / 100</h3>
+          <p class="sub">幸運色：${d.color}｜幸運數字：${d.number}｜關鍵字：${d.words.join('、')}</p>
+          <div class="result-block"><h4>整體能量</h4><div class="meter"><span data-width="${d.energy}%"></span></div></div>
+          <div class="result-list">
+            <div class="result-item"><b>愛情運 ${d.love}/100</b><div class="meter"><span data-width="${d.love}%"></span></div></div>
+            <div class="result-item"><b>工作運 ${d.career}/100</b><div class="meter"><span data-width="${d.career}%"></span></div></div>
+            <div class="result-item"><b>財運 ${d.money}/100</b><div class="meter"><span data-width="${d.money}%"></span></div></div>
+          </div>
+          <div class="result-block"><h4>今日建議</h4><p>${d.advice}</p></div>
+          <div class="result-block"><h4>今日避雷</h4><p>${d.avoid}</p></div>
+        </div>`;
+    }
+    function saveDailyAgain() {
+      const d = getDailyCache()[todayKey()];
+      if (!d) return;
+      makeRecord('每日運勢', `每日運勢｜${todayKey()}`, `今日能量 ${d.energy}/100，幸運色 ${d.color}`, dailyText(d));
+      showToast('已存入紀錄');
+    }
+    function animateMeters() {
+      requestAnimationFrame(() => document.querySelectorAll('.meter span').forEach(el => el.style.width = el.dataset.width || '0%'));
+    }
+
+    function renderTarot() {
+      tarotSession = null;
+      const body = `
+        <div class="choice-grid">
+          <div class="choice-card" onclick="startTarot(1)"><b>單張牌</b><span>適合快速問題、今日提醒、是否該行動。</span></div>
+          <div class="choice-card" onclick="startTarot(3)"><b>三張牌</b><span>解析過去、現在、未來或原因、狀態、建議。</span></div>
+          <div class="choice-card" onclick="startTarot(5)"><b>五張牌</b><span>適合複雜問題，包含阻礙、內心與外在影響。</span></div>
+        </div>
+        <div id="tarotArea" class="soft-card" style="margin-top:12px">
+          <p class="muted" style="margin:0; line-height:1.7">先選擇牌陣，再輸入問題並抽牌。抽到的牌會自動產生正位或逆位解讀。</p>
+        </div>`;
+      setApp(panelTemplate('塔羅占卜', '洗牌、選牌、翻牌，取得更完整的問題解讀。', body));
+    }
+
+    function startTarot(count) {
+      const labels = count === 1 ? ['答案'] : count === 3 ? ['過去 / 原因','現在 / 狀態','未來 / 建議'] : ['現況','隱藏原因','內心狀態','外在影響','最終建議'];
+      tarotSession = { count, labels, selected: [], used: [], finished: false };
+      document.getElementById('tarotArea').innerHTML = `
+        <div class="form-grid">
+          <div class="field">
+            <label>想問的問題</label>
+            <textarea id="tarotQuestion" placeholder="例如：這件事接下來該怎麼做？可以不填。"></textarea>
+          </div>
+          <div class="pill-row">${labels.map((x,i)=>`<span class="pill" id="slot${i}">${i+1}. ${x}</span>`).join('')}</div>
+          <p class="muted" style="margin:0">請直接點擊下方牌背，卡片會在原位置翻開，不會再把結果拉到很長。</p>
+        </div>
+        <div class="tarot-table" id="tarotDeck">
+          ${Array.from({length: 18}).map((_,i)=>`<button class="tarot-back" id="back${i}" onclick="pickTarot(${i})" aria-label="選擇第 ${i+1} 張牌"></button>`).join('')}
+        </div>
+        <div id="tarotResult" style="margin-top:14px"></div>`;
+    }
+
+    function pickTarot(i) {
+      if (!tarotSession || tarotSession.selected.length >= tarotSession.count || tarotSession.finished) return;
+      const remain = tarotCards.map((_,idx)=>idx).filter(idx => !tarotSession.used.includes(idx));
+      const cardIndex = pick(remain);
+      tarotSession.used.push(cardIndex);
+      const card = tarotCards[cardIndex];
+      const reversed = Math.random() < .42;
+      const pos = tarotSession.selected.length;
+      tarotSession.selected.push({ card, reversed });
+      const back = document.getElementById('back' + i);
+      if (back) {
+        back.classList.add('used', 'flipped');
+        back.innerHTML = renderTarotCardFace(card, reversed, tarotSession.labels[pos]);
+      }
+      const slot = document.getElementById('slot' + pos);
+      if (slot) slot.classList.add('active');
+      if (tarotSession.selected.length >= tarotSession.count) finishTarot();
+    }
+    function renderTarotCardFace(card, reversed, label) {
+      return `
+        <span class="tarot-card-label">${label}</span>
+        <span class="tarot-card-face">${card.emoji}</span>
+        <span class="tarot-card-name">${card.name}</span>
+        <span class="tarot-card-key">${reversed ? '逆位' : '正位'}｜${card.keywords.slice(0,2).join('、')}</span>
+      `;
+    }
+    function renderPickedTarot() { /* 第一版保留函式名，現已改為卡片原位翻牌。 */ }
+    function finishTarot() {
+      if (!tarotSession || tarotSession.finished) return;
+      tarotSession.finished = true;
+      const deck = document.getElementById('tarotDeck');
+      if (deck) deck.classList.add('done');
+      const q = document.getElementById('tarotQuestion')?.value.trim() || '未填寫問題';
+      const compact = tarotSession.selected.map((it, idx) => {
+        const meaning = makeTarotDetail(it, idx);
+        return `<div class="result-item"><b>${tarotSession.labels[idx]}｜${it.card.name}（${it.reversed ? '逆位' : '正位'}）</b><p>${meaning}</p></div>`;
+      }).join('');
+      const overall = makeTarotOverall(tarotSession.selected);
+      const advice = pick(tarotActionAdvice);
+      const body = `
+        <div class="result-card">
+          <h3>塔羅結果</h3>
+          <p class="sub">問題：${escapeHTML(q)}｜已直接翻開於上方牌面</p>
+          <div class="result-block"><h4>整體傾向</h4><p>${overall}</p></div>
+          <details style="margin-top:12px" open>
+            <summary>查看每張牌詳細解讀</summary>
+            <div class="inside result-list">${compact}</div>
+          </details>
+          <div class="result-block"><h4>建議行動</h4><p>${advice}</p></div>
+        </div>
+        <div class="action-row"><button class="btn" onclick="renderTarot()">再占一次</button></div>`;
+      document.getElementById('tarotResult').innerHTML = body;
+      const detail = tarotSession.selected.map((it, idx)=>`${tarotSession.labels[idx]}：${it.card.name}${it.reversed?'逆位':'正位'}｜${makeTarotDetail(it, idx)}`).join('\\n');
+      makeRecord('塔羅占卜', `塔羅占卜｜${tarotSession.count} 張牌`, `問題：${q}`, `整體傾向：${overall}\n${detail}\n建議：${advice}`);
+      showToast('塔羅結果已存入紀錄');
+    }
+    function makeTarotDetail(it, idx) {
+      const base = it.reversed ? it.card.rev : it.card.up;
+      const label = tarotSession?.labels?.[idx] || '此牌';
+      const context = pick(tarotContextLines);
+      return `關鍵字：${it.card.keywords.join('、')}。${base}以「${label}」來看，${context}`;
+    }
+    function makeTarotOverall(cards) {
+      const revCount = cards.filter(x => x.reversed).length;
+      if (revCount === 0) return '整體能量順暢，適合主動推進，但仍要維持清楚的節奏。';
+      if (revCount >= cards.length - 1) return '阻礙與內在拉扯較明顯，現在更適合調整策略，而不是硬推結果。';
+      return '局勢有機會也有阻力，關鍵在於你能否看清真正卡住的地方。';
+    }
+
+    function renderTopicMode(type) {
+      const isLove = type === 'love';
+      const title = isLove ? '愛情占卜' : '工作金錢占卜';
+      const sub = isLove ? '適合詢問感情、曖昧、復合、告白與關係走向。' : '適合詢問工作、財務、行動時機、人際與選擇。';
+      const topics = isLove ? loveTopics : careerTopics;
+      const body = `
+        <div class="oracle-stage"><div class="crystal"></div></div>
+        <div class="form-grid">
+          <div class="field"><label>占卜主題</label><select id="topicSelect">${topics.map(x=>`<option>${x}</option>`).join('')}</select></div>
+          <div class="field"><label>想補充的問題</label><textarea id="topicQuestion" placeholder="可以簡單描述目前狀況，也可以不填。"></textarea></div>
+          <button class="btn primary" onclick="drawTopic('${type}')">開始占卜</button>
+        </div>
+        <div id="topicResult" style="margin-top:14px"></div>`;
+      setApp(panelTemplate(title, sub, body));
+    }
+    function drawTopic(type) {
+      const topic = document.getElementById('topicSelect').value;
+      const q = document.getElementById('topicQuestion').value.trim() || '未補充問題';
+      const result = pick(type === 'love' ? loveResults : careerResults);
+      const luck = 45 + Math.floor(Math.random()*52);
+      const tags = sample(keywords, 3);
+      const title = type === 'love' ? '愛情占卜結果' : '工作金錢結果';
+      const html = `
+        <div class="result-card">
+          <h3>${title}</h3>
+          <p class="sub">主題：${escapeHTML(topic)}｜問題：${escapeHTML(q)}</p>
+          <div class="result-block"><h4>傾向：${result.tendency}</h4><p>${result.text}</p></div>
+          <div class="result-block"><h4>能量值：${luck}/100</h4><div class="meter"><span data-width="${luck}%"></span></div></div>
+          <div class="result-block"><h4>關鍵字</h4><p>${tags.join('、')}</p></div>
+          <div class="result-block"><h4>建議行動</h4><p>${result.action}</p></div>
+        </div>`;
+      document.getElementById('topicResult').innerHTML = html;
+      animateMeters();
+      makeRecord(type === 'love' ? '愛情占卜' : '工作金錢', `${title}｜${topic}`, `傾向：${result.tendency}｜能量 ${luck}/100`, `問題：${q}\n${result.text}\n建議：${result.action}\n關鍵字：${tags.join('、')}`);
+      showToast('結果已存入紀錄');
+    }
+
+    function renderYesNo() {
+      const body = `
+        <div class="oracle-stage"><div class="crystal"></div></div>
+        <div class="form-grid">
+          <div class="field"><label>你的問題</label><textarea id="yesQuestion" placeholder="例如：我現在適合主動聯絡嗎？"></textarea></div>
+          <button class="btn primary" onclick="drawYesNo()">取得答案</button>
+        </div>
+        <div id="yesResult" style="margin-top:14px"></div>`;
+      setApp(panelTemplate('是 / 否占卜', '適合快速得到一個傾向，不建議用來取代真正的判斷。', body));
+    }
+    function drawYesNo() {
+      const q = document.getElementById('yesQuestion').value.trim() || '未填寫問題';
+      const r = weightedPick(yesNoAnswers);
+      const clarity = 40 + Math.floor(Math.random()*60);
+      const html = `
+        <div class="result-card">
+          <h3>答案傾向：${r.ans}</h3>
+          <p class="sub">問題：${escapeHTML(q)}</p>
+          <div class="result-block"><h4>解讀</h4><p>${r.text}</p></div>
+          <div class="result-block"><h4>清晰度：${clarity}/100</h4><div class="meter"><span data-width="${clarity}%"></span></div></div>
+          <div class="result-block"><h4>提醒</h4><p>${pick(['這是一個傾向，不是絕對命令。','如果你已經很焦慮，先停一下再決定。','真正重要的是你願意承擔哪一種結果。','答案會隨你的行動與資訊改變。'])}</p></div>
+        </div>`;
+      document.getElementById('yesResult').innerHTML = html;
+      animateMeters();
+      makeRecord('是/否占卜', `是/否｜${r.ans}`, `問題：${q}`, `${r.text}\n清晰度：${clarity}/100`);
+      showToast('答案已存入紀錄');
+    }
+
+    function renderLot() {
+      const body = `
+        <div class="oracle-stage"><div class="lot-stick" id="lotStick">籤</div></div>
+        <div class="soft-card"><p class="muted" style="margin:0; line-height:1.7">心中默念想問的事情，點擊抽籤。結果包含籤號、吉凶、籤詩、白話解釋與建議。</p></div>
+        <div class="action-row"><button class="btn primary" onclick="drawLot()">抽一支籤</button></div>
+        <div id="lotResult" style="margin-top:14px"></div>`;
+      setApp(panelTemplate('靈籤占卜', '偏東方籤詩風格，適合問整體方向與近期提醒。', body));
+    }
+    function drawLot() {
+      const stick = document.getElementById('lotStick');
+      stick.classList.remove('shake'); void stick.offsetWidth; stick.classList.add('shake');
+      const r = pick(lots);
+      setTimeout(() => {
+        const html = `
+          <div class="result-card">
+            <h3>第 ${r.no} 籤｜${r.grade}</h3>
+            <p class="sub">${r.poem}</p>
+            <div class="result-block"><h4>白話解釋</h4><p>${r.meaning}</p></div>
+            <div class="result-block"><h4>建議</h4><p>${r.advice}</p></div>
+          </div>`;
+        document.getElementById('lotResult').innerHTML = html;
+        makeRecord('靈籤占卜', `第 ${r.no} 籤｜${r.grade}`, r.poem, `${r.meaning}\n建議：${r.advice}`);
+        showToast('靈籤已存入紀錄');
+      }, state.motion === false ? 0 : 560);
+    }
+
+    function renderRune() {
+      const body = `
+        <div class="soft-card"><p class="muted" style="margin:0; line-height:1.7">抽取三枚符文，依序代表「現況」「阻礙」「建議」。適合用來看當前能量結構。</p></div>
+        <div class="oracle-stage"><div class="dice-row" id="runeRow"><div class="dice">ᚱ</div><div class="dice">ᛉ</div><div class="dice">ᛟ</div></div></div>
+        <div class="action-row"><button class="btn primary" onclick="drawRune()">抽取符文</button></div>
+        <div id="runeResult" style="margin-top:14px"></div>`;
+      setApp(panelTemplate('符文占卜', '以三枚符文拆解現況、阻礙與建議。', body));
+    }
+    function drawRune() {
+      const picked = sample(runes, 3);
+      const labels = ['現況','阻礙','建議'];
+      const row = document.getElementById('runeRow');
+      row.innerHTML = picked.map(r => `<div class="dice rolling">${r.symbol}</div>`).join('');
+      const html = `
+        <div class="result-card">
+          <h3>符文結果</h3>
+          <p class="sub">三枚符文已展開，請依序閱讀。</p>
+          <div class="result-list">
+            ${picked.map((r,i)=>`<div class="result-item"><b>${labels[i]}｜${r.symbol} ${r.name}｜${r.key}</b><p>${r.meaning}</p></div>`).join('')}
+          </div>
+          <div class="result-block"><h4>整體提醒</h4><p>${pick(['現在不需要急著證明什麼，先把狀態調穩。','你的答案藏在行動之後，小步嘗試比空想更有效。','保護自己的界線，才能讓好的能量進來。','看似停滯的局面，其實正在要求你換一種方法。'])}</p></div>
+        </div>`;
+      document.getElementById('runeResult').innerHTML = html;
+      makeRecord('符文占卜', '三枚符文占卜', picked.map((r,i)=>`${labels[i]}：${r.key}`).join('｜'), picked.map((r,i)=>`${labels[i]}：${r.symbol} ${r.name}｜${r.meaning}`).join('\n'));
+      showToast('符文結果已存入紀錄');
+    }
+
+    function renderDice() {
+      const body = `
+        <div class="soft-card"><p class="muted" style="margin:0; line-height:1.7">命運骰子會擲出「主題、狀態、建議」三個結果，再組合成一句近期提醒。</p></div>
+        <div class="oracle-stage"><div class="dice-row" id="diceRow"><div class="dice">?</div><div class="dice">?</div><div class="dice">?</div></div></div>
+        <div class="action-row"><button class="btn primary" onclick="rollDice()">擲出命運</button></div>
+        <div id="diceResult" style="margin-top:14px"></div>`;
+      setApp(panelTemplate('命運骰子', '更像小遊戲的占卜模式，適合快速得到行動方向。', body));
+    }
+    function rollDice() {
+      const topic = pick(dicePools.topic), status = pick(dicePools.status), action = pick(dicePools.action);
+      document.getElementById('diceRow').innerHTML = [`${topic}`, `${status}`, `${action}`].map(x => `<div class="dice rolling" style="font-size:16px;font-weight:900">${x}</div>`).join('');
+      const summary = makeDiceSummary(topic, status, action);
+      const html = `
+        <div class="result-card">
+          <h3>命運骰子結果</h3>
+          <p class="sub">主題：${topic}｜狀態：${status}｜建議：${action}</p>
+          <div class="result-block"><h4>解讀</h4><p>${summary}</p></div>
+        </div>`;
+      document.getElementById('diceResult').innerHTML = html;
+      makeRecord('命運骰子', `命運骰子｜${topic}/${status}/${action}`, summary, `主題：${topic}\n狀態：${status}\n建議：${action}\n${summary}`);
+      showToast('命運骰子已存入紀錄');
+    }
+    function makeDiceSummary(topic, status, action) {
+      const intro = `${topic}方面目前呈現「${status}」狀態。`;
+      const actionText = {
+        '等待':'先不要急著推動，觀察下一個明確訊號會更安全。',
+        '主動':'你需要把想法轉成行動，主動提出才會有變化。',
+        '溝通':'關鍵在於把話說清楚，避免用猜測代替確認。',
+        '放下':'先放掉過度執著，新的空間才會出現。',
+        '嘗試':'可以小規模測試，不必一次投入全部資源。',
+        '保守':'守住現有成果比冒險擴張更有利。',
+        '整理':'先整理資訊與環境，混亂降低後答案會更清楚。',
+        '確認':'不要只靠感覺，向關鍵人事物確認一次會更穩。',
+        '拒絕':'適度拒絕會保護你的能量，也能讓真正重要的事留下。',
+        '加速':'條件已接近成熟，可以把握短期窗口快速推進。',
+        '休息':'暫停不是後退，恢復狀態後判斷會更準。',
+        '規劃':'先排出順序與時間表，這件事需要結構而不是衝動。'
+      }[action] || '保持彈性，依照下一個明確訊號調整。';
+      return intro + actionText;
+    }
+
+    function openSettings() {
+      const bg = state.bg || 'stars';
+      openModal('設定', `
+        <details>
+          <summary>外觀模式</summary>
+          <div class="inside">
+            <div class="pill-row">
+              <button class="btn ${state.theme==='dark'?'primary':''}" onclick="setTheme('dark')">深色模式</button>
+              <button class="btn ${state.theme==='light'?'primary':''}" onclick="setTheme('light')">亮色模式</button>
+            </div>
+          </div>
+        </details>
+        <details>
+          <summary>背景主題</summary>
+          <div class="inside theme-grid">
+            ${[
+              ['stars','星空占卜室','tile-stars'],['forest','月光森林','tile-forest'],['table','古典塔羅桌','tile-table'],['crystal','水晶洞窟','tile-crystal'],['temple','靈籤廟宇','tile-temple']
+            ].map(([id,name,cls])=>`<div class="theme-tile ${cls} ${bg===id?'active':''}" onclick="setBg('${id}')">${name}</div>`).join('')}
+          </div>
+        </details>
+        <details>
+          <summary>動畫與資料</summary>
+          <div class="inside">
+            <div class="action-row">
+              <button class="btn ${state.motion!==false?'primary':''}" onclick="toggleMotion()">${state.motion!==false?'動畫：開':'動畫：關'}</button>
+              <button class="btn" onclick="exportRecords()">匯出紀錄</button>
+              <button class="btn danger" onclick="clearAllRecords()">清空紀錄</button>
+            </div>
+          </div>
+        </details>
+      `);
+    }
+    function setTheme(t) { state.theme = t; saveState(); applyState(); openSettings(); showToast(t === 'dark' ? '已切換深色模式' : '已切換亮色模式'); }
+    function setBg(bg) { state.bg = bg; saveState(); applyState(); openSettings(); showToast('背景主題已切換'); }
+    function toggleMotion() { state.motion = state.motion === false; saveState(); openSettings(); showToast(state.motion ? '動畫已開啟' : '動畫已關閉'); }
+
+    function openRecords() {
+      const records = state.records || [];
+      const body = `
+        <div class="action-row" style="margin-top:0;margin-bottom:12px">
+          <button class="btn" onclick="exportRecords()">匯出 JSON</button>
+          <button class="btn danger" onclick="clearAllRecords()">清空紀錄</button>
+        </div>
+        ${records.length ? `<div class="record-list">${records.map(recordHTML).join('')}</div>` : `<div class="soft-card"><p class="muted" style="margin:0">目前還沒有占卜紀錄。</p></div>`}
+      `;
+      openModal('占卜紀錄', body);
+    }
+    function recordHTML(r) {
+      return `
+        <article class="record-card">
+          <header>
+            <div><h4>${escapeHTML(r.title)}</h4><small>${escapeHTML(r.mode)}｜${escapeHTML(r.time)}</small></div>
+            <div class="record-actions">
+              <button class="btn small" onclick="toggleFav('${r.id}')">${r.favorite ? '★' : '☆'}</button>
+              <button class="btn small danger" onclick="deleteRecord('${r.id}')">刪除</button>
+            </div>
+          </header>
+          <p><b>${escapeHTML(r.summary)}</b></p>
+          <p style="margin-top:8px; white-space:pre-line">${escapeHTML(r.detail)}</p>
+        </article>`;
+    }
+    function toggleFav(id) {
+      const rec = state.records.find(r => r.id === id);
+      if (rec) rec.favorite = !rec.favorite;
+      saveState();
+      openRecords();
+    }
+    function deleteRecord(id) {
+      state.records = state.records.filter(r => r.id !== id);
+      saveState();
+      openRecords();
+      showToast('紀錄已刪除');
+    }
+    function clearAllRecords() {
+      if (!confirm('確定要清空所有占卜紀錄嗎？')) return;
+      state.records = [];
+      saveState();
+      openRecords();
+      renderHome();
+      showToast('紀錄已清空');
+    }
+    function exportRecords() {
+      const data = JSON.stringify({ exportedAt: nowText(), records: state.records || [] }, null, 2);
+      const blob = new Blob([data], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `占卜紀錄_${todayKey()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast('已匯出紀錄');
+    }
+
+    function openModal(title, body) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalBody').innerHTML = body;
+      document.getElementById('modal').classList.add('show');
+    }
+    function closeModal() { document.getElementById('modal').classList.remove('show'); }
+    function modalBackdrop(e) { if (e.target.id === 'modal') closeModal(); }
+
+    applyState();
+    renderHome();
+  </script>
+</body>
+</html>
