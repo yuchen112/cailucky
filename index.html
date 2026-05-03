@@ -7225,27 +7225,12 @@ function GameCenter({ data, setData, admin=false, query='' }) {
     if (typeof kjsToast === 'function') kjsToast('批次操作已套用');
   };
 
-  const isMobileGameClient = () => {
-    try {
-      const ua = navigator.userAgent || '';
-      return /iPhone|iPad|iPod|Android|Mobile|Line\//i.test(ua) || window.innerWidth <= 768;
-    } catch { return false; }
-  };
-
   const startGame = (g) => {
     const id = g.id;
     setActiveId(id);
     try { localStorage.setItem('kjs_game_active', id); } catch {}
     const mode = g.mode || 'link';
     const playUrl = resolveGameUrl(getGameRawUrl(g, mode));
-
-    // 手機 / iPhone / LINE 內建瀏覽器：優先直接跳轉到遊戲頁。
-    // 這樣瀏覽器下方「返回」鍵會有上一頁紀錄，可回到網站；避免 iframe 全螢幕蓋住返回操作。
-    if (mode !== 'info' && playUrl && isMobileGameClient()) {
-      window.location.assign(playUrl);
-      return;
-    }
-
     if (mode === 'link' && playUrl) {
       window.open(playUrl, '_blank', 'noopener,noreferrer');
       return;
@@ -7321,7 +7306,7 @@ function GameCenter({ data, setData, admin=false, query='' }) {
       <div className="mb-3">
         <div>
           <h2 className="text-lg font-semibold">🎮 小遊戲</h2>
-          <p className="text-[13px] text-slate-500 mt-1">休閒小遊戲與互動工具集中在這裡。桌機可站內遊玩；手機/iPhone 會直接開啟遊戲頁，方便使用瀏覽器返回鍵回網站。</p>
+          <p className="text-[13px] text-slate-500 mt-1">休閒小遊戲與互動工具集中在這裡。遊戲只會在點擊時載入，關閉後仍可保留進度。</p>
         </div>
         {admin && (
           <button className="rounded-xl bg-brand text-white px-4 py-2 text-sm" onClick={() => setEditing(emptyDraft())}>＋ 新增小遊戲</button>
@@ -7520,7 +7505,7 @@ function GameCenter({ data, setData, admin=false, query='' }) {
                   <label className="grid gap-1 text-sm">
                     iframe / 內嵌網址
                     <input className="rounded-lg border px-3 py-2" placeholder="games/xxx.html 或允許 iframe 的網址" value={editing.embedUrl || ''} onChange={e=>setDraftField('embedUrl', e.target.value)} />
-                    <span className="kjs-game-edit-help">桌機會在站內開啟並保留 iframe 進度；手機/iPhone 會直接跳轉到此網址，方便用瀏覽器返回鍵回網站。</span>
+                    <span className="kjs-game-edit-help">內嵌模式會在站內開啟遊戲視窗，關閉後保留 iframe 進度；可按「重新開始」重載。</span>
                   </label>
                 )}
                 {editMode === 'info' && (
@@ -7537,7 +7522,7 @@ function GameCenter({ data, setData, admin=false, query='' }) {
                         disabled={!editResolvedUrl}
                         onClick={() => editResolvedUrl && window.open(editResolvedUrl, '_blank', 'noopener,noreferrer')}
                       >測試開啟</button>
-                      <span className="kjs-game-edit-help">相對路徑會依照目前網站位置解析；例如在 GitHub Pages 的 /cailucky/ 下，games/21Black_Jack.html 會開到 /cailucky/games/21Black_Jack.html。手機會直接跳轉到此實際路徑，讓瀏覽器返回鍵可回網站。</span>
+                      <span className="kjs-game-edit-help">相對路徑會依照目前網站位置解析；例如在 GitHub Pages 的 /cailucky/ 下，games/21Black_Jack.html 會開到 /cailucky/games/21Black_Jack.html。</span>
                     </div>
                   </div>
                 )}
