@@ -2,7 +2,7 @@
   "_meta": {
     "app": "kjs",
     "version": 2,
-    "exportedAt": "2026-05-03T05:58:32.001Z"
+    "exportedAt": "2026-05-04T10:05:50.531Z"
   },
   "data": {
     "homepage": {
@@ -5811,6 +5811,24 @@
       "items": []
     },
     "games": [
+      {
+        "title": "記憶翻牌",
+        "type": "休閒",
+        "cover": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/memory_match_game_fixed.png",
+        "mode": "link",
+        "url": "games/memory_match_game_fixed.html",
+        "embedUrl": "",
+        "desc": "",
+        "howToPlay": "",
+        "note": "",
+        "tags": [],
+        "visible": true,
+        "pinned": false,
+        "status": "公開",
+        "buttonText": "開始遊玩",
+        "createdAt": "2026-05-04",
+        "id": "jl2iqnm0ozmor0b276"
+      },
       {
         "title": "點擊核心",
         "type": "休閒",
