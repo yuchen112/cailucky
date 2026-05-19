@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=overlays-content" />
 <title>能量核心</title>
 <style>
 :root{
@@ -234,6 +234,116 @@ body.mobile-perf .structRing.flowRing{animation:none!important;}
   .moduleGainTick{font-size:11px;padding:3px 7px}
 }
 
+
+/* Mobile viewport stability patch: prevents browser toolbar height changes from resizing gameplay */
+html{
+  min-height:100%;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+  overscroll-behavior-x:none;
+}
+body{
+  min-height:100vh!important;
+  min-height:100dvh!important;
+  touch-action:manipulation;
+  overscroll-behavior-x:none;
+}
+.app{
+  min-height:100vh!important;
+  min-height:100dvh!important;
+}
+.coreStage{
+  contain:layout paint style;
+}
+.coreWrap{
+  width:100%;
+  max-width:420px;
+  aspect-ratio:1/1;
+  height:auto!important;
+  min-height:auto!important;
+  margin:0 auto;
+  flex:0 0 auto;
+  overflow:visible;
+}
+.coreBtn{
+  width:58%;
+  height:58%;
+}
+.rings{
+  width:78%;
+  height:78%;
+}
+.moduleLayer .structRing.flowRing{
+  width:62%!important;
+  height:62%!important;
+}
+.moduleLayer .structRing.orbitRing{
+  width:72%!important;
+  height:72%!important;
+}
+.moduleLayer .structRing.outerFrame{
+  width:82%!important;
+  height:82%!important;
+}
+.sheet{
+  max-height:min(86vh,720px)!important;
+  max-height:min(86dvh,720px)!important;
+}
+@media(max-width:520px){
+  .app{
+    padding-left:10px;
+    padding-right:10px;
+  }
+  .coreStage{
+    padding:12px;
+    border-radius:26px;
+  }
+  .coreWrap{
+    width:min(92vw,390px)!important;
+    max-width:390px!important;
+    aspect-ratio:1/1!important;
+    height:auto!important;
+    min-height:auto!important;
+  }
+  .coreBtn{
+    width:57%!important;
+    height:57%!important;
+  }
+  .rings{
+    width:77%!important;
+    height:77%!important;
+  }
+  .moduleLayer .structRing.flowRing{
+    width:64%!important;
+    height:64%!important;
+  }
+  .moduleLayer .structRing.orbitRing{
+    width:74%!important;
+    height:74%!important;
+  }
+  .moduleLayer .structRing.outerFrame{
+    width:84%!important;
+    height:84%!important;
+  }
+  .overloadPanel{
+    gap:8px;
+  }
+  .primaryBtn{
+    padding:12px 13px;
+  }
+}
+@media(max-width:380px){
+  .coreWrap{
+    width:min(90vw,350px)!important;
+  }
+  .coreText strong{
+    font-size:13px;
+  }
+  .coreText span{
+    font-size:11px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -412,8 +522,8 @@ function renderModules(force=false){
   layer.innerHTML=html;
 }
 function render(){applyAppearance();const eps=rawEps(),cp=clickPower(),need=prestigeNeed(),gain=prestigeGain();$('energyText').textContent=fmt(state.energy);$('epsText').textContent=fmt(eps);$('clickText').textContent='+'+fmt(cp);$('prestigeText').textContent='+'+Math.round((prestigeMult()-1)*100)+'%';$('overloadFill').style.width=state.overload+'%';const can=state.overload>=100&&Date.now()>=state.overloadCooldownUntil&&!isOverloading();$('overloadBtn').disabled=!can;document.body.classList.toggle('overloading',isOverloading());$('totalClicks').textContent=fmt(state.clicks);$('totalEarned').textContent=fmt(state.totalEarned);$('lifetimeEarned').textContent=fmt(state.lifetimeEarned);$('overloadCount').textContent=fmt(state.overloads);$('prestigeCount').textContent=fmt(state.prestige);$('shardCount').textContent=fmt(state.shards);$('prestigeProgress').style.width=Math.min(100,state.totalEarned/need*100)+'%';$('prestigeDesc').textContent=`需求 ${fmt(need)} EN，目前重啟可獲得 ${fmt(gain)} 核心碎片。每個碎片永久提升 15% 全收益。`;$('prestigeBtn').disabled=gain<=0;renderUpgrades();renderTasks();renderModules();renderSettings()}
-function renderLight(){const c=$('bgCanvas'),ctx=c.getContext('2d');ctx.clearRect(0,0,innerWidth,innerHeight);const active=isOverloading();for(const p of particles){p.x+=p.vx*(active?2.4:1);p.y+=p.vy*(active?2.4:1);if(p.x<0)p.x=innerWidth;if(p.x>innerWidth)p.x=0;if(p.y<0)p.y=innerHeight;if(p.y>innerHeight)p.y=0;p.tw+=.018;const t=.7+Math.sin(p.tw)*.3;ctx.beginPath();ctx.arc(p.x,p.y,p.r*(active?1.35:1)*t,0,Math.PI*2);ctx.fillStyle=`rgba(220,245,255,${p.a*t*(active?1.25:1)})`;ctx.fill()} }
-function resize(){const c=$('bgCanvas'),ctx=c.getContext('2d'),dpr=Math.min(1.5,devicePixelRatio||1);c.width=Math.floor(innerWidth*dpr);c.height=Math.floor(innerHeight*dpr);c.style.width=innerWidth+'px';c.style.height=innerHeight+'px';ctx.setTransform(dpr,0,0,dpr,0,0);const count=isMobile()?55:100;particles=Array.from({length:count},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.3+.25,vx:(Math.random()-.5)*.13,vy:(Math.random()-.5)*.13,a:Math.random()*.45+.08,tw:Math.random()*6.28}));renderModules(true)}
+function renderLight(){const c=$('bgCanvas'),ctx=c.getContext('2d'),vw=Math.max(1,document.documentElement.clientWidth||innerWidth),vh=Math.max(1,document.documentElement.clientHeight||innerHeight);ctx.clearRect(0,0,vw,vh);const active=isOverloading();for(const p of particles){p.x+=p.vx*(active?2.4:1);p.y+=p.vy*(active?2.4:1);if(p.x<0)p.x=vw;if(p.x>vw)p.x=0;if(p.y<0)p.y=vh;if(p.y>vh)p.y=0;p.tw+=.018;const t=.7+Math.sin(p.tw)*.3;ctx.beginPath();ctx.arc(p.x,p.y,p.r*(active?1.35:1)*t,0,Math.PI*2);ctx.fillStyle=`rgba(220,245,255,${p.a*t*(active?1.25:1)})`;ctx.fill()} }
+function resize(){const c=$('bgCanvas'),ctx=c.getContext('2d'),dpr=Math.min(1.5,devicePixelRatio||1);const vw=Math.max(1,document.documentElement.clientWidth||innerWidth);const vh=Math.max(1,document.documentElement.clientHeight||innerHeight);const prevW=c.dataset.vw?Number(c.dataset.vw):0;const prevH=c.dataset.vh?Number(c.dataset.vh):0;const widthChanged=Math.abs(vw-prevW)>2;c.dataset.vw=String(vw);c.dataset.vh=String(vh);c.width=Math.floor(vw*dpr);c.height=Math.floor(vh*dpr);c.style.width=vw+'px';c.style.height=vh+'px';ctx.setTransform(dpr,0,0,dpr,0,0);const count=isMobile()?55:100;particles=Array.from({length:count},()=>({x:Math.random()*vw,y:Math.random()*vh,r:Math.random()*1.3+.25,vx:(Math.random()-.5)*.13,vy:(Math.random()-.5)*.13,a:Math.random()*.45+.08,tw:Math.random()*6.28}));if(widthChanged||!prevW)renderModules(true)}
 function switchSection(id){document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===id));document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.section===id))}
 function effect(x,y,amount,auto=false){const wrap=$('coreWrap'),rect=wrap.getBoundingClientRect();const p=document.createElement('span');p.className=auto?'autoPulse':'pulse';p.style.left=x-20+'px';p.style.top=y-20+'px';wrap.appendChild(p);setTimeout(()=>p.remove(),760);const showFloat=!auto||(!state.lowFx&&!isMobile());if(showFloat){const f=document.createElement('span');f.className=auto?'autoGain':'floatGain';f.textContent='+'+fmt(amount);f.style.left=Math.min(rect.width-76,Math.max(20,x-22))+'px';f.style.top=Math.max(40,y-10)+'px';wrap.appendChild(f);setTimeout(()=>f.remove(),950)} }
 function clickCore(e){const wrap=$('coreWrap'),r=wrap.getBoundingClientRect(),x=(e.clientX||r.left+r.width/2)-r.left,y=(e.clientY||r.top+r.height/2)-r.top,a=clickPower();addEnergy(a);state.clicks++;gainOverload(.9);effect(x,y,a,false);render()}
