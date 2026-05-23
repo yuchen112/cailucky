@@ -1408,6 +1408,313 @@
   </style>
   <!-- [KJS HOME FINAL POLISH END] -->
 
+
+
+  <!-- [KJS SITE MATURITY INTEGRATED POLISH START]
+       網站成熟化整合：區塊節奏、柔和亮暗底色、社群牆實拍卡、卡片比例一致、後台視覺集中化。
+       不改資料結構；匯入匯出與 app.json 同步維持原欄位。
+  -->
+  <style id="kjs-site-maturity-integrated-polish-v1">
+    :root{
+      --kjs-page-bg:#f8faf7;
+      --kjs-page-bg-2:#f1f7f5;
+      --kjs-ink:#172033;
+      --kjs-card-glow:0 22px 52px -34px rgba(15,23,42,.72);
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --kjs-page-bg:#08111f;
+        --kjs-page-bg-2:#0f1b2d;
+        --kjs-ink:#e5edf8;
+        --kjs-card-glow:0 24px 58px -34px rgba(0,0,0,.88);
+      }
+    }
+
+    body.kjs-unified{
+      background-color:var(--kjs-page-bg) !important;
+      color:var(--kjs-ink);
+    }
+    .kjs-unified :where(.bg-white){ background-color:rgba(255,255,255,.86); }
+    @media (prefers-color-scheme: dark){
+      .kjs-unified :where(.dark\:bg-slate-900){ background-color:rgba(8,17,31,.94) !important; }
+      .kjs-unified :where(.dark\:text-slate-100){ color:#e5edf8 !important; }
+    }
+
+    /* 首頁區塊節奏：不靠增加功能，而是增加層次與呼吸感 */
+    .kjs-home-page .kjs-home-section{
+      position:relative;
+      padding-block:.35rem;
+    }
+    .kjs-home-page .kjs-home-section:nth-of-type(even)::before{
+      content:"";
+      position:absolute;
+      inset:-1.15rem -1rem;
+      z-index:-1;
+      border-radius:32px;
+      background:linear-gradient(135deg, rgba(20,184,166,.045), rgba(245,158,11,.035));
+      border:1px solid rgba(148,163,184,.12);
+    }
+    @media (prefers-color-scheme: dark){
+      .kjs-home-page .kjs-home-section:nth-of-type(even)::before{
+        background:linear-gradient(135deg, rgba(20,184,166,.075), rgba(30,41,59,.30));
+        border-color:rgba(148,163,184,.10);
+      }
+    }
+    @media (max-width:640px){
+      .kjs-home-page .kjs-home-section:nth-of-type(even)::before{ inset:-.85rem -.5rem; border-radius:24px; }
+    }
+
+    /* 主打活動再加強：像本期焦點，不只是普通卡片 */
+    .kjs-home-focus-card{
+      border-width:1px !important;
+      box-shadow:var(--kjs-card-glow) !important;
+    }
+    .kjs-home-focus-card:hover{
+      transform:translateY(-3px);
+    }
+    .kjs-home-focus-media img,
+    .kjs-home-feature-media img,
+    .kjs-game-cover img{
+      object-position:center;
+    }
+
+    /* 全站卡片比例方向：商品與首頁精選採 1:1；遊戲中心也偏向一致封面 */
+    .kjs-home-feature-media,
+    .kjs-game-card-polished .kjs-game-cover,
+    .kjs-game-cover{
+      aspect-ratio:1/1 !important;
+    }
+    @media (max-width:640px){
+      .kjs-game-card-polished .kjs-game-cover{ aspect-ratio:1/1 !important; }
+    }
+
+    /* 開箱實拍改成社群牆感，而不是單純圖片列 */
+    .kjs-home-gallery-strip{
+      display:flex;
+      gap:.85rem;
+      overflow-x:auto;
+      padding:.25rem .25rem .85rem;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:thin;
+      scrollbar-color:rgba(148,163,184,.36) transparent;
+    }
+    .kjs-home-gallery-strip::-webkit-scrollbar{ height:6px; }
+    .kjs-home-gallery-strip::-webkit-scrollbar-thumb{ background:rgba(148,163,184,.34); border-radius:999px; }
+    .kjs-home-gallery-tile{
+      position:relative;
+      flex:0 0 clamp(132px, 18vw, 168px);
+      aspect-ratio:1/1;
+      scroll-snap-align:start;
+      overflow:hidden;
+      border-radius:18px;
+      border:1px solid rgba(148,163,184,.28);
+      background:rgba(148,163,184,.10);
+      box-shadow:0 14px 34px -28px rgba(15,23,42,.58);
+      cursor:pointer;
+    }
+    .kjs-home-gallery-tile img{
+      width:100%; height:100%; object-fit:cover; display:block;
+      transition:transform .22s ease, filter .22s ease;
+    }
+    .kjs-home-gallery-tile:hover img{ transform:scale(1.035); filter:saturate(1.06); }
+    .kjs-home-gallery-label{
+      position:absolute;
+      left:8px; right:8px; bottom:8px;
+      display:flex;
+      justify-content:space-between;
+      gap:6px;
+      pointer-events:none;
+    }
+    .kjs-home-gallery-label span{
+      min-width:0;
+      border-radius:999px;
+      background:rgba(15,23,42,.62);
+      color:white;
+      padding:4px 7px;
+      font-size:11px;
+      font-weight:800;
+      backdrop-filter:blur(10px);
+      white-space:nowrap;
+    }
+    @media (max-width:640px){
+      .kjs-home-gallery-strip{ margin-left:-1rem; margin-right:-1rem; padding-inline:1rem; scrollbar-width:none; }
+      .kjs-home-gallery-strip::-webkit-scrollbar{ display:none; }
+      .kjs-home-gallery-tile{ flex-basis:38vw; }
+    }
+
+    /* 後台/系統工具視覺更集中，降低「直接在前台改網站」的感覺 */
+    .kjs-admin-modal,
+    .kjs-system-tool-panel,
+    [data-kjs-admin-panel="true"]{
+      background:linear-gradient(180deg, rgba(248,250,252,.98), rgba(241,245,249,.94)) !important;
+      box-shadow:0 28px 80px -44px rgba(15,23,42,.78) !important;
+    }
+    @media (prefers-color-scheme: dark){
+      .kjs-admin-modal,
+      .kjs-system-tool-panel,
+      [data-kjs-admin-panel="true"]{
+        background:linear-gradient(180deg, rgba(15,23,42,.98), rgba(8,17,31,.96)) !important;
+      }
+    }
+
+    /* 操作回饋：既有 toast 更像系統提示 */
+    .kjs-toast{
+      border-radius:18px !important;
+      box-shadow:0 18px 44px -28px rgba(15,23,42,.72) !important;
+    }
+  </style>
+  <!-- [KJS SITE MATURITY INTEGRATED POLISH END] -->
+
+
+
+  <!-- [KJS BACKOFFICE TABS + EXPORT CHECK START]
+       後台分頁化 + 匯出前檢查：集中管理入口，避免所有管理工具散落前台。
+  -->
+  <style id="kjs-backoffice-tabs-export-check-v1">
+    .kjs-backoffice-shell{
+      width:min(96vw, 980px);
+      max-height:min(90dvh, 760px);
+      display:grid;
+      grid-template-columns:210px minmax(0,1fr);
+      overflow:hidden;
+    }
+    .kjs-backoffice-nav{
+      border-right:1px solid var(--kjs-line);
+      background:rgba(248,250,252,.78);
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .kjs-backoffice-nav button{
+      width:100%;
+      min-height:42px;
+      border-radius:14px;
+      padding:9px 11px;
+      text-align:left;
+      font-size:14px;
+      font-weight:750;
+      border:1px solid transparent;
+      color:rgb(71 85 105);
+    }
+    .kjs-backoffice-nav button.is-active{
+      background:linear-gradient(135deg,var(--kjs-brand),var(--kjs-brand-2));
+      color:white;
+      box-shadow:0 12px 28px -20px rgba(20,184,166,.85);
+    }
+    .kjs-backoffice-body{
+      padding:18px;
+      overflow:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+    .kjs-backoffice-card{
+      border:1px solid var(--kjs-line);
+      border-radius:20px;
+      background:var(--kjs-surface-strong);
+      box-shadow:var(--kjs-shadow-soft);
+      padding:14px;
+    }
+    .kjs-backoffice-action-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:10px;
+    }
+    .kjs-backoffice-action{
+      min-height:58px;
+      border-radius:16px;
+      border:1px solid var(--kjs-line);
+      background:rgba(255,255,255,.72);
+      padding:10px 12px;
+      text-align:left;
+      font-weight:800;
+    }
+    .kjs-backoffice-action small{
+      display:block;
+      margin-top:4px;
+      font-weight:500;
+      color:rgb(100 116 139);
+      line-height:1.35;
+    }
+    .kjs-precheck-list{
+      display:grid;
+      gap:8px;
+      max-height:46vh;
+      overflow:auto;
+      padding-right:4px;
+    }
+    .kjs-precheck-filter-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:12px;
+    }
+    .kjs-precheck-filter-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      min-height:34px;
+      border:1px solid var(--kjs-line);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+      font-weight:750;
+      background:rgba(255,255,255,.76);
+      cursor:pointer;
+      user-select:none;
+    }
+    .kjs-precheck-filter-chip input{
+      width:14px;
+      height:14px;
+      accent-color:var(--kjs-brand);
+    }
+    .kjs-precheck-item{
+      border:1px solid var(--kjs-line);
+      border-radius:14px;
+      padding:10px 12px;
+      background:rgba(255,255,255,.72);
+      font-size:14px;
+      line-height:1.5;
+    }
+    .kjs-precheck-item[data-level="error"]{ border-left:4px solid #ef4444; }
+    .kjs-precheck-item[data-level="warn"]{ border-left:4px solid #f59e0b; }
+    .kjs-precheck-item[data-level="info"]{ border-left:4px solid #14b8a6; }
+    @media (prefers-color-scheme: dark){
+      .kjs-backoffice-nav{ background:rgba(15,23,42,.74); }
+      .kjs-backoffice-nav button{ color:rgb(203 213 225); }
+      .kjs-backoffice-action,
+      .kjs-precheck-item{ background:rgba(15,23,42,.62); }
+      .kjs-precheck-filter-chip{ background:rgba(15,23,42,.62); }
+      .kjs-backoffice-action small{ color:rgb(148 163 184); }
+    }
+    @media (max-width:720px){
+      .kjs-backoffice-shell{
+        width:100vw;
+        height:100dvh;
+        max-height:100dvh;
+        grid-template-columns:1fr;
+        border-radius:0 !important;
+      }
+      .kjs-backoffice-nav{
+        border-right:0;
+        border-bottom:1px solid var(--kjs-line);
+        flex-direction:row;
+        overflow-x:auto;
+        padding:10px;
+        scrollbar-width:none;
+      }
+      .kjs-backoffice-nav::-webkit-scrollbar{ display:none; }
+      .kjs-backoffice-nav button{
+        flex:0 0 auto;
+        width:auto;
+        white-space:nowrap;
+        min-height:38px;
+      }
+      .kjs-backoffice-body{ padding:14px; }
+    }
+  </style>
+  <!-- [KJS BACKOFFICE TABS + EXPORT CHECK END] -->
+
 </head>
 
 <body class="kjs-unified bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-100">
@@ -1444,7 +1751,7 @@
       featuredStoreTitle: '社群商店精選',
       featuredShopTitle: '點數商城精選',
       galleryTitle: '開箱/到貨實拍',
-      galleryDesc: '圖片為群友回報截圖，僅作為紀錄與分享。',
+      galleryDesc: '社群成員分享的開箱與到貨實拍。',
       sectionOrder: ['hero', 'focus', 'store', 'shop', 'gallery', 'faq'],
       visibility: { hero: true, focus: true, store: true, shop: true, gallery: true, community: false, faq: true },
       featuredDrawIds: [],
@@ -6575,6 +6882,88 @@ function useAccordionController() {
   return { activeId, setActiveId, force, setForce, openAll, closeAll, clearForce, bind };
 }
 
+
+
+// === 匯出前檢查：不阻擋資料，只在匯出前提醒可能漏填或失效的內容 ===
+function kjsHasAnyImage(item){
+  if(!item || typeof item !== 'object') return false;
+  if(String(item.image || item.cover || item.heroImage || '').trim()) return true;
+  if(Array.isArray(item.images) && item.images.some(x => String(x||'').trim())) return true;
+  return false;
+}
+function kjsItemTitle(item){ return String(item?.title || item?.name || item?.label || item?.prize || '未命名項目').trim(); }
+function kjsIsMissingNumber(v){ return v === undefined || v === null || String(v).trim() === '' || Number.isNaN(Number(v)); }
+function buildKjsPreExportIssues(data, bg, admins){
+  const d = (typeof normalizeSiteData === 'function') ? normalizeSiteData(data) : (data || {});
+  const issues = [];
+  const add = (level, group, text, hint='') => issues.push({ level, group, text, hint });
+  const storeItems = Array.isArray(d?.store?.items) ? d.store.items : [];
+  const shopItems = Array.isArray(d?.shop?.items) ? d.shop.items : [];
+  const pending = Array.isArray(d?.pending) ? d.pending : [];
+  const ongoing = Array.isArray(d?.ongoing) ? d.ongoing : [];
+  const history = Array.isArray(d?.history) ? d.history : [];
+  const settings = d?.settings || {};
+  const hp = d?.homepage || {};
+
+  if(!String(settings.lineGroupUrl || '').trim()) add('warn','系統設定','LINE 社群連結尚未填寫。','首頁加入社群按鈕可能無法正確導向。');
+  if(!String(settings.contactUrl || '').trim()) add('warn','系統設定','官方 LINE / 聯絡管理員連結尚未填寫。','商品詢問或中獎聯絡入口可能缺少連結。');
+  if(!Array.isArray(admins) || admins.length === 0) add('warn','系統設定','目前沒有管理者帳號。','之後可能無法進入管理模式。');
+
+  const seenStore = new Map();
+  storeItems.forEach((it, i) => {
+    const title = kjsItemTitle(it);
+    if(!String(it?.title || it?.name || '').trim()) add('warn','社群商店',`第 ${i+1} 筆商品缺少名稱。`);
+    if(!kjsHasAnyImage(it)) add('warn','社群商店',`商品「${title}」缺少圖片。`);
+    if(kjsIsMissingNumber(it?.price)) add('warn','社群商店',`商品「${title}」缺少售價。`);
+    if(kjsIsMissingNumber(it?.stock ?? it?.qty ?? it?.quantity ?? it?.remaining)) add('info','社群商店',`商品「${title}」未填庫存。`,'若是不限量商品可忽略。');
+    const key = title.toLowerCase();
+    if(key && seenStore.has(key)) add('warn','社群商店',`商品名稱「${title}」重複。`,'建議改成不同名稱，避免管理時選錯。');
+    seenStore.set(key, true);
+  });
+
+  const seenShop = new Map();
+  shopItems.forEach((it, i) => {
+    const title = kjsItemTitle(it);
+    if(!String(it?.title || it?.name || '').trim()) add('warn','點數商城',`第 ${i+1} 筆點數商品缺少名稱。`);
+    if(!kjsHasAnyImage(it)) add('warn','點數商城',`點數商品「${title}」缺少圖片。`);
+    const pts = it?.points ?? it?.point ?? it?.needPoints ?? it?.need_point;
+    if(kjsIsMissingNumber(pts)) add('warn','點數商城',`點數商品「${title}」缺少兌換點數。`);
+    if(!kjsIsMissingNumber(pts) && Number(pts) < 0) add('warn','點數商城',`點數商品「${title}」點數不可為負數。`);
+    const key = title.toLowerCase();
+    if(key && seenShop.has(key)) add('warn','點數商城',`點數商品名稱「${title}」重複。`);
+    seenShop.set(key, true);
+  });
+
+  pending.forEach((it, i) => {
+    const title = kjsItemTitle(it);
+    if(!String(it?.title || it?.name || '').trim()) add('warn','等待開獎',`第 ${i+1} 筆等待開獎缺少獎品名稱。`);
+    if(!String(it?.date || it?.deadline || '').trim()) add('warn','等待開獎',`活動「${title}」缺少日期 / 截止日。`);
+    const listCount = Array.isArray(it?.participants) ? it.participants.length : String(it?.listText || '').split(/\r?\n/).filter(x=>x.trim()).length;
+    if(listCount === 0) add('info','等待開獎',`活動「${title}」尚未填候選名單。`,'如果只是預告活動可忽略。');
+  });
+  ongoing.forEach((it, i) => {
+    const title = kjsItemTitle(it);
+    if(!String(it?.title || it?.name || '').trim()) add('warn','進行中活動',`第 ${i+1} 筆活動缺少名稱。`);
+    if(!String(it?.date || it?.deadline || '').trim()) add('info','進行中活動',`活動「${title}」未填日期。`);
+  });
+  history.forEach((it, i) => {
+    const title = kjsItemTitle(it);
+    if(!String(it?.title || it?.name || '').trim()) add('info','歷史紀錄',`第 ${i+1} 筆歷史紀錄缺少獎品名稱。`);
+    if(!String(it?.date || '').trim()) add('info','歷史紀錄',`歷史紀錄「${title}」缺少日期。`);
+    if(!String(it?.status || '').trim()) add('info','歷史紀錄',`歷史紀錄「${title}」缺少狀態。`);
+  });
+
+  const storeIds = new Set(storeItems.map(x => String(x?.id || '')));
+  const shopIds = new Set(shopItems.map(x => String(x?.id || '')));
+  const drawIds = new Set([...pending, ...ongoing, ...history].map(x => String(x?.id || '')));
+  (Array.isArray(hp.featuredStoreIds) ? hp.featuredStoreIds : []).forEach(id => { if(id && !storeIds.has(String(id))) add('warn','首頁精選',`首頁社群商店精選含有已不存在的商品 ID：${id}`,'建議重新進入首頁管理勾選。'); });
+  (Array.isArray(hp.featuredShopIds) ? hp.featuredShopIds : []).forEach(id => { if(id && !shopIds.has(String(id))) add('warn','首頁精選',`首頁點數商城精選含有已不存在的商品 ID：${id}`,'建議重新進入首頁管理勾選。'); });
+  (Array.isArray(hp.featuredDrawIds) ? hp.featuredDrawIds : []).forEach(id => { if(id && !drawIds.has(String(id))) add('warn','首頁主打',`首頁主打抽獎含有已不存在的活動 ID：${id}`,'建議重新選擇主打活動。'); });
+
+  if(issues.length === 0) add('info','檢查結果','未發現明顯問題，可以匯出。');
+  return issues;
+}
+
     // —— 主 App（Part 1：骨架/導覽/雙模式/匯入匯出，未含編輯器） ——
     function App(){
       // 記錄進入 App 前是否已有本機資料，避免預設 EMPTY 被 useLocalState 寫入後誤判。
@@ -6655,6 +7044,11 @@ const [tab, setTab] = useState('home'); // home | history | pending | ongoing | 
       const [menuOpen, setMenuOpen] = useState(false);
       const [adminMode, setAdminMode] = useState(false);
       const [adminDockOpen, setAdminDockOpen] = useState(false);
+      const [backOfficeOpen, setBackOfficeOpen] = useState(false);
+      const [backOfficeTab, setBackOfficeTab] = useState('overview');
+      const [precheckOpen, setPrecheckOpen] = useState(false);
+      const [precheckIssues, setPrecheckIssues] = useState([]);
+      const [precheckFilter, setPrecheckFilter] = useState({ levels: { error: true, warn: true, info: true }, groups: {} });
       const [query, setQuery] = useState('');
 const [queryMode, setQueryMode] = useLocalState('kjs_query_mode', 'all'); // all | prize | winner | note
 
@@ -6752,7 +7146,19 @@ function enterAdmin() {
 function exitAdmin() {
   setAdminMode(false);
   setCurrentAdmin('');
+  setBackOfficeOpen(false);
+  setAdminDockOpen(false);
   alert('已登出管理模式');
+}
+function openBackOffice(tabName='overview') {
+  setBackOfficeTab(tabName);
+  setBackOfficeOpen(true);
+  setAdminDockOpen(false);
+}
+function runPreExportCheck() {
+  const issues = buildKjsPreExportIssues(data, bg, admins);
+  setPrecheckIssues(issues);
+  setPrecheckOpen(true);
 }
 
 // === Drawer A11y：參考節點 ===
@@ -6912,7 +7318,13 @@ useEffect(()=>{
 // 本版會把「站內資料 data」與「管理員名單 admins（只含雜湊，不含明文密碼）」一起匯出；
 // 匯入時同時支援「新格式（含 data/admins）」與「舊格式（只有 data）」。
 
-const exportJSON = () => {
+const exportJSON = (opts = {}) => {
+  if (!opts.skipCheck) {
+    const issues = buildKjsPreExportIssues(data, bg, admins);
+    setPrecheckIssues(issues);
+    setPrecheckOpen(true);
+    return;
+  }
   // 取出目前所有圖片路徑與調整（ImageIO 會回傳字串 JSON）
   const imagesStr = window.ImageIO ? window.ImageIO.exportImagesJSON() : null;
   const images = imagesStr ? JSON.parse(imagesStr) : null;
@@ -6937,17 +7349,7 @@ const exportJSON = () => {
   URL.revokeObjectURL(a.href);
 };
 
-// （可選）僅匯出站內資料，不含管理員名單——如果要給一般成員備份，可以綁這顆
-const exportDataOnly = () => {
-  const blob = new Blob([JSON.stringify(normalizeSiteData(data), null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `kjs_data_only_${new Date().toISOString().slice(0,10)}.json`;
-  a.click();
-  URL.revokeObjectURL(a.href);
-};
-
-// 匯入支援兩種格式：
+// 匯入支援兩種格式:
 // 1) 新格式：{ _meta?, data: {...}, admins: [...] } —— 同時覆蓋站內資料與管理員名單
 // 2) 舊格式：{ ...直接就是 data 內容... } —— 只覆蓋站內資料，保留本機 admins
 const importJSON = (file) => {
@@ -7062,12 +7464,9 @@ const importJSON = (file) => {
                   {adminMode && adminDockOpen && (
                     <div className="absolute right-0 top-10 w-48 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 shadow-elevate backdrop-blur text-sm">
                       <div className="px-3 py-2 border-b border-slate-200/70 dark:border-slate-700/70 text-xs text-slate-500 dark:text-slate-400">系統工具</div>
-                      <button className="w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => { setTab('home'); setAdminDockOpen(false); setTimeout(() => window.dispatchEvent(new CustomEvent('kjs:open-home-admin')), 50); }}>首頁管理</button>
-                      <button className="w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => { setTab('system'); setMenuOpen(false); setAdminDockOpen(false); }}>系統設置</button>
-                      <button className="w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => { exportJSON(); setAdminDockOpen(false); }}>匯出資料</button>
-                      <label className="block w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">匯入資料
-                        <input type="file" accept="application/json" className="hidden" onChange={e => { if(e.target.files && e.target.files[0]) importJSON(e.target.files[0]); setAdminDockOpen(false); }} />
-                      </label>
+                      <button className="w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => openBackOffice('overview')}>開啟後台</button>
+                      <button className="w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => openBackOffice('data')}>資料管理</button>
+                      <button className="w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => { exportJSON(); setAdminDockOpen(false); }}>匯出完整資料</button>
                       <button className="w-full text-left px-3 py-2 text-rose-600 dark:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-950/30" onClick={() => { exitAdmin(); setAdminDockOpen(false); }}>退出管理</button>
                     </div>
                   )}
@@ -7179,6 +7578,188 @@ const importJSON = (file) => {
   >
     ↑
   </button>
+)}
+
+
+{/* === 後台分頁化系統工具 === */}
+{backOfficeOpen && adminMode && (
+  <div className="fixed inset-0 z-[80] bg-black/45 flex items-center justify-center p-4">
+    <div className="kjs-backoffice-shell kjs-admin-modal rounded-3xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-elevate">
+      <aside className="kjs-backoffice-nav">
+        {[
+          ['overview','總覽'],['home','首頁管理'],['draw','抽獎管理'],['shop','商店/點數'],['appearance','網站外觀'],['data','資料管理'],['system','系統設定']
+        ].map(([id,label]) => (
+          <button key={id} className={backOfficeTab===id?'is-active':''} onClick={()=>setBackOfficeTab(id)}>{label}</button>
+        ))}
+        <button className="mt-auto text-rose-600 dark:text-rose-300" onClick={exitAdmin}>退出管理</button>
+      </aside>
+      <section className="kjs-backoffice-body">
+        <div className="flex items-start justify-between gap-3 mb-4">
+          <div>
+            <h2 className="text-2xl font-black tracking-tight">系統工具</h2>
+            <p className="text-sm text-slate-500 mt-1">集中管理網站，不讓管理功能散落在一般頁面。</p>
+          </div>
+          <button className="rounded-full border px-3 py-1.5 text-sm" onClick={()=>setBackOfficeOpen(false)}>關閉</button>
+        </div>
+
+        {backOfficeTab==='overview' && (
+          <div className="grid gap-4">
+            <div className="kjs-backoffice-card">
+              <div className="font-bold mb-2">目前狀態</div>
+              <div className="grid sm:grid-cols-4 gap-2 text-sm">
+                <div className="rounded-xl border p-3">社群商品<br/><b>{(data?.store?.items||[]).length}</b> 筆</div>
+                <div className="rounded-xl border p-3">點數商品<br/><b>{(data?.shop?.items||[]).length}</b> 筆</div>
+                <div className="rounded-xl border p-3">等待開獎<br/><b>{(data?.pending||[]).length}</b> 筆</div>
+                <div className="rounded-xl border p-3">小遊戲<br/><b>{(Array.isArray(data?.games)?data.games:[]).length}</b> 筆</div>
+              </div>
+            </div>
+            <div className="kjs-backoffice-action-grid">
+              <button className="kjs-backoffice-action" onClick={()=>setBackOfficeTab('data')}>資料管理<small>匯出、匯入、檢查資料</small></button>
+              <button className="kjs-backoffice-action" onClick={()=>setBackOfficeTab('home')}>首頁管理<small>主視覺、精選商品、首頁模組</small></button>
+              <button className="kjs-backoffice-action" onClick={()=>setBackOfficeTab('shop')}>商店管理<small>社群商店與點數商城</small></button>
+              <button className="kjs-backoffice-action" onClick={()=>setBackOfficeTab('system')}>系統設定<small>管理者、LINE 連結與參數</small></button>
+            </div>
+          </div>
+        )}
+
+        {backOfficeTab==='home' && (
+          <div className="kjs-backoffice-card grid gap-3">
+            <div className="font-bold">首頁管理</div>
+            <p className="text-sm text-slate-500">編輯首頁主視覺、主打活動、社群商店精選、點數商城精選與實拍展示。</p>
+            <button className="rounded-xl bg-brand text-white px-4 py-2 text-sm font-bold justify-self-start" onClick={() => { setTab('home'); setBackOfficeOpen(false); setTimeout(() => window.dispatchEvent(new CustomEvent('kjs:open-home-admin')), 50); }}>開啟首頁管理視窗</button>
+          </div>
+        )}
+
+        {backOfficeTab==='draw' && (
+          <div className="kjs-backoffice-action-grid">
+            <button className="kjs-backoffice-action" onClick={()=>{setTab('pending');setBackOfficeOpen(false)}}>等待開獎<small>候選名單、抽獎與公告</small></button>
+            <button className="kjs-backoffice-action" onClick={()=>{setTab('ongoing');setBackOfficeOpen(false)}}>進行中活動<small>目前活動列表</small></button>
+            <button className="kjs-backoffice-action" onClick={()=>{setTab('history');setBackOfficeOpen(false)}}>歷史紀錄<small>中獎紀錄與寄送狀態</small></button>
+          </div>
+        )}
+
+        {backOfficeTab==='shop' && (
+          <div className="kjs-backoffice-action-grid">
+            <button className="kjs-backoffice-action" onClick={()=>{setTab('store');setBackOfficeOpen(false)}}>社群商店<small>售價、庫存、圖片、規格</small></button>
+            <button className="kjs-backoffice-action" onClick={()=>{setTab('shop');setBackOfficeOpen(false)}}>點數商城<small>兌換點數、庫存、圖片、規格</small></button>
+            <button className="kjs-backoffice-action" onClick={()=>{setTab('gallery');setBackOfficeOpen(false)}}>開箱實拍<small>社群牆圖片與展示</small></button>
+            <button className="kjs-backoffice-action" onClick={()=>{setTab('games');setBackOfficeOpen(false)}}>小遊戲中心<small>遊戲卡片與連結維護</small></button>
+          </div>
+        )}
+
+        {backOfficeTab==='appearance' && (
+          <div className="kjs-backoffice-card grid gap-3">
+            <div className="font-bold">網站外觀</div>
+            <p className="text-sm text-slate-500">背景圖片、亮度、模糊、透明度與漢堡選單背景仍保留在原本系統設定內。</p>
+            <button className="rounded-xl border px-4 py-2 text-sm font-bold justify-self-start" onClick={()=>{setTab('system');setBackOfficeOpen(false)}}>前往外觀設定</button>
+          </div>
+        )}
+
+        {backOfficeTab==='data' && (
+          <div className="grid gap-4">
+            <div className="kjs-backoffice-card">
+              <div className="font-bold mb-2">資料管理</div>
+              <p className="text-sm text-slate-500 mb-3">匯出會帶出完整資料。按下匯出後會先顯示檢查結果，可依類別篩選提醒，也可直接忽略不需要看的提醒。</p>
+              <div className="flex flex-wrap gap-2">
+                <button className="rounded-xl bg-brand text-white px-4 py-2 text-sm font-bold" onClick={exportJSON}>匯出完整資料</button>
+                <label className="rounded-xl border px-4 py-2 text-sm font-bold cursor-pointer">匯入 JSON
+                  <input type="file" accept="application/json" className="hidden" onChange={e => { if(e.target.files && e.target.files[0]) importJSON(e.target.files[0]); }} />
+                </label>
+              </div>
+            </div>
+            <div className="kjs-backoffice-card text-sm text-slate-500 leading-6">
+              匯出完整資料會包含：站內資料、管理者雜湊、背景設定與 ImageIO 圖片設定。<br/>若要更新公開網站，請依你原本流程將資料更新到 <b>data/app.json</b>。
+            </div>
+          </div>
+        )}
+
+        {backOfficeTab==='system' && (
+          <div className="kjs-backoffice-card grid gap-3">
+            <div className="font-bold">系統設定</div>
+            <p className="text-sm text-slate-500">管理者帳密、LINE 連結、抽獎參數、背景設定都在這裡。</p>
+            <button className="rounded-xl border px-4 py-2 text-sm font-bold justify-self-start" onClick={()=>{setTab('system');setBackOfficeOpen(false)}}>開啟完整系統設定</button>
+          </div>
+        )}
+      </section>
+    </div>
+  </div>
+)}
+
+{/* === 匯出前檢查 Modal === */}
+{precheckOpen && (
+  <div className="fixed inset-0 z-[90] bg-black/45 flex items-center justify-center p-4">
+    <div className="w-[min(94vw,680px)] max-h-[88dvh] overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-elevate">
+      <div className="p-4 border-b border-slate-200 dark:border-slate-700 flex items-start justify-between gap-3">
+        <div>
+          <h2 className="text-xl font-black">匯出前檢查</h2>
+          <p className="text-sm text-slate-500 mt-1">這只是提醒，不會強制阻擋匯出。</p>
+        </div>
+        <button className="rounded-full border px-3 py-1.5 text-sm" onClick={()=>setPrecheckOpen(false)}>關閉</button>
+      </div>
+      <div className="p-4">
+        {(() => {
+          const issues = precheckIssues || [];
+          const levelLabels = { error: '必修', warn: '提醒', info: '建議' };
+          const groups = Array.from(new Set(issues.map(it => it.group || '其他')));
+          const shown = issues.filter(it => {
+            const lv = it.level || 'info';
+            const gp = it.group || '其他';
+            const levelOn = precheckFilter?.levels?.[lv] !== false;
+            const groupOn = precheckFilter?.groups?.[gp] !== false;
+            return levelOn && groupOn;
+          });
+          const toggleLevel = (lv) => setPrecheckFilter(prev => ({
+            levels: { ...(prev?.levels || {}), [lv]: prev?.levels?.[lv] === false ? true : false },
+            groups: { ...(prev?.groups || {}) }
+          }));
+          const toggleGroup = (gp) => setPrecheckFilter(prev => ({
+            levels: { ...(prev?.levels || {}) },
+            groups: { ...(prev?.groups || {}), [gp]: prev?.groups?.[gp] === false ? true : false }
+          }));
+          return (
+            <>
+              <div className="mb-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/45 p-3">
+                <div className="text-xs font-bold text-slate-500 mb-2">顯示層級</div>
+                <div className="kjs-precheck-filter-row">
+                  {['error','warn','info'].map(lv => (
+                    <label key={lv} className="kjs-precheck-filter-chip">
+                      <input type="checkbox" checked={precheckFilter?.levels?.[lv] !== false} onChange={() => toggleLevel(lv)} />
+                      {lv==='error'?'🔴':lv==='warn'?'🟡':'🔵'} {levelLabels[lv]}
+                    </label>
+                  ))}
+                </div>
+                <div className="text-xs font-bold text-slate-500 mb-2">顯示類別</div>
+                <div className="kjs-precheck-filter-row mb-0">
+                  {groups.map(gp => (
+                    <label key={gp} className="kjs-precheck-filter-chip">
+                      <input type="checkbox" checked={precheckFilter?.groups?.[gp] !== false} onChange={() => toggleGroup(gp)} />
+                      {gp}
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div className="text-xs text-slate-500 mb-2">目前顯示 {shown.length} / {issues.length} 項。取消勾選即可隱藏你不想看的提醒。</div>
+              <div className="kjs-precheck-list">
+                {shown.length ? shown.map((it, idx)=>(
+                  <div key={idx} className="kjs-precheck-item" data-level={it.level || 'info'}>
+                    <div className="font-bold">{it.level==='error'?'❌':it.level==='warn'?'⚠️':'ℹ️'} {it.group}</div>
+                    <div>{it.text}</div>
+                    {it.hint && <div className="text-xs text-slate-500 mt-1">{it.hint}</div>}
+                  </div>
+                )) : (
+                  <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-4 text-sm text-slate-500">目前篩選條件下沒有要顯示的提醒。</div>
+                )}
+              </div>
+            </>
+          );
+        })()}
+      </div>
+      <div className="p-4 border-t border-slate-200 dark:border-slate-700 flex flex-wrap justify-end gap-2">
+        <button className="rounded-xl border px-4 py-2 text-sm font-bold" onClick={()=>setPrecheckOpen(false)}>返回修改</button>
+        <button className="rounded-xl bg-brand text-white px-4 py-2 text-sm font-bold" onClick={()=>{ setPrecheckOpen(false); exportJSON({skipCheck:true}); }}>直接匯出完整資料</button>
+      </div>
+    </div>
+  </div>
 )}
 
 {/* === Admin 登入（二段式 Modal）=== */}
@@ -8204,7 +8785,7 @@ function HomeAdminModal({ data, setData, onClose }) {
   const bulletText = draft.communityBulletsText ?? (Array.isArray(draft.communityBullets) ? draft.communityBullets.join('\n') : '');
   const renderCheckItem = (item, field, type, key) => { const id = kjsHomeItemId(item); const checked = (draft[field] || []).map(String).includes(String(id)); const img = kjsHomeFirstImage(item); return (<button key={key} type="button" onClick={()=>toggleId(field, id)} className={(checked?'ring-2 ring-brand ':'') + 'rounded-xl border p-2 text-left flex gap-2 items-center bg-white/70 dark:bg-slate-900/60'}><div className="w-14 h-14 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden flex-none grid place-items-center">{img ? <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover" onError={(e)=>{ e.currentTarget.style.display='none'; }} /> : <span>{type==='draw'?'🎉':'🎁'}</span>}</div><div className="min-w-0 flex-1"><div className="text-sm font-medium truncate">{item?.title || item?.name || '未命名'}</div><div className="text-xs text-slate-500 truncate">{id}</div></div><div className={(checked?'bg-brand text-white':'bg-slate-100 dark:bg-slate-800') + ' rounded-full px-2 py-1 text-xs'}>{checked?'已選':'選取'}</div></button>); };
   return (
-    <div className="fixed inset-0 z-[1000] bg-black/45 backdrop-blur-sm flex"><div className="m-auto w-[min(1080px,96vw)] max-h-[92vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col">
+    <div className="fixed inset-0 z-[1000] bg-black/45 backdrop-blur-sm flex"><div className="kjs-admin-modal m-auto w-[min(1080px,96vw)] max-h-[92vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col">
       <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3"><div><div className="font-semibold">首頁模組管理</div><div className="text-xs text-slate-500 mt-0.5">所有內容都儲存在 data.homepage / gallery.homepage_showcase，匯出與 app.json 同步會一起保存。</div></div><button className="rounded-lg border px-3 py-1.5 text-sm" onClick={onClose}>關閉</button></div>
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         <section className="rounded-2xl border p-4 space-y-3"><div className="font-bold">主視覺 Hero</div><div className="grid md:grid-cols-2 gap-3"><label className="grid gap-1 text-sm">小標籤<input className="px-3 py-2" value={draft.heroBadge || ''} onChange={e=>setField('heroBadge', e.target.value)} /></label><label className="grid gap-1 text-sm">背景圖 URL<input className="px-3 py-2" value={draft.heroImage || ''} onChange={e=>setField('heroImage', e.target.value)} placeholder="可留空" /></label><label className="grid gap-1 text-sm">主標題<input className="px-3 py-2" value={draft.title || ''} onChange={e=>setField('title', e.target.value)} /></label><label className="grid gap-1 text-sm">副標題<input className="px-3 py-2" value={draft.subtitle || ''} onChange={e=>setField('subtitle', e.target.value)} /></label><label className="grid gap-1 text-sm md:col-span-2">簡短介紹<textarea className="px-3 py-2 min-h-[78px]" value={draft.description || ''} onChange={e=>setField('description', e.target.value)} /></label><label className="grid gap-1 text-sm">主要按鈕文字<input className="px-3 py-2" value={draft.primaryButtonText || ''} onChange={e=>setField('primaryButtonText', e.target.value)} /></label><label className="grid gap-1 text-sm">官方LINE按鈕文字<input className="px-3 py-2" value={draft.secondaryButtonText || ''} onChange={e=>setField('secondaryButtonText', e.target.value)} /></label></div></section>
@@ -8246,7 +8827,7 @@ function Home({ setTab, data, setData, admin }) {
         {showSection('focus') && selectedDraws.length > 0 && (<section className="kjs-home-section"><div className="flex items-end justify-between gap-3 mb-4"><h2 className="kjs-home-section-title">{homepage.featuredDrawTitle || '本期主打抽獎'}</h2><button className="kjs-home-section-action border px-3 py-2 text-sm" onClick={()=>setTab('pending')}>查看全部</button></div><HomeDrawCard item={selectedDraws[0]} onClick={()=>setTab('pending')} /></section>)}
         {showSection('store') && selectedStore.length > 0 && (<section className="kjs-home-section"><div className="flex items-end justify-between gap-3 mb-4"><h2 className="kjs-home-section-title">{homepage.featuredStoreTitle || '社群商店精選'}</h2><button className="kjs-home-section-action border px-3 py-2 text-sm" onClick={()=>setTab('store')}>進入商店</button></div><HomeFeatureCarousel>{selectedStore.map((it,i)=><HomeFeatureCard key={kjsHomeItemId(it)+i} item={it} mode="cash" onClick={()=>setTab('store')} />)}</HomeFeatureCarousel></section>)}
         {showSection('shop') && selectedShop.length > 0 && (<section className="kjs-home-section"><div className="flex items-end justify-between gap-3 mb-4"><h2 className="kjs-home-section-title">{homepage.featuredShopTitle || '點數商城精選'}</h2><button className="kjs-home-section-action border px-3 py-2 text-sm" onClick={()=>setTab('shop')}>進入點數商城</button></div><HomeFeatureCarousel>{selectedShop.map((it,i)=><HomeFeatureCard key={kjsHomeItemId(it)+i} item={it} mode="points" onClick={()=>setTab('shop')} />)}</HomeFeatureCarousel></section>)}
-        {showSection('gallery') && galleryImages.length > 0 && (<section className="kjs-home-section"><div className="kjs-home-gallery-card border border-slate-200/70 dark:border-slate-700/70 p-4 sm:p-5 shadow-sm"><div className="flex items-start justify-between gap-3"><div><div className="font-semibold text-base">{homepage.galleryTitle || '開箱/到貨實拍'}</div><div className="text-xs text-slate-500 dark:text-slate-400 mt-1">{homepage.galleryDesc || '圖片為群友回報截圖，僅作為紀錄與分享。'}</div></div><button className="shrink-0 rounded-xl border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm hover:bg-white/60 dark:hover:bg-slate-800/60 active:scale-[0.99] transition" onClick={() => setTab('gallery')}>查看全部</button></div><div className="mt-4 flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory">{galleryImages.map((src, i) => <img key={i} loading="lazy" src={src} className="snap-start rounded-xl h-28 w-28 sm:h-32 sm:w-32 md:h-36 md:w-36 object-cover border border-slate-200/60 dark:border-slate-700/60" alt="" onClick={() => setTab('gallery')} />)}</div></div></section>)}
+        {showSection('gallery') && galleryImages.length > 0 && (<section className="kjs-home-section"><div className="kjs-home-gallery-card border border-slate-200/70 dark:border-slate-700/70 p-4 sm:p-5 shadow-sm"><div className="flex items-start justify-between gap-3"><div><div className="font-semibold text-base">{homepage.galleryTitle || '開箱/到貨實拍'}</div><div className="text-xs text-slate-500 dark:text-slate-400 mt-1">{homepage.galleryDesc || '社群成員分享的開箱與到貨實拍。'}</div></div><button className="shrink-0 rounded-xl border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm hover:bg-white/60 dark:hover:bg-slate-800/60 active:scale-[0.99] transition" onClick={() => setTab('gallery')}>查看全部</button></div><div className="mt-4 kjs-home-gallery-strip">{galleryImages.map((src, i) => <button key={i} type="button" className="kjs-home-gallery-tile" onClick={() => setTab('gallery')} title="查看開箱實拍"><img loading="lazy" src={src} alt="" /><div className="kjs-home-gallery-label"><span>群友分享</span><span>到貨實拍</span></div></button>)}</div></div></section>)}
         {/* 加入社群區已合併到首頁主視覺，避免首頁重複 CTA。 */}
         {showSection('faq') && (<section className="kjs-home-section" id="faq" data-testid="faq"><FaqSection data={data} admin={admin} onOpenAdmin={() => setTab('faq-admin')} /></section>)}
       </div>
