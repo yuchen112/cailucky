@@ -6,7 +6,7 @@
   <link rel="apple-touch-icon" href="/cailucky/apple-touch-icon.png">
 
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
   <title>CxQ開獎所｜官方平台</title>
   <!-- build: appjson-auto-sync-v1 -->
   <meta name="color-scheme" content="light dark">
@@ -3383,6 +3383,432 @@
 </style>
 <!-- [CXQ MOBILE RUNTIME RECOVERY V10 END] -->
 
+<!-- [CXQ ALL DEVICE INTERACTION RECOVERY V11 START] -->
+<style id="cxq-all-device-interaction-v11">
+  /* iPhone 瀏海、Android 手勢列與桌面窄視窗：內容始終留在真正可操作區。 */
+  .cxq-site-header > div:first-child{
+    padding-left:max(.75rem,env(safe-area-inset-left,0px)) !important;
+    padding-right:max(.75rem,env(safe-area-inset-right,0px)) !important;
+  }
+  .cxq-bottom-nav{
+    padding-left:env(safe-area-inset-left,0px);
+    padding-right:env(safe-area-inset-right,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  .cxq-runtime-dialog{ isolation:isolate; }
+  body.cxq-modal-open{ overflow:hidden !important; overscroll-behavior:none; }
+
+  /* 不支援 :has() 的舊版 WebView 仍可顯示工具列、寬表格與彈窗按鈕。 */
+  .cxq-wide-grid-host{ overflow-x:auto !important; overscroll-behavior-inline:contain; }
+  .cxq-modal-actions{ display:flex; flex-wrap:wrap; gap:.45rem; }
+  .cxq-modal-actions > button{ flex:1 1 auto; }
+  @supports not selector(:has(*)){
+    .cxq-page-card .sticky{
+      top:calc(var(--cxq-header-h) + 8px) !important;
+      z-index:18;
+      padding:.55rem;
+      border-radius:16px;
+      background:rgba(255,255,255,.9);
+    }
+  }
+
+  /* 兩套商店共用同一套單層規格表，桌機保持原五欄，手機改為清楚的規格卡。 */
+  .cxq-variant-single-list{ max-width:100%; }
+  .cxq-variant-row input:not([type="checkbox"]){ min-width:0; width:100%; }
+
+  @media (max-width:767px){
+    /* 手機固定為上一頁／目前頁數／下一頁，不再橫向滑動找頁碼。 */
+    .cxq-mobile-paginator{
+      overflow:visible !important;
+      justify-content:center !important;
+      width:100%;
+    }
+    .cxq-mobile-paginator::before{
+      content:attr(data-page);
+      min-width:4.5rem;
+      min-height:44px;
+      display:grid;
+      place-items:center;
+      padding:.45rem .65rem;
+      border:1px solid rgba(148,163,184,.28);
+      border-radius:10px;
+      background:var(--cxq-page-surface-strong);
+      font-size:.82rem;
+      font-weight:850;
+      font-variant-numeric:tabular-nums;
+    }
+    .cxq-mobile-paginator .cxq-page-number{ display:none !important; }
+
+    .cxq-site-header > div:first-child{
+      padding-top:max(.55rem,env(safe-area-inset-top,0px)) !important;
+      padding-left:max(.65rem,env(safe-area-inset-left,0px)) !important;
+      padding-right:max(.65rem,env(safe-area-inset-right,0px)) !important;
+    }
+    .cxq-main{
+      padding-left:max(.75rem,env(safe-area-inset-left,0px)) !important;
+      padding-right:max(.75rem,env(safe-area-inset-right,0px)) !important;
+      padding-bottom:calc(var(--bottom-nav-height) + env(safe-area-inset-bottom,0px) + 1rem) !important;
+    }
+
+    /* 手機所有主要操作維持可觸控尺寸；不改 checkbox/radio 的原生大小。 */
+    .cxq-page-card button,
+    .cxq-modal-panel button,
+    .cxq-filter-sheet button,
+    .cxq-site-search-panel button{
+      min-height:44px;
+    }
+    .cxq-page-card :where(input:not([type="checkbox"]):not([type="radio"]),select),
+    .cxq-modal-panel :where(input:not([type="checkbox"]):not([type="radio"]),select),
+    .cxq-filter-sheet :where(input:not([type="checkbox"]):not([type="radio"]),select){
+      min-height:44px;
+    }
+
+    .cxq-site-search-layer{
+      padding-top:max(4.25rem,calc(env(safe-area-inset-top,0px) + 3.75rem)) !important;
+      padding-left:max(.65rem,env(safe-area-inset-left,0px)) !important;
+      padding-right:max(.65rem,env(safe-area-inset-right,0px)) !important;
+      padding-bottom:max(.65rem,env(safe-area-inset-bottom,0px)) !important;
+    }
+    .cxq-site-search-panel{ width:100%; }
+    .cxq-filter-sheet{
+      padding-left:env(safe-area-inset-left,0px);
+      padding-right:env(safe-area-inset-right,0px);
+    }
+
+    .cxq-variant-header{
+      display:grid !important;
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto !important;
+      gap:.55rem !important;
+      padding:.55rem .75rem !important;
+    }
+    .cxq-variant-header > :nth-child(1),
+    .cxq-variant-header > :nth-child(2){ display:none; }
+    .cxq-variant-row{
+      display:grid !important;
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto !important;
+      gap:.55rem !important;
+      align-items:end !important;
+      padding:.75rem !important;
+    }
+    .cxq-variant-row > :nth-child(1){ display:none; }
+    .cxq-variant-row > :nth-child(2){
+      grid-column:1/-1;
+      padding:.1rem 0 .25rem;
+      font-weight:800;
+      overflow-wrap:anywhere;
+    }
+    .cxq-variant-row > label:last-child{
+      min-height:44px;
+      padding:.35rem;
+      justify-content:center;
+      border:1px solid rgba(148,163,184,.28);
+      border-radius:10px;
+    }
+
+    @supports not selector(:has(*)){
+      .cxq-page-card .sticky{ position:relative !important; top:auto !important; z-index:8 !important; }
+    }
+  }
+
+  @media (max-width:360px){
+    .cxq-variant-header,
+    .cxq-variant-row{ grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important; }
+    .cxq-variant-header > :last-child{ display:none; }
+    .cxq-variant-row > label:last-child{ grid-column:1/-1; }
+    .cxq-site-search-controls{ gap:.55rem; }
+  }
+
+  @media (max-height:520px) and (orientation:landscape){
+    .cxq-filter-sheet,
+    .cxq-site-search-panel{
+      max-height:calc(100vh - 1rem) !important;
+      border-radius:16px !important;
+    }
+    .cxq-site-search-layer{ padding:.5rem !important; align-items:center; }
+  }
+</style>
+<!-- [CXQ ALL DEVICE INTERACTION RECOVERY V11 END] -->
+
+<!-- [CXQ MOBILE ADMIN EDITOR SYSTEM V12 START] -->
+<style id="cxq-mobile-admin-editor-v12">
+  :root{
+    --cxq-editor-border:rgba(100,116,139,.22);
+    --cxq-editor-soft:rgba(248,250,252,.86);
+    --cxq-editor-card:rgba(255,255,255,.92);
+    --cxq-editor-shadow:0 34px 100px -48px rgba(15,23,42,.78);
+  }
+  html[data-cxq-color-mode="dark"],
+  html[data-cxq-theme="midnight"]{
+    --cxq-editor-border:rgba(148,163,184,.22);
+    --cxq-editor-soft:rgba(15,23,42,.82);
+    --cxq-editor-card:rgba(15,23,42,.94);
+  }
+
+  /* Every substantial editor is a three-part shell: header / one scroll owner / footer. */
+  .cxq-admin-editor-panel{
+    display:flex !important;
+    flex-direction:column !important;
+    min-width:0 !important;
+    max-width:min(100%,72rem) !important;
+    max-height:min(92dvh,58rem) !important;
+    overflow:hidden !important;
+    background:var(--cxq-editor-card) !important;
+    border-color:var(--cxq-editor-border) !important;
+    box-shadow:var(--cxq-editor-shadow) !important;
+    isolation:isolate;
+  }
+  .cxq-admin-editor-panel > *{ min-width:0; max-width:100%; }
+  .cxq-admin-editor-panel > .cxq-editor-header,
+  .cxq-admin-editor-panel > :first-child{
+    flex:0 0 auto !important;
+    position:relative;
+    z-index:4;
+    background:var(--cxq-page-surface-strong) !important;
+    border-color:var(--cxq-editor-border) !important;
+    box-shadow:0 12px 28px -27px rgba(15,23,42,.72);
+  }
+  .cxq-admin-editor-panel > .cxq-editor-scroll,
+  .cxq-admin-editor-panel > :where(.overflow-y-auto,.modal-scroll,.flex-1){
+    flex:1 1 auto !important;
+    width:100% !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+    touch-action:pan-y !important;
+    scrollbar-gutter:stable;
+    scroll-padding-block:5.5rem 6rem;
+  }
+  .cxq-admin-editor-panel > .cxq-editor-footer{
+    flex:0 0 auto;
+    position:relative;
+    z-index:4;
+    background:var(--cxq-page-surface-strong);
+    border-top:1px solid var(--cxq-editor-border);
+  }
+  .cxq-admin-editor-panel :where(.overflow-auto,table){
+    max-width:100%;
+  }
+  .cxq-admin-editor-panel .overflow-auto{
+    overscroll-behavior-inline:contain;
+    touch-action:pan-x pan-y !important;
+    -webkit-overflow-scrolling:touch;
+  }
+  .cxq-admin-editor-panel :where(input:not([type="checkbox"]):not([type="radio"]),select,textarea){
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    border-color:rgba(148,163,184,.38);
+    background:rgba(255,255,255,.96);
+    transition:border-color .16s ease,box-shadow .16s ease,background .16s ease;
+  }
+  html[data-cxq-color-mode="dark"] .cxq-admin-editor-panel :where(input,select,textarea),
+  html[data-cxq-theme="midnight"] .cxq-admin-editor-panel :where(input,select,textarea){
+    background:rgba(15,23,42,.9);
+  }
+  .cxq-admin-editor-panel :where(input,select,textarea):focus{
+    border-color:var(--cxq-brand);
+    box-shadow:0 0 0 4px rgba(20,184,166,.12);
+  }
+  .cxq-admin-editor-panel label{
+    min-width:0;
+    color:#475569;
+    font-weight:750;
+  }
+  html[data-cxq-color-mode="dark"] .cxq-admin-editor-panel label,
+  html[data-cxq-theme="midnight"] .cxq-admin-editor-panel label{ color:#cbd5e1; }
+
+  /* Commerce item form: calm cards with clear hierarchy. */
+  .cxq-commerce-item-body{
+    background:linear-gradient(180deg,var(--cxq-editor-soft),rgba(248,250,252,.48));
+  }
+  .cxq-commerce-item-body > *{
+    min-width:0;
+    padding:clamp(.8rem,2vw,1rem);
+    border:1px solid var(--cxq-editor-border);
+    border-radius:16px;
+    background:var(--cxq-editor-card);
+    box-shadow:0 16px 32px -32px rgba(15,23,42,.75);
+  }
+  .cxq-commerce-item-body > .grid:first-child::before{
+    content:"基本資料";
+    grid-column:1/-1;
+    display:block;
+    padding-bottom:.15rem;
+    color:var(--cxq-ink);
+    font-size:.82rem;
+    font-weight:900;
+    letter-spacing:.04em;
+  }
+  .cxq-commerce-advanced-field{ animation:cxqEditorReveal .18s ease-out; }
+  .cxq-commerce-item-body[data-advanced="false"] > .cxq-commerce-advanced-field{ display:none !important; }
+  @keyframes cxqEditorReveal{
+    from{ opacity:0; transform:translateY(-4px); }
+    to{ opacity:1; transform:none; }
+  }
+  .cxq-editor-more[aria-expanded="true"]{
+    border-color:rgba(15,159,145,.4);
+    background:rgba(20,184,166,.09);
+    color:var(--cxq-brand-deep);
+  }
+  .cxq-commerce-editor-body{ background:var(--cxq-editor-soft); }
+  .cxq-commerce-editor-body > :where(.kjs-admin-bulkbar,.rounded-xl){
+    background:var(--cxq-editor-card);
+    border-color:var(--cxq-editor-border);
+  }
+
+  @media (max-width:767px){
+    /* Override the older blanket full-screen rule only for real editors. Small dialogs stay compact. */
+    body.cxq-admin-mode .cxq-modal-panel:not(.cxq-studio-shell):not(.cxq-admin-editor-panel){
+      width:min(calc(100vw - 12px),36rem) !important;
+      height:auto !important;
+      max-height:calc(100dvh - 12px) !important;
+      border-radius:18px !important;
+    }
+    body.cxq-admin-mode .cxq-modal-root:has(.cxq-admin-editor-panel),
+    .cxq-editor-overlay{
+      padding:0 !important;
+      align-items:stretch !important;
+    }
+    body.cxq-admin-mode .cxq-admin-editor-panel{
+      width:100vw !important;
+      max-width:100vw !important;
+      height:100vh !important;
+      height:100svh !important;
+      height:100dvh !important;
+      min-height:0 !important;
+      max-height:100dvh !important;
+      margin:0 !important;
+      border:0 !important;
+      border-radius:0 !important;
+    }
+    .cxq-admin-editor-panel > .cxq-editor-header,
+    .cxq-admin-editor-panel > :first-child{
+      padding-top:max(.65rem,env(safe-area-inset-top,0px)) !important;
+      padding-left:max(.75rem,env(safe-area-inset-left,0px)) !important;
+      padding-right:max(.75rem,env(safe-area-inset-right,0px)) !important;
+    }
+    .cxq-admin-editor-panel > .cxq-editor-scroll,
+    .cxq-admin-editor-panel > :where(.overflow-y-auto,.modal-scroll,.flex-1){
+      padding-left:max(.75rem,env(safe-area-inset-left,0px)) !important;
+      padding-right:max(.75rem,env(safe-area-inset-right,0px)) !important;
+      padding-bottom:max(5.5rem,calc(env(safe-area-inset-bottom,0px) + 4.75rem)) !important;
+    }
+    .cxq-admin-editor-panel > .cxq-editor-footer{
+      padding-bottom:max(.7rem,env(safe-area-inset-bottom,0px)) !important;
+    }
+
+    /* No form column may retain a desktop width on phones. */
+    .cxq-admin-editor-panel :where(form,label,.grid,.flex,.space-y-2,.space-y-3,.space-y-4){
+      min-width:0 !important;
+      max-width:100% !important;
+    }
+    .cxq-admin-editor-panel .cxq-editor-scroll > .grid,
+    .cxq-commerce-item-body > .grid{
+      grid-template-columns:minmax(0,1fr) !important;
+    }
+    .cxq-admin-editor-panel :where(input:not([type="checkbox"]):not([type="radio"]),select,textarea){
+      display:block;
+      width:100% !important;
+      max-width:none !important;
+      min-height:46px;
+      font-size:16px !important;
+    }
+    .cxq-admin-editor-panel textarea{ min-height:116px; }
+    .cxq-admin-editor-panel label{ display:block; width:100% !important; }
+
+    /* Header actions remain visible but do not consume half the screen. */
+    .cxq-commerce-item-header{
+      display:grid !important;
+      grid-template-columns:minmax(0,1fr) !important;
+      gap:.55rem !important;
+      padding-bottom:.65rem !important;
+    }
+    .cxq-commerce-item-header > div:last-child{
+      display:grid !important;
+      grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+      gap:.4rem !important;
+    }
+    .cxq-commerce-item-header > div:last-child button{
+      min-width:0;
+      min-height:42px;
+      padding:.45rem .35rem !important;
+      font-size:.73rem !important;
+      white-space:normal;
+      line-height:1.2;
+    }
+    .cxq-commerce-editor-header{
+      display:grid !important;
+      grid-template-columns:minmax(0,1fr) !important;
+      gap:.55rem !important;
+    }
+    .cxq-commerce-editor-header > div:last-child{
+      display:grid !important;
+      grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+      gap:.4rem !important;
+    }
+    .cxq-commerce-editor-header input{ grid-column:1/-1; }
+    .cxq-commerce-item-body{ padding-top:.75rem !important; }
+    .cxq-commerce-item-body > *{ padding:.8rem; border-radius:14px; }
+
+    /* Bulk tools and tags collapse visually into comfortable rows. */
+    .cxq-commerce-editor-body .kjs-admin-bulkbar{
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+      gap:.45rem !important;
+    }
+    .cxq-commerce-editor-body .kjs-bulk-title,
+    .cxq-commerce-editor-body .kjs-bulk-count,
+    .cxq-commerce-editor-body .kjs-admin-bulkbar > input{
+      grid-column:1/-1;
+    }
+    .cxq-chip-input-row{ grid-template-columns:minmax(0,1fr) auto !important; }
+    .cxq-chip-suggestions{
+      max-height:8.5rem;
+      overflow-y:auto;
+      overscroll-behavior:contain;
+    }
+    .cxq-tag-overview{ align-items:flex-start !important; }
+    .cxq-tag-overview > details > div{
+      position:fixed !important;
+      inset:auto .75rem calc(env(safe-area-inset-bottom,0px) + .75rem) !important;
+      width:auto !important;
+      max-height:min(50dvh,22rem) !important;
+      z-index:2147483001 !important;
+    }
+
+    .cxq-variant-editor-body > .grid{
+      grid-template-columns:minmax(0,1fr) !important;
+    }
+  }
+
+  @media (max-width:420px){
+    .cxq-commerce-item-header > div:last-child{
+      grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    }
+    .cxq-commerce-editor-header > div:last-child{
+      grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    }
+    .cxq-commerce-editor-body .kjs-admin-bulkbar{
+      grid-template-columns:minmax(0,1fr) !important;
+    }
+    .cxq-commerce-editor-body .kjs-admin-bulkbar > *{ grid-column:1/-1; width:100%; }
+  }
+
+  @media (max-height:540px) and (orientation:landscape){
+    body.cxq-admin-mode .cxq-admin-editor-panel{
+      width:100vw !important;
+      height:100dvh !important;
+      max-height:100dvh !important;
+    }
+    .cxq-commerce-item-header > div:first-child > div:last-child{ display:none; }
+    .cxq-admin-editor-panel > .cxq-editor-scroll{ padding-bottom:1rem !important; }
+  }
+</style>
+<!-- [CXQ MOBILE ADMIN EDITOR SYSTEM V12 END] -->
+
 </head>
 
 <body class="kjs-unified bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-100">
@@ -3527,11 +3953,13 @@ const HISTORY_STATUS_STYLE = {
     if (window[lockKey] > 0) {
       document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
-      document.body.style.touchAction = "none";
+      document.body.style.touchAction = "";
+      document.body.style.overscrollBehavior = "none";
     } else {
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
       document.body.style.touchAction = "";
+      document.body.style.overscrollBehavior = "";
     }
   }
   window.BodyScrollLock = {
@@ -6344,6 +6772,70 @@ function cxqBodyPortal(node) {
   return ReactDOM?.createPortal && document?.body ? ReactDOM.createPortal(node, document.body) : node;
 }
 
+// 所有 Portal 搜尋／篩選視窗共用：鎖定背景、Esc、手機返回鍵、焦點循環與焦點歸還。
+function useCxqDialogLifecycle(open, onClose, initialFocusSelector = '') {
+  const openerRef = React.useRef(null);
+  const closeRef = React.useRef(onClose);
+  const historyKeyRef = React.useRef('cxq-dialog-' + Math.random().toString(36).slice(2));
+  closeRef.current = onClose;
+  React.useEffect(() => {
+    if (!open) return;
+    const active = document.activeElement;
+    if (active instanceof HTMLElement) openerRef.current = active;
+    window.BodyScrollLock?.lock?.();
+    const dialogs = document.querySelectorAll('.cxq-runtime-dialog');
+    const dialog = dialogs.length ? dialogs[dialogs.length - 1] : null;
+    const focusableSelector = 'button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),a[href],[tabindex]:not([tabindex="-1"])';
+    const focusFirst = () => {
+      const preferred = initialFocusSelector ? dialog?.querySelector(initialFocusSelector) : null;
+      const target = preferred || dialog?.querySelector(focusableSelector);
+      target?.focus?.({ preventScroll: true });
+    };
+    const onKey = event => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeRef.current?.();
+        return;
+      }
+      if (event.key !== 'Tab' || !dialog) return;
+      const nodes = Array.from(dialog.querySelectorAll(focusableSelector)).filter(node => {
+        const style = window.getComputedStyle(node);
+        return style.display !== 'none' && style.visibility !== 'hidden';
+      });
+      if (!nodes.length) return;
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    const onPop = () => closeRef.current?.();
+    document.addEventListener('keydown', onKey);
+    window.addEventListener('popstate', onPop);
+    try {
+      history.pushState({
+        ...(history.state || {}),
+        cxqDialog: historyKeyRef.current
+      }, '', location.href);
+    } catch {}
+    requestAnimationFrame(focusFirst);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      window.removeEventListener('popstate', onPop);
+      window.BodyScrollLock?.unlock?.();
+      try {
+        if (history.state?.cxqDialog === historyKeyRef.current) history.back();
+      } catch {}
+      setTimeout(() => openerRef.current?.focus?.({ preventScroll: true }), 0);
+    };
+  }, [open, initialFocusSelector]);
+  return openerRef;
+}
+
 function CommerceFilterToolbar({
   sortBy,
   onSort,
@@ -6357,6 +6849,7 @@ function CommerceFilterToolbar({
   onManage = null,
   children
 }) {
+  const filterTriggerRef = useCxqDialogLifecycle(filtersOpen, onCloseFilters, '.cxq-filter-sheet input,.cxq-filter-sheet select,.cxq-filter-sheet button');
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "cxq-commerce-toolbar",
     role: "region",
@@ -6365,6 +6858,7 @@ function CommerceFilterToolbar({
     className: "cxq-commerce-quickbar"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
+    ref: filterTriggerRef,
     className: "cxq-filter-trigger",
     onClick: onOpenFilters,
     "aria-expanded": filtersOpen ? "true" : "false"
@@ -6401,7 +6895,7 @@ function CommerceFilterToolbar({
     className: "cxq-commerce-manage",
     onClick: onManage
   }, "\u7BA1\u7406"))), filtersOpen && cxqBodyPortal(/*#__PURE__*/React.createElement("div", {
-    className: "cxq-filter-sheet-root",
+    className: "cxq-filter-sheet-root cxq-runtime-dialog",
     role: "dialog",
     "aria-modal": "true",
     "aria-label": "\u5546\u54C1\u7BE9\u9078\u8A2D\u5B9A"
@@ -6635,7 +7129,8 @@ function Store({
     value: "80"
   }, "80")))));
   const Paginator = () => /*#__PURE__*/React.createElement("div", {
-    className: "cxq-mobile-paginator mt-3 flex items-center justify-center gap-1 select-none"
+    className: "cxq-mobile-paginator mt-3 flex items-center justify-center gap-1 select-none",
+    "data-page": `${page} / ${maxPage}`
   }, /*#__PURE__*/React.createElement("button", {
     className: "rounded-lg border px-3 py-1.5 text-sm",
     disabled: page <= 1,
@@ -6644,7 +7139,7 @@ function Store({
     length: endPage - startPage + 1
   }, (_, i) => startPage + i).map(p => /*#__PURE__*/React.createElement("button", {
     key: p,
-    className: `rounded-lg border px-3 py-1.5 text-sm ${p === page ? "bg-brand text-white border-brand" : ""}`,
+    className: `cxq-page-number rounded-lg border px-3 py-1.5 text-sm ${p === page ? "bg-brand text-white border-brand" : ""}`,
     onClick: () => setPage(p)
   }, p)), /*#__PURE__*/React.createElement("button", {
     className: "rounded-lg border px-3 py-1.5 text-sm",
@@ -6901,6 +7396,8 @@ function StoreEditor({
   // ★ 新增：規格編輯 Modal 控制
   const [variantEditId, setVariantEditId] = React.useState(null);
   const [editId, setEditId] = React.useState(null);
+  const [itemAdvancedOpen, setItemAdvancedOpen] = React.useState(false);
+  React.useEffect(() => setItemAdvancedOpen(false), [editId]);
   const newItemIdsRef = React.useRef(new Set());
   const editBackupRef = React.useRef(null);
   function cloneStoreItem(it = {}) {
@@ -7165,12 +7662,12 @@ function StoreEditor({
       }, /*#__PURE__*/React.createElement("div", {
         className: "text-xs text-slate-500"
       }, "\u9078\u9805\u5217\u8868\uFF08\u9010\u5217\u586B\u300C\u5EAB\u5B58 / \u50F9\u683C\u300D\uFF09"), /*#__PURE__*/React.createElement("div", {
-        className: "rounded border"
+        className: "cxq-variant-single-list cxq-variant-price-list rounded border overflow-hidden"
       }, /*#__PURE__*/React.createElement("div", {
-        className: "grid grid-cols-[auto_1fr_1fr_auto_auto] items-center gap-2 px-3 py-2 border-b text-xs text-slate-500"
+        className: "cxq-variant-header grid grid-cols-[auto_1fr_1fr_auto_auto] items-center gap-2 px-3 py-2 border-b text-xs text-slate-500"
       }, /*#__PURE__*/React.createElement("div", null, "#"), /*#__PURE__*/React.createElement("div", null, "\u9078\u9805"), /*#__PURE__*/React.createElement("div", null, "\u5EAB\u5B58"), /*#__PURE__*/React.createElement("div", null, "\u50F9\u683C"), /*#__PURE__*/React.createElement("div", null, "\u555F\u7528")), rows.map((s, idx) => /*#__PURE__*/React.createElement("div", {
         key: s.key,
-        className: "grid grid-cols-[auto_1fr_1fr_auto_auto] items-center gap-2 px-3 py-2 border-b"
+        className: "cxq-variant-row grid grid-cols-[auto_1fr_1fr_auto_auto] items-center gap-2 px-3 py-2 border-b"
       }, /*#__PURE__*/React.createElement("div", {
         className: "text-xs text-slate-500"
       }, idx + 1), /*#__PURE__*/React.createElement("div", {
@@ -7313,7 +7810,7 @@ function StoreEditor({
     }), /*#__PURE__*/React.createElement("div", {
       className: "absolute inset-0 flex items-center justify-center p-4"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "w-[min(820px,96vw)] max-h-[90vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl"
+      className: "cxq-admin-editor-panel cxq-variant-editor-panel w-[min(820px,96vw)] max-h-[90vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col"
     }, /*#__PURE__*/React.createElement("div", {
       className: "px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between"
     }, /*#__PURE__*/React.createElement("div", {
@@ -7327,7 +7824,7 @@ function StoreEditor({
       className: "rounded bg-brand text-white px-3 py-1.5 text-sm",
       onClick: save
     }, "\u5132\u5B58"))), /*#__PURE__*/React.createElement("div", {
-      className: "p-3 space-y-3 overflow-y-auto max-h-[calc(90vh-60px)]"
+      className: "cxq-editor-scroll cxq-variant-editor-body p-3 space-y-3 overflow-y-auto max-h-[calc(90vh-60px)]"
     }, /*#__PURE__*/React.createElement("div", {
       className: "grid grid-cols-1 md:grid-cols-3 gap-2 items-center"
     }, /*#__PURE__*/React.createElement("label", {
@@ -7440,7 +7937,7 @@ function StoreEditor({
   }), /*#__PURE__*/React.createElement("div", {
     className: "absolute inset-0 flex items-center justify-center p-4"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "w-full max-w-4xl max-h-[86vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl"
+    className: "cxq-admin-editor-panel cxq-commerce-manager-panel w-full max-w-4xl max-h-[86vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "cxq-commerce-editor-header px-4 py-3 flex items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-700"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -7467,7 +7964,7 @@ function StoreEditor({
     onClick: requestClose,
     className: "rounded-lg border px-3 py-1.5 text-sm"
   }, "\u95DC\u9589"))), /*#__PURE__*/React.createElement("div", {
-    className: "p-3 overflow-y-auto max-h-[calc(86vh-56px)] space-y-3"
+    className: "cxq-editor-scroll cxq-commerce-editor-body p-3 overflow-y-auto max-h-[calc(86vh-56px)] space-y-3"
   }, /*#__PURE__*/React.createElement("div", {
     className: "kjs-admin-bulkbar"
   }, /*#__PURE__*/React.createElement("span", {
@@ -7584,7 +8081,7 @@ function StoreEditor({
       role: "dialog",
       "aria-modal": "true"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "w-[min(920px,96vw)] max-h-[92dvh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col"
+      className: "cxq-admin-editor-panel cxq-commerce-item-panel w-[min(920px,96vw)] max-h-[92dvh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col"
     }, /*#__PURE__*/React.createElement("div", {
       className: "cxq-commerce-item-header px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3"
     }, /*#__PURE__*/React.createElement("div", {
@@ -7599,13 +8096,19 @@ function StoreEditor({
       onClick: () => setVariantEditId(it.id),
       className: "rounded-lg border px-3 py-1.5 text-sm"
     }, hasV ? '編輯規格' : '新增規格'), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "cxq-editor-more rounded-lg border px-3 py-1.5 text-sm",
+      onClick: () => setItemAdvancedOpen(v => !v),
+      "aria-expanded": itemAdvancedOpen ? "true" : "false"
+    }, itemAdvancedOpen ? '收合欄位' : '更多欄位'), /*#__PURE__*/React.createElement("button", {
       onClick: cancelItemEdit,
       className: "rounded-lg border border-rose-200 text-rose-600 px-3 py-1.5 text-sm"
     }, newItemIdsRef.current.has(it.id) ? '取消新增' : '取消修改'), /*#__PURE__*/React.createElement("button", {
       onClick: finishItemEdit,
       className: "rounded-lg bg-brand text-white px-3 py-1.5 text-sm"
     }, "\u5957\u7528\u6B64\u7B46"))), /*#__PURE__*/React.createElement("div", {
-      className: "p-4 overflow-y-auto space-y-4"
+      className: "cxq-editor-scroll cxq-commerce-item-body p-4 overflow-y-auto space-y-4",
+      "data-advanced": itemAdvancedOpen ? "true" : "false"
     }, /*#__PURE__*/React.createElement("div", {
       className: "grid grid-cols-1 md:grid-cols-4 gap-3"
     }, /*#__PURE__*/React.createElement("label", {
@@ -7656,7 +8159,7 @@ function StoreEditor({
       onChange: e => up(it.id, 'buyUrl', e.target.value),
       placeholder: "buyUrl"
     }))), /*#__PURE__*/React.createElement("label", {
-      className: "text-sm block"
+      className: "cxq-commerce-advanced-field text-sm block"
     }, "\u5546\u54C1\u4ECB\u7D39", /*#__PURE__*/React.createElement("textarea", {
       className: "mt-1 w-full rounded-lg border px-3 py-2",
       rows: 4,
@@ -7664,7 +8167,7 @@ function StoreEditor({
       onChange: e => up(it.id, 'desc', e.target.value),
       placeholder: "\u5546\u54C1\u4ECB\u7D39"
     })), /*#__PURE__*/React.createElement("div", {
-      className: "grid grid-cols-1 md:grid-cols-2 gap-3"
+      className: "cxq-commerce-advanced-field grid grid-cols-1 md:grid-cols-2 gap-3"
     }, /*#__PURE__*/React.createElement("label", {
       className: "text-sm block"
     }, "\u5716\u7247\u7DB2\u5740\uFF08\u6BCF\u884C\u4E00\u5F35\uFF09", /*#__PURE__*/React.createElement("textarea", {
@@ -8645,7 +9148,8 @@ function Pending({
 
   // 分頁器（保留）
   const Paginator = () => /*#__PURE__*/React.createElement("div", {
-    className: "cxq-mobile-paginator mt-3 flex items-center justify-center gap-1 select-none"
+    className: "cxq-mobile-paginator mt-3 flex items-center justify-center gap-1 select-none",
+    "data-page": `${page} / ${maxPage}`
   }, /*#__PURE__*/React.createElement("button", {
     className: "rounded-lg border px-3 py-1.5 text-sm",
     disabled: page <= 1,
@@ -8654,7 +9158,7 @@ function Pending({
     length: endPage - startPage + 1
   }, (_, i) => startPage + i).map(p => /*#__PURE__*/React.createElement("button", {
     key: p,
-    className: `rounded-lg border px-3 py-1.5 text-sm ${p === page ? 'bg-brand text-white border-brand' : ''}`,
+    className: `cxq-page-number rounded-lg border px-3 py-1.5 text-sm ${p === page ? 'bg-brand text-white border-brand' : ''}`,
     onClick: () => setPage(p)
   }, p)), /*#__PURE__*/React.createElement("button", {
     className: "rounded-lg border px-3 py-1.5 text-sm",
@@ -8685,6 +9189,7 @@ function Pending({
     }) {
       const [panelOpen, setPanelOpen] = React.useState(false);
       const activeCount = (search ? 1 : 0) + (myName ? 1 : 0) + (mineFilter !== 'all' ? 1 : 0);
+      const drawFilterTriggerRef = useCxqDialogLifecycle(panelOpen, () => setPanelOpen(false), '.cxq-filter-sheet input,.cxq-filter-sheet select,.cxq-filter-sheet button');
       const resetFilters = () => {
         setSearch('');
         setMyName('');
@@ -8699,6 +9204,7 @@ function Pending({
         "aria-live": "polite"
       }, /*#__PURE__*/React.createElement("strong", null, total), " \u500B\u6D3B\u52D5"), /*#__PURE__*/React.createElement("button", {
         type: "button",
+        ref: drawFilterTriggerRef,
         className: "cxq-draw-filter-trigger",
         onClick: () => setPanelOpen(true),
         "aria-expanded": panelOpen ? "true" : "false"
@@ -8715,7 +9221,7 @@ function Pending({
       }, /*#__PURE__*/React.createElement("path", {
         d: "M4 6h16M7 12h10M10 18h4"
       })), /*#__PURE__*/React.createElement("span", null, "\u7BE9\u9078"), activeCount > 0 && /*#__PURE__*/React.createElement("b", null, activeCount))), panelOpen && cxqBodyPortal(/*#__PURE__*/React.createElement("div", {
-        className: "cxq-filter-sheet-root",
+        className: "cxq-filter-sheet-root cxq-runtime-dialog",
         role: "dialog",
         "aria-modal": "true",
         "aria-label": "\u6D3B\u52D5\u7BE9\u9078\u8A2D\u5B9A"
@@ -10184,6 +10690,16 @@ function App() {
   const [query, setQuery] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
   const [queryMode, setQueryMode] = useLocalState('kjs_query_mode', 'all'); // all | prize | winner | note
+  const searchableTabs = ['games', 'history', 'pending', 'ongoing', 'store', 'shop', 'others'];
+  const searchEnabled = searchableTabs.includes(tab);
+  const searchModeEnabled = ['history', 'pending', 'ongoing', 'others'].includes(tab);
+  const searchTriggerRef = useCxqDialogLifecycle(searchOpen && searchEnabled, () => setSearchOpen(false), '#kjs-search-overlay');
+  React.useEffect(() => {
+    if (!searchEnabled) {
+      setSearchOpen(false);
+      setQuery('');
+    }
+  }, [searchEnabled]);
 
   // 管理模式只增加展示類別，讓桌機與手機套用專用工作區；不影響公開資料。
   React.useEffect(() => {
@@ -10314,7 +10830,25 @@ function App() {
           return cls.includes('bg-white') || cls.includes('dark:bg-') || cls.includes('kjs-admin-modal') || cls.includes('kjs-backoffice-shell') || cls.includes('kjs-game-edit-shell') || cls.includes('sheet-w');
         });
         const panel = direct[0] || searchHost.querySelector(':scope > div:not(.absolute)');
-        if (panel && panel !== root) panel.classList.add('cxq-modal-panel');
+        if (panel && panel !== root) {
+          panel.classList.add('cxq-modal-panel');
+          const footer = panel.lastElementChild;
+          if (footer?.querySelector?.(':scope > button')) footer.classList.add('cxq-modal-actions');
+          const controlCount = panel.querySelectorAll('input,select,textarea').length;
+          const explicitEditor = panel.matches('.kjs-admin-modal,.kjs-game-edit-shell,.cxq-admin-editor-panel') || !!panel.querySelector('.cxq-commerce-editor-header,.cxq-commerce-item-header,[data-kjs-admin-panel="true"]');
+          if (explicitEditor || document.body.classList.contains('cxq-admin-mode') && controlCount >= 2) {
+            panel.classList.add('cxq-admin-editor-panel');
+            const directChildren = Array.from(panel.children);
+            const scrollOwner = directChildren.find(el => el.matches?.('.cxq-editor-scroll,.overflow-y-auto,.overflow-auto,.modal-scroll,.flex-1'));
+            if (scrollOwner) scrollOwner.classList.add('cxq-editor-scroll');
+            const first = panel.firstElementChild;
+            if (first && first !== scrollOwner) first.classList.add('cxq-editor-header');
+            if (footer && footer !== first && footer !== scrollOwner && footer.querySelector?.('button')) footer.classList.add('cxq-editor-footer');
+          }
+        }
+      });
+      document.querySelectorAll('.cxq-page-card [class~="grid-cols-12"]').forEach(grid => {
+        grid.parentElement?.classList.add('cxq-wide-grid-host');
       });
       document.body.classList.toggle('cxq-modal-open', !!document.querySelector('.cxq-modal-root:not(.hidden)'));
     };
@@ -10624,6 +11158,16 @@ function App() {
     bg,
     admins
   }) !== studioConfigBaselineRef.current);
+  // 管理模式有尚未匯出的修改時，重新整理或關閉分頁前給予瀏覽器原生提醒。
+  React.useEffect(() => {
+    const warnBeforeLeave = event => {
+      if (!adminMode || !hasUnpublishedChanges) return;
+      event.preventDefault();
+      event.returnValue = '';
+    };
+    window.addEventListener('beforeunload', warnBeforeLeave);
+    return () => window.removeEventListener('beforeunload', warnBeforeLeave);
+  }, [adminMode, hasUnpublishedChanges]);
   const studioIssues = React.useMemo(() => buildKjsPreExportIssues(data, bg, admins), [data, bg, admins]);
   const studioWarningCount = studioIssues.filter(x => x.level === 'warn' || x.level === 'error').length;
   const studioSourceInfo = (() => {
@@ -10874,8 +11418,9 @@ function App() {
     onClick: () => setTab('history')
   }, "\u516C\u958B\u7D00\u9304")), /*#__PURE__*/React.createElement("div", {
     className: "ml-auto flex items-center gap-2"
-  }, /*#__PURE__*/React.createElement("button", {
+  }, searchEnabled && /*#__PURE__*/React.createElement("button", {
     type: "button",
+    ref: searchTriggerRef,
     className: "cxq-search-trigger",
     onClick: () => setSearchOpen(true),
     title: "\u641C\u5C0B\u7DB2\u7AD9\u5167\u5BB9",
@@ -10934,8 +11479,8 @@ function App() {
       exitAdmin();
       setAdminDockOpen(false);
     }
-  }, "\u9000\u51FA\u7BA1\u7406"))))), searchOpen && /*#__PURE__*/React.createElement("div", {
-    className: "cxq-site-search-layer",
+  }, "\u9000\u51FA\u7BA1\u7406"))))), searchEnabled && searchOpen && /*#__PURE__*/React.createElement("div", {
+    className: "cxq-site-search-layer cxq-runtime-dialog",
     role: "dialog",
     "aria-modal": "true",
     "aria-label": "\u641C\u5C0B\u7DB2\u7AD9\u5167\u5BB9"
@@ -10957,6 +11502,9 @@ function App() {
     htmlFor: "kjs-search-mode-overlay"
   }, "\u641C\u5C0B\u7BC4\u570D"), /*#__PURE__*/React.createElement("select", {
     id: "kjs-search-mode-overlay",
+    style: searchModeEnabled ? undefined : {
+      display: "none"
+    },
     value: queryMode,
     onChange: e => setQueryMode(e.target.value),
     "aria-label": "\u641C\u5C0B\u7BC4\u570D"
@@ -11019,7 +11567,7 @@ function App() {
   }, "\u767C\u5E03\u4E2D\u5FC3"), /*#__PURE__*/React.createElement("button", {
     className: "primary",
     onClick: () => openBackOffice(tab === 'home' ? 'home' : 'overview')
-  }, "\u7BA1\u7406\u5DE5\u4F5C\u5BA4"))), query && /*#__PURE__*/React.createElement("div", {
+  }, "\u7BA1\u7406\u5DE5\u4F5C\u5BA4"))), searchEnabled && query && /*#__PURE__*/React.createElement("div", {
     className: "cxq-active-search-chip",
     role: "status"
   }, /*#__PURE__*/React.createElement("span", null, "\u641C\u5C0B\uFF1A", query), /*#__PURE__*/React.createElement("button", {
@@ -14185,7 +14733,8 @@ function History({
     onClick: () => removeRecord(x.id),
     className: "rounded-lg bg-red-500 text-white px-3 py-1.5"
   }, "\u522A\u9664")))))), /*#__PURE__*/React.createElement("div", {
-    className: "mt-4 flex items-center justify-center gap-1 select-none"
+    className: "cxq-mobile-paginator mt-4 flex items-center justify-center gap-1 select-none",
+    "data-page": `${historyPage} / ${historyMaxPage}`
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "rounded-lg border px-3 py-1.5 text-sm",
@@ -14196,7 +14745,7 @@ function History({
   }, (_, i) => historyStartPage + i).map(p => /*#__PURE__*/React.createElement("button", {
     key: p,
     type: "button",
-    className: `rounded-lg border px-3 py-1.5 text-sm ${p === historyPage ? 'bg-brand text-white border-brand' : ''}`,
+    className: `cxq-page-number rounded-lg border px-3 py-1.5 text-sm ${p === historyPage ? 'bg-brand text-white border-brand' : ''}`,
     onClick: () => setHistoryPage(p)
   }, p)), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -15012,7 +15561,8 @@ function LinksPage({
       removeLink(x.id);
     }
   }, "\u522A\u9664"))))), /*#__PURE__*/React.createElement("div", {
-    className: "mt-4 flex items-center justify-center gap-1 select-none"
+    className: "cxq-mobile-paginator mt-4 flex items-center justify-center gap-1 select-none",
+    "data-page": `${page} / ${maxPage}`
   }, /*#__PURE__*/React.createElement("button", {
     className: "rounded-lg border px-3 py-1.5 text-sm",
     disabled: page <= 1,
@@ -15021,7 +15571,7 @@ function LinksPage({
     length: endPage - startPage + 1
   }, (_, i) => startPage + i).map(p => /*#__PURE__*/React.createElement("button", {
     key: p,
-    className: `rounded-lg border px-3 py-1.5 text-sm ${p === page ? 'bg-brand text-white border-brand' : ''}`,
+    className: `cxq-page-number rounded-lg border px-3 py-1.5 text-sm ${p === page ? 'bg-brand text-white border-brand' : ''}`,
     onClick: () => setPage(p)
   }, p)), /*#__PURE__*/React.createElement("button", {
     className: "rounded-lg border px-3 py-1.5 text-sm",
@@ -15563,7 +16113,8 @@ function Shop({
     value: "80"
   }, "80")))));
   const Paginator = () => /*#__PURE__*/React.createElement("div", {
-    className: "cxq-mobile-paginator mt-3 flex items-center justify-center gap-1 select-none"
+    className: "cxq-mobile-paginator mt-3 flex items-center justify-center gap-1 select-none",
+    "data-page": `${page} / ${maxPage}`
   }, /*#__PURE__*/React.createElement("button", {
     className: "rounded-lg border px-3 py-1.5 text-sm",
     disabled: page <= 1,
@@ -15572,7 +16123,7 @@ function Shop({
     length: endPage - startPage + 1
   }, (_, i) => startPage + i).map(p => /*#__PURE__*/React.createElement("button", {
     key: p,
-    className: `rounded-lg border px-3 py-1.5 text-sm ${p === page ? 'bg-brand text-white border-brand' : ''}`,
+    className: `cxq-page-number rounded-lg border px-3 py-1.5 text-sm ${p === page ? 'bg-brand text-white border-brand' : ''}`,
     onClick: () => setPage(p)
   }, p)), /*#__PURE__*/React.createElement("button", {
     className: "rounded-lg border px-3 py-1.5 text-sm",
@@ -15682,6 +16233,8 @@ function ShopEditor({
   const initialDraftsRef = React.useRef(JSON.stringify(Array.isArray(items) ? items.map(cloneShopItem) : []));
   const [filter, setFilter] = React.useState('');
   const [editId, setEditId] = React.useState(null);
+  const [itemAdvancedOpen, setItemAdvancedOpen] = React.useState(false);
+  React.useEffect(() => setItemAdvancedOpen(false), [editId]);
   const [variantEditId, setVariantEditId] = React.useState(null);
   const newItemIdsRef = React.useRef(new Set());
   const editBackupRef = React.useRef(null);
@@ -16031,12 +16584,12 @@ function ShopEditor({
       }, /*#__PURE__*/React.createElement("div", {
         className: "text-xs text-slate-500"
       }, "\u9078\u9805\u5217\u8868\uFF08\u9010\u5217\u586B\u300C\u5EAB\u5B58 / \u9EDE\u6578\u300D\uFF09"), /*#__PURE__*/React.createElement("div", {
-        className: "rounded border overflow-hidden"
+        className: "cxq-variant-single-list cxq-variant-points-list rounded border overflow-hidden"
       }, /*#__PURE__*/React.createElement("div", {
-        className: "grid grid-cols-[auto_1fr_1fr_auto_auto] items-center gap-2 px-3 py-2 border-b text-xs text-slate-500"
+        className: "cxq-variant-header grid grid-cols-[auto_1fr_1fr_auto_auto] items-center gap-2 px-3 py-2 border-b text-xs text-slate-500"
       }, /*#__PURE__*/React.createElement("div", null, "#"), /*#__PURE__*/React.createElement("div", null, "\u9078\u9805"), /*#__PURE__*/React.createElement("div", null, "\u5EAB\u5B58"), /*#__PURE__*/React.createElement("div", null, "\u9EDE\u6578"), /*#__PURE__*/React.createElement("div", null, "\u555F\u7528")), rows.map((s, idx) => /*#__PURE__*/React.createElement("div", {
         key: s.key,
-        className: "grid grid-cols-[auto_1fr_1fr_auto_auto] items-center gap-2 px-3 py-2 border-b"
+        className: "cxq-variant-row grid grid-cols-[auto_1fr_1fr_auto_auto] items-center gap-2 px-3 py-2 border-b"
       }, /*#__PURE__*/React.createElement("div", {
         className: "text-xs text-slate-500"
       }, idx + 1), /*#__PURE__*/React.createElement("div", {
@@ -16181,7 +16734,7 @@ function ShopEditor({
     }), /*#__PURE__*/React.createElement("div", {
       className: "absolute inset-0 flex items-center justify-center p-4"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "w-[min(820px,96vw)] max-h-[90vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl"
+      className: "cxq-admin-editor-panel cxq-variant-editor-panel w-[min(820px,96vw)] max-h-[90vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col"
     }, /*#__PURE__*/React.createElement("div", {
       className: "px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between"
     }, /*#__PURE__*/React.createElement("div", {
@@ -16195,7 +16748,7 @@ function ShopEditor({
       className: "rounded bg-brand text-white px-3 py-1.5 text-sm",
       onClick: save
     }, "\u5132\u5B58"))), /*#__PURE__*/React.createElement("div", {
-      className: "p-3 space-y-3 overflow-y-auto max-h-[calc(90vh-60px)]"
+      className: "cxq-editor-scroll cxq-variant-editor-body p-3 space-y-3 overflow-y-auto max-h-[calc(90vh-60px)]"
     }, /*#__PURE__*/React.createElement("div", {
       className: "grid grid-cols-1 md:grid-cols-3 gap-2 items-center"
     }, /*#__PURE__*/React.createElement("label", {
@@ -16304,7 +16857,7 @@ function ShopEditor({
   }), /*#__PURE__*/React.createElement("div", {
     className: "absolute inset-0 flex items-center justify-center p-4"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "w-full max-w-4xl max-h-[86vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl"
+    className: "cxq-admin-editor-panel cxq-commerce-manager-panel w-full max-w-4xl max-h-[86vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "cxq-commerce-editor-header px-4 py-3 flex items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-700"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -16331,7 +16884,7 @@ function ShopEditor({
     onClick: onClose,
     className: "rounded-lg border px-3 py-1.5 text-sm"
   }, "\u95DC\u9589"))), /*#__PURE__*/React.createElement("div", {
-    className: "p-3 overflow-y-auto max-h-[calc(86vh-56px)] space-y-3"
+    className: "cxq-editor-scroll cxq-commerce-editor-body p-3 overflow-y-auto max-h-[calc(86vh-56px)] space-y-3"
   }, /*#__PURE__*/React.createElement("div", {
     className: "kjs-admin-bulkbar"
   }, /*#__PURE__*/React.createElement("span", {
@@ -16456,7 +17009,7 @@ function ShopEditor({
       role: "dialog",
       "aria-modal": "true"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "w-[min(920px,96vw)] max-h-[92dvh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col"
+      className: "cxq-admin-editor-panel cxq-commerce-item-panel w-[min(920px,96vw)] max-h-[92dvh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col"
     }, /*#__PURE__*/React.createElement("div", {
       className: "cxq-commerce-item-header px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3"
     }, /*#__PURE__*/React.createElement("div", {
@@ -16471,13 +17024,19 @@ function ShopEditor({
       onClick: () => setVariantEditId(it.id),
       className: "rounded-lg border px-3 py-1.5 text-sm"
     }, hasV ? '編輯規格' : '新增規格'), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "cxq-editor-more rounded-lg border px-3 py-1.5 text-sm",
+      onClick: () => setItemAdvancedOpen(v => !v),
+      "aria-expanded": itemAdvancedOpen ? "true" : "false"
+    }, itemAdvancedOpen ? '收合欄位' : '更多欄位'), /*#__PURE__*/React.createElement("button", {
       onClick: cancelItemEdit,
       className: "rounded-lg border border-rose-200 text-rose-600 px-3 py-1.5 text-sm"
     }, newItemIdsRef.current.has(it.id) ? '取消新增' : '取消修改'), /*#__PURE__*/React.createElement("button", {
       onClick: finishItemEdit,
       className: "rounded-lg bg-brand text-white px-3 py-1.5 text-sm"
     }, "\u5957\u7528\u6B64\u7B46"))), /*#__PURE__*/React.createElement("div", {
-      className: "p-4 overflow-y-auto space-y-4"
+      className: "cxq-editor-scroll cxq-commerce-item-body p-4 overflow-y-auto space-y-4",
+      "data-advanced": itemAdvancedOpen ? "true" : "false"
     }, /*#__PURE__*/React.createElement("div", {
       className: "grid grid-cols-1 md:grid-cols-4 gap-3"
     }, /*#__PURE__*/React.createElement("label", {
@@ -16529,7 +17088,7 @@ function ShopEditor({
       onChange: e => up(it.id, 'buyUrl', e.target.value),
       placeholder: "\u53EF\u7559\u7A7A"
     }))), /*#__PURE__*/React.createElement("label", {
-      className: "text-sm block"
+      className: "cxq-commerce-advanced-field text-sm block"
     }, "\u5546\u54C1\u4ECB\u7D39", /*#__PURE__*/React.createElement("textarea", {
       className: "mt-1 w-full rounded-lg border px-3 py-2",
       rows: 4,
@@ -16537,7 +17096,7 @@ function ShopEditor({
       onChange: e => up(it.id, 'desc', e.target.value),
       placeholder: "\u5546\u54C1\u4ECB\u7D39"
     })), /*#__PURE__*/React.createElement("div", {
-      className: "grid grid-cols-1 md:grid-cols-2 gap-3"
+      className: "cxq-commerce-advanced-field grid grid-cols-1 md:grid-cols-2 gap-3"
     }, /*#__PURE__*/React.createElement("label", {
       className: "text-sm block"
     }, "\u5716\u7247\u7DB2\u5740\uFF08\u6BCF\u884C\u4E00\u5F35\uFF09", /*#__PURE__*/React.createElement("textarea", {
