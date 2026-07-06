@@ -1,13 +1,52 @@
 {
   "_meta": {
     "app": "kjs",
-    "version": 2,
-    "exportedAt": "2026-05-04T10:05:50.531Z"
+    "version": 3,
+    "schemaVersion": 3,
+    "exportedAt": "2026-07-06T00:25:46.347Z"
   },
   "data": {
     "homepage": {
       "title": "開獎所",
       "subtitle": "免費抽獎・不定期驚喜",
+      "description": "盲盒・公仔・小物透明販售與交流，抽獎公開透明，紀錄可查，社群限定活動持續更新。",
+      "heroImage": "",
+      "heroBadge": "LINE 社群限定",
+      "primaryButtonText": "加入LINE社群",
+      "secondaryButtonText": "官方LINE",
+      "communityTitle": "加入 CxQ開獎所 LINE 社群",
+      "communityDesc": "免費抽獎、社群限定商品、點數活動與公開透明紀錄都會集中在社群內公告。",
+      "communityBullets": [
+        "免費抽獎",
+        "社群限定商品",
+        "點數活動",
+        "公開透明紀錄"
+      ],
+      "featuredDrawTitle": "本期主打抽獎",
+      "featuredStoreTitle": "社群商店精選",
+      "featuredShopTitle": "點數商城精選",
+      "galleryTitle": "開箱/到貨實拍",
+      "galleryDesc": "社群成員分享的開箱與到貨實拍。",
+      "sectionOrder": [
+        "hero",
+        "focus",
+        "store",
+        "shop",
+        "gallery",
+        "faq"
+      ],
+      "visibility": {
+        "hero": true,
+        "focus": true,
+        "store": true,
+        "shop": true,
+        "gallery": true,
+        "community": false,
+        "faq": true
+      },
+      "featuredDrawIds": [],
+      "featuredStoreIds": [],
+      "featuredShopIds": [],
       "announcements": [],
       "about": "🎉 歡迎來到【開獎所｜官方紀錄網頁】\n\n這裡是「開獎所」的專屬資訊中心，整合了所有抽獎相關內容，\n無論你是第一次參加，還是長期支持的老朋友，都能在這裡找到所需資訊。\n\n📚 歷史抽獎紀錄\n\n完整保存歷屆抽獎活動：包含開獎日期、獎品名稱、抽出名額、參與人數。\n\n公開透明：每場活動皆附有抽獎影片（YouTube 連結），並清楚列出得獎名單與備註狀態。\n\n方便查詢：想回顧過往活動或確認得獎紀錄，都能在這裡找到。\n\n⏳ 等待開獎\n\n目前報名中的活動：清楚顯示尚未開獎的項目。\n\n即時資訊：包括獎品名稱、圖片、預計抽出名額與截止日期。\n\n參與狀況：顯示目前已報名人數，並附上完整參與名單（可直接複製，用於抽獎工具）。\n👉 讓大家在抽獎前就能掌握規模與競爭度。\n\n🔄 進行中活動\n\n長期／常駐型活動：例如邀請好友獲得點數、完成任務、限時小挑戰。\n\n規則清楚：每個活動都有詳細說明，包含參加方式、獎勵內容與限制條件。\n\n隨時更新：不定期推出新任務，增加互動與趣味性。\n\n🛍️ 點數商城\n\n好禮兌換專區：各式商品搭配圖片、描述與所需點數。\n\n即時庫存顯示：避免兌換時出現落空。\n\n個人點數查詢：成員可隨時確認自己的點數餘額，安排兌換策略。\n\n商品分級：區分「常態商品」與「期間限定商品」，增添收藏與驚喜感。\n\n📌 其他資料\n\n抽獎規則：清楚說明流程，確保公平、公正、公開。\n\n公告彙整：社群最新資訊與活動提醒，一目了然。\n\n相關連結：包含官方帳號、社群入口、紀錄影片等，方便快速跳轉。\n\n✨ 這個網頁的目的，就是讓大家可以「隨時查詢、放心參與、輕鬆回顧」。\n不論是抽獎結果、點數累積，還是商城兌換，都能在這裡透明呈現。",
       "links": [
@@ -6069,7 +6108,12 @@
       "drawPublicShowLimit": 50,
       "drawCooldownSec": 10,
       "contactUrl": "https://lin.ee/kKEvNhs",
-      "lineGroupUrl": ""
+      "lineGroupUrl": "",
+      "siteName": "CxQ開獎所",
+      "siteShortName": "CxQ",
+      "siteTagline": "抽獎・社群選物・點數兌換",
+      "logoUrl": "",
+      "faviconUrl": ""
     },
     "gallery": {
       "items": [
@@ -6544,7 +6588,23 @@
       ]
     },
     "links": {
-      "items": []
+      "items": [
+        {
+          "id": "8kkma8mu",
+          "name": "抽獎群組",
+          "url": "https://reurl.cc/ZNGdXV"
+        },
+        {
+          "id": "5rfhig8c",
+          "name": "官方LINE",
+          "url": "https://lin.ee/kKEvNhs"
+        },
+        {
+          "id": "owa690ts",
+          "name": "🎬【YouTube 頻道】",
+          "url": "https://www.youtube.com/@%E9%96%8B%E7%8D%8E%E6%89%80"
+        }
+      ]
     }
   },
   "admins": [
@@ -6559,7 +6619,72 @@
   ],
   "images": {
     "__kind": "images.v1",
-    "data": {}
+    "data": {
+      "body:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>button:nth-of-type(1)>img:nth-of-type(1)": {
+        "src": "assets/曝光牆/50039_0.jpg",
+        "type": "img",
+        "offsetX": 0,
+        "offsetY": 0,
+        "scale": 1,
+        "rotateDeg": 0
+      },
+      "body:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>button:nth-of-type(2)>img:nth-of-type(1)": {
+        "src": "assets/曝光牆/50656_0.jpg",
+        "type": "img",
+        "offsetX": 0,
+        "offsetY": 0,
+        "scale": 1,
+        "rotateDeg": 0
+      },
+      "body:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>button:nth-of-type(3)>img:nth-of-type(1)": {
+        "src": "assets/曝光牆/50047_0.jpg",
+        "type": "img",
+        "offsetX": 0,
+        "offsetY": 0,
+        "scale": 1,
+        "rotateDeg": 0
+      },
+      "body:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>button:nth-of-type(4)>img:nth-of-type(1)": {
+        "src": "assets/曝光牆/50049_0.jpg",
+        "type": "img",
+        "offsetX": 0,
+        "offsetY": 0,
+        "scale": 1,
+        "rotateDeg": 0
+      },
+      "body:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>button:nth-of-type(5)>img:nth-of-type(1)": {
+        "src": "assets/曝光牆/50044_0.jpg",
+        "type": "img",
+        "offsetX": 0,
+        "offsetY": 0,
+        "scale": 1,
+        "rotateDeg": 0
+      },
+      "body:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>button:nth-of-type(6)>img:nth-of-type(1)": {
+        "src": "assets/曝光牆/52999_0.jpg",
+        "type": "img",
+        "offsetX": 0,
+        "offsetY": 0,
+        "scale": 1,
+        "rotateDeg": 0
+      },
+      "body:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>button:nth-of-type(7)>img:nth-of-type(1)": {
+        "src": "assets/曝光牆/50043_0.jpg",
+        "type": "img",
+        "offsetX": 0,
+        "offsetY": 0,
+        "scale": 1,
+        "rotateDeg": 0
+      },
+      "body:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>main:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(1)>section:nth-of-type(1)>div:nth-of-type(1)>div:nth-of-type(2)>button:nth-of-type(8)>img:nth-of-type(1)": {
+        "src": "assets/曝光牆/50041_0.jpg",
+        "type": "img",
+        "offsetX": 0,
+        "offsetY": 0,
+        "scale": 1,
+        "rotateDeg": 0
+      }
+    }
   },
   "bg": {
     "url": "assets/bg/d45032c7-b11d-41e7-88dc-65f2eec7eeb5.jpg",
@@ -6576,6 +6701,8 @@
     "menuBlur": 5,
     "menuOpacity": 0.4,
     "menuSize": "cover",
-    "menuPos": "center"
+    "menuPos": "center",
+    "colorMode": "light",
+    "themePreset": "clean"
   }
 }
