@@ -3809,6 +3809,130 @@
 </style>
 <!-- [CXQ MOBILE ADMIN EDITOR SYSTEM V12 END] -->
 
+<!-- [CXQ ADMIN VISUAL POLISH V13 START] -->
+<style id="cxq-admin-visual-polish-v13">
+  /* Public product titles are primary touch targets too, not decorative text. */
+  .cxq-commerce-card > button:nth-of-type(2){
+    min-height:44px !important;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+
+  /* Game page owns its intentional chip scroller; the page shell must not leak width. */
+  body.cxq-admin-mode .cxq-page-section:has(.kjs-game-grid){
+    overflow-x:clip;
+  }
+  body.cxq-admin-mode .kjs-game-grid,
+  body.cxq-admin-mode .kjs-game-card-polished,
+  body.cxq-admin-mode .kjs-game-card-body,
+  body.cxq-admin-mode .kjs-admin-mobile-actions{
+    min-width:0;
+    max-width:100%;
+  }
+
+  @media (max-width:767px){
+    /* Studio controls are stacked deliberately instead of becoming a hidden horizontal strip. */
+    .cxq-studio-header-actions{
+      display:grid !important;
+      grid-template-columns:minmax(0,1fr) auto !important;
+      gap:.5rem !important;
+      overflow:visible !important;
+      padding-bottom:0 !important;
+    }
+    .cxq-studio-header-actions > .cxq-view-switch{
+      grid-column:1/-1;
+      width:100% !important;
+    }
+    .cxq-view-switch button{
+      min-height:44px !important;
+      padding:.48rem .7rem !important;
+    }
+    .cxq-studio-header-actions > .cxq-studio-status{
+      grid-column:1;
+      min-height:44px;
+      max-width:none !important;
+      justify-content:center;
+    }
+    .cxq-studio-header-actions > button[aria-label="關閉管理工作室"]{
+      grid-column:2;
+      min-width:44px;
+      min-height:44px;
+      padding:.55rem .7rem !important;
+    }
+
+    /* Header tool entry remains comfortably tappable in every admin page. */
+    .cxq-site-header button[aria-label="系統工具"],
+    .cxq-site-header button[aria-label="管理入口"]{
+      width:44px !important;
+      min-width:44px !important;
+      height:44px !important;
+      min-height:44px !important;
+    }
+
+    /*
+      Some commerce overlays live inside a page section. Their fixed root can be a few
+      pixels shorter than 100dvh; children therefore follow the real parent height.
+    */
+    body.cxq-admin-mode .cxq-modal-root > .cxq-admin-editor-panel,
+    body.cxq-admin-mode .cxq-modal-root > .absolute.inset-0.flex > .cxq-admin-editor-panel{
+      width:100% !important;
+      height:100% !important;
+      max-width:100% !important;
+      max-height:100% !important;
+      margin:0 !important;
+    }
+    body.cxq-admin-mode .cxq-modal-root > .absolute.inset-0.flex{
+      min-height:0;
+    }
+    .cxq-commerce-item-header > div:last-child button{
+      min-height:44px !important;
+    }
+  }
+
+  @media (min-width:768px) and (max-width:1100px){
+    .kjs-backoffice-shell.cxq-studio-shell{
+      width:calc(100vw - 2rem) !important;
+      height:calc(100dvh - 2rem) !important;
+      max-height:calc(100dvh - 2rem) !important;
+      grid-template-columns:200px minmax(0,1fr) !important;
+    }
+    .cxq-admin-editor-panel{
+      max-width:calc(100vw - 2rem) !important;
+      max-height:calc(100dvh - 2rem) !important;
+    }
+  }
+</style>
+<!-- [CXQ ADMIN VISUAL POLISH V13 END] -->
+
+<!-- [CXQ ADMIN TOUCH REFINEMENT V13.1 START] -->
+<style id="cxq-admin-touch-refinement-v13-1">
+  .cxq-view-switch button{
+    min-width:44px;
+    min-height:40px !important;
+  }
+  .cxq-commerce-editor-header button{
+    min-width:44px;
+  }
+
+  @media (max-width:1100px){
+    .cxq-admin-editor-panel :where(
+      input:not([type="checkbox"]):not([type="radio"]),
+      select,
+      textarea
+    ){
+      font-size:16px !important;
+    }
+  }
+
+  @media (max-width:767px){
+    .cxq-view-switch button{
+      min-height:44px !important;
+    }
+  }
+</style>
+<!-- [CXQ ADMIN TOUCH REFINEMENT V13.1 END] -->
+
 </head>
 
 <body class="kjs-unified bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-100">
@@ -7517,7 +7641,7 @@ function StoreEditor({
       const next = {
         ...it,
         images,
-        image: images[0] || it.image || '',
+        image: images[0] || '',
         enabled: !hidden,
         visible: !hidden
       };
@@ -10804,6 +10928,7 @@ function App() {
   // 純展示層：自動辨識彈窗外框與內容面板，統一套用置中、安全高度與手機邊距。
   // 不改動任何按鈕、表單、資料或原本開關視窗的事件。
   React.useEffect(() => {
+    let dialogScrollLockHeld = false;
     const decorateDialogs = () => {
       document.querySelectorAll('.fixed.inset-0').forEach(root => {
         if (root.querySelector('.menu-pane')) return;
@@ -10850,7 +10975,15 @@ function App() {
       document.querySelectorAll('.cxq-page-card [class~="grid-cols-12"]').forEach(grid => {
         grid.parentElement?.classList.add('cxq-wide-grid-host');
       });
-      document.body.classList.toggle('cxq-modal-open', !!document.querySelector('.cxq-modal-root:not(.hidden)'));
+      const hasOpenDialog = !!document.querySelector('.cxq-modal-root:not(.hidden)');
+      document.body.classList.toggle('cxq-modal-open', hasOpenDialog);
+      if (hasOpenDialog && !dialogScrollLockHeld) {
+        window.BodyScrollLock?.lock?.();
+        dialogScrollLockHeld = true;
+      } else if (!hasOpenDialog && dialogScrollLockHeld) {
+        window.BodyScrollLock?.unlock?.();
+        dialogScrollLockHeld = false;
+      }
     };
     decorateDialogs();
     const observer = new MutationObserver(decorateDialogs);
@@ -10858,7 +10991,11 @@ function App() {
       childList: true,
       subtree: true
     });
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      document.body.classList.remove('cxq-modal-open');
+      if (dialogScrollLockHeld) window.BodyScrollLock?.unlock?.();
+    };
   }, []);
 
   // === Games：小遊戲中心顯示邏輯 ===
@@ -16425,7 +16562,7 @@ function ShopEditor({
       desc: it.desc || '',
       tags: cxqTagTokens(it.tags || []),
       images,
-      image: it.image || images[0] || '',
+      image: images[0] || '',
       availability: it.availability || '上架'
     };
     delete next.point;
