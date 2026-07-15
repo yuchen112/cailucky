@@ -7964,7 +7964,81 @@ const DEFAULT_SETTINGS = {
   logoUrl: "",
   faviconUrl: ""
 };
-
+// === Default Appearance / Background Settings（會跟著 app.json 匯出與載入） ===
+const DEFAULT_BG = {
+  themePreset: "mint",
+  colorMode: "auto",
+  url: "",
+  tint: "rgba(255,255,255,0.0)",
+  brightness: 1,
+  blur: 0,
+  opacity: 1,
+  size: "cover",
+  pos: "center",
+  menuUseMain: true,
+  menuUrl: "",
+  menuTint: "rgba(255,255,255,0.0)",
+  menuBrightness: 1,
+  menuBlur: 0,
+  menuOpacity: 1,
+  menuSize: "cover",
+  menuPos: "center"
+};
+function normalizeBgSettings(input = {}) {
+  const src = input && typeof input === 'object' && !Array.isArray(input) ? input : {};
+  const validTheme = new Set(['mint', 'warm', 'clean', 'midnight', 'rose', 'royal']);
+  const validMode = new Set(['auto', 'light', 'dark']);
+  const validSize = new Set(['cover', 'contain', 'auto']);
+  const num = (value, fallback, min, max) => {
+    const n = Number(value);
+    if (!Number.isFinite(n)) return fallback;
+    return Math.min(max, Math.max(min, n));
+  };
+  const str = (value, fallback = '') => typeof value === 'string' ? value : fallback;
+  const out = {
+    ...DEFAULT_BG,
+    ...src
+  };
+  out.themePreset = validTheme.has(out.themePreset) ? out.themePreset : DEFAULT_BG.themePreset;
+  out.colorMode = validMode.has(out.colorMode) ? out.colorMode : DEFAULT_BG.colorMode;
+  out.url = str(out.url, '');
+  out.tint = str(out.tint, DEFAULT_BG.tint);
+  out.brightness = num(out.brightness, DEFAULT_BG.brightness, 0.2, 2);
+  out.blur = num(out.blur, DEFAULT_BG.blur, 0, 32);
+  out.opacity = num(out.opacity, DEFAULT_BG.opacity, 0, 1);
+  out.size = validSize.has(out.size) ? out.size : DEFAULT_BG.size;
+  out.pos = str(out.pos, DEFAULT_BG.pos) || DEFAULT_BG.pos;
+  out.menuUseMain = out.menuUseMain !== false;
+  out.menuUrl = str(out.menuUrl, '');
+  out.menuTint = str(out.menuTint, DEFAULT_BG.menuTint);
+  out.menuBrightness = num(out.menuBrightness, DEFAULT_BG.menuBrightness, 0.2, 2);
+  out.menuBlur = num(out.menuBlur, DEFAULT_BG.menuBlur, 0, 32);
+  out.menuOpacity = num(out.menuOpacity, DEFAULT_BG.menuOpacity, 0, 1);
+  out.menuSize = validSize.has(out.menuSize) ? out.menuSize : DEFAULT_BG.menuSize;
+  out.menuPos = str(out.menuPos, DEFAULT_BG.menuPos) || DEFAULT_BG.menuPos;
+  return out;
+}
+function cxqExtractAppearanceFromAppJson(raw, obj) {
+  const candidates = [
+    raw && typeof raw === 'object' ? raw.bg : null,
+    raw && typeof raw === 'object' ? raw.appearance : null,
+    raw && typeof raw === 'object' ? raw.settings?.appearance : null,
+    obj && typeof obj === 'object' ? obj.settings?.appearance : null,
+    obj && typeof obj === 'object' ? obj.appearance : null,
+    obj && typeof obj === 'object' ? obj.bg : null
+  ];
+  return candidates.find(x => x && typeof x === 'object' && !Array.isArray(x)) || null;
+}
+function cxqAttachAppearanceToData(data, bg) {
+  const d = typeof normalizeSiteData === 'function' ? normalizeSiteData(data) : (data && typeof data === 'object' ? { ...data } : {});
+  const appearance = normalizeBgSettings(bg);
+  d.settings = {
+    ...(d.settings || {}),
+    appearance
+  };
+  d.appearance = appearance;
+  return d;
+}
 // === Homepage Modules（離線單檔首頁模組設定；全部可由管理模式編輯並跟著匯出） ===
 const DEFAULT_HOMEPAGE = {
   title: 'CxQ開獎所｜官方平台',
@@ -12412,27 +12486,32 @@ function kjsSafeParseJSON(raw, fallback) {
     return fallback;
   }
 }
+function kjsNormalizeLocalStateByKey(key, value) {
+  if (key === LS.data && typeof normalizeSiteData === 'function') return normalizeSiteData(value);
+  if (key === 'kjs_bg' && typeof normalizeBgSettings === 'function') return normalizeBgSettings(value);
+  return value;
+}
 function useLocalState(key, initial) {
   const readInitial = () => {
     try {
       const raw = localStorage.getItem(key);
       const parsed = raw ? JSON.parse(raw) : initial;
-      return key === LS.data && typeof normalizeSiteData === 'function' ? normalizeSiteData(parsed) : parsed;
+      return kjsNormalizeLocalStateByKey(key, parsed);
     } catch (err) {
       console.warn('LocalStorage 讀取失敗，已使用預設值：', key, err);
-      return key === LS.data && typeof normalizeSiteData === 'function' ? normalizeSiteData(initial) : initial;
+      return kjsNormalizeLocalStateByKey(key, initial);
     }
   };
   const [state, setRawState] = React.useState(readInitial);
   const setState = React.useCallback(next => {
     setRawState(prev => {
       const value = typeof next === 'function' ? next(prev) : next;
-      return key === LS.data && typeof normalizeSiteData === 'function' ? normalizeSiteData(value) : value;
+      return kjsNormalizeLocalStateByKey(key, value);
     });
   }, [key]);
   React.useEffect(() => {
     try {
-      const value = key === LS.data && typeof normalizeSiteData === 'function' ? normalizeSiteData(state) : state;
+      const value = kjsNormalizeLocalStateByKey(key, state);
       localStorage.setItem(key, JSON.stringify(value));
     } catch (err) {
       console.error('LocalStorage 儲存失敗：', key, err);
@@ -14292,6 +14371,9 @@ function normalizeSiteData(input) {
     ...DEFAULT_SETTINGS,
     ...kjsObj(d.settings)
   };
+  const appearanceSource = d.settings.appearance || d.appearance || d.bg || source.appearance || source.bg || null;
+  d.settings.appearance = normalizeBgSettings(appearanceSource || {});
+  d.appearance = d.settings.appearance;
   return d;
 }
 function kjsHadLocalDataBeforeApp() {
@@ -14725,7 +14807,7 @@ function App() {
       if (useLocalOnly) {
         publicBaselineRef.current = JSON.stringify(normalizeSiteData(data));
         studioConfigBaselineRef.current = JSON.stringify({
-          bg,
+          bg: normalizeBgSettings(bg),
           admins
         });
         setPublicBaselineTick(v => v + 1);
@@ -14746,8 +14828,11 @@ function App() {
 
         // 同時相容兩種格式：扁平 { ... } 或 包一層 { _meta, data, admins, bg, images }
         const obj = raw && typeof raw === 'object' && 'data' in raw ? raw.data : raw;
+        const nextBg = cxqExtractAppearanceFromAppJson(raw, obj);
+        const appliedBg = nextBg ? normalizeBgSettings(nextBg) : normalizeBgSettings(bg);
         if (obj && typeof obj === 'object') {
-          const normalized = normalizeSiteData(obj);
+          const normalizedBase = normalizeSiteData(obj);
+          const normalized = nextBg ? cxqAttachAppearanceToData(normalizedBase, appliedBg) : normalizedBase;
           publicBaselineRef.current = JSON.stringify(normalized);
           setPublicBaselineTick(v => v + 1);
           setData(normalized);
@@ -14761,9 +14846,8 @@ function App() {
           throw new Error('app.json 結構異常：期望為物件，實得 ' + typeof obj);
         }
 
-        // 背景設定：優先使用包裝層 raw.bg；若未提供，再相容 obj.bg。
-        const nextBg = raw && typeof raw === 'object' && raw.bg ? raw.bg : obj && obj.bg ? obj.bg : null;
-        if (nextBg) setBg(nextBg);
+        // 外觀設定：優先使用包裝層 raw.bg；再相容 data.settings.appearance / data.appearance / data.bg。
+        if (nextBg) setBg(appliedBg);
 
         // ImageIO 圖片設定：優先使用包裝層 raw.images；若未提供，再相容 obj.images。
         const nextImages = raw && typeof raw === 'object' && raw.images ? raw.images : obj && obj.images ? obj.images : null;
@@ -14779,7 +14863,7 @@ function App() {
         const nextAdmins = raw && typeof raw === 'object' && Array.isArray(raw.admins) ? raw.admins : obj && Array.isArray(obj.admins) ? obj.admins : null;
         if (nextAdmins) setAdmins(nextAdmins);
         studioConfigBaselineRef.current = JSON.stringify({
-          bg: nextBg || bg,
+          bg: appliedBg,
           admins: nextAdmins || admins
         });
         setPublicBaselineTick(v => v + 1);
@@ -14787,9 +14871,9 @@ function App() {
         if (!publicBaselineRef.current) {
           publicBaselineRef.current = JSON.stringify(normalizeSiteData(data));
           studioConfigBaselineRef.current = JSON.stringify({
-            bg,
-            admins
-          });
+          bg: normalizeBgSettings(bg),
+          admins
+        });
           setPublicBaselineTick(v => v + 1);
         }
         try {
@@ -15309,25 +15393,8 @@ function App() {
   }, []);
 
   // === 背景設定（主畫面 & 漢堡選單） ===
-  const [bg, setBg] = useLocalState('kjs_bg', {
-    themePreset: "mint",
-    colorMode: "auto",
-    url: "",
-    tint: "rgba(255,255,255,0.0)",
-    brightness: 1,
-    blur: 0,
-    opacity: 1,
-    size: "cover",
-    pos: "center",
-    menuUseMain: true,
-    menuUrl: "",
-    menuTint: "rgba(255,255,255,0.0)",
-    menuBrightness: 1,
-    menuBlur: 0,
-    menuOpacity: 1,
-    menuSize: "cover",
-    menuPos: "center"
-  });
+  const [bg, setBg] = useLocalState('kjs_bg', normalizeBgSettings({}));
+
 
   // 把設定套到 CSS 變數
   useEffect(() => {
@@ -15378,7 +15445,7 @@ function App() {
   // 靜態發布工作室狀態：只比較目前內容與本次載入的公開 app.json，不會自行上傳。
   const currentDataSignature = React.useMemo(() => JSON.stringify(normalizeSiteData(data)), [data]);
   const hasUnpublishedChanges = publicBaselineTick >= 0 && (!!publicBaselineRef.current && currentDataSignature !== publicBaselineRef.current || !!studioConfigBaselineRef.current && JSON.stringify({
-    bg,
+    bg: normalizeBgSettings(bg),
     admins
   }) !== studioConfigBaselineRef.current);
   // 管理模式有尚未匯出的修改時，重新整理或關閉分頁前給予瀏覽器原生提醒。
@@ -15429,11 +15496,12 @@ function App() {
   const cxqSaveImportBackup = () => {
     try {
       const imagesStr = window.ImageIO ? window.ImageIO.exportImagesJSON() : null;
+      const backupBg = normalizeBgSettings(bg);
       const snapshot = {
         savedAt: new Date().toISOString(),
-        data: normalizeSiteData(data),
+        data: cxqAttachAppearanceToData(data, backupBg),
         admins,
-        bg,
+        bg: backupBg,
         images: imagesStr ? JSON.parse(imagesStr) : null
       };
       const old = kjsSafeParseJSON(localStorage.getItem('kjs_import_backups_v1'), []);
@@ -15454,7 +15522,7 @@ function App() {
       if (!confirm(`確定還原 ${when} 的匯入前備份？目前本機內容會被取代。`)) return;
       setData(normalizeSiteData(latest.data));
       if (Array.isArray(latest.admins)) setAdmins(latest.admins);
-      if (latest.bg) setBg(latest.bg);
+      if (latest.bg || latest.data?.settings?.appearance || latest.data?.appearance || latest.data?.bg) setBg(normalizeBgSettings(latest.bg || latest.data?.settings?.appearance || latest.data?.appearance || latest.data?.bg));
       if (latest.images && window.ImageIO?.importImagesJSON) window.ImageIO.importImagesJSON(latest.images);
       kjsToast('已還原最近一次匯入前備份。');
     } catch (err) {
@@ -15473,20 +15541,25 @@ function App() {
     // 取出目前所有圖片路徑與調整（ImageIO 會回傳字串 JSON）
     const imagesStr = window.ImageIO ? window.ImageIO.exportImagesJSON() : null;
     const images = imagesStr ? JSON.parse(imagesStr) : null;
+    const exportBg = normalizeBgSettings(bg);
+    const exportData = cxqAttachAppearanceToData(data, exportBg);
     const full = {
       _meta: {
         app: 'kjs',
         version: 3,
         schemaVersion: 3,
+        appearanceSchemaVersion: 1,
         exportedAt: new Date().toISOString()
       },
-      data: normalizeSiteData(data),
-      // 站內資料（已補齊欄位）
+      data: exportData,
+      // 站內資料（已補齊欄位，含 settings.appearance）
       admins,
       // 管理員名單（hash）
       images,
-      // ← 新增：全站圖片路徑與調整（images.v1 結構）
-      bg // ← 新增：背景設定（主畫面 / 漢堡選單）
+      // ← 全站圖片路徑與調整（images.v1 結構）
+      bg: exportBg,
+      // ← 外觀背板/主題/固定亮暗色設定，公開站會自動套用
+      appearance: exportBg
     };
     const blob = new Blob([JSON.stringify(full, null, 2)], {
       type: 'application/json'
@@ -15518,6 +15591,15 @@ function App() {
           history: Array.isArray(rawData.history) ? sortHistoryDesc(rawData.history.slice()) : rawData.history
         });
         const nextAdmins = looksNew && Array.isArray(obj.admins) ? obj.admins : null;
+        const nextBg = cxqExtractAppearanceFromAppJson(obj, rawData);
+        const normalizedBg = nextBg ? normalizeBgSettings(nextBg) : null;
+        if (normalizedBg) {
+          nextData.settings = {
+            ...(nextData.settings || {}),
+            appearance: normalizedBg
+          };
+          nextData.appearance = normalizedBg;
+        }
         const before = cxqImportCounts(data);
         const after = cxqImportCounts(nextData);
         const preview = {
@@ -15526,7 +15608,7 @@ function App() {
           after,
           version: obj?._meta?.schemaVersion || obj?._meta?.version || '舊格式',
           includesAdmins: !!nextAdmins,
-          includesAppearance: !!obj?.bg,
+          includesAppearance: !!normalizedBg,
           includesImages: !!obj?.images
         };
         setLastImportPreview(preview);
@@ -15545,7 +15627,7 @@ function App() {
             console.warn('圖片設定匯入失敗：', err);
           }
         }
-        if (obj?.bg) setBg(obj.bg);
+        if (normalizedBg) setBg(normalizedBg);
         kjsToast(`匯入完成${backedUp ? '，已保留匯入前備份' : ''}。`);
       } catch (err) {
         alert('匯入失敗：' + String(err?.message || '不是有效 JSON'));
@@ -22758,7 +22840,8 @@ function SettingsPanel({
     }),
     className: "rounded-lg border px-3 py-1.5 text-sm"
   }, "\u6697\u5E95"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => setBg({
+    onClick: () => setBg(normalizeBgSettings({
+      ...bg,
       url: "",
       tint: "rgba(255,255,255,0.0)",
       brightness: 1,
@@ -22774,7 +22857,7 @@ function SettingsPanel({
       menuOpacity: 1,
       menuSize: "cover",
       menuPos: "center"
-    }),
+    })),
     className: "rounded-lg border px-3 py-1.5 text-sm"
   }, "\u6E05\u9664\u80CC\u666F")), /*#__PURE__*/React.createElement("div", {
     className: "mt-6 flex justify-end"
