@@ -3,7 +3,7 @@
     "app": "kjs",
     "version": 3,
     "schemaVersion": 3,
-    "exportedAt": "2026-07-06T00:25:46.347Z"
+    "exportedAt": "2026-07-15T19:04:18.362Z"
   },
   "data": {
     "homepage": {
@@ -6703,6 +6703,6 @@
     "menuSize": "cover",
     "menuPos": "center",
     "colorMode": "light",
-    "themePreset": "clean"
+    "themePreset": "royal"
   }
 }
