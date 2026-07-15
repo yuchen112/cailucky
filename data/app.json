@@ -3,7 +3,8 @@
     "app": "kjs",
     "version": 3,
     "schemaVersion": 3,
-    "exportedAt": "2026-07-15T19:04:18.362Z"
+    "appearanceSchemaVersion": 1,
+    "exportedAt": "2026-07-15T20:05:42.003Z"
   },
   "data": {
     "homepage": {
@@ -6113,7 +6114,26 @@
       "siteShortName": "CxQ",
       "siteTagline": "抽獎・社群選物・點數兌換",
       "logoUrl": "",
-      "faviconUrl": ""
+      "faviconUrl": "",
+      "appearance": {
+        "themePreset": "royal",
+        "colorMode": "light",
+        "url": "assets/bg/d45032c7-b11d-41e7-88dc-65f2eec7eeb5.jpg",
+        "tint": "rgba(255,255,255,0.0)",
+        "brightness": 1.1,
+        "blur": 4,
+        "opacity": 0.65,
+        "size": "cover",
+        "pos": "center",
+        "menuUseMain": false,
+        "menuUrl": "assets/bg/LINE_NOTE_250725_1.jpg",
+        "menuTint": "rgba(255,255,255,0.0)",
+        "menuBrightness": 1,
+        "menuBlur": 5,
+        "menuOpacity": 0.4,
+        "menuSize": "cover",
+        "menuPos": "center"
+      }
     },
     "gallery": {
       "items": [
@@ -6605,6 +6625,25 @@
           "url": "https://www.youtube.com/@%E9%96%8B%E7%8D%8E%E6%89%80"
         }
       ]
+    },
+    "appearance": {
+      "themePreset": "royal",
+      "colorMode": "light",
+      "url": "assets/bg/d45032c7-b11d-41e7-88dc-65f2eec7eeb5.jpg",
+      "tint": "rgba(255,255,255,0.0)",
+      "brightness": 1.1,
+      "blur": 4,
+      "opacity": 0.65,
+      "size": "cover",
+      "pos": "center",
+      "menuUseMain": false,
+      "menuUrl": "assets/bg/LINE_NOTE_250725_1.jpg",
+      "menuTint": "rgba(255,255,255,0.0)",
+      "menuBrightness": 1,
+      "menuBlur": 5,
+      "menuOpacity": 0.4,
+      "menuSize": "cover",
+      "menuPos": "center"
     }
   },
   "admins": [
@@ -6687,6 +6726,8 @@
     }
   },
   "bg": {
+    "themePreset": "royal",
+    "colorMode": "light",
     "url": "assets/bg/d45032c7-b11d-41e7-88dc-65f2eec7eeb5.jpg",
     "tint": "rgba(255,255,255,0.0)",
     "brightness": 1.1,
@@ -6701,8 +6742,25 @@
     "menuBlur": 5,
     "menuOpacity": 0.4,
     "menuSize": "cover",
-    "menuPos": "center",
+    "menuPos": "center"
+  },
+  "appearance": {
+    "themePreset": "royal",
     "colorMode": "light",
-    "themePreset": "royal"
+    "url": "assets/bg/d45032c7-b11d-41e7-88dc-65f2eec7eeb5.jpg",
+    "tint": "rgba(255,255,255,0.0)",
+    "brightness": 1.1,
+    "blur": 4,
+    "opacity": 0.65,
+    "size": "cover",
+    "pos": "center",
+    "menuUseMain": false,
+    "menuUrl": "assets/bg/LINE_NOTE_250725_1.jpg",
+    "menuTint": "rgba(255,255,255,0.0)",
+    "menuBrightness": 1,
+    "menuBlur": 5,
+    "menuOpacity": 0.4,
+    "menuSize": "cover",
+    "menuPos": "center"
   }
 }
