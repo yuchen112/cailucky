@@ -4,7 +4,7 @@
     "version": 3,
     "schemaVersion": 3,
     "appearanceSchemaVersion": 1,
-    "exportedAt": "2026-07-15T20:05:42.003Z"
+    "exportedAt": "2026-07-16T19:12:35.244Z"
   },
   "data": {
     "homepage": {
@@ -2525,14 +2525,16 @@
             "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-5.jpg",
             "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-6.jpg"
           ],
-          "imagesText": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-1.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-2.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-3.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-4.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-5.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-6.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
             "玩具",
             "擺件"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "image": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "h55f4zlt",
@@ -2547,14 +2549,16 @@
             "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky4.jpg",
             "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky5.jpg"
           ],
-          "imagesText": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky1.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky2.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky3.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky4.jpg\nhttps://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky5.jpg",
           "buyUrl": "",
           "tags": [
             "貓咪",
             "盲盒",
             "吊飾"
           ],
-          "availability": "預售"
+          "availability": "預售",
+          "image": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "xp71wun7",
@@ -2573,7 +2577,6 @@
             "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒9.jpg",
             "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒10.jpg"
           ],
-          "imagesText": "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒1.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒2.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒3.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒4.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒6.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒7.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒8.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒9.jpg\nassets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒10.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -2616,7 +2619,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "xqx14y28",
@@ -2627,7 +2633,6 @@
           "images": [
             "assets/products/盲盒/山海九尾狐第二弹.jpg"
           ],
-          "imagesText": "assets/products/盲盒/山海九尾狐第二弹.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -2663,7 +2668,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/山海九尾狐第二弹.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "ypylsvr8",
@@ -2674,7 +2682,6 @@
           "images": [
             "assets/products/盲盒/靈狐仙韻九尾狐.jpg"
           ],
-          "imagesText": "assets/products/盲盒/靈狐仙韻九尾狐.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -2710,7 +2717,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/靈狐仙韻九尾狐.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "bpg2w93e",
@@ -2721,7 +2731,6 @@
           "images": [
             "assets/products/盲盒/山海靈狐九尾狐.jpg"
           ],
-          "imagesText": "assets/products/盲盒/山海靈狐九尾狐.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -2757,7 +2766,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/山海靈狐九尾狐.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "uee34n9e",
@@ -2768,7 +2780,6 @@
           "images": [
             "assets/products/盲盒/情緒小福仙九尾狐.jpg"
           ],
-          "imagesText": "assets/products/盲盒/情緒小福仙九尾狐.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -2804,7 +2815,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/情緒小福仙九尾狐.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "sxmfho11",
@@ -2815,7 +2829,6 @@
           "images": [
             "assets/products/盲盒/上古小福仙盲盒.jpg"
           ],
-          "imagesText": "assets/products/盲盒/上古小福仙盲盒.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -2851,7 +2864,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/上古小福仙盲盒.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "7d7ybarv",
@@ -2862,7 +2878,6 @@
           "images": [
             "assets/products/盲盒/上古智慧仙九尾狐.jpg"
           ],
-          "imagesText": "assets/products/盲盒/上古智慧仙九尾狐.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -2898,7 +2913,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/上古智慧仙九尾狐.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "dy7a2b9g",
@@ -2909,7 +2927,6 @@
           "images": [
             "assets/products/盲盒/東方靈狐九尾狐.jpg"
           ],
-          "imagesText": "assets/products/盲盒/東方靈狐九尾狐.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -2945,7 +2962,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/東方靈狐九尾狐.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "hn2ts00y",
@@ -2956,7 +2976,6 @@
           "images": [
             "assets/products/盲盒/上古狐仙九尾狐.jpg"
           ],
-          "imagesText": "assets/products/盲盒/上古狐仙九尾狐.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -2992,7 +3011,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/上古狐仙九尾狐.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "z5czi4fs",
@@ -3003,7 +3025,6 @@
           "images": [
             "assets/products/盲盒/青丘九尾狐第二彈.jpg"
           ],
-          "imagesText": "assets/products/盲盒/青丘九尾狐第二彈.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3039,7 +3060,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/青丘九尾狐第二彈.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "u9zplf0m",
@@ -3050,7 +3074,6 @@
           "images": [
             "assets/products/盲盒/盛世芳華九尾狐.jpg"
           ],
-          "imagesText": "assets/products/盲盒/盛世芳華九尾狐.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3086,7 +3109,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/盛世芳華九尾狐.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "czvgq35u",
@@ -3097,7 +3123,6 @@
           "images": [
             "assets/products/盲盒/可愛嘟嘟崽.jpg"
           ],
-          "imagesText": "assets/products/盲盒/可愛嘟嘟崽.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3132,7 +3157,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/可愛嘟嘟崽.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "34flboli",
@@ -3143,7 +3171,6 @@
           "images": [
             "assets/products/盲盒/可愛熊貓搖搖樂.jpg"
           ],
-          "imagesText": "assets/products/盲盒/可愛熊貓搖搖樂.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3179,7 +3206,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/可愛熊貓搖搖樂.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "bsln31ot",
@@ -3190,7 +3220,6 @@
           "images": [
             "assets/products/盲盒/鴻運熊團團.jpg"
           ],
-          "imagesText": "assets/products/盲盒/鴻運熊團團.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3226,7 +3255,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/鴻運熊團團.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "ndxwh86x",
@@ -3237,7 +3269,6 @@
           "images": [
             "assets/products/盲盒/熊團的快樂日常.jpg"
           ],
-          "imagesText": "assets/products/盲盒/熊團的快樂日常.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3273,7 +3304,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/熊團的快樂日常.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "vgx99dwj",
@@ -3284,7 +3318,6 @@
           "images": [
             "assets/products/盲盒/豚仔中華小當家.jpg"
           ],
-          "imagesText": "assets/products/盲盒/豚仔中華小當家.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3320,7 +3353,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/豚仔中華小當家.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "j7xt4w8h",
@@ -3331,7 +3367,6 @@
           "images": [
             "assets/products/盲盒/歡喜小福䘵.jpg"
           ],
-          "imagesText": "assets/products/盲盒/歡喜小福䘵.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3366,7 +3401,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/歡喜小福䘵.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "hgofxfdw",
@@ -3377,7 +3415,6 @@
           "images": [
             "assets/products/盲盒/絕代風華.jpg"
           ],
-          "imagesText": "assets/products/盲盒/絕代風華.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3412,7 +3449,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/絕代風華.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "hzadnsdk",
@@ -3423,7 +3463,6 @@
           "images": [
             "assets/products/盲盒/福寶豚轉轉樂.jpg"
           ],
-          "imagesText": "assets/products/盲盒/福寶豚轉轉樂.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3459,7 +3498,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/福寶豚轉轉樂.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "ul5cs6c3",
@@ -3470,7 +3512,6 @@
           "images": [
             "assets/products/盲盒/西高汪的日常生活.jpg"
           ],
-          "imagesText": "assets/products/盲盒/西高汪的日常生活.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3506,7 +3547,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/西高汪的日常生活.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "5hgbh5ye",
@@ -3517,7 +3561,6 @@
           "images": [
             "assets/products/盲盒/萌寶水晶pai.jpg"
           ],
-          "imagesText": "assets/products/盲盒/萌寶水晶pai.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3553,7 +3596,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/萌寶水晶pai.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "0e2fde2q",
@@ -3564,7 +3610,6 @@
           "images": [
             "assets/products/盲盒/晶石物語盲盒.jpg"
           ],
-          "imagesText": "assets/products/盲盒/晶石物語盲盒.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3600,7 +3645,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/晶石物語盲盒.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "rlf9pmqz",
@@ -3611,7 +3659,6 @@
           "images": [
             "assets/products/盲盒/九尾狐仙傳盲盒.jpg"
           ],
-          "imagesText": "assets/products/盲盒/九尾狐仙傳盲盒.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3647,7 +3694,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/九尾狐仙傳盲盒.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "suoxozvy",
@@ -3658,7 +3708,6 @@
           "images": [
             "assets/products/盲盒/上古九尾狐.jpg"
           ],
-          "imagesText": "assets/products/盲盒/上古九尾狐.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3694,7 +3743,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/上古九尾狐.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "y8aw6o58",
@@ -3705,7 +3757,6 @@
           "images": [
             "assets/products/盲盒/國風九尾狐帶燈.jpg"
           ],
-          "imagesText": "assets/products/盲盒/國風九尾狐帶燈.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3741,7 +3792,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/國風九尾狐帶燈.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "7u5ue5wu",
@@ -3752,7 +3806,6 @@
           "images": [
             "assets/products/盲盒/涂山九尾狐第二彈.jpg"
           ],
-          "imagesText": "assets/products/盲盒/涂山九尾狐第二彈.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3788,7 +3841,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/涂山九尾狐第二彈.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "p6j7fklf",
@@ -3799,7 +3855,6 @@
           "images": [
             "assets/products/盲盒/九尾狐仙傳2代.jpg"
           ],
-          "imagesText": "assets/products/盲盒/九尾狐仙傳2代.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3835,7 +3890,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/九尾狐仙傳2代.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "89m00yky",
@@ -3846,7 +3904,6 @@
           "images": [
             "assets/products/盲盒/九尾幻境九尾狐.jpg"
           ],
-          "imagesText": "assets/products/盲盒/九尾幻境九尾狐.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -3882,7 +3939,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/盲盒/九尾幻境九尾狐.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "fyzcbkwc",
@@ -3896,7 +3956,6 @@
             "assets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源3.jpg",
             "assets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源4.jpg"
           ],
-          "imagesText": "assets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源1.jpg\nassets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源2.jpg\nassets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源3.jpg\nassets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源4.jpg",
           "buyUrl": "",
           "tags": [
             "3C",
@@ -3930,7 +3989,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "voqos3tl",
@@ -3944,7 +4006,6 @@
             "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木2.jpg",
             "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木3.jpg"
           ],
-          "imagesText": "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木1.jpg\nassets/products/積木/永生花蛋糕積木/永生花蛋糕積木1.1.jpg\nassets/products/積木/永生花蛋糕積木/永生花蛋糕積木2.jpg\nassets/products/積木/永生花蛋糕積木/永生花蛋糕積木3.jpg",
           "buyUrl": "",
           "tags": [
             "玩具",
@@ -3971,7 +4032,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "tyngck4d",
@@ -3987,7 +4051,6 @@
             "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡5.jpg",
             "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡6.jpg"
           ],
-          "imagesText": "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡1.jpg\nassets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡2.jpg\nassets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡3.jpg\nassets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡4.jpg\nassets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡5.jpg\nassets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡6.jpg",
           "buyUrl": "",
           "tags": [
             "玩具",
@@ -4021,7 +4084,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "l5o6gytq",
@@ -4035,7 +4101,6 @@
             "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.9.jpg",
             "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒2.jpg"
           ],
-          "imagesText": "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.jpg\nassets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.8.jpg\nassets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.9.jpg\nassets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒2.jpg",
           "buyUrl": "",
           "tags": [
             "玩具",
@@ -4102,7 +4167,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "3tteouk2",
@@ -4118,7 +4186,6 @@
             "assets/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯5.jpg",
             "assets/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯6.jpg"
           ],
-          "imagesText": "assets/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯1.jpg\nassets/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯2.jpg\nassets/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯3.jpg\nassets/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯4.jpg\nassets/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯5.jpg\nassets/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯6.jpg",
           "buyUrl": "",
           "tags": [
             "生活",
@@ -4154,7 +4221,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "uqq90r3j",
@@ -4168,7 +4238,6 @@
             "assets/products/生活/貓和老鼠水杯07/貓和老鼠水杯3.jpg",
             "assets/products/生活/貓和老鼠水杯07/貓和老鼠水杯4.jpg"
           ],
-          "imagesText": "assets/products/生活/貓和老鼠水杯07/貓和老鼠水杯1.jpg\nassets/products/生活/貓和老鼠水杯07/貓和老鼠水杯2.jpg\nassets/products/生活/貓和老鼠水杯07/貓和老鼠水杯3.jpg\nassets/products/生活/貓和老鼠水杯07/貓和老鼠水杯4.jpg",
           "buyUrl": "",
           "tags": [
             "生活",
@@ -4203,7 +4272,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/生活/貓和老鼠水杯07/貓和老鼠水杯1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "ya8v69aa",
@@ -4218,7 +4290,6 @@
             "assets/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯4.jpg",
             "assets/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯5.jpg"
           ],
-          "imagesText": "assets/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯1.jpg\nassets/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯2.jpg\nassets/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯3.jpg\nassets/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯4.jpg\nassets/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯5.jpg",
           "buyUrl": "",
           "tags": [
             "生活",
@@ -4269,7 +4340,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "9ianr5bd",
@@ -4283,7 +4357,6 @@
             "assets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯3.jpg",
             "assets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯4.jpg"
           ],
-          "imagesText": "assets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯1.jpg\nassets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯2.jpg\nassets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯3.jpg\nassets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯4.jpg",
           "buyUrl": "",
           "tags": [
             "生活",
@@ -4329,7 +4402,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "il41itjg",
@@ -4343,7 +4419,6 @@
             "assets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯3.jpg",
             "assets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯4.jpg"
           ],
-          "imagesText": "assets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯1.jpg\nassets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯2.jpg\nassets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯3.jpg\nassets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯4.jpg",
           "buyUrl": "",
           "tags": [
             "生活",
@@ -4412,7 +4487,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "si7ag9re",
@@ -4427,7 +4505,6 @@
             "assets/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯4.jpg",
             "assets/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯5.jpg"
           ],
-          "imagesText": "assets/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯1.jpg\nassets/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯2.jpg\nassets/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯3.jpg\nassets/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯4.jpg\nassets/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯5.jpg",
           "buyUrl": "",
           "tags": [
             "生活",
@@ -4470,7 +4547,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "06l0uwec",
@@ -4484,7 +4564,6 @@
             "assets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯3.jpg",
             "assets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯4.jpg"
           ],
-          "imagesText": "assets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯1.jpg\nassets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯2.jpg\nassets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯3.jpg\nassets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯4.jpg",
           "buyUrl": "",
           "tags": [
             "生活",
@@ -4527,7 +4606,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "6oadx8uw",
@@ -4544,7 +4626,6 @@
             "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯6.jpg",
             "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯7.jpg"
           ],
-          "imagesText": "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯1.jpg\nassets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯2.jpg\nassets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯3.jpg\nassets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯4.jpg\nassets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯5.jpg\nassets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯6.jpg\nassets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯7.jpg",
           "buyUrl": "",
           "tags": [
             "生活",
@@ -4615,7 +4696,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "5x6kuihr",
@@ -4628,7 +4712,6 @@
             "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒1.jpg",
             "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒2.jpg"
           ],
-          "imagesText": "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒0.jpg\nassets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒1.jpg\nassets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒2.jpg",
           "buyUrl": "",
           "tags": [
             "盲盒",
@@ -4663,7 +4746,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒0.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "nresjrus",
@@ -4674,7 +4760,6 @@
           "images": [
             "assets/products/JELLYCAT/奥丽莎兰花盆栽.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/奥丽莎兰花盆栽.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -4700,7 +4785,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/奥丽莎兰花盆栽.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "o5dv4tji",
@@ -4711,7 +4799,6 @@
           "images": [
             "assets/products/JELLYCAT/彩虹生日蛋糕.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/彩虹生日蛋糕.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -4737,7 +4824,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/彩虹生日蛋糕.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "unalq204",
@@ -4748,7 +4838,6 @@
           "images": [
             "assets/products/JELLYCAT/巴塞罗熊茄子熊.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/巴塞罗熊茄子熊.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -4774,7 +4863,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/巴塞罗熊茄子熊.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "u9q4t54i",
@@ -4785,7 +4877,6 @@
           "images": [
             "assets/products/JELLYCAT/巴塞罗熊大黄蜂.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/巴塞罗熊大黄蜂.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -4811,7 +4902,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/巴塞罗熊大黄蜂.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "0uvu1crd",
@@ -4822,7 +4916,6 @@
           "images": [
             "assets/products/JELLYCAT/巴塞罗南瓜小熊.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/巴塞罗南瓜小熊.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -4848,7 +4941,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/巴塞罗南瓜小熊.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "frs2g7od",
@@ -4859,7 +4955,6 @@
           "images": [
             "assets/products/JELLYCAT/抱蛋糕巴塞罗熊.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/抱蛋糕巴塞罗熊.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -4885,7 +4980,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/抱蛋糕巴塞罗熊.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "07g24aoo",
@@ -4896,7 +4994,6 @@
           "images": [
             "assets/products/JELLYCAT/微笑太阳花盆栽.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/微笑太阳花盆栽.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -4922,7 +5019,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/微笑太阳花盆栽.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "zkf5tiah",
@@ -4933,7 +5033,6 @@
           "images": [
             "assets/products/JELLYCAT/结婚蛋糕.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/结婚蛋糕.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -4959,7 +5058,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/结婚蛋糕.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "tbmpmj68",
@@ -4970,7 +5072,6 @@
           "images": [
             "assets/products/JELLYCAT/花布草莓耳朵害羞邦尼兔.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/花布草莓耳朵害羞邦尼兔.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -5012,7 +5113,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/花布草莓耳朵害羞邦尼兔.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "uisfa4l9",
@@ -5023,7 +5127,6 @@
           "images": [
             "assets/products/JELLYCAT/橙色彩虹蛋糕.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/橙色彩虹蛋糕.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -5049,7 +5152,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/橙色彩虹蛋糕.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "xmyfhklb",
@@ -5060,7 +5166,6 @@
           "images": [
             "assets/products/JELLYCAT/三明治.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/三明治.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -5086,7 +5191,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/三明治.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "j9o1hhw4",
@@ -5097,7 +5205,6 @@
           "images": [
             "assets/products/JELLYCAT/一品紅.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/一品紅.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -5123,7 +5230,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/一品紅.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "lfbsgxnt",
@@ -5134,7 +5244,6 @@
           "images": [
             "assets/products/JELLYCAT/巴塞罗熊泰迪.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/巴塞罗熊泰迪.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -5160,7 +5269,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/巴塞罗熊泰迪.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "pwzsmvym",
@@ -5171,7 +5283,6 @@
           "images": [
             "assets/products/JELLYCAT/害羞尼伯斯邦尼兔.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/害羞尼伯斯邦尼兔.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -5197,7 +5308,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/害羞尼伯斯邦尼兔.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "vbt9ybfh",
@@ -5208,7 +5322,6 @@
           "images": [
             "assets/products/JELLYCAT/玉兰妮娅拿铁.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/玉兰妮娅拿铁.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -5234,7 +5347,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/玉兰妮娅拿铁.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "5jkh2xee",
@@ -5245,7 +5361,6 @@
           "images": [
             "assets/products/JELLYCAT/草莓生日蛋糕.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/草莓生日蛋糕.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -5271,7 +5386,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/草莓生日蛋糕.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "0aoj8459",
@@ -5282,7 +5400,6 @@
           "images": [
             "assets/products/JELLYCAT/吉利猫.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/吉利猫.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -5308,7 +5425,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/吉利猫.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "y0tbbuhk",
@@ -5319,7 +5439,6 @@
           "images": [
             "assets/products/JELLYCAT/手捧花玫瑰花束.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/手捧花玫瑰花束.jpg",
           "buyUrl": "",
           "tags": [
             "Jellycat",
@@ -5345,7 +5464,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/手捧花玫瑰花束.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "zji59wv3",
@@ -5360,7 +5482,6 @@
             "assets/products/3c/拇指相機/拇指照相机3.jpg",
             "assets/products/3c/拇指相機/拇指照相机4.jpg"
           ],
-          "imagesText": "assets/products/3c/拇指相機/拇指照相机1.jpg\nassets/products/3c/拇指相機/拇指照相机2.jpg\nassets/products/3c/拇指相機/拇指照相机2.1.jpg\nassets/products/3c/拇指相機/拇指照相机3.jpg\nassets/products/3c/拇指相機/拇指照相机4.jpg",
           "buyUrl": "",
           "tags": [
             "3C"
@@ -5385,7 +5506,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/3c/拇指相機/拇指照相机1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "wl8xwog8",
@@ -5399,7 +5523,6 @@
             "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁2.jpg",
             "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁3.jpg"
           ],
-          "imagesText": "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁0.jpg\nassets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁1.jpg\nassets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁2.jpg\nassets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁3.jpg",
           "buyUrl": "",
           "tags": [
             "史迪奇",
@@ -5434,7 +5557,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁0.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "x6khyvl0",
@@ -5445,7 +5571,6 @@
           "images": [
             "assets/products/積木/動物方城市積木.jpg"
           ],
-          "imagesText": "assets/products/積木/動物方城市積木.jpg",
           "buyUrl": "",
           "tags": [
             "動物方程式",
@@ -5480,7 +5605,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/積木/動物方城市積木.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "mzpzch4a",
@@ -5491,7 +5619,6 @@
           "images": [
             "assets/products/積木/蜡笔小新积木盲盒.jpg"
           ],
-          "imagesText": "assets/products/積木/蜡笔小新积木盲盒.jpg",
           "buyUrl": "",
           "tags": [
             "蠟筆小新",
@@ -5526,7 +5653,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/積木/蜡笔小新积木盲盒.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "mhku1gde",
@@ -5537,7 +5667,6 @@
           "images": [
             "assets/products/JELLYCAT/茄子.jpg"
           ],
-          "imagesText": "assets/products/JELLYCAT/茄子.jpg",
           "buyUrl": "",
           "tags": [
             "娃娃",
@@ -5563,7 +5692,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/JELLYCAT/茄子.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "fdrofbxn",
@@ -5584,7 +5716,6 @@
             "assets/products/奇奇怪怪的小新/10.jpg",
             "assets/products/奇奇怪怪的小新/11.jpg"
           ],
-          "imagesText": "assets/products/奇奇怪怪的小新/1.jpg\nassets/products/奇奇怪怪的小新/2.jpg\nassets/products/奇奇怪怪的小新/3.jpg\nassets/products/奇奇怪怪的小新/4.jpg\nassets/products/奇奇怪怪的小新/5.jpg\nassets/products/奇奇怪怪的小新/6.jpg\nassets/products/奇奇怪怪的小新/7.jpg\nassets/products/奇奇怪怪的小新/8.jpg\nassets/products/奇奇怪怪的小新/9.jpg\nassets/products/奇奇怪怪的小新/10.jpg\nassets/products/奇奇怪怪的小新/11.jpg",
           "buyUrl": "https://myship.7-11.com.tw/cart/confirm/GM2509054490280",
           "tags": [
             "盲盒",
@@ -5619,7 +5750,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/奇奇怪怪的小新/1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "5dli6tdz",
@@ -5646,7 +5780,6 @@
             "assets/products/panda/17.jpg",
             "assets/products/panda/18.jpg"
           ],
-          "imagesText": "assets/products/panda/1.jpg\nassets/products/panda/2.jpg\nassets/products/panda/3.jpg\nassets/products/panda/4.jpg\nassets/products/panda/5.jpg\nassets/products/panda/7.jpg\nassets/products/panda/8.jpg\nassets/products/panda/9.jpg\nassets/products/panda/10.jpg\nassets/products/panda/11.jpg\nassets/products/panda/12.jpg\nassets/products/panda/13.jpg\nassets/products/panda/14.jpg\nassets/products/panda/15.jpg\nassets/products/panda/16.jpg\nassets/products/panda/17.jpg\nassets/products/panda/18.jpg",
           "buyUrl": "https://myship.7-11.com.tw/cart/confirm/GM2509054490302",
           "tags": [
             "盲盒",
@@ -5681,7 +5814,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/panda/1.jpg",
+          "enabled": true,
+          "visible": true
         },
         {
           "id": "365z3xh4",
@@ -5702,7 +5838,6 @@
             "assets/products/sticth/10.jpg",
             "assets/products/sticth/11.jpg"
           ],
-          "imagesText": "assets/products/sticth/1.jpg\nassets/products/sticth/2.jpg\nassets/products/sticth/3.jpg\nassets/products/sticth/4.jpg\nassets/products/sticth/5.jpg\nassets/products/sticth/6.jpg\nassets/products/sticth/7.jpg\nassets/products/sticth/8.jpg\nassets/products/sticth/9.jpg\nassets/products/sticth/10.jpg\nassets/products/sticth/11.jpg",
           "buyUrl": "https://myship.7-11.com.tw/cart/confirm/GM2509054490314",
           "tags": [
             "玩具",
@@ -5737,7 +5872,10 @@
                 "enabled": true
               }
             ]
-          }
+          },
+          "image": "assets/products/sticth/1.jpg",
+          "enabled": true,
+          "visible": true
         }
       ],
       "tagGroups": [
