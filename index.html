@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
   <title>CxQ開獎所｜官方平台</title>
   <!-- build: appjson-auto-sync-v1 -->
-  <meta name="color-scheme" content="light dark">
+  <meta name="color-scheme" content="light">
   <meta name="description" content="CxQ開獎所官方平台：抽獎紀錄、等待開獎、社群商店、點數商城、開箱實拍與常見問題管理。">
   <meta property="og:title" content="CxQ開獎所｜官方平台">
   <meta property="og:description" content="抽獎透明公開、社群商店、點數商城與歷史紀錄整合平台。">
@@ -20,7 +20,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      darkMode: 'class',
+      darkMode: false,
       theme: {
         extend: {
           colors: {
@@ -7967,7 +7967,7 @@ const DEFAULT_SETTINGS = {
 // === Default Appearance / Background Settings（會跟著 app.json 匯出與載入） ===
 const DEFAULT_BG = {
   themePreset: "mint",
-  colorMode: "auto",
+  colorMode: "light",
   url: "",
   tint: "rgba(255,255,255,0.0)",
   brightness: 1,
@@ -7986,8 +7986,8 @@ const DEFAULT_BG = {
 };
 function normalizeBgSettings(input = {}) {
   const src = input && typeof input === 'object' && !Array.isArray(input) ? input : {};
-  const validTheme = new Set(['mint', 'warm', 'clean', 'midnight', 'rose', 'royal']);
-  const validMode = new Set(['auto', 'light', 'dark']);
+  const validTheme = new Set(['mint', 'warm', 'clean', 'rose', 'royal']);
+  const validMode = new Set(['light']);
   const validSize = new Set(['cover', 'contain', 'auto']);
   const num = (value, fallback, min, max) => {
     const n = Number(value);
@@ -8000,7 +8000,7 @@ function normalizeBgSettings(input = {}) {
     ...src
   };
   out.themePreset = validTheme.has(out.themePreset) ? out.themePreset : DEFAULT_BG.themePreset;
-  out.colorMode = validMode.has(out.colorMode) ? out.colorMode : DEFAULT_BG.colorMode;
+  out.colorMode = 'light';
   out.url = str(out.url, '');
   out.tint = str(out.tint, DEFAULT_BG.tint);
   out.brightness = num(out.brightness, DEFAULT_BG.brightness, 0.2, 2);
@@ -11057,11 +11057,15 @@ function CommerceFilterToolbar({
   children
 }) {
   const filterTriggerRef = useCxqDialogLifecycle(filtersOpen, onCloseFilters, '.cxq-filter-sheet input,.cxq-filter-sheet select,.cxq-filter-sheet button');
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "cxq-commerce-toolbar",
-    role: "region",
-    "aria-label": "\u5546\u54C1\u7BE9\u9078\u8207\u6392\u5E8F"
-  }, /*#__PURE__*/React.createElement("div", {
+  const currentSortOption = sortOptions.find(option => option.value === sortBy) || sortOptions[0] || {
+    value: sortBy,
+    label: "最新更新"
+  };
+  const optionNodes = sortOptions.map(option => /*#__PURE__*/React.createElement("option", {
+    key: option.value,
+    value: option.value
+  }, option.label));
+  const quickbar = /*#__PURE__*/React.createElement("div", {
     className: "cxq-commerce-quickbar"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -11081,45 +11085,73 @@ function CommerceFilterToolbar({
     "aria-hidden": "true"
   }, /*#__PURE__*/React.createElement("path", {
     d: "M4 6h16M7 12h10M10 18h4"
-  })), /*#__PURE__*/React.createElement("span", null, "\u7BE9\u9078"), activeCount > 0 && /*#__PURE__*/React.createElement("span", {
+  })), /*#__PURE__*/React.createElement("span", null, "篩選"), activeCount > 0 && /*#__PURE__*/React.createElement("span", {
     className: "cxq-filter-count"
   }, activeCount)), /*#__PURE__*/React.createElement("label", {
     className: "sr-only",
     htmlFor: undefined
-  }, "\u5546\u54C1\u6392\u5E8F"), /*#__PURE__*/React.createElement("select", {
+  }, "商品排序"), /*#__PURE__*/React.createElement("select", {
     className: "cxq-commerce-sort",
     value: sortBy,
     onChange: e => onSort(e.target.value),
-    "aria-label": "\u5546\u54C1\u6392\u5E8F"
-  }, sortOptions.map(option => /*#__PURE__*/React.createElement("option", {
-    key: option.value,
-    value: option.value
-  }, option.label))), /*#__PURE__*/React.createElement("span", {
+    "aria-label": "商品排序"
+  }, optionNodes), /*#__PURE__*/React.createElement("span", {
     className: "cxq-commerce-total",
     "aria-live": "polite"
-  }, `${total} \u4EF6`), onManage && /*#__PURE__*/React.createElement("button", {
+  }, `${total} 件`), onManage && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "cxq-commerce-manage",
     onClick: onManage
-  }, "\u7BA1\u7406"))), filtersOpen && cxqBodyPortal(/*#__PURE__*/React.createElement("div", {
+  }, "管理"));
+  const mobilebar = /*#__PURE__*/React.createElement("div", {
+    className: "cxq-commerce-mobilebar",
+    "aria-label": "手機商品操作列"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "cxq-commerce-mobile-summary"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "cxq-commerce-mobile-total",
+    "aria-live": "polite"
+  }, `${total} 件商品`), /*#__PURE__*/React.createElement("span", {
+    className: "cxq-commerce-mobile-current"
+  }, currentSortOption.label), /*#__PURE__*/React.createElement("span", {
+    className: "cxq-commerce-mobile-active"
+  }, activeCount > 0 ? `已套用 ${activeCount} 條件` : "全部商品")), /*#__PURE__*/React.createElement("div", {
+    className: "cxq-commerce-mobile-actions"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "cxq-commerce-mobile-filter",
+    onClick: onOpenFilters,
+    "aria-expanded": filtersOpen ? "true" : "false"
+  }, /*#__PURE__*/React.createElement("span", null, "篩選"), activeCount > 0 && /*#__PURE__*/React.createElement("b", null, activeCount)), /*#__PURE__*/React.createElement("label", {
+    className: "cxq-commerce-mobile-sort"
+  }, /*#__PURE__*/React.createElement("span", null, "排序"), /*#__PURE__*/React.createElement("select", {
+    value: sortBy,
+    onChange: e => onSort(e.target.value),
+    "aria-label": "商品排序"
+  }, optionNodes)), onManage && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "cxq-commerce-mobile-manage",
+    onClick: onManage
+  }, "管理")));
+  const dialog = filtersOpen ? cxqBodyPortal(/*#__PURE__*/React.createElement("div", {
     className: "cxq-filter-sheet-root cxq-runtime-dialog",
     role: "dialog",
     "aria-modal": "true",
-    "aria-label": "\u5546\u54C1\u7BE9\u9078\u8A2D\u5B9A"
+    "aria-label": "商品篩選設定"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "cxq-filter-sheet-backdrop",
     onClick: onCloseFilters,
-    "aria-label": "\u95DC\u9589\u7BE9\u9078"
+    "aria-label": "關閉篩選"
   }), /*#__PURE__*/React.createElement("section", {
     className: "cxq-filter-sheet"
   }, /*#__PURE__*/React.createElement("header", {
     className: "cxq-filter-sheet-header"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("strong", null, "\u7BE9\u9078\u8207\u986F\u793A"), /*#__PURE__*/React.createElement("small", null, "\u53EA\u986F\u793A\u4F60\u9700\u8981\u7684\u5546\u54C1")), /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("strong", null, "篩選與顯示"), /*#__PURE__*/React.createElement("small", null, "只顯示你需要的商品")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: onCloseFilters,
-    "aria-label": "\u95DC\u9589"
-  }, "\xD7")), /*#__PURE__*/React.createElement("div", {
+    "aria-label": "關閉"
+  }, "×")), /*#__PURE__*/React.createElement("div", {
     className: "cxq-filter-sheet-body"
   }, children), /*#__PURE__*/React.createElement("footer", {
     className: "cxq-filter-sheet-footer"
@@ -11128,11 +11160,16 @@ function CommerceFilterToolbar({
     className: "cxq-filter-reset",
     onClick: onReset,
     disabled: activeCount === 0
-  }, "\u6E05\u9664\u689D\u4EF6"), /*#__PURE__*/React.createElement("button", {
+  }, "清除條件"), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "cxq-filter-apply",
     onClick: onCloseFilters
-  }, `\u986F\u793A ${total} \u4EF6\u5546\u54C1`))))));
+  }, `顯示 ${total} 件商品`))))) : null;
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "cxq-commerce-toolbar",
+    role: "region",
+    "aria-label": "商品篩選與排序"
+  }, quickbar, mobilebar), dialog);
 }
 function Store({
   data,
@@ -11276,7 +11313,7 @@ function Store({
       title: "\u53EA\u986F\u793A\u9810\u552E"
     }, "\u9810\u552E"));
   };
-  const Toolbar = () => /*#__PURE__*/React.createElement(CommerceFilterToolbar, {
+  const toolbarNode = /*#__PURE__*/React.createElement(CommerceFilterToolbar, {
     sortBy: sortBy,
     onSort: setSortBy,
     sortOptions: [{
@@ -11359,7 +11396,7 @@ function Store({
     className: "cxq-page-heading"
   }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDED2 \u793E\u7FA4\u5546\u5E97"), /*#__PURE__*/React.createElement("p", null, "\u700F\u89BD\u793E\u7FA4\u9650\u5B9A\u9078\u7269\uFF0C\u4F9D\u6A19\u7C64\u3001\u73FE\u8CA8\u72C0\u614B\u8207\u50F9\u683C\u5FEB\u901F\u627E\u5230\u5546\u54C1\u3002")), /*#__PURE__*/React.createElement("div", {
     className: "cxq-page-card p-4 sm:p-5 space-y-3"
-  }, /*#__PURE__*/React.createElement(Toolbar, null), maxPage > 1 && /*#__PURE__*/React.createElement(Paginator, null), pageItems.length === 0 && /*#__PURE__*/React.createElement(EmptyCard, {
+  }, toolbarNode, maxPage > 1 && /*#__PURE__*/React.createElement(Paginator, null), pageItems.length === 0 && /*#__PURE__*/React.createElement(EmptyCard, {
     text: "\u76EE\u524D\u6C92\u6709\u7B26\u5408\u689D\u4EF6\u7684\u793E\u7FA4\u5546\u54C1\u3002",
     admin: admin
   }), /*#__PURE__*/React.createElement("div", {
@@ -15427,20 +15464,13 @@ function App() {
     r.style.setProperty('--menu-bg-pos', mPos);
   }, [bg]);
 
-  // 亮暗模式由網站設定控制；午夜主題固定使用深色，其餘可選自動／亮色／深色。
+  // V34：全站固定亮色商城模式；舊 app.json / localStorage 內的 dark / auto 只保留相容欄位，不再套用。
   React.useEffect(() => {
     const root = document.documentElement;
-    const media = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
-    const apply = () => {
-      const mode = bg.colorMode || 'auto';
-      const dark = bg.themePreset === 'midnight' || mode === 'dark' || mode === 'auto' && !!media?.matches;
-      root.classList.toggle('dark', dark);
-      root.dataset.cxqColorMode = dark ? 'dark' : 'light';
-    };
-    apply();
-    media?.addEventListener?.('change', apply);
-    return () => media?.removeEventListener?.('change', apply);
-  }, [bg.colorMode, bg.themePreset]);
+    root.classList.remove('dark');
+    root.dataset.cxqColorMode = 'light';
+    if (root.dataset.cxqTheme === 'midnight') root.dataset.cxqTheme = 'mint';
+  }, [bg.themePreset]);
 
   // 靜態發布工作室狀態：只比較目前內容與本次載入的公開 app.json，不會自行上傳。
   const currentDataSignature = React.useMemo(() => JSON.stringify(normalizeSiteData(data)), [data]);
@@ -15558,7 +15588,7 @@ function App() {
       images,
       // ← 全站圖片路徑與調整（images.v1 結構）
       bg: exportBg,
-      // ← 外觀背板/主題/固定亮暗色設定，公開站會自動套用
+      // ← 外觀背板/主題/統一亮色商城設定，公開站會自動套用
       appearance: exportBg
     };
     const blob = new Blob([JSON.stringify(full, null, 2)], {
@@ -15784,7 +15814,7 @@ function App() {
       exitAdmin();
       setAdminDockOpen(false);
     }
-  }, "\u9000\u51FA\u7BA1\u7406"))))), searchEnabled && searchOpen && /*#__PURE__*/React.createElement("div", {
+  }, "\u9000\u51FA\u7BA1\u7406"))))), searchEnabled && searchOpen && cxqBodyPortal(/*#__PURE__*/React.createElement("div", {
     className: "cxq-site-search-layer cxq-runtime-dialog",
     role: "dialog",
     "aria-modal": "true",
@@ -15869,7 +15899,7 @@ function App() {
     type: "button",
     className: "cxq-search-done",
     onClick: () => commitSearch()
-  }, "\u5B8C\u6210"))))), /*#__PURE__*/React.createElement("div", {
+  }, "\u5B8C\u6210")))))), /*#__PURE__*/React.createElement("div", {
     ref: appContentRef,
     "aria-hidden": menuOpen ? 'true' : 'false'
   }, /*#__PURE__*/React.createElement("main", {
@@ -20279,8 +20309,28 @@ function Shop({
 
   // 我的點數（相容多欄位）
   const initialMyPts = (Number.isFinite(+data?.points?.myPoints) ? +data.points.myPoints : null) ?? (Number.isFinite(+data?.myPoints) ? +data.myPoints : 0);
-  const [myPts, setMyPts] = React.useState(initialMyPts || 0);
-  React.useEffect(() => setMyPts(initialMyPts || 0), [initialMyPts]);
+  const normalizeMyPts = value => Math.max(0, Number(String(value ?? "").replace(/[^0-9]/g, "")) || 0);
+  const [myPts, setMyPts] = React.useState(() => normalizeMyPts(initialMyPts));
+  const [myPtsDraft, setMyPtsDraft] = React.useState(() => String(normalizeMyPts(initialMyPts)));
+  const myPtsEditingRef = React.useRef(false);
+  const commitMyPtsDraft = React.useCallback((value = myPtsDraft) => {
+    const next = normalizeMyPts(value);
+    myPtsEditingRef.current = false;
+    setMyPts(next);
+    setMyPtsDraft(String(next));
+  }, [myPtsDraft]);
+  const updateMyPtsDraft = React.useCallback(value => {
+    const clean = String(value ?? "").replace(/[^0-9]/g, "");
+    myPtsEditingRef.current = true;
+    setMyPtsDraft(clean);
+    setMyPts(clean === "" ? 0 : normalizeMyPts(clean));
+  }, []);
+  React.useEffect(() => {
+    if (myPtsEditingRef.current) return;
+    const next = normalizeMyPts(initialMyPts);
+    setMyPts(next);
+    setMyPtsDraft(String(next));
+  }, [initialMyPts]);
 
   // 管理面板
   const [showEditor, setShowEditor] = React.useState(false);
@@ -20383,7 +20433,7 @@ function Shop({
   // 一鍵清單（點數）
   const pick = usePickList('kjs_pointshop_picklist');
   const [showConfirm, setShowConfirm] = React.useState(false);
-  const Toolbar = () => /*#__PURE__*/React.createElement(CommerceFilterToolbar, {
+  const toolbarNode = /*#__PURE__*/React.createElement(CommerceFilterToolbar, {
     sortBy: sortBy,
     onSort: setSortBy,
     sortOptions: [{
@@ -20418,14 +20468,27 @@ function Shop({
   }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, "\u5546\u54C1\u6A19\u7C64"), /*#__PURE__*/React.createElement("small", null, tag.picked.length ? `\u5DF2\u9078 ${tag.picked.length} \u500B\u6A19\u7C64` : "\u5168\u90E8\u6A19\u7C64")), /*#__PURE__*/React.createElement("span", {
     className: "cxq-filter-option-action"
   }, "\u9078\u64C7")), /*#__PURE__*/React.createElement("label", {
-    className: "cxq-filter-field"
+    className: "cxq-filter-field cxq-my-points-field"
   }, /*#__PURE__*/React.createElement("span", null, "\u6211\u7684\u9EDE\u6578"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+    type: "text",
     inputMode: "numeric",
+    pattern: "[0-9]*",
     min: "0",
-    value: myPts,
-    onChange: e => setMyPts(Math.max(0, Number(e.target.value) || 0))
-  })), /*#__PURE__*/React.createElement("label", {
+    autoComplete: "off",
+    value: myPtsDraft,
+    onFocus: () => {
+      myPtsEditingRef.current = true;
+    },
+    onChange: e => updateMyPtsDraft(e.target.value),
+    onBlur: e => commitMyPtsDraft(e.currentTarget.value),
+    onKeyDown: e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        commitMyPtsDraft(e.currentTarget.value);
+        e.currentTarget.blur();
+      }
+    }
+  }), /*#__PURE__*/React.createElement("small", null, "輸入中不會重整，離開欄位後整理格式")), /*#__PURE__*/React.createElement("label", {
     className: "cxq-filter-check"
   }, /*#__PURE__*/React.createElement("input", {
     type: "checkbox",
@@ -20476,7 +20539,7 @@ function Shop({
     className: "cxq-page-heading"
   }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDC8E \u9EDE\u6578\u5546\u57CE"), /*#__PURE__*/React.createElement("p", null, "\u4F7F\u7528\u793E\u7FA4\u9EDE\u6578\u514C\u63DB\u5546\u54C1\uFF0C\u4F9D\u6A19\u7C64\u8207\u6240\u9700\u9EDE\u6578\u5FEB\u901F\u7BE9\u9078\u3002")), /*#__PURE__*/React.createElement("div", {
     className: "cxq-page-card p-4 sm:p-5 space-y-3"
-  }, /*#__PURE__*/React.createElement(Toolbar, null), maxPage > 1 && /*#__PURE__*/React.createElement(Paginator, null), pageItems.length === 0 && /*#__PURE__*/React.createElement(EmptyCard, {
+  }, toolbarNode, maxPage > 1 && /*#__PURE__*/React.createElement(Paginator, null), pageItems.length === 0 && /*#__PURE__*/React.createElement(EmptyCard, {
     text: "\u76EE\u524D\u6C92\u6709\u7B26\u5408\u689D\u4EF6\u7684\u9EDE\u6578\u5546\u54C1\u3002",
     admin: admin
   }), /*#__PURE__*/React.createElement("div", {
@@ -22517,7 +22580,7 @@ function SettingsPanel({
     className: "cxq-preset-grid",
     role: "group",
     "aria-label": "\u54C1\u724C\u80CC\u677F\u98A8\u683C"
-  }, [['mint', '清新品牌', '柔和綠色、適合選物'], ['warm', '溫暖手作', '奶油暖色、適合手作'], ['clean', '俐落純淨', '中性留白、商品優先'], ['midnight', '夜色精品', '深色質感、聚焦圖片'], ['rose', '柔霧玫瑰', '溫柔粉杏、適合收藏'], ['royal', '皇家紫藍', '沉穩紫藍、品牌感強']].map(([key, label, desc]) => /*#__PURE__*/React.createElement("button", {
+  }, [['mint', '商城清新', '薄荷綠品牌、適合社群選物'], ['warm', '活動暖光', '奶油暖色、適合活動與優惠'], ['clean', '清爽留白', '中性留白、商品與紀錄優先'], ['rose', '柔霧收藏', '粉杏柔和、適合開箱與收藏'], ['royal', '質感品牌', '亮色紫藍、穩重但不進暗色']].map(([key, label, desc]) => /*#__PURE__*/React.createElement("button", {
     key: key,
     type: "button",
     "data-theme": key,
@@ -22527,26 +22590,9 @@ function SettingsPanel({
       ...bg,
       themePreset: key
     })
-  }, /*#__PURE__*/React.createElement("strong", null, label), /*#__PURE__*/React.createElement("small", null, desc)))), /*#__PURE__*/React.createElement("label", {
-    className: "mt-4 grid gap-1 max-w-sm"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "text-sm font-bold"
-  }, "\u756B\u9762\u660E\u6697\u6A21\u5F0F"), /*#__PURE__*/React.createElement("select", {
-    className: "rounded-lg border px-3 py-2",
-    value: bg.colorMode || 'auto',
-    onChange: e => setBg({
-      ...bg,
-      colorMode: e.target.value
-    })
-  }, /*#__PURE__*/React.createElement("option", {
-    value: "auto"
-  }, "\u8DDF\u96A8\u88DD\u7F6E"), /*#__PURE__*/React.createElement("option", {
-    value: "light"
-  }, "\u56FA\u5B9A\u4EAE\u8272"), /*#__PURE__*/React.createElement("option", {
-    value: "dark"
-  }, "\u56FA\u5B9A\u6DF1\u8272")), /*#__PURE__*/React.createElement("small", {
-    className: "text-xs text-slate-500"
-  }, "\u5348\u591C\u7CBE\u54C1\u4E3B\u984C\u6703\u56FA\u5B9A\u4F7F\u7528\u6DF1\u8272\uFF0C\u5176\u4ED6\u4E3B\u984C\u53EF\u81EA\u884C\u9078\u64C7\u3002"))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("strong", null, label), /*#__PURE__*/React.createElement("small", null, desc)))), /*#__PURE__*/React.createElement("div", {
+    className: "mt-4 rounded-2xl border border-emerald-200 bg-emerald-50/70 px-4 py-3 text-sm text-emerald-800"
+  }, "全站已固定使用統一亮色商城模式；舊資料中的自動/暗色模式會自動轉為亮色，不再提供切換。"), /*#__PURE__*/React.createElement("div", {
     className: "mt-6 grid md:grid-cols-2 gap-6"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rounded-xl border p-4"
@@ -22832,14 +22878,14 @@ function SettingsPanel({
   }, "\u67D4\u9727"), /*#__PURE__*/React.createElement("button", {
     onClick: () => setBg({
       ...bg,
-      tint: "rgba(0,0,0,0.35)",
-      brightness: 1.1,
-      blur: 0,
+      tint: "rgba(255,247,237,0.45)",
+      brightness: 1.0,
+      blur: 4,
       opacity: 1,
       menuUseMain: true
     }),
     className: "rounded-lg border px-3 py-1.5 text-sm"
-  }, "\u6697\u5E95"), /*#__PURE__*/React.createElement("button", {
+  }, "暖光"), /*#__PURE__*/React.createElement("button", {
     onClick: () => setBg(normalizeBgSettings({
       ...bg,
       url: "",
@@ -22864,7 +22910,7 @@ function SettingsPanel({
   }, /*#__PURE__*/React.createElement("button", {
     onClick: saveSettings,
     className: "rounded-lg bg-brand text-white px-4 py-2"
-  }, "\u5132\u5B58\u7CFB\u7D71\u8A2D\u5B9A")));
+  }, "\u5132\u5B58\u7CFB\u7D71\u8A2D\u5B9A"))));
 }
 function SystemSettings({
   data,
@@ -23832,6 +23878,51 @@ html body .cxq-commerce-manager-panel-v16 .kjs-admin-bulkbar{display:grid!import
 html body .cxq-commerce-manager-panel-v16 :where(input:not([type="checkbox"]):not([type="radio"]),select,textarea),html body .cxq-commerce-panel-v16 :where(input:not([type="checkbox"]):not([type="radio"]),select,textarea){min-width:0!important;max-width:100%!important;min-height:46px!important;border-radius:14px!important;border:1px solid rgba(148,163,184,.32)!important;background:#fff!important;color:var(--cxq-v16-ink)!important}html body .cxq-commerce-manager-panel-v16 button,html body .cxq-commerce-panel-v16 button{min-width:0!important;border-radius:14px!important;font-weight:850!important;white-space:normal!important;line-height:1.2!important}html body .cxq-commerce-manager-panel-v16 button.bg-brand,html body .cxq-commerce-panel-v16 button.bg-brand{background:linear-gradient(135deg,#17b8a8,#087267)!important;box-shadow:0 14px 28px -22px rgba(15,118,110,.65)!important}html body .cxq-commerce-manager-panel-v16 button.bg-emerald-600{background:linear-gradient(135deg,#10b981,#059669)!important}
 html body .cxq-commerce-item-panel-v16,html body.cxq-admin-mode .cxq-commerce-item-panel-v16{width:min(940px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;height:min(88dvh,780px)!important;max-height:calc(100dvh - 28px)!important}html body .cxq-commerce-panel-v16 .cxq-editor-more{display:none!important}html body .cxq-commerce-panel-v16 .cxq-commerce-item-body[data-advanced="false"]>.cxq-commerce-advanced-field,html body .cxq-commerce-panel-v16 .cxq-commerce-item-body[data-advanced="true"]>.cxq-commerce-advanced-field,html body .cxq-commerce-panel-v16 .cxq-commerce-item-body>.cxq-commerce-advanced-field{display:block!important}html body .cxq-commerce-panel-v16 .cxq-commerce-item-body>.cxq-commerce-advanced-field.grid,html body .cxq-commerce-panel-v16 .cxq-commerce-item-body>div.cxq-commerce-advanced-field{display:grid!important}
 html body.cxq-admin-mode .cxq-variant-editor-panel{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto minmax(0,1fr)!important;width:min(840px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;height:min(86dvh,720px)!important;max-height:calc(100dvh - 28px)!important;min-width:0!important;min-height:0!important;margin:auto!important;overflow:hidden!important;border:1px solid var(--cxq-v16-line)!important;border-radius:24px!important;background:#fff!important;box-shadow:var(--cxq-v16-shadow)!important}html body.cxq-admin-mode .cxq-variant-editor-panel>:first-child{grid-row:1!important;flex:0 0 auto!important;padding:14px 16px!important}html body.cxq-admin-mode .cxq-variant-editor-panel>.cxq-variant-editor-body{grid-row:2!important;min-height:0!important;height:100%!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important;padding:16px max(16px,env(safe-area-inset-right,0px)) max(28px,calc(env(safe-area-inset-bottom,0px) + 18px)) max(16px,env(safe-area-inset-left,0px))!important}
+
+  /* V34 最終捲動收斂：頁面預設可滑，彈窗/管理工作室開啟時只鎖背景、讓內容區自己滑。 */
+  html{
+    min-height:100%!important;
+    height:auto!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    overscroll-behavior-y:auto!important;
+    scroll-behavior:auto!important;
+  }
+  body.cxq-v34-marketplace-light{
+    min-height:100svh!important;
+    height:auto!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    touch-action:pan-x pan-y!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior-y:auto!important;
+  }
+  body.cxq-v34-marketplace-light #root{
+    min-height:100svh!important;
+    height:auto!important;
+    overflow:visible!important;
+    touch-action:auto!important;
+  }
+  body.cxq-v34-marketplace-light:has(.cxq-site-search-layer),
+  body.cxq-v34-marketplace-light:has(.cxq-commerce-modal-root-v16),
+  body.cxq-v34-marketplace-light:has(.cxq-modal-root:not(.hidden)),
+  body.cxq-v34-marketplace-light.cxq-v6-modal-open,
+  body.cxq-v34-marketplace-light.cxq-v17-modal-open,
+  body.cxq-v34-marketplace-light.cxq-studio-v19-open{
+    overflow:hidden!important;
+    overscroll-behavior:contain!important;
+  }
+  body.cxq-v34-marketplace-light :where(.cxq-site-search-layer,.cxq-commerce-modal-root-v16,.cxq-modal-root,.fixed.inset-0){
+    touch-action:auto!important;
+  }
+  body.cxq-v34-marketplace-light :where(.cxq-editor-scroll,.overflow-y-auto,.overflow-auto,.modal-scroll,.cxq-commerce-editor-body,.cxq-commerce-item-body,.cxq-studio-body,.cxq-studio-content,.kjs-backoffice-shell,.kjs-backoffice-main){
+    min-height:0!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    -webkit-overflow-scrolling:touch!important;
+    touch-action:pan-y!important;
+    overscroll-behavior:contain!important;
+  }
 @media(max-width:767px){html body .cxq-commerce-modal-root-v16,html body.cxq-admin-mode .cxq-commerce-modal-root-v16{padding:max(10px,env(safe-area-inset-top,0px)) max(10px,env(safe-area-inset-right,0px)) max(10px,env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px))!important}html body .cxq-commerce-panel-v16,html body.cxq-admin-mode .cxq-commerce-panel-v16,html body .cxq-commerce-item-panel-v16,html body.cxq-admin-mode .cxq-commerce-item-panel-v16{width:min(94vw,560px)!important;max-width:94vw!important;height:min(90dvh,760px)!important;max-height:calc(100dvh - max(20px,env(safe-area-inset-top,0px)) - max(20px,env(safe-area-inset-bottom,0px)))!important;border-radius:22px!important}html body .cxq-commerce-manager-panel-v16>.cxq-commerce-editor-header,html body .cxq-commerce-panel-v16>.cxq-commerce-item-header{grid-template-columns:minmax(0,1fr)!important;align-items:start!important;gap:10px!important;padding:12px 12px 10px!important}html body .cxq-commerce-manager-panel-v16>.cxq-commerce-editor-header>:first-child .text-xs{display:none!important}html body .cxq-commerce-manager-panel-v16>.cxq-commerce-editor-header>:last-child{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;width:100%!important}html body .cxq-commerce-manager-panel-v16>.cxq-commerce-editor-header input{grid-column:1/-1!important;width:100%!important;min-width:0!important;min-height:44px!important;font-size:16px!important}html body .cxq-commerce-manager-panel-v16>.cxq-commerce-editor-header button{width:100%!important;min-height:42px!important;padding:.56rem .65rem!important;font-size:.82rem!important}html body .cxq-commerce-manager-panel-v16>.cxq-commerce-editor-header button:nth-of-type(2){display:none!important}html body .cxq-commerce-panel-v16>.cxq-commerce-editor-body{padding:12px 12px max(26px,calc(env(safe-area-inset-bottom,0px) + 18px))!important;gap:12px!important}html body .cxq-commerce-manager-panel-v16 .kjs-admin-bulkbar{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;padding:12px!important}html body .cxq-commerce-manager-panel-v16 .kjs-admin-bulkbar .kjs-bulk-title,html body .cxq-commerce-manager-panel-v16 .kjs-admin-bulkbar .kjs-bulk-count,html body .cxq-commerce-manager-panel-v16 .kjs-admin-bulkbar input{grid-column:1/-1!important}html body .cxq-commerce-manager-panel-v16 .kjs-admin-bulkbar .kjs-bulk-count{min-height:34px!important}html body .cxq-commerce-editor-body .grid:has(>.kjs-admin-check){display:grid!important;grid-template-columns:34px 58px minmax(0,1fr)!important;align-items:center!important;gap:10px!important;padding:12px!important}html body .cxq-commerce-editor-body .grid:has(>.kjs-admin-check)>.flex:last-child{grid-column:1/-1!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important;width:100%!important;justify-content:stretch!important}html body .cxq-commerce-editor-body .grid:has(>.kjs-admin-check)>.flex:last-child button{width:100%!important;min-height:40px!important;padding:.45rem .35rem!important;font-size:.78rem!important}html body .cxq-commerce-editor-body .grid:has(>.kjs-admin-check) .truncate{white-space:normal!important;display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important}html body .cxq-commerce-panel-v16>.cxq-commerce-item-header>:last-child{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;width:100%!important}html body .cxq-commerce-panel-v16>.cxq-commerce-item-header button{width:100%!important;min-height:42px!important;padding:.52rem .35rem!important;font-size:.78rem!important}html body .cxq-commerce-panel-v16>.cxq-commerce-item-body{padding:12px 12px max(28px,calc(env(safe-area-inset-bottom,0px) + 18px))!important}html body .cxq-commerce-panel-v16 .cxq-commerce-item-body>.grid{grid-template-columns:1fr!important}html body.cxq-admin-mode .cxq-variant-editor-panel{width:min(94vw,560px)!important;max-width:94vw!important;height:min(88dvh,720px)!important;max-height:calc(100dvh - max(20px,env(safe-area-inset-top,0px)) - max(20px,env(safe-area-inset-bottom,0px)))!important;border-radius:22px!important}html body.cxq-admin-mode .cxq-variant-editor-panel>:first-child{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important}html body.cxq-admin-mode .cxq-variant-editor-panel>:first-child>:last-child{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}html body.cxq-admin-mode .cxq-variant-editor-panel>:first-child button{width:100%!important;min-height:42px!important}}
 @media(max-width:380px){html body .cxq-commerce-manager-panel-v16 .kjs-admin-bulkbar,html body .cxq-commerce-manager-panel-v16>.cxq-commerce-editor-header>:last-child{grid-template-columns:1fr!important}html body .cxq-commerce-editor-body .grid:has(>.kjs-admin-check){grid-template-columns:32px 54px minmax(0,1fr)!important}html body .cxq-commerce-editor-body .grid:has(>.kjs-admin-check)>.flex:last-child{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
   @media(max-width:380px){html body .cxq-commerce-manager-panel-v16>.cxq-commerce-editor-header>:last-child{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
@@ -24951,6 +25042,892 @@ window['__disabled_cxq_ver25_audit_final_v28_script'] = true;
 })();
 </script>
 <!-- [CXQ COMMERCE MODAL STABILITY V30 END] -->
+<!-- [CXQ MARKETPLACE SEARCH AND ADMIN EXPERIENCE V33 START] -->
+<style id="cxq-marketplace-search-admin-v33">
+  :root{
+    --cxq-shop-brand:#0f9f8f;
+    --cxq-shop-brand-2:#14b8a6;
+    --cxq-shop-ink:#0f172a;
+    --cxq-shop-muted:#64748b;
+    --cxq-shop-line:rgba(148,163,184,.26);
+    --cxq-safe-top:max(14px,env(safe-area-inset-top,0px));
+    --cxq-safe-right:max(12px,env(safe-area-inset-right,0px));
+    --cxq-safe-bottom:max(14px,env(safe-area-inset-bottom,0px));
+    --cxq-safe-left:max(12px,env(safe-area-inset-left,0px));
+    --cxq-modal-h:calc(100vh - var(--cxq-safe-top) - var(--cxq-safe-bottom) - 20px);
+  }
+  @supports(height:100svh){:root{--cxq-modal-h:calc(100svh - var(--cxq-safe-top) - var(--cxq-safe-bottom) - 20px);}}
+  @supports(height:100dvh){:root{--cxq-modal-h:calc(100dvh - var(--cxq-safe-top) - var(--cxq-safe-bottom) - 20px);}}
+
+  html body :where(.cxq-page-section:has([aria-label="社群商店清單"]),.cxq-page-section:has([aria-label="點數商城清單"])){
+    position:relative!important; display:grid!important; gap:16px!important;
+  }
+  html body :where(.cxq-page-section:has([aria-label="社群商店清單"]),.cxq-page-section:has([aria-label="點數商城清單"])) .cxq-page-heading{
+    position:relative!important; overflow:hidden!important; border-radius:30px!important; padding:26px 28px!important;
+    border:1px solid rgba(20,184,166,.20)!important;
+    background:radial-gradient(circle at 7% 12%,rgba(20,184,166,.20),transparent 26rem),radial-gradient(circle at 94% 0%,rgba(251,191,36,.16),transparent 18rem),linear-gradient(135deg,#fff 0%,#f4fffc 58%,#fff7ed 100%)!important;
+    box-shadow:0 30px 90px -70px rgba(15,23,42,.72)!important;
+  }
+  html body :where(.cxq-page-section:has([aria-label="社群商店清單"]),.cxq-page-section:has([aria-label="點數商城清單"])) .cxq-page-heading::after{
+    content:"熱門商品 · 快速篩選 · 清楚價格 · 手機好逛"; display:inline-flex!important; max-width:100%!important; margin-top:14px!important;
+    padding:8px 13px!important; border-radius:999px!important; border:1px solid rgba(20,184,166,.22)!important;
+    background:rgba(255,255,255,.82)!important; color:#0f766e!important; font-size:.78rem!important; font-weight:900!important; letter-spacing:.02em!important;
+    box-shadow:0 14px 34px -30px rgba(15,23,42,.55)!important;
+  }
+  html body :where(.cxq-page-section:has([aria-label="社群商店清單"]),.cxq-page-section:has([aria-label="點數商城清單"])) .cxq-page-heading h2{
+    font-size:clamp(1.45rem,2.7vw,2.15rem)!important; line-height:1.08!important; letter-spacing:-.04em!important; color:#0f172a!important;
+  }
+  html body :where(.cxq-page-section:has([aria-label="社群商店清單"]),.cxq-page-section:has([aria-label="點數商城清單"])) .cxq-page-heading p{
+    max-width:70rem!important; margin-top:9px!important; color:#475569!important; line-height:1.75!important;
+  }
+  html body :where(.cxq-page-section:has([aria-label="社群商店清單"]),.cxq-page-section:has([aria-label="點數商城清單"])) .cxq-page-card{
+    border-radius:30px!important; border:1px solid rgba(148,163,184,.22)!important;
+    background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(248,250,252,.94))!important;
+    box-shadow:0 30px 90px -72px rgba(15,23,42,.72)!important;
+  }
+  html body .cxq-commerce-toolbar{
+    position:relative!important; z-index:3!important; overflow:visible!important; border-radius:24px!important;
+    border:1px solid rgba(148,163,184,.22)!important; padding:12px!important;
+    background:linear-gradient(135deg,rgba(240,253,250,.90),rgba(255,255,255,.97))!important;
+    box-shadow:0 18px 52px -42px rgba(15,23,42,.62)!important;
+  }
+  html body .cxq-commerce-quickbar{display:grid!important; grid-template-columns:auto minmax(190px,1fr) auto auto!important; align-items:center!important; gap:10px!important;}
+  html body :where(.cxq-filter-trigger,.cxq-commerce-manage,.cxq-commerce-sort){min-height:46px!important; border-radius:16px!important; font-weight:900!important;}
+  html body .cxq-commerce-sort{background:#fff!important; border:1px solid rgba(148,163,184,.34)!important; color:#0f172a!important; padding-inline:14px 34px!important;}
+  html body .cxq-filter-trigger{background:#fff!important; border:1px solid rgba(148,163,184,.34)!important; color:#0f766e!important; padding-inline:14px!important;}
+  html body .cxq-commerce-manage,html body .cxq-filter-apply,html body .cxq-search-done{
+    background:linear-gradient(135deg,var(--cxq-shop-brand-2),#0f766e)!important; color:#fff!important; border:0!important;
+    box-shadow:0 14px 32px -22px rgba(13,148,136,.85)!important;
+  }
+  html body .cxq-commerce-total{font-weight:900!important; color:#0f766e!important;}
+  html body .cxq-commerce-card{
+    position:relative!important; border-radius:22px!important; border:1px solid rgba(148,163,184,.20)!important;
+    background:linear-gradient(180deg,#fff 0%,#fff 66%,#f8fafc 100%)!important;
+    box-shadow:0 18px 52px -42px rgba(15,23,42,.70)!important; transform:translateZ(0)!important; overflow:hidden!important;
+  }
+  html body .cxq-commerce-card::before{content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit; box-shadow:inset 0 1px 0 rgba(255,255,255,.86);}
+  html body .cxq-commerce-card > button:first-child{padding:10px!important;}
+  html body .cxq-commerce-card .aspect-\[4\/3\]{aspect-ratio:1/1!important; border-radius:18px!important; background:linear-gradient(135deg,#f8fafc,#eefdf9)!important;}
+  html body .cxq-commerce-card img{object-fit:contain!important; filter:saturate(1.03);}
+  html body .cxq-commerce-card .text-sm.font-semibold{font-size:.95rem!important; line-height:1.42!important; color:#0f172a!important; min-height:2.68em!important;}
+  html body .cxq-commerce-card .text-base.font-black{font-size:1.12rem!important; color:#0f766e!important; letter-spacing:-.02em!important;}
+  @media(hover:hover){html body .cxq-commerce-card:hover{transform:translateY(-2px)!important; border-color:rgba(20,184,166,.42)!important; box-shadow:0 26px 64px -42px rgba(15,118,110,.48)!important;}}
+
+  html body.cxq-search-modal-open-v33,html body.cxq-filter-modal-open-v33,html body.cxq-commerce-modal-open-v33{overflow:hidden!important; overscroll-behavior:none!important;}
+  html body .cxq-site-search-layer.cxq-runtime-dialog,html body .cxq-filter-sheet-root.cxq-runtime-dialog{
+    position:fixed!important; inset:0!important; z-index:2147483000!important; display:grid!important; place-items:center!important;
+    padding:var(--cxq-safe-top) var(--cxq-safe-right) var(--cxq-safe-bottom) var(--cxq-safe-left)!important;
+    background:rgba(15,23,42,.36)!important; backdrop-filter:blur(16px) saturate(1.08)!important; -webkit-backdrop-filter:blur(16px) saturate(1.08)!important;
+    overflow:hidden!important; pointer-events:auto!important; touch-action:pan-y!important; overscroll-behavior:contain!important;
+  }
+  html body .cxq-site-search-backdrop,html body .cxq-filter-sheet-backdrop{
+    position:absolute!important; inset:0!important; z-index:0!important; display:block!important; width:100%!important; height:100%!important;
+    padding:0!important; margin:0!important; border:0!important; border-radius:0!important; background:transparent!important; pointer-events:auto!important; cursor:default!important;
+  }
+  html body .cxq-site-search-panel,html body .cxq-filter-sheet{
+    position:relative!important; z-index:2!important; width:min(680px,calc(100vw - 28px))!important; max-width:calc(100vw - 28px)!important;
+    max-height:var(--cxq-modal-h)!important; display:grid!important; overflow:hidden!important; border-radius:28px!important;
+    border:1px solid rgba(226,232,240,.94)!important; background:linear-gradient(180deg,#fff,#fbfefd)!important; color:#0f172a!important;
+    box-shadow:0 38px 120px -58px rgba(15,23,42,.88)!important; pointer-events:auto!important; touch-action:pan-y!important; isolation:isolate!important;
+  }
+  html body .cxq-site-search-panel{grid-template-rows:auto auto minmax(88px,1fr) auto!important;}
+  html body .cxq-filter-sheet{width:min(580px,calc(100vw - 28px))!important; grid-template-rows:auto minmax(0,1fr) auto!important;}
+  html body .cxq-site-search-panel>header,html body .cxq-filter-sheet-header{
+    display:flex!important; align-items:flex-start!important; justify-content:space-between!important; gap:14px!important; padding:18px 20px 14px!important;
+    border-bottom:1px solid rgba(148,163,184,.22)!important; background:linear-gradient(135deg,rgba(240,253,250,.95),rgba(255,255,255,.98))!important;
+  }
+  html body .cxq-site-search-panel header strong,html body .cxq-filter-sheet-header strong{font-size:1.08rem!important; font-weight:950!important; letter-spacing:-.02em!important; color:#0f172a!important;}
+  html body .cxq-site-search-panel header small,html body .cxq-filter-sheet-header small{display:block!important; margin-top:3px!important; color:#64748b!important; line-height:1.45!important;}
+  html body .cxq-site-search-panel header button,html body .cxq-filter-sheet-header>button{
+    flex:none!important; width:42px!important; height:42px!important; min-height:42px!important; border-radius:15px!important;
+    border:1px solid rgba(148,163,184,.30)!important; background:#fff!important; color:#0f172a!important; font-size:20px!important;
+  }
+  html body .cxq-site-search-controls{
+    display:grid!important; grid-template-columns:minmax(120px,.32fr) minmax(0,1fr)!important; gap:10px!important; padding:14px 20px!important;
+    border-bottom:1px solid rgba(148,163,184,.18)!important; background:#fff!important;
+  }
+  html body .cxq-site-search-controls:has(select[style*="display: none"]){grid-template-columns:1fr!important;}
+  html body .cxq-site-search-controls select[style*="display: none"]{display:none!important;}
+  html body .cxq-site-search-controls:has(select[style*="display: none"]) input{grid-column:1/-1!important;}
+  html body .cxq-site-search-controls :where(select,input){
+    width:100%!important; min-width:0!important; height:48px!important; min-height:48px!important; border:1px solid rgba(148,163,184,.34)!important;
+    border-radius:16px!important; background:#fff!important; color:#0f172a!important; font-size:16px!important; box-shadow:none!important;
+  }
+  html body .cxq-site-search-results,html body .cxq-filter-sheet-body{
+    min-height:0!important; overflow-y:auto!important; overflow-x:hidden!important; -webkit-overflow-scrolling:touch!important;
+    padding:12px 20px!important; overscroll-behavior:contain!important; touch-action:pan-y!important;
+  }
+  html body .cxq-site-search-results{display:grid!important; gap:10px!important;}
+  html body .cxq-site-search-result{
+    display:grid!important; grid-template-columns:auto minmax(0,1fr)!important; gap:5px 10px!important; width:100%!important;
+    text-align:left!important; padding:12px 14px!important; border-radius:18px!important; border:1px solid rgba(148,163,184,.22)!important;
+    background:#fff!important; color:#0f172a!important; box-shadow:0 14px 34px -32px rgba(15,23,42,.62)!important;
+  }
+  html body .cxq-site-search-result-type{grid-row:1 / span 3!important; align-self:start!important; border-radius:999px!important; padding:5px 8px!important; background:#ccfbf1!important; color:#0f766e!important; font-size:.72rem!important; font-weight:950!important;}
+  html body .cxq-site-search-result strong{min-width:0!important; overflow:hidden!important; text-overflow:ellipsis!important; white-space:nowrap!important; font-size:.94rem!important;}
+  html body .cxq-site-search-result small,html body .cxq-site-search-result em{grid-column:2!important; color:#64748b!important; font-size:.78rem!important; font-style:normal!important; min-width:0!important; overflow:hidden!important; text-overflow:ellipsis!important; white-space:nowrap!important;}
+  html body .cxq-site-search-hint,html body .cxq-site-search-empty{margin:12px 20px!important; padding:18px!important; border:1px dashed rgba(20,184,166,.28)!important; border-radius:20px!important; background:rgba(240,253,250,.70)!important; color:#475569!important; line-height:1.65!important; overflow:auto!important;}
+  html body .cxq-site-search-panel>footer,html body .cxq-filter-sheet-footer{display:flex!important; justify-content:flex-end!important; gap:10px!important; padding:14px 20px 18px!important; border-top:1px solid rgba(148,163,184,.18)!important; background:linear-gradient(180deg,#fff,#f8fafc)!important;}
+  html body .cxq-site-search-panel>footer button,html body .cxq-filter-sheet-footer button{min-height:44px!important; border-radius:16px!important; padding-inline:16px!important; font-weight:900!important;}
+  html body .cxq-filter-grid{display:grid!important; gap:12px!important;}
+  html body .cxq-filter-option,html body .cxq-filter-field,html body .cxq-filter-group{border-radius:18px!important; border:1px solid rgba(148,163,184,.24)!important; background:#fff!important; padding:13px!important;}
+
+  html body .cxq-commerce-overlay-v33,html body :where(.fixed.inset-0:has(.cxq-commerce-manager-panel),.fixed.inset-0:has(.cxq-commerce-item-panel),.fixed.inset-0:has(.cxq-variant-editor-panel)){
+    position:fixed!important; inset:0!important; z-index:2147482500!important; overflow:hidden!important; display:grid!important; place-items:center!important;
+    padding:var(--cxq-safe-top) var(--cxq-safe-right) var(--cxq-safe-bottom) var(--cxq-safe-left)!important;
+    background:rgba(15,23,42,.48)!important; backdrop-filter:blur(14px) saturate(1.05)!important; -webkit-backdrop-filter:blur(14px) saturate(1.05)!important;
+    pointer-events:auto!important; touch-action:none!important;
+  }
+  html body .cxq-commerce-overlay-v33 > :where(.absolute.inset-0.bg-black\/40,.absolute.inset-0.bg-black\/55),
+  html body :where(.fixed.inset-0:has(.cxq-commerce-manager-panel),.fixed.inset-0:has(.cxq-commerce-item-panel),.fixed.inset-0:has(.cxq-variant-editor-panel)) > :where(.absolute.inset-0.bg-black\/40,.absolute.inset-0.bg-black\/55){
+    position:absolute!important; inset:0!important; z-index:0!important; display:block!important;
+    background:transparent!important; backdrop-filter:none!important; -webkit-backdrop-filter:none!important; pointer-events:auto!important;
+  }
+  html body .cxq-commerce-overlay-v33 :where(.cxq-commerce-manager-panel,.cxq-commerce-item-panel,.cxq-variant-editor-panel),
+  html body :where(.fixed.inset-0:has(.cxq-commerce-manager-panel),.fixed.inset-0:has(.cxq-commerce-item-panel),.fixed.inset-0:has(.cxq-variant-editor-panel)) :where(.cxq-commerce-manager-panel,.cxq-commerce-item-panel,.cxq-variant-editor-panel){
+    position:relative!important; z-index:1!important;
+  }
+  html body .cxq-commerce-overlay-v33 > .absolute.inset-0.flex,html body :where(.fixed.inset-0:has(.cxq-commerce-manager-panel),.fixed.inset-0:has(.cxq-commerce-item-panel),.fixed.inset-0:has(.cxq-variant-editor-panel)) > .absolute.inset-0.flex{
+    position:static!important; inset:auto!important; display:contents!important; padding:0!important; pointer-events:none!important;
+  }
+  html body :where(.cxq-commerce-manager-panel,.cxq-commerce-item-panel,.cxq-variant-editor-panel){
+    pointer-events:auto!important; min-width:0!important; min-height:0!important; overflow:hidden!important; margin:auto!important;
+    display:grid!important; grid-template-columns:minmax(0,1fr)!important; grid-template-rows:auto minmax(0,1fr)!important;
+    border-radius:30px!important; border:1px solid rgba(226,232,240,.96)!important; background:linear-gradient(180deg,#fff,#fbfefd 72%,#f8fafc)!important;
+    color:#0f172a!important; box-shadow:0 38px 130px -64px rgba(15,23,42,.92)!important; touch-action:auto!important;
+  }
+  html body .cxq-commerce-manager-panel{width:min(1120px,calc(100vw - 28px))!important; height:min(840px,var(--cxq-modal-h))!important; max-width:calc(100vw - 28px)!important; max-height:var(--cxq-modal-h)!important;}
+  html body .cxq-commerce-item-panel,html body .cxq-variant-editor-panel{width:min(920px,calc(100vw - 28px))!important; height:min(780px,var(--cxq-modal-h))!important; max-width:calc(100vw - 28px)!important; max-height:var(--cxq-modal-h)!important;}
+  html body :where(.cxq-commerce-editor-header,.cxq-commerce-item-header){
+    grid-row:1!important; position:relative!important; top:auto!important; z-index:5!important; display:grid!important; grid-template-columns:minmax(0,1fr)!important; gap:12px!important;
+    align-items:start!important; padding:18px 20px!important; border-bottom:1px solid rgba(148,163,184,.22)!important;
+    background:radial-gradient(circle at 0 0,rgba(20,184,166,.14),transparent 20rem),linear-gradient(180deg,#fff,#f8fafc)!important;
+    box-shadow:0 18px 54px -48px rgba(15,23,42,.72)!important;
+  }
+  html body :where(.cxq-commerce-editor-header,.cxq-commerce-item-header) .font-semibold{font-size:1.08rem!important; font-weight:950!important; letter-spacing:-.025em!important; color:#0f172a!important;}
+  html body :where(.cxq-commerce-editor-header,.cxq-commerce-item-header) .text-xs{color:#64748b!important; line-height:1.45!important; white-space:normal!important;}
+  html body .cxq-commerce-editor-header > div:last-child{display:grid!important; grid-template-columns:minmax(240px,1fr) repeat(4,max-content)!important; gap:10px!important; width:100%!important; min-width:0!important; align-items:center!important; justify-content:stretch!important;}
+  html body .cxq-commerce-item-header > div:last-child{display:grid!important; grid-auto-flow:column!important; grid-auto-columns:max-content!important; gap:10px!important; justify-content:end!important; min-width:0!important; max-width:100%!important;}
+  html body :where(.cxq-commerce-editor-header,.cxq-commerce-item-header) :where(input,button){min-height:44px!important; border-radius:15px!important; font-size:15px!important;}
+  html body :where(.cxq-commerce-editor-header,.cxq-commerce-item-header) input{width:100%!important; min-width:0!important; border:1px solid rgba(148,163,184,.34)!important; background:#fff!important; color:#0f172a!important; padding-inline:13px!important;}
+  html body :where(.cxq-commerce-editor-header,.cxq-commerce-item-header) button{font-weight:900!important; white-space:nowrap!important;}
+  html body .cxq-commerce-editor-header button:nth-of-type(1),html body .cxq-commerce-item-header button:last-child{background:linear-gradient(135deg,var(--cxq-shop-brand-2),#0f766e)!important; color:#fff!important; border:0!important;}
+  html body :where(.cxq-commerce-editor-body,.cxq-commerce-item-body){
+    grid-row:2!important; min-width:0!important; min-height:0!important; height:100%!important; max-height:none!important;
+    overflow-y:auto!important; overflow-x:hidden!important; -webkit-overflow-scrolling:touch!important; overscroll-behavior:contain!important; touch-action:pan-y!important; scrollbar-gutter:stable!important;
+    padding:18px 20px max(24px,calc(env(safe-area-inset-bottom,0px) + 18px))!important;
+    background:linear-gradient(rgba(15,118,110,.024) 1px,transparent 1px),linear-gradient(90deg,rgba(15,118,110,.024) 1px,transparent 1px),linear-gradient(180deg,#fff,#fbfefd)!important;
+    background-size:34px 34px,34px 34px,auto!important;
+  }
+  html body .cxq-commerce-editor-body{display:flex!important; flex-direction:column!important; gap:14px!important;}
+  html body .kjs-admin-bulkbar{
+    display:grid!important; grid-template-columns:repeat(auto-fit,minmax(138px,1fr))!important; gap:10px!important; padding:14px!important;
+    border:1px solid rgba(148,163,184,.22)!important; border-radius:22px!important; background:rgba(255,255,255,.90)!important;
+    box-shadow:0 18px 46px -42px rgba(15,23,42,.62)!important; overflow:visible!important; max-height:none!important; height:auto!important;
+  }
+  html body .kjs-admin-bulkbar .kjs-bulk-title{font-weight:950!important; color:#0f172a!important;}
+  html body .kjs-admin-bulkbar .kjs-bulk-count{color:#0f766e!important; font-weight:900!important;}
+  html body .kjs-admin-bulkbar :where(input,button){min-width:0!important; width:100%!important; min-height:42px!important; border-radius:14px!important;}
+  html body .cxq-commerce-editor-body > .rounded-xl{border-radius:24px!important; border:1px solid rgba(148,163,184,.22)!important; background:rgba(255,255,255,.92)!important; box-shadow:0 18px 52px -46px rgba(15,23,42,.66)!important; overflow:hidden!important;}
+  html body .cxq-commerce-editor-body > .rounded-xl:has(.kjs-admin-check){display:grid!important; gap:10px!important; padding:12px!important; overflow:visible!important;}
+  html body .cxq-commerce-editor-body > .rounded-xl:has(.kjs-admin-check) > .hidden.md\:grid{position:sticky!important; top:0!important; z-index:2!important; border-radius:16px!important; border:1px solid rgba(148,163,184,.18)!important; background:#f8fafc!important;}
+  html body .cxq-commerce-editor-body > .rounded-xl:has(.kjs-admin-check) > .grid:not(.hidden){border:1px solid rgba(148,163,184,.20)!important; border-radius:18px!important; background:#fff!important; box-shadow:0 14px 36px -34px rgba(15,23,42,.58)!important; overflow:hidden!important;}
+  html body .cxq-commerce-editor-body > .rounded-xl:has(.kjs-admin-check) > .grid:not(.hidden) button{min-height:38px!important; border-radius:12px!important; font-weight:850!important;}
+  html body .cxq-commerce-item-body{display:grid!important; grid-template-columns:minmax(0,1fr)!important; gap:14px!important;}
+  html body .cxq-commerce-item-body > :where(.grid,label,div){border:1px solid rgba(148,163,184,.22)!important; border-radius:22px!important; background:linear-gradient(180deg,#fff,#fbfefe)!important; box-shadow:0 16px 42px -38px rgba(15,23,42,.58)!important; padding:16px!important;}
+  html body .cxq-commerce-item-body>.grid:first-child::before{content:"基本資料"; grid-column:1/-1; color:#0f172a; font-size:.94rem; font-weight:950; letter-spacing:-.015em;}
+  html body .cxq-commerce-item-body :where(label,.text-sm){font-weight:850!important; color:#334155!important;}
+  html body .cxq-commerce-item-body :where(input:not([type="checkbox"]):not([type="radio"]),select,textarea){width:100%!important; min-width:0!important; min-height:46px!important; border:1px solid rgba(148,163,184,.34)!important; border-radius:15px!important; background:#fff!important; color:#0f172a!important; font-size:16px!important;}
+  html body .cxq-commerce-item-body textarea{resize:vertical!important; min-height:124px!important;}
+  html body .cxq-editor-more,html body .cxq-editor-more-hidden{display:none!important;}
+  html body .cxq-commerce-advanced-field{display:block!important;}
+  html body div.cxq-commerce-advanced-field,html body .cxq-commerce-advanced-field.grid{display:grid!important;}
+
+  @media(max-width:767px){
+    html body :where(.cxq-page-section:has([aria-label="社群商店清單"]),.cxq-page-section:has([aria-label="點數商城清單"])){gap:12px!important;}
+    html body :where(.cxq-page-section:has([aria-label="社群商店清單"]),.cxq-page-section:has([aria-label="點數商城清單"])) .cxq-page-heading{border-radius:22px!important; padding:18px 16px!important;}
+    html body :where(.cxq-page-section:has([aria-label="社群商店清單"]),.cxq-page-section:has([aria-label="點數商城清單"])) .cxq-page-heading::after{content:"搜尋 · 篩選 · 商品 · 兌換"; font-size:.72rem!important; margin-top:10px!important;}
+    html body :where(.cxq-page-section:has([aria-label="社群商店清單"]),.cxq-page-section:has([aria-label="點數商城清單"])) .cxq-page-card{border-radius:22px!important; padding:12px!important;}
+    html body .cxq-commerce-quickbar{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important; gap:8px!important;}
+    html body .cxq-commerce-quickbar > *{width:100%!important; min-width:0!important;}
+    html body .cxq-commerce-sort{grid-column:1/-1!important; order:1!important;}
+    html body .cxq-filter-trigger{order:2!important;}
+    html body .cxq-commerce-manage{order:3!important;}
+    html body .cxq-commerce-total{display:none!important;}
+    html body .cxq-commerce-card{border-radius:18px!important;}
+    html body .cxq-commerce-card > button:first-child{padding:8px!important;}
+    html body .cxq-commerce-card > button:nth-of-type(2){padding-inline:10px!important;}
+    html body .cxq-commerce-card .text-sm.font-semibold{font-size:.88rem!important; min-height:2.52em!important;}
+    html body .cxq-commerce-card .text-base.font-black{font-size:1rem!important;}
+    html body .cxq-site-search-layer.cxq-runtime-dialog,html body .cxq-filter-sheet-root.cxq-runtime-dialog{padding:var(--cxq-safe-top) 10px var(--cxq-safe-bottom) 10px!important;}
+    html body .cxq-site-search-panel,html body .cxq-filter-sheet{width:min(94vw,560px)!important; max-width:94vw!important; max-height:var(--cxq-modal-h)!important; border-radius:24px!important;}
+    html body .cxq-site-search-panel>header,html body .cxq-filter-sheet-header{padding:15px 15px 12px!important;}
+    html body .cxq-site-search-controls{grid-template-columns:1fr!important; padding:12px 15px!important;}
+    html body .cxq-site-search-controls input{grid-column:1/-1!important;}
+    html body .cxq-site-search-results,html body .cxq-filter-sheet-body{padding:10px 15px!important;}
+    html body .cxq-site-search-panel>footer,html body .cxq-filter-sheet-footer{padding:12px 15px 15px!important;}
+    html body .cxq-site-search-panel>footer button,html body .cxq-filter-sheet-footer button{flex:1 1 0!important;}
+    html body .cxq-commerce-overlay-v33,html body :where(.fixed.inset-0:has(.cxq-commerce-manager-panel),.fixed.inset-0:has(.cxq-commerce-item-panel),.fixed.inset-0:has(.cxq-variant-editor-panel)){padding:var(--cxq-safe-top) 6px var(--cxq-safe-bottom) 6px!important;}
+    html body .cxq-commerce-manager-panel,html body .cxq-commerce-item-panel,html body .cxq-variant-editor-panel{width:min(94vw,560px)!important; max-width:94vw!important; height:var(--cxq-modal-h)!important; max-height:var(--cxq-modal-h)!important; border-radius:24px!important;}
+    html body :where(.cxq-commerce-editor-header,.cxq-commerce-item-header){padding:13px!important; gap:10px!important;}
+    html body :where(.cxq-commerce-editor-header,.cxq-commerce-item-header) .text-xs{font-size:.74rem!important;}
+    html body .cxq-commerce-editor-header > div:last-child{grid-template-columns:1fr 1fr!important; gap:8px!important;}
+    html body .cxq-commerce-editor-header input{grid-column:1/-1!important; min-height:46px!important;}
+    html body .cxq-commerce-editor-header button{width:100%!important; min-height:42px!important; padding:.55rem .45rem!important; font-size:.82rem!important; white-space:normal!important;}
+    html body .cxq-commerce-item-header > div:last-child{grid-template-columns:1fr 1fr!important; grid-auto-flow:row!important; gap:8px!important; justify-content:stretch!important; width:100%!important;}
+    html body .cxq-commerce-item-header button{width:100%!important; min-height:42px!important; padding:.55rem .4rem!important; font-size:.8rem!important; white-space:normal!important;}
+    html body :where(.cxq-commerce-editor-body,.cxq-commerce-item-body){padding:12px 12px max(24px,calc(env(safe-area-inset-bottom,0px) + 14px))!important; gap:12px!important;}
+    html body .kjs-admin-bulkbar{grid-template-columns:1fr 1fr!important; padding:12px!important; border-radius:18px!important;}
+    html body .kjs-admin-bulkbar .kjs-bulk-title,html body .kjs-admin-bulkbar .kjs-bulk-count,html body .kjs-admin-bulkbar input{grid-column:1/-1!important; justify-content:flex-start!important; width:100%!important;}
+    html body .cxq-commerce-editor-body > .rounded-xl:has(.kjs-admin-check){padding:10px!important; border-radius:18px!important;}
+    html body .cxq-commerce-editor-body > .rounded-xl:has(.kjs-admin-check) > .hidden.md\:grid{display:none!important;}
+    html body .cxq-commerce-editor-body > .rounded-xl:has(.kjs-admin-check) > .grid:not(.hidden){grid-template-columns:34px 58px minmax(0,1fr)!important; gap:10px!important; padding:12px!important; align-items:center!important; border-radius:18px!important;}
+    html body .cxq-commerce-editor-body > .rounded-xl:has(.kjs-admin-check) > .grid:not(.hidden) > .flex:last-child{grid-column:1/-1!important; display:grid!important; grid-template-columns:repeat(4,minmax(0,1fr))!important; gap:8px!important; width:100%!important; justify-content:stretch!important;}
+    html body .cxq-commerce-editor-body > .rounded-xl:has(.kjs-admin-check) > .grid:not(.hidden) > .flex:last-child button{width:100%!important; min-height:40px!important; padding:.45rem .3rem!important; font-size:.76rem!important; white-space:normal!important;}
+    html body .cxq-commerce-editor-body > .rounded-xl:has(.kjs-admin-check) .truncate{white-space:normal!important; display:-webkit-box!important; -webkit-line-clamp:2!important; -webkit-box-orient:vertical!important;}
+    html body .cxq-commerce-item-body > :where(.grid,label,div){padding:13px!important; border-radius:18px!important;}
+    html body .cxq-commerce-item-body > .grid{grid-template-columns:1fr!important;}
+  }
+  @media(max-width:380px){
+    html body .cxq-commerce-editor-header > div:last-child,html body .cxq-commerce-item-header > div:last-child{grid-template-columns:1fr!important;}
+    html body .kjs-admin-bulkbar{grid-template-columns:1fr!important;}
+    html body .cxq-commerce-editor-body > .rounded-xl:has(.kjs-admin-check) > .grid:not(.hidden) > .flex:last-child{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  }
+  html.cxq-resizing-v33 body :where(.cxq-commerce-card,.cxq-page-card,.cxq-page-heading,.cxq-site-search-panel,.cxq-commerce-manager-panel,.cxq-commerce-item-panel){transition:none!important; animation:none!important;}
+  @media(prefers-reduced-motion:reduce){html body *{scroll-behavior:auto!important;}}
+  html[data-cxq-color-mode="dark"] body :where(.cxq-page-heading,.cxq-page-card,.cxq-commerce-card,.cxq-commerce-toolbar,.cxq-commerce-manager-panel,.cxq-commerce-item-panel,.cxq-variant-editor-panel,.cxq-site-search-panel,.cxq-filter-sheet),
+  html[data-cxq-theme="midnight"] body :where(.cxq-page-heading,.cxq-page-card,.cxq-commerce-card,.cxq-commerce-toolbar,.cxq-commerce-manager-panel,.cxq-commerce-item-panel,.cxq-variant-editor-panel,.cxq-site-search-panel,.cxq-filter-sheet){background:linear-gradient(180deg,rgba(15,23,42,.96),rgba(15,42,42,.86))!important; color:#e2e8f0!important; border-color:rgba(100,116,139,.34)!important;}
+  html[data-cxq-color-mode="dark"] body :where(.cxq-page-heading h2,.cxq-commerce-card .text-sm.font-semibold,.cxq-commerce-editor-header .font-semibold,.cxq-commerce-item-header .font-semibold,.cxq-site-search-panel header strong,.cxq-filter-sheet-header strong),
+  html[data-cxq-theme="midnight"] body :where(.cxq-page-heading h2,.cxq-commerce-card .text-sm.font-semibold,.cxq-commerce-editor-header .font-semibold,.cxq-commerce-item-header .font-semibold,.cxq-site-search-panel header strong,.cxq-filter-sheet-header strong){color:#f8fafc!important;}
+</style>
+<script id="cxq-marketplace-search-admin-v33-script">
+(() => {
+  if (window.__cxqMarketplaceSearchAdminV33) return;
+  window.__cxqMarketplaceSearchAdminV33 = true;
+  let scheduled = false;
+  let resizeTimer = 0;
+  const panelSelector = '.cxq-commerce-manager-panel,.cxq-commerce-item-panel,.cxq-variant-editor-panel';
+  const scrollSelector = '.cxq-commerce-editor-body,.cxq-commerce-item-body,.cxq-site-search-results,.cxq-filter-sheet-body';
+  const findOverlay = (panel) => {
+    let el = panel && panel.parentElement;
+    while (el && el !== document.body) {
+      if (el.classList && el.classList.contains('fixed') && el.classList.contains('inset-0')) return el;
+      el = el.parentElement;
+    }
+    return null;
+  };
+  const sync = () => {
+    scheduled = false;
+    const searchLayer = document.querySelector('.cxq-site-search-layer.cxq-runtime-dialog');
+    const filterLayer = document.querySelector('.cxq-filter-sheet-root.cxq-runtime-dialog');
+    const commercePanel = document.querySelector(panelSelector);
+    document.body.classList.toggle('cxq-search-modal-open-v33', !!searchLayer);
+    document.body.classList.toggle('cxq-filter-modal-open-v33', !!filterLayer);
+    document.body.classList.toggle('cxq-commerce-modal-open-v33', !!commercePanel);
+    document.documentElement.classList.toggle('cxq-commerce-modal-open-v33', !!commercePanel);
+    document.querySelectorAll('.cxq-commerce-overlay-v33').forEach(el => {
+      if (!el.querySelector(panelSelector)) el.classList.remove('cxq-commerce-overlay-v33');
+    });
+    document.querySelectorAll(panelSelector).forEach(panel => {
+      const overlay = findOverlay(panel);
+      if (overlay) overlay.classList.add('cxq-commerce-overlay-v33');
+    });
+    if (searchLayer && searchLayer.parentElement !== document.body) {
+      try { document.body.appendChild(searchLayer); } catch (err) {}
+    }
+    if (filterLayer && filterLayer.parentElement !== document.body) {
+      try { document.body.appendChild(filterLayer); } catch (err) {}
+    }
+    document.querySelectorAll(scrollSelector).forEach(el => {
+      el.style.webkitOverflowScrolling = 'touch';
+      el.style.overscrollBehavior = 'contain';
+      el.style.touchAction = 'pan-y';
+    });
+  };
+  const schedule = () => {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(sync);
+  };
+  const guardLayer = (selector, event) => {
+    const layer = document.querySelector(selector);
+    if (!layer) return;
+    if (layer.contains(event.target)) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  };
+  ['pointerdown','touchstart','click'].forEach(type => {
+    document.addEventListener(type, event => guardLayer('.cxq-site-search-layer.cxq-runtime-dialog', event), true);
+    document.addEventListener(type, event => guardLayer('.cxq-filter-sheet-root.cxq-runtime-dialog', event), true);
+  });
+  const onResize = () => {
+    document.documentElement.classList.add('cxq-resizing-v33');
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => document.documentElement.classList.remove('cxq-resizing-v33'), 180);
+    schedule();
+  };
+  window.addEventListener('resize', onResize, { passive:true });
+  window.addEventListener('orientationchange', onResize, { passive:true });
+  const startObserver = () => {
+    const root = document.body || document.documentElement;
+    if (!root) return;
+    const observer = new MutationObserver(mutations => {
+      for (const mutation of mutations) {
+        if (mutation.type === 'childList') { schedule(); return; }
+      }
+    });
+    observer.observe(root, { childList:true, subtree:true });
+    window.__cxqMarketplaceSearchAdminV33Observer = observer;
+  };
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    const topLayer = document.querySelector('.cxq-site-search-layer.cxq-runtime-dialog,.cxq-filter-sheet-root.cxq-runtime-dialog');
+    if (!topLayer) return;
+    const close = topLayer.querySelector('header button,[aria-label="關閉"],[aria-label="關閉搜尋"],[aria-label="關閉篩選"]');
+    if (close && typeof close.click === 'function') {
+      event.preventDefault();
+      close.click();
+    }
+  }, true);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => { startObserver(); sync(); }, { once:true });
+  } else {
+    startObserver();
+    sync();
+  }
+})();
+</script>
+<!-- [CXQ MARKETPLACE SEARCH AND ADMIN EXPERIENCE V33 END] -->
+
+<!-- [CXQ FULL MARKETPLACE LIGHT EXPERIENCE V34 START] -->
+<style id="cxq-full-marketplace-light-v34">
+  :root{
+    color-scheme:light only!important;
+    --cxq-v34-brand:#0f9f8f;
+    --cxq-v34-brand-2:#14b8a6;
+    --cxq-v34-brand-dark:#0f766e;
+    --cxq-v34-warm:#ff8a3d;
+    --cxq-v34-gold:#fbbf24;
+    --cxq-v34-ink:#0f172a;
+    --cxq-v34-muted:#64748b;
+    --cxq-v34-line:rgba(148,163,184,.24);
+    --cxq-v34-soft:#f4fffc;
+    --cxq-v34-page:#f6fbfa;
+    --cxq-v34-card:#ffffff;
+    --cxq-v34-shadow:0 22px 70px -54px rgba(15,23,42,.72);
+    --cxq-v34-shadow-strong:0 34px 120px -70px rgba(15,23,42,.82);
+  }
+  html,html.dark,html[data-cxq-color-mode="dark"],html[data-cxq-theme="midnight"]{
+    color-scheme:light only!important;
+    background:#f6fbfa!important;
+  }
+  html.dark{background:#f6fbfa!important;}
+  html body{
+    background:
+      radial-gradient(circle at 8% 0%,rgba(20,184,166,.14),transparent 24rem),
+      radial-gradient(circle at 88% 6%,rgba(251,191,36,.16),transparent 22rem),
+      linear-gradient(180deg,#fff 0%,#f6fbfa 38%,#f8fafc 100%)!important;
+    color:var(--cxq-v34-ink)!important;
+  }
+  html body :where(.dark\:bg-slate-900,.dark\:bg-slate-800,.dark\:bg-slate-950,.dark\:bg-slate-900\/90,.dark\:bg-slate-900\/80,.dark\:bg-slate-900\/70,.dark\:bg-slate-900\/60,.dark\:bg-slate-900\/50,.dark\:bg-slate-800\/70,.dark\:bg-slate-800\/60,.dark\:bg-slate-800\/50){
+    background-color:transparent!important;
+  }
+  html body :where(.dark\:text-white,.dark\:text-slate-100,.dark\:text-slate-200,.dark\:text-slate-300,.dark\:text-slate-400){
+    color:inherit!important;
+  }
+
+  /* 平台頂部：像大型商城，搜尋/導覽/管理狀態都更清楚。 */
+  html body .cxq-site-header{
+    background:rgba(255,255,255,.94)!important;
+    border-bottom:1px solid rgba(15,159,143,.14)!important;
+    box-shadow:0 16px 46px -42px rgba(15,23,42,.72)!important;
+  }
+  html body .cxq-site-header::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:-1px; height:3px;
+    background:linear-gradient(90deg,var(--cxq-v34-brand),var(--cxq-v34-gold),var(--cxq-v34-warm));
+    opacity:.75;
+    pointer-events:none;
+  }
+  html body .cxq-brand-mark{
+    background:linear-gradient(135deg,var(--cxq-v34-brand-2),var(--cxq-v34-brand-dark))!important;
+    color:#fff!important;
+    box-shadow:0 14px 34px -24px rgba(15,118,110,.9)!important;
+  }
+  html body .cxq-brand-name{color:#0f172a!important; font-weight:950!important; letter-spacing:-.025em!important;}
+  html body .cxq-brand-tagline{color:#64748b!important;}
+  html body .cxq-desktop-nav{
+    border-radius:999px!important;
+    padding:4px!important;
+    border:1px solid rgba(148,163,184,.20)!important;
+    background:rgba(248,250,252,.88)!important;
+  }
+  html body .cxq-desktop-nav button{
+    border-radius:999px!important;
+    color:#334155!important;
+    font-weight:850!important;
+  }
+  html body .cxq-desktop-nav button.is-active{
+    background:linear-gradient(135deg,var(--cxq-v34-brand-2),var(--cxq-v34-brand-dark))!important;
+    color:#fff!important;
+    box-shadow:0 12px 28px -20px rgba(15,118,110,.9)!important;
+  }
+  html body .cxq-search-trigger{
+    background:#fff!important;
+    color:#0f766e!important;
+    border:1px solid rgba(15,159,143,.22)!important;
+    box-shadow:0 12px 30px -24px rgba(15,23,42,.6)!important;
+  }
+
+  /* 全站頁面共同版型：各分頁變成功能館。 */
+  html body .cxq-main{
+    padding-top:24px!important;
+  }
+  html body :where(.cxq-page-section,.kjs-home-section){
+    position:relative!important;
+  }
+  html body .cxq-page-heading{
+    border-radius:28px!important;
+    padding:22px 24px!important;
+    border:1px solid rgba(15,159,143,.18)!important;
+    background:
+      radial-gradient(circle at 0% 0%,rgba(20,184,166,.18),transparent 22rem),
+      linear-gradient(135deg,#fff,#f4fffc 70%,#fff7ed)!important;
+    box-shadow:var(--cxq-v34-shadow)!important;
+  }
+  html body .cxq-page-heading h2,
+  html body .kjs-home-section-title{
+    color:#0f172a!important;
+    font-weight:950!important;
+    letter-spacing:-.035em!important;
+  }
+  html body .cxq-page-heading p{
+    color:#64748b!important;
+    line-height:1.7!important;
+  }
+  html body .cxq-page-card,
+  html body :where(.rounded-2xl.border,.rounded-xl.border):not(.cxq-preset):not(.cxq-chip){
+    border-color:rgba(148,163,184,.22)!important;
+    background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(248,250,252,.92))!important;
+    box-shadow:0 18px 58px -52px rgba(15,23,42,.70)!important;
+  }
+  html body :where(input:not([type="checkbox"]):not([type="radio"]),select,textarea){
+    background:#fff!important;
+    color:#0f172a!important;
+    border:1px solid rgba(148,163,184,.34)!important;
+    box-shadow:none!important;
+  }
+  html body :where(input,select,textarea):focus{
+    border-color:rgba(20,184,166,.72)!important;
+    box-shadow:0 0 0 4px rgba(20,184,166,.14)!important;
+    outline:none!important;
+  }
+  html body :where(button,a){
+    -webkit-tap-highlight-color:transparent;
+  }
+  html body :where(button[class*="bg-brand"],a[class*="bg-brand"],.rounded-lg.bg-brand,.rounded-xl.bg-brand){
+    background:linear-gradient(135deg,var(--cxq-v34-brand-2),var(--cxq-v34-brand-dark))!important;
+    color:#fff!important;
+    border:0!important;
+    box-shadow:0 16px 38px -26px rgba(15,118,110,.86)!important;
+  }
+
+  /* 首頁：Shopee 的大入口 + Hami 的點數福利感。 */
+  html body .kjs-home-page{
+    background:transparent!important;
+    color:#0f172a!important;
+  }
+  html body .kjs-home-page > section:first-of-type > div{
+    border-radius:34px!important;
+    border:1px solid rgba(20,184,166,.22)!important;
+    background:
+      radial-gradient(circle at 5% 12%,rgba(20,184,166,.26),transparent 24rem),
+      radial-gradient(circle at 92% 14%,rgba(251,191,36,.26),transparent 18rem),
+      linear-gradient(135deg,#fff 0%,#effdf9 55%,#fff7ed 100%)!important;
+    color:#0f172a!important;
+    box-shadow:var(--cxq-v34-shadow-strong)!important;
+  }
+  html body .kjs-home-page h1{
+    color:#0f172a!important;
+    font-weight:1000!important;
+    letter-spacing:-.055em!important;
+  }
+  html body .kjs-home-page .cxq-hero-shop-cta,
+  html body .kjs-home-section-action{
+    border-radius:16px!important;
+    border:1px solid rgba(15,159,143,.22)!important;
+    background:#fff!important;
+    color:#0f766e!important;
+    font-weight:900!important;
+    box-shadow:0 14px 34px -30px rgba(15,23,42,.62)!important;
+  }
+  html body .cxq-hero-proof{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    gap:8px!important;
+    border:0!important;
+  }
+  html body .cxq-hero-proof span{
+    border-radius:999px!important;
+    border:1px solid rgba(20,184,166,.20)!important;
+    background:rgba(255,255,255,.76)!important;
+    color:#0f766e!important;
+    padding:7px 11px!important;
+    font-weight:850!important;
+  }
+  html body [data-testid="stats"] > *{
+    border-radius:24px!important;
+    border:1px solid rgba(148,163,184,.18)!important;
+    background:rgba(255,255,255,.88)!important;
+    box-shadow:0 18px 54px -46px rgba(15,23,42,.68)!important;
+  }
+  html body .kjs-home-section{
+    border-radius:30px!important;
+    padding:18px!important;
+    border:1px solid rgba(148,163,184,.18)!important;
+    background:rgba(255,255,255,.68)!important;
+    box-shadow:0 18px 60px -56px rgba(15,23,42,.72)!important;
+  }
+  html body .kjs-home-gallery-card{
+    border-radius:28px!important;
+    background:linear-gradient(135deg,#fff,#f4fffc)!important;
+  }
+  html body .kjs-home-footer{
+    color:#64748b!important;
+  }
+
+  /* 抽獎/紀錄/FAQ/遊戲：全部卡片化、商城館化。 */
+  html body :where(.kjs-game-card,.kjs-history-card,.kjs-faq-item,.kjs-strict-collapse,.cxq-card,.cxq-page-card article){
+    border-radius:22px!important;
+    border-color:rgba(148,163,184,.22)!important;
+    background:#fff!important;
+    box-shadow:0 16px 52px -46px rgba(15,23,42,.70)!important;
+  }
+  html body :where(.kjs-game-card,.kjs-history-card,.kjs-faq-item,.kjs-strict-collapse):hover{
+    border-color:rgba(20,184,166,.34)!important;
+    box-shadow:0 24px 64px -48px rgba(15,118,110,.44)!important;
+  }
+  html body :where(.cxq-chip,.rounded-full){
+    border-color:rgba(20,184,166,.20)!important;
+  }
+
+  /* 商店：商品牆保持 V33，但加強商城感。 */
+  html body .cxq-commerce-toolbar{
+    background:linear-gradient(135deg,#fff,#f0fdfa)!important;
+    border-color:rgba(20,184,166,.22)!important;
+  }
+  html body .cxq-commerce-card{
+    border-radius:22px!important;
+    background:linear-gradient(180deg,#fff 0%,#fff 68%,#f8fafc 100%)!important;
+  }
+  html body .cxq-commerce-card .text-base.font-black{
+    color:#f97316!important;
+  }
+  html body .cxq-commerce-card [class*="font-bold"]{
+    color:#0f766e!important;
+  }
+
+  /* 搜尋/篩選/彈窗：統一亮色小視窗。 */
+  html body :where(.cxq-site-search-panel,.cxq-filter-sheet,.cxq-admin-editor-panel,.cxq-modal-panel,.sheet-w,.kjs-game-edit-shell){
+    background:linear-gradient(180deg,#fff,#fbfefd)!important;
+    color:#0f172a!important;
+    border-color:rgba(226,232,240,.95)!important;
+  }
+  html body :where(.cxq-site-search-panel,.cxq-filter-sheet,.cxq-admin-editor-panel,.cxq-modal-panel,.sheet-w,.kjs-game-edit-shell) :where(header,.cxq-commerce-editor-header,.cxq-commerce-item-header){
+    background:linear-gradient(135deg,rgba(240,253,250,.95),#fff)!important;
+    border-color:rgba(148,163,184,.22)!important;
+  }
+
+  /* 管理工作室：平台後台化。 */
+  html body.cxq-admin-mode .cxq-studio-shell{
+    background:#fff!important;
+    color:#0f172a!important;
+    border:1px solid rgba(226,232,240,.92)!important;
+    box-shadow:0 38px 130px -70px rgba(15,23,42,.9)!important;
+  }
+  html body.cxq-admin-mode .cxq-studio-shell .kjs-backoffice-nav{
+    background:linear-gradient(180deg,#effdf9,#f8fafc)!important;
+    border-right:1px solid rgba(20,184,166,.18)!important;
+  }
+  html body.cxq-admin-mode .cxq-studio-shell .kjs-backoffice-nav button{
+    color:#334155!important;
+    background:rgba(255,255,255,.58)!important;
+    border:1px solid transparent!important;
+  }
+  html body.cxq-admin-mode .cxq-studio-shell .kjs-backoffice-nav button.is-active{
+    background:#fff!important;
+    color:#0f766e!important;
+    border-color:rgba(20,184,166,.26)!important;
+    box-shadow:0 16px 42px -34px rgba(15,118,110,.60)!important;
+  }
+  html body.cxq-admin-mode .cxq-studio-shell .cxq-studio-header{
+    background:linear-gradient(135deg,#fff,#f0fdfa)!important;
+    border-bottom:1px solid rgba(20,184,166,.18)!important;
+  }
+  html body.cxq-admin-mode .cxq-studio-shell :where(.cxq-studio-panel,.cxq-studio-action,.cxq-studio-stat,.cxq-publish-step,.cxq-studio-health-row){
+    background:#fff!important;
+    color:#0f172a!important;
+    border-color:rgba(148,163,184,.22)!important;
+    box-shadow:0 14px 48px -44px rgba(15,23,42,.68)!important;
+  }
+
+  /* 設定頁：暗色模式已移除，主題卡改成亮色品牌選擇。 */
+  html body .cxq-preset-grid{
+    display:grid!important;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr))!important;
+    gap:10px!important;
+  }
+  html body .cxq-preset{
+    border-radius:18px!important;
+    border:1px solid rgba(148,163,184,.24)!important;
+    background:#fff!important;
+    padding:14px!important;
+    text-align:left!important;
+    box-shadow:0 14px 38px -34px rgba(15,23,42,.62)!important;
+  }
+  html body .cxq-preset.is-active{
+    border-color:rgba(20,184,166,.52)!important;
+    background:linear-gradient(135deg,#fff,#ecfdf5)!important;
+    box-shadow:0 18px 54px -40px rgba(15,118,110,.56)!important;
+  }
+  html body .cxq-preset[data-theme="midnight"]{display:none!important;}
+  html body [data-cxq-color-mode="dark"]{color:#0f172a!important;}
+
+  @media(max-width:767px){
+    html body .cxq-main{padding:16px 12px 28px!important;}
+    html body .cxq-page-heading{border-radius:22px!important; padding:18px 16px!important;}
+    html body .cxq-page-card{border-radius:22px!important;}
+    html body .kjs-home-page > section:first-of-type{padding:12px 12px 20px!important;}
+    html body .kjs-home-page > section:first-of-type > div{border-radius:26px!important;}
+    html body .kjs-home-section{border-radius:22px!important; padding:14px!important;}
+    html body .cxq-desktop-nav{display:none!important;}
+  }
+</style>
+<script id="cxq-full-marketplace-light-v34-script">
+(() => {
+  if (window.__cxqFullMarketplaceLightV34) return;
+  window.__cxqFullMarketplaceLightV34 = true;
+  const apply = () => {
+    const root = document.documentElement;
+    root.classList.remove('dark');
+    root.dataset.cxqColorMode = 'light';
+    if (root.dataset.cxqTheme === 'midnight') root.dataset.cxqTheme = 'mint';
+    document.body?.classList?.add('cxq-v34-marketplace-light');
+  };
+  apply();
+  document.addEventListener('DOMContentLoaded', apply, { once:true });
+  window.addEventListener('pageshow', apply, { passive:true });
+})();
+</script>
+<!-- [CXQ FULL MARKETPLACE LIGHT EXPERIENCE V34 END] -->
+
+
+<!-- [CXQ MOBILE COMMERCE SPLIT UX V35 START] -->
+<style id="cxq-mobile-commerce-split-v35">
+  html body .cxq-commerce-mobilebar{display:none!important;}
+  html body .cxq-my-points-field small{display:block;margin-top:.42rem;color:#64748b;font-size:.73rem;line-height:1.35;}
+
+  @media(min-width:768px){
+    html body .cxq-commerce-toolbar .cxq-commerce-quickbar{display:grid!important;}
+    html body .cxq-commerce-toolbar .cxq-commerce-mobilebar{display:none!important;}
+  }
+
+  @media(max-width:767px){
+    html body .cxq-commerce-toolbar{
+      padding:12px!important;
+      border-radius:24px!important;
+      background:linear-gradient(135deg,#ffffff 0%,#f4fffc 58%,#fffaf0 100%)!important;
+      border:1px solid rgba(20,184,166,.24)!important;
+      box-shadow:0 18px 52px -42px rgba(15,23,42,.66)!important;
+      overflow:visible!important;
+    }
+    html body .cxq-commerce-toolbar .cxq-commerce-quickbar{display:none!important;}
+    html body .cxq-commerce-toolbar .cxq-commerce-mobilebar{
+      display:grid!important;
+      grid-template-columns:minmax(0,1fr)!important;
+      grid-template-rows:auto auto!important;
+      grid-auto-flow:row!important;
+      gap:10px!important;
+      width:100%!important;
+      min-width:0!important;
+    }
+    html body .cxq-commerce-toolbar .cxq-commerce-mobilebar > *{
+      grid-column:1/-1!important;
+      min-width:0!important;
+      width:100%!important;
+      max-width:100%!important;
+    }
+    html body .cxq-commerce-mobile-summary{
+      display:grid!important;
+      grid-template-columns:minmax(0,1fr) auto!important;
+      gap:6px 10px!important;
+      align-items:center!important;
+      padding:2px 2px 4px!important;
+      min-width:0!important;
+    }
+    html body .cxq-commerce-mobile-total{
+      font-size:.94rem!important;
+      font-weight:950!important;
+      color:#0f172a!important;
+      letter-spacing:-.02em!important;
+      min-width:0!important;
+    }
+    html body .cxq-commerce-mobile-current{
+      justify-self:end!important;
+      max-width:42vw!important;
+      overflow:hidden!important;
+      text-overflow:ellipsis!important;
+      white-space:nowrap!important;
+      border-radius:999px!important;
+      padding:.28rem .58rem!important;
+      background:rgba(15,159,145,.10)!important;
+      color:#0f766e!important;
+      font-size:.72rem!important;
+      font-weight:850!important;
+    }
+    html body .cxq-commerce-mobile-active{
+      grid-column:1/-1!important;
+      color:#64748b!important;
+      font-size:.76rem!important;
+      line-height:1.35!important;
+    }
+    html body .cxq-commerce-mobile-actions{
+      display:grid!important;
+      grid-template-columns:repeat(2,minmax(0,1fr))!important;
+      gap:10px!important;
+      width:100%!important;
+      min-width:0!important;
+    }
+    html body .cxq-commerce-mobile-actions :where(button,label){
+      min-width:0!important;
+      min-height:52px!important;
+      border-radius:18px!important;
+      border:1px solid rgba(148,163,184,.28)!important;
+      background:#fff!important;
+      color:#0f172a!important;
+      box-shadow:0 12px 34px -30px rgba(15,23,42,.58)!important;
+    }
+    html body .cxq-commerce-mobile-filter{
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      gap:.45rem!important;
+      padding:.72rem .8rem!important;
+      font-size:.95rem!important;
+      font-weight:950!important;
+    }
+    html body .cxq-commerce-mobile-filter b{
+      min-width:1.35rem!important;
+      height:1.35rem!important;
+      display:inline-grid!important;
+      place-items:center!important;
+      border-radius:999px!important;
+      background:#0f9f8f!important;
+      color:#fff!important;
+      font-size:.72rem!important;
+    }
+    html body .cxq-commerce-mobile-sort{
+      display:grid!important;
+      grid-template-columns:auto minmax(0,1fr)!important;
+      align-items:center!important;
+      gap:.45rem!important;
+      padding:.46rem .58rem .46rem .75rem!important;
+      overflow:hidden!important;
+    }
+    html body .cxq-commerce-mobile-sort > span{
+      color:#0f766e!important;
+      font-size:.78rem!important;
+      font-weight:950!important;
+      white-space:nowrap!important;
+    }
+    html body .cxq-commerce-mobile-sort select{
+      width:100%!important;
+      min-width:0!important;
+      min-height:40px!important;
+      border:0!important;
+      border-radius:12px!important;
+      background:#f8fafc!important;
+      color:#0f172a!important;
+      font-size:16px!important;
+      font-weight:850!important;
+      padding:.45rem .55rem!important;
+      outline:none!important;
+    }
+    html body .cxq-commerce-mobile-manage{
+      grid-column:1/-1!important;
+      min-height:50px!important;
+      background:linear-gradient(135deg,#0f9f8f,#0f766e)!important;
+      color:#fff!important;
+      border-color:transparent!important;
+      font-weight:950!important;
+      box-shadow:0 16px 38px -30px rgba(15,118,110,.72)!important;
+    }
+
+    html body .cxq-filter-sheet-root{
+      display:grid!important;
+      place-items:center!important;
+      align-items:center!important;
+      justify-content:center!important;
+      padding:max(14px,env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-right,0px)) max(14px,env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px))!important;
+      overflow:hidden!important;
+    }
+    html body .cxq-filter-sheet{
+      width:min(92vw,560px)!important;
+      max-width:92vw!important;
+      max-height:calc(100dvh - max(32px,env(safe-area-inset-top,0px)) - max(32px,env(safe-area-inset-bottom,0px)))!important;
+      border-radius:24px!important;
+      border:1px solid rgba(226,232,240,.96)!important;
+      background:linear-gradient(180deg,#fff,#fbfefd)!important;
+      box-shadow:0 34px 110px -62px rgba(15,23,42,.84)!important;
+      overflow:hidden!important;
+    }
+    html body .cxq-filter-sheet-header{
+      padding:15px 16px 12px!important;
+      background:linear-gradient(135deg,#f0fdfa,#fff)!important;
+    }
+    html body .cxq-filter-sheet-body{
+      padding:14px!important;
+      overflow-y:auto!important;
+      -webkit-overflow-scrolling:touch!important;
+      overscroll-behavior:contain!important;
+    }
+    html body .cxq-filter-grid{
+      grid-template-columns:1fr!important;
+      gap:10px!important;
+    }
+    html body .cxq-filter-option-wide{grid-column:auto!important;}
+    html body .cxq-filter-option,
+    html body .cxq-filter-field,
+    html body .cxq-filter-check,
+    html body .cxq-filter-group{
+      border-radius:18px!important;
+      background:#fff!important;
+      box-shadow:0 12px 34px -32px rgba(15,23,42,.58)!important;
+    }
+    html body .cxq-my-points-field input{
+      font-size:18px!important;
+      font-weight:900!important;
+      letter-spacing:.02em!important;
+      color:#0f172a!important;
+      background:#f8fafc!important;
+    }
+    html body .cxq-filter-sheet-footer{
+      grid-template-columns:1fr 1fr!important;
+      padding:12px 14px max(14px,env(safe-area-inset-bottom,0px))!important;
+      background:#fff!important;
+    }
+    html body .cxq-filter-sheet-footer button{min-height:50px!important;border-radius:16px!important;}
+  }
+
+  @media(max-width:360px){
+    html body .cxq-commerce-mobile-actions{grid-template-columns:1fr!important;}
+    html body .cxq-commerce-mobile-manage{grid-column:auto!important;}
+    html body .cxq-commerce-mobile-current{max-width:100%!important;justify-self:start!important;}
+    html body .cxq-commerce-mobile-summary{grid-template-columns:1fr!important;}
+  }
+</style>
+<!-- [CXQ MOBILE COMMERCE SPLIT UX V35 END] -->
 </body>
 </html>
 
