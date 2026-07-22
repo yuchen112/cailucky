@@ -5,7 +5,7 @@
     "schemaVersion": 6,
     "sourceSchemaVersion": 3,
     "appearanceSchemaVersion": 4,
-    "exportedAt": "2026-07-22T12:43:51.362Z",
+    "exportedAt": "2026-07-22T16:15:28.295Z",
     "generatedBy": "cxq-static-commerce-rebuild-v4",
     "exportType": "complete-static-site-backup"
   },
@@ -917,32 +917,6 @@
     "ongoing": [],
     "shop": {
       "items": [
-        {
-          "enabled": true,
-          "visible": true,
-          "tags": [
-            "3C"
-          ],
-          "images": [
-            "assets/點數商城/動力自帶Type-C快充伸縮線氮化鎵充電器.jpg"
-          ],
-          "status": "可兌換",
-          "name": "動力自帶Type-C快充伸縮線氮化鎵充電器",
-          "points": "150",
-          "desc": "在現代人快節奏的生活中，MOBIA 摩比亞推出的動力自帶Type-C快充伸縮線氮化鎵充電器，為您的充電需求提供完美解決方案。這款充電器擁有三口輸出設計，無論是手機、平板還是其他設備，都能迅速充電，讓您隨時保持連線。不僅功能強大，體積小巧的設計也方便攜帶，無論是在辦公室、家中或出門在外，隨手可用。選擇MOBIA，體驗科技與生活的完美結合，讓充電變得輕鬆自在。",
-          "image": "assets/點數商城/動力自帶Type-C快充伸縮線氮化鎵充電器.jpg",
-          "stock": 1,
-          "id": "shop_moo0iwuv_d0i26e",
-          "category": "3C",
-          "character": "",
-          "brand": "",
-          "series": "",
-          "size": "",
-          "material": "",
-          "preorderDeadline": "",
-          "arrivalEstimate": "",
-          "availability": "可兌換"
-        },
         {
           "enabled": true,
           "visible": true,
@@ -2664,7 +2638,7 @@
           ],
           "availability": "預售",
           "id": "xp71wun7",
-          "name": "A0037:國潮風明月千里月餅盲盒",
+          "name": "國潮風明月千里月餅盲盒",
           "price": "150",
           "stock": "",
           "desc": "單隻150/一中盒(4隻)560/2中盒(8隻)1080\n預購7~14天\n購買後回報得點數1/5/10點\n未回報視同放棄\n\n",
@@ -2713,7 +2687,8 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "code": "A0037"
         },
         {
           "visible": true,
@@ -6610,48 +6585,78 @@
       ],
       "tagGroups": [
         {
-          "id": "tags",
-          "name": "標籤",
+          "id": "taggroup_mrw9tpa4",
+          "name": "類別",
           "tags": [
             "3C",
+            "公仔",
+            "生活",
+            "吊飾",
+            "玩具",
+            "盲包",
+            "盲盒",
+            "娃娃",
+            "預售"
+          ]
+        },
+        {
+          "id": "taggroup_mrw9u5gr",
+          "name": "角色",
+          "tags": [
             "九尾狐",
             "三麗鷗",
             "大耳狗",
             "小白",
             "小葵",
-            "公仔",
-            "水晶",
             "卡皮巴拉",
             "史迪奇",
-            "永生花",
-            "生活",
-            "吊飾",
             "米奇",
             "米妮",
-            "行動電源",
             "兔子",
-            "杯子",
             "狗狗",
-            "玩具",
-            "盲包",
-            "盲盒",
             "阿呆",
-            "保溫杯",
-            "娃娃",
             "美樂蒂",
             "迪士尼",
             "庫洛米",
             "動物方程式",
-            "預售",
             "熊",
             "熊貓",
             "維尼",
-            "積木",
             "貓和老鼠",
             "貓咪",
-            "擺件",
             "蠟筆小新",
             "Jellycat"
+          ]
+        },
+        {
+          "id": "taggroup_mrw9zvoq",
+          "name": "3C",
+          "tags": [
+            "行動電源"
+          ]
+        },
+        {
+          "id": "taggroup_mrwa008q",
+          "name": "其他",
+          "tags": [
+            "水晶",
+            "永生花"
+          ]
+        },
+        {
+          "id": "taggroup_mrwa0xw2",
+          "name": "生活",
+          "tags": [
+            "杯子",
+            "保溫杯",
+            "擺件"
+          ]
+        },
+        {
+          "id": "taggroup_mrwa33ts",
+          "name": "玩具",
+          "tags": [
+            "積木"
           ]
         }
       ]
