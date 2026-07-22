@@ -1,0 +1,197 @@
+{
+  "_meta": {
+    "app": "kjs",
+    "version": 8,
+    "schemaVersion": 8,
+    "sourceSchemaVersion": 0,
+    "appearanceSchemaVersion": 3,
+    "exportType": "safe-blank",
+    "generatedBy": "cxq-static-commerce-rebuild-v6",
+    "exportedAt": "2026-07-22T00:00:00.000Z"
+  },
+  "data": {
+    "homepage": {
+      "title": "CxQ 開獎所",
+      "subtitle": "社群選物、點數兌換、透明開獎",
+      "description": "盲盒、公仔、小物透明販售與交流，抽獎公開透明，紀錄可查，社群限定活動持續更新。",
+      "heroImage": "",
+      "heroBadge": "CxQ Select",
+      "primaryButtonText": "逛社群商店",
+      "secondaryButtonText": "查詢點數",
+      "communityTitle": "社群服務",
+      "communityDesc": "",
+      "communityBullets": [
+        "商品快速瀏覽",
+        "手作訂製洽詢",
+        "點數查詢",
+        "開獎紀錄透明"
+      ],
+      "featuredDrawTitle": "最新開獎",
+      "featuredStoreTitle": "社群商店",
+      "featuredShopTitle": "點數兌換",
+      "galleryTitle": "客人回報/分享",
+      "galleryDesc": "社群成員的開箱、到貨與回報分享集中整理。",
+      "sectionOrder": [
+        "hero",
+        "store",
+        "gallery",
+        "draws",
+        "shop",
+        "custom",
+        "faq"
+      ],
+      "visibility": {
+        "hero": true,
+        "store": true,
+        "points": true,
+        "draws": true,
+        "shop": true,
+        "gallery": true,
+        "community": true,
+        "faq": true
+      },
+      "announcements": [],
+      "about": "開獎所整合商品、手作訂製、點數查詢、兌換與開獎紀錄，讓參與者快速確認活動進度、點數與得獎資訊。",
+      "links": [],
+      "aboutShort": "開獎所整合商品、手作訂製、點數查詢、兌換與開獎紀錄，讓參與者快速確認活動進度、點數與得獎資訊。"
+    },
+    "history": [],
+    "pending": [],
+    "ongoing": [],
+    "shop": {
+      "items": [],
+      "people": [],
+      "logs": [],
+      "tagGroups": [
+        {
+          "id": "tags",
+          "name": "標籤",
+          "tags": []
+        }
+      ]
+    },
+    "store": {
+      "items": [],
+      "tagGroups": [
+        {
+          "id": "tags",
+          "name": "標籤",
+          "tags": []
+        }
+      ]
+    },
+    "others": {
+      "cards": []
+    },
+    "gallery": {
+      "items": [],
+      "homepage_showcase": []
+    },
+    "faq": {
+      "categories": []
+    },
+    "links": {
+      "items": []
+    },
+    "custom": {
+      "intro": "",
+      "items": []
+    },
+    "settings": {
+      "drawMaxPerRun": 500,
+      "drawPublicShowLimit": 50,
+      "drawCooldownSec": 10,
+      "contactUrl": "",
+      "lineGroupUrl": "",
+      "siteName": "CxQ 開獎所",
+      "siteShortName": "CxQ",
+      "siteTagline": "社群商店、點數查詢、兌換與透明開獎中心",
+      "logoUrl": "",
+      "faviconUrl": "",
+      "defaultAdminEnabled": true,
+      "pointsSearchEnabled": true,
+      "pointsSearchHint": "請輸入暱稱、LINE 名稱或編號查詢。",
+      "appearance": {
+        "themePreset": "commerce",
+        "colorMode": "light",
+        "accentColor": "#b3263b",
+        "secondaryColor": "#0f766e",
+        "heroStyle": "editorial",
+        "cardStyle": "clean",
+        "productImageRatio": "1 / 1",
+        "density": "comfortable",
+        "url": "",
+        "tint": "rgba(255,255,255,0)",
+        "brightness": 1,
+        "blur": 0,
+        "opacity": 1,
+        "size": "cover",
+        "pos": "center"
+      }
+    },
+    "appearance": {
+      "themePreset": "commerce",
+      "colorMode": "light",
+      "accentColor": "#b3263b",
+      "secondaryColor": "#0f766e",
+      "heroStyle": "editorial",
+      "cardStyle": "clean",
+      "productImageRatio": "1 / 1",
+      "density": "comfortable",
+      "url": "",
+      "tint": "rgba(255,255,255,0)",
+      "brightness": 1,
+      "blur": 0,
+      "opacity": 1,
+      "size": "cover",
+      "pos": "center"
+    }
+  },
+  "admins": [
+    {
+      "id": "default-admin",
+      "name": "admin",
+      "username": "admin",
+      "displayName": "初始管理員",
+      "role": "owner",
+      "enabled": true,
+      "builtIn": true,
+      "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"
+    }
+  ],
+  "images": null,
+  "bg": {
+    "themePreset": "commerce",
+    "colorMode": "light",
+    "accentColor": "#b3263b",
+    "secondaryColor": "#0f766e",
+    "heroStyle": "editorial",
+    "cardStyle": "clean",
+    "productImageRatio": "1 / 1",
+    "density": "comfortable",
+    "url": "",
+    "tint": "rgba(255,255,255,0)",
+    "brightness": 1,
+    "blur": 0,
+    "opacity": 1,
+    "size": "cover",
+    "pos": "center"
+  },
+  "appearance": {
+    "themePreset": "commerce",
+    "colorMode": "light",
+    "accentColor": "#b3263b",
+    "secondaryColor": "#0f766e",
+    "heroStyle": "editorial",
+    "cardStyle": "clean",
+    "productImageRatio": "1 / 1",
+    "density": "comfortable",
+    "url": "",
+    "tint": "rgba(255,255,255,0)",
+    "brightness": 1,
+    "blur": 0,
+    "opacity": 1,
+    "size": "cover",
+    "pos": "center"
+  }
+}
