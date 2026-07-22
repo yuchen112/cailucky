@@ -1,11 +1,13 @@
 {
   "_meta": {
     "app": "kjs",
-    "version": 8,
-    "schemaVersion": 8,
-    "appearanceSchemaVersion": 1,
-    "exportedAt": "2026-07-18T12:15:31.656Z",
-    "generatedBy": "cxq-static-commerce-rebuild-v6"
+    "version": 6,
+    "schemaVersion": 6,
+    "sourceSchemaVersion": 3,
+    "appearanceSchemaVersion": 4,
+    "exportedAt": "2026-07-22T12:38:38.050Z",
+    "generatedBy": "cxq-static-commerce-rebuild-v4",
+    "exportType": "complete-static-site-backup"
   },
   "data": {
     "homepage": {
@@ -29,6 +31,7 @@
       "featuredShopTitle": "點數商城精選",
       "galleryTitle": "客人回報/分享",
       "galleryDesc": "社群成員的開箱、到貨與回報分享集中整理。",
+      "aboutShort": "開獎所整合商品、手作訂製、點數查詢、兌換與開獎紀錄，讓參與者快速確認活動進度、點數與得獎資訊。",
       "sectionOrder": [
         "hero",
         "store",
@@ -40,36 +43,41 @@
       ],
       "visibility": {
         "hero": true,
-        "focus": true,
         "store": true,
+        "custom": true,
+        "points": true,
+        "draws": true,
         "shop": true,
         "gallery": true,
         "community": false,
-        "faq": true
+        "faq": true,
+        "focus": true
       },
-      "featuredDrawIds": [],
-      "featuredStoreIds": [],
-      "featuredShopIds": [],
       "announcements": [],
       "about": "開獎所整合商品、手作訂製、點數查詢、兌換與開獎紀錄，讓參與者快速確認活動進度、點數與得獎資訊。",
       "links": [
         {
+          "visible": true,
           "id": "8kkma8mu",
           "name": "抽獎群組",
           "url": "https://reurl.cc/ZNGdXV"
         },
         {
+          "visible": true,
           "id": "5rfhig8c",
           "name": "官方LINE",
           "url": "https://lin.ee/kKEvNhs"
         },
         {
+          "visible": true,
           "id": "owa690ts",
           "name": "🎬【YouTube 頻道】",
           "url": "https://www.youtube.com/@%E9%96%8B%E7%8D%8E%E6%89%80"
         }
       ],
-      "aboutShort": "開獎所整合商品、手作訂製、點數查詢、兌換與開獎紀錄，讓參與者快速確認活動進度、點數與得獎資訊。"
+      "featuredDrawIds": [],
+      "featuredStoreIds": [],
+      "featuredShopIds": []
     },
     "history": [
       {
@@ -911,139 +919,211 @@
       "items": [
         {
           "enabled": true,
-          "name": "動力自帶Type-C快充伸縮線氮化鎵充電器",
-          "points": "150",
-          "desc": "在現代人快節奏的生活中，MOBIA 摩比亞推出的動力自帶Type-C快充伸縮線氮化鎵充電器，為您的充電需求提供完美解決方案。這款充電器擁有三口輸出設計，無論是手機、平板還是其他設備，都能迅速充電，讓您隨時保持連線。不僅功能強大，體積小巧的設計也方便攜帶，無論是在辦公室、家中或出門在外，隨手可用。選擇MOBIA，體驗科技與生活的完美結合，讓充電變得輕鬆自在。",
+          "visible": true,
           "tags": [
             "3C"
           ],
-          "image": "assets/點數商城/動力自帶Type-C快充伸縮線氮化鎵充電器.jpg",
           "images": [
             "assets/點數商城/動力自帶Type-C快充伸縮線氮化鎵充電器.jpg"
           ],
+          "status": "可兌換",
+          "name": "動力自帶Type-C快充伸縮線氮化鎵充電器",
+          "points": "150",
+          "desc": "在現代人快節奏的生活中，MOBIA 摩比亞推出的動力自帶Type-C快充伸縮線氮化鎵充電器，為您的充電需求提供完美解決方案。這款充電器擁有三口輸出設計，無論是手機、平板還是其他設備，都能迅速充電，讓您隨時保持連線。不僅功能強大，體積小巧的設計也方便攜帶，無論是在辦公室、家中或出門在外，隨手可用。選擇MOBIA，體驗科技與生活的完美結合，讓充電變得輕鬆自在。",
+          "image": "assets/點數商城/動力自帶Type-C快充伸縮線氮化鎵充電器.jpg",
           "stock": 1,
           "id": "shop_moo0iwuv_d0i26e",
           "category": "3C",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": "",
+          "availability": "可兌換"
         },
         {
+          "enabled": true,
+          "visible": true,
+          "tags": [
+            "折扣"
+          ],
+          "images": [
+            "assets/點數商城/抽獎機會+1.jpg"
+          ],
+          "status": "可兌換",
           "id": "qgc174m6",
           "name": "抽獎機會+1",
           "points": 5,
           "stock": 88888,
           "desc": "請向管理員截圖兌換\n兌換後可指定抽獎獎項名額+1\n每期只能使用1次",
           "image": "assets/點數商城/抽獎機會+1.jpg",
-          "images": [
-            "assets/點數商城/抽獎機會+1.jpg"
-          ],
-          "enabled": true,
-          "tags": [
-            "折扣"
-          ],
           "category": "折扣",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": "",
+          "availability": "可兌換"
         },
         {
           "enabled": true,
+          "visible": true,
+          "tags": [
+            "折扣"
+          ],
+          "images": [
+            "assets/點數商城/折抵50元.jpg"
+          ],
+          "status": "可兌換",
           "name": "折抵50元",
           "points": "20",
           "stock": 88888,
           "desc": "社群商店折抵用\n折抵金額50元\n折抵完金額不得低於200請注意!\n例:500元商品最高折抵300元",
-          "tags": [
-            "折扣"
-          ],
           "image": "assets/點數商城/折抵50元.jpg",
-          "images": [
-            "assets/點數商城/折抵50元.jpg"
-          ],
           "id": "shop_moo0iwuv_xvbdr4",
           "category": "折扣",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": "",
+          "availability": "可兌換"
         },
         {
           "enabled": true,
+          "visible": true,
+          "tags": [
+            "折扣"
+          ],
+          "images": [
+            "assets/點數商城/折抵100元.jpg"
+          ],
+          "status": "可兌換",
           "name": "折抵100元",
           "points": "30",
           "stock": 88888,
           "desc": "社群商店折抵用\n折抵金額100元\n折抵完金額不得低於200請注意!\n例:500元商品最高折抵300元",
-          "tags": [
-            "折扣"
-          ],
           "image": "assets/點數商城/折抵100元.jpg",
-          "images": [
-            "assets/點數商城/折抵100元.jpg"
-          ],
           "id": "shop_moo0iwuv_caux36",
           "category": "折扣",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": "",
+          "availability": "可兌換"
         },
         {
           "enabled": true,
+          "visible": true,
+          "tags": [
+            "折扣"
+          ],
+          "images": [
+            "assets/點數商城/折抵200元.jpg"
+          ],
+          "status": "可兌換",
           "name": "折抵200元",
           "points": "50",
           "stock": 88888,
           "desc": "社群商店折抵用\n折抵金額200元\n折抵完金額不得低於200請注意!\n例:500元商品最高折抵300元",
-          "tags": [
-            "折扣"
-          ],
           "image": "assets/點數商城/折抵200元.jpg",
-          "images": [
-            "assets/點數商城/折抵200元.jpg"
-          ],
           "id": "shop_moo0iwuv_u9qx5j",
           "category": "折扣",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": "",
+          "availability": "可兌換"
         },
         {
           "enabled": true,
+          "visible": true,
+          "tags": [
+            "折扣"
+          ],
+          "images": [
+            "assets/點數商城/折抵300元.jpg"
+          ],
+          "status": "可兌換",
           "name": "折抵300元",
           "points": "70",
           "stock": 88888,
           "desc": "社群商店折抵用\n折抵金額300元\n折抵完金額不得低於200請注意!\n例:500元商品最高折抵300元",
-          "tags": [
-            "折扣"
-          ],
           "image": "assets/點數商城/折抵300元.jpg",
-          "images": [
-            "assets/點數商城/折抵300元.jpg"
-          ],
           "id": "shop_moo0iwuv_wxkqmo",
           "category": "折扣",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": "",
+          "availability": "可兌換"
         },
         {
           "enabled": true,
+          "visible": true,
+          "tags": [
+            "折扣"
+          ],
+          "images": [
+            "assets/點數商城/折抵500元.jpg"
+          ],
+          "status": "可兌換",
           "name": "折抵500元",
           "points": "110",
           "stock": 88888,
           "desc": "社群商店折抵用\n折抵金額500元\n折抵完金額不得低於200請注意!\n例:500元商品最高折抵300元\n",
-          "tags": [
-            "折扣"
-          ],
           "image": "assets/點數商城/折抵500元.jpg",
-          "images": [
-            "assets/點數商城/折抵500元.jpg"
-          ],
           "id": "shop_moo0iwuv_t3lcfi",
           "category": "折扣",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": "",
+          "availability": "可兌換"
         },
         {
           "enabled": true,
+          "visible": true,
+          "tags": [
+            "折扣"
+          ],
+          "images": [
+            "assets/點數商城/折抵1000元.jpg"
+          ],
+          "status": "可兌換",
           "name": "折抵1000元",
           "points": "200",
           "stock": 88888,
           "desc": "社群商店折抵用\n折抵金額1000元\n折抵完金額不得低於200請注意!\n例:500元商品最高折抵300元\n",
-          "tags": [
-            "折扣"
-          ],
           "image": "assets/點數商城/折抵1000元.jpg",
-          "images": [
-            "assets/點數商城/折抵1000元.jpg"
-          ],
           "id": "shop_moo0iwuv_u7lkid",
           "category": "折扣",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": "",
+          "availability": "可兌換"
         }
       ],
       "people": [],
@@ -2106,20 +2186,8 @@
     "store": {
       "items": [
         {
-          "id": "4ijuf9xm",
-          "name": "A0039:萌萌小派對",
-          "price": "150",
-          "stock": "",
-          "desc": "單隻150/一中盒(8隻)1080\n預購7~14天\n\n\n",
-          "images": [
-            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-1.jpg",
-            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-2.jpg",
-            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-3.jpg",
-            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-4.jpg",
-            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-5.jpg",
-            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-6.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "公仔",
             "玩具",
@@ -2127,46 +2195,6 @@
             "預售",
             "擺件"
           ],
-          "availability": "預售",
-          "image": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/small-party-1.jpg",
-          "enabled": true,
-          "visible": true,
-          "category": "公仔",
-          "character": ""
-        },
-        {
-          "id": "h55f4zlt",
-          "name": "A0038:喵見好運吊飾盲盒",
-          "price": "480",
-          "stock": "",
-          "desc": "單隻90 / 一中盒(6隻) 480\n預購7~14天\n購買一中盒後回報得點數1點\n未回報視同放棄",
-          "images": [
-            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky1.jpg",
-            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky2.jpg",
-            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky3.jpg",
-            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky4.jpg",
-            "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky5.jpg"
-          ],
-          "buyUrl": "",
-          "tags": [
-            "吊飾",
-            "盲盒",
-            "預售",
-            "貓咪"
-          ],
-          "availability": "預售",
-          "image": "https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/upload/meowLucky1.jpg",
-          "enabled": true,
-          "visible": true,
-          "category": "盲盒",
-          "character": "貓咪"
-        },
-        {
-          "id": "xp71wun7",
-          "name": "A0037:國潮風明月千里月餅盲盒",
-          "price": "150",
-          "stock": "",
-          "desc": "單隻150/一中盒(4隻)560/2中盒(8隻)1080\n預購7~14天\n購買後回報得點數1/5/10點\n未回報視同放棄\n\n",
           "images": [
             "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒1.jpg",
             "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒2.jpg",
@@ -2178,15 +2206,13 @@
             "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒9.jpg",
             "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒10.jpg"
           ],
-          "buyUrl": "",
-          "tags": [
-            "公仔",
-            "玩具",
-            "盲盒",
-            "預售",
-            "擺件"
-          ],
           "availability": "預售",
+          "id": "xp71wun7",
+          "name": "A0037:國潮風明月千里月餅盲盒",
+          "price": "150",
+          "stock": "",
+          "desc": "單隻150/一中盒(4隻)560/2中盒(8隻)1080\n預購7~14天\n購買後回報得點數1/5/10點\n未回報視同放棄\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2224,21 +2250,18 @@
             ]
           },
           "image": "assets/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "xqx14y28",
-          "name": "A0036: 山海九尾狐第二彈",
-          "price": "170",
-          "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.30*6.80*9.80\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
-          "images": [
-            "assets/products/盲盒/山海九尾狐第二弹.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -2247,7 +2270,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/山海九尾狐第二弹.jpg"
+          ],
           "availability": "預售",
+          "id": "xqx14y28",
+          "name": "A0036: 山海九尾狐第二彈",
+          "price": "170",
+          "stock": "",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.30*6.80*9.80\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2277,21 +2309,18 @@
             ]
           },
           "image": "assets/products/盲盒/山海九尾狐第二弹.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "ypylsvr8",
-          "name": "A0035: 靈狐仙韻九尾狐",
-          "price": "170",
-          "stock": "",
-          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高9.20*8.20*9.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
-          "images": [
-            "assets/products/盲盒/靈狐仙韻九尾狐.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -2300,7 +2329,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/靈狐仙韻九尾狐.jpg"
+          ],
           "availability": "預售",
+          "id": "ypylsvr8",
+          "name": "A0035: 靈狐仙韻九尾狐",
+          "price": "170",
+          "stock": "",
+          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高9.20*8.20*9.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2330,21 +2368,18 @@
             ]
           },
           "image": "assets/products/盲盒/靈狐仙韻九尾狐.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "bpg2w93e",
-          "name": "A0034: 山海靈狐九尾狐",
-          "price": "170",
-          "stock": "",
-          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高10.20*10.20*12.50\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
-          "images": [
-            "assets/products/盲盒/山海靈狐九尾狐.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -2353,7 +2388,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/山海靈狐九尾狐.jpg"
+          ],
           "availability": "預售",
+          "id": "bpg2w93e",
+          "name": "A0034: 山海靈狐九尾狐",
+          "price": "170",
+          "stock": "",
+          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高10.20*10.20*12.50\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2383,21 +2427,18 @@
             ]
           },
           "image": "assets/products/盲盒/山海靈狐九尾狐.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "uee34n9e",
-          "name": "A0033: 情緒小福仙九尾狐",
-          "price": "190",
-          "stock": "",
-          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高9.60*8.80*12.80\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
-          "images": [
-            "assets/products/盲盒/情緒小福仙九尾狐.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -2406,7 +2447,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/情緒小福仙九尾狐.jpg"
+          ],
           "availability": "預售",
+          "id": "uee34n9e",
+          "name": "A0033: 情緒小福仙九尾狐",
+          "price": "190",
+          "stock": "",
+          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高9.60*8.80*12.80\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2436,21 +2486,18 @@
             ]
           },
           "image": "assets/products/盲盒/情緒小福仙九尾狐.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "sxmfho11",
-          "name": "A0032: 上古小福仙盲盒",
-          "price": "170",
-          "stock": "",
-          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高10.00*7.00*11.00\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
-          "images": [
-            "assets/products/盲盒/上古小福仙盲盒.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -2459,7 +2506,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/上古小福仙盲盒.jpg"
+          ],
           "availability": "預售",
+          "id": "sxmfho11",
+          "name": "A0032: 上古小福仙盲盒",
+          "price": "170",
+          "stock": "",
+          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高10.00*7.00*11.00\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2489,21 +2545,18 @@
             ]
           },
           "image": "assets/products/盲盒/上古小福仙盲盒.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "7d7ybarv",
-          "name": "A0031: 上古智慧仙九尾狐",
-          "price": "170",
-          "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.00*7.00*11.00\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
-          "images": [
-            "assets/products/盲盒/上古智慧仙九尾狐.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -2512,7 +2565,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/上古智慧仙九尾狐.jpg"
+          ],
           "availability": "預售",
+          "id": "7d7ybarv",
+          "name": "A0031: 上古智慧仙九尾狐",
+          "price": "170",
+          "stock": "",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.00*7.00*11.00\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2542,21 +2604,18 @@
             ]
           },
           "image": "assets/products/盲盒/上古智慧仙九尾狐.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "dy7a2b9g",
-          "name": "A0030: 東方靈狐九尾狐",
-          "price": "170",
-          "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高9.30*7.30*11.30\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
-          "images": [
-            "assets/products/盲盒/東方靈狐九尾狐.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -2565,7 +2624,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/東方靈狐九尾狐.jpg"
+          ],
           "availability": "預售",
+          "id": "dy7a2b9g",
+          "name": "A0030: 東方靈狐九尾狐",
+          "price": "170",
+          "stock": "",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高9.30*7.30*11.30\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2595,21 +2663,18 @@
             ]
           },
           "image": "assets/products/盲盒/東方靈狐九尾狐.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "hn2ts00y",
-          "name": "A0029: 上古狐仙九尾狐",
-          "price": "170",
-          "stock": "",
-          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高10.00*8.50*10.00\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
-          "images": [
-            "assets/products/盲盒/上古狐仙九尾狐.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -2618,7 +2683,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/上古狐仙九尾狐.jpg"
+          ],
           "availability": "預售",
+          "id": "hn2ts00y",
+          "name": "A0029: 上古狐仙九尾狐",
+          "price": "170",
+          "stock": "",
+          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高10.00*8.50*10.00\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2648,21 +2722,18 @@
             ]
           },
           "image": "assets/products/盲盒/上古狐仙九尾狐.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "z5czi4fs",
-          "name": "A0028: 青丘九尾狐第二彈",
-          "price": "170",
-          "stock": "",
-          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高9.30*9.30*10.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
-          "images": [
-            "assets/products/盲盒/青丘九尾狐第二彈.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -2671,7 +2742,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/青丘九尾狐第二彈.jpg"
+          ],
           "availability": "預售",
+          "id": "z5czi4fs",
+          "name": "A0028: 青丘九尾狐第二彈",
+          "price": "170",
+          "stock": "",
+          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高9.30*9.30*10.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2701,21 +2781,18 @@
             ]
           },
           "image": "assets/products/盲盒/青丘九尾狐第二彈.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "u9zplf0m",
-          "name": "A0027: 盛世芳華九尾狐",
-          "price": "190",
-          "stock": "",
-          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高9.20*8.20*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
-          "images": [
-            "assets/products/盲盒/盛世芳華九尾狐.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -2724,7 +2801,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/盛世芳華九尾狐.jpg"
+          ],
           "availability": "預售",
+          "id": "u9zplf0m",
+          "name": "A0027: 盛世芳華九尾狐",
+          "price": "190",
+          "stock": "",
+          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高9.20*8.20*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2754,21 +2840,18 @@
             ]
           },
           "image": "assets/products/盲盒/盛世芳華九尾狐.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "czvgq35u",
-          "name": "A0026: 可愛嘟嘟崽",
-          "price": "140",
-          "stock": "",
-          "desc": "單隻140/一中盒(6隻)720\n單盒長寬高8.20*7.20*9.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
-          "images": [
-            "assets/products/盲盒/可愛嘟嘟崽.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "公仔",
             "玩具",
@@ -2776,7 +2859,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/可愛嘟嘟崽.jpg"
+          ],
           "availability": "預售",
+          "id": "czvgq35u",
+          "name": "A0026: 可愛嘟嘟崽",
+          "price": "140",
+          "stock": "",
+          "desc": "單隻140/一中盒(6隻)720\n單盒長寬高8.20*7.20*9.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2806,21 +2898,18 @@
             ]
           },
           "image": "assets/products/盲盒/可愛嘟嘟崽.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "34flboli",
-          "name": "A0025: 可愛熊貓搖搖樂",
-          "price": "130",
-          "stock": "",
-          "desc": "單隻130/一中盒(6隻)720\n單盒長寬高8.20*7.70*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
-          "images": [
-            "assets/products/盲盒/可愛熊貓搖搖樂.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "公仔",
             "玩具",
@@ -2830,7 +2919,16 @@
             "貓咪",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/可愛熊貓搖搖樂.jpg"
+          ],
           "availability": "預售",
+          "id": "34flboli",
+          "name": "A0025: 可愛熊貓搖搖樂",
+          "price": "130",
+          "stock": "",
+          "desc": "單隻130/一中盒(6隻)720\n單盒長寬高8.20*7.70*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2860,21 +2958,18 @@
             ]
           },
           "image": "assets/products/盲盒/可愛熊貓搖搖樂.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": "貓咪"
+          "character": "貓咪",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "bsln31ot",
-          "name": "A0024: 鴻運熊團團",
-          "price": "190",
-          "stock": "",
-          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高8.20*7.70*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
-          "images": [
-            "assets/products/盲盒/鴻運熊團團.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "公仔",
             "玩具",
@@ -2884,7 +2979,16 @@
             "貓咪",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/鴻運熊團團.jpg"
+          ],
           "availability": "預售",
+          "id": "bsln31ot",
+          "name": "A0024: 鴻運熊團團",
+          "price": "190",
+          "stock": "",
+          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高8.20*7.70*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2914,21 +3018,18 @@
             ]
           },
           "image": "assets/products/盲盒/鴻運熊團團.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": "貓咪"
+          "character": "貓咪",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "ndxwh86x",
-          "name": "A0023: 熊團的快樂日常",
-          "price": "160",
-          "stock": "",
-          "desc": "單隻160/一中盒(6隻)780\n單盒長寬高8.70*7.70*9.40\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
-          "images": [
-            "assets/products/盲盒/熊團的快樂日常.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "公仔",
             "玩具",
@@ -2938,7 +3039,16 @@
             "貓咪",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/熊團的快樂日常.jpg"
+          ],
           "availability": "預售",
+          "id": "ndxwh86x",
+          "name": "A0023: 熊團的快樂日常",
+          "price": "160",
+          "stock": "",
+          "desc": "單隻160/一中盒(6隻)780\n單盒長寬高8.70*7.70*9.40\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -2968,21 +3078,18 @@
             ]
           },
           "image": "assets/products/盲盒/熊團的快樂日常.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": "貓咪"
+          "character": "貓咪",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "vgx99dwj",
-          "name": "A0022: 豚仔中華小當家",
-          "price": "130",
-          "stock": "",
-          "desc": "單隻130/一中盒(8隻)960\n單盒長寬高8.20*7.70*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
-          "images": [
-            "assets/products/盲盒/豚仔中華小當家.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "公仔",
             "卡皮巴拉",
@@ -2991,7 +3098,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/豚仔中華小當家.jpg"
+          ],
           "availability": "預售",
+          "id": "vgx99dwj",
+          "name": "A0022: 豚仔中華小當家",
+          "price": "130",
+          "stock": "",
+          "desc": "單隻130/一中盒(8隻)960\n單盒長寬高8.20*7.70*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3021,21 +3137,18 @@
             ]
           },
           "image": "assets/products/盲盒/豚仔中華小當家.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": "卡皮巴拉"
+          "character": "卡皮巴拉",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "j7xt4w8h",
-          "name": "A0021: 歡喜小福䘵",
-          "price": "170",
-          "stock": "",
-          "desc": "單隻170/一中盒(8隻)930\n單盒長寬高8.20*7.70*9.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
-          "images": [
-            "assets/products/盲盒/歡喜小福䘵.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "公仔",
             "玩具",
@@ -3043,7 +3156,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/歡喜小福䘵.jpg"
+          ],
           "availability": "預售",
+          "id": "j7xt4w8h",
+          "name": "A0021: 歡喜小福䘵",
+          "price": "170",
+          "stock": "",
+          "desc": "單隻170/一中盒(8隻)930\n單盒長寬高8.20*7.70*9.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3073,21 +3195,18 @@
             ]
           },
           "image": "assets/products/盲盒/歡喜小福䘵.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "hgofxfdw",
-          "name": "A0020: 絕代風華",
-          "price": "190",
-          "stock": "",
-          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高9.20*7.70*12.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
-          "images": [
-            "assets/products/盲盒/絕代風華.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "公仔",
             "玩具",
@@ -3095,7 +3214,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/絕代風華.jpg"
+          ],
           "availability": "預售",
+          "id": "hgofxfdw",
+          "name": "A0020: 絕代風華",
+          "price": "190",
+          "stock": "",
+          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高9.20*7.70*12.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3125,21 +3253,18 @@
             ]
           },
           "image": "assets/products/盲盒/絕代風華.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "hzadnsdk",
-          "name": "A0019: 福寶豚轉轉樂",
-          "price": "160",
-          "stock": "",
-          "desc": "單隻160/一中盒(6隻)780\n單盒長寬高8.20*7.70*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
-          "images": [
-            "assets/products/盲盒/福寶豚轉轉樂.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "公仔",
             "卡皮巴拉",
@@ -3148,7 +3273,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/福寶豚轉轉樂.jpg"
+          ],
           "availability": "預售",
+          "id": "hzadnsdk",
+          "name": "A0019: 福寶豚轉轉樂",
+          "price": "160",
+          "stock": "",
+          "desc": "單隻160/一中盒(6隻)780\n單盒長寬高8.20*7.70*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3178,21 +3312,18 @@
             ]
           },
           "image": "assets/products/盲盒/福寶豚轉轉樂.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": "卡皮巴拉"
+          "character": "卡皮巴拉",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "ul5cs6c3",
-          "name": "A0018: 西高汪的日常生活",
-          "price": "130",
-          "stock": "",
-          "desc": "單隻130/一中盒(6隻)690\n單盒長寬高8.20*8.20*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
-          "images": [
-            "assets/products/盲盒/西高汪的日常生活.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "公仔",
             "狗狗",
@@ -3201,7 +3332,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/西高汪的日常生活.jpg"
+          ],
           "availability": "預售",
+          "id": "ul5cs6c3",
+          "name": "A0018: 西高汪的日常生活",
+          "price": "130",
+          "stock": "",
+          "desc": "單隻130/一中盒(6隻)690\n單盒長寬高8.20*8.20*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3231,21 +3371,18 @@
             ]
           },
           "image": "assets/products/盲盒/西高汪的日常生活.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "5hgbh5ye",
-          "name": "A0017: 萌寶水晶pai",
-          "price": "100",
-          "stock": "",
-          "desc": "單隻100/一中盒(6隻)570\n單盒長寬高8.20*7.70*9.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
-          "images": [
-            "assets/products/盲盒/萌寶水晶pai.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "公仔",
             "水晶",
@@ -3254,7 +3391,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/萌寶水晶pai.jpg"
+          ],
           "availability": "預售",
+          "id": "5hgbh5ye",
+          "name": "A0017: 萌寶水晶pai",
+          "price": "100",
+          "stock": "",
+          "desc": "單隻100/一中盒(6隻)570\n單盒長寬高8.20*7.70*9.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3284,21 +3430,18 @@
             ]
           },
           "image": "assets/products/盲盒/萌寶水晶pai.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "0e2fde2q",
-          "name": "A0016: 晶石物語盲盒",
-          "price": "170",
-          "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.20*8.20*10.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
-          "images": [
-            "assets/products/盲盒/晶石物語盲盒.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "公仔",
             "水晶",
@@ -3307,7 +3450,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/晶石物語盲盒.jpg"
+          ],
           "availability": "預售",
+          "id": "0e2fde2q",
+          "name": "A0016: 晶石物語盲盒",
+          "price": "170",
+          "stock": "",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.20*8.20*10.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3337,21 +3489,18 @@
             ]
           },
           "image": "assets/products/盲盒/晶石物語盲盒.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "rlf9pmqz",
-          "name": "A0015: 九尾狐仙傳盲盒",
-          "price": "170",
-          "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.00*7.00*11.00\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
-          "images": [
-            "assets/products/盲盒/九尾狐仙傳盲盒.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -3360,7 +3509,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/九尾狐仙傳盲盒.jpg"
+          ],
           "availability": "預售",
+          "id": "rlf9pmqz",
+          "name": "A0015: 九尾狐仙傳盲盒",
+          "price": "170",
+          "stock": "",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.00*7.00*11.00\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3390,21 +3548,18 @@
             ]
           },
           "image": "assets/products/盲盒/九尾狐仙傳盲盒.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "suoxozvy",
-          "name": "A0014: 上古九尾狐",
-          "price": "170",
-          "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高9.80*8.30*10.90\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
-          "images": [
-            "assets/products/盲盒/上古九尾狐.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -3413,7 +3568,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/上古九尾狐.jpg"
+          ],
           "availability": "預售",
+          "id": "suoxozvy",
+          "name": "A0014: 上古九尾狐",
+          "price": "170",
+          "stock": "",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高9.80*8.30*10.90\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3443,21 +3607,18 @@
             ]
           },
           "image": "assets/products/盲盒/上古九尾狐.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "y8aw6o58",
-          "name": "A0013: 國風九尾狐帶燈",
-          "price": "170",
-          "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高9.80*8.80*10.10\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
-          "images": [
-            "assets/products/盲盒/國風九尾狐帶燈.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -3466,7 +3627,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/國風九尾狐帶燈.jpg"
+          ],
           "availability": "預售",
+          "id": "y8aw6o58",
+          "name": "A0013: 國風九尾狐帶燈",
+          "price": "170",
+          "stock": "",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高9.80*8.80*10.10\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3496,21 +3666,18 @@
             ]
           },
           "image": "assets/products/盲盒/國風九尾狐帶燈.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "7u5ue5wu",
-          "name": "A0012: 涂山九尾狐第二彈",
-          "price": "170",
-          "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.80*9.20*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
-          "images": [
-            "assets/products/盲盒/涂山九尾狐第二彈.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -3519,7 +3686,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/涂山九尾狐第二彈.jpg"
+          ],
           "availability": "預售",
+          "id": "7u5ue5wu",
+          "name": "A0012: 涂山九尾狐第二彈",
+          "price": "170",
+          "stock": "",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.80*9.20*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3549,21 +3725,18 @@
             ]
           },
           "image": "assets/products/盲盒/涂山九尾狐第二彈.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "p6j7fklf",
-          "name": "A0011: 九尾狐仙傳2代",
-          "price": "190",
-          "stock": "",
-          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高10.20*9.50*10.50\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
-          "images": [
-            "assets/products/盲盒/九尾狐仙傳2代.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -3572,7 +3745,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/九尾狐仙傳2代.jpg"
+          ],
           "availability": "預售",
+          "id": "p6j7fklf",
+          "name": "A0011: 九尾狐仙傳2代",
+          "price": "190",
+          "stock": "",
+          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高10.20*9.50*10.50\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3602,21 +3784,18 @@
             ]
           },
           "image": "assets/products/盲盒/九尾狐仙傳2代.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "89m00yky",
-          "name": "A0010: 九尾幻境九尾狐",
-          "price": "160",
-          "stock": "",
-          "desc": "單隻160/一中盒(6隻)780\n單盒長寬高9.70*9.20*8.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
-          "images": [
-            "assets/products/盲盒/九尾幻境九尾狐.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "九尾狐",
             "公仔",
@@ -3625,7 +3804,16 @@
             "預售",
             "擺件"
           ],
+          "images": [
+            "assets/products/盲盒/九尾幻境九尾狐.jpg"
+          ],
           "availability": "預售",
+          "id": "89m00yky",
+          "name": "A0010: 九尾幻境九尾狐",
+          "price": "160",
+          "stock": "",
+          "desc": "單隻160/一中盒(6隻)780\n單盒長寬高9.70*9.20*8.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3655,30 +3843,36 @@
             ]
           },
           "image": "assets/products/盲盒/九尾幻境九尾狐.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "公仔",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "fyzcbkwc",
-          "name": "C0002:10000毫安自備雙線快充行動電源",
-          "price": "480",
-          "stock": "",
-          "desc": "10000毫安\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "visible": true,
+          "enabled": true,
+          "tags": [
+            "3C",
+            "行動電源",
+            "預售"
+          ],
           "images": [
             "assets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源1.jpg",
             "assets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源2.jpg",
             "assets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源3.jpg",
             "assets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源4.jpg"
           ],
-          "buyUrl": "",
-          "tags": [
-            "3C",
-            "行動電源",
-            "預售"
-          ],
           "availability": "預售",
+          "id": "fyzcbkwc",
+          "name": "C0002:10000毫安自備雙線快充行動電源",
+          "price": "480",
+          "stock": "",
+          "desc": "10000毫安\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3708,31 +3902,37 @@
             ]
           },
           "image": "assets/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "3C",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "voqos3tl",
-          "name": "A0009:永生花蛋糕積木",
-          "price": "650",
-          "stock": "",
-          "desc": "完成高度17CM\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
-          "images": [
-            "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木1.jpg",
-            "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木1.1.jpg",
-            "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木2.jpg",
-            "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木3.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "永生花",
             "玩具",
             "預售",
             "積木"
           ],
+          "images": [
+            "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木1.jpg",
+            "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木1.1.jpg",
+            "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木2.jpg",
+            "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木3.jpg"
+          ],
           "availability": "預售",
+          "id": "voqos3tl",
+          "name": "A0009:永生花蛋糕積木",
+          "price": "650",
+          "stock": "",
+          "desc": "完成高度17CM\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3754,17 +3954,23 @@
             ]
           },
           "image": "assets/products/積木/永生花蛋糕積木/永生花蛋糕積木1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "積木",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "tyngck4d",
-          "name": "A0008:磚也星河遊樂園旋轉夢幻城堡",
-          "price": "320",
-          "stock": "",
-          "desc": "完成高度17CM\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "visible": true,
+          "enabled": true,
+          "tags": [
+            "玩具",
+            "預售",
+            "積木"
+          ],
           "images": [
             "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡1.jpg",
             "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡2.jpg",
@@ -3773,13 +3979,13 @@
             "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡5.jpg",
             "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡6.jpg"
           ],
-          "buyUrl": "",
-          "tags": [
-            "玩具",
-            "預售",
-            "積木"
-          ],
           "availability": "預售",
+          "id": "tyngck4d",
+          "name": "A0008:磚也星河遊樂園旋轉夢幻城堡",
+          "price": "320",
+          "stock": "",
+          "desc": "完成高度17CM\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3809,31 +4015,37 @@
             ]
           },
           "image": "assets/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "積木",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "l5o6gytq",
-          "name": "A0007:永生花積木旋轉音樂盒",
-          "price": "320",
-          "stock": "",
-          "desc": "完成高度16CM\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
-          "images": [
-            "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.jpg",
-            "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.8.jpg",
-            "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.9.jpg",
-            "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒2.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "永生花",
             "玩具",
             "預售",
             "積木"
           ],
+          "images": [
+            "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.jpg",
+            "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.8.jpg",
+            "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.9.jpg",
+            "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒2.jpg"
+          ],
           "availability": "預售",
+          "id": "l5o6gytq",
+          "name": "A0007:永生花積木旋轉音樂盒",
+          "price": "320",
+          "stock": "",
+          "desc": "完成高度16CM\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3895,17 +4107,25 @@
             ]
           },
           "image": "assets/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "積木",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "3tteouk2",
-          "name": "F0008:蠟筆小新趣味保溫杯",
-          "price": "380",
-          "stock": "",
-          "desc": "480ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "visible": true,
+          "enabled": true,
+          "tags": [
+            "小葵",
+            "生活",
+            "保溫杯",
+            "預售",
+            "蠟筆小新"
+          ],
           "images": [
             "assets/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯1.jpg",
             "assets/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯2.jpg",
@@ -3914,15 +4134,13 @@
             "assets/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯5.jpg",
             "assets/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯6.jpg"
           ],
-          "buyUrl": "",
-          "tags": [
-            "小葵",
-            "生活",
-            "保溫杯",
-            "預售",
-            "蠟筆小新"
-          ],
           "availability": "預售",
+          "id": "3tteouk2",
+          "name": "F0008:蠟筆小新趣味保溫杯",
+          "price": "380",
+          "stock": "",
+          "desc": "480ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -3952,24 +4170,18 @@
             ]
           },
           "image": "assets/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "生活",
-          "character": "蠟筆小新"
+          "character": "蠟筆小新",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "uqq90r3j",
-          "name": "F0007:貓和老鼠水杯",
-          "price": "380",
-          "stock": "",
-          "desc": "1060ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
-          "images": [
-            "assets/products/生活/貓和老鼠水杯07/貓和老鼠水杯1.jpg",
-            "assets/products/生活/貓和老鼠水杯07/貓和老鼠水杯2.jpg",
-            "assets/products/生活/貓和老鼠水杯07/貓和老鼠水杯3.jpg",
-            "assets/products/生活/貓和老鼠水杯07/貓和老鼠水杯4.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "生活",
             "杯子",
@@ -3977,7 +4189,19 @@
             "貓和老鼠",
             "貓咪"
           ],
+          "images": [
+            "assets/products/生活/貓和老鼠水杯07/貓和老鼠水杯1.jpg",
+            "assets/products/生活/貓和老鼠水杯07/貓和老鼠水杯2.jpg",
+            "assets/products/生活/貓和老鼠水杯07/貓和老鼠水杯3.jpg",
+            "assets/products/生活/貓和老鼠水杯07/貓和老鼠水杯4.jpg"
+          ],
           "availability": "預售",
+          "id": "uqq90r3j",
+          "name": "F0007:貓和老鼠水杯",
+          "price": "380",
+          "stock": "",
+          "desc": "1060ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4007,17 +4231,24 @@
             ]
           },
           "image": "assets/products/生活/貓和老鼠水杯07/貓和老鼠水杯1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "生活",
-          "character": "貓咪"
+          "character": "貓咪",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "ya8v69aa",
-          "name": "F0006:蠟筆小新陶瓷馬克杯",
-          "price": "280",
-          "stock": "",
-          "desc": "350ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "visible": true,
+          "enabled": true,
+          "tags": [
+            "生活",
+            "杯子",
+            "預售",
+            "蠟筆小新"
+          ],
           "images": [
             "assets/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯1.jpg",
             "assets/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯2.jpg",
@@ -4025,14 +4256,13 @@
             "assets/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯4.jpg",
             "assets/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯5.jpg"
           ],
-          "buyUrl": "",
-          "tags": [
-            "生活",
-            "杯子",
-            "預售",
-            "蠟筆小新"
-          ],
           "availability": "預售",
+          "id": "ya8v69aa",
+          "name": "F0006:蠟筆小新陶瓷馬克杯",
+          "price": "280",
+          "stock": "",
+          "desc": "350ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4078,24 +4308,18 @@
             ]
           },
           "image": "assets/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "生活",
-          "character": "蠟筆小新"
+          "character": "蠟筆小新",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "9ianr5bd",
-          "name": "F0005:三麗鷗陶瓷杯",
-          "price": "450",
-          "stock": "",
-          "desc": "500ml\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯1.jpg",
-            "assets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯2.jpg",
-            "assets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯3.jpg",
-            "assets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯4.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "三麗鷗",
             "大耳狗",
@@ -4105,7 +4329,19 @@
             "庫洛米",
             "預售"
           ],
+          "images": [
+            "assets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯1.jpg",
+            "assets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯2.jpg",
+            "assets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯3.jpg",
+            "assets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯4.jpg"
+          ],
           "availability": "預售",
+          "id": "9ianr5bd",
+          "name": "F0005:三麗鷗陶瓷杯",
+          "price": "450",
+          "stock": "",
+          "desc": "500ml\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4143,24 +4379,18 @@
             ]
           },
           "image": "assets/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "生活",
-          "character": "庫洛米"
+          "character": "庫洛米",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "il41itjg",
-          "name": "F0004:蠟筆小新保溫杯",
-          "price": "490",
-          "stock": "",
-          "desc": "600ml\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯1.jpg",
-            "assets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯2.jpg",
-            "assets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯3.jpg",
-            "assets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯4.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "小白",
             "生活",
@@ -4169,7 +4399,19 @@
             "預售",
             "蠟筆小新"
           ],
+          "images": [
+            "assets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯1.jpg",
+            "assets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯2.jpg",
+            "assets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯3.jpg",
+            "assets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯4.jpg"
+          ],
           "availability": "預售",
+          "id": "il41itjg",
+          "name": "F0004:蠟筆小新保溫杯",
+          "price": "490",
+          "stock": "",
+          "desc": "600ml\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4231,17 +4473,24 @@
             ]
           },
           "image": "assets/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "生活",
-          "character": "蠟筆小新"
+          "character": "蠟筆小新",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "si7ag9re",
-          "name": "F0003:蠟筆小新可愛創意保溫杯",
-          "price": "450",
-          "stock": "",
-          "desc": "480ml\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "visible": true,
+          "enabled": true,
+          "tags": [
+            "生活",
+            "保溫杯",
+            "預售",
+            "蠟筆小新"
+          ],
           "images": [
             "assets/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯1.jpg",
             "assets/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯2.jpg",
@@ -4249,14 +4498,13 @@
             "assets/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯4.jpg",
             "assets/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯5.jpg"
           ],
-          "buyUrl": "",
-          "tags": [
-            "生活",
-            "保溫杯",
-            "預售",
-            "蠟筆小新"
-          ],
           "availability": "預售",
+          "id": "si7ag9re",
+          "name": "F0003:蠟筆小新可愛創意保溫杯",
+          "price": "450",
+          "stock": "",
+          "desc": "480ml\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4294,24 +4542,18 @@
             ]
           },
           "image": "assets/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "生活",
-          "character": "蠟筆小新"
+          "character": "蠟筆小新",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "06l0uwec",
-          "name": "F0002:貓和老鼠馬克杯",
-          "price": "360",
-          "stock": "",
-          "desc": "360ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
-          "images": [
-            "assets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯1.jpg",
-            "assets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯2.jpg",
-            "assets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯3.jpg",
-            "assets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯4.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "生活",
             "杯子",
@@ -4319,7 +4561,19 @@
             "貓和老鼠",
             "貓咪"
           ],
+          "images": [
+            "assets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯1.jpg",
+            "assets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯2.jpg",
+            "assets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯3.jpg",
+            "assets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯4.jpg"
+          ],
           "availability": "預售",
+          "id": "06l0uwec",
+          "name": "F0002:貓和老鼠馬克杯",
+          "price": "360",
+          "stock": "",
+          "desc": "360ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4357,27 +4611,18 @@
             ]
           },
           "image": "assets/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "生活",
-          "character": "貓咪"
+          "character": "貓咪",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "6oadx8uw",
-          "name": "F0001:高顏值啤酒杯玻璃杯",
-          "price": "290",
-          "stock": "",
-          "desc": "450ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
-          "images": [
-            "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯1.jpg",
-            "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯2.jpg",
-            "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯3.jpg",
-            "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯4.jpg",
-            "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯5.jpg",
-            "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯6.jpg",
-            "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯7.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "史迪奇",
             "生活",
@@ -4388,7 +4633,22 @@
             "預售",
             "維尼"
           ],
+          "images": [
+            "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯1.jpg",
+            "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯2.jpg",
+            "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯3.jpg",
+            "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯4.jpg",
+            "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯5.jpg",
+            "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯6.jpg",
+            "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯7.jpg"
+          ],
           "availability": "預售",
+          "id": "6oadx8uw",
+          "name": "F0001:高顏值啤酒杯玻璃杯",
+          "price": "290",
+          "stock": "",
+          "desc": "450ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4450,30 +4710,36 @@
             ]
           },
           "image": "assets/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "生活",
-          "character": "史迪奇"
+          "character": "史迪奇",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "5x6kuihr",
-          "name": "B0020:卡皮巴拉玩偶砸金蛋盲盒",
-          "price": "100",
-          "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數1點\n未回報視同放棄",
-          "images": [
-            "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒0.jpg",
-            "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒1.jpg",
-            "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒2.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "卡皮巴拉",
             "盲盒",
             "娃娃",
             "預售"
           ],
+          "images": [
+            "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒0.jpg",
+            "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒1.jpg",
+            "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒2.jpg"
+          ],
           "availability": "預售",
+          "id": "5x6kuihr",
+          "name": "B0020:卡皮巴拉玩偶砸金蛋盲盒",
+          "price": "100",
+          "stock": "",
+          "desc": "預購7~14天\n購買後回報得點數1點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4503,27 +4769,33 @@
             ]
           },
           "image": "assets/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒0.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": "卡皮巴拉"
+          "character": "卡皮巴拉",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "nresjrus",
-          "name": "B0019:奧麗莎蘭花盆栽",
-          "price": "580",
-          "stock": "",
-          "desc": "25cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/奥丽莎兰花盆栽.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/奥丽莎兰花盆栽.jpg"
+          ],
           "availability": "預售",
+          "id": "nresjrus",
+          "name": "B0019:奧麗莎蘭花盆栽",
+          "price": "580",
+          "stock": "",
+          "desc": "25cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4545,27 +4817,33 @@
             ]
           },
           "image": "assets/products/JELLYCAT/奥丽莎兰花盆栽.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "o5dv4tji",
-          "name": "B0018:彩虹生日蛋糕",
-          "price": "580",
-          "stock": "",
-          "desc": "26cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/彩虹生日蛋糕.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/彩虹生日蛋糕.jpg"
+          ],
           "availability": "預售",
+          "id": "o5dv4tji",
+          "name": "B0018:彩虹生日蛋糕",
+          "price": "580",
+          "stock": "",
+          "desc": "26cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4587,28 +4865,34 @@
             ]
           },
           "image": "assets/products/JELLYCAT/彩虹生日蛋糕.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "unalq204",
-          "name": "B0017:巴塞隆納熊茄子熊",
-          "price": "580",
-          "stock": "",
-          "desc": "30cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/巴塞罗熊茄子熊.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "熊",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/巴塞罗熊茄子熊.jpg"
+          ],
           "availability": "預售",
+          "id": "unalq204",
+          "name": "B0017:巴塞隆納熊茄子熊",
+          "price": "580",
+          "stock": "",
+          "desc": "30cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4630,28 +4914,34 @@
             ]
           },
           "image": "assets/products/JELLYCAT/巴塞罗熊茄子熊.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": "熊"
+          "character": "熊",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "u9q4t54i",
-          "name": "B0016:巴塞隆納熊大黃蜂",
-          "price": "580",
-          "stock": "",
-          "desc": "22cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/巴塞罗熊大黄蜂.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "熊",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/巴塞罗熊大黄蜂.jpg"
+          ],
           "availability": "預售",
+          "id": "u9q4t54i",
+          "name": "B0016:巴塞隆納熊大黃蜂",
+          "price": "580",
+          "stock": "",
+          "desc": "22cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4673,28 +4963,34 @@
             ]
           },
           "image": "assets/products/JELLYCAT/巴塞罗熊大黄蜂.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": "熊"
+          "character": "熊",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "0uvu1crd",
-          "name": "B0015:巴塞隆納南瓜小熊",
-          "price": "580",
-          "stock": "",
-          "desc": "36cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/巴塞罗南瓜小熊.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "熊",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/巴塞罗南瓜小熊.jpg"
+          ],
           "availability": "預售",
+          "id": "0uvu1crd",
+          "name": "B0015:巴塞隆納南瓜小熊",
+          "price": "580",
+          "stock": "",
+          "desc": "36cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4716,28 +5012,34 @@
             ]
           },
           "image": "assets/products/JELLYCAT/巴塞罗南瓜小熊.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": "熊"
+          "character": "熊",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "frs2g7od",
-          "name": "B0014:抱蛋糕巴塞隆納熊",
-          "price": "580",
-          "stock": "",
-          "desc": "28cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/抱蛋糕巴塞罗熊.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "熊",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/抱蛋糕巴塞罗熊.jpg"
+          ],
           "availability": "預售",
+          "id": "frs2g7od",
+          "name": "B0014:抱蛋糕巴塞隆納熊",
+          "price": "580",
+          "stock": "",
+          "desc": "28cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4759,27 +5061,33 @@
             ]
           },
           "image": "assets/products/JELLYCAT/抱蛋糕巴塞罗熊.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": "熊"
+          "character": "熊",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "07g24aoo",
-          "name": "B0013:微笑太陽花盆栽",
-          "price": "580",
-          "stock": "",
-          "desc": "35cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/微笑太阳花盆栽.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/微笑太阳花盆栽.jpg"
+          ],
           "availability": "預售",
+          "id": "07g24aoo",
+          "name": "B0013:微笑太陽花盆栽",
+          "price": "580",
+          "stock": "",
+          "desc": "35cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4801,27 +5109,33 @@
             ]
           },
           "image": "assets/products/JELLYCAT/微笑太阳花盆栽.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "zkf5tiah",
-          "name": "B0001:結婚蛋糕",
-          "price": "650",
-          "stock": "",
-          "desc": "28cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/结婚蛋糕.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/结婚蛋糕.jpg"
+          ],
           "availability": "預售",
+          "id": "zkf5tiah",
+          "name": "B0001:結婚蛋糕",
+          "price": "650",
+          "stock": "",
+          "desc": "28cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4843,28 +5157,34 @@
             ]
           },
           "image": "assets/products/JELLYCAT/结婚蛋糕.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "tbmpmj68",
-          "name": "B0002:花布草莓耳朵害羞邦尼兔",
-          "price": "580",
-          "stock": "",
-          "desc": "31cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/花布草莓耳朵害羞邦尼兔.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "兔子",
             "娃娃",
             "預售",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/花布草莓耳朵害羞邦尼兔.jpg"
+          ],
           "availability": "預售",
+          "id": "tbmpmj68",
+          "name": "B0002:花布草莓耳朵害羞邦尼兔",
+          "price": "580",
+          "stock": "",
+          "desc": "31cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4902,27 +5222,33 @@
             ]
           },
           "image": "assets/products/JELLYCAT/花布草莓耳朵害羞邦尼兔.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": "兔子"
+          "character": "兔子",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "uisfa4l9",
-          "name": "B0003:橙色彩虹蛋糕",
-          "price": "580",
-          "stock": "",
-          "desc": "16cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/橙色彩虹蛋糕.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/橙色彩虹蛋糕.jpg"
+          ],
           "availability": "預售",
+          "id": "uisfa4l9",
+          "name": "B0003:橙色彩虹蛋糕",
+          "price": "580",
+          "stock": "",
+          "desc": "16cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4944,27 +5270,33 @@
             ]
           },
           "image": "assets/products/JELLYCAT/橙色彩虹蛋糕.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "xmyfhklb",
-          "name": "B0012:三明治",
-          "price": "580",
-          "stock": "",
-          "desc": "13cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/三明治.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/三明治.jpg"
+          ],
           "availability": "預售",
+          "id": "xmyfhklb",
+          "name": "B0012:三明治",
+          "price": "580",
+          "stock": "",
+          "desc": "13cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -4986,27 +5318,33 @@
             ]
           },
           "image": "assets/products/JELLYCAT/三明治.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "j9o1hhw4",
-          "name": "B0011:一品紅",
-          "price": "650",
-          "stock": "",
-          "desc": "24cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/一品紅.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/一品紅.jpg"
+          ],
           "availability": "預售",
+          "id": "j9o1hhw4",
+          "name": "B0011:一品紅",
+          "price": "650",
+          "stock": "",
+          "desc": "24cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5028,28 +5366,34 @@
             ]
           },
           "image": "assets/products/JELLYCAT/一品紅.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "lfbsgxnt",
-          "name": "B0010:巴塞隆納熊泰迪",
-          "price": "580",
-          "stock": "",
-          "desc": "28cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/巴塞罗熊泰迪.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "熊",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/巴塞罗熊泰迪.jpg"
+          ],
           "availability": "預售",
+          "id": "lfbsgxnt",
+          "name": "B0010:巴塞隆納熊泰迪",
+          "price": "580",
+          "stock": "",
+          "desc": "28cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5071,28 +5415,34 @@
             ]
           },
           "image": "assets/products/JELLYCAT/巴塞罗熊泰迪.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": "熊"
+          "character": "熊",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "pwzsmvym",
-          "name": "B0009:害羞尼伯斯邦尼兔",
-          "price": "580",
-          "stock": "",
-          "desc": "31cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/害羞尼伯斯邦尼兔.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "兔子",
             "娃娃",
             "預售",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/害羞尼伯斯邦尼兔.jpg"
+          ],
           "availability": "預售",
+          "id": "pwzsmvym",
+          "name": "B0009:害羞尼伯斯邦尼兔",
+          "price": "580",
+          "stock": "",
+          "desc": "31cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5114,27 +5464,33 @@
             ]
           },
           "image": "assets/products/JELLYCAT/害羞尼伯斯邦尼兔.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": "兔子"
+          "character": "兔子",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "vbt9ybfh",
-          "name": "B0008:玉蘭妮亞拿鐵",
-          "price": "650",
-          "stock": "",
-          "desc": "22cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/玉兰妮娅拿铁.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/玉兰妮娅拿铁.jpg"
+          ],
           "availability": "預售",
+          "id": "vbt9ybfh",
+          "name": "B0008:玉蘭妮亞拿鐵",
+          "price": "650",
+          "stock": "",
+          "desc": "22cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5156,27 +5512,33 @@
             ]
           },
           "image": "assets/products/JELLYCAT/玉兰妮娅拿铁.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "5jkh2xee",
-          "name": "B0007:草莓生日蛋糕",
-          "price": "580",
-          "stock": "",
-          "desc": "16cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/草莓生日蛋糕.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/草莓生日蛋糕.jpg"
+          ],
           "availability": "預售",
+          "id": "5jkh2xee",
+          "name": "B0007:草莓生日蛋糕",
+          "price": "580",
+          "stock": "",
+          "desc": "16cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5198,28 +5560,34 @@
             ]
           },
           "image": "assets/products/JELLYCAT/草莓生日蛋糕.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "0aoj8459",
-          "name": "B0006:吉利貓",
-          "price": "650",
-          "stock": "",
-          "desc": "65cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/吉利猫.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "貓咪",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/吉利猫.jpg"
+          ],
           "availability": "預售",
+          "id": "0aoj8459",
+          "name": "B0006:吉利貓",
+          "price": "650",
+          "stock": "",
+          "desc": "65cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5241,27 +5609,33 @@
             ]
           },
           "image": "assets/products/JELLYCAT/吉利猫.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": "貓咪"
+          "character": "貓咪",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "y0tbbuhk",
-          "name": "B0005:手捧花玫瑰花束",
-          "price": "650",
-          "stock": "",
-          "desc": "31cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/手捧花玫瑰花束.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/手捧花玫瑰花束.jpg"
+          ],
           "availability": "預售",
+          "id": "y0tbbuhk",
+          "name": "B0005:手捧花玫瑰花束",
+          "price": "650",
+          "stock": "",
+          "desc": "31cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5283,17 +5657,22 @@
             ]
           },
           "image": "assets/products/JELLYCAT/手捧花玫瑰花束.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "zji59wv3",
-          "name": "C0001：拇指相機",
-          "price": "450",
-          "stock": "",
-          "desc": "附贈8g記憶卡\n預購7~14天\n購買後回報得點數8點\n未回報視同放棄",
+          "visible": true,
+          "enabled": true,
+          "tags": [
+            "3C",
+            "預售"
+          ],
           "images": [
             "assets/products/3c/拇指相機/拇指照相机1.jpg",
             "assets/products/3c/拇指相機/拇指照相机2.jpg",
@@ -5301,12 +5680,13 @@
             "assets/products/3c/拇指相機/拇指照相机3.jpg",
             "assets/products/3c/拇指相機/拇指照相机4.jpg"
           ],
-          "buyUrl": "",
-          "tags": [
-            "3C",
-            "預售"
-          ],
           "availability": "預售",
+          "id": "zji59wv3",
+          "name": "C0001：拇指相機",
+          "price": "450",
+          "stock": "",
+          "desc": "附贈8g記憶卡\n預購7~14天\n購買後回報得點數8點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5328,24 +5708,18 @@
             ]
           },
           "image": "assets/products/3c/拇指相機/拇指照相机1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "3C",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "wl8xwog8",
-          "name": "A0006:史迪奇瓜瓜不倒翁",
-          "price": "290",
-          "stock": "",
-          "desc": "1袋/一盒12袋，一袋3入\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
-          "images": [
-            "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁0.jpg",
-            "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁1.jpg",
-            "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁2.jpg",
-            "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁3.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "史迪奇",
             "生活",
@@ -5353,7 +5727,19 @@
             "盲包",
             "預售"
           ],
+          "images": [
+            "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁0.jpg",
+            "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁1.jpg",
+            "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁2.jpg",
+            "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁3.jpg"
+          ],
           "availability": "預售",
+          "id": "wl8xwog8",
+          "name": "A0006:史迪奇瓜瓜不倒翁",
+          "price": "290",
+          "stock": "",
+          "desc": "1袋/一盒12袋，一袋3入\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5383,21 +5769,18 @@
             ]
           },
           "image": "assets/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁0.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "生活",
-          "character": "史迪奇"
+          "character": "史迪奇",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "x6khyvl0",
-          "name": "A0005:動物方城市積木盲盒",
-          "price": "120",
-          "stock": "",
-          "desc": "單盒/1組12盒\n預購7~14天\n購買後回報得點數1點\n未回報視同放棄",
-          "images": [
-            "assets/products/積木/動物方城市積木.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "玩具",
             "盲盒",
@@ -5405,7 +5788,16 @@
             "預售",
             "積木"
           ],
+          "images": [
+            "assets/products/積木/動物方城市積木.jpg"
+          ],
           "availability": "預售",
+          "id": "x6khyvl0",
+          "name": "A0005:動物方城市積木盲盒",
+          "price": "120",
+          "stock": "",
+          "desc": "單盒/1組12盒\n預購7~14天\n購買後回報得點數1點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5435,21 +5827,18 @@
             ]
           },
           "image": "assets/products/積木/動物方城市積木.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "盲盒",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "mzpzch4a",
-          "name": "A0004:蠟筆小新積木盲盒",
-          "price": "120",
-          "stock": "",
-          "desc": "單盒/1組12盒\n預購7~14天\n購買後回報得點數1點\n未回報視同放棄",
-          "images": [
-            "assets/products/積木/蜡笔小新积木盲盒.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "玩具",
             "盲盒",
@@ -5457,7 +5846,16 @@
             "積木",
             "蠟筆小新"
           ],
+          "images": [
+            "assets/products/積木/蜡笔小新积木盲盒.jpg"
+          ],
           "availability": "預售",
+          "id": "mzpzch4a",
+          "name": "A0004:蠟筆小新積木盲盒",
+          "price": "120",
+          "stock": "",
+          "desc": "單盒/1組12盒\n預購7~14天\n購買後回報得點數1點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5487,27 +5885,33 @@
             ]
           },
           "image": "assets/products/積木/蜡笔小新积木盲盒.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "盲盒",
-          "character": "蠟筆小新"
+          "character": "蠟筆小新",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "mhku1gde",
-          "name": "B0004:Jellycat茄子",
-          "price": "490",
-          "stock": "",
-          "desc": "40CM\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
-          "images": [
-            "assets/products/JELLYCAT/茄子.jpg"
-          ],
-          "buyUrl": "",
+          "visible": true,
+          "enabled": true,
           "tags": [
             "娃娃",
             "預售",
             "Jellycat"
           ],
+          "images": [
+            "assets/products/JELLYCAT/茄子.jpg"
+          ],
           "availability": "預售",
+          "id": "mhku1gde",
+          "name": "B0004:Jellycat茄子",
+          "price": "490",
+          "stock": "",
+          "desc": "40CM\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "buyUrl": "",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5529,17 +5933,24 @@
             ]
           },
           "image": "assets/products/JELLYCAT/茄子.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "娃娃",
-          "character": ""
+          "character": "",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "fdrofbxn",
-          "name": " A0003:52TOYS 奇奇怪怪的小新 蠟筆小新",
-          "price": "180",
-          "stock": "",
-          "desc": "盲盒1盒/一中盒10盒\n",
+          "visible": true,
+          "enabled": true,
+          "tags": [
+            "玩具",
+            "盲盒",
+            "預售",
+            "蠟筆小新"
+          ],
           "images": [
             "assets/products/奇奇怪怪的小新/1.jpg",
             "assets/products/奇奇怪怪的小新/2.jpg",
@@ -5553,14 +5964,13 @@
             "assets/products/奇奇怪怪的小新/10.jpg",
             "assets/products/奇奇怪怪的小新/11.jpg"
           ],
-          "buyUrl": "https://myship.7-11.com.tw/cart/confirm/GM2509054490280",
-          "tags": [
-            "玩具",
-            "盲盒",
-            "預售",
-            "蠟筆小新"
-          ],
           "availability": "預售",
+          "id": "fdrofbxn",
+          "name": " A0003:52TOYS 奇奇怪怪的小新 蠟筆小新",
+          "price": "180",
+          "stock": "",
+          "desc": "盲盒1盒/一中盒10盒\n",
+          "buyUrl": "https://myship.7-11.com.tw/cart/confirm/GM2509054490280",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5590,17 +6000,25 @@
             ]
           },
           "image": "assets/products/奇奇怪怪的小新/1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "盲盒",
-          "character": "蠟筆小新"
+          "character": "蠟筆小新",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "5dli6tdz",
-          "name": "A0002:52TOYS熊貓卷兒童趣味日記系列童趣日記",
-          "price": "290",
-          "stock": "",
-          "desc": "盲盒1盒/一中盒8盒\n",
+          "visible": true,
+          "enabled": true,
+          "tags": [
+            "玩具",
+            "盲盒",
+            "預售",
+            "熊貓",
+            "貓咪"
+          ],
           "images": [
             "assets/products/panda/1.jpg",
             "assets/products/panda/2.jpg",
@@ -5620,15 +6038,13 @@
             "assets/products/panda/17.jpg",
             "assets/products/panda/18.jpg"
           ],
-          "buyUrl": "https://myship.7-11.com.tw/cart/confirm/GM2509054490302",
-          "tags": [
-            "玩具",
-            "盲盒",
-            "預售",
-            "熊貓",
-            "貓咪"
-          ],
           "availability": "預售",
+          "id": "5dli6tdz",
+          "name": "A0002:52TOYS熊貓卷兒童趣味日記系列童趣日記",
+          "price": "290",
+          "stock": "",
+          "desc": "盲盒1盒/一中盒8盒\n",
+          "buyUrl": "https://myship.7-11.com.tw/cart/confirm/GM2509054490302",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5658,17 +6074,25 @@
             ]
           },
           "image": "assets/products/panda/1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "盲盒",
-          "character": "貓咪"
+          "character": "貓咪",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         },
         {
-          "id": "365z3xh4",
-          "name": "A0001:TOP TOY 迪士尼 史迪奇 mini 絨絨 系列盲袋",
-          "price": "220",
-          "stock": "",
-          "desc": "盲袋1袋 (內含3個)/一中盒10袋\n",
+          "visible": true,
+          "enabled": true,
+          "tags": [
+            "史迪奇",
+            "玩具",
+            "盲包",
+            "盲盒",
+            "預售"
+          ],
           "images": [
             "assets/products/sticth/1.jpg",
             "assets/products/sticth/2.jpg",
@@ -5682,15 +6106,13 @@
             "assets/products/sticth/10.jpg",
             "assets/products/sticth/11.jpg"
           ],
-          "buyUrl": "https://myship.7-11.com.tw/cart/confirm/GM2509054490314",
-          "tags": [
-            "史迪奇",
-            "玩具",
-            "盲包",
-            "盲盒",
-            "預售"
-          ],
           "availability": "預售",
+          "id": "365z3xh4",
+          "name": "A0001:TOP TOY 迪士尼 史迪奇 mini 絨絨 系列盲袋",
+          "price": "220",
+          "stock": "",
+          "desc": "盲袋1袋 (內含3個)/一中盒10袋\n",
+          "buyUrl": "https://myship.7-11.com.tw/cart/confirm/GM2509054490314",
           "variants": {
             "mode": "single",
             "attrs": [
@@ -5720,10 +6142,14 @@
             ]
           },
           "image": "assets/products/sticth/1.jpg",
-          "enabled": true,
-          "visible": true,
           "category": "盲盒",
-          "character": "史迪奇"
+          "character": "史迪奇",
+          "brand": "",
+          "series": "",
+          "size": "",
+          "material": "",
+          "preorderDeadline": "",
+          "arrivalEstimate": ""
         }
       ],
       "tagGroups": [
@@ -5774,57 +6200,70 @@
         }
       ]
     },
+    "custom": {
+      "intro": "",
+      "items": []
+    },
     "others": {
       "cards": [
         {
+          "visible": true,
           "id": "bg4xnglq",
           "title": "📢【最新公告】",
           "content": "親愛的大家，\n感謝你加入這個剛開始起步的小社群！\n\n目前一切都還在建立中，\n我還在慢慢學習與調整各種細節。\n如果你有任何建議或想法，\n都非常歡迎私訊或留言告訴我。\n你的聲音，對我來說都很重要。\n\n同時也歡迎你把這個群組分享給朋友，\n讓更多人一起參與、抽獎、同樂～\n有你們的支持，真的差很多！\n\n目前所有事情都是我一人處理，\n若有來不及回覆、漏看訊息的情況，\n還請大家多多包涵與體諒 🙏\n\n再次感謝你的加入與鼓勵，\n希望這裡能慢慢成為一個溫暖、有趣、\n值得期待的小角落 ❤️",
           "pin": true
         },
         {
+          "visible": true,
           "id": "yb2do9jf",
           "title": "🌟【創立初衷】",
           "content": "【開獎所｜創立初衷與理念】\n\n其實每個人家裡，多少都有一些用不到的東西，\n包括我自己也一樣。\n\n把它們拿去賣，常常不容易成交；\n擺在角落，又只會積灰塵。\n既然如此，何不讓它們變成別人的需要？\n與其閒置，不如分享出去。\n\n🔹 為什麼會有這個社群？\n\n「開獎所」的起點很單純：\n\n把大家家中閒置的東西，拿來當獎品。\n\n透過抽獎的方式，讓物品找到新主人。\n\n每個人都有機會參與，感受驚喜與樂趣。\n\n✨ 這不只是物品的流動，更是大家一起的互動。\n✨ 每一次開獎，都是一場小小的同樂會。\n\n🔹 點數系統的構想\n\n隨著人越來越多，我希望能有一個循環機制，\n讓分享的人得到回饋，讓需要的人能換到想要的。\n\n你拿出物品 → 得到點數。\n\n點數可以再用來參加抽獎，或兌換自己真正想要的東西。\n\n東西不再是閒置，而是轉化成驚喜與交流。\n\n這就像一個線上的跳蚤市場，\n不同的是：\n\n你分享的東西會立即送出，不用苦苦等買家。\n\n你得到的點數也能立即使用，不需要等待。\n\n🔹 我們的核心價值\n\n抽獎：圖個樂子，人人都能參與。\n\n分享：你的物品，也可能成為下一次的驚喜獎品。\n\n流通：點數讓分享更有價值，讓東西不再閒置。\n\n簡單：沒有複雜規則，只有純粹的互助與樂趣。\n\n🔹 最後想說\n\n「開獎所」不是一個商業平台，而是一個互助的小圈子。\n我們希望透過抽獎與點數，\n把「多的東西」變成「彼此的驚喜」。\n\n希望大家能在這裡：\n一起參與、一起分享、一起玩得開心！",
           "pin": false
         },
         {
+          "visible": true,
           "id": "5aro7b6p",
           "title": "🛒 【社群商店】",
           "content": "📌 購買方式\n-> 可用新台幣直接購買商品\n-> 選購想要的商品加入清單，複製清單傳給官方 LINE 下單\n-> 若只購買單樣商品，可直接私訊官方 LINE 購買\n\n📌 折抵規範\n-> 部分商品可同時使用點數折抵金額（依點數系統規範）\n-> 折抵完最低金額需為 200 元\n例：500 元商品最多折抵 300 元\n例：290 元商品使用 100 元折扣後為 200 元，差額 10 元不累計、不退回\n⭐ 備註：折扣券一次性使用，不得累計\n\n📌 注意事項\n-> 商品數量有限，售完即止\n-> 商品內容與價格以公告為準\n⭐ 備註：官方保留最終修改或解釋權",
           "pin": false
         },
         {
+          "visible": true,
           "id": "wdrhwh36",
           "title": "🛍️【點數商城】",
           "content": "📌 兌換方式\n-> 可使用點數直接兌換指定商品\n-> 商品品項與所需點數會公告於公開網站\n-> 兌換後由官方 LINE 確認與安排寄送\n⭐ 備註：點數兌換為一次性操作，確定後不可退回或更換\n\n📌 注意事項\n-> 商品數量有限，兌換完即止\n-> 兌換內容與所需點數以公告為準\n⭐ 備註：官方保留最終修改或解釋權",
           "pin": false
         },
         {
+          "visible": true,
           "id": "f2c70jkq",
           "title": "💎【點數規則與獲取方式】",
           "content": "📌 點數來源\n-> 贊助物品，依價值回饋對應點數（比值約 1 點 : 6 元）\n-> 活動任務（如邀請好友、特殊加碼活動）\n-> 管理員公告的臨時任務或活動加分\n⭐ 備註：點數計算以實際收到物品或完成任務後才會生效\n\n📌 點數用途\n-> 增加抽獎機會\n-> 折抵社群商店商品金額（折抵完最低金額須為 200）\n　例：500 元商品最多只可折抵 300 元\n　例：290 元商品使用 100 元折扣，金額變 200，差額 10 元不累計不退\n　※ 折扣券不累計（一次性使用）\n-> 兌換點數商城商品\n⭐ 備註：部分商品或活動可能會限定「僅能使用點數兌換」\n\n📌 使用規範\n-> 點數不得轉讓、兌換現金（除非官方特別公告）\n-> 點數使用一經確認，不可取消或退回\n-> 點數餘額可隨時於公開網站查詢\n⭐ 備註：如遇爭議，以管理員最終公告為準",
           "pin": false
         },
         {
+          "visible": true,
           "id": "uez01m0g",
           "title": "📢 【贊助物品制度說明】",
           "content": "📌 贊助流程\n-> 成員可提供實體物品作為贊助\n-> 與管理員確認後，由官方提供 7-11 賣貨便「寄件編號」\n-> 將物品打包好後，直接至 7-11 寄出即可\n-> 運費由官方支付，贊助者不用自行負擔\n-> 管理員會先進行初步評估，確認無誤後再請你寄出\n-> 收到實物後，若與評估一致，將正常發放點數\n⭐ 備註：若檢查出問題（如娃娃髒污、3C 產品無法正常使用…等），管理員有權調整並降低點數\n\n📌 點數回饋\n-> 贊助物品依價值回饋對應點數（約 1 點 : 6 元）\n-> 贊助所得點數會登記於公開紀錄表，透明可查\n⭐ 備註：點數金額僅供參考，實際依最終檢視狀況為準\n\n📌 使用方式\n-> 贊助物品可能放入抽獎池供大家抽獎\n-> 也可能進入點數商城，讓成員用點數兌換\n-> 絕不會作為管理員個人私用\n⭐ 備註：贊助後物品視同歸社群所有，處置方式由管理員統一安排",
           "pin": false
         },
         {
+          "visible": true,
           "id": "bhjmk5kw",
           "title": "🎯【抽獎活動】",
           "content": "📌 抽獎規範\n-> 所有抽獎活動皆免費參加，不需購買資格\n-> 每人限用一個帳號參加，禁止重複或假帳號\n-> 中獎者需在規定時間內回覆並確認寄送資料，否則視同放棄\n-> 若中獎者退群或未領取，依規則辦理補抽或重抽\n⭐ 備註：管理員按讚則代表報名成功\n\n👥 參與條件\n-> 必須加入本群，並遵守群內公告規範\n-> 按照抽獎貼文指示操作（留言「我要參加」或完成指定任務）\n-> 部分特殊獎品可能會附加任務條件（如邀請好友、提交截圖），以活動公告為準\n⭐ 備註：累積成功邀請好友達 20 名者，之後「邀請好友任務」自動升級為「分享社群連結給不同好友或群組，並回傳分享截圖至官方 LINE」\n\n🎲 開獎方式\n-> 以公開透明方式進行（隨機抽籤／系統工具／公開影片）\n-> 抽獎過程會同步上傳至 YouTube 或公告於網站\n-> 開獎後公布中獎名單；中獎人須自行聯絡官方 LINE 以確認領獎事宜\n-> 中獎者僅需自付運費（可貨到付款），無其他額外費用\n⭐ 備註：基本使用賣貨便，基礎運費 38，賣貨便最低金額為 58；下單時金額顯示為 20。寄出會在獎品內放 20；若遺漏請聯絡官方 LINE 處理",
           "pin": false
         },
         {
+          "visible": true,
           "id": "ey2bdxs9",
           "title": "🌟【中獎後補寄與再抽獎規則】",
           "content": "1. 中獎人退群\n- 開獎後至領獎前，如中獎人主動退出群組，視同放棄得獎資格，將直接重抽。\n\n2. 未領取獎品\n- 得獎者須於開獎後 7 天內 主動與管理員聯絡並確認寄送資訊。\n- 超過 7 天未聯絡者，視同放棄得獎資格，將直接重抽。\n\n3. 補寄規則\n- 得獎者若因地址錯誤、收件人未簽收等原因導致退件，可提供一次免費補寄。\n- 若補寄後仍未簽收，視同放棄得獎資格，該獎品將進行重抽。\n\n4. 再抽獎時間\n- 再抽獎將於確認失效資格後，由管理員不定時公告並進行。",
           "pin": false
         },
         {
+          "visible": true,
           "id": "a4r510v1",
           "title": "🤝【贊助者招募與感謝說明】",
           "content": "親愛的朋友們：\n\n感謝每一位參與本群抽獎活動的你們！\n為了讓更多人感受到這份驚喜與樂趣，我們長期歡迎大家提供小禮物贊助🎁\n\n✅ 只要是全新／完整的實體物品（如小玩具、小家電、文具、雜貨等），皆可作為獎品候選\n✅ 所有贊助品項會經過簡單篩選後安排抽獎\n✅ 運費將由我們負擔，你只需提供實體商品即可\n✅ 若你有其他形式的合作或贊助想法，也歡迎一併提出！\n\n📩 有意贊助者，請私訊官方帳號聯繫！\n我們會安排後續流程，並在抽獎活動中標註感謝您的支持！\n\n🎉 謝謝所有過去曾提供獎品的朋友們！\n你們的支持讓這個群組充滿溫暖與期待，我們也會持續努力，把開獎的快樂分享給更多人 ❤️\n",
@@ -5832,232 +6271,196 @@
         }
       ]
     },
-    "custom": {
-      "intro": "",
-      "items": []
-    },
-    "settings": {
-      "drawMaxPerRun": 500,
-      "drawPublicShowLimit": 50,
-      "drawCooldownSec": 10,
-      "contactUrl": "https://lin.ee/kKEvNhs",
-      "lineGroupUrl": "",
-      "siteName": "CxQ開獎所",
-      "siteShortName": "CxQ",
-      "siteTagline": "社群商店、點數查詢、兌換與透明開獎中心",
-      "logoUrl": "",
-      "faviconUrl": "",
-      "appearance": {
-        "themePreset": "royal",
-        "colorMode": "light",
-        "url": "assets/bg/d45032c7-b11d-41e7-88dc-65f2eec7eeb5.jpg",
-        "tint": "rgba(255,255,255,0.0)",
-        "brightness": 1.1,
-        "blur": 4,
-        "opacity": 0.65,
-        "size": "cover",
-        "pos": "center",
-        "menuUseMain": false,
-        "menuUrl": "assets/bg/LINE_NOTE_250725_1.jpg",
-        "menuTint": "rgba(255,255,255,0.0)",
-        "menuBrightness": 1,
-        "menuBlur": 5,
-        "menuOpacity": 0.4,
-        "menuSize": "cover",
-        "menuPos": "center"
-      },
-      "pointsSearchHint": "請至少輸入 2 個字，例如暱稱、LINE 名稱或編號。"
-    },
     "gallery": {
       "items": [
         {
+          "visible": true,
+          "tags": [],
           "id": "o4lmx9bdpjcmg373mrj",
           "src": "assets/曝光牆/50052_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "jxmvglhw7opmg373mrj",
           "src": "assets/曝光牆/50051_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "lolak5n5fkkmg373mrj",
           "src": "assets/曝光牆/50050_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "grkpqlnq3a7mg373mrj",
           "src": "assets/曝光牆/50049_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "jdg7ymuvlfmg373mrj",
           "src": "assets/曝光牆/50048_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "t01p05kx60dmg373mrj",
           "src": "assets/曝光牆/50047_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "0pdpkh15roblmg373mrj",
           "src": "assets/曝光牆/50046_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "22qqeou5cwbmg373mrj",
           "src": "assets/曝光牆/50045_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "bzjev84y84mg373mrj",
           "src": "assets/曝光牆/50044_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "3e3ax1r0vjnmg373mrj",
           "src": "assets/曝光牆/50043_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "gqg121kdvkjmg373mrj",
           "src": "assets/曝光牆/50042_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "sjnxanqqrk8mg373mrj",
           "src": "assets/曝光牆/50041_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "00l0lnt3b9mtomg373mrj",
           "src": "assets/曝光牆/50040_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "dev1qasofwmg373mrj",
           "src": "assets/曝光牆/50039_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "1d6te8aay8hmg70rqh4",
           "src": "assets/曝光牆/50283.jpg",
           "prize": "",
           "at": "2025-09-30",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "n9g6k70o6abmgdwsps2",
           "src": "assets/曝光牆/50656_0.jpg",
           "prize": "",
           "at": "2025-10-05",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "knla1nkthjkmgdwsps2",
           "src": "assets/曝光牆/50657_0.jpg",
           "prize": "",
           "at": "2025-10-05",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "4ggj1o0ftfmgw2jyq2",
           "src": "assets/曝光牆/51864_0.jpg",
           "prize": "",
           "at": "2025-10-18",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "l1vf7yz72cjmgw2jyq2",
           "src": "assets/曝光牆/51865_0.jpg",
           "prize": "",
           "at": "2025-10-18",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "mayq61vvmjmmh7xmnj9",
           "src": "assets/曝光牆/52999_0.jpg",
           "prize": "",
           "at": "2025-10-26",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         },
         {
+          "visible": true,
+          "tags": [],
           "id": "4y30equ753emh7xmnj9",
           "src": "assets/曝光牆/53000_0.jpg",
           "prize": "",
           "at": "2025-10-26",
-          "visible": true,
-          "pin": false,
-          "tags": []
+          "pin": false
         }
       ],
       "homepage_showcase": [
@@ -6075,9 +6478,6 @@
       "categories": [
         {
           "visible": true,
-          "id": "4h5s3fxfubmg378mst",
-          "name": "🛒 【社群商店】",
-          "order": 1,
           "items": [
             {
               "visible": true,
@@ -6121,13 +6521,13 @@
               "a": "若遇缺貨/延期，會在 48 小時內主動通知並提供：改款、等候、或退款三選一。",
               "order": 6
             }
-          ]
+          ],
+          "id": "4h5s3fxfubmg378mst",
+          "name": "🛒 【社群商店】",
+          "order": 1
         },
         {
           "visible": true,
-          "id": "jrack6q85p9mg379kj1",
-          "name": "🛍️【點數商城】",
-          "order": 2,
           "items": [
             {
               "visible": true,
@@ -6164,13 +6564,13 @@
               "a": "少數會；若同款同規格同時存在，商城價通常會以「點數折抵」更優惠。",
               "order": 5
             }
-          ]
+          ],
+          "id": "jrack6q85p9mg379kj1",
+          "name": "🛍️【點數商城】",
+          "order": 2
         },
         {
           "visible": true,
-          "id": "kqpk9w7tvo9mg379sjx",
-          "name": "💎【點數規則】",
-          "order": 3,
           "items": [
             {
               "visible": true,
@@ -6207,13 +6607,13 @@
               "a": "可先折抵點數兌換折扣卡，差額再以指定付款方式結清。",
               "order": 5
             }
-          ]
+          ],
+          "id": "kqpk9w7tvo9mg379sjx",
+          "name": "💎【點數規則】",
+          "order": 3
         },
         {
           "visible": true,
-          "id": "fszc2any01lmg37a6e5",
-          "name": "📢 【贊助物品】",
-          "order": 4,
           "items": [
             {
               "visible": true,
@@ -6250,13 +6650,13 @@
               "a": "會在點數查詢內寫上贊助物品得點\n未來可能會（可匿名）；在網站上設置區塊感謝贊助。",
               "order": 5
             }
-          ]
+          ],
+          "id": "fszc2any01lmg37a6e5",
+          "name": "📢 【贊助物品】",
+          "order": 4
         },
         {
           "visible": true,
-          "id": "krn24vjsedmg37aofh",
-          "name": "🎯【抽獎活動】",
-          "order": 5,
           "items": [
             {
               "visible": true,
@@ -6293,13 +6693,13 @@
               "a": "請於7天內主動聯繫官方LINE截圖告知中獎(逾時依規則再抽)\n群組內無頭像者需點擊社群成員截圖確認名稱",
               "order": 5
             }
-          ]
+          ],
+          "id": "krn24vjsedmg37aofh",
+          "name": "🎯【抽獎活動】",
+          "order": 5
         },
         {
           "visible": true,
-          "id": "eedc5wpudscmg37b1xx",
-          "name": "🌟【中獎後補寄與再抽獎規則】",
-          "order": 6,
           "items": [
             {
               "visible": true,
@@ -6336,32 +6736,84 @@
               "a": "以原報名名單為基礎，剔除無效/逾時者後重新擇一；會另行公告補抽結果。",
               "order": 5
             }
-          ]
+          ],
+          "id": "eedc5wpudscmg37b1xx",
+          "name": "🌟【中獎後補寄與再抽獎規則】",
+          "order": 6
         }
       ]
     },
     "links": {
       "items": [
         {
+          "visible": true,
           "id": "8kkma8mu",
           "name": "抽獎群組",
           "url": "https://reurl.cc/ZNGdXV"
         },
         {
+          "visible": true,
           "id": "5rfhig8c",
           "name": "官方LINE",
           "url": "https://lin.ee/kKEvNhs"
         },
         {
+          "visible": true,
           "id": "owa690ts",
           "name": "🎬【YouTube 頻道】",
           "url": "https://www.youtube.com/@%E9%96%8B%E7%8D%8E%E6%89%80"
         }
       ]
     },
+    "settings": {
+      "drawMaxPerRun": 500,
+      "drawPublicShowLimit": 50,
+      "drawCooldownSec": 10,
+      "contactUrl": "https://lin.ee/kKEvNhs",
+      "lineGroupUrl": "",
+      "siteName": "CxQ開獎所",
+      "siteShortName": "CxQ",
+      "siteTagline": "社群商店、點數查詢、兌換與透明開獎中心",
+      "logoUrl": "https://raw.githubusercontent.com/yuchen112/cailucky/refs/heads/main/favicon.ico",
+      "faviconUrl": "",
+      "defaultAdminEnabled": false,
+      "pointsSearchEnabled": true,
+      "pointsSearchHint": "請至少輸入 2 個字，例如暱稱、LINE 名稱或編號。",
+      "appearance": {
+        "themePreset": "royal",
+        "colorMode": "light",
+        "accentColor": "#b3263b",
+        "secondaryColor": "#0f766e",
+        "heroStyle": "editorial",
+        "cardStyle": "clean",
+        "productImageRatio": "1 / 1",
+        "density": "comfortable",
+        "url": "assets/bg/d45032c7-b11d-41e7-88dc-65f2eec7eeb5.jpg",
+        "tint": "rgba(255,255,255,0.0)",
+        "brightness": 1.1,
+        "blur": 4,
+        "opacity": 0.65,
+        "size": "cover",
+        "pos": "center",
+        "menuUseMain": false,
+        "menuUrl": "assets/bg/LINE_NOTE_250725_1.jpg",
+        "menuTint": "rgba(255,255,255,0.0)",
+        "menuBrightness": 1,
+        "menuBlur": 5,
+        "menuOpacity": 0.4,
+        "menuSize": "cover",
+        "menuPos": "center"
+      }
+    },
     "appearance": {
       "themePreset": "royal",
       "colorMode": "light",
+      "accentColor": "#b3263b",
+      "secondaryColor": "#0f766e",
+      "heroStyle": "editorial",
+      "cardStyle": "clean",
+      "productImageRatio": "1 / 1",
+      "density": "comfortable",
       "url": "assets/bg/d45032c7-b11d-41e7-88dc-65f2eec7eeb5.jpg",
       "tint": "rgba(255,255,255,0.0)",
       "brightness": 1.1,
@@ -6381,12 +6833,32 @@
   },
   "admins": [
     {
+      "id": "default-admin",
+      "name": "admin",
+      "username": "admin",
+      "displayName": "初始管理員",
+      "role": "owner",
+      "enabled": false,
+      "builtIn": true,
+      "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"
+    },
+    {
       "name": "andy13579222@gmail.com",
-      "passwordHash": "177bc8c2cbc970dca9dbdd60f8fdb85cfce97c9701b022891135e1129fb8f237"
+      "passwordHash": "177bc8c2cbc970dca9dbdd60f8fdb85cfce97c9701b022891135e1129fb8f237",
+      "id": "admin_andy13579222@gmail.com",
+      "username": "andy13579222@gmail.com",
+      "displayName": "andy13579222@gmail.com",
+      "role": "manager",
+      "enabled": true
     },
     {
       "name": "f660850",
-      "passwordHash": "3572ae0695237d24fd9da32bcc409c21354bff405edb510023d112117e207440"
+      "passwordHash": "3572ae0695237d24fd9da32bcc409c21354bff405edb510023d112117e207440",
+      "id": "admin_f660850",
+      "username": "f660850",
+      "displayName": "f660850",
+      "role": "manager",
+      "enabled": true
     }
   ],
   "images": {
@@ -6461,6 +6933,12 @@
   "bg": {
     "themePreset": "royal",
     "colorMode": "light",
+    "accentColor": "#b3263b",
+    "secondaryColor": "#0f766e",
+    "heroStyle": "editorial",
+    "cardStyle": "clean",
+    "productImageRatio": "1 / 1",
+    "density": "comfortable",
     "url": "assets/bg/d45032c7-b11d-41e7-88dc-65f2eec7eeb5.jpg",
     "tint": "rgba(255,255,255,0.0)",
     "brightness": 1.1,
@@ -6480,6 +6958,12 @@
   "appearance": {
     "themePreset": "royal",
     "colorMode": "light",
+    "accentColor": "#b3263b",
+    "secondaryColor": "#0f766e",
+    "heroStyle": "editorial",
+    "cardStyle": "clean",
+    "productImageRatio": "1 / 1",
+    "density": "comfortable",
     "url": "assets/bg/d45032c7-b11d-41e7-88dc-65f2eec7eeb5.jpg",
     "tint": "rgba(255,255,255,0.0)",
     "brightness": 1.1,
