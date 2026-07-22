@@ -5,7 +5,7 @@
     "schemaVersion": 6,
     "sourceSchemaVersion": 3,
     "appearanceSchemaVersion": 4,
-    "exportedAt": "2026-07-22T12:38:38.050Z",
+    "exportedAt": "2026-07-22T12:43:51.362Z",
     "generatedBy": "cxq-static-commerce-rebuild-v4",
     "exportType": "complete-static-site-backup"
   },
@@ -1126,7 +1126,463 @@
           "availability": "可兌換"
         }
       ],
-      "people": [],
+      "people": [
+        {
+          "points": 70,
+          "visible": true,
+          "id": "person_mrw2pknu_3h9so",
+          "name": "@秀",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 15,
+          "visible": true,
+          "id": "person_mrw2pknu_nfdwc",
+          "name": "@Shirley",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 7,
+          "visible": true,
+          "id": "person_mrw2pknu_uviz1",
+          "name": "@ARIEL",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 6,
+          "visible": true,
+          "id": "person_mrw2pknu_wxwte",
+          "name": "@Jr",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 5,
+          "visible": true,
+          "id": "person_mrw2pknu_pk0qm",
+          "name": "@呆呆的",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 5,
+          "visible": true,
+          "id": "person_mrw2pknu_7takw",
+          "name": "@星⭐️",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 4,
+          "visible": true,
+          "id": "person_mrw2pknu_icjzt",
+          "name": "@₊˚̶魁柒໒",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 4,
+          "visible": true,
+          "id": "person_mrw2pknu_lw19d",
+          "name": "@蘇",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 3,
+          "visible": true,
+          "id": "person_mrw2pknu_ohxna",
+          "name": "@默默",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 3,
+          "visible": true,
+          "id": "person_mrw2pknu_g1jil",
+          "name": "@J",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 3,
+          "visible": true,
+          "id": "person_mrw2pknu_0rdju",
+          "name": "@habv",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 3,
+          "visible": true,
+          "id": "person_mrw2pknu_h10vl",
+          "name": "@ㄩㄣˊ",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 3,
+          "visible": true,
+          "id": "person_mrw2pknu_9flnr",
+          "name": "@米寶/1m",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 3,
+          "visible": true,
+          "id": "person_mrw2pknu_8jxdd",
+          "name": "@黃國維",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 2,
+          "visible": true,
+          "id": "person_mrw2pknu_sjlb8",
+          "name": "@玄",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 2,
+          "visible": true,
+          "id": "person_mrw2pknu_uzoq7",
+          "name": "@Green",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 2,
+          "visible": true,
+          "id": "person_mrw2pknu_p4eqd",
+          "name": "@me",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 2,
+          "visible": true,
+          "id": "person_mrw2pknu_vqql7",
+          "name": "@ray",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 2,
+          "visible": true,
+          "id": "person_mrw2pknu_3fsl3",
+          "name": "@大運衝擊波",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 2,
+          "visible": true,
+          "id": "person_mrw2pknu_d6h39",
+          "name": "@晴兒",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 2,
+          "visible": true,
+          "id": "person_mrw2pknu_cpqrw",
+          "name": "@涂小安",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 2,
+          "visible": true,
+          "id": "person_mrw2pknu_g8yrh",
+          "name": "@💪💪肌肉棒子",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_2dfkg",
+          "name": "@L",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_8ex79",
+          "name": "@Blue",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_bppuz",
+          "name": "@Laixi",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_q9f7n",
+          "name": "@cindy",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_lhp33",
+          "name": "@caicai",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_enwqj",
+          "name": "@eve",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_ap2vu",
+          "name": "@jiun",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_1baj3",
+          "name": "@kiki1990",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_ya1a2",
+          "name": "@Rayyy",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_2g8dt",
+          "name": "@Rita",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_t1pkc",
+          "name": "@sara12",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_zekqv",
+          "name": "@wolf",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_7lvss",
+          "name": "@YAHYAH",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_66nu0",
+          "name": "@Yu",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_7yezs",
+          "name": "@Yuma",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_j5qlt",
+          "name": "@✎.白白",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_o3j80",
+          "name": "@仙貝🍘",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_3o1jg",
+          "name": "@二二",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_16gvh",
+          "name": "@光",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_snnu5",
+          "name": "@吳安琪",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_pe0ov",
+          "name": "@呀哈",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_om2b2",
+          "name": "@土龍君",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_629cp",
+          "name": "@小勳",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_z425p",
+          "name": "@思思",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_d8lkp",
+          "name": "@我要",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_pochb",
+          "name": "@明珠",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_kj53c",
+          "name": "@曉莉",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_1ovqw",
+          "name": "@棒賽耖咪哞",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_zi7u8",
+          "name": "@橘子",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_agp1e",
+          "name": "@泰",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_h69yi",
+          "name": "@玲",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_am13e",
+          "name": "@琇",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_6dmmu",
+          "name": "@瑩憂悠",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_i10b7",
+          "name": "@璇",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_bin5r",
+          "name": "@睏過頭-ㄚ嘉",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_obh7s",
+          "name": "@羊",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_6bfl9",
+          "name": "@羊🐑",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_bkth3",
+          "name": "@芊芊",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_6x8s3",
+          "name": "@苡姍",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_zykup",
+          "name": "@薛克斌baqir",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_x7vod",
+          "name": "@西瓜甜不甜🍉",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_0lzw6",
+          "name": "@貝貝",
+          "note": "2026/7月統整更新匯入"
+        },
+        {
+          "points": 1,
+          "visible": true,
+          "id": "person_mrw2pknu_q1ews",
+          "name": "@💋晴晴💋",
+          "note": "2026/7月統整更新匯入"
+        }
+      ],
       "logs": [
         {
           "id": "r2ll32g5",
