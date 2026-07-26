@@ -5,7 +5,7 @@
     "schemaVersion": 6,
     "sourceSchemaVersion": 3,
     "appearanceSchemaVersion": 4,
-    "exportedAt": "2026-07-22T17:07:55.913Z",
+    "exportedAt": "2026-07-26T14:07:06.416Z",
     "generatedBy": "cxq-static-commerce-rebuild-v4",
     "exportType": "complete-static-site-backup"
   },
@@ -1566,9 +1566,9 @@
           "note": "群組得獎回報",
           "at": "2025-12-30 18:25",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1579,9 +1579,9 @@
           "note": "群組得獎回報",
           "at": "2025-12-30 18:24",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1592,9 +1592,9 @@
           "note": "群組得獎回報",
           "at": "2025-12-30 18:24",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1605,9 +1605,9 @@
           "note": "群組得獎回報",
           "at": "2025-12-30 18:24",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1618,9 +1618,9 @@
           "note": "群組得獎回報",
           "at": "2025-12-30 18:24",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1631,9 +1631,9 @@
           "note": "群組得獎回報",
           "at": "2025-12-30 18:23",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1644,9 +1644,9 @@
           "note": "群組得獎回報",
           "at": "2025-12-30 18:23",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1657,9 +1657,9 @@
           "note": "群組得獎回報",
           "at": "2025-12-30 18:23",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1670,9 +1670,9 @@
           "note": "群組得獎回報",
           "at": "2025-12-30 18:23",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1683,9 +1683,9 @@
           "note": "更名  @默默",
           "at": "2025-12-30 18:22",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1696,9 +1696,9 @@
           "note": " @萍萍 更名",
           "at": "2025-12-30 18:22",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1709,9 +1709,9 @@
           "note": "群組得獎回報",
           "at": "2025-11-11 22:41",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1722,9 +1722,9 @@
           "note": "贊助 磨刀器/娃娃數個",
           "at": "2025-11-09 21:33",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1735,9 +1735,9 @@
           "note": "邀請 @曦",
           "at": "2025-11-09 21:32",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1748,9 +1748,9 @@
           "note": "邀請 @L",
           "at": "2025-11-09 21:31",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1761,9 +1761,9 @@
           "note": " 群組得獎回報",
           "at": "2025-10-27 00:40",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1774,9 +1774,9 @@
           "note": "群組得獎回報",
           "at": "2025-10-27 00:40",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1787,9 +1787,9 @@
           "note": " 群組得獎回報",
           "at": "2025-10-18 17:19",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1800,9 +1800,9 @@
           "note": "群組得獎回報",
           "at": "2025-10-18 17:19",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1813,9 +1813,9 @@
           "note": "邀請好友 @Virginia",
           "at": "2025-10-13 01:46",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1826,9 +1826,9 @@
           "note": "群組得獎回報",
           "at": "2025-10-04 23:48",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1839,9 +1839,9 @@
           "note": "邀請好友 @琪琪 ",
           "at": "2025-10-02 21:02",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1852,9 +1852,9 @@
           "note": "群組得獎回報",
           "at": "2025-10-02 19:14",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1865,9 +1865,9 @@
           "note": "撤銷 jtsogyo0",
           "at": "2025-10-02 19:14",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1878,9 +1878,9 @@
           "note": "群組得獎回報",
           "at": "2025-10-02 19:14",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1891,9 +1891,9 @@
           "note": "填寫問卷",
           "at": "2025-10-02 19:07",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1904,9 +1904,9 @@
           "note": "填寫問卷",
           "at": "2025-09-29 11:12",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1917,9 +1917,9 @@
           "note": "邀請好友 @美美",
           "at": "2025-09-28 17:06",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1930,9 +1930,9 @@
           "note": " 填寫問卷",
           "at": "2025-09-25 03:13",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1943,9 +1943,9 @@
           "note": "群組得獎回報",
           "at": "2025-09-24 16:36",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1956,9 +1956,9 @@
           "note": " 填寫問卷",
           "at": "2025-09-24 16:36",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1969,9 +1969,9 @@
           "note": "填寫問卷",
           "at": "2025-09-24 16:35",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1982,9 +1982,9 @@
           "note": " 填寫問卷",
           "at": "2025-09-24 16:35",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -1995,9 +1995,9 @@
           "note": " 填寫問卷",
           "at": "2025-09-24 16:34",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2008,9 +2008,9 @@
           "note": " 填寫問卷",
           "at": "2025-09-24 16:34",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2021,9 +2021,9 @@
           "note": " 填寫問卷",
           "at": "2025-09-24 16:34",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2034,9 +2034,9 @@
           "note": " 填寫問卷",
           "at": "2025-09-24 16:33",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2047,9 +2047,9 @@
           "note": " 填寫問卷",
           "at": "2025-09-24 16:33",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2060,9 +2060,9 @@
           "note": " 填寫問卷",
           "at": "2025-09-24 16:32",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2073,9 +2073,9 @@
           "note": " 填寫問卷",
           "at": "2025-09-24 16:32",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2086,9 +2086,9 @@
           "note": " 填寫問卷",
           "at": "2025-09-24 16:32",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2099,9 +2099,9 @@
           "note": " 填寫問卷",
           "at": "2025-09-24 16:32",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2112,9 +2112,9 @@
           "note": " 填寫問卷",
           "at": "2025-09-24 16:32",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2125,9 +2125,9 @@
           "note": "點數錯誤更正補償",
           "at": "2025-09-24 16:31",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2138,9 +2138,9 @@
           "note": "填寫問卷",
           "at": "2025-09-24 16:31",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2151,9 +2151,9 @@
           "note": "撤銷 vbix632j",
           "at": "2025-09-24 16:30",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2164,9 +2164,9 @@
           "note": "",
           "at": "2025-09-24 16:30",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2177,9 +2177,9 @@
           "note": "群組得獎回報",
           "at": "2025-09-24 16:30",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2190,9 +2190,9 @@
           "note": "撤銷 qfp7z8fs",
           "at": "2025-09-24 16:29",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2203,9 +2203,9 @@
           "note": " 邀請好友 @周福氣",
           "at": "2025-09-23 01:11",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2216,9 +2216,9 @@
           "note": "贊助 柴之助 4*6 桌上相本",
           "at": "2025-09-22 00:38",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2229,9 +2229,9 @@
           "note": "邀請好友 @喬森",
           "at": "2025-09-20 06:04",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2242,9 +2242,9 @@
           "note": " 群組得獎回報",
           "at": "2025-09-18 17:24",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2255,9 +2255,9 @@
           "note": "群組得獎回報",
           "at": "2025-09-17 16:49",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2268,9 +2268,9 @@
           "note": " 群組得獎回報",
           "at": "2025-09-17 16:49",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2281,9 +2281,9 @@
           "note": "邀請好友 @238🐶🐮🐍Cindy ",
           "at": "2025-09-16 16:54",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2294,9 +2294,9 @@
           "note": "群組得獎回報",
           "at": "2025-09-12 16:53",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2307,9 +2307,9 @@
           "note": "邀請好友 @cxr. ",
           "at": "2025-09-11 02:58",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2320,9 +2320,9 @@
           "note": " 邀請好友 @波米米",
           "at": "2025-09-11 02:58",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2333,9 +2333,9 @@
           "note": "邀請好友 @團團",
           "at": "2025-09-11 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2346,9 +2346,9 @@
           "note": " 群組得獎回報",
           "at": "2025-09-09 01:20",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2359,9 +2359,9 @@
           "note": "邀請好友 @Pius",
           "at": "2025-09-07 01:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2372,9 +2372,9 @@
           "note": " 邀請好友 @Phoebe",
           "at": "2025-09-06 08:07",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2385,9 +2385,9 @@
           "note": "邀請好友 @😀😃 ",
           "at": "2025-09-06 07:30",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2398,9 +2398,9 @@
           "note": " 邀請好友 @斐媽",
           "at": "2025-09-06 07:29",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2411,9 +2411,9 @@
           "note": "邀請好友 @懂懂媽",
           "at": "2025-09-06 06:21",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2424,9 +2424,9 @@
           "note": "邀請好友 @Sw",
           "at": "2025-09-06 06:17",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2437,9 +2437,9 @@
           "note": "邀請好友 @萍萍",
           "at": "2025-09-05 22:32",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2450,9 +2450,9 @@
           "note": " 邀請好友 @Motzu",
           "at": "2025-09-05 21:24",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2463,9 +2463,9 @@
           "note": "邀請好友 @蔡",
           "at": "2025-09-05 20:36",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2476,9 +2476,9 @@
           "note": "邀請好友 @玄",
           "at": "2025-09-05 16:23",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2489,9 +2489,9 @@
           "note": "群組得獎回報",
           "at": "2025-09-05 16:22",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2502,9 +2502,9 @@
           "note": "群組得獎回報",
           "at": "2025-09-05 15:16",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2515,9 +2515,9 @@
           "note": "群組得獎回報",
           "at": "2025-09-05 03:06",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2528,9 +2528,9 @@
           "note": "群組得獎回報",
           "at": "2025-09-05 03:06",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2541,9 +2541,9 @@
           "note": "群組得獎回報",
           "at": "2025-09-05 03:06",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2554,9 +2554,9 @@
           "note": "群組得獎回報",
           "at": "2025-09-05 03:05",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2567,9 +2567,9 @@
           "note": "群組得獎回報",
           "at": "2025-09-05 03:05",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2580,9 +2580,9 @@
           "note": "群組得獎回報",
           "at": "2025-09-05 03:04",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2593,9 +2593,9 @@
           "note": "撤銷 7joe973a",
           "at": "2025-09-05 03:03",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2606,9 +2606,9 @@
           "note": "群組得獎回報",
           "at": "2025-09-05 03:03",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2619,9 +2619,9 @@
           "note": "",
           "at": "2025-09-05 03:02",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2632,9 +2632,9 @@
           "note": "",
           "at": "2025-09-05 03:02",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2645,9 +2645,9 @@
           "note": "",
           "at": "2025-09-05 03:01",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2658,9 +2658,9 @@
           "note": "",
           "at": "2025-09-05 03:01",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2671,9 +2671,9 @@
           "note": "",
           "at": "2025-09-05 03:01",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2684,9 +2684,9 @@
           "note": "",
           "at": "2025-09-05 03:01",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2697,9 +2697,9 @@
           "note": "",
           "at": "2025-09-05 03:01",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2710,9 +2710,9 @@
           "note": "",
           "at": "2025-09-05 03:01",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2723,9 +2723,9 @@
           "note": "",
           "at": "2025-09-05 03:01",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2736,9 +2736,9 @@
           "note": "",
           "at": "2025-09-05 03:00",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2749,9 +2749,9 @@
           "note": "",
           "at": "2025-09-05 03:00",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2762,9 +2762,9 @@
           "note": "",
           "at": "2025-09-05 03:00",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2775,9 +2775,9 @@
           "note": "",
           "at": "2025-09-05 03:00",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2788,9 +2788,9 @@
           "note": "",
           "at": "2025-09-05 03:00",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2801,9 +2801,9 @@
           "note": "",
           "at": "2025-09-05 03:00",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2814,9 +2814,9 @@
           "note": "",
           "at": "2025-09-05 03:00",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2827,9 +2827,9 @@
           "note": "",
           "at": "2025-09-05 03:00",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2840,9 +2840,9 @@
           "note": "",
           "at": "2025-09-05 03:00",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2853,9 +2853,9 @@
           "note": "",
           "at": "2025-09-05 02:59",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2866,9 +2866,9 @@
           "note": "",
           "at": "2025-09-05 02:59",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2879,9 +2879,9 @@
           "note": "",
           "at": "2025-09-05 02:59",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2892,9 +2892,9 @@
           "note": "",
           "at": "2025-09-05 02:59",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2905,9 +2905,9 @@
           "note": "",
           "at": "2025-09-05 02:59",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2918,9 +2918,9 @@
           "note": "",
           "at": "2025-09-05 02:59",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2931,9 +2931,9 @@
           "note": "",
           "at": "2025-09-05 02:59",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2944,9 +2944,9 @@
           "note": "",
           "at": "2025-09-05 02:59",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2957,9 +2957,9 @@
           "note": "",
           "at": "2025-09-05 02:59",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2970,9 +2970,9 @@
           "note": "",
           "at": "2025-09-05 02:59",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2983,9 +2983,9 @@
           "note": "",
           "at": "2025-09-05 02:59",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -2996,9 +2996,9 @@
           "note": "",
           "at": "2025-09-05 02:58",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3009,9 +3009,9 @@
           "note": "",
           "at": "2025-09-05 02:58",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3022,9 +3022,9 @@
           "note": "",
           "at": "2025-09-05 02:58",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3035,9 +3035,9 @@
           "note": "",
           "at": "2025-09-05 02:58",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3048,9 +3048,9 @@
           "note": "",
           "at": "2025-09-05 02:58",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3061,9 +3061,9 @@
           "note": "",
           "at": "2025-09-05 02:58",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3074,9 +3074,9 @@
           "note": "",
           "at": "2025-09-05 02:58",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3087,9 +3087,9 @@
           "note": "",
           "at": "2025-09-05 02:58",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3100,9 +3100,9 @@
           "note": "",
           "at": "2025-09-05 02:58",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3113,9 +3113,9 @@
           "note": "",
           "at": "2025-09-05 02:58",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3126,9 +3126,9 @@
           "note": "",
           "at": "2025-09-05 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3139,9 +3139,9 @@
           "note": "",
           "at": "2025-09-05 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3152,9 +3152,9 @@
           "note": "",
           "at": "2025-09-05 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3165,9 +3165,9 @@
           "note": "",
           "at": "2025-09-05 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3178,9 +3178,9 @@
           "note": "",
           "at": "2025-09-05 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3191,9 +3191,9 @@
           "note": "",
           "at": "2025-09-05 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3204,9 +3204,9 @@
           "note": "",
           "at": "2025-09-05 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3217,9 +3217,9 @@
           "note": "",
           "at": "2025-09-05 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3230,9 +3230,9 @@
           "note": "",
           "at": "2025-09-05 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3243,9 +3243,9 @@
           "note": "",
           "at": "2025-09-05 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3256,9 +3256,9 @@
           "note": "",
           "at": "2025-09-05 02:56",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3269,9 +3269,9 @@
           "note": "",
           "at": "2025-09-05 02:56",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3282,9 +3282,9 @@
           "note": "",
           "at": "2025-09-05 02:56",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3295,9 +3295,9 @@
           "note": "",
           "at": "2025-09-05 02:56",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3308,9 +3308,9 @@
           "note": "",
           "at": "2025-09-05 02:56",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3321,9 +3321,9 @@
           "note": "",
           "at": "2025-09-05 02:56",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3334,9 +3334,9 @@
           "note": "",
           "at": "2025-09-05 02:56",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3347,9 +3347,9 @@
           "note": "撤銷 05odw8kv",
           "at": "2025-09-01 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3360,9 +3360,9 @@
           "note": "撤銷 v4pptf9m",
           "at": "2025-09-01 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3373,9 +3373,9 @@
           "note": "撤銷 azv6zkg3",
           "at": "2025-09-01 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3386,9 +3386,9 @@
           "note": "撤銷 qiotfl6j",
           "at": "2025-09-01 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3399,9 +3399,9 @@
           "note": "撤銷 9fu0cypt",
           "at": "2025-09-01 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3412,9 +3412,9 @@
           "note": "撤銷 2w3fy4t7",
           "at": "2025-09-01 02:57",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3425,9 +3425,9 @@
           "note": "1561",
           "at": "2025-08-31 20:06",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3438,9 +3438,9 @@
           "note": "156",
           "at": "2025-08-31 18:24",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3451,9 +3451,9 @@
           "note": "123",
           "at": "2025-08-31 18:23",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3464,9 +3464,9 @@
           "note": "52852",
           "at": "2025-08-31 11:32",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3477,9 +3477,9 @@
           "note": "252",
           "at": "2025-08-31 11:32",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
@@ -3490,12 +3490,13 @@
           "note": "123",
           "at": "2025-08-31 11:32",
           "personName": "",
-          "before": null,
-          "after": null,
-          "balance": null,
+          "before": 0,
+          "after": 0,
+          "balance": 0,
           "admin": ""
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_3h9so",
           "personId": "person_mrw2pknu_3h9so",
           "personName": "@秀",
@@ -3506,10 +3507,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_nfdwc",
           "personId": "person_mrw2pknu_nfdwc",
           "personName": "@Shirley",
@@ -3520,10 +3521,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_uviz1",
           "personId": "person_mrw2pknu_uviz1",
           "personName": "@ARIEL",
@@ -3534,10 +3535,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_wxwte",
           "personId": "person_mrw2pknu_wxwte",
           "personName": "@Jr",
@@ -3548,10 +3549,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_pk0qm",
           "personId": "person_mrw2pknu_pk0qm",
           "personName": "@呆呆的",
@@ -3562,10 +3563,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_7takw",
           "personId": "person_mrw2pknu_7takw",
           "personName": "@星⭐️",
@@ -3576,10 +3577,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_icjzt",
           "personId": "person_mrw2pknu_icjzt",
           "personName": "@₊˚̶魁柒໒",
@@ -3590,10 +3591,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_lw19d",
           "personId": "person_mrw2pknu_lw19d",
           "personName": "@蘇",
@@ -3604,10 +3605,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_ohxna",
           "personId": "person_mrw2pknu_ohxna",
           "personName": "@默默",
@@ -3618,10 +3619,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_g1jil",
           "personId": "person_mrw2pknu_g1jil",
           "personName": "@J",
@@ -3632,10 +3633,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_0rdju",
           "personId": "person_mrw2pknu_0rdju",
           "personName": "@habv",
@@ -3646,10 +3647,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_h10vl",
           "personId": "person_mrw2pknu_h10vl",
           "personName": "@ㄩㄣˊ",
@@ -3660,10 +3661,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_9flnr",
           "personId": "person_mrw2pknu_9flnr",
           "personName": "@米寶/1m",
@@ -3674,10 +3675,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_8jxdd",
           "personId": "person_mrw2pknu_8jxdd",
           "personName": "@黃國維",
@@ -3688,10 +3689,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_sjlb8",
           "personId": "person_mrw2pknu_sjlb8",
           "personName": "@玄",
@@ -3702,10 +3703,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_uzoq7",
           "personId": "person_mrw2pknu_uzoq7",
           "personName": "@Green",
@@ -3716,10 +3717,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_p4eqd",
           "personId": "person_mrw2pknu_p4eqd",
           "personName": "@me",
@@ -3730,10 +3731,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_vqql7",
           "personId": "person_mrw2pknu_vqql7",
           "personName": "@ray",
@@ -3744,10 +3745,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_3fsl3",
           "personId": "person_mrw2pknu_3fsl3",
           "personName": "@大運衝擊波",
@@ -3758,10 +3759,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_d6h39",
           "personId": "person_mrw2pknu_d6h39",
           "personName": "@晴兒",
@@ -3772,10 +3773,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_cpqrw",
           "personId": "person_mrw2pknu_cpqrw",
           "personName": "@涂小安",
@@ -3786,10 +3787,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_g8yrh",
           "personId": "person_mrw2pknu_g8yrh",
           "personName": "@💪💪肌肉棒子",
@@ -3800,10 +3801,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_2dfkg",
           "personId": "person_mrw2pknu_2dfkg",
           "personName": "@L",
@@ -3814,10 +3815,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_8ex79",
           "personId": "person_mrw2pknu_8ex79",
           "personName": "@Blue",
@@ -3828,10 +3829,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_bppuz",
           "personId": "person_mrw2pknu_bppuz",
           "personName": "@Laixi",
@@ -3842,10 +3843,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_q9f7n",
           "personId": "person_mrw2pknu_q9f7n",
           "personName": "@cindy",
@@ -3856,10 +3857,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_lhp33",
           "personId": "person_mrw2pknu_lhp33",
           "personName": "@caicai",
@@ -3870,10 +3871,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_enwqj",
           "personId": "person_mrw2pknu_enwqj",
           "personName": "@eve",
@@ -3884,10 +3885,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_ap2vu",
           "personId": "person_mrw2pknu_ap2vu",
           "personName": "@jiun",
@@ -3898,10 +3899,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_1baj3",
           "personId": "person_mrw2pknu_1baj3",
           "personName": "@kiki1990",
@@ -3912,10 +3913,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_ya1a2",
           "personId": "person_mrw2pknu_ya1a2",
           "personName": "@Rayyy",
@@ -3926,10 +3927,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_2g8dt",
           "personId": "person_mrw2pknu_2g8dt",
           "personName": "@Rita",
@@ -3940,10 +3941,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_t1pkc",
           "personId": "person_mrw2pknu_t1pkc",
           "personName": "@sara12",
@@ -3954,10 +3955,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_zekqv",
           "personId": "person_mrw2pknu_zekqv",
           "personName": "@wolf",
@@ -3968,10 +3969,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_7lvss",
           "personId": "person_mrw2pknu_7lvss",
           "personName": "@YAHYAH",
@@ -3982,10 +3983,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_66nu0",
           "personId": "person_mrw2pknu_66nu0",
           "personName": "@Yu",
@@ -3996,10 +3997,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_7yezs",
           "personId": "person_mrw2pknu_7yezs",
           "personName": "@Yuma",
@@ -4010,10 +4011,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_j5qlt",
           "personId": "person_mrw2pknu_j5qlt",
           "personName": "@✎.白白",
@@ -4024,10 +4025,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_o3j80",
           "personId": "person_mrw2pknu_o3j80",
           "personName": "@仙貝🍘",
@@ -4038,10 +4039,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_3o1jg",
           "personId": "person_mrw2pknu_3o1jg",
           "personName": "@二二",
@@ -4052,10 +4053,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_16gvh",
           "personId": "person_mrw2pknu_16gvh",
           "personName": "@光",
@@ -4066,10 +4067,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_snnu5",
           "personId": "person_mrw2pknu_snnu5",
           "personName": "@吳安琪",
@@ -4080,10 +4081,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_pe0ov",
           "personId": "person_mrw2pknu_pe0ov",
           "personName": "@呀哈",
@@ -4094,10 +4095,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_om2b2",
           "personId": "person_mrw2pknu_om2b2",
           "personName": "@土龍君",
@@ -4108,10 +4109,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_629cp",
           "personId": "person_mrw2pknu_629cp",
           "personName": "@小勳",
@@ -4122,10 +4123,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_z425p",
           "personId": "person_mrw2pknu_z425p",
           "personName": "@思思",
@@ -4136,10 +4137,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_d8lkp",
           "personId": "person_mrw2pknu_d8lkp",
           "personName": "@我要",
@@ -4150,10 +4151,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_pochb",
           "personId": "person_mrw2pknu_pochb",
           "personName": "@明珠",
@@ -4164,10 +4165,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_kj53c",
           "personId": "person_mrw2pknu_kj53c",
           "personName": "@曉莉",
@@ -4178,10 +4179,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_1ovqw",
           "personId": "person_mrw2pknu_1ovqw",
           "personName": "@棒賽耖咪哞",
@@ -4192,10 +4193,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_zi7u8",
           "personId": "person_mrw2pknu_zi7u8",
           "personName": "@橘子",
@@ -4206,10 +4207,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_agp1e",
           "personId": "person_mrw2pknu_agp1e",
           "personName": "@泰",
@@ -4220,10 +4221,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_h69yi",
           "personId": "person_mrw2pknu_h69yi",
           "personName": "@玲",
@@ -4234,10 +4235,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_am13e",
           "personId": "person_mrw2pknu_am13e",
           "personName": "@琇",
@@ -4248,10 +4249,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_6dmmu",
           "personId": "person_mrw2pknu_6dmmu",
           "personName": "@瑩憂悠",
@@ -4262,10 +4263,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_i10b7",
           "personId": "person_mrw2pknu_i10b7",
           "personName": "@璇",
@@ -4276,10 +4277,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_bin5r",
           "personId": "person_mrw2pknu_bin5r",
           "personName": "@睏過頭-ㄚ嘉",
@@ -4290,10 +4291,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_obh7s",
           "personId": "person_mrw2pknu_obh7s",
           "personName": "@羊",
@@ -4304,10 +4305,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_6bfl9",
           "personId": "person_mrw2pknu_6bfl9",
           "personName": "@羊🐑",
@@ -4318,10 +4319,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_bkth3",
           "personId": "person_mrw2pknu_bkth3",
           "personName": "@芊芊",
@@ -4332,10 +4333,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_6x8s3",
           "personId": "person_mrw2pknu_6x8s3",
           "personName": "@苡姍",
@@ -4346,10 +4347,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_zykup",
           "personId": "person_mrw2pknu_zykup",
           "personName": "@薛克斌baqir",
@@ -4360,10 +4361,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_x7vod",
           "personId": "person_mrw2pknu_x7vod",
           "personName": "@西瓜甜不甜🍉",
@@ -4374,10 +4375,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_0lzw6",
           "personId": "person_mrw2pknu_0lzw6",
           "personName": "@貝貝",
@@ -4388,10 +4389,10 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         },
         {
+          "visible": true,
           "id": "log_init_person_mrw2pknu_q1ews",
           "personId": "person_mrw2pknu_q1ews",
           "personName": "@💋晴晴💋",
@@ -4402,7 +4403,6 @@
           "note": "2026/7月統整更新匯入",
           "at": "",
           "admin": "app.json",
-          "visible": true,
           "seed": true
         }
       ],
@@ -4445,7 +4445,7 @@
           "name": "國潮風明月千里月餅盲盒",
           "price": "150",
           "stock": "",
-          "desc": "單隻150/一中盒(4隻)560/2中盒(8隻)1080\n預購7~14天\n購買後回報得點數1/5/10點\n未回報視同放棄\n\n",
+          "desc": "單隻150/一中盒(4隻)560/2中盒(8隻)1080",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -4513,7 +4513,7 @@
           "name": "A0036: 山海九尾狐第二彈",
           "price": "170",
           "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.30*6.80*9.80\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.30*6.80*9.80",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -4572,7 +4572,7 @@
           "name": "A0035: 靈狐仙韻九尾狐",
           "price": "170",
           "stock": "",
-          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高9.20*8.20*9.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高9.20*8.20*9.70",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -4631,7 +4631,7 @@
           "name": "A0034: 山海靈狐九尾狐",
           "price": "170",
           "stock": "",
-          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高10.20*10.20*12.50\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高10.20*10.20*12.50",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -4690,7 +4690,7 @@
           "name": "A0033: 情緒小福仙九尾狐",
           "price": "190",
           "stock": "",
-          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高9.60*8.80*12.80\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高9.60*8.80*12.80",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -4749,7 +4749,7 @@
           "name": "A0032: 上古小福仙盲盒",
           "price": "170",
           "stock": "",
-          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高10.00*7.00*11.00\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高10.00*7.00*11.00",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -4808,7 +4808,7 @@
           "name": "A0031: 上古智慧仙九尾狐",
           "price": "170",
           "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.00*7.00*11.00\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.00*7.00*11.00",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -4867,7 +4867,7 @@
           "name": "A0030: 東方靈狐九尾狐",
           "price": "170",
           "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高9.30*7.30*11.30\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高9.30*7.30*11.30",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -4926,7 +4926,7 @@
           "name": "A0029: 上古狐仙九尾狐",
           "price": "170",
           "stock": "",
-          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高10.00*8.50*10.00\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高10.00*8.50*10.00",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -4985,7 +4985,7 @@
           "name": "A0028: 青丘九尾狐第二彈",
           "price": "170",
           "stock": "",
-          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高9.30*9.30*10.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "desc": "單隻170/一中盒(6隻)960\n單盒長寬高9.30*9.30*10.20",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5044,7 +5044,7 @@
           "name": "A0027: 盛世芳華九尾狐",
           "price": "190",
           "stock": "",
-          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高9.20*8.20*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高9.20*8.20*11.20",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5102,7 +5102,7 @@
           "name": "A0026: 可愛嘟嘟崽",
           "price": "140",
           "stock": "",
-          "desc": "單隻140/一中盒(6隻)720\n單盒長寬高8.20*7.20*9.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "desc": "單隻140/一中盒(6隻)720\n單盒長寬高8.20*7.20*9.20",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5162,7 +5162,7 @@
           "name": "A0025: 可愛熊貓搖搖樂",
           "price": "130",
           "stock": "",
-          "desc": "單隻130/一中盒(6隻)720\n單盒長寬高8.20*7.70*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "desc": "單隻130/一中盒(6隻)720\n單盒長寬高8.20*7.70*11.20",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5222,7 +5222,7 @@
           "name": "A0024: 鴻運熊團團",
           "price": "190",
           "stock": "",
-          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高8.20*7.70*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高8.20*7.70*11.20",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5282,7 +5282,7 @@
           "name": "A0023: 熊團的快樂日常",
           "price": "160",
           "stock": "",
-          "desc": "單隻160/一中盒(6隻)780\n單盒長寬高8.70*7.70*9.40\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "desc": "單隻160/一中盒(6隻)780\n單盒長寬高8.70*7.70*9.40",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5341,7 +5341,7 @@
           "name": "A0022: 豚仔中華小當家",
           "price": "130",
           "stock": "",
-          "desc": "單隻130/一中盒(8隻)960\n單盒長寬高8.20*7.70*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "desc": "單隻130/一中盒(8隻)960\n單盒長寬高8.20*7.70*11.20",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5399,7 +5399,7 @@
           "name": "A0021: 歡喜小福䘵",
           "price": "170",
           "stock": "",
-          "desc": "單隻170/一中盒(8隻)930\n單盒長寬高8.20*7.70*9.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "desc": "單隻170/一中盒(8隻)930\n單盒長寬高8.20*7.70*9.70",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5457,7 +5457,7 @@
           "name": "A0020: 絕代風華",
           "price": "190",
           "stock": "",
-          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高9.20*7.70*12.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高9.20*7.70*12.70",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5516,7 +5516,7 @@
           "name": "A0019: 福寶豚轉轉樂",
           "price": "160",
           "stock": "",
-          "desc": "單隻160/一中盒(6隻)780\n單盒長寬高8.20*7.70*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "desc": "單隻160/一中盒(6隻)780\n單盒長寬高8.20*7.70*11.20",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5575,7 +5575,7 @@
           "name": "A0018: 西高汪的日常生活",
           "price": "130",
           "stock": "",
-          "desc": "單隻130/一中盒(6隻)690\n單盒長寬高8.20*8.20*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "desc": "單隻130/一中盒(6隻)690\n單盒長寬高8.20*8.20*11.20",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5634,7 +5634,7 @@
           "name": "A0017: 萌寶水晶pai",
           "price": "100",
           "stock": "",
-          "desc": "單隻100/一中盒(6隻)570\n單盒長寬高8.20*7.70*9.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "desc": "單隻100/一中盒(6隻)570\n單盒長寬高8.20*7.70*9.70",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5693,7 +5693,7 @@
           "name": "A0016: 晶石物語盲盒",
           "price": "170",
           "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.20*8.20*10.70\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.20*8.20*10.70",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5752,7 +5752,7 @@
           "name": "A0015: 九尾狐仙傳盲盒",
           "price": "170",
           "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.00*7.00*11.00\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.00*7.00*11.00",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5811,7 +5811,7 @@
           "name": "A0014: 上古九尾狐",
           "price": "170",
           "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高9.80*8.30*10.90\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n\n\n",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高9.80*8.30*10.90",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5870,7 +5870,7 @@
           "name": "A0013: 國風九尾狐帶燈",
           "price": "170",
           "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高9.80*8.80*10.10\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高9.80*8.80*10.10",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5929,7 +5929,7 @@
           "name": "A0012: 涂山九尾狐第二彈",
           "price": "170",
           "stock": "",
-          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.80*9.20*11.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
+          "desc": "單隻170/一中盒(6隻)930\n單盒長寬高10.80*9.20*11.20",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -5988,7 +5988,7 @@
           "name": "A0011: 九尾狐仙傳2代",
           "price": "190",
           "stock": "",
-          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高10.20*9.50*10.50\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
+          "desc": "單隻190/一中盒(6隻)1080\n單盒長寬高10.20*9.50*10.50",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -6047,7 +6047,7 @@
           "name": "A0010: 九尾幻境九尾狐",
           "price": "160",
           "stock": "",
-          "desc": "單隻160/一中盒(6隻)780\n單盒長寬高9.70*9.20*8.20\n預購7~14天\n購買後回報得點數1/5點\n未回報視同放棄\n",
+          "desc": "單隻160/一中盒(6隻)780\n單盒長寬高9.70*9.20*8.20",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -6106,7 +6106,7 @@
           "name": "C0002:10000毫安自備雙線快充行動電源",
           "price": "480",
           "stock": "",
-          "desc": "10000毫安\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "desc": "10000毫安",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -6166,7 +6166,7 @@
           "name": "A0009:永生花蛋糕積木",
           "price": "650",
           "stock": "",
-          "desc": "完成高度17CM\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "desc": "完成高度17CM",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -6219,7 +6219,7 @@
           "name": "A0008:磚也星河遊樂園旋轉夢幻城堡",
           "price": "320",
           "stock": "",
-          "desc": "完成高度17CM\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "desc": "完成高度17CM",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -6279,7 +6279,7 @@
           "name": "A0007:永生花積木旋轉音樂盒",
           "price": "320",
           "stock": "",
-          "desc": "完成高度16CM\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "desc": "完成高度16CM",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -6374,7 +6374,7 @@
           "name": "F0008:蠟筆小新趣味保溫杯",
           "price": "380",
           "stock": "",
-          "desc": "480ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "desc": "480ml",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -6435,7 +6435,7 @@
           "name": "F0007:貓和老鼠水杯",
           "price": "380",
           "stock": "",
-          "desc": "1060ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "desc": "1060ml",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -6496,7 +6496,7 @@
           "name": "F0006:蠟筆小新陶瓷馬克杯",
           "price": "280",
           "stock": "",
-          "desc": "350ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "desc": "350ml",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -6575,7 +6575,7 @@
           "name": "F0005:三麗鷗陶瓷杯",
           "price": "450",
           "stock": "",
-          "desc": "500ml\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "500ml",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -6645,7 +6645,7 @@
           "name": "F0004:蠟筆小新保溫杯",
           "price": "490",
           "stock": "",
-          "desc": "600ml\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "600ml",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -6738,7 +6738,7 @@
           "name": "F0003:蠟筆小新可愛創意保溫杯",
           "price": "450",
           "stock": "",
-          "desc": "480ml\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "480ml",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -6807,7 +6807,7 @@
           "name": "F0002:貓和老鼠馬克杯",
           "price": "360",
           "stock": "",
-          "desc": "360ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "desc": "360ml",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -6882,7 +6882,7 @@
           "name": "F0001:高顏值啤酒杯玻璃杯",
           "price": "290",
           "stock": "",
-          "desc": "450ml\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "desc": "450ml",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -6973,7 +6973,7 @@
           "name": "B0020:卡皮巴拉玩偶砸金蛋盲盒",
           "price": "100",
           "stock": "",
-          "desc": "預購7~14天\n購買後回報得點數1點\n未回報視同放棄",
+          "desc": "",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7029,7 +7029,7 @@
           "name": "B0019:奧麗莎蘭花盆栽",
           "price": "580",
           "stock": "",
-          "desc": "25cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "25cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7077,7 +7077,7 @@
           "name": "B0018:彩虹生日蛋糕",
           "price": "580",
           "stock": "",
-          "desc": "26cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "26cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7126,7 +7126,7 @@
           "name": "B0017:巴塞隆納熊茄子熊",
           "price": "580",
           "stock": "",
-          "desc": "30cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "30cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7175,7 +7175,7 @@
           "name": "B0016:巴塞隆納熊大黃蜂",
           "price": "580",
           "stock": "",
-          "desc": "22cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "22cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7224,7 +7224,7 @@
           "name": "B0015:巴塞隆納南瓜小熊",
           "price": "580",
           "stock": "",
-          "desc": "36cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "36cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7273,7 +7273,7 @@
           "name": "B0014:抱蛋糕巴塞隆納熊",
           "price": "580",
           "stock": "",
-          "desc": "28cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "28cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7321,7 +7321,7 @@
           "name": "B0013:微笑太陽花盆栽",
           "price": "580",
           "stock": "",
-          "desc": "35cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "35cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7369,7 +7369,7 @@
           "name": "B0001:結婚蛋糕",
           "price": "650",
           "stock": "",
-          "desc": "28cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "28cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7418,7 +7418,7 @@
           "name": "B0002:花布草莓耳朵害羞邦尼兔",
           "price": "580",
           "stock": "",
-          "desc": "31cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "31cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7482,7 +7482,7 @@
           "name": "B0003:橙色彩虹蛋糕",
           "price": "580",
           "stock": "",
-          "desc": "16cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "16cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7530,7 +7530,7 @@
           "name": "B0012:三明治",
           "price": "580",
           "stock": "",
-          "desc": "13cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "13cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7578,7 +7578,7 @@
           "name": "B0011:一品紅",
           "price": "650",
           "stock": "",
-          "desc": "24cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "24cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7627,7 +7627,7 @@
           "name": "B0010:巴塞隆納熊泰迪",
           "price": "580",
           "stock": "",
-          "desc": "28cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "28cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7676,7 +7676,7 @@
           "name": "B0009:害羞尼伯斯邦尼兔",
           "price": "580",
           "stock": "",
-          "desc": "31cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "31cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7724,7 +7724,7 @@
           "name": "B0008:玉蘭妮亞拿鐵",
           "price": "650",
           "stock": "",
-          "desc": "22cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "22cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7772,7 +7772,7 @@
           "name": "B0007:草莓生日蛋糕",
           "price": "580",
           "stock": "",
-          "desc": "16cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "16cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7821,7 +7821,7 @@
           "name": "B0006:吉利貓",
           "price": "650",
           "stock": "",
-          "desc": "65cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "65cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7869,7 +7869,7 @@
           "name": "B0005:手捧花玫瑰花束",
           "price": "650",
           "stock": "",
-          "desc": "31cm\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "31cm",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7920,7 +7920,7 @@
           "name": "C0001：拇指相機",
           "price": "450",
           "stock": "",
-          "desc": "附贈8g記憶卡\n預購7~14天\n購買後回報得點數8點\n未回報視同放棄",
+          "desc": "附贈8g記憶卡",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -7973,7 +7973,7 @@
           "name": "A0006:史迪奇瓜瓜不倒翁",
           "price": "290",
           "stock": "",
-          "desc": "1袋/一盒12袋，一袋3入\n預購7~14天\n購買後回報得點數5點\n未回報視同放棄",
+          "desc": "1袋/一盒12袋，一袋3入",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -8031,7 +8031,7 @@
           "name": "A0005:動物方城市積木盲盒",
           "price": "120",
           "stock": "",
-          "desc": "單盒/1組12盒\n預購7~14天\n購買後回報得點數1點\n未回報視同放棄",
+          "desc": "單盒/1組12盒",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -8089,7 +8089,7 @@
           "name": "A0004:蠟筆小新積木盲盒",
           "price": "120",
           "stock": "",
-          "desc": "單盒/1組12盒\n預購7~14天\n購買後回報得點數1點\n未回報視同放棄",
+          "desc": "單盒/1組12盒",
           "buyUrl": "",
           "variants": {
             "mode": "single",
@@ -8145,7 +8145,7 @@
           "name": "B0004:Jellycat茄子",
           "price": "490",
           "stock": "",
-          "desc": "40CM\n預購7~14天\n購買後回報得點數10點\n未回報視同放棄",
+          "desc": "40CM",
           "buyUrl": "",
           "variants": {
             "mode": "single",
