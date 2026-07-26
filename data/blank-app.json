@@ -1,12 +1,12 @@
 {
   "_meta": {
     "app": "kjs",
-    "version": 8,
-    "schemaVersion": 8,
+    "version": 7,
+    "schemaVersion": 7,
     "sourceSchemaVersion": 0,
     "appearanceSchemaVersion": 3,
-    "exportType": "safe-blank",
-    "generatedBy": "cxq-static-commerce-rebuild-v6",
+    "exportType": "complete-static-site-backup",
+    "generatedBy": "cxq-static-commerce-rebuild-v15",
     "exportedAt": "2026-07-22T00:00:00.000Z"
   },
   "data": {
@@ -33,9 +33,9 @@
       "galleryDesc": "社群成員的開箱、到貨與回報分享集中整理。",
       "sectionOrder": [
         "hero",
+        "raffles",
         "store",
         "gallery",
-        "draws",
         "shop",
         "custom",
         "faq"
@@ -44,16 +44,18 @@
         "hero": true,
         "store": true,
         "points": true,
-        "draws": true,
         "shop": true,
         "gallery": true,
         "community": true,
-        "faq": true
+        "faq": true,
+        "raffles": true
       },
       "announcements": [],
       "about": "開獎所整合商品、手作訂製、點數查詢、兌換與開獎紀錄，讓參與者快速確認活動進度、點數與得獎資訊。",
       "links": [],
-      "aboutShort": "開獎所整合商品、手作訂製、點數查詢、兌換與開獎紀錄，讓參與者快速確認活動進度、點數與得獎資訊。"
+      "aboutShort": "開獎所整合商品、手作訂製、點數查詢、兌換與開獎紀錄，讓參與者快速確認活動進度、點數與得獎資訊。",
+      "backgroundImage": "assets/bg/cxq-site-background.png",
+      "featuredRaffleTitle": "抽獎中心"
     },
     "history": [],
     "pending": [],
@@ -105,7 +107,7 @@
       "lineGroupUrl": "",
       "siteName": "CxQ 開獎所",
       "siteShortName": "CxQ",
-      "siteTagline": "社群商店、點數查詢、兌換與透明開獎中心",
+      "siteTagline": "社群商店、點數查詢、兌換與抽獎中心",
       "logoUrl": "",
       "faviconUrl": "",
       "defaultAdminEnabled": true,
@@ -126,7 +128,8 @@
         "blur": 0,
         "opacity": 0.56,
         "size": "cover",
-        "pos": "center"
+        "pos": "center",
+        "backgroundImage": "assets/bg/cxq-site-background.png"
       }
     },
     "appearance": {
@@ -144,7 +147,11 @@
       "blur": 0,
       "opacity": 0.56,
       "size": "cover",
-      "pos": "center"
+      "pos": "center",
+      "backgroundImage": "assets/bg/cxq-site-background.png"
+    },
+    "raffles": {
+      "items": []
     }
   },
   "admins": [
@@ -175,7 +182,8 @@
     "blur": 0,
     "opacity": 0.56,
     "size": "cover",
-    "pos": "center"
+    "pos": "center",
+    "backgroundImage": "assets/bg/cxq-site-background.png"
   },
   "appearance": {
     "themePreset": "royal",
@@ -192,6 +200,7 @@
     "blur": 0,
     "opacity": 0.56,
     "size": "cover",
-    "pos": "center"
+    "pos": "center",
+    "backgroundImage": "assets/bg/cxq-site-background.png"
   }
 }
