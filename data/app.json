@@ -5,7 +5,7 @@
     "schemaVersion": 7,
     "sourceSchemaVersion": 3,
     "appearanceSchemaVersion": 4,
-    "exportedAt": "2026-07-28T18:14:30.646Z",
+    "exportedAt": "2026-07-28T18:25:27.158Z",
     "generatedBy": "cxq-static-commerce-rebuild-v4",
     "exportType": "complete-static-site-backup"
   },
@@ -6741,7 +6741,7 @@
       "drawCooldownSec": 10,
       "contactUrl": "https://lin.ee/kKEvNhs",
       "lineGroupUrl": "",
-      "siteName": "CxQ開獎所",
+      "siteName": "CxQ",
       "siteShortName": "CxQ",
       "siteTagline": "社群商店、點數查詢、兌換與抽獎中心",
       "logoUrl": "https://raw.githubusercontent.com/yuchen112/cailucky/refs/heads/main/favicon.ico",
