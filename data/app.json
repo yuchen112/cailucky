@@ -5,7 +5,7 @@
     "schemaVersion": 7,
     "sourceSchemaVersion": 3,
     "appearanceSchemaVersion": 4,
-    "exportedAt": "2026-07-28T00:57:56.859Z",
+    "exportedAt": "2026-07-28T18:14:30.646Z",
     "generatedBy": "cxq-static-commerce-rebuild-v4",
     "exportType": "complete-static-site-backup"
   },
@@ -14,8 +14,8 @@
       "title": "開獎所",
       "subtitle": "免費抽獎・不定期驚喜",
       "description": "盲盒、公仔、小物透明販售與交流，抽獎公開透明，紀錄可查，社群限定活動持續更新。",
-      "heroImage": "assets/brand/cxq-hero-main.png",
-      "backgroundImage": "assets/bg/call_ge7JYpDnxUlIiEjADN2tjpO1.png",
+      "heroImage": "assets/bg/CxQ首頁封面_新Logo柔粉盲盒風.png",
+      "backgroundImage": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png",
       "heroBadge": "LINE 社群限定",
       "primaryButtonText": "加入LINE社群",
       "secondaryButtonText": "官方LINE",
@@ -6758,7 +6758,7 @@
         "cardStyle": "clean",
         "productImageRatio": "1 / 1",
         "density": "comfortable",
-        "url": "assets/bg/call_ge7JYpDnxUlIiEjADN2tjpO1.png",
+        "url": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png",
         "tint": "rgba(255,255,255,0.0)",
         "brightness": 1,
         "blur": 0,
@@ -6773,7 +6773,7 @@
         "menuOpacity": 0.4,
         "menuSize": "cover",
         "menuPos": "center",
-        "backgroundImage": "assets/bg/call_ge7JYpDnxUlIiEjADN2tjpO1.png"
+        "backgroundImage": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png"
       }
     },
     "appearance": {
@@ -6785,7 +6785,7 @@
       "cardStyle": "clean",
       "productImageRatio": "1 / 1",
       "density": "comfortable",
-      "url": "assets/bg/call_ge7JYpDnxUlIiEjADN2tjpO1.png",
+      "url": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png",
       "tint": "rgba(255,255,255,0.0)",
       "brightness": 1,
       "blur": 0,
@@ -6800,7 +6800,7 @@
       "menuOpacity": 0.4,
       "menuSize": "cover",
       "menuPos": "center",
-      "backgroundImage": "assets/bg/call_ge7JYpDnxUlIiEjADN2tjpO1.png"
+      "backgroundImage": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png"
     }
   },
   "admins": [
@@ -6911,7 +6911,7 @@
     "cardStyle": "clean",
     "productImageRatio": "1 / 1",
     "density": "comfortable",
-    "url": "assets/bg/call_ge7JYpDnxUlIiEjADN2tjpO1.png",
+    "url": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png",
     "tint": "rgba(255,255,255,0.0)",
     "brightness": 1,
     "blur": 0,
@@ -6926,7 +6926,7 @@
     "menuOpacity": 0.4,
     "menuSize": "cover",
     "menuPos": "center",
-    "backgroundImage": "assets/bg/call_ge7JYpDnxUlIiEjADN2tjpO1.png"
+    "backgroundImage": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png"
   },
   "appearance": {
     "themePreset": "royal",
@@ -6937,7 +6937,7 @@
     "cardStyle": "clean",
     "productImageRatio": "1 / 1",
     "density": "comfortable",
-    "url": "assets/bg/call_ge7JYpDnxUlIiEjADN2tjpO1.png",
+    "url": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png",
     "tint": "rgba(255,255,255,0.0)",
     "brightness": 1,
     "blur": 0,
@@ -6952,6 +6952,6 @@
     "menuOpacity": 0.4,
     "menuSize": "cover",
     "menuPos": "center",
-    "backgroundImage": "assets/bg/call_ge7JYpDnxUlIiEjADN2tjpO1.png"
+    "backgroundImage": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png"
   }
 }
