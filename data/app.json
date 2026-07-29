@@ -11,16 +11,16 @@
   },
   "data": {
     "homepage": {
-      "title": "開獎所",
+      "title": "CxQ 選物開獎所",
       "subtitle": "免費抽獎・不定期驚喜",
-      "description": "盲盒、公仔、小物透明販售與交流，抽獎公開透明，紀錄可查，社群限定活動持續更新。",
-      "heroImage": "assets/bg/CxQ首頁封面_新Logo柔粉盲盒風.png",
-      "backgroundImage": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png",
-      "heroBadge": "LINE 社群限定",
-      "primaryButtonText": "加入LINE社群",
-      "secondaryButtonText": "官方LINE",
+      "description": "社群小物、抽獎名單、開獎紀錄與點數查詢都在這。",
+      "heroImage": "assets/brand/cxq-home-hero-new-logo.png",
+      "backgroundImage": "assets/bg/cxq-site-background-new-logo.png",
+      "heroBadge": "社群限定",
+      "primaryButtonText": "逛社群商店",
+      "secondaryButtonText": "查詢點數",
       "communityTitle": "加入 CxQ開獎所 LINE 社群",
-      "communityDesc": "免費抽獎、社群限定商品、點數活動與公開透明紀錄都會集中在社群內公告。",
+      "communityDesc": "免費抽獎、社群限定商品、點數活動與公開透明紀錄都會在社群內公告。",
       "communityBullets": [
         "商品快速瀏覽",
         "手作訂製洽詢",
@@ -32,15 +32,15 @@
       "featuredStoreTitle": "社群商店精選",
       "featuredShopTitle": "點數商城精選",
       "galleryTitle": "客人回報/分享",
-      "galleryDesc": "社群成員的開箱、到貨與回報分享集中整理。",
-      "aboutShort": "開獎所整合商品、手作訂製、點數查詢、兌換與開獎紀錄，讓參與者快速確認活動進度、點數與得獎資訊。",
+      "galleryDesc": "看看大家收到的小物、開箱與到貨回報。",
+      "aboutShort": "CxQ 社群小站，選物、抽獎與點數資訊以社群公告為準。",
       "sectionOrder": [
         "hero",
         "raffles",
-        "store",
-        "gallery",
-        "shop",
         "custom",
+        "store",
+        "shop",
+        "gallery",
         "faq"
       ],
       "visibility": {
@@ -56,7 +56,7 @@
         "focus": true
       },
       "announcements": [],
-      "about": "開獎所整合商品、手作訂製、點數查詢、兌換與開獎紀錄，讓參與者快速確認活動進度、點數與得獎資訊。",
+      "about": "社群選物、抽獎紀錄與點數查詢，保持簡單、清楚、好確認。",
       "links": [
         {
           "visible": true,
@@ -79,7 +79,8 @@
       ],
       "featuredDrawIds": [],
       "featuredStoreIds": [],
-      "featuredShopIds": []
+      "featuredShopIds": [],
+      "heroThumb": "assets/thumbs/brand/cxq-home-hero-new-logo.webp"
     },
     "history": [],
     "pending": [],
@@ -390,7 +391,7 @@
           "date": "2025-11-07",
           "winnerCount": 1,
           "totalParticipants": 15,
-          "youtube": "待補上（已放置記事本中）",
+          "youtube": "",
           "note": "",
           "legacyHistoryId": "7zg5smzp",
           "sourceType": "history",
@@ -1954,7 +1955,11 @@
           "material": "",
           "preorderDeadline": "",
           "arrivalEstimate": "",
-          "availability": "可兌換"
+          "availability": "可兌換",
+          "thumb": "assets/thumbs/點數商城/抽獎機會+1.webp",
+          "thumbs": [
+            "assets/thumbs/點數商城/抽獎機會+1.webp"
+          ]
         },
         {
           "enabled": true,
@@ -1980,7 +1985,11 @@
           "material": "",
           "preorderDeadline": "",
           "arrivalEstimate": "",
-          "availability": "可兌換"
+          "availability": "可兌換",
+          "thumb": "assets/thumbs/點數商城/折抵50元.webp",
+          "thumbs": [
+            "assets/thumbs/點數商城/折抵50元.webp"
+          ]
         },
         {
           "enabled": true,
@@ -2006,7 +2015,11 @@
           "material": "",
           "preorderDeadline": "",
           "arrivalEstimate": "",
-          "availability": "可兌換"
+          "availability": "可兌換",
+          "thumb": "assets/thumbs/點數商城/折抵100元.webp",
+          "thumbs": [
+            "assets/thumbs/點數商城/折抵100元.webp"
+          ]
         },
         {
           "enabled": true,
@@ -2032,7 +2045,11 @@
           "material": "",
           "preorderDeadline": "",
           "arrivalEstimate": "",
-          "availability": "可兌換"
+          "availability": "可兌換",
+          "thumb": "assets/thumbs/點數商城/折抵200元.webp",
+          "thumbs": [
+            "assets/thumbs/點數商城/折抵200元.webp"
+          ]
         },
         {
           "enabled": true,
@@ -2058,7 +2075,11 @@
           "material": "",
           "preorderDeadline": "",
           "arrivalEstimate": "",
-          "availability": "可兌換"
+          "availability": "可兌換",
+          "thumb": "assets/thumbs/點數商城/折抵300元.webp",
+          "thumbs": [
+            "assets/thumbs/點數商城/折抵300元.webp"
+          ]
         },
         {
           "enabled": true,
@@ -2084,7 +2105,11 @@
           "material": "",
           "preorderDeadline": "",
           "arrivalEstimate": "",
-          "availability": "可兌換"
+          "availability": "可兌換",
+          "thumb": "assets/thumbs/點數商城/折抵500元.webp",
+          "thumbs": [
+            "assets/thumbs/點數商城/折抵500元.webp"
+          ]
         },
         {
           "enabled": true,
@@ -2110,11 +2135,1642 @@
           "material": "",
           "preorderDeadline": "",
           "arrivalEstimate": "",
-          "availability": "可兌換"
+          "availability": "可兌換",
+          "thumb": "assets/thumbs/點數商城/折抵1000元.webp",
+          "thumbs": [
+            "assets/thumbs/點數商城/折抵1000元.webp"
+          ]
         }
       ],
-      "people": [],
-      "logs": [],
+      "people": [
+        {
+          "id": "points_202607_001",
+          "name": "@秀",
+          "nickname": "秀",
+          "lineId": "@秀",
+          "points": 70,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_002",
+          "name": "@Shirley",
+          "nickname": "Shirley",
+          "lineId": "@Shirley",
+          "points": 15,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_003",
+          "name": "@ARIEL",
+          "nickname": "ARIEL",
+          "lineId": "@ARIEL",
+          "points": 7,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_004",
+          "name": "@Jr",
+          "nickname": "Jr",
+          "lineId": "@Jr",
+          "points": 6,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_005",
+          "name": "@呆呆的",
+          "nickname": "呆呆的",
+          "lineId": "@呆呆的",
+          "points": 5,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_006",
+          "name": "@星⭐️",
+          "nickname": "星⭐️",
+          "lineId": "@星⭐️",
+          "points": 5,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_007",
+          "name": "@₊˚̶魁柒໒",
+          "nickname": "₊˚̶魁柒໒",
+          "lineId": "@₊˚̶魁柒໒",
+          "points": 4,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_008",
+          "name": "@蘇",
+          "nickname": "蘇",
+          "lineId": "@蘇",
+          "points": 4,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_009",
+          "name": "@默默",
+          "nickname": "默默",
+          "lineId": "@默默",
+          "points": 3,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_010",
+          "name": "@J",
+          "nickname": "J",
+          "lineId": "@J",
+          "points": 3,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_011",
+          "name": "@habv",
+          "nickname": "habv",
+          "lineId": "@habv",
+          "points": 3,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_012",
+          "name": "@ㄩㄣˊ",
+          "nickname": "ㄩㄣˊ",
+          "lineId": "@ㄩㄣˊ",
+          "points": 3,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_013",
+          "name": "@米寶/1m",
+          "nickname": "米寶/1m",
+          "lineId": "@米寶/1m",
+          "points": 3,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_014",
+          "name": "@黃國維",
+          "nickname": "黃國維",
+          "lineId": "@黃國維",
+          "points": 3,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_015",
+          "name": "@玄",
+          "nickname": "玄",
+          "lineId": "@玄",
+          "points": 2,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_016",
+          "name": "@Green",
+          "nickname": "Green",
+          "lineId": "@Green",
+          "points": 2,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_017",
+          "name": "@me",
+          "nickname": "me",
+          "lineId": "@me",
+          "points": 2,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_018",
+          "name": "@ray",
+          "nickname": "ray",
+          "lineId": "@ray",
+          "points": 2,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_019",
+          "name": "@大運衝擊波",
+          "nickname": "大運衝擊波",
+          "lineId": "@大運衝擊波",
+          "points": 2,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_020",
+          "name": "@晴兒",
+          "nickname": "晴兒",
+          "lineId": "@晴兒",
+          "points": 2,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_021",
+          "name": "@涂小安",
+          "nickname": "涂小安",
+          "lineId": "@涂小安",
+          "points": 2,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_022",
+          "name": "@💪💪肌肉棒子",
+          "nickname": "💪💪肌肉棒子",
+          "lineId": "@💪💪肌肉棒子",
+          "points": 2,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_023",
+          "name": "@L",
+          "nickname": "L",
+          "lineId": "@L",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_024",
+          "name": "@Blue",
+          "nickname": "Blue",
+          "lineId": "@Blue",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_025",
+          "name": "@Laixi",
+          "nickname": "Laixi",
+          "lineId": "@Laixi",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_026",
+          "name": "@cindy",
+          "nickname": "cindy",
+          "lineId": "@cindy",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_027",
+          "name": "@caicai",
+          "nickname": "caicai",
+          "lineId": "@caicai",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_028",
+          "name": "@eve",
+          "nickname": "eve",
+          "lineId": "@eve",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_029",
+          "name": "@jiun",
+          "nickname": "jiun",
+          "lineId": "@jiun",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_030",
+          "name": "@kiki1990",
+          "nickname": "kiki1990",
+          "lineId": "@kiki1990",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_031",
+          "name": "@Rayyy",
+          "nickname": "Rayyy",
+          "lineId": "@Rayyy",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_032",
+          "name": "@Rita",
+          "nickname": "Rita",
+          "lineId": "@Rita",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_033",
+          "name": "@sara12",
+          "nickname": "sara12",
+          "lineId": "@sara12",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_034",
+          "name": "@wolf",
+          "nickname": "wolf",
+          "lineId": "@wolf",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_035",
+          "name": "@YAHYAH",
+          "nickname": "YAHYAH",
+          "lineId": "@YAHYAH",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_036",
+          "name": "@Yu",
+          "nickname": "Yu",
+          "lineId": "@Yu",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_037",
+          "name": "@Yuma",
+          "nickname": "Yuma",
+          "lineId": "@Yuma",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_038",
+          "name": "@✎.白白",
+          "nickname": "✎.白白",
+          "lineId": "@✎.白白",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_039",
+          "name": "@仙貝🍘",
+          "nickname": "仙貝🍘",
+          "lineId": "@仙貝🍘",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_040",
+          "name": "@二二",
+          "nickname": "二二",
+          "lineId": "@二二",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_041",
+          "name": "@光",
+          "nickname": "光",
+          "lineId": "@光",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_042",
+          "name": "@吳安琪",
+          "nickname": "吳安琪",
+          "lineId": "@吳安琪",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_043",
+          "name": "@呀哈",
+          "nickname": "呀哈",
+          "lineId": "@呀哈",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_044",
+          "name": "@土龍君",
+          "nickname": "土龍君",
+          "lineId": "@土龍君",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_045",
+          "name": "@小勳",
+          "nickname": "小勳",
+          "lineId": "@小勳",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_046",
+          "name": "@思思",
+          "nickname": "思思",
+          "lineId": "@思思",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_047",
+          "name": "@我要",
+          "nickname": "我要",
+          "lineId": "@我要",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_048",
+          "name": "@明珠",
+          "nickname": "明珠",
+          "lineId": "@明珠",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_049",
+          "name": "@曉莉",
+          "nickname": "曉莉",
+          "lineId": "@曉莉",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_050",
+          "name": "@棒賽耖咪哞",
+          "nickname": "棒賽耖咪哞",
+          "lineId": "@棒賽耖咪哞",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_051",
+          "name": "@橘子",
+          "nickname": "橘子",
+          "lineId": "@橘子",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_052",
+          "name": "@泰",
+          "nickname": "泰",
+          "lineId": "@泰",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_053",
+          "name": "@玲",
+          "nickname": "玲",
+          "lineId": "@玲",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_054",
+          "name": "@琇",
+          "nickname": "琇",
+          "lineId": "@琇",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_055",
+          "name": "@瑩憂悠",
+          "nickname": "瑩憂悠",
+          "lineId": "@瑩憂悠",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_056",
+          "name": "@璇",
+          "nickname": "璇",
+          "lineId": "@璇",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_057",
+          "name": "@睏過頭-ㄚ嘉",
+          "nickname": "睏過頭-ㄚ嘉",
+          "lineId": "@睏過頭-ㄚ嘉",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_058",
+          "name": "@羊",
+          "nickname": "羊",
+          "lineId": "@羊",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_059",
+          "name": "@羊🐑",
+          "nickname": "羊🐑",
+          "lineId": "@羊🐑",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_060",
+          "name": "@芊芊",
+          "nickname": "芊芊",
+          "lineId": "@芊芊",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_061",
+          "name": "@苡姍",
+          "nickname": "苡姍",
+          "lineId": "@苡姍",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_062",
+          "name": "@薛克斌baqir",
+          "nickname": "薛克斌baqir",
+          "lineId": "@薛克斌baqir",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_063",
+          "name": "@西瓜甜不甜🍉",
+          "nickname": "西瓜甜不甜🍉",
+          "lineId": "@西瓜甜不甜🍉",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_064",
+          "name": "@貝貝",
+          "nickname": "貝貝",
+          "lineId": "@貝貝",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        },
+        {
+          "id": "points_202607_065",
+          "name": "@💋晴晴💋",
+          "nickname": "💋晴晴💋",
+          "lineId": "@💋晴晴💋",
+          "points": 1,
+          "note": "2026/7月統整更新匯入",
+          "visible": true,
+          "importedAt": "2026-07-29",
+          "updatedAt": "2026-07-29"
+        }
+      ],
+      "logs": [
+        {
+          "id": "log_202607_001",
+          "personId": "points_202607_001",
+          "personName": "@秀",
+          "delta": 70,
+          "before": 0,
+          "after": 70,
+          "balance": 70,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_002",
+          "personId": "points_202607_002",
+          "personName": "@Shirley",
+          "delta": 15,
+          "before": 0,
+          "after": 15,
+          "balance": 15,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_003",
+          "personId": "points_202607_003",
+          "personName": "@ARIEL",
+          "delta": 7,
+          "before": 0,
+          "after": 7,
+          "balance": 7,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_004",
+          "personId": "points_202607_004",
+          "personName": "@Jr",
+          "delta": 6,
+          "before": 0,
+          "after": 6,
+          "balance": 6,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_005",
+          "personId": "points_202607_005",
+          "personName": "@呆呆的",
+          "delta": 5,
+          "before": 0,
+          "after": 5,
+          "balance": 5,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_006",
+          "personId": "points_202607_006",
+          "personName": "@星⭐️",
+          "delta": 5,
+          "before": 0,
+          "after": 5,
+          "balance": 5,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_007",
+          "personId": "points_202607_007",
+          "personName": "@₊˚̶魁柒໒",
+          "delta": 4,
+          "before": 0,
+          "after": 4,
+          "balance": 4,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_008",
+          "personId": "points_202607_008",
+          "personName": "@蘇",
+          "delta": 4,
+          "before": 0,
+          "after": 4,
+          "balance": 4,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_009",
+          "personId": "points_202607_009",
+          "personName": "@默默",
+          "delta": 3,
+          "before": 0,
+          "after": 3,
+          "balance": 3,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_010",
+          "personId": "points_202607_010",
+          "personName": "@J",
+          "delta": 3,
+          "before": 0,
+          "after": 3,
+          "balance": 3,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_011",
+          "personId": "points_202607_011",
+          "personName": "@habv",
+          "delta": 3,
+          "before": 0,
+          "after": 3,
+          "balance": 3,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_012",
+          "personId": "points_202607_012",
+          "personName": "@ㄩㄣˊ",
+          "delta": 3,
+          "before": 0,
+          "after": 3,
+          "balance": 3,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_013",
+          "personId": "points_202607_013",
+          "personName": "@米寶/1m",
+          "delta": 3,
+          "before": 0,
+          "after": 3,
+          "balance": 3,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_014",
+          "personId": "points_202607_014",
+          "personName": "@黃國維",
+          "delta": 3,
+          "before": 0,
+          "after": 3,
+          "balance": 3,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_015",
+          "personId": "points_202607_015",
+          "personName": "@玄",
+          "delta": 2,
+          "before": 0,
+          "after": 2,
+          "balance": 2,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_016",
+          "personId": "points_202607_016",
+          "personName": "@Green",
+          "delta": 2,
+          "before": 0,
+          "after": 2,
+          "balance": 2,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_017",
+          "personId": "points_202607_017",
+          "personName": "@me",
+          "delta": 2,
+          "before": 0,
+          "after": 2,
+          "balance": 2,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_018",
+          "personId": "points_202607_018",
+          "personName": "@ray",
+          "delta": 2,
+          "before": 0,
+          "after": 2,
+          "balance": 2,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_019",
+          "personId": "points_202607_019",
+          "personName": "@大運衝擊波",
+          "delta": 2,
+          "before": 0,
+          "after": 2,
+          "balance": 2,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_020",
+          "personId": "points_202607_020",
+          "personName": "@晴兒",
+          "delta": 2,
+          "before": 0,
+          "after": 2,
+          "balance": 2,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_021",
+          "personId": "points_202607_021",
+          "personName": "@涂小安",
+          "delta": 2,
+          "before": 0,
+          "after": 2,
+          "balance": 2,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_022",
+          "personId": "points_202607_022",
+          "personName": "@💪💪肌肉棒子",
+          "delta": 2,
+          "before": 0,
+          "after": 2,
+          "balance": 2,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_023",
+          "personId": "points_202607_023",
+          "personName": "@L",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_024",
+          "personId": "points_202607_024",
+          "personName": "@Blue",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_025",
+          "personId": "points_202607_025",
+          "personName": "@Laixi",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_026",
+          "personId": "points_202607_026",
+          "personName": "@cindy",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_027",
+          "personId": "points_202607_027",
+          "personName": "@caicai",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_028",
+          "personId": "points_202607_028",
+          "personName": "@eve",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_029",
+          "personId": "points_202607_029",
+          "personName": "@jiun",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_030",
+          "personId": "points_202607_030",
+          "personName": "@kiki1990",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_031",
+          "personId": "points_202607_031",
+          "personName": "@Rayyy",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_032",
+          "personId": "points_202607_032",
+          "personName": "@Rita",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_033",
+          "personId": "points_202607_033",
+          "personName": "@sara12",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_034",
+          "personId": "points_202607_034",
+          "personName": "@wolf",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_035",
+          "personId": "points_202607_035",
+          "personName": "@YAHYAH",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_036",
+          "personId": "points_202607_036",
+          "personName": "@Yu",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_037",
+          "personId": "points_202607_037",
+          "personName": "@Yuma",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_038",
+          "personId": "points_202607_038",
+          "personName": "@✎.白白",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_039",
+          "personId": "points_202607_039",
+          "personName": "@仙貝🍘",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_040",
+          "personId": "points_202607_040",
+          "personName": "@二二",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_041",
+          "personId": "points_202607_041",
+          "personName": "@光",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_042",
+          "personId": "points_202607_042",
+          "personName": "@吳安琪",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_043",
+          "personId": "points_202607_043",
+          "personName": "@呀哈",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_044",
+          "personId": "points_202607_044",
+          "personName": "@土龍君",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_045",
+          "personId": "points_202607_045",
+          "personName": "@小勳",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_046",
+          "personId": "points_202607_046",
+          "personName": "@思思",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_047",
+          "personId": "points_202607_047",
+          "personName": "@我要",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_048",
+          "personId": "points_202607_048",
+          "personName": "@明珠",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_049",
+          "personId": "points_202607_049",
+          "personName": "@曉莉",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_050",
+          "personId": "points_202607_050",
+          "personName": "@棒賽耖咪哞",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_051",
+          "personId": "points_202607_051",
+          "personName": "@橘子",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_052",
+          "personId": "points_202607_052",
+          "personName": "@泰",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_053",
+          "personId": "points_202607_053",
+          "personName": "@玲",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_054",
+          "personId": "points_202607_054",
+          "personName": "@琇",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_055",
+          "personId": "points_202607_055",
+          "personName": "@瑩憂悠",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_056",
+          "personId": "points_202607_056",
+          "personName": "@璇",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_057",
+          "personId": "points_202607_057",
+          "personName": "@睏過頭-ㄚ嘉",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_058",
+          "personId": "points_202607_058",
+          "personName": "@羊",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_059",
+          "personId": "points_202607_059",
+          "personName": "@羊🐑",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_060",
+          "personId": "points_202607_060",
+          "personName": "@芊芊",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_061",
+          "personId": "points_202607_061",
+          "personName": "@苡姍",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_062",
+          "personId": "points_202607_062",
+          "personName": "@薛克斌baqir",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_063",
+          "personId": "points_202607_063",
+          "personName": "@西瓜甜不甜🍉",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_064",
+          "personId": "points_202607_064",
+          "personName": "@貝貝",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        },
+        {
+          "id": "log_202607_065",
+          "personId": "points_202607_065",
+          "personName": "@💋晴晴💋",
+          "delta": 1,
+          "before": 0,
+          "after": 1,
+          "balance": 1,
+          "note": "2026/7月統整更新匯入",
+          "at": "2026-07-29",
+          "admin": "統整匯入",
+          "visible": true,
+          "source": "2026-07-points-import"
+        }
+      ],
       "tagGroups": [
         {
           "id": "tags",
@@ -2201,7 +3857,19 @@
           "material": "",
           "preorderDeadline": "",
           "arrivalEstimate": "",
-          "code": "A0037"
+          "code": "A0037",
+          "thumb": "assets/thumbs/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒1.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒1.webp",
+            "assets/thumbs/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒2.webp",
+            "assets/thumbs/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒3.webp",
+            "assets/thumbs/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒4.webp",
+            "assets/thumbs/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒6.webp",
+            "assets/thumbs/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒7.webp",
+            "assets/thumbs/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒8.webp",
+            "assets/thumbs/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒9.webp",
+            "assets/thumbs/products/盲盒/國潮風明月千里月餅盲盒/國潮風明月千里月餅盲盒10.webp"
+          ]
         },
         {
           "visible": true,
@@ -2260,7 +3928,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/山海九尾狐第二弹.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/山海九尾狐第二弹.webp"
+          ]
         },
         {
           "visible": true,
@@ -2319,7 +3991,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/靈狐仙韻九尾狐.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/靈狐仙韻九尾狐.webp"
+          ]
         },
         {
           "visible": true,
@@ -2378,7 +4054,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/山海靈狐九尾狐.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/山海靈狐九尾狐.webp"
+          ]
         },
         {
           "visible": true,
@@ -2437,7 +4117,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/情緒小福仙九尾狐.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/情緒小福仙九尾狐.webp"
+          ]
         },
         {
           "visible": true,
@@ -2496,7 +4180,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/上古小福仙盲盒.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/上古小福仙盲盒.webp"
+          ]
         },
         {
           "visible": true,
@@ -2555,7 +4243,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/上古智慧仙九尾狐.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/上古智慧仙九尾狐.webp"
+          ]
         },
         {
           "visible": true,
@@ -2614,7 +4306,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/東方靈狐九尾狐.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/東方靈狐九尾狐.webp"
+          ]
         },
         {
           "visible": true,
@@ -2673,7 +4369,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/上古狐仙九尾狐.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/上古狐仙九尾狐.webp"
+          ]
         },
         {
           "visible": true,
@@ -2732,7 +4432,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/青丘九尾狐第二彈.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/青丘九尾狐第二彈.webp"
+          ]
         },
         {
           "visible": true,
@@ -2791,7 +4495,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/盛世芳華九尾狐.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/盛世芳華九尾狐.webp"
+          ]
         },
         {
           "visible": true,
@@ -2849,7 +4557,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/可愛嘟嘟崽.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/可愛嘟嘟崽.webp"
+          ]
         },
         {
           "visible": true,
@@ -2909,7 +4621,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/可愛熊貓搖搖樂.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/可愛熊貓搖搖樂.webp"
+          ]
         },
         {
           "visible": true,
@@ -2969,7 +4685,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/鴻運熊團團.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/鴻運熊團團.webp"
+          ]
         },
         {
           "visible": true,
@@ -3029,7 +4749,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/熊團的快樂日常.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/熊團的快樂日常.webp"
+          ]
         },
         {
           "visible": true,
@@ -3088,7 +4812,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/豚仔中華小當家.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/豚仔中華小當家.webp"
+          ]
         },
         {
           "visible": true,
@@ -3146,7 +4874,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/歡喜小福䘵.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/歡喜小福䘵.webp"
+          ]
         },
         {
           "visible": true,
@@ -3204,7 +4936,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/絕代風華.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/絕代風華.webp"
+          ]
         },
         {
           "visible": true,
@@ -3263,7 +4999,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/福寶豚轉轉樂.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/福寶豚轉轉樂.webp"
+          ]
         },
         {
           "visible": true,
@@ -3322,7 +5062,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/西高汪的日常生活.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/西高汪的日常生活.webp"
+          ]
         },
         {
           "visible": true,
@@ -3381,7 +5125,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/萌寶水晶pai.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/萌寶水晶pai.webp"
+          ]
         },
         {
           "visible": true,
@@ -3440,7 +5188,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/晶石物語盲盒.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/晶石物語盲盒.webp"
+          ]
         },
         {
           "visible": true,
@@ -3499,7 +5251,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/九尾狐仙傳盲盒.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/九尾狐仙傳盲盒.webp"
+          ]
         },
         {
           "visible": true,
@@ -3558,7 +5314,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/上古九尾狐.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/上古九尾狐.webp"
+          ]
         },
         {
           "visible": true,
@@ -3617,7 +5377,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/國風九尾狐帶燈.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/國風九尾狐帶燈.webp"
+          ]
         },
         {
           "visible": true,
@@ -3676,7 +5440,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/涂山九尾狐第二彈.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/涂山九尾狐第二彈.webp"
+          ]
         },
         {
           "visible": true,
@@ -3735,7 +5503,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/九尾狐仙傳2代.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/九尾狐仙傳2代.webp"
+          ]
         },
         {
           "visible": true,
@@ -3794,7 +5566,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/盲盒/九尾幻境九尾狐.webp",
+          "thumbs": [
+            "assets/thumbs/products/盲盒/九尾幻境九尾狐.webp"
+          ]
         },
         {
           "visible": true,
@@ -3853,7 +5629,14 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源1.webp",
+          "thumbs": [
+            "assets/thumbs/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源1.webp",
+            "assets/thumbs/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源2.webp",
+            "assets/thumbs/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源3.webp",
+            "assets/thumbs/products/3c/10000毫安自備雙線快充行動電源/10000毫安自備雙線快充行動電源4.webp"
+          ]
         },
         {
           "visible": true,
@@ -3905,7 +5688,14 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/積木/永生花蛋糕積木/永生花蛋糕積木1.webp",
+          "thumbs": [
+            "assets/thumbs/products/積木/永生花蛋糕積木/永生花蛋糕積木1.webp",
+            "assets/thumbs/products/積木/永生花蛋糕積木/永生花蛋糕積木1.1.webp",
+            "assets/thumbs/products/積木/永生花蛋糕積木/永生花蛋糕積木2.webp",
+            "assets/thumbs/products/積木/永生花蛋糕積木/永生花蛋糕積木3.webp"
+          ]
         },
         {
           "visible": true,
@@ -3966,7 +5756,16 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡1.webp",
+          "thumbs": [
+            "assets/thumbs/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡1.webp",
+            "assets/thumbs/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡2.webp",
+            "assets/thumbs/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡3.webp",
+            "assets/thumbs/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡4.webp",
+            "assets/thumbs/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡5.webp",
+            "assets/thumbs/products/積木/磚也星河遊樂園旋轉夢幻城堡/磚也星河遊樂園旋轉夢幻城堡6.webp"
+          ]
         },
         {
           "visible": true,
@@ -4058,7 +5857,14 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.webp",
+          "thumbs": [
+            "assets/thumbs/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.webp",
+            "assets/thumbs/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.8.webp",
+            "assets/thumbs/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒1.9.webp",
+            "assets/thumbs/products/積木/永生花積木旋轉音樂盒/永生花積木旋轉音樂盒2.webp"
+          ]
         },
         {
           "visible": true,
@@ -4121,7 +5927,16 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯1.webp",
+          "thumbs": [
+            "assets/thumbs/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯1.webp",
+            "assets/thumbs/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯2.webp",
+            "assets/thumbs/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯3.webp",
+            "assets/thumbs/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯4.webp",
+            "assets/thumbs/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯5.webp",
+            "assets/thumbs/products/生活/蠟筆小新趣味保溫杯08/蠟筆小新趣味保溫杯6.webp"
+          ]
         },
         {
           "visible": true,
@@ -4182,7 +5997,14 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/生活/貓和老鼠水杯07/貓和老鼠水杯1.webp",
+          "thumbs": [
+            "assets/thumbs/products/生活/貓和老鼠水杯07/貓和老鼠水杯1.webp",
+            "assets/thumbs/products/生活/貓和老鼠水杯07/貓和老鼠水杯2.webp",
+            "assets/thumbs/products/生活/貓和老鼠水杯07/貓和老鼠水杯3.webp",
+            "assets/thumbs/products/生活/貓和老鼠水杯07/貓和老鼠水杯4.webp"
+          ]
         },
         {
           "visible": true,
@@ -4259,7 +6081,15 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯1.webp",
+          "thumbs": [
+            "assets/thumbs/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯1.webp",
+            "assets/thumbs/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯2.webp",
+            "assets/thumbs/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯3.webp",
+            "assets/thumbs/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯4.webp",
+            "assets/thumbs/products/生活/蠟筆小新陶瓷馬克杯06/蠟筆小新陶瓷馬克杯5.webp"
+          ]
         },
         {
           "visible": true,
@@ -4330,7 +6160,14 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯1.webp",
+          "thumbs": [
+            "assets/thumbs/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯1.webp",
+            "assets/thumbs/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯2.webp",
+            "assets/thumbs/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯3.webp",
+            "assets/thumbs/products/生活/三麗鷗陶瓷杯05/三麗鷗陶瓷杯4.webp"
+          ]
         },
         {
           "visible": true,
@@ -4424,7 +6261,14 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯1.webp",
+          "thumbs": [
+            "assets/thumbs/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯1.webp",
+            "assets/thumbs/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯2.webp",
+            "assets/thumbs/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯3.webp",
+            "assets/thumbs/products/生活/蠟筆小新保溫杯04/蠟筆小新保溫杯4.webp"
+          ]
         },
         {
           "visible": true,
@@ -4493,7 +6337,15 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯1.webp",
+          "thumbs": [
+            "assets/thumbs/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯1.webp",
+            "assets/thumbs/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯2.webp",
+            "assets/thumbs/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯3.webp",
+            "assets/thumbs/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯4.webp",
+            "assets/thumbs/products/生活/蠟筆小新可愛創意保溫杯03/蠟筆小新可愛創意保溫杯5.webp"
+          ]
         },
         {
           "visible": true,
@@ -4562,7 +6414,14 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯1.webp",
+          "thumbs": [
+            "assets/thumbs/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯1.webp",
+            "assets/thumbs/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯2.webp",
+            "assets/thumbs/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯3.webp",
+            "assets/thumbs/products/生活/貓和老鼠馬克杯02/貓和老鼠馬克杯4.webp"
+          ]
         },
         {
           "visible": true,
@@ -4661,7 +6520,17 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯1.webp",
+          "thumbs": [
+            "assets/thumbs/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯1.webp",
+            "assets/thumbs/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯2.webp",
+            "assets/thumbs/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯3.webp",
+            "assets/thumbs/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯4.webp",
+            "assets/thumbs/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯5.webp",
+            "assets/thumbs/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯6.webp",
+            "assets/thumbs/products/生活/高顏值啤酒杯玻璃杯01/高顏值啤酒杯玻璃杯7.webp"
+          ]
         },
         {
           "visible": true,
@@ -4720,7 +6589,13 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒0.webp",
+          "thumbs": [
+            "assets/thumbs/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒0.webp",
+            "assets/thumbs/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒1.webp",
+            "assets/thumbs/products/卡皮巴拉玩偶砸金蛋盲盒/卡皮巴拉玩偶砸金蛋盲盒2.webp"
+          ]
         },
         {
           "visible": true,
@@ -4768,7 +6643,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/奥丽莎兰花盆栽.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/奥丽莎兰花盆栽.webp"
+          ]
         },
         {
           "visible": true,
@@ -4816,7 +6695,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/彩虹生日蛋糕.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/彩虹生日蛋糕.webp"
+          ]
         },
         {
           "visible": true,
@@ -4865,7 +6748,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/巴塞罗熊茄子熊.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/巴塞罗熊茄子熊.webp"
+          ]
         },
         {
           "visible": true,
@@ -4914,7 +6801,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/巴塞罗熊大黄蜂.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/巴塞罗熊大黄蜂.webp"
+          ]
         },
         {
           "visible": true,
@@ -4963,7 +6854,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/巴塞罗南瓜小熊.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/巴塞罗南瓜小熊.webp"
+          ]
         },
         {
           "visible": true,
@@ -5012,7 +6907,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/抱蛋糕巴塞罗熊.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/抱蛋糕巴塞罗熊.webp"
+          ]
         },
         {
           "visible": true,
@@ -5060,7 +6959,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/微笑太阳花盆栽.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/微笑太阳花盆栽.webp"
+          ]
         },
         {
           "visible": true,
@@ -5108,7 +7011,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/结婚蛋糕.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/结婚蛋糕.webp"
+          ]
         },
         {
           "visible": true,
@@ -5173,7 +7080,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/花布草莓耳朵害羞邦尼兔.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/花布草莓耳朵害羞邦尼兔.webp"
+          ]
         },
         {
           "visible": true,
@@ -5221,7 +7132,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/橙色彩虹蛋糕.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/橙色彩虹蛋糕.webp"
+          ]
         },
         {
           "visible": true,
@@ -5269,7 +7184,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/三明治.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/三明治.webp"
+          ]
         },
         {
           "visible": true,
@@ -5317,7 +7236,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/一品紅.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/一品紅.webp"
+          ]
         },
         {
           "visible": true,
@@ -5366,7 +7289,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/巴塞罗熊泰迪.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/巴塞罗熊泰迪.webp"
+          ]
         },
         {
           "visible": true,
@@ -5415,7 +7342,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/害羞尼伯斯邦尼兔.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/害羞尼伯斯邦尼兔.webp"
+          ]
         },
         {
           "visible": true,
@@ -5463,7 +7394,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/玉兰妮娅拿铁.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/玉兰妮娅拿铁.webp"
+          ]
         },
         {
           "visible": true,
@@ -5511,7 +7446,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/草莓生日蛋糕.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/草莓生日蛋糕.webp"
+          ]
         },
         {
           "visible": true,
@@ -5560,7 +7499,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/吉利猫.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/吉利猫.webp"
+          ]
         },
         {
           "visible": true,
@@ -5608,7 +7551,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/手捧花玫瑰花束.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/手捧花玫瑰花束.webp"
+          ]
         },
         {
           "visible": true,
@@ -5659,7 +7606,15 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/3c/拇指相機/拇指照相机1.webp",
+          "thumbs": [
+            "assets/thumbs/products/3c/拇指相機/拇指照相机1.webp",
+            "assets/thumbs/products/3c/拇指相機/拇指照相机2.webp",
+            "assets/thumbs/products/3c/拇指相機/拇指照相机2.1.webp",
+            "assets/thumbs/products/3c/拇指相機/拇指照相机3.webp",
+            "assets/thumbs/products/3c/拇指相機/拇指照相机4.webp"
+          ]
         },
         {
           "visible": true,
@@ -5720,7 +7675,14 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁0.webp",
+          "thumbs": [
+            "assets/thumbs/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁0.webp",
+            "assets/thumbs/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁1.webp",
+            "assets/thumbs/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁2.webp",
+            "assets/thumbs/products/史迪奇瓜瓜不倒翁/史迪奇瓜瓜不倒翁3.webp"
+          ]
         },
         {
           "visible": true,
@@ -5778,7 +7740,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/積木/動物方城市積木.webp",
+          "thumbs": [
+            "assets/thumbs/products/積木/動物方城市積木.webp"
+          ]
         },
         {
           "visible": true,
@@ -5836,7 +7802,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/積木/蜡笔小新积木盲盒.webp",
+          "thumbs": [
+            "assets/thumbs/products/積木/蜡笔小新积木盲盒.webp"
+          ]
         },
         {
           "visible": true,
@@ -5884,7 +7854,11 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/JELLYCAT/茄子.webp",
+          "thumbs": [
+            "assets/thumbs/products/JELLYCAT/茄子.webp"
+          ]
         },
         {
           "visible": true,
@@ -5951,7 +7925,21 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/奇奇怪怪的小新/1.webp",
+          "thumbs": [
+            "assets/thumbs/products/奇奇怪怪的小新/1.webp",
+            "assets/thumbs/products/奇奇怪怪的小新/2.webp",
+            "assets/thumbs/products/奇奇怪怪的小新/3.webp",
+            "assets/thumbs/products/奇奇怪怪的小新/4.webp",
+            "assets/thumbs/products/奇奇怪怪的小新/5.webp",
+            "assets/thumbs/products/奇奇怪怪的小新/6.webp",
+            "assets/thumbs/products/奇奇怪怪的小新/7.webp",
+            "assets/thumbs/products/奇奇怪怪的小新/8.webp",
+            "assets/thumbs/products/奇奇怪怪的小新/9.webp",
+            "assets/thumbs/products/奇奇怪怪的小新/10.webp",
+            "assets/thumbs/products/奇奇怪怪的小新/11.webp"
+          ]
         },
         {
           "visible": true,
@@ -6025,7 +8013,27 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/panda/1.webp",
+          "thumbs": [
+            "assets/thumbs/products/panda/1.webp",
+            "assets/thumbs/products/panda/2.webp",
+            "assets/thumbs/products/panda/3.webp",
+            "assets/thumbs/products/panda/4.webp",
+            "assets/thumbs/products/panda/5.webp",
+            "assets/thumbs/products/panda/7.webp",
+            "assets/thumbs/products/panda/8.webp",
+            "assets/thumbs/products/panda/9.webp",
+            "assets/thumbs/products/panda/10.webp",
+            "assets/thumbs/products/panda/11.webp",
+            "assets/thumbs/products/panda/12.webp",
+            "assets/thumbs/products/panda/13.webp",
+            "assets/thumbs/products/panda/14.webp",
+            "assets/thumbs/products/panda/15.webp",
+            "assets/thumbs/products/panda/16.webp",
+            "assets/thumbs/products/panda/17.webp",
+            "assets/thumbs/products/panda/18.webp"
+          ]
         },
         {
           "visible": true,
@@ -6093,7 +8101,21 @@
           "size": "",
           "material": "",
           "preorderDeadline": "",
-          "arrivalEstimate": ""
+          "arrivalEstimate": "",
+          "thumb": "assets/thumbs/products/sticth/1.webp",
+          "thumbs": [
+            "assets/thumbs/products/sticth/1.webp",
+            "assets/thumbs/products/sticth/2.webp",
+            "assets/thumbs/products/sticth/3.webp",
+            "assets/thumbs/products/sticth/4.webp",
+            "assets/thumbs/products/sticth/5.webp",
+            "assets/thumbs/products/sticth/6.webp",
+            "assets/thumbs/products/sticth/7.webp",
+            "assets/thumbs/products/sticth/8.webp",
+            "assets/thumbs/products/sticth/9.webp",
+            "assets/thumbs/products/sticth/10.webp",
+            "assets/thumbs/products/sticth/11.webp"
+          ]
         }
       ],
       "tagGroups": [
@@ -6180,7 +8202,7 @@
           "visible": true,
           "id": "bg4xnglq",
           "title": "📢【最新公告】",
-          "content": "親愛的大家，\n感謝你加入這個剛開始起步的小社群！\n\n目前一切都還在建立中，\n我還在慢慢學習與調整各種細節。\n如果你有任何建議或想法，\n都非常歡迎私訊或留言告訴我。\n你的聲音，對我來說都很重要。\n\n同時也歡迎你把這個群組分享給朋友，\n讓更多人一起參與、抽獎、同樂～\n有你們的支持，真的差很多！\n\n目前所有事情都是我一人處理，\n若有來不及回覆、漏看訊息的情況，\n還請大家多多包涵與體諒 🙏\n\n再次感謝你的加入與鼓勵，\n希望這裡能慢慢成為一個溫暖、有趣、\n值得期待的小角落 ❤️",
+          "content": "感謝加入 CxQ 社群。\n社群商品、抽獎活動、點數查詢與公告資訊會依社群內容更新。\n如需洽詢商品、訂製或活動細節，歡迎透過 LINE 聯繫。",
           "pin": true
         },
         {
@@ -6250,7 +8272,8 @@
           "src": "assets/曝光牆/50052_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50052_0.webp"
         },
         {
           "visible": true,
@@ -6259,7 +8282,8 @@
           "src": "assets/曝光牆/50051_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50051_0.webp"
         },
         {
           "visible": true,
@@ -6268,7 +8292,8 @@
           "src": "assets/曝光牆/50050_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50050_0.webp"
         },
         {
           "visible": true,
@@ -6277,7 +8302,8 @@
           "src": "assets/曝光牆/50049_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50049_0.webp"
         },
         {
           "visible": true,
@@ -6286,7 +8312,8 @@
           "src": "assets/曝光牆/50048_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50048_0.webp"
         },
         {
           "visible": true,
@@ -6295,7 +8322,8 @@
           "src": "assets/曝光牆/50047_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50047_0.webp"
         },
         {
           "visible": true,
@@ -6304,7 +8332,8 @@
           "src": "assets/曝光牆/50046_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50046_0.webp"
         },
         {
           "visible": true,
@@ -6313,7 +8342,8 @@
           "src": "assets/曝光牆/50045_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50045_0.webp"
         },
         {
           "visible": true,
@@ -6322,7 +8352,8 @@
           "src": "assets/曝光牆/50044_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50044_0.webp"
         },
         {
           "visible": true,
@@ -6331,7 +8362,8 @@
           "src": "assets/曝光牆/50043_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50043_0.webp"
         },
         {
           "visible": true,
@@ -6340,7 +8372,8 @@
           "src": "assets/曝光牆/50042_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50042_0.webp"
         },
         {
           "visible": true,
@@ -6349,7 +8382,8 @@
           "src": "assets/曝光牆/50041_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50041_0.webp"
         },
         {
           "visible": true,
@@ -6358,7 +8392,8 @@
           "src": "assets/曝光牆/50040_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50040_0.webp"
         },
         {
           "visible": true,
@@ -6367,7 +8402,8 @@
           "src": "assets/曝光牆/50039_0.jpg",
           "prize": "",
           "at": "2025-09-28",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50039_0.webp"
         },
         {
           "visible": true,
@@ -6376,7 +8412,8 @@
           "src": "assets/曝光牆/50283.jpg",
           "prize": "",
           "at": "2025-09-30",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50283.webp"
         },
         {
           "visible": true,
@@ -6385,7 +8422,8 @@
           "src": "assets/曝光牆/50656_0.jpg",
           "prize": "",
           "at": "2025-10-05",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50656_0.webp"
         },
         {
           "visible": true,
@@ -6394,7 +8432,8 @@
           "src": "assets/曝光牆/50657_0.jpg",
           "prize": "",
           "at": "2025-10-05",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/50657_0.webp"
         },
         {
           "visible": true,
@@ -6403,7 +8442,8 @@
           "src": "assets/曝光牆/51864_0.jpg",
           "prize": "",
           "at": "2025-10-18",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/51864_0.webp"
         },
         {
           "visible": true,
@@ -6412,7 +8452,8 @@
           "src": "assets/曝光牆/51865_0.jpg",
           "prize": "",
           "at": "2025-10-18",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/51865_0.webp"
         },
         {
           "visible": true,
@@ -6421,7 +8462,8 @@
           "src": "assets/曝光牆/52999_0.jpg",
           "prize": "",
           "at": "2025-10-26",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/52999_0.webp"
         },
         {
           "visible": true,
@@ -6430,7 +8472,8 @@
           "src": "assets/曝光牆/53000_0.jpg",
           "prize": "",
           "at": "2025-10-26",
-          "pin": false
+          "pin": false,
+          "thumb": "assets/thumbs/曝光牆/53000_0.webp"
         }
       ],
       "homepage_showcase": [
@@ -6617,7 +8660,7 @@
               "visible": true,
               "id": "pvc9l2ibz1mg384yyu",
               "q": "Q5. 會公開感謝嗎？",
-              "a": "會在點數查詢內寫上贊助物品得點\n未來可能會（可匿名）；在網站上設置區塊感謝贊助。",
+              "a": "贊助與點數相關資訊以社群公告為準；需匿名可私訊確認。",
               "order": 5
             }
           ],
@@ -6743,26 +8786,26 @@
       "lineGroupUrl": "",
       "siteName": "CxQ 選物開獎所",
       "siteShortName": "CxQ",
-      "siteTagline": "社群商店、點數查詢、兌換與抽獎中心",
-      "logoUrl": "https://raw.githubusercontent.com/yuchen112/cailucky/refs/heads/main/favicon.ico",
-      "faviconUrl": "",
+      "siteTagline": "社群選物、抽獎紀錄與點數查詢",
+      "logoUrl": "assets/brand/cxq-app-icon-192.png",
+      "faviconUrl": "favicon.ico",
       "defaultAdminEnabled": false,
       "pointsSearchEnabled": true,
-      "pointsSearchHint": "請至少輸入 2 個字，例如暱稱、LINE 名稱或編號。",
+      "pointsSearchHint": "輸入至少 2 個字，可查詢自己的點數與更新紀錄。",
       "appearance": {
-        "themePreset": "royal",
+        "themePreset": "cxq-soft-logo",
         "colorMode": "light",
-        "accentColor": "#b3263b",
-        "secondaryColor": "#0f766e",
+        "accentColor": "#d94c73",
+        "secondaryColor": "#9b73cf",
         "heroStyle": "editorial",
         "cardStyle": "clean",
         "productImageRatio": "1 / 1",
         "density": "comfortable",
-        "url": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png",
+        "url": "assets/bg/cxq-site-background-new-logo.png",
         "tint": "rgba(255,255,255,0.0)",
-        "brightness": 1,
+        "brightness": 1.04,
         "blur": 0,
-        "opacity": 0.56,
+        "opacity": 0.42,
         "size": "cover",
         "pos": "center",
         "menuUseMain": false,
@@ -6773,23 +8816,27 @@
         "menuOpacity": 0.4,
         "menuSize": "cover",
         "menuPos": "center",
-        "backgroundImage": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png"
-      }
+        "backgroundImage": "assets/bg/cxq-site-background-new-logo.png",
+        "heroImage": "assets/brand/cxq-home-hero-new-logo.png",
+        "backgroundThumb": "assets/thumbs/bg/cxq-site-background-new-logo.webp",
+        "heroThumb": "assets/thumbs/brand/cxq-home-hero-new-logo.webp"
+      },
+      "brandLogoUrl": "assets/brand/cxq-app-icon-192.png"
     },
     "appearance": {
-      "themePreset": "royal",
+      "themePreset": "cxq-soft-logo",
       "colorMode": "light",
-      "accentColor": "#b3263b",
-      "secondaryColor": "#0f766e",
+      "accentColor": "#d94c73",
+      "secondaryColor": "#9b73cf",
       "heroStyle": "editorial",
       "cardStyle": "clean",
       "productImageRatio": "1 / 1",
       "density": "comfortable",
-      "url": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png",
+      "url": "assets/bg/cxq-site-background-new-logo.png",
       "tint": "rgba(255,255,255,0.0)",
-      "brightness": 1,
+      "brightness": 1.04,
       "blur": 0,
-      "opacity": 0.56,
+      "opacity": 0.42,
       "size": "cover",
       "pos": "center",
       "menuUseMain": false,
@@ -6800,7 +8847,10 @@
       "menuOpacity": 0.4,
       "menuSize": "cover",
       "menuPos": "center",
-      "backgroundImage": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png"
+      "backgroundImage": "assets/bg/cxq-site-background-new-logo.png",
+      "heroImage": "assets/brand/cxq-home-hero-new-logo.png",
+      "backgroundThumb": "assets/thumbs/bg/cxq-site-background-new-logo.webp",
+      "heroThumb": "assets/thumbs/brand/cxq-home-hero-new-logo.webp"
     }
   },
   "admins": [
@@ -6903,19 +8953,19 @@
     }
   },
   "bg": {
-    "themePreset": "royal",
+    "themePreset": "cxq-soft-logo",
     "colorMode": "light",
-    "accentColor": "#b3263b",
-    "secondaryColor": "#0f766e",
+    "accentColor": "#d94c73",
+    "secondaryColor": "#9b73cf",
     "heroStyle": "editorial",
     "cardStyle": "clean",
     "productImageRatio": "1 / 1",
     "density": "comfortable",
-    "url": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png",
+    "url": "assets/bg/cxq-site-background-new-logo.png",
     "tint": "rgba(255,255,255,0.0)",
-    "brightness": 1,
+    "brightness": 1.04,
     "blur": 0,
-    "opacity": 0.56,
+    "opacity": 0.42,
     "size": "cover",
     "pos": "center",
     "menuUseMain": false,
@@ -6926,22 +8976,25 @@
     "menuOpacity": 0.4,
     "menuSize": "cover",
     "menuPos": "center",
-    "backgroundImage": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png"
+    "backgroundImage": "assets/bg/cxq-site-background-new-logo.png",
+    "heroImage": "assets/brand/cxq-home-hero-new-logo.png",
+    "backgroundThumb": "assets/thumbs/bg/cxq-site-background-new-logo.webp",
+    "heroThumb": "assets/thumbs/brand/cxq-home-hero-new-logo.webp"
   },
   "appearance": {
-    "themePreset": "royal",
+    "themePreset": "cxq-soft-logo",
     "colorMode": "light",
-    "accentColor": "#b3263b",
-    "secondaryColor": "#0f766e",
+    "accentColor": "#d94c73",
+    "secondaryColor": "#9b73cf",
     "heroStyle": "editorial",
     "cardStyle": "clean",
     "productImageRatio": "1 / 1",
     "density": "comfortable",
-    "url": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png",
+    "url": "assets/bg/cxq-site-background-new-logo.png",
     "tint": "rgba(255,255,255,0.0)",
-    "brightness": 1,
+    "brightness": 1.04,
     "blur": 0,
-    "opacity": 0.56,
+    "opacity": 0.42,
     "size": "cover",
     "pos": "center",
     "menuUseMain": false,
@@ -6952,6 +9005,9 @@
     "menuOpacity": 0.4,
     "menuSize": "cover",
     "menuPos": "center",
-    "backgroundImage": "assets/bg/CxQ網站背景_新Logo柔粉留白風.png"
+    "backgroundImage": "assets/bg/cxq-site-background-new-logo.png",
+    "heroImage": "assets/brand/cxq-home-hero-new-logo.png",
+    "backgroundThumb": "assets/thumbs/bg/cxq-site-background-new-logo.webp",
+    "heroThumb": "assets/thumbs/brand/cxq-home-hero-new-logo.webp"
   }
 }
