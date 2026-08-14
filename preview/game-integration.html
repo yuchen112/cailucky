@@ -1,21 +1,21 @@
 <!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>CxQ 小遊戲｜預覽版</title><style>
 :root{font-family:Inter,"Noto Sans TC",system-ui,sans-serif;color:#2d2a32;background:#fffaf6}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#fff8f1,#fff 36%);min-height:100vh}.bar{position:sticky;top:0;z-index:10;background:#2e292f;color:white;padding:10px 16px;text-align:center;font-weight:800;letter-spacing:.08em}.wrap{max-width:1180px;margin:auto;padding:24px 18px 56px}.head{display:flex;gap:18px;align-items:center;justify-content:space-between;margin-bottom:22px}.back{border:1px solid #d8cfc9;background:#fff;border-radius:999px;padding:10px 15px;font-weight:700}.eyebrow{font-size:12px;letter-spacing:.18em;color:#9d6f6b;font-weight:900}.head h1{font-size:clamp(28px,5vw,50px);margin:5px 0 6px}.head p{margin:0;color:#746c70}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.card{background:#fff;border:1px solid #eadfd8;border-radius:22px;overflow:hidden;box-shadow:0 10px 30px #5b3b2b10;min-width:0}.cover{aspect-ratio:1.3/1;background:#f3ece7;display:block;width:100%;object-fit:cover}.copy{padding:14px 15px 16px}.badge{display:inline-flex;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:900;margin-bottom:8px}.live .badge{background:#e8f7ed;color:#1e7a42}.locked{opacity:.68}.locked .badge{background:#eee;color:#6f6a6d}.copy strong{display:block;font-size:18px;margin-bottom:4px}.copy span{font-size:13px;color:#7a7275}.note{margin-top:26px;padding:16px 18px;border-radius:18px;background:#fff0d9;border:1px solid #f2d7ac;color:#6b4d2d;line-height:1.65}.card.live{cursor:pointer;transition:.18s}.card.live:hover{transform:translateY(-3px);box-shadow:0 16px 36px #5b3b2b1a}@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.head{display:block}.back{margin-bottom:18px}}@media(max-width:430px){.wrap{padding:18px 12px 42px}.grid{gap:12px}.card{border-radius:18px}.copy{padding:11px}.copy strong{font-size:16px}}
-</style></head><body><div class="bar">⚠ CxQ TEST PREVIEW｜獨立測試版，不會修改正式網站</div><main class="wrap"><section class="head"><button class="back" onclick="alert('正式整合後會返回網站首頁')">← 返回首頁</button><div><div class="eyebrow">GAME CENTER</div><h1>CxQ 小遊戲</h1><p>完成的遊戲顯示「可以遊玩」，其他維持暫未開放。</p></div></section><section class="grid" id="grid"></section><div class="note"><b>這是版面與操作流程預覽。</b> 你目前的正式 GitHub <code>main</code> 沒有被修改。完整遊戲素材很大，所以這個網址先讓你判斷「這樣放進網站是不是你要的」。你確認方向後，再把遊戲本體逐款放進測試分支即可。</div></main><script>
+</style></head><body><div class="bar">⚠ CxQ TEST PREVIEW｜獨立測試版，不會修改正式網站</div><main class="wrap"><section class="head"><button class="back" onclick="alert('正式整合後會返回網站首頁')">← 返回首頁</button><div><div class="eyebrow">GAME CENTER</div><h1>CxQ 小遊戲</h1><p>已完成的遊戲直接顯示遊戲 HTML 內的正式名稱，其他維持暫未開放。</p></div></section><section class="grid" id="grid"></section><div class="note"><b>這是版面與操作流程預覽。</b> 你目前的正式 GitHub <code>main</code> 沒有被修改。完整遊戲素材很大，所以這個網址先讓你判斷「這樣放進網站是不是你要的」。你確認方向後，再把遊戲本體逐款放進測試分支即可。</div></main><script>
 const games=[
-['fortune','每日占卜','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/fortune.png',0],
-['link','連連看','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/link.png',1],
-['brick','打磚塊','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/brick.png',1],
-['click','點擊核心','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/clickcore.png',1],
-['2048','2048','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/twenty48.png',1],
-['memory','記憶翻牌','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/memory.png',1],
-['tetris','俄羅斯方塊','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/tetris.png',1],
-['whack','打地鼠','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/whack.png',0],
-['merge','球球融合','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/merge.png',0],
-['flappy','Flappy Bird','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/flappy.png',0],
-['dino','斷網恐龍','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/dino.png',0],
-['poker','撲克遊戲','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/poker.png',0],
-['mines','踩地雷','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/mines.png',0]
+['fortune','每日占卜','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/fortune.png',0,''],
+['link','連連看','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/link.png',1,'夢境織光・角色連連看'],
+['brick','打磚塊','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/brick.png',1,'心光旅團：記憶核心'],
+['click','點擊核心','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/clickcore.png',1,'星願旅團：點亮夢境'],
+['2048','2048','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/twenty48.png',1,'星願 2048'],
+['memory','記憶翻牌','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/memory.png',1,'暮光回憶收藏室'],
+['tetris','俄羅斯方塊','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/tetris.png',1,'心境織境・方塊物語'],
+['whack','打地鼠','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/whack.png',0,''],
+['merge','球球融合','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/merge.png',0,''],
+['flappy','Flappy Bird','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/flappy.png',0,''],
+['dino','斷網恐龍','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/dino.png',0,''],
+['poker','撲克遊戲','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/poker.png',0,''],
+['mines','踩地雷','https://raw.githubusercontent.com/yuchen112/cailucky/main/assets/game-covers/mines.png',0,'']
 ];
 const fallback='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 500"><rect width="100%" height="100%" fill="#f2e9e3"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="36" fill="#826f6b">CxQ GAME</text></svg>`);
-document.querySelector('#grid').innerHTML=games.map(g=>`<article class="card ${g[3]?'live':'locked'}" ${g[3]?`onclick="alert('${g[1]}：完整遊戲檔會在下一階段放進測試分支；這個預覽先確認網站整合位置與呈現方式。')"`:''}><img class="cover" src="${g[2]}" onerror="this.src='${fallback}'"><div class="copy"><i class="badge">${g[3]?'● 可以遊玩':'暫未開放'}</i><strong>${g[1]}</strong><span>${g[3]?'點擊開始遊戲':'敬請期待'}</span></div></article>`).join('');
+document.querySelector('#grid').innerHTML=games.map(g=>`<article class="card ${g[3]?'live':'locked'}" ${g[3]?`onclick="alert('${g[4]}：完整遊戲檔會在下一階段放進測試分支；這個預覽先確認網站整合位置與呈現方式。')"`:''}><img class="cover" src="${g[2]}" onerror="this.src='${fallback}'"><div class="copy"><i class="badge">${g[3]?g[4]:'暫未開放'}</i><strong>${g[1]}</strong><span>${g[3]?'點擊開始遊戲':'敬請期待'}</span></div></article>`).join('');
 </script></body></html>
