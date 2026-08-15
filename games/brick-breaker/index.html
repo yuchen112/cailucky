@@ -686,7 +686,7 @@ body.light{--text:#fff8ed;--text-strong:#fff;--muted:#e9dbea}
     canvas.style.height = H + 'px';
     ctx.setTransform(DPR,0,0,DPR,0,0);
     if(paddle){
-      paddle.y = H - Math.max(76, H * .11);
+      paddle.y = H - Math.max(135, H * .17);
       state.basePaddleW = Math.max(80, W * DIFF[state.difficulty].paddle);
       if(state.paddleGrowTimer <= 0) paddle.w = state.basePaddleW;
       paddle.x = clamp(paddle.x, paddle.w/2+14, W-paddle.w/2-14);
@@ -789,7 +789,7 @@ body.light{--text:#fff8ed;--text-strong:#fff;--muted:#e9dbea}
     state.basePaddleW = Math.max(80, W * DIFF[state.difficulty].paddle);
     paddle = {
       x:W/2,
-      y:H - Math.max(76,H*.11),
+      y:H - Math.max(135,H*.17),
       w:state.basePaddleW,
       h:16,
       targetX:W/2,
