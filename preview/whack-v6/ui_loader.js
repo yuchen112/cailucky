@@ -1,0 +1,1 @@
+// UI art loader placeholder. Individual visual assets are loaded from preview/whack-v6/assets/ui/.
