@@ -1,0 +1,1 @@
+CxQ whack v6 UI assets are individually generated artwork. The game loads them from this directory.
