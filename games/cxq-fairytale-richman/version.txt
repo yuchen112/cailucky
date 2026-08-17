@@ -1,6 +1,7 @@
 CxQ Fairy-tale Richman — latest mainline
-Updated 2026-08-18 04:08 +08:00
-Dedicated raster asset integration pass in progress: home background, character slot and world map are being moved into the game's own assets and wired directly into runtime rendering.
+Updated 2026-08-18 04:15 +08:00
+Dedicated normal/selected character-slot raster assets are now stored inside the game assets and used directly by the setup screen.
 Website-brand background references remain removed.
+Legacy setup background calls are not used by the active selection flow.
 Technical landscape gate/layout CSS only.
 Only latest build retained.
