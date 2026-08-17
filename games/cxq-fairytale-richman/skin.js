@@ -69,3 +69,16 @@ function hud(){
   if(S.msg)txt(S.msg,800,852,20,'center','#fff3ca',900,true);
   if(b.log.length)txt(b.log[b.log.length-1],800,815,16,'center','#edf5ff',750,true);
 }
+const popupBeforeSkin=popup;
+popup=function(){
+  const b=S.board,q=b&&b.popup;
+  if(!q||q.kind!=='mini')return popupBeforeSkin();
+  contain(IM.tile_minigame,610,90,380,380);
+  txt('星光停格挑戰',800,495,30,'center','#ffe58a',1000,true);
+  txt('看準時機按下「停！」，越接近中央獎勵越高',800,540,20);
+  const m=b.mini,x=515,y=590,w=570;
+  skinPanel(IM.btnBlue,x,y,w,30,.98);
+  skinPanel(IM.btnRed,x+w*.44,y,w*.12,30,.95);
+  contain(IM.dice1,x+(m?.pos??0)*w-28,y-18,56,64,1);
+  btn('miniStop','停！',660,655,280,78,true);
+};
