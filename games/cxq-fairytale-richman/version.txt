@@ -1,8 +1,9 @@
 CxQ Fairy-tale Richman — latest mainline
-Updated 2026-08-18 05:40 +08:00
-Broken legacy Lv1-Lv3 house rasters are removed and no longer rendered.
-Board tile and dice raster loads are cache-busted and guarded against decode failures.
-Current production pass is replacing the black placeholder presentation with dedicated game-only backgrounds and removing developer-only text from visible screens.
-Website-brand artwork remains prohibited from this game.
+Updated 2026-08-18 06:15 +08:00
+Dedicated game-only home, setup and continuous world-map backgrounds are installed as real repository raster files and rendered by runtime.
+Home developer-note text and the corrupted decorative start-tile placeholder are removed.
+Functional board tiles remain independent overlays above the continuous map background.
+Broken legacy Lv1-Lv3 house rasters remain removed until replacement art passes QA.
+Website-brand artwork is not used by this game.
 Technical CSS is limited to viewport/orientation behavior.
 Only latest build retained.
