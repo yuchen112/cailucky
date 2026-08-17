@@ -2,54 +2,111 @@
 const C=document.getElementById('game'),X=C.getContext('2d',{alpha:false});
 const W=1600,H=900,MW=3200,MH=1800,A='assets/';
 document.documentElement.style.background='#071325';document.body.style.margin='0';document.body.style.overflow='hidden';C.style.display='block';C.style.width='100vw';C.style.height='100vh';C.style.touchAction='none';
+
 const CHAR_KEYS=['joy','dream','night','sadness','trust','memory','growth','healing','luck','hope'];
 const CHAR_NAMES=['慶典少女','星夢魔女','夜鈴米亞','雨音澄澄','鑰匙守護者','記憶偵探','森林旅人','棉糖汪汪','森鈴芽獸','希望旅人'];
 const CHAR_ROLES=['幸運型','骰控型','卡片型','防禦型','商店型','移動型','土地型','小遊戲型','收租型','特殊型'];
 const PLAYER_COLORS=['#ff716e','#6db9ff','#7ed87c','#ffd05d'];
 const REGION_NAMES=['星願花園','月輝城鎮','森語溪谷','雲端市集'];
-const REGION_TINT=['#d98b9b','#8178bf','#6fa777','#8fb5d8'];
 const IM={};
 function load(k,u){const i=new Image();i.decoding='async';i.src=u;IM[k]=i;return i}
 load('btnBlue',A+'ui/btn_blue.webp');load('btnRed',A+'ui/btn_red.webp');
 ['start','land','event','card','shop','minigame','npc'].forEach(k=>load('tile_'+k,A+'tiles/'+k+'.webp'));
-for(let i=1;i<=3;i++)load('house'+i,A+'houses/house_lv'+i+'.webp');for(let i=1;i<=6;i++)load('dice'+i,A+'dice/dice_'+i+'.webp');
+for(let i=1;i<=3;i++)load('house'+i,A+'houses/house_lv'+i+'.webp');
+for(let i=1;i<=6;i++)load('dice'+i,A+'dice/dice_'+i+'.webp');
 CHAR_KEYS.forEach((k,i)=>load('c'+i,'../../assets/characters/cxq-role-'+k+'.webp'));
-const SAVE='cxq_richman_latest_save_v2';
+
+const SAVE='cxq_richman_latest_save_v3';
 const S={scene:'home',buttons:[],seats:[{type:'human',char:6,diff:'standard'},{type:'ai',char:1,diff:'standard'},{type:'off',char:2,diff:'standard'},{type:'off',char:3,diff:'standard'}],activeSeat:0,money:200000,rounds:30,board:null,msg:'',help:false,settings:false,rolling:false,dice:1,forcedDice:0,pickAnim:null};
-function resize(){const d=Math.min(devicePixelRatio||1,2);C.width=Math.round(innerWidth*d);C.height=Math.round(innerHeight*d)}addEventListener('resize',resize);resize();
+
+function resize(){const d=Math.min(devicePixelRatio||1,2);C.width=Math.round(innerWidth*d);C.height=Math.round(innerHeight*d)}
+addEventListener('resize',resize);resize();
 function begin(){X.setTransform(C.width/W,0,0,C.height/H,0,0);X.clearRect(0,0,W,H);S.buttons=[]}
-function txt(s,x,y,z=26,a='center',c='#fff',w=800,o=true){X.save();X.font=`${w} ${z}px system-ui,-apple-system,"Noto Sans TC",sans-serif`;X.textAlign=a;X.textBaseline='middle';if(o){X.lineJoin='round';X.lineWidth=Math.max(2,z/7);X.strokeStyle='rgba(24,18,28,.92)';X.strokeText(String(s),x,y)}X.fillStyle=c;X.fillText(String(s),x,y);X.restore()}
+function txt(s,x,y,z=26,a='center',c='#fff',w=800,o=true){X.save();X.font=`${w} ${z}px system-ui,-apple-system,"Noto Sans TC",sans-serif`;X.textAlign=a;X.textBaseline='middle';if(o){X.lineJoin='round';X.lineWidth=Math.max(2,z/7);X.strokeStyle='rgba(20,14,28,.92)';X.strokeText(String(s),x,y)}X.fillStyle=c;X.fillText(String(s),x,y);X.restore()}
 function contain(im,x,y,w,h,alpha=1){if(!im||!im.complete||!im.naturalWidth)return;const r=Math.min(w/im.naturalWidth,h/im.naturalHeight),iw=im.naturalWidth*r,ih=im.naturalHeight*r;X.save();X.globalAlpha=alpha;X.drawImage(im,x+(w-iw)/2,y+(h-ih)/2,iw,ih);X.restore()}
+function stretch(im,x,y,w,h,alpha=1){if(!im||!im.complete||!im.naturalWidth)return;X.save();X.globalAlpha=alpha;X.drawImage(im,x,y,w,h);X.restore()}
 function btn(id,label,x,y,w,h,red=false,alpha=1,en=true){contain(red?IM.btnRed:IM.btnBlue,x,y,w,h,alpha*(en?1:.38));txt(label,x+w/2,y+h*.49,Math.min(29,h*.34),'center','#fff',900,true);S.buttons.push({id,x,y,w,h,en})}
 function hit(x,y){return S.buttons.slice().reverse().find(b=>b.en&&x>=b.x&&x<=b.x+b.w&&y>=b.y&&y<=b.y+b.h)}
-function activeSeatIds(){return S.seats.map((s,i)=>s.type==='off'?-1:i).filter(i=>i>=0)}function humanCount(){return S.seats.filter(s=>s.type==='human').length}
+function activeSeatIds(){return S.seats.map((s,i)=>s.type==='off'?-1:i).filter(i=>i>=0)}
+function humanCount(){return S.seats.filter(s=>s.type==='human').length}
 function assigned(ci){return activeSeatIds().find(i=>S.seats[i].char===ci)}
-function roundRect(x,y,w,h,r,fill,stroke='#e3bd70',lw=4){X.beginPath();X.roundRect(x,y,w,h,r);X.fillStyle=fill;X.fill();if(stroke){X.lineWidth=lw;X.strokeStyle=stroke;X.stroke()}}
-function star(x,y,r,c='#ffe27d'){X.save();X.translate(x,y);X.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.45:r;const px=Math.cos(a)*rr,py=Math.sin(a)*rr;i?X.lineTo(px,py):X.moveTo(px,py)}X.closePath();X.fillStyle=c;X.fill();X.restore()}
-function drawCloud(x,y,s,a=.8){X.save();X.globalAlpha=a;X.fillStyle='#fff';for(const [dx,dy,rr] of [[-s*.45,0,s*.45],[0,-s*.15,s*.6],[s*.48,0,s*.42],[0,s*.2,s*.55]])X.beginPath(),X.arc(x+dx,y+dy,rr,0,Math.PI*2),X.fill();X.restore()}
-function drawCastle(x,y,s=1){X.save();X.translate(x,y);X.fillStyle='#f3e4cb';X.strokeStyle='#6e5c70';X.lineWidth=4*s;for(const off of [-80,0,80]){X.fillRect((off-22)*s,-80*s,44*s,110*s);X.strokeRect((off-22)*s,-80*s,44*s,110*s);X.beginPath();X.moveTo((off-30)*s,-80*s);X.lineTo(off*s,-125*s);X.lineTo((off+30)*s,-80*s);X.closePath();X.fillStyle=off===0?'#db788d':'#7678b8';X.fill();X.fillStyle='#f3e4cb'}X.fillRect(-120*s,10*s,240*s,100*s);X.strokeRect(-120*s,10*s,240*s,100*s);X.fillStyle='#73596e';X.fillRect(-22*s,55*s,44*s,55*s);X.restore()}
-function homeBg(){const g=X.createLinearGradient(0,0,0,H);g.addColorStop(0,'#3c5798');g.addColorStop(.55,'#7aa8a0');g.addColorStop(1,'#d6a46e');X.fillStyle=g;X.fillRect(0,0,W,H);X.fillStyle='#658f78';X.beginPath();X.moveTo(0,520);for(let x=0;x<=W;x+=100)X.lineTo(x,460+70*Math.sin(x*.007));X.lineTo(W,H);X.lineTo(0,H);X.fill();drawCastle(1160,345,1.25);drawCloud(190,130,65,.7);drawCloud(670,95,55,.55);drawCloud(1450,150,80,.6);X.fillStyle='rgba(24,25,55,.65)';X.fillRect(0,0,690,H);for(let i=0;i<34;i++){const x=720+i*28,y=650+Math.sin(i*.8)*40;X.fillStyle=i%2?'#e4c38f':'#c79a76';X.fillRect(x,y,24,60)}}
-function title(x=345,y=145){txt('CxQ',x,y,102,'center','#ffe27a',1000,true);txt('童話大富翁',x,y+83,68,'center','#fff0b9',1000,true);txt('夢想王國資產大冒險',x,y+140,22,'center','#f4f7ff',850,true)}
-function home(){homeBg();title(335,145);btn('start','開始遊戲',105,405,470,110,true);btn('continue','繼續遊戲',130,520,420,82,false,.96,!!localStorage.getItem(SAVE));btn('help','遊戲說明',130,614,420,82,false,.94);btn('settings','設定',130,708,420,82,false,.94);const people=[0,1,2];people.forEach((c,i)=>{const x=860+i*210,y=430+(i===1?40:0);contain(IM['c'+c],x,y,205,300)});txt('大型連續地圖 × 獨立棋格 × 真人 / AI 自由配置',1075,825,18,'center','#fff5cf',850,true)}
-const SETUP={gx:42,gy:130,cw:180,ch:215,g:12,seatY:704,seatX:[42,432,822,1212]};
+
+/* Visible presentation rule: this mainline does not draw decorative panels, gradients,
+   clouds, castles, stars or other faux UI with Canvas geometry. Runtime Canvas is only
+   the compositor for independent image assets + dynamic text/data. */
+function imagePanel(im,x,y,w,h,alpha=1){stretch(im,x,y,w,h,alpha)}
+function title(x=370,y=150){txt('CxQ',x,y,102,'center','#ffe27a',1000,true);txt('童話大富翁',x,y+84,68,'center','#fff0b9',1000,true);txt('夢想王國資產大冒險',x,y+142,22,'center','#f4f7ff',850,true)}
+function home(){
+  contain(IM.tile_start,950,90,430,430,.34);
+  title(360,145);
+  btn('start','開始遊戲',110,405,470,110,true);
+  btn('continue','繼續遊戲',135,520,420,82,false,.96,!!localStorage.getItem(SAVE));
+  btn('help','遊戲說明',135,614,420,82,false,.94);
+  btn('settings','設定',135,708,420,82,false,.94);
+  contain(IM.c0,760,390,230,330,.98);contain(IM.c1,970,410,220,310,.96);contain(IM.c2,1180,400,230,320,.96);
+  txt('目前畫面已停止使用官網 Brand 背景與程式繪製裝飾',1070,820,18,'center','#fff5cf',850,true);
+}
+
+const SETUP={gx:44,gy:125,cw:178,ch:216,g:13,seatY:708,seatX:[42,432,822,1212]};
 function slotPos(i){return {x:SETUP.gx+(i%5)*(SETUP.cw+SETUP.g),y:SETUP.gy+Math.floor(i/5)*(SETUP.ch+SETUP.g)}}
-function seatTarget(i){return {x:SETUP.seatX[i]+62,y:SETUP.seatY+42}}
-function chooseChar(ci){if(S.pickAnim||S.seats[S.activeSeat].type==='off')return;const a=S.activeSeat,b=assigned(ci),old=S.seats[a].char,p=slotPos(ci);if(old===ci&&b===a)return;S.pickAnim={char:ci,seat:a,swapSeat:(b!==undefined&&b!==a)?b:-1,oldChar:old,start:performance.now(),dur:960,from:{x:p.x+SETUP.cw/2,y:p.y+SETUP.ch*.46},to:seatTarget(a)}}
+function seatTarget(i){return {x:SETUP.seatX[i]+62,y:SETUP.seatY+40}}
+function chooseChar(ci){if(S.pickAnim||S.seats[S.activeSeat].type==='off')return;const a=S.activeSeat,b=assigned(ci),old=S.seats[a].char,p=slotPos(ci);if(old===ci&&b===a)return;S.pickAnim={char:ci,seat:a,swapSeat:(b!==undefined&&b!==a)?b:-1,oldChar:old,start:performance.now(),dur:800,from:{x:p.x+SETUP.cw/2,y:p.y+SETUP.ch*.48},to:seatTarget(a)}}
 function updatePickAnim(){const q=S.pickAnim;if(!q)return;const t=Math.min(1,(performance.now()-q.start)/q.dur);if(t>=1){S.seats[q.seat].char=q.char;if(q.swapSeat>=0)S.seats[q.swapSeat].char=q.oldChar;S.pickAnim=null}}
-function drawWalker(q){const t=Math.min(1,(performance.now()-q.start)/q.dur),e=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;const x=q.from.x+(q.to.x-q.from.x)*e,y=q.from.y+(q.to.y-q.from.y)*e;const phase=Math.sin(t*Math.PI*10),bob=Math.abs(phase)*9,squash=1-Math.abs(phase)*.05;X.save();X.translate(x,y-bob);X.scale((phase<0?-1:1)*squash,1/squash);contain(IM['c'+q.char],-67,-92,134,158,1);X.restore()}
-function setupBg(){const g=X.createLinearGradient(0,0,0,H);g.addColorStop(0,'#1c2346');g.addColorStop(.6,'#3e355b');g.addColorStop(1,'#6e4f5a');X.fillStyle=g;X.fillRect(0,0,W,H);for(let i=0;i<5;i++){const x=120+i*350;roundRect(x,70,260,500,110,'#24345f','#c9a96a',5);X.fillStyle='#546f97';X.fillRect(x+20,220,220,330);drawCloud(x+130,170,45,.18)}X.fillStyle='#503f4a';X.fillRect(0,560,W,340);X.strokeStyle='rgba(232,187,122,.15)';for(let y=590;y<H;y+=55){X.beginPath();X.moveTo(0,y);X.lineTo(W,y);X.stroke()}}
-function charCard(i,x,y,w,h){const own=assigned(i),sel=S.seats[S.activeSeat].char===i&&!S.pickAnim,moving=S.pickAnim&&S.pickAnim.char===i;roundRect(x,y,w,h,24,sel?'rgba(111,56,75,.95)':'rgba(37,43,72,.92)',sel?'#ffe18b':'#d4b36d',sel?7:4);X.fillStyle='rgba(255,255,255,.08)';X.beginPath();X.ellipse(x+w/2,y+h-48,w*.33,16,0,0,Math.PI*2);X.fill();if(!moving)contain(IM['c'+i],x+12,y+10,w-24,h-50,own!==undefined&&!sel?.35:1);txt(CHAR_NAMES[i],x+w/2,y+h-23,15,'center',sel?'#ffe786':'#fff',900,true);if(own!==undefined){roundRect(x+8,y+8,52,28,13,PLAYER_COLORS[own],null,0);txt((own+1)+'P',x+34,y+22,14,'center','#fff',1000,true);if(!sel)txt('已選',x+w-32,y+22,13,'center','#fff',900,true)}S.buttons.push({id:'char'+i,x,y,w,h,en:!S.pickAnim})}
-function seatPanel(i,x,y){const s=S.seats[i],sel=S.activeSeat===i;roundRect(x,y,345,138,24,sel?'rgba(255,240,196,.97)':'rgba(246,231,203,.94)',sel?'#ffd45e':'#d7b375',sel?6:4);S.buttons.push({id:'seat'+i,x,y,w:345,h:138,en:!S.pickAnim});if(!(S.pickAnim&&S.pickAnim.seat===i)&&s.type!=='off')contain(IM['c'+s.char],x+12,y-26,98,114,.98);roundRect(x+118,y+8,50,31,14,PLAYER_COLORS[i],null,0);txt((i+1)+'P',x+143,y+24,16,'center','#fff',1000,true);txt(s.type==='off'?'空席':CHAR_NAMES[s.char],x+182,y+48,15,'center','#4a3643',900,false);btn('human'+i,'真人',x+120,y+72,66,38,false,s.type==='human'?1:.42,!S.pickAnim);btn('ai'+i,'AI',x+190,y+72,56,38,true,s.type==='ai'?1:.42,!S.pickAnim);btn('off'+i,'空席',x+250,y+72,72,38,false,s.type==='off'?1:.42,!S.pickAnim);if(s.type==='ai')txt('AI '+(s.diff==='easy'?'輕鬆':s.diff==='standard'?'標準':'聰明'),x+281,y+22,12,'center','#6d5360',900,false)}
-function setup(){updatePickAnim();setupBg();btn('back','返回',20,18,150,58,false,1,!S.pickAnim);txt('角色選擇',500,48,38,'center','#fff0b6',1000,true);txt('先選 P1～P4 席位，再選角色；確認後角色會走到玩家席位',500,88,17,'center','#fff',800,true);for(let i=0;i<10;i++){const p=slotPos(i);charCard(i,p.x,p.y,SETUP.cw,SETUP.ch)}roundRect(1010,118,535,520,34,'rgba(26,31,56,.92)','#d7b66e',5);const ci=S.pickAnim&&S.pickAnim.seat===S.activeSeat?S.pickAnim.char:S.seats[S.activeSeat].char;contain(IM['c'+ci],1060,138,195,260);txt(CHAR_NAMES[ci],1290,168,32,'left','#fff0b2',950,true);txt(CHAR_ROLES[ci],1290,213,18,'left','#dceaff',800,true);txt('目前席位 '+(S.activeSeat+1)+'P',1290,255,18,'left',PLAYER_COLORS[S.activeSeat],900,true);txt('參賽 '+activeSeatIds().length+' 人 / 真人 '+humanCount()+' 人',1290,292,17,'left','#fff',800,true);btn('money','起始資金 $'+S.money.toLocaleString(),1082,345,405,62,false,.96,!S.pickAnim);btn('rounds',S.rounds+' 回合',1082,417,405,62,false,.96,!S.pickAnim);btn('startGame','開始這局',1082,510,405,92,true,1,activeSeatIds().length>=2&&humanCount()>=1&&!S.pickAnim);for(let i=0;i<4;i++)seatPanel(i,SETUP.seatX[i],SETUP.seatY);if(S.pickAnim)drawWalker(S.pickAnim)}
-const ROUTE=[[520,1470],[735,1530],[950,1505],[1110,1380],[1170,1195],[1095,1015],[930,895],[735,850],[560,760],[500,585],[600,430],[800,350],[1030,370],[1230,470],[1420,555],[1630,520],[1830,430],[2050,400],[2260,470],[2440,590],[2530,760],[2490,930],[2330,1045],[2140,1110],[1980,1230],[1930,1420],[2110,1520],[2350,1495],[2580,1400],[2750,1240],[2840,1040],[2820,820],[2730,625],[2580,455],[2380,325],[2140,265]];
-const TYPE_PATTERN=['start','land','event','land','card','land','shop','land','event','land','minigame','land','npc','land','card','land','event','land','shop','land','npc','land','event','land','minigame','land','card','land','event','land','shop','land','npc','land','event','land'];
-function makeBoard(){const tiles=ROUTE.map((p,i)=>({x:p[0],y:p[1],type:TYPE_PATTERN[i],owner:-1,level:0,region:Math.floor(i/9)%4,price:9000+(i%7)*1800}));const players=activeSeatIds().map((si,id)=>({id,seat:si,type:S.seats[si].type,char:S.seats[si].char,diff:S.seats[si].diff,cash:S.money,pos:0,cards:[],tickets:0,skip:0,shield:0,bankrupt:false}));S.board={worldW:MW,worldH:MH,tiles,players,turn:0,round:1,cam:{x:0,y:900,target:null},popup:null,mini:null,log:['遊戲開始！'],winner:null};focus(true);saveGame()}
-function cp(){return S.board.players[S.board.turn]}function living(){return S.board.players.filter(p=>!p.bankrupt)}
+function drawPickAnim(){const q=S.pickAnim;if(!q)return;const t=Math.min(1,(performance.now()-q.start)/q.dur),e=1-Math.pow(1-t,3);const x=q.from.x+(q.to.x-q.from.x)*e,y=q.from.y+(q.to.y-q.from.y)*e;contain(IM['c'+q.char],x-66,y-92,132,154,1)}
+function charCard(i,x,y,w,h){
+  const own=assigned(i),sel=S.seats[S.activeSeat].char===i&&!S.pickAnim,moving=S.pickAnim&&S.pickAnim.char===i;
+  contain(IM.tile_start,x,y,w,h,sel?1:.76);
+  if(!moving)contain(IM['c'+i],x+18,y+12,w-36,h-54,own!==undefined&&!sel?.34:1);
+  txt(CHAR_NAMES[i],x+w/2,y+h-22,15,'center',sel?'#ffe786':'#fff',900,true);
+  if(own!==undefined){contain(IM.btnRed,x+3,y+2,66,36,.9);txt((own+1)+'P',x+36,y+20,14,'center','#fff',1000,true)}
+  S.buttons.push({id:'char'+i,x,y,w,h,en:!S.pickAnim});
+}
+function seatPanel(i,x,y){
+  const s=S.seats[i],sel=S.activeSeat===i;
+  imagePanel(sel?IM.btnRed:IM.btnBlue,x,y,345,138,s.type==='off'?.42:.96);
+  S.buttons.push({id:'seat'+i,x,y,w:345,h:138,en:!S.pickAnim});
+  if(!(S.pickAnim&&S.pickAnim.seat===i)&&s.type!=='off')contain(IM['c'+s.char],x+10,y-28,100,116,.98);
+  contain(IM.btnRed,x+112,y+5,62,39,.9);txt((i+1)+'P',x+143,y+25,16,'center','#fff',1000,true);
+  txt(s.type==='off'?'空席':CHAR_NAMES[s.char],x+220,y+49,15,'center','#fff',900,true);
+  btn('human'+i,'真人',x+118,y+72,66,38,false,s.type==='human'?1:.42,!S.pickAnim);
+  btn('ai'+i,'AI',x+188,y+72,56,38,true,s.type==='ai'?1:.42,!S.pickAnim);
+  btn('off'+i,'空席',x+248,y+72,72,38,false,s.type==='off'?1:.42,!S.pickAnim);
+  if(s.type==='ai')btn('diff'+i,s.diff==='easy'?'輕鬆':s.diff==='standard'?'標準':'聰明',x+250,y+10,78,34,false,.9,!S.pickAnim);
+}
+function setup(){
+  updatePickAnim();
+  btn('back','返回',18,15,150,58,false,1,!S.pickAnim);
+  txt('角色選擇',500,45,38,'center','#fff0b6',1000,true);
+  txt('P1～P4 先選真人 / AI / 空席，再選角色',500,84,17,'center','#fff',800,true);
+  for(let i=0;i<10;i++){const p=slotPos(i);charCard(i,p.x,p.y,SETUP.cw,SETUP.ch)}
+  imagePanel(IM.btnBlue,1015,112,520,520,.9);
+  const ci=S.pickAnim&&S.pickAnim.seat===S.activeSeat?S.pickAnim.char:S.seats[S.activeSeat].char;
+  contain(IM['c'+ci],1060,135,190,250);
+  txt(CHAR_NAMES[ci],1290,170,30,'left','#fff0b2',950,true);txt(CHAR_ROLES[ci],1290,215,18,'left','#dceaff',800,true);
+  txt('目前席位 '+(S.activeSeat+1)+'P',1290,256,18,'left',PLAYER_COLORS[S.activeSeat],900,true);
+  txt('參賽 '+activeSeatIds().length+' 人 / 真人 '+humanCount()+' 人',1290,294,17,'left','#fff',800,true);
+  btn('money','起始資金 $'+S.money.toLocaleString(),1082,347,405,62,false,.96,!S.pickAnim);
+  btn('rounds',S.rounds+' 回合',1082,419,405,62,false,.96,!S.pickAnim);
+  btn('startGame','開始這局',1082,505,405,90,true,1,activeSeatIds().length>=2&&humanCount()>=1&&!S.pickAnim);
+  for(let i=0;i<4;i++)seatPanel(i,SETUP.seatX[i],SETUP.seatY);
+  drawPickAnim();
+}
+
+const ROUTE=[[1450,1590],[1240,1610],[1030,1540],[840,1430],[710,1270],[650,1080],[700,900],[820,760],[980,650],[1160,575],[1360,515],[1570,500],[1780,530],[1990,600],[2180,720],[2340,870],[2440,1040],[2440,1220],[2340,1390],[2180,1515],[1980,1590],[1780,1570],[1600,1475],[1480,1320],[1390,1150],[1240,1030],[1070,1030],[930,1120],[1010,1270],[1220,1380]];
+const TYPE_PATTERN=['start','land','event','land','card','land','shop','land','event','land','minigame','land','npc','land','card','land','event','land','shop','land','npc','land','event','land','minigame','land','card','land','event','land'];
+function makeBoard(){const tiles=ROUTE.map((p,i)=>({x:p[0],y:p[1],type:TYPE_PATTERN[i%TYPE_PATTERN.length],owner:-1,level:0,region:Math.floor(i/8)%4,price:9000+(i%7)*1800}));tiles[0].type='start';const players=activeSeatIds().map((si,id)=>({id,seat:si,type:S.seats[si].type,char:S.seats[si].char,diff:S.seats[si].diff,cash:S.money,pos:0,cards:[],tickets:0,skip:0,shield:0,bankrupt:false}));S.board={worldW:MW,worldH:MH,tiles,players,turn:0,round:1,cam:{x:650,y:900,target:null},popup:null,mini:null,log:['遊戲開始！'],winner:null};focus(true);saveGame()}
+function cp(){return S.board.players[S.board.turn]}
+function living(){return S.board.players.filter(p=>!p.bankrupt)}
 function focus(now=false){const b=S.board,p=cp(),t=b.tiles[p.pos],tx=Math.max(0,Math.min(MW-W,t.x-W/2)),ty=Math.max(0,Math.min(MH-H,t.y-H/2));if(now){b.cam.x=tx;b.cam.y=ty;b.cam.target=null}else b.cam.target={x:tx,y:ty}}
 function regionOwned(pid,reg){const lands=S.board.tiles.filter(t=>t.type==='land'&&t.region===reg);return lands.length>0&&lands.every(t=>t.owner===pid)}
-function mapBackdrop(){const g=X.createLinearGradient(0,0,0,MH);g.addColorStop(0,'#5cb2d2');g.addColorStop(1,'#317eaa');X.fillStyle=g;X.fillRect(0,0,MW,MH);const islands=[[480,520,520,340,'#72a96d'],[1470,400,620,310,'#7eaa71'],[2430,470,580,320,'#70a77d'],[700,1280,620,360,'#8eb271'],[1780,1320,650,350,'#76a66c'],[2680,1260,540,340,'#82aa7a']];for(const [x,y,rx,ry,c] of islands){X.fillStyle='#466f5f';X.beginPath();X.ellipse(x,y+26,rx,ry,0,0,Math.PI*2);X.fill();X.fillStyle=c;X.beginPath();X.ellipse(x,y,rx,ry,0,0,Math.PI*2);X.fill()}for(let i=0;i<ROUTE.length;i++){const a=ROUTE[i],b=ROUTE[(i+1)%ROUTE.length];X.strokeStyle='#b89163';X.lineWidth=54;X.lineCap='round';X.beginPath();X.moveTo(a[0],a[1]);X.lineTo(b[0],b[1]);X.stroke();X.strokeStyle='#e4c88f';X.lineWidth=34;X.beginPath();X.moveTo(a[0],a[1]);X.lineTo(b[0],b[1]);X.stroke()}for(const [x,y] of [[400,420],[1510,310],[2470,370],[730,1180],[1810,1210],[2700,1160]])drawCastle(x,y,.72);for(let i=0;i<70;i++){const x=(i*431)%MW,y=160+((i*773)%1450);X.fillStyle=i%2?'#417d55':'#366b4d';X.beginPath();X.arc(x,y,18+(i%9),0,Math.PI*2);X.fill()}}
-function drawTile(t,i){contain(IM['tile_'+t.type],t.x-78,t.y-78,156,156,1);if(t.type==='land'){X.save();X.globalAlpha=.42;X.fillStyle=REGION_TINT[t.region];X.beginPath();X.arc(t.x,t.y,64,0,Math.PI*2);X.fill();X.restore();if(t.owner>=0){txt((t.owner+1)+'P',t.x,t.y-65,14,'center',PLAYER_COLORS[t.owner],1000,true);if(t.level>0)contain(IM['house'+t.level],t.x-53,t.y-140,106,104,.98)}txt('$'+Math.round(t.price/1000)+'K',t.x,t.y+61,12,'center','#fff6d2',900,true)}}
-function drawPlayers(){const b=S.board;for(const p of b.players){if(p.bankrupt)continue;const t=b.tiles[p.pos],same=b.players.filter(q=>!q.bankrupt&&q.pos===p.pos),idx=same.indexOf(p),off=(idx-(same.length-1)/2)*32;contain(IM['c'+p.char],t.x-56+off,t.y-154,112,132);txt((p.id+1)+'P',t.x+off,t.y-160,13,'center',PLAYER_COLORS[p.id],1000,true)}}
-function drawMap(){mapBackdrop();S.board.tiles.forEach(drawTile);drawPlayers()}
-function hud(){const b=S.board,p=cp();roundRect(18,16,570,70,28,'rgba(24,31,57,.92)','#d7b46a',4);txt(`${p.id+1}P  ${CHAR_NAMES[p.char]}   $${Math.max(0,p.cash).toLocaleString()}`,303,51,21,'center','#fff',900,true);roundRect(1230,16,350,70,28,'rgba(24,31,57,.92)','#d7b46a',4);txt(`第 ${b.round}/${S.rounds} 回合`,1405,51,21,'center','#fff',900,true);btn('cards','卡片 '+p.cards.length,1088,790,160,72,false,.95,!S.rolling&&!b.popup);btn('roll',S.rolling?'骰子轉動中':'擲骰子',1260,760,300,112,true,.98,!S.rolling&&!b.popup&&!b.winner);contain(IM['dice'+S.dice],1330,655,160,100);if(S.msg)txt(S.msg,800,852,20,'center','#fff3ca',900,true);if(b.log.length)txt(b.log[b.log.length-1],800,815,16,'center','#edf5ff',750,true)}
+function drawTile(t){
+  contain(IM['tile_'+t.type],t.x-88,t.y-88,176,176,1);
+  if(t.type==='land'){
+    if(t.owner>=0){contain(IM.btnRed,t.x-36,t.y-103,72,36,.88);txt((t.owner+1)+'P',t.x,t.y-86,14,'center',PLAYER_COLORS[t.owner],1000,true);if(t.level>0)contain(IM['house'+t.level],t.x-58,t.y-148,116,116,.98)}
+    txt('$'+Math.round(t.price/1000)+'K',t.x,t.y+69,13,'center','#fff6d2',900,true);
+  }
+}
+function drawPlayers(){const b=S.board;for(const p of b.players){if(p.bankrupt)continue;const t=b.tiles[p.pos],same=b.players.filter(q=>!q.bankrupt&&q.pos===p.pos),idx=same.indexOf(p),off=(idx-(same.length-1)/2)*34;contain(IM['c'+p.char],t.x-62+off,t.y-174,124,144);txt((p.id+1)+'P',t.x+off,t.y-177,14,'center',PLAYER_COLORS[p.id],1000,true)}}
+function drawMap(){const b=S.board;b.tiles.forEach(drawTile);drawPlayers()}
+function hud(){const b=S.board,p=cp();btn('noop',`${p.id+1}P  ${CHAR_NAMES[p.char]}   $${Math.max(0,p.cash).toLocaleString()}`,18,16,570,70,false);btn('noop2',`第 ${b.round}/${S.rounds} 回合`,1230,16,350,70,false);btn('cards','卡片 '+p.cards.length,1088,790,160,72,false,.95,!S.rolling&&!b.popup);btn('roll',S.rolling?'骰子轉動中':'擲骰子',1260,760,300,112,true,.98,!S.rolling&&!b.popup&&!b.winner);contain(IM['dice'+S.dice],1330,655,160,100);if(S.msg)txt(S.msg,800,852,20,'center','#fff3ca',900,true);if(b.log.length)txt(b.log[b.log.length-1],800,815,16,'center','#edf5ff',750,true)}
 function typeName(t){return {start:'起點',land:'土地',event:'事件',card:'卡片',shop:'商店',minigame:'小遊戲',npc:'NPC / 神明'}[t]||t}
