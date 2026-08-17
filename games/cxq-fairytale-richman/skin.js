@@ -1,5 +1,8 @@
 'use strict';
 // Visible UI skin: raster/image assets only. Canvas is used only as compositor + live text.
+load('charSlot',A+'ui/char_slot.webp');
+load('charSlotSelected',A+'ui/char_slot_selected.webp');
+
 function skinPanel(im,x,y,w,h,alpha=1){
   if(!im||!im.complete||!im.naturalWidth)return;
   X.save();X.globalAlpha=alpha;X.drawImage(im,x,y,w,h);X.restore();
@@ -7,8 +10,8 @@ function skinPanel(im,x,y,w,h,alpha=1){
 
 function charCard(i,x,y,w,h){
   const own=assigned(i),sel=S.seats[S.activeSeat].char===i&&!S.pickAnim,moving=S.pickAnim&&S.pickAnim.char===i;
-  skinPanel(sel?IM.btnRed:IM.btnBlue,x,y,w,h,own!==undefined&&!sel?.70:.96);
-  if(!moving)contain(IM['c'+i],x+12,y+8,w-24,h-48,own!==undefined&&!sel?.34:1);
+  contain(sel?IM.charSlotSelected:IM.charSlot,x,y,w,h,own!==undefined&&!sel?.70:.98);
+  if(!moving)contain(IM['c'+i],x+16,y+10,w-32,h-52,own!==undefined&&!sel?.34:1);
   txt(CHAR_NAMES[i],x+w/2,y+h-22,15,'center',sel?'#ffe786':'#fff',900,true);
   if(own!==undefined){
     contain(IM.btnRed,x+4,y+3,64,36,.92);
@@ -78,7 +81,6 @@ function hud(){
   if(b.log.length)txt(b.log[b.log.length-1],800,815,16,'center','#edf5ff',750,true);
 }
 
-// Replace every popup presentation so game.js does not expose Canvas bars/panels.
 popup=function(){
   const b=S.board,p=cp(),q=b&&b.popup;
   if(!q)return;
@@ -86,41 +88,19 @@ popup=function(){
   if(q.kind==='tile'){
     contain(IM['tile_'+t.type],590,105,420,420,.98);
     btn('noop3',typeName(t.type),600,460,400,70,false);
-    if(t.type==='start'){
-      txt('經過起點可獲得 $5,000',800,555,24);
-      btn('ok','確定',680,630,240,74,false);return;
-    }
+    if(t.type==='start'){txt('經過起點可獲得 $5,000',800,555,24);btn('ok','確定',680,630,240,74,false);return;}
     if(t.type==='land'){
-      if(t.owner<0){
-        txt(REGION_NAMES[t.region]+'・土地價格 $'+t.price.toLocaleString(),800,550,23);
-        btn('buy','購買',600,620,245,78,true,1,p.cash>=t.price);
-        btn('skip','略過',870,620,190,78,false);
-      }else if(t.owner===p.id){
-        const cost=Math.round(t.price*.65);
-        txt('自己的土地・Lv'+t.level+' / 3',800,548,23);
-        btn('upgrade',t.level<3?'升級 $'+cost.toLocaleString():'已滿級',620,620,360,78,true,1,t.level<3&&p.cash>=cost);
-        btn('skip','繼續',690,715,220,62,false);
-      }else{
-        const rent=rentFor(t);
-        txt(`支付 ${t.owner+1}P 租金 $${rent.toLocaleString()}`,800,550,23);
-        btn('pay','支付租金',650,625,300,78,true);
-      }
+      if(t.owner<0){txt(REGION_NAMES[t.region]+'・土地價格 $'+t.price.toLocaleString(),800,550,23);btn('buy','購買',600,620,245,78,true,1,p.cash>=t.price);btn('skip','略過',870,620,190,78,false);}
+      else if(t.owner===p.id){const cost=Math.round(t.price*.65);txt('自己的土地・Lv'+t.level+' / 3',800,548,23);btn('upgrade',t.level<3?'升級 $'+cost.toLocaleString():'已滿級',620,620,360,78,true,1,t.level<3&&p.cash>=cost);btn('skip','繼續',690,715,220,62,false);}
+      else{const rent=rentFor(t);txt(`支付 ${t.owner+1}P 租金 $${rent.toLocaleString()}`,800,550,23);btn('pay','支付租金',650,625,300,78,true);}
       return;
     }
     btn('special','查看結果',665,625,270,78,false);return;
   }
-  if(q.kind==='event'){
-    contain(IM.tile_event,610,105,380,380);txt(q.name,800,525,30,'center','#ffe58a',1000,true);txt(q.desc,800,570,22);btn('eventOk','確定',680,640,240,74,false);return;
-  }
-  if(q.kind==='npc'){
-    contain(IM.tile_npc,610,105,380,380);txt(q.name,800,525,30,'center','#ffe58a',1000,true);txt(q.desc,800,570,22);btn('npcOk','確定',680,640,240,74,false);return;
-  }
-  if(q.kind==='shop'){
-    contain(IM.tile_shop,610,90,380,380);txt('童話商店',800,500,30,'center','#ffe58a',1000,true);txt('支付 $2,500 隨機取得一張卡片',800,548,21);btn('shopBuy','購買卡片',620,615,300,76,true,1,p.cash>=2500);btn('skip','離開',940,615,170,76,false);return;
-  }
-  if(q.kind==='carddraw'){
-    contain(IM.tile_card,610,90,380,380);txt('抽到：'+q.card,800,520,28,'center','#ffe58a',1000,true);btn('cardOk','收下',680,620,240,76,false);return;
-  }
+  if(q.kind==='event'){contain(IM.tile_event,610,105,380,380);txt(q.name,800,525,30,'center','#ffe58a',1000,true);txt(q.desc,800,570,22);btn('eventOk','確定',680,640,240,74,false);return;}
+  if(q.kind==='npc'){contain(IM.tile_npc,610,105,380,380);txt(q.name,800,525,30,'center','#ffe58a',1000,true);txt(q.desc,800,570,22);btn('npcOk','確定',680,640,240,74,false);return;}
+  if(q.kind==='shop'){contain(IM.tile_shop,610,90,380,380);txt('童話商店',800,500,30,'center','#ffe58a',1000,true);txt('支付 $2,500 隨機取得一張卡片',800,548,21);btn('shopBuy','購買卡片',620,615,300,76,true,1,p.cash>=2500);btn('skip','離開',940,615,170,76,false);return;}
+  if(q.kind==='carddraw'){contain(IM.tile_card,610,90,380,380);txt('抽到：'+q.card,800,520,28,'center','#ffe58a',1000,true);btn('cardOk','收下',680,620,240,76,false);return;}
   if(q.kind==='cards'){
     contain(IM.tile_card,95,120,290,290,.95);txt('持有卡片',450,132,28,'left','#ffe58a',1000,true);
     if(!p.cards.length){txt('目前沒有卡片',450,195,22,'left');btn('closeCards','返回',1120,700,240,70,false);return;}
@@ -128,13 +108,7 @@ popup=function(){
   }
   if(q.kind==='mini'){
     contain(IM.tile_minigame,610,90,380,380);txt('星光停格挑戰',800,495,30,'center','#ffe58a',1000,true);txt('看準時機按下「停！」，越接近中央獎勵越高',800,540,20);
-    const m=b.mini,x=515,y=590,w=570;
-    skinPanel(IM.btnBlue,x,y,w,30,.98);
-    skinPanel(IM.btnRed,x+w*.44,y,w*.12,30,.95);
-    contain(IM.dice1,x+(m?.pos??0)*w-28,y-18,56,64,1);
-    btn('miniStop','停！',660,655,280,78,true);return;
+    const m=b.mini,x=515,y=590,w=570;skinPanel(IM.btnBlue,x,y,w,30,.98);skinPanel(IM.btnRed,x+w*.44,y,w*.12,30,.95);contain(IM.dice1,x+(m?.pos??0)*w-28,y-18,56,64,1);btn('miniStop','停！',660,655,280,78,true);return;
   }
-  if(q.kind==='winner'){
-    contain(IM.dice6,690,145,220,180,.96);txt('本局結束',800,340,54,'center','#ffe58a',1000,true);txt(q.text,800,420,34,'center','#fff',1000,true);btn('home','回到首頁',630,540,340,88,true);return;
-  }
+  if(q.kind==='winner'){contain(IM.dice6,690,145,220,180,.96);txt('本局結束',800,340,54,'center','#ffe58a',1000,true);txt(q.text,800,420,34,'center','#fff',1000,true);btn('home','回到首頁',630,540,340,88,true);return;}
 };
