@@ -1,6 +1,7 @@
 CxQ Fairy-tale Richman — latest mainline
-Updated 2026-08-18 03:25 +08:00
+Updated 2026-08-18 04:00 +08:00
 Website-brand background references removed.
-Visible character cards, player seats, land tint overlays and HUD panels are now image-skinned instead of canvas-drawn geometry.
-Technical landscape gate/layout CSS only; visible game-art CSS is being removed from the latest mainline.
+Visible character cards, player seats, HUD, minigame meter and popup presentation use image assets instead of Canvas-drawn geometry.
+Latest skin is compatible with the current core selection animation and no longer calls removed setup background helpers.
+Technical landscape gate/layout CSS only; visible game-art CSS is not used by the game canvas.
 Only latest build retained.
