@@ -1,4 +1,0 @@
-Art upgrade batch 2026-08-18 05:08
-- Broken legacy Lv1-Lv3 house rasters removed from runtime and repository.
-- Raster requests are cache-busted and guarded; invalid special tiles fall back to a valid board raster rather than showing corrupt blocks.
-- Next production visual swaps: dedicated game home background, setup background, map background, then replacement building set.
