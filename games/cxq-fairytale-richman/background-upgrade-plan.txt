@@ -1,0 +1,7 @@
+Production background swap target (latest mainline)
+
+home_scene.webp  -> dedicated fairytale kingdom landscape, no website Brand art
+setup_scene.webp -> dedicated character-selection hall, no baked characters/UI/text
+map_scene.webp   -> one continuous four-region world background; functional tiles remain separate runtime assets
+
+The runtime must only activate a new background after its independent raster file is present and decodes successfully. Broken/corrupt assets are never promoted to production.
