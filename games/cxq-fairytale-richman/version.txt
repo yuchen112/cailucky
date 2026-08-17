@@ -1,9 +1,8 @@
 CxQ Fairy-tale Richman — latest mainline
-Updated 2026-08-18 05:08 +08:00
-Dedicated normal/selected character-slot raster assets remain active.
-Board tiles and dice are re-requested with the latest cache revision; failed special tiles fall back to a valid land/slot raster instead of a corrupted browser image.
-The visibly corrupted Lv1-Lv3 house files were removed from the latest mainline and are no longer rendered; replacement building art will be installed only after it passes visual/decode checks.
-Redundant repair scripts, planning notes and incomplete binary staging fragments were removed.
-Website-brand background references remain removed.
-Technical landscape gate/layout CSS only.
+Updated 2026-08-18 05:40 +08:00
+Broken legacy Lv1-Lv3 house rasters are removed and no longer rendered.
+Board tile and dice raster loads are cache-busted and guarded against decode failures.
+Current production pass is replacing the black placeholder presentation with dedicated game-only backgrounds and removing developer-only text from visible screens.
+Website-brand artwork remains prohibited from this game.
+Technical CSS is limited to viewport/orientation behavior.
 Only latest build retained.
