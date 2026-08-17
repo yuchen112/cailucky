@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#142616">
+<title>CxQ 森林精靈打地鼠｜HD 重建預覽</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#142616}.stage{position:fixed;inset:0;overflow:hidden}.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.logo{position:absolute;z-index:4;left:4%;top:max(2.5%,env(safe-area-inset-top));width:92%;height:18%;object-fit:contain}.guest{position:absolute;z-index:2;object-fit:contain;pointer-events:none}.growth{left:-7%;bottom:27%;width:45%;height:39%;object-position:left bottom}.joy{right:-8%;bottom:28%;width:40%;height:35%;object-position:right bottom}.box{position:absolute;z-index:3;left:50%;bottom:40%;transform:translateX(-50%);width:20%;max-height:17%;object-fit:contain}.menu{position:absolute;z-index:8;left:7%;right:7%;bottom:max(1.5%,env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr 1fr;gap:.7vh 1.5vw}.tap{border:0;padding:0;margin:0;background:transparent;min-width:0;min-height:0;touch-action:manipulation}.tap img{display:block;width:100%;height:auto;object-fit:contain}.start{grid-column:1/-1;width:90%;justify-self:center}.settings{grid-column:1/-1;width:58%;justify-self:center}#gameFrame{position:fixed;inset:0;width:100%;height:100%;border:0;background:#000;display:none;visibility:hidden;z-index:30}@media(min-aspect-ratio:1/1){.logo{left:23%;width:54%;height:20%}.growth{left:7%;bottom:19%;width:27%;height:48%}.joy{right:7%;bottom:20%;width:25%;height:44%}.box{width:12%;bottom:38%}.menu{left:27%;right:27%;bottom:max(1%,env(safe-area-inset-bottom));gap:.4vh 1vw}}
+</style>
+</head>
+<body>
+<section class="stage" id="home">
+<img class="bg" src="https://yuchen112.github.io/cailucky/games/fortune/assets/backgrounds/destiny-village.png" alt="森林背景">
+<img class="logo" src="https://raw.githubusercontent.com/yuchen112/cailucky/whack-v11-assets/preview/whack-v6/v11/home_logo.webp" alt="森林精靈打地鼠">
+<img class="guest growth" src="https://yuchen112.github.io/cailucky/games/fortune/assets/characters/growth.png" alt="成長">
+<img class="guest joy" src="https://yuchen112.github.io/cailucky/games/fortune/assets/characters/joy.png" alt="快樂">
+<img class="box" src="https://raw.githubusercontent.com/yuchen112/cailucky/whack-v11-hd-preview/preview/whack-v6/v11hd/char_box.avif" alt="小箱子">
+<div class="menu">
+<button class="tap start" data-open="mode"><img src="https://raw.githubusercontent.com/yuchen112/cailucky/whack-v11-hd-preview/preview/whack-v6/v11hd/btn_start.avif" alt="開始遊戲"></button>
+<button class="tap" data-open="howto"><img src="https://raw.githubusercontent.com/yuchen112/cailucky/whack-v11-assets/preview/whack-v6/v11/btn_howto.webp" alt="遊戲說明"></button>
+<button class="tap" data-open="rank"><img src="https://raw.githubusercontent.com/yuchen112/cailucky/whack-v11-assets/preview/whack-v6/v11/btn_rank.webp" alt="排行榜"></button>
+<button class="tap settings" data-open="settings"><img src="https://raw.githubusercontent.com/yuchen112/cailucky/whack-v11-hd-preview/preview/whack-v6/v11hd/btn_settings.avif" alt="設定"></button>
+</div>
+</section>
+<iframe id="gameFrame" title="森林精靈打地鼠遊戲" src="about:blank" allow="fullscreen"></iframe>
+<script>
+const frame=document.getElementById('gameFrame');
+let wanted='mode';
+function enterGame(screen){wanted=screen;frame.style.display='block';frame.style.visibility='hidden';if(frame.src==='about:blank'||!frame.src.includes('/preview/whack-v6/')){frame.src='https://yuchen112.github.io/cailucky/preview/whack-v6/?stable=10';}else{openInside();}}
+function openInside(){try{const d=frame.contentDocument;if(!d)return;const b=d.querySelector('[data-screen="'+wanted+'"]');if(b)b.click();frame.style.visibility='visible';}catch(e){frame.style.visibility='visible';}}
+frame.addEventListener('load',()=>setTimeout(openInside,80));
+document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>enterGame(b.dataset.open)));
+document.querySelectorAll('img').forEach(img=>img.addEventListener('error',()=>{img.style.visibility='hidden';console.warn('image failed',img.src)}));
+</script>
+</body>
+</html>
