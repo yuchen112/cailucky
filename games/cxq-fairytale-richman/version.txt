@@ -1,7 +1,8 @@
 CxQ Fairy-tale Richman — latest mainline
-Updated 2026-08-18 04:15 +08:00
-Dedicated normal/selected character-slot raster assets are now stored inside the game assets and used directly by the setup screen.
+Updated 2026-08-18 04:22 +08:00
+Dedicated normal/selected character-slot raster assets remain active.
+All board tiles, Lv1-Lv3 houses, dice and UI image requests are now cache-busted and guarded against broken-image decode failures.
+If an asset fails to decode it is replaced by a safe raster fallback instead of rendering as a corrupted/glitched tile.
 Website-brand background references remain removed.
-Legacy setup background calls are not used by the active selection flow.
 Technical landscape gate/layout CSS only.
 Only latest build retained.
