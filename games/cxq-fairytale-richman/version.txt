@@ -1,5 +1,5 @@
 CxQ Fairy-tale Richman — latest mainline
-Updated 2026-08-18 17:55 +08:00
+Updated 2026-08-18 19:00 +08:00
 - Consolidated runtime remains core.js + game.js only; obsolete repair/skin overlay files stay removed.
 - Help/Settings crash path remains fixed with working image-backed screens.
 - viewport.js remains a technical browser-adaptation layer only; it does not draw visible game UI.
@@ -16,3 +16,5 @@ Updated 2026-08-18 17:55 +08:00
 - Dice art still requires a true six-face replacement set.
 - Board characters still require dedicated figurine/walk-cycle art; current movement logic still needs the final walking animation pass.
 - Only the latest mainline runtime is retained.
+
+- Selection cards now render character art below the dedicated frame layer; P1-P4 seats are larger and raised for mobile/ultrawide readability.

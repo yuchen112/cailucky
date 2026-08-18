@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20260818-1740';
+const CACHE='cxq-richman-20260818-1900';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   './assets/backgrounds/home_scene_v3.webp','./assets/backgrounds/setup_scene_v3.webp','./assets/backgrounds/map_scene_r1.webp',
