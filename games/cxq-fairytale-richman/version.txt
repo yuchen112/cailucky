@@ -1,10 +1,10 @@
 CxQ Fairy-tale Richman — latest mainline
-Updated 2026-08-18 06:20 +08:00
-Dedicated game-only home, setup and world-map backgrounds are installed as verified repository raster files using new cache-safe filenames.
-The previous truncated background uploads are removed from the latest tree.
-Home developer text and corrupted decorative tile placeholder are removed.
-Functional board tiles remain independent overlays above the continuous map background.
-Broken legacy Lv1-Lv3 house rasters remain removed until replacement art passes QA.
-Website-brand artwork is not used by this game.
-Technical CSS is limited to viewport/orientation behavior.
-Only latest build retained.
+Updated 2026-08-18 11:05 +08:00
+- Installed dedicated 1600x900 game home and setup scenes generated for this game; no official-site Brand artwork.
+- Replaced the old tiny character-slot raster with the new illustrated crown character frame.
+- Replaced stretched generic-button P1-P4 seats with a dedicated illustrated player-seat panel.
+- Added a dedicated illustrated role-information panel for the setup screen.
+- Removed obsolete home/setup r1 backgrounds, old char-slot rasters and the temporary background-patch script.
+- The current map background remains only as a required temporary runtime asset until the new 3200x1800 world map is completed.
+- Broken Lv1-Lv3 houses remain disabled rather than displaying corrupt art.
+- Technical CSS remains limited to viewport/orientation behavior.
