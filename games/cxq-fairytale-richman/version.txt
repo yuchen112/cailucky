@@ -1,16 +1,17 @@
 CxQ Fairy-tale Richman — latest mainline
-Updated 2026-08-18 16:15 +08:00
-- Consolidated the runtime to core.js + game.js only; obsolete repair.js and skin.js overlays were removed.
-- Fixed the Help/Settings crash path and replaced it with working image-backed screens.
-- Fixed non-16:9 mobile distortion by using uniform aspect-preserving canvas scaling and corrected pointer mapping.
-- Kept the 1600x900 dedicated game home/setup scenes, character frame, player-seat panel and role information panel.
-- Expanded the board route from 30 to 36 functional tiles.
-- Expanded events to 24 and cards to 12, with usable gameplay effects.
-- Added initial distinct role/passive gameplay behavior for all 10 characters.
-- Added three roaming NPC/god markers per board, round-to-round movement, bankruptcy-gated beggar availability, and timed Angel/Demon/Death attachments.
-- Added functional settings state for master/BGM/SFX/vibration/graphics/language preferences.
-- Current map_scene_r1 remains a temporary low-resolution runtime background and is the next required art replacement.
+Updated 2026-08-18 17:15 +08:00
+- Consolidated runtime remains core.js + game.js only; obsolete repair/skin overlay files stay removed.
+- Help/Settings crash path remains fixed with working image-backed screens.
+- Non-16:9 mobile distortion remains fixed with uniform aspect-preserving canvas scaling and corrected pointer mapping.
+- 1600x900 dedicated game home/setup scenes, character frame, player-seat panel and role information panel are active.
+- Board route is 36 functional tiles.
+- Events: 24. Cards: 12. All 10 characters have initial distinct gameplay role/passive behavior.
+- Three roaming NPC/god markers move between rounds; Beggar availability is bankruptcy-gated; Angel/Demon/Death timed attachments are active.
+- Settings state includes master/BGM/SFX/vibration/graphics/language controls.
+- Added installable standalone PWA manifest and service worker offline caching for the current game shell and current runtime art assets.
+- Current map_scene_r1 is still the temporary low-resolution map background and remains the highest-priority art replacement.
 - Lv1-Lv3 building art remains disabled until verified replacement assets are installed.
-- Dice art still requires a true six-face replacement set and board characters still require dedicated figurine/walk-cycle art.
+- Dice art still requires a true six-face replacement set.
+- Board characters still require dedicated figurine/walk-cycle art; current movement logic still needs the final walking animation pass.
 - Technical CSS is limited to viewport/orientation behavior.
 - Only the latest mainline runtime is retained.
