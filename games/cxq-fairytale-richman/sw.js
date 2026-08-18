@@ -1,10 +1,11 @@
-const CACHE='cxq-richman-20260818-1900';
+const CACHE='cxq-richman-20260818-1944';
 const PRECACHE=[
-  './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
+  './','./index.html','./core.js','./home-richman4.js','./viewport.js','./game.js','./manifest.webmanifest',
   './assets/backgrounds/home_scene_v3.webp','./assets/backgrounds/setup_scene_v3.webp','./assets/backgrounds/map_scene_r1.webp',
   './assets/ui/btn_blue.webp','./assets/ui/btn_red.webp','./assets/ui/char_slot_v2.webp','./assets/ui/player_seat_v2.webp','./assets/ui/role_info_v2.webp',
   './assets/tiles/land.webp','./assets/tiles/card.webp','./assets/tiles/shop.webp','./assets/tiles/minigame.webp','./assets/tiles/npc.webp',
   './assets/dice/dice_1.webp','./assets/dice/dice_2.webp','./assets/dice/dice_3.webp','./assets/dice/dice_4.webp','./assets/dice/dice_5.webp','./assets/dice/dice_6.webp',
+  '../fortune/assets/backgrounds/destiny-village.png','../fortune/assets/buildings/moon-tarot-cottage.png',
   '../../assets/characters/cxq-role-joy.webp','../../assets/characters/cxq-role-dream.webp','../../assets/characters/cxq-role-night.webp','../../assets/characters/cxq-role-sadness.webp','../../assets/characters/cxq-role-trust.webp','../../assets/characters/cxq-role-memory.webp','../../assets/characters/cxq-role-growth.webp','../../assets/characters/cxq-role-healing.webp','../../assets/characters/cxq-role-luck.webp','../../assets/characters/cxq-role-hope.webp'
 ];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(PRECACHE)).then(()=>self.skipWaiting()))});
