@@ -1,112 +1,68 @@
 'use strict';
 const C=document.getElementById('game'),X=C.getContext('2d',{alpha:false});
 const W=1600,H=900,MW=3200,MH=1800,A='assets/';
-document.documentElement.style.background='#071325';document.body.style.margin='0';document.body.style.overflow='hidden';C.style.display='block';C.style.width='100vw';C.style.height='100vh';C.style.touchAction='none';
-
+const IM={};
 const CHAR_KEYS=['joy','dream','night','sadness','trust','memory','growth','healing','luck','hope'];
 const CHAR_NAMES=['慶典少女','星夢魔女','夜鈴米亞','雨音澄澄','鑰匙守護者','記憶偵探','森林旅人','棉糖汪汪','森鈴芽獸','希望旅人'];
 const CHAR_ROLES=['幸運型','骰控型','卡片型','防禦型','商店型','移動型','土地型','小遊戲型','收租型','特殊型'];
+const ROLE_DESC=['正向事件獎金提高','骰點過低時有機會修正','抽卡時有機會額外獲得卡片','支付租金時享有減免','商店價格較低','移動能力較穩定','購地價格享有折扣','小遊戲現金獎勵提高','收到的租金提高','首次瀕臨破產可獲救'];
 const PLAYER_COLORS=['#ff716e','#6db9ff','#7ed87c','#ffd05d'];
 const REGION_NAMES=['星願花園','月輝城鎮','森語溪谷','雲端市集'];
-const IM={};
-function load(k,u){const i=new Image();i.decoding='async';i.src=u;IM[k]=i;return i}
+const SAVE='cxq_richman_latest_save_v4',PREF='cxq_richman_pref_v1';
+const S={scene:'home',buttons:[],seats:[{type:'human',char:6,diff:'standard'},{type:'ai',char:1,diff:'standard'},{type:'off',char:2,diff:'standard'},{type:'off',char:3,diff:'standard'}],activeSeat:0,money:200000,rounds:30,board:null,msg:'',rolling:false,dice:1,forcedDice:0,pickAnim:null,settings:{master:80,bgm:70,sfx:80,vibrate:true,lang:'zh-Hant',graphics:'medium'}};
+try{Object.assign(S.settings,JSON.parse(localStorage.getItem(PREF)||'{}'))}catch(e){}
+
+function load(k,u){const i=new Image();i.decoding='async';i.onload=()=>{IM[k]=i};i.onerror=()=>{IM[k]=null};i.src=u+'?v=20260818-1615';IM[k]=i;return i}
 load('btnBlue',A+'ui/btn_blue.webp');load('btnRed',A+'ui/btn_red.webp');
+load('charSlot',A+'ui/char_slot_v2.webp');load('playerSeat',A+'ui/player_seat_v2.webp');load('roleInfo',A+'ui/role_info_v2.webp');
+load('homeBg',A+'backgrounds/home_scene_v2.webp');load('setupBg',A+'backgrounds/setup_scene_v2.webp');load('mapBg',A+'backgrounds/map_scene_r1.webp');
 ['start','land','event','card','shop','minigame','npc'].forEach(k=>load('tile_'+k,A+'tiles/'+k+'.webp'));
-for(let i=1;i<=3;i++)load('house'+i,A+'houses/house_lv'+i+'.webp');
 for(let i=1;i<=6;i++)load('dice'+i,A+'dice/dice_'+i+'.webp');
 CHAR_KEYS.forEach((k,i)=>load('c'+i,'../../assets/characters/cxq-role-'+k+'.webp'));
+IM.house1=IM.house2=IM.house3=null;
 
-const SAVE='cxq_richman_latest_save_v3';
-const S={scene:'home',buttons:[],seats:[{type:'human',char:6,diff:'standard'},{type:'ai',char:1,diff:'standard'},{type:'off',char:2,diff:'standard'},{type:'off',char:3,diff:'standard'}],activeSeat:0,money:200000,rounds:30,board:null,msg:'',help:false,settings:false,rolling:false,dice:1,forcedDice:0,pickAnim:null};
-
-function resize(){const d=Math.min(devicePixelRatio||1,2);C.width=Math.round(innerWidth*d);C.height=Math.round(innerHeight*d)}
-addEventListener('resize',resize);resize();
-function begin(){X.setTransform(C.width/W,0,0,C.height/H,0,0);X.clearRect(0,0,W,H);S.buttons=[]}
-function txt(s,x,y,z=26,a='center',c='#fff',w=800,o=true){X.save();X.font=`${w} ${z}px system-ui,-apple-system,"Noto Sans TC",sans-serif`;X.textAlign=a;X.textBaseline='middle';if(o){X.lineJoin='round';X.lineWidth=Math.max(2,z/7);X.strokeStyle='rgba(20,14,28,.92)';X.strokeText(String(s),x,y)}X.fillStyle=c;X.fillText(String(s),x,y);X.restore()}
-function contain(im,x,y,w,h,alpha=1){if(!im||!im.complete||!im.naturalWidth)return;const r=Math.min(w/im.naturalWidth,h/im.naturalHeight),iw=im.naturalWidth*r,ih=im.naturalHeight*r;X.save();X.globalAlpha=alpha;X.drawImage(im,x+(w-iw)/2,y+(h-ih)/2,iw,ih);X.restore()}
-function stretch(im,x,y,w,h,alpha=1){if(!im||!im.complete||!im.naturalWidth)return;X.save();X.globalAlpha=alpha;X.drawImage(im,x,y,w,h);X.restore()}
+const VIEW={scale:1,ox:0,oy:0};
+function resize(){const d=Math.min(devicePixelRatio||1,2);C.width=Math.max(1,Math.round(innerWidth*d));C.height=Math.max(1,Math.round(innerHeight*d));const sx=C.width/W,sy=C.height/H;VIEW.scale=Math.min(sx,sy);VIEW.ox=(C.width-W*VIEW.scale)/2;VIEW.oy=(C.height-H*VIEW.scale)/2}
+addEventListener('resize',resize);addEventListener('orientationchange',resize);resize();
+function begin(){X.setTransform(1,0,0,1,0,0);X.clearRect(0,0,C.width,C.height);X.setTransform(VIEW.scale,0,0,VIEW.scale,VIEW.ox,VIEW.oy);S.buttons=[]}
+function pointerToGame(e){const r=C.getBoundingClientRect(),px=(e.clientX-r.left)/r.width*C.width,py=(e.clientY-r.top)/r.height*C.height;return{x:(px-VIEW.ox)/VIEW.scale,y:(py-VIEW.oy)/VIEW.scale}}
+function txt(s,x,y,z=26,a='center',c='#fff',w=800,o=true){X.save();X.font=`${w} ${z}px system-ui,-apple-system,"Noto Sans TC",sans-serif`;X.textAlign=a;X.textBaseline='middle';if(o){X.lineJoin='round';X.lineWidth=Math.max(2,z/7);X.strokeStyle='rgba(20,14,28,.9)';X.strokeText(String(s),x,y)}X.fillStyle=c;X.fillText(String(s),x,y);X.restore()}
+function contain(im,x,y,w,h,alpha=1){if(!im||!im.complete||!im.naturalWidth)return false;const r=Math.min(w/im.naturalWidth,h/im.naturalHeight),iw=im.naturalWidth*r,ih=im.naturalHeight*r;X.save();X.imageSmoothingEnabled=true;X.imageSmoothingQuality='high';X.globalAlpha=alpha;X.drawImage(im,x+(w-iw)/2,y+(h-ih)/2,iw,ih);X.restore();return true}
+function cover(im,x,y,w,h,alpha=1){if(!im||!im.complete||!im.naturalWidth)return false;const r=Math.max(w/im.naturalWidth,h/im.naturalHeight),iw=im.naturalWidth*r,ih=im.naturalHeight*r;X.save();X.imageSmoothingEnabled=true;X.imageSmoothingQuality='high';X.globalAlpha=alpha;X.drawImage(im,x+(w-iw)/2,y+(h-ih)/2,iw,ih);X.restore();return true}
+function stretch(im,x,y,w,h,alpha=1){if(!im||!im.complete||!im.naturalWidth)return false;X.save();X.imageSmoothingEnabled=true;X.imageSmoothingQuality='high';X.globalAlpha=alpha;X.drawImage(im,x,y,w,h);X.restore();return true}
 function btn(id,label,x,y,w,h,red=false,alpha=1,en=true){contain(red?IM.btnRed:IM.btnBlue,x,y,w,h,alpha*(en?1:.38));txt(label,x+w/2,y+h*.49,Math.min(29,h*.34),'center','#fff',900,true);S.buttons.push({id,x,y,w,h,en})}
 function hit(x,y){return S.buttons.slice().reverse().find(b=>b.en&&x>=b.x&&x<=b.x+b.w&&y>=b.y&&y<=b.y+b.h)}
 function activeSeatIds(){return S.seats.map((s,i)=>s.type==='off'?-1:i).filter(i=>i>=0)}
 function humanCount(){return S.seats.filter(s=>s.type==='human').length}
 function assigned(ci){return activeSeatIds().find(i=>S.seats[i].char===ci)}
-
-/* Visible presentation rule: this mainline does not draw decorative panels, gradients,
-   clouds, castles, stars or other faux UI with Canvas geometry. Runtime Canvas is only
-   the compositor for independent image assets + dynamic text/data. */
-function imagePanel(im,x,y,w,h,alpha=1){stretch(im,x,y,w,h,alpha)}
-function title(x=370,y=150){txt('CxQ',x,y,102,'center','#ffe27a',1000,true);txt('童話大富翁',x,y+84,68,'center','#fff0b9',1000,true);txt('夢想王國資產大冒險',x,y+142,22,'center','#f4f7ff',850,true)}
-function home(){
-  contain(IM.tile_start,950,90,430,430,.34);
-  title(360,145);
-  btn('start','開始遊戲',110,405,470,110,true);
-  btn('continue','繼續遊戲',135,520,420,82,false,.96,!!localStorage.getItem(SAVE));
-  btn('help','遊戲說明',135,614,420,82,false,.94);
-  btn('settings','設定',135,708,420,82,false,.94);
-  contain(IM.c0,760,390,230,330,.98);contain(IM.c1,970,410,220,310,.96);contain(IM.c2,1180,400,230,320,.96);
-  txt('目前畫面已停止使用官網 Brand 背景與程式繪製裝飾',1070,820,18,'center','#fff5cf',850,true);
-}
+function title(x=350,y=138){txt('CxQ',x,y,94,'center','#ffe27a',1000,true);txt('童話大富翁',x,y+78,64,'center','#fff0b9',1000,true);txt('夢想王國資產大冒險',x,y+132,20,'center','#f4f7ff',850,true)}
+function home(){cover(IM.homeBg,0,0,W,H,1);title();btn('start','開始遊戲',86,390,440,104,true);btn('continue','繼續遊戲',108,506,396,78,false,.96,!!localStorage.getItem(SAVE));btn('help','遊戲說明',108,596,396,78,false,.96);btn('settings','設定',108,686,396,78,false,.96);contain(IM.c0,930,450,205,285,.98);contain(IM.c1,1110,462,190,270,.97);contain(IM.c2,1270,447,210,292,.98)}
 
 const SETUP={gx:44,gy:125,cw:178,ch:216,g:13,seatY:708,seatX:[42,432,822,1212]};
-function slotPos(i){return {x:SETUP.gx+(i%5)*(SETUP.cw+SETUP.g),y:SETUP.gy+Math.floor(i/5)*(SETUP.ch+SETUP.g)}}
-function seatTarget(i){return {x:SETUP.seatX[i]+62,y:SETUP.seatY+40}}
-function chooseChar(ci){if(S.pickAnim||S.seats[S.activeSeat].type==='off')return;const a=S.activeSeat,b=assigned(ci),old=S.seats[a].char,p=slotPos(ci);if(old===ci&&b===a)return;S.pickAnim={char:ci,seat:a,swapSeat:(b!==undefined&&b!==a)?b:-1,oldChar:old,start:performance.now(),dur:800,from:{x:p.x+SETUP.cw/2,y:p.y+SETUP.ch*.48},to:seatTarget(a)}}
+function slotPos(i){return{x:SETUP.gx+(i%5)*(SETUP.cw+SETUP.g),y:SETUP.gy+Math.floor(i/5)*(SETUP.ch+SETUP.g)}}
+function seatTarget(i){return{x:SETUP.seatX[i]+60,y:SETUP.seatY+42}}
+function chooseChar(ci){if(S.pickAnim||S.seats[S.activeSeat].type==='off')return;const a=S.activeSeat,b=assigned(ci),old=S.seats[a].char,p=slotPos(ci);if(old===ci&&b===a)return;S.pickAnim={char:ci,seat:a,swapSeat:(b!==undefined&&b!==a)?b:-1,oldChar:old,start:performance.now(),dur:650,from:{x:p.x+SETUP.cw/2,y:p.y+SETUP.ch*.48},to:seatTarget(a)}}
 function updatePickAnim(){const q=S.pickAnim;if(!q)return;const t=Math.min(1,(performance.now()-q.start)/q.dur);if(t>=1){S.seats[q.seat].char=q.char;if(q.swapSeat>=0)S.seats[q.swapSeat].char=q.oldChar;S.pickAnim=null}}
-function drawPickAnim(){const q=S.pickAnim;if(!q)return;const t=Math.min(1,(performance.now()-q.start)/q.dur),e=1-Math.pow(1-t,3);const x=q.from.x+(q.to.x-q.from.x)*e,y=q.from.y+(q.to.y-q.from.y)*e;contain(IM['c'+q.char],x-66,y-92,132,154,1)}
-function charCard(i,x,y,w,h){
-  const own=assigned(i),sel=S.seats[S.activeSeat].char===i&&!S.pickAnim,moving=S.pickAnim&&S.pickAnim.char===i;
-  contain(IM.tile_start,x,y,w,h,sel?1:.76);
-  if(!moving)contain(IM['c'+i],x+18,y+12,w-36,h-54,own!==undefined&&!sel?.34:1);
-  txt(CHAR_NAMES[i],x+w/2,y+h-22,15,'center',sel?'#ffe786':'#fff',900,true);
-  if(own!==undefined){contain(IM.btnRed,x+3,y+2,66,36,.9);txt((own+1)+'P',x+36,y+20,14,'center','#fff',1000,true)}
-  S.buttons.push({id:'char'+i,x,y,w,h,en:!S.pickAnim});
-}
-function seatPanel(i,x,y){
-  const s=S.seats[i],sel=S.activeSeat===i;
-  imagePanel(sel?IM.btnRed:IM.btnBlue,x,y,345,138,s.type==='off'?.42:.96);
-  S.buttons.push({id:'seat'+i,x,y,w:345,h:138,en:!S.pickAnim});
-  if(!(S.pickAnim&&S.pickAnim.seat===i)&&s.type!=='off')contain(IM['c'+s.char],x+10,y-28,100,116,.98);
-  contain(IM.btnRed,x+112,y+5,62,39,.9);txt((i+1)+'P',x+143,y+25,16,'center','#fff',1000,true);
-  txt(s.type==='off'?'空席':CHAR_NAMES[s.char],x+220,y+49,15,'center','#fff',900,true);
-  btn('human'+i,'真人',x+118,y+72,66,38,false,s.type==='human'?1:.42,!S.pickAnim);
-  btn('ai'+i,'AI',x+188,y+72,56,38,true,s.type==='ai'?1:.42,!S.pickAnim);
-  btn('off'+i,'空席',x+248,y+72,72,38,false,s.type==='off'?1:.42,!S.pickAnim);
-  if(s.type==='ai')btn('diff'+i,s.diff==='easy'?'輕鬆':s.diff==='standard'?'標準':'聰明',x+250,y+10,78,34,false,.9,!S.pickAnim);
-}
-function setup(){
-  updatePickAnim();
-  btn('back','返回',18,15,150,58,false,1,!S.pickAnim);
-  txt('角色選擇',500,45,38,'center','#fff0b6',1000,true);
-  txt('P1～P4 先選真人 / AI / 空席，再選角色',500,84,17,'center','#fff',800,true);
-  for(let i=0;i<10;i++){const p=slotPos(i);charCard(i,p.x,p.y,SETUP.cw,SETUP.ch)}
-  imagePanel(IM.btnBlue,1015,112,520,520,.9);
-  const ci=S.pickAnim&&S.pickAnim.seat===S.activeSeat?S.pickAnim.char:S.seats[S.activeSeat].char;
-  contain(IM['c'+ci],1060,135,190,250);
-  txt(CHAR_NAMES[ci],1290,170,30,'left','#fff0b2',950,true);txt(CHAR_ROLES[ci],1290,215,18,'left','#dceaff',800,true);
-  txt('目前席位 '+(S.activeSeat+1)+'P',1290,256,18,'left',PLAYER_COLORS[S.activeSeat],900,true);
-  txt('參賽 '+activeSeatIds().length+' 人 / 真人 '+humanCount()+' 人',1290,294,17,'left','#fff',800,true);
-  btn('money','起始資金 $'+S.money.toLocaleString(),1082,347,405,62,false,.96,!S.pickAnim);
-  btn('rounds',S.rounds+' 回合',1082,419,405,62,false,.96,!S.pickAnim);
-  btn('startGame','開始這局',1082,505,405,90,true,1,activeSeatIds().length>=2&&humanCount()>=1&&!S.pickAnim);
-  for(let i=0;i<4;i++)seatPanel(i,SETUP.seatX[i],SETUP.seatY);
-  drawPickAnim();
-}
+function drawPickAnim(){const q=S.pickAnim;if(!q)return;const t=Math.min(1,(performance.now()-q.start)/q.dur),e=1-Math.pow(1-t,3),x=q.from.x+(q.to.x-q.from.x)*e,y=q.from.y+(q.to.y-q.from.y)*e;contain(IM['c'+q.char],x-66,y-92,132,154,1)}
+function charCard(i,x,y,w,h){const own=assigned(i),sel=S.seats[S.activeSeat].char===i&&!S.pickAnim,moving=S.pickAnim&&S.pickAnim.char===i;contain(IM.charSlot,x+(sel?-5:0),y+(sel?-6:0),w+(sel?10:0),h+(sel?12:0),own!==undefined&&!sel?.62:.98);if(!moving)contain(IM['c'+i],x+22,y+23,w-44,h-66,own!==undefined&&!sel?.32:1);txt(CHAR_NAMES[i],x+w/2,y+h-25,14,'center',sel?'#ffe786':'#fff8e8',900,true);if(own!==undefined){contain(IM.btnRed,x+5,y+5,62,34,.92);txt((own+1)+'P',x+36,y+22,13,'center','#fff',1000,true)}S.buttons.push({id:'char'+i,x,y,w,h,en:!S.pickAnim})}
+function seatPanel(i,x,y){const s=S.seats[i],sel=S.activeSeat===i;contain(IM.playerSeat,x,y,350,132,s.type==='off'?.38:(sel?1:.92));S.buttons.push({id:'seat'+i,x,y,w:350,h:132,en:!S.pickAnim});if(!(S.pickAnim&&S.pickAnim.seat===i)&&s.type!=='off')contain(IM['c'+s.char],x+15,y+13,92,92,.98);txt((i+1)+'P',x+145,y+29,16,'center',sel?'#ffe67a':'#fff',1000,true);txt(s.type==='off'?'空席':CHAR_NAMES[s.char],x+233,y+30,14,'center','#fff',900,true);btn('human'+i,'真人',x+124,y+66,64,34,false,s.type==='human'?1:.38,!S.pickAnim);btn('ai'+i,'AI',x+192,y+66,52,34,true,s.type==='ai'?1:.38,!S.pickAnim);btn('off'+i,'空席',x+248,y+66,68,34,false,s.type==='off'?1:.38,!S.pickAnim);if(s.type==='ai')btn('diff'+i,s.diff==='easy'?'輕鬆':s.diff==='standard'?'標準':'聰明',x+244,y+100,78,28,false,.88,!S.pickAnim)}
+function setup(){updatePickAnim();cover(IM.setupBg,0,0,W,H,1);btn('back','返回',18,15,150,58,false,1,!S.pickAnim);txt('角色與玩家配置',500,45,36,'center','#fff0b6',1000,true);txt('每個席位直接選真人 / AI / 空席，再選角色',500,82,16,'center','#fff',800,true);for(let i=0;i<10;i++){const p=slotPos(i);charCard(i,p.x,p.y,SETUP.cw,SETUP.ch)}const ci=S.pickAnim&&S.pickAnim.seat===S.activeSeat?S.pickAnim.char:S.seats[S.activeSeat].char;contain(IM.roleInfo,1000,100,555,205,.96);txt(CHAR_NAMES[ci],1265,145,28,'left','#50321d',1000,false);txt(CHAR_ROLES[ci]+'｜'+ROLE_DESC[ci],1265,184,15,'left','#745236',850,false);txt('目前席位 '+(S.activeSeat+1)+'P',1265,221,17,'left',PLAYER_COLORS[S.activeSeat],1000,true);txt('參賽 '+activeSeatIds().length+' 人 / 真人 '+humanCount()+' 人',1265,253,15,'left','#62462f',850,false);contain(IM['c'+ci],1048,285,225,315,.99);btn('money','起始資金 $'+S.money.toLocaleString(),1270,344,270,58,false,.96,!S.pickAnim);btn('rounds',S.rounds+' 回合',1270,414,270,58,false,.96,!S.pickAnim);btn('startGame','開始這局',1270,496,270,82,true,1,activeSeatIds().length>=2&&humanCount()>=1&&!S.pickAnim);for(let i=0;i<4;i++)seatPanel(i,SETUP.seatX[i],SETUP.seatY);drawPickAnim()}
 
-const ROUTE=[[1450,1590],[1240,1610],[1030,1540],[840,1430],[710,1270],[650,1080],[700,900],[820,760],[980,650],[1160,575],[1360,515],[1570,500],[1780,530],[1990,600],[2180,720],[2340,870],[2440,1040],[2440,1220],[2340,1390],[2180,1515],[1980,1590],[1780,1570],[1600,1475],[1480,1320],[1390,1150],[1240,1030],[1070,1030],[930,1120],[1010,1270],[1220,1380]];
-const TYPE_PATTERN=['start','land','event','land','card','land','shop','land','event','land','minigame','land','npc','land','card','land','event','land','shop','land','npc','land','event','land','minigame','land','card','land','event','land'];
-function makeBoard(){const tiles=ROUTE.map((p,i)=>({x:p[0],y:p[1],type:TYPE_PATTERN[i%TYPE_PATTERN.length],owner:-1,level:0,region:Math.floor(i/8)%4,price:9000+(i%7)*1800}));tiles[0].type='start';const players=activeSeatIds().map((si,id)=>({id,seat:si,type:S.seats[si].type,char:S.seats[si].char,diff:S.seats[si].diff,cash:S.money,pos:0,cards:[],tickets:0,skip:0,shield:0,bankrupt:false}));S.board={worldW:MW,worldH:MH,tiles,players,turn:0,round:1,cam:{x:650,y:900,target:null},popup:null,mini:null,log:['遊戲開始！'],winner:null};focus(true);saveGame()}
-function cp(){return S.board.players[S.board.turn]}
-function living(){return S.board.players.filter(p=>!p.bankrupt)}
-function focus(now=false){const b=S.board,p=cp(),t=b.tiles[p.pos],tx=Math.max(0,Math.min(MW-W,t.x-W/2)),ty=Math.max(0,Math.min(MH-H,t.y-H/2));if(now){b.cam.x=tx;b.cam.y=ty;b.cam.target=null}else b.cam.target={x:tx,y:ty}}
-function regionOwned(pid,reg){const lands=S.board.tiles.filter(t=>t.type==='land'&&t.region===reg);return lands.length>0&&lands.every(t=>t.owner===pid)}
-function drawTile(t){
-  contain(IM['tile_'+t.type],t.x-88,t.y-88,176,176,1);
-  if(t.type==='land'){
-    if(t.owner>=0){contain(IM.btnRed,t.x-36,t.y-103,72,36,.88);txt((t.owner+1)+'P',t.x,t.y-86,14,'center',PLAYER_COLORS[t.owner],1000,true);if(t.level>0)contain(IM['house'+t.level],t.x-58,t.y-148,116,116,.98)}
-    txt('$'+Math.round(t.price/1000)+'K',t.x,t.y+69,13,'center','#fff6d2',900,true);
-  }
-}
+function npcMarker(n,t){contain(IM.tile_npc,t.x-40,t.y-158,80,80,.92);txt(n.name,t.x,t.y-174,12,'center','#fff8ce',900,true)}
+function drawTile(t){contain(IM['tile_'+t.type],t.x-88,t.y-88,176,176,1);if(t.type==='land'){if(t.owner>=0){contain(IM.btnRed,t.x-36,t.y-103,72,36,.88);txt((t.owner+1)+'P',t.x,t.y-86,14,'center',PLAYER_COLORS[t.owner],1000,true);if(t.level>0&&IM['house'+t.level])contain(IM['house'+t.level],t.x-58,t.y-148,116,116,.98)}txt('$'+Math.round(t.price/1000)+'K',t.x,t.y+69,13,'center','#fff6d2',900,true)}}
 function drawPlayers(){const b=S.board;for(const p of b.players){if(p.bankrupt)continue;const t=b.tiles[p.pos],same=b.players.filter(q=>!q.bankrupt&&q.pos===p.pos),idx=same.indexOf(p),off=(idx-(same.length-1)/2)*34;contain(IM['c'+p.char],t.x-62+off,t.y-174,124,144);txt((p.id+1)+'P',t.x+off,t.y-177,14,'center',PLAYER_COLORS[p.id],1000,true)}}
-function drawMap(){const b=S.board;b.tiles.forEach(drawTile);drawPlayers()}
-function hud(){const b=S.board,p=cp();btn('noop',`${p.id+1}P  ${CHAR_NAMES[p.char]}   $${Math.max(0,p.cash).toLocaleString()}`,18,16,570,70,false);btn('noop2',`第 ${b.round}/${S.rounds} 回合`,1230,16,350,70,false);btn('cards','卡片 '+p.cards.length,1088,790,160,72,false,.95,!S.rolling&&!b.popup);btn('roll',S.rolling?'骰子轉動中':'擲骰子',1260,760,300,112,true,.98,!S.rolling&&!b.popup&&!b.winner);contain(IM['dice'+S.dice],1330,655,160,100);if(S.msg)txt(S.msg,800,852,20,'center','#fff3ca',900,true);if(b.log.length)txt(b.log[b.log.length-1],800,815,16,'center','#edf5ff',750,true)}
-function typeName(t){return {start:'起點',land:'土地',event:'事件',card:'卡片',shop:'商店',minigame:'小遊戲',npc:'NPC / 神明'}[t]||t}
+function drawMap(){const b=S.board;stretch(IM.mapBg,0,0,MW,MH,1);b.tiles.forEach(drawTile);if(b.npcs)for(const n of b.npcs){const t=b.tiles[n.pos];if(t)npcMarker(n,t)}drawPlayers()}
+function hud(){const b=S.board,p=cp();contain(IM.playerSeat,18,16,570,72,.96);txt(`${p.id+1}P  ${CHAR_NAMES[p.char]}   $${Math.max(0,p.cash).toLocaleString()}`,303,51,20,'center','#fff',900,true);contain(IM.roleInfo,1218,16,362,76,.95);txt(`第 ${b.round}/${S.rounds} 回合`,1395,43,18,'center','#50321d',1000,false);const fx=(p.effects||[]).map(e=>`${e.kind}${e.turns}`).join(' ');if(fx)txt(fx,1395,70,12,'center','#745236',850,false);btn('cards','卡片 '+p.cards.length,1088,790,160,72,false,.95,!S.rolling&&!b.popup);btn('roll',S.rolling?'骰子轉動中':'擲骰子',1260,760,300,112,true,.98,!S.rolling&&!b.popup&&!b.winner);contain(IM['dice'+S.dice],1330,655,160,100);if(S.msg)txt(S.msg,800,852,20,'center','#fff3ca',900,true);if(b.log.length)txt(b.log[b.log.length-1],800,815,16,'center','#edf5ff',750,true)}
+function popupPanel(){contain(IM.roleInfo,470,65,660,770,.96)}
+function popup(){const b=S.board,p=cp(),q=b&&b.popup;if(!q)return;popupPanel();const t=q.tile;if(q.kind==='tile'){contain(IM['tile_'+t.type],650,120,300,300,.98);txt(typeName(t.type),800,445,26,'center','#50321d',1000,false);if(t.type==='start'){txt('經過起點可獲得 $5,000',800,505,22,'center','#62462f',900,false);btn('ok','確定',680,600,240,74,false);return}if(t.type==='land'){if(t.owner<0){const cost=buyCost(p,t);txt(REGION_NAMES[t.region]+'・土地價格 $'+cost.toLocaleString(),800,505,21,'center','#62462f',900,false);btn('buy','購買',600,590,245,78,true,1,p.cash>=cost);btn('skip','略過',870,590,190,78,false)}else if(t.owner===p.id){const cost=Math.round(t.price*.65);txt('自己的土地・Lv'+t.level+' / 3',800,505,22,'center','#62462f',900,false);btn('upgrade',t.level<3?'升級 $'+cost.toLocaleString():'已滿級',620,590,360,78,true,1,t.level<3&&p.cash>=cost);btn('skip','繼續',690,682,220,62,false)}else{const rent=rentFor(t,p);txt(`支付 ${t.owner+1}P 租金 $${rent.toLocaleString()}`,800,505,22,'center','#62462f',900,false);btn('pay','支付租金',650,590,300,78,true)}return}btn('special','查看結果',665,590,270,78,false);return}
+if(q.kind==='event'){contain(IM.tile_event,650,120,300,300);txt(q.name,800,470,28,'center','#50321d',1000,false);txt(q.desc,800,520,20,'center','#62462f',850,false);btn('eventOk','確定',680,610,240,74,false);return}
+if(q.kind==='npc'){contain(IM.tile_npc,650,120,300,300);txt(q.name,800,470,28,'center','#50321d',1000,false);txt(q.desc,800,520,20,'center','#62462f',850,false);btn('npcOk','確定',680,610,240,74,false);return}
+if(q.kind==='shop'){contain(IM.tile_shop,650,110,300,300);txt('童話商店',800,460,28,'center','#50321d',1000,false);txt(`支付 $${shopCost(p).toLocaleString()} 隨機取得一張卡片`,800,510,19,'center','#62462f',850,false);btn('shopBuy','購買卡片',620,590,300,76,true,1,p.cash>=shopCost(p));btn('skip','離開',940,590,170,76,false);return}
+if(q.kind==='carddraw'){contain(IM.tile_card,650,110,300,300);txt('抽到：'+q.card,800,480,25,'center','#50321d',1000,false);btn('cardOk','收下',680,600,240,76,false);return}
+if(q.kind==='cards'){contain(IM.tile_card,520,120,220,220,.95);txt('持有卡片',770,140,25,'left','#50321d',1000,false);if(!p.cards.length){txt('目前沒有卡片',770,205,20,'left','#62462f',850,false);btn('closeCards','返回',680,650,240,70,false);return}p.cards.slice(0,6).forEach((c,i)=>btn('useCard'+i,c,750,180+i*70,320,56,i===0));btn('closeCards','返回',520,650,200,65,false);return}
+if(q.kind==='mini'){contain(IM.tile_minigame,650,105,300,300);txt(q.name||'星光停格挑戰',800,455,26,'center','#50321d',1000,false);txt('看準時機按下「停！」',800,500,19,'center','#62462f',850,false);const m=b.mini,x=555,y=560,w=490;contain(IM.btnBlue,x,y,w,32,.98);contain(IM.btnRed,x+w*.44,y,w*.12,32,.95);contain(IM.dice1,x+(m?.pos??0)*w-28,y-18,56,64,1);btn('miniStop','停！',660,635,280,78,true);return}
+if(q.kind==='winner'){contain(IM.dice6,690,145,220,180,.96);txt('本局結束',800,370,46,'center','#50321d',1000,false);txt(q.text,800,435,28,'center','#62462f',1000,false);btn('home','回到首頁',630,555,340,88,true)}}
+
+function help(){cover(IM.homeBg,0,0,W,H,.74);contain(IM.roleInfo,270,90,1060,690,.97);txt('遊戲說明',800,145,42,'center','#50321d',1000,false);const lines=['擲骰子逐格前進，購買土地、升級房屋並向對手收租。','同一區域土地全數持有時，該區租金會提高。','事件、卡片、商店、小遊戲與地圖 NPC / 神明會改變局勢。','資金不足會自動變賣資產；仍無法償付則破產退場。','真人與 AI 可自由配置 2～4 名，AI 有輕鬆／標準／聰明三種難度。'];lines.forEach((l,i)=>txt(l,800,255+i*72,20,'center','#62462f',850,false));btn('home','回到首頁',630,670,340,78,true)}
+function settings(){cover(IM.homeBg,0,0,W,H,.74);contain(IM.roleInfo,340,90,920,690,.97);txt('設定',800,145,42,'center','#50321d',1000,false);btn('master','主音量 '+S.settings.master+'%',520,240,560,62,false);btn('bgm','BGM '+S.settings.bgm+'%',520,315,560,62,false);btn('sfx','音效 '+S.settings.sfx+'%',520,390,560,62,false);btn('vibrate','震動 '+(S.settings.vibrate?'開':'關'),520,465,560,62,false);btn('graphics','畫質 '+({low:'低',medium:'中',high:'高',ultra:'超高'}[S.settings.graphics]||'中'),520,540,560,62,false);btn('lang','語言 '+(S.settings.lang==='zh-Hant'?'繁中':S.settings.lang==='zh-Hans'?'簡中':'English'),520,615,560,62,false);btn('home','回到首頁',650,705,300,68,true)}
+function savePrefs(){try{localStorage.setItem(PREF,JSON.stringify(S.settings))}catch(e){}}
