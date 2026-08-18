@@ -1,10 +1,16 @@
 CxQ Fairy-tale Richman — latest mainline
-Updated 2026-08-18 11:05 +08:00
-- Installed dedicated 1600x900 game home and setup scenes generated for this game; no official-site Brand artwork.
-- Replaced the old tiny character-slot raster with the new illustrated crown character frame.
-- Replaced stretched generic-button P1-P4 seats with a dedicated illustrated player-seat panel.
-- Added a dedicated illustrated role-information panel for the setup screen.
-- Removed obsolete home/setup r1 backgrounds, old char-slot rasters and the temporary background-patch script.
-- The current map background remains only as a required temporary runtime asset until the new 3200x1800 world map is completed.
-- Broken Lv1-Lv3 houses remain disabled rather than displaying corrupt art.
-- Technical CSS remains limited to viewport/orientation behavior.
+Updated 2026-08-18 16:15 +08:00
+- Consolidated the runtime to core.js + game.js only; obsolete repair.js and skin.js overlays were removed.
+- Fixed the Help/Settings crash path and replaced it with working image-backed screens.
+- Fixed non-16:9 mobile distortion by using uniform aspect-preserving canvas scaling and corrected pointer mapping.
+- Kept the 1600x900 dedicated game home/setup scenes, character frame, player-seat panel and role information panel.
+- Expanded the board route from 30 to 36 functional tiles.
+- Expanded events to 24 and cards to 12, with usable gameplay effects.
+- Added initial distinct role/passive gameplay behavior for all 10 characters.
+- Added three roaming NPC/god markers per board, round-to-round movement, bankruptcy-gated beggar availability, and timed Angel/Demon/Death attachments.
+- Added functional settings state for master/BGM/SFX/vibration/graphics/language preferences.
+- Current map_scene_r1 remains a temporary low-resolution runtime background and is the next required art replacement.
+- Lv1-Lv3 building art remains disabled until verified replacement assets are installed.
+- Dice art still requires a true six-face replacement set and board characters still require dedicated figurine/walk-cycle art.
+- Technical CSS is limited to viewport/orientation behavior.
+- Only the latest mainline runtime is retained.
