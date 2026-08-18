@@ -1,0 +1,37 @@
+name: Materialize CxQ scene assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.asset-staging/cxq/READY'
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Rebuild verified scene images
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f .asset-staging/cxq/home.part.00.b64
+          test -f .asset-staging/cxq/home.part.01.b64
+          test -f .asset-staging/cxq/setup.part.00.b64
+          test -f .asset-staging/cxq/setup.part.01.b64
+          mkdir -p games/cxq-fairytale-richman/assets/backgrounds
+          cat .asset-staging/cxq/home.part.*.b64 | tr -d '\r\n ' | base64 -d > games/cxq-fairytale-richman/assets/backgrounds/home_scene_v4.avif
+          cat .asset-staging/cxq/setup.part.*.b64 | tr -d '\r\n ' | base64 -d > games/cxq-fairytale-richman/assets/backgrounds/setup_scene_v4.avif
+          test "$(wc -c < games/cxq-fairytale-richman/assets/backgrounds/home_scene_v4.avif)" -eq 19830
+          test "$(wc -c < games/cxq-fairytale-richman/assets/backgrounds/setup_scene_v4.avif)" -eq 12822
+          rm -rf .asset-staging/cxq
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add games/cxq-fairytale-richman/assets/backgrounds .asset-staging/cxq
+          git commit -m 'Materialize verified CxQ scene backgrounds [skip ci]'
+          git push origin HEAD:main
