@@ -1,17 +1,22 @@
 CxQ Fairy-tale Richman — latest mainline
-Updated 2026-08-18 17:15 +08:00
+Updated 2026-08-18 17:25 +08:00
 - Consolidated runtime remains core.js + game.js only; obsolete repair/skin overlay files stay removed.
 - Help/Settings crash path remains fixed with working image-backed screens.
-- Non-16:9 mobile distortion remains fixed with uniform aspect-preserving canvas scaling and corrected pointer mapping.
+- Added viewport.js as a technical browser-adaptation layer only; it does not draw visible game UI.
+- Canvas now tracks the current Visual Viewport, including Safari/Chrome dynamic browser bars and installed-PWA mode.
+- Game rendering keeps a uniform 1600x900 design space and letterboxes instead of stretching on 4:3, 16:10, ultrawide and other non-16:9 landscape windows.
+- Added safe-area handling for notches / rounded corners and corrected pointer coordinates after viewport changes.
+- Added delayed orientation/viewport re-measure passes for iOS Safari rotation and browser-toolbar settling.
+- Portrait remains blocked; landscape works across small phones, tablets, desktop resizable windows and ultrawide displays.
 - 1600x900 dedicated game home/setup scenes, character frame, player-seat panel and role information panel are active.
 - Board route is 36 functional tiles.
 - Events: 24. Cards: 12. All 10 characters have initial distinct gameplay role/passive behavior.
 - Three roaming NPC/god markers move between rounds; Beggar availability is bankruptcy-gated; Angel/Demon/Death timed attachments are active.
 - Settings state includes master/BGM/SFX/vibration/graphics/language controls.
-- Added installable standalone PWA manifest and service worker offline caching for the current game shell and current runtime art assets.
+- Installable standalone PWA and service-worker offline caching are active; viewport.js is included in the offline shell.
 - Current map_scene_r1 is still the temporary low-resolution map background and remains the highest-priority art replacement.
 - Lv1-Lv3 building art remains disabled until verified replacement assets are installed.
 - Dice art still requires a true six-face replacement set.
 - Board characters still require dedicated figurine/walk-cycle art; current movement logic still needs the final walking animation pass.
-- Technical CSS is limited to viewport/orientation behavior.
+- Technical CSS is limited to viewport/orientation/safe-area behavior.
 - Only the latest mainline runtime is retained.
