@@ -1,0 +1,12 @@
+{
+  "name": "CxQ 童話大富翁",
+  "short_name": "CxQ 大富翁",
+  "description": "CxQ 童話公仔風格的手機橫向大富翁遊戲",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#071325",
+  "theme_color": "#071325",
+  "lang": "zh-Hant"
+}
