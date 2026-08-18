@@ -1,6 +1,6 @@
-const CACHE='cxq-richman-20260818-1944';
+const CACHE='cxq-richman-20260818-2002';
 const PRECACHE=[
-  './','./index.html','./core.js','./home-richman4.js','./viewport.js','./game.js','./manifest.webmanifest',
+  './','./index.html','./core.js','./viewport.js','./game.js','./home-richman4.js','./manifest.webmanifest',
   './assets/backgrounds/home_scene_v3.webp','./assets/backgrounds/setup_scene_v3.webp','./assets/backgrounds/map_scene_r1.webp',
   './assets/ui/btn_blue.webp','./assets/ui/btn_red.webp','./assets/ui/char_slot_v2.webp','./assets/ui/player_seat_v2.webp','./assets/ui/role_info_v2.webp',
   './assets/tiles/land.webp','./assets/tiles/card.webp','./assets/tiles/shop.webp','./assets/tiles/minigame.webp','./assets/tiles/npc.webp',
