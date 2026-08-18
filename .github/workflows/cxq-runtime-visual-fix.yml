@@ -1,0 +1,45 @@
+name: CxQ runtime visual fix
+on:
+  push:
+    branches: [main]
+    paths: ['.asset-staging/runtime/READY']
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - name: Apply verified setup-layer fixes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('games/cxq-fairytale-richman/core.js')
+          s=p.read_text()
+          old="function charCard(i,x,y,w,h){const own=assigned(i),sel=S.seats[S.activeSeat].char===i&&!S.pickAnim,moving=S.pickAnim&&S.pickAnim.char===i;contain(IM.charSlot,x+(sel?-5:0),y+(sel?-6:0),w+(sel?10:0),h+(sel?12:0),own!==undefined&&!sel?.62:.98);if(!moving)contain(IM['c'+i],x+22,y+23,w-44,h-66,own!==undefined&&!sel?.32:1);txt(CHAR_NAMES[i],x+w/2,y+h-25,14,'center',sel?'#ffe786':'#fff8e8',900,true);if(own!==undefined){contain(IM.btnRed,x+5,y+5,62,34,.92);txt((own+1)+'P',x+36,y+22,13,'center','#fff',1000,true)}S.buttons.push({id:'char'+i,x,y,w,h,en:!S.pickAnim})}"
+          new="function charCard(i,x,y,w,h){const own=assigned(i),sel=S.seats[S.activeSeat].char===i&&!S.pickAnim,moving=S.pickAnim&&S.pickAnim.char===i,fx=x+(sel?-6:0),fy=y+(sel?-7:0),fw=w+(sel?12:0),fh=h+(sel?14:0),a=own!==undefined&&!sel?.64:1;if(!moving)contain(IM['c'+i],x+24,y+20,w-48,h-60,own!==undefined&&!sel?.38:1);contain(IM.charSlot,fx,fy,fw,fh,a);txt(CHAR_NAMES[i],x+w/2,y+h-25,14,'center',sel?'#ffe786':'#fff8e8',900,true);if(own!==undefined){contain(IM.btnRed,x+5,y+5,62,34,.92);txt((own+1)+'P',x+36,y+22,13,'center','#fff',1000,true)}S.buttons.push({id:'char'+i,x,y,w,h,en:!S.pickAnim})}"
+          if old not in s: raise SystemExit('charCard signature changed; refusing unsafe patch')
+          s=s.replace(old,new,1)
+          s=s.replace("const SETUP={gx:44,gy:125,cw:178,ch:216,g:13,seatY:708,seatX:[42,432,822,1212]};","const SETUP={gx:44,gy:118,cw:178,ch:216,g:13,seatY:684,seatX:[28,420,812,1204]};",1)
+          old2="function seatPanel(i,x,y){const s=S.seats[i],sel=S.activeSeat===i;contain(IM.playerSeat,x,y,350,132,s.type==='off'?.38:(sel?1:.92));S.buttons.push({id:'seat'+i,x,y,w:350,h:132,en:!S.pickAnim});if(!(S.pickAnim&&S.pickAnim.seat===i)&&s.type!=='off')contain(IM['c'+s.char],x+15,y+13,92,92,.98);txt((i+1)+'P',x+145,y+29,16,'center',sel?'#ffe67a':'#fff',1000,true);txt(s.type==='off'?'空席':CHAR_NAMES[s.char],x+233,y+30,14,'center','#fff',900,true);btn('human'+i,'真人',x+124,y+66,64,34,false,s.type==='human'?1:.38,!S.pickAnim);btn('ai'+i,'AI',x+192,y+66,52,34,true,s.type==='ai'?1:.38,!S.pickAnim);btn('off'+i,'空席',x+248,y+66,68,34,false,s.type==='off'?1:.38,!S.pickAnim);if(s.type==='ai')btn('diff'+i,s.diff==='easy'?'輕鬆':s.diff==='standard'?'標準':'聰明',x+244,y+100,78,28,false,.88,!S.pickAnim)}"
+          new2="function seatPanel(i,x,y){const s=S.seats[i],sel=S.activeSeat===i;contain(IM.playerSeat,x,y,368,148,s.type==='off'?.40:(sel?1:.94));S.buttons.push({id:'seat'+i,x,y,w:368,h:148,en:!S.pickAnim});if(!(S.pickAnim&&S.pickAnim.seat===i)&&s.type!=='off')contain(IM['c'+s.char],x+14,y+10,104,112,.99);txt((i+1)+'P',x+151,y+31,17,'center',sel?'#ffe67a':'#fff',1000,true);txt(s.type==='off'?'空席':CHAR_NAMES[s.char],x+247,y+31,15,'center','#fff',900,true);btn('human'+i,'真人',x+126,y+70,68,36,false,s.type==='human'?1:.38,!S.pickAnim);btn('ai'+i,'AI',x+199,y+70,56,36,true,s.type==='ai'?1:.38,!S.pickAnim);btn('off'+i,'空席',x+260,y+70,72,36,false,s.type==='off'?1:.38,!S.pickAnim);if(s.type==='ai')btn('diff'+i,s.diff==='easy'?'輕鬆':s.diff==='standard'?'標準':'聰明',x+252,y+108,86,30,false,.9,!S.pickAnim)}"
+          if old2 not in s: raise SystemExit('seatPanel signature changed; refusing unsafe patch')
+          s=s.replace(old2,new2,1)
+          s=s.replace("const ASSET_REV='20260818-1740';","const ASSET_REV='20260818-1900';",1)
+          p.write_text(s)
+          for f in ['games/cxq-fairytale-richman/index.html','games/cxq-fairytale-richman/sw.js']:
+              q=Path(f); t=q.read_text().replace('20260818-1740','20260818-1900').replace('20260818-1725','20260818-1900'); q.write_text(t)
+          v=Path('games/cxq-fairytale-richman/version.txt')
+          t=v.read_text(); t=t.replace('Updated 2026-08-18 17:55 +08:00','Updated 2026-08-18 19:00 +08:00')
+          if 'Selection cards now render' not in t: t += '\n- Selection cards now render character art below the dedicated frame layer; P1-P4 seats are larger and raised for mobile/ultrawide readability.\n'
+          v.write_text(t)
+          PY
+          rm -rf .asset-staging/runtime
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add games/cxq-fairytale-richman .asset-staging/runtime
+          git commit -m 'Fix CxQ selection frame layering and seat readability [skip ci]'
+          git push origin HEAD:main
