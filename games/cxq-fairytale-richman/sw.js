@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20260824-0540';
+const CACHE='cxq-richman-20260824-0610';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   './assets/backgrounds/home_scene_v7.png','./assets/backgrounds/setup_scene_v4.png','./assets/backgrounds/map_scene_r1.webp',
@@ -9,10 +9,10 @@ const PRECACHE=[
   './assets/ui/status_human_v1.png','./assets/ui/status_ai_v1.png','./assets/ui/status_off_v1.png',
   './assets/characters/portraits/joy_portrait_v1.png','./assets/characters/portraits/dream_portrait_v1.png','./assets/characters/portraits/night_portrait_v1.png','./assets/characters/portraits/sadness_portrait_v1.png','./assets/characters/portraits/trust_portrait_v1.png','./assets/characters/portraits/memory_portrait_v1.png','./assets/characters/portraits/growth_portrait_v1.png','./assets/characters/portraits/healing_portrait_v1.png','./assets/characters/portraits/luck_portrait_v1.png','./assets/characters/portraits/hope_portrait_v1.png',
   './assets/maps/map_preview_starwish_v1.png','./assets/maps/map_preview_moonharbor_v1.png','./assets/maps/map_preview_cloudbazaar_v1.png',
-  './assets/tiles/land.webp','./assets/tiles/card.webp','./assets/tiles/shop.webp','./assets/tiles/minigame.webp','./assets/tiles/npc.webp',
+  './assets/tiles/land.webp','./assets/tiles/card_v2.png','./assets/tiles/shop.webp','./assets/tiles/minigame.webp','./assets/tiles/npc.webp',
   './assets/dice/dice_1.webp','./assets/dice/dice_2.webp','./assets/dice/dice_3.webp','./assets/dice/dice_4.webp','./assets/dice/dice_5.webp','./assets/dice/dice_6.webp',
   '../../assets/characters/cxq-role-joy.webp','../../assets/characters/cxq-role-dream.webp','../../assets/characters/cxq-role-night.webp','../../assets/characters/cxq-role-sadness.webp','../../assets/characters/cxq-role-trust.webp','../../assets/characters/cxq-role-memory.webp','../../assets/characters/cxq-role-growth.webp','../../assets/characters/cxq-role-healing.webp','../../assets/characters/cxq-role-luck.webp','../../assets/characters/cxq-role-hope.webp'
-  ,'./assets/characters/joy/walk_right_contact_v1.png','./assets/characters/joy/walk_right_passing_v1.png','./assets/characters/dream/walk_right_contact_v1.png','./assets/characters/dream/walk_right_passing_v1.png'
+  ,'./assets/characters/joy/walk_right_contact_v1.png','./assets/characters/joy/walk_right_passing_v1.png','./assets/characters/dream/walk_right_contact_v1.png','./assets/characters/dream/walk_right_passing_v1.png','./assets/characters/night/walk_right_contact_v1.png','./assets/characters/night/walk_right_passing_v1.png'
 ];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(PRECACHE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('cxq-richman-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});

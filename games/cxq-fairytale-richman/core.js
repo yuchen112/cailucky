@@ -19,7 +19,7 @@ const SAVE='cxq_richman_latest_save_v4',PREF='cxq_richman_pref_v1';
 const S={scene:'home',buttons:[],seats:[{type:'human',char:6,diff:'standard'},{type:'ai',char:1,diff:'standard'},{type:'off',char:2,diff:'standard'},{type:'off',char:3,diff:'standard'}],activeSeat:0,mapIndex:0,money:200000,rounds:30,victory:'assets',eventLevel:'standard',startingCards:1,gods:true,board:null,msg:'',rolling:false,dice:1,forcedDice:0,pickAnim:null,settings:{master:80,bgm:70,sfx:80,vibrate:true,lang:'zh-Hant',graphics:'medium'}};
 try{Object.assign(S.settings,JSON.parse(localStorage.getItem(PREF)||'{}'))}catch(e){}
 
-const ASSET_REV='20260824-0540';
+const ASSET_REV='20260824-0610';
 function load(k,u){const i=new Image();i.decoding='async';i.onload=()=>{IM[k]=i};i.onerror=()=>{IM[k]=null};i.src=u+'?v='+ASSET_REV;IM[k]=i;return i}
 load('btnBlue',A+'ui/btn_blue.webp');load('btnRed',A+'ui/btn_red.webp');
 load('homeMenuNew',A+'ui/home_menu_new_v1.png');load('homeMenuContinue',A+'ui/home_menu_continue_v1.png');load('homeMenuHelp',A+'ui/home_menu_help_v1.png');load('homeMenuSettings',A+'ui/home_menu_settings_v1.png');
@@ -29,12 +29,13 @@ for(let i=0;i<4;i++)load('playerSeatP'+i,A+`ui/player_seat_p${i+1}_v1.png`);
 load('statusHuman',A+'ui/status_human_v1.png');load('statusAi',A+'ui/status_ai_v1.png');load('statusOff',A+'ui/status_off_v1.png');
 load('homeBg',A+'backgrounds/home_scene_v7.png');load('setupBg',A+'backgrounds/setup_scene_v4.png');load('mapBg',A+'backgrounds/map_scene_r1.webp');
 MAPS.forEach((m,i)=>load('mapPreview'+i,A+'maps/map_preview_'+m.key+'_v1.png'));
-load('tile_land',A+'tiles/land.webp');load('tile_card',A+'tiles/card.webp');load('tile_shop',A+'tiles/shop.webp');load('tile_minigame',A+'tiles/minigame.webp');load('tile_npc',A+'tiles/npc.webp');
+load('tile_land',A+'tiles/land.webp');load('tile_card',A+'tiles/card_v2.png');load('tile_shop',A+'tiles/shop.webp');load('tile_minigame',A+'tiles/minigame.webp');load('tile_npc',A+'tiles/npc.webp');
 // Known-corrupt start/event rasters are intentionally not loaded. They are visually quarantined.
 for(let i=1;i<=6;i++)load('dice'+i,A+'dice/dice_'+i+'.webp');
 CHAR_KEYS.forEach((k,i)=>{load('c'+i,'../../assets/characters/cxq-role-'+k+'.webp');load('portrait'+i,A+'characters/portraits/'+k+'_portrait_v1.png')});
 load('joyWalkRightContact',A+'characters/joy/walk_right_contact_v1.png');load('joyWalkRightPassing',A+'characters/joy/walk_right_passing_v1.png');
 load('dreamWalkRightContact',A+'characters/dream/walk_right_contact_v1.png');load('dreamWalkRightPassing',A+'characters/dream/walk_right_passing_v1.png');
+load('nightWalkRightContact',A+'characters/night/walk_right_contact_v1.png');load('nightWalkRightPassing',A+'characters/night/walk_right_passing_v1.png');
 IM.house1=IM.house2=IM.house3=null;
 
 const VIEW={scale:1,ox:0,oy:0};
