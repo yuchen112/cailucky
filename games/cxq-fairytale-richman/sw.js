@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20260824-0635';
+const CACHE='cxq-richman-20260824-0710';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   './assets/backgrounds/home_scene_v7.png','./assets/backgrounds/setup_scene_v4.png','./assets/backgrounds/map_scene_r1.webp',
@@ -12,7 +12,7 @@ const PRECACHE=[
   './assets/tiles/land.webp','./assets/tiles/card_v2.png','./assets/tiles/shop.webp','./assets/tiles/minigame.webp','./assets/tiles/npc.webp',
   './assets/dice/dice_1.webp','./assets/dice/dice_2.webp','./assets/dice/dice_3.webp','./assets/dice/dice_4.webp','./assets/dice/dice_5.webp','./assets/dice/dice_6.webp',
   '../../assets/characters/cxq-role-joy.webp','../../assets/characters/cxq-role-dream.webp','../../assets/characters/cxq-role-night.webp','../../assets/characters/cxq-role-sadness.webp','../../assets/characters/cxq-role-trust.webp','../../assets/characters/cxq-role-memory.webp','../../assets/characters/cxq-role-growth.webp','../../assets/characters/cxq-role-healing.webp','../../assets/characters/cxq-role-luck.webp','../../assets/characters/cxq-role-hope.webp'
-  ,'./assets/characters/joy/walk_right_contact_v1.png','./assets/characters/joy/walk_right_passing_v1.png','./assets/characters/dream/walk_right_contact_v1.png','./assets/characters/dream/walk_right_passing_v1.png','./assets/characters/night/walk_right_contact_v1.png','./assets/characters/night/walk_right_passing_v1.png','./assets/characters/sadness/walk_right_contact_v1.png','./assets/characters/sadness/walk_right_passing_v1.png'
+  ,'./assets/characters/joy/walk_right_contact_v1.png','./assets/characters/joy/walk_right_passing_v1.png','./assets/characters/dream/walk_right_contact_v1.png','./assets/characters/dream/walk_right_passing_v1.png','./assets/characters/night/walk_right_contact_v1.png','./assets/characters/night/walk_right_passing_v1.png','./assets/characters/sadness/walk_right_contact_v1.png','./assets/characters/sadness/walk_right_passing_v1.png','./assets/characters/trust/walk_right_contact_v1.png','./assets/characters/trust/walk_right_passing_v1.png','./assets/characters/memory/walk_right_contact_v1.png','./assets/characters/memory/walk_right_passing_v1.png'
 ];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(PRECACHE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('cxq-richman-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
