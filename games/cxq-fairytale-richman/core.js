@@ -12,7 +12,7 @@ const SAVE='cxq_richman_latest_save_v4',PREF='cxq_richman_pref_v1';
 const S={scene:'home',buttons:[],seats:[{type:'human',char:6,diff:'standard'},{type:'ai',char:1,diff:'standard'},{type:'off',char:2,diff:'standard'},{type:'off',char:3,diff:'standard'}],activeSeat:0,money:200000,rounds:30,board:null,msg:'',rolling:false,dice:1,forcedDice:0,pickAnim:null,settings:{master:80,bgm:70,sfx:80,vibrate:true,lang:'zh-Hant',graphics:'medium'}};
 try{Object.assign(S.settings,JSON.parse(localStorage.getItem(PREF)||'{}'))}catch(e){}
 
-const ASSET_REV='20260823-1930';
+const ASSET_REV='20260823-2010';
 function load(k,u){const i=new Image();i.decoding='async';i.onload=()=>{IM[k]=i};i.onerror=()=>{IM[k]=null};i.src=u+'?v='+ASSET_REV;IM[k]=i;return i}
 load('btnBlue',A+'ui/btn_blue.webp');load('btnRed',A+'ui/btn_red.webp');
 load('charSlot',A+'ui/char_slot_v2.webp');load('playerSeat',A+'ui/player_seat_v2.webp');load('roleInfo',A+'ui/role_info_v2.webp');
@@ -21,6 +21,7 @@ load('tile_land',A+'tiles/land.webp');load('tile_card',A+'tiles/card.webp');load
 // Known-corrupt start/event rasters are intentionally not loaded. They are visually quarantined.
 for(let i=1;i<=6;i++)load('dice'+i,A+'dice/dice_'+i+'.webp');
 CHAR_KEYS.forEach((k,i)=>load('c'+i,'../../assets/characters/cxq-role-'+k+'.webp'));
+load('joyWalkRightContact',A+'characters/joy/walk_right_contact_v1.png');load('joyWalkRightPassing',A+'characters/joy/walk_right_passing_v1.png');
 IM.house1=IM.house2=IM.house3=null;
 
 const VIEW={scale:1,ox:0,oy:0};
@@ -32,6 +33,7 @@ function txt(s,x,y,z=26,a='center',c='#fff',w=800,o=true){X.save();X.font=`${w} 
 function contain(im,x,y,w,h,alpha=1){if(!im||!im.complete||!im.naturalWidth)return false;const r=Math.min(w/im.naturalWidth,h/im.naturalHeight),iw=im.naturalWidth*r,ih=im.naturalHeight*r;X.save();X.imageSmoothingEnabled=true;X.imageSmoothingQuality='high';X.globalAlpha=alpha;X.drawImage(im,x+(w-iw)/2,y+(h-ih)/2,iw,ih);X.restore();return true}
 function cover(im,x,y,w,h,alpha=1){if(!im||!im.complete||!im.naturalWidth)return false;const r=Math.max(w/im.naturalWidth,h/im.naturalHeight),iw=im.naturalWidth*r,ih=im.naturalHeight*r;X.save();X.imageSmoothingEnabled=true;X.imageSmoothingQuality='high';X.globalAlpha=alpha;X.drawImage(im,x+(w-iw)/2,y+(h-ih)/2,iw,ih);X.restore();return true}
 function stretch(im,x,y,w,h,alpha=1){if(!im||!im.complete||!im.naturalWidth)return false;X.save();X.imageSmoothingEnabled=true;X.imageSmoothingQuality='high';X.globalAlpha=alpha;X.drawImage(im,x,y,w,h);X.restore();return true}
+function containFacing(im,x,y,w,h,faceRight=true,alpha=1){if(!im||!im.complete||!im.naturalWidth)return false;const r=Math.min(w/im.naturalWidth,h/im.naturalHeight),iw=im.naturalWidth*r,ih=im.naturalHeight*r,cx=x+w/2,iy=y+(h-ih)/2;X.save();X.imageSmoothingEnabled=true;X.imageSmoothingQuality='high';X.globalAlpha=alpha;X.translate(cx,0);X.scale(faceRight?1:-1,1);X.drawImage(im,-iw/2,iy,iw,ih);X.restore();return true}
 function btn(id,label,x,y,w,h,red=false,alpha=1,en=true){contain(red?IM.btnRed:IM.btnBlue,x,y,w,h,alpha*(en?1:.38));txt(label,x+w/2,y+h*.49,Math.min(29,h*.34),'center','#fff',900,true);S.buttons.push({id,x,y,w,h,en})}
 function hit(x,y){return S.buttons.slice().reverse().find(b=>b.en&&x>=b.x&&x<=b.x+b.w&&y>=b.y&&y<=b.y+b.h)}
 function activeSeatIds(){return S.seats.map((s,i)=>s.type==='off'?-1:i).filter(i=>i>=0)}
@@ -78,7 +80,7 @@ function setup(){updatePickAnim();cover(IM.setupBg,0,0,W,H,1);btn('back','返回
 function tileImage(type){if(type==='start')return IM.tile_shop||IM.tile_land;if(type==='event')return IM.tile_card||IM.tile_land;return IM['tile_'+type]||IM.tile_land}
 function npcMarker(n,t){contain(IM.tile_npc,t.x-40,t.y-158,80,80,.92);txt(n.name,t.x,t.y-174,12,'center','#fff8ce',900,true)}
 function drawTile(t){contain(tileImage(t.type),t.x-88,t.y-88,176,176,1);if(t.type==='start'||t.type==='event')txt(t.type==='start'?'起點':'事件',t.x,t.y+4,16,'center','#fff6d2',1000,true);if(t.type==='land'){if(t.owner>=0){contain(IM.btnRed,t.x-36,t.y-103,72,36,.88);txt((t.owner+1)+'P',t.x,t.y-86,14,'center',PLAYER_COLORS[t.owner],1000,true);if(t.level>0&&IM['house'+t.level])contain(IM['house'+t.level],t.x-58,t.y-148,116,116,.98)}txt('$'+Math.round(t.price/1000)+'K',t.x,t.y+69,13,'center','#fff6d2',900,true)}}
-function drawPlayers(){const b=S.board;for(const p of b.players){if(p.bankrupt)continue;const t=b.tiles[p.pos],same=b.players.filter(q=>!q.bankrupt&&q.pos===p.pos),idx=same.indexOf(p),off=(idx-(same.length-1)/2)*34;contain(IM['c'+p.char],t.x-62+off,t.y-174,124,144);txt((p.id+1)+'P',t.x+off,t.y-177,14,'center',PLAYER_COLORS[p.id],1000,true)}}
+function drawPlayers(){const b=S.board,now=performance.now();for(const p of b.players){if(p.bankrupt)continue;const t=b.tiles[p.pos],same=b.players.filter(q=>!q.bankrupt&&q.pos===p.pos),idx=same.indexOf(p),off=(idx-(same.length-1)/2)*34;let x=t.x+off,y=t.y;if(p.moveAnim){const q=p.moveAnim,u=Math.min(1,(now-q.start)/q.dur),e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;x=q.from.x+(q.to.x-q.from.x)*e+off;y=q.from.y+(q.to.y-q.from.y)*e}if(p.char===0&&p.moveAnim){const q=p.moveAnim,frame=Math.floor((now-q.start)/105)%2?IM.joyWalkRightPassing:IM.joyWalkRightContact;containFacing(frame,x-74,y-184,148,164,q.to.x>=q.from.x)}else contain(IM['c'+p.char],x-62,y-174,124,144);txt((p.id+1)+'P',x,y-177,14,'center',PLAYER_COLORS[p.id],1000,true)}}
 function drawMap(){const b=S.board;stretch(IM.mapBg,0,0,MW,MH,1);b.tiles.forEach(drawTile);if(b.npcs)for(const n of b.npcs){const t=b.tiles[n.pos];if(t)npcMarker(n,t)}drawPlayers()}
 function hud(){const b=S.board,p=cp();contain(IM.playerSeat,18,16,570,72,.96);txt(`${p.id+1}P  ${CHAR_NAMES[p.char]}   $${Math.max(0,p.cash).toLocaleString()}`,303,51,20,'center','#fff',900,true);contain(IM.roleInfo,1218,16,362,76,.95);txt(`第 ${b.round}/${S.rounds} 回合`,1395,43,18,'center','#50321d',1000,false);const fx=(p.effects||[]).map(e=>`${e.kind}${e.turns}`).join(' ');if(fx)txt(fx,600,48,14,'left','#ffe69a',850,true);contain(IM['dice'+S.dice],1325,620,145,145);btn('roll','擲骰子',1260,770,300,86,true,1,!S.rolling&&!b.popup&&!b.winner);btn('cards','卡片 '+p.cards.length,1055,786,180,60,false,.95,!S.rolling&&!b.popup);if(S.msg)txt(S.msg,800,850,16,'center','#fff6d2',800,true)}
 function help(){cover(IM.homeBg,0,0,W,H,.7);txt('遊戲說明',800,95,48,'center','#ffe58a',1000,true);const lines=['擲骰子逐格前進，購買土地、升級 Lv1～Lv3 房屋並向對手收租。','同一區域土地全數持有時，該區租金會提高。','事件、卡片、商店、小遊戲與 NPC / 神明會改變局勢。','資金不足會自動變賣房屋與土地；仍無法償付則破產退場。','真人與 AI 可自由配置 2～4 名參賽者，AI 有輕鬆／標準／聰明三種難度。'];lines.forEach((l,i)=>txt(l,800,230+i*82,23,'center','#fff',800,true));btn('home','回到首頁',630,690,340,86,true)}
