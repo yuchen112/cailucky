@@ -3,6 +3,16 @@ const vm = require('vm');
 const path = require('path');
 
 const root = path.resolve(__dirname, '..');
+const swContext = vm.createContext({
+  self: { addEventListener() {}, skipWaiting() {}, clients: { claim() {} } },
+  caches: {}, fetch() {}
+});
+vm.runInContext(fs.readFileSync(path.join(root, 'sw.js'), 'utf8') + ';this.precache=PRECACHE;this.cacheName=CACHE', swContext);
+for (const item of swContext.precache) {
+  const target = item === './' ? path.join(root, 'index.html') : path.resolve(root, item);
+  if (!fs.existsSync(target)) throw new Error(`service worker precache missing: ${item}`);
+}
+if (!swContext.cacheName.includes('20260824-2230')) throw new Error('service worker cache revision is stale');
 const storage = new Map();
 const draw = new Proxy({}, {
   get(target, key) {
