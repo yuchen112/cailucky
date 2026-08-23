@@ -38,4 +38,34 @@ vm.runInContext(`
   game(); hud(); openPopup('roster'); popup(); openPopup('playerDetail',{player:S.board.players[0]}); popup();
   S.scene='result'; S.board.winner=S.board.players[0]; result();
 `, context);
-console.log('CxQ canvas smoke test passed: scenes, HUD, property buildings, roster and result rendered without exceptions.');
+function buttonsFor(code) {
+  vm.runInContext(`S.buttons=[];${code}`, context);
+  return JSON.parse(vm.runInContext('JSON.stringify(S.buttons)', context));
+}
+function overlap(a, b) { return Math.min(a.x+a.w,b.x+b.w)>Math.max(a.x,b.x)&&Math.min(a.y+a.h,b.y+b.h)>Math.max(a.y,b.y); }
+function allowedNested(a,b){const pair=[a.id,b.id].join('|');return /^seat\d\|(?:seatType|diff)\d$/.test(pair)||/^(?:seatType|diff)\d\|seat\d$/.test(pair)}
+for (const [scene, code] of [
+  ['setup','S.scene="setup";setup()'],['map','S.scene="mapSelect";mapSelect()'],['rules','S.scene="rules";rulesSetup()'],
+  ['game','S.scene="game";S.board.popup=null;game()'],['roster','S.scene="game";openPopup("roster");game()'],['result','S.scene="result";result()']
+]) {
+  const buttons=buttonsFor(code);
+  for(const b of buttons){if(b.x<0||b.y<0||b.x+b.w>1600||b.y+b.h>900)throw new Error(`${scene}: ${b.id} outside safe area`)}
+  for(let i=0;i<buttons.length;i++)for(let j=i+1;j<buttons.length;j++)if(overlap(buttons[i],buttons[j])&&!allowedNested(buttons[i],buttons[j]))throw new Error(`${scene}: ${buttons[i].id} overlaps ${buttons[j].id}`)
+}
+for(const [w,h] of [[932,430],[1247,787],[1366,768],[1920,720],[2560,1080]]){const scale=Math.min(w/1600,h/900),safeW=1600*scale,safeH=900*scale;if(Math.abs(safeW/safeH-16/9)>.0001)throw new Error('safe area distorted')}
+vm.runInContext(`
+  for(let mi=0;mi<MAPS.length;mi++){
+    S.mapIndex=mi; makeBoard();
+    for(let ri=0;ri<4;ri++)if(REGION_NAMES[ri]!==MAPS[mi].regions[ri])throw new Error('map region label mismatch');
+    const lands=S.board.tiles.filter(t=>t.type==='land'&&t.region===0);
+    lands.forEach(t=>{t.owner=0;t.level=3});
+    if(buildingImage(lands[0])!==IM['building'+mi+'_landmark'])throw new Error('completed region did not use its map landmark');
+    lands[0].owner=1;
+    if(buildingImage(lands[1])!==IM['building'+mi+'_3'])throw new Error('incomplete region incorrectly used landmark');
+  }
+  S.mapIndex=0;makeBoard();
+  const owner=S.board.players[0], land=S.board.tiles.find(t=>t.type==='land');
+  land.owner=owner.id;land.level=1;owner.rentBoost=1;rentFor(land,S.board.players[1]);
+  if(owner.rentBoost!==0)throw new Error('rent boost was not consumed by an actual rent calculation');
+`, context);
+console.log('CxQ smoke/layout test passed: scenes, HUD, buildings, map regions, rent rules, roster, results, button bounds, overlap rules and five landscape aspect ratios.');
