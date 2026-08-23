@@ -19,31 +19,22 @@ const SAVE='cxq_richman_latest_save_v4',PREF='cxq_richman_pref_v1';
 const S={scene:'home',buttons:[],seats:[{type:'human',char:6,diff:'standard'},{type:'ai',char:1,diff:'standard'},{type:'off',char:2,diff:'standard'},{type:'off',char:3,diff:'standard'}],activeSeat:0,mapIndex:0,money:200000,rounds:30,victory:'assets',eventLevel:'standard',startingCards:1,gods:true,board:null,msg:'',rolling:false,dice:1,forcedDice:0,pickAnim:null,settings:{master:80,bgm:70,sfx:80,vibrate:true,lang:'zh-Hant',graphics:'medium'}};
 try{Object.assign(S.settings,JSON.parse(localStorage.getItem(PREF)||'{}'))}catch(e){}
 
-const ASSET_REV='20260824-1100';
+const ASSET_REV='20260824-1145';
 function load(k,u){const i=new Image();i.decoding='async';i.onload=()=>{IM[k]=i};i.onerror=()=>{IM[k]=null};i.src=u+'?v='+ASSET_REV;IM[k]=i;return i}
 load('btnBlue',A+'ui/btn_blue.webp');load('btnRed',A+'ui/btn_red.webp');
-load('homeMenuNew',A+'ui/home_menu_new_v1.png');load('homeMenuContinue',A+'ui/home_menu_continue_v1.png');load('homeMenuHelp',A+'ui/home_menu_help_v1.png');load('homeMenuSettings',A+'ui/home_menu_settings_v1.png');
+load('homeMenuNew',A+'ui/home_menu_new_v1.webp');load('homeMenuContinue',A+'ui/home_menu_continue_v1.webp');load('homeMenuHelp',A+'ui/home_menu_help_v1.webp');load('homeMenuSettings',A+'ui/home_menu_settings_v1.webp');
 load('charSlot',A+'ui/char_slot_v2.webp');load('playerSeat',A+'ui/player_seat_v2.webp');load('roleInfo',A+'ui/role_info_v2.webp');
-load('characterStage',A+'ui/character_stage_v1.png');load('abilityPanel',A+'ui/ability_panel_v1.png');
-for(let i=0;i<4;i++)load('playerSeatP'+i,A+`ui/player_seat_p${i+1}_v1.png`);
-load('statusHuman',A+'ui/status_human_v1.png');load('statusAi',A+'ui/status_ai_v1.png');load('statusOff',A+'ui/status_off_v1.png');
-load('homeBg',A+'backgrounds/home_scene_v7.png');load('setupBg',A+'backgrounds/setup_scene_v4.png');
-MAPS.forEach((m,i)=>load('mapWorld'+i,A+'maps/map_world_'+m.key+'_v1.png'));
-MAPS.forEach((m,i)=>load('mapPreview'+i,A+'maps/map_preview_'+m.key+'_v1.png'));
-load('tile_land',A+'tiles/land.webp');load('tile_card',A+'tiles/card_v2.png');load('tile_shop',A+'tiles/shop.webp');load('tile_minigame',A+'tiles/minigame.webp');load('tile_npc',A+'tiles/npc.webp');
+load('characterStage',A+'ui/character_stage_v1.webp');load('abilityPanel',A+'ui/ability_panel_v1.webp');
+for(let i=0;i<4;i++)load('playerSeatP'+i,A+`ui/player_seat_p${i+1}_v1.webp`);
+load('statusHuman',A+'ui/status_human_v1.webp');load('statusAi',A+'ui/status_ai_v1.webp');load('statusOff',A+'ui/status_off_v1.webp');
+load('homeBg',A+'backgrounds/home_scene_v7.webp');load('setupBg',A+'backgrounds/setup_scene_v4.webp');
+MAPS.forEach((m,i)=>load('mapWorld'+i,A+'maps/map_world_'+m.key+'_v1.webp'));
+MAPS.forEach((m,i)=>load('mapPreview'+i,A+'maps/map_preview_'+m.key+'_v1.webp'));
+load('tile_land',A+'tiles/land.webp');load('tile_card',A+'tiles/card_v2.webp');load('tile_shop',A+'tiles/shop.webp');load('tile_minigame',A+'tiles/minigame.webp');load('tile_npc',A+'tiles/npc.webp');
 // Known-corrupt start/event rasters are intentionally not loaded. They are visually quarantined.
 for(let i=1;i<=6;i++)load('dice'+i,A+'dice/dice_'+i+'.webp');
-CHAR_KEYS.forEach((k,i)=>{load('c'+i,'../../assets/characters/cxq-role-'+k+'.webp');load('portrait'+i,A+'characters/portraits/'+k+'_portrait_v1.png')});
-load('joyWalkRightContact',A+'characters/joy/walk_right_contact_v1.png');load('joyWalkRightPassing',A+'characters/joy/walk_right_passing_v1.png');
-load('dreamWalkRightContact',A+'characters/dream/walk_right_contact_v1.png');load('dreamWalkRightPassing',A+'characters/dream/walk_right_passing_v1.png');
-load('nightWalkRightContact',A+'characters/night/walk_right_contact_v1.png');load('nightWalkRightPassing',A+'characters/night/walk_right_passing_v1.png');
-load('sadnessWalkRightContact',A+'characters/sadness/walk_right_contact_v1.png');load('sadnessWalkRightPassing',A+'characters/sadness/walk_right_passing_v1.png');
-load('trustWalkRightContact',A+'characters/trust/walk_right_contact_v1.png');load('trustWalkRightPassing',A+'characters/trust/walk_right_passing_v1.png');
-load('memoryWalkRightContact',A+'characters/memory/walk_right_contact_v1.png');load('memoryWalkRightPassing',A+'characters/memory/walk_right_passing_v1.png');
-load('growthWalkRightContact',A+'characters/growth/walk_right_contact_v1.png');load('growthWalkRightPassing',A+'characters/growth/walk_right_passing_v1.png');
-load('healingWalkRightContact',A+'characters/healing/walk_right_contact_v1.png');load('healingWalkRightPassing',A+'characters/healing/walk_right_passing_v1.png');
-load('luckWalkRightContact',A+'characters/luck/walk_right_contact_v1.png');load('luckWalkRightPassing',A+'characters/luck/walk_right_passing_v1.png');
-load('hopeWalkRightContact',A+'characters/hope/walk_right_contact_v1.png');load('hopeWalkRightPassing',A+'characters/hope/walk_right_passing_v1.png');
+CHAR_KEYS.forEach((k,i)=>{load('c'+i,'../../assets/characters/cxq-role-'+k+'.webp');load('portrait'+i,A+'characters/portraits/'+k+'_portrait_v1.webp')});
+CHAR_KEYS.forEach(k=>{load(k+'WalkRightContact',A+'characters/'+k+'/walk_right_contact_v1.webp');load(k+'WalkRightPassing',A+'characters/'+k+'/walk_right_passing_v1.webp')});
 IM.house1=IM.house2=IM.house3=null;
 
 const VIEW={scale:1,ox:0,oy:0};
