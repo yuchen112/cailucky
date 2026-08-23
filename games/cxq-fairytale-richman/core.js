@@ -19,7 +19,7 @@ const SAVE='cxq_richman_latest_save_v4',PREF='cxq_richman_pref_v1';
 const S={scene:'home',buttons:[],seats:[{type:'human',char:6,diff:'standard'},{type:'ai',char:1,diff:'standard'},{type:'off',char:2,diff:'standard'},{type:'off',char:3,diff:'standard'}],activeSeat:0,mapIndex:0,money:200000,rounds:30,victory:'assets',eventLevel:'standard',startingCards:1,gods:true,board:null,msg:'',rolling:false,dice:1,forcedDice:0,pickAnim:null,settings:{master:80,bgm:70,sfx:80,vibrate:true,lang:'zh-Hant',graphics:'medium'}};
 try{Object.assign(S.settings,JSON.parse(localStorage.getItem(PREF)||'{}'))}catch(e){}
 
-const ASSET_REV='20260824-1215';
+const ASSET_REV='20260824-1300';
 function load(k,u){const i=new Image();i.decoding='async';i.onload=()=>{IM[k]=i};i.onerror=()=>{IM[k]=null};i.src=u+'?v='+ASSET_REV;IM[k]=i;return i}
 load('btnBlue',A+'ui/btn_blue.webp');load('btnRed',A+'ui/btn_red.webp');
 load('homeMenuNew',A+'ui/home_menu_new_v1.webp');load('homeMenuContinue',A+'ui/home_menu_continue_v1.webp');load('homeMenuHelp',A+'ui/home_menu_help_v1.webp');load('homeMenuSettings',A+'ui/home_menu_settings_v1.webp');
@@ -127,7 +127,9 @@ else if(q.kind==='npc'){title=`遇見${q.name}`;body=q.desc;actions=[['npcOk','�
 else if(q.kind==='carddraw'){title='獲得卡片';body=q.card;actions=[['cardOk','收入卡冊']]}
 else if(q.kind==='shop'){title='童話商店';body=`花費 $${shopCost(p).toLocaleString()} 購買一張隨機卡片`;actions=[['shopBuy','購買卡片'],['skip','離開商店']]}
 else if(q.kind==='mini'){title=q.name||'童話小遊戲';body='光點越接近中央時按下停止，獎勵越高。';const pos=b.mini?.pos||0;X.fillStyle='#223d77';X.fillRect(570,430,460,34);X.fillStyle='#ffe067';X.fillRect(570+pos*440,424,20,46);X.strokeStyle='#fff4bb';X.lineWidth=4;X.strokeRect(790,420,20,54);actions=[['miniStop','現在停止']]}
-else if(q.kind==='cards'){title='卡片冊';body=p.cards.length?'選擇一張卡片立即使用':'目前沒有卡片';p.cards.slice(0,6).forEach((c,i)=>actions.push(['useCard'+i,c]));actions.push(['closeCards','關閉卡冊'])}
+else if(q.kind==='cards'){title='卡片冊';body=p.cards.length?`選擇卡片立即使用｜${p.cards.length} / 8`:'目前沒有卡片';p.cards.slice(0,8).forEach((c,i)=>actions.push(['useCard'+i,c]));actions.push(['closeCards','關閉卡冊'])}
+else if(q.kind==='cardDice'){title='遙控骰子';body='選擇本回合要前進的點數';for(let i=1;i<=6;i++)actions.push(['cardDice'+i,i+' 點']);actions.push(['cardCancel','返回卡冊'])}
+else if(q.kind==='cardTarget'){title=q.card;body='選擇要施放卡片的對手';living().filter(x=>x.id!==p.id).forEach(x=>actions.push(['cardTarget'+x.id,`${x.id+1}P ${CHAR_NAMES[x.char]}`]));actions.push(['cardCancel','返回卡冊'])}
 else if(q.kind==='pause'){title='冒險選單';body=`${b.mapRules?.name||'童話王國'}｜第 ${b.round} 回合`;actions=[['resume','繼續遊戲'],['saveHome','保存並回首頁']]}
 else if(q.kind==='winner'){title='本局結果';body=q.text;actions=[['home','返回首頁']]}
 txt(title,800,205,38,'center','#fff0a5',1000,true);txt(body,800,305,24,'center','#fff',850,true);const cols=actions.length>3?2:1,w=cols===2?270:360,h=64,startY=actions.length>3?370:470;actions.forEach((a,i)=>{const col=i%cols,row=Math.floor(i/cols),x=cols===2?515+col*300:620;btn(a[0],a[1],x,startY+row*74,w,h,i===0)});}
