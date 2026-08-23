@@ -14,9 +14,10 @@ const SAVE='cxq_richman_latest_save_v4',PREF='cxq_richman_pref_v1';
 const S={scene:'home',buttons:[],seats:[{type:'human',char:6,diff:'standard'},{type:'ai',char:1,diff:'standard'},{type:'off',char:2,diff:'standard'},{type:'off',char:3,diff:'standard'}],activeSeat:0,money:200000,rounds:30,board:null,msg:'',rolling:false,dice:1,forcedDice:0,pickAnim:null,settings:{master:80,bgm:70,sfx:80,vibrate:true,lang:'zh-Hant',graphics:'medium'}};
 try{Object.assign(S.settings,JSON.parse(localStorage.getItem(PREF)||'{}'))}catch(e){}
 
-const ASSET_REV='20260823-2215';
+const ASSET_REV='20260823-2315';
 function load(k,u){const i=new Image();i.decoding='async';i.onload=()=>{IM[k]=i};i.onerror=()=>{IM[k]=null};i.src=u+'?v='+ASSET_REV;IM[k]=i;return i}
 load('btnBlue',A+'ui/btn_blue.webp');load('btnRed',A+'ui/btn_red.webp');
+load('homeMenuNew',A+'ui/home_menu_new_v1.png');load('homeMenuContinue',A+'ui/home_menu_continue_v1.png');load('homeMenuHelp',A+'ui/home_menu_help_v1.png');load('homeMenuSettings',A+'ui/home_menu_settings_v1.png');
 load('charSlot',A+'ui/char_slot_v2.webp');load('playerSeat',A+'ui/player_seat_v2.webp');load('roleInfo',A+'ui/role_info_v2.webp');
 load('homeBg',A+'backgrounds/home_scene_v7.png');load('setupBg',A+'backgrounds/setup_scene_v4.png');load('mapBg',A+'backgrounds/map_scene_r1.webp');
 load('tile_land',A+'tiles/land.webp');load('tile_card',A+'tiles/card.webp');load('tile_shop',A+'tiles/shop.webp');load('tile_minigame',A+'tiles/minigame.webp');load('tile_npc',A+'tiles/npc.webp');
@@ -29,7 +30,7 @@ IM.house1=IM.house2=IM.house3=null;
 const VIEW={scale:1,ox:0,oy:0};
 function resize(){const d=Math.min(devicePixelRatio||1,2),vw=(window.visualViewport?.width||innerWidth),vh=(window.visualViewport?.height||innerHeight);C.width=Math.max(1,Math.round(vw*d));C.height=Math.max(1,Math.round(vh*d));const sx=C.width/W,sy=C.height/H;VIEW.scale=Math.min(sx,sy);VIEW.ox=(C.width-W*VIEW.scale)/2;VIEW.oy=(C.height-H*VIEW.scale)/2}
 addEventListener('resize',resize);addEventListener('orientationchange',()=>{resize();setTimeout(resize,180);setTimeout(resize,520)});if(window.visualViewport)visualViewport.addEventListener('resize',resize);resize();
-function begin(){X.setTransform(1,0,0,1,0,0);X.fillStyle=S.scene==='game'?'#315d65':'#183f57';X.fillRect(0,0,C.width,C.height);X.setTransform(VIEW.scale,0,0,VIEW.scale,VIEW.ox,VIEW.oy);S.buttons=[]}
+function begin(){X.setTransform(1,0,0,1,0,0);X.fillStyle=S.scene==='game'?'#315d65':'#183f57';X.fillRect(0,0,C.width,C.height);const edgeBg=S.scene==='home'?IM.homeBg:S.scene==='setup'?IM.setupBg:null;if(edgeBg&&edgeBg.complete&&edgeBg.naturalWidth){const r=Math.max(C.width/edgeBg.naturalWidth,C.height/edgeBg.naturalHeight),iw=edgeBg.naturalWidth*r,ih=edgeBg.naturalHeight*r;X.save();X.globalAlpha=.72;X.drawImage(edgeBg,(C.width-iw)/2,(C.height-ih)/2,iw,ih);X.restore()}X.setTransform(VIEW.scale,0,0,VIEW.scale,VIEW.ox,VIEW.oy);S.buttons=[]}
 function pointerToGame(e){const r=C.getBoundingClientRect(),px=(e.clientX-r.left)/r.width*C.width,py=(e.clientY-r.top)/r.height*C.height;return{x:(px-VIEW.ox)/VIEW.scale,y:(py-VIEW.oy)/VIEW.scale}}
 function txt(s,x,y,z=26,a='center',c='#fff',w=800,o=true){X.save();X.font=`${w} ${z}px system-ui,-apple-system,"Noto Sans TC",sans-serif`;X.textAlign=a;X.textBaseline='middle';if(o){X.lineJoin='round';X.lineWidth=Math.max(2,z/7);X.strokeStyle='rgba(20,14,28,.9)';X.strokeText(String(s),x,y)}X.fillStyle=c;X.fillText(String(s),x,y);X.restore()}
 function contain(im,x,y,w,h,alpha=1){if(!im||!im.complete||!im.naturalWidth)return false;const r=Math.min(w/im.naturalWidth,h/im.naturalHeight),iw=im.naturalWidth*r,ih=im.naturalHeight*r;X.save();X.imageSmoothingEnabled=true;X.imageSmoothingQuality='high';X.globalAlpha=alpha;X.drawImage(im,x+(w-iw)/2,y+(h-ih)/2,iw,ih);X.restore();return true}
@@ -47,22 +48,23 @@ function clamp01(v){return Math.max(0,Math.min(1,v))}
 function easeOut(v){v=clamp01(v);return 1-Math.pow(1-v,3)}
 function homeIntro(delay,duration=420){return easeOut((performance.now()-HOME.enteredAt-delay)/duration)}
 function resetHome(){HOME.enteredAt=performance.now();HOME.hover=HOME.pressed=HOME.leaving=null;HOME.leaveAt=0;HOME.locked=false}
-function homeButton(id,label,x,y,w,h,red,index,enabled=true){
+function homeTile(id,label,image,x,y,size,index,enabled=true){
   const a=homeIntro(330+index*90,360);if(a<=0)return;
   const active=HOME.pressed===id||HOME.hover===id,down=HOME.pressed===id;
-  const scale=down?.965:(active?1.025:1),dw=w*scale,dh=h*scale,dy=y-(dh-h)/2+(1-a)*22;
-  contain(red?IM.btnRed:IM.btnBlue,x-(dw-w)/2,dy,dw,dh,a*(enabled?1:.38));
-  X.save();X.globalAlpha=a*(enabled?1:.58);txt(label,x+w/2,y+h*.49+(1-a)*22,Math.min(29,h*.34),'center','#fff',900,true);X.restore();
-  S.buttons.push({id,x,y,w,h,en:enabled&&!HOME.locked});
+  const scale=down?.955:(active?1.035:1),drawSize=size*scale,dx=x-(drawSize-size)/2,dy=y-(drawSize-size)/2+(1-a)*24;
+  contain(image,dx,dy,drawSize,drawSize,a*(enabled?1:.38));
+  X.save();X.globalAlpha=a*(enabled?1:.56);txt(label,x+size/2,y+size*.815+(1-a)*24,25,'center',enabled?'#fff7dd':'#cfcee0',1000,true);X.restore();
+  if(active&&enabled){X.save();X.globalAlpha=a*.72;txt(down?'放開確認':'點擊進入',x+size/2,y+size-17,12,'center','#fff4b8',900,true);X.restore()}
+  S.buttons.push({id,x,y,w:size,h:size,en:enabled&&!HOME.locked});
 }
 function home(){
   const now=performance.now(),sceneA=homeIntro(0,620),canContinue=!!localStorage.getItem(SAVE);
   cover(IM.homeBg,0,0,W,H,1);
   X.save();X.globalAlpha=sceneA;
   contain(IM.playerSeat,1120,38,430,94,.9);txt('童話棋盤冒險',1335,67,18,'center','#fff7dc',1000,true);txt('擲骰・買地・蓋房・收租・卡片・神明事件',1335,98,13,'center','#fff',850,true);X.restore();
-  const logoA=homeIntro(80,520),logoY=(1-logoA)*30;X.save();X.globalAlpha=logoA;txt('CxQ',330,120+logoY,86,'center','#ffe27a',1000,true);txt('童話大富翁',330,198+logoY,62,'center','#fff1be',1000,true);txt('夢想王國資產大冒險',330,252+logoY,19,'center','#f7f2dc',900,true);X.restore();
-  homeButton('start','新遊戲',60,330,560,116,true,0);homeButton('continue','繼續遊戲',84,458,512,92,false,1,canContinue);homeButton('help','遊戲說明',84,562,512,92,false,2);homeButton('settings','系統設定',84,666,512,92,false,3);
-  const infoA=homeIntro(740,380);X.save();X.globalAlpha=infoA;contain(IM.roleInfo,78,770,530,104,.96);txt(canContinue?'已有冒險紀錄，可從上次進度繼續':'尚無冒險紀錄｜開始新遊戲建立存檔',343,807,18,'center','#60462d',900,false);txt('2–4 人｜真人／電腦自由配置',343,840,16,'center','#76583b',850,false);X.restore();
+  const logoA=homeIntro(80,520),logoY=(1-logoA)*30;X.save();X.globalAlpha=logoA;txt('CxQ',330,78+logoY,72,'center','#ffe27a',1000,true);txt('童話大富翁',330,145+logoY,52,'center','#fff1be',1000,true);txt('夢想王國資產大冒險',330,190+logoY,17,'center','#f7f2dc',900,true);X.restore();
+  homeTile('start','新遊戲',IM.homeMenuNew,62,226,250,0);homeTile('continue','繼續遊戲',IM.homeMenuContinue,338,226,250,1,canContinue);homeTile('help','遊戲說明',IM.homeMenuHelp,62,500,250,2);homeTile('settings','系統設定',IM.homeMenuSettings,338,500,250,3);
+  const infoA=homeIntro(740,380);X.save();X.globalAlpha=infoA;contain(IM.roleInfo,70,776,510,82,.94);txt(canContinue?'已有冒險紀錄｜可繼續上次進度':'尚無冒險紀錄｜請開始新遊戲',325,803,16,'center','#60462d',900,false);txt('2–4 人｜真人／電腦自由配置',325,832,14,'center','#76583b',850,false);X.restore();
   if(HOME.leaving){const p=clamp01((now-HOME.leaveAt)/300);X.save();X.globalAlpha=1-p;txt(HOME.leaving==='start'?'前往角色與玩家配置…':HOME.leaving==='continue'?'讀取冒險紀錄…':'',800,860,16,'center','#fff5c7',900,true);X.restore()}
   txt('CxQ FAIRYTALE RICHMAN',1515,874,11,'right','rgba(255,255,255,.82)',800,true);
 }
