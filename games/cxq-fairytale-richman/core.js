@@ -21,7 +21,7 @@ const S={scene:'home',buttons:[],seats:[{type:'human',char:6,diff:'standard'},{t
 REGION_NAMES=new Proxy(REGION_NAMES,{get(target,prop){if(/^\d+$/.test(String(prop)))return (MAPS[S.board?.mapIndex??S.mapIndex]?.regions||target)[Number(prop)]||target[Number(prop)];return Reflect.get(target,prop)}});
 try{Object.assign(S.settings,JSON.parse(localStorage.getItem(PREF)||'{}'))}catch(e){}
 
-const ASSET_REV='20260825-0130';
+const ASSET_REV='20260825-0215';
 function load(k,u){const i=new Image();i.decoding='async';i.onload=()=>{IM[k]=i};i.onerror=()=>{IM[k]=null};i.src=u+'?v='+ASSET_REV;IM[k]=i;return i}
 load('btnBlue',A+'ui/btn_blue.webp');load('btnRed',A+'ui/btn_red.webp');
 load('homeMenuNew',A+'ui/home_menu_new_v1.webp');load('homeMenuContinue',A+'ui/home_menu_continue_v1.webp');load('homeMenuHelp',A+'ui/home_menu_help_v1.webp');load('homeMenuSettings',A+'ui/home_menu_settings_v1.webp');
