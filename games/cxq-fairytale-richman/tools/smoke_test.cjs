@@ -14,6 +14,7 @@ for (const item of swContext.precache) {
 }
 if (!swContext.cacheName.includes('20260824-2230')) throw new Error('service worker cache revision is stale');
 const storage = new Map();
+const timers = [];
 const draw = new Proxy({}, {
   get(target, key) {
     if (key === 'measureText') return value => ({ width: String(value).length * 13 });
@@ -31,7 +32,7 @@ class MockImage {
 }
 const sandbox = {
   console, Image: MockImage, performance: { now: () => 1000 }, devicePixelRatio: 1,
-  innerWidth: 1600, innerHeight: 900, requestAnimationFrame() {}, setTimeout() {}, clearTimeout() {},
+  innerWidth: 1600, innerHeight: 900, requestAnimationFrame() {}, setTimeout(fn) { timers.push(fn); return timers.length; }, clearTimeout() {},
   setInterval: () => 1, clearInterval() {}, addEventListener() {},
   navigator: { vibrate() {} }, screen: {},
   localStorage: { getItem: key => storage.get(key) || null, setItem: (key, value) => storage.set(key, value), removeItem: key => storage.delete(key) },
@@ -78,4 +79,42 @@ vm.runInContext(`
   land.owner=owner.id;land.level=1;owner.rentBoost=1;rentFor(land,S.board.players[1]);
   if(owner.rentBoost!==0)throw new Error('rent boost was not consumed by an actual rent calculation');
 `, context);
-console.log('CxQ smoke/layout test passed: scenes, HUD, buildings, map regions, rent rules, roster, results, button bounds, overlap rules and five landscape aspect ratios.');
+function drainTimers(limit = 20) {
+  let count = 0;
+  while (timers.length && count++ < limit) timers.shift()();
+  if (timers.length) throw new Error('timer queue did not settle');
+}
+for (let mapIndex = 0; mapIndex < 3; mapIndex++) {
+  vm.runInContext(`
+    S.scene='game';S.mapIndex=${mapIndex};S.money=200000;S.rounds=30;
+    S.seats.forEach((s,i)=>{s.type=i<2?'human':'off'});makeBoard();
+  `, context);
+  for (let turn = 0; turn < 90; turn++) {
+    vm.runInContext(`(()=>{
+      const simP=cp();
+      simP.type='human';
+      simP.pos=(simP.pos+1+(S.board.round%6))%S.board.tiles.length;
+      resolveTile();
+      const simQ=S.board.popup;
+      if(simQ?.kind==='tile'){
+        const simT=simQ.tile;
+        if(simT.type==='land'){
+          if(simT.owner<0&&simP.cash>=buyCost(simP,simT))action('buy');
+          else if(simT.owner===simP.id&&simT.level<3&&simP.cash>=Math.round(simT.price*.65))action('upgrade');
+          else if(simT.owner>=0&&simT.owner!==simP.id)action('pay');
+          else action('skip');
+        }else if(['event','card','shop','minigame','npc'].includes(simT.type))action('special');
+        else action('ok');
+      }
+      if(S.board.popup?.kind==='event')action('eventOk');
+      else if(S.board.popup?.kind==='npc')action('npcOk');
+      else if(S.board.popup?.kind==='carddraw')action('cardOk');
+      else if(S.board.popup?.kind==='shop')action('shopBuy');
+      else if(S.board.popup?.kind==='mini')action('miniStop');
+    })()`, context);
+    drainTimers();
+  }
+  const outcome = JSON.parse(vm.runInContext(`JSON.stringify({round:S.board.round,logs:S.board.log.length,owned:S.board.tiles.filter(t=>t.owner>=0).length,players:S.board.players.length})`, context));
+  if (outcome.round < 20 || outcome.logs < 4 || outcome.owned < 1 || outcome.players !== 2) throw new Error(`map ${mapIndex} match simulation incomplete: ${JSON.stringify(outcome)}`);
+}
+console.log('CxQ smoke/layout test passed: scenes, HUD, buildings, map regions, rent rules, three complete simulated matches, roster, results, button bounds, overlap rules and five landscape aspect ratios.');
