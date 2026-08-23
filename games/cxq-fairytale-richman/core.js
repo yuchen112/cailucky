@@ -19,7 +19,7 @@ const SAVE='cxq_richman_latest_save_v4',PREF='cxq_richman_pref_v1';
 const S={scene:'home',buttons:[],seats:[{type:'human',char:6,diff:'standard'},{type:'ai',char:1,diff:'standard'},{type:'off',char:2,diff:'standard'},{type:'off',char:3,diff:'standard'}],activeSeat:0,mapIndex:0,money:200000,rounds:30,victory:'assets',eventLevel:'standard',startingCards:1,gods:true,board:null,msg:'',rolling:false,dice:1,forcedDice:0,pickAnim:null,settings:{master:80,bgm:70,sfx:80,vibrate:true,lang:'zh-Hant',graphics:'medium'}};
 try{Object.assign(S.settings,JSON.parse(localStorage.getItem(PREF)||'{}'))}catch(e){}
 
-const ASSET_REV='20260824-0820';
+const ASSET_REV='20260824-0900';
 function load(k,u){const i=new Image();i.decoding='async';i.onload=()=>{IM[k]=i};i.onerror=()=>{IM[k]=null};i.src=u+'?v='+ASSET_REV;IM[k]=i;return i}
 load('btnBlue',A+'ui/btn_blue.webp');load('btnRed',A+'ui/btn_red.webp');
 load('homeMenuNew',A+'ui/home_menu_new_v1.png');load('homeMenuContinue',A+'ui/home_menu_continue_v1.png');load('homeMenuHelp',A+'ui/home_menu_help_v1.png');load('homeMenuSettings',A+'ui/home_menu_settings_v1.png');
@@ -41,6 +41,8 @@ load('trustWalkRightContact',A+'characters/trust/walk_right_contact_v1.png');loa
 load('memoryWalkRightContact',A+'characters/memory/walk_right_contact_v1.png');load('memoryWalkRightPassing',A+'characters/memory/walk_right_passing_v1.png');
 load('growthWalkRightContact',A+'characters/growth/walk_right_contact_v1.png');load('growthWalkRightPassing',A+'characters/growth/walk_right_passing_v1.png');
 load('healingWalkRightContact',A+'characters/healing/walk_right_contact_v1.png');load('healingWalkRightPassing',A+'characters/healing/walk_right_passing_v1.png');
+load('luckWalkRightContact',A+'characters/luck/walk_right_contact_v1.png');load('luckWalkRightPassing',A+'characters/luck/walk_right_passing_v1.png');
+load('hopeWalkRightContact',A+'characters/hope/walk_right_contact_v1.png');load('hopeWalkRightPassing',A+'characters/hope/walk_right_passing_v1.png');
 IM.house1=IM.house2=IM.house3=null;
 
 const VIEW={scale:1,ox:0,oy:0};
