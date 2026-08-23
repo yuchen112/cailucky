@@ -10,11 +10,16 @@ const CHAR_ROLES=['幸運型','骰控型','卡片型','防禦型','商店型','�
 const ROLE_DESC=['正向事件獎金提高','骰點過低時有機會修正','抽卡時有機會額外獲得卡片','支付租金時享有減免','商店價格較低','移動能力較穩定','購地價格享有折扣','小遊戲現金獎勵提高','收到的租金提高','首次瀕臨破產可獲救'];
 const PLAYER_COLORS=['#ff716e','#6db9ff','#7ed87c','#ffd05d'];
 const REGION_NAMES=['星願花園','月輝城鎮','森語溪谷','雲端市集'];
+const MAPS=[
+  {key:'starwish',name:'星願花園',tag:'初次冒險',difficulty:'輕鬆',desc:['道路平穩、價格均衡','適合第一次遊玩'],priceRate:1,rentRate:1,eventRate:1},
+  {key:'moonharbor',name:'月光港灣',tag:'潮汐之路',difficulty:'標準',desc:['租金較高、卡片活躍','港口事件改變局勢'],priceRate:1.08,rentRate:1.15,eventRate:1.2},
+  {key:'cloudbazaar',name:'雲端市集',tag:'空島競逐',difficulty:'挑戰',desc:['土地昂貴、事件頻繁','適合熟悉規則的玩家'],priceRate:1.18,rentRate:1.28,eventRate:1.45}
+];
 const SAVE='cxq_richman_latest_save_v4',PREF='cxq_richman_pref_v1';
-const S={scene:'home',buttons:[],seats:[{type:'human',char:6,diff:'standard'},{type:'ai',char:1,diff:'standard'},{type:'off',char:2,diff:'standard'},{type:'off',char:3,diff:'standard'}],activeSeat:0,money:200000,rounds:30,board:null,msg:'',rolling:false,dice:1,forcedDice:0,pickAnim:null,settings:{master:80,bgm:70,sfx:80,vibrate:true,lang:'zh-Hant',graphics:'medium'}};
+const S={scene:'home',buttons:[],seats:[{type:'human',char:6,diff:'standard'},{type:'ai',char:1,diff:'standard'},{type:'off',char:2,diff:'standard'},{type:'off',char:3,diff:'standard'}],activeSeat:0,mapIndex:0,money:200000,rounds:30,victory:'assets',eventLevel:'standard',startingCards:1,gods:true,board:null,msg:'',rolling:false,dice:1,forcedDice:0,pickAnim:null,settings:{master:80,bgm:70,sfx:80,vibrate:true,lang:'zh-Hant',graphics:'medium'}};
 try{Object.assign(S.settings,JSON.parse(localStorage.getItem(PREF)||'{}'))}catch(e){}
 
-const ASSET_REV='20260824-0300';
+const ASSET_REV='20260824-0520';
 function load(k,u){const i=new Image();i.decoding='async';i.onload=()=>{IM[k]=i};i.onerror=()=>{IM[k]=null};i.src=u+'?v='+ASSET_REV;IM[k]=i;return i}
 load('btnBlue',A+'ui/btn_blue.webp');load('btnRed',A+'ui/btn_red.webp');
 load('homeMenuNew',A+'ui/home_menu_new_v1.png');load('homeMenuContinue',A+'ui/home_menu_continue_v1.png');load('homeMenuHelp',A+'ui/home_menu_help_v1.png');load('homeMenuSettings',A+'ui/home_menu_settings_v1.png');
@@ -23,6 +28,7 @@ load('characterStage',A+'ui/character_stage_v1.png');load('abilityPanel',A+'ui/a
 for(let i=0;i<4;i++)load('playerSeatP'+i,A+`ui/player_seat_p${i+1}_v1.png`);
 load('statusHuman',A+'ui/status_human_v1.png');load('statusAi',A+'ui/status_ai_v1.png');load('statusOff',A+'ui/status_off_v1.png');
 load('homeBg',A+'backgrounds/home_scene_v7.png');load('setupBg',A+'backgrounds/setup_scene_v4.png');load('mapBg',A+'backgrounds/map_scene_r1.webp');
+MAPS.forEach((m,i)=>load('mapPreview'+i,A+'maps/map_preview_'+m.key+'_v1.png'));
 load('tile_land',A+'tiles/land.webp');load('tile_card',A+'tiles/card.webp');load('tile_shop',A+'tiles/shop.webp');load('tile_minigame',A+'tiles/minigame.webp');load('tile_npc',A+'tiles/npc.webp');
 // Known-corrupt start/event rasters are intentionally not loaded. They are visually quarantined.
 for(let i=1;i<=6;i++)load('dice'+i,A+'dice/dice_'+i+'.webp');
@@ -93,12 +99,36 @@ function seatPanel(i,x,y){
 }
 function setup(){updatePickAnim();cover(IM.setupBg,0,0,W,H,1);btn('back','返回首頁',18,15,190,64,false,1,!S.pickAnim);txt('角色選擇',800,42,40,'center','#fff0b6',1000,true);txt('先選席位，再選角色｜真人・電腦・空席自由配置',800,80,16,'center','#fff',850,true);const ci=SETUP_VIEW.char,owner=assigned(ci);if(!(S.pickAnim&&S.pickAnim.char===ci))contain(IM['c'+ci],SETUP.stageX+105,SETUP.stageY+72,SETUP.stageW-210,SETUP.stageH-120,.99);contain(IM.characterStage,SETUP.stageX,SETUP.stageY,SETUP.stageW,SETUP.stageH,.99);btn('prevChar','◀',132,306,108,96,false,1,!S.pickAnim);btn('nextChar','▶',672,306,108,96,false,1,!S.pickAnim);txt(`${ci+1} / ${CHAR_KEYS.length}`,520,588,19,'center','#fff5cf',900,true);btn('confirmChar',owner===undefined||owner===S.activeSeat?'選擇這名角色':`與 ${owner+1}P 交換`,350,606,340,68,true,1,!S.pickAnim&&S.seats[S.activeSeat].type!=='off');contain(IM.abilityPanel,850,104,420,420,.99);txt(CHAR_NAMES[ci],1060,164,30,'center','#fff4c8',1000,true);txt(CHAR_TITLES[ci]+'｜'+CHAR_ROLES[ci],1060,207,17,'center','#d9eaff',950,true);txt(CHAR_CONCEPTS[ci],1060,295,16,'center','#fff',850,true);txt('專屬能力',1060,348,15,'center','#ffe17b',1000,true);txt(ROLE_DESC[ci],1085,407,15,'center','#fff6d6',900,true);txt('★',935,407,32,'center','#75d8ff',1000,true);txt(`目前設定：${S.activeSeat+1}P`,1060,473,18,'center',PLAYER_COLORS[S.activeSeat],1000,true);btn('money','起始資金 $'+S.money.toLocaleString(),1278,174,300,64,false,.96,!S.pickAnim);btn('rounds',S.rounds+' 回合',1278,250,300,64,false,.96,!S.pickAnim);txt(`參賽 ${activeSeatIds().length} 人｜真人 ${humanCount()} 人`,1428,347,17,'center','#fff',900,true);btn('startGame','下一步',1268,388,310,86,true,1,activeSeatIds().length>=2&&humanCount()>=1&&!S.pickAnim);if(SETUP_VIEW.notice&&performance.now()<SETUP_VIEW.noticeUntil)txt(SETUP_VIEW.notice,1060,558,17,'center','#ffe27a',1000,true);for(let i=0;i<4;i++)seatPanel(i,SETUP.seatX[i],SETUP.seatY);drawPickAnim()}
 
+function mapSelect(){
+  cover(IM.setupBg,0,0,W,H,.88);txt('選擇冒險地圖',800,58,44,'center','#fff0b6',1000,true);txt('每張地圖都有不同的土地價格、租金與事件節奏',800,101,18,'center','#fff',850,true);btn('mapBack','返回選角',22,20,190,62,false);
+  const xs=[150,620,1090];
+  MAPS.forEach((m,i)=>{const x=xs[i],selected=S.mapIndex===i;stretch(IM.abilityPanel,x-10,125,380,620,selected?1:.84);cover(IM['mapPreview'+i],x+24,162,312,292,selected?1:.7);txt(m.name,x+180,488,30,'center','#fff2bd',1000,true);txt(m.tag+'｜'+m.difficulty,x+180,527,17,'center','#d9eaff',900,true);txt(m.desc[0],x+180,560,16,'center','#fff',850,true);txt(m.desc[1],x+180,585,16,'center','#fff',850,true);txt(`土地 ×${m.priceRate.toFixed(2)}　租金 ×${m.rentRate.toFixed(2)}`,x+180,617,14,'center','#ffe17b',850,true);btn('chooseMap'+i,selected?'已選擇':'選擇地圖',x+55,650,250,58,selected,false,1)});
+  btn('mapNext','遊戲條件',630,772,340,84,true);
+}
+
+function rulesSetup(){
+  const m=MAPS[S.mapIndex];cover(IM.setupBg,0,0,W,H,.82);txt('遊戲條件',800,58,44,'center','#fff0b6',1000,true);txt(`${m.name}｜${activeSeatIds().length} 名參賽者`,800,103,18,'center','#fff',900,true);btn('rulesBack','返回地圖',22,20,190,62,false);
+  contain(IM.abilityPanel,180,145,560,560,.98);txt('基本規則',460,205,30,'center','#fff2bd',1000,true);btn('ruleMoney','起始資金　$'+S.money.toLocaleString(),250,265,420,68,false);btn('ruleRounds','遊戲回合　'+S.rounds,250,350,420,68,false);btn('ruleVictory','勝利條件　'+(S.victory==='assets'?'總資產最高':'最後生存者'),250,435,420,68,false);btn('ruleCards','起始卡片　'+S.startingCards+' 張',250,520,420,68,false);
+  contain(IM.abilityPanel,860,145,560,560,.98);txt('事件規則',1140,205,30,'center','#fff2bd',1000,true);btn('ruleEvents','事件頻率　'+(S.eventLevel==='low'?'較少':S.eventLevel==='standard'?'標準':'熱鬧'),930,265,420,68,false);btn('ruleGods','神明／NPC　'+(S.gods?'開啟':'關閉'),930,350,420,68,false);txt(`地圖租金倍率 ×${m.rentRate.toFixed(2)}`,1140,460,18,'center','#fff7dd',900,true);txt('所有設定都可在開局前再次調整',1140,510,16,'center','#d9eaff',850,true);
+  btn('launchGame','開始冒險',630,772,340,84,true);
+}
+
 function tileImage(type){if(type==='start')return IM.tile_shop||IM.tile_land;if(type==='event')return IM.tile_card||IM.tile_land;return IM['tile_'+type]||IM.tile_land}
 function npcMarker(n,t){contain(IM.tile_npc,t.x-40,t.y-158,80,80,.92);txt(n.name,t.x,t.y-174,12,'center','#fff8ce',900,true)}
 function drawTile(t){contain(tileImage(t.type),t.x-88,t.y-88,176,176,1);if(t.type==='start'||t.type==='event')txt(t.type==='start'?'起點':'事件',t.x,t.y+4,16,'center','#fff6d2',1000,true);if(t.type==='land'){if(t.owner>=0){contain(IM.btnRed,t.x-36,t.y-103,72,36,.88);txt((t.owner+1)+'P',t.x,t.y-86,14,'center',PLAYER_COLORS[t.owner],1000,true);if(t.level>0&&IM['house'+t.level])contain(IM['house'+t.level],t.x-58,t.y-148,116,116,.98)}txt('$'+Math.round(t.price/1000)+'K',t.x,t.y+69,13,'center','#fff6d2',900,true)}}
 function drawPlayers(){const b=S.board,now=performance.now();for(const p of b.players){if(p.bankrupt)continue;const t=b.tiles[p.pos],same=b.players.filter(q=>!q.bankrupt&&q.pos===p.pos),idx=same.indexOf(p),off=(idx-(same.length-1)/2)*34;let x=t.x+off,y=t.y;if(p.moveAnim){const q=p.moveAnim,u=Math.min(1,(now-q.start)/q.dur),e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;x=q.from.x+(q.to.x-q.from.x)*e+off;y=q.from.y+(q.to.y-q.from.y)*e}if(p.char===0&&p.moveAnim){const q=p.moveAnim,frame=Math.floor((now-q.start)/105)%2?IM.joyWalkRightPassing:IM.joyWalkRightContact;containFacing(frame,x-74,y-184,148,164,q.to.x>=q.from.x)}else contain(IM['c'+p.char],x-62,y-174,124,144);txt((p.id+1)+'P',x,y-177,14,'center',PLAYER_COLORS[p.id],1000,true)}}
 function drawMap(){const b=S.board;stretch(IM.mapBg,0,0,MW,MH,1);b.tiles.forEach(drawTile);if(b.npcs)for(const n of b.npcs){const t=b.tiles[n.pos];if(t)npcMarker(n,t)}drawPlayers()}
 function hud(){const b=S.board,p=cp();contain(IM.playerSeat,18,16,570,72,.96);txt(`${p.id+1}P  ${CHAR_NAMES[p.char]}   $${Math.max(0,p.cash).toLocaleString()}`,303,51,20,'center','#fff',900,true);contain(IM.roleInfo,1218,16,362,76,.95);txt(`第 ${b.round}/${S.rounds} 回合`,1395,43,18,'center','#50321d',1000,false);const fx=(p.effects||[]).map(e=>`${e.kind}${e.turns}`).join(' ');if(fx)txt(fx,600,48,14,'left','#ffe69a',850,true);contain(IM['dice'+S.dice],1325,620,145,145);btn('roll','擲骰子',1260,770,300,86,true,1,!S.rolling&&!b.popup&&!b.winner);btn('cards','卡片 '+p.cards.length,1055,786,180,60,false,.95,!S.rolling&&!b.popup);if(S.msg)txt(S.msg,800,850,16,'center','#fff6d2',800,true)}
+function popup(){const b=S.board,q=b.popup;if(!q)return;const p=cp();X.fillStyle='rgba(4,8,24,.64)';X.fillRect(0,0,W,H);contain(IM.abilityPanel,440,115,720,670,.99);let title='冒險訊息',body='',actions=[];
+if(q.kind==='tile'){const t=q.tile;title=typeName(t.type);if(t.type==='land'){if(t.owner<0){body=`空地售價 $${buyCost(p,t).toLocaleString()}`;actions=[['buy','購買土地'],['skip','暫時略過']]}else if(t.owner===p.id){body=t.level<3?`目前 Lv${t.level}，升級費 $${Math.round(t.price*.65).toLocaleString()}`:'這塊土地已升至最高等級';actions=t.level<3?[['upgrade','升級土地'],['skip','完成回合']]:[['skip','完成回合']]}else{body=`需支付 $${rentFor(t,p).toLocaleString()} 租金`;actions=[['pay',p.shield>0?'使用護盾／結算':'支付租金']]} }else if(t.type==='start'){body='在起點稍作休息，獲得旅費。';actions=[['ok','繼續冒險']]}else{body=`抵達${typeName(t.type)}格`;actions=[['special','查看結果']]}}
+else if(q.kind==='event'){title=q.name;body=q.desc;actions=[['eventOk','收下結果']]}
+else if(q.kind==='npc'){title=`遇見${q.name}`;body=q.desc;actions=[['npcOk','繼續冒險']]}
+else if(q.kind==='carddraw'){title='獲得卡片';body=q.card;actions=[['cardOk','收入卡冊']]}
+else if(q.kind==='shop'){title='童話商店';body=`花費 $${shopCost(p).toLocaleString()} 購買一張隨機卡片`;actions=[['shopBuy','購買卡片'],['skip','離開商店']]}
+else if(q.kind==='mini'){title=q.name||'童話小遊戲';body='光點越接近中央時按下停止，獎勵越高。';const pos=b.mini?.pos||0;X.fillStyle='#223d77';X.fillRect(570,430,460,34);X.fillStyle='#ffe067';X.fillRect(570+pos*440,424,20,46);X.strokeStyle='#fff4bb';X.lineWidth=4;X.strokeRect(790,420,20,54);actions=[['miniStop','現在停止']]}
+else if(q.kind==='cards'){title='卡片冊';body=p.cards.length?'選擇一張卡片立即使用':'目前沒有卡片';p.cards.slice(0,6).forEach((c,i)=>actions.push(['useCard'+i,c]));actions.push(['closeCards','關閉卡冊'])}
+else if(q.kind==='winner'){title='本局結果';body=q.text;actions=[['home','返回首頁']]}
+txt(title,800,205,38,'center','#fff0a5',1000,true);txt(body,800,305,24,'center','#fff',850,true);const cols=actions.length>3?2:1,w=cols===2?270:360,h=64,startY=actions.length>3?370:470;actions.forEach((a,i)=>{const col=i%cols,row=Math.floor(i/cols),x=cols===2?515+col*300:620;btn(a[0],a[1],x,startY+row*74,w,h,i===0)});}
 function help(){cover(IM.homeBg,0,0,W,H,.7);txt('遊戲說明',800,95,48,'center','#ffe58a',1000,true);const lines=['擲骰子逐格前進，購買土地、升級 Lv1～Lv3 房屋並向對手收租。','同一區域土地全數持有時，該區租金會提高。','事件、卡片、商店、小遊戲與 NPC / 神明會改變局勢。','資金不足會自動變賣房屋與土地；仍無法償付則破產退場。','真人與 AI 可自由配置 2～4 名參賽者，AI 有輕鬆／標準／聰明三種難度。'];lines.forEach((l,i)=>txt(l,800,230+i*82,23,'center','#fff',800,true));btn('home','回到首頁',630,690,340,86,true)}
 function savePrefs(){try{localStorage.setItem(PREF,JSON.stringify(S.settings))}catch(e){}}
 function settings(){cover(IM.setupBg,0,0,W,H,.72);txt('設定',800,90,46,'center','#ffe58a',1000,true);const s=S.settings;btn('master','主音量 '+s.master+'%',500,185,600,58,false);btn('bgm','BGM '+s.bgm+'%',500,255,600,58,false);btn('sfx','音效 '+s.sfx+'%',500,325,600,58,false);btn('vibrate','震動 '+(s.vibrate?'開':'關'),500,395,600,58,false);btn('graphics','畫質 '+s.graphics,500,465,600,58,false);btn('lang','語言 '+s.lang,500,535,600,58,false);btn('home','回到首頁',630,660,340,76,true)}
