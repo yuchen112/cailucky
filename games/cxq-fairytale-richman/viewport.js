@@ -41,9 +41,10 @@
     const usableW=Math.max(1,C.width-sl-sr),usableH=Math.max(1,C.height-st-sb);
     VIEW.scale=Math.min(usableW/W,usableH/H);
     VIEW.ox=sl+(usableW-W*VIEW.scale)/2;
-    // Landscape UI anchors to the top safe edge. Any aspect-ratio surplus remains below
-    // the 16:9 design space, preventing the whole setup screen from drifting downward.
-    VIEW.oy=st;
+    // Keep the protected 16:9 playfield centered while the independently painted
+    // backdrop fills surplus browser space on ultrawide and unusual landscape windows.
+    VIEW.oy=st+(usableH-H*VIEW.scale)/2;
+    VIEW.cssW=v.w;VIEW.cssH=v.h;VIEW.aspect=v.w/v.h;
 
     document.body.dataset.aspect=(v.w/v.h>2?'ultrawide':v.w/v.h<1.45?'compact':'standard');
   }

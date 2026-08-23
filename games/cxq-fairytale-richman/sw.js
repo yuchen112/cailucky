@@ -1,15 +1,19 @@
-const CACHE='cxq-richman-20260824-1330';
+const CACHE='cxq-richman-20260824-2210';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   './assets/backgrounds/home_scene_v7.webp','./assets/backgrounds/setup_scene_v4.webp',
-  './assets/ui/btn_blue.webp','./assets/ui/btn_red.webp','./assets/ui/char_slot_v2.webp','./assets/ui/player_seat_v2.webp','./assets/ui/role_info_v2.webp',
+  './assets/ui/btn_blue.webp','./assets/ui/btn_red.webp','./assets/ui/player_seat_v2.webp','./assets/ui/role_info_v2.webp',
   './assets/ui/home_menu_new_v1.webp','./assets/ui/home_menu_continue_v1.webp','./assets/ui/home_menu_help_v1.webp','./assets/ui/home_menu_settings_v1.webp',
   './assets/ui/character_stage_v1.webp','./assets/ui/ability_panel_v1.webp',
-  './assets/ui/player_seat_p1_v1.webp','./assets/ui/player_seat_p2_v1.webp','./assets/ui/player_seat_p3_v1.webp','./assets/ui/player_seat_p4_v1.webp',
+  './assets/ui/map_card_frame_v1.webp',
+  './assets/ui/player_seat_wide_p1_v1.webp','./assets/ui/player_seat_wide_p2_v1.webp','./assets/ui/player_seat_wide_p3_v1.webp','./assets/ui/player_seat_wide_p4_v1.webp',
   './assets/ui/status_human_v1.webp','./assets/ui/status_ai_v1.webp','./assets/ui/status_off_v1.webp',
   './assets/characters/portraits/joy_portrait_v1.webp','./assets/characters/portraits/dream_portrait_v1.webp','./assets/characters/portraits/night_portrait_v1.webp','./assets/characters/portraits/sadness_portrait_v1.webp','./assets/characters/portraits/trust_portrait_v1.webp','./assets/characters/portraits/memory_portrait_v1.webp','./assets/characters/portraits/growth_portrait_v1.webp','./assets/characters/portraits/healing_portrait_v1.webp','./assets/characters/portraits/luck_portrait_v1.webp','./assets/characters/portraits/hope_portrait_v1.webp',
   './assets/maps/map_preview_starwish_v1.webp','./assets/maps/map_preview_moonharbor_v1.webp','./assets/maps/map_preview_cloudbazaar_v1.webp',
   './assets/maps/map_world_starwish_v1.webp','./assets/maps/map_world_moonharbor_v1.webp','./assets/maps/map_world_cloudbazaar_v1.webp',
+  './assets/buildings/starwish_l1_v1.webp','./assets/buildings/starwish_l2_v1.webp','./assets/buildings/starwish_l3_v1.webp','./assets/buildings/starwish_landmark_v1.webp',
+  './assets/buildings/moonharbor_l1_v1.webp','./assets/buildings/moonharbor_l2_v1.webp','./assets/buildings/moonharbor_l3_v1.webp','./assets/buildings/moonharbor_landmark_v1.webp',
+  './assets/buildings/cloudbazaar_l1_v1.webp','./assets/buildings/cloudbazaar_l2_v1.webp','./assets/buildings/cloudbazaar_l3_v1.webp','./assets/buildings/cloudbazaar_landmark_v1.webp',
   './assets/tiles/land.webp','./assets/tiles/card_v2.webp','./assets/tiles/shop.webp','./assets/tiles/minigame.webp','./assets/tiles/npc.webp',
   './assets/dice/dice_1.webp','./assets/dice/dice_2.webp','./assets/dice/dice_3.webp','./assets/dice/dice_4.webp','./assets/dice/dice_5.webp','./assets/dice/dice_6.webp',
   '../../assets/characters/cxq-role-joy.webp','../../assets/characters/cxq-role-dream.webp','../../assets/characters/cxq-role-night.webp','../../assets/characters/cxq-role-sadness.webp','../../assets/characters/cxq-role-trust.webp','../../assets/characters/cxq-role-memory.webp','../../assets/characters/cxq-role-growth.webp','../../assets/characters/cxq-role-healing.webp','../../assets/characters/cxq-role-luck.webp','../../assets/characters/cxq-role-hope.webp'
