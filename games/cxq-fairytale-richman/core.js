@@ -14,11 +14,11 @@ const SAVE='cxq_richman_latest_save_v4',PREF='cxq_richman_pref_v1';
 const S={scene:'home',buttons:[],seats:[{type:'human',char:6,diff:'standard'},{type:'ai',char:1,diff:'standard'},{type:'off',char:2,diff:'standard'},{type:'off',char:3,diff:'standard'}],activeSeat:0,money:200000,rounds:30,board:null,msg:'',rolling:false,dice:1,forcedDice:0,pickAnim:null,settings:{master:80,bgm:70,sfx:80,vibrate:true,lang:'zh-Hant',graphics:'medium'}};
 try{Object.assign(S.settings,JSON.parse(localStorage.getItem(PREF)||'{}'))}catch(e){}
 
-const ASSET_REV='20260823-2145';
+const ASSET_REV='20260823-2215';
 function load(k,u){const i=new Image();i.decoding='async';i.onload=()=>{IM[k]=i};i.onerror=()=>{IM[k]=null};i.src=u+'?v='+ASSET_REV;IM[k]=i;return i}
 load('btnBlue',A+'ui/btn_blue.webp');load('btnRed',A+'ui/btn_red.webp');
 load('charSlot',A+'ui/char_slot_v2.webp');load('playerSeat',A+'ui/player_seat_v2.webp');load('roleInfo',A+'ui/role_info_v2.webp');
-load('homeBg',A+'backgrounds/home_scene_v6.png');load('setupBg',A+'backgrounds/setup_scene_v4.png');load('mapBg',A+'backgrounds/map_scene_r1.webp');
+load('homeBg',A+'backgrounds/home_scene_v7.png');load('setupBg',A+'backgrounds/setup_scene_v4.png');load('mapBg',A+'backgrounds/map_scene_r1.webp');
 load('tile_land',A+'tiles/land.webp');load('tile_card',A+'tiles/card.webp');load('tile_shop',A+'tiles/shop.webp');load('tile_minigame',A+'tiles/minigame.webp');load('tile_npc',A+'tiles/npc.webp');
 // Known-corrupt start/event rasters are intentionally not loaded. They are visually quarantined.
 for(let i=1;i<=6;i++)load('dice'+i,A+'dice/dice_'+i+'.webp');
@@ -56,11 +56,9 @@ function homeButton(id,label,x,y,w,h,red,index,enabled=true){
   S.buttons.push({id,x,y,w,h,en:enabled&&!HOME.locked});
 }
 function home(){
-  const now=performance.now(),t=(now-HOME.enteredAt)/1000,sceneA=homeIntro(0,620),canContinue=!!localStorage.getItem(SAVE);
+  const now=performance.now(),sceneA=homeIntro(0,620),canContinue=!!localStorage.getItem(SAVE);
   cover(IM.homeBg,0,0,W,H,1);
   X.save();X.globalAlpha=sceneA;
-  contain(IM.c6,1030,485+Math.sin(t*1.7)*3,188,276,.98);contain(IM.c1,1190,520+Math.sin(t*1.55+1.2)*3,174,254,.97);
-  contain(IM.c7,1320,620+Math.sin(t*1.9+.5)*2,146,168,.99);contain(IM.c8,1420,650-Math.sin(t*1.9+.5)*2,140,160,.99);
   contain(IM.playerSeat,1120,38,430,94,.9);txt('童話棋盤冒險',1335,67,18,'center','#fff7dc',1000,true);txt('擲骰・買地・蓋房・收租・卡片・神明事件',1335,98,13,'center','#fff',850,true);X.restore();
   const logoA=homeIntro(80,520),logoY=(1-logoA)*30;X.save();X.globalAlpha=logoA;txt('CxQ',330,120+logoY,86,'center','#ffe27a',1000,true);txt('童話大富翁',330,198+logoY,62,'center','#fff1be',1000,true);txt('夢想王國資產大冒險',330,252+logoY,19,'center','#f7f2dc',900,true);X.restore();
   homeButton('start','新遊戲',60,330,560,116,true,0);homeButton('continue','繼續遊戲',84,458,512,92,false,1,canContinue);homeButton('help','遊戲說明',84,562,512,92,false,2);homeButton('settings','系統設定',84,666,512,92,false,3);

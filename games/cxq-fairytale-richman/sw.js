@@ -1,7 +1,7 @@
-const CACHE='cxq-richman-20260823-2145';
+const CACHE='cxq-richman-20260823-2215';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
-  './assets/backgrounds/home_scene_v6.png','./assets/backgrounds/setup_scene_v4.png','./assets/backgrounds/map_scene_r1.webp',
+  './assets/backgrounds/home_scene_v7.png','./assets/backgrounds/setup_scene_v4.png','./assets/backgrounds/map_scene_r1.webp',
   './assets/ui/btn_blue.webp','./assets/ui/btn_red.webp','./assets/ui/char_slot_v2.webp','./assets/ui/player_seat_v2.webp','./assets/ui/role_info_v2.webp',
   './assets/tiles/land.webp','./assets/tiles/card.webp','./assets/tiles/shop.webp','./assets/tiles/minigame.webp','./assets/tiles/npc.webp',
   './assets/dice/dice_1.webp','./assets/dice/dice_2.webp','./assets/dice/dice_3.webp','./assets/dice/dice_4.webp','./assets/dice/dice_5.webp','./assets/dice/dice_6.webp',
