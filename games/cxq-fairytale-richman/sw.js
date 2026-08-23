@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20260824-2230';
+const CACHE='cxq-richman-20260824-2330';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   './assets/backgrounds/home_scene_v7.webp','./assets/backgrounds/setup_scene_v4.webp',
@@ -14,6 +14,10 @@ const PRECACHE=[
   './assets/buildings/starwish_l1_v1.webp','./assets/buildings/starwish_l2_v1.webp','./assets/buildings/starwish_l3_v1.webp','./assets/buildings/starwish_landmark_v1.webp',
   './assets/buildings/moonharbor_l1_v1.webp','./assets/buildings/moonharbor_l2_v1.webp','./assets/buildings/moonharbor_l3_v1.webp','./assets/buildings/moonharbor_landmark_v1.webp',
   './assets/buildings/cloudbazaar_l1_v1.webp','./assets/buildings/cloudbazaar_l2_v1.webp','./assets/buildings/cloudbazaar_l3_v1.webp','./assets/buildings/cloudbazaar_landmark_v1.webp',
+  './assets/events/starwish_event_v1.webp','./assets/events/moonharbor_event_v1.webp','./assets/events/cloudbazaar_event_v1.webp',
+  './assets/minigames/star_catch_v1.webp','./assets/minigames/balloon_pop_v1.webp','./assets/minigames/treasure_timing_v1.webp',
+  './assets/npc/wealth_v1.webp','./assets/npc/poverty_v1.webp','./assets/npc/land_v1.webp','./assets/npc/angel_v1.webp','./assets/npc/demon_v1.webp','./assets/npc/death_v1.webp',
+  './assets/dice/dice_throw_1_v1.webp','./assets/dice/dice_throw_2_v1.webp','./assets/dice/dice_throw_3_v1.webp','./assets/dice/dice_throw_4_v1.webp','./assets/dice/dice_throw_5_v1.webp','./assets/dice/dice_throw_6_v1.webp',
   './assets/tiles/land.webp','./assets/tiles/card_v2.webp','./assets/tiles/shop.webp','./assets/tiles/minigame.webp','./assets/tiles/npc.webp',
   './assets/dice/dice_1.webp','./assets/dice/dice_2.webp','./assets/dice/dice_3.webp','./assets/dice/dice_4.webp','./assets/dice/dice_5.webp','./assets/dice/dice_6.webp',
   '../../assets/characters/cxq-role-joy.webp','../../assets/characters/cxq-role-dream.webp','../../assets/characters/cxq-role-night.webp','../../assets/characters/cxq-role-sadness.webp','../../assets/characters/cxq-role-trust.webp','../../assets/characters/cxq-role-memory.webp','../../assets/characters/cxq-role-growth.webp','../../assets/characters/cxq-role-healing.webp','../../assets/characters/cxq-role-luck.webp','../../assets/characters/cxq-role-hope.webp'

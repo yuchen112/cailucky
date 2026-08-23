@@ -12,7 +12,7 @@ for (const item of swContext.precache) {
   const target = item === './' ? path.join(root, 'index.html') : path.resolve(root, item);
   if (!fs.existsSync(target)) throw new Error(`service worker precache missing: ${item}`);
 }
-if (!swContext.cacheName.includes('20260824-2230')) throw new Error('service worker cache revision is stale');
+if (!swContext.cacheName.includes('20260824-2330')) throw new Error('service worker cache revision is stale');
 const storage = new Map();
 const timers = [];
 const draw = new Proxy({}, {
@@ -47,6 +47,10 @@ vm.runInContext(`
   makeBoard();
   S.board.tiles.filter(t=>t.type==='land').slice(0,4).forEach((t,i)=>{t.owner=0;t.level=Math.min(3,i)});
   game(); hud(); openPopup('roster'); popup(); openPopup('playerDetail',{player:S.board.players[0]}); popup();
+  openPopup('event',{name:'王國節慶',desc:'獲得 $6,000'});popup();
+  openPopup('npc',{name:'財神',desc:'獲得 $8,000'});popup();
+  for(let kind=0;kind<3;kind++){S.board.mini={kind,pos:.5,name:['星光接接樂','月港氣球祭','雲端寶箱'][kind],winningChest:1};openPopup('mini',{name:S.board.mini.name});popup()}
+  openPopup('tileInspect',{tile:S.board.tiles.find(t=>t.type==='land')});popup();
   S.scene='result'; S.board.winner=S.board.players[0]; result();
 `, context);
 function buttonsFor(code) {
@@ -57,7 +61,13 @@ function overlap(a, b) { return Math.min(a.x+a.w,b.x+b.w)>Math.max(a.x,b.x)&&Mat
 function allowedNested(a,b){const pair=[a.id,b.id].join('|');return /^seat\d\|(?:seatType|diff)\d$/.test(pair)||/^(?:seatType|diff)\d\|seat\d$/.test(pair)}
 for (const [scene, code] of [
   ['setup','S.scene="setup";setup()'],['map','S.scene="mapSelect";mapSelect()'],['rules','S.scene="rules";rulesSetup()'],
-  ['game','S.scene="game";S.board.popup=null;game()'],['roster','S.scene="game";openPopup("roster");game()'],['result','S.scene="result";result()']
+  ['game','S.scene="game";S.board.popup=null;game()'],['roster','S.scene="game";openPopup("roster");game()'],
+  ['event','S.scene="game";openPopup("event",{name:"王國節慶",desc:"獲得獎勵"});game()'],
+  ['npc','S.scene="game";openPopup("npc",{name:"財神",desc:"獲得獎勵"});game()'],
+  ['miniStar','S.scene="game";S.board.mini={kind:0,pos:.5,name:"星光接接樂"};openPopup("mini",{name:S.board.mini.name});game()'],
+  ['miniBalloon','S.scene="game";S.board.mini={kind:1,pos:.5,name:"月港氣球祭"};openPopup("mini",{name:S.board.mini.name});game()'],
+  ['miniTreasure','S.scene="game";S.board.mini={kind:2,pos:.5,name:"雲端寶箱",winningChest:1};openPopup("mini",{name:S.board.mini.name});game()'],
+  ['inspect','S.scene="game";openPopup("tileInspect",{tile:S.board.tiles.find(t=>t.type==="land")});game()'],['result','S.scene="result";result()']
 ]) {
   const buttons=buttonsFor(code);
   for(const b of buttons){if(b.x<0||b.y<0||b.x+b.w>1600||b.y+b.h>900)throw new Error(`${scene}: ${b.id} outside safe area`)}
@@ -76,7 +86,9 @@ vm.runInContext(`
   }
   S.mapIndex=0;makeBoard();
   const owner=S.board.players[0], land=S.board.tiles.find(t=>t.type==='land');
-  land.owner=owner.id;land.level=1;owner.rentBoost=1;rentFor(land,S.board.players[1]);
+  land.owner=owner.id;land.level=1;owner.rentBoost=1;rentEstimate(land,S.board.players[1]);
+  if(owner.rentBoost!==1)throw new Error('rent preview consumed the rent boost');
+  rentFor(land,S.board.players[1]);
   if(owner.rentBoost!==0)throw new Error('rent boost was not consumed by an actual rent calculation');
 `, context);
 function drainTimers(limit = 20) {
