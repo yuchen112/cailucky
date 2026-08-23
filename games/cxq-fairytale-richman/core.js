@@ -1,4 +1,5 @@
 'use strict';
+function richCard(c,x,y,w,h,buttonId=''){const d=cardDef(c),im=IM['card_'+d.cover];contain(im,x,y,w,h,1);X.save();X.fillStyle='rgba(4,10,31,.9)';X.fillRect(x,y+h-68,w,68);X.restore();fitTxt(d.name,x+w/2,y+h-45,w-16,16,'center','#fff3b3',1000,true,10);txt(`${d.cost} 點券`,x+w/2,y+h-19,12,'center','#d9efff',900,true);if(buttonId)S.buttons.push({id:buttonId,x,y,w,h,en:true})}
 const C=document.getElementById('game'),X=C.getContext('2d',{alpha:false});
 const W=1600,H=900,MW=3200,MH=1800,A='assets/';
 const IM={};
@@ -20,7 +21,7 @@ const S={scene:'home',buttons:[],seats:[{type:'human',char:6,diff:'standard'},{t
 REGION_NAMES=new Proxy(REGION_NAMES,{get(target,prop){if(/^\d+$/.test(String(prop)))return (MAPS[S.board?.mapIndex??S.mapIndex]?.regions||target)[Number(prop)]||target[Number(prop)];return Reflect.get(target,prop)}});
 try{Object.assign(S.settings,JSON.parse(localStorage.getItem(PREF)||'{}'))}catch(e){}
 
-const ASSET_REV='20260824-2330';
+const ASSET_REV='20260825-0130';
 function load(k,u){const i=new Image();i.decoding='async';i.onload=()=>{IM[k]=i};i.onerror=()=>{IM[k]=null};i.src=u+'?v='+ASSET_REV;IM[k]=i;return i}
 load('btnBlue',A+'ui/btn_blue.webp');load('btnRed',A+'ui/btn_red.webp');
 load('homeMenuNew',A+'ui/home_menu_new_v1.webp');load('homeMenuContinue',A+'ui/home_menu_continue_v1.webp');load('homeMenuHelp',A+'ui/home_menu_help_v1.webp');load('homeMenuSettings',A+'ui/home_menu_settings_v1.webp');
@@ -38,6 +39,7 @@ for(let i=1;i<=6;i++)load('dice'+i,A+'dice/dice_'+i+'.webp');
 for(let i=1;i<=6;i++)load('diceThrow'+i,A+`dice/dice_throw_${i}_v1.webp`);
 MAPS.forEach((m,i)=>load('eventScene'+i,A+`events/${m.key}_event_v1.webp`));
 load('miniStar',A+'minigames/star_catch_v1.webp');load('miniBalloon',A+'minigames/balloon_pop_v1.webp');load('miniTreasure',A+'minigames/treasure_timing_v1.webp');
+['precision_dice','remote_dice','shield','speed','roadblock','teleport','land_purchase','free_upgrade','discount','rent','swap','stop'].forEach(k=>load('card_'+k,A+'cards/'+k+'_v1.webp'));
 load('npcWealth',A+'npc/wealth_v1.webp');load('npcPoverty',A+'npc/poverty_v1.webp');load('npcLand',A+'npc/land_v1.webp');load('npcAngel',A+'npc/angel_v1.webp');load('npcDemon',A+'npc/demon_v1.webp');load('npcDeath',A+'npc/death_v1.webp');
 CHAR_KEYS.forEach((k,i)=>{load('c'+i,'../../assets/characters/cxq-role-'+k+'.webp');load('portrait'+i,A+'characters/portraits/'+k+'_portrait_v1.webp')});
 CHAR_KEYS.forEach(k=>{load(k+'WalkRightContact',A+'characters/'+k+'/walk_right_contact_v1.webp');load(k+'WalkRightPassing',A+'characters/'+k+'/walk_right_passing_v1.webp')});

@@ -1,4 +1,8 @@
-CxQ Fairy-tale Richman — latest mainline
+CxQ Fairy-tale Richman — testing branch 20260825-0130
+Current batch: data-driven card catalogue, 12 separately generated card covers, coupon shop, bank, non-fixed roaming gods, expanded facilities, card album and full current-player data panel.
+Main branch remains unchanged pending user approval.
+
+CxQ Fairy-tale Richman — previous mainline notes
 Updated 2026-08-18 19:00 +08:00
 - Consolidated runtime remains core.js + game.js only; obsolete repair/skin overlay files stay removed.
 - Help/Settings crash path remains fixed with working image-backed screens.

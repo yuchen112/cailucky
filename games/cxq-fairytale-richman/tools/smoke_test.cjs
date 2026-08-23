@@ -12,7 +12,7 @@ for (const item of swContext.precache) {
   const target = item === './' ? path.join(root, 'index.html') : path.resolve(root, item);
   if (!fs.existsSync(target)) throw new Error(`service worker precache missing: ${item}`);
 }
-if (!swContext.cacheName.includes('20260824-2330')) throw new Error('service worker cache revision is stale');
+if (!swContext.cacheName.includes('20260825-0130')) throw new Error('service worker cache revision is stale');
 const storage = new Map();
 const timers = [];
 const draw = new Proxy({}, {
