@@ -1322,6 +1322,19 @@ function drawTile(t) {
     tileSize = t.type === "land" ? 132 : 152;
   X.save();
   X.translate(shiftX, shiftY);
+  if (t.type === "land" && t.owner >= 0) {
+    X.save();
+    X.strokeStyle = PLAYER_COLORS[t.owner];
+    X.fillStyle = PLAYER_COLORS[t.owner] + "33";
+    X.lineWidth = 13;
+    X.shadowColor = PLAYER_COLORS[t.owner];
+    X.shadowBlur = 16;
+    X.beginPath();
+    X.arc(t.x, t.y, 72, 0, Math.PI * 2);
+    X.fill();
+    X.stroke();
+    X.restore();
+  }
   contain(
     tileImage(t.type),
     t.x - tileSize / 2,
@@ -1398,16 +1411,16 @@ function drawTile(t) {
             true,
           );
       }
-      stretch(IM["playerSeatP" + t.owner], t.x - 66, t.y + 20, 132, 42, 0.99);
-      contain(IM["portrait" + owner?.char], t.x - 61, t.y + 23, 36, 36, 0.99);
+      stretch(IM["playerSeatP" + t.owner], t.x - 73, t.y + 18, 146, 46, 0.99);
+      contain(IM["portrait" + owner?.char], t.x - 67, t.y + 22, 38, 38, 0.99);
       fitTxt(
-        `${t.owner + 1}P ${owner ? CHAR_NAMES[owner.char] : ""}`,
-        t.x + 18,
+        `${t.owner + 1}P ${owner ? CHAR_NAMES[owner.char] : ""} Lv${t.level}`,
+        t.x + 20,
         t.y + 41,
-        80,
+        88,
         12,
         "center",
-        PLAYER_COLORS[t.owner],
+        "#ffffff",
         1000,
         true,
         9,
@@ -2190,7 +2203,7 @@ function help() {
     "擲出立體骰子逐格前進；分岔路口可選路，路障、瞬移與交通工具會改變走法。",
     "購買土地並升至 Lv5；大型建築可改建旅館、商場或公園，各有獨立收租效果。",
     "拖曳棋盤自由查看世界；點擊格子可確認地價、地主、建築階級與預估租金。",
-    "卡片以點券在百貨公司購買或出售；銀行可保存現金，每名玩家最多持有 15 張。",
+    "卡片與道具分冊管理；百貨公司可買賣卡片，車輛、路障與炸彈則收入 8 格道具箱。",
     "事件、三種小遊戲及巡遊神明會改變局勢；神明附身效果會持續多個回合。",
     "真人與不同難度 AI 可自由配置 2～4 名；完整角色資料只在該真人回合開放。",
   ];
