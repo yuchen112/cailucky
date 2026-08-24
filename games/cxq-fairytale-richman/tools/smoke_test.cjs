@@ -19,7 +19,21 @@ for (const item of swContext.precache) {
   if (!fs.existsSync(target))
     throw new Error(`service worker precache missing: ${item}`);
 }
-if (!swContext.cacheName.includes("20260825-2100"))
+const projectAssets = [];
+function collectAssets(directory) {
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const full = path.join(directory, entry.name);
+    if (entry.isDirectory()) collectAssets(full);
+    else if (/\.(?:webp|png)$/i.test(entry.name)) projectAssets.push(full);
+  }
+}
+collectAssets(path.join(root, "assets"));
+for (const file of projectAssets) {
+  const cachePath = "./" + path.relative(root, file).replaceAll("\\", "/");
+  if (!swContext.precache.includes(cachePath))
+    throw new Error(`unused or uncached project asset remains: ${cachePath}`);
+}
+if (!swContext.cacheName.includes("20260825-2230"))
   throw new Error("service worker cache revision is stale");
 const manifest = JSON.parse(
   fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"),
@@ -104,6 +118,16 @@ for (const file of ["core.js", "game.js"])
   vm.runInContext(fs.readFileSync(path.join(root, file), "utf8"), context, {
     filename: file,
   });
+const loadedAssets = JSON.parse(
+  vm.runInContext("JSON.stringify(Object.values(IM).map(image=>image._src).filter(Boolean))", context),
+);
+const precacheSet = new Set(swContext.precache);
+for (const source of loadedAssets) {
+  const clean = source.replace(/\?.*$/, ""),
+    cachePath = clean.startsWith("../") || clean.startsWith("./") ? clean : "./" + clean;
+  if (!precacheSet.has(cachePath))
+    throw new Error(`runtime asset is absent from Safari/PWA precache: ${clean}`);
+}
 vm.runInContext(
   `
   home(); setup(); mapSelect(); rulesSetup();

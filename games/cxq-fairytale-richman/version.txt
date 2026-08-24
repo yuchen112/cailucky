@@ -1,4 +1,4 @@
-CxQ Fairy-tale Richman — testing branch 20260825-2100
+CxQ Fairy-tale Richman — testing branch 20260825-2230
 
 Release status
 - This build belongs only to preview/cxq-fairytale-richman-testing.
@@ -26,15 +26,15 @@ Game flow
 - Passing the start tile pays the travel allowance exactly once; landing on start no longer duplicates that payment.
 - Home -> character and P1-P4 seat setup -> map selection -> game conditions -> board -> result is one integrated state path.
 - Seats support human, AI difficulty and empty states; active characters remain unique.
-- Three maps use independent 36-node routes, facilities, economy multipliers and branch choices.
+- Three maps use independent 36-node routes, facilities and economy multipliers. These authored oval-road maps intentionally expose no invisible shortcut branches.
 - The board can be dragged and zoomed, with minimap, return-to-character camera and tile inspection.
-- Turn phases include pre-roll cards, one-to-three dice, animated movement, branch selection, tile resolution and end-of-turn effects.
+- Turn phases include pre-roll cards and tools, one-to-three dice, animated movement, tile resolution and end-of-turn effects.
 - Property play includes ownership markers, rent, shields, discounts, five upgrade levels, large-building choices and visible construction animation.
-- Coupon shops buy and sell cards, banks move cash to deposits, and card capacity is fifteen.
-- Gods roam instead of occupying a fixed god tile; attachment, replacement and timed positive/negative effects are active.
+- Coupon shops separately buy and sell cards or tools; the card book holds fifteen cards and the tool box holds eight vehicles, roadblocks or bombs.
+- Gods roam instead of occupying a fixed god tile; encounters visibly attach a companion to the character, replacement releases the former god, and expiration returns it to the road.
 - Current-player data is restricted to the active human and includes overview, property camera jumps, card covers and timed effects.
 - Saves migrate older card/state formats, and Safari/PWA assets share one cache revision.
 
 Verification
-- Automated checks cover all setup/game popup scenes, unique card covers, non-fixed god rules, independent routes, branch choices, multi-dice vehicles, save migration, five-level buildings, rent effects, three complete simulated matches and five landscape aspect ratios.
+- Automated checks cover all setup/game popup scenes, complete card/tool interactions, non-fixed god lifecycle, independent routes, multi-dice vehicles, save migration, five-level buildings, rent effects, three complete simulated matches, PWA asset parity and five landscape aspect ratios.
 - Browser QA covers the published home, selection, map, conditions and live board flow with console/page-error inspection.

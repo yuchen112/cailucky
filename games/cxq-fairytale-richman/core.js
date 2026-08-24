@@ -207,7 +207,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-2100";
+const ASSET_REV = "20260825-2230";
 function load(k, u) {
   const i = new Image();
   i.decoding = "async";
@@ -264,8 +264,6 @@ load("miniTreasure", A + "minigames/treasure_timing_v1.webp");
   "precision_dice",
   "remote_dice",
   "shield",
-  "speed",
-  "roadblock",
   "teleport",
   "land_purchase",
   "free_upgrade",
@@ -284,7 +282,6 @@ load("facilityCoupon", A + "facilities/coupon_token_v2.webp");
 load("facilityMagic", A + "facilities/magic_token_v2.webp");
 load("facilityHospital", A + "facilities/hospital_token_v2.webp");
 load("facilityStart", A + "facilities/start_token_v2.webp");
-load("forkSign", A + "facilities/fork_sign_v1.webp");
 load("npcWealth", A + "npc/wealth_v1.webp");
 load("npcFortune", A + "npc/fortune_v1.webp");
 load("npcPoverty", A + "npc/poverty_v1.webp");
@@ -310,7 +307,6 @@ CHAR_KEYS.forEach((k) => {
 MAPS.forEach((m, mi) => {
   for (let level = 1; level <= 5; level++)
     load(`building${mi}_${level}`, A + `buildings/${m.key}_l${level}_v1.webp`);
-  load(`building${mi}_landmark`, A + `buildings/${m.key}_landmark_v1.webp`);
 });
 CHAR_KEYS.forEach((key) =>
   load(`landmark_${key}`, A + `buildings/landmark_${key}_v1.webp`),
@@ -1524,13 +1520,6 @@ function drawMap() {
     const t = b.tiles[pos];
     if (t) contain(IM.tool_roadblock, t.x - 72, t.y - 116, 144, 96, 1);
   }
-  const mapKey = b.mapRules?.key || MAPS[S.mapIndex]?.key;
-  const forks = typeof MAP_BRANCHES === "undefined" ? null : MAP_BRANCHES[mapKey];
-  if (forks)
-    for (const pos of Object.keys(forks)) {
-      const t = b.tiles[+pos];
-      if (t) contain(IM.forkSign, t.x - 48, t.y - 126, 96, 102, 0.96);
-    }
   drawPlayers();
 }
 function playerHudCard(p, i) {
