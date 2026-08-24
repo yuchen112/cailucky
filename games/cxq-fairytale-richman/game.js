@@ -1617,10 +1617,7 @@ function useCard(i) {
       .filter((x) => x.id !== p.id)
       .sort((a, b) => b.cash - a.cash)[0];
     if (o) o.skip++;
-  } else if (c === "roadblock")
-    S.board.roadblocks = (S.board.roadblocks || []).concat(
-      (p.pos + 4) % S.board.tiles.length,
-    );
+  }
   addLog(`${p.id + 1}P 使用 ${d.name}`);
   S.board.popup = null;
   saveGame();
@@ -2005,9 +2002,7 @@ function action(id) {
       }
     }
     p.cards.splice(q.cardIndex, 1);
-    if (c === "roadblock") {
-      if (!(S.board.roadblocks || []).includes(index)) S.board.roadblocks.push(index);
-    } else if (c === "teleport") {
+    if (c === "teleport") {
       p.pos = index;
       focus();
     } else if (c === "buyland" && t.type === "land" && t.owner < 0) {

@@ -271,6 +271,16 @@ vm.runInContext(
   godP.effects=[{kind:'窮神',turns:1}];S.board.npcs=[];tickEffects(godP);
   if(godP.effects.length||!S.board.npcs.some(n=>n.name==='窮神'))throw new Error('expired god did not return to roaming state');
   S.board.popup=null;S.board.npcs=[];spawnNPCs(3);
+  const cardP=cp(), cardOpponent=S.board.players[1];S.board.phase='pre-roll';
+  cardP.cards=['shield'];useCard(0);if(cardP.shield!==1||cardP.cards.length)throw new Error('shield card flow failed');
+  cardP.cards=['remote'];useCard(0);useChosenDice(4);if(S.forcedDice!==4||cardP.cards.length)throw new Error('chosen-dice card flow failed');
+  cardP.cards=['stop'];useCard(0);useTargetCard(cardOpponent.id);if(cardOpponent.skip!==1||cardP.cards.length)throw new Error('target stop-card flow failed');
+  const teleportTarget=S.board.tiles.find(t=>t.type==='event');cardP.cards=['teleport'];useCard(0);action('cardTile'+teleportTarget.index);
+  if(cardP.pos!==teleportTarget.index||cardP.cards.length)throw new Error('teleport target flow failed');
+  const purchaseTarget=S.board.tiles.find(t=>t.type==='land'&&t.owner<0);cardP.cards=['buyland'];cardP.cash=500000;useCard(0);action('cardTile'+purchaseTarget.index);
+  if(purchaseTarget.owner!==cardP.id||cardP.cards.length)throw new Error('land-purchase target flow failed');
+  purchaseTarget.level=0;cardP.cards=['upgrade'];useCard(0);if(purchaseTarget.level!==1||cardP.cards.length)throw new Error('free-upgrade card flow failed');
+  cardP.cards=['discount','rent'];useCard(0);useCard(0);if(cardP.discount!==1||cardP.rentBoost!==1||cardP.cards.length)throw new Error('property effect-card flow failed');
   const testP=cp(); testP.tools=['speed'];S.board.phase='pre-roll';useTool(0);
   if(testP.diceCount!==2||testP.vehicleTurns!==5)throw new Error('vehicle card did not enable multi-dice turns');
   testP.tools=['car'];S.board.phase='pre-roll';useTool(0);
