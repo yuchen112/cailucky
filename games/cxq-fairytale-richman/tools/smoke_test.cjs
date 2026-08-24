@@ -19,7 +19,7 @@ for (const item of swContext.precache) {
   if (!fs.existsSync(target))
     throw new Error(`service worker precache missing: ${item}`);
 }
-if (!swContext.cacheName.includes("20260825-1930"))
+if (!swContext.cacheName.includes("20260825-2100"))
   throw new Error("service worker cache revision is stale");
 const manifest = JSON.parse(
   fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"),
@@ -233,6 +233,7 @@ vm.runInContext(
   if(!IM.tile_land?._src?.includes('land_parcel_v1.webp'))throw new Error('roadside land parcel art is not active');
   for(let i=1;i<=6;i++)if(!IM['diceThrow'+i]?._src?.includes('_v2.webp'))throw new Error('physical throw die missing for face '+i);
   for(const key of ['speed','car','roadblock','bomb'])if(!IM['tool_'+key]?.complete)throw new Error('tool art missing: '+key);
+  for(const key of ['npcWealth','npcFortune','npcPoverty','npcMisfortune','npcLand','npcAngel','npcDemon','npcDeath'])if(!IM[key]?.complete)throw new Error('independent roaming-god art missing: '+key);
   if(CARD_POOL.some(id=>cardDef(id).kind==='tool')||TOOL_POOL.some(id=>cardDef(id).kind!=='tool'))throw new Error('cards and tools are mixed in their pools');
   for(const key of ['buildingSpecialHotel','buildingSpecialMall','buildingSpecialPark'])if(!IM[key]?.complete)throw new Error('special building art missing: '+key);
   for(const key of CHAR_KEYS)if(!IM['landmark_'+key]?.complete)throw new Error('character landmark art missing: '+key);
@@ -261,6 +262,15 @@ vm.runInContext(
   S.board.popup=null;
   if(S.board.turnBanner?.player!==0)throw new Error('opening turn banner missing');turnBannerHud();
   if(Object.keys(MAP_BRANCHES).length)throw new Error('oval maps expose an invisible route fork');
+  S.board.npcs=[{name:'財神',pos:5,dir:1}];spawnNPCs(3);
+  if(S.board.npcs.length!==3||S.board.npcs.filter(n=>n.name==='財神').length!==1)throw new Error('roaming gods were replaced or duplicated while replenishing');
+  const godP=cp();godP.effects=[{kind:'財神',turns:4}];S.board.npcs=S.board.npcs.filter(n=>n.name!=='財神');spawnNPCs(3);
+  if(S.board.npcs.some(n=>n.name==='財神'))throw new Error('attached god respawned on the map');
+  S.board.npcs=[{name:'窮神',pos:godP.pos,dir:1}];applyNPCByName('窮神',godP);
+  if(!godP.effects.some(e=>e.kind==='窮神')||godP.effects.some(e=>e.kind==='財神')||!S.board.npcs.some(n=>n.name==='財神'))throw new Error('god replacement did not release the former companion');
+  godP.effects=[{kind:'窮神',turns:1}];S.board.npcs=[];tickEffects(godP);
+  if(godP.effects.length||!S.board.npcs.some(n=>n.name==='窮神'))throw new Error('expired god did not return to roaming state');
+  S.board.popup=null;S.board.npcs=[];spawnNPCs(3);
   const testP=cp(); testP.tools=['speed'];S.board.phase='pre-roll';useTool(0);
   if(testP.diceCount!==2||testP.vehicleTurns!==5)throw new Error('vehicle card did not enable multi-dice turns');
   testP.tools=['car'];S.board.phase='pre-roll';useTool(0);

@@ -727,6 +727,20 @@ function attachEffect(p, kind, turns) {
   if (e) e.turns = Math.max(e.turns, turns);
   else p.effects.push({ kind, turns });
 }
+function isGodEffect(effect) {
+  return NPC_DEFS.some((d) => d.name === effect?.kind && !["乞丐", "惡犬"].includes(d.name));
+}
+function releaseGod(name, nearPos = 0) {
+  const b = S.board;
+  if (!b?.gods || !name || b.npcs.some((n) => n.name === name)) return;
+  const occupied = new Set([
+    ...b.players.filter((p) => !p.bankrupt).map((p) => p.pos),
+    ...b.npcs.map((n) => n.pos),
+  ]);
+  let pos = (nearPos + 4 + Math.floor(Math.random() * Math.max(1, b.tiles.length - 8))) % b.tiles.length;
+  for (let i = 0; i < b.tiles.length && occupied.has(pos); i++) pos = (pos + 1) % b.tiles.length;
+  b.npcs.push({ name, pos, dir: Math.random() < 0.5 ? -1 : 1 });
+}
 function tickEffects(p) {
   for (const e of p.effects || []) {
     if (e.kind === "財神") cashGain(p, 1800);
@@ -739,11 +753,15 @@ function tickEffects(p) {
     else if (e.kind === "死神" && p.cards.length && Math.random() < 0.3)
       p.cards.splice(Math.floor(Math.random() * p.cards.length), 1);
   }
+  const expired = (p.effects || []).filter((e) => e.turns <= 1 && isGodEffect(e));
   p.effects = (p.effects || [])
     .map((e) => ({ ...e, turns: e.turns - 1 }))
     .filter((e) => e.turns > 0);
-  if (S.board?.gods && S.board.npcs.length < 3 && Math.random() < 0.3)
-    spawnNPCs();
+  for (const e of expired) {
+    releaseGod(e.kind, p.pos);
+    addLog(`${e.kind}離開 ${p.id + 1}P，重新回到地圖巡遊`);
+  }
+  if (S.board?.gods) spawnNPCs(3);
 }
 function markUpgrade(t) {
   if (S.board) S.board.buildAnim = { tile: t, at: performance.now() };
@@ -900,20 +918,29 @@ function focus(now = false) {
     b.cam.target = null;
   } else b.cam.target = { x: tx, y: ty };
 }
-function spawnNPCs() {
+function spawnNPCs(target = 3) {
   const b = S.board,
     pool = NPC_DEFS.filter((n) => !["乞丐", "惡犬"].includes(n.name)),
-    chosen = [];
-  while (chosen.length < 3) {
-    const d = pool[Math.floor(Math.random() * pool.length)];
-    if (!chosen.some((x) => x.name === d.name))
-      chosen.push({
-        name: d.name,
-        pos: 2 + Math.floor(Math.random() * (b.tiles.length - 3)),
-        dir: Math.random() < 0.5 ? -1 : 1,
-      });
+    attached = new Set(b.players.flatMap((p) => (p.effects || []).filter(isGodEffect).map((e) => e.kind))),
+    names = new Set((b.npcs || []).map((n) => n.name)),
+    occupied = new Set([
+      ...b.players.filter((p) => !p.bankrupt).map((p) => p.pos),
+      ...(b.npcs || []).map((n) => n.pos),
+    ]);
+  b.npcs ||= [];
+  const available = pool.filter((d) => !attached.has(d.name) && !names.has(d.name));
+  while (b.npcs.length < target && available.length) {
+    const pick = Math.floor(Math.random() * available.length),
+      d = available.splice(pick, 1)[0];
+    let pos = 2 + Math.floor(Math.random() * (b.tiles.length - 3));
+    for (let i = 0; i < b.tiles.length && occupied.has(pos); i++) pos = (pos + 1) % b.tiles.length;
+    occupied.add(pos);
+    b.npcs.push({
+      name: d.name,
+      pos,
+      dir: Math.random() < 0.5 ? -1 : 1,
+    });
   }
-  b.npcs = chosen;
 }
 function moveNPCs() {
   const b = S.board;
@@ -1030,7 +1057,11 @@ function applyNPCByName(name, p) {
   const old = (p.effects || []).find((e) =>
     NPC_DEFS.some((d) => d.name === e.kind),
   );
-  if (old) p.effects = p.effects.filter((e) => e !== old);
+  if (old) {
+    p.effects = p.effects.filter((e) => e !== old);
+    releaseGod(old.kind, p.pos);
+    addLog(`${old.kind}離開 ${p.id + 1}P，由${name}接替附身`);
+  }
   n.apply(p);
   if (!(p.effects || []).some((e) => e.kind === name))
     attachEffect(p, name, ["死神"].includes(name) ? 13 : 7);
@@ -1691,6 +1722,8 @@ function loadGame() {
     });
     S.board.players.forEach((p) => {
       p.effects = p.effects || [];
+      const legacyGod = p.effects.filter(isGodEffect).at(-1);
+      p.effects = p.effects.filter((e) => !isGodEffect(e) || e === legacyGod);
       const migrated = (p.cards || []).map((c) => cardDef(c).id).filter(Boolean);
       p.tools = [...(p.tools || []), ...migrated.filter((c) => cardDef(c).kind === "tool")]
         .map((c) => toolDef(c).id)
@@ -1707,6 +1740,18 @@ function loadGame() {
       p.bombSteps = p.bombSteps || 0;
       p.direction = p.direction || 1;
     });
+    const attachedGods = new Set(S.board.players.flatMap((p) => p.effects.filter(isGodEffect).map((e) => e.kind))),
+      seenGods = new Set();
+    S.board.npcs = S.board.gods
+      ? S.board.npcs.filter((n) => {
+          if (!NPC_DEFS.some((d) => d.name === n.name) || attachedGods.has(n.name) || seenGods.has(n.name)) return false;
+          seenGods.add(n.name);
+          n.pos = ((Number(n.pos) || 0) + S.board.tiles.length) % S.board.tiles.length;
+          n.dir = n.dir === -1 ? -1 : 1;
+          return true;
+        })
+      : [];
+    if (S.board.gods) spawnNPCs(3);
     S.scene = S.board.winner ? "result" : "game";
     if (S.scene === "game") {
       focus(true);

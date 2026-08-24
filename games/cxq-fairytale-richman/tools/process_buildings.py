@@ -52,12 +52,26 @@ def extract(image: Image.Image) -> Image.Image:
     return Image.fromarray(rgba, "RGBA")
 
 
+def extract_exact_checker(image: Image.Image) -> Image.Image:
+    """Remove baked light checker tiles even inside enclosed character gaps.
+
+    Generated pale hair and clothing are warm tinted, while the preview checker is
+    near-perfect neutral gray.  The tighter threshold preserves those subject whites.
+    """
+    rgba = np.asarray(image.convert("RGBA")).copy()
+    rgb = rgba[:, :, :3].astype(np.int16)
+    checker = (rgb.max(axis=2) - rgb.min(axis=2) <= 2) & (rgb.mean(axis=2) >= 238)
+    bg = Image.fromarray((checker * 255).astype(np.uint8), "L").filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(.7))
+    rgba[:, :, 3] = np.minimum(rgba[:, :, 3], 255 - np.asarray(bg))
+    return Image.fromarray(rgba, "RGBA")
+
+
 if __name__ == "__main__":
     sources = [Path(p) for p in sys.argv[1:]] or sorted(ROOT.glob("*.png"))
     for source in sources:
         original = Image.open(source)
         if source.parent.name == "ui": original.info["cxq_remove_all_neutral"] = True
-        prepared = extract(original)
+        prepared = extract_exact_checker(original) if source.stem in {"fortune_v1", "misfortune_v1"} else extract(original)
         prepared.thumbnail((1536 if prepared.width > prepared.height * 1.8 else 768, 768), Image.Resampling.LANCZOS)
         target = source.with_suffix(".webp")
         prepared.save(target, "WEBP", quality=90, method=6)

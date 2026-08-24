@@ -207,7 +207,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-1930";
+const ASSET_REV = "20260825-2100";
 function load(k, u) {
   const i = new Image();
   i.decoding = "async";
@@ -286,7 +286,9 @@ load("facilityHospital", A + "facilities/hospital_token_v2.webp");
 load("facilityStart", A + "facilities/start_token_v2.webp");
 load("forkSign", A + "facilities/fork_sign_v1.webp");
 load("npcWealth", A + "npc/wealth_v1.webp");
+load("npcFortune", A + "npc/fortune_v1.webp");
 load("npcPoverty", A + "npc/poverty_v1.webp");
+load("npcMisfortune", A + "npc/misfortune_v1.webp");
 load("npcLand", A + "npc/land_v1.webp");
 load("npcAngel", A + "npc/angel_v1.webp");
 load("npcDemon", A + "npc/demon_v1.webp");
@@ -1248,9 +1250,9 @@ function npcImage(name) {
   return (
     {
       財神: IM.npcWealth,
-      福神: IM.npcWealth,
+      福神: IM.npcFortune,
       窮神: IM.npcPoverty,
-      衰神: IM.npcPoverty,
+      衰神: IM.npcMisfortune,
       乞丐: IM.npcPoverty,
       惡犬: IM.npcPoverty,
       土地公: IM.npcLand,
@@ -1493,6 +1495,16 @@ function drawPlayers() {
       1000,
       true,
     );
+    const god = (p.effects || []).find((e) => isGodEffect(e));
+    if (god) {
+      X.save();
+      X.shadowColor = "rgba(255,225,120,.9)";
+      X.shadowBlur = 14;
+      contain(npcImage(god.kind), x - 102, y - 112, 76, 88, 0.98);
+      X.restore();
+      stretch(IM.roleInfo, x - 104, y - 50, 82, 28, 0.96);
+      fitTxt(`${god.kind} ${god.turns}`, x - 63, y - 36, 72, 11, "center", "#fff4bd", 1000, true, 8);
+    }
     if (p.bombSteps > 0) {
       contain(IM.tool_bomb, x + 36, y - 112, 64, 64, 1);
       txt(String(p.bombSteps), x + 69, y - 94, 13, "center", "#fff2a5", 1000, true);
