@@ -1,4 +1,4 @@
-CxQ Fairy-tale Richman — testing branch 20260825-1630
+CxQ Fairy-tale Richman — testing branch 20260825-1800
 
 Release status
 - This build belongs only to preview/cxq-fairytale-richman-testing.
@@ -6,6 +6,7 @@ Release status
 - The only runtime path is index.html -> core.js + viewport.js + game.js. The obsolete home-richman4 overlay and temporary patch files are removed.
 
 Art and presentation
+- Dice throws now use six independently generated physical ivory-and-gold dice without the former floating cushion. The throw travels from the action console into the board, rotates in flight, bounces, settles and only then presents the result.
 - All three board worlds now use independently generated loop-road backgrounds authored for gameplay readability; movement nodes share the visible road centerline and the map selector/minimap use the same world art.
 - All ten CxQ characters now have an independently generated completed-region landmark. A completed region promotes one anchor property to its owner's character landmark while the remaining properties retain their map building progression.
 - Property ownership plaques were moved below buildings and use player color, P-number and character portrait together, preventing the old plaque/building overlap and making ownership readable without relying on color alone.

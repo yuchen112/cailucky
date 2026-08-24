@@ -1259,9 +1259,14 @@ function moveSteps(steps) {
 function rollDice() {
   if (S.rolling || !S.board || S.board.popup || S.board.winner) return;
   const p = cp();
+  S.board.turnBanner = null;
   S.board.phase = "rolling";
   S.rolling = true;
-  S.diceAnim = { start: performance.now(), duration: 920 };
+  const previewCount = S.forcedDice
+    ? 1
+    : Math.max(1, Math.min(3, p.diceCount || 1));
+  S.diceResults = [];
+  S.diceAnim = { start: performance.now(), duration: 920, count: previewCount };
   let spins = 0;
   const timer = setInterval(() => {
     S.dice = 1 + Math.floor(Math.random() * 6);
@@ -1286,6 +1291,8 @@ function rollDice() {
         p.slow = 0;
       }
       S.diceResults = results;
+      S.diceAnim.results = results;
+      S.diceAnim.settleAt = performance.now();
       S.dice = results[0];
       if (p.vehicleTurns > 0 && --p.vehicleTurns === 0) p.diceCount = 1;
       sfx("dice");

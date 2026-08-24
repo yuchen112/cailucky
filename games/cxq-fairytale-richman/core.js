@@ -198,7 +198,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-1630";
+const ASSET_REV = "20260825-1800";
 function load(k, u) {
   const i = new Image();
   i.decoding = "async";
@@ -244,7 +244,7 @@ load("tile_minigame", A + "tiles/minigame.webp");
 // Known-corrupt start/event rasters are intentionally not loaded. They are visually quarantined.
 for (let i = 1; i <= 6; i++) load("dice" + i, A + "dice/dice_" + i + ".webp");
 for (let i = 1; i <= 6; i++)
-  load("diceThrow" + i, A + `dice/dice_throw_${i}_v1.webp`);
+  load("diceThrow" + i, A + `dice/dice_throw_${i}_v2.webp`);
 MAPS.forEach((m, i) =>
   load("eventScene" + i, A + `events/${m.key}_event_v1.webp`),
 );
@@ -1580,29 +1580,52 @@ function playerHudCard(p, i) {
 function diceThrowOverlay() {
   const q = S.diceAnim;
   if (!q) return;
-  const u = Math.min(1, (performance.now() - q.start) / q.duration),
-    lift = Math.sin(u * Math.PI) * 130,
-    spin = u < 0.7 ? Math.sin(u * Math.PI * 4) * 0.12 : 0,
-    sz = 300 + Math.sin(u * Math.PI) * 70,
-    results = S.diceResults?.length ? S.diceResults : [S.dice],
+  const now = performance.now(),
+    u = Math.min(1, (now - q.start) / q.duration),
+    count = q.count || 1,
+    results = q.results?.length
+      ? q.results
+      : Array.from({ length: count }, (_, i) => ((S.dice + i * 2 - 1) % 6) + 1),
     total = results.reduce((sum, value) => sum + value, 0);
+  X.save();
+  const shade = Math.sin(Math.min(1, u * 1.5) * Math.PI) * 0.22;
+  X.fillStyle = `rgba(3,7,22,${shade})`;
+  X.fillRect(0, 0, W, H);
+  X.restore();
   results.forEach((value, index) => {
-    const offset = (index - (results.length - 1) / 2) * 255;
+    const offset = (index - (results.length - 1) / 2) * 245,
+      travel = Math.min(1, u / 0.72),
+      ease = 1 - Math.pow(1 - travel, 3),
+      launchX = 1350 + index * 24,
+      targetX = 800 + offset,
+      x = launchX + (targetX - launchX) * ease,
+      groundY = 505 + Math.abs(offset) * 0.035,
+      lift = Math.sin(travel * Math.PI) * (250 + index * 28),
+      settleAge = q.settleAt ? Math.max(0, now - q.settleAt) : 0,
+      bounce = q.settleAt
+        ? Math.abs(Math.sin(settleAge / 72)) * Math.max(0, 54 - settleAge * 0.11)
+        : 0,
+      y = 720 + (groundY - 720) * ease - lift - bounce,
+      spin = q.settleAt ? 0 : u * (index % 2 ? -7.5 : 8.5),
+      squash = q.settleAt && settleAge < 90 ? 0.9 : 1,
+      sz = 205 + Math.sin(travel * Math.PI) * 42;
     X.save();
-    X.translate(800 + offset, 470 - lift + Math.abs(offset) * 0.04);
-    X.rotate(spin * (index % 2 ? -1 : 1));
-    X.shadowColor = "#ffe27a";
-    X.shadowBlur = 45;
+    X.translate(x, y);
+    X.rotate(spin);
+    X.scale(1, squash);
+    X.shadowColor = "rgba(18,10,4,.72)";
+    X.shadowBlur = 28;
+    X.shadowOffsetY = 18;
     contain(IM["diceThrow" + value], -sz / 2, -sz / 2, sz, sz, 1);
     X.restore();
   });
-  if (u > 0.72)
+  if (q.results?.length)
     txt(
       results.length > 1
         ? `${results.join("＋")}＝${total} 點！`
         : `${total} 點！`,
       800,
-      650,
+      690,
       58,
       "center",
       "#fff0a0",

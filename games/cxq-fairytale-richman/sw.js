@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20260825-1630';
+const CACHE='cxq-richman-20260825-1800';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   '../../assets/brand/cxq-app-icon-192.png','../../assets/brand/cxq-app-icon-512.png',
@@ -26,7 +26,7 @@ const PRECACHE=[
   './assets/facilities/roadblock_prop_v2.webp','./assets/facilities/bank_token_v2.webp','./assets/facilities/news_token_v2.webp','./assets/facilities/coupon_token_v2.webp','./assets/facilities/magic_token_v2.webp','./assets/facilities/hospital_token_v2.webp','./assets/facilities/start_token_v2.webp',
   './assets/facilities/fork_sign_v1.webp',
   './assets/npc/wealth_v1.webp','./assets/npc/poverty_v1.webp','./assets/npc/land_v1.webp','./assets/npc/angel_v1.webp','./assets/npc/demon_v1.webp','./assets/npc/death_v1.webp',
-  './assets/dice/dice_throw_1_v1.webp','./assets/dice/dice_throw_2_v1.webp','./assets/dice/dice_throw_3_v1.webp','./assets/dice/dice_throw_4_v1.webp','./assets/dice/dice_throw_5_v1.webp','./assets/dice/dice_throw_6_v1.webp',
+  './assets/dice/dice_throw_1_v2.webp','./assets/dice/dice_throw_2_v2.webp','./assets/dice/dice_throw_3_v2.webp','./assets/dice/dice_throw_4_v2.webp','./assets/dice/dice_throw_5_v2.webp','./assets/dice/dice_throw_6_v2.webp',
   './assets/tiles/land_parcel_v1.webp','./assets/tiles/card_v2.webp','./assets/tiles/shop.webp','./assets/tiles/minigame.webp',
   './assets/dice/dice_1.webp','./assets/dice/dice_2.webp','./assets/dice/dice_3.webp','./assets/dice/dice_4.webp','./assets/dice/dice_5.webp','./assets/dice/dice_6.webp',
   '../../assets/characters/cxq-role-joy.webp','../../assets/characters/cxq-role-dream.webp','../../assets/characters/cxq-role-night.webp','../../assets/characters/cxq-role-sadness.webp','../../assets/characters/cxq-role-trust.webp','../../assets/characters/cxq-role-memory.webp','../../assets/characters/cxq-role-growth.webp','../../assets/characters/cxq-role-healing.webp','../../assets/characters/cxq-role-luck.webp','../../assets/characters/cxq-role-hope.webp'
