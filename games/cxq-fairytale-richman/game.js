@@ -88,11 +88,12 @@ const CARD_DEFS = [
   },
   {
     id: "speed",
-    name: "機車卡",
+    name: "星光機車",
     cost: 35,
     cover: "speed",
-    desc: "本回合可擲兩顆骰子",
+    desc: "裝備後 5 回合使用兩顆骰子",
     timing: "turn",
+    kind: "tool",
   },
   {
     id: "roadblock",
@@ -101,6 +102,7 @@ const CARD_DEFS = [
     cover: "roadblock",
     desc: "在指定道路設置路障",
     timing: "target",
+    kind: "tool",
   },
   {
     id: "teleport",
@@ -158,8 +160,27 @@ const CARD_DEFS = [
     desc: "指定玩家暫停一回合",
     timing: "target",
   },
+  {
+    id: "car",
+    name: "星願汽車",
+    cost: 55,
+    cover: "car",
+    desc: "裝備後 5 回合使用三顆骰子",
+    timing: "turn",
+    kind: "tool",
+  },
+  {
+    id: "bomb",
+    name: "定時炸彈",
+    cost: 40,
+    cover: "bomb",
+    desc: "裝到指定對手身上，移動 12 步後爆炸並住院",
+    timing: "target",
+    kind: "tool",
+  },
 ];
-const CARD_POOL = CARD_DEFS.map((c) => c.id);
+const CARD_POOL = CARD_DEFS.filter((c) => c.kind !== "tool").map((c) => c.id);
+const TOOL_POOL = CARD_DEFS.filter((c) => c.kind === "tool").map((c) => c.id);
 const LEGACY_CARD_MAP = {
   精準骰子: "precision",
   遙控骰子: "remote",
@@ -184,6 +205,10 @@ function cardDef(v) {
     CARD_DEFS.find((c) => c.id === normalized || c.name === normalized) ||
     CARD_DEFS[0]
   );
+}
+function toolDef(v) {
+  const d = cardDef(v);
+  return d.kind === "tool" ? d : CARD_DEFS.find((item) => item.kind === "tool");
 }
 const baseScenePopup = scenePopup;
 scenePopup = function (q, b, p) {
@@ -281,10 +306,12 @@ scenePopup = function (q, b, p) {
     return true;
   }
   if (q.kind === "shop") {
+    const tab = q.tab || "cards",
+      stock = tab === "tools" ? b.toolStock || [] : b.shopStock || [];
     contain(IM.abilityPanel, 230, 55, 1140, 800, 0.99);
     txt("童話百貨公司", 800, 112, 38, "center", "#fff0a5", 1000, true);
     txt(
-      `持有點券 ${p.tickets}｜卡片 ${p.cards.length}/15｜點選商品購買`,
+      `點券 ${p.tickets}｜卡片 ${p.cards.length}/15｜道具 ${(p.tools || []).length}/8`,
       800,
       154,
       18,
@@ -293,19 +320,15 @@ scenePopup = function (q, b, p) {
       900,
       true,
     );
-    (b.shopStock || [])
+    btn("shopTabCards", "卡片", 500, 195, 285, 54, tab === "cards");
+    btn("shopTabTools", "道具", 815, 195, 285, 54, tab === "tools");
+    stock
       .slice(0, 6)
-      .forEach((c, i) =>
-        richCard(
-          c,
-          350 + (i % 3) * 305,
-          190 + Math.floor(i / 3) * 260,
-          220,
-          235,
-          "shopItem" + i,
-        ),
-      );
-    btn("shopSell", "出售卡片", 470, 710, 300, 72, false);
+      .forEach((c, i) => {
+        const renderer = tab === "tools" ? richTool : richCard;
+        renderer(c, 350 + (i % 3) * 305, 260 + Math.floor(i / 3) * 210, 220, 190, "shopItem" + i);
+      });
+    btn("shopSell", tab === "tools" ? "出售道具" : "出售卡片", 470, 710, 300, 72, false);
     btn("skip", "離開百貨公司", 830, 710, 300, 72, true);
     return true;
   }
@@ -334,10 +357,12 @@ scenePopup = function (q, b, p) {
     return true;
   }
   if (q.kind === "shopSell") {
+    const tools = q.tab === "tools",
+      inventory = tools ? p.tools || [] : p.cards;
     contain(IM.abilityPanel, 170, 55, 1260, 800, 0.99);
-    txt("出售卡片", 800, 105, 38, "center", "#fff0a5", 1000, true);
+    txt(tools ? "出售道具" : "出售卡片", 800, 105, 38, "center", "#fff0a5", 1000, true);
     txt(
-      "點選卡片出售，可取回售價一半的點券",
+      `點選${tools ? "道具" : "卡片"}出售，可取回售價一半的點券`,
       800,
       145,
       17,
@@ -346,18 +371,12 @@ scenePopup = function (q, b, p) {
       900,
       true,
     );
-    p.cards
+    inventory
       .slice(0, 10)
-      .forEach((c, i) =>
-        richCard(
-          c,
-          245 + (i % 5) * 225,
-          175 + Math.floor(i / 5) * 270,
-          170,
-          245,
-          "sellCard" + i,
-        ),
-      );
+      .forEach((c, i) => {
+        const renderer = tools ? richTool : richCard;
+        renderer(c, 245 + (i % 5) * 225, 175 + Math.floor(i / 5) * 270, 170, 245, (tools ? "sellTool" : "sellCard") + i);
+      });
     btn("shopSellBack", "返回商品架", 650, 760, 300, 65, true);
     return true;
   }
@@ -417,6 +436,34 @@ scenePopup = function (q, b, p) {
     btn("closeCards", "返回棋盤", 650, 760, 300, 65, true);
     return true;
   }
+  if (q.kind === "tools") {
+    contain(IM.abilityPanel, 170, 55, 1260, 800, 0.99);
+    txt("道具箱", 800, 105, 38, "center", "#fff0a5", 1000, true);
+    txt(`道具 ${(p.tools || []).length}/8｜車輛、路障與定時炸彈`, 800, 145, 17, "center", "#fff", 900, true);
+    (p.tools || []).slice(0, 8).forEach((c, i) =>
+      richTool(c, 270 + (i % 4) * 270, 185 + Math.floor(i / 4) * 270, 200, 240, "useTool" + i),
+    );
+    btn("closeTools", "返回棋盤", 650, 760, 300, 65, true);
+    return true;
+  }
+  if (q.kind === "toolTarget") {
+    contain(IM.abilityPanel, 400, 110, 800, 680, 0.99);
+    txt(toolDef(p.tools[q.toolIndex]).name, 800, 185, 38, "center", "#fff0a5", 1000, true);
+    living().filter((x) => x.id !== p.id).forEach((x, i) =>
+      btn("toolTarget" + x.id, `${x.id + 1}P ${CHAR_NAMES[x.char]}`, 500, 285 + i * 90, 600, 68, i === 0),
+    );
+    btn("closeTools", "取消", 650, 675, 300, 62, false);
+    return true;
+  }
+  if (q.kind === "toolTileTarget") {
+    contain(IM.abilityPanel, 360, 85, 880, 730, 0.99);
+    txt("設置路障", 800, 165, 38, "center", "#fff0a5", 1000, true);
+    q.targets.forEach((index, i) =>
+      btn("toolTile" + index, `道路第 ${index + 1} 格`, 455 + (i % 2) * 360, 270 + Math.floor(i / 2) * 86, 330, 66, i === 0),
+    );
+    btn("closeTools", "取消", 650, 680, 300, 62, false);
+    return true;
+  }
   if (q.kind === "carddraw") {
     const d = cardDef(q.card);
     contain(IM.abilityPanel, 460, 70, 680, 760, 0.99);
@@ -457,10 +504,11 @@ scenePopup = function (q, b, p) {
       900,
       true,
     );
-    btn("playerTabOverview", "總覽", 485, 205, 190, 54, tab === "overview");
-    btn("playerTabLands", "地產", 685, 205, 190, 54, tab === "lands");
-    btn("playerTabCards", "卡片", 885, 205, 190, 54, tab === "cards");
-    btn("playerTabEffects", "狀態", 1085, 205, 190, 54, tab === "effects");
+    btn("playerTabOverview", "總覽", 430, 205, 150, 54, tab === "overview");
+    btn("playerTabLands", "地產", 590, 205, 150, 54, tab === "lands");
+    btn("playerTabCards", "卡片", 750, 205, 150, 54, tab === "cards");
+    btn("playerTabTools", "道具", 910, 205, 150, 54, tab === "tools");
+    btn("playerTabEffects", "狀態", 1070, 205, 150, 54, tab === "effects");
     const rows = [
       `現金　$${x.cash.toLocaleString()}`,
       `銀行存款　$${(x.bank || 0).toLocaleString()}`,
@@ -468,7 +516,8 @@ scenePopup = function (q, b, p) {
       `點券　${x.tickets}`,
       `土地　${lands.length}　｜建築層數　${buildings}`,
       `卡片　${x.cards.length}/15`,
-      `交通工具　${x.diceCount > 1 ? "機車（兩顆骰子）" : "步行（一顆骰子）"}`,
+      `道具　${(x.tools || []).length}/8`,
+      `交通工具　${x.vehicle === "car" ? "星願汽車（三顆骰子）" : x.vehicle === "motorcycle" ? "星光機車（兩顆骰子）" : "步行（一顆骰子）"}`,
       `狀態／神明　${effect}`,
     ];
     if (tab === "overview")
@@ -527,6 +576,13 @@ scenePopup = function (q, b, p) {
         );
       if (!x.cards.length)
         txt("目前沒有卡片", 800, 440, 22, "center", "#fff", 900, true);
+    }
+    if (tab === "tools") {
+      (x.tools || []).slice(0, 8).forEach((c, i) =>
+        richTool(c, 300 + (i % 4) * 245, 300 + Math.floor(i / 4) * 245, 180, 220),
+      );
+      if (!(x.tools || []).length)
+        txt("目前沒有道具", 800, 440, 22, "center", "#fff", 900, true);
     }
     if (tab === "effects") {
       const statuses = [
@@ -912,6 +968,7 @@ function makeBoard() {
     bank: 0,
     pos: 0,
     cards: [],
+    tools: [],
     tickets: 0,
     skip: 0,
     shield: 0,
@@ -954,6 +1011,7 @@ function makeBoard() {
     npcs: [],
     roadblocks: [],
     shopStock: [],
+    toolStock: [],
     turnBanner: { player: 0, start: performance.now() },
   };
   players.forEach((p) => {
@@ -1033,7 +1091,11 @@ function applySpecial(t, p) {
       { length: 6 },
       () => CARD_POOL[Math.floor(Math.random() * CARD_POOL.length)],
     );
-    openPopup("shop");
+    S.board.toolStock = Array.from(
+      { length: 4 },
+      () => TOOL_POOL[Math.floor(Math.random() * TOOL_POOL.length)],
+    );
+    openPopup("shop", { tab: "cards" });
     addLog(`${p.id + 1}P 進入童話百貨公司`);
   } else if (t.type === "coupon") {
     p.tickets += 3;
@@ -1213,6 +1275,12 @@ function moveToTile(next) {
   p.pos = next;
   p.moveAnim = { from: { x: from.x, y: from.y }, to: { x: to.x, y: to.y }, start: performance.now(), dur };
   move.remaining--;
+  if (p.bombSteps > 0 && --p.bombSteps === 0) {
+    p.skip += 3;
+    move.remaining = 0;
+    addLog(`${p.id + 1}P 的定時炸彈爆炸，將住院休息 3 回合`);
+    sfx("loss");
+  }
   move.branchHandledAt = old;
   sfx("step");
   if (p.pos === 0 && old !== 0) {
@@ -1294,7 +1362,10 @@ function rollDice() {
       S.diceAnim.results = results;
       S.diceAnim.settleAt = performance.now();
       S.dice = results[0];
-      if (p.vehicleTurns > 0 && --p.vehicleTurns === 0) p.diceCount = 1;
+      if (p.vehicleTurns > 0 && --p.vehicleTurns === 0) {
+        p.diceCount = 1;
+        p.vehicle = null;
+      }
       sfx("dice");
       if (S.settings.vibrate && navigator.vibrate)
         navigator.vibrate([24, 35, 32]);
@@ -1373,17 +1444,21 @@ function aiResolve() {
     return;
   }
   if (q.kind === "shop") {
-    const choices = (b.shopStock || [])
+    const wantsTool = (p.tools || []).length < 3 && p.diceCount === 1 && Math.random() < (smart ? 0.7 : 0.4),
+      source = wantsTool ? b.toolStock || [] : b.shopStock || [],
+      choices = source
       .map((id, index) => ({ ...cardDef(id), index }))
       .filter((d) => d.cost <= p.tickets)
       .sort((a, z) => z.cost - a.cost);
-    if (choices.length && p.cards.length < 15) {
+    const inventory = wantsTool ? (p.tools ||= []) : p.cards,
+      capacity = wantsTool ? 8 : 15;
+    if (choices.length && inventory.length < capacity) {
       const d = easy
         ? choices[Math.floor(Math.random() * choices.length)]
         : choices[0];
       p.tickets -= d.cost;
-      p.cards.push(d.id);
-      b.shopStock.splice(d.index, 1);
+      inventory.push(d.id);
+      source.splice(d.index, 1);
       addLog(`${p.id + 1}P 以 ${d.cost} 點券購買 ${d.name}`);
     }
     finishAction();
@@ -1400,13 +1475,29 @@ function aiTurn() {
   const smart = p.diff === "smart",
     easy = p.diff === "easy",
     chance = easy ? 0.25 : smart ? 0.9 : 0.58;
+  const tools = p.tools || [];
+  if (p.diceCount === 1) {
+    const vehicleIndex = tools.findIndex((id) => id === "car" || id === "speed");
+    if (vehicleIndex >= 0) useTool(vehicleIndex);
+  }
+  const roadblockIndex = tools.indexOf("roadblock");
+  if (roadblockIndex >= 0 && Math.random() < chance) {
+    p.tools.splice(roadblockIndex, 1);
+    const pos = (p.pos + 4) % S.board.tiles.length;
+    if (!S.board.roadblocks.includes(pos)) S.board.roadblocks.push(pos);
+  }
+  const bombIndex = tools.indexOf("bomb");
+  if (bombIndex >= 0 && Math.random() < chance) {
+    const target = living().filter((x) => x.id !== p.id).sort((a, b) => netWorth(b) - netWorth(a))[0];
+    if (target) { p.tools.splice(bombIndex, 1); target.bombSteps = 12; }
+  }
   if (Math.random() < chance) {
     const own = S.board.tiles.some((t) => t.owner === p.id && t.level < 5),
       priorities = [];
     if (p.shield === 0) priorities.push("shield");
     if (own) priorities.push("upgrade", "rent");
     if (p.cash > 90000) priorities.push("discount");
-    priorities.push(smart ? "precision" : "remote", "speed", "stop");
+    priorities.push(smart ? "precision" : "remote", "stop");
     const wanted = priorities.find((c) => p.cards.includes(c));
     if (wanted) {
       useCard(p.cards.indexOf(wanted));
@@ -1414,6 +1505,31 @@ function aiTurn() {
     }
   }
   if (!S.rolling && !S.board.popup) setTimeout(rollDice, 260);
+}
+function useTool(i) {
+  const p = cp(), c = (p.tools || [])[i], d = toolDef(c);
+  if (!c || S.board.phase !== "pre-roll") return;
+  if (c === "roadblock") {
+    openPopup("toolTileTarget", { toolIndex: i, targets: Array.from({ length: 6 }, (_, n) => (p.pos + n + 1) % S.board.tiles.length) });
+    return;
+  }
+  if (c === "bomb") {
+    openPopup("toolTarget", { toolIndex: i });
+    return;
+  }
+  p.tools.splice(i, 1);
+  if (c === "speed") {
+    p.diceCount = 2;
+    p.vehicleTurns = 5;
+    p.vehicle = "motorcycle";
+  } else if (c === "car") {
+    p.diceCount = 3;
+    p.vehicleTurns = 5;
+    p.vehicle = "car";
+  }
+  addLog(`${p.id + 1}P 裝備 ${d.name}`);
+  S.board.popup = null;
+  saveGame();
 }
 function useCard(i) {
   const p = cp(),
@@ -1428,10 +1544,9 @@ function useCard(i) {
     openPopup("cardTarget", { cardIndex: i, card: c });
     return;
   }
-  if (p.type === "human" && ["roadblock", "teleport", "buyland"].includes(c)) {
+  if (p.type === "human" && ["teleport", "buyland"].includes(c)) {
     let targets;
-    if (c === "roadblock") targets = Array.from({ length: 6 }, (_, n) => (p.pos + n + 1) % S.board.tiles.length);
-    else if (c === "buyland") targets = S.board.tiles.filter((t) => t.type === "land" && t.owner < 0).map((t) => t.index);
+    if (c === "buyland") targets = S.board.tiles.filter((t) => t.type === "land" && t.owner < 0).map((t) => t.index);
     else targets = S.board.tiles.filter((_, index) => index % 5 === 0).map((t) => t.index);
     openPopup("cardTileTarget", { cardIndex: i, targets });
     return;
@@ -1440,10 +1555,7 @@ function useCard(i) {
   if (c === "precision") S.forcedDice = 6;
   else if (c === "remote") S.forcedDice = 3;
   else if (c === "shield") p.shield++;
-  else if (c === "speed") {
-    p.diceCount = 2;
-    p.vehicleTurns = 5;
-  } else if (c === "discount") p.discount = 1;
+  else if (c === "discount") p.discount = 1;
   else if (c === "upgrade") upgradeRandomLand(p);
   else if (c === "buyland") {
     const t = S.board.tiles[p.pos];
@@ -1567,6 +1679,7 @@ function loadGame() {
     S.board.phase = "pre-roll";
     S.board.roadblocks = S.board.roadblocks || [];
     S.board.shopStock = S.board.shopStock || [];
+    S.board.toolStock = S.board.toolStock || [];
     const savedRoute = MAP_ROUTES[MAPS[S.mapIndex]?.key] || MAP_ROUTES.starwish;
     S.board.tiles.forEach((t, i) => {
       t.index = i;
@@ -1578,13 +1691,20 @@ function loadGame() {
     });
     S.board.players.forEach((p) => {
       p.effects = p.effects || [];
-      p.cards = (p.cards || [])
+      const migrated = (p.cards || []).map((c) => cardDef(c).id).filter(Boolean);
+      p.tools = [...(p.tools || []), ...migrated.filter((c) => cardDef(c).kind === "tool")]
+        .map((c) => toolDef(c).id)
+        .slice(0, 8);
+      p.cards = migrated
+        .filter((c) => cardDef(c).kind !== "tool")
         .map((c) => cardDef(c).id)
         .filter(Boolean)
         .slice(0, 15);
       p.bank = p.bank || 0;
       p.diceCount = p.diceCount || 1;
       p.vehicleTurns = p.vehicleTurns || 0;
+      p.vehicle = p.vehicle || (p.diceCount === 3 ? "car" : p.diceCount === 2 ? "motorcycle" : null);
+      p.bombSteps = p.bombSteps || 0;
       p.direction = p.direction || 1;
     });
     S.scene = S.board.winner ? "result" : "game";
@@ -1805,15 +1925,23 @@ function action(id) {
   if (S.scene === "game" && S.board && id.startsWith("shopItem")) {
     const p = cp(),
       si = +id.slice(8),
-      c = S.board.shopStock?.[si],
+      tab = S.board.popup?.tab || "cards",
+      stock = tab === "tools" ? S.board.toolStock : S.board.shopStock,
+      c = stock?.[si],
       d = cardDef(c);
-    if (c && p.tickets >= d.cost && p.cards.length < 15) {
+    const inventory = tab === "tools" ? (p.tools ||= []) : p.cards,
+      capacity = tab === "tools" ? 8 : 15;
+    if (c && p.tickets >= d.cost && inventory.length < capacity) {
       p.tickets -= d.cost;
-      p.cards.push(c);
-      S.board.shopStock.splice(si, 1);
+      inventory.push(c);
+      stock.splice(si, 1);
       addLog(`${p.id + 1}P 以 ${d.cost} 點券購買 ${d.name}`);
     }
-    openPopup("shop");
+    openPopup("shop", { tab });
+    return;
+  }
+  if (S.scene === "game" && S.board && id.startsWith("shopTab")) {
+    openPopup("shop", { tab: id === "shopTabTools" ? "tools" : "cards" });
     return;
   }
   if (S.scene === "game" && S.board && id.startsWith("branchChoice")) {
@@ -1864,11 +1992,11 @@ function action(id) {
     return;
   }
   if (S.scene === "game" && S.board && id === "shopSell") {
-    openPopup("shopSell");
+    openPopup("shopSell", { tab: S.board.popup?.tab || "cards" });
     return;
   }
   if (S.scene === "game" && S.board && id === "shopSellBack") {
-    openPopup("shop");
+    openPopup("shop", { tab: S.board.popup?.tab || "cards" });
     return;
   }
   if (S.scene === "game" && S.board && id.startsWith("sellCard")) {
@@ -1882,6 +2010,17 @@ function action(id) {
       addLog(`${p.id + 1}P 出售 ${d.name}`);
     }
     openPopup("shopSell");
+    return;
+  }
+  if (S.scene === "game" && S.board && id.startsWith("sellTool")) {
+    const p = cp(), index = +id.slice(8), c = (p.tools || [])[index];
+    if (c) {
+      const d = toolDef(c);
+      p.tools.splice(index, 1);
+      p.tickets += Math.max(1, Math.floor(d.cost / 2));
+      addLog(`${p.id + 1}P 出售 ${d.name}`);
+    }
+    openPopup("shopSell", { tab: "tools" });
     return;
   }
   if (S.scene === "game" && S.board && id === "bankDeposit") {
@@ -1996,7 +2135,15 @@ function action(id) {
       openPopup("cards");
       return;
     }
+    if (id === "tools") {
+      openPopup("tools");
+      return;
+    }
     if (id === "closeCards") {
+      b.popup = null;
+      return;
+    }
+    if (id === "closeTools") {
       b.popup = null;
       return;
     }
@@ -2014,6 +2161,30 @@ function action(id) {
     }
     if (id.startsWith("useCard")) {
       useCard(+id.slice(7));
+      return;
+    }
+    if (id.startsWith("useTool")) {
+      useTool(+id.slice(7));
+      return;
+    }
+    if (id.startsWith("toolTile")) {
+      const index = +id.slice(8), q = b.popup;
+      if (q?.kind === "toolTileTarget" && q.targets.includes(index)) {
+        p.tools.splice(q.toolIndex, 1);
+        if (!b.roadblocks.includes(index)) b.roadblocks.push(index);
+        addLog(`${p.id + 1}P 在第 ${index + 1} 格設置路障`);
+        b.popup = null; saveGame();
+      }
+      return;
+    }
+    if (id.startsWith("toolTarget")) {
+      const target = living().find((x) => x.id === +id.slice(10)), q = b.popup;
+      if (q?.kind === "toolTarget" && target && target.id !== p.id) {
+        p.tools.splice(q.toolIndex, 1);
+        target.bombSteps = 12;
+        addLog(`${p.id + 1}P 將定時炸彈交給 ${target.id + 1}P`);
+        b.popup = null; saveGame();
+      }
       return;
     }
     if (id === "buy") {

@@ -31,6 +31,15 @@ function richCard(c, x, y, w, h, buttonId = "") {
   );
   if (buttonId) S.buttons.push({ id: buttonId, x, y, w, h, en: true });
 }
+function richTool(c, x, y, w, h, buttonId = "") {
+  const d = toolDef(c),
+    im = IM["tool_" + d.cover];
+  contain(IM.mapCardFrame, x, y, w, h, 0.98);
+  contain(im, x + 18, y + 12, w - 36, h - 82, 1);
+  fitTxt(d.name, x + w / 2, y + h - 50, w - 20, 16, "center", "#fff3b3", 1000, true, 10);
+  txt(`${d.cost} 點券`, x + w / 2, y + h - 23, 12, "center", "#d9efff", 900, true);
+  if (buttonId) S.buttons.push({ id: buttonId, x, y, w, h, en: true });
+}
 const C = document.getElementById("game"),
   X = C.getContext("2d", { alpha: false });
 const W = 1600,
@@ -198,7 +207,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-1800";
+const ASSET_REV = "20260825-1930";
 function load(k, u) {
   const i = new Image();
   i.decoding = "async";
@@ -265,7 +274,10 @@ load("miniTreasure", A + "minigames/treasure_timing_v1.webp");
   "swap",
   "stop",
 ].forEach((k) => load("card_" + k, A + "cards/" + k + "_v1.webp"));
-load("roadblockProp", A + "facilities/roadblock_prop_v2.webp");
+load("tool_speed", A + "tools/motorcycle_v1.webp");
+load("tool_car", A + "tools/car_v1.webp");
+load("tool_roadblock", A + "tools/roadblock_v1.webp");
+load("tool_bomb", A + "tools/bomb_v1.webp");
 load("facilityBank", A + "facilities/bank_token_v2.webp");
 load("facilityNews", A + "facilities/news_token_v2.webp");
 load("facilityCoupon", A + "facilities/coupon_token_v2.webp");
@@ -1446,14 +1458,16 @@ function drawPlayers() {
     const key = CHAR_KEYS[p.char],
       contact = IM[key + "WalkRightContact"],
       passing = IM[key + "WalkRightPassing"];
+    if (p.vehicle)
+      contain(IM["tool_" + (p.vehicle === "car" ? "car" : "speed")], x - 82, y - 88, 164, 112, 1);
     X.save();
     X.shadowColor = PLAYER_COLORS[p.id];
     X.shadowBlur = 18;
-    if (p.moveAnim && contact?.complete && passing?.complete) {
+    if (p.moveAnim && !p.vehicle && contact?.complete && passing?.complete) {
       const q = p.moveAnim,
         frame = Math.floor((now - q.start) / 105) % 2 ? passing : contact;
       containFacing(frame, x - 74, y - 144, 148, 164, q.to.x >= q.from.x);
-    } else contain(IM["c" + p.char], x - 62, y - 126, 124, 144);
+    } else contain(IM["c" + p.char], x - (p.vehicle ? 46 : 62), y - (p.vehicle ? 145 : 126), p.vehicle ? 92 : 124, p.vehicle ? 108 : 144);
     X.restore();
     stretch(IM["playerSeatP" + p.id], x - 55, y - 146, 110, 34, 0.98);
     txt(
@@ -1466,6 +1480,10 @@ function drawPlayers() {
       1000,
       true,
     );
+    if (p.bombSteps > 0) {
+      contain(IM.tool_bomb, x + 36, y - 112, 64, 64, 1);
+      txt(String(p.bombSteps), x + 69, y - 94, 13, "center", "#fff2a5", 1000, true);
+    }
   }
 }
 function drawMap() {
@@ -1479,7 +1497,7 @@ function drawMap() {
     }
   for (const pos of b.roadblocks || []) {
     const t = b.tiles[pos];
-    if (t) contain(IM.roadblockProp, t.x - 58, t.y - 128, 116, 108, 1);
+    if (t) contain(IM.tool_roadblock, t.x - 72, t.y - 116, 144, 96, 1);
   }
   const mapKey = b.mapRules?.key || MAPS[S.mapIndex]?.key;
   const forks = typeof MAP_BRANCHES === "undefined" ? null : MAP_BRANCHES[mapKey];
@@ -1777,7 +1795,18 @@ function hud() {
     "卡片 " + p.cards.length,
     990,
     785,
-    205,
+    100,
+    56,
+    false,
+    0.95,
+    !S.rolling && !b.popup && p.type === "human",
+  );
+  btn(
+    "tools",
+    "道具 " + (p.tools || []).length,
+    1095,
+    785,
+    100,
     56,
     false,
     0.95,

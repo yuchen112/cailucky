@@ -19,7 +19,7 @@ for (const item of swContext.precache) {
   if (!fs.existsSync(target))
     throw new Error(`service worker precache missing: ${item}`);
 }
-if (!swContext.cacheName.includes("20260825-1800"))
+if (!swContext.cacheName.includes("20260825-1930"))
   throw new Error("service worker cache revision is stale");
 const manifest = JSON.parse(
   fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"),
@@ -141,7 +141,10 @@ for (const [scene, code] of [
   ["rules", 'S.scene="rules";rulesSetup()'],
   ["game", 'S.scene="game";S.board.popup=null;game()'],
   ["branch", 'S.scene="game";openPopup("branch",{choices:[9,13]});game()'],
-  ["cardTileTarget", 'S.scene="game";cp().cards=["roadblock"];openPopup("cardTileTarget",{cardIndex:0,targets:[1,2,3,4,5,6]});game()'],
+  ["cardTileTarget", 'S.scene="game";cp().cards=["teleport"];openPopup("cardTileTarget",{cardIndex:0,targets:[1,2,3,4,5,6]});game()'],
+  ["tools", 'S.scene="game";cp().tools=["speed","car","roadblock","bomb"];openPopup("tools");game()'],
+  ["toolTileTarget", 'S.scene="game";cp().tools=["roadblock"];openPopup("toolTileTarget",{toolIndex:0,targets:[1,2,3,4,5,6]});game()'],
+  ["toolTarget", 'S.scene="game";cp().tools=["bomb"];openPopup("toolTarget",{toolIndex:0});game()'],
   ["roster", 'S.scene="game";openPopup("roster");game()'],
   [
     "playerOverview",
@@ -156,12 +159,20 @@ for (const [scene, code] of [
     'S.scene="game";openPopup("playerDetail",{player:cp(),tab:"cards"});game()',
   ],
   [
+    "playerTools",
+    'S.scene="game";cp().tools=["speed","car","roadblock","bomb"];openPopup("playerDetail",{player:cp(),tab:"tools"});game()',
+  ],
+  [
     "playerEffects",
     'S.scene="game";openPopup("playerDetail",{player:cp(),tab:"effects"});game()',
   ],
   [
     "shop",
     'S.scene="game";S.board.shopStock=CARD_POOL.slice(0,6);openPopup("shop");game()',
+  ],
+  [
+    "shopTools",
+    'S.scene="game";S.board.toolStock=TOOL_POOL.slice(0,4);openPopup("shop",{tab:"tools"});game()',
   ],
   [
     "event",
@@ -221,6 +232,8 @@ vm.runInContext(
   if(!IM.actionConsole?.complete)throw new Error('image-backed action console missing');
   if(!IM.tile_land?._src?.includes('land_parcel_v1.webp'))throw new Error('roadside land parcel art is not active');
   for(let i=1;i<=6;i++)if(!IM['diceThrow'+i]?._src?.includes('_v2.webp'))throw new Error('physical throw die missing for face '+i);
+  for(const key of ['speed','car','roadblock','bomb'])if(!IM['tool_'+key]?.complete)throw new Error('tool art missing: '+key);
+  if(CARD_POOL.some(id=>cardDef(id).kind==='tool')||TOOL_POOL.some(id=>cardDef(id).kind!=='tool'))throw new Error('cards and tools are mixed in their pools');
   for(const key of ['buildingSpecialHotel','buildingSpecialMall','buildingSpecialPark'])if(!IM[key]?.complete)throw new Error('special building art missing: '+key);
   for(const key of CHAR_KEYS)if(!IM['landmark_'+key]?.complete)throw new Error('character landmark art missing: '+key);
   for(const key of CHAR_KEYS)if(!IM[key+'WalkRightContact']?.complete||!IM[key+'WalkRightPassing']?.complete)throw new Error('character walk animation missing for '+key);
@@ -233,7 +246,7 @@ vm.runInContext(
     if(route.length!==36||Math.max(...xs)-Math.min(...xs)<2200||Math.max(...ys)-Math.min(...ys)<1100)throw new Error(key+' route does not span its authored oval road');
     if(route.some(([x,y])=>x<350||x>2850||y<275||y>1525))throw new Error(key+' route falls outside the visible road band');
   }
-  S.mapIndex=0;makeBoard();
+  S.mapIndex=0;makeBoard();S.scene='game';
   const roadsideLand=S.board.tiles.find(t=>t.type==='land'), roadsidePos=tileVisualPosition(roadsideLand);
   if(roadsidePos.x===roadsideLand.x&&roadsidePos.y===roadsideLand.y)throw new Error('land parcel still overlaps its road movement coordinate');
   if(roadsidePos.x<0||roadsidePos.y<0||roadsidePos.x>MW||roadsidePos.y>MH)throw new Error('roadside land parcel is outside the board');
@@ -248,10 +261,20 @@ vm.runInContext(
   S.board.popup=null;
   if(S.board.turnBanner?.player!==0)throw new Error('opening turn banner missing');turnBannerHud();
   if(Object.keys(MAP_BRANCHES).length)throw new Error('oval maps expose an invisible route fork');
-  const testP=cp(); testP.cards=['speed']; useCard(0);
+  const testP=cp(); testP.tools=['speed'];S.board.phase='pre-roll';useTool(0);
   if(testP.diceCount!==2||testP.vehicleTurns!==5)throw new Error('vehicle card did not enable multi-dice turns');
+  testP.tools=['car'];S.board.phase='pre-roll';useTool(0);
+  if(testP.diceCount!==3||testP.vehicle!=='car')throw new Error('car tool did not enable three-dice turns');
+  testP.tools=['roadblock'];S.board.phase='pre-roll';useTool(0);
+  const roadTarget=S.board.popup.targets[0];action('toolTile'+roadTarget);
+  if(!S.board.roadblocks.includes(roadTarget)||testP.tools.length)throw new Error('roadblock tool was not placed on a selected road node');
+  testP.tools=['bomb'];S.board.phase='pre-roll';useTool(0);
+  const bombTarget=S.board.players[1];action('toolTarget'+bombTarget.id);
+  if(bombTarget.bombSteps!==12||testP.tools.length)throw new Error('timed bomb was not attached to the selected player');
   testP.cards=Array(20).fill('shield'); saveGame();
   if(!loadGame()||cp().cards.length!==15)throw new Error('save migration did not enforce 15-card capacity');
+  cp().cards=['speed','roadblock','shield'];cp().tools=[];saveGame();
+  if(!loadGame()||!cp().tools.includes('speed')||!cp().tools.includes('roadblock')||cp().cards.join(',')!=='shield')throw new Error('legacy tool cards were not migrated out of the card book');
   for(let mi=0;mi<MAPS.length;mi++){
     S.mapIndex=mi; makeBoard();
     for(let ri=0;ri<4;ri++)if(REGION_NAMES[ri]!==MAPS[mi].regions[ri])throw new Error('map region label mismatch');
@@ -337,5 +360,5 @@ for (let mapIndex = 0; mapIndex < 3; mapIndex++) {
     );
 }
 console.log(
-  "CxQ smoke/layout test passed: scenes, HUD, five player-data views, unique card covers, coupon shop, facilities, roaming-god rules, independent map routes, multi-dice vehicles, save migration, buildings, rent rules, three complete simulated matches, button bounds, overlap rules and five landscape aspect ratios.",
+  "CxQ smoke/layout test passed: scenes, HUD, player-data views, separate card/tool inventories, unique art, coupon shop, facilities, roaming-god rules, independent map routes, multi-dice vehicles, save migration, buildings, rent rules, three complete simulated matches, button bounds, overlap rules and five landscape aspect ratios.",
 );
