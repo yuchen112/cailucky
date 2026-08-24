@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20260825-1230';
+const CACHE='cxq-richman-20260825-1630';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   '../../assets/brand/cxq-app-icon-192.png','../../assets/brand/cxq-app-icon-512.png',
@@ -11,8 +11,7 @@ const PRECACHE=[
   './assets/ui/player_seat_wide_p1_v1.webp','./assets/ui/player_seat_wide_p2_v1.webp','./assets/ui/player_seat_wide_p3_v1.webp','./assets/ui/player_seat_wide_p4_v1.webp',
   './assets/ui/status_human_v1.webp','./assets/ui/status_ai_v1.webp','./assets/ui/status_off_v1.webp',
   './assets/characters/portraits/joy_portrait_v1.webp','./assets/characters/portraits/dream_portrait_v1.webp','./assets/characters/portraits/night_portrait_v1.webp','./assets/characters/portraits/sadness_portrait_v1.webp','./assets/characters/portraits/trust_portrait_v1.webp','./assets/characters/portraits/memory_portrait_v1.webp','./assets/characters/portraits/growth_portrait_v1.webp','./assets/characters/portraits/healing_portrait_v1.webp','./assets/characters/portraits/luck_portrait_v1.webp','./assets/characters/portraits/hope_portrait_v1.webp',
-  './assets/maps/map_preview_starwish_v1.webp','./assets/maps/map_preview_moonharbor_v1.webp','./assets/maps/map_preview_cloudbazaar_v1.webp',
-  './assets/maps/map_world_starwish_v1.webp','./assets/maps/map_world_moonharbor_v1.webp','./assets/maps/map_world_cloudbazaar_v1.webp',
+  './assets/maps/map_world_starwish_v2.webp','./assets/maps/map_world_moonharbor_v2.webp','./assets/maps/map_world_cloudbazaar_v2.webp',
   './assets/buildings/starwish_l1_v1.webp','./assets/buildings/starwish_l2_v1.webp','./assets/buildings/starwish_l3_v1.webp','./assets/buildings/starwish_landmark_v1.webp',
   './assets/buildings/starwish_l4_v1.webp','./assets/buildings/starwish_l5_v1.webp',
   './assets/buildings/moonharbor_l1_v1.webp','./assets/buildings/moonharbor_l2_v1.webp','./assets/buildings/moonharbor_l3_v1.webp','./assets/buildings/moonharbor_landmark_v1.webp',
@@ -20,6 +19,7 @@ const PRECACHE=[
   './assets/buildings/cloudbazaar_l1_v1.webp','./assets/buildings/cloudbazaar_l2_v1.webp','./assets/buildings/cloudbazaar_l3_v1.webp','./assets/buildings/cloudbazaar_landmark_v1.webp',
   './assets/buildings/cloudbazaar_l4_v1.webp','./assets/buildings/cloudbazaar_l5_v1.webp',
   './assets/buildings/special_hotel_v1.webp','./assets/buildings/special_mall_v1.webp','./assets/buildings/special_park_v1.webp',
+  './assets/buildings/landmark_joy_v1.webp','./assets/buildings/landmark_dream_v1.webp','./assets/buildings/landmark_night_v1.webp','./assets/buildings/landmark_sadness_v1.webp','./assets/buildings/landmark_trust_v1.webp','./assets/buildings/landmark_memory_v1.webp','./assets/buildings/landmark_growth_v1.webp','./assets/buildings/landmark_healing_v1.webp','./assets/buildings/landmark_luck_v1.webp','./assets/buildings/landmark_hope_v1.webp',
   './assets/events/starwish_event_v1.webp','./assets/events/moonharbor_event_v1.webp','./assets/events/cloudbazaar_event_v1.webp',
   './assets/minigames/star_catch_v1.webp','./assets/minigames/balloon_pop_v1.webp','./assets/minigames/treasure_timing_v1.webp',
   './assets/cards/precision_dice_v1.webp','./assets/cards/remote_dice_v1.webp','./assets/cards/shield_v1.webp','./assets/cards/speed_v1.webp','./assets/cards/roadblock_v1.webp','./assets/cards/teleport_v1.webp','./assets/cards/land_purchase_v1.webp','./assets/cards/free_upgrade_v1.webp','./assets/cards/discount_v1.webp','./assets/cards/rent_v1.webp','./assets/cards/swap_v1.webp','./assets/cards/stop_v1.webp',

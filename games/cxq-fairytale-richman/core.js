@@ -198,7 +198,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-1230";
+const ASSET_REV = "20260825-1630";
 function load(k, u) {
   const i = new Image();
   i.decoding = "async";
@@ -232,10 +232,10 @@ load("statusOff", A + "ui/status_off_v1.webp");
 load("homeBg", A + "backgrounds/home_scene_v7.webp");
 load("setupBg", A + "backgrounds/setup_scene_v4.webp");
 MAPS.forEach((m, i) =>
-  load("mapWorld" + i, A + "maps/map_world_" + m.key + "_v1.webp"),
+  load("mapWorld" + i, A + "maps/map_world_" + m.key + "_v2.webp"),
 );
 MAPS.forEach((m, i) =>
-  load("mapPreview" + i, A + "maps/map_preview_" + m.key + "_v1.webp"),
+  load("mapPreview" + i, A + "maps/map_world_" + m.key + "_v2.webp"),
 );
 load("tile_land", A + "tiles/land_parcel_v1.webp");
 load("tile_card", A + "tiles/card_v2.webp");
@@ -298,6 +298,9 @@ MAPS.forEach((m, mi) => {
     load(`building${mi}_${level}`, A + `buildings/${m.key}_l${level}_v1.webp`);
   load(`building${mi}_landmark`, A + `buildings/${m.key}_landmark_v1.webp`);
 });
+CHAR_KEYS.forEach((key) =>
+  load(`landmark_${key}`, A + `buildings/landmark_${key}_v1.webp`),
+);
 load("buildingSpecialHotel", A + "buildings/special_hotel_v1.webp");
 load("buildingSpecialMall", A + "buildings/special_mall_v1.webp");
 load("buildingSpecialPark", A + "buildings/special_park_v1.webp");
@@ -1264,8 +1267,20 @@ function buildingImage(t) {
       park: IM.buildingSpecialPark,
     }[t.special] || null;
   const mi = S.board?.mapIndex || 0,
-    isLandmark = t.level >= 5 && regionOwned(t.owner, t.region);
-  return IM[`building${mi}_${isLandmark ? "landmark" : Math.min(5, t.level)}`];
+    isLandmark = isRegionLandmark(t);
+  if (isLandmark) {
+    const owner = S.board.players.find((p) => p.id === t.owner);
+    return IM[`landmark_${CHAR_KEYS[owner?.char || 0]}`];
+  }
+  return IM[`building${mi}_${Math.min(5, t.level)}`];
+}
+function isRegionLandmark(t) {
+  if (t.owner < 0 || t.level < 5 || !regionOwned(t.owner, t.region)) return false;
+  return (
+    S.board.tiles.find(
+      (land) => land.type === "land" && land.region === t.region,
+    ) === t
+  );
 }
 function tileVisualPosition(t) {
   if (t.type !== "land" || !S.board) return { x: t.x, y: t.y };
@@ -1280,7 +1295,7 @@ function tileVisualPosition(t) {
   let dx = t.x - b.plotCenter.x,
     dy = t.y - b.plotCenter.y;
   const length = Math.hypot(dx, dy) || 1,
-    offset = -108;
+    offset = -190;
   dx /= length;
   dy /= length;
   return {
@@ -1337,10 +1352,11 @@ function drawTile(t) {
       const building = buildingImage(t);
       if (building) {
         const grow = 1 + pulse * 0.18,
-          sz = 145 * grow;
+          landmark = isRegionLandmark(t),
+          sz = (landmark ? 178 : 145) * grow;
         X.save();
         X.shadowColor = PLAYER_COLORS[t.owner];
-        X.shadowBlur = 18 + 28 * pulse;
+        X.shadowBlur = 28 + 30 * pulse;
         contain(building, t.x - sz / 2, t.y + 22 - sz, sz, sz, 1);
         X.restore();
         if (t.special)
@@ -1370,12 +1386,12 @@ function drawTile(t) {
             true,
           );
       }
-      stretch(IM["playerSeatP" + t.owner], t.x - 66, t.y - 112, 132, 42, 0.98);
-      contain(IM["portrait" + owner?.char], t.x - 61, t.y - 109, 36, 36, 0.98);
+      stretch(IM["playerSeatP" + t.owner], t.x - 66, t.y + 20, 132, 42, 0.99);
+      contain(IM["portrait" + owner?.char], t.x - 61, t.y + 23, 36, 36, 0.99);
       fitTxt(
         `${t.owner + 1}P ${owner ? CHAR_NAMES[owner.char] : ""}`,
         t.x + 18,
-        t.y - 91,
+        t.y + 41,
         80,
         12,
         "center",
@@ -1399,7 +1415,7 @@ function drawTile(t) {
     txt(
       "$" + Math.round(t.price / 1000) + "K",
       t.x,
-      t.y + 55,
+      t.y + 78,
       13,
       "center",
       "#fff6d2",

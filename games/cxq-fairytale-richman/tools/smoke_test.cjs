@@ -19,7 +19,7 @@ for (const item of swContext.precache) {
   if (!fs.existsSync(target))
     throw new Error(`service worker precache missing: ${item}`);
 }
-if (!swContext.cacheName.includes("20260825-1230"))
+if (!swContext.cacheName.includes("20260825-1630"))
   throw new Error("service worker cache revision is stale");
 const manifest = JSON.parse(
   fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"),
@@ -221,15 +221,16 @@ vm.runInContext(
   if(!IM.actionConsole?.complete)throw new Error('image-backed action console missing');
   if(!IM.tile_land?._src?.includes('land_parcel_v1.webp'))throw new Error('roadside land parcel art is not active');
   for(const key of ['buildingSpecialHotel','buildingSpecialMall','buildingSpecialPark'])if(!IM[key]?.complete)throw new Error('special building art missing: '+key);
+  for(const key of CHAR_KEYS)if(!IM['landmark_'+key]?.complete)throw new Error('character landmark art missing: '+key);
   for(const key of CHAR_KEYS)if(!IM[key+'WalkRightContact']?.complete||!IM[key+'WalkRightPassing']?.complete)throw new Error('character walk animation missing for '+key);
   S.scene='setup';S.activeSeat=0;S.pickAnim=null;SETUP_VIEW.char=1;chooseChar(1);
   if(!S.pickAnim)throw new Error('selection did not start character walk-in');drawPickAnim();S.pickAnim=null;
   if(TYPE_PATTERN.includes('npc'))throw new Error('fixed god tile still exists');
   for(const required of ['bank','news','coupon','magic','hospital','shop','card','minigame'])if(!TYPE_PATTERN.includes(required))throw new Error('missing board facility '+required);
-  if(MAP_ROUTES.starwish===MAP_ROUTES.moonharbor||JSON.stringify(MAP_ROUTES.starwish)===JSON.stringify(MAP_ROUTES.moonharbor))throw new Error('maps still share one route');
   for(const [key,route] of Object.entries(MAP_ROUTES)){
     const xs=route.map(p=>p[0]),ys=route.map(p=>p[1]);
-    if(Math.max(...xs)-Math.min(...xs)<1400||Math.max(...ys)-Math.min(...ys)<700)throw new Error(key+' route remains visually clustered');
+    if(route.length!==36||Math.max(...xs)-Math.min(...xs)<2200||Math.max(...ys)-Math.min(...ys)<1100)throw new Error(key+' route does not span its authored oval road');
+    if(route.some(([x,y])=>x<350||x>2850||y<275||y>1525))throw new Error(key+' route falls outside the visible road band');
   }
   S.mapIndex=0;makeBoard();
   const roadsideLand=S.board.tiles.find(t=>t.type==='land'), roadsidePos=tileVisualPosition(roadsideLand);
@@ -245,9 +246,7 @@ vm.runInContext(
   if(cp().cash!==startCash)throw new Error('landing on start duplicated the passing allowance');
   S.board.popup=null;
   if(S.board.turnBanner?.player!==0)throw new Error('opening turn banner missing');turnBannerHud();
-  cp().pos=8;S.board.pendingMove={remaining:1,branchHandledAt:-1};S.rolling=true;chooseBranch(13);
-  if(cp().pos!==13)throw new Error('branch choice did not move to selected route');
-  S.board.pendingMove=null;S.rolling=false;
+  if(Object.keys(MAP_BRANCHES).length)throw new Error('oval maps expose an invisible route fork');
   const testP=cp(); testP.cards=['speed']; useCard(0);
   if(testP.diceCount!==2||testP.vehicleTurns!==5)throw new Error('vehicle card did not enable multi-dice turns');
   testP.cards=Array(20).fill('shield'); saveGame();
@@ -257,7 +256,7 @@ vm.runInContext(
     for(let ri=0;ri<4;ri++)if(REGION_NAMES[ri]!==MAPS[mi].regions[ri])throw new Error('map region label mismatch');
     const lands=S.board.tiles.filter(t=>t.type==='land'&&t.region===0);
     lands.forEach(t=>{t.owner=0;t.level=5});
-    if(buildingImage(lands[0])!==IM['building'+mi+'_landmark'])throw new Error('completed region did not use its map landmark');
+    if(buildingImage(lands[0])!==IM['landmark_'+CHAR_KEYS[S.board.players[0].char]])throw new Error('completed region did not use its owner character landmark');
     lands[0].owner=1;
     if(buildingImage(lands[1])!==IM['building'+mi+'_5'])throw new Error('incomplete region did not use its level-five art');
     lands[1].level=4;
