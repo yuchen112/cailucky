@@ -19,7 +19,7 @@ for (const item of swContext.precache) {
   if (!fs.existsSync(target))
     throw new Error(`service worker precache missing: ${item}`);
 }
-if (!swContext.cacheName.includes("20260825-0700"))
+if (!swContext.cacheName.includes("20260825-0730"))
   throw new Error("service worker cache revision is stale");
 const manifest = JSON.parse(
   fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"),
@@ -224,6 +224,10 @@ vm.runInContext(
   if(TYPE_PATTERN.includes('npc'))throw new Error('fixed god tile still exists');
   for(const required of ['bank','news','coupon','magic','hospital','shop','card','minigame'])if(!TYPE_PATTERN.includes(required))throw new Error('missing board facility '+required);
   if(MAP_ROUTES.starwish===MAP_ROUTES.moonharbor||JSON.stringify(MAP_ROUTES.starwish)===JSON.stringify(MAP_ROUTES.moonharbor))throw new Error('maps still share one route');
+  for(const [key,route] of Object.entries(MAP_ROUTES)){
+    const xs=route.map(p=>p[0]),ys=route.map(p=>p[1]);
+    if(Math.max(...xs)-Math.min(...xs)<2000||Math.max(...ys)-Math.min(...ys)<700)throw new Error(key+' route remains visually clustered');
+  }
   S.mapIndex=0;makeBoard();
   cp().pos=8;S.board.pendingMove={remaining:1,branchHandledAt:-1};S.rolling=true;chooseBranch(13);
   if(cp().pos!==13)throw new Error('branch choice did not move to selected route');
