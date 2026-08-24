@@ -19,8 +19,14 @@ for (const item of swContext.precache) {
   if (!fs.existsSync(target))
     throw new Error(`service worker precache missing: ${item}`);
 }
-if (!swContext.cacheName.includes("20260825-0600"))
+if (!swContext.cacheName.includes("20260825-0630"))
   throw new Error("service worker cache revision is stale");
+const manifest = JSON.parse(
+  fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"),
+);
+for (const size of ["192x192", "512x512"])
+  if (!manifest.icons?.some((icon) => icon.sizes === size))
+    throw new Error(`PWA manifest missing ${size} icon`);
 const storage = new Map();
 const timers = [];
 const draw = new Proxy(

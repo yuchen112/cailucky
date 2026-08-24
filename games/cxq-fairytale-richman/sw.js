@@ -1,6 +1,7 @@
-const CACHE='cxq-richman-20260825-0600';
+const CACHE='cxq-richman-20260825-0630';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
+  '../../assets/brand/cxq-app-icon-192.png','../../assets/brand/cxq-app-icon-512.png',
   './assets/backgrounds/home_scene_v7.webp','./assets/backgrounds/setup_scene_v4.webp',
   './assets/ui/btn_blue.webp','./assets/ui/btn_red.webp','./assets/ui/player_seat_v2.webp','./assets/ui/role_info_v2.webp',
   './assets/ui/home_menu_new_v1.webp','./assets/ui/home_menu_continue_v1.webp','./assets/ui/home_menu_help_v1.webp','./assets/ui/home_menu_settings_v1.webp',

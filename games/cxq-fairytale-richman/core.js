@@ -198,7 +198,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-0600";
+const ASSET_REV = "20260825-0630";
 function load(k, u) {
   const i = new Image();
   i.decoding = "async";
