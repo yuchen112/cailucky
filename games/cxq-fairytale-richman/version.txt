@@ -1,4 +1,4 @@
-CxQ Fairy-tale Richman — testing branch 20260825-1130
+CxQ Fairy-tale Richman — testing branch 20260825-1230
 
 Release status
 - This build belongs only to preview/cxq-fairytale-richman-testing.
@@ -6,6 +6,7 @@ Release status
 - The only runtime path is index.html -> core.js + viewport.js + game.js. The obsolete home-richman4 overlay and temporary patch files are removed.
 
 Art and presentation
+- Hotel, mall and blessing-park upgrades now use three independently generated transparent building assets instead of reusing a generic level-five building.
 - Purchasable land is now a dedicated low roadside parcel rather than a floating property card; characters retain their road coordinates while parcels and buildings occupy a separate roadside footprint.
 - The current-player panel now exposes cash, bank deposit, net worth and a round-driven price index without opening a modal.
 - The board action area now uses a dedicated AI-generated image-backed console, active-character portrait, grouped dice/card controls, animated turn banners, popup entrances and press/hover feedback.
@@ -17,6 +18,8 @@ Art and presentation
 - Each map has distinct Lv1-Lv5 property art and a landmark, with hotel, mall and park large-building identities and effects.
 
 Game flow
+- Purchase, upgrade, rent, net-worth and large-building calculations now share one round-driven market index and one canonical cost path for human players, AI players and UI previews.
+- Passing the start tile pays the travel allowance exactly once; landing on start no longer duplicates that payment.
 - Home -> character and P1-P4 seat setup -> map selection -> game conditions -> board -> result is one integrated state path.
 - Seats support human, AI difficulty and empty states; active characters remain unique.
 - Three maps use independent 36-node routes, facilities, economy multipliers and branch choices.

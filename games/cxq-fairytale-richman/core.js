@@ -198,7 +198,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-1130";
+const ASSET_REV = "20260825-1230";
 function load(k, u) {
   const i = new Image();
   i.decoding = "async";
@@ -298,6 +298,9 @@ MAPS.forEach((m, mi) => {
     load(`building${mi}_${level}`, A + `buildings/${m.key}_l${level}_v1.webp`);
   load(`building${mi}_landmark`, A + `buildings/${m.key}_landmark_v1.webp`);
 });
+load("buildingSpecialHotel", A + "buildings/special_hotel_v1.webp");
+load("buildingSpecialMall", A + "buildings/special_mall_v1.webp");
+load("buildingSpecialPark", A + "buildings/special_park_v1.webp");
 
 const VIEW = { scale: 1, ox: 0, oy: 0 };
 function resize() {
@@ -1254,6 +1257,12 @@ function npcMarker(n, t) {
 }
 function buildingImage(t) {
   if (t.owner < 0 || t.level < 1) return null;
+  if (t.special)
+    return {
+      hotel: IM.buildingSpecialHotel,
+      mall: IM.buildingSpecialMall,
+      park: IM.buildingSpecialPark,
+    }[t.special] || null;
   const mi = S.board?.mapIndex || 0,
     isLandmark = t.level >= 5 && regionOwned(t.owner, t.region);
   return IM[`building${mi}_${isLandmark ? "landmark" : Math.min(5, t.level)}`];
@@ -1984,10 +1993,8 @@ function popup() {
       t.type === "land" ? REGION_NAMES[t.region] + "地產" : typeName(t.type);
     if (t.type === "land") {
       if (t.owner < 0) {
-        const baseRent = Math.round(
-          t.price * 0.25 * (b.mapRules?.rentRate || 1),
-        );
-        body = `空地售價 $${buyCost(p, t).toLocaleString()}｜基礎租金 $${baseRent.toLocaleString()}｜購買後可升級三階建築`;
+        const rent = baseRent(t);
+        body = `空地售價 $${buyCost(p, t).toLocaleString()}｜基礎租金 $${rent.toLocaleString()}｜購買後可升級五階建築`;
         actions = [
           ["buy", "購買土地"],
           ["skip", "暫時略過"],
@@ -1996,7 +2003,7 @@ function popup() {
         const names = ["空地", "童話小屋", "精緻旅店", "豪華地標"];
         body =
           t.level < 3
-            ? `${names[t.level]}｜目前租金 $${rentEstimate(t, p).toLocaleString()}｜升級費 $${Math.round(t.price * 0.65).toLocaleString()}`
+            ? `${names[t.level]}｜目前租金 $${rentEstimate(t, p).toLocaleString()}｜升級費 $${upgradeCost(t).toLocaleString()}`
             : `${regionOwned(p.id, t.region) ? "區域地標已落成" : "最高級建築"}｜目前租金 $${rentEstimate(t, p).toLocaleString()}`;
         actions =
           t.level < 3

@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20260825-1130';
+const CACHE='cxq-richman-20260825-1230';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   '../../assets/brand/cxq-app-icon-192.png','../../assets/brand/cxq-app-icon-512.png',
@@ -19,6 +19,7 @@ const PRECACHE=[
   './assets/buildings/moonharbor_l4_v1.webp','./assets/buildings/moonharbor_l5_v1.webp',
   './assets/buildings/cloudbazaar_l1_v1.webp','./assets/buildings/cloudbazaar_l2_v1.webp','./assets/buildings/cloudbazaar_l3_v1.webp','./assets/buildings/cloudbazaar_landmark_v1.webp',
   './assets/buildings/cloudbazaar_l4_v1.webp','./assets/buildings/cloudbazaar_l5_v1.webp',
+  './assets/buildings/special_hotel_v1.webp','./assets/buildings/special_mall_v1.webp','./assets/buildings/special_park_v1.webp',
   './assets/events/starwish_event_v1.webp','./assets/events/moonharbor_event_v1.webp','./assets/events/cloudbazaar_event_v1.webp',
   './assets/minigames/star_catch_v1.webp','./assets/minigames/balloon_pop_v1.webp','./assets/minigames/treasure_timing_v1.webp',
   './assets/cards/precision_dice_v1.webp','./assets/cards/remote_dice_v1.webp','./assets/cards/shield_v1.webp','./assets/cards/speed_v1.webp','./assets/cards/roadblock_v1.webp','./assets/cards/teleport_v1.webp','./assets/cards/land_purchase_v1.webp','./assets/cards/free_upgrade_v1.webp','./assets/cards/discount_v1.webp','./assets/cards/rent_v1.webp','./assets/cards/swap_v1.webp','./assets/cards/stop_v1.webp',

@@ -215,7 +215,7 @@ scenePopup = function (q, b, p) {
       owner = t.owner >= 0 ? b.players.find((x) => x.id === t.owner) : null,
       mine = t.owner === p.id,
       buy = buyCost(p, t),
-      cost = Math.round(t.price * (t.level >= 3 ? 0.7 + t.level * 0.08 : 0.65)),
+      cost = upgradeCost(t),
       art = buildingImage(t) || IM.tile_land;
     contain(IM.abilityPanel, 250, 70, 1100, 760, 0.99);
     fitTxt(
@@ -264,7 +264,7 @@ scenePopup = function (q, b, p) {
         ]
       : [
           `售價　　　$${buy.toLocaleString()}`,
-          `基礎租金　$${Math.round(t.price * 0.25 * (b.mapRules?.rentRate || 1)).toLocaleString()}`,
+          `基礎租金　$${baseRent(t).toLocaleString()}`,
           "購買後可逐級興建",
           "Lv5 可改建旅館／商場／公園",
         ];
@@ -311,11 +311,12 @@ scenePopup = function (q, b, p) {
     return true;
   }
   if (q.kind === "specialBuild") {
-    const t = q.tile;
+    const t = q.tile,
+      cost = upgradeCost(t);
     contain(IM.abilityPanel, 360, 90, 880, 720, 0.99);
     txt("選擇大型建築", 800, 170, 38, "center", "#fff0a5", 1000, true);
     paragraph(
-      "Lv5 可改建為不同設施；每種設施具有獨立的收租與抵達效果。",
+      `Lv5 改建費 $${cost.toLocaleString()}；每種設施具有獨立的收租與抵達效果。`,
       800,
       245,
       620,
@@ -327,9 +328,9 @@ scenePopup = function (q, b, p) {
       900,
       true,
     );
-    btn("buildHotel", "星光旅館｜高租金＋停留", 480, 345, 640, 72, true);
-    btn("buildMall", "童話商場｜租金＋點券", 480, 440, 640, 72, false);
-    btn("buildPark", "祝福公園｜低租金＋地主回復", 480, 535, 640, 72, false);
+    btn("buildHotel", "星光旅館｜高租金＋房客停留", 480, 345, 640, 72, true);
+    btn("buildMall", "童話商場｜租金＋地主點券", 480, 440, 640, 72, false);
+    btn("buildPark", "祝福公園｜低租金＋地主收入", 480, 535, 640, 72, false);
     btn("buildCancel", "暫不改建", 610, 650, 380, 68, false);
     return true;
   }
@@ -808,10 +809,19 @@ function regionOwned(pid, reg) {
   return lands.length > 0 && lands.every((t) => t.owner === pid);
 }
 function buyCost(p, t) {
-  let c = t.price;
+  let c = Math.round(t.price * marketIndex());
   if (p.char === 6) c = Math.round(c * 0.9);
   if (p.discount) c = Math.round(c * 0.75);
   return c;
+}
+function upgradeCost(t) {
+  const nextLevel = Math.min(5, (t.level || 0) + 1);
+  return Math.round(t.price * (0.61 + nextLevel * 0.07) * marketIndex());
+}
+function baseRent(t) {
+  return Math.round(
+    t.price * 0.25 * (S.board?.mapRules?.rentRate || 1) * marketIndex(),
+  );
 }
 function shopCost(p) {
   return p.char === 4 ? 2000 : 2500;
@@ -866,7 +876,10 @@ function applyPropertyArrival(t, payer, owner) {
 function netWorth(p) {
   let v = p.cash + (p.bank || 0);
   S.board.tiles.forEach((t) => {
-    if (t.owner === p.id) v += t.price + Math.round(t.price * 0.65 * t.level);
+    if (t.owner === p.id)
+      v += Math.round(
+        (t.price + t.price * 0.65 * t.level) * marketIndex(),
+      );
   });
   return v;
 }
@@ -1030,8 +1043,7 @@ function resolveTile() {
     return;
   }
   if (t.type === "start") {
-    cashGain(p, 5000);
-    addLog(`${p.id + 1}P 經過起點，獲得 $5,000`);
+    addLog(`${p.id + 1}P 停留起點休息`);
   }
   if (p.type === "ai" && !["start", "land"].includes(t.type)) {
     if (t.type === "bank") {
@@ -1362,7 +1374,7 @@ function aiResolve() {
         return;
       }
       if (t.owner === p.id) {
-        const cost = Math.round(t.price * (0.65 + t.level * 0.04)),
+        const cost = upgradeCost(t),
           want =
             t.level < 5 &&
             p.cash - cost > (easy ? 90000 : smart ? 30000 : 55000);
@@ -1940,7 +1952,7 @@ function action(id) {
   ) {
     const p = cp(),
       t = S.board.popup.tile,
-      cost = Math.round(t.price * (0.7 + t.level * 0.08));
+      cost = upgradeCost(t);
     if (t.level === 4) {
       openPopup("specialBuild", { tile: t });
       return;
@@ -1966,7 +1978,7 @@ function action(id) {
       id
     ];
     if (q?.kind === "specialBuild" && t && kind) {
-      const cost = Math.round(t.price * 1.02);
+      const cost = upgradeCost(t);
       if (p.cash >= cost) {
         p.cash -= cost;
         t.level = 5;
@@ -2062,8 +2074,8 @@ function action(id) {
     }
     if (id === "upgrade") {
       const t = q.tile,
-        cost = Math.round(t.price * 0.65);
-      if (t.level < 3 && p.cash >= cost) {
+        cost = upgradeCost(t);
+      if (t.level < 4 && p.cash >= cost) {
         p.cash -= cost;
         t.level++;
         markUpgrade(t);

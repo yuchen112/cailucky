@@ -19,7 +19,7 @@ for (const item of swContext.precache) {
   if (!fs.existsSync(target))
     throw new Error(`service worker precache missing: ${item}`);
 }
-if (!swContext.cacheName.includes("20260825-1130"))
+if (!swContext.cacheName.includes("20260825-1230"))
   throw new Error("service worker cache revision is stale");
 const manifest = JSON.parse(
   fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"),
@@ -220,6 +220,7 @@ vm.runInContext(
   if(new Set(CARD_DEFS.map(c=>c.cover)).size!==CARD_DEFS.length)throw new Error('card covers are not unique');
   if(!IM.actionConsole?.complete)throw new Error('image-backed action console missing');
   if(!IM.tile_land?._src?.includes('land_parcel_v1.webp'))throw new Error('roadside land parcel art is not active');
+  for(const key of ['buildingSpecialHotel','buildingSpecialMall','buildingSpecialPark'])if(!IM[key]?.complete)throw new Error('special building art missing: '+key);
   for(const key of CHAR_KEYS)if(!IM[key+'WalkRightContact']?.complete||!IM[key+'WalkRightPassing']?.complete)throw new Error('character walk animation missing for '+key);
   S.scene='setup';S.activeSeat=0;S.pickAnim=null;SETUP_VIEW.char=1;chooseChar(1);
   if(!S.pickAnim)throw new Error('selection did not start character walk-in');drawPickAnim();S.pickAnim=null;
@@ -236,7 +237,13 @@ vm.runInContext(
   if(roadsidePos.x<0||roadsidePos.y<0||roadsidePos.x>MW||roadsidePos.y>MH)throw new Error('roadside land parcel is outside the board');
   S.board.round=1;if(marketIndex()!==1)throw new Error('opening price index is invalid');
   S.board.round=21;if(marketIndex()!==1.2)throw new Error('round-driven price index did not advance');
+  const economyLand=S.board.tiles.find(t=>t.type==='land');
+  economyLand.level=2;
+  if(upgradeCost(economyLand)!==Math.round(economyLand.price*(.61+3*.07)*marketIndex()))throw new Error('canonical upgrade cost is inconsistent');
   S.board.round=1;
+  const startCash=cp().cash;cp().pos=0;resolveTile();
+  if(cp().cash!==startCash)throw new Error('landing on start duplicated the passing allowance');
+  S.board.popup=null;
   if(S.board.turnBanner?.player!==0)throw new Error('opening turn banner missing');turnBannerHud();
   cp().pos=8;S.board.pendingMove={remaining:1,branchHandledAt:-1};S.rolling=true;chooseBranch(13);
   if(cp().pos!==13)throw new Error('branch choice did not move to selected route');
@@ -255,6 +262,10 @@ vm.runInContext(
     if(buildingImage(lands[1])!==IM['building'+mi+'_5'])throw new Error('incomplete region did not use its level-five art');
     lands[1].level=4;
     if(buildingImage(lands[1])!==IM['building'+mi+'_4'])throw new Error('level-four art is not distinct');
+    lands[1].level=5;lands[1].special='hotel';
+    if(buildingImage(lands[1])!==IM.buildingSpecialHotel)throw new Error('hotel did not use dedicated art');
+    lands[1].special='mall';if(buildingImage(lands[1])!==IM.buildingSpecialMall)throw new Error('mall did not use dedicated art');
+    lands[1].special='park';if(buildingImage(lands[1])!==IM.buildingSpecialPark)throw new Error('park did not use dedicated art');
   }
   S.mapIndex=0;makeBoard();
   const owner=S.board.players[0], land=S.board.tiles.find(t=>t.type==='land');
