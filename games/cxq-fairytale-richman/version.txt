@@ -1,4 +1,4 @@
-CxQ Fairy-tale Richman — testing branch 20260825-0830
+CxQ Fairy-tale Richman — testing branch 20260825-1000
 
 Release status
 - This build belongs only to preview/cxq-fairytale-richman-testing.
@@ -6,6 +6,7 @@ Release status
 - The only runtime path is index.html -> core.js + viewport.js + game.js. The obsolete home-richman4 overlay and temporary patch files are removed.
 
 Art and presentation
+- The board action area now uses a dedicated AI-generated image-backed console, active-character portrait, grouped dice/card controls, animated turn banners, popup entrances and press/hover feedback.
 - The home, character-selection stage, three map previews and three board worlds use dedicated scene art sized for the 16:9 virtual board camera.
 - All ten CxQ characters have separate portrait art and two independently prepared walking poses used during real tile-to-tile movement.
 - All six dice faces have dedicated throw art and appear as a physical multi-die overlay before movement.

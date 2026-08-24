@@ -198,7 +198,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-0830";
+const ASSET_REV = "20260825-1000";
 function load(k, u) {
   const i = new Image();
   i.decoding = "async";
@@ -222,6 +222,7 @@ load("playerSeat", A + "ui/player_seat_v2.webp");
 load("roleInfo", A + "ui/role_info_v2.webp");
 load("characterStage", A + "ui/character_stage_v1.webp");
 load("abilityPanel", A + "ui/ability_panel_v1.webp");
+load("actionConsole", A + "ui/action_console_v1.webp");
 load("mapCardFrame", A + "ui/map_card_frame_v1.webp");
 for (let i = 0; i < 4; i++)
   load("playerSeatP" + i, A + `ui/player_seat_wide_p${i + 1}_v1.webp`);
@@ -492,12 +493,26 @@ function containFacing(im, x, y, w, h, faceRight = true, alpha = 1) {
   X.restore();
   return true;
 }
+const UI_BUTTON = { hover: null, pressed: null };
 function btn(id, label, x, y, w, h, red = false, alpha = 1, en = true) {
-  contain(red ? IM.btnRed : IM.btnBlue, x, y, w, h, alpha * (en ? 1 : 0.38));
+  const pressed = en && UI_BUTTON.pressed === id,
+    hovered = en && UI_BUTTON.hover === id,
+    expand = pressed ? -3 : hovered ? 2 : 0,
+    bx = x - expand,
+    by = y - expand,
+    bw = w + expand * 2,
+    bh = h + expand * 2;
+  X.save();
+  if (hovered && !pressed) {
+    X.shadowColor = red ? "rgba(255,150,185,.9)" : "rgba(115,220,255,.9)";
+    X.shadowBlur = 18;
+  }
+  contain(red ? IM.btnRed : IM.btnBlue, bx, by, bw, bh, alpha * (en ? 1 : 0.38));
+  X.restore();
   fitTxt(
     label,
     x + w / 2,
-    y + h * 0.49,
+    y + h * 0.49 + (pressed ? 3 : 0),
     w * 0.72,
     Math.min(29, h * 0.34),
     "center",
@@ -1630,22 +1645,36 @@ function hud() {
   );
   btn("focusCurrent", "回到角色", 410, 130, 170, 54, false, 0.94, !b.popup);
   miniMapHud();
+  contain(IM.actionConsole, 955, 575, 635, 318, 0.98);
+  contain(IM["portrait" + p.char], 1010, 615, 150, 150, p.bankrupt ? 0.45 : 1);
+  fitTxt(
+    `${p.id + 1}P ${CHAR_NAMES[p.char]}`,
+    1085,
+    750,
+    150,
+    15,
+    "center",
+    PLAYER_COLORS[p.id],
+    1000,
+    true,
+    11,
+  );
   const diceCount = Math.max(1, Math.min(3, p.diceCount || 1));
   for (let i = 0; i < diceCount; i++)
     contain(
       IM["dice" + (S.diceResults?.[i] || S.dice)],
-      1285 + i * 75,
-      635,
-      110,
-      110,
+      1215 + i * 105,
+      620,
+      115,
+      115,
     );
   btn(
     "roll",
     "擲骰子",
-    1260,
-    770,
-    300,
-    86,
+    1215,
+    755,
+    340,
+    78,
     true,
     1,
     !S.rolling && !b.popup && !b.winner,
@@ -1653,10 +1682,10 @@ function hud() {
   btn(
     "cards",
     "卡片 " + p.cards.length,
-    1055,
-    786,
-    180,
-    60,
+    990,
+    785,
+    205,
+    56,
     false,
     0.95,
     !S.rolling && !b.popup && p.type === "human",
@@ -1664,6 +1693,54 @@ function hud() {
   if (S.msg)
     fitTxt(S.msg, 800, 850, 680, 16, "center", "#fff6d2", 800, true, 12);
   diceThrowOverlay();
+}
+function turnBannerHud() {
+  const b = S.board,
+    q = b?.turnBanner;
+  if (!q) return;
+  const age = performance.now() - q.start;
+  if (age > 1150) {
+    b.turnBanner = null;
+    return;
+  }
+  const p = b.players.find((player) => player.id === q.player) || cp(),
+    enter = Math.min(1, age / 260),
+    leave = age < 850 ? 1 : Math.max(0, 1 - (age - 850) / 300),
+    ease = 1 - Math.pow(1 - enter, 3),
+    x = 550,
+    y = 192 - (1 - ease) * 90;
+  X.save();
+  X.globalAlpha = leave;
+  X.shadowColor = PLAYER_COLORS[p.id];
+  X.shadowBlur = 28;
+  stretch(IM["playerSeatP" + p.id], x, y, 500, 108, leave);
+  X.shadowBlur = 0;
+  contain(IM["portrait" + p.char], x + 22, y + 9, 90, 90, leave);
+  fitTxt(
+    `第 ${b.round} 回合｜${p.id + 1}P ${CHAR_NAMES[p.char]}`,
+    x + 295,
+    y + 40,
+    335,
+    25,
+    "center",
+    PLAYER_COLORS[p.id],
+    1000,
+    true,
+    16,
+  );
+  fitTxt(
+    p.type === "ai" ? "電腦玩家正在思考" : "輪到你行動了",
+    x + 295,
+    y + 73,
+    320,
+    17,
+    "center",
+    "#fff7d0",
+    900,
+    true,
+    12,
+  );
+  X.restore();
 }
 function scenePopup(q, b, p) {
   if (q.kind === "event") {
@@ -1840,9 +1917,17 @@ function popup() {
   const b = S.board,
     q = b.popup;
   if (!q) return;
-  const p = cp();
-  X.fillStyle = "rgba(4,8,24,.72)";
+  const p = cp(),
+    age = Math.max(0, performance.now() - (q.openedAt || 0)),
+    intro = Math.min(1, age / 220),
+    ease = 1 - Math.pow(1 - intro, 3),
+    scale = 0.94 + ease * 0.06;
+  X.fillStyle = `rgba(4,8,24,${0.72 * ease})`;
   X.fillRect(0, 0, W, H);
+  X.translate(W / 2, H / 2);
+  X.scale(scale, scale);
+  X.translate(-W / 2, -H / 2);
+  X.globalAlpha *= ease;
   if (scenePopup(q, b, p)) return;
   contain(IM.abilityPanel, 440, 115, 720, 670, 0.99);
   let title = "冒險訊息",
@@ -2205,4 +2290,23 @@ C.addEventListener("pointerleave", () => {
 });
 C.addEventListener("pointercancel", () => {
   HOME.pressed = null;
+});
+C.addEventListener("pointerdown", (e) => {
+  const p = pointerToGame(e),
+    b = hit(p.x, p.y);
+  UI_BUTTON.pressed = b?.en ? b.id : null;
+});
+C.addEventListener("pointermove", (e) => {
+  const p = pointerToGame(e),
+    b = hit(p.x, p.y);
+  UI_BUTTON.hover = b?.en ? b.id : null;
+});
+C.addEventListener("pointerup", () => {
+  UI_BUTTON.pressed = null;
+});
+C.addEventListener("pointerleave", () => {
+  UI_BUTTON.hover = UI_BUTTON.pressed = null;
+});
+C.addEventListener("pointercancel", () => {
+  UI_BUTTON.pressed = null;
 });

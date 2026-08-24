@@ -767,7 +767,7 @@ function addLog(s) {
   S.msg = s;
 }
 function openPopup(kind, data = {}) {
-  S.board.popup = { kind, ...data };
+  S.board.popup = { kind, openedAt: performance.now(), ...data };
 }
 function typeName(t) {
   return (
@@ -982,6 +982,7 @@ function makeBoard() {
     npcs: [],
     roadblocks: [],
     shopStock: [],
+    turnBanner: { player: 0, start: performance.now() },
   };
   players.forEach((p) => {
     for (let i = 0; i < S.startingCards; i++) drawCard(p);
@@ -1210,6 +1211,7 @@ function nextTurn() {
     addLog("生存賽進入新一季，直到只剩最後一名玩家");
   }
   const p = cp();
+  b.turnBanner = { player: p.id, start: performance.now() };
   b.phase = "turn-start";
   tickEffects(p);
   if (p.skip > 0) {
@@ -1632,7 +1634,10 @@ function game() {
   drawMap();
   X.restore();
   hud();
+  turnBannerHud();
+  X.save();
   popup();
+  X.restore();
   if (b.mini && b.popup && b.popup.kind === "mini" && b.mini.kind < 2) {
     const now = performance.now(),
       dt = Math.min(0.04, (now - b.mini.last) / 1000);
