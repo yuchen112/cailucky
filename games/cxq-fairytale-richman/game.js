@@ -818,7 +818,10 @@ function shopCost(p) {
 }
 function rentFor(t, payer = null) {
   let r = Math.round(
-    t.price * (0.25 + t.level * 0.22) * (S.board?.mapRules?.rentRate || 1),
+    t.price *
+      (0.25 + t.level * 0.22) *
+      (S.board?.mapRules?.rentRate || 1) *
+      marketIndex(),
   );
   if (t.owner >= 0 && regionOwned(t.owner, t.region)) r = Math.round(r * 1.5);
   const owner = S.board.players.find((x) => x.id === t.owner);
@@ -835,7 +838,10 @@ function rentFor(t, payer = null) {
 }
 function rentEstimate(t, payer = null) {
   let r = Math.round(
-    t.price * (0.25 + t.level * 0.22) * (S.board?.mapRules?.rentRate || 1),
+    t.price *
+      (0.25 + t.level * 0.22) *
+      (S.board?.mapRules?.rentRate || 1) *
+      marketIndex(),
   );
   if (t.owner >= 0 && regionOwned(t.owner, t.region)) r = Math.round(r * 1.5);
   const owner = S.board.players.find((x) => x.id === t.owner);
@@ -846,6 +852,10 @@ function rentEstimate(t, payer = null) {
   else if (t.special === "mall") r = Math.round(r * 1.2);
   else if (t.special === "park") r = Math.round(r * 0.65);
   return r;
+}
+function marketIndex() {
+  const round = Math.max(1, S.board?.round || 1);
+  return Math.min(2, 1 + Math.floor((round - 1) / 10) * 0.1);
 }
 function applyPropertyArrival(t, payer, owner) {
   if (!owner || !t.special) return;
@@ -2194,7 +2204,8 @@ C.addEventListener("pointerup", (e) => {
     const wx = p.x + S.board.cam.x,
       wy = p.y + S.board.cam.y,
       t = S.board.tiles.reduce((best, x) => {
-        const d = Math.hypot(x.x - wx, x.y - wy);
+        const visual = tileVisualPosition(x),
+          d = Math.hypot(visual.x - wx, visual.y - wy);
         return d < (best?.d ?? 86) ? { tile: x, d } : best;
       }, null)?.tile;
     if (t) {

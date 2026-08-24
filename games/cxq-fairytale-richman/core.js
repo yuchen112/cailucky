@@ -198,7 +198,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-1030";
+const ASSET_REV = "20260825-1130";
 function load(k, u) {
   const i = new Image();
   i.decoding = "async";
@@ -237,7 +237,7 @@ MAPS.forEach((m, i) =>
 MAPS.forEach((m, i) =>
   load("mapPreview" + i, A + "maps/map_preview_" + m.key + "_v1.webp"),
 );
-load("tile_land", A + "tiles/land.webp");
+load("tile_land", A + "tiles/land_parcel_v1.webp");
 load("tile_card", A + "tiles/card_v2.webp");
 load("tile_shop", A + "tiles/shop.webp");
 load("tile_minigame", A + "tiles/minigame.webp");
@@ -1258,8 +1258,42 @@ function buildingImage(t) {
     isLandmark = t.level >= 5 && regionOwned(t.owner, t.region);
   return IM[`building${mi}_${isLandmark ? "landmark" : Math.min(5, t.level)}`];
 }
+function tileVisualPosition(t) {
+  if (t.type !== "land" || !S.board) return { x: t.x, y: t.y };
+  const b = S.board;
+  if (!b.plotCenter) {
+    const points = b.tiles || [];
+    b.plotCenter = points.reduce(
+      (sum, point) => ({ x: sum.x + point.x / points.length, y: sum.y + point.y / points.length }),
+      { x: 0, y: 0 },
+    );
+  }
+  let dx = t.x - b.plotCenter.x,
+    dy = t.y - b.plotCenter.y;
+  const length = Math.hypot(dx, dy) || 1,
+    offset = -108;
+  dx /= length;
+  dy /= length;
+  return {
+    x: Math.max(76, Math.min(MW - 76, t.x + dx * offset)),
+    y: Math.max(116, Math.min(MH - 76, t.y + dy * offset)),
+  };
+}
 function drawTile(t) {
-  contain(tileImage(t.type), t.x - 88, t.y - 88, 176, 176, 1);
+  const visual = tileVisualPosition(t),
+    shiftX = visual.x - t.x,
+    shiftY = visual.y - t.y,
+    tileSize = t.type === "land" ? 132 : 152;
+  X.save();
+  X.translate(shiftX, shiftY);
+  contain(
+    tileImage(t.type),
+    t.x - tileSize / 2,
+    t.y - tileSize / 2,
+    tileSize,
+    tileSize,
+    1,
+  );
   const facility = facilityImage(t.type);
   if (facility) contain(facility, t.x - 66, t.y - 150, 132, 140, 1);
   if (t.type === "start" || t.type === "event")
@@ -1280,7 +1314,7 @@ function drawTile(t) {
     X.shadowColor = "#ffd84f";
     X.shadowBlur = 22;
     X.beginPath();
-    X.arc(t.x, t.y, 82, 0, Math.PI * 2);
+    X.arc(t.x, t.y, tileSize * 0.48, 0, Math.PI * 2);
     X.stroke();
     X.restore();
   }
@@ -1294,7 +1328,7 @@ function drawTile(t) {
       const building = buildingImage(t);
       if (building) {
         const grow = 1 + pulse * 0.18,
-          sz = 158 * grow;
+          sz = 145 * grow;
         X.save();
         X.shadowColor = PLAYER_COLORS[t.owner];
         X.shadowBlur = 18 + 28 * pulse;
@@ -1327,14 +1361,14 @@ function drawTile(t) {
             true,
           );
       }
-      stretch(IM["playerSeatP" + t.owner], t.x - 75, t.y - 122, 150, 48, 0.98);
-      contain(IM["portrait" + owner?.char], t.x - 69, t.y - 119, 42, 42, 0.98);
+      stretch(IM["playerSeatP" + t.owner], t.x - 66, t.y - 112, 132, 42, 0.98);
+      contain(IM["portrait" + owner?.char], t.x - 61, t.y - 109, 36, 36, 0.98);
       fitTxt(
         `${t.owner + 1}P ${owner ? CHAR_NAMES[owner.char] : ""}`,
-        t.x + 21,
-        t.y - 99,
-        92,
-        13,
+        t.x + 18,
+        t.y - 91,
+        80,
+        12,
         "center",
         PLAYER_COLORS[t.owner],
         1000,
@@ -1356,7 +1390,7 @@ function drawTile(t) {
     txt(
       "$" + Math.round(t.price / 1000) + "K",
       t.x,
-      t.y + 69,
+      t.y + 55,
       13,
       "center",
       "#fff6d2",
@@ -1364,6 +1398,7 @@ function drawTile(t) {
       true,
     );
   }
+  X.restore();
 }
 function drawPlayers() {
   const b = S.board,
@@ -1592,11 +1627,11 @@ function hud() {
   const b = S.board,
     p = cp();
   b.players.forEach(playerHudCard);
-  stretch(IM.roleInfo, 1170, 12, 416, 106, 0.96);
+  stretch(IM.roleInfo, 1170, 12, 416, 134, 0.96);
   fitTxt(
     `${b.mapRules?.name || "童話王國"}　　第 ${b.round}/${S.rounds} 回合`,
     1378,
-    38,
+    35,
     360,
     18,
     "center",
@@ -1608,7 +1643,7 @@ function hud() {
   fitTxt(
     `現在行動：${p.id + 1}P ${CHAR_NAMES[p.char]}`,
     1378,
-    69,
+    62,
     350,
     17,
     "center",
@@ -1618,18 +1653,28 @@ function hud() {
     12,
   );
   fitTxt(
-    p.type === "ai"
-      ? `電腦思考中・${p.diff === "easy" ? "輕鬆" : p.diff === "smart" ? "聰明" : "標準"}`
-      : "拖曳地圖・點格查看・選擇本回合行動",
+    `現金 $${p.cash.toLocaleString()}　存款 $${(p.bank || 0).toLocaleString()}`,
     1378,
-    95,
+    91,
     350,
-    13,
+    15,
     "center",
     "#e2f1ff",
     850,
     true,
-    10,
+    12,
+  );
+  fitTxt(
+    `總資產 $${netWorth(p).toLocaleString()}　物價指數 ×${marketIndex().toFixed(1)}`,
+    1378,
+    118,
+    350,
+    15,
+    "center",
+    "#ffe58e",
+    900,
+    true,
+    12,
   );
   btn("pause", "選單", 20, 130, 150, 54, false, 0.94, !S.rolling && !b.popup);
   btn(
