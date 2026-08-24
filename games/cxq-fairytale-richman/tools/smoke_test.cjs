@@ -19,7 +19,7 @@ for (const item of swContext.precache) {
   if (!fs.existsSync(target))
     throw new Error(`service worker precache missing: ${item}`);
 }
-if (!swContext.cacheName.includes("20260825-0800"))
+if (!swContext.cacheName.includes("20260825-0830"))
   throw new Error("service worker cache revision is stale");
 const manifest = JSON.parse(
   fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"),

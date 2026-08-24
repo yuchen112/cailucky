@@ -198,7 +198,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-0800";
+const ASSET_REV = "20260825-0830";
 function load(k, u) {
   const i = new Image();
   i.decoding = "async";
@@ -240,7 +240,6 @@ load("tile_land", A + "tiles/land.webp");
 load("tile_card", A + "tiles/card_v2.webp");
 load("tile_shop", A + "tiles/shop.webp");
 load("tile_minigame", A + "tiles/minigame.webp");
-load("tile_npc", A + "tiles/npc.webp");
 // Known-corrupt start/event rasters are intentionally not loaded. They are visually quarantined.
 for (let i = 1; i <= 6; i++) load("dice" + i, A + "dice/dice_" + i + ".webp");
 for (let i = 1; i <= 6; i++)
