@@ -198,7 +198,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-0630";
+const ASSET_REV = "20260825-0700";
 function load(k, u) {
   const i = new Image();
   i.decoding = "async";
@@ -751,8 +751,15 @@ function drawPickAnim() {
   const t = Math.min(1, (performance.now() - q.start) / q.dur),
     e = 1 - Math.pow(1 - t, 3),
     x = q.from.x + (q.to.x - q.from.x) * e,
-    y = q.from.y + (q.to.y - q.from.y) * e;
-  contain(IM["c" + q.char], x - 66, y - 92, 132, 154, 1);
+    y = q.from.y + (q.to.y - q.from.y) * e,
+    key = CHAR_KEYS[q.char],
+    contact = IM[key + "WalkRightContact"],
+    passing = IM[key + "WalkRightPassing"],
+    step = Math.floor((performance.now() - q.start) / 95) % 2,
+    frame = step ? passing : contact;
+  if (frame?.complete)
+    containFacing(frame, x - 72, y - 105, 144, 164, q.to.x >= q.from.x);
+  else contain(IM["c" + q.char], x - 66, y - 92, 132, 154, 1);
 }
 function seatPanel(i, x, y) {
   const s = S.seats[i],

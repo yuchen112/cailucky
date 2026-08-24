@@ -19,7 +19,7 @@ for (const item of swContext.precache) {
   if (!fs.existsSync(target))
     throw new Error(`service worker precache missing: ${item}`);
 }
-if (!swContext.cacheName.includes("20260825-0630"))
+if (!swContext.cacheName.includes("20260825-0700"))
   throw new Error("service worker cache revision is stale");
 const manifest = JSON.parse(
   fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"),
@@ -218,6 +218,9 @@ for (const [w, h] of [
 vm.runInContext(
   `
   if(new Set(CARD_DEFS.map(c=>c.cover)).size!==CARD_DEFS.length)throw new Error('card covers are not unique');
+  for(const key of CHAR_KEYS)if(!IM[key+'WalkRightContact']?.complete||!IM[key+'WalkRightPassing']?.complete)throw new Error('character walk animation missing for '+key);
+  S.scene='setup';S.activeSeat=0;S.pickAnim=null;SETUP_VIEW.char=1;chooseChar(1);
+  if(!S.pickAnim)throw new Error('selection did not start character walk-in');drawPickAnim();S.pickAnim=null;
   if(TYPE_PATTERN.includes('npc'))throw new Error('fixed god tile still exists');
   for(const required of ['bank','news','coupon','magic','hospital','shop','card','minigame'])if(!TYPE_PATTERN.includes(required))throw new Error('missing board facility '+required);
   if(MAP_ROUTES.starwish===MAP_ROUTES.moonharbor||JSON.stringify(MAP_ROUTES.starwish)===JSON.stringify(MAP_ROUTES.moonharbor))throw new Error('maps still share one route');

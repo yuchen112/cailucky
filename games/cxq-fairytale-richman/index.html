@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="CxQ 大富翁">
-  <link rel="manifest" href="manifest.webmanifest?v=20260825-0630">
+  <link rel="manifest" href="manifest.webmanifest?v=20260825-0700">
   <link rel="apple-touch-icon" href="../../assets/brand/cxq-app-icon-192.png">
   <title>CxQ 童話大富翁</title>
   <style>
@@ -22,9 +22,9 @@
 <body>
   <canvas id="game"></canvas>
   <div id="rotateGate">CxQ 童話大富翁僅支援橫向遊玩<br>請將手機旋轉為橫屏</div>
-  <script src="core.js?v=20260825-0630"></script>
-  <script src="viewport.js?v=20260825-0630"></script>
-  <script src="game.js?v=20260825-0630"></script>
+  <script src="core.js?v=20260825-0700"></script>
+  <script src="viewport.js?v=20260825-0700"></script>
+  <script src="game.js?v=20260825-0700"></script>
   <script>
     (function(){
       function size(){var v=window.visualViewport;return{w:(v&&v.width)||innerWidth,h:(v&&v.height)||innerHeight}}
@@ -33,7 +33,7 @@
       if(window.visualViewport)visualViewport.addEventListener('resize',gate);
       document.addEventListener('pointerdown',function(){var s=size();if(s.w>s.h&&screen.orientation&&screen.orientation.lock){screen.orientation.lock('landscape').catch(function(){})}},{once:true});
       gate();
-      if('serviceWorker'in navigator){addEventListener('load',function(){navigator.serviceWorker.register('./sw.js?v=20260825-0630').then(function(r){r.update()}).catch(function(){})})}
+      if('serviceWorker'in navigator){addEventListener('load',function(){navigator.serviceWorker.register('./sw.js?v=20260825-0700').then(function(r){r.update()}).catch(function(){})})}
     })();
   </script>
 </body>
