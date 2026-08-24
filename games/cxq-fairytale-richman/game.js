@@ -174,6 +174,11 @@ const LEGACY_CARD_MAP = {
   瞬移卡: "teleport",
   停留卡: "stop",
 };
+const MAP_BRANCHES = {
+  starwish: { 8: [9, 13], 26: [27, 31] },
+  moonharbor: { 7: [8, 12], 24: [25, 30] },
+  cloudbazaar: { 6: [7, 11], 20: [21, 25] },
+};
 function cardDef(v) {
   const normalized = LEGACY_CARD_MAP[v] || v;
   return (
@@ -183,6 +188,28 @@ function cardDef(v) {
 }
 const baseScenePopup = scenePopup;
 scenePopup = function (q, b, p) {
+  if (q.kind === "branch") {
+    contain(IM.abilityPanel, 400, 115, 800, 650, 0.99);
+    txt("前方道路分岔", 800, 205, 40, "center", "#fff0a5", 1000, true);
+    paragraph("選擇本回合要前進的道路；剩餘點數會沿選定方向繼續移動。", 800, 290, 610, 20, 30, 2, "center", "#fff", 900, true);
+    q.choices.forEach((dest, i) => {
+      const tile = b.tiles[dest];
+      btn("branchChoice" + i, `${i ? "捷徑" : "大道"}｜前往第 ${dest + 1} 格・${typeName(tile.type)}`, 525, 385 + i * 105, 550, 78, i === 1);
+    });
+    return true;
+  }
+  if (q.kind === "cardTileTarget") {
+    contain(IM.abilityPanel, 360, 85, 880, 730, 0.99);
+    const d = cardDef(p.cards[q.cardIndex]);
+    txt(d.name, 800, 165, 38, "center", "#fff0a5", 1000, true);
+    paragraph(d.desc + "｜選擇目標格。", 800, 230, 610, 19, 29, 2, "center", "#fff", 900, true);
+    q.targets.slice(0, 8).forEach((index, i) => {
+      const t = b.tiles[index];
+      btn("cardTile" + index, `第 ${index + 1} 格｜${t.type === "land" ? regionName(t.region) : typeName(t.type)}`, 455 + (i % 2) * 360, 315 + Math.floor(i / 2) * 78, 330, 62, i === 0);
+    });
+    btn("cardCancel", "返回卡片冊", 650, 680, 300, 64, false);
+    return true;
+  }
   if (
     q.kind === "tile" &&
     q.tile?.type === "land" &&
@@ -1219,49 +1246,66 @@ function nextTurn() {
   b.phase = "pre-roll";
   if (p.type === "ai") setTimeout(aiTurn, 700);
 }
+function branchAt(pos) {
+  const key = S.board?.mapRules?.key || MAPS[S.mapIndex]?.key;
+  return MAP_BRANCHES[key]?.[pos] || null;
+}
+function finishMovement() {
+  const b = S.board, p = cp();
+  p.moveAnim = null;
+  b.pendingMove = null;
+  S.rolling = false;
+  resolveTile();
+}
+function moveToTile(next) {
+  const b = S.board, p = cp(), move = b.pendingMove;
+  if (!move) return;
+  const old = p.pos, from = b.tiles[old], to = b.tiles[next], dur = 280;
+  p.pos = next;
+  p.moveAnim = { from: { x: from.x, y: from.y }, to: { x: to.x, y: to.y }, start: performance.now(), dur };
+  move.remaining--;
+  move.branchHandledAt = old;
+  sfx("step");
+  if (p.pos === 0 && old !== 0) {
+    cashGain(p, 5000);
+    addLog(`${p.id + 1}P 通過起點 +$5,000`);
+  }
+  const roadIndex = (b.roadblocks || []).indexOf(p.pos);
+  if (roadIndex >= 0) {
+    b.roadblocks.splice(roadIndex, 1);
+    move.remaining = 0;
+    addLog(`${p.id + 1}P 撞上路障，移動提前結束`);
+  }
+  focus();
+  setTimeout(() => { p.moveAnim = null; advanceMovement(); }, dur);
+}
+function chooseBranch(next) {
+  const b = S.board, move = b.pendingMove, choices = branchAt(cp().pos);
+  if (!move || !choices?.includes(next)) return;
+  b.popup = null;
+  moveToTile(next);
+}
+function advanceMovement() {
+  const b = S.board, p = cp(), move = b.pendingMove;
+  if (!move || move.remaining <= 0) { finishMovement(); return; }
+  const choices = p.direction > 0 ? branchAt(p.pos) : null;
+  if (choices && move.branchHandledAt !== p.pos) {
+    b.phase = "branch-choice";
+    if (p.type === "ai") {
+      const destination = p.diff === "easy" ? choices[Math.floor(Math.random() * choices.length)] : choices[1];
+      setTimeout(() => chooseBranch(destination), 300);
+    } else openPopup("branch", { choices });
+    return;
+  }
+  const next = (p.pos + (p.direction || 1) + b.tiles.length) % b.tiles.length;
+  moveToTile(next);
+}
 function moveSteps(steps) {
-  const b = S.board,
-    p = cp();
+  const b = S.board;
   S.rolling = true;
   b.phase = "moving";
-  let n = 0;
-  const step = () => {
-    if (n >= steps) {
-      p.moveAnim = null;
-      S.rolling = false;
-      resolveTile();
-      return;
-    }
-    const old = p.pos,
-      from = b.tiles[old];
-    p.pos = (p.pos + (p.direction || 1) + b.tiles.length) % b.tiles.length;
-    const to = b.tiles[p.pos],
-      dur = 280;
-    p.moveAnim = {
-      from: { x: from.x, y: from.y },
-      to: { x: to.x, y: to.y },
-      start: performance.now(),
-      dur,
-    };
-    sfx("step");
-    if (p.pos === 0 && old !== 0) {
-      cashGain(p, 5000);
-      addLog(`${p.id + 1}P 通過起點 +$5,000`);
-    }
-    n++;
-    const roadIndex = (b.roadblocks || []).indexOf(p.pos);
-    if (roadIndex >= 0) {
-      b.roadblocks.splice(roadIndex, 1);
-      n = steps;
-      addLog(`${p.id + 1}P 撞上路障，移動提前結束`);
-    }
-    focus();
-    setTimeout(() => {
-      p.moveAnim = null;
-      step();
-    }, dur);
-  };
-  step();
+  b.pendingMove = { remaining: steps, branchHandledAt: -1 };
+  advanceMovement();
 }
 function rollDice() {
   if (S.rolling || !S.board || S.board.popup || S.board.winner) return;
@@ -1413,7 +1457,7 @@ function aiTurn() {
       addLog(`${p.id + 1}P 的 AI 策略使用 ${cardDef(wanted).name}`);
     }
   }
-  setTimeout(rollDice, 260);
+  if (!S.rolling && !S.board.popup) setTimeout(rollDice, 260);
 }
 function useCard(i) {
   const p = cp(),
@@ -1426,6 +1470,14 @@ function useCard(i) {
   }
   if (p.type === "human" && ["swap", "stop"].includes(c)) {
     openPopup("cardTarget", { cardIndex: i, card: c });
+    return;
+  }
+  if (p.type === "human" && ["roadblock", "teleport", "buyland"].includes(c)) {
+    let targets;
+    if (c === "roadblock") targets = Array.from({ length: 6 }, (_, n) => (p.pos + n + 1) % S.board.tiles.length);
+    else if (c === "buyland") targets = S.board.tiles.filter((t) => t.type === "land" && t.owner < 0).map((t) => t.index);
+    else targets = S.board.tiles.filter((_, index) => index % 5 === 0).map((t) => t.index);
+    openPopup("cardTileTarget", { cardIndex: i, targets });
     return;
   }
   p.cards.splice(i, 1);
@@ -1456,9 +1508,11 @@ function useCard(i) {
       focus();
     }
   } else if (c === "teleport") {
-    S.board.popup = null;
-    moveSteps(6);
-    return;
+    const valuable = S.board.tiles
+      .filter((t) => t.type === "land" && (t.owner < 0 || t.owner === p.id))
+      .sort((a, b) => (b.owner === p.id ? 1 : 0) - (a.owner === p.id ? 1 : 0));
+    p.pos = (valuable[0] || S.board.tiles[(p.pos + 6) % S.board.tiles.length]).index;
+    focus();
   } else if (c === "stop") {
     const o = living()
       .filter((x) => x.id !== p.id)
@@ -1801,6 +1855,36 @@ function action(id) {
       addLog(`${p.id + 1}P 以 ${d.cost} 點券購買 ${d.name}`);
     }
     openPopup("shop");
+    return;
+  }
+  if (S.scene === "game" && S.board && id.startsWith("branchChoice")) {
+    const choice = S.board.popup?.choices?.[+id.slice(12)];
+    if (Number.isInteger(choice)) chooseBranch(choice);
+    return;
+  }
+  if (S.scene === "game" && S.board && id.startsWith("cardTile")) {
+    const p = cp(), q = S.board.popup, index = +id.slice(8), c = p.cards[q?.cardIndex], t = S.board.tiles[index];
+    if (q?.kind !== "cardTileTarget" || !q.targets.includes(index) || !t) return;
+    if (c === "buyland") {
+      const cost = buyCost(p, t);
+      if (t.type !== "land" || t.owner >= 0 || p.cash < cost) {
+        addLog("現金不足或該土地已無法購買");
+        return;
+      }
+    }
+    p.cards.splice(q.cardIndex, 1);
+    if (c === "roadblock") {
+      if (!(S.board.roadblocks || []).includes(index)) S.board.roadblocks.push(index);
+    } else if (c === "teleport") {
+      p.pos = index;
+      focus();
+    } else if (c === "buyland" && t.type === "land" && t.owner < 0) {
+      const cost = buyCost(p, t);
+      p.cash -= cost; t.owner = p.id; markUpgrade(t);
+    }
+    addLog(`${p.id + 1}P 使用 ${cardDef(c).name}`);
+    S.board.popup = null;
+    saveGame();
     return;
   }
   if (S.scene === "game" && S.board && id.startsWith("playerTab")) {

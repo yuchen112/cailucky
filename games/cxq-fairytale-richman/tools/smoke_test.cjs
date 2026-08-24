@@ -19,7 +19,7 @@ for (const item of swContext.precache) {
   if (!fs.existsSync(target))
     throw new Error(`service worker precache missing: ${item}`);
 }
-if (!swContext.cacheName.includes("20260825-0430"))
+if (!swContext.cacheName.includes("20260825-0530"))
   throw new Error("service worker cache revision is stale");
 const storage = new Map();
 const timers = [];
@@ -134,6 +134,8 @@ for (const [scene, code] of [
   ["map", 'S.scene="mapSelect";mapSelect()'],
   ["rules", 'S.scene="rules";rulesSetup()'],
   ["game", 'S.scene="game";S.board.popup=null;game()'],
+  ["branch", 'S.scene="game";openPopup("branch",{choices:[9,13]});game()'],
+  ["cardTileTarget", 'S.scene="game";cp().cards=["roadblock"];openPopup("cardTileTarget",{cardIndex:0,targets:[1,2,3,4,5,6]});game()'],
   ["roster", 'S.scene="game";openPopup("roster");game()'],
   [
     "playerOverview",
@@ -214,6 +216,9 @@ vm.runInContext(
   for(const required of ['bank','news','coupon','magic','hospital','shop','card','minigame'])if(!TYPE_PATTERN.includes(required))throw new Error('missing board facility '+required);
   if(MAP_ROUTES.starwish===MAP_ROUTES.moonharbor||JSON.stringify(MAP_ROUTES.starwish)===JSON.stringify(MAP_ROUTES.moonharbor))throw new Error('maps still share one route');
   S.mapIndex=0;makeBoard();
+  cp().pos=8;S.board.pendingMove={remaining:1,branchHandledAt:-1};S.rolling=true;chooseBranch(13);
+  if(cp().pos!==13)throw new Error('branch choice did not move to selected route');
+  S.board.pendingMove=null;S.rolling=false;
   const testP=cp(); testP.cards=['speed']; useCard(0);
   if(testP.diceCount!==2||testP.vehicleTurns!==5)throw new Error('vehicle card did not enable multi-dice turns');
   testP.cards=Array(20).fill('shield'); saveGame();

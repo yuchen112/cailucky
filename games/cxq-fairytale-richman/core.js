@@ -198,7 +198,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-0430";
+const ASSET_REV = "20260825-0530";
 function load(k, u) {
   const i = new Image();
   i.decoding = "async";
@@ -272,6 +272,7 @@ load("facilityCoupon", A + "facilities/coupon_token_v2.webp");
 load("facilityMagic", A + "facilities/magic_token_v2.webp");
 load("facilityHospital", A + "facilities/hospital_token_v2.webp");
 load("facilityStart", A + "facilities/start_token_v2.webp");
+load("forkSign", A + "facilities/fork_sign_v1.webp");
 load("npcWealth", A + "npc/wealth_v1.webp");
 load("npcPoverty", A + "npc/poverty_v1.webp");
 load("npcLand", A + "npc/land_v1.webp");
@@ -1399,6 +1400,13 @@ function drawMap() {
     const t = b.tiles[pos];
     if (t) contain(IM.roadblockProp, t.x - 58, t.y - 128, 116, 108, 1);
   }
+  const mapKey = b.mapRules?.key || MAPS[S.mapIndex]?.key;
+  const forks = typeof MAP_BRANCHES === "undefined" ? null : MAP_BRANCHES[mapKey];
+  if (forks)
+    for (const pos of Object.keys(forks)) {
+      const t = b.tiles[+pos];
+      if (t) contain(IM.forkSign, t.x - 48, t.y - 126, 96, 102, 0.96);
+    }
   drawPlayers();
 }
 function playerHudCard(p, i) {

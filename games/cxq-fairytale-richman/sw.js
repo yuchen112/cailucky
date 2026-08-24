@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20260825-0430';
+const CACHE='cxq-richman-20260825-0530';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   './assets/backgrounds/home_scene_v7.webp','./assets/backgrounds/setup_scene_v4.webp',
@@ -21,6 +21,7 @@ const PRECACHE=[
   './assets/minigames/star_catch_v1.webp','./assets/minigames/balloon_pop_v1.webp','./assets/minigames/treasure_timing_v1.webp',
   './assets/cards/precision_dice_v1.webp','./assets/cards/remote_dice_v1.webp','./assets/cards/shield_v1.webp','./assets/cards/speed_v1.webp','./assets/cards/roadblock_v1.webp','./assets/cards/teleport_v1.webp','./assets/cards/land_purchase_v1.webp','./assets/cards/free_upgrade_v1.webp','./assets/cards/discount_v1.webp','./assets/cards/rent_v1.webp','./assets/cards/swap_v1.webp','./assets/cards/stop_v1.webp',
   './assets/facilities/roadblock_prop_v2.webp','./assets/facilities/bank_token_v2.webp','./assets/facilities/news_token_v2.webp','./assets/facilities/coupon_token_v2.webp','./assets/facilities/magic_token_v2.webp','./assets/facilities/hospital_token_v2.webp','./assets/facilities/start_token_v2.webp',
+  './assets/facilities/fork_sign_v1.webp',
   './assets/npc/wealth_v1.webp','./assets/npc/poverty_v1.webp','./assets/npc/land_v1.webp','./assets/npc/angel_v1.webp','./assets/npc/demon_v1.webp','./assets/npc/death_v1.webp',
   './assets/dice/dice_throw_1_v1.webp','./assets/dice/dice_throw_2_v1.webp','./assets/dice/dice_throw_3_v1.webp','./assets/dice/dice_throw_4_v1.webp','./assets/dice/dice_throw_5_v1.webp','./assets/dice/dice_throw_6_v1.webp',
   './assets/tiles/land.webp','./assets/tiles/card_v2.webp','./assets/tiles/shop.webp','./assets/tiles/minigame.webp','./assets/tiles/npc.webp',
