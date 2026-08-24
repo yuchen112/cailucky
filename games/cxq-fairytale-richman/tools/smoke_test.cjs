@@ -33,7 +33,7 @@ for (const file of projectAssets) {
   if (!swContext.precache.includes(cachePath))
     throw new Error(`unused or uncached project asset remains: ${cachePath}`);
 }
-if (!swContext.cacheName.includes("20260825-2230"))
+if (!swContext.cacheName.includes("20260825-2245"))
   throw new Error("service worker cache revision is stale");
 const manifest = JSON.parse(
   fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"),
@@ -253,6 +253,7 @@ for (const [w, h] of [
 vm.runInContext(
   `
   if(new Set(CARD_DEFS.map(c=>c.cover)).size!==CARD_DEFS.length)throw new Error('card covers are not unique');
+  if(IM.homeBg.fetchPriority!=='high'||IM.homeMenuNew.fetchPriority!=='high')throw new Error('home-critical art is not prioritized');
   if(!IM.actionConsole?.complete)throw new Error('image-backed action console missing');
   if(!IM.tile_land?._src?.includes('land_parcel_v1.webp'))throw new Error('roadside land parcel art is not active');
   for(let i=1;i<=6;i++)if(!IM['diceThrow'+i]?._src?.includes('_v2.webp'))throw new Error('physical throw die missing for face '+i);

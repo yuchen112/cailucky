@@ -207,10 +207,11 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-2230";
-function load(k, u) {
+const ASSET_REV = "20260825-2245";
+function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
+  i.fetchPriority = priority;
   i.onload = () => {
     IM[k] = i;
   };
@@ -221,12 +222,14 @@ function load(k, u) {
   IM[k] = i;
   return i;
 }
-load("btnBlue", A + "ui/btn_blue.webp");
-load("btnRed", A + "ui/btn_red.webp");
-load("homeMenuNew", A + "ui/home_menu_new_v1.webp");
-load("homeMenuContinue", A + "ui/home_menu_continue_v1.webp");
-load("homeMenuHelp", A + "ui/home_menu_help_v1.webp");
-load("homeMenuSettings", A + "ui/home_menu_settings_v1.webp");
+load("homeBg", A + "backgrounds/home_scene_v7.webp", "high");
+load("homeMenuNew", A + "ui/home_menu_new_v1.webp", "high");
+load("homeMenuContinue", A + "ui/home_menu_continue_v1.webp", "high");
+load("homeMenuHelp", A + "ui/home_menu_help_v1.webp", "high");
+load("homeMenuSettings", A + "ui/home_menu_settings_v1.webp", "high");
+load("btnBlue", A + "ui/btn_blue.webp", "high");
+load("btnRed", A + "ui/btn_red.webp", "high");
+load("setupBg", A + "backgrounds/setup_scene_v4.webp", "high");
 load("playerSeat", A + "ui/player_seat_v2.webp");
 load("roleInfo", A + "ui/role_info_v2.webp");
 load("characterStage", A + "ui/character_stage_v1.webp");
@@ -238,8 +241,6 @@ for (let i = 0; i < 4; i++)
 load("statusHuman", A + "ui/status_human_v1.webp");
 load("statusAi", A + "ui/status_ai_v1.webp");
 load("statusOff", A + "ui/status_off_v1.webp");
-load("homeBg", A + "backgrounds/home_scene_v7.webp");
-load("setupBg", A + "backgrounds/setup_scene_v4.webp");
 MAPS.forEach((m, i) =>
   load("mapWorld" + i, A + "maps/map_world_" + m.key + "_v2.webp"),
 );
