@@ -19,7 +19,7 @@ for (const item of swContext.precache) {
   if (!fs.existsSync(target))
     throw new Error(`service worker precache missing: ${item}`);
 }
-if (!swContext.cacheName.includes("20260825-0315"))
+if (!swContext.cacheName.includes("20260825-0430"))
   throw new Error("service worker cache revision is stale");
 const storage = new Map();
 const timers = [];
@@ -222,10 +222,12 @@ vm.runInContext(
     S.mapIndex=mi; makeBoard();
     for(let ri=0;ri<4;ri++)if(REGION_NAMES[ri]!==MAPS[mi].regions[ri])throw new Error('map region label mismatch');
     const lands=S.board.tiles.filter(t=>t.type==='land'&&t.region===0);
-    lands.forEach(t=>{t.owner=0;t.level=3});
+    lands.forEach(t=>{t.owner=0;t.level=5});
     if(buildingImage(lands[0])!==IM['building'+mi+'_landmark'])throw new Error('completed region did not use its map landmark');
     lands[0].owner=1;
-    if(buildingImage(lands[1])!==IM['building'+mi+'_3'])throw new Error('incomplete region incorrectly used landmark');
+    if(buildingImage(lands[1])!==IM['building'+mi+'_5'])throw new Error('incomplete region did not use its level-five art');
+    lands[1].level=4;
+    if(buildingImage(lands[1])!==IM['building'+mi+'_4'])throw new Error('level-four art is not distinct');
   }
   S.mapIndex=0;makeBoard();
   const owner=S.board.players[0], land=S.board.tiles.find(t=>t.type==='land');
@@ -233,6 +235,9 @@ vm.runInContext(
   if(owner.rentBoost!==1)throw new Error('rent preview consumed the rent boost');
   rentFor(land,S.board.players[1]);
   if(owner.rentBoost!==0)throw new Error('rent boost was not consumed by an actual rent calculation');
+  land.level=5;land.special='hotel';
+  const hotelRent=rentEstimate(land,S.board.players[1]);land.special='park';
+  if(hotelRent<=rentEstimate(land,S.board.players[1]))throw new Error('large-building rent identities are not distinct');
 `,
   context,
 );

@@ -253,6 +253,29 @@ scenePopup = function (q, b, p) {
     btn("skip", "離開百貨公司", 830, 710, 300, 72, true);
     return true;
   }
+  if (q.kind === "specialBuild") {
+    const t = q.tile;
+    contain(IM.abilityPanel, 360, 90, 880, 720, 0.99);
+    txt("選擇大型建築", 800, 170, 38, "center", "#fff0a5", 1000, true);
+    paragraph(
+      "Lv5 可改建為不同設施；每種設施具有獨立的收租與抵達效果。",
+      800,
+      245,
+      620,
+      19,
+      29,
+      2,
+      "center",
+      "#fff",
+      900,
+      true,
+    );
+    btn("buildHotel", "星光旅館｜高租金＋停留", 480, 345, 640, 72, true);
+    btn("buildMall", "童話商場｜租金＋點券", 480, 440, 640, 72, false);
+    btn("buildPark", "祝福公園｜低租金＋地主回復", 480, 535, 640, 72, false);
+    btn("buildCancel", "暫不改建", 610, 650, 380, 68, false);
+    return true;
+  }
   if (q.kind === "shopSell") {
     contain(IM.abilityPanel, 170, 55, 1260, 800, 0.99);
     txt("出售卡片", 800, 105, 38, "center", "#fff0a5", 1000, true);
@@ -802,6 +825,9 @@ function rentFor(t, payer = null) {
     owner.rentBoost = 0;
   }
   if (payer?.char === 3) r = Math.round(r * 0.8);
+  if (t.special === "hotel") r = Math.round(r * 1.4);
+  else if (t.special === "mall") r = Math.round(r * 1.2);
+  else if (t.special === "park") r = Math.round(r * 0.65);
   return r;
 }
 function rentEstimate(t, payer = null) {
@@ -813,7 +839,16 @@ function rentEstimate(t, payer = null) {
   if (owner?.char === 8) r = Math.round(r * 1.15);
   if (owner?.rentBoost) r = Math.round(r * 1.5);
   if (payer?.char === 3) r = Math.round(r * 0.8);
+  if (t.special === "hotel") r = Math.round(r * 1.4);
+  else if (t.special === "mall") r = Math.round(r * 1.2);
+  else if (t.special === "park") r = Math.round(r * 0.65);
   return r;
+}
+function applyPropertyArrival(t, payer, owner) {
+  if (!owner || !t.special) return;
+  if (t.special === "hotel") payer.skip += 1;
+  else if (t.special === "mall") owner.tickets += 2;
+  else if (t.special === "park") owner.cash += 2500;
 }
 function netWorth(p) {
   let v = p.cash + (p.bank || 0);
@@ -1302,6 +1337,8 @@ function aiResolve() {
         if (want) {
           p.cash -= cost;
           t.level++;
+          if (t.level === 5)
+            t.special = smart ? "hotel" : easy ? "park" : "mall";
           markUpgrade(t);
           addLog(`${p.id + 1}P 將土地升到 Lv${t.level}`);
         }
@@ -1315,7 +1352,10 @@ function aiResolve() {
       } else {
         p.cash -= r;
         const o = b.players.find((x) => x.id === t.owner);
-        if (o && !o.bankrupt) o.cash += r;
+        if (o && !o.bankrupt) {
+          o.cash += r;
+          applyPropertyArrival(t, p, o);
+        }
       }
       finishAction();
       return;
@@ -1826,6 +1866,10 @@ function action(id) {
     const p = cp(),
       t = S.board.popup.tile,
       cost = Math.round(t.price * (0.7 + t.level * 0.08));
+    if (t.level === 4) {
+      openPopup("specialBuild", { tile: t });
+      return;
+    }
     if (t.level < 5 && p.cash >= cost) {
       p.cash -= cost;
       t.level++;
@@ -1834,6 +1878,32 @@ function action(id) {
     }
     finishAction();
     return;
+  }
+  if (S.scene === "game" && S.board && id.startsWith("build")) {
+    const q = S.board.popup,
+      p = cp(),
+      t = q?.tile;
+    if (id === "buildCancel") {
+      openPopup("tile", { tile: t });
+      return;
+    }
+    const kind = { buildHotel: "hotel", buildMall: "mall", buildPark: "park" }[
+      id
+    ];
+    if (q?.kind === "specialBuild" && t && kind) {
+      const cost = Math.round(t.price * 1.02);
+      if (p.cash >= cost) {
+        p.cash -= cost;
+        t.level = 5;
+        t.special = kind;
+        markUpgrade(t);
+        addLog(
+          `${p.id + 1}P 完成${kind === "hotel" ? "星光旅館" : kind === "mall" ? "童話商場" : "祝福公園"}`,
+        );
+      }
+      finishAction();
+      return;
+    }
   }
   if (S.scene === "game" && S.board) {
     const b = S.board,
@@ -1936,7 +2006,10 @@ function action(id) {
       } else {
         p.cash -= r;
         const o = b.players.find((x) => x.id === t.owner);
-        if (o && !o.bankrupt) o.cash += r;
+        if (o && !o.bankrupt) {
+          o.cash += r;
+          applyPropertyArrival(t, p, o);
+        }
         addLog(`${p.id + 1}P 支付 $${r.toLocaleString()} 租金`);
       }
       finishAction();

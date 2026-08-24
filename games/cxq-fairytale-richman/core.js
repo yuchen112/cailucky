@@ -198,7 +198,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-0315";
+const ASSET_REV = "20260825-0430";
 function load(k, u) {
   const i = new Image();
   i.decoding = "async";
@@ -265,6 +265,13 @@ load("miniTreasure", A + "minigames/treasure_timing_v1.webp");
   "swap",
   "stop",
 ].forEach((k) => load("card_" + k, A + "cards/" + k + "_v1.webp"));
+load("roadblockProp", A + "facilities/roadblock_prop_v2.webp");
+load("facilityBank", A + "facilities/bank_token_v2.webp");
+load("facilityNews", A + "facilities/news_token_v2.webp");
+load("facilityCoupon", A + "facilities/coupon_token_v2.webp");
+load("facilityMagic", A + "facilities/magic_token_v2.webp");
+load("facilityHospital", A + "facilities/hospital_token_v2.webp");
+load("facilityStart", A + "facilities/start_token_v2.webp");
 load("npcWealth", A + "npc/wealth_v1.webp");
 load("npcPoverty", A + "npc/poverty_v1.webp");
 load("npcLand", A + "npc/land_v1.webp");
@@ -286,7 +293,7 @@ CHAR_KEYS.forEach((k) => {
   );
 });
 MAPS.forEach((m, mi) => {
-  for (let level = 1; level <= 3; level++)
+  for (let level = 1; level <= 5; level++)
     load(`building${mi}_${level}`, A + `buildings/${m.key}_l${level}_v1.webp`);
   load(`building${mi}_landmark`, A + `buildings/${m.key}_landmark_v1.webp`);
 });
@@ -1187,6 +1194,16 @@ function tileImage(type) {
   if (type === "event") return IM.tile_card || IM.tile_land;
   return IM["tile_" + type] || IM.tile_land;
 }
+function facilityImage(type) {
+  return {
+    start: IM.facilityStart,
+    bank: IM.facilityBank,
+    news: IM.facilityNews,
+    coupon: IM.facilityCoupon,
+    magic: IM.facilityMagic,
+    hospital: IM.facilityHospital,
+  }[type];
+}
 function npcImage(name) {
   return (
     {
@@ -1216,11 +1233,13 @@ function npcMarker(n, t) {
 function buildingImage(t) {
   if (t.owner < 0 || t.level < 1) return null;
   const mi = S.board?.mapIndex || 0,
-    isLandmark = t.level >= 3 && regionOwned(t.owner, t.region);
-  return IM[`building${mi}_${isLandmark ? "landmark" : Math.min(3, t.level)}`];
+    isLandmark = t.level >= 5 && regionOwned(t.owner, t.region);
+  return IM[`building${mi}_${isLandmark ? "landmark" : Math.min(5, t.level)}`];
 }
 function drawTile(t) {
   contain(tileImage(t.type), t.x - 88, t.y - 88, 176, 176, 1);
+  const facility = facilityImage(t.type);
+  if (facility) contain(facility, t.x - 66, t.y - 150, 132, 140, 1);
   if (t.type === "start" || t.type === "event")
     txt(
       t.type === "start" ? "起點" : "事件",
@@ -1259,6 +1278,21 @@ function drawTile(t) {
         X.shadowBlur = 18 + 28 * pulse;
         contain(building, t.x - sz / 2, t.y + 22 - sz, sz, sz, 1);
         X.restore();
+        if (t.special)
+          txt(
+            t.special === "hotel"
+              ? "星光旅館"
+              : t.special === "mall"
+                ? "童話商場"
+                : "祝福公園",
+            t.x,
+            t.y - 148,
+            12,
+            "center",
+            "#fff2ae",
+            1000,
+            true,
+          );
         if (pulse > 0)
           txt(
             "★ 升級完成 ★",
@@ -1363,7 +1397,7 @@ function drawMap() {
     }
   for (const pos of b.roadblocks || []) {
     const t = b.tiles[pos];
-    if (t) contain(IM.tile_npc, t.x - 54, t.y - 118, 108, 108, 1);
+    if (t) contain(IM.roadblockProp, t.x - 58, t.y - 128, 116, 108, 1);
   }
   drawPlayers();
 }

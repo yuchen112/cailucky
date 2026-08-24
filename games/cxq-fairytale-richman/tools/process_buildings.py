@@ -17,7 +17,9 @@ ROOT = Path(__file__).resolve().parents[1] / "assets" / "buildings"
 def extract(image: Image.Image) -> Image.Image:
     rgba = np.asarray(image.convert("RGBA")).copy()
     rgb = rgba[:, :, :3].astype(np.int16)
-    neutral = (rgb.max(axis=2) - rgb.min(axis=2) <= 3) & (rgb.mean(axis=2) >= 238)
+    neutral_light = (rgb.max(axis=2) - rgb.min(axis=2) <= 6) & (rgb.mean(axis=2) >= 232)
+    neutral_dark = rgb.max(axis=2) <= 10
+    neutral = neutral_light | neutral_dark
     h, w = neutral.shape
     outside = np.zeros((h, w), dtype=np.uint8)
     # UI frames deliberately contain enclosed portrait holes; their baked checker
