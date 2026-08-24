@@ -19,7 +19,7 @@ for (const item of swContext.precache) {
   if (!fs.existsSync(target))
     throw new Error(`service worker precache missing: ${item}`);
 }
-if (!swContext.cacheName.includes("20260825-0530"))
+if (!swContext.cacheName.includes("20260825-0600"))
   throw new Error("service worker cache revision is stale");
 const storage = new Map();
 const timers = [];

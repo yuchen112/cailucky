@@ -210,20 +210,19 @@ scenePopup = function (q, b, p) {
     btn("cardCancel", "返回卡片冊", 650, 680, 300, 64, false);
     return true;
   }
-  if (
-    q.kind === "tile" &&
-    q.tile?.type === "land" &&
-    q.tile.owner === p.id &&
-    q.tile.level >= 3
-  ) {
+  if (q.kind === "tile" && q.tile?.type === "land") {
     const t = q.tile,
-      cost = Math.round(t.price * (0.7 + t.level * 0.08));
-    contain(IM.abilityPanel, 440, 115, 720, 670, 0.99);
+      owner = t.owner >= 0 ? b.players.find((x) => x.id === t.owner) : null,
+      mine = t.owner === p.id,
+      buy = buyCost(p, t),
+      cost = Math.round(t.price * (t.level >= 3 ? 0.7 + t.level * 0.08 : 0.65)),
+      art = buildingImage(t) || IM.tile_land;
+    contain(IM.abilityPanel, 250, 70, 1100, 760, 0.99);
     fitTxt(
-      `${regionName(t.region)}｜Lv${t.level} 地產`,
+      `${regionName(t.region)}｜${owner ? `Lv${t.level} 地產` : "待售土地"}`,
       800,
-      205,
-      610,
+      140,
+      900,
       38,
       "center",
       "#fff0a5",
@@ -231,24 +230,55 @@ scenePopup = function (q, b, p) {
       true,
       22,
     );
-    paragraph(
-      t.level < 5
-        ? `可升級為 ${t.level === 3 ? "大型建築" : "童話地標"}｜升級費 $${cost.toLocaleString()}｜目前租金 $${rentEstimate(t, p).toLocaleString()}`
-        : `最高級童話地標｜目前租金 $${rentEstimate(t, p).toLocaleString()}`,
-      800,
-      330,
-      560,
-      21,
-      31,
-      3,
-      "center",
-      "#fff",
-      900,
-      true,
+    contain(art, 300, 205, 430, 430, 1);
+    if (owner) {
+      stretch(IM["playerSeatP" + owner.id], 325, 615, 380, 76, 0.98);
+      contain(IM["portrait" + owner.char], 337, 620, 66, 66, 1);
+      fitTxt(
+        `${owner.id + 1}P ${CHAR_NAMES[owner.char]}｜地主`,
+        540,
+        650,
+        250,
+        20,
+        "center",
+        PLAYER_COLORS[owner.id],
+        1000,
+        true,
+        13,
+      );
+    } else txt("尚未有地主", 515, 655, 24, "center", "#dceaff", 900, true);
+    const specialName =
+      t.special === "hotel"
+        ? "星光旅館"
+        : t.special === "mall"
+          ? "童話商場"
+          : t.special === "park"
+            ? "祝福公園"
+            : "";
+    const lines = owner
+      ? [
+          `土地價值　$${t.price.toLocaleString()}`,
+          `建築狀態　${specialName || `Lv${t.level} ${t.level ? "建築" : "空地"}`}`,
+          `目前租金　$${rentEstimate(t, p).toLocaleString()}`,
+          mine && t.level < 5 ? `下階費用　$${cost.toLocaleString()}` : mine ? "已達最高建築階級" : "抵達後必須支付租金",
+        ]
+      : [
+          `售價　　　$${buy.toLocaleString()}`,
+          `基礎租金　$${Math.round(t.price * 0.25 * (b.mapRules?.rentRate || 1)).toLocaleString()}`,
+          "購買後可逐級興建",
+          "Lv5 可改建旅館／商場／公園",
+        ];
+    lines.forEach((line, i) =>
+      fitTxt(line, 1010, 275 + i * 62, 475, 23, "center", i === 2 ? "#ffe477" : "#fff", 900, true, 15),
     );
-    if (t.level < 5)
-      btn("upgrade", `升級至 Lv${t.level + 1}`, 590, 500, 420, 72, true);
-    btn("skip", "完成回合", 590, t.level < 5 ? 590 : 520, 420, 72, false);
+    if (!owner) {
+      btn("buy", `購買土地　$${buy.toLocaleString()}`, 795, 555, 430, 72, true);
+      btn("skip", "暫時略過", 795, 650, 430, 68, false);
+    } else if (mine) {
+      if (t.level < 5)
+        btn("upgrade", t.level === 4 ? "選擇大型建築" : `升級至 Lv${t.level + 1}`, 795, 555, 430, 72, true);
+      btn("skip", "完成回合", 795, t.level < 5 ? 650 : 600, 430, 68, false);
+    } else btn("pay", p.shield > 0 ? "使用護盾／結算" : `支付租金　$${rentEstimate(t, p).toLocaleString()}`, 795, 600, 430, 74, true);
     return true;
   }
   if (q.kind === "shop") {
