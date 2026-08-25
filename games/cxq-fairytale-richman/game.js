@@ -204,6 +204,38 @@ const CARD_DEFS = [
     timing: "target",
     kind: "tool",
   },
+  {
+    id: "demolition",
+    name: "拆屋卡",
+    cost: 40,
+    cover: "demolition",
+    desc: "指定一棟對手建築降低一級",
+    timing: "target",
+  },
+  {
+    id: "reverse",
+    name: "轉向卡",
+    cost: 25,
+    cover: "reverse",
+    desc: "指定玩家下一次移動方向反轉",
+    timing: "target",
+  },
+  {
+    id: "snatch",
+    name: "搶奪卡",
+    cost: 35,
+    cover: "snatch",
+    desc: "從指定玩家隨機取得一張卡片",
+    timing: "target",
+  },
+  {
+    id: "equalize",
+    name: "均富卡",
+    cost: 60,
+    cover: "equal_wealth",
+    desc: "所有存活玩家的現金重新平均分配",
+    timing: "turn",
+  },
 ];
 const CARD_POOL = CARD_DEFS.filter((c) => c.kind !== "tool").map((c) => c.id);
 const TOOL_POOL = CARD_DEFS.filter((c) => c.kind === "tool").map((c) => c.id);
@@ -1734,20 +1766,26 @@ function useCard(i) {
     openPopup("cardDice", { cardIndex: i });
     return;
   }
-  if (p.type === "human" && ["swap", "stop"].includes(c)) {
+  if (p.type === "human" && ["swap", "stop", "reverse", "snatch"].includes(c)) {
+    if (c === "snatch" && !living().some((x) => x.id !== p.id && x.cards.length)) {
+      openPopup("cards", { page: Math.floor(i / 8), error: "目前沒有持有卡片的對手可供搶奪。" });
+      return;
+    }
     openPopup("cardTarget", { cardIndex: i, card: c });
     return;
   }
-  if (p.type === "human" && ["teleport", "buyland", "upgrade"].includes(c)) {
+  if (p.type === "human" && ["teleport", "buyland", "upgrade", "demolition"].includes(c)) {
     let targets;
     if (c === "buyland") {
       const underfoot = S.board.tiles[p.pos];
       targets = underfoot?.type === "land" && underfoot.owner < 0 ? [p.pos] : [];
     } else if (c === "upgrade") {
       targets = S.board.tiles.filter((t) => t.type === "land" && t.owner === p.id && t.level < 5).map((t) => t.index);
+    } else if (c === "demolition") {
+      targets = S.board.tiles.filter((t) => t.type === "land" && t.owner >= 0 && t.owner !== p.id && t.level > 0).map((t) => t.index);
     } else targets = Array.from({ length: 8 }, (_, n) => (p.pos + n + 1) % S.board.tiles.length);
     if (!targets.length) {
-      openPopup("cards", { page: Math.floor(i / 8), error: c === "buyland" ? "購地卡只能用於腳下的無主土地。" : "目前沒有可以升級的房屋。" });
+      openPopup("cards", { page: Math.floor(i / 8), error: c === "buyland" ? "購地卡只能用於腳下的無主土地。" : c === "demolition" ? "目前沒有可拆除的對手建築。" : "目前沒有可以升級的房屋。" });
       return;
     }
     openPopup("cardTileTarget", { cardIndex: i, targets });
@@ -1774,6 +1812,24 @@ function useCard(i) {
     if (p.detained?.facility === "jail") { p.detained = null; p.skip = 0; }
     else p.bailPass = 1;
   }
+  else if (c === "equalize") {
+    const participants = living(),
+      total = participants.reduce((sum, player) => sum + Math.max(0, player.cash), 0),
+      share = Math.floor(total / participants.length),
+      remainder = total - share * participants.length;
+    participants.forEach((player, index) => {
+      player.cash = share + (index === 0 ? remainder : 0);
+    });
+  }
+  else if (c === "demolition") {
+    const target = S.board.tiles
+      .filter((t) => t.type === "land" && t.owner >= 0 && t.owner !== p.id && t.level > 0)
+      .sort((a, b) => b.level - a.level)[0];
+    if (target) {
+      target.level--;
+      if (target.level < 5) target.special = null;
+    }
+  }
   else if (c === "swap") {
     const o = living()
       .filter((x) => x.id !== p.id)
@@ -1795,6 +1851,12 @@ function useCard(i) {
       .filter((x) => x.id !== p.id)
       .sort((a, b) => b.cash - a.cash)[0];
     if (o) o.skip++;
+  } else if (c === "reverse") {
+    const o = living().filter((x) => x.id !== p.id).sort((a, b) => netWorth(b) - netWorth(a))[0];
+    if (o) o.direction = -(o.direction || 1);
+  } else if (c === "snatch") {
+    const o = living().filter((x) => x.id !== p.id && x.cards.length).sort((a, b) => b.cards.length - a.cards.length)[0];
+    if (o && p.cards.length < 15) p.cards.push(o.cards.splice(Math.floor(Math.random() * o.cards.length), 1)[0]);
   }
   addLog(`${p.id + 1}P 使用 ${d.name}`);
   S.board.popup = null;
@@ -1818,14 +1880,17 @@ function useTargetCard(targetId) {
     i = q?.cardIndex,
     c = p.cards[i],
     o = living().find((x) => x.id === targetId && x.id !== p.id);
-  if (S.board.phase !== "pre-roll" || q?.kind !== "cardTarget" || !o || !["swap", "stop"].includes(c)) return;
+  if (S.board.phase !== "pre-roll" || q?.kind !== "cardTarget" || !o || !["swap", "stop", "reverse", "snatch"].includes(c)) return;
+  if (c === "snatch" && (!o.cards.length || p.cards.length >= 15)) return;
   p.cards.splice(i, 1);
   if (c === "swap") {
     const z = p.pos;
     p.pos = o.pos;
     o.pos = z;
     focus();
-  } else o.skip++;
+  } else if (c === "stop") o.skip++;
+  else if (c === "reverse") o.direction = -(o.direction || 1);
+  else if (c === "snatch") p.cards.push(o.cards.splice(Math.floor(Math.random() * o.cards.length), 1)[0]);
   addLog(`${p.id + 1}P 對 ${o.id + 1}P 使用 ${cardDef(c).name}`);
   S.board.popup = null;
   saveGame();
@@ -2200,6 +2265,9 @@ function action(id) {
     } else if (c === "upgrade" && t.type === "land" && t.owner === p.id && t.level < 5) {
       t.level++;
       markUpgrade(t);
+    } else if (c === "demolition" && t.type === "land" && t.owner >= 0 && t.owner !== p.id && t.level > 0) {
+      t.level--;
+      if (t.level < 5) t.special = null;
     }
     addLog(`${p.id + 1}P 使用 ${cardDef(c).name}`);
     S.board.popup = null;

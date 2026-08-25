@@ -33,7 +33,7 @@ for (const file of projectAssets) {
   if (!swContext.precache.includes(cachePath))
     throw new Error(`unused or uncached project asset remains: ${cachePath}`);
 }
-const expectedRevision = "20260825-2015";
+const expectedRevision = "20260825-2030";
 if (!swContext.cacheName.includes(expectedRevision))
   throw new Error("service worker cache revision is stale");
 const htmlSource = fs.readFileSync(path.join(root, "index.html"), "utf8"),
@@ -272,6 +272,7 @@ for (const [w, h] of [
 vm.runInContext(
   `
   if(new Set(CARD_DEFS.map(c=>c.cover)).size!==CARD_DEFS.length)throw new Error('card covers are not unique');
+  for(const card of CARD_DEFS)if(!(card.kind==='tool'?IM['tool_'+card.id]:IM['card_'+card.cover])?.complete)throw new Error('card or tool artwork is not loaded: '+card.id);
   if(new Set(EVENTS.map(e=>e[3])).size!==EVENTS.length||EVENTS.some(e=>!e[3]||!IM['event_'+e[3]]?.complete))throw new Error('every event must have unique dedicated art');
   if(!TURN_PHASES.has('awaiting-confirmation')||!TURN_PHASES.has('branch-choice'))throw new Error('turn state machine phases are incomplete');
   S.scene='game';S.mapIndex=0;makeBoard();
@@ -353,6 +354,11 @@ vm.runInContext(
   if(S.board.popup?.kind!=='specialBuild'||cardP.cards.length!==1)throw new Error('level-four upgrade card skipped large-building selection');action('buildHotel');
   if(purchaseTarget.level!==5||purchaseTarget.special!=='hotel'||cardP.cards.length||cardP.cash!==cashBeforeFreeBuild||S.board.phase!=='pre-roll')throw new Error('free large-building upgrade flow failed');
   cardP.cards=['discount','rent'];useCard(0);useCard(0);if(cardP.discount!==1||cardP.rentBoost!==1||cardP.cards.length)throw new Error('property effect-card flow failed');
+  const demolitionTarget=S.board.tiles.find(t=>t.type==='land'&&t!==purchaseTarget);demolitionTarget.owner=cardOpponent.id;demolitionTarget.level=3;cardP.cards=['demolition'];useCard(0);action('cardTile'+demolitionTarget.index);
+  if(demolitionTarget.level!==2||cardP.cards.length)throw new Error('demolition card flow failed');
+  cardOpponent.direction=1;cardP.cards=['reverse'];useCard(0);useTargetCard(cardOpponent.id);if(cardOpponent.direction!==-1||cardP.cards.length)throw new Error('reverse card flow failed');
+  cardOpponent.cards=['shield'];cardP.cards=['snatch'];useCard(0);useTargetCard(cardOpponent.id);if(cardOpponent.cards.length||cardP.cards.join(',')!=='shield')throw new Error('snatch card flow failed');
+  cardP.cash=100000;cardOpponent.cash=300000;cardP.cards=['equalize'];useCard(0);if(cardP.cash!==200000||cardOpponent.cash!==200000||cardP.cards.length)throw new Error('equal-wealth card flow failed');
   cardP.cards=['hospitalpass'];useCard(0);admitPlayer(cardP,'hospital',2,'test');if(cardP.detained||cardP.hospitalPass!==0)throw new Error('hospital pass did not prevent admission');S.board.popup=null;
   cardP.cards=['bail'];useCard(0);admitPlayer(cardP,'jail',2,'test');if(cardP.detained||cardP.bailPass!==0)throw new Error('bail card did not prevent detention');S.board.popup=null;
   cardP.cards=[];cardP.pos=0;admitPlayer(cardP,'hospital',2,'test');if(cardP.pos!==S.board.tiles.find(t=>t.type==='hospital').index||cardP.detained?.facility!=='hospital')throw new Error('hospital admission did not move the player to the facility');cardP.detained=null;cardP.skip=0;S.board.popup=null;

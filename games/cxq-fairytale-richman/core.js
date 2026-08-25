@@ -210,7 +210,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-2015";
+const ASSET_REV = "20260825-2030";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -306,6 +306,10 @@ load("miniTreasure", A + "minigames/treasure_timing_v1.webp");
 ].forEach((k) => load("card_" + k, A + "cards/" + k + "_v1.webp"));
 load("card_hospital_pass", A + "cards/hospital_pass_v1.png");
 load("card_bail", A + "cards/bail_v1.png");
+load("card_demolition", A + "cards/demolition_v1.png");
+load("card_reverse", A + "cards/reverse_v1.png");
+load("card_snatch", A + "cards/snatch_v1.png");
+load("card_equal_wealth", A + "cards/equal_wealth_v1.png");
 load("tool_speed", A + "tools/motorcycle_v1.webp");
 load("tool_car", A + "tools/car_v1.webp");
 load("tool_roadblock", A + "tools/roadblock_v1.webp");
@@ -2243,10 +2247,10 @@ function popup() {
     for (let i = 1; i <= 6; i++) actions.push(["cardDice" + i, i + " 點"]);
     actions.push(["cardCancel", "返回卡冊"]);
   } else if (q.kind === "cardTarget") {
-    title = q.card;
+    title = cardDef(q.card).name;
     body = "選擇要施放卡片的對手";
     living()
-      .filter((x) => x.id !== p.id)
+      .filter((x) => x.id !== p.id && (q.card !== "snatch" || x.cards.length > 0))
       .forEach((x) =>
         actions.push([
           "cardTarget" + x.id,

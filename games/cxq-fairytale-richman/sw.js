@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20260825-2015';
+const CACHE='cxq-richman-20260825-2030';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   '../../assets/brand/cxq-app-icon-192.png','../../assets/brand/cxq-app-icon-512.png',
@@ -30,6 +30,7 @@ const PRECACHE=[
   './assets/events/accidental_injury_v1.png','./assets/events/royal_inspection_v1.png','./assets/events/recovery_blessing_v1.png','./assets/events/proof_of_innocence_v1.png',
   './assets/minigames/star_catch_v1.webp','./assets/minigames/balloon_pop_v1.webp','./assets/minigames/treasure_timing_v1.webp',
   './assets/cards/precision_dice_v1.webp','./assets/cards/remote_dice_v1.webp','./assets/cards/shield_v1.webp','./assets/cards/teleport_v1.webp','./assets/cards/land_purchase_v1.webp','./assets/cards/free_upgrade_v1.webp','./assets/cards/discount_v1.webp','./assets/cards/rent_v1.webp','./assets/cards/swap_v1.webp','./assets/cards/stop_v1.webp','./assets/cards/hospital_pass_v1.png','./assets/cards/bail_v1.png',
+  './assets/cards/demolition_v1.png','./assets/cards/reverse_v1.png','./assets/cards/snatch_v1.png','./assets/cards/equal_wealth_v1.png',
   './assets/facilities/bank_token_v2.webp','./assets/facilities/news_token_v2.webp','./assets/facilities/coupon_token_v2.webp','./assets/facilities/magic_token_v2.webp','./assets/facilities/hospital_token_v2.webp','./assets/facilities/police_token_v1.png','./assets/facilities/start_token_v2.webp',
   './assets/tools/motorcycle_v1.webp','./assets/tools/car_v1.webp','./assets/tools/roadblock_v1.webp','./assets/tools/bomb_v1.webp',
   './assets/npc/wealth_v1.webp','./assets/npc/fortune_v1.webp','./assets/npc/poverty_v1.webp','./assets/npc/misfortune_v1.webp','./assets/npc/land_v1.webp','./assets/npc/angel_v1.webp','./assets/npc/demon_v1.webp','./assets/npc/death_v1.webp',
