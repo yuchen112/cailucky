@@ -685,6 +685,7 @@ const GOD_TRANSFORMS = {
   天使: "惡魔", 惡魔: "天使", 土地公: "惡犬",
   財神: "窮神", 窮神: "財神", 福神: "衰神", 衰神: "福神",
 };
+const TRANSIENT_NPCS = new Set(["乞丐", "惡犬"]);
 function makeMapRoute({ cx, cy, rx, ry, startAngle = Math.PI / 2 }) {
   return Array.from({ length: 36 }, (_, i) => {
     const angle = startAngle + (i * Math.PI * 2) / 36;
@@ -758,7 +759,7 @@ function attachEffect(p, kind, turns) {
   else p.effects.push({ kind, turns });
 }
 function isGodEffect(effect) {
-  return NPC_DEFS.some((d) => d.name === effect?.kind && !["乞丐", "惡犬"].includes(d.name));
+  return NPC_DEFS.some((d) => d.name === effect?.kind) && !TRANSIENT_NPCS.has(effect?.kind);
 }
 function releaseGod(name, nearPos = 0) {
   const b = S.board;
@@ -1129,20 +1130,23 @@ function npcAt(pos) {
 function applyNPCByName(name, p) {
   const n = NPC_DEFS.find((x) => x.name === name);
   if (!n) return;
-  const old = (p.effects || []).find((e) =>
-    NPC_DEFS.some((d) => d.name === e.kind),
-  );
+  const companion = !TRANSIENT_NPCS.has(name),
+    old = (p.effects || []).find(isGodEffect);
   if (old) {
     p.effects = p.effects.filter((e) => e !== old);
     releaseGod(old.kind, p.pos);
     addLog(`${old.kind}離開 ${p.id + 1}P，由${name}接替附身`);
   }
   n.apply(p);
-  if (!(p.effects || []).some((e) => e.kind === name))
+  if (companion && !(p.effects || []).some((e) => e.kind === name))
     attachEffect(p, name, ["死神"].includes(name) ? 13 : 7);
   S.board.npcs = S.board.npcs.filter((x) => x.name !== name);
   openPopup("npc", { name: n.name, desc: n.desc });
-  addLog(`${p.id + 1}P 遇到${n.name}，將跟隨角色並持續發揮效果`);
+  addLog(
+    companion
+      ? `${p.id + 1}P 遇到${n.name}，將跟隨角色並持續發揮效果`
+      : `${p.id + 1}P 遇到${n.name}，立即結算路上事件`,
+  );
 }
 function resolveTile() {
   const b = S.board,

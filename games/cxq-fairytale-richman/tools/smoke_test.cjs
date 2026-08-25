@@ -317,6 +317,8 @@ vm.runInContext(
   if(!godP.effects.some(e=>e.kind==='窮神')||godP.effects.some(e=>e.kind==='財神')||!S.board.npcs.some(n=>n.name==='財神'))throw new Error('god replacement did not release the former companion');
   godP.effects=[{kind:'窮神',turns:1}];S.board.npcs=[];tickEffects(godP);
   if(godP.effects.length||!S.board.npcs.some(n=>n.name==='財神'))throw new Error('expired god did not transform and return to roaming state');
+  S.board.popup=null;godP.effects=[];S.board.npcs=[{name:'乞丐',pos:godP.pos,dir:1}];const beforeBeggar=godP.cash;applyNPCByName('乞丐',godP);
+  if(godP.cash!==beforeBeggar-1000||godP.effects.some(e=>e.kind==='乞丐'))throw new Error('transient NPC was incorrectly attached as a multi-turn god');
   S.board.popup=null;S.board.npcs=[];spawnNPCs(3);
   const cardP=cp(), cardOpponent=S.board.players[1];S.board.phase='pre-roll';
   cardP.cards=['shield'];useCard(0);if(cardP.shield!==1||cardP.cards.length)throw new Error('shield card flow failed');
