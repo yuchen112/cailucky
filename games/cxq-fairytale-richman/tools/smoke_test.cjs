@@ -265,7 +265,7 @@ vm.runInContext(
   if(S.rolling||S.board.phase!=='pre-roll')throw new Error('human input rolled during an AI turn');
   cp().type='human';setTurnPhase('awaiting-confirmation');rollDice();
   if(S.rolling||S.board.phase!=='awaiting-confirmation')throw new Error('dice started outside pre-roll state');
-  S.board.popup=null;const phaseEvent=S.board.tiles.find(t=>t.type==='event');cp().pos=phaseEvent.index;resolveTile();
+  S.board.popup=null;S.board.npcs=[];const phaseEvent=S.board.tiles.find(t=>t.type==='event');cp().pos=phaseEvent.index;resolveTile();
   if(S.board.phase!=='awaiting-confirmation'||!S.board.popup)throw new Error('arrival result did not wait for player confirmation');
   action('special');
   if(S.board.phase!=='awaiting-confirmation'||S.board.popup?.kind!=='event')throw new Error('event result did not remain paused for acknowledgement');
@@ -294,6 +294,8 @@ vm.runInContext(
   if(new Set(routeFingerprints).size!==MAPS.length)throw new Error('maps must not share generated route coordinates');
   for(const map of MAPS)if(!map.road||MAP_ROUTES[map.key][0][1]!==Math.round(map.road.cy+map.road.ry))throw new Error(map.key+' route is not derived from its own authored road geometry');
   for(const map of MAPS){S.mapIndex=MAPS.indexOf(map);makeBoard();for(const tile of S.board.tiles){const road=roadAnchor(tile),plot=plotAnchor(tile);if(road.x!==tile.x||road.y!==tile.y)throw new Error('road anchor drifted from movement tile');if(tile.type==='land'&&Math.hypot(plot.x-road.x,plot.y-road.y)<100)throw new Error('land plot overlaps pawn road anchor');}}
+  S.mapIndex=0;makeBoard();S.board.players[0].pos=4;S.board.players[1].pos=4;drawPlayers();
+  if(S.board.players.some(p=>!Number.isFinite(p.pos)))throw new Error('same-tile player layout corrupted pawn positions');
   S.mapIndex=0;makeBoard();S.scene='game';
   const roadsideLand=S.board.tiles.find(t=>t.type==='land'), roadsidePos=tileVisualPosition(roadsideLand);
   if(roadsidePos.x===roadsideLand.x&&roadsidePos.y===roadsideLand.y)throw new Error('land parcel still overlaps its road movement coordinate');

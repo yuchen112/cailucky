@@ -1517,19 +1517,34 @@ function drawPlayers() {
     const t = b.tiles[p.pos],
       same = b.players.filter((q) => !q.bankrupt && q.pos === p.pos),
       idx = same.indexOf(p),
-      off = (idx - (same.length - 1) / 2) * 34;
-    let x = t.x + off,
-      y = t.y;
+      off = (idx - (same.length - 1) / 2) * 42,
+      previous = b.tiles[(p.pos - 1 + b.tiles.length) % b.tiles.length],
+      following = b.tiles[(p.pos + 1) % b.tiles.length],
+      tangentLength = Math.hypot(following.x - previous.x, following.y - previous.y) || 1,
+      tangentX = (following.x - previous.x) / tangentLength,
+      tangentY = (following.y - previous.y) / tangentLength;
+    let x = t.x + tangentX * off,
+      y = t.y + tangentY * off;
     if (p.moveAnim) {
       const q = p.moveAnim,
         u = Math.min(1, (now - q.start) / q.dur),
         e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
-      x = q.from.x + (q.to.x - q.from.x) * e + off;
-      y = q.from.y + (q.to.y - q.from.y) * e;
+      x = q.from.x + (q.to.x - q.from.x) * e + tangentX * off;
+      y = q.from.y + (q.to.y - q.from.y) * e + tangentY * off;
     }
     const key = CHAR_KEYS[p.char],
       contact = IM[key + "WalkRightContact"],
-      passing = IM[key + "WalkRightPassing"];
+      passing = IM[key + "WalkRightPassing"],
+      walkingBob = p.moveAnim && !p.vehicle
+        ? -Math.abs(Math.sin((now - p.moveAnim.start) / 105 * Math.PI)) * 7
+        : 0;
+    X.save();
+    X.globalAlpha = p.moveAnim ? 0.42 : 0.3;
+    X.fillStyle = "#08101c";
+    X.beginPath();
+    X.ellipse(x, y - 8, p.vehicle ? 58 : 42, p.vehicle ? 18 : 13, 0, 0, Math.PI * 2);
+    X.fill();
+    X.restore();
     if (p.vehicle)
       contain(IM["tool_" + (p.vehicle === "car" ? "car" : "speed")], x - 82, y - 88, 164, 112, 1);
     X.save();
@@ -1538,8 +1553,8 @@ function drawPlayers() {
     if (p.moveAnim && !p.vehicle && contact?.complete && passing?.complete) {
       const q = p.moveAnim,
         frame = Math.floor((now - q.start) / 105) % 2 ? passing : contact;
-      containFacing(frame, x - 74, y - 144, 148, 164, q.to.x >= q.from.x);
-    } else contain(IM["c" + p.char], x - (p.vehicle ? 46 : 62), y - (p.vehicle ? 145 : 126), p.vehicle ? 92 : 124, p.vehicle ? 108 : 144);
+      containFacing(frame, x - 74, y - 144 + walkingBob, 148, 164, q.to.x >= q.from.x);
+    } else contain(IM["c" + p.char], x - (p.vehicle ? 46 : 62), y - (p.vehicle ? 145 : 126) + walkingBob, p.vehicle ? 92 : 124, p.vehicle ? 108 : 144);
     X.restore();
     stretch(IM["playerSeatP" + p.id], x - 55, y - 146, 110, 34, 0.98);
     txt(
