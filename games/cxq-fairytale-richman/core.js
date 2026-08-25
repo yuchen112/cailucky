@@ -1924,7 +1924,11 @@ function scenePopup(q, b, p) {
     X.restore();
     fitTxt(q.name, 800, 122, 620, 34, "center", "#fff0a5", 1000, true, 21);
     paragraph(q.desc, 800, 540, 590, 23, 32, 2, "center", "#fff", 900, true);
-    btn("eventOk", "收下事件結果", 590, 650, 420, 72, true);
+    if (q.detainedTurn && Number.isInteger(q.releaseIndex) && q.releaseIndex >= 0) {
+      const cardName = q.facility === "jail" ? "使用保釋卡" : "使用醫院通行證";
+      btn("releaseDetained", cardName, 470, 650, 310, 72, true);
+      btn("eventOk", "繼續停留", 820, 650, 310, 72, false);
+    } else btn("eventOk", "收下事件結果", 590, 650, 420, 72, true);
     return true;
   }
   if (q.kind === "npc") {

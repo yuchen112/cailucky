@@ -1341,9 +1341,20 @@ function nextTurn() {
   if (p.skip > 0) {
     p.skip--;
     if (p.detained) {
+      const facility = p.detained.facility,
+        releaseCard = facility === "jail" ? "bail" : "hospitalpass",
+        releaseIndex = p.cards.indexOf(releaseCard);
+      if (p.type === "ai" && releaseIndex >= 0) {
+        p.cards.splice(releaseIndex, 1);
+        p.detained = null;
+        p.skip = 0;
+        openPopup("event", { name: "AI 使用解除卡", desc: `${p.id + 1}P 使用${cardDef(releaseCard).name}，立即恢復行動資格。`, detainedTurn: true, released: true });
+        addLog(`${p.id + 1}P 使用${cardDef(releaseCard).name}解除狀態`);
+        return;
+      }
       p.detained.turns = Math.max(0, p.detained.turns - 1);
       const place = p.detained.facility === "jail" ? "警察局" : "醫院";
-      openPopup("event", { name: `${place}停留`, desc: `${p.id + 1}P 尚需停留 ${p.detained.turns} 回合。`, detainedTurn: true });
+      openPopup("event", { name: `${place}停留`, desc: `${p.id + 1}P 尚需停留 ${p.detained.turns} 回合。`, detainedTurn: true, facility, releaseIndex });
       if (!p.detained.turns) p.detained = null;
     } else openPopup("event", { name: "暫停回合", desc: `${p.id + 1}P 本回合無法行動。`, detainedTurn: true });
     return;
@@ -2367,6 +2378,19 @@ function action(id) {
       return;
     }
     if (id === "eventOk" || id === "npcOk" || id === "cardOk") {
+      finishAction();
+      return;
+    }
+    if (id === "releaseDetained") {
+      const q = b.popup,
+        cardId = q?.facility === "jail" ? "bail" : "hospitalpass",
+        cardIndex = p.cards.indexOf(cardId);
+      if (q?.detainedTurn && cardIndex >= 0) {
+        p.cards.splice(cardIndex, 1);
+        p.detained = null;
+        p.skip = 0;
+        addLog(`${p.id + 1}P 使用${cardDef(cardId).name}解除狀態`);
+      }
       finishAction();
       return;
     }

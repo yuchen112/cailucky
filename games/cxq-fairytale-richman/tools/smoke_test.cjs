@@ -203,6 +203,10 @@ for (const [scene, code] of [
     'S.scene="game";openPopup("event",{name:"王國節慶",desc:"獲得獎勵"});game()',
   ],
   [
+    "detainedEvent",
+    'S.scene="game";cp().cards=["bail"];openPopup("event",{name:"警察局停留",desc:"尚需停留",detainedTurn:true,facility:"jail",releaseIndex:0});game()',
+  ],
+  [
     "npc",
     'S.scene="game";openPopup("npc",{name:"財神",desc:"獲得獎勵"});game()',
   ],
@@ -308,7 +312,8 @@ vm.runInContext(
   cardP.cards=['discount','rent'];useCard(0);useCard(0);if(cardP.discount!==1||cardP.rentBoost!==1||cardP.cards.length)throw new Error('property effect-card flow failed');
   cardP.cards=['hospitalpass'];useCard(0);admitPlayer(cardP,'hospital',2,'test');if(cardP.detained||cardP.hospitalPass!==0)throw new Error('hospital pass did not prevent admission');S.board.popup=null;
   cardP.cards=['bail'];useCard(0);admitPlayer(cardP,'jail',2,'test');if(cardP.detained||cardP.bailPass!==0)throw new Error('bail card did not prevent detention');S.board.popup=null;
-  const testP=cp(); testP.tools=['speed'];S.board.phase='pre-roll';useTool(0);
+  cardP.cards=['bail'];cardP.detained={facility:'jail',turns:2};cardP.skip=2;openPopup('event',{name:'拘留',desc:'test',detainedTurn:true,facility:'jail',releaseIndex:0});action('releaseDetained');if(cardP.detained||cardP.skip||cardP.cards.length)throw new Error('detention release action failed');
+  S.board.turn=0;const testP=cp(); testP.tools=['speed'];S.board.phase='pre-roll';useTool(0);
   if(testP.diceCount!==2||testP.vehicleTurns!==5)throw new Error('vehicle card did not enable multi-dice turns');
   testP.tools=['car'];S.board.phase='pre-roll';useTool(0);
   if(testP.diceCount!==3||testP.vehicle!=='car')throw new Error('car tool did not enable three-dice turns');
