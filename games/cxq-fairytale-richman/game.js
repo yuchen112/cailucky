@@ -207,6 +207,10 @@ const CARD_DEFS = [
 ];
 const CARD_POOL = CARD_DEFS.filter((c) => c.kind !== "tool").map((c) => c.id);
 const TOOL_POOL = CARD_DEFS.filter((c) => c.kind === "tool").map((c) => c.id);
+const NEGATIVE_EVENTS = new Set([
+  "突發修繕", "迷路", "惡作劇", "稅務日", "道路施工", "魔法失控",
+  "森林迷霧", "卡片遺失", "土地維護", "意外受傷", "王國稽查",
+]);
 const LEGACY_CARD_MAP = {
   精準骰子: "precision",
   遙控骰子: "remote",
@@ -471,6 +475,7 @@ scenePopup = function (q, b, p) {
     contain(IM.abilityPanel, 170, 55, 1260, 800, 0.99);
     txt("道具箱", 800, 105, 38, "center", "#fff0a5", 1000, true);
     txt(`道具 ${(p.tools || []).length}/8｜車輛、路障與定時炸彈`, 800, 145, 17, "center", "#fff", 900, true);
+    if (q.error) fitTxt(q.error, 800, 171, 920, 15, "center", "#ffcf8a", 1000, true, 11);
     (p.tools || []).slice(0, 8).forEach((c, i) =>
       richTool(c, 270 + (i % 4) * 270, 185 + Math.floor(i / 4) * 270, 200, 240, "useTool" + i),
     );
@@ -480,7 +485,7 @@ scenePopup = function (q, b, p) {
   if (q.kind === "toolTarget") {
     contain(IM.abilityPanel, 400, 110, 800, 680, 0.99);
     txt(toolDef(p.tools[q.toolIndex]).name, 800, 185, 38, "center", "#fff0a5", 1000, true);
-    living().filter((x) => x.id !== p.id).forEach((x, i) =>
+    living().filter((x) => x.id !== p.id && !(x.bombSteps > 0)).forEach((x, i) =>
       btn("toolTarget" + x.id, `${x.id + 1}P ${CHAR_NAMES[x.char]}`, 500, 285 + i * 90, 600, 68, i === 0),
     );
     btn("closeTools", "取消", 650, 675, 300, 62, false);
@@ -1180,13 +1185,19 @@ function resolveTile() {
 function applySpecial(t, p) {
   if (t.type === "event" || t.type === "news") {
     const e = EVENTS[Math.floor(Math.random() * EVENTS.length)];
-    e[2](p);
+    const protectedByShield = p.shield > 0 && NEGATIVE_EVENTS.has(e[0]);
+    if (protectedByShield) p.shield--;
+    else e[2](p);
     openPopup("event", {
       name: (t.type === "news" ? "王國新聞｜" : "命運事件｜") + e[0],
-      desc: e[1],
+      desc: protectedByShield ? `護身符生效，已抵銷「${e[0]}」的負面效果。` : e[1],
       art: e[3] || null,
     });
-    addLog(`${p.id + 1}P：${e[0]}・${e[1]}`);
+    addLog(
+      protectedByShield
+        ? `${p.id + 1}P 使用護身符抵銷 ${e[0]}`
+        : `${p.id + 1}P：${e[0]}・${e[1]}`,
+    );
   } else if (t.type === "card") {
     drawCard(p);
     const c = p.cards[p.cards.length - 1];
@@ -1651,12 +1662,27 @@ function aiTurn() {
 }
 function useTool(i) {
   const p = cp(), c = (p.tools || [])[i], d = toolDef(c);
-  if (!c || S.board.phase !== "pre-roll") return;
+  if (!c || !d || S.board.phase !== "pre-roll") return;
   if (c === "roadblock") {
-    openPopup("toolTileTarget", { toolIndex: i, targets: Array.from({ length: 6 }, (_, n) => (p.pos + n + 1) % S.board.tiles.length) });
+    const occupied = new Set([
+      ...living().map((x) => x.pos),
+      ...(S.board.npcs || []).map((x) => x.pos),
+      ...(S.board.roadblocks || []),
+    ]),
+      targets = Array.from({ length: 6 }, (_, n) => (p.pos + n + 1) % S.board.tiles.length)
+        .filter((pos) => !occupied.has(pos));
+    if (!targets.length) {
+      openPopup("tools", { error: "前方六格目前沒有可放置路障的位置。" });
+      return;
+    }
+    openPopup("toolTileTarget", { toolIndex: i, targets });
     return;
   }
   if (c === "bomb") {
+    if (!living().some((x) => x.id !== p.id && !(x.bombSteps > 0))) {
+      openPopup("tools", { error: "目前沒有可裝上定時炸彈的對手。" });
+      return;
+    }
     openPopup("toolTarget", { toolIndex: i });
     return;
   }
@@ -1678,7 +1704,7 @@ function useCard(i) {
   const p = cp(),
     c = p.cards[i],
     d = cardDef(c);
-  if (!c) return;
+  if (!c || S.board.phase !== "pre-roll") return;
   if (p.type === "human" && ["remote", "precision"].includes(c)) {
     openPopup("cardDice", { cardIndex: i });
     return;
@@ -1753,7 +1779,7 @@ function useChosenDice(n) {
   const p = cp(),
     q = S.board.popup,
     i = q?.cardIndex;
-  if (q?.kind !== "cardDice" || !["remote", "precision"].includes(p.cards[i]))
+  if (S.board.phase !== "pre-roll" || q?.kind !== "cardDice" || !["remote", "precision"].includes(p.cards[i]))
     return;
   p.cards.splice(i, 1);
   S.forcedDice = n;
@@ -1767,7 +1793,7 @@ function useTargetCard(targetId) {
     i = q?.cardIndex,
     c = p.cards[i],
     o = living().find((x) => x.id === targetId && x.id !== p.id);
-  if (q?.kind !== "cardTarget" || !o || !["swap", "stop"].includes(c)) return;
+  if (S.board.phase !== "pre-roll" || q?.kind !== "cardTarget" || !o || !["swap", "stop"].includes(c)) return;
   p.cards.splice(i, 1);
   if (c === "swap") {
     const z = p.pos;
@@ -2131,6 +2157,14 @@ function action(id) {
         return;
       }
     }
+    if (c === "upgrade" && t.type === "land" && t.owner === p.id && t.level === 4) {
+      openPopup("specialBuild", {
+        tile: t,
+        fromCard: true,
+        freeCardIndex: q.cardIndex,
+      });
+      return;
+    }
     p.cards.splice(q.cardIndex, 1);
     if (c === "teleport") {
       p.pos = index;
@@ -2239,15 +2273,19 @@ function action(id) {
       p = cp(),
       t = q?.tile;
     if (id === "buildCancel") {
-      openPopup("tile", { tile: t });
+      if (q?.fromCard)
+        openPopup("cards", { page: Math.floor((q.freeCardIndex || 0) / 8) });
+      else openPopup("tile", { tile: t });
       return;
     }
     const kind = { buildHotel: "hotel", buildMall: "mall", buildPark: "park" }[
       id
     ];
     if (q?.kind === "specialBuild" && t && kind) {
-      const cost = upgradeCost(t);
-      if (p.cash >= cost) {
+      const cost = q.fromCard ? 0 : upgradeCost(t),
+        freeCardValid = !q.fromCard || p.cards[q.freeCardIndex] === "upgrade";
+      if (freeCardValid && p.cash >= cost) {
+        if (q.fromCard) p.cards.splice(q.freeCardIndex, 1);
         p.cash -= cost;
         t.level = 5;
         t.special = kind;
@@ -2255,6 +2293,11 @@ function action(id) {
         addLog(
           `${p.id + 1}P 完成${kind === "hotel" ? "星光旅館" : kind === "mall" ? "童話商場" : "祝福公園"}`,
         );
+      }
+      if (q.fromCard) {
+        S.board.popup = null;
+        saveGame();
+        return;
       }
       finishAction();
       return;

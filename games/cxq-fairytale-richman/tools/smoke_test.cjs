@@ -321,7 +321,10 @@ vm.runInContext(
   if(godP.cash!==beforeBeggar-1000||godP.effects.some(e=>e.kind==='乞丐'))throw new Error('transient NPC was incorrectly attached as a multi-turn god');
   S.board.popup=null;S.board.npcs=[];spawnNPCs(3);
   const cardP=cp(), cardOpponent=S.board.players[1];S.board.phase='pre-roll';
+  cardP.cards=['shield'];S.board.phase='arrival';useCard(0);if(cardP.cards.length!==1||cardP.shield)throw new Error('card was consumed outside pre-roll phase');S.board.phase='pre-roll';
   cardP.cards=['shield'];useCard(0);if(cardP.shield!==1||cardP.cards.length)throw new Error('shield card flow failed');
+  const negativeTile=S.board.tiles.find(t=>t.type==='event'),negativeIndex=EVENTS.findIndex(e=>e[0]==='突發修繕'),cashBeforeShield=cardP.cash,oldRandom=Math.random;Math.random=()=>((negativeIndex+.1)/EVENTS.length);applySpecial(negativeTile,cardP);Math.random=oldRandom;
+  if(cardP.cash!==cashBeforeShield||cardP.shield!==0)throw new Error('shield did not cancel a negative event');S.board.popup=null;
   cardP.cards=['remote'];useCard(0);useChosenDice(4);if(S.forcedDice!==4||cardP.cards.length)throw new Error('chosen-dice card flow failed');
   cardP.cards=['stop'];useCard(0);useTargetCard(cardOpponent.id);if(cardOpponent.skip!==1||cardP.cards.length)throw new Error('target stop-card flow failed');
   const teleportTarget=S.board.tiles.find(t=>t.type==='event');cardP.cards=['teleport'];useCard(0);action('cardTile'+teleportTarget.index);
@@ -329,6 +332,9 @@ vm.runInContext(
   const purchaseTarget=S.board.tiles.find(t=>t.type==='land'&&t.owner<0);cardP.pos=purchaseTarget.index;cardP.cards=['buyland'];cardP.cash=500000;useCard(0);action('cardTile'+purchaseTarget.index);
   if(purchaseTarget.owner!==cardP.id||cardP.cards.length)throw new Error('land-purchase target flow failed');
   purchaseTarget.level=0;cardP.cards=['upgrade'];useCard(0);action('cardTile'+purchaseTarget.index);if(purchaseTarget.level!==1||cardP.cards.length)throw new Error('free-upgrade card flow failed');
+  purchaseTarget.level=4;purchaseTarget.special=null;cardP.cards=['upgrade'];const cashBeforeFreeBuild=cardP.cash;useCard(0);action('cardTile'+purchaseTarget.index);
+  if(S.board.popup?.kind!=='specialBuild'||cardP.cards.length!==1)throw new Error('level-four upgrade card skipped large-building selection');action('buildHotel');
+  if(purchaseTarget.level!==5||purchaseTarget.special!=='hotel'||cardP.cards.length||cardP.cash!==cashBeforeFreeBuild||S.board.phase!=='pre-roll')throw new Error('free large-building upgrade flow failed');
   cardP.cards=['discount','rent'];useCard(0);useCard(0);if(cardP.discount!==1||cardP.rentBoost!==1||cardP.cards.length)throw new Error('property effect-card flow failed');
   cardP.cards=['hospitalpass'];useCard(0);admitPlayer(cardP,'hospital',2,'test');if(cardP.detained||cardP.hospitalPass!==0)throw new Error('hospital pass did not prevent admission');S.board.popup=null;
   cardP.cards=['bail'];useCard(0);admitPlayer(cardP,'jail',2,'test');if(cardP.detained||cardP.bailPass!==0)throw new Error('bail card did not prevent detention');S.board.popup=null;
@@ -340,9 +346,12 @@ vm.runInContext(
   testP.tools=['roadblock'];S.board.phase='pre-roll';useTool(0);
   const roadTarget=S.board.popup.targets[0];action('toolTile'+roadTarget);
   if(!S.board.roadblocks.includes(roadTarget)||testP.tools.length)throw new Error('roadblock tool was not placed on a selected road node');
+  testP.tools=['roadblock'];S.board.roadblocks=Array.from({length:6},(_,n)=>(testP.pos+n+1)%S.board.tiles.length);useTool(0);
+  if(S.board.popup?.kind!=='tools'||!S.board.popup.error||testP.tools.length!==1)throw new Error('roadblock was consumed without a valid target');S.board.popup=null;
   testP.tools=['bomb'];S.board.phase='pre-roll';useTool(0);
   const bombTarget=S.board.players[1];action('toolTarget'+bombTarget.id);
   if(bombTarget.bombSteps!==12||testP.tools.length)throw new Error('timed bomb was not attached to the selected player');
+  testP.tools=['bomb'];useTool(0);if(S.board.popup?.kind!=='tools'||!S.board.popup.error||testP.tools.length!==1)throw new Error('bomb was consumed when every opponent already carried one');S.board.popup=null;
   testP.cards=Array(20).fill('shield'); saveGame();
   if(!loadGame()||cp().cards.length!==15)throw new Error('save migration did not enforce 15-card capacity');
   cp().cards=['speed','roadblock','shield'];cp().tools=[];saveGame();
