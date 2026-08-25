@@ -280,6 +280,7 @@ vm.runInContext(
   const routeFingerprints=Object.values(MAP_ROUTES).map(route=>route.map(p=>p.join(',')).join('|'));
   if(new Set(routeFingerprints).size!==MAPS.length)throw new Error('maps must not share generated route coordinates');
   for(const map of MAPS)if(!map.road||MAP_ROUTES[map.key][0][1]!==Math.round(map.road.cy+map.road.ry))throw new Error(map.key+' route is not derived from its own authored road geometry');
+  for(const map of MAPS){S.mapIndex=MAPS.indexOf(map);makeBoard();for(const tile of S.board.tiles){const road=roadAnchor(tile),plot=plotAnchor(tile);if(road.x!==tile.x||road.y!==tile.y)throw new Error('road anchor drifted from movement tile');if(tile.type==='land'&&Math.hypot(plot.x-road.x,plot.y-road.y)<100)throw new Error('land plot overlaps pawn road anchor');}}
   S.mapIndex=0;makeBoard();S.scene='game';
   const roadsideLand=S.board.tiles.find(t=>t.type==='land'), roadsidePos=tileVisualPosition(roadsideLand);
   if(roadsidePos.x===roadsideLand.x&&roadsidePos.y===roadsideLand.y)throw new Error('land parcel still overlaps its road movement coordinate');

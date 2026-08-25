@@ -2503,8 +2503,12 @@ C.addEventListener("pointerup", (e) => {
     const wx = p.x + S.board.cam.x,
       wy = p.y + S.board.cam.y,
       t = S.board.tiles.reduce((best, x) => {
-        const visual = tileVisualPosition(x),
-          d = Math.hypot(visual.x - wx, visual.y - wy);
+        const visual = plotAnchor(x),
+          road = roadAnchor(x),
+          d = Math.min(
+            Math.hypot(visual.x - wx, visual.y - wy),
+            Math.hypot(road.x - wx, road.y - wy),
+          );
         return d < (best?.d ?? 86) ? { tile: x, d } : best;
       }, null)?.tile;
     if (t) {

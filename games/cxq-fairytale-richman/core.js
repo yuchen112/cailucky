@@ -1329,7 +1329,10 @@ function isRegionLandmark(t) {
     ) === t
   );
 }
-function tileVisualPosition(t) {
+function roadAnchor(t) {
+  return { x: t.x, y: t.y };
+}
+function plotAnchor(t) {
   if (t.type !== "land" || !S.board) return { x: t.x, y: t.y };
   const b = S.board;
   if (!b.plotCenter) {
@@ -1350,8 +1353,14 @@ function tileVisualPosition(t) {
     y: Math.max(116, Math.min(MH - 76, t.y + dy * offset)),
   };
 }
+// Backwards-compatible name for popup and input code. A land's visual target is
+// its plot, while pawns, roaming NPCs and obstacles always use roadAnchor().
+function tileVisualPosition(t) {
+  return plotAnchor(t);
+}
 function drawTile(t) {
-  const visual = tileVisualPosition(t),
+  const road = roadAnchor(t),
+    visual = plotAnchor(t),
     shiftX = visual.x - t.x,
     shiftY = visual.y - t.y,
     tileSize = t.type === "land" ? 132 : 152;
@@ -1360,12 +1369,12 @@ function drawTile(t) {
   // but never compete for the same footprint.
   if (t.type === "land") {
     X.save();
-    contain(IM.roadNode || IM.tile_land, t.x - 61, t.y - 48, 122, 96, 1);
+    contain(IM.roadNode || IM.tile_land, road.x - 61, road.y - 48, 122, 96, 1);
     if (t.owner >= 0) {
       X.strokeStyle = PLAYER_COLORS[t.owner];
       X.lineWidth = 8;
       X.beginPath();
-      X.arc(t.x, t.y, 52, 0, Math.PI * 2);
+      X.arc(road.x, road.y, 52, 0, Math.PI * 2);
       X.stroke();
     }
     X.restore();
@@ -1561,7 +1570,7 @@ function drawPlayers() {
 }
 function drawMap() {
   const b = S.board;
-  stretch(IM["mapWorld" + (b.mapIndex || 0)] || IM.mapWorld0, 0, 0, MW, MH, 1);
+  cover(IM["mapWorld" + (b.mapIndex || 0)] || IM.mapWorld0, 0, 0, MW, MH, 1);
   b.tiles.forEach(drawTile);
   if (b.npcs)
     for (const n of b.npcs) {
