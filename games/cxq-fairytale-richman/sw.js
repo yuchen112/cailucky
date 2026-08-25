@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20260825-2045';
+const CACHE='cxq-richman-20260826-1430';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   '../../assets/brand/cxq-app-icon-192.png','../../assets/brand/cxq-app-icon-512.png',
@@ -20,6 +20,7 @@ const PRECACHE=[
   './assets/buildings/cloudbazaar_l4_v1.webp','./assets/buildings/cloudbazaar_l5_v1.webp',
   './assets/buildings/special_hotel_v1.webp','./assets/buildings/special_mall_v1.webp','./assets/buildings/special_park_v1.webp',
   './assets/buildings/landmark_joy_v1.webp','./assets/buildings/landmark_dream_v1.webp','./assets/buildings/landmark_night_v1.webp','./assets/buildings/landmark_sadness_v1.webp','./assets/buildings/landmark_trust_v1.webp','./assets/buildings/landmark_memory_v1.webp','./assets/buildings/landmark_growth_v1.webp','./assets/buildings/landmark_healing_v1.webp','./assets/buildings/landmark_luck_v1.webp','./assets/buildings/landmark_hope_v1.webp',
+  './assets/results/victory_ceremony_v1.png','./assets/results/defeat_ceremony_v1.png',
   './assets/events/starwish_event_v1.webp','./assets/events/moonharbor_event_v1.webp','./assets/events/cloudbazaar_event_v1.webp',
   './assets/events/kingdom_festival_v1.png','./assets/events/emergency_repairs_v1.png','./assets/events/fairy_gift_v1.png','./assets/events/lucky_fountain_v1.png',
   './assets/events/lost_in_maze_v1.png','./assets/events/market_boom_v1.png','./assets/events/mischief_v1.png','./assets/events/traveler_quest_v1.png',
@@ -28,14 +29,16 @@ const PRECACHE=[
   './assets/events/moonlight_dividend_v1.png','./assets/events/forest_mist_v1.png','./assets/events/cloud_tailwind_v1.png','./assets/events/merchant_guild_reward_v1.png',
   './assets/events/lost_card_v1.png','./assets/events/lucky_day_v1.png','./assets/events/land_maintenance_v1.png','./assets/events/fairy_blessing_v1.png',
   './assets/events/accidental_injury_v1.png','./assets/events/royal_inspection_v1.png','./assets/events/recovery_blessing_v1.png','./assets/events/proof_of_innocence_v1.png',
+  './assets/events/system_land_purchase_v1.webp','./assets/events/system_rent_payment_v1.webp','./assets/events/system_build_upgrade_v1.webp',
   './assets/minigames/star_catch_v1.webp','./assets/minigames/balloon_pop_v1.webp','./assets/minigames/treasure_timing_v1.webp',
-  './assets/cards/precision_dice_v1.webp','./assets/cards/remote_dice_v1.webp','./assets/cards/shield_v1.webp','./assets/cards/teleport_v1.webp','./assets/cards/land_purchase_v1.webp','./assets/cards/free_upgrade_v1.webp','./assets/cards/discount_v1.webp','./assets/cards/rent_v1.webp','./assets/cards/swap_v1.webp','./assets/cards/stop_v1.webp','./assets/cards/hospital_pass_v1.png','./assets/cards/bail_v1.png',
+  './assets/cards/shield_v1.webp','./assets/cards/teleport_v1.webp','./assets/cards/land_purchase_v1.webp','./assets/cards/free_upgrade_v1.webp','./assets/cards/discount_v1.webp','./assets/cards/rent_v1.webp','./assets/cards/swap_v1.webp','./assets/cards/stop_v1.webp','./assets/cards/hospital_pass_v1.png','./assets/cards/bail_v1.png',
   './assets/cards/demolition_v1.png','./assets/cards/reverse_v1.png','./assets/cards/snatch_v1.png','./assets/cards/equal_wealth_v1.png',
   './assets/facilities/bank_token_v2.webp','./assets/facilities/news_token_v2.webp','./assets/facilities/coupon_token_v2.webp','./assets/facilities/magic_token_v2.webp','./assets/facilities/hospital_token_v2.webp','./assets/facilities/police_token_v1.png','./assets/facilities/start_token_v2.webp',
-  './assets/tools/motorcycle_v1.webp','./assets/tools/car_v1.webp','./assets/tools/roadblock_v1.webp','./assets/tools/bomb_v1.webp',
+  './assets/tools/motorcycle_v1.webp','./assets/tools/car_v1.webp','./assets/tools/remote_dice_v2.png','./assets/tools/roadblock_v1.webp','./assets/tools/bomb_v1.webp',
   './assets/npc/wealth_v1.webp','./assets/npc/fortune_v1.webp','./assets/npc/poverty_v1.webp','./assets/npc/misfortune_v1.webp','./assets/npc/land_v1.webp','./assets/npc/angel_v1.webp','./assets/npc/demon_v1.webp','./assets/npc/death_v1.webp',
+  './assets/npc/thief_v1.png','./assets/npc/bandit_v1.png','./assets/npc/spy_v1.png','./assets/npc/hooligan_v1.png',
   './assets/dice/dice_throw_1_v2.webp','./assets/dice/dice_throw_2_v2.webp','./assets/dice/dice_throw_3_v2.webp','./assets/dice/dice_throw_4_v2.webp','./assets/dice/dice_throw_5_v2.webp','./assets/dice/dice_throw_6_v2.webp',
-  './assets/tiles/land_parcel_v1.webp','./assets/tiles/road_node_v1.png','./assets/tiles/card_v2.webp','./assets/tiles/shop.webp','./assets/tiles/minigame.webp',
+  './assets/tiles/land_parcel_v1.webp','./assets/tiles/road_node_v2.png','./assets/tiles/card_v2.webp','./assets/tiles/shop.webp','./assets/tiles/minigame.webp',
   './assets/dice/dice_1.webp','./assets/dice/dice_2.webp','./assets/dice/dice_3.webp','./assets/dice/dice_4.webp','./assets/dice/dice_5.webp','./assets/dice/dice_6.webp',
   '../../assets/characters/cxq-role-joy.webp','../../assets/characters/cxq-role-dream.webp','../../assets/characters/cxq-role-night.webp','../../assets/characters/cxq-role-sadness.webp','../../assets/characters/cxq-role-trust.webp','../../assets/characters/cxq-role-memory.webp','../../assets/characters/cxq-role-growth.webp','../../assets/characters/cxq-role-healing.webp','../../assets/characters/cxq-role-luck.webp','../../assets/characters/cxq-role-hope.webp'
   ,'./assets/characters/joy/walk_right_contact_v1.webp','./assets/characters/joy/walk_right_passing_v1.webp','./assets/characters/dream/walk_right_contact_v1.webp','./assets/characters/dream/walk_right_passing_v1.webp','./assets/characters/night/walk_right_contact_v1.webp','./assets/characters/night/walk_right_passing_v1.webp','./assets/characters/sadness/walk_right_contact_v1.webp','./assets/characters/sadness/walk_right_passing_v1.webp','./assets/characters/trust/walk_right_contact_v1.webp','./assets/characters/trust/walk_right_passing_v1.webp','./assets/characters/memory/walk_right_contact_v1.webp','./assets/characters/memory/walk_right_passing_v1.webp','./assets/characters/growth/walk_right_contact_v1.webp','./assets/characters/growth/walk_right_passing_v1.webp','./assets/characters/healing/walk_right_contact_v1.webp','./assets/characters/healing/walk_right_passing_v1.webp','./assets/characters/luck/walk_right_contact_v1.webp','./assets/characters/luck/walk_right_passing_v1.webp','./assets/characters/hope/walk_right_contact_v1.webp','./assets/characters/hope/walk_right_passing_v1.webp'

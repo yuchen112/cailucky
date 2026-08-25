@@ -33,7 +33,7 @@ for (const file of projectAssets) {
   if (!swContext.precache.includes(cachePath))
     throw new Error(`unused or uncached project asset remains: ${cachePath}`);
 }
-const expectedRevision = "20260825-2045";
+const expectedRevision = "20260826-1430";
 if (!swContext.cacheName.includes(expectedRevision))
   throw new Error("service worker cache revision is stale");
 const htmlSource = fs.readFileSync(path.join(root, "index.html"), "utf8"),
@@ -274,6 +274,7 @@ vm.runInContext(
   if(new Set(CARD_DEFS.map(c=>c.cover)).size!==CARD_DEFS.length)throw new Error('card covers are not unique');
   for(const card of CARD_DEFS)if(!(card.kind==='tool'?IM['tool_'+card.id]:IM['card_'+card.cover])?.complete)throw new Error('card or tool artwork is not loaded: '+card.id);
   if(new Set(EVENTS.map(e=>e[3])).size!==EVENTS.length||EVENTS.some(e=>!e[3]||!IM['event_'+e[3]]?.complete))throw new Error('every event must have unique dedicated art');
+  for(const key of ['event_systemLandPurchase','event_systemRentPayment','event_systemBuildUpgrade'])if(!IM[key]?.complete)throw new Error('system event art missing: '+key);
   if(!TURN_PHASES.has('awaiting-confirmation')||!TURN_PHASES.has('branch-choice'))throw new Error('turn state machine phases are incomplete');
   S.scene='game';S.mapIndex=0;makeBoard();
   if(S.board.phase!=='pre-roll')throw new Error('new match does not enter pre-roll state');
@@ -291,9 +292,11 @@ vm.runInContext(
   if(!IM.actionConsole?.complete)throw new Error('image-backed action console missing');
   if(!IM.tile_land?._src?.includes('land_parcel_v1.webp'))throw new Error('roadside land parcel art is not active');
   for(let i=1;i<=6;i++)if(!IM['diceThrow'+i]?._src?.includes('_v2.webp'))throw new Error('physical throw die missing for face '+i);
-  for(const key of ['speed','car','roadblock','bomb'])if(!IM['tool_'+key]?.complete)throw new Error('tool art missing: '+key);
+  for(const key of ['remote','speed','car','roadblock','bomb'])if(!IM['tool_'+key]?.complete)throw new Error('tool art missing: '+key);
   for(const key of ['npcWealth','npcFortune','npcPoverty','npcMisfortune','npcLand','npcAngel','npcDemon','npcDeath'])if(!IM[key]?.complete)throw new Error('independent roaming-god art missing: '+key);
+  for(const key of ['npcThief','npcBandit','npcSpy','npcHooligan'])if(!IM[key]?.complete)throw new Error('independent facility-helper art missing: '+key);
   if(CARD_POOL.some(id=>cardDef(id).kind==='tool')||TOOL_POOL.some(id=>cardDef(id).kind!=='tool'))throw new Error('cards and tools are mixed in their pools');
+  if(CARD_DEFS.some(d=>d.id==='precision')||cardDef('remote').kind!=='tool'||CARD_POOL.includes('remote')||!TOOL_POOL.includes('remote'))throw new Error('remote dice is duplicated or classified as a card');
   for(const key of ['buildingSpecialHotel','buildingSpecialMall','buildingSpecialPark'])if(!IM[key]?.complete)throw new Error('special building art missing: '+key);
   for(const key of CHAR_KEYS)if(!IM['landmark_'+key]?.complete)throw new Error('character landmark art missing: '+key);
   for(const key of CHAR_KEYS)if(!IM[key+'WalkRightContact']?.complete||!IM[key+'WalkRightPassing']?.complete)throw new Error('character walk animation missing for '+key);
@@ -309,7 +312,7 @@ vm.runInContext(
   const routeFingerprints=Object.values(MAP_ROUTES).map(route=>route.map(p=>p.join(',')).join('|'));
   if(new Set(routeFingerprints).size!==MAPS.length)throw new Error('maps must not share generated route coordinates');
   for(const map of MAPS)if(!map.road||MAP_ROUTES[map.key][0][1]!==Math.round(map.road.cy+map.road.ry))throw new Error(map.key+' route is not derived from its own authored road geometry');
-  for(const map of MAPS){S.mapIndex=MAPS.indexOf(map);makeBoard();for(const tile of S.board.tiles){const road=roadAnchor(tile),plot=plotAnchor(tile);if(road.x!==tile.x||road.y!==tile.y)throw new Error('road anchor drifted from movement tile');if(tile.type==='land'&&Math.hypot(plot.x-road.x,plot.y-road.y)<100)throw new Error('land plot overlaps pawn road anchor');}}
+  for(const map of MAPS){if(!Array.isArray(MAP_PLOT_OFFSETS[map.key])||MAP_PLOT_OFFSETS[map.key].length!==36)throw new Error(map.key+' lacks per-space plot anchors');S.mapIndex=MAPS.indexOf(map);makeBoard();for(const tile of S.board.tiles){const road=roadAnchor(tile),plot=plotAnchor(tile);if(road.x!==tile.x||road.y!==tile.y)throw new Error('road anchor drifted from movement tile');if(tile.type==='land'&&Math.hypot(plot.x-road.x,plot.y-road.y)<100)throw new Error('land plot overlaps pawn road anchor');}}
   S.mapIndex=0;makeBoard();S.board.players[0].pos=4;S.board.players[1].pos=4;drawPlayers();
   if(S.board.players.some(p=>!Number.isFinite(p.pos)))throw new Error('same-tile player layout corrupted pawn positions');
   S.mapIndex=0;makeBoard();S.scene='game';
@@ -338,12 +341,15 @@ vm.runInContext(
   S.board.popup=null;godP.effects=[];S.board.npcs=[{name:'乞丐',pos:godP.pos,dir:1}];const beforeBeggar=godP.cash;applyNPCByName('乞丐',godP);
   if(godP.cash!==beforeBeggar-1000||godP.effects.some(e=>e.kind==='乞丐'))throw new Error('transient NPC was incorrectly attached as a multi-turn god');
   S.board.popup=null;S.board.npcs=[];spawnNPCs(3);
+  if(S.board.npcs.some(n=>n.name==='死神'))throw new Error('death god spawned in the ordinary roaming pool');
+  godP.effects=[{kind:'死神',turns:1}];S.board.npcs=[];tickEffects(godP);if(godP.effects.length||S.board.npcs.some(n=>n.name==='死神'))throw new Error('death god returned to the ordinary road after expiry');
   const cardP=cp(), cardOpponent=S.board.players[1];S.board.phase='pre-roll';
   cardP.cards=['shield'];S.board.phase='arrival';useCard(0);if(cardP.cards.length!==1||cardP.shield)throw new Error('card was consumed outside pre-roll phase');S.board.phase='pre-roll';
   cardP.cards=['shield'];useCard(0);if(cardP.shield!==1||cardP.cards.length)throw new Error('shield card flow failed');
   const negativeTile=S.board.tiles.find(t=>t.type==='event'),negativeIndex=EVENTS.findIndex(e=>e[0]==='突發修繕'),cashBeforeShield=cardP.cash,oldRandom=Math.random;Math.random=()=>((negativeIndex+.1)/EVENTS.length);applySpecial(negativeTile,cardP);Math.random=oldRandom;
   if(cardP.cash!==cashBeforeShield||cardP.shield!==0)throw new Error('shield did not cancel a negative event');S.board.popup=null;
-  cardP.cards=['remote'];useCard(0);useChosenDice(4);if(S.forcedDice!==4||cardP.cards.length)throw new Error('chosen-dice card flow failed');
+  cardP.tools=['remote'];useTool(0);if(S.board.popup?.kind!=='toolDice'||cardP.tools.length!==1)throw new Error('remote dice did not open tool selection');useChosenDice(4);if(S.forcedDice!==4||cardP.tools.length)throw new Error('remote-dice tool flow failed');
+  const rollRandom=Math.random;cardP.char=0;cardP.slow=0;let resolved=resolveDiceRoll([2,3],cardP);if(resolved.rolledTotal!==5||resolved.finalSteps!==5||resolved.faces.join(',')!=='2,3')throw new Error('dice total and movement steps diverged');Math.random=()=>0;cardP.char=1;resolved=resolveDiceRoll([1],cardP);if(resolved.rolledTotal!==1||resolved.finalSteps!==2||!resolved.adjustments.length)throw new Error('character dice adjustment is not represented in roll resolution');cardP.char=0;cardP.slow=1;resolved=resolveDiceRoll([6],cardP);if(resolved.rolledTotal!==6||resolved.finalSteps!==3||cardP.slow)throw new Error('god dice adjustment is not represented in roll resolution');Math.random=rollRandom;
   cardP.cards=['stop'];useCard(0);useTargetCard(cardOpponent.id);if(cardOpponent.skip!==1||cardP.cards.length)throw new Error('target stop-card flow failed');
   const teleportTarget=S.board.tiles.find(t=>t.type==='event');cardP.cards=['teleport'];useCard(0);action('cardTile'+teleportTarget.index);
   if(cardP.pos!==teleportTarget.index||cardP.cards.length)throw new Error('teleport target flow failed');
@@ -364,6 +370,8 @@ vm.runInContext(
   cardP.cards=[];cardP.pos=0;admitPlayer(cardP,'hospital',2,'test');if(cardP.pos!==S.board.tiles.find(t=>t.type==='hospital').index||cardP.detained?.facility!=='hospital')throw new Error('hospital admission did not move the player to the facility');cardP.detained=null;cardP.skip=0;S.board.popup=null;
   cardP.pos=S.board.tiles.find(t=>t.type==='police').index;applySpecial(S.board.tiles[cardP.pos],cardP);if(cardP.detained)throw new Error('ordinary police-station landing incorrectly detained the player');S.board.popup=null;
   cardP.cards=['bail'];cardP.detained={facility:'jail',turns:2};cardP.skip=2;openPopup('event',{name:'拘留',desc:'test',detainedTurn:true,facility:'jail',releaseIndex:0});action('releaseDetained');if(cardP.detained||cardP.skip||cardP.cards.length)throw new Error('detention release action failed');
+  S.board.turn=cardP.id;cardP.type='human';cardOpponent.detained={facility:'jail',turns:2};cardOpponent.skip=2;cardP.tickets=30;openPopup('facilityVisit',{facility:'jail'});action('facilityRelease'+cardOpponent.id);if(cardOpponent.detained||cardOpponent.skip||cardP.tickets!==0)throw new Error('30-ticket facility release flow failed');S.board.popup=null;
+  cardP.tickets=300;cardOpponent.cash=50000;const helperCash=cardP.cash;openPopup('facilityVisit',{facility:'jail'});action('facilityHelperbandit');if(cardP.tickets!==0||cardP.cash<=helperCash||cardOpponent.cash!==40000)throw new Error('300-ticket facility helper flow failed');S.board.popup=null;
   S.board.turn=0;const testP=cp(); testP.tools=['speed'];S.board.phase='pre-roll';useTool(0);
   if(testP.diceCount!==2||testP.vehicleTurns!==5)throw new Error('vehicle card did not enable multi-dice turns');
   testP.tools=['car'];S.board.phase='pre-roll';useTool(0);

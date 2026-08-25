@@ -1,4 +1,7 @@
 "use strict";
+const ANIMATION_FPS = 60,
+  ANIMATION_MIN_FRAMES = 30,
+  ANIMATION_MIN_MS = Math.ceil((ANIMATION_MIN_FRAMES / ANIMATION_FPS) * 1000);
 function richCard(c, x, y, w, h, buttonId = "") {
   const d = cardDef(c),
     im = IM["card_" + d.cover];
@@ -160,6 +163,14 @@ const MAPS = [
     road: { cx: 1600, cy: 850, rx: 1120, ry: 570, startAngle: Math.PI / 2 },
   },
 ];
+// Every road space keeps its own roadside construction anchor. These authored
+// offsets follow each painted oval instead of deriving a single inward shift,
+// so pawns stay on the road while plots/buildings sit consistently outside it.
+const MAP_PLOT_OFFSETS = {
+  starwish: [[0,122],[-10,104],[-23,120],[-30,100],[-49,112],[-55,88],[-82,91],[-85,60],[-116,39],[-104,0],[-116,-39],[-85,-60],[-82,-91],[-55,-88],[-49,-112],[-30,-100],[-23,-120],[-10,-104],[0,-122],[10,-104],[23,-120],[30,-100],[49,-112],[55,-88],[82,-91],[85,-60],[116,-39],[104,0],[116,39],[85,60],[82,91],[55,88],[49,112],[30,100],[23,120],[10,104]],
+  moonharbor: [[0,122],[-10,104],[-23,120],[-30,99],[-49,112],[-55,88],[-82,90],[-86,59],[-116,39],[-104,0],[-116,-39],[-86,-59],[-82,-90],[-55,-88],[-49,-112],[-30,-99],[-23,-120],[-10,-104],[0,-122],[10,-104],[23,-120],[30,-99],[49,-112],[55,-88],[82,-90],[86,-59],[116,-39],[104,0],[116,39],[86,59],[82,90],[55,88],[49,112],[30,99],[23,120],[10,104]],
+  cloudbazaar: [[0,122],[-9,104],[-22,120],[-29,100],[-48,112],[-54,89],[-81,92],[-85,60],[-115,40],[-104,0],[-115,-40],[-85,-60],[-81,-92],[-54,-89],[-48,-112],[-29,-100],[-22,-120],[-9,-104],[0,-122],[9,-104],[22,-120],[29,-100],[48,-112],[54,-89],[81,-92],[85,-60],[115,-40],[104,0],[115,40],[85,60],[81,92],[54,89],[48,112],[29,100],[22,120],[9,104]],
+};
 const SAVE = "cxq_richman_latest_save_v4",
   PREF = "cxq_richman_pref_v1";
 const S = {
@@ -184,6 +195,7 @@ const S = {
   rolling: false,
   dice: 1,
   diceResults: [1],
+  rollResolution: null,
   forcedDice: 0,
   pickAnim: null,
   settings: {
@@ -210,7 +222,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-2045";
+const ASSET_REV = "20260826-1430";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -289,12 +301,13 @@ load("event_accidentalInjury", A + "events/accidental_injury_v1.png");
 load("event_royalInspection", A + "events/royal_inspection_v1.png");
 load("event_recoveryBlessing", A + "events/recovery_blessing_v1.png");
 load("event_proofOfInnocence", A + "events/proof_of_innocence_v1.png");
+load("event_systemLandPurchase", A + "events/system_land_purchase_v1.webp");
+load("event_systemRentPayment", A + "events/system_rent_payment_v1.webp");
+load("event_systemBuildUpgrade", A + "events/system_build_upgrade_v1.webp");
 load("miniStar", A + "minigames/star_catch_v1.webp");
 load("miniBalloon", A + "minigames/balloon_pop_v1.webp");
 load("miniTreasure", A + "minigames/treasure_timing_v1.webp");
 [
-  "precision_dice",
-  "remote_dice",
   "shield",
   "teleport",
   "land_purchase",
@@ -312,6 +325,7 @@ load("card_snatch", A + "cards/snatch_v1.png");
 load("card_equal_wealth", A + "cards/equal_wealth_v1.png");
 load("tool_speed", A + "tools/motorcycle_v1.webp");
 load("tool_car", A + "tools/car_v1.webp");
+load("tool_remote", A + "tools/remote_dice_v2.png");
 load("tool_roadblock", A + "tools/roadblock_v1.webp");
 load("tool_bomb", A + "tools/bomb_v1.webp");
 load("facilityBank", A + "facilities/bank_token_v2.webp");
@@ -321,7 +335,7 @@ load("facilityMagic", A + "facilities/magic_token_v2.webp");
 load("facilityHospital", A + "facilities/hospital_token_v2.webp");
 load("facilityPolice", A + "facilities/police_token_v1.png");
 load("facilityStart", A + "facilities/start_token_v2.webp");
-load("roadNode", A + "tiles/road_node_v1.png");
+load("roadNode", A + "tiles/road_node_v2.png");
 load("npcWealth", A + "npc/wealth_v1.webp");
 load("npcFortune", A + "npc/fortune_v1.webp");
 load("npcPoverty", A + "npc/poverty_v1.webp");
@@ -330,6 +344,10 @@ load("npcLand", A + "npc/land_v1.webp");
 load("npcAngel", A + "npc/angel_v1.webp");
 load("npcDemon", A + "npc/demon_v1.webp");
 load("npcDeath", A + "npc/death_v1.webp");
+load("npcThief", A + "npc/thief_v1.png");
+load("npcBandit", A + "npc/bandit_v1.png");
+load("npcSpy", A + "npc/spy_v1.png");
+load("npcHooligan", A + "npc/hooligan_v1.png");
 CHAR_KEYS.forEach((k, i) => {
   load("c" + i, "../../assets/characters/cxq-role-" + k + ".webp");
   load("portrait" + i, A + "characters/portraits/" + k + "_portrait_v1.webp");
@@ -354,6 +372,8 @@ CHAR_KEYS.forEach((key) =>
 load("buildingSpecialHotel", A + "buildings/special_hotel_v1.webp");
 load("buildingSpecialMall", A + "buildings/special_mall_v1.webp");
 load("buildingSpecialPark", A + "buildings/special_park_v1.webp");
+load("resultVictory", A + "results/victory_ceremony_v1.png");
+load("resultDefeat", A + "results/defeat_ceremony_v1.png");
 
 const VIEW = { scale: 1, ox: 0, oy: 0 };
 function sceneBackdrop() {
@@ -381,8 +401,8 @@ function begin() {
       iw = edgeBg.naturalWidth * r,
       ih = edgeBg.naturalHeight * r;
     X.save();
-    X.globalAlpha = 0.78;
-    X.filter = "blur(14px) saturate(.86) brightness(.62)";
+    X.globalAlpha = 1;
+    X.filter = "blur(18px) saturate(.92) brightness(.78)";
     X.drawImage(edgeBg, (C.width - iw) / 2, (C.height - ih) / 2, iw, ih);
     X.filter = "none";
     X.restore();
@@ -718,7 +738,7 @@ function home() {
   );
   X.restore();
   if (HOME.leaving) {
-    const p = clamp01((now - HOME.leaveAt) / 300);
+    const p = clamp01((now - HOME.leaveAt) / ANIMATION_MIN_MS);
     X.save();
     X.globalAlpha = 1 - p;
     txt(
@@ -1318,23 +1338,11 @@ function roadAnchor(t) {
 }
 function plotAnchor(t) {
   if (t.type !== "land" || !S.board) return { x: t.x, y: t.y };
-  const b = S.board;
-  if (!b.plotCenter) {
-    const points = b.tiles || [];
-    b.plotCenter = points.reduce(
-      (sum, point) => ({ x: sum.x + point.x / points.length, y: sum.y + point.y / points.length }),
-      { x: 0, y: 0 },
-    );
-  }
-  let dx = t.x - b.plotCenter.x,
-    dy = t.y - b.plotCenter.y;
-  const length = Math.hypot(dx, dy) || 1,
-    offset = -128;
-  dx /= length;
-  dy /= length;
+  const mapKey = MAPS[S.board.mapIndex || 0]?.key || "starwish",
+    [dx, dy] = MAP_PLOT_OFFSETS[mapKey]?.[t.index] || [0, 0];
   return {
-    x: Math.max(76, Math.min(MW - 76, t.x + dx * offset)),
-    y: Math.max(116, Math.min(MH - 76, t.y + dy * offset)),
+    x: Math.max(76, Math.min(MW - 76, t.x + dx)),
+    y: Math.max(116, Math.min(MH - 76, t.y + dy)),
   };
 }
 // Backwards-compatible name for popup and input code. A land's visual target is
@@ -1683,7 +1691,8 @@ function diceThrowOverlay() {
     results = q.results?.length
       ? q.results
       : Array.from({ length: count }, (_, i) => ((S.dice + i * 2 - 1) % 6) + 1),
-    total = results.reduce((sum, value) => sum + value, 0);
+    total = results.reduce((sum, value) => sum + value, 0),
+    resolution = q.resolution;
   X.save();
   const shade = Math.sin(Math.min(1, u * 1.5) * Math.PI) * 0.22;
   X.fillStyle = `rgba(3,7,22,${shade})`;
@@ -1718,9 +1727,11 @@ function diceThrowOverlay() {
   });
   if (q.results?.length)
     txt(
-      results.length > 1
-        ? `${results.join("＋")}＝${total} 點！`
-        : `${total} 點！`,
+      resolution && resolution.finalSteps !== resolution.rolledTotal
+        ? `${results.join("＋")}＝${total} 點 → 前進 ${resolution.finalSteps} 步`
+        : results.length > 1
+          ? `${results.join("＋")}＝${total} 點！`
+          : `${total} 點！`,
       800,
       690,
       58,
@@ -2160,7 +2171,7 @@ function popup() {
   if (!q) return;
   const p = cp(),
     age = Math.max(0, performance.now() - (q.openedAt || 0)),
-    intro = Math.min(1, age / 220),
+    intro = Math.min(1, age / ANIMATION_MIN_MS),
     ease = 1 - Math.pow(1 - intro, 3),
     scale = 0.94 + ease * 0.06;
   X.fillStyle = `rgba(4,8,24,${0.72 * ease})`;
@@ -2241,11 +2252,11 @@ function popup() {
       : "目前沒有卡片";
     p.cards.slice(0, 8).forEach((c, i) => actions.push(["useCard" + i, c]));
     actions.push(["closeCards", "關閉卡冊"]);
-  } else if (q.kind === "cardDice") {
+  } else if (q.kind === "toolDice") {
     title = "遙控骰子";
     body = "選擇本回合要前進的點數";
-    for (let i = 1; i <= 6; i++) actions.push(["cardDice" + i, i + " 點"]);
-    actions.push(["cardCancel", "返回卡冊"]);
+    for (let i = 1; i <= 6; i++) actions.push(["toolDice" + i, i + " 點"]);
+    actions.push(["closeTools", "返回道具箱"]);
   } else if (q.kind === "cardTarget") {
     title = cardDef(q.card).name;
     body = "選擇要施放卡片的對手";
@@ -2264,6 +2275,7 @@ function popup() {
     actions = [
       ["resume", "繼續遊戲"],
       ["saveHome", "保存並回首頁"],
+      ["surrender", "認輸投降"],
     ];
   } else if (q.kind === "roster") {
     title = "玩家與資產";
@@ -2319,9 +2331,30 @@ function help() {
   btn("home", "回到首頁", 630, 690, 340, 86, true);
 }
 function result() {
-  const b = S.board;
-  cover(IM.setupBg, 0, 0, W, H, 0.82);
-  txt("冒險結算", 800, 58, 46, "center", "#fff0a5", 1000, true);
+  const b = S.board,
+    now = performance.now(),
+    age = Math.max(0, now - (b.resultAnimStart || now - 2200)),
+    intro = Math.min(1, age / ANIMATION_MIN_MS),
+    humanVictory = b.winner?.type === "human";
+  cover(humanVictory ? IM.resultVictory : IM.resultDefeat, 0, 0, W, H, intro);
+  X.save();
+  X.fillStyle = `rgba(2,7,22,${0.2 + intro * 0.34})`;
+  X.fillRect(0, 0, W, H);
+  X.restore();
+  for (let i = 0; i < 24; i++) {
+    const phase = (age / 1400 + i / 24) % 1,
+      px = (i * 211 + Math.sin(i * 7.1) * 90 + 1600) % 1600,
+      py = humanVictory ? 30 + phase * 760 : 80 + phase * 700,
+      radius = 2 + (i % 4);
+    X.save();
+    X.globalAlpha = intro * (0.25 + 0.65 * Math.sin(phase * Math.PI));
+    X.fillStyle = humanVictory ? "#ffe47a" : "#86a8ff";
+    X.beginPath();
+    X.arc(px, py, radius, 0, Math.PI * 2);
+    X.fill();
+    X.restore();
+  }
+  txt(humanVictory ? "冒險成功" : "冒險結束", 800, 58 - (1 - intro) * 55, 46, "center", humanVictory ? "#fff0a5" : "#d8e2ff", 1000, true);
   fitTxt(
     `${b.mapRules?.name || "童話王國"}｜${b.victory === "survival" ? "最後生存者" : "總資產競賽"}｜${Math.max(1, b.round - 1)} 回合`,
     800,
@@ -2345,7 +2378,11 @@ function result() {
     );
   ranked.forEach((p, i) => {
     const y = 150 + i * 142,
-      alpha = p.bankrupt ? 0.58 : 0.98;
+      rowProgress = Math.min(1, Math.max(0, (age - 300 - i * 110) / ANIMATION_MIN_MS)),
+      alpha = (p.bankrupt ? 0.58 : 0.98) * rowProgress,
+      rowShift = (1 - rowProgress) * (i % 2 ? 260 : -260);
+    X.save();
+    X.translate(rowShift, 0);
     stretch(IM["playerSeatP" + (p.id % 4)], 220, y, 540, 126, alpha);
     stretch(IM.roleInfo, 770, y, 610, 126, alpha);
     contain(
@@ -2424,9 +2461,12 @@ function result() {
       true,
       14,
     );
+    X.restore();
   });
-  btn("resultHome", "返回首頁", 420, 765, 330, 78, false);
-  btn("rematch", "同設定再戰", 850, 765, 330, 78, true);
+  if (age >= 1800) {
+    btn("resultHome", "返回首頁", 420, 765, 330, 78, false);
+    btn("rematch", "同設定再戰", 850, 765, 330, 78, true);
+  }
 }
 let AUDIO_CTX = null,
   MUSIC_TIMER = 0,

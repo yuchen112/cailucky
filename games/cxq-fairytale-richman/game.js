@@ -73,20 +73,13 @@ const EVENTS = [
 ];
 const CARD_DEFS = [
   {
-    id: "precision",
-    name: "精準骰子",
-    cost: 20,
-    cover: "precision_dice",
-    desc: "指定本回合骰子點數",
-    timing: "turn",
-  },
-  {
     id: "remote",
     name: "遙控骰子",
-    cost: 25,
-    cover: "remote_dice",
+    cost: 30,
+    cover: "remote",
     desc: "自由選擇 1～6 點",
     timing: "turn",
+    kind: "tool",
   },
   {
     id: "shield",
@@ -244,7 +237,8 @@ const NEGATIVE_EVENTS = new Set([
   "森林迷霧", "卡片遺失", "土地維護", "意外受傷", "王國稽查",
 ]);
 const LEGACY_CARD_MAP = {
-  精準骰子: "precision",
+  precision: "remote",
+  精準骰子: "remote",
   遙控骰子: "remote",
   護身符: "shield",
   加速靴: "speed",
@@ -274,6 +268,48 @@ function toolDef(v) {
 }
 const baseScenePopup = scenePopup;
 scenePopup = function (q, b, p) {
+  if (q.kind === "facilityVisit") {
+    const police = q.facility === "jail",
+      title = police ? "童話警察局" : "童話醫院",
+      helpers = police
+        ? [["thief", "小偷", IM.npcThief], ["bandit", "強盜", IM.npcBandit]]
+        : [["spy", "間諜", IM.npcSpy], ["hooligan", "流氓", IM.npcHooligan]],
+      detained = b.players.filter((target) => !target.bankrupt && target.detained?.facility === q.facility);
+    contain(IM.abilityPanel, 270, 50, 1060, 820, 0.99);
+    fitTxt(`${title}｜協助中心`, 800, 112, 850, 38, "center", "#fff0a5", 1000, true, 22);
+    paragraph("30 點券可協助一名玩家立即離開；300 點券可雇用一名特殊角色執行一次行動。", 800, 164, 820, 18, 27, 2, "center", "#fff", 900, true);
+    txt(`目前點券 ${p.tickets}`, 800, 225, 22, "center", "#ffe16d", 1000, true);
+    txt("協助離開｜30 點券", 510, 280, 24, "center", "#dceaff", 1000, true);
+    if (!detained.length) txt("目前沒有可協助的玩家", 510, 360, 18, "center", "#aebbd2", 800, true);
+    detained.slice(0, 3).forEach((target, i) =>
+      btn(`facilityRelease${target.id}`, `${target.id + 1}P ${CHAR_NAMES[target.char]}｜剩 ${target.detained.turns} 回合`, 315, 315 + i * 82, 390, 62, p.tickets >= 30),
+    );
+    txt("特殊角色｜300 點券", 1030, 280, 24, "center", "#dceaff", 1000, true);
+    helpers.forEach(([id, name, art], i) => {
+      contain(art, 790 + i * 250, 310, 200, 230, 1);
+      btn(`facilityHelper${id}`, `雇用${name}`, 790 + i * 250, 535, 200, 62, p.tickets >= 300);
+    });
+    btn("facilityLeave", "離開", 650, 740, 300, 66, true);
+    return true;
+  }
+  if (q.kind === "surrenderConfirm") {
+    contain(IM.abilityPanel, 400, 115, 800, 650, 0.99);
+    txt("確認認輸", 800, 205, 40, "center", "#ffd2a0", 1000, true);
+    paragraph("認輸後會出售全部土地並退出本局；若仍有兩名以上玩家，才會進入死神召喚選擇。", 800, 300, 610, 20, 32, 3, "center", "#fff", 900, true);
+    btn("surrenderConfirm", "確認退出本局", 520, 525, 560, 76, false);
+    btn("surrenderCancel", "取消", 650, 635, 300, 64, true);
+    return true;
+  }
+  if (q.kind === "deathTarget") {
+    contain(IM.abilityPanel, 360, 75, 880, 760, 0.99);
+    txt("魔法屋｜死神召喚", 800, 150, 40, "center", "#e7d1ff", 1000, true);
+    paragraph("選擇一名仍在場的玩家。死神會清除其卡片與道具並跟隨 13 回合；也可以放棄召喚。", 800, 220, 650, 19, 29, 3, "center", "#fff", 900, true);
+    living().forEach((target, i) =>
+      btn("deathTarget" + target.id, `${target.id + 1}P ${CHAR_NAMES[target.char]}`, 500, 335 + i * 82, 600, 64, i === 0),
+    );
+    btn("deathSkip", "不召喚死神", 650, 710, 300, 62, false);
+    return true;
+  }
   if (q.kind === "branch") {
     contain(IM.abilityPanel, 400, 115, 800, 650, 0.99);
     txt("前方道路分岔", 800, 205, 40, "center", "#fff0a5", 1000, true);
@@ -358,11 +394,11 @@ scenePopup = function (q, b, p) {
       fitTxt(line, 1010, 275 + i * 62, 475, 23, "center", i === 2 ? "#ffe477" : "#fff", 900, true, 15),
     );
     if (!owner) {
-      btn("buy", `購買土地　$${buy.toLocaleString()}`, 795, 555, 430, 72, true);
+      btn("buy", (p.effects || []).some((e) => e.kind === "死神") ? "死神附身｜無法購地" : `購買土地　$${buy.toLocaleString()}`, 795, 555, 430, 72, true);
       btn("skip", "暫時略過", 795, 650, 430, 68, false);
     } else if (mine) {
       if (t.level < 5)
-        btn("upgrade", t.level === 4 ? "選擇大型建築" : `升級至 Lv${t.level + 1}`, 795, 555, 430, 72, true);
+        btn("upgrade", (p.effects || []).some((e) => e.kind === "死神") ? "死神附身｜無法加建" : t.level === 4 ? "選擇大型建築" : `升級至 Lv${t.level + 1}`, 795, 555, 430, 72, true);
       btn("skip", "完成回合", 795, t.level < 5 ? 650 : 600, 430, 68, false);
     } else btn("pay", p.shield > 0 ? "使用護盾／結算" : `支付租金　$${rentEstimate(t, p).toLocaleString()}`, 795, 600, 430, 74, true);
     return true;
@@ -506,7 +542,7 @@ scenePopup = function (q, b, p) {
   if (q.kind === "tools") {
     contain(IM.abilityPanel, 170, 55, 1260, 800, 0.99);
     txt("道具箱", 800, 105, 38, "center", "#fff0a5", 1000, true);
-    txt(`道具 ${(p.tools || []).length}/8｜車輛、路障與定時炸彈`, 800, 145, 17, "center", "#fff", 900, true);
+    txt(`道具 ${(p.tools || []).length}/8｜遙控骰子、車輛、路障與定時炸彈`, 800, 145, 17, "center", "#fff", 900, true);
     if (q.error) fitTxt(q.error, 800, 171, 920, 15, "center", "#ffcf8a", 1000, true, 11);
     (p.tools || []).slice(0, 8).forEach((c, i) =>
       richTool(c, 270 + (i % 4) * 270, 185 + Math.floor(i / 4) * 270, 200, 240, "useTool" + i),
@@ -786,6 +822,10 @@ const TYPE_PATTERN = [
   "land",
 ];
 function cashGain(p, n) {
+  if ((p.effects || []).some((effect) => effect.kind === "死神")) {
+    addLog(`${p.id + 1}P 的收入被死神吞噬`);
+    return;
+  }
   p.cash += p.char === 0 ? Math.round(n * 1.2) : n;
   sfx("gain");
 }
@@ -800,7 +840,7 @@ function isGodEffect(effect) {
 }
 function releaseGod(name, nearPos = 0) {
   const b = S.board;
-  if (!b?.gods || !name || b.npcs.some((n) => n.name === name)) return;
+  if (!b?.gods || !name || name === "死神" || b.npcs.some((n) => n.name === name)) return;
   const occupied = new Set([
     ...b.players.filter((p) => !p.bankrupt).map((p) => p.pos),
     ...b.npcs.map((n) => n.pos),
@@ -823,6 +863,10 @@ function tickEffects(p) {
     .map((e) => ({ ...e, turns: e.turns - 1 }))
     .filter((e) => e.turns > 0);
   for (const e of expired) {
+    if (e.kind === "死神") {
+      addLog(`死神離開 ${p.id + 1}P，返回魔法世界`);
+      continue;
+    }
     const replacement = GOD_TRANSFORMS[e.kind] || e.kind;
     releaseGod(replacement, p.pos);
     addLog(`${e.kind}離開 ${p.id + 1}P，${replacement}回到道路巡遊`);
@@ -949,6 +993,7 @@ function rentFor(t, payer = null) {
   );
   if (t.owner >= 0 && regionOwned(t.owner, t.region)) r = Math.round(r * 1.5);
   const owner = S.board.players.find((x) => x.id === t.owner);
+  if ((owner?.effects || []).some((e) => e.kind === "死神")) return 0;
   if (owner?.char === 8) r = Math.round(r * 1.15);
   if (owner?.rentBoost) {
     r = Math.round(r * 1.5);
@@ -957,6 +1002,7 @@ function rentFor(t, payer = null) {
   if (payer?.char === 3) r = Math.round(r * 0.8);
   if ((payer?.effects || []).some((e) => e.kind === "財神")) r = 0;
   if ((payer?.effects || []).some((e) => e.kind === "窮神")) r = Math.round(r * 2);
+  if ((payer?.effects || []).some((e) => e.kind === "死神")) r = Math.round(r * 2);
   if (t.special === "hotel") r = Math.round(r * 1.4);
   else if (t.special === "mall") r = Math.round(r * 1.2);
   else if (t.special === "park") r = Math.round(r * 0.65);
@@ -971,11 +1017,13 @@ function rentEstimate(t, payer = null) {
   );
   if (t.owner >= 0 && regionOwned(t.owner, t.region)) r = Math.round(r * 1.5);
   const owner = S.board.players.find((x) => x.id === t.owner);
+  if ((owner?.effects || []).some((e) => e.kind === "死神")) return 0;
   if (owner?.char === 8) r = Math.round(r * 1.15);
   if (owner?.rentBoost) r = Math.round(r * 1.5);
   if (payer?.char === 3) r = Math.round(r * 0.8);
   if ((payer?.effects || []).some((e) => e.kind === "財神")) r = 0;
   if ((payer?.effects || []).some((e) => e.kind === "窮神")) r = Math.round(r * 2);
+  if ((payer?.effects || []).some((e) => e.kind === "死神")) r = Math.round(r * 2);
   if (t.special === "hotel") r = Math.round(r * 1.4);
   else if (t.special === "mall") r = Math.round(r * 1.2);
   else if (t.special === "park") r = Math.round(r * 0.65);
@@ -1036,7 +1084,7 @@ function focus(now = false) {
 }
 function spawnNPCs(target = 3) {
   const b = S.board,
-    pool = NPC_DEFS.filter((n) => !["乞丐", "惡犬"].includes(n.name)),
+    pool = NPC_DEFS.filter((n) => !["乞丐", "惡犬", "死神"].includes(n.name)),
     attached = new Set(b.players.flatMap((p) => (p.effects || []).filter(isGodEffect).map((e) => e.kind))),
     names = new Set((b.npcs || []).map((n) => n.name)),
     occupied = new Set([
@@ -1191,6 +1239,34 @@ function applyNPCByName(name, p) {
       : `${p.id + 1}P 遇到${n.name}，立即結算路上事件`,
   );
 }
+function surrenderPlayer(p) {
+  if (!p || p.bankrupt) return;
+  p.bankrupt = true;
+  p.cash = 0;
+  p.bank = 0;
+  p.cards = [];
+  p.tools = [];
+  p.effects = [];
+  S.board.tiles.forEach((tile) => {
+    if (tile.owner === p.id) {
+      tile.owner = -1;
+      tile.level = 0;
+      tile.special = null;
+    }
+  });
+  addLog(`${p.id + 1}P 認輸並退出本局`);
+}
+function summonDeathGod(target) {
+  if (!target || target.bankrupt) return false;
+  const former = (target.effects || []).find(isGodEffect);
+  if (former) releaseGod(former.kind, target.pos);
+  target.effects = (target.effects || []).filter((effect) => !isGodEffect(effect));
+  target.cards = [];
+  target.tools = [];
+  attachEffect(target, "死神", 13);
+  addLog(`魔法屋召喚死神附身 ${target.id + 1}P，持續 13 回合`);
+  return true;
+}
 function resolveTile() {
   const b = S.board,
     p = cp(),
@@ -1276,22 +1352,12 @@ function applySpecial(t, p) {
       desc: o ? `與 ${o.id + 1}P 交換位置。` : "魔法暫時沉睡。",
     });
   } else if (t.type === "hospital") {
-    openPopup("event", {
-      name: "童話醫院",
-      desc: p.detained?.facility === "hospital"
-        ? `正在住院休養，尚需停留 ${p.detained.turns} 回合。`
-        : "平安經過醫院，本回合不會因此住院。",
-      facility: "hospital",
-    });
+    if (p.type === "human") openPopup("facilityVisit", { facility: "hospital" });
+    else resolveAIFacility(p, "hospital");
     addLog(`${p.id + 1}P 抵達童話醫院`);
   } else if (t.type === "police") {
-    openPopup("event", {
-      name: "童話警察局",
-      desc: p.detained?.facility === "jail"
-        ? `正在接受調查，尚需停留 ${p.detained.turns} 回合。`
-        : "完成例行問候，本回合不會因此遭到拘留。",
-      facility: "jail",
-    });
+    if (p.type === "human") openPopup("facilityVisit", { facility: "jail" });
+    else resolveAIFacility(p, "jail");
     addLog(`${p.id + 1}P 抵達童話警察局`);
   } else if (t.type === "minigame") {
     if (p.type === "ai") {
@@ -1316,6 +1382,53 @@ function applySpecial(t, p) {
       openPopup("mini", { name: S.board.mini.name });
     }
   }
+}
+function releaseDetainedPlayer(visitor, target) {
+  if (!target?.detained || visitor.tickets < 30) return false;
+  visitor.tickets -= 30;
+  target.detained = null;
+  target.skip = 0;
+  addLog(`${visitor.id + 1}P 使用 30 點券協助 ${target.id + 1}P 立即離開`);
+  return true;
+}
+function applyFacilityHelper(visitor, helper) {
+  if (visitor.tickets < 300) return "點券不足，無法雇用。";
+  const opponents = living().filter((target) => target.id !== visitor.id);
+  if (!opponents.length) return "目前沒有可執行行動的對手。";
+  visitor.tickets -= 300;
+  const richest = opponents.slice().sort((a, b) => netWorth(b) - netWorth(a))[0];
+  if (helper === "thief" || helper === "spy") {
+    const stock = [...richest.cards.map((id) => ({ id, kind: "card" })), ...richest.tools.map((id) => ({ id, kind: "tool" }))];
+    if (!stock.length) return `${helper === "thief" ? "小偷" : "間諜"}查探後發現對手沒有卡片或道具。`;
+    const item = stock[Math.floor(Math.random() * stock.length)], source = item.kind === "card" ? richest.cards : richest.tools,
+      destination = item.kind === "card" ? visitor.cards : visitor.tools;
+    source.splice(source.indexOf(item.id), 1);
+    if (destination.length < 15) destination.push(item.id);
+    return `${helper === "thief" ? "小偷" : "間諜"}從 ${richest.id + 1}P 取得${item.kind === "card" ? "卡片" : "道具"}「${cardDef(item.id).name}」。`;
+  }
+  if (helper === "bandit") {
+    const amount = Math.min(10000, Math.max(0, richest.cash));
+    richest.cash -= amount;
+    cashGain(visitor, amount);
+    return `強盜從 ${richest.id + 1}P 取回 $${amount.toLocaleString()}。`;
+  }
+  const land = S.board.tiles.filter((tile) => tile.owner === richest.id && tile.level > 0).sort((a, b) => b.level - a.level)[0];
+  if (!land) return "流氓巡查後沒有找到可破壞的建築。";
+  land.level--;
+  if (land.level < 5) land.special = null;
+  markUpgrade(land);
+  return `流氓使 ${richest.id + 1}P 的一棟建築降低一級。`;
+}
+function resolveAIFacility(p, facility) {
+  const detained = S.board.players.filter((target) => !target.bankrupt && target.detained?.facility === facility),
+    ally = detained.find((target) => target.id === p.id) || detained.find((target) => target.type === "ai");
+  let desc = "完成例行拜訪，沒有使用點券。";
+  if (ally && p.tickets >= 30 && releaseDetainedPlayer(p, ally)) desc = `使用 30 點券協助 ${ally.id + 1}P 立即離開。`;
+  else if (p.tickets >= 300) {
+    const helper = facility === "jail" ? (Math.random() < 0.5 ? "thief" : "bandit") : (Math.random() < 0.5 ? "spy" : "hooligan");
+    desc = applyFacilityHelper(p, helper);
+  }
+  openPopup("event", { name: facility === "jail" ? "AI 警察局決策" : "AI 醫院決策", desc, aiDecision: true });
 }
 function admitPlayer(p, facility, turns, reason) {
   const passKey = facility === "jail" ? "bailPass" : "hospitalPass";
@@ -1408,6 +1521,7 @@ function finishGame(w) {
   b.winner = w || null;
   b.popup = null;
   b.mini = null;
+  b.resultAnimStart = performance.now();
   sfx("win");
   saveGame();
   S.scene = "result";
@@ -1484,14 +1598,10 @@ function finishMovement() {
 function moveToTile(next) {
   const b = S.board, p = cp(), move = b.pendingMove;
   if (!move) return;
-  const old = p.pos, from = b.tiles[old], to = b.tiles[next], dur = 280;
+  const old = p.pos, from = b.tiles[old], to = b.tiles[next], dur = ANIMATION_MIN_MS + 20;
   p.pos = next;
   p.moveAnim = { from: { x: from.x, y: from.y }, to: { x: to.x, y: to.y }, start: performance.now(), dur };
   move.remaining--;
-  if (npcAt(p.pos)) {
-    move.remaining = 0;
-    addLog(`${p.id + 1}P 在途中遇見巡遊角色，移動停止`);
-  }
   if (p.bombSteps > 0 && --p.bombSteps === 0) {
     p.detained = { facility: "hospital", turns: 3 };
     p.skip += 3;
@@ -1544,6 +1654,27 @@ function moveSteps(steps) {
   b.pendingMove = { remaining: steps, branchHandledAt: -1 };
   advanceMovement();
 }
+function resolveDiceRoll(results, p) {
+  const faces = results.map((value) => Math.max(1, Math.min(6, Number(value) || 1))),
+    rolledTotal = faces.reduce((sum, value) => sum + value, 0),
+    adjustments = [];
+  let finalSteps = rolledTotal;
+  if (p.char === 1 && finalSteps === 1 && Math.random() < 0.5) {
+    finalSteps = 2;
+    adjustments.push("角色能力：最低前進 2 步");
+  }
+  if (p.char === 5 && finalSteps <= 2 && Math.random() < 0.3) {
+    finalSteps = 3;
+    adjustments.push("角色能力：低點數改為 3 步");
+  }
+  if (p.slow) {
+    const before = finalSteps;
+    finalSteps = Math.min(finalSteps, 3);
+    p.slow = 0;
+    if (finalSteps !== before) adjustments.push("衰神：本回合最多前進 3 步");
+  }
+  return { faces, rolledTotal, finalSteps, adjustments };
+}
 function rollDice() {
   if (
     S.rolling ||
@@ -1576,18 +1707,14 @@ function rollDice() {
             { length: count },
             () => 1 + Math.floor(Math.random() * 6),
           );
-      let d = results.reduce((sum, value) => sum + value, 0);
+      const resolution = resolveDiceRoll(results, p);
       S.forcedDice = 0;
-      if (p.char === 1 && d === 1 && Math.random() < 0.5) d = 2;
-      if (p.char === 5 && d <= 2 && Math.random() < 0.3) d = 3;
-      if (p.slow) {
-        d = Math.min(d, 3);
-        p.slow = 0;
-      }
-      S.diceResults = results;
-      S.diceAnim.results = results;
+      S.rollResolution = resolution;
+      S.diceResults = resolution.faces;
+      S.diceAnim.results = resolution.faces;
+      S.diceAnim.resolution = resolution;
       S.diceAnim.settleAt = performance.now();
-      S.dice = results[0];
+      S.dice = resolution.faces[0];
       if (p.vehicleTurns > 0 && --p.vehicleTurns === 0) {
         p.diceCount = 1;
         p.vehicle = null;
@@ -1595,11 +1722,16 @@ function rollDice() {
       sfx("dice");
       if (S.settings.vibrate && navigator.vibrate)
         navigator.vibrate([24, 35, 32]);
-      addLog(`${p.id + 1}P 擲出 ${results.join("＋")}，合計 ${d} 點`);
+      addLog(
+        `${p.id + 1}P 擲出 ${resolution.faces.join("＋")}，` +
+          (resolution.finalSteps === resolution.rolledTotal
+            ? `前進 ${resolution.finalSteps} 步`
+            : `原始 ${resolution.rolledTotal} 點，修正為 ${resolution.finalSteps} 步`),
+      );
       setTimeout(() => {
         S.diceAnim = null;
         S.rolling = false;
-        moveSteps(d);
+        moveSteps(resolution.finalSteps);
       }, 320);
     }
   }, 70);
@@ -1616,19 +1748,21 @@ function aiResolve() {
     if (t.type === "land") {
       if (t.owner < 0) {
         const cost = buyCost(p, t),
-          reserve = easy ? 70000 : smart ? 25000 : 45000;
-        if (p.cash - cost > reserve) {
+          reserve = easy ? 70000 : smart ? 25000 : 45000,
+          canInvest = !(p.effects || []).some((e) => e.kind === "死神");
+        if (canInvest && p.cash - cost > reserve) {
           p.cash -= cost;
           if (p.discount) p.discount = 0;
           t.owner = p.id;
           addLog(`${p.id + 1}P 購買 ${REGION_NAMES[t.region]} 土地`);
         }
-        openPopup("event", { name: "AI 購地決策", desc: t.owner === p.id ? `${p.id + 1}P 購買了這塊土地。` : `${p.id + 1}P 決定保留資金。`, aiDecision: true });
+        openPopup("event", { name: "AI 購地決策", desc: t.owner === p.id ? `${p.id + 1}P 購買了這塊土地。` : `${p.id + 1}P 決定保留資金。`, art: "systemLandPurchase", aiDecision: true });
         return;
       }
       if (t.owner === p.id) {
         const cost = upgradeCost(t),
           want =
+            !(p.effects || []).some((e) => e.kind === "死神") &&
             t.level < 5 &&
             p.cash - cost > (easy ? 90000 : smart ? 30000 : 55000);
         if (want) {
@@ -1639,7 +1773,7 @@ function aiResolve() {
           markUpgrade(t);
           addLog(`${p.id + 1}P 將土地升到 Lv${t.level}`);
         }
-        openPopup("event", { name: "AI 建築決策", desc: want ? `${p.id + 1}P 將房屋升至 Lv${t.level}。` : `${p.id + 1}P 本回合不升級。`, aiDecision: true });
+        openPopup("event", { name: "AI 建築決策", desc: want ? `${p.id + 1}P 將房屋升至 Lv${t.level}。` : `${p.id + 1}P 本回合不升級。`, art: "systemBuildUpgrade", aiDecision: true });
         return;
       }
       const r = rentFor(t, p);
@@ -1654,7 +1788,7 @@ function aiResolve() {
           applyPropertyArrival(t, p, o);
         }
       }
-      openPopup("event", { name: "AI 租金結算", desc: `${p.id + 1}P 完成租金結算，請確認後繼續。`, aiDecision: true });
+      openPopup("event", { name: "AI 租金結算", desc: `${p.id + 1}P 完成租金結算，請確認後繼續。`, art: "systemRentPayment", aiDecision: true });
       return;
     }
     if (["event", "card", "shop", "minigame", "npc"].includes(t.type)) {
@@ -1695,21 +1829,36 @@ function aiTurn() {
   const smart = p.diff === "smart",
     easy = p.diff === "easy",
     chance = easy ? 0.25 : smart ? 0.9 : 0.58;
-  const tools = p.tools || [];
+  const tools = p.tools || [],
+    notices = [];
+  const remoteIndex = tools.indexOf("remote");
+  if (remoteIndex >= 0 && Math.random() < chance) {
+    useTool(remoteIndex);
+    notices.push(`使用遙控骰子，選擇 ${S.forcedDice} 點`);
+  }
   if (p.diceCount === 1) {
     const vehicleIndex = tools.findIndex((id) => id === "car" || id === "speed");
-    if (vehicleIndex >= 0) useTool(vehicleIndex);
+    if (vehicleIndex >= 0) {
+      const vehicleName = toolDef(tools[vehicleIndex]).name;
+      useTool(vehicleIndex);
+      notices.push(`裝備${vehicleName}`);
+    }
   }
   const roadblockIndex = tools.indexOf("roadblock");
   if (roadblockIndex >= 0 && Math.random() < chance) {
     p.tools.splice(roadblockIndex, 1);
     const pos = (p.pos + 4) % S.board.tiles.length;
     if (!S.board.roadblocks.includes(pos)) S.board.roadblocks.push(pos);
+    notices.push(`在前方第 4 格設置路障`);
   }
   const bombIndex = tools.indexOf("bomb");
   if (bombIndex >= 0 && Math.random() < chance) {
     const target = living().filter((x) => x.id !== p.id).sort((a, b) => netWorth(b) - netWorth(a))[0];
-    if (target) { p.tools.splice(bombIndex, 1); target.bombSteps = 12; }
+    if (target) {
+      p.tools.splice(bombIndex, 1);
+      target.bombSteps = 12;
+      notices.push(`將定時炸彈交給 ${target.id + 1}P`);
+    }
   }
   if (Math.random() < chance) {
     const own = S.board.tiles.some((t) => t.owner === p.id && t.level < 5),
@@ -1717,18 +1866,50 @@ function aiTurn() {
     if (p.shield === 0) priorities.push("shield");
     if (own) priorities.push("upgrade", "rent");
     if (p.cash > 90000) priorities.push("discount");
-    priorities.push(smart ? "precision" : "remote", "stop");
+    priorities.push("stop");
     const wanted = priorities.find((c) => p.cards.includes(c));
     if (wanted) {
       useCard(p.cards.indexOf(wanted));
       addLog(`${p.id + 1}P 的 AI 策略使用 ${cardDef(wanted).name}`);
+      notices.push(`使用${cardDef(wanted).name}`);
     }
+  }
+  if (notices.length && !S.board.popup) {
+    openPopup("event", {
+      name: "AI 回合準備",
+      desc: `${p.id + 1}P ${notices.join("；")}。`,
+      aiDecision: true,
+      resumeAiRoll: true,
+    });
+    return;
   }
   if (!S.rolling && !S.board.popup) setTimeout(rollDice, 260);
 }
 function useTool(i) {
   const p = cp(), c = (p.tools || [])[i], d = toolDef(c);
   if (!c || !d || S.board.phase !== "pre-roll") return;
+  if (c === "remote") {
+    if (p.type === "human") {
+      openPopup("toolDice", { toolIndex: i });
+      return;
+    }
+    const candidates = Array.from({ length: 6 }, (_, n) => {
+      const steps = n + 1,
+        tile = S.board.tiles[(p.pos + steps * (p.direction || 1) + S.board.tiles.length) % S.board.tiles.length];
+      let score = 0;
+      if (tile.type === "land" && tile.owner < 0) score += 8;
+      if (tile.type === "land" && tile.owner === p.id) score += 5;
+      if (["card", "coupon", "minigame"].includes(tile.type)) score += 4;
+      if (tile.type === "event") score += p.diff === "easy" ? 1 : -1;
+      if (tile.type === "land" && tile.owner >= 0 && tile.owner !== p.id) score -= 7;
+      if (npcAt(tile.index)) score += ["財神", "福神", "土地公", "天使"].includes(npcAt(tile.index).name) ? 5 : -5;
+      return { steps, score };
+    }).sort((a, b) => b.score - a.score || b.steps - a.steps);
+    p.tools.splice(i, 1);
+    S.forcedDice = candidates[0].steps;
+    addLog(`${p.id + 1}P 使用遙控骰子設定 ${S.forcedDice} 點`);
+    return;
+  }
   if (c === "roadblock") {
     const occupied = new Set([
       ...living().map((x) => x.pos),
@@ -1771,10 +1952,6 @@ function useCard(i) {
     c = p.cards[i],
     d = cardDef(c);
   if (!c || S.board.phase !== "pre-roll") return;
-  if (p.type === "human" && ["remote", "precision"].includes(c)) {
-    openPopup("cardDice", { cardIndex: i });
-    return;
-  }
   if (p.type === "human" && ["swap", "stop", "reverse", "snatch"].includes(c)) {
     if (c === "snatch" && !living().some((x) => x.id !== p.id && x.cards.length)) {
       openPopup("cards", { page: Math.floor(i / 8), error: "目前沒有持有卡片的對手可供搶奪。" });
@@ -1801,9 +1978,7 @@ function useCard(i) {
     return;
   }
   p.cards.splice(i, 1);
-  if (c === "precision") S.forcedDice = 6;
-  else if (c === "remote") S.forcedDice = 3;
-  else if (c === "shield") p.shield++;
+  if (c === "shield") p.shield++;
   else if (c === "discount") p.discount = 1;
   else if (c === "upgrade") return;
   else if (c === "buyland") {
@@ -1874,10 +2049,10 @@ function useCard(i) {
 function useChosenDice(n) {
   const p = cp(),
     q = S.board.popup,
-    i = q?.cardIndex;
-  if (S.board.phase !== "pre-roll" || q?.kind !== "cardDice" || !["remote", "precision"].includes(p.cards[i]))
+    i = q?.toolIndex;
+  if (S.board.phase !== "pre-roll" || q?.kind !== "toolDice" || p.tools[i] !== "remote")
     return;
-  p.cards.splice(i, 1);
+  p.tools.splice(i, 1);
   S.forcedDice = n;
   addLog(`${p.id + 1}P 將骰子設定為 ${n} 點`);
   S.board.popup = null;
@@ -1996,7 +2171,7 @@ function loadGame() {
       seenGods = new Set();
     S.board.npcs = S.board.gods
       ? S.board.npcs.filter((n) => {
-          if (!NPC_DEFS.some((d) => d.name === n.name) || attachedGods.has(n.name) || seenGods.has(n.name)) return false;
+          if (n.name === "死神" || !NPC_DEFS.some((d) => d.name === n.name) || attachedGods.has(n.name) || seenGods.has(n.name)) return false;
           seenGods.add(n.name);
           n.pos = ((Number(n.pos) || 0) + S.board.tiles.length) % S.board.tiles.length;
           n.dir = n.dir === -1 ? -1 : 1;
@@ -2357,6 +2532,11 @@ function action(id) {
     const p = cp(),
       t = S.board.popup.tile,
       cost = upgradeCost(t);
+    if ((p.effects || []).some((e) => e.kind === "死神")) {
+      addLog(`${p.id + 1}P 受死神影響，本回合無法加建`);
+      finishAction();
+      return;
+    }
     if (t.level === 4) {
       openPopup("specialBuild", { tile: t });
       return;
@@ -2438,6 +2618,56 @@ function action(id) {
       b.popup = null;
       return;
     }
+    if (id === "surrender") {
+      if (p.type === "human" && !p.bankrupt) openPopup("surrenderConfirm");
+      return;
+    }
+    if (id === "surrenderCancel") {
+      openPopup("pause");
+      return;
+    }
+    if (id === "surrenderConfirm") {
+      if (q?.kind !== "surrenderConfirm" || p.type !== "human") return;
+      surrenderPlayer(p);
+      if (living().length <= 1) {
+        finishGame(living()[0]);
+      } else {
+        openPopup("deathTarget", { surrenderedId: p.id });
+      }
+      return;
+    }
+    if (id.startsWith("deathTarget")) {
+      const target = living().find((player) => player.id === +id.slice(11));
+      if (q?.kind === "deathTarget" && target) summonDeathGod(target);
+      b.popup = null;
+      nextTurn();
+      return;
+    }
+    if (id === "deathSkip") {
+      if (q?.kind === "deathTarget") {
+        b.popup = null;
+        nextTurn();
+      }
+      return;
+    }
+    if (id.startsWith("facilityRelease")) {
+      if (q?.kind !== "facilityVisit" || p.type !== "human") return;
+      const target = b.players.find((player) => player.id === +id.slice(15));
+      if (target && target.detained?.facility === q.facility && releaseDetainedPlayer(p, target))
+        openPopup("event", { name: "協助完成", desc: `${target.id + 1}P 已立即離開${q.facility === "jail" ? "警察局" : "醫院"}。` });
+      return;
+    }
+    if (id.startsWith("facilityHelper")) {
+      if (q?.kind !== "facilityVisit" || p.type !== "human") return;
+      const helper = id.slice(14), desc = applyFacilityHelper(p, helper);
+      addLog(`${p.id + 1}P：${desc}`);
+      openPopup("event", { name: "特殊角色行動", desc });
+      return;
+    }
+    if (id === "facilityLeave") {
+      if (q?.kind === "facilityVisit") finishAction();
+      return;
+    }
     if (id === "saveHome") {
       saveGame();
       S.scene = "home";
@@ -2474,7 +2704,7 @@ function action(id) {
       openPopup("cards");
       return;
     }
-    if (id.startsWith("cardDice")) {
+    if (id.startsWith("toolDice")) {
       useChosenDice(+id.slice(8));
       return;
     }
@@ -2513,7 +2743,9 @@ function action(id) {
     if (id === "buy") {
       const t = q.tile,
         cost = buyCost(p, t);
-      if (p.cash >= cost) {
+      if ((p.effects || []).some((e) => e.kind === "死神")) {
+        addLog(`${p.id + 1}P 受死神影響，本回合無法購地`);
+      } else if (p.cash >= cost) {
         p.cash -= cost;
         if (p.discount) p.discount = 0;
         t.owner = p.id;
@@ -2525,7 +2757,9 @@ function action(id) {
     if (id === "upgrade") {
       const t = q.tile,
         cost = upgradeCost(t);
-      if (t.level < 4 && p.cash >= cost) {
+      if ((p.effects || []).some((e) => e.kind === "死神")) {
+        addLog(`${p.id + 1}P 受死神影響，本回合無法加建`);
+      } else if (t.level < 4 && p.cash >= cost) {
         p.cash -= cost;
         t.level++;
         markUpgrade(t);
@@ -2561,6 +2795,12 @@ function action(id) {
       return;
     }
     if (id === "eventOk" || id === "npcOk" || id === "cardOk") {
+      if (q?.resumeAiRoll) {
+        b.popup = null;
+        setTurnPhase("pre-roll");
+        setTimeout(rollDice, 260);
+        return;
+      }
       finishAction();
       return;
     }
