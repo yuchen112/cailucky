@@ -274,9 +274,12 @@ vm.runInContext(
   for(const required of ['bank','news','coupon','magic','hospital','police','shop','card','minigame'])if(!TYPE_PATTERN.includes(required))throw new Error('missing board facility '+required);
   for(const [key,route] of Object.entries(MAP_ROUTES)){
     const xs=route.map(p=>p[0]),ys=route.map(p=>p[1]);
-    if(route.length!==36||Math.max(...xs)-Math.min(...xs)<2200||Math.max(...ys)-Math.min(...ys)<1100)throw new Error(key+' route does not span its authored oval road');
-    if(route.some(([x,y])=>x<350||x>2850||y<275||y>1525))throw new Error(key+' route falls outside the visible road band');
+    if(route.length!==36||Math.max(...xs)-Math.min(...xs)<2150||Math.max(...ys)-Math.min(...ys)<1100)throw new Error(key+' route does not span its authored oval road');
+    if(route.some(([x,y])=>x<350||x>2850||y<270||y>1530))throw new Error(key+' route falls outside the visible road band');
   }
+  const routeFingerprints=Object.values(MAP_ROUTES).map(route=>route.map(p=>p.join(',')).join('|'));
+  if(new Set(routeFingerprints).size!==MAPS.length)throw new Error('maps must not share generated route coordinates');
+  for(const map of MAPS)if(!map.road||MAP_ROUTES[map.key][0][1]!==Math.round(map.road.cy+map.road.ry))throw new Error(map.key+' route is not derived from its own authored road geometry');
   S.mapIndex=0;makeBoard();S.scene='game';
   const roadsideLand=S.board.tiles.find(t=>t.type==='land'), roadsidePos=tileVisualPosition(roadsideLand);
   if(roadsidePos.x===roadsideLand.x&&roadsidePos.y===roadsideLand.y)throw new Error('land parcel still overlaps its road movement coordinate');

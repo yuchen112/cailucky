@@ -685,9 +685,9 @@ const GOD_TRANSFORMS = {
   天使: "惡魔", 惡魔: "天使", 土地公: "惡犬",
   財神: "窮神", 窮神: "財神", 福神: "衰神", 衰神: "福神",
 };
-function makeOvalRoute(cx = 1600, cy = 900, rx = 1180, ry = 620) {
+function makeMapRoute({ cx, cy, rx, ry, startAngle = Math.PI / 2 }) {
   return Array.from({ length: 36 }, (_, i) => {
-    const angle = Math.PI / 2 + (i * Math.PI * 2) / 36;
+    const angle = startAngle + (i * Math.PI * 2) / 36;
     return [
       Math.round(cx + Math.cos(angle) * rx),
       Math.round(cy + Math.sin(angle) * ry),
@@ -695,7 +695,7 @@ function makeOvalRoute(cx = 1600, cy = 900, rx = 1180, ry = 620) {
   });
 }
 const MAP_ROUTES = Object.fromEntries(
-  MAPS.map((map) => [map.key, makeOvalRoute()]),
+  MAPS.map((map) => [map.key, makeMapRoute(map.road)]),
 );
 const ROUTE = new Proxy([], {
   get(_, prop) {

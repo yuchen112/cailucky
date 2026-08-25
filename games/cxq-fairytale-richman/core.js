@@ -133,6 +133,7 @@ const MAPS = [
     priceRate: 1,
     rentRate: 1,
     eventRate: 1,
+    road: { cx: 1600, cy: 900, rx: 1190, ry: 620, startAngle: Math.PI / 2 },
   },
   {
     key: "moonharbor",
@@ -144,6 +145,7 @@ const MAPS = [
     priceRate: 1.08,
     rentRate: 1.15,
     eventRate: 1.2,
+    road: { cx: 1600, cy: 860, rx: 1100, ry: 580, startAngle: Math.PI / 2 },
   },
   {
     key: "cloudbazaar",
@@ -155,6 +157,7 @@ const MAPS = [
     priceRate: 1.18,
     rentRate: 1.28,
     eventRate: 1.45,
+    road: { cx: 1600, cy: 850, rx: 1120, ry: 570, startAngle: Math.PI / 2 },
   },
 ];
 const SAVE = "cxq_richman_latest_save_v4",
