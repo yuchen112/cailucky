@@ -273,6 +273,8 @@ load("miniTreasure", A + "minigames/treasure_timing_v1.webp");
   "swap",
   "stop",
 ].forEach((k) => load("card_" + k, A + "cards/" + k + "_v1.webp"));
+load("card_hospital_pass", A + "cards/hospital_pass_v1.png");
+load("card_bail", A + "cards/bail_v1.png");
 load("tool_speed", A + "tools/motorcycle_v1.webp");
 load("tool_car", A + "tools/car_v1.webp");
 load("tool_roadblock", A + "tools/roadblock_v1.webp");

@@ -306,6 +306,8 @@ vm.runInContext(
   if(purchaseTarget.owner!==cardP.id||cardP.cards.length)throw new Error('land-purchase target flow failed');
   purchaseTarget.level=0;cardP.cards=['upgrade'];useCard(0);action('cardTile'+purchaseTarget.index);if(purchaseTarget.level!==1||cardP.cards.length)throw new Error('free-upgrade card flow failed');
   cardP.cards=['discount','rent'];useCard(0);useCard(0);if(cardP.discount!==1||cardP.rentBoost!==1||cardP.cards.length)throw new Error('property effect-card flow failed');
+  cardP.cards=['hospitalpass'];useCard(0);admitPlayer(cardP,'hospital',2,'test');if(cardP.detained||cardP.hospitalPass!==0)throw new Error('hospital pass did not prevent admission');S.board.popup=null;
+  cardP.cards=['bail'];useCard(0);admitPlayer(cardP,'jail',2,'test');if(cardP.detained||cardP.bailPass!==0)throw new Error('bail card did not prevent detention');S.board.popup=null;
   const testP=cp(); testP.tools=['speed'];S.board.phase='pre-roll';useTool(0);
   if(testP.diceCount!==2||testP.vehicleTurns!==5)throw new Error('vehicle card did not enable multi-dice turns');
   testP.tools=['car'];S.board.phase='pre-roll';useTool(0);

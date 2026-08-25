@@ -60,6 +60,10 @@ const EVENTS = [
   ],
   ["土地維護", "支付 $2,500", (p) => (p.cash -= 2500)],
   ["精靈加護", "免費升級一塊自己的土地", (p) => upgradeRandomLand(p)],
+  ["意外受傷", "送往童話醫院休養 2 回合", (p) => admitPlayer(p, "hospital", 2, "意外受傷，住院 2 回合。")],
+  ["王國稽查", "送往童話警察局拘留 2 回合", (p) => admitPlayer(p, "jail", 2, "接受王國調查，拘留 2 回合。")],
+  ["康復祝福", "立即解除住院狀態", (p) => { if (p.detained?.facility === "hospital") { p.detained = null; p.skip = 0; } }],
+  ["無罪證明", "立即解除拘留狀態", (p) => { if (p.detained?.facility === "jail") { p.detained = null; p.skip = 0; } }],
 ];
 const CARD_DEFS = [
   {
@@ -168,6 +172,22 @@ const CARD_DEFS = [
     desc: "裝備後 5 回合使用三顆骰子",
     timing: "turn",
     kind: "tool",
+  },
+  {
+    id: "hospitalpass",
+    name: "醫院通行證",
+    cost: 30,
+    cover: "hospital_pass",
+    desc: "解除住院，或抵銷下一次住院",
+    timing: "turn",
+  },
+  {
+    id: "bail",
+    name: "保釋卡",
+    cost: 35,
+    cover: "bail",
+    desc: "解除拘留，或抵銷下一次拘留",
+    timing: "turn",
   },
   {
     id: "bomb",
@@ -1035,6 +1055,8 @@ function makeBoard() {
     vehicleTurns: 0,
     direction: 1,
     detained: null,
+    hospitalPass: 0,
+    bailPass: 0,
   }));
   S.board = {
     worldW: MW,
@@ -1199,6 +1221,13 @@ function applySpecial(t, p) {
   }
 }
 function admitPlayer(p, facility, turns, reason) {
+  const passKey = facility === "jail" ? "bailPass" : "hospitalPass";
+  if (p[passKey] > 0) {
+    p[passKey]--;
+    openPopup("event", { name: "通行證生效", desc: `${p.id + 1}P 抵銷了本次${facility === "jail" ? "拘留" : "住院"}。`, aiDecision: p.type === "ai" });
+    addLog(`${p.id + 1}P 使用通行證免除${facility === "jail" ? "拘留" : "住院"}`);
+    return;
+  }
   p.detained = { facility, turns };
   p.skip = Math.max(p.skip || 0, turns);
   const name = facility === "jail" ? "童話警察局" : "童話醫院";
@@ -1638,6 +1667,13 @@ function useCard(i) {
       markUpgrade(t);
     }
   } else if (c === "rent") p.rentBoost = 1;
+  else if (c === "hospitalpass") {
+    if (p.detained?.facility === "hospital") { p.detained = null; p.skip = 0; }
+    else p.hospitalPass = 1;
+  } else if (c === "bail") {
+    if (p.detained?.facility === "jail") { p.detained = null; p.skip = 0; }
+    else p.bailPass = 1;
+  }
   else if (c === "swap") {
     const o = living()
       .filter((x) => x.id !== p.id)
@@ -1779,6 +1815,8 @@ function loadGame() {
       p.bombSteps = p.bombSteps || 0;
       p.direction = p.direction || 1;
       p.detained = p.detained || null;
+      p.hospitalPass = p.hospitalPass || 0;
+      p.bailPass = p.bailPass || 0;
     });
     const attachedGods = new Set(S.board.players.flatMap((p) => p.effects.filter(isGodEffect).map((e) => e.kind))),
       seenGods = new Set();
