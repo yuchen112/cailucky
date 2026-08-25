@@ -257,7 +257,7 @@ for (const [w, h] of [
 vm.runInContext(
   `
   if(new Set(CARD_DEFS.map(c=>c.cover)).size!==CARD_DEFS.length)throw new Error('card covers are not unique');
-  if(new Set(EVENTS.slice(0,16).map(e=>e[3])).size!==16||EVENTS.slice(0,16).some(e=>!IM['event_'+e[3]]?.complete))throw new Error('dedicated event art is not wired for the completed event set');
+  if(new Set(EVENTS.slice(0,20).map(e=>e[3])).size!==20||EVENTS.slice(0,20).some(e=>!IM['event_'+e[3]]?.complete))throw new Error('dedicated event art is not wired for the completed event set');
   if(IM.homeBg.fetchPriority!=='high'||IM.homeMenuNew.fetchPriority!=='high')throw new Error('home-critical art is not prioritized');
   if(!IM.actionConsole?.complete)throw new Error('image-backed action console missing');
   if(!IM.tile_land?._src?.includes('land_parcel_v1.webp'))throw new Error('roadside land parcel art is not active');

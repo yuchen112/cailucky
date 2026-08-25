@@ -32,18 +32,20 @@ const EVENTS = [
     },
     "magicMalfunction",
   ],
-  ["月光紅利", "獲得 $5,500", (p) => cashGain(p, 5500)],
+  ["月光紅利", "獲得 $5,500", (p) => cashGain(p, 5500), "moonlightDividend"],
   [
     "森林迷霧",
     "後退 2 格",
     (p) => (p.pos = (p.pos - 2 + S.board.tiles.length) % S.board.tiles.length),
+    "forestMist",
   ],
   [
     "雲端順風",
     "前進 2 格",
     (p) => (p.pos = (p.pos + 2) % S.board.tiles.length),
+    "cloudTailwind",
   ],
-  ["商會回饋", "獲得 $4,000", (p) => cashGain(p, 4000)],
+  ["商會回饋", "獲得 $4,000", (p) => cashGain(p, 4000), "merchantGuildReward"],
   [
     "卡片遺失",
     "隨機失去一張卡",
