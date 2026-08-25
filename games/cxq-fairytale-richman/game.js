@@ -66,10 +66,10 @@ const EVENTS = [
   ],
   ["土地維護", "支付 $2,500", (p) => (p.cash -= 2500), "landMaintenance"],
   ["精靈加護", "免費升級一塊自己的土地", (p) => upgradeRandomLand(p), "fairyBlessing"],
-  ["意外受傷", "送往童話醫院休養 2 回合", (p) => admitPlayer(p, "hospital", 2, "意外受傷，住院 2 回合。")],
-  ["王國稽查", "送往童話警察局拘留 2 回合", (p) => admitPlayer(p, "jail", 2, "接受王國調查，拘留 2 回合。")],
-  ["康復祝福", "立即解除住院狀態", (p) => { if (p.detained?.facility === "hospital") { p.detained = null; p.skip = 0; } }],
-  ["無罪證明", "立即解除拘留狀態", (p) => { if (p.detained?.facility === "jail") { p.detained = null; p.skip = 0; } }],
+  ["意外受傷", "送往童話醫院休養 2 回合", (p) => admitPlayer(p, "hospital", 2, "意外受傷，住院 2 回合。"), "accidentalInjury"],
+  ["王國稽查", "送往童話警察局拘留 2 回合", (p) => admitPlayer(p, "jail", 2, "接受王國調查，拘留 2 回合。"), "royalInspection"],
+  ["康復祝福", "立即解除住院狀態", (p) => { if (p.detained?.facility === "hospital") { p.detained = null; p.skip = 0; } }, "recoveryBlessing"],
+  ["無罪證明", "立即解除拘留狀態", (p) => { if (p.detained?.facility === "jail") { p.detained = null; p.skip = 0; } }, "proofOfInnocence"],
 ];
 const CARD_DEFS = [
   {

@@ -27,6 +27,7 @@ const PRECACHE=[
   './assets/events/road_construction_v1.png','./assets/events/kingdom_subsidy_v1.png','./assets/events/lost_and_found_v1.png','./assets/events/magic_malfunction_v1.png',
   './assets/events/moonlight_dividend_v1.png','./assets/events/forest_mist_v1.png','./assets/events/cloud_tailwind_v1.png','./assets/events/merchant_guild_reward_v1.png',
   './assets/events/lost_card_v1.png','./assets/events/lucky_day_v1.png','./assets/events/land_maintenance_v1.png','./assets/events/fairy_blessing_v1.png',
+  './assets/events/accidental_injury_v1.png','./assets/events/royal_inspection_v1.png','./assets/events/recovery_blessing_v1.png','./assets/events/proof_of_innocence_v1.png',
   './assets/minigames/star_catch_v1.webp','./assets/minigames/balloon_pop_v1.webp','./assets/minigames/treasure_timing_v1.webp',
   './assets/cards/precision_dice_v1.webp','./assets/cards/remote_dice_v1.webp','./assets/cards/shield_v1.webp','./assets/cards/teleport_v1.webp','./assets/cards/land_purchase_v1.webp','./assets/cards/free_upgrade_v1.webp','./assets/cards/discount_v1.webp','./assets/cards/rent_v1.webp','./assets/cards/swap_v1.webp','./assets/cards/stop_v1.webp','./assets/cards/hospital_pass_v1.png','./assets/cards/bail_v1.png',
   './assets/facilities/bank_token_v2.webp','./assets/facilities/news_token_v2.webp','./assets/facilities/coupon_token_v2.webp','./assets/facilities/magic_token_v2.webp','./assets/facilities/hospital_token_v2.webp','./assets/facilities/police_token_v1.png','./assets/facilities/start_token_v2.webp',
