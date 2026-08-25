@@ -8,9 +8,9 @@ const EVENTS = [
   ["市場熱潮", "獲得 $5,000", (p) => cashGain(p, 5000), "marketBoom"],
   ["惡作劇", "損失 $2,000", (p) => (p.cash -= 2000), "mischief"],
   ["旅人委託", "獲得 2 點券", (p) => (p.tickets += 2), "travelerQuest"],
-  ["守護祝福", "得到一次護盾", (p) => (p.shield += 1)],
-  ["稅務日", "支付資產稅 $4,000", (p) => (p.cash -= 4000)],
-  ["星光雨", "獲得 $7,000", (p) => cashGain(p, 7000)],
+  ["守護祝福", "得到一次護盾", (p) => (p.shield += 1), "guardianBlessing"],
+  ["稅務日", "支付資產稅 $4,000", (p) => (p.cash -= 4000), "taxDay"],
+  ["星光雨", "獲得 $7,000", (p) => cashGain(p, 7000), "starlightRain"],
   [
     "交換市集",
     "免費抽兩張卡",
@@ -18,6 +18,7 @@ const EVENTS = [
       drawCard(p);
       drawCard(p);
     },
+    "exchangeMarket",
   ],
   ["道路施工", "下一回合骰子最多 3 點", (p) => (p.slow = 1)],
   ["王國補助", "獲得 $3,000", (p) => cashGain(p, 3000)],
