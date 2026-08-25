@@ -1238,9 +1238,23 @@ function applySpecial(t, p) {
       desc: o ? `與 ${o.id + 1}P 交換位置。` : "魔法暫時沉睡。",
     });
   } else if (t.type === "hospital") {
-    admitPlayer(p, "hospital", 2, "接受照護，住院 2 回合。");
+    openPopup("event", {
+      name: "童話醫院",
+      desc: p.detained?.facility === "hospital"
+        ? `正在住院休養，尚需停留 ${p.detained.turns} 回合。`
+        : "平安經過醫院，本回合不會因此住院。",
+      facility: "hospital",
+    });
+    addLog(`${p.id + 1}P 抵達童話醫院`);
   } else if (t.type === "police") {
-    admitPlayer(p, "jail", 2, "接受調查，拘留 2 回合。");
+    openPopup("event", {
+      name: "童話警察局",
+      desc: p.detained?.facility === "jail"
+        ? `正在接受調查，尚需停留 ${p.detained.turns} 回合。`
+        : "完成例行問候，本回合不會因此遭到拘留。",
+      facility: "jail",
+    });
+    addLog(`${p.id + 1}P 抵達童話警察局`);
   } else if (t.type === "minigame") {
     if (p.type === "ai") {
       p.tickets += 2;
@@ -1272,6 +1286,12 @@ function admitPlayer(p, facility, turns, reason) {
   }
   p.detained = { facility, turns };
   p.skip = Math.max(p.skip || 0, turns);
+  const facilityType = facility === "jail" ? "police" : "hospital",
+    facilityTile = S.board.tiles.find((tile) => tile.type === facilityType);
+  if (facilityTile) {
+    p.pos = facilityTile.index;
+    focus();
+  }
   const name = facility === "jail" ? "童話警察局" : "童話醫院";
   openPopup("event", { name, desc: reason, facility, aiDecision: p.type === "ai" });
   addLog(`${p.id + 1}P 前往${name}，停留 ${turns} 回合`);
@@ -1431,6 +1451,8 @@ function moveToTile(next) {
   if (p.bombSteps > 0 && --p.bombSteps === 0) {
     p.detained = { facility: "hospital", turns: 3 };
     p.skip += 3;
+    const hospital = b.tiles.find((tile) => tile.type === "hospital");
+    if (hospital) p.pos = hospital.index;
     move.remaining = 0;
     addLog(`${p.id + 1}P 的定時炸彈爆炸，將住院休息 3 回合`);
     sfx("loss");
