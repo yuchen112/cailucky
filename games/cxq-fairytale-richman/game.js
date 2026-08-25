@@ -30,6 +30,7 @@ const EVENTS = [
       if (p.cards.length)
         p.cards.splice(Math.floor(Math.random() * p.cards.length), 1);
     },
+    "lostCard",
     "magicMalfunction",
   ],
   ["月光紅利", "獲得 $5,500", (p) => cashGain(p, 5500), "moonlightDividend"],
@@ -61,9 +62,10 @@ const EVENTS = [
       p.shield++;
       p.tickets++;
     },
+    "luckyDay",
   ],
-  ["土地維護", "支付 $2,500", (p) => (p.cash -= 2500)],
-  ["精靈加護", "免費升級一塊自己的土地", (p) => upgradeRandomLand(p)],
+  ["土地維護", "支付 $2,500", (p) => (p.cash -= 2500), "landMaintenance"],
+  ["精靈加護", "免費升級一塊自己的土地", (p) => upgradeRandomLand(p), "fairyBlessing"],
   ["意外受傷", "送往童話醫院休養 2 回合", (p) => admitPlayer(p, "hospital", 2, "意外受傷，住院 2 回合。")],
   ["王國稽查", "送往童話警察局拘留 2 回合", (p) => admitPlayer(p, "jail", 2, "接受王國調查，拘留 2 回合。")],
   ["康復祝福", "立即解除住院狀態", (p) => { if (p.detained?.facility === "hospital") { p.detained = null; p.skip = 0; } }],
