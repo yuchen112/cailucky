@@ -33,8 +33,21 @@ for (const file of projectAssets) {
   if (!swContext.precache.includes(cachePath))
     throw new Error(`unused or uncached project asset remains: ${cachePath}`);
 }
-if (!swContext.cacheName.includes("20260825-2359"))
+const expectedRevision = "20260825-2010";
+if (!swContext.cacheName.includes(expectedRevision))
   throw new Error("service worker cache revision is stale");
+const htmlSource = fs.readFileSync(path.join(root, "index.html"), "utf8"),
+  coreSource = fs.readFileSync(path.join(root, "core.js"), "utf8"),
+  versionSource = fs.readFileSync(path.join(root, "version.txt"), "utf8");
+for (const asset of ["manifest.webmanifest", "core.js", "viewport.js", "game.js", "sw.js"])
+  if (!htmlSource.includes(`${asset}?v=${expectedRevision}`))
+    throw new Error(`entry version mismatch: ${asset}`);
+if (!coreSource.includes(`const ASSET_REV = "${expectedRevision}"`))
+  throw new Error("runtime asset revision is stale");
+if (!versionSource.includes(expectedRevision))
+  throw new Error("version file is stale");
+if (!fs.readFileSync(path.join(root, "sw.js"), "utf8").includes("ignoreSearch:true"))
+  throw new Error("versioned asset requests have no offline precache fallback");
 const manifest = JSON.parse(
   fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"),
 );
