@@ -24,6 +24,7 @@ const PRECACHE=[
   './assets/events/kingdom_festival_v1.png','./assets/events/emergency_repairs_v1.png','./assets/events/fairy_gift_v1.png','./assets/events/lucky_fountain_v1.png',
   './assets/events/lost_in_maze_v1.png','./assets/events/market_boom_v1.png','./assets/events/mischief_v1.png','./assets/events/traveler_quest_v1.png',
   './assets/events/guardian_blessing_v1.png','./assets/events/tax_day_v1.png','./assets/events/starlight_rain_v1.png','./assets/events/exchange_market_v1.png',
+  './assets/events/road_construction_v1.png','./assets/events/kingdom_subsidy_v1.png','./assets/events/lost_and_found_v1.png','./assets/events/magic_malfunction_v1.png',
   './assets/minigames/star_catch_v1.webp','./assets/minigames/balloon_pop_v1.webp','./assets/minigames/treasure_timing_v1.webp',
   './assets/cards/precision_dice_v1.webp','./assets/cards/remote_dice_v1.webp','./assets/cards/shield_v1.webp','./assets/cards/teleport_v1.webp','./assets/cards/land_purchase_v1.webp','./assets/cards/free_upgrade_v1.webp','./assets/cards/discount_v1.webp','./assets/cards/rent_v1.webp','./assets/cards/swap_v1.webp','./assets/cards/stop_v1.webp','./assets/cards/hospital_pass_v1.png','./assets/cards/bail_v1.png',
   './assets/facilities/bank_token_v2.webp','./assets/facilities/news_token_v2.webp','./assets/facilities/coupon_token_v2.webp','./assets/facilities/magic_token_v2.webp','./assets/facilities/hospital_token_v2.webp','./assets/facilities/police_token_v1.png','./assets/facilities/start_token_v2.webp',

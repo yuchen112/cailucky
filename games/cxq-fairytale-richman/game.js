@@ -20,9 +20,9 @@ const EVENTS = [
     },
     "exchangeMarket",
   ],
-  ["道路施工", "下一回合骰子最多 3 點", (p) => (p.slow = 1)],
-  ["王國補助", "獲得 $3,000", (p) => cashGain(p, 3000)],
-  ["失物招領", "獲得 $2,500", (p) => cashGain(p, 2500)],
+  ["道路施工", "下一回合骰子最多 3 點", (p) => (p.slow = 1), "roadConstruction"],
+  ["王國補助", "獲得 $3,000", (p) => cashGain(p, 3000), "kingdomSubsidy"],
+  ["失物招領", "獲得 $2,500", (p) => cashGain(p, 2500), "lostAndFound"],
   [
     "魔法失控",
     "隨機損失一張卡",
@@ -30,6 +30,7 @@ const EVENTS = [
       if (p.cards.length)
         p.cards.splice(Math.floor(Math.random() * p.cards.length), 1);
     },
+    "magicMalfunction",
   ],
   ["月光紅利", "獲得 $5,500", (p) => cashGain(p, 5500)],
   [
