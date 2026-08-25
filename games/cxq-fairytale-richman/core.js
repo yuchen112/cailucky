@@ -258,6 +258,10 @@ for (let i = 1; i <= 6; i++)
 MAPS.forEach((m, i) =>
   load("eventScene" + i, A + `events/${m.key}_event_v1.webp`),
 );
+load("event_kingdomFestival", A + "events/kingdom_festival_v1.png");
+load("event_emergencyRepairs", A + "events/emergency_repairs_v1.png");
+load("event_fairyGift", A + "events/fairy_gift_v1.png");
+load("event_luckyFountain", A + "events/lucky_fountain_v1.png");
 load("miniStar", A + "minigames/star_catch_v1.webp");
 load("miniBalloon", A + "minigames/balloon_pop_v1.webp");
 load("miniTreasure", A + "minigames/treasure_timing_v1.webp");
@@ -1918,7 +1922,7 @@ function scenePopup(q, b, p) {
     X.beginPath();
     X.roundRect(493, 155, 614, 330, 22);
     X.clip();
-    cover(IM["eventScene" + (b.mapIndex || 0)], 493, 155, 614, 330, 1);
+    cover((q.art && IM["event_" + q.art]) || IM["eventScene" + (b.mapIndex || 0)], 493, 155, 614, 330, 1);
     X.fillStyle = "rgba(5,10,30,.2)";
     X.fillRect(493, 155, 614, 330);
     X.restore();

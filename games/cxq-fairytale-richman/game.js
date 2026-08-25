@@ -1,9 +1,9 @@
 "use strict";
 const EVENTS = [
-  ["王國節慶", "獲得 $6,000", (p) => cashGain(p, 6000)],
-  ["突發修繕", "支付 $3,500", (p) => (p.cash -= 3500)],
-  ["精靈贈禮", "獲得一張卡片", (p) => drawCard(p)],
-  ["幸運噴泉", "獲得 $4,500", (p) => cashGain(p, 4500)],
+  ["王國節慶", "獲得 $6,000", (p) => cashGain(p, 6000), "kingdomFestival"],
+  ["突發修繕", "支付 $3,500", (p) => (p.cash -= 3500), "emergencyRepairs"],
+  ["精靈贈禮", "獲得一張卡片", (p) => drawCard(p), "fairyGift"],
+  ["幸運噴泉", "獲得 $4,500", (p) => cashGain(p, 4500), "luckyFountain"],
   ["迷路", "下一回合暫停一次", (p) => (p.skip += 1)],
   ["市場熱潮", "獲得 $5,000", (p) => cashGain(p, 5000)],
   ["惡作劇", "損失 $2,000", (p) => (p.cash -= 2000)],
@@ -1154,6 +1154,7 @@ function applySpecial(t, p) {
     openPopup("event", {
       name: (t.type === "news" ? "王國新聞｜" : "命運事件｜") + e[0],
       desc: e[1],
+      art: e[3] || null,
     });
     addLog(`${p.id + 1}P：${e[0]}・${e[1]}`);
   } else if (t.type === "card") {
