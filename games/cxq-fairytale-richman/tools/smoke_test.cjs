@@ -33,7 +33,7 @@ for (const file of projectAssets) {
   if (!swContext.precache.includes(cachePath))
     throw new Error(`unused or uncached project asset remains: ${cachePath}`);
 }
-const expectedRevision = "20260825-2010";
+const expectedRevision = "20260825-2015";
 if (!swContext.cacheName.includes(expectedRevision))
   throw new Error("service worker cache revision is stale");
 const htmlSource = fs.readFileSync(path.join(root, "index.html"), "utf8"),
@@ -44,6 +44,8 @@ for (const asset of ["manifest.webmanifest", "core.js", "viewport.js", "game.js"
     throw new Error(`entry version mismatch: ${asset}`);
 if (!coreSource.includes(`const ASSET_REV = "${expectedRevision}"`))
   throw new Error("runtime asset revision is stale");
+if (coreSource.includes("function resize()"))
+  throw new Error("legacy viewport scaler still competes with viewport.js");
 if (!versionSource.includes(expectedRevision))
   throw new Error("version file is stale");
 if (!fs.readFileSync(path.join(root, "sw.js"), "utf8").includes("ignoreSearch:true"))

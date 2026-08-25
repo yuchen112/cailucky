@@ -210,7 +210,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260825-2010";
+const ASSET_REV = "20260825-2015";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -352,26 +352,6 @@ load("buildingSpecialMall", A + "buildings/special_mall_v1.webp");
 load("buildingSpecialPark", A + "buildings/special_park_v1.webp");
 
 const VIEW = { scale: 1, ox: 0, oy: 0 };
-function resize() {
-  const d = Math.min(devicePixelRatio || 1, 2),
-    vw = window.visualViewport?.width || innerWidth,
-    vh = window.visualViewport?.height || innerHeight;
-  C.width = Math.max(1, Math.round(vw * d));
-  C.height = Math.max(1, Math.round(vh * d));
-  const sx = C.width / W,
-    sy = C.height / H;
-  VIEW.scale = Math.min(sx, sy);
-  VIEW.ox = (C.width - W * VIEW.scale) / 2;
-  VIEW.oy = 0;
-}
-addEventListener("resize", resize);
-addEventListener("orientationchange", () => {
-  resize();
-  setTimeout(resize, 180);
-  setTimeout(resize, 520);
-});
-if (window.visualViewport) visualViewport.addEventListener("resize", resize);
-resize();
 function sceneBackdrop() {
   if (S.scene === "home") return IM.homeBg;
   if (
