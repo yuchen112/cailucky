@@ -818,8 +818,28 @@ function addLog(s) {
   if (S.board.log.length > 8) S.board.log.shift();
   S.msg = s;
 }
+const TURN_PHASES = new Set([
+  "turn-start",
+  "pre-roll",
+  "rolling",
+  "moving",
+  "branch-choice",
+  "arrival",
+  "awaiting-confirmation",
+  "turn-end",
+]);
+function setTurnPhase(next) {
+  if (!S.board || !TURN_PHASES.has(next)) return false;
+  S.board.phase = next;
+  return true;
+}
 function openPopup(kind, data = {}) {
   S.board.popup = { kind, openedAt: performance.now(), ...data };
+  if (
+    S.board.phase === "arrival" ||
+    (S.board.phase === "turn-start" && data.detainedTurn)
+  )
+    setTurnPhase("awaiting-confirmation");
 }
 function typeName(t) {
   return (
@@ -1082,7 +1102,7 @@ function makeBoard() {
     players,
     turn: 0,
     round: 1,
-    phase: "turn-start",
+    phase: "pre-roll",
     cam: { x: 650, y: 900, target: null },
     popup: null,
     mini: null,
@@ -1129,7 +1149,7 @@ function resolveTile() {
     p = cp(),
     t = b.tiles[p.pos],
     n = npcAt(p.pos);
-  b.phase = "arrival";
+  setTurnPhase("arrival");
   if (n) {
     applyNPCByName(n.name, p);
     return;
@@ -1292,6 +1312,7 @@ function finishAction() {
       ownChange && (last.includes("購買") || last.includes("升到"));
   if (ownChange && last.includes("購買")) markUpgrade(q.tile);
   ensureSolvent(p);
+  setTurnPhase("turn-end");
   S.board.popup = null;
   S.board.mini = null;
   saveGame();
@@ -1343,7 +1364,7 @@ function nextTurn() {
   }
   const p = cp();
   b.turnBanner = { player: p.id, start: performance.now() };
-  b.phase = "turn-start";
+  setTurnPhase("turn-start");
   tickEffects(p);
   if (p.skip > 0) {
     p.skip--;
@@ -1367,7 +1388,7 @@ function nextTurn() {
     return;
   }
   focus();
-  b.phase = "pre-roll";
+  setTurnPhase("pre-roll");
   if (p.type === "ai") setTimeout(aiTurn, 700);
 }
 function branchAt(pos) {
@@ -1425,7 +1446,7 @@ function advanceMovement() {
   if (!move || move.remaining <= 0) { finishMovement(); return; }
   const choices = p.direction > 0 ? branchAt(p.pos) : null;
   if (choices && move.branchHandledAt !== p.pos) {
-    b.phase = "branch-choice";
+    setTurnPhase("branch-choice");
     if (p.type === "ai") {
       const destination = p.diff === "easy" ? choices[Math.floor(Math.random() * choices.length)] : choices[1];
       setTimeout(() => chooseBranch(destination), 300);
@@ -1438,15 +1459,21 @@ function advanceMovement() {
 function moveSteps(steps) {
   const b = S.board;
   S.rolling = true;
-  b.phase = "moving";
+  setTurnPhase("moving");
   b.pendingMove = { remaining: steps, branchHandledAt: -1 };
   advanceMovement();
 }
 function rollDice() {
-  if (S.rolling || !S.board || S.board.popup || S.board.winner) return;
+  if (
+    S.rolling ||
+    !S.board ||
+    S.board.popup ||
+    S.board.winner ||
+    S.board.phase !== "pre-roll"
+  ) return;
   const p = cp();
   S.board.turnBanner = null;
-  S.board.phase = "rolling";
+  setTurnPhase("rolling");
   S.rolling = true;
   const previewCount = S.forcedDice
     ? 1
@@ -1583,7 +1610,7 @@ function aiResolve() {
 }
 function aiTurn() {
   const p = cp();
-  if (!p || p.type !== "ai" || S.board.popup || S.board.winner) return;
+  if (!p || p.type !== "ai" || S.board.popup || S.board.winner || S.board.phase !== "pre-roll") return;
   const smart = p.diff === "smart",
     easy = p.diff === "easy",
     chance = easy ? 0.25 : smart ? 0.9 : 0.58;
@@ -1800,7 +1827,7 @@ function loadGame() {
     S.board.mini = null;
     S.board.selectedTile = null;
     S.board.npcs = S.board.npcs || [];
-    S.board.phase = "pre-roll";
+    setTurnPhase("pre-roll");
     S.board.roadblocks = S.board.roadblocks || [];
     S.board.shopStock = S.board.shopStock || [];
     S.board.toolStock = S.board.toolStock || [];
@@ -2270,7 +2297,7 @@ function action(id) {
       return;
     }
     if (id === "roll") {
-      rollDice();
+      if (p.type === "human" && b.phase === "pre-roll") rollDice();
       return;
     }
     if (id === "cards") {

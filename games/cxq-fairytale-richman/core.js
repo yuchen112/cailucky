@@ -1875,7 +1875,7 @@ function hud() {
     78,
     true,
     1,
-    !S.rolling && !b.popup && !b.winner,
+    !S.rolling && !b.popup && !b.winner && b.phase === "pre-roll" && p.type === "human",
   );
   btn(
     "cards",
@@ -1886,7 +1886,7 @@ function hud() {
     56,
     false,
     0.95,
-    !S.rolling && !b.popup && p.type === "human",
+    !S.rolling && !b.popup && b.phase === "pre-roll" && p.type === "human",
   );
   btn(
     "tools",
@@ -1897,7 +1897,7 @@ function hud() {
     56,
     false,
     0.95,
-    !S.rolling && !b.popup && p.type === "human",
+    !S.rolling && !b.popup && b.phase === "pre-roll" && p.type === "human",
   );
   if (S.msg)
     fitTxt(S.msg, 800, 850, 680, 16, "center", "#fff6d2", 800, true, 12);

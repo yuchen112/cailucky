@@ -258,6 +258,19 @@ vm.runInContext(
   `
   if(new Set(CARD_DEFS.map(c=>c.cover)).size!==CARD_DEFS.length)throw new Error('card covers are not unique');
   if(new Set(EVENTS.map(e=>e[3])).size!==EVENTS.length||EVENTS.some(e=>!e[3]||!IM['event_'+e[3]]?.complete))throw new Error('every event must have unique dedicated art');
+  if(!TURN_PHASES.has('awaiting-confirmation')||!TURN_PHASES.has('branch-choice'))throw new Error('turn state machine phases are incomplete');
+  S.scene='game';S.mapIndex=0;makeBoard();
+  if(S.board.phase!=='pre-roll')throw new Error('new match does not enter pre-roll state');
+  cp().type='ai';action('roll');
+  if(S.rolling||S.board.phase!=='pre-roll')throw new Error('human input rolled during an AI turn');
+  cp().type='human';setTurnPhase('awaiting-confirmation');rollDice();
+  if(S.rolling||S.board.phase!=='awaiting-confirmation')throw new Error('dice started outside pre-roll state');
+  S.board.popup=null;const phaseEvent=S.board.tiles.find(t=>t.type==='event');cp().pos=phaseEvent.index;resolveTile();
+  if(S.board.phase!=='awaiting-confirmation'||!S.board.popup)throw new Error('arrival result did not wait for player confirmation');
+  action('special');
+  if(S.board.phase!=='awaiting-confirmation'||S.board.popup?.kind!=='event')throw new Error('event result did not remain paused for acknowledgement');
+  action('eventOk');
+  if(S.board.popup||S.board.phase!=='pre-roll')throw new Error('confirmed result did not advance to the next pre-roll state: '+JSON.stringify({phase:S.board.phase,popup:S.board.popup,turn:S.board.turn,round:S.board.round}));
   if(IM.homeBg.fetchPriority!=='high'||IM.homeMenuNew.fetchPriority!=='high')throw new Error('home-critical art is not prioritized');
   if(!IM.actionConsole?.complete)throw new Error('image-backed action console missing');
   if(!IM.tile_land?._src?.includes('land_parcel_v1.webp'))throw new Error('roadside land parcel art is not active');
