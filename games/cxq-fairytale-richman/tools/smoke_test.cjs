@@ -33,7 +33,7 @@ for (const file of projectAssets) {
   if (!swContext.precache.includes(cachePath))
     throw new Error(`unused or uncached project asset remains: ${cachePath}`);
 }
-const expectedRevision = "20260825-2030";
+const expectedRevision = "20260825-2045";
 if (!swContext.cacheName.includes(expectedRevision))
   throw new Error("service worker cache revision is stale");
 const htmlSource = fs.readFileSync(path.join(root, "index.html"), "utf8"),
@@ -408,6 +408,13 @@ vm.runInContext(
   land.level=5;land.special='hotel';
   const hotelRent=rentEstimate(land,S.board.players[1]);land.special='park';
   if(hotelRent<=rentEstimate(land,S.board.players[1]))throw new Error('large-building rent identities are not distinct');
+  S.board.tiles.forEach(t=>{t.owner=-1;t.level=0;t.special=null});
+  land.owner=owner.id;land.level=5;land.special='hotel';owner.cash=-1;
+  ensureSolvent(owner);
+  if(land.level!==4||land.special!==null||owner.bankrupt)throw new Error('automatic house liquidation left an invalid large-building identity');
+  land.owner=owner.id;land.level=0;land.special='mall';owner.cash=-Math.max(land.price,1000000);
+  ensureSolvent(owner);
+  if(land.owner!==-1||land.level!==0||land.special!==null)throw new Error('land liquidation left stale owner/building state');
 `,
   context,
 );

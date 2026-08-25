@@ -843,7 +843,12 @@ function upgradeRandomLand(p) {
 }
 function downgradeRandomLand(p) {
   const a = S.board?.tiles.filter((t) => t.owner === p.id && t.level > 0) || [];
-  if (a.length) a[Math.floor(Math.random() * a.length)].level--;
+  if (a.length) {
+    const t = a[Math.floor(Math.random() * a.length)];
+    t.level--;
+    if (t.level < 5) t.special = null;
+    markUpgrade(t);
+  }
 }
 function drawCard(p) {
   if (p.cards.length < 15)
@@ -1002,6 +1007,7 @@ function applyGodArrival(t, p) {
   }
   if (effects.has("惡魔") && t.owner >= 0 && t.level > 0) {
     t.level--;
+    if (t.level < 5) t.special = null;
     markUpgrade(t);
     addLog(`惡魔拆除第 ${t.index + 1} 格一層建築`);
   }
@@ -1340,6 +1346,7 @@ function ensureSolvent(p) {
     while (t.level > 0 && p.cash < 0) {
       p.cash += Math.round(t.price * 0.32);
       t.level--;
+      if (t.level < 5) t.special = null;
       addLog(`${p.id + 1}P 變賣房屋籌措資金`);
     }
   }
@@ -1349,6 +1356,7 @@ function ensureSolvent(p) {
     p.cash += Math.round(t.price * 0.55);
     t.owner = -1;
     t.level = 0;
+    t.special = null;
     addLog(`${p.id + 1}P 出售土地籌措資金`);
   }
   if (p.cash < 0 && p.char === 9 && !p.hopeUsed) {
@@ -1363,6 +1371,7 @@ function ensureSolvent(p) {
       if (t.owner === p.id) {
         t.owner = -1;
         t.level = 0;
+        t.special = null;
       }
     });
     addLog(`${p.id + 1}P 破產退場！`);
