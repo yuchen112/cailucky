@@ -30,7 +30,6 @@ const EVENTS = [
       if (p.cards.length)
         p.cards.splice(Math.floor(Math.random() * p.cards.length), 1);
     },
-    "lostCard",
     "magicMalfunction",
   ],
   ["月光紅利", "獲得 $5,500", (p) => cashGain(p, 5500), "moonlightDividend"],
@@ -54,6 +53,7 @@ const EVENTS = [
       if (p.cards.length)
         p.cards.splice(Math.floor(Math.random() * p.cards.length), 1);
     },
+    "lostCard",
   ],
   [
     "幸運日",
