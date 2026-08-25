@@ -282,6 +282,7 @@ load("facilityNews", A + "facilities/news_token_v2.webp");
 load("facilityCoupon", A + "facilities/coupon_token_v2.webp");
 load("facilityMagic", A + "facilities/magic_token_v2.webp");
 load("facilityHospital", A + "facilities/hospital_token_v2.webp");
+load("facilityPolice", A + "facilities/police_token_v1.png");
 load("facilityStart", A + "facilities/start_token_v2.webp");
 load("npcWealth", A + "npc/wealth_v1.webp");
 load("npcFortune", A + "npc/fortune_v1.webp");
@@ -1241,6 +1242,7 @@ function facilityImage(type) {
     coupon: IM.facilityCoupon,
     magic: IM.facilityMagic,
     hospital: IM.facilityHospital,
+    police: IM.facilityPolice,
   }[type];
 }
 function npcImage(name) {
@@ -1319,6 +1321,31 @@ function drawTile(t) {
     shiftX = visual.x - t.x,
     shiftY = visual.y - t.y,
     tileSize = t.type === "land" ? 132 : 152;
+  // A land has two authored anchors: the road tile where the pawn stands and
+  // the roadside lot where its building grows. Draw their physical connection
+  // explicitly so plots never look like floating UI cards.
+  if (t.type === "land") {
+    X.save();
+    X.strokeStyle = "rgba(255,225,145,.55)";
+    X.lineWidth = 10;
+    X.lineCap = "round";
+    X.beginPath();
+    X.moveTo(t.x, t.y);
+    X.lineTo(visual.x, visual.y);
+    X.stroke();
+    X.strokeStyle = "rgba(69,45,32,.68)";
+    X.lineWidth = 3;
+    X.stroke();
+    contain(IM.tile_land, t.x - 58, t.y - 58, 116, 116, 1);
+    if (t.owner >= 0) {
+      X.strokeStyle = PLAYER_COLORS[t.owner];
+      X.lineWidth = 8;
+      X.beginPath();
+      X.arc(t.x, t.y, 58, 0, Math.PI * 2);
+      X.stroke();
+    }
+    X.restore();
+  }
   X.save();
   X.translate(shiftX, shiftY);
   if (t.type === "land" && t.owner >= 0) {

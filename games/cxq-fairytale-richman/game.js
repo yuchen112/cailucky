@@ -421,18 +421,22 @@ scenePopup = function (q, b, p) {
       900,
       true,
     );
+    const page = Math.max(0, Math.min(q.page || 0, Math.ceil(p.cards.length / 8) - 1)), start = page * 8;
+    txt(`第 ${page + 1}/${Math.max(1, Math.ceil(p.cards.length / 8))} 頁`, 1280, 145, 16, "center", "#d9efff", 900, true);
     p.cards
-      .slice(0, 10)
+      .slice(start, start + 8)
       .forEach((c, i) =>
         richCard(
           c,
-          245 + (i % 5) * 225,
-          175 + Math.floor(i / 5) * 270,
-          170,
-          245,
-          "useCard" + i,
+          270 + (i % 4) * 270,
+          180 + Math.floor(i / 4) * 270,
+          180,
+          235,
+          "useCard" + (start + i),
         ),
       );
+    if (page > 0) btn("cardsPrev", "上一頁", 400, 760, 210, 62, false);
+    if (start + 8 < p.cards.length) btn("cardsNext", "下一頁", 990, 760, 210, 62, false);
     btn("closeCards", "返回棋盤", 650, 760, 300, 65, true);
     return true;
   }
@@ -655,6 +659,10 @@ const NPC_DEFS = [
   { name: "乞丐", desc: "施捨 $1,000", apply: (p) => (p.cash -= 1000) },
   { name: "惡犬", desc: "休息 3 回合", apply: (p) => (p.skip += 3) },
 ];
+const GOD_TRANSFORMS = {
+  天使: "惡魔", 惡魔: "天使", 土地公: "惡犬",
+  財神: "窮神", 窮神: "財神", 福神: "衰神", 衰神: "福神",
+};
 function makeOvalRoute(cx = 1600, cy = 900, rx = 1180, ry = 620) {
   return Array.from({ length: 36 }, (_, i) => {
     const angle = Math.PI / 2 + (i * Math.PI * 2) / 36;
@@ -711,7 +719,7 @@ const TYPE_PATTERN = [
   "magic",
   "land",
   "event",
-  "land",
+  "police",
   "hospital",
   "land",
   "coupon",
@@ -758,8 +766,9 @@ function tickEffects(p) {
     .map((e) => ({ ...e, turns: e.turns - 1 }))
     .filter((e) => e.turns > 0);
   for (const e of expired) {
-    releaseGod(e.kind, p.pos);
-    addLog(`${e.kind}離開 ${p.id + 1}P，重新回到地圖巡遊`);
+    const replacement = GOD_TRANSFORMS[e.kind] || e.kind;
+    releaseGod(replacement, p.pos);
+    addLog(`${e.kind}離開 ${p.id + 1}P，${replacement}回到道路巡遊`);
   }
   if (S.board?.gods) spawnNPCs(3);
 }
@@ -1008,6 +1017,7 @@ function makeBoard() {
     diceCount: 1,
     vehicleTurns: 0,
     direction: 1,
+    detained: null,
   }));
   S.board = {
     worldW: MW,
@@ -1077,7 +1087,6 @@ function resolveTile() {
   b.phase = "arrival";
   if (n) {
     applyNPCByName(n.name, p);
-    if (p.type === "ai") setTimeout(aiResolve, 420);
     return;
   }
   if (t.type === "start") {
@@ -1089,19 +1098,14 @@ function resolveTile() {
       p.cash -= amount;
       p.bank = (p.bank || 0) + amount;
       addLog(`${p.id + 1}P 在銀行存入 $${amount.toLocaleString()}`);
-      finishAction();
+      openPopup("event", { name: "童話銀行", desc: `${p.id + 1}P 存入 $${amount.toLocaleString()}。`, aiDecision: true });
       return;
     }
     applySpecial(t, p);
-    if (t.type === "minigame") {
-      finishAction();
-      return;
-    }
-    setTimeout(aiResolve, 420);
     return;
   }
   openPopup("tile", { tile: t });
-  if (p.type === "ai") setTimeout(aiResolve, 420);
+  if (p.type === "ai") aiResolve();
 }
 function applySpecial(t, p) {
   if (t.type === "event" || t.type === "news") {
@@ -1152,13 +1156,15 @@ function applySpecial(t, p) {
       desc: o ? `與 ${o.id + 1}P 交換位置。` : "魔法暫時沉睡。",
     });
   } else if (t.type === "hospital") {
-    p.skip += 1;
-    openPopup("event", { name: "童話醫院", desc: "接受照護，下一回合休息。" });
+    admitPlayer(p, "hospital", 2, "接受照護，住院 2 回合。");
+  } else if (t.type === "police") {
+    admitPlayer(p, "jail", 2, "接受調查，拘留 2 回合。");
   } else if (t.type === "minigame") {
     if (p.type === "ai") {
       p.tickets += 2;
       cashGain(p, p.char === 7 ? 3200 : 2500);
       addLog(`${p.id + 1}P 完成小遊戲，獲得獎勵`);
+      openPopup("event", { name: "AI 小遊戲結果", desc: "獲得獎金與 2 點券。", aiDecision: true });
     } else {
       const kind = Math.floor(Math.random() * 3),
         names = ["星光接接樂", "月港氣球祭", "雲端寶箱"];
@@ -1173,6 +1179,13 @@ function applySpecial(t, p) {
       openPopup("mini", { name: S.board.mini.name });
     }
   }
+}
+function admitPlayer(p, facility, turns, reason) {
+  p.detained = { facility, turns };
+  p.skip = Math.max(p.skip || 0, turns);
+  const name = facility === "jail" ? "童話警察局" : "童話醫院";
+  openPopup("event", { name, desc: reason, facility, aiDecision: p.type === "ai" });
+  addLog(`${p.id + 1}P 前往${name}，停留 ${turns} 回合`);
 }
 function ensureSolvent(p) {
   if (p.cash >= 0) return;
@@ -1280,8 +1293,12 @@ function nextTurn() {
   tickEffects(p);
   if (p.skip > 0) {
     p.skip--;
-    addLog(`${p.id + 1}P 本回合暫停`);
-    setTimeout(nextTurn, 650);
+    if (p.detained) {
+      p.detained.turns = Math.max(0, p.detained.turns - 1);
+      const place = p.detained.facility === "jail" ? "警察局" : "醫院";
+      openPopup("event", { name: `${place}停留`, desc: `${p.id + 1}P 尚需停留 ${p.detained.turns} 回合。`, detainedTurn: true });
+      if (!p.detained.turns) p.detained = null;
+    } else openPopup("event", { name: "暫停回合", desc: `${p.id + 1}P 本回合無法行動。`, detainedTurn: true });
     return;
   }
   focus();
@@ -1307,6 +1324,7 @@ function moveToTile(next) {
   p.moveAnim = { from: { x: from.x, y: from.y }, to: { x: to.x, y: to.y }, start: performance.now(), dur };
   move.remaining--;
   if (p.bombSteps > 0 && --p.bombSteps === 0) {
+    p.detained = { facility: "hospital", turns: 3 };
     p.skip += 3;
     move.remaining = 0;
     addLog(`${p.id + 1}P 的定時炸彈爆炸，將住院休息 3 回合`);
@@ -1428,7 +1446,7 @@ function aiResolve() {
           t.owner = p.id;
           addLog(`${p.id + 1}P 購買 ${REGION_NAMES[t.region]} 土地`);
         }
-        finishAction();
+        openPopup("event", { name: "AI 購地決策", desc: t.owner === p.id ? `${p.id + 1}P 購買了這塊土地。` : `${p.id + 1}P 決定保留資金。`, aiDecision: true });
         return;
       }
       if (t.owner === p.id) {
@@ -1444,7 +1462,7 @@ function aiResolve() {
           markUpgrade(t);
           addLog(`${p.id + 1}P 將土地升到 Lv${t.level}`);
         }
-        finishAction();
+        openPopup("event", { name: "AI 建築決策", desc: want ? `${p.id + 1}P 將房屋升至 Lv${t.level}。` : `${p.id + 1}P 本回合不升級。`, aiDecision: true });
         return;
       }
       const r = rentFor(t, p);
@@ -1459,19 +1477,14 @@ function aiResolve() {
           applyPropertyArrival(t, p, o);
         }
       }
-      finishAction();
+      openPopup("event", { name: "AI 租金結算", desc: `${p.id + 1}P 完成租金結算，請確認後繼續。`, aiDecision: true });
       return;
     }
     if (["event", "card", "shop", "minigame", "npc"].includes(t.type)) {
       applySpecial(t, p);
-      if (t.type === "minigame") {
-        finishAction();
-        return;
-      }
-      setTimeout(aiResolve, 360);
       return;
     }
-    finishAction();
+    openPopup("event", { name: "AI 行動結果", desc: `${p.id + 1}P 的格子效果已完成。`, aiDecision: true });
     return;
   }
   if (q.kind === "shop") {
@@ -1492,11 +1505,10 @@ function aiResolve() {
       source.splice(d.index, 1);
       addLog(`${p.id + 1}P 以 ${d.cost} 點券購買 ${d.name}`);
     }
-    finishAction();
+    openPopup("event", { name: "AI 商店結果", desc: choices.length ? `${p.id + 1}P 已完成購物。` : `${p.id + 1}P 沒有購買商品。`, aiDecision: true });
     return;
   }
   if (["event", "npc", "carddraw"].includes(q.kind)) {
-    finishAction();
     return;
   }
 }
@@ -2172,7 +2184,12 @@ function action(id) {
       return;
     }
     if (id === "cards") {
-      openPopup("cards");
+      openPopup("cards", { page: 0 });
+      return;
+    }
+    if (id === "cardsPrev" || id === "cardsNext") {
+      const page = Math.max(0, (b.popup?.page || 0) + (id === "cardsNext" ? 1 : -1));
+      openPopup("cards", { page });
       return;
     }
     if (id === "tools") {

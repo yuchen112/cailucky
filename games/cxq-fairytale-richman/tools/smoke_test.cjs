@@ -33,7 +33,7 @@ for (const file of projectAssets) {
   if (!swContext.precache.includes(cachePath))
     throw new Error(`unused or uncached project asset remains: ${cachePath}`);
 }
-if (!swContext.cacheName.includes("20260825-2245"))
+if (!swContext.cacheName.includes("20260825-2359"))
   throw new Error("service worker cache revision is stale");
 const manifest = JSON.parse(
   fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"),
@@ -266,7 +266,7 @@ vm.runInContext(
   S.scene='setup';S.activeSeat=0;S.pickAnim=null;SETUP_VIEW.char=1;chooseChar(1);
   if(!S.pickAnim)throw new Error('selection did not start character walk-in');drawPickAnim();S.pickAnim=null;
   if(TYPE_PATTERN.includes('npc'))throw new Error('fixed god tile still exists');
-  for(const required of ['bank','news','coupon','magic','hospital','shop','card','minigame'])if(!TYPE_PATTERN.includes(required))throw new Error('missing board facility '+required);
+  for(const required of ['bank','news','coupon','magic','hospital','police','shop','card','minigame'])if(!TYPE_PATTERN.includes(required))throw new Error('missing board facility '+required);
   for(const [key,route] of Object.entries(MAP_ROUTES)){
     const xs=route.map(p=>p[0]),ys=route.map(p=>p[1]);
     if(route.length!==36||Math.max(...xs)-Math.min(...xs)<2200||Math.max(...ys)-Math.min(...ys)<1100)throw new Error(key+' route does not span its authored oval road');
@@ -294,7 +294,7 @@ vm.runInContext(
   S.board.npcs=[{name:'窮神',pos:godP.pos,dir:1}];applyNPCByName('窮神',godP);
   if(!godP.effects.some(e=>e.kind==='窮神')||godP.effects.some(e=>e.kind==='財神')||!S.board.npcs.some(n=>n.name==='財神'))throw new Error('god replacement did not release the former companion');
   godP.effects=[{kind:'窮神',turns:1}];S.board.npcs=[];tickEffects(godP);
-  if(godP.effects.length||!S.board.npcs.some(n=>n.name==='窮神'))throw new Error('expired god did not return to roaming state');
+  if(godP.effects.length||!S.board.npcs.some(n=>n.name==='財神'))throw new Error('expired god did not transform and return to roaming state');
   S.board.popup=null;S.board.npcs=[];spawnNPCs(3);
   const cardP=cp(), cardOpponent=S.board.players[1];S.board.phase='pre-roll';
   cardP.cards=['shield'];useCard(0);if(cardP.shield!==1||cardP.cards.length)throw new Error('shield card flow failed');
