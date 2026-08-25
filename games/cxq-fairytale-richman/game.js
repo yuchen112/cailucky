@@ -1270,7 +1270,10 @@ function applySpecial(t, p) {
         dir: 1,
         last: performance.now(),
         name: names[kind],
+        target: 0.18 + Math.random() * 0.64,
+        speed: kind === 0 ? 0.72 : 1.28,
         winningChest: Math.floor(Math.random() * 3),
+        revealUntil: performance.now() + 1200,
       };
       openPopup("mini", { name: S.board.mini.name });
     }
@@ -1960,7 +1963,7 @@ function game() {
     const now = performance.now(),
       dt = Math.min(0.04, (now - b.mini.last) / 1000);
     b.mini.last = now;
-    b.mini.pos += b.mini.dir * dt * 0.82;
+    b.mini.pos += b.mini.dir * dt * (b.mini.speed || 0.82);
     if (b.mini.pos >= 1) {
       b.mini.pos = 1;
       b.mini.dir = -1;
@@ -2509,21 +2512,34 @@ function action(id) {
     }
     if (id === "miniStop" || id === "miniPop" || id.startsWith("miniChest")) {
       let reward = 2200,
-        tickets = 1;
+        tickets = 1,
+        grade = "完成挑戰";
       if (id.startsWith("miniChest")) {
+        if (performance.now() < (b.mini?.revealUntil || 0)) return;
         const pick = +id.slice(9),
           win = pick === (b.mini?.winningChest ?? 0);
         reward = win ? 7000 : 2800;
         tickets = win ? 2 : 1;
+        grade = win ? "記憶正確｜找到星光寶箱" : "選錯寶箱｜仍獲得參加獎";
       } else {
-        const dist = Math.abs((b.mini?.pos ?? 0) - 0.5);
+        const dist = Math.abs((b.mini?.pos ?? 0) - (b.mini?.target ?? 0.5));
         reward = dist < 0.07 ? 7000 : dist < 0.18 ? 4500 : 2200;
         tickets = dist < 0.18 ? 2 : 1;
+        grade = dist < 0.07 ? "完美命中" : dist < 0.18 ? "漂亮命中" : "擦邊完成";
       }
       if (p.char === 7) reward = Math.round(reward * 1.25);
       p.cash += reward;
       p.tickets += tickets;
       addLog(`${p.id + 1}P 小遊戲獲得 $${reward.toLocaleString()}`);
+      openPopup("miniResult", {
+        kindIndex: b.mini?.kind || 0,
+        reward,
+        tickets,
+        grade,
+      });
+      return;
+    }
+    if (id === "miniResultOk") {
       finishAction();
       return;
     }

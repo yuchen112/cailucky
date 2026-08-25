@@ -2025,14 +2025,18 @@ function scenePopup(q, b, p) {
       22,
     );
     if (kind === 0) {
-      const pos = b.mini?.pos || 0;
+      const pos = b.mini?.pos || 0,
+        target = b.mini?.target ?? 0.5,
+        targetX = 520 + target * 540;
       X.fillStyle = "rgba(12,30,70,.82)";
       X.fillRect(520, 560, 560, 34);
+      X.fillStyle = "rgba(105,255,205,.45)";
+      X.fillRect(targetX - 38, 551, 76, 52);
       X.fillStyle = "#ffe067";
       X.fillRect(520 + pos * 540, 551, 20, 52);
       X.strokeStyle = "#fff4bb";
       X.lineWidth = 5;
-      X.strokeRect(790, 548, 20, 58);
+      X.strokeRect(targetX - 38, 548, 76, 58);
       txt(
         "星光越接近中央，獎勵越高",
         800,
@@ -2045,8 +2049,19 @@ function scenePopup(q, b, p) {
       );
       btn("miniStop", "接住星光", 610, 680, 380, 70, true);
     } else if (kind === 1) {
-      const pos = b.mini?.pos || 0;
-      const bx = 535 + pos * 510;
+      const pos = b.mini?.pos || 0,
+        target = b.mini?.target ?? 0.5,
+        bx = 535 + pos * 510,
+        tx = 535 + target * 510;
+      X.save();
+      X.strokeStyle = "#fff2a7";
+      X.lineWidth = 6;
+      X.shadowColor = "#ffe26b";
+      X.shadowBlur = 18;
+      X.beginPath();
+      X.arc(tx, 575, 46, 0, Math.PI * 2);
+      X.stroke();
+      X.restore();
       X.save();
       X.shadowColor = "#8ff6ff";
       X.shadowBlur = 25;
@@ -2058,8 +2073,9 @@ function scenePopup(q, b, p) {
       txt("看準移動中的魔法氣球", 800, 625, 18, "center", "#fff", 900, true);
       btn("miniPop", "戳破氣球", 610, 680, 380, 70, true);
     } else {
+      const revealing = performance.now() < (b.mini?.revealUntil || 0);
       txt(
-        "三個寶箱中只有一個藏著星光大獎",
+        revealing ? "記住正在發光的寶箱" : "選出剛才藏有星光的寶箱",
         800,
         585,
         18,
@@ -2071,14 +2087,27 @@ function scenePopup(q, b, p) {
       for (let i = 0; i < 3; i++)
         btn(
           "miniChest" + i,
-          `寶箱 ${i + 1}`,
+          revealing && i === b.mini?.winningChest ? `★ 寶箱 ${i + 1} ★` : `寶箱 ${i + 1}`,
           475 + i * 225,
           650,
           200,
           70,
           i === 1,
+          1,
+          !revealing,
         );
     }
+    return true;
+  }
+  if (q.kind === "miniResult") {
+    const kind = q.kindIndex || 0,
+      img = [IM.miniStar, IM.miniBalloon, IM.miniTreasure][kind];
+    contain(IM.abilityPanel, 400, 95, 800, 700, 0.99);
+    contain(img, 545, 155, 510, 285, 1);
+    txt("小遊戲結算", 800, 500, 38, "center", "#fff0a5", 1000, true);
+    fitTxt(q.grade, 800, 555, 620, 24, "center", "#ffe477", 1000, true, 15);
+    txt(`獎金 $${q.reward.toLocaleString()}　點券 +${q.tickets}`, 800, 615, 21, "center", "#fff", 900, true);
+    btn("miniResultOk", "收下獎勵", 610, 675, 380, 72, true);
     return true;
   }
   if (q.kind === "tileInspect") {

@@ -354,7 +354,10 @@ vm.runInContext(
   const bombTarget=S.board.players[1];action('toolTarget'+bombTarget.id);
   if(bombTarget.bombSteps!==12||testP.tools.length)throw new Error('timed bomb was not attached to the selected player');
   testP.tools=['bomb'];useTool(0);if(S.board.popup?.kind!=='tools'||!S.board.popup.error||testP.tools.length!==1)throw new Error('bomb was consumed when every opponent already carried one');S.board.popup=null;
-  testP.cards=Array(20).fill('shield'); saveGame();
+  const miniTurn=S.board.turn,miniCash=testP.cash;setTurnPhase('awaiting-confirmation');S.board.mini={kind:0,pos:.42,target:.42,dir:1,last:performance.now(),speed:.72,name:'星光接接樂'};openPopup('mini',{name:'星光接接樂'});action('miniStop');
+  if(S.board.popup?.kind!=='miniResult'||testP.cash<=miniCash||S.board.turn!==miniTurn)throw new Error('minigame result did not pause for acknowledgement');action('miniResultOk');
+  if(S.board.popup||S.board.turn===miniTurn)throw new Error('acknowledged minigame result did not end the turn');
+  cp().cards=Array(20).fill('shield'); saveGame();
   if(!loadGame()||cp().cards.length!==15)throw new Error('save migration did not enforce 15-card capacity');
   cp().cards=['speed','roadblock','shield'];cp().tools=[];saveGame();
   if(!loadGame()||!cp().tools.includes('speed')||!cp().tools.includes('roadblock')||cp().cards.join(',')!=='shield')throw new Error('legacy tool cards were not migrated out of the card book');
@@ -421,6 +424,7 @@ for (let mapIndex = 0; mapIndex < 3; mapIndex++) {
       else if(S.board.popup?.kind==='carddraw')action('cardOk');
       else if(S.board.popup?.kind==='shop')action('shopBuy');
       else if(S.board.popup?.kind==='mini')action('miniStop');
+      if(S.board.popup?.kind==='miniResult')action('miniResultOk');
     })()`,
       context,
     );
