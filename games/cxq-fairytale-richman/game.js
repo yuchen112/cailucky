@@ -618,7 +618,7 @@ scenePopup = function (q, b, p) {
 };
 const NPC_DEFS = [
   { name: "財神", desc: "獲得 $8,000", apply: (p) => cashGain(p, 8000) },
-  { name: "窮神", desc: "損失 $5,000", apply: (p) => (p.cash -= 5000) },
+  { name: "窮神", desc: "損失 $5,000，租金負擔提高", apply: (p) => (p.cash -= 5000) },
   {
     name: "福神",
     desc: "獲得 2 張卡片",
@@ -630,30 +630,25 @@ const NPC_DEFS = [
   { name: "衰神", desc: "下一回合骰子最多 3 點", apply: (p) => (p.slow = 1) },
   {
     name: "土地公",
-    desc: "隨機免費升級一塊自己的土地",
-    apply: (p) => upgradeRandomLand(p),
+    desc: "停留土地時可強制占有",
+    apply: () => {},
   },
   {
     name: "天使",
-    desc: "加蓋一層並跟隨 7 回合",
-    apply: (p) => {
-      upgradeRandomLand(p);
-      attachEffect(p, "天使", 7);
-    },
+    desc: "停留建築時加蓋一層，持續 7 回合",
+    apply: (p) => attachEffect(p, "天使", 7),
   },
   {
     name: "惡魔",
-    desc: "拆除一層並跟隨 7 回合",
-    apply: (p) => {
-      downgradeRandomLand(p);
-      attachEffect(p, "惡魔", 7);
-    },
+    desc: "停留建築時拆除一層，持續 7 回合",
+    apply: (p) => attachEffect(p, "惡魔", 7),
   },
   {
     name: "死神",
     desc: "失去所有卡片並跟隨 13 回合",
     apply: (p) => {
       p.cards = [];
+      p.tools = [];
       attachEffect(p, "死神", 13);
     },
   },
@@ -756,9 +751,6 @@ function tickEffects(p) {
     else if (e.kind === "窮神") p.cash -= 1200;
     else if (e.kind === "福神" && Math.random() < 0.35) drawCard(p);
     else if (e.kind === "衰神") p.slow = 1;
-    else if (e.kind === "土地公" && Math.random() < 0.35) upgradeRandomLand(p);
-    else if (e.kind === "天使") p.shield = Math.max(1, p.shield);
-    else if (e.kind === "惡魔" && Math.random() < 0.25) downgradeRandomLand(p);
     else if (e.kind === "死神" && p.cards.length && Math.random() < 0.3)
       p.cards.splice(Math.floor(Math.random() * p.cards.length), 1);
   }
@@ -874,6 +866,8 @@ function rentFor(t, payer = null) {
     owner.rentBoost = 0;
   }
   if (payer?.char === 3) r = Math.round(r * 0.8);
+  if ((payer?.effects || []).some((e) => e.kind === "財神")) r = 0;
+  if ((payer?.effects || []).some((e) => e.kind === "窮神")) r = Math.round(r * 2);
   if (t.special === "hotel") r = Math.round(r * 1.4);
   else if (t.special === "mall") r = Math.round(r * 1.2);
   else if (t.special === "park") r = Math.round(r * 0.65);
@@ -891,6 +885,8 @@ function rentEstimate(t, payer = null) {
   if (owner?.char === 8) r = Math.round(r * 1.15);
   if (owner?.rentBoost) r = Math.round(r * 1.5);
   if (payer?.char === 3) r = Math.round(r * 0.8);
+  if ((payer?.effects || []).some((e) => e.kind === "財神")) r = 0;
+  if ((payer?.effects || []).some((e) => e.kind === "窮神")) r = Math.round(r * 2);
   if (t.special === "hotel") r = Math.round(r * 1.4);
   else if (t.special === "mall") r = Math.round(r * 1.2);
   else if (t.special === "park") r = Math.round(r * 0.65);
@@ -905,6 +901,26 @@ function applyPropertyArrival(t, payer, owner) {
   if (t.special === "hotel") payer.skip += 1;
   else if (t.special === "mall") owner.tickets += 2;
   else if (t.special === "park") owner.cash += 2500;
+}
+function applyGodArrival(t, p) {
+  if (t.type !== "land") return;
+  const effects = new Set((p.effects || []).map((e) => e.kind));
+  if (effects.has("土地公") && t.owner !== p.id) {
+    t.owner = p.id;
+    t.level = Math.max(0, t.level || 0);
+    markUpgrade(t);
+    addLog(`${p.id + 1}P 受土地公協助占有土地`);
+  }
+  if (effects.has("天使") && t.owner >= 0 && t.level < 5) {
+    t.level++;
+    markUpgrade(t);
+    addLog(`天使為第 ${t.index + 1} 格加蓋一層`);
+  }
+  if (effects.has("惡魔") && t.owner >= 0 && t.level > 0) {
+    t.level--;
+    markUpgrade(t);
+    addLog(`惡魔拆除第 ${t.index + 1} 格一層建築`);
+  }
 }
 function netWorth(p) {
   let v = p.cash + (p.bank || 0);
@@ -1093,6 +1109,7 @@ function resolveTile() {
   if (t.type === "start") {
     addLog(`${p.id + 1}P 停留起點休息`);
   }
+  applyGodArrival(t, p);
   if (p.type === "ai" && !["start", "land"].includes(t.type)) {
     if (t.type === "bank") {
       const amount = Math.max(0, Math.min(10000, p.cash - 50000));

@@ -1595,7 +1595,7 @@ function playerHudCard(p, i) {
     10,
   );
   txt(
-    `土地 ${land}　卡片 ${p.cards.length}`,
+    `土地 ${land}　卡 ${p.cards.length}　具 ${(p.tools || []).length}`,
     x + 98,
     y + 91,
     12,
@@ -1617,6 +1617,11 @@ function playerHudCard(p, i) {
       1000,
       true,
     );
+  }
+  if (p.detained) {
+    const detainedName = p.detained.facility === "jail" ? "拘留" : "住院";
+    stretch(IM.roleInfo, x + 5, y + 77, 82, 25, 0.98);
+    fitTxt(`${detainedName} ${p.detained.turns}`, x + 46, y + 90, 72, 10, "center", "#ffcf86", 1000, true, 8);
   }
   if (current) {
     X.save();
@@ -1775,6 +1780,13 @@ function hud() {
     true,
     12,
   );
+  const statusText = [
+    p.detained ? `${p.detained.facility === "jail" ? "拘留" : "住院"} ${p.detained.turns}回合` : "",
+    ...(p.effects || []).map((e) => `${e.kind} ${e.turns}`),
+    p.vehicle ? `${p.vehicle === "car" ? "汽車" : "機車"} ${p.vehicleTurns}` : "",
+    p.bombSteps > 0 ? `炸彈 ${p.bombSteps}步` : "",
+  ].filter(Boolean).join("｜") || "狀態正常";
+  fitTxt(statusText, 1378, 140, 350, 12, "center", "#fff0a5", 900, true, 9);
   btn("pause", "選單", 20, 130, 150, 54, false, 0.94, !S.rolling && !b.popup);
   btn(
     "roster",
