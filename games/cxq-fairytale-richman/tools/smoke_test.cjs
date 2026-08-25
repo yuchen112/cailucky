@@ -302,9 +302,9 @@ vm.runInContext(
   cardP.cards=['stop'];useCard(0);useTargetCard(cardOpponent.id);if(cardOpponent.skip!==1||cardP.cards.length)throw new Error('target stop-card flow failed');
   const teleportTarget=S.board.tiles.find(t=>t.type==='event');cardP.cards=['teleport'];useCard(0);action('cardTile'+teleportTarget.index);
   if(cardP.pos!==teleportTarget.index||cardP.cards.length)throw new Error('teleport target flow failed');
-  const purchaseTarget=S.board.tiles.find(t=>t.type==='land'&&t.owner<0);cardP.cards=['buyland'];cardP.cash=500000;useCard(0);action('cardTile'+purchaseTarget.index);
+  const purchaseTarget=S.board.tiles.find(t=>t.type==='land'&&t.owner<0);cardP.pos=purchaseTarget.index;cardP.cards=['buyland'];cardP.cash=500000;useCard(0);action('cardTile'+purchaseTarget.index);
   if(purchaseTarget.owner!==cardP.id||cardP.cards.length)throw new Error('land-purchase target flow failed');
-  purchaseTarget.level=0;cardP.cards=['upgrade'];useCard(0);if(purchaseTarget.level!==1||cardP.cards.length)throw new Error('free-upgrade card flow failed');
+  purchaseTarget.level=0;cardP.cards=['upgrade'];useCard(0);action('cardTile'+purchaseTarget.index);if(purchaseTarget.level!==1||cardP.cards.length)throw new Error('free-upgrade card flow failed');
   cardP.cards=['discount','rent'];useCard(0);useCard(0);if(cardP.discount!==1||cardP.rentBoost!==1||cardP.cards.length)throw new Error('property effect-card flow failed');
   const testP=cp(); testP.tools=['speed'];S.board.phase='pre-roll';useTool(0);
   if(testP.diceCount!==2||testP.vehicleTurns!==5)throw new Error('vehicle card did not enable multi-dice turns');

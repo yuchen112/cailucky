@@ -284,6 +284,7 @@ load("facilityMagic", A + "facilities/magic_token_v2.webp");
 load("facilityHospital", A + "facilities/hospital_token_v2.webp");
 load("facilityPolice", A + "facilities/police_token_v1.png");
 load("facilityStart", A + "facilities/start_token_v2.webp");
+load("roadNode", A + "tiles/road_node_v1.png");
 load("npcWealth", A + "npc/wealth_v1.webp");
 load("npcFortune", A + "npc/fortune_v1.webp");
 load("npcPoverty", A + "npc/poverty_v1.webp");
@@ -1308,7 +1309,7 @@ function tileVisualPosition(t) {
   let dx = t.x - b.plotCenter.x,
     dy = t.y - b.plotCenter.y;
   const length = Math.hypot(dx, dy) || 1,
-    offset = -190;
+    offset = -128;
   dx /= length;
   dy /= length;
   return {
@@ -1321,27 +1322,17 @@ function drawTile(t) {
     shiftX = visual.x - t.x,
     shiftY = visual.y - t.y,
     tileSize = t.type === "land" ? 132 : 152;
-  // A land has two authored anchors: the road tile where the pawn stands and
-  // the roadside lot where its building grows. Draw their physical connection
-  // explicitly so plots never look like floating UI cards.
+  // A land has two authored anchors: a road node for the pawn and a compact
+  // roadside plot for construction. They are close enough to read as one tile,
+  // but never compete for the same footprint.
   if (t.type === "land") {
     X.save();
-    X.strokeStyle = "rgba(255,225,145,.55)";
-    X.lineWidth = 10;
-    X.lineCap = "round";
-    X.beginPath();
-    X.moveTo(t.x, t.y);
-    X.lineTo(visual.x, visual.y);
-    X.stroke();
-    X.strokeStyle = "rgba(69,45,32,.68)";
-    X.lineWidth = 3;
-    X.stroke();
-    contain(IM.tile_land, t.x - 58, t.y - 58, 116, 116, 1);
+    contain(IM.roadNode || IM.tile_land, t.x - 61, t.y - 48, 122, 96, 1);
     if (t.owner >= 0) {
       X.strokeStyle = PLAYER_COLORS[t.owner];
       X.lineWidth = 8;
       X.beginPath();
-      X.arc(t.x, t.y, 58, 0, Math.PI * 2);
+      X.arc(t.x, t.y, 52, 0, Math.PI * 2);
       X.stroke();
     }
     X.restore();

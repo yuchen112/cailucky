@@ -421,6 +421,7 @@ scenePopup = function (q, b, p) {
       900,
       true,
     );
+    if (q.error) fitTxt(q.error, 800, 171, 920, 15, "center", "#ffcf8a", 1000, true, 11);
     const page = Math.max(0, Math.min(q.page || 0, Math.ceil(p.cards.length / 8) - 1)), start = page * 8;
     txt(`第 ${page + 1}/${Math.max(1, Math.ceil(p.cards.length / 8))} 頁`, 1280, 145, 16, "center", "#d9efff", 900, true);
     p.cards
@@ -1323,6 +1324,10 @@ function moveToTile(next) {
   p.pos = next;
   p.moveAnim = { from: { x: from.x, y: from.y }, to: { x: to.x, y: to.y }, start: performance.now(), dur };
   move.remaining--;
+  if (npcAt(p.pos)) {
+    move.remaining = 0;
+    addLog(`${p.id + 1}P 在途中遇見巡遊角色，移動停止`);
+  }
   if (p.bombSteps > 0 && --p.bombSteps === 0) {
     p.detained = { facility: "hospital", turns: 3 };
     p.skip += 3;
@@ -1587,10 +1592,18 @@ function useCard(i) {
     openPopup("cardTarget", { cardIndex: i, card: c });
     return;
   }
-  if (p.type === "human" && ["teleport", "buyland"].includes(c)) {
+  if (p.type === "human" && ["teleport", "buyland", "upgrade"].includes(c)) {
     let targets;
-    if (c === "buyland") targets = S.board.tiles.filter((t) => t.type === "land" && t.owner < 0).map((t) => t.index);
-    else targets = S.board.tiles.filter((_, index) => index % 5 === 0).map((t) => t.index);
+    if (c === "buyland") {
+      const underfoot = S.board.tiles[p.pos];
+      targets = underfoot?.type === "land" && underfoot.owner < 0 ? [p.pos] : [];
+    } else if (c === "upgrade") {
+      targets = S.board.tiles.filter((t) => t.type === "land" && t.owner === p.id && t.level < 5).map((t) => t.index);
+    } else targets = Array.from({ length: 8 }, (_, n) => (p.pos + n + 1) % S.board.tiles.length);
+    if (!targets.length) {
+      openPopup("cards", { page: Math.floor(i / 8), error: c === "buyland" ? "購地卡只能用於腳下的無主土地。" : "目前沒有可以升級的房屋。" });
+      return;
+    }
     openPopup("cardTileTarget", { cardIndex: i, targets });
     return;
   }
@@ -1599,7 +1612,7 @@ function useCard(i) {
   else if (c === "remote") S.forcedDice = 3;
   else if (c === "shield") p.shield++;
   else if (c === "discount") p.discount = 1;
-  else if (c === "upgrade") upgradeRandomLand(p);
+  else if (c === "upgrade") return;
   else if (c === "buyland") {
     const t = S.board.tiles[p.pos];
     if (t?.type === "land" && t.owner < 0 && p.cash >= buyCost(p, t)) {
@@ -1748,6 +1761,7 @@ function loadGame() {
       p.vehicle = p.vehicle || (p.diceCount === 3 ? "car" : p.diceCount === 2 ? "motorcycle" : null);
       p.bombSteps = p.bombSteps || 0;
       p.direction = p.direction || 1;
+      p.detained = p.detained || null;
     });
     const attachedGods = new Set(S.board.players.flatMap((p) => p.effects.filter(isGodEffect).map((e) => e.kind))),
       seenGods = new Set();
@@ -2020,6 +2034,9 @@ function action(id) {
     } else if (c === "buyland" && t.type === "land" && t.owner < 0) {
       const cost = buyCost(p, t);
       p.cash -= cost; t.owner = p.id; markUpgrade(t);
+    } else if (c === "upgrade" && t.type === "land" && t.owner === p.id && t.level < 5) {
+      t.level++;
+      markUpgrade(t);
     }
     addLog(`${p.id + 1}P 使用 ${cardDef(c).name}`);
     S.board.popup = null;
