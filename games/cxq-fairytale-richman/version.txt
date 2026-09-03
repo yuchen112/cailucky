@@ -1,41 +1,29 @@
-CxQ Fairy-tale Richman — testing branch 20260826-1430
+CxQ Fairy-tale Richman — testing branch 20260904-0430
 
 Release status
 - This build belongs only to preview/cxq-fairytale-richman-testing.
-- The main branch remains unchanged until the user approves the testing build.
-- The only runtime path is index.html -> core.js + viewport.js + game.js. The obsolete home-richman4 overlay and temporary patch files are removed.
+- The main branch remains unchanged until the user approves this testing build.
+- Runtime remains one integrated path: index.html -> core.js + viewport.js + game.js.
 
-Art and presentation
-- Dice throws now use six independently generated physical ivory-and-gold dice without the former floating cushion. The throw travels from the action console into the board, rotates in flight, bounces, settles and only then presents the result.
-- All three board worlds now use independently generated loop-road backgrounds authored for gameplay readability; movement nodes share the visible road centerline and the map selector/minimap use the same world art.
-- All ten CxQ characters now have an independently generated completed-region landmark. A completed region promotes one anchor property to its owner's character landmark while the remaining properties retain their map building progression.
-- Property ownership plaques were moved below buildings and use player color, P-number and character portrait together, preventing the old plaque/building overlap and making ownership readable without relying on color alone.
-- Hotel, mall and blessing-park upgrades now use three independently generated transparent building assets instead of reusing a generic level-five building.
-- Purchasable land is now a dedicated low roadside parcel rather than a floating property card; characters retain their road coordinates while parcels and buildings occupy a separate roadside footprint.
-- The current-player panel now exposes cash, bank deposit, net worth and a round-driven price index without opening a modal.
-- The board action area now uses a dedicated AI-generated image-backed console, active-character portrait, grouped dice/card controls, animated turn banners, popup entrances and press/hover feedback.
-- The home, character-selection stage, three map previews and three board worlds use dedicated scene art sized for the 16:9 virtual board camera.
-- All ten CxQ characters have separate portrait art and two independently prepared walking poses used during real tile-to-tile movement.
-- All six dice faces have dedicated throw art and appear as a physical multi-die overlay before movement.
-- Every one of the sixteen action/strategy cards has its own cover, while the four road tools use a separate tool inventory and distinct art.
-- All twenty-eight random events have dedicated event illustrations instead of sharing one generic event scene.
-- Roaming gods/NPCs, minigames, roadblocks, facilities, player seats and map fork signs use image assets rather than CSS-drawn substitutes.
-- Each map has distinct Lv1-Lv5 property art and a landmark, with hotel, mall and park large-building identities and effects.
+Streamlined game design
+- The in-match card book, tool box, shop, minigames, coupons, bank, hospital and police systems are removed from the playable route.
+- Character setup now leads to a dedicated two-slot persistent-equipment phase. Equipment is selected before the map and remains automatic for the whole match.
+- Eight independently generated equipment assets cover property, construction, fortune, defense, income and movement effects.
+- Random events now affect cash, land, buildings, movement or protection only. AI outcomes always pause for the player to acknowledge.
+- Roaming gods move on the road, attach only when a player finishes movement on the same node, replace an existing companion cleanly, and never spawn the Death God normally.
 
-Game flow
-- Purchase, upgrade, rent, net-worth and large-building calculations now share one round-driven market index and one canonical cost path for human players, AI players and UI previews.
-- Passing the start tile pays the travel allowance exactly once; landing on start no longer duplicates that payment.
-- Home -> character and P1-P4 seat setup -> map selection -> game conditions -> board -> result is one integrated state path.
-- Seats support human, AI difficulty and empty states; active characters remain unique.
-- Three maps use independent 36-node routes, facilities and economy multipliers. These authored oval-road maps intentionally expose no invisible shortcut branches.
-- The board can be dragged and zoomed, with minimap, return-to-character camera and tile inspection.
-- Turn phases include pre-roll cards and tools, one-to-three dice, animated movement, tile resolution and end-of-turn effects.
-- Property play includes ownership markers, rent, shields, discounts, five upgrade levels, large-building choices and visible construction animation.
-- Coupon shops separately buy and sell cards or tools; the card book holds fifteen cards and the tool box holds eight vehicles, roadblocks or bombs.
-- Gods roam instead of occupying a fixed god tile; encounters visibly attach a companion to the character, replacement releases the former god, and expiration returns it to the road.
-- Current-player data is restricted to the active human and includes overview, property camera jumps, card covers and timed effects.
-- Saves migrate older card/state formats, and Safari/PWA assets share one cache revision.
+Property and presentation
+- Every land node has a road coordinate for pawns and a separate authored roadside plot coordinate for buildings.
+- Ownership is shown by player-color rings, portrait plaques and P-number, while pawns remain on the road node.
+- Buildings progress through five levels. Lv5 uses the landowner character's dedicated landmark artwork.
+- The HUD shows cash, net worth, land, building count, equipment and god status without card/tool/bank clutter.
+- Player details use Overview, Property, Equipment and Status tabs with all content contained inside the artwork frame.
+- Dice use six physical face assets, a minimum thirty-frame throw/settle sequence and an explicit rolled-total-to-final-step message.
+- Character movement uses two walking poses and at least thirty frames per tile.
 
-Verification
-- Automated checks cover all setup/game popup scenes, unique event/card/tool artwork, complete card/tool interactions, non-fixed god lifecycle, facilities, independent routes, multi-dice vehicles, save migration, five-level and special buildings, rent effects, three complete simulated matches, PWA asset parity and five landscape aspect ratios.
-- Browser QA covers the published home, selection, map, conditions and live board flow with console/page-error inspection.
+Compatibility and verification
+- The 1600x900 safe playfield stays proportional; extra-wide landscape space is filled with the current scene backdrop.
+- Dynamic mobile browser bars, safe-area insets, Safari/PWA caching and mouse/touch coordinate mapping share the same viewport adapter.
+- Saves migrate to the equipment model while removing obsolete inventories and facilities.
+- Automated checks cover asset/PWA parity, equipment rules, event art, gods, dice adjustments, land/building economics, saves, layout bounds and full-match simulations on all three maps.
+- Browser QA covers home, character selection, equipment, map, rules, live board, purchase, AI acknowledgement, player data, mobile landscape and ultrawide landscape.

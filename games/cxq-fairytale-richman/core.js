@@ -102,24 +102,24 @@ const CHAR_CONCEPTS = [
 const CHAR_ROLES = [
   "幸運型",
   "骰控型",
-  "卡片型",
+  "事件型",
   "防禦型",
-  "商店型",
+  "理財型",
   "移動型",
   "土地型",
-  "小遊戲型",
+  "收益型",
   "收租型",
   "特殊型",
 ];
 const ROLE_DESC = [
   "正向事件獎金提高",
   "骰點過低時有機會修正",
-  "抽卡時有機會額外獲得卡片",
+  "負面事件影響較低",
   "支付租金時享有減免",
-  "商店價格較低",
+  "現金事件收益較高",
   "移動能力較穩定",
   "購地價格享有折扣",
-  "小遊戲現金獎勵提高",
+  "每圈獎金提高",
   "收到的租金提高",
   "首次瀕臨破產可獲救",
 ];
@@ -143,7 +143,7 @@ const MAPS = [
     name: "月光港灣",
     tag: "潮汐之路",
     difficulty: "標準",
-    desc: ["租金較高、卡片活躍", "港口事件改變局勢"],
+    desc: ["租金較高、事件活躍", "港口事件改變局勢"],
     regions: ["月港碼頭", "潮汐街區", "燈塔山坡", "星砂商埠"],
     priceRate: 1.08,
     rentRate: 1.15,
@@ -177,10 +177,10 @@ const S = {
   scene: "home",
   buttons: [],
   seats: [
-    { type: "human", char: 6, diff: "standard" },
-    { type: "ai", char: 1, diff: "standard" },
-    { type: "off", char: 2, diff: "standard" },
-    { type: "off", char: 3, diff: "standard" },
+    { type: "human", char: 6, diff: "standard", equipment: ["deed", "boots"] },
+    { type: "ai", char: 1, diff: "standard", equipment: ["compass", "charm"] },
+    { type: "off", char: 2, diff: "standard", equipment: [] },
+    { type: "off", char: 3, diff: "standard", equipment: [] },
   ],
   activeSeat: 0,
   mapIndex: 0,
@@ -188,7 +188,6 @@ const S = {
   rounds: 30,
   victory: "assets",
   eventLevel: "standard",
-  startingCards: 1,
   gods: true,
   board: null,
   msg: "",
@@ -222,7 +221,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260826-1430";
+const ASSET_REV = "20260904-0430";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -265,7 +264,6 @@ MAPS.forEach((m, i) =>
 load("tile_land", A + "tiles/land_parcel_v1.webp");
 load("tile_card", A + "tiles/card_v2.webp");
 load("tile_shop", A + "tiles/shop.webp");
-load("tile_minigame", A + "tiles/minigame.webp");
 // Known-corrupt start/event rasters are intentionally not loaded. They are visually quarantined.
 for (let i = 1; i <= 6; i++) load("dice" + i, A + "dice/dice_" + i + ".webp");
 for (let i = 1; i <= 6; i++)
@@ -275,65 +273,26 @@ MAPS.forEach((m, i) =>
 );
 load("event_kingdomFestival", A + "events/kingdom_festival_v1.png");
 load("event_emergencyRepairs", A + "events/emergency_repairs_v1.png");
-load("event_fairyGift", A + "events/fairy_gift_v1.png");
 load("event_luckyFountain", A + "events/lucky_fountain_v1.png");
 load("event_lostInMaze", A + "events/lost_in_maze_v1.png");
 load("event_marketBoom", A + "events/market_boom_v1.png");
 load("event_mischief", A + "events/mischief_v1.png");
-load("event_travelerQuest", A + "events/traveler_quest_v1.png");
 load("event_guardianBlessing", A + "events/guardian_blessing_v1.png");
 load("event_taxDay", A + "events/tax_day_v1.png");
 load("event_starlightRain", A + "events/starlight_rain_v1.png");
-load("event_exchangeMarket", A + "events/exchange_market_v1.png");
 load("event_roadConstruction", A + "events/road_construction_v1.png");
 load("event_kingdomSubsidy", A + "events/kingdom_subsidy_v1.png");
-load("event_lostAndFound", A + "events/lost_and_found_v1.png");
 load("event_magicMalfunction", A + "events/magic_malfunction_v1.png");
 load("event_moonlightDividend", A + "events/moonlight_dividend_v1.png");
 load("event_forestMist", A + "events/forest_mist_v1.png");
 load("event_cloudTailwind", A + "events/cloud_tailwind_v1.png");
 load("event_merchantGuildReward", A + "events/merchant_guild_reward_v1.png");
-load("event_lostCard", A + "events/lost_card_v1.png");
-load("event_luckyDay", A + "events/lucky_day_v1.png");
 load("event_landMaintenance", A + "events/land_maintenance_v1.png");
 load("event_fairyBlessing", A + "events/fairy_blessing_v1.png");
-load("event_accidentalInjury", A + "events/accidental_injury_v1.png");
-load("event_royalInspection", A + "events/royal_inspection_v1.png");
-load("event_recoveryBlessing", A + "events/recovery_blessing_v1.png");
-load("event_proofOfInnocence", A + "events/proof_of_innocence_v1.png");
 load("event_systemLandPurchase", A + "events/system_land_purchase_v1.webp");
 load("event_systemRentPayment", A + "events/system_rent_payment_v1.webp");
 load("event_systemBuildUpgrade", A + "events/system_build_upgrade_v1.webp");
-load("miniStar", A + "minigames/star_catch_v1.webp");
-load("miniBalloon", A + "minigames/balloon_pop_v1.webp");
-load("miniTreasure", A + "minigames/treasure_timing_v1.webp");
-[
-  "shield",
-  "teleport",
-  "land_purchase",
-  "free_upgrade",
-  "discount",
-  "rent",
-  "swap",
-  "stop",
-].forEach((k) => load("card_" + k, A + "cards/" + k + "_v1.webp"));
-load("card_hospital_pass", A + "cards/hospital_pass_v1.png");
-load("card_bail", A + "cards/bail_v1.png");
-load("card_demolition", A + "cards/demolition_v1.png");
-load("card_reverse", A + "cards/reverse_v1.png");
-load("card_snatch", A + "cards/snatch_v1.png");
-load("card_equal_wealth", A + "cards/equal_wealth_v1.png");
-load("tool_speed", A + "tools/motorcycle_v1.webp");
-load("tool_car", A + "tools/car_v1.webp");
-load("tool_remote", A + "tools/remote_dice_v2.png");
-load("tool_roadblock", A + "tools/roadblock_v1.webp");
-load("tool_bomb", A + "tools/bomb_v1.webp");
-load("facilityBank", A + "facilities/bank_token_v2.webp");
-load("facilityNews", A + "facilities/news_token_v2.webp");
-load("facilityCoupon", A + "facilities/coupon_token_v2.webp");
 load("facilityMagic", A + "facilities/magic_token_v2.webp");
-load("facilityHospital", A + "facilities/hospital_token_v2.webp");
-load("facilityPolice", A + "facilities/police_token_v1.png");
 load("facilityStart", A + "facilities/start_token_v2.webp");
 load("roadNode", A + "tiles/road_node_v2.png");
 load("npcWealth", A + "npc/wealth_v1.webp");
@@ -344,10 +303,6 @@ load("npcLand", A + "npc/land_v1.webp");
 load("npcAngel", A + "npc/angel_v1.webp");
 load("npcDemon", A + "npc/demon_v1.webp");
 load("npcDeath", A + "npc/death_v1.webp");
-load("npcThief", A + "npc/thief_v1.png");
-load("npcBandit", A + "npc/bandit_v1.png");
-load("npcSpy", A + "npc/spy_v1.png");
-load("npcHooligan", A + "npc/hooligan_v1.png");
 CHAR_KEYS.forEach((k, i) => {
   load("c" + i, "../../assets/characters/cxq-role-" + k + ".webp");
   load("portrait" + i, A + "characters/portraits/" + k + "_portrait_v1.webp");
@@ -369,17 +324,17 @@ MAPS.forEach((m, mi) => {
 CHAR_KEYS.forEach((key) =>
   load(`landmark_${key}`, A + `buildings/landmark_${key}_v1.webp`),
 );
-load("buildingSpecialHotel", A + "buildings/special_hotel_v1.webp");
-load("buildingSpecialMall", A + "buildings/special_mall_v1.webp");
-load("buildingSpecialPark", A + "buildings/special_park_v1.webp");
 load("resultVictory", A + "results/victory_ceremony_v1.png");
 load("resultDefeat", A + "results/defeat_ceremony_v1.png");
+[
+  "deed", "toolkit", "charm", "guardian", "bell", "boots", "compass", "manual",
+].forEach((key) => load("equip_" + key, A + "equipment/" + key + "_v1.png"));
 
 const VIEW = { scale: 1, ox: 0, oy: 0 };
 function sceneBackdrop() {
   if (S.scene === "home") return IM.homeBg;
   if (
-    ["setup", "mapSelect", "rules", "result", "help", "settings"].includes(
+    ["setup", "loadout", "mapSelect", "rules", "result", "help", "settings"].includes(
       S.scene,
     )
   )
@@ -672,7 +627,7 @@ function home() {
   contain(IM.playerSeat, 1120, 38, 430, 94, 0.9);
   txt("童話棋盤冒險", 1335, 67, 18, "center", "#fff7dc", 1000, true);
   txt(
-    "擲骰・買地・蓋房・收租・卡片・神明事件",
+    "擲骰・買地・蓋房・收租・常駐裝備・巡遊神明",
     1335,
     98,
     13,
@@ -1051,7 +1006,7 @@ function setup() {
   txt("下一階段再設定", 1422, 299, 14, "center", "#d9eaff", 850, true);
   btn(
     "startGame",
-    "確認角色，選擇地圖",
+    "確認角色，選擇裝備",
     1260,
     350,
     320,
@@ -1075,6 +1030,31 @@ function setup() {
     );
   for (let i = 0; i < 4; i++) seatPanel(i, SETUP.seatX[i], SETUP.seatY);
   drawPickAnim();
+}
+
+function loadout() {
+  cover(IM.setupBg, 0, 0, W, H, 0.86);
+  btn("loadoutBack", "返回選角", 22, 20, 190, 62, false);
+  txt("冒險裝備", 800, 50, 42, "center", "#fff0b6", 1000, true);
+  txt("每名玩家最多攜帶兩件常駐裝備；同類效果不可重複", 800, 91, 17, "center", "#fff", 850, true);
+  const seat = S.seats[S.activeSeat], active = activeSeatIds();
+  active.forEach((seatIndex, i) => {
+    const s = S.seats[seatIndex], x = 245 + i * 285;
+    stretch(IM["playerSeatP" + i], x, 112, 265, 78, seatIndex === S.activeSeat ? 1 : .62);
+    contain(IM["portrait" + s.char], x + 8, 116, 70, 70, 1);
+    btn("loadoutSeat" + seatIndex, `${i + 1}P ${CHAR_NAMES[s.char]}`, x + 78, 124, 178, 54, seatIndex === S.activeSeat, 1, true);
+  });
+  EQUIPMENT_DEFS.forEach((item, i) => {
+    const x = 70 + (i % 4) * 380, y = 215 + Math.floor(i / 4) * 270,
+      selected = (seat.equipment || []).includes(item.id), full = (seat.equipment || []).length >= 2;
+    stretch(IM.roleInfo, x, y, 330, 235, selected ? 1 : .9);
+    contain(IM["equip_" + item.id], x + 18, y + 24, 118, 118, selected ? 1 : .72);
+    fitTxt(item.name, x + 150, y + 48, 155, 20, "left", selected ? "#ffe37a" : "#fff2c5", 1000, true, 13);
+    paragraph(item.desc, x + 150, y + 88, 155, 13, 19, 3, "left", "#dceaff", 850, true);
+    btn("equip" + item.id, selected ? "已裝備｜卸下" : full ? "裝備欄已滿" : "裝備", x + 35, y + 168, 260, 50, selected, .96, selected || !full);
+  });
+  fitTxt(`${S.activeSeat + 1}P 已裝備 ${(seat.equipment || []).length}/2`, 800, 773, 450, 20, "center", "#ffe17b", 1000, true, 14);
+  btn("loadoutNext", "確認裝備，選擇地圖", 590, 808, 420, 68, true, 1, active.every((i) => (S.seats[i].equipment || []).length > 0));
 }
 
 function mapSelect() {
@@ -1210,15 +1190,7 @@ function rulesSetup() {
     68,
     false,
   );
-  btn(
-    "ruleCards",
-    "起始卡片　" + S.startingCards + " 張",
-    250,
-    520,
-    420,
-    68,
-    false,
-  );
+  txt("每位角色最多攜帶兩件常駐裝備", 460, 555, 18, "center", "#d9efff", 900, true);
   contain(IM.abilityPanel, 860, 145, 560, 560, 0.98);
   txt("事件規則", 1140, 205, 30, "center", "#fff2bd", 1000, true);
   btn(
@@ -1275,12 +1247,7 @@ function tileImage(type) {
 function facilityImage(type) {
   return {
     start: IM.facilityStart,
-    bank: IM.facilityBank,
-    news: IM.facilityNews,
-    coupon: IM.facilityCoupon,
     magic: IM.facilityMagic,
-    hospital: IM.facilityHospital,
-    police: IM.facilityPolice,
   }[type];
 }
 function npcImage(name) {
@@ -1311,27 +1278,13 @@ function npcMarker(n, t) {
 }
 function buildingImage(t) {
   if (t.owner < 0 || t.level < 1) return null;
-  if (t.special)
-    return {
-      hotel: IM.buildingSpecialHotel,
-      mall: IM.buildingSpecialMall,
-      park: IM.buildingSpecialPark,
-    }[t.special] || null;
   const mi = S.board?.mapIndex || 0,
-    isLandmark = isRegionLandmark(t);
+    isLandmark = t.level >= 5;
   if (isLandmark) {
     const owner = S.board.players.find((p) => p.id === t.owner);
     return IM[`landmark_${CHAR_KEYS[owner?.char || 0]}`];
   }
   return IM[`building${mi}_${Math.min(5, t.level)}`];
-}
-function isRegionLandmark(t) {
-  if (t.owner < 0 || t.level < 5 || !regionOwned(t.owner, t.region)) return false;
-  return (
-    S.board.tiles.find(
-      (land) => land.type === "land" && land.region === t.region,
-    ) === t
-  );
 }
 function roadAnchor(t) {
   return { x: t.x, y: t.y };
@@ -1584,10 +1537,6 @@ function drawMap() {
       const t = b.tiles[n.pos];
       if (t) npcMarker(n, t);
     }
-  for (const pos of b.roadblocks || []) {
-    const t = b.tiles[pos];
-    if (t) contain(IM.tool_roadblock, t.x - 72, t.y - 116, 144, 96, 1);
-  }
   drawPlayers();
 }
 function playerHudCard(p, i) {
@@ -1630,7 +1579,9 @@ function playerHudCard(p, i) {
     true,
     11,
   );
-  const land = b.tiles.filter((t) => t.owner === p.id).length;
+  const owned = b.tiles.filter((t) => t.owner === p.id),
+    land = owned.length,
+    buildings = owned.reduce((sum, t) => sum + (t.level || 0), 0);
   fitTxt(
     `資產 $${netWorth(p).toLocaleString()}`,
     x + 98,
@@ -1644,7 +1595,7 @@ function playerHudCard(p, i) {
     10,
   );
   txt(
-    `土地 ${land}　卡 ${p.cards.length}　具 ${(p.tools || []).length}`,
+    `土地 ${land}　建築 ${buildings}　裝備 ${(p.equipment || []).length}`,
     x + 98,
     y + 91,
     12,
@@ -1666,11 +1617,6 @@ function playerHudCard(p, i) {
       1000,
       true,
     );
-  }
-  if (p.detained) {
-    const detainedName = p.detained.facility === "jail" ? "拘留" : "住院";
-    stretch(IM.roleInfo, x + 5, y + 77, 82, 25, 0.98);
-    fitTxt(`${detainedName} ${p.detained.turns}`, x + 46, y + 90, 72, 10, "center", "#ffcf86", 1000, true, 8);
   }
   if (current) {
     X.save();
@@ -1809,7 +1755,7 @@ function hud() {
     12,
   );
   fitTxt(
-    `現金 $${p.cash.toLocaleString()}　存款 $${(p.bank || 0).toLocaleString()}`,
+    `現金 $${p.cash.toLocaleString()}　持有土地 ${ownedLands(p).length}`,
     1378,
     91,
     350,
@@ -1833,10 +1779,9 @@ function hud() {
     12,
   );
   const statusText = [
-    p.detained ? `${p.detained.facility === "jail" ? "拘留" : "住院"} ${p.detained.turns}回合` : "",
     ...(p.effects || []).map((e) => `${e.kind} ${e.turns}`),
-    p.vehicle ? `${p.vehicle === "car" ? "汽車" : "機車"} ${p.vehicleTurns}` : "",
-    p.bombSteps > 0 ? `炸彈 ${p.bombSteps}步` : "",
+    hasEquipment(p, "guardian") && (p.guardianReadyAt || 0) > b.round ? `守護徽章 ${p.guardianReadyAt - b.round}回合` : "",
+    hasEquipment(p, "compass") && (p.compassReadyAt || 0) > b.round ? `星辰羅盤 ${p.compassReadyAt - b.round}回合` : "",
   ].filter(Boolean).join("｜") || "狀態正常";
   fitTxt(statusText, 1378, 140, 350, 12, "center", "#fff0a5", 900, true, 9);
   btn("pause", "選單", 20, 130, 150, 54, false, 0.94, !S.rolling && !b.popup);
@@ -1855,6 +1800,11 @@ function hud() {
   miniMapHud();
   contain(IM.actionConsole, 955, 575, 635, 318, 0.98);
   contain(IM["portrait" + p.char], 1010, 615, 150, 150, p.bankrupt ? 0.45 : 1);
+  (p.equipment || []).slice(0, 2).forEach((id, i) => {
+    contain(IM["equip_" + id], 990 + i * 82, 775, 66, 66, 1);
+    const def = equipmentDef(id);
+    fitTxt(def?.name || "裝備", 1023 + i * 82, 847, 78, 10, "center", "#fff0ad", 900, true, 8);
+  });
   fitTxt(
     `${p.id + 1}P ${CHAR_NAMES[p.char]}`,
     1085,
@@ -1886,28 +1836,6 @@ function hud() {
     true,
     1,
     !S.rolling && !b.popup && !b.winner && b.phase === "pre-roll" && p.type === "human",
-  );
-  btn(
-    "cards",
-    "卡片 " + p.cards.length,
-    990,
-    785,
-    100,
-    56,
-    false,
-    0.95,
-    !S.rolling && !b.popup && b.phase === "pre-roll" && p.type === "human",
-  );
-  btn(
-    "tools",
-    "道具 " + (p.tools || []).length,
-    1095,
-    785,
-    100,
-    56,
-    false,
-    0.95,
-    !S.rolling && !b.popup && b.phase === "pre-roll" && p.type === "human",
   );
   if (S.msg)
     fitTxt(S.msg, 800, 850, 680, 16, "center", "#fff6d2", 800, true, 12);
@@ -2318,11 +2246,11 @@ function help() {
   cover(IM.homeBg, 0, 0, W, H, 0.7);
   txt("遊戲說明", 800, 95, 48, "center", "#ffe58a", 1000, true);
   const lines = [
-    "擲出立體骰子逐格前進；分岔路口可選路，路障、瞬移與交通工具會改變走法。",
-    "購買土地並升至 Lv5；大型建築可改建旅館、商場或公園，各有獨立收租效果。",
+    "擲出立體骰子逐格前進；骰子點數與角色實際步數會逐步同步呈現。",
+    "購買土地並升至 Lv5；最高階可建成該角色專屬地標，外框清楚標示地主顏色。",
     "拖曳棋盤自由查看世界；點擊格子可確認地價、地主、建築階級與預估租金。",
-    "卡片與道具分冊管理；百貨公司可買賣卡片，車輛、路障與炸彈則收入 8 格道具箱。",
-    "事件、三種小遊戲及巡遊神明會改變局勢；神明附身效果會持續多個回合。",
+    "選角後可攜帶兩件不同類型常駐裝備；整場自動生效，不需在回合中整理物品。",
+    "命運事件與巡遊神明會改變局勢；神明只在角色停留相同位置時觸發附身。",
     "真人與不同難度 AI 可自由配置 2～4 名；完整角色資料只在該真人回合開放。",
   ];
   lines.forEach((l, i) =>

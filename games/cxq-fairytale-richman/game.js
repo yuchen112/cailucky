@@ -1,75 +1,40 @@
 "use strict";
+const EQUIPMENT_DEFS = [
+  { id: "deed", name: "地契印章", group: "property", desc: "首次購地享有八折優惠。" },
+  { id: "toolkit", name: "建築工具箱", group: "property", desc: "所有建築升級費用降低 12%。" },
+  { id: "charm", name: "幸運徽章", group: "fortune", desc: "正向命運事件出現機率提高。" },
+  { id: "guardian", name: "守護吊墜", group: "fortune", desc: "每 8 回合抵銷一次負面事件。" },
+  { id: "bell", name: "收租鈴鐺", group: "income", desc: "收到的租金提高 10%。" },
+  { id: "boots", name: "旅行靴", group: "movement", desc: "骰出 1 點時修正為 2 點。" },
+  { id: "compass", name: "星願羅盤", group: "movement", desc: "每 6 回合可自動重投過低點數。" },
+  { id: "manual", name: "修繕手冊", group: "defense", desc: "首次建築受損時抵銷降級。" },
+];
+function equipmentDef(id) { return EQUIPMENT_DEFS.find((item) => item.id === id); }
+function hasEquipment(p, id) { return (p?.equipment || []).includes(id); }
+function autoEquipmentForSeat(seat) {
+  const byChar = [["charm","bell"],["compass","boots"],["guardian","compass"],["guardian","manual"],["deed","toolkit"],["boots","compass"],["deed","toolkit"],["charm","guardian"],["bell","deed"],["manual","guardian"]];
+  seat.equipment = (byChar[seat.char] || ["deed","boots"]).slice(0, 2);
+  return seat.equipment;
+}
 const EVENTS = [
-  ["王國節慶", "獲得 $6,000", (p) => cashGain(p, 6000), "kingdomFestival"],
-  ["突發修繕", "支付 $3,500", (p) => (p.cash -= 3500), "emergencyRepairs"],
-  ["精靈贈禮", "獲得一張卡片", (p) => drawCard(p), "fairyGift"],
-  ["幸運噴泉", "獲得 $4,500", (p) => cashGain(p, 4500), "luckyFountain"],
-  ["迷路", "下一回合暫停一次", (p) => (p.skip += 1), "lostInMaze"],
-  ["市場熱潮", "獲得 $5,000", (p) => cashGain(p, 5000), "marketBoom"],
-  ["惡作劇", "損失 $2,000", (p) => (p.cash -= 2000), "mischief"],
-  ["旅人委託", "獲得 2 點券", (p) => (p.tickets += 2), "travelerQuest"],
-  ["守護祝福", "得到一次護盾", (p) => (p.shield += 1), "guardianBlessing"],
-  ["稅務日", "支付資產稅 $4,000", (p) => (p.cash -= 4000), "taxDay"],
-  ["星光雨", "獲得 $7,000", (p) => cashGain(p, 7000), "starlightRain"],
-  [
-    "交換市集",
-    "免費抽兩張卡",
-    (p) => {
-      drawCard(p);
-      drawCard(p);
-    },
-    "exchangeMarket",
-  ],
-  ["道路施工", "下一回合骰子最多 3 點", (p) => (p.slow = 1), "roadConstruction"],
-  ["王國補助", "獲得 $3,000", (p) => cashGain(p, 3000), "kingdomSubsidy"],
-  ["失物招領", "獲得 $2,500", (p) => cashGain(p, 2500), "lostAndFound"],
-  [
-    "魔法失控",
-    "隨機損失一張卡",
-    (p) => {
-      if (p.cards.length)
-        p.cards.splice(Math.floor(Math.random() * p.cards.length), 1);
-    },
-    "magicMalfunction",
-  ],
-  ["月光紅利", "獲得 $5,500", (p) => cashGain(p, 5500), "moonlightDividend"],
-  [
-    "森林迷霧",
-    "後退 2 格",
-    (p) => (p.pos = (p.pos - 2 + S.board.tiles.length) % S.board.tiles.length),
-    "forestMist",
-  ],
-  [
-    "雲端順風",
-    "前進 2 格",
-    (p) => (p.pos = (p.pos + 2) % S.board.tiles.length),
-    "cloudTailwind",
-  ],
-  ["商會回饋", "獲得 $4,000", (p) => cashGain(p, 4000), "merchantGuildReward"],
-  [
-    "卡片遺失",
-    "隨機失去一張卡",
-    (p) => {
-      if (p.cards.length)
-        p.cards.splice(Math.floor(Math.random() * p.cards.length), 1);
-    },
-    "lostCard",
-  ],
-  [
-    "幸運日",
-    "獲得護盾與 1 點券",
-    (p) => {
-      p.shield++;
-      p.tickets++;
-    },
-    "luckyDay",
-  ],
-  ["土地維護", "支付 $2,500", (p) => (p.cash -= 2500), "landMaintenance"],
-  ["精靈加護", "免費升級一塊自己的土地", (p) => upgradeRandomLand(p), "fairyBlessing"],
-  ["意外受傷", "送往童話醫院休養 2 回合", (p) => admitPlayer(p, "hospital", 2, "意外受傷，住院 2 回合。"), "accidentalInjury"],
-  ["王國稽查", "送往童話警察局拘留 2 回合", (p) => admitPlayer(p, "jail", 2, "接受王國調查，拘留 2 回合。"), "royalInspection"],
-  ["康復祝福", "立即解除住院狀態", (p) => { if (p.detained?.facility === "hospital") { p.detained = null; p.skip = 0; } }, "recoveryBlessing"],
-  ["無罪證明", "立即解除拘留狀態", (p) => { if (p.detained?.facility === "jail") { p.detained = null; p.skip = 0; } }, "proofOfInnocence"],
+  ["王國節慶", "節慶分紅收入", (p) => cashGain(p, 6000), "kingdomFestival", "positive"],
+  ["幸運噴泉", "獲得旅行祝福金", (p) => cashGain(p, 4500), "luckyFountain", "positive"],
+  ["市場熱潮", "名下土地帶來額外收入", (p) => cashGain(p, 2500 + ownedLands(p).length * 900), "marketBoom", "positive"],
+  ["守護祝福", "下一次負面命運將被抵銷", (p) => (p.shield += 1), "guardianBlessing", "positive"],
+  ["星光雨", "獲得大量星光獎金", (p) => cashGain(p, 7000), "starlightRain", "positive"],
+  ["王國補助", "依目前回合獲得補助", (p) => cashGain(p, 2500 + S.board.round * 120), "kingdomSubsidy", "positive"],
+  ["月光紅利", "獲得月光港紅利", (p) => cashGain(p, 5500), "moonlightDividend", "positive"],
+  ["商會回饋", "依持有建築獲得回饋", (p) => cashGain(p, 3000 + ownedLands(p).reduce((n,t)=>n+t.level,0)*350), "merchantGuildReward", "positive"],
+  ["精靈加護", "一塊自己的土地免費升級", (p) => upgradeRandomLand(p), "fairyBlessing", "positive"],
+  ["突發修繕", "支付必要的建築維護費", (p) => (p.cash -= Math.min(6500, 2200 + ownedLands(p).length * 450)), "emergencyRepairs", "negative"],
+  ["迷路", "沿道路後退兩格", (p) => (p.pos = (p.pos - 2 + S.board.tiles.length) % S.board.tiles.length), "lostInMaze", "negative"],
+  ["惡作劇", "損失少量旅行資金", (p) => (p.cash -= 2500), "mischief", "negative"],
+  ["稅務日", "依土地數支付王國稅金", (p) => (p.cash -= 1800 + ownedLands(p).length * 650), "taxDay", "negative"],
+  ["道路施工", "下一次移動最多三步", (p) => (p.slow = 1), "roadConstruction", "negative"],
+  ["魔法失控", "一棟建築可能降低一級", (p) => damageRandomLand(p), "magicMalfunction", "negative"],
+  ["森林迷霧", "沿道路後退兩格", (p) => (p.pos = (p.pos - 2 + S.board.tiles.length) % S.board.tiles.length), "forestMist", "negative"],
+  ["雲端順風", "沿道路前進兩格", (p) => (p.pos = (p.pos + 2) % S.board.tiles.length), "cloudTailwind", "positive"],
+  ["土地維護", "支付名下土地維護費", (p) => (p.cash -= 1200 + ownedLands(p).length * 500), "landMaintenance", "negative"],
 ];
 const CARD_DEFS = [
   {
@@ -369,18 +334,10 @@ scenePopup = function (q, b, p) {
         13,
       );
     } else txt("尚未有地主", 515, 655, 24, "center", "#dceaff", 900, true);
-    const specialName =
-      t.special === "hotel"
-        ? "星光旅館"
-        : t.special === "mall"
-          ? "童話商場"
-          : t.special === "park"
-            ? "祝福公園"
-            : "";
     const lines = owner
       ? [
           `土地價值　$${t.price.toLocaleString()}`,
-          `建築狀態　${specialName || `Lv${t.level} ${t.level ? "建築" : "空地"}`}`,
+          `建築狀態　${t.level >= 5 ? `${CHAR_NAMES[owner.char]}專屬地標` : `Lv${t.level} ${t.level ? "建築" : "空地"}`}`,
           `目前租金　$${rentEstimate(t, p).toLocaleString()}`,
           mine && t.level < 5 ? `下階費用　$${cost.toLocaleString()}` : mine ? "已達最高建築階級" : "抵達後必須支付租金",
         ]
@@ -388,7 +345,7 @@ scenePopup = function (q, b, p) {
           `售價　　　$${buy.toLocaleString()}`,
           `基礎租金　$${baseRent(t).toLocaleString()}`,
           "購買後可逐級興建",
-          "Lv5 可改建旅館／商場／公園",
+          "Lv5 建成地主角色的專屬地標",
         ];
     lines.forEach((line, i) =>
       fitTxt(line, 1010, 275 + i * 62, 475, 23, "center", i === 2 ? "#ffe477" : "#fff", 900, true, 15),
@@ -398,7 +355,7 @@ scenePopup = function (q, b, p) {
       btn("skip", "暫時略過", 795, 650, 430, 68, false);
     } else if (mine) {
       if (t.level < 5)
-        btn("upgrade", (p.effects || []).some((e) => e.kind === "死神") ? "死神附身｜無法加建" : t.level === 4 ? "選擇大型建築" : `升級至 Lv${t.level + 1}`, 795, 555, 430, 72, true);
+        btn("upgrade", (p.effects || []).some((e) => e.kind === "死神") ? "死神附身｜無法加建" : t.level === 4 ? `建成${CHAR_NAMES[p.char]}專屬地標` : `升級至 Lv${t.level + 1}`, 795, 555, 430, 72, true);
       btn("skip", "完成回合", 795, t.level < 5 ? 650 : 600, 430, 68, false);
     } else btn("pay", p.shield > 0 ? "使用護盾／結算" : `支付租金　$${rentEstimate(t, p).toLocaleString()}`, 795, 600, 430, 74, true);
     return true;
@@ -584,11 +541,11 @@ scenePopup = function (q, b, p) {
         (x.effects || []).map((e) => `${e.kind} ${e.turns}回合`).join("、") ||
         "無";
     const tab = q.tab || "overview";
-    contain(IM.abilityPanel, 190, 45, 1220, 820, 0.99);
-    contain(IM["portrait" + x.char], 245, 120, 220, 220);
+    contain(IM.abilityPanel, 250, 55, 1100, 800, 0.99);
+    contain(IM["portrait" + x.char], 315, 125, 180, 180);
     fitTxt(
       `${x.id + 1}P ${CHAR_NAMES[x.char]}`,
-      500,
+      525,
       120,
       360,
       36,
@@ -600,7 +557,7 @@ scenePopup = function (q, b, p) {
     );
     txt(
       `${x.type === "human" ? "真人玩家" : "電腦 AI"}｜${CHAR_ROLES[x.char]}`,
-      500,
+      525,
       165,
       19,
       "left",
@@ -608,29 +565,24 @@ scenePopup = function (q, b, p) {
       900,
       true,
     );
-    btn("playerTabOverview", "總覽", 430, 205, 150, 54, tab === "overview");
-    btn("playerTabLands", "地產", 590, 205, 150, 54, tab === "lands");
-    btn("playerTabCards", "卡片", 750, 205, 150, 54, tab === "cards");
-    btn("playerTabTools", "道具", 910, 205, 150, 54, tab === "tools");
-    btn("playerTabEffects", "狀態", 1070, 205, 150, 54, tab === "effects");
+    btn("playerTabOverview", "總覽", 520, 215, 180, 54, tab === "overview");
+    btn("playerTabLands", "地產", 710, 215, 180, 54, tab === "lands");
+    btn("playerTabEquipment", "裝備", 900, 215, 180, 54, tab === "equipment");
+    btn("playerTabEffects", "狀態", 1090, 215, 180, 54, tab === "effects");
     const rows = [
       `現金　$${x.cash.toLocaleString()}`,
-      `銀行存款　$${(x.bank || 0).toLocaleString()}`,
       `總資產　$${netWorth(x).toLocaleString()}`,
-      `點券　${x.tickets}`,
       `土地　${lands.length}　｜建築層數　${buildings}`,
-      `卡片　${x.cards.length}/15`,
-      `道具　${(x.tools || []).length}/8`,
-      `交通工具　${x.vehicle === "car" ? "星願汽車（三顆骰子）" : x.vehicle === "motorcycle" ? "星光機車（兩顆骰子）" : "步行（一顆骰子）"}`,
+      `常駐裝備　${(x.equipment || []).map((id) => equipmentDef(id)?.name).filter(Boolean).join("、") || "無"}`,
       `狀態／神明　${effect}`,
     ];
     if (tab === "overview")
       rows.forEach((s, i) =>
         fitTxt(
           s,
-          515,
-          310 + i * 52,
-          760,
+          500,
+          330 + i * 66,
+          700,
           20,
           "left",
           i === 2 ? "#ffe17b" : "#fff",
@@ -666,34 +618,23 @@ scenePopup = function (q, b, p) {
       if (!lands.length)
         txt("目前尚未持有地產", 800, 440, 22, "center", "#fff", 900, true);
     }
-    if (tab === "cards") {
-      x.cards
-        .slice(0, 10)
-        .forEach((c, i) =>
-          richCard(
-            c,
-            300 + (i % 5) * 205,
-            300 + Math.floor(i / 5) * 245,
-            155,
-            220,
-          ),
-        );
-      if (!x.cards.length)
-        txt("目前沒有卡片", 800, 440, 22, "center", "#fff", 900, true);
-    }
-    if (tab === "tools") {
-      (x.tools || []).slice(0, 8).forEach((c, i) =>
-        richTool(c, 300 + (i % 4) * 245, 300 + Math.floor(i / 4) * 245, 180, 220),
-      );
-      if (!(x.tools || []).length)
-        txt("目前沒有道具", 800, 440, 22, "center", "#fff", 900, true);
+    if (tab === "equipment") {
+      (x.equipment || []).slice(0, 2).forEach((id, i) => {
+        const def = equipmentDef(id), ex = 480 + i * 360;
+        contain(IM["equip_" + id], ex + 15, 315, 190, 190, 1);
+        fitTxt(def?.name || "常駐裝備", ex + 110, 548, 260, 23, "center", "#fff0a5", 1000, true, 15);
+        paragraph(def?.desc || "", ex + 110, 588, 245, 15, 22, 3, "center", "#fff", 850, true);
+      });
+      if (!(x.equipment || []).length)
+        txt("目前沒有攜帶常駐裝備", 800, 460, 22, "center", "#fff", 900, true);
     }
     if (tab === "effects") {
       const statuses = [
         ...(x.effects || []).map((e) => `${e.kind}｜剩餘 ${e.turns} 回合`),
         x.shield ? `護盾｜可抵銷 ${x.shield} 次` : "",
         x.skip ? `暫停｜剩餘 ${x.skip} 回合` : "",
-        x.vehicleTurns ? `機車｜剩餘 ${x.vehicleTurns} 回合` : "",
+        hasEquipment(x, "guardian") ? `守護徽章｜${(x.guardianReadyAt || 0) <= b.round ? "可發動" : `${x.guardianReadyAt - b.round} 回合後恢復`}` : "",
+        hasEquipment(x, "compass") ? `星辰羅盤｜${(x.compassReadyAt || 0) <= b.round ? "可發動" : `${x.compassReadyAt - b.round} 回合後恢復`}` : "",
       ].filter(Boolean);
       statuses.forEach((s, i) =>
         btn("noopStatus" + i, s, 470, 315 + i * 72, 660, 60, false),
@@ -720,11 +661,8 @@ const NPC_DEFS = [
   { name: "窮神", desc: "損失 $5,000，租金負擔提高", apply: (p) => (p.cash -= 5000) },
   {
     name: "福神",
-    desc: "獲得 2 張卡片",
-    apply: (p) => {
-      drawCard(p);
-      drawCard(p);
-    },
+    desc: "獲得祝福金並免費升級一塊土地",
+    apply: (p) => { cashGain(p, 5000); upgradeRandomLand(p); },
   },
   { name: "衰神", desc: "下一回合骰子最多 3 點", apply: (p) => (p.slow = 1) },
   {
@@ -744,10 +682,8 @@ const NPC_DEFS = [
   },
   {
     name: "死神",
-    desc: "失去所有卡片並跟隨 13 回合",
+    desc: "封鎖收入並跟隨 13 回合",
     apply: (p) => {
-      p.cards = [];
-      p.tools = [];
       attachEffect(p, "死神", 13);
     },
   },
@@ -784,42 +720,12 @@ const ROUTE = new Proxy([], {
   },
 });
 const TYPE_PATTERN = [
-  "start",
-  "land",
-  "news",
-  "land",
-  "card",
-  "land",
-  "shop",
-  "land",
-  "event",
-  "land",
-  "minigame",
-  "land",
-  "land",
-  "land",
-  "card",
-  "land",
-  "event",
-  "land",
-  "bank",
-  "land",
-  "land",
-  "land",
-  "event",
-  "land",
-  "minigame",
-  "land",
-  "card",
-  "land",
-  "magic",
-  "land",
-  "event",
-  "police",
-  "hospital",
-  "land",
-  "coupon",
-  "land",
+  "start", "land", "event", "land", "land", "land",
+  "event", "land", "land", "land", "event", "land",
+  "magic", "land", "event", "land", "land", "land",
+  "event", "land", "land", "land", "event", "land",
+  "magic", "land", "event", "land", "land", "land",
+  "event", "land", "land", "land", "event", "land",
 ];
 function cashGain(p, n) {
   if ((p.effects || []).some((effect) => effect.kind === "死神")) {
@@ -853,10 +759,12 @@ function tickEffects(p) {
   for (const e of p.effects || []) {
     if (e.kind === "財神") cashGain(p, 1800);
     else if (e.kind === "窮神") p.cash -= 1200;
-    else if (e.kind === "福神" && Math.random() < 0.35) drawCard(p);
+    else if (e.kind === "福神" && Math.random() < 0.35) {
+      cashGain(p, 1500);
+      upgradeRandomLand(p);
+    }
     else if (e.kind === "衰神") p.slow = 1;
-    else if (e.kind === "死神" && p.cards.length && Math.random() < 0.3)
-      p.cards.splice(Math.floor(Math.random() * p.cards.length), 1);
+    else if (e.kind === "死神") p.cash = Math.max(0, p.cash - 1200);
   }
   const expired = (p.effects || []).filter((e) => e.turns <= 1 && isGodEffect(e));
   p.effects = (p.effects || [])
@@ -893,6 +801,22 @@ function downgradeRandomLand(p) {
     if (t.level < 5) t.special = null;
     markUpgrade(t);
   }
+}
+function ownedLands(p) {
+  return S.board?.tiles.filter((t) => t.type === "land" && t.owner === p.id) || [];
+}
+function damageRandomLand(p) {
+  const lands = ownedLands(p).filter((t) => t.level > 0);
+  if (!lands.length) return;
+  if (hasEquipment(p, "manual") && !p.manualUsed) {
+    p.manualUsed = true;
+    addLog(`${p.id + 1}P 的修繕手冊抵銷一次建築受損`);
+    return;
+  }
+  const t = lands[Math.floor(Math.random() * lands.length)];
+  t.level--;
+  if (t.level < 5) t.special = null;
+  markUpgrade(t);
 }
 function drawCard(p) {
   if (p.cards.length < 15)
@@ -935,13 +859,7 @@ function typeName(t) {
       land: "土地",
       event: "命運",
       news: "新聞",
-      card: "卡片點",
-      shop: "百貨公司",
-      minigame: "小遊戲",
-      bank: "銀行",
       magic: "魔法屋",
-      hospital: "醫院",
-      coupon: "點券格",
     }[t] || t
   );
 }
@@ -969,12 +887,14 @@ function regionOwned(pid, reg) {
 function buyCost(p, t) {
   let c = Math.round(t.price * marketIndex());
   if (p.char === 6) c = Math.round(c * 0.9);
-  if (p.discount) c = Math.round(c * 0.75);
+  if (hasEquipment(p, "deed") && !p.deedUsed) c = Math.round(c * 0.8);
   return c;
 }
-function upgradeCost(t) {
+function upgradeCost(t, p = null) {
   const nextLevel = Math.min(5, (t.level || 0) + 1);
-  return Math.round(t.price * (0.61 + nextLevel * 0.07) * marketIndex());
+  let cost = t.price * (0.61 + nextLevel * 0.07) * marketIndex();
+  if (hasEquipment(p || (S.board ? cp() : null), "toolkit")) cost *= 0.88;
+  return Math.round(cost);
 }
 function baseRent(t) {
   return Math.round(
@@ -995,6 +915,7 @@ function rentFor(t, payer = null) {
   const owner = S.board.players.find((x) => x.id === t.owner);
   if ((owner?.effects || []).some((e) => e.kind === "死神")) return 0;
   if (owner?.char === 8) r = Math.round(r * 1.15);
+  if (hasEquipment(owner, "bell")) r = Math.round(r * 1.1);
   if (owner?.rentBoost) {
     r = Math.round(r * 1.5);
     owner.rentBoost = 0;
@@ -1019,6 +940,7 @@ function rentEstimate(t, payer = null) {
   const owner = S.board.players.find((x) => x.id === t.owner);
   if ((owner?.effects || []).some((e) => e.kind === "死神")) return 0;
   if (owner?.char === 8) r = Math.round(r * 1.15);
+  if (hasEquipment(owner, "bell")) r = Math.round(r * 1.1);
   if (owner?.rentBoost) r = Math.round(r * 1.5);
   if (payer?.char === 3) r = Math.round(r * 0.8);
   if ((payer?.effects || []).some((e) => e.kind === "財神")) r = 0;
@@ -1036,7 +958,7 @@ function marketIndex() {
 function applyPropertyArrival(t, payer, owner) {
   if (!owner || !t.special) return;
   if (t.special === "hotel") payer.skip += 1;
-  else if (t.special === "mall") owner.tickets += 2;
+  else if (t.special === "mall") owner.cash += 1800;
   else if (t.special === "park") owner.cash += 2500;
 }
 function applyGodArrival(t, p) {
@@ -1061,7 +983,7 @@ function applyGodArrival(t, p) {
   }
 }
 function netWorth(p) {
-  let v = p.cash + (p.bank || 0);
+  let v = p.cash;
   S.board.tiles.forEach((t) => {
     if (t.owner === p.id)
       v += Math.round(
@@ -1155,26 +1077,21 @@ function makeBoard() {
     type: S.seats[si].type,
     char: S.seats[si].char,
     diff: S.seats[si].diff,
+    equipment: [...(S.seats[si].equipment || [])],
     cash: S.money + (S.seats[si].char === 9 ? 2000 : 0),
-    bank: 0,
     pos: 0,
-    cards: [],
-    tools: [],
-    tickets: 0,
-    skip: 0,
     shield: 0,
     bankrupt: false,
     effects: [],
     hopeUsed: false,
-    rentBoost: 0,
-    discount: 0,
+    skip: 0,
     slow: 0,
     diceCount: 1,
-    vehicleTurns: 0,
     direction: 1,
-    detained: null,
-    hospitalPass: 0,
-    bailPass: 0,
+    deedUsed: false,
+    manualUsed: false,
+    guardianReadyAt: 1,
+    compassReadyAt: 1,
   }));
   S.board = {
     worldW: MW,
@@ -1188,7 +1105,6 @@ function makeBoard() {
     },
     victory: S.victory,
     eventLevel: S.eventLevel,
-    startingCards: S.startingCards,
     gods: S.gods,
     tiles,
     players,
@@ -1197,20 +1113,13 @@ function makeBoard() {
     phase: "pre-roll",
     cam: { x: 650, y: 900, target: null },
     popup: null,
-    mini: null,
     buildAnim: null,
     selectedTile: null,
     log: [`${mapRules.name}冒險開始！`],
     winner: null,
     npcs: [],
-    roadblocks: [],
-    shopStock: [],
-    toolStock: [],
     turnBanner: { player: 0, start: performance.now() },
   };
-  players.forEach((p) => {
-    for (let i = 0; i < S.startingCards; i++) drawCard(p);
-  });
   if (S.gods) spawnNPCs();
   focus(true);
   saveGame();
@@ -1243,9 +1152,6 @@ function surrenderPlayer(p) {
   if (!p || p.bankrupt) return;
   p.bankrupt = true;
   p.cash = 0;
-  p.bank = 0;
-  p.cards = [];
-  p.tools = [];
   p.effects = [];
   S.board.tiles.forEach((tile) => {
     if (tile.owner === p.id) {
@@ -1261,8 +1167,6 @@ function summonDeathGod(target) {
   const former = (target.effects || []).find(isGodEffect);
   if (former) releaseGod(former.kind, target.pos);
   target.effects = (target.effects || []).filter((effect) => !isGodEffect(effect));
-  target.cards = [];
-  target.tools = [];
   attachEffect(target, "死神", 13);
   addLog(`魔法屋召喚死神附身 ${target.id + 1}P，持續 13 回合`);
   return true;
@@ -1282,14 +1186,6 @@ function resolveTile() {
   }
   applyGodArrival(t, p);
   if (p.type === "ai" && !["start", "land"].includes(t.type)) {
-    if (t.type === "bank") {
-      const amount = Math.max(0, Math.min(10000, p.cash - 50000));
-      p.cash -= amount;
-      p.bank = (p.bank || 0) + amount;
-      addLog(`${p.id + 1}P 在銀行存入 $${amount.toLocaleString()}`);
-      openPopup("event", { name: "童話銀行", desc: `${p.id + 1}P 存入 $${amount.toLocaleString()}。`, aiDecision: true });
-      return;
-    }
     applySpecial(t, p);
     return;
   }
@@ -1297,47 +1193,27 @@ function resolveTile() {
   if (p.type === "ai") aiResolve();
 }
 function applySpecial(t, p) {
-  if (t.type === "event" || t.type === "news") {
-    const e = EVENTS[Math.floor(Math.random() * EVENTS.length)];
-    const protectedByShield = p.shield > 0 && NEGATIVE_EVENTS.has(e[0]);
-    if (protectedByShield) p.shield--;
+  if (t.type === "event") {
+    const weighted = hasEquipment(p, "charm")
+      ? [...EVENTS, ...EVENTS.filter((event) => event[4] === "positive")]
+      : EVENTS,
+      e = weighted[Math.floor(Math.random() * weighted.length)],
+      negative = e[4] === "negative",
+      guardianReady = hasEquipment(p, "guardian") && S.board.round >= (p.guardianReadyAt || 1),
+      protectedByShield = negative && (p.shield > 0 || guardianReady);
+    if (guardianReady && negative) p.guardianReadyAt = S.board.round + 8;
+    if (protectedByShield && p.shield > 0) p.shield--;
     else e[2](p);
     openPopup("event", {
-      name: (t.type === "news" ? "王國新聞｜" : "命運事件｜") + e[0],
-      desc: protectedByShield ? `護身符生效，已抵銷「${e[0]}」的負面效果。` : e[1],
+      name: "命運事件｜" + e[0],
+      desc: protectedByShield ? `${guardianReady ? "守護吊墜" : "守護效果"}生效，已抵銷「${e[0]}」。` : e[1],
       art: e[3] || null,
     });
     addLog(
       protectedByShield
-        ? `${p.id + 1}P 使用護身符抵銷 ${e[0]}`
+        ? `${p.id + 1}P 抵銷 ${e[0]}`
         : `${p.id + 1}P：${e[0]}・${e[1]}`,
     );
-  } else if (t.type === "card") {
-    drawCard(p);
-    const c = p.cards[p.cards.length - 1];
-    openPopup("carddraw", { card: c });
-    addLog(`${p.id + 1}P 抽到 ${cardDef(c).name}`);
-  } else if (t.type === "shop") {
-    S.board.shopStock = Array.from(
-      { length: 6 },
-      () => CARD_POOL[Math.floor(Math.random() * CARD_POOL.length)],
-    );
-    S.board.toolStock = Array.from(
-      { length: 4 },
-      () => TOOL_POOL[Math.floor(Math.random() * TOOL_POOL.length)],
-    );
-    openPopup("shop", { tab: "cards" });
-    addLog(`${p.id + 1}P 進入童話百貨公司`);
-  } else if (t.type === "coupon") {
-    p.tickets += 3;
-    addLog(`${p.id + 1}P 獲得 3 點券`);
-    openPopup("event", {
-      name: "點券獎勵",
-      desc: "獲得 3 點券，可在百貨公司購買卡片。",
-    });
-  } else if (t.type === "bank") {
-    openPopup("bank");
-    addLog(`${p.id + 1}P 抵達銀行`);
   } else if (t.type === "magic") {
     const o = living().filter((x) => x.id !== p.id)[
       Math.floor(Math.random() * Math.max(1, living().length - 1))
@@ -1351,36 +1227,6 @@ function applySpecial(t, p) {
       name: "魔法屋",
       desc: o ? `與 ${o.id + 1}P 交換位置。` : "魔法暫時沉睡。",
     });
-  } else if (t.type === "hospital") {
-    if (p.type === "human") openPopup("facilityVisit", { facility: "hospital" });
-    else resolveAIFacility(p, "hospital");
-    addLog(`${p.id + 1}P 抵達童話醫院`);
-  } else if (t.type === "police") {
-    if (p.type === "human") openPopup("facilityVisit", { facility: "jail" });
-    else resolveAIFacility(p, "jail");
-    addLog(`${p.id + 1}P 抵達童話警察局`);
-  } else if (t.type === "minigame") {
-    if (p.type === "ai") {
-      p.tickets += 2;
-      cashGain(p, p.char === 7 ? 3200 : 2500);
-      addLog(`${p.id + 1}P 完成小遊戲，獲得獎勵`);
-      openPopup("event", { name: "AI 小遊戲結果", desc: "獲得獎金與 2 點券。", aiDecision: true });
-    } else {
-      const kind = Math.floor(Math.random() * 3),
-        names = ["星光接接樂", "月港氣球祭", "雲端寶箱"];
-      S.board.mini = {
-        kind,
-        pos: 0,
-        dir: 1,
-        last: performance.now(),
-        name: names[kind],
-        target: 0.18 + Math.random() * 0.64,
-        speed: kind === 0 ? 0.72 : 1.28,
-        winningChest: Math.floor(Math.random() * 3),
-        revealUntil: performance.now() + 1200,
-      };
-      openPopup("mini", { name: S.board.mini.name });
-    }
   }
 }
 function releaseDetainedPlayer(visitor, target) {
@@ -1561,23 +1407,7 @@ function nextTurn() {
   tickEffects(p);
   if (p.skip > 0) {
     p.skip--;
-    if (p.detained) {
-      const facility = p.detained.facility,
-        releaseCard = facility === "jail" ? "bail" : "hospitalpass",
-        releaseIndex = p.cards.indexOf(releaseCard);
-      if (p.type === "ai" && releaseIndex >= 0) {
-        p.cards.splice(releaseIndex, 1);
-        p.detained = null;
-        p.skip = 0;
-        openPopup("event", { name: "AI 使用解除卡", desc: `${p.id + 1}P 使用${cardDef(releaseCard).name}，立即恢復行動資格。`, detainedTurn: true, released: true });
-        addLog(`${p.id + 1}P 使用${cardDef(releaseCard).name}解除狀態`);
-        return;
-      }
-      p.detained.turns = Math.max(0, p.detained.turns - 1);
-      const place = p.detained.facility === "jail" ? "警察局" : "醫院";
-      openPopup("event", { name: `${place}停留`, desc: `${p.id + 1}P 尚需停留 ${p.detained.turns} 回合。`, detainedTurn: true, facility, releaseIndex });
-      if (!p.detained.turns) p.detained = null;
-    } else openPopup("event", { name: "暫停回合", desc: `${p.id + 1}P 本回合無法行動。`, detainedTurn: true });
+    openPopup("event", { name: "暫停回合", desc: `${p.id + 1}P 本回合休息，尚餘 ${p.skip} 回合。`, detainedTurn: true });
     return;
   }
   focus();
@@ -1602,26 +1432,11 @@ function moveToTile(next) {
   p.pos = next;
   p.moveAnim = { from: { x: from.x, y: from.y }, to: { x: to.x, y: to.y }, start: performance.now(), dur };
   move.remaining--;
-  if (p.bombSteps > 0 && --p.bombSteps === 0) {
-    p.detained = { facility: "hospital", turns: 3 };
-    p.skip += 3;
-    const hospital = b.tiles.find((tile) => tile.type === "hospital");
-    if (hospital) p.pos = hospital.index;
-    move.remaining = 0;
-    addLog(`${p.id + 1}P 的定時炸彈爆炸，將住院休息 3 回合`);
-    sfx("loss");
-  }
   move.branchHandledAt = old;
   sfx("step");
   if (p.pos === 0 && old !== 0) {
     cashGain(p, 5000);
     addLog(`${p.id + 1}P 通過起點 +$5,000`);
-  }
-  const roadIndex = (b.roadblocks || []).indexOf(p.pos);
-  if (roadIndex >= 0) {
-    b.roadblocks.splice(roadIndex, 1);
-    move.remaining = 0;
-    addLog(`${p.id + 1}P 撞上路障，移動提前結束`);
   }
   focus();
   setTimeout(() => { p.moveAnim = null; advanceMovement(); }, dur);
@@ -1656,9 +1471,19 @@ function moveSteps(steps) {
 }
 function resolveDiceRoll(results, p) {
   const faces = results.map((value) => Math.max(1, Math.min(6, Number(value) || 1))),
-    rolledTotal = faces.reduce((sum, value) => sum + value, 0),
     adjustments = [];
+  let rolledTotal = faces.reduce((sum, value) => sum + value, 0);
+  if (hasEquipment(p, "compass") && rolledTotal <= 2 && S.board.round >= (p.compassReadyAt || 1)) {
+    faces[0] = 3 + Math.floor(Math.random() * 4);
+    rolledTotal = faces.reduce((sum, value) => sum + value, 0);
+    p.compassReadyAt = S.board.round + 6;
+    adjustments.push(`星願羅盤：重新投擲為 ${rolledTotal} 點`);
+  }
   let finalSteps = rolledTotal;
+  if (hasEquipment(p, "boots") && finalSteps === 1) {
+    finalSteps = 2;
+    adjustments.push("旅行靴：最低前進 2 步");
+  }
   if (p.char === 1 && finalSteps === 1 && Math.random() < 0.5) {
     finalSteps = 2;
     adjustments.push("角色能力：最低前進 2 步");
@@ -1752,7 +1577,7 @@ function aiResolve() {
           canInvest = !(p.effects || []).some((e) => e.kind === "死神");
         if (canInvest && p.cash - cost > reserve) {
           p.cash -= cost;
-          if (p.discount) p.discount = 0;
+          if (hasEquipment(p, "deed") && !p.deedUsed) p.deedUsed = true;
           t.owner = p.id;
           addLog(`${p.id + 1}P 購買 ${REGION_NAMES[t.region]} 土地`);
         }
@@ -1760,7 +1585,7 @@ function aiResolve() {
         return;
       }
       if (t.owner === p.id) {
-        const cost = upgradeCost(t),
+        const cost = upgradeCost(t, p),
           want =
             !(p.effects || []).some((e) => e.kind === "死神") &&
             t.level < 5 &&
@@ -1768,8 +1593,7 @@ function aiResolve() {
         if (want) {
           p.cash -= cost;
           t.level++;
-          if (t.level === 5)
-            t.special = smart ? "hotel" : easy ? "park" : "mall";
+          if (t.level === 5) t.special = null;
           markUpgrade(t);
           addLog(`${p.id + 1}P 將土地升到 Lv${t.level}`);
         }
@@ -2085,14 +1909,13 @@ function saveGame() {
     localStorage.setItem(
       SAVE,
       JSON.stringify({
-        version: 2,
+        version: 3,
         seats: S.seats,
         mapIndex: S.mapIndex,
         money: S.money,
         rounds: S.rounds,
         victory: S.victory,
         eventLevel: S.eventLevel,
-        startingCards: S.startingCards,
         gods: S.gods,
         settings: S.settings,
         board: S.board,
@@ -2112,9 +1935,6 @@ function loadGame() {
     S.rounds = d.rounds || S.rounds;
     S.victory = d.victory || d.board.victory || "assets";
     S.eventLevel = d.eventLevel || d.board.eventLevel || "standard";
-    S.startingCards = Number.isInteger(d.startingCards)
-      ? d.startingCards
-      : d.board.startingCards || 0;
     S.gods = typeof d.gods === "boolean" ? d.gods : d.board.gods !== false;
     S.settings = d.settings || S.settings;
     S.board = d.board;
@@ -2128,44 +1948,32 @@ function loadGame() {
       eventRate: 1,
     };
     S.board.popup = null;
-    S.board.mini = null;
     S.board.selectedTile = null;
     S.board.npcs = S.board.npcs || [];
     setTurnPhase("pre-roll");
-    S.board.roadblocks = S.board.roadblocks || [];
-    S.board.shopStock = S.board.shopStock || [];
-    S.board.toolStock = S.board.toolStock || [];
     const savedRoute = MAP_ROUTES[MAPS[S.mapIndex]?.key] || MAP_ROUTES.starwish;
+    const currentTypes = adjustedTypes(MAPS[S.mapIndex] || MAPS[0]);
     S.board.tiles.forEach((t, i) => {
       t.index = i;
+      t.type = currentTypes[i] || "land";
       if (savedRoute[i]) {
         t.x = savedRoute[i][0];
         t.y = savedRoute[i][1];
       }
-      if (t.type === "npc") t.type = "land";
     });
     S.board.players.forEach((p) => {
       p.effects = p.effects || [];
       const legacyGod = p.effects.filter(isGodEffect).at(-1);
       p.effects = p.effects.filter((e) => !isGodEffect(e) || e === legacyGod);
-      const migrated = (p.cards || []).map((c) => cardDef(c).id).filter(Boolean);
-      p.tools = [...(p.tools || []), ...migrated.filter((c) => cardDef(c).kind === "tool")]
-        .map((c) => toolDef(c).id)
-        .slice(0, 8);
-      p.cards = migrated
-        .filter((c) => cardDef(c).kind !== "tool")
-        .map((c) => cardDef(c).id)
-        .filter(Boolean)
-        .slice(0, 15);
-      p.bank = p.bank || 0;
+      p.equipment = (p.equipment || S.seats[p.seat]?.equipment || autoEquipmentForSeat(S.seats[p.seat ?? p.id])).slice(0, 2);
       p.diceCount = p.diceCount || 1;
-      p.vehicleTurns = p.vehicleTurns || 0;
-      p.vehicle = p.vehicle || (p.diceCount === 3 ? "car" : p.diceCount === 2 ? "motorcycle" : null);
-      p.bombSteps = p.bombSteps || 0;
       p.direction = p.direction || 1;
-      p.detained = p.detained || null;
-      p.hospitalPass = p.hospitalPass || 0;
-      p.bailPass = p.bailPass || 0;
+      p.skip = p.skip || 0;
+      p.deedUsed = !!p.deedUsed;
+      p.manualUsed = !!p.manualUsed;
+      p.guardianReadyAt = p.guardianReadyAt || 1;
+      p.compassReadyAt = p.compassReadyAt || 1;
+      ["cards", "tools", "bank", "tickets", "vehicle", "vehicleTurns", "bombSteps", "detained", "hospitalPass", "bailPass", "discount", "rentBoost"].forEach((key) => delete p[key]);
     });
     const attachedGods = new Set(S.board.players.flatMap((p) => p.effects.filter(isGodEffect).map((e) => e.kind))),
       seenGods = new Set();
@@ -2326,13 +2134,31 @@ function action(id) {
       return;
     }
     if (id === "startGame") {
-      S.scene = "mapSelect";
+      activeSeatIds().forEach((i) => {
+        S.seats[i].equipment ||= [];
+        if (S.seats[i].type === "ai") autoEquipmentForSeat(S.seats[i]);
+      });
+      S.activeSeat = activeSeatIds()[0];
+      S.scene = "loadout";
       return;
     }
   }
+  if (S.scene === "loadout") {
+    if (id === "loadoutBack") { S.scene = "setup"; return; }
+    if (id.startsWith("loadoutSeat")) { S.activeSeat = +id.slice(11); return; }
+    if (id.startsWith("equip")) {
+      const item = equipmentDef(id.slice(5)), seat = S.seats[S.activeSeat];
+      if (!item || seat.type === "off") return;
+      seat.equipment ||= [];
+      if (seat.equipment.includes(item.id)) seat.equipment = seat.equipment.filter((x) => x !== item.id);
+      else if (seat.equipment.length < 2 && !seat.equipment.some((x) => equipmentDef(x)?.group === item.group)) seat.equipment.push(item.id);
+      return;
+    }
+    if (id === "loadoutNext" && activeSeatIds().every((i) => (S.seats[i].equipment || []).length > 0)) { S.scene = "mapSelect"; return; }
+  }
   if (S.scene === "mapSelect") {
     if (id === "mapBack") {
-      S.scene = "setup";
+      S.scene = "loadout";
       return;
     }
     if (id.startsWith("chooseMap")) {
@@ -2359,10 +2185,6 @@ function action(id) {
     }
     if (id === "ruleVictory") {
       S.victory = cycleVal(S.victory, ["assets", "survival"]);
-      return;
-    }
-    if (id === "ruleCards") {
-      S.startingCards = cycleVal(S.startingCards, [0, 1, 2, 3]);
       return;
     }
     if (id === "ruleEvents") {
@@ -2535,10 +2357,6 @@ function action(id) {
     if ((p.effects || []).some((e) => e.kind === "死神")) {
       addLog(`${p.id + 1}P 受死神影響，本回合無法加建`);
       finishAction();
-      return;
-    }
-    if (t.level === 4) {
-      openPopup("specialBuild", { tile: t });
       return;
     }
     if (t.level < 5 && p.cash >= cost) {
@@ -2747,7 +2565,7 @@ function action(id) {
         addLog(`${p.id + 1}P 受死神影響，本回合無法購地`);
       } else if (p.cash >= cost) {
         p.cash -= cost;
-        if (p.discount) p.discount = 0;
+        if (hasEquipment(p, "deed") && !p.deedUsed) p.deedUsed = true;
         t.owner = p.id;
         addLog(`${p.id + 1}P 購買 ${REGION_NAMES[t.region]} 土地`);
       }
@@ -2756,10 +2574,10 @@ function action(id) {
     }
     if (id === "upgrade") {
       const t = q.tile,
-        cost = upgradeCost(t);
+        cost = upgradeCost(t, p);
       if ((p.effects || []).some((e) => e.kind === "死神")) {
         addLog(`${p.id + 1}P 受死神影響，本回合無法加建`);
-      } else if (t.level < 4 && p.cash >= cost) {
+      } else if (t.level < 5 && p.cash >= cost) {
         p.cash -= cost;
         t.level++;
         markUpgrade(t);
@@ -2955,6 +2773,7 @@ function frame() {
   begin();
   if (S.scene === "home") home();
   else if (S.scene === "setup") setup();
+  else if (S.scene === "loadout") loadout();
   else if (S.scene === "mapSelect") mapSelect();
   else if (S.scene === "rules") rulesSetup();
   else if (S.scene === "game" && S.board) game();
