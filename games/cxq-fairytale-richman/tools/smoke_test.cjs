@@ -3,7 +3,7 @@ const vm = require("vm");
 const path = require("path");
 
 const root = path.resolve(__dirname, "..");
-const revision = "20260904-0430";
+const revision = "20260907-1200";
 const read = (name) => fs.readFileSync(path.join(root, name), "utf8");
 const fail = (message) => { throw new Error(message); };
 
@@ -172,6 +172,17 @@ run(`(()=>{
   S.board.npcs=[];spawnNPCs(4);
   if(S.board.npcs.some(n=>n.name==='死神'))throw new Error('Death God spawned normally');
 })()`);
+
+timers.length = 0;
+run(`(()=>{
+  S.mapIndex=0;makeBoard();S.scene='game';
+  const p=cp();p.type='ai';S.rolling=false;S.board.popup=null;S.board.phase='pre-roll';
+  aiTurn();
+})()`);
+if (!timers.length) fail("AI did not schedule its dice turn");
+timers.shift()();
+if (run("S.board.phase") !== "rolling") fail("AI turn did not enter the dice sequence");
+run("S.rolling=false;S.diceAnim=null;S.board.phase='pre-roll'");
 
 run(`
   S.mapIndex=0;makeBoard();saveGame();

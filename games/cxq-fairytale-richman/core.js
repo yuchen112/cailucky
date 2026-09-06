@@ -2,47 +2,6 @@
 const ANIMATION_FPS = 60,
   ANIMATION_MIN_FRAMES = 30,
   ANIMATION_MIN_MS = Math.ceil((ANIMATION_MIN_FRAMES / ANIMATION_FPS) * 1000);
-function richCard(c, x, y, w, h, buttonId = "") {
-  const d = cardDef(c),
-    im = IM["card_" + d.cover];
-  contain(im, x, y, w, h, 1);
-  X.save();
-  X.fillStyle = "rgba(4,10,31,.9)";
-  X.fillRect(x, y + h - 68, w, 68);
-  X.restore();
-  fitTxt(
-    d.name,
-    x + w / 2,
-    y + h - 45,
-    w - 16,
-    16,
-    "center",
-    "#fff3b3",
-    1000,
-    true,
-    10,
-  );
-  txt(
-    `${d.cost} 點券`,
-    x + w / 2,
-    y + h - 19,
-    12,
-    "center",
-    "#d9efff",
-    900,
-    true,
-  );
-  if (buttonId) S.buttons.push({ id: buttonId, x, y, w, h, en: true });
-}
-function richTool(c, x, y, w, h, buttonId = "") {
-  const d = toolDef(c),
-    im = IM["tool_" + d.cover];
-  contain(IM.mapCardFrame, x, y, w, h, 0.98);
-  contain(im, x + 18, y + 12, w - 36, h - 82, 1);
-  fitTxt(d.name, x + w / 2, y + h - 50, w - 20, 16, "center", "#fff3b3", 1000, true, 10);
-  txt(`${d.cost} 點券`, x + w / 2, y + h - 23, 12, "center", "#d9efff", 900, true);
-  if (buttonId) S.buttons.push({ id: buttonId, x, y, w, h, en: true });
-}
 const C = document.getElementById("game"),
   X = C.getContext("2d", { alpha: false });
 const W = 1600,
@@ -221,7 +180,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260904-0430";
+const ASSET_REV = "20260907-1200";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -262,8 +221,8 @@ MAPS.forEach((m, i) =>
   load("mapPreview" + i, A + "maps/map_world_" + m.key + "_v2.webp"),
 );
 load("tile_land", A + "tiles/land_parcel_v1.webp");
-load("tile_card", A + "tiles/card_v2.webp");
-load("tile_shop", A + "tiles/shop.webp");
+load("tile_event", A + "tiles/event_token_v3.png");
+load("tile_start", A + "tiles/start_token_v3.png");
 // Known-corrupt start/event rasters are intentionally not loaded. They are visually quarantined.
 for (let i = 1; i <= 6; i++) load("dice" + i, A + "dice/dice_" + i + ".webp");
 for (let i = 1; i <= 6; i++)
@@ -271,29 +230,28 @@ for (let i = 1; i <= 6; i++)
 MAPS.forEach((m, i) =>
   load("eventScene" + i, A + `events/${m.key}_event_v1.webp`),
 );
-load("event_kingdomFestival", A + "events/kingdom_festival_v1.png");
-load("event_emergencyRepairs", A + "events/emergency_repairs_v1.png");
-load("event_luckyFountain", A + "events/lucky_fountain_v1.png");
-load("event_lostInMaze", A + "events/lost_in_maze_v1.png");
-load("event_marketBoom", A + "events/market_boom_v1.png");
-load("event_mischief", A + "events/mischief_v1.png");
-load("event_guardianBlessing", A + "events/guardian_blessing_v1.png");
-load("event_taxDay", A + "events/tax_day_v1.png");
-load("event_starlightRain", A + "events/starlight_rain_v1.png");
-load("event_roadConstruction", A + "events/road_construction_v1.png");
-load("event_kingdomSubsidy", A + "events/kingdom_subsidy_v1.png");
-load("event_magicMalfunction", A + "events/magic_malfunction_v1.png");
-load("event_moonlightDividend", A + "events/moonlight_dividend_v1.png");
-load("event_forestMist", A + "events/forest_mist_v1.png");
-load("event_cloudTailwind", A + "events/cloud_tailwind_v1.png");
-load("event_merchantGuildReward", A + "events/merchant_guild_reward_v1.png");
-load("event_landMaintenance", A + "events/land_maintenance_v1.png");
-load("event_fairyBlessing", A + "events/fairy_blessing_v1.png");
+load("event_kingdomFestival", A + "events/kingdom_festival_v2.webp");
+load("event_emergencyRepairs", A + "events/emergency_repairs_v2.webp");
+load("event_luckyFountain", A + "events/lucky_fountain_v2.webp");
+load("event_lostInMaze", A + "events/lost_in_maze_v2.webp");
+load("event_marketBoom", A + "events/market_boom_v2.webp");
+load("event_mischief", A + "events/mischief_v2.webp");
+load("event_guardianBlessing", A + "events/guardian_blessing_v2.webp");
+load("event_taxDay", A + "events/tax_day_v2.webp");
+load("event_starlightRain", A + "events/starlight_rain_v2.webp");
+load("event_roadConstruction", A + "events/road_construction_v2.webp");
+load("event_kingdomSubsidy", A + "events/kingdom_subsidy_v2.webp");
+load("event_magicMalfunction", A + "events/magic_malfunction_v2.webp");
+load("event_moonlightDividend", A + "events/moonlight_dividend_v2.webp");
+load("event_forestMist", A + "events/forest_mist_v2.webp");
+load("event_cloudTailwind", A + "events/cloud_tailwind_v2.webp");
+load("event_merchantGuildReward", A + "events/merchant_guild_reward_v2.webp");
+load("event_landMaintenance", A + "events/land_maintenance_v2.webp");
+load("event_fairyBlessing", A + "events/fairy_blessing_v2.webp");
 load("event_systemLandPurchase", A + "events/system_land_purchase_v1.webp");
 load("event_systemRentPayment", A + "events/system_rent_payment_v1.webp");
 load("event_systemBuildUpgrade", A + "events/system_build_upgrade_v1.webp");
 load("facilityMagic", A + "facilities/magic_token_v2.webp");
-load("facilityStart", A + "facilities/start_token_v2.webp");
 load("roadNode", A + "tiles/road_node_v2.png");
 load("npcWealth", A + "npc/wealth_v1.webp");
 load("npcFortune", A + "npc/fortune_v1.webp");
@@ -1240,13 +1198,12 @@ function rulesSetup() {
 }
 
 function tileImage(type) {
-  if (type === "start") return IM.tile_shop || IM.tile_land;
-  if (type === "event") return IM.tile_card || IM.tile_land;
+  if (type === "start") return IM.tile_start || IM.roadNode || IM.tile_land;
+  if (type === "event") return IM.tile_event || IM.roadNode || IM.tile_land;
   return IM["tile_" + type] || IM.tile_land;
 }
 function facilityImage(type) {
   return {
-    start: IM.facilityStart,
     magic: IM.facilityMagic,
   }[type];
 }

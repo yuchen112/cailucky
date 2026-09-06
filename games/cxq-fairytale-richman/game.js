@@ -36,201 +36,6 @@ const EVENTS = [
   ["雲端順風", "沿道路前進兩格", (p) => (p.pos = (p.pos + 2) % S.board.tiles.length), "cloudTailwind", "positive"],
   ["土地維護", "支付名下土地維護費", (p) => (p.cash -= 1200 + ownedLands(p).length * 500), "landMaintenance", "negative"],
 ];
-const CARD_DEFS = [
-  {
-    id: "remote",
-    name: "遙控骰子",
-    cost: 30,
-    cover: "remote",
-    desc: "自由選擇 1～6 點",
-    timing: "turn",
-    kind: "tool",
-  },
-  {
-    id: "shield",
-    name: "護身符",
-    cost: 30,
-    cover: "shield",
-    desc: "抵銷一次租金或負面效果",
-    timing: "turn",
-  },
-  {
-    id: "speed",
-    name: "星光機車",
-    cost: 35,
-    cover: "speed",
-    desc: "裝備後 5 回合使用兩顆骰子",
-    timing: "turn",
-    kind: "tool",
-  },
-  {
-    id: "roadblock",
-    name: "路障卡",
-    cost: 15,
-    cover: "roadblock",
-    desc: "在指定道路設置路障",
-    timing: "target",
-    kind: "tool",
-  },
-  {
-    id: "teleport",
-    name: "傳送卡",
-    cost: 40,
-    cover: "teleport",
-    desc: "移動到指定地點",
-    timing: "target",
-  },
-  {
-    id: "buyland",
-    name: "購地卡",
-    cost: 45,
-    cover: "land_purchase",
-    desc: "強制購買腳下無主土地",
-    timing: "arrival",
-  },
-  {
-    id: "upgrade",
-    name: "免費升級卡",
-    cost: 50,
-    cover: "free_upgrade",
-    desc: "免費升級一棟自己的房屋",
-    timing: "turn",
-  },
-  {
-    id: "discount",
-    name: "地產折價券",
-    cost: 20,
-    cover: "discount",
-    desc: "下次購地價格七五折",
-    timing: "turn",
-  },
-  {
-    id: "rent",
-    name: "租金加倍卡",
-    cost: 35,
-    cover: "rent",
-    desc: "下一次收取租金提高",
-    timing: "turn",
-  },
-  {
-    id: "swap",
-    name: "交換卡",
-    cost: 45,
-    cover: "swap",
-    desc: "與指定玩家交換位置",
-    timing: "target",
-  },
-  {
-    id: "stop",
-    name: "停留卡",
-    cost: 25,
-    cover: "stop",
-    desc: "指定玩家暫停一回合",
-    timing: "target",
-  },
-  {
-    id: "car",
-    name: "星願汽車",
-    cost: 55,
-    cover: "car",
-    desc: "裝備後 5 回合使用三顆骰子",
-    timing: "turn",
-    kind: "tool",
-  },
-  {
-    id: "hospitalpass",
-    name: "醫院通行證",
-    cost: 30,
-    cover: "hospital_pass",
-    desc: "解除住院，或抵銷下一次住院",
-    timing: "turn",
-  },
-  {
-    id: "bail",
-    name: "保釋卡",
-    cost: 35,
-    cover: "bail",
-    desc: "解除拘留，或抵銷下一次拘留",
-    timing: "turn",
-  },
-  {
-    id: "bomb",
-    name: "定時炸彈",
-    cost: 40,
-    cover: "bomb",
-    desc: "裝到指定對手身上，移動 12 步後爆炸並住院",
-    timing: "target",
-    kind: "tool",
-  },
-  {
-    id: "demolition",
-    name: "拆屋卡",
-    cost: 40,
-    cover: "demolition",
-    desc: "指定一棟對手建築降低一級",
-    timing: "target",
-  },
-  {
-    id: "reverse",
-    name: "轉向卡",
-    cost: 25,
-    cover: "reverse",
-    desc: "指定玩家下一次移動方向反轉",
-    timing: "target",
-  },
-  {
-    id: "snatch",
-    name: "搶奪卡",
-    cost: 35,
-    cover: "snatch",
-    desc: "從指定玩家隨機取得一張卡片",
-    timing: "target",
-  },
-  {
-    id: "equalize",
-    name: "均富卡",
-    cost: 60,
-    cover: "equal_wealth",
-    desc: "所有存活玩家的現金重新平均分配",
-    timing: "turn",
-  },
-];
-const CARD_POOL = CARD_DEFS.filter((c) => c.kind !== "tool").map((c) => c.id);
-const TOOL_POOL = CARD_DEFS.filter((c) => c.kind === "tool").map((c) => c.id);
-const NEGATIVE_EVENTS = new Set([
-  "突發修繕", "迷路", "惡作劇", "稅務日", "道路施工", "魔法失控",
-  "森林迷霧", "卡片遺失", "土地維護", "意外受傷", "王國稽查",
-]);
-const LEGACY_CARD_MAP = {
-  precision: "remote",
-  精準骰子: "remote",
-  遙控骰子: "remote",
-  護身符: "shield",
-  加速靴: "speed",
-  財富卡: "discount",
-  地產折價券: "discount",
-  幸運符: "shield",
-  免費升級卡: "upgrade",
-  租金加倍卡: "rent",
-  交換卡: "swap",
-  瞬移卡: "teleport",
-  停留卡: "stop",
-};
-// Branch-capable movement remains in the engine, but these three oval-road maps
-// deliberately contain no invisible shortcuts. A map may opt in only when its
-// authored background includes the matching fork geometry.
-const MAP_BRANCHES = {};
-function cardDef(v) {
-  const normalized = LEGACY_CARD_MAP[v] || v;
-  return (
-    CARD_DEFS.find((c) => c.id === normalized || c.name === normalized) ||
-    CARD_DEFS[0]
-  );
-}
-function toolDef(v) {
-  const d = cardDef(v);
-  return d.kind === "tool" ? d : CARD_DEFS.find((item) => item.kind === "tool");
-}
 const baseScenePopup = scenePopup;
 scenePopup = function (q, b, p) {
   if (q.kind === "facilityVisit") {
@@ -817,12 +622,6 @@ function damageRandomLand(p) {
   t.level--;
   if (t.level < 5) t.special = null;
   markUpgrade(t);
-}
-function drawCard(p) {
-  if (p.cards.length < 15)
-    p.cards.push(CARD_POOL[Math.floor(Math.random() * CARD_POOL.length)]);
-  if (p.char === 2 && p.cards.length < 15 && Math.random() < 0.22)
-    p.cards.push(CARD_POOL[Math.floor(Math.random() * CARD_POOL.length)]);
 }
 function addLog(s) {
   S.board.log.push(s);
@@ -1650,64 +1449,14 @@ function aiResolve() {
 function aiTurn() {
   const p = cp();
   if (!p || p.type !== "ai" || S.board.popup || S.board.winner || S.board.phase !== "pre-roll") return;
-  const smart = p.diff === "smart",
-    easy = p.diff === "easy",
-    chance = easy ? 0.25 : smart ? 0.9 : 0.58;
-  const tools = p.tools || [],
-    notices = [];
-  const remoteIndex = tools.indexOf("remote");
-  if (remoteIndex >= 0 && Math.random() < chance) {
-    useTool(remoteIndex);
-    notices.push(`使用遙控骰子，選擇 ${S.forcedDice} 點`);
-  }
-  if (p.diceCount === 1) {
-    const vehicleIndex = tools.findIndex((id) => id === "car" || id === "speed");
-    if (vehicleIndex >= 0) {
-      const vehicleName = toolDef(tools[vehicleIndex]).name;
-      useTool(vehicleIndex);
-      notices.push(`裝備${vehicleName}`);
-    }
-  }
-  const roadblockIndex = tools.indexOf("roadblock");
-  if (roadblockIndex >= 0 && Math.random() < chance) {
-    p.tools.splice(roadblockIndex, 1);
-    const pos = (p.pos + 4) % S.board.tiles.length;
-    if (!S.board.roadblocks.includes(pos)) S.board.roadblocks.push(pos);
-    notices.push(`在前方第 4 格設置路障`);
-  }
-  const bombIndex = tools.indexOf("bomb");
-  if (bombIndex >= 0 && Math.random() < chance) {
-    const target = living().filter((x) => x.id !== p.id).sort((a, b) => netWorth(b) - netWorth(a))[0];
-    if (target) {
-      p.tools.splice(bombIndex, 1);
-      target.bombSteps = 12;
-      notices.push(`將定時炸彈交給 ${target.id + 1}P`);
-    }
-  }
-  if (Math.random() < chance) {
-    const own = S.board.tiles.some((t) => t.owner === p.id && t.level < 5),
-      priorities = [];
-    if (p.shield === 0) priorities.push("shield");
-    if (own) priorities.push("upgrade", "rent");
-    if (p.cash > 90000) priorities.push("discount");
-    priorities.push("stop");
-    const wanted = priorities.find((c) => p.cards.includes(c));
-    if (wanted) {
-      useCard(p.cards.indexOf(wanted));
-      addLog(`${p.id + 1}P 的 AI 策略使用 ${cardDef(wanted).name}`);
-      notices.push(`使用${cardDef(wanted).name}`);
-    }
-  }
-  if (notices.length && !S.board.popup) {
-    openPopup("event", {
-      name: "AI 回合準備",
-      desc: `${p.id + 1}P ${notices.join("；")}。`,
-      aiDecision: true,
-      resumeAiRoll: true,
-    });
-    return;
-  }
-  if (!S.rolling && !S.board.popup) setTimeout(rollDice, 260);
+  // The streamlined ruleset has no in-match inventory. AI equipment is passive,
+  // so its only pre-roll decision is when to begin the physical dice sequence.
+  // Keeping this path inventory-free prevents migrated saves from reactivating
+  // removed card, tool, vehicle, roadblock or bomb behaviour.
+  setTimeout(() => {
+    if (cp() === p && p.type === "ai" && !S.board.popup && S.board.phase === "pre-roll")
+      rollDice();
+  }, p.diff === "easy" ? 520 : p.diff === "smart" ? 240 : 360);
 }
 function useTool(i) {
   const p = cp(), c = (p.tools || [])[i], d = toolDef(c);
