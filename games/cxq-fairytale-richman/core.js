@@ -180,7 +180,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260907-2355";
+const ASSET_REV = "20260908-0030";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -377,26 +377,29 @@ function fitTxt(
   return size;
 }
 function wrapLines(s, maxW, z = 22, w = 800, maxLines = 3) {
-  const chars = Array.from(String(s)),
-    lines = [];
-  let line = "";
+  const paragraphs = String(s).split("\n"), lines = [];
   X.save();
   X.font = `${w} ${z}px system-ui,-apple-system,"Noto Sans TC",sans-serif`;
-  for (const ch of chars) {
-    const next = line + ch;
-    if (line && X.measureText(next).width > maxW) {
-      lines.push(line);
-      line = ch;
-      if (lines.length === maxLines - 1) break;
-    } else line = next;
+  for (let pi = 0; pi < paragraphs.length && lines.length < maxLines; pi++) {
+    let line = "";
+    for (const ch of Array.from(paragraphs[pi])) {
+      const next = line + ch;
+      if (line && X.measureText(next).width > maxW) {
+        lines.push(line);
+        line = ch;
+        if (lines.length >= maxLines) break;
+      } else line = next;
+    }
+    if (lines.length < maxLines && line) lines.push(line);
   }
-  const used = lines.join("").length;
-  if (lines.length === maxLines - 1 && used + line.length < chars.length) {
-    while (line.length && X.measureText(line + "…").width > maxW)
-      line = line.slice(0, -1);
-    line += "…";
+  const sourceLength = paragraphs.join("").length,
+    visibleLength = lines.join("").replace(/…/g, "").length;
+  if (visibleLength < sourceLength && lines.length) {
+    let last = lines.length - 1;
+    while (lines[last].length && X.measureText(lines[last] + "…").width > maxW)
+      lines[last] = lines[last].slice(0, -1);
+    lines[last] += "…";
   }
-  if (line) lines.push(line);
   X.restore();
   return lines.slice(0, maxLines);
 }
@@ -430,6 +433,14 @@ function contain(im, x, y, w, h, alpha = 1) {
   X.drawImage(im, x + (w - iw) / 2, y + (h - ih) / 2, iw, ih);
   X.restore();
   return true;
+}
+function portrait(im, x, y, w, h, alpha = 1) {
+  X.save();
+  X.beginPath();
+  X.ellipse(x + w / 2, y + h / 2, w * 0.47, h * 0.47, 0, 0, Math.PI * 2);
+  X.clip();
+  contain(im, x, y, w, h, alpha);
+  X.restore();
 }
 function cover(im, x, y, w, h, alpha = 1) {
   if (!im || !im.complete || !im.naturalWidth) return false;
@@ -762,7 +773,7 @@ function seatPanel(i, x, y) {
   stretch(IM["playerSeatP" + i], x, y, 390, 150, alpha);
   S.buttons.push({ id: "seat" + i, x, y, w: 390, h: 150, en: !S.pickAnim });
   if (!(S.pickAnim && S.pickAnim.seat === i) && s.type !== "off")
-    contain(IM["portrait" + s.char], x + 24, y + 20, 108, 108, 0.99);
+    portrait(IM["portrait" + s.char], x + 24, y + 20, 108, 108, 0.99);
   contain(
     s.type === "human"
       ? IM.statusHuman
@@ -1173,7 +1184,8 @@ function rulesSetup() {
     68,
     false,
   );
-  fitTxt("每位角色最多攜帶兩件常駐裝備", 460, 555, 400, 20, "center", "#d9efff", 900, true, 15);
+  fitTxt("每位角色最多攜帶兩件常駐裝備", 460, 525, 400, 18, "center", "#d9efff", 900, true, 14);
+  fitTxt("點擊上方欄位即可循環切換設定", 460, 566, 400, 15, "center", "#fff1b8", 850, true, 12);
   contain(IM.abilityPanel, 860, 145, 560, 560, 0.98);
   txt("事件規則", 1140, 205, 30, "center", "#fff2bd", 1000, true);
   btn(
@@ -1202,7 +1214,7 @@ function rulesSetup() {
   fitTxt(
     `地圖租金倍率 ×${m.rentRate.toFixed(2)}`,
     1140,
-    460,
+    445,
     400,
     18,
     "center",
@@ -1213,7 +1225,7 @@ function rulesSetup() {
   fitTxt(
     "所有設定都可在開局前再次調整",
     1140,
-    510,
+    495,
     400,
     16,
     "center",
@@ -1221,7 +1233,7 @@ function rulesSetup() {
     850,
     true,
   );
-  btn("launchGame", "開始冒險", 630, 772, 340, 84, true);
+  btn("launchGame", "開始冒險", 630, 746, 340, 84, true);
 }
 
 function tileImage(type) {
@@ -1442,21 +1454,15 @@ function drawTile(t) {
 }
 function drawPlayers() {
   const b = S.board,
-    now = performance.now();
-  for (const p of b.players) {
+    now = performance.now(),
+    ordered = b.players.slice().sort((a, z) => (a.id === cp().id) - (z.id === cp().id));
+  for (const p of ordered) {
     if (p.bankrupt) continue;
     const t = b.tiles[p.pos],
       same = b.players.filter((q) => !q.bankrupt && q.pos === p.pos),
       idx = same.indexOf(p),
-      formations = {
-        1: [[0, 0]],
-        2: [[-74, -14], [74, 14]],
-        3: [[-76, 18], [0, -42], [76, 18]],
-        4: [[-76, -42], [76, -42], [-76, 42], [76, 42]],
-      },
-      slot = (formations[Math.min(4, same.length)] || formations[1])[idx] || [0, 0],
-      slotX = slot[0],
-      slotY = slot[1];
+      slotX = 0,
+      slotY = 0;
     let x = t.x + slotX,
       y = t.y + slotY;
     if (p.moveAnim) {
@@ -1488,17 +1494,15 @@ function drawPlayers() {
       containFacing(frame, x - 60, y - 128 + walkingBob, 120, 140, q.to.x >= q.from.x);
     } else contain(IM["c" + p.char], x - 56, y - 118 + walkingBob, 112, 132);
     X.restore();
-    stretch(IM["playerSeatP" + p.id], x - 55, y - 146, 110, 34, 0.98);
-    txt(
-      p.id + 1 + "P",
-      x,
-      y - 129,
-      13,
-      "center",
-      PLAYER_COLORS[p.id],
-      1000,
-      true,
-    );
+    const labelOwner = same.some((player) => player.id === cp().id)
+      ? cp().id
+      : same[same.length - 1].id;
+    if (p.id === labelOwner) {
+      const label = same.map((player) => `${player.id + 1}P`).join("・"),
+        labelW = Math.max(92, 42 + same.length * 35);
+      stretch(IM["playerSeatP" + p.id], x - labelW / 2, y - 146, labelW, 34, 0.98);
+      fitTxt(label, x, y - 129, labelW - 18, 13, "center", PLAYER_COLORS[p.id], 1000, true, 10);
+    }
     const god = (p.effects || []).find((e) => isGodEffect(e));
     if (god) {
       X.save();
@@ -1530,7 +1534,7 @@ function playerHudCard(p, i) {
     h = 106,
     current = p.id === cp().id;
   stretch(IM["playerSeatP" + p.id], x, y, w, h, current ? 1 : 0.82);
-  contain(
+  portrait(
     IM["portrait" + p.char],
     x + 7,
     y + 10,
@@ -1783,7 +1787,7 @@ function hud() {
   btn("focusCurrent", "回到角色", 410, 130, 170, 54, false, 0.94, !b.popup);
   miniMapHud();
   contain(IM.actionConsole, 955, 575, 635, 318, 0.98);
-  contain(IM["portrait" + p.char], 1010, 615, 150, 150, p.bankrupt ? 0.45 : 1);
+  portrait(IM["portrait" + p.char], 1010, 615, 150, 150, p.bankrupt ? 0.45 : 1);
   (p.equipment || []).slice(0, 2).forEach((id, i) => {
     contain(IM["equip_" + id], 990 + i * 82, 775, 66, 66, 1);
     const def = equipmentDef(id);
@@ -1875,22 +1879,22 @@ function turnBannerHud() {
 }
 function scenePopup(q, b, p) {
   if (q.kind === "event") {
-    contain(IM.abilityPanel, 400, 80, 800, 760, 0.99);
+    contain(IM.abilityPanel, 380, 45, 840, 820, 0.99);
     X.save();
     X.beginPath();
-    X.roundRect(493, 190, 614, 295, 22);
+    X.roundRect(490, 176, 620, 286, 22);
     X.clip();
-    cover((q.art && IM["event_" + q.art]) || IM["eventScene" + (b.mapIndex || 0)], 493, 190, 614, 295, 1);
+    cover((q.art && IM["event_" + q.art]) || IM["eventScene" + (b.mapIndex || 0)], 490, 176, 620, 286, 1);
     X.fillStyle = "rgba(5,10,30,.2)";
-    X.fillRect(493, 190, 614, 295);
+    X.fillRect(490, 176, 620, 286);
     X.restore();
-    fitTxt(q.name, 800, 165, 590, 31, "center", "#fff0a5", 1000, true, 21);
-    paragraph(q.desc, 800, 540, 590, 23, 32, 2, "center", "#fff", 900, true);
+    fitTxt(q.name, 800, 142, 620, 31, "center", "#fff0a5", 1000, true, 21);
+    paragraph(q.desc, 800, 540, 620, 20, 29, 4, "center", "#fff", 900, true);
     if (q.detainedTurn && Number.isInteger(q.releaseIndex) && q.releaseIndex >= 0) {
       const cardName = q.facility === "jail" ? "使用保釋卡" : "使用醫院通行證";
       btn("releaseDetained", cardName, 470, 650, 310, 72, true);
       btn("eventOk", "繼續停留", 820, 650, 310, 72, false);
-    } else btn("eventOk", "收下事件結果", 590, 650, 420, 72, true);
+    } else btn("eventOk", "確認事件結果", 590, 680, 420, 72, true);
     return true;
   }
   if (q.kind === "npc") {
@@ -2288,18 +2292,36 @@ function result() {
           : -1
         : netWorth(z) - netWorth(a),
     );
+  if (ranked.length <= 2 && ranked[0]) {
+    contain(IM["c" + ranked[0].char], 650, 390, 300, 310, intro);
+    fitTxt(
+      `冠軍｜${ranked[0].id + 1}P ${CHAR_NAMES[ranked[0].char]}`,
+      800,
+      365,
+      430,
+      27,
+      "center",
+      "#ffe477",
+      1000,
+      true,
+      18,
+    );
+  }
   ranked.forEach((p, i) => {
-    const y = 150 + i * 142,
+    const compact = ranked.length <= 2,
+      y = compact ? 155 + i * 150 : 150 + i * 142,
       rowProgress = Math.min(1, Math.max(0, (age - 300 - i * 110) / ANIMATION_MIN_MS)),
       alpha = (p.bankrupt ? 0.58 : 0.98) * rowProgress,
       rowShift = (1 - rowProgress) * (i % 2 ? 260 : -260);
     X.save();
     X.translate(rowShift, 0);
-    stretch(IM["playerSeatP" + (p.id % 4)], 220, y, 540, 126, alpha);
-    stretch(IM.roleInfo, 770, y, 610, 126, alpha);
-    contain(
+    const rowX = compact ? (i === 0 ? 105 : 985) : 220,
+      infoX = compact ? rowX : 770;
+    stretch(IM["playerSeatP" + (p.id % 4)], rowX, y, compact ? 510 : 540, 126, alpha);
+    if (!compact) stretch(IM.roleInfo, infoX, y, 610, 126, alpha);
+    portrait(
       IM["portrait" + p.char],
-      238,
+      rowX + 18,
       y + 12,
       104,
       102,
@@ -2307,7 +2329,7 @@ function result() {
     );
     txt(
       `${i + 1}`,
-      365,
+      rowX + 145,
       y + 62,
       34,
       "center",
@@ -2317,8 +2339,8 @@ function result() {
     );
     fitTxt(
       `${p.id + 1}P ${CHAR_NAMES[p.char]}`,
-      420,
-      y + 39,
+      rowX + 200,
+      y + (compact ? 28 : 39),
       300,
       23,
       "left",
@@ -2329,8 +2351,8 @@ function result() {
     );
     txt(
       p.bankrupt ? "已破產" : "完成冒險",
-      420,
-      y + 80,
+      rowX + 200,
+      y + (compact ? 104 : 80),
       16,
       "left",
       p.bankrupt ? "#ffb7b7" : "#dfffdc",
@@ -2341,8 +2363,8 @@ function result() {
       buildings = lands.reduce((n, t) => n + t.level, 0);
     fitTxt(
       `現金 $${p.cash.toLocaleString()}`,
-      810,
-      y + 36,
+      compact ? rowX + 200 : 810,
+      y + (compact ? 52 : 36),
       230,
       17,
       "left",
@@ -2353,8 +2375,8 @@ function result() {
     );
     txt(
       `土地 ${lands.length}　建築 ${buildings}`,
-      810,
-      y + 78,
+      compact ? rowX + 200 : 810,
+      y + (compact ? 76 : 78),
       15,
       "left",
       "#dbeaff",
@@ -2363,9 +2385,9 @@ function result() {
     );
     fitTxt(
       `總資產 $${netWorth(p).toLocaleString()}`,
-      1135,
-      y + 58,
-      330,
+      compact ? rowX + 400 : 1135,
+      y + (compact ? 104 : 58),
+      compact ? 165 : 330,
       20,
       "center",
       i === 0 ? "#ffe071" : "#fff",

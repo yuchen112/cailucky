@@ -30,7 +30,7 @@ const EVENTS = [
   ["迷路", "沿道路後退兩格", (p) => (p.pos = (p.pos - 2 + S.board.tiles.length) % S.board.tiles.length), "lostInMaze", "negative"],
   ["惡作劇", "損失少量旅行資金", (p) => (p.cash -= 2500), "mischief", "negative"],
   ["稅務日", "依土地數支付王國稅金", (p) => (p.cash -= 1800 + ownedLands(p).length * 650), "taxDay", "negative"],
-  ["道路施工", "下一次移動最多三步", (p) => (p.slow = 1), "roadConstruction", "negative"],
+  ["道路施工", "支付臨時道路通行費", (p) => (p.cash -= 3200), "roadConstruction", "negative"],
   ["魔法失控", "一棟建築可能降低一級", (p) => damageRandomLand(p), "magicMalfunction", "negative"],
   ["森林迷霧", "沿道路後退兩格", (p) => (p.pos = (p.pos - 2 + S.board.tiles.length) % S.board.tiles.length), "forestMist", "negative"],
   ["雲端順風", "沿道路前進兩格", (p) => (p.pos = (p.pos + 2) % S.board.tiles.length), "cloudTailwind", "positive"],
@@ -346,15 +346,14 @@ scenePopup = function (q, b, p) {
         (x.effects || []).map((e) => `${e.kind} ${e.turns}回合`).join("、") ||
         "無";
     const tab = q.tab || "overview";
-    contain(IM.abilityPanel, 250, 55, 1100, 800, 0.99);
-    contain(IM["portrait" + x.char], 315, 125, 180, 180);
+    contain(IM.abilityPanel, 270, 45, 1060, 820, 0.99);
     fitTxt(
       `${x.id + 1}P ${CHAR_NAMES[x.char]}`,
-      525,
-      120,
-      360,
+      800,
+      132,
+      520,
       36,
-      "left",
+      "center",
       "#fff0a5",
       1000,
       true,
@@ -362,18 +361,18 @@ scenePopup = function (q, b, p) {
     );
     txt(
       `${x.type === "human" ? "真人玩家" : "電腦 AI"}｜${CHAR_ROLES[x.char]}`,
-      525,
-      165,
+      800,
+      174,
       19,
-      "left",
+      "center",
       "#d9efff",
       900,
       true,
     );
-    btn("playerTabOverview", "總覽", 520, 215, 180, 54, tab === "overview");
-    btn("playerTabLands", "地產", 710, 215, 180, 54, tab === "lands");
-    btn("playerTabEquipment", "裝備", 900, 215, 180, 54, tab === "equipment");
-    btn("playerTabEffects", "狀態", 1090, 215, 180, 54, tab === "effects");
+    btn("playerTabOverview", "總覽", 485, 220, 190, 54, tab === "overview");
+    btn("playerTabLands", "地產", 690, 220, 190, 54, tab === "lands");
+    btn("playerTabEquipment", "裝備", 895, 220, 190, 54, tab === "equipment");
+    btn("playerTabEffects", "狀態", 1100, 220, 190, 54, tab === "effects");
     const rows = [
       `現金　$${x.cash.toLocaleString()}`,
       `總資產　$${netWorth(x).toLocaleString()}`,
@@ -381,13 +380,14 @@ scenePopup = function (q, b, p) {
       `常駐裝備　${(x.equipment || []).map((id) => equipmentDef(id)?.name).filter(Boolean).join("、") || "無"}`,
       `狀態／神明　${effect}`,
     ];
-    if (tab === "overview")
+    if (tab === "overview") {
+      portrait(IM["portrait" + x.char], 350, 310, 190, 190);
       rows.forEach((s, i) =>
         fitTxt(
           s,
-          500,
-          330 + i * 66,
-          700,
+          590,
+          332 + i * 62,
+          610,
           20,
           "left",
           i === 2 ? "#ffe17b" : "#fff",
@@ -396,6 +396,7 @@ scenePopup = function (q, b, p) {
           13,
         ),
       );
+    }
     if (tab === "lands") {
       txt(
         "點選地產可將鏡頭移至該格",
@@ -469,7 +470,7 @@ const NPC_DEFS = [
     desc: "獲得祝福金並免費升級一塊土地",
     apply: (p) => { cashGain(p, 5000); upgradeRandomLand(p); },
   },
-  { name: "衰神", desc: "下一回合骰子最多 3 點", apply: (p) => (p.slow = 1) },
+  { name: "衰神", desc: "損失 $3,000；不修改骰子點數", apply: (p) => (p.cash -= 3000) },
   {
     name: "土地公",
     desc: "停留土地時可強制占有",
@@ -984,6 +985,12 @@ function resolveTile() {
     addLog(`${p.id + 1}P 停留起點休息`);
   }
   applyGodArrival(t, p);
+  // Resolve event arrival as one complete illustrated result dialog instead
+  // of showing an empty intermediary panel first.
+  if (t.type === "event") {
+    applySpecial(t, p);
+    return;
+  }
   if (p.type === "ai" && !["start", "land"].includes(t.type)) {
     applySpecial(t, p);
     return;

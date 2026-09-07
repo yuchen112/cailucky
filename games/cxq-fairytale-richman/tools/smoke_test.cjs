@@ -3,7 +3,7 @@ const vm = require("vm");
 const path = require("path");
 
 const root = path.resolve(__dirname, "..");
-const revision = "20260907-2355";
+const revision = "20260908-0030";
 const read = (name) => fs.readFileSync(path.join(root, name), "utf8");
 const fail = (message) => { throw new Error(message); };
 
@@ -178,8 +178,6 @@ run(`(()=>{
   S.mapIndex=0;makeBoard();S.scene='game';
   const p=cp(), eventTile=S.board.tiles.find(t=>t.type==='event');
   p.type='human';p.pos=eventTile.index;S.board.npcs=[];resolveTile();
-  if(S.board.popup?.kind!=='tile')throw new Error('event landing did not wait for player choice');
-  action('special');
   if(S.board.popup?.kind!=='event'||S.board.phase!=='awaiting-confirmation')throw new Error('event did not wait for acknowledgement');
   action('eventOk');
   if(S.board.popup)throw new Error('event acknowledgement did not close');
@@ -207,11 +205,11 @@ for (let mi = 0; mi < 3; mi++) {
   run(`(()=>{
     S.mapIndex=${mi};S.gods=false;
     S.seats.forEach((seat,i)=>{seat.type=i===0?'human':'off'});
-    makeBoard();S.scene='game';S.board.npcs=[];S.forcedDice=2;rollDice();
+    makeBoard();S.scene='game';S.board.npcs=[];S.forcedDice=1;rollDice();
   })()`);
   drain(200);
   const movement = json("({pos:cp().pos,phase:S.board.phase,popup:S.board.popup?.kind||null})");
-  if (movement.pos !== 2 || movement.phase !== "awaiting-confirmation" || !movement.popup)
+  if (movement.pos !== 1 || movement.phase !== "awaiting-confirmation" || !movement.popup)
     fail(`map ${mi} real dice movement stalled: ${JSON.stringify(movement)}`);
   run(`(()=>{const land=S.board.tiles.find(t=>t.type==='land');land.owner=0;land.level=5;drawMap()})()`);
 }
