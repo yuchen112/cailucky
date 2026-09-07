@@ -1214,8 +1214,10 @@ function nextTurn() {
   if (p.type === "ai") setTimeout(aiTurn, 700);
 }
 function branchAt(pos) {
-  const key = S.board?.mapRules?.key || MAPS[S.mapIndex]?.key;
-  return MAP_BRANCHES[key]?.[pos] || null;
+  // Current maps use a single continuous authored loop. Branch selection was
+  // left over from an earlier prototype and referenced a removed table, which
+  // stopped every real dice movement on its first step.
+  return null;
 }
 function finishMovement() {
   const b = S.board, p = cp();
@@ -1339,10 +1341,6 @@ function rollDice() {
       S.diceAnim.resolution = resolution;
       S.diceAnim.settleAt = performance.now();
       S.dice = resolution.faces[0];
-      if (p.vehicleTurns > 0 && --p.vehicleTurns === 0) {
-        p.diceCount = 1;
-        p.vehicle = null;
-      }
       sfx("dice");
       if (S.settings.vibrate && navigator.vibrate)
         navigator.vibrate([24, 35, 32]);
@@ -1887,17 +1885,21 @@ function action(id) {
         S.seats[i].equipment ||= [];
         if (S.seats[i].type === "ai") autoEquipmentForSeat(S.seats[i]);
       });
-      S.activeSeat = activeSeatIds()[0];
+      S.activeSeat = activeSeatIds().find((i) => S.seats[i].type === "human");
       S.scene = "loadout";
       return;
     }
   }
   if (S.scene === "loadout") {
     if (id === "loadoutBack") { S.scene = "setup"; return; }
-    if (id.startsWith("loadoutSeat")) { S.activeSeat = +id.slice(11); return; }
+    if (id.startsWith("loadoutSeat")) {
+      const seatIndex = +id.slice(11);
+      if (S.seats[seatIndex]?.type === "human") S.activeSeat = seatIndex;
+      return;
+    }
     if (id.startsWith("equip")) {
       const item = equipmentDef(id.slice(5)), seat = S.seats[S.activeSeat];
-      if (!item || seat.type === "off") return;
+      if (!item || seat.type !== "human") return;
       seat.equipment ||= [];
       if (seat.equipment.includes(item.id)) seat.equipment = seat.equipment.filter((x) => x !== item.id);
       else if (seat.equipment.length < 2 && !seat.equipment.some((x) => equipmentDef(x)?.group === item.group)) seat.equipment.push(item.id);

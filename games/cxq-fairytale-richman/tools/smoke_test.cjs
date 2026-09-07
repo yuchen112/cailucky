@@ -3,7 +3,7 @@ const vm = require("vm");
 const path = require("path");
 
 const root = path.resolve(__dirname, "..");
-const revision = "20260907-1930";
+const revision = "20260907-2230";
 const read = (name) => fs.readFileSync(path.join(root, name), "utf8");
 const fail = (message) => { throw new Error(message); };
 
@@ -51,7 +51,8 @@ const sandbox = {
   console, Image: MockImage, performance: { now: () => 1000 }, devicePixelRatio: 1,
   innerWidth: 1600, innerHeight: 900, requestAnimationFrame() {},
   setTimeout(fn) { timers.push(fn); return timers.length; }, clearTimeout() {},
-  setInterval: () => 1, clearInterval() {}, addEventListener() {},
+  setInterval(fn) { for (let i = 0; i < 9; i++) timers.push(fn); return timers.length; },
+  clearInterval() {}, addEventListener() {},
   navigator: { vibrate() {} }, screen: {},
   localStorage: {
     getItem: (key) => storage.get(key) || null,
@@ -88,6 +89,18 @@ run(`(()=>{
   if(TYPE_PATTERN.some(type=>['card','shop','minigame','bank','hospital','police','coupon'].includes(type)))throw new Error('removed system remains in board route');
   if(TYPE_PATTERN.includes('npc'))throw new Error('fixed god tile remains');
   if(ANIMATION_MIN_FRAMES<30||ANIMATION_MIN_MS<500)throw new Error('animation minimum is below thirty frames');
+})()`);
+
+run(`(()=>{
+  S.scene='setup';S.seats[0].type='human';S.seats[1].type='ai';
+  S.seats[2].type=S.seats[3].type='off';S.activeSeat=0;
+  action('startGame');
+  const before=JSON.stringify(S.seats[1].equipment);
+  action('loadoutSeat1');
+  if(S.activeSeat!==0)throw new Error('AI equipment seat became player-editable');
+  S.activeSeat=1;action('equipdeed');
+  if(JSON.stringify(S.seats[1].equipment)!==before)throw new Error('player changed AI equipment');
+  S.activeSeat=0;
 })()`);
 
 function buttonsFor(code) {
@@ -183,6 +196,20 @@ if (!timers.length) fail("AI did not schedule its dice turn");
 timers.shift()();
 if (run("S.board.phase") !== "rolling") fail("AI turn did not enter the dice sequence");
 run("S.rolling=false;S.diceAnim=null;S.board.phase='pre-roll'");
+timers.length = 0;
+
+for (let mi = 0; mi < 3; mi++) {
+  run(`(()=>{
+    S.mapIndex=${mi};S.gods=false;
+    S.seats.forEach((seat,i)=>{seat.type=i===0?'human':'off'});
+    makeBoard();S.scene='game';S.board.npcs=[];S.forcedDice=2;rollDice();
+  })()`);
+  drain(200);
+  const movement = json("({pos:cp().pos,phase:S.board.phase,popup:S.board.popup?.kind||null})");
+  if (movement.pos !== 2 || movement.phase !== "awaiting-confirmation" || !movement.popup)
+    fail(`map ${mi} real dice movement stalled: ${JSON.stringify(movement)}`);
+  run(`(()=>{const land=S.board.tiles.find(t=>t.type==='land');land.owner=0;land.level=5;drawMap()})()`);
+}
 
 run(`
   S.mapIndex=0;makeBoard();saveGame();

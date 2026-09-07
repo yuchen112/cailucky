@@ -180,7 +180,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260907-1930";
+const ASSET_REV = "20260907-2230";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -1003,13 +1003,27 @@ function loadout() {
   cover(IM.setupBg, 0, 0, W, H, 0.86);
   btn("loadoutBack", "返回選角", 22, 20, 190, 62, false);
   txt("冒險裝備", 800, 50, 42, "center", "#fff0b6", 1000, true);
-  txt("每名玩家最多攜帶兩件常駐裝備；同類效果不可重複", 800, 91, 17, "center", "#fff", 850, true);
-  const seat = S.seats[S.activeSeat], active = activeSeatIds();
+  txt("真人選擇常駐裝備；電腦玩家會依角色與難度自動配置", 800, 91, 17, "center", "#fff", 850, true);
+  const active = activeSeatIds(),
+    humans = active.filter((seatIndex) => S.seats[seatIndex].type === "human");
+  if (!humans.includes(S.activeSeat)) S.activeSeat = humans[0];
+  const seat = S.seats[S.activeSeat];
   active.forEach((seatIndex, i) => {
     const s = S.seats[seatIndex], x = 245 + i * 285;
-    stretch(IM["playerSeatP" + i], x, 112, 265, 78, seatIndex === S.activeSeat ? 1 : .62);
+    const editable = s.type === "human";
+    stretch(IM["playerSeatP" + seatIndex], x, 112, 265, 78, seatIndex === S.activeSeat ? 1 : .62);
     contain(IM["portrait" + s.char], x + 8, 116, 70, 70, 1);
-    btn("loadoutSeat" + seatIndex, `${i + 1}P ${CHAR_NAMES[s.char]}`, x + 78, 124, 178, 54, seatIndex === S.activeSeat, 1, true);
+    btn(
+      "loadoutSeat" + seatIndex,
+      editable ? `${seatIndex + 1}P ${CHAR_NAMES[s.char]}` : `${seatIndex + 1}P AI｜自動配置`,
+      x + 78,
+      124,
+      178,
+      54,
+      seatIndex === S.activeSeat,
+      editable ? 1 : .72,
+      editable,
+    );
   });
   EQUIPMENT_DEFS.forEach((item, i) => {
     const x = 70 + (i % 4) * 380, y = 215 + Math.floor(i / 4) * 270,
@@ -1278,18 +1292,24 @@ function drawTile(t) {
     visual = plotAnchor(t),
     shiftX = visual.x - t.x,
     shiftY = visual.y - t.y,
-    tileSize = t.type === "land" ? 132 : 152;
+    tileSize = t.type === "land" ? 118 : t.type === "start" ? 150 : 132;
   // A land has two authored anchors: a road node for the pawn and a compact
   // roadside plot for construction. They are close enough to read as one tile,
   // but never compete for the same footprint.
   if (t.type === "land") {
     X.save();
-    contain(IM.roadNode || IM.tile_land, road.x - 61, road.y - 48, 122, 96, 1);
+    contain(IM.roadNode || IM.tile_land, road.x - 54, road.y - 40, 108, 80, 1);
+    X.strokeStyle = "rgba(236,203,126,.68)";
+    X.lineWidth = 5;
+    X.beginPath();
+    X.moveTo(road.x, road.y);
+    X.lineTo(visual.x, visual.y);
+    X.stroke();
     if (t.owner >= 0) {
       X.strokeStyle = PLAYER_COLORS[t.owner];
       X.lineWidth = 8;
       X.beginPath();
-      X.arc(road.x, road.y, 52, 0, Math.PI * 2);
+      X.arc(road.x, road.y, 45, 0, Math.PI * 2);
       X.stroke();
     }
     X.restore();
@@ -1351,7 +1371,7 @@ function drawTile(t) {
       const building = buildingImage(t);
       if (building) {
         const grow = 1 + pulse * 0.18,
-          landmark = isRegionLandmark(t),
+          landmark = t.level >= 5,
           sz = (landmark ? 178 : 145) * grow;
         X.save();
         X.shadowColor = PLAYER_COLORS[t.owner];
@@ -1432,44 +1452,45 @@ function drawPlayers() {
     const t = b.tiles[p.pos],
       same = b.players.filter((q) => !q.bankrupt && q.pos === p.pos),
       idx = same.indexOf(p),
-      off = (idx - (same.length - 1) / 2) * 42,
-      previous = b.tiles[(p.pos - 1 + b.tiles.length) % b.tiles.length],
-      following = b.tiles[(p.pos + 1) % b.tiles.length],
-      tangentLength = Math.hypot(following.x - previous.x, following.y - previous.y) || 1,
-      tangentX = (following.x - previous.x) / tangentLength,
-      tangentY = (following.y - previous.y) / tangentLength;
-    let x = t.x + tangentX * off,
-      y = t.y + tangentY * off;
+      formations = {
+        1: [[0, 0]],
+        2: [[-74, -14], [74, 14]],
+        3: [[-76, 18], [0, -42], [76, 18]],
+        4: [[-76, -42], [76, -42], [-76, 42], [76, 42]],
+      },
+      slot = (formations[Math.min(4, same.length)] || formations[1])[idx] || [0, 0],
+      slotX = slot[0],
+      slotY = slot[1];
+    let x = t.x + slotX,
+      y = t.y + slotY;
     if (p.moveAnim) {
       const q = p.moveAnim,
         u = Math.min(1, (now - q.start) / q.dur),
         e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
-      x = q.from.x + (q.to.x - q.from.x) * e + tangentX * off;
-      y = q.from.y + (q.to.y - q.from.y) * e + tangentY * off;
+      x = q.from.x + (q.to.x - q.from.x) * e + slotX;
+      y = q.from.y + (q.to.y - q.from.y) * e + slotY;
     }
     const key = CHAR_KEYS[p.char],
       contact = IM[key + "WalkRightContact"],
       passing = IM[key + "WalkRightPassing"],
-      walkingBob = p.moveAnim && !p.vehicle
+      walkingBob = p.moveAnim
         ? -Math.abs(Math.sin((now - p.moveAnim.start) / 105 * Math.PI)) * 7
         : 0;
     X.save();
     X.globalAlpha = p.moveAnim ? 0.42 : 0.3;
     X.fillStyle = "#08101c";
     X.beginPath();
-    X.ellipse(x, y - 8, p.vehicle ? 58 : 42, p.vehicle ? 18 : 13, 0, 0, Math.PI * 2);
+    X.ellipse(x, y - 8, 38, 12, 0, 0, Math.PI * 2);
     X.fill();
     X.restore();
-    if (p.vehicle)
-      contain(IM["tool_" + (p.vehicle === "car" ? "car" : "speed")], x - 82, y - 88, 164, 112, 1);
     X.save();
     X.shadowColor = PLAYER_COLORS[p.id];
     X.shadowBlur = 18;
-    if (p.moveAnim && !p.vehicle && contact?.complete && passing?.complete) {
+    if (p.moveAnim && contact?.complete && passing?.complete) {
       const q = p.moveAnim,
         frame = Math.floor((now - q.start) / 105) % 2 ? passing : contact;
       containFacing(frame, x - 74, y - 144 + walkingBob, 148, 164, q.to.x >= q.from.x);
-    } else contain(IM["c" + p.char], x - (p.vehicle ? 46 : 62), y - (p.vehicle ? 145 : 126) + walkingBob, p.vehicle ? 92 : 124, p.vehicle ? 108 : 144);
+    } else contain(IM["c" + p.char], x - 56, y - 118 + walkingBob, 112, 132);
     X.restore();
     stretch(IM["playerSeatP" + p.id], x - 55, y - 146, 110, 34, 0.98);
     txt(
@@ -1491,10 +1512,6 @@ function drawPlayers() {
       X.restore();
       stretch(IM.roleInfo, x - 104, y - 50, 82, 28, 0.96);
       fitTxt(`${god.kind} ${god.turns}`, x - 63, y - 36, 72, 11, "center", "#fff4bd", 1000, true, 8);
-    }
-    if (p.bombSteps > 0) {
-      contain(IM.tool_bomb, x + 36, y - 112, 64, 64, 1);
-      txt(String(p.bombSteps), x + 69, y - 94, 13, "center", "#fff2a5", 1000, true);
     }
   }
 }
