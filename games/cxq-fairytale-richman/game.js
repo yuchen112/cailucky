@@ -1388,6 +1388,7 @@ function aiResolve() {
     if (t.type === "land") {
       if (t.owner < 0) {
         const cost = buyCost(p, t),
+          cashBefore = p.cash,
           reserve = easy ? 70000 : smart ? 25000 : 45000,
           canInvest = !(p.effects || []).some((e) => e.kind === "死神");
         if (canInvest && p.cash - cost > reserve) {
@@ -1396,11 +1397,19 @@ function aiResolve() {
           t.owner = p.id;
           addLog(`${p.id + 1}P 購買 ${REGION_NAMES[t.region]} 土地`);
         }
-        openPopup("event", { name: "AI 購地決策", desc: t.owner === p.id ? `${p.id + 1}P 購買了這塊土地。` : `${p.id + 1}P 決定保留資金。`, art: "systemLandPurchase", aiDecision: true });
+        openPopup("event", {
+          name: "AI 購地決策",
+          desc: t.owner === p.id
+            ? `${p.id + 1}P ${CHAR_NAMES[p.char]}購買「${REGION_NAMES[t.region]}第 ${t.index + 1} 號地」。\n支付 $${cost.toLocaleString()}｜現金 $${cashBefore.toLocaleString()} → $${p.cash.toLocaleString()}`
+            : `${p.id + 1}P ${CHAR_NAMES[p.char]}決定保留資金。\n地價 $${cost.toLocaleString()}｜目前現金 $${p.cash.toLocaleString()}`,
+          art: "systemLandPurchase", aiDecision: true,
+        });
         return;
       }
       if (t.owner === p.id) {
         const cost = upgradeCost(t, p),
+          cashBefore = p.cash,
+          levelBefore = t.level,
           want =
             !(p.effects || []).some((e) => e.kind === "死神") &&
             t.level < 5 &&
@@ -1412,22 +1421,37 @@ function aiResolve() {
           markUpgrade(t);
           addLog(`${p.id + 1}P 將土地升到 Lv${t.level}`);
         }
-        openPopup("event", { name: "AI 建築決策", desc: want ? `${p.id + 1}P 將房屋升至 Lv${t.level}。` : `${p.id + 1}P 本回合不升級。`, art: "systemBuildUpgrade", aiDecision: true });
+        openPopup("event", {
+          name: "AI 建築決策",
+          desc: want
+            ? `${p.id + 1}P 升級「${REGION_NAMES[t.region]}第 ${t.index + 1} 號地」。\nLv${levelBefore} → Lv${t.level}｜支付 $${cost.toLocaleString()}｜現金 $${cashBefore.toLocaleString()} → $${p.cash.toLocaleString()}`
+            : `${p.id + 1}P 本回合不升級。\n升級費 $${cost.toLocaleString()}｜目前現金 $${p.cash.toLocaleString()}`,
+          art: "systemBuildUpgrade", aiDecision: true,
+        });
         return;
       }
       const r = rentFor(t, p);
-      if (p.shield > 0) {
+      const payerBefore = p.cash,
+        o = b.players.find((x) => x.id === t.owner),
+        ownerBefore = o?.cash || 0,
+        shielded = p.shield > 0;
+      if (shielded) {
         p.shield--;
         addLog(`${p.id + 1}P 使用護盾免除租金`);
       } else {
         p.cash -= r;
-        const o = b.players.find((x) => x.id === t.owner);
         if (o && !o.bankrupt) {
           o.cash += r;
           applyPropertyArrival(t, p, o);
         }
       }
-      openPopup("event", { name: "AI 租金結算", desc: `${p.id + 1}P 完成租金結算，請確認後繼續。`, art: "systemRentPayment", aiDecision: true });
+      openPopup("event", {
+        name: "AI 租金結算",
+        desc: shielded
+          ? `${p.id + 1}P 的護盾抵銷租金。\n地產「${REGION_NAMES[t.region]}第 ${t.index + 1} 號地」｜本次支付 $0`
+          : `${p.id + 1}P ${CHAR_NAMES[p.char]}支付 ${t.owner + 1}P ${o ? CHAR_NAMES[o.char] : "地主"} $${r.toLocaleString()}。\n地產「${REGION_NAMES[t.region]}第 ${t.index + 1} 號地」Lv${t.level}\n付款方 $${payerBefore.toLocaleString()} → $${p.cash.toLocaleString()}｜地主 $${ownerBefore.toLocaleString()} → $${o?.cash.toLocaleString()}`,
+        art: "systemRentPayment", aiDecision: true,
+      });
       return;
     }
     if (["event", "card", "shop", "minigame", "npc"].includes(t.type)) {

@@ -180,7 +180,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260908-0115";
+const ASSET_REV = "20260908-0230";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -1324,19 +1324,6 @@ function drawTile(t) {
   }
   X.save();
   X.translate(shiftX, shiftY);
-  if (t.type === "land" && t.owner >= 0) {
-    X.save();
-    X.strokeStyle = PLAYER_COLORS[t.owner];
-    X.fillStyle = PLAYER_COLORS[t.owner] + "18";
-    X.lineWidth = 6;
-    X.shadowColor = PLAYER_COLORS[t.owner];
-    X.shadowBlur = 9;
-    X.beginPath();
-    X.arc(t.x, t.y, 51, 0, Math.PI * 2);
-    X.fill();
-    X.stroke();
-    X.restore();
-  }
   contain(
     tileImage(t.type),
     t.x - tileSize / 2,
@@ -1414,12 +1401,11 @@ function drawTile(t) {
           );
       }
       stretch(IM["playerSeatP" + t.owner], t.x - 57, t.y + 16, 114, 36, 0.99);
-      contain(IM["portrait" + owner?.char], t.x - 52, t.y + 19, 29, 29, 0.99);
       fitTxt(
-        `${t.owner + 1}P ${owner ? CHAR_NAMES[owner.char] : ""} Lv${t.level}`,
-        t.x + 15,
+        `${t.owner + 1}P｜Lv${t.level}`,
+        t.x,
         t.y + 34,
-        70,
+        94,
         10,
         "center",
         "#ffffff",
@@ -1526,28 +1512,28 @@ function drawMap() {
     }
   drawPlayers();
 }
-function playerHudCard(p, i) {
+function playerHudCard(p, i, compact = false) {
   const b = S.board,
-    x = 12 + i * 286,
+    x = compact ? 350 + i * 202 : 12,
     y = 12,
-    w = 274,
-    h = 106,
+    w = compact ? 190 : 320,
+    h = compact ? 76 : 106,
     current = p.id === cp().id;
   stretch(IM["playerSeatP" + p.id], x, y, w, h, current ? 1 : 0.82);
   portrait(
     IM["portrait" + p.char],
     x + 7,
-    y + 10,
-    80,
-    80,
+    y + (compact ? 8 : 10),
+    compact ? 58 : 80,
+    compact ? 58 : 80,
     p.bankrupt ? 0.45 : 1,
   );
   fitTxt(
     `${p.id + 1}P ${CHAR_NAMES[p.char]}`,
-    x + 98,
-    y + 22,
-    162,
-    18,
+    x + (compact ? 72 : 98),
+    y + (compact ? 22 : 22),
+    compact ? 105 : 200,
+    compact ? 14 : 18,
     "left",
     current ? "#ffe894" : "#fff",
     1000,
@@ -1556,10 +1542,10 @@ function playerHudCard(p, i) {
   );
   fitTxt(
     `現金 $${Math.max(0, p.cash).toLocaleString()}`,
-    x + 98,
-    y + 47,
-    162,
-    15,
+    x + (compact ? 72 : 98),
+    y + (compact ? 49 : 47),
+    compact ? 105 : 200,
+    compact ? 12 : 15,
     "left",
     "#fff5d3",
     900,
@@ -1569,36 +1555,17 @@ function playerHudCard(p, i) {
   const owned = b.tiles.filter((t) => t.owner === p.id),
     land = owned.length,
     buildings = owned.reduce((sum, t) => sum + (t.level || 0), 0);
-  fitTxt(
-    `資產 $${netWorth(p).toLocaleString()}`,
-    x + 98,
-    y + 70,
-    162,
-    14,
-    "left",
-    "#d9efff",
-    850,
-    true,
-    10,
-  );
-  fitTxt(
-    `土地 ${land}　建築 ${buildings}　裝備 ${(p.equipment || []).length}`,
-    x + 98,
-    y + 91,
-    162,
-    12,
-    "left",
-    "#d7e6f4",
-    800,
-    true,
-  );
+  if (!compact) {
+    fitTxt(`資產 $${netWorth(p).toLocaleString()}`, x + 98, y + 70, 200, 14, "left", "#d9efff", 850, true, 10);
+    fitTxt(`土地 ${land}　建築 ${buildings}　裝備 ${(p.equipment || []).length}`, x + 98, y + 91, 200, 12, "left", "#d7e6f4", 800, true);
+  }
   const effect = (p.effects || [])[0];
   if (effect) {
-    contain(npcImage(effect.kind), x + w - 42, y + 62, 34, 34, 0.98);
+    contain(npcImage(effect.kind), x + w - 38, y + h - 38, 30, 30, 0.98);
     txt(
       String(effect.turns),
       x + w - 13,
-      y + 89,
+      y + h - 12,
       10,
       "center",
       "#ffe07a",
@@ -1716,7 +1683,8 @@ function miniMapHud() {
 function hud() {
   const b = S.board,
     p = cp();
-  b.players.forEach(playerHudCard);
+  playerHudCard(p, 0, false);
+  b.players.filter((player) => player.id !== p.id).forEach((player, i) => playerHudCard(player, i, true));
   stretch(IM.roleInfo, 1170, 12, 416, 134, 0.96);
   fitTxt(
     `${b.mapRules?.name || "童話王國"}　　第 ${b.round}/${S.rounds} 回合`,
