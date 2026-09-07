@@ -180,7 +180,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260907-1200";
+const ASSET_REV = "20260907-1930";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -252,7 +252,7 @@ load("event_systemLandPurchase", A + "events/system_land_purchase_v1.webp");
 load("event_systemRentPayment", A + "events/system_rent_payment_v1.webp");
 load("event_systemBuildUpgrade", A + "events/system_build_upgrade_v1.webp");
 load("facilityMagic", A + "facilities/magic_token_v2.webp");
-load("roadNode", A + "tiles/road_node_v2.png");
+load("roadNode", A + "tiles/road_node_v3.webp");
 load("npcWealth", A + "npc/wealth_v1.webp");
 load("npcFortune", A + "npc/fortune_v1.webp");
 load("npcPoverty", A + "npc/poverty_v1.webp");
@@ -363,8 +363,17 @@ function fitTxt(
     if (X.measureText(String(s)).width <= maxW) break;
     size--;
   }
+  X.font = `${w} ${size}px system-ui,-apple-system,"Noto Sans TC",sans-serif`;
+  const measured = Math.max(1, X.measureText(String(s)).width),
+    scaleX = Math.min(1, maxW / measured);
   X.restore();
-  txt(s, x, y, size, a, c, w, o);
+  if (scaleX < 0.999) {
+    X.save();
+    X.translate(x, y);
+    X.scale(scaleX, 1);
+    txt(s, 0, 0, size, a, c, w, o);
+    X.restore();
+  } else txt(s, x, y, size, a, c, w, o);
   return size;
 }
 function wrapLines(s, maxW, z = 22, w = 800, maxLines = 3) {
@@ -818,12 +827,12 @@ function seatPanel(i, x, y) {
       x + 259,
       y + 119,
       194,
-      13,
+      15,
       "center",
       "#fff5cf",
       850,
       true,
-      10,
+      12,
     );
 }
 function setup() {
@@ -915,9 +924,9 @@ function setup() {
     1060,
     284,
     292,
-    16,
-    25,
-    2,
+    18,
+    28,
+    3,
     "center",
     "#fff",
     850,
@@ -926,12 +935,12 @@ function setup() {
   txt("專屬能力", 1060, 348, 15, "center", "#ffe17b", 1000, true);
   paragraph(
     ROLE_DESC[ci],
-    1085,
+    1060,
     407,
-    260,
-    15,
-    24,
-    2,
+    292,
+    17,
+    27,
+    3,
     "center",
     "#fff6d6",
     900,
@@ -960,8 +969,8 @@ function setup() {
     true,
   );
   txt(`真人 ${humanCount()} 人`, 1422, 232, 18, "center", "#fff", 900, true);
-  txt("資金、回合、事件與神明", 1422, 276, 14, "center", "#d9eaff", 850, true);
-  txt("下一階段再設定", 1422, 299, 14, "center", "#d9eaff", 850, true);
+  fitTxt("資金、回合、事件與神明", 1422, 272, 230, 16, "center", "#d9eaff", 900, true, 13);
+  fitTxt("下一階段再設定", 1422, 300, 230, 16, "center", "#d9eaff", 900, true, 13);
   btn(
     "startGame",
     "確認角色，選擇裝備",
@@ -1008,7 +1017,7 @@ function loadout() {
     stretch(IM.roleInfo, x, y, 330, 235, selected ? 1 : .9);
     contain(IM["equip_" + item.id], x + 18, y + 24, 118, 118, selected ? 1 : .72);
     fitTxt(item.name, x + 150, y + 48, 155, 20, "left", selected ? "#ffe37a" : "#fff2c5", 1000, true, 13);
-    paragraph(item.desc, x + 150, y + 88, 155, 13, 19, 3, "left", "#dceaff", 850, true);
+    paragraph(item.desc, x + 150, y + 91, 162, 15, 21, 3, "left", "#dceaff", 900, true);
     btn("equip" + item.id, selected ? "已裝備｜卸下" : full ? "裝備欄已滿" : "裝備", x + 35, y + 168, 260, 50, selected, .96, selected || !full);
   });
   fitTxt(`${S.activeSeat + 1}P 已裝備 ${(seat.equipment || []).length}/2`, 800, 773, 450, 20, "center", "#ffe17b", 1000, true, 14);
@@ -1069,28 +1078,30 @@ function mapSelect() {
       x + 225,
       512,
       330,
-      16,
-      25,
-      2,
+      17,
+      27,
+      3,
       "center",
       "#fff",
       850,
       true,
     );
-    txt(
+    fitTxt(
       `土地 ×${m.priceRate.toFixed(2)}　租金 ×${m.rentRate.toFixed(2)}`,
       x + 225,
       568,
+      330,
       14,
       "center",
       "#ffe17b",
       850,
       true,
     );
-    txt(
+    fitTxt(
       `事件 ×${m.eventRate.toFixed(2)}`,
       x + 225,
       596,
+      330,
       14,
       "center",
       "#d8f2ff",
@@ -1148,7 +1159,7 @@ function rulesSetup() {
     68,
     false,
   );
-  txt("每位角色最多攜帶兩件常駐裝備", 460, 555, 18, "center", "#d9efff", 900, true);
+  fitTxt("每位角色最多攜帶兩件常駐裝備", 460, 555, 400, 20, "center", "#d9efff", 900, true, 15);
   contain(IM.abilityPanel, 860, 145, 560, 560, 0.98);
   txt("事件規則", 1140, 205, 30, "center", "#fff2bd", 1000, true);
   btn(
@@ -1174,20 +1185,22 @@ function rulesSetup() {
     68,
     false,
   );
-  txt(
+  fitTxt(
     `地圖租金倍率 ×${m.rentRate.toFixed(2)}`,
     1140,
     460,
+    400,
     18,
     "center",
     "#fff7dd",
     900,
     true,
   );
-  txt(
+  fitTxt(
     "所有設定都可在開局前再次調整",
     1140,
     510,
+    400,
     16,
     "center",
     "#d9eaff",
@@ -1551,10 +1564,11 @@ function playerHudCard(p, i) {
     true,
     10,
   );
-  txt(
+  fitTxt(
     `土地 ${land}　建築 ${buildings}　裝備 ${(p.equipment || []).length}`,
     x + 98,
     y + 91,
+    162,
     12,
     "left",
     "#d7e6f4",
@@ -1851,13 +1865,13 @@ function scenePopup(q, b, p) {
     contain(IM.abilityPanel, 400, 80, 800, 760, 0.99);
     X.save();
     X.beginPath();
-    X.roundRect(493, 155, 614, 330, 22);
+    X.roundRect(493, 190, 614, 295, 22);
     X.clip();
-    cover((q.art && IM["event_" + q.art]) || IM["eventScene" + (b.mapIndex || 0)], 493, 155, 614, 330, 1);
+    cover((q.art && IM["event_" + q.art]) || IM["eventScene" + (b.mapIndex || 0)], 493, 190, 614, 295, 1);
     X.fillStyle = "rgba(5,10,30,.2)";
-    X.fillRect(493, 155, 614, 330);
+    X.fillRect(493, 190, 614, 295);
     X.restore();
-    fitTxt(q.name, 800, 122, 620, 34, "center", "#fff0a5", 1000, true, 21);
+    fitTxt(q.name, 800, 165, 590, 31, "center", "#fff0a5", 1000, true, 21);
     paragraph(q.desc, 800, 540, 590, 23, 32, 2, "center", "#fff", 900, true);
     if (q.detainedTurn && Number.isInteger(q.releaseIndex) && q.releaseIndex >= 0) {
       const cardName = q.facility === "jail" ? "使用保釋卡" : "使用醫院通行證";

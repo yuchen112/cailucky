@@ -113,16 +113,16 @@ scenePopup = function (q, b, p) {
     fitTxt(
       `${regionName(t.region)}｜${owner ? `Lv${t.level} 地產` : "待售土地"}`,
       800,
-      140,
+      174,
       900,
-      38,
+      34,
       "center",
       "#fff0a5",
       1000,
       true,
       22,
     );
-    contain(art, 300, 205, 430, 430, 1);
+    contain(art, 300, 220, 430, 415, 1);
     if (owner) {
       stretch(IM["playerSeatP" + owner.id], 325, 615, 380, 76, 0.98);
       contain(IM["portrait" + owner.char], 337, 620, 66, 66, 1);

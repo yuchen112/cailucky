@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20260907-1200';
+const CACHE='cxq-richman-20260907-1930';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   '../../assets/brand/cxq-app-icon-192.png','../../assets/brand/cxq-app-icon-512.png',
@@ -33,7 +33,7 @@ const PRECACHE=[
   './assets/facilities/magic_token_v2.webp',
   './assets/npc/wealth_v1.webp','./assets/npc/fortune_v1.webp','./assets/npc/poverty_v1.webp','./assets/npc/misfortune_v1.webp','./assets/npc/land_v1.webp','./assets/npc/angel_v1.webp','./assets/npc/demon_v1.webp','./assets/npc/death_v1.webp',
   './assets/dice/dice_throw_1_v2.webp','./assets/dice/dice_throw_2_v2.webp','./assets/dice/dice_throw_3_v2.webp','./assets/dice/dice_throw_4_v2.webp','./assets/dice/dice_throw_5_v2.webp','./assets/dice/dice_throw_6_v2.webp',
-  './assets/tiles/land_parcel_v1.webp','./assets/tiles/road_node_v2.png','./assets/tiles/event_token_v3.png','./assets/tiles/start_token_v3.png',
+  './assets/tiles/land_parcel_v1.webp','./assets/tiles/road_node_v3.webp','./assets/tiles/event_token_v3.png','./assets/tiles/start_token_v3.png',
   './assets/dice/dice_1.webp','./assets/dice/dice_2.webp','./assets/dice/dice_3.webp','./assets/dice/dice_4.webp','./assets/dice/dice_5.webp','./assets/dice/dice_6.webp',
   '../../assets/characters/cxq-role-joy.webp','../../assets/characters/cxq-role-dream.webp','../../assets/characters/cxq-role-night.webp','../../assets/characters/cxq-role-sadness.webp','../../assets/characters/cxq-role-trust.webp','../../assets/characters/cxq-role-memory.webp','../../assets/characters/cxq-role-growth.webp','../../assets/characters/cxq-role-healing.webp','../../assets/characters/cxq-role-luck.webp','../../assets/characters/cxq-role-hope.webp'
   ,'./assets/characters/joy/walk_right_contact_v1.webp','./assets/characters/joy/walk_right_passing_v1.webp','./assets/characters/dream/walk_right_contact_v1.webp','./assets/characters/dream/walk_right_passing_v1.webp','./assets/characters/night/walk_right_contact_v1.webp','./assets/characters/night/walk_right_passing_v1.webp','./assets/characters/sadness/walk_right_contact_v1.webp','./assets/characters/sadness/walk_right_passing_v1.webp','./assets/characters/trust/walk_right_contact_v1.webp','./assets/characters/trust/walk_right_passing_v1.webp','./assets/characters/memory/walk_right_contact_v1.webp','./assets/characters/memory/walk_right_passing_v1.webp','./assets/characters/growth/walk_right_contact_v1.webp','./assets/characters/growth/walk_right_passing_v1.webp','./assets/characters/healing/walk_right_contact_v1.webp','./assets/characters/healing/walk_right_passing_v1.webp','./assets/characters/luck/walk_right_contact_v1.webp','./assets/characters/luck/walk_right_passing_v1.webp','./assets/characters/hope/walk_right_contact_v1.webp','./assets/characters/hope/walk_right_passing_v1.webp'
