@@ -180,7 +180,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260908-0030";
+const ASSET_REV = "20260908-0115";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -1023,7 +1023,7 @@ function loadout() {
     const s = S.seats[seatIndex], x = 245 + i * 285;
     const editable = s.type === "human";
     stretch(IM["playerSeatP" + seatIndex], x, 112, 265, 78, seatIndex === S.activeSeat ? 1 : .62);
-    contain(IM["portrait" + s.char], x + 8, 116, 70, 70, 1);
+    portrait(IM["portrait" + s.char], x + 8, 116, 70, 70, 1);
     btn(
       "loadoutSeat" + seatIndex,
       editable ? `${seatIndex + 1}P ${CHAR_NAMES[s.char]}` : `${seatIndex + 1}P AI｜自動配置`,
@@ -1037,16 +1037,16 @@ function loadout() {
     );
   });
   EQUIPMENT_DEFS.forEach((item, i) => {
-    const x = 70 + (i % 4) * 380, y = 215 + Math.floor(i / 4) * 270,
+    const x = 105 + (i % 2) * 700, y = 205 + Math.floor(i / 2) * 137,
       selected = (seat.equipment || []).includes(item.id), full = (seat.equipment || []).length >= 2;
-    stretch(IM.roleInfo, x, y, 330, 235, selected ? 1 : .9);
-    contain(IM["equip_" + item.id], x + 18, y + 24, 118, 118, selected ? 1 : .72);
-    fitTxt(item.name, x + 150, y + 48, 155, 20, "left", selected ? "#ffe37a" : "#fff2c5", 1000, true, 13);
-    paragraph(item.desc, x + 150, y + 91, 162, 15, 21, 3, "left", "#dceaff", 900, true);
-    btn("equip" + item.id, selected ? "已裝備｜卸下" : full ? "裝備欄已滿" : "裝備", x + 35, y + 168, 260, 50, selected, .96, selected || !full);
+    stretch(IM["playerSeatP" + S.activeSeat], x, y, 660, 125, selected ? 1 : .82);
+    contain(IM["equip_" + item.id], x + 18, y + 14, 96, 96, selected ? 1 : .74);
+    fitTxt(item.name, x + 130, y + 35, 250, 21, "left", selected ? "#ffe37a" : "#fff2c5", 1000, true, 14);
+    paragraph(item.desc, x + 130, y + 76, 330, 15, 21, 2, "left", "#dceaff", 900, true);
+    btn("equip" + item.id, selected ? "已裝備｜卸下" : full ? "裝備欄已滿" : "裝備", x + 480, y + 35, 160, 55, selected, .96, selected || !full);
   });
-  fitTxt(`${S.activeSeat + 1}P 已裝備 ${(seat.equipment || []).length}/2`, 800, 773, 450, 20, "center", "#ffe17b", 1000, true, 14);
-  btn("loadoutNext", "確認裝備，選擇地圖", 590, 808, 420, 68, true, 1, active.every((i) => (S.seats[i].equipment || []).length > 0));
+  fitTxt(`${S.activeSeat + 1}P 已裝備 ${(seat.equipment || []).length}/2`, 800, 767, 450, 20, "center", "#ffe17b", 1000, true, 14);
+  btn("loadoutNext", "確認裝備，選擇地圖", 590, 806, 420, 68, true, 1, active.every((i) => (S.seats[i].equipment || []).length > 0));
 }
 
 function mapSelect() {
@@ -1786,18 +1786,18 @@ function hud() {
   );
   btn("focusCurrent", "回到角色", 410, 130, 170, 54, false, 0.94, !b.popup);
   miniMapHud();
-  contain(IM.actionConsole, 955, 575, 635, 318, 0.98);
-  portrait(IM["portrait" + p.char], 1010, 615, 150, 150, p.bankrupt ? 0.45 : 1);
+  contain(IM.actionConsole, 1040, 625, 540, 260, 0.98);
+  portrait(IM["portrait" + p.char], 1080, 658, 112, 112, p.bankrupt ? 0.45 : 1);
   (p.equipment || []).slice(0, 2).forEach((id, i) => {
-    contain(IM["equip_" + id], 990 + i * 82, 775, 66, 66, 1);
+    contain(IM["equip_" + id], 1062 + i * 63, 785, 52, 52, 1);
     const def = equipmentDef(id);
-    fitTxt(def?.name || "裝備", 1023 + i * 82, 847, 78, 10, "center", "#fff0ad", 900, true, 8);
+    fitTxt(def?.name || "裝備", 1088 + i * 63, 843, 60, 9, "center", "#fff0ad", 900, true, 7);
   });
   fitTxt(
     `${p.id + 1}P ${CHAR_NAMES[p.char]}`,
-    1085,
-    750,
-    150,
+    1136,
+    774,
+    125,
     15,
     "center",
     PLAYER_COLORS[p.id],
@@ -1809,18 +1809,18 @@ function hud() {
   for (let i = 0; i < diceCount; i++)
     contain(
       IM["dice" + (S.diceResults?.[i] || S.dice)],
-      1215 + i * 105,
-      620,
-      115,
-      115,
+      1228 + i * 94,
+      668,
+      94,
+      94,
     );
   btn(
     "roll",
     "擲骰子",
-    1215,
-    755,
-    340,
-    78,
+    1225,
+    785,
+    320,
+    68,
     true,
     1,
     !S.rolling && !b.popup && !b.winner && b.phase === "pre-roll" && p.type === "human",

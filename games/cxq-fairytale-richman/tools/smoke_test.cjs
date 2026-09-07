@@ -3,7 +3,7 @@ const vm = require("vm");
 const path = require("path");
 
 const root = path.resolve(__dirname, "..");
-const revision = "20260908-0030";
+const revision = "20260908-0115";
 const read = (name) => fs.readFileSync(path.join(root, name), "utf8");
 const fail = (message) => { throw new Error(message); };
 
