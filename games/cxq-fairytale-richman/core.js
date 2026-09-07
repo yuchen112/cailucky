@@ -180,7 +180,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260907-2230";
+const ASSET_REV = "20260907-2355";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -1276,10 +1276,13 @@ function roadAnchor(t) {
 function plotAnchor(t) {
   if (t.type !== "land" || !S.board) return { x: t.x, y: t.y };
   const mapKey = MAPS[S.board.mapIndex || 0]?.key || "starwish",
-    [dx, dy] = MAP_PLOT_OFFSETS[mapKey]?.[t.index] || [0, 0];
+    [dx, dy] = MAP_PLOT_OFFSETS[mapKey]?.[t.index] || [0, 0],
+    // Keep the plot visibly attached to its road stop. The authored vectors
+    // describe which roadside is safe; this factor controls the visual gap.
+    plotOffsetScale = 0.68;
   return {
-    x: Math.max(76, Math.min(MW - 76, t.x + dx)),
-    y: Math.max(116, Math.min(MH - 76, t.y + dy)),
+    x: Math.max(62, Math.min(MW - 62, t.x + dx * plotOffsetScale)),
+    y: Math.max(104, Math.min(MH - 62, t.y + dy * plotOffsetScale)),
   };
 }
 // Backwards-compatible name for popup and input code. A land's visual target is
@@ -1292,26 +1295,19 @@ function drawTile(t) {
     visual = plotAnchor(t),
     shiftX = visual.x - t.x,
     shiftY = visual.y - t.y,
-    tileSize = t.type === "land" ? 118 : t.type === "start" ? 150 : 132;
+    tileSize = t.type === "land" ? 94 : t.type === "start" ? 128 : 114;
   // A land has two authored anchors: a road node for the pawn and a compact
   // roadside plot for construction. They are close enough to read as one tile,
   // but never compete for the same footprint.
   if (t.type === "land") {
     X.save();
-    contain(IM.roadNode || IM.tile_land, road.x - 54, road.y - 40, 108, 80, 1);
-    X.strokeStyle = "rgba(236,203,126,.68)";
-    X.lineWidth = 5;
+    contain(IM.roadNode || IM.tile_land, road.x - 49, road.y - 36, 98, 72, 1);
+    X.strokeStyle = "rgba(111,78,38,.62)";
+    X.lineWidth = 3;
     X.beginPath();
     X.moveTo(road.x, road.y);
     X.lineTo(visual.x, visual.y);
     X.stroke();
-    if (t.owner >= 0) {
-      X.strokeStyle = PLAYER_COLORS[t.owner];
-      X.lineWidth = 8;
-      X.beginPath();
-      X.arc(road.x, road.y, 45, 0, Math.PI * 2);
-      X.stroke();
-    }
     X.restore();
   }
   X.save();
@@ -1319,12 +1315,12 @@ function drawTile(t) {
   if (t.type === "land" && t.owner >= 0) {
     X.save();
     X.strokeStyle = PLAYER_COLORS[t.owner];
-    X.fillStyle = PLAYER_COLORS[t.owner] + "33";
-    X.lineWidth = 13;
+    X.fillStyle = PLAYER_COLORS[t.owner] + "18";
+    X.lineWidth = 6;
     X.shadowColor = PLAYER_COLORS[t.owner];
-    X.shadowBlur = 16;
+    X.shadowBlur = 9;
     X.beginPath();
-    X.arc(t.x, t.y, 72, 0, Math.PI * 2);
+    X.arc(t.x, t.y, 51, 0, Math.PI * 2);
     X.fill();
     X.stroke();
     X.restore();
@@ -1372,11 +1368,11 @@ function drawTile(t) {
       if (building) {
         const grow = 1 + pulse * 0.18,
           landmark = t.level >= 5,
-          sz = (landmark ? 178 : 145) * grow;
+          sz = (landmark ? 140 : 112) * grow;
         X.save();
         X.shadowColor = PLAYER_COLORS[t.owner];
         X.shadowBlur = 28 + 30 * pulse;
-        contain(building, t.x - sz / 2, t.y + 22 - sz, sz, sz, 1);
+        contain(building, t.x - sz / 2, t.y + 15 - sz, sz, sz, 1);
         X.restore();
         if (t.special)
           txt(
@@ -1386,7 +1382,7 @@ function drawTile(t) {
                 ? "童話商場"
                 : "祝福公園",
             t.x,
-            t.y - 148,
+            t.y - 116,
             12,
             "center",
             "#fff2ae",
@@ -1397,7 +1393,7 @@ function drawTile(t) {
           txt(
             "★ 升級完成 ★",
             t.x,
-            t.y - 170,
+            t.y - 136,
             14,
             "center",
             "#ffe274",
@@ -1405,25 +1401,25 @@ function drawTile(t) {
             true,
           );
       }
-      stretch(IM["playerSeatP" + t.owner], t.x - 73, t.y + 18, 146, 46, 0.99);
-      contain(IM["portrait" + owner?.char], t.x - 67, t.y + 22, 38, 38, 0.99);
+      stretch(IM["playerSeatP" + t.owner], t.x - 57, t.y + 16, 114, 36, 0.99);
+      contain(IM["portrait" + owner?.char], t.x - 52, t.y + 19, 29, 29, 0.99);
       fitTxt(
         `${t.owner + 1}P ${owner ? CHAR_NAMES[owner.char] : ""} Lv${t.level}`,
-        t.x + 20,
-        t.y + 41,
-        88,
-        12,
+        t.x + 15,
+        t.y + 34,
+        70,
+        10,
         "center",
         "#ffffff",
         1000,
         true,
-        9,
+        8,
       );
       if (!building && pulse > 0)
         txt(
           "★ 地契已取得 ★",
           t.x,
-          t.y - 142,
+          t.y - 112,
           14,
           "center",
           "#ffe274",
@@ -1434,8 +1430,8 @@ function drawTile(t) {
     txt(
       "$" + Math.round(t.price / 1000) + "K",
       t.x,
-      t.y + 78,
-      13,
+      t.y + (t.owner >= 0 ? 66 : 58),
+      11,
       "center",
       "#fff6d2",
       900,
@@ -1489,7 +1485,7 @@ function drawPlayers() {
     if (p.moveAnim && contact?.complete && passing?.complete) {
       const q = p.moveAnim,
         frame = Math.floor((now - q.start) / 105) % 2 ? passing : contact;
-      containFacing(frame, x - 74, y - 144 + walkingBob, 148, 164, q.to.x >= q.from.x);
+      containFacing(frame, x - 60, y - 128 + walkingBob, 120, 140, q.to.x >= q.from.x);
     } else contain(IM["c" + p.char], x - 56, y - 118 + walkingBob, 112, 132);
     X.restore();
     stretch(IM["playerSeatP" + p.id], x - 55, y - 146, 110, 34, 0.98);

@@ -5,7 +5,7 @@ const EQUIPMENT_DEFS = [
   { id: "charm", name: "幸運徽章", group: "fortune", desc: "正向命運事件出現機率提高。" },
   { id: "guardian", name: "守護吊墜", group: "fortune", desc: "每 8 回合抵銷一次負面事件。" },
   { id: "bell", name: "收租鈴鐺", group: "income", desc: "收到的租金提高 10%。" },
-  { id: "boots", name: "旅行靴", group: "movement", desc: "骰出 1 點時修正為 2 點。" },
+  { id: "boots", name: "旅行靴", group: "movement", desc: "縮短角色逐格行走的演出時間；不改變骰子點數。" },
   { id: "compass", name: "星願羅盤", group: "movement", desc: "每 6 回合可自動重投過低點數。" },
   { id: "manual", name: "修繕手冊", group: "defense", desc: "首次建築受損時抵銷降級。" },
 ];
@@ -999,13 +999,37 @@ function applySpecial(t, p) {
       e = weighted[Math.floor(Math.random() * weighted.length)],
       negative = e[4] === "negative",
       guardianReady = hasEquipment(p, "guardian") && S.board.round >= (p.guardianReadyAt || 1),
-      protectedByShield = negative && (p.shield > 0 || guardianReady);
+      protectedByShield = negative && (p.shield > 0 || guardianReady),
+      before = {
+        cash: p.cash,
+        pos: p.pos,
+        shield: p.shield,
+        slow: p.slow || 0,
+        levels: ownedLands(p).reduce((sum, land) => sum + land.level, 0),
+      };
     if (guardianReady && negative) p.guardianReadyAt = S.board.round + 8;
     if (protectedByShield && p.shield > 0) p.shield--;
     else e[2](p);
+    const cashDelta = p.cash - before.cash,
+      levelDelta = ownedLands(p).reduce((sum, land) => sum + land.level, 0) - before.levels,
+      details = [];
+    if (protectedByShield) details.push("本次損失為 $0");
+    if (cashDelta) details.push(`${cashDelta > 0 ? "獲得" : "支付"} $${Math.abs(cashDelta).toLocaleString()}`);
+    if (p.pos !== before.pos) {
+      const distance = Math.min(
+        (p.pos - before.pos + S.board.tiles.length) % S.board.tiles.length,
+        (before.pos - p.pos + S.board.tiles.length) % S.board.tiles.length,
+      );
+      details.push(`位置移動 ${distance} 格（第 ${before.pos + 1} 格 → 第 ${p.pos + 1} 格）`);
+    }
+    if (levelDelta) details.push(`名下建築${levelDelta > 0 ? "提升" : "降低"} ${Math.abs(levelDelta)} 級`);
+    if (p.shield > before.shield) details.push(`獲得負面事件防護 ${p.shield - before.shield} 次`);
+    if ((p.slow || 0) > before.slow) details.push("下次擲骰前將明確顯示移動限制");
     openPopup("event", {
       name: "命運事件｜" + e[0],
-      desc: protectedByShield ? `${guardianReady ? "守護吊墜" : "守護效果"}生效，已抵銷「${e[0]}」。` : e[1],
+      desc: (protectedByShield
+        ? `${guardianReady ? "守護吊墜" : "守護效果"}生效，已抵銷「${e[0]}」。`
+        : e[1]) + `\n結果：${details.join("；") || "本次沒有數值變化"}。`,
       art: e[3] || null,
     });
     addLog(
@@ -1229,7 +1253,8 @@ function finishMovement() {
 function moveToTile(next) {
   const b = S.board, p = cp(), move = b.pendingMove;
   if (!move) return;
-  const old = p.pos, from = b.tiles[old], to = b.tiles[next], dur = ANIMATION_MIN_MS + 20;
+  const old = p.pos, from = b.tiles[old], to = b.tiles[next],
+    dur = hasEquipment(p, "boots") ? ANIMATION_MIN_MS : ANIMATION_MIN_MS + 70;
   p.pos = next;
   p.moveAnim = { from: { x: from.x, y: from.y }, to: { x: to.x, y: to.y }, start: performance.now(), dur };
   move.remaining--;
@@ -1280,24 +1305,10 @@ function resolveDiceRoll(results, p) {
     p.compassReadyAt = S.board.round + 6;
     adjustments.push(`星願羅盤：重新投擲為 ${rolledTotal} 點`);
   }
-  let finalSteps = rolledTotal;
-  if (hasEquipment(p, "boots") && finalSteps === 1) {
-    finalSteps = 2;
-    adjustments.push("旅行靴：最低前進 2 步");
-  }
-  if (p.char === 1 && finalSteps === 1 && Math.random() < 0.5) {
-    finalSteps = 2;
-    adjustments.push("角色能力：最低前進 2 步");
-  }
-  if (p.char === 5 && finalSteps <= 2 && Math.random() < 0.3) {
-    finalSteps = 3;
-    adjustments.push("角色能力：低點數改為 3 步");
-  }
+  const finalSteps = rolledTotal;
   if (p.slow) {
-    const before = finalSteps;
-    finalSteps = Math.min(finalSteps, 3);
     p.slow = 0;
-    if (finalSteps !== before) adjustments.push("衰神：本回合最多前進 3 步");
+    adjustments.push("道路施工狀態已解除；本次仍依骰面完整移動");
   }
   return { faces, rolledTotal, finalSteps, adjustments };
 }

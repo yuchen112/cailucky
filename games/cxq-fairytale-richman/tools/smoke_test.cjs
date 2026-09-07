@@ -3,7 +3,7 @@ const vm = require("vm");
 const path = require("path");
 
 const root = path.resolve(__dirname, "..");
-const revision = "20260907-2230";
+const revision = "20260907-2355";
 const read = (name) => fs.readFileSync(path.join(root, name), "utf8");
 const fail = (message) => { throw new Error(message); };
 
@@ -142,7 +142,10 @@ run(`(()=>{
     for(const tile of S.board.tiles){
       const road=roadAnchor(tile),plot=plotAnchor(tile);
       if(road.x!==tile.x||road.y!==tile.y)throw new Error('pawn road anchor drifted');
-      if(tile.type==='land'&&Math.hypot(plot.x-road.x,plot.y-road.y)<80)throw new Error('building plot overlaps pawn road node');
+      if(tile.type==='land'){
+        const gap=Math.hypot(plot.x-road.x,plot.y-road.y);
+        if(gap<52||gap>92)throw new Error('roadside plot is detached from its road node');
+      }
     }
     const land=S.board.tiles.find(t=>t.type==='land'), owner=S.board.players[0];
     land.owner=owner.id;land.level=5;
@@ -163,7 +166,9 @@ run(`(()=>{
   const plainRent=Math.round(land.price*(.25+land.level*.22)*marketIndex());
   if(rentEstimate(land,other)!==Math.round(plainRent*1.1))throw new Error('rent bell failed');
   p.equipment=['boots'];let roll=resolveDiceRoll([1],p);
-  if(roll.finalSteps!==2)throw new Error('travel boots failed');
+  if(roll.finalSteps!==1||roll.rolledTotal!==1)throw new Error('dice face and movement diverged');
+  p.equipment=[];roll=resolveDiceRoll([2,5],p);
+  if(roll.finalSteps!==7||roll.faces.join(',')!=='2,5')throw new Error('multi-die total and movement diverged');
   p.equipment=['compass'];p.compassReadyAt=1;S.board.round=1;
   const oldRandom=Math.random;Math.random=()=>.99;roll=resolveDiceRoll([1],p);Math.random=oldRandom;
   if(roll.finalSteps<=1||p.compassReadyAt!==7)throw new Error('compass reroll failed');
@@ -236,4 +241,4 @@ for(const [w,h] of [[844,390],[932,430],[1366,768],[1920,720],[2560,1080]]){
   if(Math.abs((1600*scale)/(900*scale)-16/9)>.0001)fail('safe area distorted');
 }
 
-console.log("CxQ streamlined-game smoke test passed: PWA assets, four-stage setup, two-slot equipment, event acknowledgement, roaming gods, dice adjustments, road/plot anchors, character landmarks, save migration, responsive geometry and all three map simulations.");
+console.log("CxQ streamlined-game smoke test passed: PWA assets, four-stage setup, two-slot equipment, event acknowledgement, roaming gods, exact dice movement, integrated road/plot anchors, character landmarks, save migration, responsive geometry and all three map simulations.");
