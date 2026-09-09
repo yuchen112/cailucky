@@ -108,13 +108,13 @@ scenePopup = function (q, b, p) {
       mine = t.owner === p.id,
       buy = buyCost(p, t),
       cost = upgradeCost(t),
-      art = buildingImage(t) || IM.tile_land;
-    contain(IM.abilityPanel, 250, 70, 1100, 760, 0.99);
+      art = buildingImage(t) || IM.roadNode || IM.tile_land;
+    contain(IM.abilityPanel, 400, 65, 800, 770, 0.99);
     fitTxt(
       `${regionName(t.region)}｜${owner ? `Lv${t.level} 地產` : "待售土地"}`,
       800,
       174,
-      900,
+      650,
       34,
       "center",
       "#fff0a5",
@@ -122,23 +122,23 @@ scenePopup = function (q, b, p) {
       true,
       22,
     );
-    contain(art, 300, 220, 430, 415, 1);
+    contain(art, 475, 235, 230, 220, 1);
     if (owner) {
-      stretch(IM["playerSeatP" + owner.id], 325, 615, 380, 76, 0.98);
-      contain(IM["portrait" + owner.char], 337, 620, 66, 66, 1);
+      stretch(IM["playerSeatP" + owner.id], 470, 455, 240, 62, 0.98);
+      portrait(IM["portrait" + owner.char], 478, 460, 52, 52, 1);
       fitTxt(
         `${owner.id + 1}P ${CHAR_NAMES[owner.char]}｜地主`,
-        540,
-        650,
-        250,
-        20,
+        615,
+        486,
+        165,
+        16,
         "center",
         PLAYER_COLORS[owner.id],
         1000,
         true,
         13,
       );
-    } else txt("尚未有地主", 515, 655, 24, "center", "#dceaff", 900, true);
+    } else txt("尚未有地主", 590, 486, 19, "center", "#dceaff", 900, true);
     const lines = owner
       ? [
           `土地價值　$${t.price.toLocaleString()}`,
@@ -153,16 +153,16 @@ scenePopup = function (q, b, p) {
           "Lv5 建成地主角色的專屬地標",
         ];
     lines.forEach((line, i) =>
-      fitTxt(line, 1010, 275 + i * 62, 475, 23, "center", i === 2 ? "#ffe477" : "#fff", 900, true, 15),
+      fitTxt(line, 900, 260 + i * 55, 390, 20, "left", i === 2 ? "#ffe477" : "#fff", 900, true, 13),
     );
     if (!owner) {
-      btn("buy", (p.effects || []).some((e) => e.kind === "死神") ? "死神附身｜無法購地" : `購買土地　$${buy.toLocaleString()}`, 795, 555, 430, 72, true);
-      btn("skip", "暫時略過", 795, 650, 430, 68, false);
+      btn("buy", (p.effects || []).some((e) => e.kind === "死神") ? "死神附身｜無法購地" : `購買土地　$${buy.toLocaleString()}`, 590, 585, 420, 68, true);
+      btn("skip", "暫時略過", 650, 674, 300, 62, false);
     } else if (mine) {
       if (t.level < 5)
-        btn("upgrade", (p.effects || []).some((e) => e.kind === "死神") ? "死神附身｜無法加建" : t.level === 4 ? `建成${CHAR_NAMES[p.char]}專屬地標` : `升級至 Lv${t.level + 1}`, 795, 555, 430, 72, true);
-      btn("skip", "完成回合", 795, t.level < 5 ? 650 : 600, 430, 68, false);
-    } else btn("pay", p.shield > 0 ? "使用護盾／結算" : `支付租金　$${rentEstimate(t, p).toLocaleString()}`, 795, 600, 430, 74, true);
+        btn("upgrade", (p.effects || []).some((e) => e.kind === "死神") ? "死神附身｜無法加建" : t.level === 4 ? `建成${CHAR_NAMES[p.char]}專屬地標` : `升級至 Lv${t.level + 1}`, 590, 585, 420, 68, true);
+      btn("skip", "完成回合", 650, t.level < 5 ? 674 : 625, 300, 62, false);
+    } else btn("pay", p.shield > 0 ? "使用護盾／結算" : `支付租金　$${rentEstimate(t, p).toLocaleString()}`, 590, 610, 420, 70, true);
     return true;
   }
   if (q.kind === "shop") {
@@ -1692,13 +1692,26 @@ function useTargetCard(targetId) {
   S.board.popup = null;
   saveGame();
 }
-function saveGame() {
+function saveKey(slot = 0) {
+  return slot > 0 ? SAVE_SLOT_PREFIX + slot : SAVE;
+}
+function saveSlotSummary(slot = 0) {
+  try {
+    const d = JSON.parse(localStorage.getItem(saveKey(slot)) || "null");
+    if (!d?.board) return slot === 0 ? "尚無即時紀錄" : "空白";
+    const stamp = d.savedAt ? new Date(d.savedAt) : null,
+      time = stamp && !Number.isNaN(stamp.getTime()) ? `${stamp.getMonth() + 1}/${stamp.getDate()} ${String(stamp.getHours()).padStart(2, "0")}:${String(stamp.getMinutes()).padStart(2, "0")}` : "舊版紀錄";
+    return `第${d.board.round || 1}回合｜${time}`;
+  } catch (e) { return "紀錄損毀"; }
+}
+function saveGame(slot = 0) {
   if (!S.board) return;
   try {
     localStorage.setItem(
-      SAVE,
+      saveKey(slot),
       JSON.stringify({
-        version: 3,
+        version: 4,
+        savedAt: Date.now(),
         seats: S.seats,
         mapIndex: S.mapIndex,
         money: S.money,
@@ -1712,9 +1725,9 @@ function saveGame() {
     );
   } catch (e) {}
 }
-function loadGame() {
+function loadGame(slot = 0) {
   try {
-    const d = JSON.parse(localStorage.getItem(SAVE));
+    const d = JSON.parse(localStorage.getItem(saveKey(slot)));
     if (!d || !d.board) return false;
     S.seats = d.seats || S.seats;
     S.mapIndex = Number.isInteger(d.mapIndex)
@@ -1872,12 +1885,19 @@ function action(id) {
   }
   if (S.scene === "setup") {
     if (id === "prevChar") {
-      SETUP_VIEW.char =
-        (SETUP_VIEW.char + CHAR_KEYS.length - 1) % CHAR_KEYS.length;
+      for (let n = 1; n <= CHAR_KEYS.length; n++) {
+        const ci = (SETUP_VIEW.char - n + CHAR_KEYS.length) % CHAR_KEYS.length,
+          owner = assigned(ci);
+        if (owner === undefined || owner === S.activeSeat) { SETUP_VIEW.char = ci; break; }
+      }
       return;
     }
     if (id === "nextChar") {
-      SETUP_VIEW.char = (SETUP_VIEW.char + 1) % CHAR_KEYS.length;
+      for (let n = 1; n <= CHAR_KEYS.length; n++) {
+        const ci = (SETUP_VIEW.char + n) % CHAR_KEYS.length,
+          owner = assigned(ci);
+        if (owner === undefined || owner === S.activeSeat) { SETUP_VIEW.char = ci; break; }
+      }
       return;
     }
     if (id === "confirmChar") {
@@ -1896,7 +1916,11 @@ function action(id) {
         }
         s.type = "ai";
       } else if (s.type === "ai") s.type = "off";
-      else s.type = "human";
+      else {
+        s.type = "human";
+        const used = new Set(activeSeatIds().filter((seat) => seat !== i).map((seat) => S.seats[seat].char));
+        if (used.has(s.char)) s.char = CHAR_KEYS.findIndex((_, ci) => !used.has(ci));
+      }
       SETUP_VIEW.char = s.char;
       return;
     }
@@ -2204,6 +2228,22 @@ function action(id) {
       openPopup("pause");
       return;
     }
+    if (id === "openSaves") { openPopup("saveManager"); return; }
+    if (id === "openLoads") { openPopup("loadManager"); return; }
+    if (/^saveSlot[1-4]$/.test(id)) {
+      const slot = +id.at(-1);
+      if (localStorage.getItem(saveKey(slot))) openPopup("saveConfirm", { slot });
+      else { saveGame(slot); openPopup("saveManager"); }
+      return;
+    }
+    if (/^confirmSave[1-4]$/.test(id)) {
+      saveGame(+id.at(-1)); openPopup("saveManager"); return;
+    }
+    if (/^loadSlot[0-4]$/.test(id)) {
+      const slot = +id.at(-1);
+      if (localStorage.getItem(saveKey(slot))) loadGame(slot);
+      return;
+    }
     if (id === "roster") {
       if (p.type === "human") openPopup("playerDetail", { player: p });
       return;
@@ -2217,6 +2257,7 @@ function action(id) {
       return;
     }
     if (id === "focusCurrent") {
+      b.popup = null;
       focus();
       return;
     }

@@ -131,6 +131,7 @@ const MAP_PLOT_OFFSETS = {
   cloudbazaar: [[0,122],[-9,104],[-22,120],[-29,100],[-48,112],[-54,89],[-81,92],[-85,60],[-115,40],[-104,0],[-115,-40],[-85,-60],[-81,-92],[-54,-89],[-48,-112],[-29,-100],[-22,-120],[-9,-104],[0,-122],[9,-104],[22,-120],[29,-100],[48,-112],[54,-89],[81,-92],[85,-60],[115,-40],[104,0],[115,40],[85,60],[81,92],[54,89],[48,112],[29,100],[22,120],[9,104]],
 };
 const SAVE = "cxq_richman_latest_save_v4",
+  SAVE_SLOT_PREFIX = "cxq_richman_manual_save_v1_",
   PREF = "cxq_richman_pref_v1";
 const S = {
   scene: "home",
@@ -180,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260908-0230";
+const ASSET_REV = "20260909-0200";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -724,10 +725,15 @@ function chooseChar(ci) {
     b = assigned(ci),
     old = S.seats[a].char;
   if (old === ci && b === a) return;
+  if (b !== undefined && b !== a) {
+    SETUP_VIEW.notice = `${CHAR_NAMES[ci]}已由 ${b + 1}P 選擇，請選擇其他角色`;
+    SETUP_VIEW.noticeUntil = performance.now() + 2200;
+    return;
+  }
   S.pickAnim = {
     char: ci,
     seat: a,
-    swapSeat: b !== undefined && b !== a ? b : -1,
+    swapSeat: -1,
     oldChar: old,
     start: performance.now(),
     dur: 650,
@@ -896,14 +902,14 @@ function setup() {
     "confirmChar",
     owner === undefined || owner === S.activeSeat
       ? "選擇這名角色"
-      : `與 ${owner + 1}P 交換`,
+      : `已由 ${owner + 1}P 選擇`,
     350,
     606,
     340,
     68,
     true,
     1,
-    !S.pickAnim && S.seats[S.activeSeat].type !== "off",
+    !S.pickAnim && S.seats[S.activeSeat].type !== "off" && (owner === undefined || owner === S.activeSeat),
   );
   contain(IM.abilityPanel, 850, 104, 420, 420, 0.99);
   fitTxt(
@@ -1286,16 +1292,7 @@ function roadAnchor(t) {
   return { x: t.x, y: t.y };
 }
 function plotAnchor(t) {
-  if (t.type !== "land" || !S.board) return { x: t.x, y: t.y };
-  const mapKey = MAPS[S.board.mapIndex || 0]?.key || "starwish",
-    [dx, dy] = MAP_PLOT_OFFSETS[mapKey]?.[t.index] || [0, 0],
-    // Keep the plot visibly attached to its road stop. The authored vectors
-    // describe which roadside is safe; this factor controls the visual gap.
-    plotOffsetScale = 0.68;
-  return {
-    x: Math.max(62, Math.min(MW - 62, t.x + dx * plotOffsetScale)),
-    y: Math.max(104, Math.min(MH - 62, t.y + dy * plotOffsetScale)),
-  };
+  return { x: t.x, y: t.y };
 }
 // Backwards-compatible name for popup and input code. A land's visual target is
 // its plot, while pawns, roaming NPCs and obstacles always use roadAnchor().
@@ -1308,24 +1305,10 @@ function drawTile(t) {
     shiftX = visual.x - t.x,
     shiftY = visual.y - t.y,
     tileSize = t.type === "land" ? 94 : t.type === "start" ? 128 : 114;
-  // A land has two authored anchors: a road node for the pawn and a compact
-  // roadside plot for construction. They are close enough to read as one tile,
-  // but never compete for the same footprint.
-  if (t.type === "land") {
-    X.save();
-    contain(IM.roadNode || IM.tile_land, road.x - 49, road.y - 36, 98, 72, 1);
-    X.strokeStyle = "rgba(111,78,38,.62)";
-    X.lineWidth = 3;
-    X.beginPath();
-    X.moveTo(road.x, road.y);
-    X.lineTo(visual.x, visual.y);
-    X.stroke();
-    X.restore();
-  }
   X.save();
   X.translate(shiftX, shiftY);
   contain(
-    tileImage(t.type),
+    t.type === "land" ? (IM.roadNode || tileImage(t.type)) : tileImage(t.type),
     t.x - tileSize / 2,
     t.y - tileSize / 2,
     tileSize,
@@ -1364,14 +1347,30 @@ function drawTile(t) {
             : 0,
         owner = S.board.players.find((p) => p.id === t.owner);
       const building = buildingImage(t);
+      X.save();
+      X.strokeStyle = PLAYER_COLORS[t.owner];
+      X.lineWidth = 6;
+      X.shadowColor = PLAYER_COLORS[t.owner];
+      X.shadowBlur = 12;
+      X.beginPath();
+      X.ellipse(t.x, t.y + 4, 43, 31, 0, 0, Math.PI * 2);
+      X.stroke();
+      X.restore();
+      X.save();
+      X.strokeStyle = "#68421c";
+      X.lineWidth = 4;
+      X.beginPath(); X.moveTo(t.x - 34, t.y - 9); X.lineTo(t.x - 34, t.y - 78); X.stroke();
+      X.fillStyle = PLAYER_COLORS[t.owner];
+      X.beginPath(); X.moveTo(t.x - 32, t.y - 75); X.lineTo(t.x + 16, t.y - 61); X.lineTo(t.x - 32, t.y - 47); X.closePath(); X.fill();
+      X.restore();
       if (building) {
         const grow = 1 + pulse * 0.18,
           landmark = t.level >= 5,
-          sz = (landmark ? 140 : 112) * grow;
+          sz = (landmark ? 148 : 118) * grow;
         X.save();
         X.shadowColor = PLAYER_COLORS[t.owner];
         X.shadowBlur = 28 + 30 * pulse;
-        contain(building, t.x - sz / 2, t.y + 15 - sz, sz, sz, 1);
+        contain(building, t.x - sz / 2, t.y + 17 - sz, sz, sz, 1);
         X.restore();
         if (t.special)
           txt(
@@ -1400,19 +1399,6 @@ function drawTile(t) {
             true,
           );
       }
-      stretch(IM["playerSeatP" + t.owner], t.x - 57, t.y + 16, 114, 36, 0.99);
-      fitTxt(
-        `${t.owner + 1}P｜Lv${t.level}`,
-        t.x,
-        t.y + 34,
-        94,
-        10,
-        "center",
-        "#ffffff",
-        1000,
-        true,
-        8,
-      );
       if (!building && pulse > 0)
         txt(
           "★ 地契已取得 ★",
@@ -1425,16 +1411,8 @@ function drawTile(t) {
           true,
         );
     }
-    txt(
-      "$" + Math.round(t.price / 1000) + "K",
-      t.x,
-      t.y + (t.owner >= 0 ? 66 : 58),
-      11,
-      "center",
-      "#fff6d2",
-      900,
-      true,
-    );
+    if (S.board?.selectedTile === t)
+      txt(`$${Math.round(t.price / 1000)}K`, t.x, t.y + 58, 11, "center", "#fff6d2", 900, true);
   }
   X.restore();
 }
@@ -1644,53 +1622,36 @@ function diceThrowOverlay() {
 }
 function miniMapHud() {
   const b = S.board,
-    x = 18,
-    y = 675,
-    w = 286,
-    h = 168;
-  stretch(IM.roleInfo, x, y, w, h, 0.96);
+    x = 1184,
+    y = 24,
+    w = 142,
+    h = 108;
   X.save();
   X.beginPath();
-  X.roundRect(x + 18, y + 25, w - 36, h - 48, 12);
+  X.roundRect(x, y, w, h, 12);
   X.clip();
-  cover(
-    IM["mapPreview" + (b.mapIndex || 0)],
-    x + 18,
-    y + 25,
-    w - 36,
-    h - 48,
-    0.88,
-  );
+  cover(IM["mapPreview" + (b.mapIndex || 0)], x, y, w, h, 0.95);
   X.restore();
-  const rx = x + 18 + (b.cam.x / (MW - W)) * (w - 96),
-    ry = y + 25 + (b.cam.y / (MH - H)) * (h - 94);
+  const rx = x + (b.cam.x / (MW - W)) * (w - 40),
+    ry = y + (b.cam.y / (MH - H)) * (h - 30);
   X.save();
   X.strokeStyle = "#fff073";
-  X.lineWidth = 4;
-  X.strokeRect(rx, ry, 60, 46);
+  X.lineWidth = 3;
+  X.strokeRect(rx, ry, 40, 30);
   X.restore();
-  txt(
-    "拖曳棋盤｜點格查看",
-    x + w / 2,
-    y + h - 12,
-    12,
-    "center",
-    "#fff6d2",
-    900,
-    true,
-  );
 }
 function hud() {
   const b = S.board,
     p = cp();
   playerHudCard(p, 0, false);
   b.players.filter((player) => player.id !== p.id).forEach((player, i) => playerHudCard(player, i, true));
-  stretch(IM.roleInfo, 1170, 12, 416, 134, 0.96);
+  stretch(IM.roleInfo, 1168, 10, 420, 166, 0.98);
+  miniMapHud();
   fitTxt(
     `${b.mapRules?.name || "童話王國"}　　第 ${b.round}/${S.rounds} 回合`,
-    1378,
+    1450,
     35,
-    360,
+    230,
     18,
     "center",
     "#fff4c9",
@@ -1700,9 +1661,9 @@ function hud() {
   );
   fitTxt(
     `現在行動：${p.id + 1}P ${CHAR_NAMES[p.char]}`,
-    1378,
+    1450,
     62,
-    350,
+    230,
     17,
     "center",
     PLAYER_COLORS[p.id],
@@ -1712,9 +1673,9 @@ function hud() {
   );
   fitTxt(
     `現金 $${p.cash.toLocaleString()}　持有土地 ${ownedLands(p).length}`,
-    1378,
+    1450,
     91,
-    350,
+    230,
     15,
     "center",
     "#e2f1ff",
@@ -1724,9 +1685,9 @@ function hud() {
   );
   fitTxt(
     `總資產 $${netWorth(p).toLocaleString()}　物價指數 ×${marketIndex().toFixed(1)}`,
-    1378,
+    1450,
     118,
-    350,
+    230,
     15,
     "center",
     "#ffe58e",
@@ -1739,60 +1700,15 @@ function hud() {
     hasEquipment(p, "guardian") && (p.guardianReadyAt || 0) > b.round ? `守護徽章 ${p.guardianReadyAt - b.round}回合` : "",
     hasEquipment(p, "compass") && (p.compassReadyAt || 0) > b.round ? `星辰羅盤 ${p.compassReadyAt - b.round}回合` : "",
   ].filter(Boolean).join("｜") || "狀態正常";
-  fitTxt(statusText, 1378, 140, 350, 12, "center", "#fff0a5", 900, true, 9);
-  btn("pause", "選單", 20, 130, 150, 54, false, 0.94, !S.rolling && !b.popup);
-  btn(
-    "roster",
-    "目前角色資料",
-    180,
-    130,
-    220,
-    54,
-    false,
-    0.94,
-    !S.rolling && !b.popup && p.type === "human",
-  );
-  btn("focusCurrent", "回到角色", 410, 130, 170, 54, false, 0.94, !b.popup);
-  miniMapHud();
-  contain(IM.actionConsole, 1040, 625, 540, 260, 0.98);
-  portrait(IM["portrait" + p.char], 1080, 658, 112, 112, p.bankrupt ? 0.45 : 1);
+  fitTxt(statusText, 1450, 139, 230, 11, "center", "#fff0a5", 900, true, 8);
+  btn("pause", "⚙", 1524, 184, 62, 56, false, 0.96, !S.rolling && !b.popup);
   (p.equipment || []).slice(0, 2).forEach((id, i) => {
-    contain(IM["equip_" + id], 1062 + i * 63, 785, 52, 52, 1);
+    contain(IM["equip_" + id], 22 + i * 70, 121, 58, 58, 1);
     const def = equipmentDef(id);
-    fitTxt(def?.name || "裝備", 1088 + i * 63, 843, 60, 9, "center", "#fff0ad", 900, true, 7);
+    fitTxt(def?.name || "裝備", 51 + i * 70, 184, 66, 9, "center", "#fff0ad", 900, true, 7);
   });
-  fitTxt(
-    `${p.id + 1}P ${CHAR_NAMES[p.char]}`,
-    1136,
-    774,
-    125,
-    15,
-    "center",
-    PLAYER_COLORS[p.id],
-    1000,
-    true,
-    11,
-  );
-  const diceCount = Math.max(1, Math.min(3, p.diceCount || 1));
-  for (let i = 0; i < diceCount; i++)
-    contain(
-      IM["dice" + (S.diceResults?.[i] || S.dice)],
-      1228 + i * 94,
-      668,
-      94,
-      94,
-    );
-  btn(
-    "roll",
-    "擲骰子",
-    1225,
-    785,
-    320,
-    68,
-    true,
-    1,
-    !S.rolling && !b.popup && !b.winner && b.phase === "pre-roll" && p.type === "human",
-  );
+  const canRoll = !S.rolling && !b.popup && !b.winner && b.phase === "pre-roll" && p.type === "human";
+  if (canRoll) btn("roll", "擲骰子", 635, 798, 330, 70, true, 1, true);
   if (S.msg)
     fitTxt(S.msg, 800, 850, 680, 16, "center", "#fff6d2", 800, true, 12);
   diceThrowOverlay();
@@ -2154,13 +2070,29 @@ function popup() {
       );
     actions.push(["cardCancel", "返回卡冊"]);
   } else if (q.kind === "pause") {
-    title = "冒險選單";
+    title = "遊戲設定";
     body = `${b.mapRules?.name || "童話王國"}｜第 ${b.round} 回合`;
     actions = [
       ["resume", "繼續遊戲"],
-      ["saveHome", "保存並回首頁"],
+      ["openSaves", "儲存遊戲"],
+      ["openLoads", "讀取遊戲"],
+      ["roster", "角色與資產"],
+      ["focusCurrent", "回到目前角色"],
+      ["saveHome", "回到首頁"],
       ["surrender", "認輸投降"],
     ];
+  } else if (q.kind === "saveManager" || q.kind === "loadManager") {
+    const saving = q.kind === "saveManager";
+    title = saving ? "儲存遊戲" : "讀取遊戲";
+    body = saving ? "即時紀錄會自動更新；請選擇一個手動儲存槽。" : "選擇要返回的冒險紀錄。";
+    actions.push([saving ? "noop" : "loadSlot0", `即時紀錄｜${saveSlotSummary(0)}`]);
+    for (let i = 1; i <= 4; i++)
+      actions.push([`${saving ? "save" : "load"}Slot${i}`, `紀錄 ${i}｜${saveSlotSummary(i)}`]);
+    actions.push(["pause", "返回設定"]);
+  } else if (q.kind === "saveConfirm") {
+    title = `覆蓋紀錄 ${q.slot}`;
+    body = `${saveSlotSummary(q.slot)}\n確定要以目前進度覆蓋這個紀錄嗎？`;
+    actions = [[`confirmSave${q.slot}`, "確認覆蓋"], ["openSaves", "取消"]];
   } else if (q.kind === "roster") {
     title = "玩家與資產";
     body = "查看目前現金、土地、建築、卡片與總資產";

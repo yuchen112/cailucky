@@ -3,7 +3,7 @@ const vm = require("vm");
 const path = require("path");
 
 const root = path.resolve(__dirname, "..");
-const revision = "20260908-0230";
+const revision = "20260909-0200";
 const read = (name) => fs.readFileSync(path.join(root, name), "utf8");
 const fail = (message) => { throw new Error(message); };
 
@@ -94,6 +94,9 @@ run(`(()=>{
 run(`(()=>{
   S.scene='setup';S.seats[0].type='human';S.seats[1].type='ai';
   S.seats[2].type=S.seats[3].type='off';S.activeSeat=0;
+  S.seats[0].char=6;S.seats[1].char=1;S.activeSeat=1;S.pickAnim=null;chooseChar(6);
+  if(S.pickAnim||S.seats[1].char===6)throw new Error('duplicate character selection was accepted');
+  S.activeSeat=0;
   action('startGame');
   const before=JSON.stringify(S.seats[1].equipment);
   action('loadoutSeat1');
@@ -143,8 +146,7 @@ run(`(()=>{
       const road=roadAnchor(tile),plot=plotAnchor(tile);
       if(road.x!==tile.x||road.y!==tile.y)throw new Error('pawn road anchor drifted');
       if(tile.type==='land'){
-        const gap=Math.hypot(plot.x-road.x,plot.y-road.y);
-        if(gap<52||gap>92)throw new Error('roadside plot is detached from its road node');
+        if(plot.x!==road.x||plot.y!==road.y)throw new Error('building is not anchored directly on its board space');
       }
     }
     const land=S.board.tiles.find(t=>t.type==='land'), owner=S.board.players[0];
@@ -215,7 +217,8 @@ for (let mi = 0; mi < 3; mi++) {
 }
 
 run(`
-  S.mapIndex=0;makeBoard();saveGame();
+  S.mapIndex=0;makeBoard();saveGame();saveGame(2);
+  if(!localStorage.getItem(SAVE_SLOT_PREFIX+'2')||saveSlotSummary(2)==='空白')throw new Error('manual save slot failed');
   const raw=JSON.parse(localStorage.getItem(SAVE));
   raw.board.players[0].cards=['shield'];raw.board.players[0].tools=['bomb'];raw.board.players[0].bank=9000;raw.board.players[0].tickets=20;
   localStorage.setItem(SAVE,JSON.stringify(raw));
@@ -239,4 +242,4 @@ for(const [w,h] of [[844,390],[932,430],[1366,768],[1920,720],[2560,1080]]){
   if(Math.abs((1600*scale)/(900*scale)-16/9)>.0001)fail('safe area distorted');
 }
 
-console.log("CxQ streamlined-game smoke test passed: PWA assets, four-stage setup, two-slot equipment, event acknowledgement, roaming gods, exact dice movement, integrated road/plot anchors, character landmarks, save migration, responsive geometry and all three map simulations.");
+console.log("CxQ streamlined-game smoke test passed: PWA assets, unique character selection, five save records, two-slot equipment, event acknowledgement, roaming gods, exact dice movement, buildings anchored on board spaces, character landmarks, save migration, responsive geometry and all three map simulations.");
