@@ -521,12 +521,12 @@ const GOD_TRANSFORMS = {
   財神: "窮神", 窮神: "財神", 福神: "衰神", 衰神: "福神",
 };
 const TRANSIENT_NPCS = new Set(["乞丐", "惡犬"]);
-// Authored against each 3200×1800 painted road. Keeping the 36 anchors explicit
+// Authored against each 3200×1800 painted road. Twenty-four generous anchors
 // prevents board pieces from drifting away from bends when art or viewport changes.
 const MAP_ROUTES = {
-  starwish: [[1600,1520],[1394,1513],[1197,1486],[1013,1442],[846,1380],[702,1303],[583,1213],[493,1113],[434,1008],[410,900],[422,793],[471,689],[556,593],[675,505],[824,430],[997,368],[1189,321],[1392,292],[1600,280],[1806,287],[2003,314],[2187,358],[2354,420],[2498,497],[2617,587],[2707,687],[2766,792],[2790,900],[2778,1007],[2729,1111],[2644,1207],[2525,1295],[2376,1370],[2203,1432],[2011,1479],[1808,1508]],
-  moonharbor: [[1600,1440],[1410,1433],[1226,1408],[1055,1365],[901,1307],[766,1235],[656,1152],[574,1059],[521,961],[500,860],[513,760],[559,663],[638,572],[748,490],[885,419],[1045,361],[1221,318],[1408,290],[1600,280],[1790,287],[1974,312],[2145,355],[2299,413],[2434,485],[2544,568],[2626,661],[2679,759],[2700,860],[2687,960],[2641,1057],[2562,1148],[2452,1230],[2315,1301],[2155,1359],[1979,1402],[1792,1430]],
-  cloudbazaar: [[1600,1420],[1406,1413],[1220,1388],[1045,1347],[888,1290],[751,1219],[639,1137],[555,1046],[501,949],[480,850],[493,751],[540,656],[621,567],[733,486],[872,417],[1035,360],[1214,317],[1405,290],[1600,280],[1794,287],[1980,312],[2155,353],[2312,410],[2449,481],[2561,563],[2645,654],[2699,751],[2720,850],[2707,949],[2660,1044],[2579,1133],[2467,1214],[2328,1283],[2165,1340],[1986,1383],[1795,1410]],
+  starwish: [[1600,1520],[1197,1486],[1013,1442],[702,1303],[583,1213],[434,1008],[410,900],[471,689],[556,593],[824,430],[997,368],[1392,292],[1600,280],[2003,314],[2187,358],[2498,497],[2617,587],[2766,792],[2790,900],[2729,1111],[2644,1207],[2376,1370],[2203,1432],[1808,1508]],
+  moonharbor: [[1600,1440],[1226,1408],[1055,1365],[766,1235],[656,1152],[521,961],[500,860],[559,663],[638,572],[885,419],[1045,361],[1408,290],[1600,280],[1974,312],[2145,355],[2434,485],[2544,568],[2679,759],[2700,860],[2641,1057],[2562,1148],[2315,1301],[2155,1359],[1792,1430]],
+  cloudbazaar: [[1600,1420],[1220,1388],[1045,1347],[751,1219],[639,1137],[501,949],[480,850],[540,656],[621,567],[872,417],[1035,360],[1405,290],[1600,280],[1980,312],[2155,353],[2449,481],[2561,563],[2699,751],[2720,850],[2660,1044],[2579,1133],[2328,1283],[2165,1340],[1795,1410]],
 };
 const ROUTE = new Proxy([], {
   get(_, prop) {
@@ -542,10 +542,8 @@ const ROUTE = new Proxy([], {
 });
 const TYPE_PATTERN = [
   "start", "land", "event", "land", "land", "land",
-  "event", "land", "land", "land", "event", "land",
   "magic", "land", "event", "land", "land", "land",
-  "event", "land", "land", "land", "event", "land",
-  "magic", "land", "event", "land", "land", "land",
+  "event", "land", "land", "land", "magic", "land",
   "event", "land", "land", "land", "event", "land",
 ];
 function cashGain(p, n) {
@@ -781,7 +779,7 @@ function applyGodArrival(t, p) {
   const effects = new Set((p.effects || []).map((e) => e.kind));
   if (effects.has("土地公") && t.owner !== p.id) {
     t.owner = p.id;
-    t.level = Math.max(0, t.level || 0);
+    t.level = Math.max(1, t.level || 0);
     markUpgrade(t);
     addLog(`${p.id + 1}P 受土地公協助占有土地`);
   }
@@ -858,10 +856,10 @@ function adjustedTypes(mapRules) {
     factor =
       ({ low: 0.7, standard: 1, high: 1.4 }[S.eventLevel] || 1) *
       mapRules.eventRate,
-    target = Math.max(2, Math.min(9, Math.round(5 * factor))),
+    target = Math.max(2, Math.min(6, Math.round(4 * factor))),
     current = types.filter((x) => x === "event").length;
   if (target > current) {
-    const candidates = [5, 9, 13, 19, 25, 31, 35];
+    const candidates = [3, 5, 9, 11, 15, 21, 23];
     for (let i = 0; i < target - current && i < candidates.length; i++)
       types[candidates[i]] = "event";
   } else if (target < current) {
@@ -883,8 +881,8 @@ function makeBoard() {
       type: typePattern[i],
       owner: -1,
       level: 0,
-      region: Math.floor(i / 9) % 4,
-      price: Math.round((9000 + (i % 7) * 1800) * mapRules.priceRate),
+      region: Math.floor(i / 6) % 4,
+      price: Math.round((12000 + (i % 6) * 2300) * mapRules.priceRate),
     }));
   const players = activeSeatIds().map((si, id) => ({
     id,
@@ -1410,6 +1408,8 @@ function aiResolve() {
           p.cash -= cost;
           if (hasEquipment(p, "deed") && !p.deedUsed) p.deedUsed = true;
           t.owner = p.id;
+          t.level = 1;
+          markUpgrade(t);
           addLog(`${p.id + 1}P 購買 ${REGION_NAMES[t.region]} 土地`);
         }
         openPopup("event", {
@@ -1770,9 +1770,32 @@ function loadGame(slot = 0) {
     setTurnPhase("pre-roll");
     const savedRoute = MAP_ROUTES[MAPS[S.mapIndex]?.key] || MAP_ROUTES.starwish;
     const currentTypes = adjustedTypes(MAPS[S.mapIndex] || MAPS[0]);
+    if (S.board.tiles.length !== savedRoute.length) {
+      const legacyTiles = S.board.tiles,
+        legacyLength = Math.max(1, legacyTiles.length);
+      S.board.tiles = savedRoute.map((point, i) => {
+        const oldIndex = Math.min(legacyLength - 1, Math.round((i / savedRoute.length) * legacyLength)),
+          old = legacyTiles[oldIndex] || {};
+        return {
+          ...old,
+          index: i,
+          x: point[0],
+          y: point[1],
+          type: currentTypes[i] || "land",
+          region: Math.floor(i / 6) % 4,
+        };
+      });
+      S.board.players.forEach((player) => {
+        player.pos = Math.min(savedRoute.length - 1, Math.floor(((Number(player.pos) || 0) / legacyLength) * savedRoute.length));
+      });
+      (S.board.npcs || []).forEach((npc) => {
+        npc.pos = Math.min(savedRoute.length - 1, Math.floor(((Number(npc.pos) || 0) / legacyLength) * savedRoute.length));
+      });
+    }
     S.board.tiles.forEach((t, i) => {
       t.index = i;
       t.type = currentTypes[i] || "land";
+      if (t.owner >= 0 && t.type === "land" && (!t.level || t.level < 1)) t.level = 1;
       if (savedRoute[i]) {
         t.x = savedRoute[i][0];
         t.y = savedRoute[i][1];
@@ -2099,7 +2122,7 @@ function action(id) {
       focus();
     } else if (c === "buyland" && t.type === "land" && t.owner < 0) {
       const cost = buyCost(p, t);
-      p.cash -= cost; t.owner = p.id; markUpgrade(t);
+      p.cash -= cost; t.owner = p.id; t.level = 1; markUpgrade(t);
     } else if (c === "upgrade" && t.type === "land" && t.owner === p.id && t.level < 5) {
       t.level++;
       markUpgrade(t);
@@ -2426,6 +2449,8 @@ function action(id) {
         p.cash -= cost;
         if (hasEquipment(p, "deed") && !p.deedUsed) p.deedUsed = true;
         t.owner = p.id;
+        t.level = 1;
+        markUpgrade(t);
         addLog(`${p.id + 1}P 購買 ${REGION_NAMES[t.region]} 土地`);
       }
       finishAction();

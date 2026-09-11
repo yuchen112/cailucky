@@ -181,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260912-1400";
+const ASSET_REV = "20260912-1800";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -262,6 +262,7 @@ load("npcLand", A + "npc/land_v1.webp");
 load("npcAngel", A + "npc/angel_v1.webp");
 load("npcDemon", A + "npc/demon_v1.webp");
 load("npcDeath", A + "npc/death_v1.webp");
+load("playerFlags", A + "ui/player_flags_atlas_v1.png");
 CHAR_KEYS.forEach((k, i) => {
   load("c" + i, "../../assets/characters/cxq-role-" + k + ".webp");
   load("portrait" + i, A + "characters/portraits/" + k + "_portrait_v1.webp");
@@ -1317,13 +1318,24 @@ function npcMarker(n, t) {
 }
 function buildingImage(t) {
   if (t.owner < 0 || t.level < 1) return null;
-  const mi = S.board?.mapIndex || 0,
-    isLandmark = t.level >= 5;
-  if (isLandmark) {
-    const owner = S.board.players.find((p) => p.id === t.owner);
-    return IM[`landmark_${CHAR_KEYS[owner?.char || 0]}`];
-  }
-  return IM[`building${mi}_${Math.min(5, t.level)}`];
+  const owner = S.board.players.find((p) => p.id === t.owner);
+  return IM[`landmark_${CHAR_KEYS[owner?.char || 0]}`];
+}
+function drawOwnerFlag(ownerId, x, y, w = 92, h = 112) {
+  const atlas = IM.playerFlags;
+  if (!atlas?.complete || !atlas.naturalWidth) return false;
+  const sw = atlas.naturalWidth / 2,
+    sh = atlas.naturalHeight / 2,
+    sx = (ownerId % 2) * sw,
+    sy = Math.floor(ownerId / 2) * sh;
+  X.save();
+  X.imageSmoothingEnabled = true;
+  X.imageSmoothingQuality = "high";
+  X.shadowColor = "rgba(0,0,0,.55)";
+  X.shadowBlur = 10;
+  X.drawImage(atlas, sx, sy, sw, sh, x, y, w, h);
+  X.restore();
+  return true;
 }
 function roadAnchor(t) {
   return { x: t.x, y: t.y };
@@ -1344,6 +1356,11 @@ function drawTile(t) {
     tileSize = t.type === "land" ? 94 : t.type === "start" ? 128 : 114;
   X.save();
   X.translate(shiftX, shiftY);
+  if (t.type === "land") {
+    const mapGlow = ["rgba(255,218,112,.3)", "rgba(105,174,255,.32)", "rgba(184,149,255,.32)"][S.board?.mapIndex || 0];
+    X.fillStyle = mapGlow;
+    X.beginPath(); X.ellipse(t.x, t.y + 3, 58, 43, 0, 0, Math.PI * 2); X.fill();
+  }
   contain(
     t.type === "land" ? (IM.roadNode || tileImage(t.type)) : tileImage(t.type),
     t.x - tileSize / 2,
@@ -1393,17 +1410,11 @@ function drawTile(t) {
       X.ellipse(t.x, t.y + 4, 43, 31, 0, 0, Math.PI * 2);
       X.stroke();
       X.restore();
-      X.save();
-      X.strokeStyle = "#68421c";
-      X.lineWidth = 4;
-      X.beginPath(); X.moveTo(t.x - 34, t.y - 9); X.lineTo(t.x - 34, t.y - 78); X.stroke();
-      X.fillStyle = PLAYER_COLORS[t.owner];
-      X.beginPath(); X.moveTo(t.x - 32, t.y - 75); X.lineTo(t.x + 16, t.y - 61); X.lineTo(t.x - 32, t.y - 47); X.closePath(); X.fill();
-      X.restore();
+      drawOwnerFlag(t.owner, t.x - 76, t.y - 108, 72, 92);
       if (building) {
         const grow = 1 + pulse * 0.18,
           landmark = t.level >= 5,
-          sz = (landmark ? 148 : 118) * grow;
+          sz = ([0, 82, 100, 118, 136, 154][Math.min(5, t.level)] || 82) * grow;
         X.save();
         X.shadowColor = PLAYER_COLORS[t.owner];
         X.shadowBlur = 28 + 30 * pulse;

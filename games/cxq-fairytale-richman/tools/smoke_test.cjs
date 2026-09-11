@@ -3,7 +3,7 @@ const vm = require("vm");
 const path = require("path");
 
 const root = path.resolve(__dirname, "..");
-const revision = "20260912-1400";
+const revision = "20260912-1800";
 const read = (name) => fs.readFileSync(path.join(root, name), "utf8");
 const fail = (message) => { throw new Error(message); };
 
@@ -136,7 +136,7 @@ run(`(()=>{
   S.seats.forEach((seat,i)=>{seat.type=i<2?'human':'off';seat.equipment=i===0?['deed','boots']:['compass','charm']});
   for(let mi=0;mi<MAPS.length;mi++){
     S.mapIndex=mi;makeBoard();
-    if(S.board.tiles.length!==36)throw new Error('map route length mismatch');
+    if(S.board.tiles.length!==24)throw new Error('map route length mismatch');
     if(S.board.tiles.some(t=>!['start','land','event','magic'].includes(t.type)))throw new Error('forbidden tile type generated');
     for(const p of S.board.players){
       if(p.equipment.length!==2)throw new Error('equipment not copied into match');
