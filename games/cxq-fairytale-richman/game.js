@@ -338,6 +338,24 @@ scenePopup = function (q, b, p) {
     btn("cardOk", "收入卡冊", 625, 750, 350, 65, true);
     return true;
   }
+  if (q.kind === "roster") {
+    contain(IM.abilityPanel, 315, 55, 970, 800, 0.99);
+    fitTxt("玩家與資產", 800, 132, 650, 38, "center", "#fff0a5", 1000, true, 22);
+    fitTxt("選擇任一玩家，查看角色、地產、裝備與目前狀態", 800, 178, 720, 18, "center", "#d9efff", 900, true, 13);
+    b.players.forEach((x, i) => {
+      const lands = b.tiles.filter((t) => t.owner === x.id),
+        buildings = lands.reduce((n, t) => n + t.level, 0),
+        y = 220 + i * 118;
+      stretch(IM["playerSeatP" + x.id], 415, y, 770, 100, x.bankrupt ? 0.45 : 0.98);
+      portrait(IM["portrait" + x.char], 430, y + 8, 84, 84, x.bankrupt ? 0.45 : 1);
+      fitTxt(`${x.id + 1}P ${CHAR_NAMES[x.char]}｜${x.type === "human" ? "真人" : "電腦 AI"}`, 535, y + 32, 365, 20, "left", PLAYER_COLORS[x.id], 1000, true, 14);
+      fitTxt(`現金 $${Math.max(0, x.cash).toLocaleString()}　總資產 $${netWorth(x).toLocaleString()}`, 535, y + 64, 410, 17, "left", "#fff5d3", 900, true, 12);
+      fitTxt(`土地 ${lands.length}　建築 ${buildings}　裝備 ${(x.equipment || []).length}`, 535, y + 86, 410, 14, "left", "#d9efff", 850, true, 11);
+      btn("inspectPlayer" + x.id, "查看資料", 960, y + 22, 190, 58, i === 0, 1, !x.bankrupt);
+    });
+    btn("pause", "返回設定", 650, 760, 300, 62, false);
+    return true;
+  }
   if (q.kind === "playerDetail") {
     const x = q.player,
       lands = b.tiles.filter((t) => t.owner === x.id),
@@ -459,7 +477,7 @@ scenePopup = function (q, b, p) {
           true,
         );
     }
-    btn("closeCards", "返回棋盤", 670, 770, 260, 62, true);
+    btn("rosterBack", "返回玩家列表", 650, 770, 300, 62, true);
     return true;
   }
   return baseScenePopup(q, b, p);
@@ -2242,11 +2260,11 @@ function action(id) {
       return;
     }
     if (id === "roster") {
-      openPopup("playerDetail", { player: p });
+      openPopup("roster");
       return;
     }
     if (id === "rosterBack") {
-      openPopup("playerDetail", { player: p });
+      openPopup("roster");
       return;
     }
     if (id.startsWith("inspectPlayer")) {

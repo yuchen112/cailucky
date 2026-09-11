@@ -181,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260912-1200";
+const ASSET_REV = "20260912-1400";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -1741,7 +1741,7 @@ function hud() {
     hasEquipment(p, "compass") && (p.compassReadyAt || 0) > b.round ? `星辰羅盤 ${p.compassReadyAt - b.round}回合` : "",
   ].filter(Boolean).join("｜") || "狀態正常";
   fitTxt(statusText, 1342, 163, 320, 14, "center", "#fff0a5", 900, true, 10);
-  btn("pause", "⚙", 1530, 22, 58, 54, false, 0.96, !S.rolling && !b.popup);
+  btn("pause", "⚙", 1462, 24, 48, 46, false, 0.96, !S.rolling && !b.popup);
   (p.equipment || []).slice(0, 2).forEach((id, i) => {
     contain(IM["equip_" + id], 22 + i * 70, 121, 58, 58, 1);
     const def = equipmentDef(id);
@@ -2190,7 +2190,7 @@ function help() {
     "拖曳棋盤自由查看世界；點擊格子可確認地價、地主、建築階級與預估租金。",
     "選角後可攜帶兩件不同類型常駐裝備；整場自動生效，不需在回合中整理物品。",
     "命運事件與巡遊神明會改變局勢；神明只在角色停留相同位置時觸發附身。",
-    "真人與不同難度 AI 可自由配置 2～4 名；完整角色資料只在該真人回合開放。",
+    "真人與不同難度 AI 可自由配置 2～4 名；遊戲設定內可隨時查看所有在場角色資料。",
   ];
   lines.forEach((l, i) =>
     fitTxt(l, 800, 200 + i * 72, 1280, 22, "center", "#fff", 850, true, 15),
