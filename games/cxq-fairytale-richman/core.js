@@ -181,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260912-2200";
+const ASSET_REV = "20260912-2330";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -290,7 +290,8 @@ load("resultDefeat", A + "results/defeat_ceremony_v1.png");
   "deed", "toolkit", "charm", "guardian", "bell", "boots", "compass", "manual",
 ].forEach((key) => load("equip_" + key, A + "equipment/" + key + "_v1.png"));
 
-const VIEW = { scale: 1, ox: 0, oy: 0, visibleX: 0, visibleY: 0, visibleW: W, visibleH: H };
+const VIEW = { scale: 1, ox: 0, oy: 0, visibleX: 0, visibleY: 0, visibleW: W, visibleH: H, uiScale: 1, uiOx: 0, uiOy: 0 };
+let UI_FIT_ACTIVE = false;
 function sceneBackdrop() {
   if (S.scene === "home") return IM.homeBg;
   if (
@@ -307,14 +308,35 @@ function begin() {
   X.setTransform(1, 0, 0, 1, 0, 0);
   X.fillStyle = "#071325";
   X.fillRect(0, 0, C.width, C.height);
+  const edgeBg = sceneBackdrop();
+  if (edgeBg && edgeBg.complete && edgeBg.naturalWidth) {
+    const r = Math.max(C.width / edgeBg.naturalWidth, C.height / edgeBg.naturalHeight),
+      iw = edgeBg.naturalWidth * r, ih = edgeBg.naturalHeight * r;
+    X.drawImage(edgeBg, (C.width - iw) / 2, (C.height - ih) / 2, iw, ih);
+  }
   X.setTransform(VIEW.scale, 0, 0, VIEW.scale, VIEW.ox, VIEW.oy);
   S.buttons = [];
+}
+function beginUiLayer() {
+  X.save();
+  UI_FIT_ACTIVE = true;
+  X.setTransform(VIEW.uiScale, 0, 0, VIEW.uiScale, VIEW.uiOx, VIEW.uiOy);
+}
+function endUiLayer() {
+  UI_FIT_ACTIVE = false;
+  X.restore();
 }
 function pointerToGame(e) {
   const r = C.getBoundingClientRect(),
     px = ((e.clientX - r.left) / r.width) * C.width,
     py = ((e.clientY - r.top) / r.height) * C.height;
   return { x: (px - VIEW.ox) / VIEW.scale, y: (py - VIEW.oy) / VIEW.scale };
+}
+function pointerToUi(e) {
+  const r = C.getBoundingClientRect(),
+    px = ((e.clientX - r.left) / r.width) * C.width,
+    py = ((e.clientY - r.top) / r.height) * C.height;
+  return { x: (px - VIEW.uiOx) / VIEW.uiScale, y: (py - VIEW.uiOy) / VIEW.uiScale };
 }
 function txt(s, x, y, z = 26, a = "center", c = "#fff", w = 800, o = true) {
   X.save();
@@ -430,6 +452,15 @@ function portrait(im, x, y, w, h, alpha = 1) {
   X.restore();
 }
 function cover(im, x, y, w, h, alpha = 1) {
+  if (UI_FIT_ACTIVE && im === sceneBackdrop() && x === 0 && y === 0 && w === W && h === H) {
+    if (alpha < 1) {
+      X.save();
+      X.fillStyle = `rgba(2,7,20,${1 - alpha})`;
+      X.fillRect(0, 0, W, H);
+      X.restore();
+    }
+    return true;
+  }
   if (!im || !im.complete || !im.naturalWidth) return false;
   const r = Math.max(w / im.naturalWidth, h / im.naturalHeight),
     iw = im.naturalWidth * r,
@@ -623,8 +654,8 @@ function home() {
   const now = performance.now(),
     sceneA = homeIntro(0, 620),
     canContinue = !!localStorage.getItem(SAVE),
-    safeY = VIEW.visibleY || 0,
-    safeBottom = safeY + (VIEW.visibleH || H),
+    safeY = UI_FIT_ACTIVE ? 0 : (VIEW.visibleY || 0),
+    safeBottom = safeY + (UI_FIT_ACTIVE ? H : (VIEW.visibleH || H)),
     headerY = safeY + 12,
     logoLift = Math.min(52, safeY * 0.64);
   cover(IM.homeBg, 0, 0, W, H, 1);
@@ -1531,8 +1562,8 @@ function drawMap() {
 }
 function playerHudCard(p, i, compact = false) {
   const b = S.board,
-    safeX = VIEW.visibleX || 0,
-    safeY = VIEW.visibleY || 0,
+    safeX = UI_FIT_ACTIVE ? 0 : (VIEW.visibleX || 0),
+    safeY = UI_FIT_ACTIVE ? 0 : (VIEW.visibleY || 0),
     x = compact ? safeX + 394 + i * 220 : safeX + 12,
     y = safeY + 12,
     w = compact ? 216 : 370,
@@ -1663,10 +1694,10 @@ function diceThrowOverlay() {
 }
 function miniMapHud() {
   const b = S.board,
-    x = (VIEW.visibleX || 0) + 20,
+    x = (UI_FIT_ACTIVE ? 0 : (VIEW.visibleX || 0)) + 20,
     w = 260,
     h = 160,
-    y = (VIEW.visibleY || 0) + (VIEW.visibleH || H) - h - 22;
+    y = (UI_FIT_ACTIVE ? 0 : (VIEW.visibleY || 0)) + (UI_FIT_ACTIVE ? H : (VIEW.visibleH || H)) - h - 22;
   panelPlate(x - 10, y - 34, w + 20, h + 46, 0.92);
   fitTxt("路線小地圖", x + w / 2, y - 13, w - 20, 17, "center", "#fff0a5", 1000, true, 12);
   X.save();
@@ -1686,10 +1717,10 @@ function miniMapHud() {
 function hud() {
   const b = S.board,
     p = cp(),
-    safeX = VIEW.visibleX || 0,
-    safeY = VIEW.visibleY || 0,
-    safeW = VIEW.visibleW || W,
-    safeH = VIEW.visibleH || H,
+    safeX = UI_FIT_ACTIVE ? 0 : (VIEW.visibleX || 0),
+    safeY = UI_FIT_ACTIVE ? 0 : (VIEW.visibleY || 0),
+    safeW = UI_FIT_ACTIVE ? W : (VIEW.visibleW || W),
+    safeH = UI_FIT_ACTIVE ? H : (VIEW.visibleH || H),
     right = safeX + safeW,
     bottom = safeY + safeH,
     infoX = right - 382,
@@ -1752,10 +1783,10 @@ function hud() {
     hasEquipment(p, "compass") && (p.compassReadyAt || 0) > b.round ? `星辰羅盤 ${p.compassReadyAt - b.round}回合` : "",
   ].filter(Boolean).join("｜") || "狀態正常";
   fitTxt(statusText, infoCX, safeY + 179, 326, 17, "center", "#fff0a5", 900, true, 12);
-  const gearX = right - 88, gearY = safeY + 20, gearEnabled = !S.rolling && !b.popup;
-  panelPlate(gearX, gearY, 72, 70, gearEnabled ? 1 : 0.48);
-  txt("⚙", gearX + 36, gearY + 35, 38, "center", "#fff6d2", 1000, true);
-  S.buttons.push({ id: "pause", x: gearX, y: gearY, w: 72, h: 70, en: gearEnabled });
+  const gearX = right - 96, gearY = safeY + 216, gearEnabled = !S.rolling && !b.popup;
+  panelPlate(gearX, gearY, 80, 76, gearEnabled ? 1 : 0.48);
+  txt("⚙", gearX + 40, gearY + 38, 42, "center", "#fff6d2", 1000, true);
+  S.buttons.push({ id: "pause", x: gearX, y: gearY, w: 80, h: 76, en: gearEnabled });
   (p.equipment || []).slice(0, 2).forEach((id, i) => {
     contain(IM["equip_" + id], safeX + 26 + i * 80, safeY + 145, 68, 68, 1);
     const def = equipmentDef(id);
@@ -2453,13 +2484,13 @@ function settings() {
 
 C.addEventListener("pointerdown", (e) => {
   if (S.scene !== "home" || HOME.locked) return;
-  const p = pointerToGame(e),
+  const p = pointerToUi(e),
     b = hit(p.x, p.y);
   HOME.pressed = b?.en ? b.id : null;
 });
 C.addEventListener("pointermove", (e) => {
   if (S.scene !== "home" || HOME.locked) return;
-  const p = pointerToGame(e),
+  const p = pointerToUi(e),
     b = hit(p.x, p.y);
   HOME.hover = b?.en ? b.id : null;
 });
@@ -2471,12 +2502,12 @@ C.addEventListener("pointercancel", () => {
   HOME.pressed = null;
 });
 C.addEventListener("pointerdown", (e) => {
-  const p = pointerToGame(e),
+  const p = pointerToUi(e),
     b = hit(p.x, p.y);
   UI_BUTTON.pressed = b?.en ? b.id : null;
 });
 C.addEventListener("pointermove", (e) => {
-  const p = pointerToGame(e),
+  const p = pointerToUi(e),
     b = hit(p.x, p.y);
   UI_BUTTON.hover = b?.en ? b.id : null;
 });

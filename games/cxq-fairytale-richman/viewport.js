@@ -76,6 +76,9 @@
     VIEW.visibleY = (st - VIEW.oy) / VIEW.scale;
     VIEW.visibleW = usableW / VIEW.scale;
     VIEW.visibleH = usableH / VIEW.scale;
+    VIEW.uiScale = Math.min(usableW / W, usableH / H);
+    VIEW.uiOx = sl + (usableW - W * VIEW.uiScale) / 2;
+    VIEW.uiOy = st + (usableH - H * VIEW.uiScale) / 2;
     VIEW.cssW = v.w;
     VIEW.cssH = v.h;
     VIEW.aspect = v.w / v.h;

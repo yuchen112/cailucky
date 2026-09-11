@@ -1851,11 +1851,11 @@ function game() {
   X.translate(-b.cam.x, -b.cam.y);
   drawMap();
   X.restore();
+  beginUiLayer();
   hud();
   turnBannerHud();
-  X.save();
   popup();
-  X.restore();
+  endUiLayer();
   if (b.mini && b.popup && b.popup.kind === "mini" && b.mini.kind < 2) {
     const now = performance.now(),
       dt = Math.min(0.04, (now - b.mini.last) / 1000);
@@ -2574,8 +2574,8 @@ const BOARD_INPUT = {
 };
 C.addEventListener("pointerdown", (e) => {
   if (S.scene !== "game" || !S.board || S.board.popup || S.rolling) return;
-  const p = pointerToGame(e);
-  if (hit(p.x, p.y) || p.y < 205 || p.y > 650) return;
+  const p = pointerToGame(e), ui = pointerToUi(e);
+  if (hit(ui.x, ui.y) || p.y < 205 || p.y > 650) return;
   BOARD_INPUT.active = true;
   BOARD_INPUT.moved = false;
   BOARD_INPUT.x = p.x;
@@ -2614,8 +2614,9 @@ C.addEventListener(
 );
 C.addEventListener("pointerup", (e) => {
   audioGesture();
-  const p = pointerToGame(e),
-    button = hit(p.x, p.y);
+  const ui = pointerToUi(e),
+    button = hit(ui.x, ui.y),
+    p = pointerToGame(e);
   HOME.pressed = null;
   if (button) {
     BOARD_INPUT.active = false;
@@ -2655,15 +2656,19 @@ C.addEventListener("pointercancel", () => {
 });
 function frame() {
   begin();
-  if (S.scene === "home") home();
-  else if (S.scene === "setup") setup();
-  else if (S.scene === "loadout") loadout();
-  else if (S.scene === "mapSelect") mapSelect();
-  else if (S.scene === "rules") rulesSetup();
-  else if (S.scene === "game" && S.board) game();
-  else if (S.scene === "result" && S.board) result();
-  else if (S.scene === "help") help();
-  else if (S.scene === "settings") settings();
+  if (S.scene === "game" && S.board) game();
+  else {
+    beginUiLayer();
+    if (S.scene === "home") home();
+    else if (S.scene === "setup") setup();
+    else if (S.scene === "loadout") loadout();
+    else if (S.scene === "mapSelect") mapSelect();
+    else if (S.scene === "rules") rulesSetup();
+    else if (S.scene === "result" && S.board) result();
+    else if (S.scene === "help") help();
+    else if (S.scene === "settings") settings();
+    endUiLayer();
+  }
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
