@@ -1,6 +1,6 @@
 "use strict";
-// Cross-browser viewport adapter. Visible game art remains inside the 1600x900 design space;
-// this file only handles browser geometry, safe areas, dynamic bars and pointer alignment.
+// Cross-browser viewport adapter. The 1600x900 stage always fills the usable screen
+// proportionally; surplus art is cropped instead of inventing blurred filler bands.
 (function () {
   let raf = 0,
     timers = [];
@@ -67,11 +67,15 @@
       sb = ins.bottom * dpr;
     const usableW = Math.max(1, C.width - sl - sr),
       usableH = Math.max(1, C.height - st - sb);
-    VIEW.scale = Math.min(usableW / W, usableH / H);
+    VIEW.scale = Math.max(usableW / W, usableH / H);
     VIEW.ox = sl + (usableW - W * VIEW.scale) / 2;
-    // Keep the protected 16:9 playfield centered while the independently painted
-    // backdrop fills surplus browser space on ultrawide and unusual landscape windows.
     VIEW.oy = st + (usableH - H * VIEW.scale) / 2;
+    // Canvas HUD code uses this rectangle to remain inside the part of the stage
+    // that survives cover-cropping on ultrawide phones and 16:10 tablets.
+    VIEW.visibleX = (sl - VIEW.ox) / VIEW.scale;
+    VIEW.visibleY = (st - VIEW.oy) / VIEW.scale;
+    VIEW.visibleW = usableW / VIEW.scale;
+    VIEW.visibleH = usableH / VIEW.scale;
     VIEW.cssW = v.w;
     VIEW.cssH = v.h;
     VIEW.aspect = v.w / v.h;

@@ -181,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260912-1800";
+const ASSET_REV = "20260912-2200";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -290,7 +290,7 @@ load("resultDefeat", A + "results/defeat_ceremony_v1.png");
   "deed", "toolkit", "charm", "guardian", "bell", "boots", "compass", "manual",
 ].forEach((key) => load("equip_" + key, A + "equipment/" + key + "_v1.png"));
 
-const VIEW = { scale: 1, ox: 0, oy: 0 };
+const VIEW = { scale: 1, ox: 0, oy: 0, visibleX: 0, visibleY: 0, visibleW: W, visibleH: H };
 function sceneBackdrop() {
   if (S.scene === "home") return IM.homeBg;
   if (
@@ -307,21 +307,6 @@ function begin() {
   X.setTransform(1, 0, 0, 1, 0, 0);
   X.fillStyle = "#071325";
   X.fillRect(0, 0, C.width, C.height);
-  const edgeBg = sceneBackdrop();
-  if (edgeBg && edgeBg.complete && edgeBg.naturalWidth) {
-    const r = Math.max(
-        C.width / edgeBg.naturalWidth,
-        C.height / edgeBg.naturalHeight,
-      ),
-      iw = edgeBg.naturalWidth * r,
-      ih = edgeBg.naturalHeight * r;
-    X.save();
-    X.globalAlpha = 1;
-    X.filter = "blur(18px) saturate(.92) brightness(.78)";
-    X.drawImage(edgeBg, (C.width - iw) / 2, (C.height - ih) / 2, iw, ih);
-    X.filter = "none";
-    X.restore();
-  }
   X.setTransform(VIEW.scale, 0, 0, VIEW.scale, VIEW.ox, VIEW.oy);
   S.buttons = [];
 }
@@ -637,16 +622,20 @@ function homeTile(id, label, image, x, y, size, index, enabled = true) {
 function home() {
   const now = performance.now(),
     sceneA = homeIntro(0, 620),
-    canContinue = !!localStorage.getItem(SAVE);
+    canContinue = !!localStorage.getItem(SAVE),
+    safeY = VIEW.visibleY || 0,
+    safeBottom = safeY + (VIEW.visibleH || H),
+    headerY = safeY + 12,
+    logoLift = Math.min(52, safeY * 0.64);
   cover(IM.homeBg, 0, 0, W, H, 1);
   X.save();
   X.globalAlpha = sceneA;
-  contain(IM.playerSeat, 1120, 38, 430, 94, 0.9);
-  txt("童話棋盤冒險", 1335, 67, 18, "center", "#fff7dc", 1000, true);
+  contain(IM.playerSeat, 1120, headerY, 430, 94, 0.9);
+  txt("童話棋盤冒險", 1335, headerY + 29, 18, "center", "#fff7dc", 1000, true);
   txt(
     "擲骰・買地・蓋房・收租・常駐裝備・巡遊神明",
     1335,
-    98,
+    headerY + 60,
     13,
     "center",
     "#fff",
@@ -658,12 +647,12 @@ function home() {
     logoY = (1 - logoA) * 30;
   X.save();
   X.globalAlpha = logoA;
-  txt("CxQ", 330, 78 + logoY, 72, "center", "#ffe27a", 1000, true);
-  txt("童話大富翁", 330, 145 + logoY, 52, "center", "#fff1be", 1000, true);
+  txt("CxQ", 330, 78 + logoY + logoLift, 72, "center", "#ffe27a", 1000, true);
+  txt("童話大富翁", 330, 145 + logoY + logoLift, 52, "center", "#fff1be", 1000, true);
   txt(
     "夢想王國資產大冒險",
     330,
-    190 + logoY,
+    190 + logoY + logoLift,
     17,
     "center",
     "#f7f2dc",
@@ -687,11 +676,12 @@ function home() {
   const infoA = homeIntro(740, 380);
   X.save();
   X.globalAlpha = infoA;
-  contain(IM.roleInfo, 70, 776, 510, 82, 0.94);
+  const infoY = Math.min(776, safeBottom - 88);
+  contain(IM.roleInfo, 70, infoY, 510, 82, 0.94);
   txt(
     canContinue ? "已有冒險紀錄｜可繼續上次進度" : "尚無冒險紀錄｜請開始新遊戲",
     325,
-    803,
+    infoY + 27,
     16,
     "center",
     "#60462d",
@@ -701,7 +691,7 @@ function home() {
   txt(
     "2–4 人｜真人／電腦自由配置",
     325,
-    832,
+    infoY + 56,
     14,
     "center",
     "#76583b",
@@ -1541,26 +1531,28 @@ function drawMap() {
 }
 function playerHudCard(p, i, compact = false) {
   const b = S.board,
-    x = compact ? 350 + i * 202 : 12,
-    y = 12,
-    w = compact ? 198 : 330,
-    h = compact ? 82 : 112,
+    safeX = VIEW.visibleX || 0,
+    safeY = VIEW.visibleY || 0,
+    x = compact ? safeX + 394 + i * 220 : safeX + 12,
+    y = safeY + 12,
+    w = compact ? 216 : 370,
+    h = compact ? 92 : 126,
     current = p.id === cp().id;
   stretch(IM["playerSeatP" + p.id], x, y, w, h, current ? 1 : 0.82);
   portrait(
     IM["portrait" + p.char],
     x + 7,
     y + (compact ? 8 : 10),
-    compact ? 62 : 84,
-    compact ? 62 : 84,
+    compact ? 74 : 100,
+    compact ? 74 : 100,
     p.bankrupt ? 0.45 : 1,
   );
   fitTxt(
     `${p.id + 1}P ${CHAR_NAMES[p.char]}`,
-    x + (compact ? 72 : 98),
-    y + (compact ? 22 : 22),
-    compact ? 112 : 205,
-    compact ? 16 : 19,
+    x + (compact ? 88 : 116),
+    y + (compact ? 25 : 25),
+    compact ? 120 : 238,
+    compact ? 20 : 24,
     "left",
     current ? "#ffe894" : "#fff",
     1000,
@@ -1569,10 +1561,10 @@ function playerHudCard(p, i, compact = false) {
   );
   fitTxt(
     `現金 $${Math.max(0, p.cash).toLocaleString()}`,
-    x + (compact ? 72 : 98),
-    y + (compact ? 49 : 47),
-    compact ? 112 : 205,
-    compact ? 14 : 16,
+    x + (compact ? 88 : 116),
+    y + (compact ? 61 : 59),
+    compact ? 120 : 238,
+    compact ? 18 : 21,
     "left",
     "#fff5d3",
     900,
@@ -1583,8 +1575,8 @@ function playerHudCard(p, i, compact = false) {
     land = owned.length,
     buildings = owned.reduce((sum, t) => sum + (t.level || 0), 0);
   if (!compact) {
-    fitTxt(`資產 $${netWorth(p).toLocaleString()}`, x + 98, y + 70, 200, 14, "left", "#d9efff", 850, true, 10);
-    fitTxt(`土地 ${land}　建築 ${buildings}　裝備 ${(p.equipment || []).length}`, x + 98, y + 91, 200, 12, "left", "#d7e6f4", 800, true);
+    fitTxt(`資產 $${netWorth(p).toLocaleString()}`, x + 116, y + 88, 232, 18, "left", "#d9efff", 850, true, 12);
+    fitTxt(`土地 ${land}　建築 ${buildings}　裝備 ${(p.equipment || []).length}`, x + 116, y + 112, 232, 16, "left", "#d7e6f4", 800, true, 11);
   }
   const effect = (p.effects || [])[0];
   if (effect) {
@@ -1671,10 +1663,10 @@ function diceThrowOverlay() {
 }
 function miniMapHud() {
   const b = S.board,
-    x = 20,
-    y = 690,
-    w = 244,
-    h = 150;
+    x = (VIEW.visibleX || 0) + 20,
+    w = 260,
+    h = 160,
+    y = (VIEW.visibleY || 0) + (VIEW.visibleH || H) - h - 22;
   panelPlate(x - 10, y - 34, w + 20, h + 46, 0.92);
   fitTxt("路線小地圖", x + w / 2, y - 13, w - 20, 17, "center", "#fff0a5", 1000, true, 12);
   X.save();
@@ -1693,17 +1685,25 @@ function miniMapHud() {
 }
 function hud() {
   const b = S.board,
-    p = cp();
+    p = cp(),
+    safeX = VIEW.visibleX || 0,
+    safeY = VIEW.visibleY || 0,
+    safeW = VIEW.visibleW || W,
+    safeH = VIEW.visibleH || H,
+    right = safeX + safeW,
+    bottom = safeY + safeH,
+    infoX = right - 382,
+    infoCX = infoX + 181;
   playerHudCard(p, 0, false);
   b.players.filter((player) => player.id !== p.id).forEach((player, i) => playerHudCard(player, i, true));
-  panelPlate(1162, 12, 360, 174, 0.95);
+  panelPlate(infoX, safeY + 12, 370, 190, 0.97);
   miniMapHud();
   fitTxt(
     `${b.mapRules?.name || "童話王國"}　　第 ${b.round}/${S.rounds} 回合`,
-    1342,
-    39,
-    320,
-    20,
+    infoCX,
+    safeY + 42,
+    280,
+    24,
     "center",
     "#fff4c9",
     1000,
@@ -1712,10 +1712,10 @@ function hud() {
   );
   fitTxt(
     `現在行動：${p.id + 1}P ${CHAR_NAMES[p.char]}`,
-    1342,
-    72,
-    320,
-    19,
+    infoCX,
+    safeY + 80,
+    326,
+    23,
     "center",
     PLAYER_COLORS[p.id],
     1000,
@@ -1724,10 +1724,10 @@ function hud() {
   );
   fitTxt(
     `現金 $${p.cash.toLocaleString()}　持有土地 ${ownedLands(p).length}`,
-    1342,
-    105,
-    320,
-    17,
+    infoCX,
+    safeY + 116,
+    326,
+    20,
     "center",
     "#e2f1ff",
     850,
@@ -1736,10 +1736,10 @@ function hud() {
   );
   fitTxt(
     `總資產 $${netWorth(p).toLocaleString()}　物價指數 ×${marketIndex().toFixed(1)}`,
-    1342,
-    136,
-    320,
-    17,
+    infoCX,
+    safeY + 150,
+    326,
+    20,
     "center",
     "#ffe58e",
     900,
@@ -1751,25 +1751,28 @@ function hud() {
     hasEquipment(p, "guardian") && (p.guardianReadyAt || 0) > b.round ? `守護徽章 ${p.guardianReadyAt - b.round}回合` : "",
     hasEquipment(p, "compass") && (p.compassReadyAt || 0) > b.round ? `星辰羅盤 ${p.compassReadyAt - b.round}回合` : "",
   ].filter(Boolean).join("｜") || "狀態正常";
-  fitTxt(statusText, 1342, 163, 320, 14, "center", "#fff0a5", 900, true, 10);
-  btn("pause", "⚙", 1462, 24, 48, 46, false, 0.96, !S.rolling && !b.popup);
+  fitTxt(statusText, infoCX, safeY + 179, 326, 17, "center", "#fff0a5", 900, true, 12);
+  const gearX = right - 88, gearY = safeY + 20, gearEnabled = !S.rolling && !b.popup;
+  panelPlate(gearX, gearY, 72, 70, gearEnabled ? 1 : 0.48);
+  txt("⚙", gearX + 36, gearY + 35, 38, "center", "#fff6d2", 1000, true);
+  S.buttons.push({ id: "pause", x: gearX, y: gearY, w: 72, h: 70, en: gearEnabled });
   (p.equipment || []).slice(0, 2).forEach((id, i) => {
-    contain(IM["equip_" + id], 22 + i * 70, 121, 58, 58, 1);
+    contain(IM["equip_" + id], safeX + 26 + i * 80, safeY + 145, 68, 68, 1);
     const def = equipmentDef(id);
-    fitTxt(def?.name || "裝備", 51 + i * 70, 184, 66, 9, "center", "#fff0ad", 900, true, 7);
+    fitTxt(def?.name || "裝備", safeX + 60 + i * 80, safeY + 219, 76, 13, "center", "#fff0ad", 900, true, 9);
   });
   const canRoll = !S.rolling && !b.popup && !b.winner && b.phase === "pre-roll" && p.type === "human";
   if (canRoll) {
-    diceIconButton("roll", 1418, 724, 132, true);
-    fitTxt("點擊骰子投擲", 1484, 875, 190, 18, "center", "#fff4b0", 1000, true, 13);
+    diceIconButton("roll", right - 166, bottom - 174, 150, true);
+    fitTxt("點擊骰子投擲", right - 91, bottom - 10, 210, 22, "center", "#fff4b0", 1000, true, 15);
   }
   if (S.msg && S.msg !== S.toastText) { S.toastText = S.msg; S.toastAt = performance.now(); }
   if (S.toastText) {
     const age = performance.now() - (S.toastAt || 0), alpha = age < 2600 ? 1 : Math.max(0, 1 - (age - 2600) / 1300);
     if (alpha > 0) {
       X.save(); X.globalAlpha = alpha;
-      panelPlate(455, 785, 690, 64, 0.92);
-      fitTxt(S.toastText, 800, 817, 640, 20, "center", "#fff6d2", 900, true, 14);
+      panelPlate(safeX + safeW / 2 - 370, bottom - 88, 740, 72, 0.94);
+      fitTxt(S.toastText, safeX + safeW / 2, bottom - 52, 690, 24, "center", "#fff6d2", 900, true, 16);
       X.restore();
     } else if (S.msg === S.toastText) S.msg = "";
   }
