@@ -347,6 +347,8 @@ scenePopup = function (q, b, p) {
         "無";
     const tab = q.tab || "overview";
     contain(IM.abilityPanel, 270, 45, 1060, 820, 0.99);
+    btn("playerPrev", "◀", 325, 104, 86, 56, false);
+    btn("playerNext", "▶", 1189, 104, 86, 56, false);
     fitTxt(
       `${x.id + 1}P ${CHAR_NAMES[x.char]}`,
       800,
@@ -360,7 +362,7 @@ scenePopup = function (q, b, p) {
       22,
     );
     txt(
-      `${x.type === "human" ? "真人玩家" : "電腦 AI"}｜${CHAR_ROLES[x.char]}`,
+      `${x.type === "human" ? "真人玩家" : "電腦 AI"}｜${CHAR_ROLES[x.char]}｜可用左右鍵查看所有角色`,
       800,
       174,
       19,
@@ -501,18 +503,13 @@ const GOD_TRANSFORMS = {
   財神: "窮神", 窮神: "財神", 福神: "衰神", 衰神: "福神",
 };
 const TRANSIENT_NPCS = new Set(["乞丐", "惡犬"]);
-function makeMapRoute({ cx, cy, rx, ry, startAngle = Math.PI / 2 }) {
-  return Array.from({ length: 36 }, (_, i) => {
-    const angle = startAngle + (i * Math.PI * 2) / 36;
-    return [
-      Math.round(cx + Math.cos(angle) * rx),
-      Math.round(cy + Math.sin(angle) * ry),
-    ];
-  });
-}
-const MAP_ROUTES = Object.fromEntries(
-  MAPS.map((map) => [map.key, makeMapRoute(map.road)]),
-);
+// Authored against each 3200×1800 painted road. Keeping the 36 anchors explicit
+// prevents board pieces from drifting away from bends when art or viewport changes.
+const MAP_ROUTES = {
+  starwish: [[1600,1520],[1394,1513],[1197,1486],[1013,1442],[846,1380],[702,1303],[583,1213],[493,1113],[434,1008],[410,900],[422,793],[471,689],[556,593],[675,505],[824,430],[997,368],[1189,321],[1392,292],[1600,280],[1806,287],[2003,314],[2187,358],[2354,420],[2498,497],[2617,587],[2707,687],[2766,792],[2790,900],[2778,1007],[2729,1111],[2644,1207],[2525,1295],[2376,1370],[2203,1432],[2011,1479],[1808,1508]],
+  moonharbor: [[1600,1440],[1410,1433],[1226,1408],[1055,1365],[901,1307],[766,1235],[656,1152],[574,1059],[521,961],[500,860],[513,760],[559,663],[638,572],[748,490],[885,419],[1045,361],[1221,318],[1408,290],[1600,280],[1790,287],[1974,312],[2145,355],[2299,413],[2434,485],[2544,568],[2626,661],[2679,759],[2700,860],[2687,960],[2641,1057],[2562,1148],[2452,1230],[2315,1301],[2155,1359],[1979,1402],[1792,1430]],
+  cloudbazaar: [[1600,1420],[1406,1413],[1220,1388],[1045,1347],[888,1290],[751,1219],[639,1137],[555,1046],[501,949],[480,850],[493,751],[540,656],[621,567],[733,486],[872,417],[1035,360],[1214,317],[1405,290],[1600,280],[1794,287],[1980,312],[2155,353],[2312,410],[2449,481],[2561,563],[2645,654],[2699,751],[2720,850],[2707,949],[2660,1044],[2579,1133],[2467,1214],[2328,1283],[2165,1340],[1986,1383],[1795,1410]],
+};
 const ROUTE = new Proxy([], {
   get(_, prop) {
     const route = MAP_ROUTES[MAPS[S.mapIndex]?.key] || MAP_ROUTES.starwish;
@@ -2099,7 +2096,7 @@ function action(id) {
   }
   if (S.scene === "game" && S.board && id.startsWith("playerTab")) {
     const tab = id.slice(9).toLowerCase();
-    openPopup("playerDetail", { player: cp(), tab });
+    openPopup("playerDetail", { player: S.board.popup?.player || cp(), tab });
     return;
   }
   if (S.scene === "game" && S.board && id.startsWith("propertyJump")) {
@@ -2245,7 +2242,7 @@ function action(id) {
       return;
     }
     if (id === "roster") {
-      if (p.type === "human") openPopup("playerDetail", { player: p });
+      openPopup("playerDetail", { player: p });
       return;
     }
     if (id === "rosterBack") {
@@ -2253,7 +2250,17 @@ function action(id) {
       return;
     }
     if (id.startsWith("inspectPlayer")) {
-      if (+id.slice(13) === p.id) openPopup("playerDetail", { player: p });
+      const target = b.players.find((player) => player.id === +id.slice(13));
+      if (target) openPopup("playerDetail", { player: target });
+      return;
+    }
+    if (id === "playerPrev" || id === "playerNext") {
+      const shown = q?.player || p,
+        roster = b.players.filter((player) => !player.bankrupt),
+        at = Math.max(0, roster.findIndex((player) => player.id === shown.id)),
+        step = id === "playerPrev" ? -1 : 1,
+        target = roster[(at + step + roster.length) % roster.length];
+      openPopup("playerDetail", { player: target, tab: q?.tab || "overview" });
       return;
     }
     if (id === "focusCurrent") {

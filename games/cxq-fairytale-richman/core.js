@@ -181,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260909-0200";
+const ASSET_REV = "20260912-1200";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -512,6 +512,43 @@ function btn(id, label, x, y, w, h, red = false, alpha = 1, en = true) {
     12,
   );
   S.buttons.push({ id, x, y, w, h, en });
+}
+function panelPlate(x, y, w, h, alpha = 0.94) {
+  X.save();
+  X.globalAlpha = alpha;
+  const g = X.createLinearGradient(x, y, x, y + h);
+  g.addColorStop(0, "rgba(12,39,77,.96)");
+  g.addColorStop(1, "rgba(3,14,39,.96)");
+  X.fillStyle = g;
+  X.strokeStyle = "#e6bb57";
+  X.lineWidth = 3;
+  X.beginPath();
+  X.roundRect(x, y, w, h, 18);
+  X.fill(); X.stroke();
+  X.strokeStyle = "rgba(116,202,255,.55)";
+  X.lineWidth = 1;
+  X.beginPath();
+  X.roundRect(x + 7, y + 7, w - 14, h - 14, 13);
+  X.stroke();
+  X.restore();
+}
+function diceIconButton(id, x, y, size, en = true) {
+  const pressed = en && UI_BUTTON.pressed === id,
+    hovered = en && UI_BUTTON.hover === id,
+    d = pressed ? -4 : hovered ? 4 : 0,
+    cx = x + size / 2,
+    cy = y + size / 2;
+  X.save();
+  X.globalAlpha = en ? 1 : 0.38;
+  X.shadowColor = hovered ? "rgba(255,229,112,.95)" : "rgba(0,0,0,.55)";
+  X.shadowBlur = hovered ? 24 : 14;
+  const g = X.createRadialGradient(cx, cy - 12, 8, cx, cy, size / 2);
+  g.addColorStop(0, "#376fae"); g.addColorStop(1, "#071a43");
+  X.fillStyle = g; X.strokeStyle = "#f3cf70"; X.lineWidth = 6;
+  X.beginPath(); X.arc(cx, cy, size / 2 - 4 + d / 2, 0, Math.PI * 2); X.fill(); X.stroke();
+  contain(IM["diceThrow" + (S.dice || 1)], x + 18 - d / 2, y + 15 - d / 2, size - 36 + d, size - 36 + d, 1);
+  X.restore();
+  S.buttons.push({ id, x, y, w: size, h: size, en });
 }
 function hit(x, y) {
   return S.buttons
@@ -1425,8 +1462,9 @@ function drawPlayers() {
     const t = b.tiles[p.pos],
       same = b.players.filter((q) => !q.bankrupt && q.pos === p.pos),
       idx = same.indexOf(p),
-      slotX = 0,
-      slotY = 0;
+      slots = same.length <= 1 ? [[0, 0]] : same.length === 2 ? [[-17, 5], [17, -5]] : [[-22, 8], [0, -10], [22, 8], [0, 18]],
+      slotX = slots[idx]?.[0] || 0,
+      slotY = slots[idx]?.[1] || 0;
     let x = t.x + slotX,
       y = t.y + slotY;
     if (p.moveAnim) {
@@ -1494,24 +1532,24 @@ function playerHudCard(p, i, compact = false) {
   const b = S.board,
     x = compact ? 350 + i * 202 : 12,
     y = 12,
-    w = compact ? 190 : 320,
-    h = compact ? 76 : 106,
+    w = compact ? 198 : 330,
+    h = compact ? 82 : 112,
     current = p.id === cp().id;
   stretch(IM["playerSeatP" + p.id], x, y, w, h, current ? 1 : 0.82);
   portrait(
     IM["portrait" + p.char],
     x + 7,
     y + (compact ? 8 : 10),
-    compact ? 58 : 80,
-    compact ? 58 : 80,
+    compact ? 62 : 84,
+    compact ? 62 : 84,
     p.bankrupt ? 0.45 : 1,
   );
   fitTxt(
     `${p.id + 1}P ${CHAR_NAMES[p.char]}`,
     x + (compact ? 72 : 98),
     y + (compact ? 22 : 22),
-    compact ? 105 : 200,
-    compact ? 14 : 18,
+    compact ? 112 : 205,
+    compact ? 16 : 19,
     "left",
     current ? "#ffe894" : "#fff",
     1000,
@@ -1522,8 +1560,8 @@ function playerHudCard(p, i, compact = false) {
     `現金 $${Math.max(0, p.cash).toLocaleString()}`,
     x + (compact ? 72 : 98),
     y + (compact ? 49 : 47),
-    compact ? 105 : 200,
-    compact ? 12 : 15,
+    compact ? 112 : 205,
+    compact ? 14 : 16,
     "left",
     "#fff5d3",
     900,
@@ -1622,22 +1660,24 @@ function diceThrowOverlay() {
 }
 function miniMapHud() {
   const b = S.board,
-    x = 1184,
-    y = 24,
-    w = 142,
-    h = 108;
+    x = 20,
+    y = 690,
+    w = 244,
+    h = 150;
+  panelPlate(x - 10, y - 34, w + 20, h + 46, 0.92);
+  fitTxt("路線小地圖", x + w / 2, y - 13, w - 20, 17, "center", "#fff0a5", 1000, true, 12);
   X.save();
   X.beginPath();
   X.roundRect(x, y, w, h, 12);
   X.clip();
   cover(IM["mapPreview" + (b.mapIndex || 0)], x, y, w, h, 0.95);
   X.restore();
-  const rx = x + (b.cam.x / (MW - W)) * (w - 40),
-    ry = y + (b.cam.y / (MH - H)) * (h - 30);
+  const rx = x + (b.cam.x / (MW - W)) * (w - 62),
+    ry = y + (b.cam.y / (MH - H)) * (h - 47);
   X.save();
   X.strokeStyle = "#fff073";
   X.lineWidth = 3;
-  X.strokeRect(rx, ry, 40, 30);
+  X.strokeRect(rx, ry, 62, 47);
   X.restore();
 }
 function hud() {
@@ -1645,14 +1685,14 @@ function hud() {
     p = cp();
   playerHudCard(p, 0, false);
   b.players.filter((player) => player.id !== p.id).forEach((player, i) => playerHudCard(player, i, true));
-  stretch(IM.roleInfo, 1168, 10, 420, 166, 0.98);
+  panelPlate(1162, 12, 360, 174, 0.95);
   miniMapHud();
   fitTxt(
     `${b.mapRules?.name || "童話王國"}　　第 ${b.round}/${S.rounds} 回合`,
-    1450,
-    35,
-    230,
-    18,
+    1342,
+    39,
+    320,
+    20,
     "center",
     "#fff4c9",
     1000,
@@ -1661,10 +1701,10 @@ function hud() {
   );
   fitTxt(
     `現在行動：${p.id + 1}P ${CHAR_NAMES[p.char]}`,
-    1450,
-    62,
-    230,
-    17,
+    1342,
+    72,
+    320,
+    19,
     "center",
     PLAYER_COLORS[p.id],
     1000,
@@ -1673,10 +1713,10 @@ function hud() {
   );
   fitTxt(
     `現金 $${p.cash.toLocaleString()}　持有土地 ${ownedLands(p).length}`,
-    1450,
-    91,
-    230,
-    15,
+    1342,
+    105,
+    320,
+    17,
     "center",
     "#e2f1ff",
     850,
@@ -1685,10 +1725,10 @@ function hud() {
   );
   fitTxt(
     `總資產 $${netWorth(p).toLocaleString()}　物價指數 ×${marketIndex().toFixed(1)}`,
-    1450,
-    118,
-    230,
-    15,
+    1342,
+    136,
+    320,
+    17,
     "center",
     "#ffe58e",
     900,
@@ -1700,17 +1740,28 @@ function hud() {
     hasEquipment(p, "guardian") && (p.guardianReadyAt || 0) > b.round ? `守護徽章 ${p.guardianReadyAt - b.round}回合` : "",
     hasEquipment(p, "compass") && (p.compassReadyAt || 0) > b.round ? `星辰羅盤 ${p.compassReadyAt - b.round}回合` : "",
   ].filter(Boolean).join("｜") || "狀態正常";
-  fitTxt(statusText, 1450, 139, 230, 11, "center", "#fff0a5", 900, true, 8);
-  btn("pause", "⚙", 1524, 184, 62, 56, false, 0.96, !S.rolling && !b.popup);
+  fitTxt(statusText, 1342, 163, 320, 14, "center", "#fff0a5", 900, true, 10);
+  btn("pause", "⚙", 1530, 22, 58, 54, false, 0.96, !S.rolling && !b.popup);
   (p.equipment || []).slice(0, 2).forEach((id, i) => {
     contain(IM["equip_" + id], 22 + i * 70, 121, 58, 58, 1);
     const def = equipmentDef(id);
     fitTxt(def?.name || "裝備", 51 + i * 70, 184, 66, 9, "center", "#fff0ad", 900, true, 7);
   });
   const canRoll = !S.rolling && !b.popup && !b.winner && b.phase === "pre-roll" && p.type === "human";
-  if (canRoll) btn("roll", "擲骰子", 635, 798, 330, 70, true, 1, true);
-  if (S.msg)
-    fitTxt(S.msg, 800, 850, 680, 16, "center", "#fff6d2", 800, true, 12);
+  if (canRoll) {
+    diceIconButton("roll", 1418, 724, 132, true);
+    fitTxt("點擊骰子投擲", 1484, 875, 190, 18, "center", "#fff4b0", 1000, true, 13);
+  }
+  if (S.msg && S.msg !== S.toastText) { S.toastText = S.msg; S.toastAt = performance.now(); }
+  if (S.toastText) {
+    const age = performance.now() - (S.toastAt || 0), alpha = age < 2600 ? 1 : Math.max(0, 1 - (age - 2600) / 1300);
+    if (alpha > 0) {
+      X.save(); X.globalAlpha = alpha;
+      panelPlate(455, 785, 690, 64, 0.92);
+      fitTxt(S.toastText, 800, 817, 640, 20, "center", "#fff6d2", 900, true, 14);
+      X.restore();
+    } else if (S.msg === S.toastText) S.msg = "";
+  }
   diceThrowOverlay();
 }
 function turnBannerHud() {
