@@ -181,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260912-2330";
+const ASSET_REV = "20260912-2355";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -204,8 +204,8 @@ load("homeMenuSettings", A + "ui/home_menu_settings_v1.webp", "high");
 load("btnBlue", A + "ui/btn_blue.webp", "high");
 load("btnRed", A + "ui/btn_red.webp", "high");
 load("setupBg", A + "backgrounds/setup_scene_v4.webp", "high");
-load("playerSeat", A + "ui/player_seat_v2.webp");
-load("roleInfo", A + "ui/role_info_v2.webp");
+load("playerSeat", A + "ui/player_seat_v3.png");
+load("roleInfo", A + "ui/role_info_v3.png");
 load("characterStage", A + "ui/character_stage_v1.webp");
 load("abilityPanel", A + "ui/ability_panel_v1.webp");
 load("actionConsole", A + "ui/action_console_v1.webp");
@@ -661,7 +661,7 @@ function home() {
   cover(IM.homeBg, 0, 0, W, H, 1);
   X.save();
   X.globalAlpha = sceneA;
-  contain(IM.playerSeat, 1120, headerY, 430, 94, 0.9);
+  stretch(IM.playerSeat, 1120, headerY, 430, 94, 0.9);
   txt("童話棋盤冒險", 1335, headerY + 29, 18, "center", "#fff7dc", 1000, true);
   txt(
     "擲骰・買地・蓋房・收租・常駐裝備・巡遊神明",
@@ -708,7 +708,7 @@ function home() {
   X.save();
   X.globalAlpha = infoA;
   const infoY = Math.min(776, safeBottom - 88);
-  contain(IM.roleInfo, 70, infoY, 510, 82, 0.94);
+  stretch(IM.roleInfo, 70, infoY, 510, 82, 0.94);
   txt(
     canContinue ? "已有冒險紀錄｜可繼續上次進度" : "尚無冒險紀錄｜請開始新遊戲",
     325,
@@ -1033,7 +1033,7 @@ function setup() {
     1000,
     true,
   );
-  contain(IM.roleInfo, 1280, 145, 285, 168, 0.95);
+  stretch(IM.roleInfo, 1280, 145, 285, 168, 0.95);
   txt(
     `參賽 ${activeSeatIds().length} 人`,
     1422,
@@ -1494,7 +1494,13 @@ function drawPlayers() {
     const t = b.tiles[p.pos],
       same = b.players.filter((q) => !q.bankrupt && q.pos === p.pos),
       idx = same.indexOf(p),
-      slots = same.length <= 1 ? [[0, 0]] : same.length === 2 ? [[-17, 5], [17, -5]] : [[-22, 8], [0, -10], [22, 8], [0, 18]],
+      slots = same.length <= 1
+        ? [[0, 0]]
+        : same.length === 2
+          ? [[-44, 8], [44, 8]]
+          : same.length === 3
+            ? [[-55, 10], [0, -12], [55, 10]]
+            : [[-62, -4], [-22, 18], [22, -4], [62, 18]],
       slotX = slots[idx]?.[0] || 0,
       slotY = slots[idx]?.[1] || 0;
     let x = t.x + slotX,
@@ -1509,34 +1515,44 @@ function drawPlayers() {
     const key = CHAR_KEYS[p.char],
       contact = IM[key + "WalkRightContact"],
       passing = IM[key + "WalkRightPassing"],
+      motionAge = p.moveAnim ? now - p.moveAnim.start : 0,
+      stepPhase = motionAge / 105,
       walkingBob = p.moveAnim
-        ? -Math.abs(Math.sin((now - p.moveAnim.start) / 105 * Math.PI)) * 7
-        : 0;
+        ? -Math.abs(Math.sin(stepPhase * Math.PI)) * 10
+        : Math.sin(now / 520 + p.id * 1.7) * 3,
+      idleBreath = p.moveAnim ? 1 : 1 + Math.sin(now / 620 + p.id) * 0.018,
+      lean = p.moveAnim ? Math.sin(stepPhase * Math.PI) * 0.035 : Math.sin(now / 900 + p.id) * 0.008;
     X.save();
     X.globalAlpha = p.moveAnim ? 0.42 : 0.3;
     X.fillStyle = "#08101c";
     X.beginPath();
-    X.ellipse(x, y - 8, 38, 12, 0, 0, Math.PI * 2);
+    X.ellipse(x, y + 7, p.moveAnim ? 34 : 39, p.moveAnim ? 9 : 12, 0, 0, Math.PI * 2);
     X.fill();
     X.restore();
     X.save();
     X.shadowColor = PLAYER_COLORS[p.id];
     X.shadowBlur = 18;
+    X.translate(x, y);
+    X.rotate(lean);
+    X.scale(1 - (idleBreath - 1) * 0.45, idleBreath);
     if (p.moveAnim && contact?.complete && passing?.complete) {
       const q = p.moveAnim,
         frame = Math.floor((now - q.start) / 105) % 2 ? passing : contact;
-      containFacing(frame, x - 60, y - 128 + walkingBob, 120, 140, q.to.x >= q.from.x);
-    } else contain(IM["c" + p.char], x - 56, y - 118 + walkingBob, 112, 132);
+      containFacing(frame, -60, -128 + walkingBob, 120, 140, q.to.x >= q.from.x);
+    } else contain(IM["c" + p.char], -56, -118 + walkingBob, 112, 132);
     X.restore();
-    const labelOwner = same.some((player) => player.id === cp().id)
-      ? cp().id
-      : same[same.length - 1].id;
-    if (p.id === labelOwner) {
-      const label = same.map((player) => `${player.id + 1}P`).join("・"),
-        labelW = Math.max(92, 42 + same.length * 35);
-      stretch(IM["playerSeatP" + p.id], x - labelW / 2, y - 146, labelW, 34, 0.98);
-      fitTxt(label, x, y - 129, labelW - 18, 13, "center", PLAYER_COLORS[p.id], 1000, true, 10);
+    if (p.moveAnim) {
+      const dust = Math.abs(Math.sin(stepPhase * Math.PI));
+      X.save();
+      X.globalAlpha = 0.34 * dust;
+      X.fillStyle = "#fff0b5";
+      X.beginPath(); X.arc(x - 18, y + 5, 5 + dust * 4, 0, Math.PI * 2); X.fill();
+      X.beginPath(); X.arc(x + 15, y + 8, 3 + dust * 3, 0, Math.PI * 2); X.fill();
+      X.restore();
     }
+    const labelW = 68;
+    stretch(IM["playerSeatP" + p.id], x - labelW / 2, y - 151 + walkingBob * 0.25, labelW, 30, 0.98);
+    fitTxt(`${p.id + 1}P`, x, y - 136 + walkingBob * 0.25, labelW - 16, 13, "center", PLAYER_COLORS[p.id], 1000, true, 10);
     const god = (p.effects || []).find((e) => isGodEffect(e));
     if (god) {
       X.save();
@@ -1798,7 +1814,7 @@ function hud() {
     fitTxt("點擊骰子投擲", right - 91, bottom - 10, 210, 22, "center", "#fff4b0", 1000, true, 15);
   }
   if (S.msg && S.msg !== S.toastText) { S.toastText = S.msg; S.toastAt = performance.now(); }
-  if (S.toastText) {
+  if (S.toastText && !b.popup && !S.diceAnim) {
     const age = performance.now() - (S.toastAt || 0), alpha = age < 2600 ? 1 : Math.max(0, 1 - (age - 2600) / 1300);
     if (alpha > 0) {
       X.save(); X.globalAlpha = alpha;
@@ -2070,8 +2086,11 @@ function popup() {
     intro = Math.min(1, age / ANIMATION_MIN_MS),
     ease = 1 - Math.pow(1 - intro, 3),
     scale = 0.94 + ease * 0.06;
+  X.save();
+  X.setTransform(1, 0, 0, 1, 0, 0);
   X.fillStyle = `rgba(4,8,24,${0.72 * ease})`;
-  X.fillRect(0, 0, W, H);
+  X.fillRect(0, 0, C.width, C.height);
+  X.restore();
   X.translate(W / 2, H / 2);
   X.scale(scale, scale);
   X.translate(-W / 2, -H / 2);

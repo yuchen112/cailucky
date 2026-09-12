@@ -122,7 +122,16 @@ scenePopup = function (q, b, p) {
       true,
       22,
     );
-    contain(art, 475, 235, 230, 220, 1);
+    X.save();
+    X.fillStyle = "rgba(4,20,54,.46)";
+    X.beginPath(); X.roundRect(448, 226, 286, 314, 24); X.fill();
+    X.restore();
+    contain(art, 476, 242, 230, 205, 1);
+    X.save();
+    X.strokeStyle = "rgba(242,194,82,.7)";
+    X.lineWidth = 2;
+    X.beginPath(); X.moveTo(756, 238); X.lineTo(756, 522); X.stroke();
+    X.restore();
     if (owner) {
       stretch(IM["playerSeatP" + owner.id], 470, 455, 240, 62, 0.98);
       portrait(IM["portrait" + owner.char], 478, 460, 52, 52, 1);
