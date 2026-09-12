@@ -181,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260912-2355";
+const ASSET_REV = "20260913-0015";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -295,7 +295,7 @@ let UI_FIT_ACTIVE = false;
 function sceneBackdrop() {
   if (S.scene === "home") return IM.homeBg;
   if (
-    ["setup", "loadout", "mapSelect", "rules", "result", "help", "settings"].includes(
+    ["setup", "loadout", "mapSelect", "rules", "result", "help", "settings", "loadSelect"].includes(
       S.scene,
     )
   )
@@ -610,6 +610,12 @@ function resetHome() {
   HOME.leaveAt = 0;
   HOME.locked = false;
 }
+function hasAnySave() {
+  if (localStorage.getItem(SAVE)) return true;
+  for (let i = 1; i <= 4; i++)
+    if (localStorage.getItem(SAVE_SLOT_PREFIX + i)) return true;
+  return false;
+}
 function homeTile(id, label, image, x, y, size, index, enabled = true) {
   const a = homeIntro(330 + index * 90, 360);
   if (a <= 0) return;
@@ -626,7 +632,7 @@ function homeTile(id, label, image, x, y, size, index, enabled = true) {
     label,
     x + size / 2,
     y + size * 0.815 + (1 - a) * 24,
-    25,
+    29,
     "center",
     enabled ? "#fff7dd" : "#cfcee0",
     1000,
@@ -653,7 +659,7 @@ function homeTile(id, label, image, x, y, size, index, enabled = true) {
 function home() {
   const now = performance.now(),
     sceneA = homeIntro(0, 620),
-    canContinue = !!localStorage.getItem(SAVE),
+    canContinue = hasAnySave(),
     safeY = UI_FIT_ACTIVE ? 0 : (VIEW.visibleY || 0),
     safeBottom = safeY + (UI_FIT_ACTIVE ? H : (VIEW.visibleH || H)),
     headerY = safeY + 12,
@@ -662,12 +668,12 @@ function home() {
   X.save();
   X.globalAlpha = sceneA;
   stretch(IM.playerSeat, 1120, headerY, 430, 94, 0.9);
-  txt("童話棋盤冒險", 1335, headerY + 29, 18, "center", "#fff7dc", 1000, true);
+  txt("童話棋盤冒險", 1335, headerY + 29, 22, "center", "#fff7dc", 1000, true);
   txt(
     "擲骰・買地・蓋房・收租・常駐裝備・巡遊神明",
     1335,
     headerY + 60,
-    13,
+    16,
     "center",
     "#fff",
     850,
@@ -678,12 +684,12 @@ function home() {
     logoY = (1 - logoA) * 30;
   X.save();
   X.globalAlpha = logoA;
-  txt("CxQ", 330, 78 + logoY + logoLift, 72, "center", "#ffe27a", 1000, true);
-  txt("童話大富翁", 330, 145 + logoY + logoLift, 52, "center", "#fff1be", 1000, true);
+  txt("CxQ", 330, 96 + logoY + logoLift, 68, "center", "#ffe27a", 1000, true);
+  txt("童話大富翁", 330, 158 + logoY + logoLift, 48, "center", "#fff1be", 1000, true);
   txt(
     "夢想王國資產大冒險",
     330,
-    190 + logoY + logoLift,
+    203 + logoY + logoLift,
     17,
     "center",
     "#f7f2dc",
@@ -707,27 +713,27 @@ function home() {
   const infoA = homeIntro(740, 380);
   X.save();
   X.globalAlpha = infoA;
-  const infoY = Math.min(776, safeBottom - 88);
-  stretch(IM.roleInfo, 70, infoY, 510, 82, 0.94);
+  const infoY = Math.min(766, safeBottom - 112);
+  stretch(IM.roleInfo, 54, infoY, 552, 104, 0.98);
   txt(
     canContinue ? "已有冒險紀錄｜可繼續上次進度" : "尚無冒險紀錄｜請開始新遊戲",
     325,
-    infoY + 27,
-    16,
+    infoY + 38,
+    26,
     "center",
-    "#60462d",
-    900,
-    false,
+    "#fff2bd",
+    950,
+    true,
   );
   txt(
-    "2–4 人｜真人／電腦自由配置",
+    "5 槽存檔：即時紀錄＋4 個自選紀錄",
     325,
-    infoY + 56,
-    14,
+    infoY + 72,
+    22,
     "center",
-    "#76583b",
+    "#ffffff",
     850,
-    false,
+    true,
   );
   X.restore();
   if (HOME.leaving) {
@@ -760,6 +766,36 @@ function home() {
     800,
     true,
   );
+}
+
+function loadSelect() {
+  cover(IM.setupBg, 0, 0, W, H, 0.9);
+  X.save();
+  X.fillStyle = "rgba(3,8,24,.42)";
+  X.fillRect(0, 0, W, H);
+  X.restore();
+  contain(IM.abilityPanel, 415, 64, 770, 772, 0.99);
+  txt("讀取冒險紀錄", 800, 132, 42, "center", "#fff0a5", 1000, true);
+  txt("選擇即時紀錄，或四個自選儲存槽之一", 800, 182, 19, "center", "#ffffff", 850, true);
+  const slots = [0, 1, 2, 3, 4];
+  slots.forEach((slot, i) => {
+    const key = slot === 0 ? SAVE : SAVE_SLOT_PREFIX + slot,
+      exists = !!localStorage.getItem(key),
+      label = `${slot === 0 ? "即時紀錄" : `自選紀錄 ${slot}`}｜${saveSlotSummary(slot)}`;
+    btn(
+      `homeLoadSlot${slot}`,
+      label,
+      535,
+      228 + i * 92,
+      530,
+      72,
+      i === 0,
+      exists ? 1 : 0.42,
+      exists,
+    );
+  });
+  btn("back", "返回首頁", 625, 710, 350, 72, false);
+  txt("空白紀錄會保持不可選取，避免誤按", 800, 800, 16, "center", "#dfeaff", 800, true);
 }
 
 const SETUP = {

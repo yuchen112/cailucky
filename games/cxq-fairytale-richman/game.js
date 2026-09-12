@@ -1892,7 +1892,7 @@ function action(id) {
     !HOME.locked &&
     ["start", "continue", "help", "settings"].includes(id)
   ) {
-    if (id === "continue" && !localStorage.getItem(SAVE)) return;
+    if (id === "continue" && !hasAnySave()) return;
     HOME.locked = true;
     HOME.pressed = id;
     HOME.leaving = id;
@@ -1901,7 +1901,7 @@ function action(id) {
       HOME.pressed = null;
       if (id === "start") S.scene = "setup";
       else if (id === "continue") {
-        if (!loadGame()) S.scene = "setup";
+        S.scene = "loadSelect";
       } else S.scene = id;
       HOME.locked = false;
       HOME.leaving = null;
@@ -1917,6 +1917,11 @@ function action(id) {
   if (id === "back") {
     S.scene = "home";
     resetHome();
+    return;
+  }
+  if (S.scene === "loadSelect" && /^homeLoadSlot[0-4]$/.test(id)) {
+    const slot = +id.at(-1);
+    if (!loadGame(slot)) S.scene = "loadSelect";
     return;
   }
   if (S.scene === "settings") {
@@ -2676,6 +2681,7 @@ function frame() {
     else if (S.scene === "result" && S.board) result();
     else if (S.scene === "help") help();
     else if (S.scene === "settings") settings();
+    else if (S.scene === "loadSelect") loadSelect();
     endUiLayer();
   }
   requestAnimationFrame(frame);

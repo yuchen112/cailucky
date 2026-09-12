@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20260912-2355';
+const CACHE='cxq-richman-20260913-0015';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   '../../assets/brand/cxq-app-icon-192.png','../../assets/brand/cxq-app-icon-512.png',
