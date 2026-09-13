@@ -1,0 +1,47 @@
+{
+  "license": "CC0",
+  "checked": "2026-09-13",
+  "music": [
+    {
+      "file": "flight.mp3",
+      "title": "Happy Adventure (Loop)",
+      "author": "TinyWorlds",
+      "source": "https://opengameart.org/content/happy-adventure-loop",
+      "original": "happy_adveture.mp3"
+    },
+    {
+      "file": "runner.mp3",
+      "title": "Flowerbed Fields [Loop]",
+      "author": "Zane Little Music",
+      "source": "https://opengameart.org/content/flowerbed-fields-loop",
+      "original": "flowerbed_fields.ogg"
+    }
+  ],
+  "sounds": [
+    {
+      "source": "https://kenney.nl/assets/impact-sounds",
+      "author": "Kenney",
+      "files": {
+        "drop": "impactWood_light_000.ogg",
+        "step": "footstep_grass_000.ogg",
+        "land": "footstep_grass_002.ogg"
+      }
+    },
+    {
+      "source": "https://kenney.nl/assets/ui-audio",
+      "author": "Kenney",
+      "files": {
+        "jump": "rollover3.ogg",
+        "collect": "switch8.ogg"
+      }
+    },
+    {
+      "source": "https://kenney.nl/assets/music-jingles",
+      "author": "Kenney",
+      "files": {
+        "merge": "jingles_PIZZI01.ogg",
+        "skill": "jingles_PIZZI03.ogg"
+      }
+    }
+  ]
+}

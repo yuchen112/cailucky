@@ -1,0 +1,87 @@
+[
+  {
+    "file": "assets/merge.webp",
+    "generated": true,
+    "prompt": "Use case: stylized-concept. Full-bleed portrait 2:3 game background. A cozy handcrafted toy workshop, sage clover and peach blanket details based on reference characters, warm oak shelves, gold bells, cushions, glass jars with stars, afternoon window light. Premium soft sculpted clay and plush rendering. Central 65% quiet empty cream work surface for overlay of a physics game container; decorations only around perimeter. No character, no text, no interface, no embedded balls. Beautiful warm ivory peach honey palette."
+  },
+  {
+    "file": "assets/flappy.webp",
+    "generated": true,
+    "prompt": "Use case: stylized-concept. Full-bleed portrait 2:3 game background. Dreamy sky mail route high above clouds, pale aqua sky, floating miniature postal cottages at far edges, lavender stars, warm gold crescent lanterns, little sealed envelopes on strings. Match premium soft clay/plush fairy character references. Center 75% open clear pale blue sky for flying gameplay; no obstacles across center, no characters, no text, no interface. Layered distant clouds, luminous warm morning, elegant airy visual identity."
+  },
+  {
+    "file": "assets/dino.webp",
+    "generated": true,
+    "prompt": "Use case: stylized-concept. Full-bleed landscape 3:2 background for a side-scrolling forest courier game. Wide storybook forest trail viewed SIDE ON, tiny clover-roof postal cottages in distance, large soft sage trees, golden sunlight, layered hills, beige dirt ground occupies bottom 18 percent with a clearly level top edge. Plush clay miniature materials matching original character references. Empty path, no foreground obstacles, no characters, no text or UI. Horizontal composition, open center for running."
+  },
+  {
+    "file": "assets/mines.webp",
+    "generated": true,
+    "prompt": "Use case: stylized-concept. Full-bleed landscape 3:2 tabletop puzzle game background. Top-down warm ivory explorer desk with parchment map underlay, clover leaves, brass compass, small key, stitched navy field notebook, peach handkerchief, moon lantern at outer corners. Center 80% smooth quiet cream parchment free of symbols and objects for a minesweeper grid. Premium sculpted clay/plush tactile fantasy style matching reference. Muted olive parchment brass palette, calm focused mood. No letters, no numbers, no grid, no characters."
+  },
+  {
+    "file": "assets/balls.webp",
+    "generated": true,
+    "prompt": "Use case: stylized-concept. ONE transparent PNG game atlas, exactly 4 equal columns and 3 equal rows, 4:3 landscape. Twelve separate spherical plush collectible balls centered in equal square cells. Each ball is perfectly circular in silhouette with tiny detailing INSIDE sphere and no protruding limbs, 12% transparent cell padding. Reading order: mint clover sphere, peach heart sphere, brass bell sphere, green leaf sphere, sepia photo memory sphere, pink balloon sphere, navy crescent sphere, antique key sphere, white rainbow thread sphere, blue raindrop sphere, lavender star-envelope sphere, luminous golden heartlight sphere. Match reference clay/plush soft materials, crisp readable motifs, different clear colors, gentle gloss. Actual alpha transparency outside balls, NO checkerboard or background, no text, no labels, no grid lines."
+  },
+  {
+    "file": "assets/flight-kit.webp",
+    "generated": true,
+    "prompt": "Use case: stylized-concept. ONE transparent PNG game props atlas exactly 3 equal columns by 2 equal rows, 3:2. Each asset centered isolated with generous transparent margins. Reading order: 1 cream paper-envelope flying boat with sage clover stamp viewed SIDE ON, 2 leaf glider with brass bell viewed SIDE ON, 3 little lavender cloud cushion flying vehicle viewed SIDE ON; bottom row 4 tall clover-covered stone mail pillar with flat top (game obstacle), 5 sealed gold star envelope collectible, 6 lavender comet star trail cluster. Premium sculpted clay/plush fantasy matching reference. Actual transparent alpha background, no text, no grid, no characters."
+  },
+  {
+    "file": "assets/runner-kit.webp",
+    "generated": true,
+    "prompt": "Use case: stylized-concept. ONE transparent PNG game atlas exactly 3 equal columns and 2 equal rows, 3:2. Six separate front-readable SIDE-VIEW forest game props fully inside own cells with padding. Reading order: 1 low gnarled tree root obstacle, 2 squat wooden parcel crate obstacle, 3 hanging leafy branch obstacle, 4 cream sealed mail envelope with gold star, 5 floating moon-hourglass magic emblem, 6 peach plush winged heart shield emblem. Soft premium clay/plush game style matching reference. No people, no text, no checkerboard, genuine alpha transparency."
+  },
+  {
+    "file": "assets/runner-cast.webp",
+    "generated": true,
+    "prompt": "Use case: identity-preserve. Production SIDE-VIEW running sprite sheet, transparent PNG, exactly 4 equal columns and 3 equal rows (landscape4:3), 12 fully isolated full-body sprites. Rows follow input references: top row original mint clover fox with brass bells; second row original cream floppy-ear puppy with peach heart blanket; third row original navy cat-hood moon child with owl. Preserve exact identity faces costumes colors and accessories. All facing RIGHT, each fully visible with 12% padding inside square cell, equal character scale. Columns for each row: 1 running stride left foot forward, 2 running stride right foot forward, 3 jumping tucked legs arms forward, 4 crouched landing with bent knees. Genuine four distinct poses per character. Premium soft sculpted clay/plush style matching references. No ground, no scenery, no text, no grid, no checkerboard, actual alpha-transparent background. Keep small accessories close to body, no overlap across cells."
+  },
+  {
+    "file": "assets/rain.webp",
+    "generated": true,
+    "prompt": "Full-bleed landscape3:2 SIDE VIEW forest courier trail after gentle rain. Soft clay/plush miniature garden, hydrangea flowers, rain umbrella canopy at outer edges, wet cobblestone LEVEL horizontal running path at bottom20 percent, pale blue grey sky and warm cottage windows in distance, no obstacles or characters. Match premium CxQ soft sculpted plush fantasy style. Empty central travel lane, no words or UI."
+  },
+  {
+    "file": "assets/moon.webp",
+    "generated": true,
+    "prompt": "Full-bleed portrait2:3 sky mail game background. Deep lavender and navy moonlit clouds, softly glowing crescent and distant floating postal cottages at outer edges, little gold stars, premium CxQ soft clay/plush style. Center75 percent open uncluttered dark blue sky for flying gameplay, no obstacles or characters, no words, no UI. Dreamlike gentle night, warm lights."
+  },
+  {
+    "file": "assets/mines-kit.webp",
+    "generated": true,
+    "prompt": "Use case: stylized-concept. Production minesweeper TILE TEXTURE atlas, exactly 3 equal columns and 2 equal rows, 3:2 canvas. FULLY OPAQUE image. Background is warm ivory parchment in EVERY cell. NO transparency and NO checkerboard anywhere. Top-left cell is a closed sage-green stitched leaf square tile, leaves at corners, flat green center. Top-middle cell is an opened blank cream linen square tile. Top-right cell is a tiny brass bell flag on cream tile. Bottom-left cell is a dark charcoal fantasy trap with purple ribbon on cream tile. Bottom-middle cell is a golden compass on cream tile. Bottom-right cell is a golden clover treasure chest on cream tile. Each tile fills its entire equal square cell edge to edge, neat straight square boundaries, no gaps. Match premium sculpted clay/plush CxQ style with crisp mobile-readable shapes. No letters or numbers, no grid outlines. All cells remain complete square usable game tile images."
+  },
+  {
+    "file": "assets/merge-cover.webp",
+    "generated": true,
+    "prompt": "Generate a polished landscape 3:2 cover illustration for a finished CxQ game. Warm magical toy workshop. A delightful pyramid of the reference collectible plush round spheres, clover fox, cream puppy, gold bell, moon orb, hearts. Clearly depicts a ball merging puzzle, elegant richly detailed handcrafted miniature, warm honey peach sage. Match referenced soft sculpted clay/plush 3D miniature art quality and character elements. Strong clear central composition legible at thumbnail size. No words, no logo, no UI, no checkerboard. Full bleed opaque image."
+  },
+  {
+    "file": "assets/dino-cover.webp",
+    "generated": true,
+    "prompt": "Generate a polished landscape 3:2 cover illustration for a finished CxQ game. The three reference couriers, clover fox, cream peach blanket puppy, navy cat hood moon child with owl, racing toward right on forest path, hopping root, holding mail bags, joyful energetic premium adventure miniature scene. Match referenced soft sculpted clay/plush 3D miniature art quality and character elements. Strong clear central composition legible at thumbnail size. No words, no logo, no UI, no checkerboard. Full bleed opaque image."
+  },
+  {
+    "file": "assets/mines-cover.webp",
+    "generated": true,
+    "prompt": "Generate a polished landscape 3:2 cover illustration for a finished CxQ game. A beautiful tabletop board of green leaf squares, ivory revealed tiles with just a few clear numbers 1 2 3, bell flags and a golden clover treasure chest, compass. Charming tactile minesweeper puzzle adventure. Match referenced soft sculpted clay/plush 3D miniature art quality and character elements. Strong clear central composition legible at thumbnail size. No words, no logo, no UI, no checkerboard. Full bleed opaque image."
+  },
+  {
+    "file": "assets/rain-run.webp",
+    "generated": true,
+    "prompt": "Edit this game background while preserving its exact side-view composition, uninterrupted horizontal running path at 75–89% of image height, background village and foreground trees. No character, no obstacle on path, no text. Transform it into a soft rainy blue-green garden after a shower, small flower lanterns, damp path, gentle puddle reflections without water hazards. Premium sculpted clay storybook art. Landscape 3:2, full bleed."
+  },
+  {
+    "file": "assets/moon-run.webp",
+    "generated": true,
+    "prompt": "Edit this game background while preserving its exact side-view composition, uninterrupted horizontal running path at 75–89% of image height, background village and foreground trees. No character, no obstacle on path, no text. Transform it into a beautiful midnight woodland under a crescent moon, lavender navy blue canopy, warm window lights, glowing star flowers, clearly visible horizontal path. Retain warm readable silhouettes. Premium sculpted clay storybook art. Landscape 3:2, full bleed."
+  },
+  {
+    "file": "assets/flappy-cover.webp",
+    "generated": true,
+    "prompt": "Edit first image only. Replace the orange fox pilot with the exact clover fox character from the second reference (top row): cream face, green eyes, sage green leafy hair and crest, dark brown large ears, tiny branch-like antlers, sage outfit, clover gold bell, cream and green fluffy fur. It must be recognizably this same CxQ character, not a generic orange fox. Keep the expressive happy flying pose, envelope glider, held letter and beautiful sky composition intact. No goggles, no words, no UI. Polished clay-plush miniature style."
+  }
+]
