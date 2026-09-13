@@ -181,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260913-0410";
+const ASSET_REV = "20260913-0520";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -210,6 +210,7 @@ load("characterStage", A + "ui/modal_frame_v6.png");
 load("abilityPanel", A + "ui/modal_frame_v6.png");
 load("actionConsole", A + "ui/info_panel_v5.png");
 load("settingsFrame", A + "ui/settings_frame_v5.png");
+load("settingsIcon", A + "ui/settings_icon_v6.png", "high");
 load("diceFrame", A + "ui/dice_frame_v5.png");
 load("mapCardFrame", A + "ui/info_panel_v5.png");
 for (let i = 0; i < 4; i++)
@@ -578,6 +579,10 @@ function panelPlate(x, y, w, h, alpha = 0.94) {
   X.roundRect(x + 7, y + 7, w - 14, h - 14, 13);
   X.stroke();
   X.restore();
+}
+function artLabel(text, x, y, w = 150, h = 44, size = 16, color = "#fff6d2", alpha = 0.98) {
+  stretch(IM.roleInfo, x, y, w, h, alpha);
+  fitTxt(text, x + w / 2, y + h * 0.51, w * 0.68, size, "center", color, 1000, true, 10);
 }
 function diceIconButton(id, x, y, size, en = true) {
   const pressed = en && UI_BUTTON.pressed === id,
@@ -1418,8 +1423,7 @@ function npcMarker(n, t) {
   X.shadowBlur = 22;
   contain(npcImage(n.name), t.x - 74, t.y - 162 + bob, 148, 174, 1);
   X.restore();
-  contain(IM.roleInfo, t.x - 65, t.y - 180 + bob, 130, 38, 0.94);
-  txt(n.name, t.x, t.y - 161 + bob, 13, "center", "#fff8ce", 1000, true);
+  artLabel(n.name, t.x - 70, t.y - 185 + bob, 140, 44, 15, "#fff8ce", 0.98);
 }
 function buildingImage(t) {
   if (t.owner < 0 || t.level < 1) return null;
@@ -1523,43 +1527,20 @@ function drawTile(t) {
         contain(building, t.x - sz / 2, t.y + 17 - sz, sz, sz, 1);
         X.restore();
         if (t.special)
-          txt(
-            t.special === "hotel"
-              ? "星光旅館"
-              : t.special === "mall"
-                ? "童話商場"
-                : "祝福公園",
-            t.x,
-            t.y - 116,
-            12,
-            "center",
+          artLabel(
+            t.special === "hotel" ? "星光旅館" : t.special === "mall" ? "童話商場" : "祝福公園",
+            t.x - 73,
+            t.y - 143,
+            146,
+            40,
+            13,
             "#fff2ae",
-            1000,
-            true,
           );
         if (pulse > 0)
-          txt(
-            "★ 升級完成 ★",
-            t.x,
-            t.y - 136,
-            14,
-            "center",
-            "#ffe274",
-            1000,
-            true,
-          );
+          artLabel("★ 升級完成 ★", t.x - 86, t.y - 180, 172, 42, 14, "#ffe274");
       }
       if (!building && pulse > 0)
-        txt(
-          "★ 地契已取得 ★",
-          t.x,
-          t.y - 112,
-          14,
-          "center",
-          "#ffe274",
-          1000,
-          true,
-        );
+        artLabel("★ 地契已取得 ★", t.x - 86, t.y - 136, 172, 42, 14, "#ffe274");
     }
     if (S.board?.selectedTile === t)
       txt(`$${Math.round(t.price / 1000)}K`, t.x, t.y + 58, 11, "center", "#fff6d2", 900, true);
@@ -1889,17 +1870,23 @@ function hud() {
   fitTxt(statusText, infoCX, safeY + 179, 326, 17, "center", "#fff0a5", 900, true, 12);
   const gearX = right - 96, gearY = safeY + 216, gearEnabled = !S.rolling && !b.popup;
   panelPlate(gearX, gearY, 80, 76, gearEnabled ? 1 : 0.48);
-  txt("⚙", gearX + 40, gearY + 38, 42, "center", "#fff6d2", 1000, true);
+  X.save();
+  X.translate(gearX + 40, gearY + 38);
+  X.rotate(Math.sin(performance.now() / 1050) * 0.035 + (UI_BUTTON.hover === "pause" ? 0.09 : 0));
+  X.shadowColor = UI_BUTTON.hover === "pause" ? "rgba(103,211,255,.95)" : "rgba(255,214,96,.45)";
+  X.shadowBlur = UI_BUTTON.hover === "pause" ? 22 : 10;
+  contain(IM.settingsIcon, -32, -32, 64, 64, gearEnabled ? 1 : 0.48);
+  X.restore();
   S.buttons.push({ id: "pause", x: gearX, y: gearY, w: 80, h: 76, en: gearEnabled });
   (p.equipment || []).slice(0, 2).forEach((id, i) => {
     contain(IM["equip_" + id], safeX + 26 + i * 80, safeY + 145, 68, 68, 1);
     const def = equipmentDef(id);
-    fitTxt(def?.name || "裝備", safeX + 60 + i * 80, safeY + 219, 76, 13, "center", "#fff0ad", 900, true, 9);
+    artLabel(def?.name || "裝備", safeX + 18 + i * 80, safeY + 207, 84, 34, 11, "#fff0ad", 0.96);
   });
   const canRoll = !S.rolling && !b.popup && !b.winner && b.phase === "pre-roll" && p.type === "human";
   if (canRoll) {
     diceIconButton("roll", right - 166, bottom - 174, 150, true);
-    fitTxt("點擊骰子投擲", right - 91, bottom - 10, 210, 22, "center", "#fff4b0", 1000, true, 15);
+    artLabel("點擊骰子投擲", right - 201, bottom - 51, 220, 48, 20, "#fff4b0");
   }
   if (S.msg && S.msg !== S.toastText) { S.toastText = S.msg; S.toastAt = performance.now(); }
   if (S.toastText && !b.popup && !S.diceAnim) {

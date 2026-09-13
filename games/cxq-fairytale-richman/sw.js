@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20260913-0410';
+const CACHE='cxq-richman-20260913-0520';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   '../../assets/brand/cxq-app-icon-192.png','../../assets/brand/cxq-app-icon-512.png',
@@ -6,7 +6,7 @@ const PRECACHE=[
   './assets/ui/btn_blue_v5.png','./assets/ui/btn_red_v5.png','./assets/ui/player_plate_v5.png','./assets/ui/tooltip_plate_v5.png',
   './assets/ui/home_menu_new_v4.png','./assets/ui/home_menu_continue_v4.png','./assets/ui/home_menu_help_v4.png','./assets/ui/home_menu_settings_v4.png',
   './assets/ui/modal_frame_v6.png',
-  './assets/ui/info_panel_v5.png','./assets/ui/settings_frame_v5.png','./assets/ui/dice_frame_v5.png',
+  './assets/ui/info_panel_v5.png','./assets/ui/settings_frame_v5.png','./assets/ui/settings_icon_v6.png','./assets/ui/dice_frame_v5.png',
   './assets/ui/flag_p1_v4.png','./assets/ui/flag_p2_v4.png','./assets/ui/flag_p3_v4.png','./assets/ui/flag_p4_v4.png',
   './assets/characters/joy/idle_v7.png','./assets/characters/joy/walk_right_contact_v7.png','./assets/characters/joy/walk_right_passing_v7.png','./assets/characters/joy/dice_v7.png','./assets/characters/joy/surprise_v7.png','./assets/characters/joy/victory_v7.png',
   './assets/characters/dream/idle_v7.png','./assets/characters/dream/walk_right_contact_v7.png','./assets/characters/dream/walk_right_passing_v7.png','./assets/characters/dream/dice_v7.png','./assets/characters/dream/surprise_v7.png','./assets/characters/dream/victory_v7.png',
