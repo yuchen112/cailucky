@@ -1,10 +1,10 @@
-const CACHE='cxq-richman-20260913-0630';
+const CACHE='cxq-richman-20260913-0640';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   '../../assets/brand/cxq-app-icon-192.png','../../assets/brand/cxq-app-icon-512.png',
   './assets/backgrounds/home_scene_v7.webp','./assets/backgrounds/setup_scene_v4.webp',
   './assets/ui/btn_blue_v5.png','./assets/ui/btn_red_v5.png','./assets/ui/player_plate_v5.png','./assets/ui/tooltip_plate_v5.png',
-  './assets/ui/home_menu_new_v4.png','./assets/ui/home_menu_continue_v4.png','./assets/ui/home_menu_help_v4.png','./assets/ui/home_menu_settings_v4.png',
+  './assets/ui/home_menu_new_v4.png','./assets/ui/home_menu_continue_v4.png','./assets/ui/home_menu_help_v4.png','./assets/ui/home_menu_settings_v4.png','./assets/ui/home_menu_gallery_v1.png',
   './assets/ui/modal_frame_v6.png',
   './assets/ui/info_panel_v5.png','./assets/ui/settings_frame_v5.png','./assets/ui/settings_icon_v6.png','./assets/ui/dice_frame_v5.png',
   './assets/ui/flag_p1_v4.png','./assets/ui/flag_p2_v4.png','./assets/ui/flag_p3_v4.png','./assets/ui/flag_p4_v4.png',

@@ -181,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260913-0630";
+const ASSET_REV = "20260913-0640";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -201,6 +201,7 @@ load("homeMenuNew", A + "ui/home_menu_new_v4.png", "high");
 load("homeMenuContinue", A + "ui/home_menu_continue_v4.png", "high");
 load("homeMenuHelp", A + "ui/home_menu_help_v4.png", "high");
 load("homeMenuSettings", A + "ui/home_menu_settings_v4.png", "high");
+load("homeMenuGallery", A + "ui/home_menu_gallery_v1.png", "high");
 load("btnBlue", A + "ui/btn_blue_v5.png", "high");
 load("btnRed", A + "ui/btn_red_v5.png", "high");
 load("setupBg", A + "backgrounds/setup_scene_v4.webp", "high");
@@ -733,19 +734,21 @@ function home() {
     true,
   );
   X.restore();
-  homeTile("start", "新遊戲", IM.homeMenuNew, 62, 226, 250, 0);
+  const tileSize = 205;
+  homeTile("start", "新遊戲", IM.homeMenuNew, 38, 226, tileSize, 0);
   homeTile(
     "continue",
     "繼續遊戲",
     IM.homeMenuContinue,
-    338,
-    226,
     250,
+    226,
+    tileSize,
     1,
     canContinue,
   );
-  homeTile("help", "遊戲說明", IM.homeMenuHelp, 62, 500, 250, 2);
-  homeTile("settings", "系統設定", IM.homeMenuSettings, 338, 500, 250, 3);
+  homeTile("gallery", "遊戲圖鑑", IM.homeMenuGallery, 462, 226, tileSize, 2);
+  homeTile("help", "遊戲說明", IM.homeMenuHelp, 144, 447, tileSize, 3);
+  homeTile("settings", "系統設定", IM.homeMenuSettings, 356, 447, tileSize, 4);
   const infoA = homeIntro(740, 380);
   X.save();
   X.globalAlpha = infoA;
@@ -772,7 +775,6 @@ function home() {
     true,
   );
   X.restore();
-  btn("gallery", "遊戲圖鑑", 650, infoY + 16, 300, 72, true);
   if (HOME.leaving) {
     const p = clamp01((now - HOME.leaveAt) / ANIMATION_MIN_MS);
     X.save();
