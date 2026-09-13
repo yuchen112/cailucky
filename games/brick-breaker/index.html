@@ -1128,7 +1128,7 @@ function gameLater(fn,ms){gameJobs.push({fn,left:ms/1000,epoch:gameEpoch})}
 
     balls = balls.filter(b=>b.y < H + 60);
     if(balls.length === 0){
-      if(hlShield>0){hlShield=0;showToast('雨露護盾擋住一次失誤')}else state.lives--;
+      const protectedFall=hlShield>0;if(protectedFall){hlShield=0}else state.lives--;
       state.combo = 0;
       updateHud();
       beep('lose');
@@ -1136,7 +1136,7 @@ function gameLater(fn,ms){gameJobs.push({fn,left:ms/1000,epoch:gameEpoch})}
       if(state.lives<=0) endGame(false);
       else{
         spawnBall(paddle.x,paddle.y-24,-Math.PI/2+rand(-.25,.25),360,true);
-        showToast('生命 -1');
+        showToast(protectedFall?'雨露護盾擋住一次失誤':'生命 -1');
       }
     }
 
