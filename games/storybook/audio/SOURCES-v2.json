@@ -1,0 +1,60 @@
+{
+  "music": [
+    {
+      "game": "merge",
+      "title": "Cozy Puzzle In-Game 1",
+      "author": "MintoDog",
+      "license": "CC0",
+      "url": "https://opengameart.org/content/cozy-puzzle-in-game-1"
+    },
+    {
+      "game": "mines",
+      "title": "JRPG Piano",
+      "author": "Joth",
+      "license": "CC0",
+      "url": "https://opengameart.org/content/jrpg-piano"
+    },
+    {
+      "game": "flappy",
+      "title": "Sherwood",
+      "author": "Chris Murphy / zesona",
+      "license": "CC0",
+      "url": "https://opengameart.org/content/sherwood"
+    },
+    {
+      "game": "dino",
+      "title": "Flowerbed Fields [Loop]",
+      "author": "Zane Little Music",
+      "license": "CC0",
+      "url": "https://opengameart.org/content/flowerbed-fields-loop"
+    }
+  ],
+  "sounds": {
+    "merge": {
+      "drop": "impact/Audio/impactGlass_light_000.ogg",
+      "merge": "jingles/Audio/Steel jingles/jingles_STEEL01.ogg"
+    },
+    "dino": {
+      "jump": "jingles/Audio/8-Bit jingles/jingles_NES01.ogg",
+      "collect": "jingles/Audio/8-Bit jingles/jingles_NES00.ogg"
+    },
+    "mines": {
+      "flip": "impact/Audio/impactSoft_medium_000.ogg",
+      "flag": "impact/Audio/impactWood_light_002.ogg"
+    }
+  },
+  "checked": "2026-09-13",
+  "license": "CC0",
+  "soundLibraries": [
+    {
+      "source": "https://kenney.nl/assets/impact-sounds",
+      "author": "Kenney",
+      "license": "CC0"
+    },
+    {
+      "source": "https://kenney.nl/assets/music-jingles",
+      "author": "Kenney",
+      "license": "CC0"
+    }
+  ]
+}

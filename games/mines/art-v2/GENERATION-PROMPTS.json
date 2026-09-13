@@ -1,0 +1,68 @@
+{
+  "game": "mines",
+  "assets": [
+    {
+      "file": "scene.webp",
+      "prompt": "Vintage explorer field journal illustration, sepia pen crosshatching, muted ochre olive and burgundy inks on aged cotton paper, hand-drawn scientific expedition notes. Flat 2D illustration, no 3D no clay no plush no ornate leaf frames. Landscape 3:2 overhead explorer desk with a broad blank foldout map dominating center, ink-drawn compass at upper left, burgundy wax seal, brass pencil and magnifying glass near edges, travel tickets, muted worn leather desktop. No readable writing, no characters. Production game background asset. Full bleed, opaque.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "panel.webp",
+      "prompt": "Vintage explorer field journal illustration, sepia pen crosshatching, muted ochre olive and burgundy inks on aged cotton paper, hand-drawn scientific expedition notes. Flat 2D illustration, no 3D no clay no plush no ornate leaf frames. Portrait 2:3 blank vintage field journal page, ivory aged paper, tiny corner dog-ear top right, faint pencil ruled top margin and subtle ink line outer border, 90% blank clean center. Flat 2D pen and watercolor, no ornament frames, no text. Production UI image asset, only a single object filling the image.",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "button.webp",
+      "prompt": "Vintage explorer field journal illustration, sepia pen crosshatching, muted ochre olive and burgundy inks on aged cotton paper, hand-drawn scientific expedition notes. Flat 2D illustration, no 3D no clay no plush no ornate leaf frames. Landscape 3:1 burgundy ink-stamped rectangular expedition ticket, lightly worn edges, solid burgundy central ink fill for ivory labels, thin ochre double line near border. Transparent background. No text. Production UI image asset, only a single object filling the image.",
+      "width": 2172,
+      "height": 724,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "tiles.webp",
+      "prompt": "Vintage explorer field journal illustration, sepia pen crosshatching, muted ochre olive and burgundy inks on aged cotton paper, hand-drawn scientific expedition notes. Flat 2D illustration, no 3D no clay no plush no ornate leaf frames. Exactly 3 equal columns by 2 equal rows of SQUARE tiles. Row1: unopened olive ink hatched map square; revealed blank ivory map square; burgundy pennant marker on map square. Row2: sepia sketched jagged trap stone on map square; brass compass illustration on map square; travel treasure chest ink illustration on map square. Opaque ivory paper background, no transparency checkerboard. Thin ink grid edges, simple legible objects, no numbers no text. Flat vintage expedition map pen drawings, NOT 3D. No words. This is a sprite atlas with mathematically equal cell layout.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "cast-a.webp",
+      "prompt": "Vintage explorer field journal illustration, sepia pen crosshatching, muted ochre olive and burgundy inks on aged cotton paper, hand-drawn scientific expedition notes. Flat 2D illustration, no 3D no clay no plush no ornate leaf frames. Re-illustrate these exact FIVE user-owned characters in that art style, preserving all identity, colors, outfits and signature accessories. Production cutout sprite sheet on TRANSPARENT BACKGROUND. Landscape 3:2 canvas, exactly THREE columns TWO rows of square cells, same arrangement as reference, last cell empty. Every character entirely inside own cell with 8% clear padding. Alpha transparency, no checkerboard, no backdrop, no floor, no border. This image must contain only the five isolated characters. Do not alter character identity. Especially preserve sage-green clover fox (not orange), cream peach-blanket puppy, navy moon child with owl. Strongly sepia pen crosshatching with muted flat color, antique illustrated field guide, no 3D shading.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "cast-b.webp",
+      "prompt": "Vintage explorer field journal illustration, sepia pen crosshatching, muted ochre olive and burgundy inks on aged cotton paper, hand-drawn scientific expedition notes. Flat 2D illustration, no 3D no clay no plush no ornate leaf frames. Re-illustrate these exact FIVE user-owned characters in that art style, preserving all identity, colors, outfits and signature accessories. Production cutout sprite sheet on TRANSPARENT BACKGROUND. Landscape 3:2 canvas, exactly THREE columns TWO rows of square cells, same arrangement as reference, last cell empty. Every character entirely inside own cell with 8% clear padding. Alpha transparency, no checkerboard, no backdrop, no floor, no border. This image must contain only the five isolated characters. Do not alter character identity. Especially preserve sage-green clover fox (not orange), cream peach-blanket puppy, navy moon child with owl. Strongly sepia pen crosshatching with muted flat color, antique illustrated field guide, no 3D shading.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "cover.webp",
+      "prompt": "Vintage explorer journal game cover. Sepia ink crosshatching and muted olive burgundy on aged cotton paper. The exact green leaf-hood brown-haired child from reference studying a folded square grid map with burgundy expedition flags and brass compass. The exact sage clover fox accompanies them. Flat antique field-guide illustration with pen strokes, no clay, no glossy toy. Landscape 3:2 full-bleed cover artwork, no text, no logos, no border. Use second reference as environmental art direction. Preserve user's character identity, signature clothes, colors and accessories from first reference. One cohesive scene, not a sprite sheet.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    }
+  ]
+}

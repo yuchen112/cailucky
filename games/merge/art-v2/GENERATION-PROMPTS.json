@@ -1,0 +1,77 @@
+{
+  "game": "merge",
+  "assets": [
+    {
+      "file": "scene.webp",
+      "prompt": "Premium candy-glass arcade toy: translucent gummy jewel colors, hot coral pink, icy cyan and lemon, glossy glass refraction, clean white studio highlights. No wood, fabric, leaves frame, parchment or clay. Portrait 2:3 background of a fantastical transparent capsule candy machine showroom, coral pink chrome sides, cyan glass tubes with candy orbs, terrazzo floor, large quiet pale blue center, energetic playful light. Production game background asset. Full bleed, opaque.",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "panel.webp",
+      "prompt": "Premium candy-glass arcade toy: translucent gummy jewel colors, hot coral pink, icy cyan and lemon, glossy glass refraction, clean white studio highlights. No wood, fabric, leaves frame, parchment or clay. Portrait 2:3 functional game container panel, front orthographic view, transparent frosted cyan glass cavity on an opaque very pale ice blue interior, thin coral pink chrome rim, small luminous corner rivets, huge empty central 85% interior. No text no icons. Production UI image asset, only a single object filling the image.",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "button.webp",
+      "prompt": "Premium candy-glass arcade toy: translucent gummy jewel colors, hot coral pink, icy cyan and lemon, glossy glass refraction, clean white studio highlights. No wood, fabric, leaves frame, parchment or clay. Landscape 3:1 single polished raspberry pink candy-glass pill button with crisp glossy highlight, deep raspberry central fill for white labels, small cyan end accents. Isolated transparent background. No text. Production UI image asset, only a single object filling the image.",
+      "width": 2172,
+      "height": 724,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "balls.webp",
+      "prompt": "Premium candy-glass arcade toy: translucent gummy jewel colors, hot coral pink, icy cyan and lemon, glossy glass refraction, clean white studio highlights. No wood, fabric, leaves frame, parchment or clay. Exactly 4 equal columns by 3 equal rows. Twelve circular collectible marbles, full round spheres, each fits within its own square cell with 8% padding. Preserve the 12 reference symbols in matching order: clover, heart, bell, leaf hood, photo, balloon, moon, key, thread, rain, envelope, radiant heart. Translucent candy glass, no fabric seams, no plush. True transparent background. No words. This is a sprite atlas with mathematically equal cell layout.",
+      "width": 1448,
+      "height": 1086,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "cast-a.webp",
+      "prompt": "Re-render the reference as five isolated glossy translucent candy-glass toys. Preserve the EXACT five character designs: top left sage green clover fox with cream face green eyes golden bell; top middle cream puppy in peach blanket with teal heart pouch; top right brown-haired green leaf-hood child with wooden staff; bottom left brown-haired child in SEPIA CREAM PEACH HOOD holding old photographs, brown photo satchel, NO blue moon hood or owl; bottom middle pink party balloon child. Same exact 3 columns 2 rows square-cell layout, final bottom-right cell empty. True TRANSPARENT BACKGROUND cutout sprite sheet, actual alpha channel. No floor, no room, no backdrop, no checkered pattern. 1536x1024 landscape. The five sprites are completely separate and within their own square cells. Candy glass highlights and jewel colors, not clay. Strictly preserve identities.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "cast-b.webp",
+      "prompt": "Premium candy-glass arcade toy: translucent gummy jewel colors, hot coral pink, icy cyan and lemon, glossy glass refraction, clean white studio highlights. No wood, fabric, leaves frame, parchment or clay. Re-illustrate these exact FIVE user-owned characters in that art style, preserving all identity, colors, outfits and signature accessories. Production cutout sprite sheet on TRANSPARENT BACKGROUND. Landscape 3:2 canvas, exactly THREE columns TWO rows of square cells, same arrangement as reference, last cell empty. Every character entirely inside own cell with 8% clear padding. Alpha transparency, no checkerboard, no backdrop, no floor, no border. This image must contain only the five isolated characters. Do not alter character identity. Especially preserve sage-green clover fox (not orange), cream peach-blanket puppy, navy moon child with owl. ",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "night.webp",
+      "prompt": "Change the glass candy showroom into deep electric violet night with neon magenta and cyan tubes. Preserve same candy machine composition. Empty playable background with no characters, no objects on path, no words. Preserve image aspect ratio.",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "cover.webp",
+      "prompt": "Edit this exact candy glass game cover. Remove ONLY the blue moon hood child holding photographs at bottom-left, including its owl and outfit, replacing that area naturally with continuation of candy machine room and transparent glass marbles. Preserve the cream puppy, sage clover fox, green leaf hood child, pink balloon child, central capsule machine, glass material and composition. Four characters only. No words. Landscape 1536x1024.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "game": "dino",
+  "assets": [
+    {
+      "file": "scene.webp",
+      "prompt": "Authentic crisp 16-bit pixel art, deliberate visible square pixels, limited violet navy electric teal orange palette, strong silhouette outlines, retro arcade console look. No smooth gradients, no clay, no soft painted images, no antialiased vector. Landscape 3:2 side scrolling pixel-art forest courier level, teal trees, violet distant mountains, orange lantern posts, clear horizontal dirt runway spanning full width at 75–89% image height, blue sky, no characters no obstacles no text. Match classic polished 16-bit platformer backgrounds. Production game background asset. Full bleed, opaque.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "panel.webp",
+      "prompt": "Authentic crisp 16-bit pixel art, deliberate visible square pixels, limited violet navy electric teal orange palette, strong silhouette outlines, retro arcade console look. No smooth gradients, no clay, no soft painted images, no antialiased vector. Portrait 2:3 pixel arcade control panel, dark midnight navy solid central display occupying 90%, thin stepped cyan frame with small orange pixel corners. Flat front view blank screen, crisp square pixels, no text no letters no symbols. Production UI image asset, only a single object filling the image.",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "button.webp",
+      "prompt": "Authentic crisp 16-bit pixel art, deliberate visible square pixels, limited violet navy electric teal orange palette, strong silhouette outlines, retro arcade console look. No smooth gradients, no clay, no soft painted images, no antialiased vector. Landscape 3:1 pixel arcade orange rectangular button, stepped chamfered corners, dark pixel outlines, burnt-orange shadow edge, large warm orange center for dark navy text. Transparent background. No text. Production UI image asset, only a single object filling the image.",
+      "width": 2172,
+      "height": 724,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "kit.webp",
+      "prompt": "Authentic crisp 16-bit pixel art, deliberate visible square pixels, limited violet navy electric teal orange palette, strong silhouette outlines, retro arcade console look. No smooth gradients, no clay, no soft painted images, no antialiased vector. Exactly 3 equal columns by 2 equal rows. Six crisp pixel art sprites: ground root obstacle; wooden cargo crate; horizontal hanging branch hazard; collectible envelope; crescent hourglass powerup; peach heart shield. Each fits square cell with 8% padding, no overlapping cells, transparent background. Pixel platformer production sprites. No words. This is a sprite atlas with mathematically equal cell layout.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "runner.webp",
+      "prompt": "Authentic crisp 16-bit pixel art, deliberate visible square pixels, limited violet navy electric teal orange palette, strong silhouette outlines, retro arcade console look. No smooth gradients, no clay, no soft painted images, no antialiased vector. Exactly FOUR equal columns by THREE equal rows; twelve square cells. Match exact three reference characters in exact same order: row1 sage clover fox with bell (never orange fox), row2 cream peach blanket puppy, row3 navy cat hood child and owl. Each row shows four poses facing RIGHT: run stride A, opposite run stride B, jumping, LOW crouch/slide. Pixel game sprite sheet, crisp distinct square pixels, same scale, aligned soles near bottom 90% of each cell, each character safely inside own cell. TRUE transparent background. Preserve the user characters identity and signature elements. No words. This is a sprite atlas with mathematically equal cell layout.",
+      "width": 1448,
+      "height": 1086,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "cast-a.webp",
+      "prompt": "Authentic crisp 16-bit pixel art, deliberate visible square pixels, limited violet navy electric teal orange palette, strong silhouette outlines, retro arcade console look. No smooth gradients, no clay, no soft painted images, no antialiased vector. Re-illustrate these exact FIVE user-owned characters in that art style, preserving all identity, colors, outfits and signature accessories. Production cutout sprite sheet on TRANSPARENT BACKGROUND. Landscape 3:2 canvas, exactly THREE columns TWO rows of square cells, same arrangement as reference, last cell empty. Every character entirely inside own cell with 8% clear padding. Alpha transparency, no checkerboard, no backdrop, no floor, no border. This image must contain only the five isolated characters. Do not alter character identity. Especially preserve sage-green clover fox (not orange), cream peach-blanket puppy, navy moon child with owl. ",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "cast-b.webp",
+      "prompt": "Authentic crisp 16-bit pixel art, deliberate visible square pixels, limited violet navy electric teal orange palette, strong silhouette outlines, retro arcade console look. No smooth gradients, no clay, no soft painted images, no antialiased vector. Re-illustrate these exact FIVE user-owned characters in that art style, preserving all identity, colors, outfits and signature accessories. Production cutout sprite sheet on TRANSPARENT BACKGROUND. Landscape 3:2 canvas, exactly THREE columns TWO rows of square cells, same arrangement as reference, last cell empty. Every character entirely inside own cell with 8% clear padding. Alpha transparency, no checkerboard, no backdrop, no floor, no border. This image must contain only the five isolated characters. Do not alter character identity. Especially preserve sage-green clover fox (not orange), cream peach-blanket puppy, navy moon child with owl. ",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "rain.webp",
+      "prompt": "Change pixel forest into rainy teal urban garden station, purple sky, neon orange tiny lamps. Keep exact horizontal runway height and crisp 16-bit pixels. Empty playable background with no characters, no objects on path, no words. Preserve image aspect ratio.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "moon.webp",
+      "prompt": "Change pixel forest into violet midnight forest, crescent moon and teal star lights. Keep exact horizontal runway height and crisp 16-bit pixels. Empty playable background with no characters, no objects on path, no words. Preserve image aspect ratio.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "cover.webp",
+      "prompt": "Crisp 16-bit pixel arcade game cover with large deliberate square pixels and navy violet teal orange palette. The exact sage clover fox with cream face green eyes and gold bell from reference is jumping over a wooden package on a dark neon woodland delivery route. Pixel star envelope collectibles, dynamic horizontal motion, retro cartridge game feeling. No smooth painterly edges. Landscape 3:2 full-bleed cover artwork, no text, no logos, no border. Use second reference as environmental art direction. Preserve user's character identity, signature clothes, colors and accessories from first reference. One cohesive scene, not a sprite sheet.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    }
+  ]
+}

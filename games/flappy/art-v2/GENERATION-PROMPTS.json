@@ -1,0 +1,86 @@
+{
+  "game": "flappy",
+  "assets": [
+    {
+      "file": "scene.webp",
+      "prompt": "Flat hand-painted watercolor illustration on visible cold pressed paper, loose blue ink outlines, airy cerulean peach lilac palette, delicate pigment bleed. No 3D, clay, plush, glossy toy, ornate leaf frames. Portrait 2:3 open endless watercolor sky, sunlit peach clouds near edges, distant blue paper-kite islands and swallows, calm large open center for flying, luminous paper texture. No text no characters. Production game background asset. Full bleed, opaque.",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "panel.webp",
+      "prompt": "Flat hand-painted watercolor illustration on visible cold pressed paper, loose blue ink outlines, airy cerulean peach lilac palette, delicate pigment bleed. No 3D, clay, plush, glossy toy, ornate leaf frames. Portrait 2:3 blank airmail stationery, watercolor paper ivory white with thin blue ink border, subtle red-blue airmail corner strokes, one faint cloud wash at very bottom, center 90% empty and clean for text. Full rectangular panel. No writing no stamps no characters. Production UI image asset, only a single object filling the image.",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "button.webp",
+      "prompt": "Flat hand-painted watercolor illustration on visible cold pressed paper, loose blue ink outlines, airy cerulean peach lilac palette, delicate pigment bleed. No 3D, clay, plush, glossy toy, ornate leaf frames. Landscape 3:1 watercolor painted deep indigo blue paper ribbon with brush edges, large clean dark blue center for white labels, tiny peach folded corners. Transparent background. No text. Production UI image asset, only a single object filling the image.",
+      "width": 2172,
+      "height": 724,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "kit.webp",
+      "prompt": "Flat hand-painted watercolor illustration on visible cold pressed paper, loose blue ink outlines, airy cerulean peach lilac palette, delicate pigment bleed. No 3D, clay, plush, glossy toy, ornate leaf frames. Exactly 3 equal columns by 2 equal rows. Six isolated sprites in this order: paper envelope sailboat; leaf paper glider; lilac cloud cushion; tall rectangular airmail post pillar with flat ends (entire column silhouette has consistent width); star-sealed letter; flowing small star trail. True transparent background. Preserve reference subjects but render purely flat watercolor blue ink. Each fits cell, 10% padding. No words. This is a sprite atlas with mathematically equal cell layout.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "cast-a.webp",
+      "prompt": "Flat hand-painted watercolor illustration on visible cold pressed paper, loose blue ink outlines, airy cerulean peach lilac palette, delicate pigment bleed. No 3D, clay, plush, glossy toy, ornate leaf frames. Re-illustrate these exact FIVE user-owned characters in that art style, preserving all identity, colors, outfits and signature accessories. Production cutout sprite sheet on TRANSPARENT BACKGROUND. Landscape 3:2 canvas, exactly THREE columns TWO rows of square cells, same arrangement as reference, last cell empty. Every character entirely inside own cell with 8% clear padding. Alpha transparency, no checkerboard, no backdrop, no floor, no border. This image must contain only the five isolated characters. Do not alter character identity. Especially preserve sage-green clover fox (not orange), cream peach-blanket puppy, navy moon child with owl. Strongly 2D blue ink lines, flat watercolor pigment wash, no dimensional 3D shading.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "cast-b.webp",
+      "prompt": "Flat hand-painted watercolor illustration on visible cold pressed paper, loose blue ink outlines, airy cerulean peach lilac palette, delicate pigment bleed. No 3D, clay, plush, glossy toy, ornate leaf frames. Re-illustrate these exact FIVE user-owned characters in that art style, preserving all identity, colors, outfits and signature accessories. Production cutout sprite sheet on TRANSPARENT BACKGROUND. Landscape 3:2 canvas, exactly THREE columns TWO rows of square cells, same arrangement as reference, last cell empty. Every character entirely inside own cell with 8% clear padding. Alpha transparency, no checkerboard, no backdrop, no floor, no border. This image must contain only the five isolated characters. Do not alter character identity. Especially preserve sage-green clover fox (not orange), cream peach-blanket puppy, navy moon child with owl. Strongly 2D blue ink lines, flat watercolor pigment wash, no dimensional 3D shading.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "forest.webp",
+      "prompt": "Change the watercolor sky into a breezy pale mint forest valley viewed from above, distant tree islands only around edges, airy blank center. Preserve flat loose watercolor on paper. Empty playable background with no characters, no objects on path, no words. Preserve image aspect ratio.",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "moon.webp",
+      "prompt": "Change into a midnight indigo watercolor sky with pale moon and faint pink clouds around edges. Visible pigment washes, no 3D. Empty playable background with no characters, no objects on path, no words. Preserve image aspect ratio.",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    },
+    {
+      "file": "cover.webp",
+      "prompt": "Airy flat watercolor illustrated game cover on textured cold-pressed paper. The exact sage clover fox with cream face, green eyes and bell from reference is piloting a paper envelope glider through open cerulean sky with tiny floating islands and airmail ribbons. Loose blue ink outlines, peach clouds, visible wash, flat 2D. Landscape 3:2 full-bleed cover artwork, no text, no logos, no border. Use second reference as environmental art direction. Preserve user's character identity, signature clothes, colors and accessories from first reference. One cohesive scene, not a sprite sheet.",
+      "width": 1536,
+      "height": 1024,
+      "alpha": false,
+      "generator": "OpenAI built-in image generation",
+      "generated": "2026-09-13"
+    }
+  ]
+}
