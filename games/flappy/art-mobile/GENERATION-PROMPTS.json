@@ -1,0 +1,17 @@
+{
+  "generator": "OpenAI built-in image generation",
+  "assets": [
+    {
+      "file": "lobby.webp",
+      "prompt": "Flat watercolor airmail adventure on cold pressed paper. Airy cerulean, peach clouds, blue ink contour, flying islands and paper envelope motifs. Create a mobile game MAIN MENU ENVIRONMENT, portrait 9:16. Use reference only for style and motifs. No characters, no faces, no animals. This is a stage for adding the user's chosen character as a separate sprite. Strong single focal pedestal at horizontal center, vertical 53%, occupying about 35% width; large calm empty air above, open foreground below. Decorative game props concentrated along outer edges. Top 20% left calm for title logo; bottom 28% calm for large play button and four icons. A single floating paper-envelope airship platform at center with a tiny empty seat, in peach-blue cloud sky; foreground islands at corners. No text, no UI widgets, no logos, no buttons, no borders, no character baked into background. Full bleed portrait 9:16."
+    },
+    {
+      "file": "logo.webp",
+      "prompt": "Production mobile game title LOGO, transparent alpha background. Exact Traditional Chinese text: 「星願飛行郵差」. Nothing else written. Flat watercolor, blue ink outline, paper envelope wings, peach sky. Bold playful custom illustrated title lettering, excellent legibility at 300px wide, compact two-line stacked composition like a premium mobile casual game logo. Thick clean contrasting outline integrated into the artwork, a few small relevant clover/heart/envelope/compass motifs depending on theme. No characters or animals. Centered complete logo occupying canvas with 7% padding, landscape 2:1, actual transparency, no checkerboard, no square plaque, no mockup, no room. Preserve exact Chinese characters."
+    },
+    {
+      "file": "icons.webp",
+      "prompt": "Hand-painted flat watercolor on paper, blue ink contour, peach and cerulean, white paper wings. Production game interface ICON ATLAS. Exactly THREE columns TWO rows, six isolated icons each fully inside its square cell with 12% transparent padding. Order left to right top row: a friendly paw print with clover for character selection; shiny trophy cup with star for records; a keepsake book with heart for collection. Bottom row: an adventure folded map with route flags; a rounded mechanical gear for settings; a bold triangular play arrow inside a jewel badge. Big recognizable mobile game silhouettes, matching game theme. No text, no letters, no captions, no frames outside each icon. True transparent alpha background, no backdrop or checkerboard. Landscape 3:2 canvas, square cells equally sized."
+    }
+  ]
+}

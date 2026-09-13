@@ -1,0 +1,107 @@
+/* Images provide all decorative artwork; these rules arrange touch targets. */
+body{--mobile-icons:url('../merge/art-mobile/icons.webp')}
+body[data-game=flappy]{--mobile-icons:url('../flappy/art-mobile/icons.webp')}
+body[data-game=dino]{--mobile-icons:url('../dino/art-mobile/icons.webp')}
+body[data-game=mines]{--mobile-icons:url('../mines/art-mobile/icons.webp')}
+.menu-icon{display:inline-block;width:52px;height:52px;flex:none;background-image:var(--mobile-icons);background-size:300% 200%;background-position:var(--icon-x) var(--icon-y);background-repeat:no-repeat;pointer-events:none}
+body.lobby-open{overflow:hidden;background-image:none}
+body.lobby-open main{position:relative;max-width:520px;width:100%;height:100svh;min-height:0;margin:auto;padding:0}
+body.lobby-open .topbar{position:absolute;z-index:10;top:max(8px,env(safe-area-inset-top));left:12px;margin:0;padding:0!important;height:44px}
+body.lobby-open .topbar a{display:grid;place-items:center;width:80px;height:44px;min-height:44px;padding:0;font-size:14px;background-size:contain;background-repeat:no-repeat}
+body.lobby-open .topbar small{display:none}
+body.lobby-open .mobile-sound{position:absolute;top:max(8px,env(safe-area-inset-top));right:max(12px,calc((100vw - 500px)/2));bottom:auto;padding:0;width:48px;height:48px;min-height:48px;background:none}
+.mobile-sound .menu-icon{width:44px;height:44px}
+#home.mobile-home{position:relative;display:block;width:100%;height:100svh;max-width:none;min-height:0;margin:0;padding:0;overflow:hidden;background-position:center;background-size:cover}
+body[data-game=merge] #home.mobile-home{background-image:url('../merge/art-mobile/lobby.webp')}
+body[data-game=flappy] #home.mobile-home{background-image:url('../flappy/art-mobile/lobby.webp')}
+body[data-game=dino] #home.mobile-home{background-image:url('../dino/art-mobile/lobby.webp')}
+body[data-game=mines] #home.mobile-home{background-image:url('../mines/art-mobile/lobby.webp')}
+.lobby-logo{position:absolute;top:7%;left:6%;width:88%;height:20%;margin:0}
+.lobby-logo img{display:block;width:100%;height:100%;object-fit:contain}
+.cast-stage{position:absolute;top:28%;left:5%;width:90%;height:28%;display:flex;align-items:center;justify-content:center;gap:10px}
+.cast-stage button{background:none;padding:0;border:0;box-shadow:none}
+.cast-hero{height:100%;width:65%;min-height:0;touch-action:pan-y}
+.cast-hero .role-art{display:block;width:auto;height:100%;max-height:260px;max-width:100%;margin:auto}
+.cast-arrow{width:50px;height:60px;min-height:60px;flex:none}
+.cast-arrow .menu-icon{width:48px;height:48px}
+.cast-arrow.previous .menu-icon{transform:rotate(180deg)}
+.cast-caption{position:absolute;top:56%;left:7%;width:86%;text-align:center;line-height:1.45;pointer-events:none}
+.cast-caption strong{font-size:18px;display:block;color:var(--accent)}
+.cast-caption small{font-size:11px;display:block;color:var(--ink)}
+.mode-ticket{position:absolute;top:62%;left:12%;width:76%;height:10%;max-height:82px;padding:10px 28px;display:flex;gap:6px;align-items:center;justify-content:center;background-size:100% 100%;font-size:15px;text-align:left}
+.mode-ticket .menu-icon{width:44px;height:44px}
+.mode-ticket b,.mode-ticket small{display:block}.mode-ticket small{font-size:10px;font-weight:400;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#home .lobby-start{position:absolute;bottom:14%;left:8%;width:84%;height:11%;max-height:90px;margin:0;padding:10px 20px;font-size:27px;letter-spacing:2px;font-weight:900;background-size:100% 100%}
+.lobby-dock{position:absolute;bottom:max(1.5%,env(safe-area-inset-bottom));left:3%;width:94%;height:10%;display:grid;grid-template-columns:repeat(4,1fr);align-items:center}
+.lobby-dock .dock-button{display:flex;flex-direction:column;align-items:center;justify-content:center;background:none;padding:0;min-height:64px;gap:0;color:var(--ink);font-weight:800;font-size:12px}
+.dock-button .menu-icon{width:min(55px,7svh);height:min(55px,7svh)}
+.menu-sheet{width:min(480px,calc(100% - 16px));max-height:88dvh;margin:auto;padding:26px 24px!important;overscroll-behavior:contain;text-align:left;overflow:auto}
+.sheet-header{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.menu-sheet[open]{display:flex;flex-direction:column;overflow:hidden}
+.sheet-header{flex:none}
+.sheet-content{min-height:0;overflow:auto;overscroll-behavior:contain;max-height:calc(88dvh - 112px);padding:2px}
+.sheet-header h2{margin:0;font:800 23px/1.3 'Microsoft JhengHei',sans-serif}
+.sheet-close{min-width:74px;min-height:48px;padding:8px 18px;font-size:14px;background-size:100% 100%}
+.sheet-content .roles{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px;max-width:none}
+.sheet-content .role-choice{padding:4px 2px;min-height:100px;color:var(--ink)}
+.sheet-content .role-choice .role-art{width:100%;max-width:130px;display:block;margin:auto}
+.sheet-content .role-choice span:last-child{font-size:12px;white-space:normal}
+.sheet-content .role-choice[aria-pressed=true]{background:none;outline:0;color:var(--accent)}
+.sheet-content .role-choice[aria-pressed=true]::after{content:'';position:absolute;bottom:22px;right:0;width:25px;height:25px;background:var(--mobile-icons) 100% 100%/300% 200% no-repeat}
+.character-detail,.sheet-tip{font-size:13px;line-height:1.6;text-align:center;margin:16px 0 4px}
+.choice-section{margin:10px 0 22px}.choice-section h3,.route-section h3{font-size:17px;margin:10px 0;font-weight:800}
+.choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.choice-card{background-image:url('assets/panel.webp');background-size:100% 100%;display:flex;align-items:center;justify-content:center;flex-direction:column;min-height:132px;padding:12px 7px;color:var(--ink);gap:4px}
+body[data-game=merge] .choice-card{background-image:url('../merge/art-v2/panel.webp')}
+body[data-game=flappy] .choice-card{background-image:url('../flappy/art-v2/panel.webp')}
+body[data-game=dino] .choice-card{background-image:url('../dino/art-v2/panel.webp')}
+body[data-game=mines] .choice-card{background-image:url('../mines/art-v2/panel.webp')}
+.choice-card strong{font-size:13px;line-height:1.3}.choice-card small{font-size:10px}.choice-card[aria-pressed=true]{color:var(--accent)}
+.choice-card .menu-icon{width:54px;height:54px}.choice-card:disabled{cursor:not-allowed;opacity:.45}
+.choice-scene{width:100%;height:66px;object-fit:cover}.vehicle-art{width:66px;height:66px;background:url('../flappy/art-v2/kit.webp') var(--x) 0/300% 200% no-repeat}
+.stage-number{display:grid;place-items:center;width:56px;height:56px;font-size:28px;font-weight:900;background:var(--mobile-icons) 100% 100%/300% 200% no-repeat;color:var(--ink)}
+.toggle-choice{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:70px;padding:12px 26px;font-size:16px}.toggle-choice .menu-icon{width:35px;height:35px}.toggle-choice b{margin-left:auto}
+.sound-shortcut{display:flex;align-items:center;justify-content:center;width:100%;gap:8px;min-height:64px}.sound-shortcut .menu-icon{width:38px;height:38px}
+.custom-map{display:grid;gap:8px}.custom-map label{font-size:14px}.number-stepper{display:flex;align-items:center;gap:8px}.number-stepper input{width:72px;text-align:center}.number-stepper button{width:54px;height:48px;padding:0;font-size:24px}
+.menu-sheet #routes{display:grid;gap:10px}.menu-sheet .route-card{min-height:90px;gap:8px;padding:15px 25px;font-size:14px}.menu-sheet .route-card::before{content:'';width:80px;height:60px;flex:none;background:center/cover no-repeat}
+.menu-sheet [data-route='0']::before{background-image:url('../dino/art-v2/scene.webp')}.menu-sheet [data-route='1']::before{background-image:url('../dino/art-v2/rain.webp')}.menu-sheet [data-route='2']::before{background-image:url('../dino/art-v2/moon.webp')}
+body[data-game=dino] .menu-icon,body[data-game=dino] .lobby-logo img{image-rendering:pixelated}
+body[data-game=dino] .cast-caption strong,body[data-game=dino] .lobby-dock button{color:#ffe2a0}
+body[data-game=dino] .cast-caption small{color:#d5f8ff}
+body[data-game=flappy] .lobby-logo{top:8%;height:19%}body[data-game=flappy] .cast-stage{top:29%;height:27%}
+body[data-game=mines] .cast-caption{background-image:url('../mines/art-v2/panel.webp');background-size:100% 100%;padding:5px;top:55%}
+@media(orientation:portrait){body[data-game=merge] .cast-stage{top:25%;height:23%}body[data-game=flappy] .cast-stage{top:26%;height:21%}body[data-game=mines] .cast-stage{top:26%;height:25%}}
+body[data-game=merge] .cast-caption strong{color:#442a4a}body[data-game=merge] .cast-caption small{color:#302447}
+.map-stops{position:absolute;top:61%;left:17%;width:66%;height:9%;display:flex;justify-content:space-between;gap:10px}.map-stops button{padding:0;background:none;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;color:#483320;font-size:12px}.map-stops .menu-icon{width:40px;height:40px}.map-stops button[aria-pressed=true]{color:#8d241f;font-weight:900;text-decoration:underline;text-underline-offset:3px}.map-stops button:disabled{cursor:not-allowed}
+@media(orientation:portrait){body[data-game=mines] .mode-ticket{top:70%;height:7%;font-size:13px;padding:6px 20px}body[data-game=mines] .mode-ticket .menu-icon{width:32px;height:32px}body[data-game=mines] #home .lobby-start{bottom:12%;height:10%}body[data-game=flappy] .mode-ticket{left:8%;width:84%;top:60%;height:11%}}
+@media(max-height:620px) and (orientation:portrait){.lobby-logo{top:9%;height:18%}.cast-caption strong{font-size:16px}.cast-caption small{font-size:10px}.mode-ticket{top:64%;height:9%;padding:6px 20px}.mode-ticket .menu-icon{width:30px;height:30px}.mode-ticket b{font-size:13px}.mode-ticket small{font-size:9px}#home .lobby-start{font-size:23px;bottom:13%;height:10%}.lobby-dock{height:10%;bottom:1%}.lobby-dock .dock-button{min-height:52px;font-size:11px}}
+@media(orientation:landscape){body.lobby-open main{max-width:1000px}#home.mobile-home{max-height:760px}.lobby-logo{left:3%;top:12%;width:45%;height:26%}.cast-stage{left:4%;top:39%;width:42%;height:41%}.cast-caption{left:4%;top:82%;width:42%}.mode-ticket{left:53%;top:18%;width:39%;height:19%;max-height:85px}#home .lobby-start{left:50%;bottom:auto;top:40%;width:46%;height:22%;max-height:90px}.lobby-dock{left:50%;width:46%;bottom:5%;height:25%}.dock-button .menu-icon{width:50px;height:50px}.menu-sheet{max-height:94dvh}body.lobby-open .mobile-sound{right:max(12px,calc((100vw - 980px)/2))}body[data-game=flappy] .lobby-logo{top:12%;height:26%}body[data-game=flappy] .cast-stage{top:39%;height:41%}body[data-game=mines] .cast-caption{top:82%}}
+@media(orientation:landscape){.map-stops{top:10%;left:54%;width:37%;height:17%}.map-stops .menu-icon{width:32px;height:32px}body[data-game=mines] .mode-ticket{top:28%;height:14%}body[data-game=mines] #home .lobby-start{top:46%;height:18%}}
+/* Keep play fields and thumb controls visible inside the phone's safe area. */
+body:not(.lobby-open) .topbar{padding-right:64px}
+body:not(.lobby-open) .mobile-sound{top:max(7px,env(safe-area-inset-top));right:10px;bottom:auto;width:48px;height:44px;padding:0;background:none}
+body:not(.lobby-open) .mobile-sound .menu-icon{width:40px;height:40px}
+dialog .dialog-actions button{min-height:52px;font-size:16px}dialog h2{font-family:'Microsoft JhengHei',sans-serif}
+@media(max-width:700px) and (orientation:portrait){
+ body:not(.lobby-open) main{padding:8px 10px max(10px,env(safe-area-inset-bottom));min-height:100dvh}
+ body:not(.lobby-open) .topbar{height:40px;margin-bottom:5px}.topbar a{min-height:40px}
+ body[data-game=merge] .workmate{display:none}
+ body[data-game=merge] .hud{min-height:50px;padding:5px 15px;margin-bottom:3px}
+ body[data-game=merge] .workbench canvas{min-height:0;max-height:calc(100dvh - 225px)}
+ body[data-game=merge] .status-line{min-height:30px;padding:5px 12px;margin:3px 0}
+ body[data-game=merge] .mobile-drop{margin-top:3px}.mobile-drop button{min-height:52px;font-size:15px!important}
+ body[data-game=merge] #drop{flex:1;padding:7px 15px}body[data-game=merge] #help{padding:7px 16px}body[data-game=merge] #undo,body[data-game=merge] #ability{width:90px;max-width:90px;min-height:52px;font-size:11px!important;padding:6px 13px;line-height:1.3}
+ body[data-game=flappy] .flight-hud{padding:5px 16px;min-height:52px}.flight-hud button{min-height:44px}
+ body[data-game=flappy] #play canvas{width:auto;max-width:100%;height:auto;max-height:calc(100dvh - 175px);margin:auto;aspect-ratio:400/620}
+ body[data-game=flappy] #status{min-height:32px;padding:6px 15px;margin-top:3px}
+ body[data-game=mines] .field-notes{min-height:54px;padding:4px 14px;gap:5px;margin-bottom:4px}
+ body[data-game=mines] .field-notes #map-home{display:none}body[data-game=mines] #board{padding:4px}
+ body[data-game=mines] .field-notes #hint-text{display:none}body[data-game=mines] .field-notes #mode-label{display:block;flex:1;margin:0;font-size:11px}body[data-game=mines] .field-notes.show-hint #hint-text{display:block;flex-basis:100%;order:3;margin:4px 0 8px;font-size:13px}
+ body[data-game=mines] .field-notes #play-role .role-art{width:38px}.field-notes #hint-text{font-size:10px}.field-notes button{min-height:44px;padding:8px 14px;font-size:11px}
+ body[data-game=mines] .hud{min-height:50px;padding:6px 15px;margin:3px 0}.hud strong{font-size:22px}
+ body[data-game=mines] .tools{padding:4px 12px;margin:3px 0;min-height:50px;gap:4px}.tools button{min-height:44px;padding:7px 12px;font-size:12px}
+ body[data-game=mines] #map-scroll{padding:5px;margin:3px 0}body[data-game=mines] #status{min-height:30px;padding:6px 12px;font-size:11px}
+}
+@media(orientation:landscape) and (max-height:600px){body[data-game=dino] #play .controls{align-items:end}body[data-game=dino] #jump,body[data-game=dino] #slide{width:70px;height:60px;min-height:60px;padding:0;background:none;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;color:#fff1be}#jump .menu-icon,#slide .menu-icon{width:43px;height:43px}#jump .menu-icon{transform:rotate(-90deg)}#slide .menu-icon{transform:rotate(90deg)}#jump span:last-child,#slide span:last-child{font-size:12px}body[data-game=dino] #play .controls #skill{min-height:48px}body[data-game=dino] #play .controls .status-line{margin-bottom:5px}body[data-game=dino] #play .hud{font-size:11px}}
+
+.mobile-sound .menu-icon,.sound-shortcut .menu-icon{background-image:url(mobile-audio.webp);background-size:200% 200%;background-position:0 0}body[data-game=flappy] .mobile-sound .menu-icon,body[data-game=flappy] .sound-shortcut .menu-icon{background-position:100% 0}body[data-game=dino] .mobile-sound .menu-icon,body[data-game=dino] .sound-shortcut .menu-icon{background-position:0 100%}body[data-game=mines] .mobile-sound .menu-icon,body[data-game=mines] .sound-shortcut .menu-icon{background-position:100% 100%}
