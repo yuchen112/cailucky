@@ -1294,7 +1294,11 @@ function moveToTile(next) {
     addLog(`${p.id + 1}P 通過起點 +$5,000`);
   }
   focus();
-  setTimeout(() => { p.moveAnim = null; advanceMovement(); }, dur);
+  setTimeout(() => {
+    p.moveAnim = null;
+    p.landAnimAt = performance.now();
+    advanceMovement();
+  }, dur);
 }
 function chooseBranch(next) {
   const b = S.board, move = b.pendingMove, choices = branchAt(cp().pos);

@@ -181,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260913-0400";
+const ASSET_REV = "20260913-0410";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -894,6 +894,13 @@ function drawPickAnim() {
   if (frame?.complete)
     containFacing(frame, x - 72, y - 105, 144, 164, q.to.x >= q.from.x);
   else contain(IM["c" + q.char], x - 66, y - 92, 132, 154, 1);
+  for (let i = 0; i < 6; i++) {
+    const trail = Math.max(0, e - i * 0.045),
+      tx = q.from.x + (q.to.x - q.from.x) * trail,
+      ty = q.from.y + (q.to.y - q.from.y) * trail + Math.sin(t * 13 + i) * 10;
+    X.save(); X.globalAlpha = (1 - i / 6) * (1 - t * 0.55); X.fillStyle = i % 2 ? "#74e9ff" : "#ffe478";
+    X.beginPath(); X.arc(tx, ty, 5 - i * 0.55, 0, Math.PI * 2); X.fill(); X.restore();
+  }
 }
 function seatPanel(i, x, y) {
   const s = S.seats[i],
@@ -1002,15 +1009,26 @@ function setup() {
     SETUP.stageH,
     0.99,
   );
-  if (!(S.pickAnim && S.pickAnim.char === ci))
-    contain(
-      IM["c" + ci],
-      SETUP.stageX + 105,
-      SETUP.stageY + 72,
-      SETUP.stageW - 210,
-      SETUP.stageH - 120,
-      0.99,
-    );
+  if (!(S.pickAnim && S.pickAnim.char === ci)) {
+    const now = performance.now(),
+      breathe = 1 + Math.sin(now / 620) * 0.018,
+      floatY = Math.sin(now / 760) * 7,
+      sway = Math.sin(now / 1050) * 0.012;
+    X.save();
+    X.translate(SETUP.stageX + SETUP.stageW / 2, SETUP.stageY + SETUP.stageH / 2 + floatY);
+    X.rotate(sway);
+    X.scale(2 - breathe, breathe);
+    contain(IM["c" + ci], -(SETUP.stageW - 210) / 2, -(SETUP.stageH - 120) / 2, SETUP.stageW - 210, SETUP.stageH - 120, 0.99);
+    X.restore();
+    for (let i = 0; i < 7; i++) {
+      const a = now / 950 + i * 0.897,
+        r = 145 + (i % 3) * 17,
+        px = SETUP.stageX + SETUP.stageW / 2 + Math.cos(a) * r,
+        py = SETUP.stageY + SETUP.stageH / 2 + Math.sin(a * 1.18) * (r * 0.72);
+      X.save(); X.globalAlpha = 0.28 + 0.3 * (0.5 + 0.5 * Math.sin(a * 2.4)); X.fillStyle = i % 2 ? "#7ee9ff" : "#ffe990";
+      X.beginPath(); X.arc(px, py, 2.5 + (i % 3), 0, Math.PI * 2); X.fill(); X.restore();
+    }
+  }
   btn("prevChar", "◀", 132, 306, 108, 96, false, 1, !S.pickAnim);
   btn("nextChar", "▶", 672, 306, 108, 96, false, 1, !S.pickAnim);
   txt(
@@ -1583,6 +1601,8 @@ function drawPlayers() {
       walkingBob = p.moveAnim
         ? -Math.abs(Math.sin(stepPhase * Math.PI)) * 10
         : Math.sin(now / 520 + p.id * 1.7) * 3,
+      landingAge = p.landAnimAt ? now - p.landAnimAt : 9999,
+      landing = landingAge < 440 ? Math.sin((landingAge / 440) * Math.PI) * Math.exp(-landingAge / 520) : 0,
       idleBreath = p.moveAnim ? 1 : 1 + Math.sin(now / 620 + p.id) * 0.018,
       lean = p.moveAnim ? Math.sin(stepPhase * Math.PI) * 0.035 : Math.sin(now / 900 + p.id) * 0.008;
     X.save();
@@ -1597,7 +1617,7 @@ function drawPlayers() {
     X.shadowBlur = 18;
     X.translate(x, y);
     X.rotate(lean);
-    X.scale(1 - (idleBreath - 1) * 0.45, idleBreath);
+    X.scale(1 + landing * 0.14 - (idleBreath - 1) * 0.45, idleBreath - landing * 0.1);
     if (p.moveAnim && contact?.complete && passing?.complete) {
       const q = p.moveAnim,
         frame = Math.floor((now - q.start) / 105) % 2 ? passing : contact;
