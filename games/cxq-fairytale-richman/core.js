@@ -181,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260913-0620";
+const ASSET_REV = "20260913-0630";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -772,6 +772,7 @@ function home() {
     true,
   );
   X.restore();
+  btn("gallery", "遊戲圖鑑", 650, infoY + 16, 300, 72, true);
   if (HOME.leaving) {
     const p = clamp01((now - HOME.leaveAt) / ANIMATION_MIN_MS);
     X.save();
@@ -2349,6 +2350,76 @@ function help() {
     fitTxt(l, 800, 200 + i * 72, 1280, 22, "center", "#fff", 850, true, 15),
   );
   btn("home", "回到首頁", 630, 690, 340, 86, true);
+}
+const GALLERY = { tab: "characters" };
+const GALLERY_TABS = [
+  ["characters", "角色"],
+  ["equipment", "道具裝備"],
+  ["gods", "神明"],
+  ["board", "棋盤百科"],
+];
+const GALLERY_GODS = [
+  ["財神", "獲得 $8,000", "npcWealth"],
+  ["福神", "祝福金並免費升級土地", "npcFortune"],
+  ["窮神", "損失現金並提高租金負擔", "npcPoverty"],
+  ["衰神", "損失 $3,000", "npcMisfortune"],
+  ["土地公", "停留土地時可強制占有", "npcLand"],
+  ["天使", "替停留建築加蓋一層", "npcAngel"],
+  ["惡魔", "拆除停留建築一層", "npcDemon"],
+  ["死神", "封鎖收入並跟隨 13 回合", "npcDeath"],
+];
+function galleryCard(x, y, w, h, image, name, detail, imageH = 142) {
+  X.save();
+  X.fillStyle = "rgba(5,25,66,.9)";
+  X.strokeStyle = "#e9bd54";
+  X.lineWidth = 3;
+  X.beginPath();
+  X.roundRect(x, y, w, h, 24);
+  X.fill();
+  X.stroke();
+  X.restore();
+  contain(image, x + 18, y + 10, w - 36, imageH, 1);
+  fitTxt(name, x + w / 2, y + imageH + 40, w - 28, 24, "center", "#ffe786", 1000, true, 17);
+  paragraph(detail, x + w / 2, y + imageH + 72, w - 34, 15, 21, 2, "center", "#fff", 800, true);
+}
+function gallery() {
+  cover(IM.setupBg, 0, 0, W, H, 0.8);
+  X.save(); X.fillStyle = "rgba(2,8,24,.42)"; X.fillRect(0, 0, W, H); X.restore();
+  txt("遊戲圖鑑", 800, 55, 42, "center", "#ffe58a", 1000, true);
+  txt("所有內容直接開放查看｜認識角色、裝備、神明與棋盤", 800, 92, 17, "center", "#fff", 850, true);
+  GALLERY_TABS.forEach(([id, label], i) => btn("galleryTab" + id, label, 285 + i * 260, 120, 230, 60, GALLERY.tab === id));
+  if (GALLERY.tab === "characters") {
+    CHAR_KEYS.forEach((key, i) => {
+      const col = i % 5, row = Math.floor(i / 5);
+      galleryCard(55 + col * 305, 205 + row * 275, 270, 250, IM["portrait" + i], CHAR_NAMES[i], `${CHAR_TITLES[i]}｜${CHAR_ROLES[i]}\n${CHAR_CONCEPTS[i]}`, 140);
+    });
+  } else if (GALLERY.tab === "equipment") {
+    EQUIPMENT_DEFS.forEach((item, i) => {
+      const col = i % 4, row = Math.floor(i / 4);
+      galleryCard(75 + col * 380, 210 + row * 280, 350, 252, IM["equip_" + item.id], item.name, item.desc, 142);
+    });
+  } else if (GALLERY.tab === "gods") {
+    GALLERY_GODS.forEach((item, i) => {
+      const col = i % 4, row = Math.floor(i / 4);
+      galleryCard(75 + col * 380, 210 + row * 280, 350, 252, IM[item[2]], item[0], item[1], 148);
+    });
+  } else {
+    const entries = [
+      ["星願花園", "平穩均衡，適合初次冒險", IM.mapPreview0],
+      ["月光港灣", "租金較高，事件更活躍", IM.mapPreview1],
+      ["雲端市集", "土地昂貴，事件頻繁", IM.mapPreview2],
+      ["土地格", "購地、升級並收取租金", IM.tile_land],
+      ["事件格", "觸發改變現金與地產的命運事件", IM.tile_event],
+      ["角色地標", "Lv5 建成地主角色的專屬建築", IM.landmark_growth],
+      ["立體骰子", "點數與角色逐格移動完全同步", IM.diceThrow6],
+      ["起點", "完成一圈後取得起點獎勵", IM.tile_start],
+    ];
+    entries.forEach((item, i) => {
+      const col = i % 4, row = Math.floor(i / 4);
+      galleryCard(75 + col * 380, 210 + row * 280, 350, 252, item[2], item[0], item[1], 148);
+    });
+  }
+  btn("home", "回到首頁", 650, 792, 300, 70, true);
 }
 function result() {
   const b = S.board,

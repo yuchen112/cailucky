@@ -3,7 +3,7 @@ const vm = require("vm");
 const path = require("path");
 
 const root = path.resolve(__dirname, "..");
-const revision = "20260913-0620";
+const revision = "20260913-0630";
 const read = (name) => fs.readFileSync(path.join(root, name), "utf8");
 const fail = (message) => { throw new Error(message); };
 
@@ -81,7 +81,13 @@ for (const source of loaded) {
 }
 
 run(`(()=>{
-  home(); setup(); loadout(); mapSelect(); rulesSetup();
+  home(); setup(); loadout(); mapSelect(); rulesSetup(); gallery();
+  if(GALLERY_TABS.length!==4)throw new Error('gallery must contain four categories');
+  if(GALLERY_GODS.length!==8)throw new Error('god gallery must contain all eight gods');
+  S.scene='home';HOME.locked=false;action('gallery');
+  if(S.scene!=='gallery'||GALLERY.tab!=='characters')throw new Error('gallery homepage entry failed');
+  action('galleryTabequipment');
+  if(GALLERY.tab!=='equipment')throw new Error('gallery tab navigation failed');
   if(EQUIPMENT_DEFS.length!==8)throw new Error('equipment catalog must contain eight items');
   if(new Set(EQUIPMENT_DEFS.map(x=>x.id)).size!==8)throw new Error('equipment ids must be unique');
   for(const item of EQUIPMENT_DEFS)if(!IM['equip_'+item.id]?.complete)throw new Error('equipment art missing: '+item.id);

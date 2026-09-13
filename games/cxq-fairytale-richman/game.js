@@ -1891,6 +1891,11 @@ function cycleVal(v, arr) {
 }
 function action(id) {
   if (!id) return;
+  if (S.scene === "home" && !HOME.locked && id === "gallery") {
+    S.scene = "gallery";
+    GALLERY.tab = "characters";
+    return;
+  }
   if (
     S.scene === "home" &&
     !HOME.locked &&
@@ -1921,6 +1926,10 @@ function action(id) {
   if (id === "back") {
     S.scene = "home";
     resetHome();
+    return;
+  }
+  if (S.scene === "gallery" && id.startsWith("galleryTab")) {
+    GALLERY.tab = id.slice(10);
     return;
   }
   if (S.scene === "loadSelect" && /^homeLoadSlot[0-4]$/.test(id)) {
@@ -2685,6 +2694,7 @@ function frame() {
     else if (S.scene === "result" && S.board) result();
     else if (S.scene === "help") help();
     else if (S.scene === "settings") settings();
+    else if (S.scene === "gallery") gallery();
     else if (S.scene === "loadSelect") loadSelect();
     endUiLayer();
   }
