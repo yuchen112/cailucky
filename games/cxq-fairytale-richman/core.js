@@ -181,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260913-0015";
+const ASSET_REV = "20260913-0400";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -197,33 +197,36 @@ function load(k, u, priority = "auto") {
   return i;
 }
 load("homeBg", A + "backgrounds/home_scene_v7.webp", "high");
-load("homeMenuNew", A + "ui/home_menu_new_v1.webp", "high");
-load("homeMenuContinue", A + "ui/home_menu_continue_v1.webp", "high");
-load("homeMenuHelp", A + "ui/home_menu_help_v1.webp", "high");
-load("homeMenuSettings", A + "ui/home_menu_settings_v1.webp", "high");
-load("btnBlue", A + "ui/btn_blue.webp", "high");
-load("btnRed", A + "ui/btn_red.webp", "high");
+load("homeMenuNew", A + "ui/home_menu_new_v4.png", "high");
+load("homeMenuContinue", A + "ui/home_menu_continue_v4.png", "high");
+load("homeMenuHelp", A + "ui/home_menu_help_v4.png", "high");
+load("homeMenuSettings", A + "ui/home_menu_settings_v4.png", "high");
+load("btnBlue", A + "ui/btn_blue_v5.png", "high");
+load("btnRed", A + "ui/btn_red_v5.png", "high");
 load("setupBg", A + "backgrounds/setup_scene_v4.webp", "high");
-load("playerSeat", A + "ui/player_seat_v3.png");
-load("roleInfo", A + "ui/role_info_v3.png");
-load("characterStage", A + "ui/character_stage_v1.webp");
-load("abilityPanel", A + "ui/ability_panel_v1.webp");
-load("actionConsole", A + "ui/action_console_v1.webp");
-load("mapCardFrame", A + "ui/map_card_frame_v1.webp");
+load("playerSeat", A + "ui/player_plate_v5.png");
+load("roleInfo", A + "ui/tooltip_plate_v5.png");
+load("characterStage", A + "ui/modal_frame_v6.png");
+load("abilityPanel", A + "ui/modal_frame_v6.png");
+load("actionConsole", A + "ui/info_panel_v5.png");
+load("settingsFrame", A + "ui/settings_frame_v5.png");
+load("diceFrame", A + "ui/dice_frame_v5.png");
+load("mapCardFrame", A + "ui/info_panel_v5.png");
 for (let i = 0; i < 4; i++)
-  load("playerSeatP" + i, A + `ui/player_seat_wide_p${i + 1}_v1.webp`);
-load("statusHuman", A + "ui/status_human_v1.webp");
-load("statusAi", A + "ui/status_ai_v1.webp");
-load("statusOff", A + "ui/status_off_v1.webp");
+  load("playerSeatP" + i, A + "ui/player_plate_v5.png");
+load("statusHuman", A + "ui/btn_red_v5.png");
+load("statusAi", A + "ui/btn_blue_v5.png");
+load("statusOff", A + "ui/tooltip_plate_v5.png");
 MAPS.forEach((m, i) =>
   load("mapWorld" + i, A + "maps/map_world_" + m.key + "_v2.webp"),
 );
 MAPS.forEach((m, i) =>
   load("mapPreview" + i, A + "maps/map_world_" + m.key + "_v2.webp"),
 );
-load("tile_land", A + "tiles/land_parcel_v1.webp");
-load("tile_event", A + "tiles/event_token_v3.png");
-load("tile_start", A + "tiles/start_token_v3.png");
+load("tile_land", A + "tiles/land_v4.png");
+load("tile_event", A + "tiles/event_v4.png");
+load("tile_start", A + "tiles/start_v4.png");
+load("diceAction", A + "dice/dice_action_v4.png");
 // Known-corrupt start/event rasters are intentionally not loaded. They are visually quarantined.
 for (let i = 1; i <= 6; i++) load("dice" + i, A + "dice/dice_" + i + ".webp");
 for (let i = 1; i <= 6; i++)
@@ -254,41 +257,38 @@ load("event_systemRentPayment", A + "events/system_rent_payment_v1.webp");
 load("event_systemBuildUpgrade", A + "events/system_build_upgrade_v1.webp");
 load("facilityMagic", A + "facilities/magic_token_v2.webp");
 load("roadNode", A + "tiles/road_node_v3.webp");
-load("npcWealth", A + "npc/wealth_v1.webp");
-load("npcFortune", A + "npc/fortune_v1.webp");
-load("npcPoverty", A + "npc/poverty_v1.webp");
-load("npcMisfortune", A + "npc/misfortune_v1.webp");
-load("npcLand", A + "npc/land_v1.webp");
-load("npcAngel", A + "npc/angel_v1.webp");
-load("npcDemon", A + "npc/demon_v1.webp");
-load("npcDeath", A + "npc/death_v1.webp");
-load("playerFlags", A + "ui/player_flags_atlas_v1.png");
+load("npcWealth", A + "npc/wealth_v4.png");
+load("npcFortune", A + "npc/fortune_v4.png");
+load("npcPoverty", A + "npc/poverty_v4.png");
+load("npcMisfortune", A + "npc/misfortune_v4.png");
+load("npcLand", A + "npc/land_v4.png");
+load("npcAngel", A + "npc/angel_v4.png");
+load("npcDemon", A + "npc/demon_v4.png");
+load("npcDeath", A + "npc/death_v4.png");
+for (let i = 0; i < 4; i++) load("playerFlag" + i, A + `ui/flag_p${i + 1}_v4.png`);
 CHAR_KEYS.forEach((k, i) => {
-  load("c" + i, "../../assets/characters/cxq-role-" + k + ".webp");
-  load("portrait" + i, A + "characters/portraits/" + k + "_portrait_v1.webp");
+  load("c" + i, A + "characters/" + k + "/idle_v7.png");
+  load("portrait" + i, A + "characters/" + k + "/idle_v7.png");
+  load(k + "Dice", A + "characters/" + k + "/dice_v7.png");
+  load(k + "Surprise", A + "characters/" + k + "/surprise_v7.png");
+  load(k + "Victory", A + "characters/" + k + "/victory_v7.png");
 });
 CHAR_KEYS.forEach((k) => {
-  load(
-    k + "WalkRightContact",
-    A + "characters/" + k + "/walk_right_contact_v1.webp",
-  );
-  load(
-    k + "WalkRightPassing",
-    A + "characters/" + k + "/walk_right_passing_v1.webp",
-  );
+  load(k + "WalkRightContact", A + "characters/" + k + "/walk_right_contact_v7.png");
+  load(k + "WalkRightPassing", A + "characters/" + k + "/walk_right_passing_v7.png");
 });
 MAPS.forEach((m, mi) => {
   for (let level = 1; level <= 5; level++)
-    load(`building${mi}_${level}`, A + `buildings/${m.key}_l${level}_v1.webp`);
+    load(`building${mi}_${level}`, A + `buildings/shared_l${Math.min(4, level)}_v4.png`);
 });
 CHAR_KEYS.forEach((key) =>
-  load(`landmark_${key}`, A + `buildings/landmark_${key}_v1.webp`),
+  load(`landmark_${key}`, A + `buildings/landmark_${key}_v4.png`),
 );
-load("resultVictory", A + "results/victory_ceremony_v1.png");
-load("resultDefeat", A + "results/defeat_ceremony_v1.png");
+load("resultVictory", A + "results/victory_v4.webp");
+load("resultDefeat", A + "results/defeat_v4.webp");
 [
   "deed", "toolkit", "charm", "guardian", "bell", "boots", "compass", "manual",
-].forEach((key) => load("equip_" + key, A + "equipment/" + key + "_v1.png"));
+].forEach((key) => load("equip_" + key, A + "equipment/" + key + "_v4.png"));
 
 const VIEW = { scale: 1, ox: 0, oy: 0, visibleX: 0, visibleY: 0, visibleW: W, visibleH: H, uiScale: 1, uiOx: 0, uiOy: 0 };
 let UI_FIT_ACTIVE = false;
@@ -443,6 +443,36 @@ function contain(im, x, y, w, h, alpha = 1) {
   X.restore();
   return true;
 }
+function nineSlice(im, x, y, w, h, left = 96, top = 96, right = 96, bottom = 96, alpha = 1) {
+  if (!im?.complete || !im.naturalWidth || !im.naturalHeight) {
+    panelPlate(x, y, w, h, alpha);
+    return false;
+  }
+  const sw = im.naturalWidth,
+    sh = im.naturalHeight,
+    sx = [0, left, sw - right, sw],
+    sy = [0, top, sh - bottom, sh],
+    cornerScale = Math.min(1, w / (left + right), h / (top + bottom)),
+    dl = left * cornerScale,
+    dr = right * cornerScale,
+    dt = top * cornerScale,
+    db = bottom * cornerScale,
+    dx = [x, x + dl, x + w - dr, x + w],
+    dy = [y, y + dt, y + h - db, y + h];
+  X.save();
+  X.globalAlpha = alpha;
+  X.imageSmoothingEnabled = true;
+  X.imageSmoothingQuality = "high";
+  for (let row = 0; row < 3; row++)
+    for (let col = 0; col < 3; col++)
+      X.drawImage(
+        im,
+        sx[col], sy[row], sx[col + 1] - sx[col], sy[row + 1] - sy[row],
+        dx[col], dy[row], dx[col + 1] - dx[col], dy[row + 1] - dy[row],
+      );
+  X.restore();
+  return true;
+}
 function portrait(im, x, y, w, h, alpha = 1) {
   X.save();
   X.beginPath();
@@ -514,7 +544,7 @@ function btn(id, label, x, y, w, h, red = false, alpha = 1, en = true) {
     X.shadowColor = red ? "rgba(255,150,185,.9)" : "rgba(115,220,255,.9)";
     X.shadowBlur = 18;
   }
-  contain(red ? IM.btnRed : IM.btnBlue, bx, by, bw, bh, alpha * (en ? 1 : 0.38));
+  stretch(red ? IM.btnRed : IM.btnBlue, bx, by, bw, bh, alpha * (en ? 1 : 0.38));
   X.restore();
   fitTxt(
     label,
@@ -563,7 +593,7 @@ function diceIconButton(id, x, y, size, en = true) {
   g.addColorStop(0, "#376fae"); g.addColorStop(1, "#071a43");
   X.fillStyle = g; X.strokeStyle = "#f3cf70"; X.lineWidth = 6;
   X.beginPath(); X.arc(cx, cy, size / 2 - 4 + d / 2, 0, Math.PI * 2); X.fill(); X.stroke();
-  contain(IM["diceThrow" + (S.dice || 1)], x + 18 - d / 2, y + 15 - d / 2, size - 36 + d, size - 36 + d, 1);
+  contain(IM.diceAction || IM["diceThrow" + (S.dice || 1)], x + 18 - d / 2, y + 15 - d / 2, size - 36 + d, size - 36 + d, 1);
   X.restore();
   S.buttons.push({ id, x, y, w: size, h: size, en });
 }
@@ -774,9 +804,9 @@ function loadSelect() {
   X.fillStyle = "rgba(3,8,24,.42)";
   X.fillRect(0, 0, W, H);
   X.restore();
-  contain(IM.abilityPanel, 415, 64, 770, 772, 0.99);
-  txt("讀取冒險紀錄", 800, 132, 42, "center", "#fff0a5", 1000, true);
-  txt("選擇即時紀錄，或四個自選儲存槽之一", 800, 182, 19, "center", "#ffffff", 850, true);
+  stretch(IM.abilityPanel, 400, 82, 800, 736, 0.99);
+  txt("讀取冒險紀錄", 800, 176, 38, "center", "#fff0a5", 1000, true);
+  txt("選擇即時紀錄，或四個自選儲存槽之一", 800, 220, 18, "center", "#ffffff", 850, true);
   const slots = [0, 1, 2, 3, 4];
   slots.forEach((slot, i) => {
     const key = slot === 0 ? SAVE : SAVE_SLOT_PREFIX + slot,
@@ -785,17 +815,17 @@ function loadSelect() {
     btn(
       `homeLoadSlot${slot}`,
       label,
-      535,
-      228 + i * 92,
-      530,
-      72,
+      505,
+      254 + i * 76,
+      590,
+      60,
       i === 0,
       exists ? 1 : 0.42,
       exists,
     );
   });
-  btn("back", "返回首頁", 625, 710, 350, 72, false);
-  txt("空白紀錄會保持不可選取，避免誤按", 800, 800, 16, "center", "#dfeaff", 800, true);
+  btn("back", "返回首頁", 625, 654, 350, 66, false);
+  txt("空白紀錄無法選取，避免誤按", 800, 754, 16, "center", "#dfeaff", 800, true);
 }
 
 const SETUP = {
@@ -964,6 +994,14 @@ function setup() {
   );
   const ci = SETUP_VIEW.char,
     owner = assigned(ci);
+  contain(
+    IM.characterStage,
+    SETUP.stageX,
+    SETUP.stageY,
+    SETUP.stageW,
+    SETUP.stageH,
+    0.99,
+  );
   if (!(S.pickAnim && S.pickAnim.char === ci))
     contain(
       IM["c" + ci],
@@ -973,14 +1011,6 @@ function setup() {
       SETUP.stageH - 120,
       0.99,
     );
-  contain(
-    IM.characterStage,
-    SETUP.stageX,
-    SETUP.stageY,
-    SETUP.stageW,
-    SETUP.stageH,
-    0.99,
-  );
   btn("prevChar", "◀", 132, 306, 108, 96, false, 1, !S.pickAnim);
   btn("nextChar", "▶", 672, 306, 108, 96, false, 1, !S.pickAnim);
   txt(
@@ -1006,7 +1036,7 @@ function setup() {
     1,
     !S.pickAnim && S.seats[S.activeSeat].type !== "off" && (owner === undefined || owner === S.activeSeat),
   );
-  contain(IM.abilityPanel, 850, 104, 420, 420, 0.99);
+  stretch(IM.abilityPanel, 850, 104, 420, 420, 0.99);
   fitTxt(
     CHAR_NAMES[ci],
     1060,
@@ -1264,7 +1294,7 @@ function rulesSetup() {
     true,
   );
   btn("rulesBack", "返回地圖", 22, 20, 190, 62, false);
-  contain(IM.abilityPanel, 180, 145, 560, 560, 0.98);
+  stretch(IM.abilityPanel, 180, 145, 560, 560, 0.98);
   txt("基本規則", 460, 205, 30, "center", "#fff2bd", 1000, true);
   btn(
     "ruleMoney",
@@ -1287,7 +1317,7 @@ function rulesSetup() {
   );
   fitTxt("每位角色最多攜帶兩件常駐裝備", 460, 525, 400, 18, "center", "#d9efff", 900, true, 14);
   fitTxt("點擊上方欄位即可循環切換設定", 460, 566, 400, 15, "center", "#fff1b8", 850, true, 12);
-  contain(IM.abilityPanel, 860, 145, 560, 560, 0.98);
+  stretch(IM.abilityPanel, 860, 145, 560, 560, 0.98);
   txt("事件規則", 1140, 205, 30, "center", "#fff2bd", 1000, true);
   btn(
     "ruleEvents",
@@ -1376,21 +1406,18 @@ function npcMarker(n, t) {
 function buildingImage(t) {
   if (t.owner < 0 || t.level < 1) return null;
   const owner = S.board.players.find((p) => p.id === t.owner);
-  return IM[`landmark_${CHAR_KEYS[owner?.char || 0]}`];
+  if (t.level >= 5) return IM[`landmark_${CHAR_KEYS[owner?.char || 0]}`];
+  return IM[`building${S.board.mapIndex || 0}_${Math.min(4, t.level)}`];
 }
 function drawOwnerFlag(ownerId, x, y, w = 92, h = 112) {
-  const atlas = IM.playerFlags;
-  if (!atlas?.complete || !atlas.naturalWidth) return false;
-  const sw = atlas.naturalWidth / 2,
-    sh = atlas.naturalHeight / 2,
-    sx = (ownerId % 2) * sw,
-    sy = Math.floor(ownerId / 2) * sh;
+  const flag = IM["playerFlag" + ownerId];
+  if (!flag?.complete || !flag.naturalWidth) return false;
   X.save();
   X.imageSmoothingEnabled = true;
   X.imageSmoothingQuality = "high";
   X.shadowColor = "rgba(0,0,0,.55)";
   X.shadowBlur = 10;
-  X.drawImage(atlas, sx, sy, sw, sh, x, y, w, h);
+  X.drawImage(flag, x, y, w, h);
   X.restore();
   return true;
 }
@@ -1701,6 +1728,11 @@ function diceThrowOverlay() {
   X.fillStyle = `rgba(3,7,22,${shade})`;
   X.fillRect(0, 0, W, H);
   X.restore();
+  const acting = cp();
+  if (acting) {
+    const poseAlpha = Math.min(1, u * 3) * (u < 0.82 ? 1 : Math.max(0, (1 - u) / 0.18));
+    contain(IM[CHAR_KEYS[acting.char] + "Dice"], 90, 300, 360, 430, poseAlpha);
+  }
   results.forEach((value, index) => {
     const offset = (index - (results.length - 1) / 2) * 245,
       travel = Math.min(1, u / 0.72),
@@ -1911,7 +1943,8 @@ function turnBannerHud() {
 }
 function scenePopup(q, b, p) {
   if (q.kind === "event") {
-    contain(IM.abilityPanel, 380, 45, 840, 820, 0.99);
+    stretch(IM.abilityPanel, 380, 45, 840, 820, 0.99);
+    contain(IM[CHAR_KEYS[p.char] + "Surprise"], 80, 390, 300, 380, 1);
     X.save();
     X.beginPath();
     X.roundRect(490, 176, 620, 286, 22);
@@ -1930,7 +1963,7 @@ function scenePopup(q, b, p) {
     return true;
   }
   if (q.kind === "npc") {
-    contain(IM.abilityPanel, 725, 92, 610, 720, 0.99);
+    stretch(IM.abilityPanel, 725, 92, 610, 720, 0.99);
     contain(npcImage(q.name), 220, 160, 500, 560, 1);
     fitTxt(
       `遇見 ${q.name}`,
@@ -1963,7 +1996,7 @@ function scenePopup(q, b, p) {
   if (q.kind === "mini") {
     const kind = b.mini?.kind || 0,
       img = [IM.miniStar, IM.miniBalloon, IM.miniTreasure][kind];
-    contain(IM.abilityPanel, 345, 70, 910, 790, 0.99);
+    stretch(IM.abilityPanel, 345, 70, 910, 790, 0.99);
     X.save();
     X.beginPath();
     X.roundRect(455, 150, 690, 388, 22);
@@ -2060,7 +2093,7 @@ function scenePopup(q, b, p) {
   if (q.kind === "miniResult") {
     const kind = q.kindIndex || 0,
       img = [IM.miniStar, IM.miniBalloon, IM.miniTreasure][kind];
-    contain(IM.abilityPanel, 400, 95, 800, 700, 0.99);
+    stretch(IM.abilityPanel, 400, 95, 800, 700, 0.99);
     contain(img, 545, 155, 510, 285, 1);
     txt("小遊戲結算", 800, 500, 38, "center", "#fff0a5", 1000, true);
     fitTxt(q.grade, 800, 555, 620, 24, "center", "#ffe477", 1000, true, 15);
@@ -2071,7 +2104,7 @@ function scenePopup(q, b, p) {
   if (q.kind === "tileInspect") {
     const t = q.tile,
       owner = t.owner >= 0 ? b.players.find((x) => x.id === t.owner) : null;
-    contain(IM.abilityPanel, 440, 105, 720, 690, 0.99);
+    stretch(IM.abilityPanel, 440, 105, 720, 690, 0.99);
     fitTxt(
       `第 ${t.index + 1} 格｜${t.type === "land" ? REGION_NAMES[t.region] : typeName(t.type)}`,
       800,
@@ -2132,7 +2165,7 @@ function popup() {
   X.translate(-W / 2, -H / 2);
   X.globalAlpha *= ease;
   if (scenePopup(q, b, p)) return;
-  contain(IM.abilityPanel, 440, 115, 720, 670, 0.99);
+  stretch(IM.abilityPanel, 440, 115, 720, 670, 0.99);
   let title = "冒險訊息",
     body = "",
     actions = [];
@@ -2344,7 +2377,7 @@ function result() {
         : netWorth(z) - netWorth(a),
     );
   if (ranked.length <= 2 && ranked[0]) {
-    contain(IM["c" + ranked[0].char], 650, 390, 300, 310, intro);
+    contain(IM[CHAR_KEYS[ranked[0].char] + "Victory"], 625, 350, 350, 370, intro);
     fitTxt(
       `冠軍｜${ranked[0].id + 1}P ${CHAR_NAMES[ranked[0].char]}`,
       800,
