@@ -1,20 +1,29 @@
-CxQ Fairy-tale Richman — latest mainline
-Updated 2026-08-18 19:00 +08:00
-- Consolidated runtime remains core.js + game.js only; obsolete repair/skin overlay files stay removed.
-- Help/Settings crash path remains fixed with working image-backed screens.
-- viewport.js remains a technical browser-adaptation layer only; it does not draw visible game UI.
-- Canvas tracks Visual Viewport, Safari/Chrome dynamic bars, safe areas, installed-PWA mode and non-16:9 landscape sizes without stretching the 1600x900 design space.
-- Screenshot-driven repair: replaced the failed home/setup background references with new v3 asset paths and forced a new asset/cache revision.
-- Old home_scene_v2/setup_scene_v2 files were deleted from the latest mainline.
-- Screenshot-driven repair: the visibly corrupt start/event tile rasters were quarantined and deleted; runtime now uses verified existing independent tiles as temporary visual substitutes instead of ever rendering magenta/black corruption.
-- Service worker cache moved to the 17:40 asset revision and no longer precaches the removed corrupt tiles.
-- Board route is 36 functional tiles. Events: 24. Cards: 12. All 10 characters have initial distinct gameplay role/passive behavior.
-- Three roaming NPC/god markers move between rounds; Beggar availability is bankruptcy-gated; Angel/Demon/Death timed attachments are active.
-- Settings state includes master/BGM/SFX/vibration/graphics/language controls.
-- Current map_scene_r1 is still the temporary low-resolution map background and remains the highest-priority art replacement; the blurry gameplay background shown in the screenshots is NOT considered fixed.
-- Lv1-Lv3 building art remains disabled until verified replacement assets are installed.
-- Dice art still requires a true six-face replacement set.
-- Board characters still require dedicated figurine/walk-cycle art; current movement logic still needs the final walking animation pass.
-- Only the latest mainline runtime is retained.
+CxQ Fairy-tale Richman — testing branch 20260913-0620
 
-- Selection cards now render character art below the dedicated frame layer; P1-P4 seats are larger and raised for mobile/ultrawide readability.
+Release status
+- This build belongs only to preview/cxq-fairytale-richman-testing.
+- The main branch remains unchanged until the user approves this testing build.
+- Runtime remains one integrated path: index.html -> core.js + viewport.js + game.js.
+
+Streamlined game design
+- The in-match card book, tool box, shop, minigames, coupons, bank, hospital and police systems are removed from the playable route.
+- Character setup now leads to a dedicated two-slot persistent-equipment phase. Equipment is selected before the map and remains automatic for the whole match.
+- Eight independently generated equipment assets cover property, construction, fortune, defense, income and movement effects.
+- Random events now affect cash, land, buildings, movement or protection only. AI outcomes always pause for the player to acknowledge.
+- Roaming gods move on the road, attach only when a player finishes movement on the same node, replace an existing companion cleanly, and never spawn the Death God normally.
+
+Property and presentation
+- Every land node has a road coordinate for pawns and a separate authored roadside plot coordinate for buildings.
+- Ownership is shown by player-color rings, portrait plaques and P-number, while pawns remain on the road node.
+- Buildings progress through five levels. Lv5 uses the landowner character's dedicated landmark artwork.
+- The HUD shows cash, net worth, land, building count, equipment and god status without card/tool/bank clutter.
+- Player details use Overview, Property, Equipment and Status tabs with all content contained inside the artwork frame.
+- Dice use six physical face assets, a minimum thirty-frame throw/settle sequence and an explicit rolled-total-to-final-step message.
+- Character movement uses two walking poses and at least thirty frames per tile.
+
+Compatibility and verification
+- The 1600x900 safe playfield stays proportional; extra-wide landscape space is filled with the current scene backdrop.
+- Dynamic mobile browser bars, safe-area insets, Safari/PWA caching and mouse/touch coordinate mapping share the same viewport adapter.
+- Saves migrate to the equipment model while removing obsolete inventories and facilities.
+- Automated checks cover asset/PWA parity, equipment rules, event art, gods, dice adjustments, land/building economics, saves, layout bounds and full-match simulations on all three maps.
+- Browser QA covers home, character selection, equipment, map, rules, live board, purchase, AI acknowledgement, player data, mobile landscape and ultrawide landscape.
