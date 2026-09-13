@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20260913-0520';
+const CACHE='cxq-richman-20260913-0610';
 const PRECACHE=[
   './','./index.html','./core.js','./viewport.js','./game.js','./manifest.webmanifest',
   '../../assets/brand/cxq-app-icon-192.png','../../assets/brand/cxq-app-icon-512.png',
@@ -33,10 +33,11 @@ const PRECACHE=[
   './assets/events/land_maintenance_v2.webp','./assets/events/fairy_blessing_v2.webp',
   './assets/events/system_land_purchase_v1.webp','./assets/events/system_rent_payment_v1.webp','./assets/events/system_build_upgrade_v1.webp',
   './assets/facilities/magic_token_v2.webp',
-  './assets/npc/wealth_v4.png','./assets/npc/fortune_v4.png','./assets/npc/poverty_v4.png','./assets/npc/misfortune_v4.png','./assets/npc/land_v4.png','./assets/npc/angel_v4.png','./assets/npc/demon_v4.png','./assets/npc/death_v4.png',
-  './assets/dice/dice_throw_1_v2.webp','./assets/dice/dice_throw_2_v2.webp','./assets/dice/dice_throw_3_v2.webp','./assets/dice/dice_throw_4_v2.webp','./assets/dice/dice_throw_5_v2.webp','./assets/dice/dice_throw_6_v2.webp',
+  './assets/npc/wealth_v6.png','./assets/npc/fortune_v6.png','./assets/npc/poverty_v6.png','./assets/npc/misfortune_v6.png','./assets/npc/land_v6.png','./assets/npc/angel_v6.png','./assets/npc/demon_v6.png','./assets/npc/death_v6.png',
+  './assets/dice/dice_throw_1_v3.png','./assets/dice/dice_throw_2_v3.png','./assets/dice/dice_throw_3_v3.png','./assets/dice/dice_throw_4_v3.png','./assets/dice/dice_throw_5_v3.png','./assets/dice/dice_throw_6_v3.png',
   './assets/tiles/land_v4.png','./assets/tiles/road_node_v3.webp','./assets/tiles/event_v4.png','./assets/tiles/start_v4.png','./assets/dice/dice_action_v4.png',
   './assets/dice/dice_1.webp','./assets/dice/dice_2.webp','./assets/dice/dice_3.webp','./assets/dice/dice_4.webp','./assets/dice/dice_5.webp','./assets/dice/dice_6.webp'
+  ,'./assets/audio/once_upon_a_time_loop_cc0.mp3'
 ];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(PRECACHE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('cxq-richman-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});

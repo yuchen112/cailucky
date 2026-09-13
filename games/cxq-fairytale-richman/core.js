@@ -181,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260913-0520";
+const ASSET_REV = "20260913-0610";
 function load(k, u, priority = "auto") {
   const i = new Image();
   i.decoding = "async";
@@ -231,7 +231,7 @@ load("diceAction", A + "dice/dice_action_v4.png");
 // Known-corrupt start/event rasters are intentionally not loaded. They are visually quarantined.
 for (let i = 1; i <= 6; i++) load("dice" + i, A + "dice/dice_" + i + ".webp");
 for (let i = 1; i <= 6; i++)
-  load("diceThrow" + i, A + `dice/dice_throw_${i}_v2.webp`);
+  load("diceThrow" + i, A + `dice/dice_throw_${i}_v3.png`);
 MAPS.forEach((m, i) =>
   load("eventScene" + i, A + `events/${m.key}_event_v1.webp`),
 );
@@ -258,14 +258,14 @@ load("event_systemRentPayment", A + "events/system_rent_payment_v1.webp");
 load("event_systemBuildUpgrade", A + "events/system_build_upgrade_v1.webp");
 load("facilityMagic", A + "facilities/magic_token_v2.webp");
 load("roadNode", A + "tiles/road_node_v3.webp");
-load("npcWealth", A + "npc/wealth_v4.png");
-load("npcFortune", A + "npc/fortune_v4.png");
-load("npcPoverty", A + "npc/poverty_v4.png");
-load("npcMisfortune", A + "npc/misfortune_v4.png");
-load("npcLand", A + "npc/land_v4.png");
-load("npcAngel", A + "npc/angel_v4.png");
-load("npcDemon", A + "npc/demon_v4.png");
-load("npcDeath", A + "npc/death_v4.png");
+load("npcWealth", A + "npc/wealth_v6.png");
+load("npcFortune", A + "npc/fortune_v6.png");
+load("npcPoverty", A + "npc/poverty_v6.png");
+load("npcMisfortune", A + "npc/misfortune_v6.png");
+load("npcLand", A + "npc/land_v6.png");
+load("npcAngel", A + "npc/angel_v6.png");
+load("npcDemon", A + "npc/demon_v6.png");
+load("npcDeath", A + "npc/death_v6.png");
 for (let i = 0; i < 4; i++) load("playerFlag" + i, A + `ui/flag_p${i + 1}_v4.png`);
 CHAR_KEYS.forEach((k, i) => {
   load("c" + i, A + "characters/" + k + "/idle_v7.png");
@@ -547,10 +547,11 @@ function btn(id, label, x, y, w, h, red = false, alpha = 1, en = true) {
   }
   stretch(red ? IM.btnRed : IM.btnBlue, bx, by, bw, bh, alpha * (en ? 1 : 0.38));
   X.restore();
+  const iconOnly = label === "◀" || label === "▶";
   fitTxt(
     label,
     x + w / 2,
-    y + h * 0.49 + (pressed ? 3 : 0),
+    y + h * (iconOnly ? 0.5 : 0.55) + (pressed ? 3 : 0),
     w * 0.72,
     Math.min(29, h * 0.34),
     "center",
@@ -914,6 +915,18 @@ function seatPanel(i, x, y) {
       s.type === "human" ? "真人" : s.type === "ai" ? "電腦 AI" : "空席";
   const alpha = s.type === "off" ? 0.48 : sel ? 1 : 0.94;
   stretch(IM["playerSeatP" + i], x, y, 390, 150, alpha);
+  if (sel) {
+    X.save();
+    X.strokeStyle = PLAYER_COLORS[i];
+    X.lineWidth = 5;
+    X.shadowColor = PLAYER_COLORS[i];
+    X.shadowBlur = 24;
+    X.beginPath();
+    X.roundRect(x + 4, y + 4, 382, 142, 24);
+    X.stroke();
+    X.restore();
+    artLabel(`目前編輯 ${i + 1}P`, x + 132, y - 25, 150, 42, 15, PLAYER_COLORS[i]);
+  }
   S.buttons.push({ id: "seat" + i, x, y, w: 390, h: 150, en: !S.pickAnim });
   if (!(S.pickAnim && S.pickAnim.seat === i) && s.type !== "off")
     portrait(IM["portrait" + s.char], x + 24, y + 20, 108, 108, 0.99);
@@ -1417,13 +1430,13 @@ function npcImage(name) {
   );
 }
 function npcMarker(n, t) {
-  const bob = Math.sin(performance.now() / 330 + n.pos) * 7;
+  const bob = Math.sin(performance.now() / 330 + n.pos) * 4;
   X.save();
   X.shadowColor = "rgba(255,225,120,.9)";
-  X.shadowBlur = 22;
-  contain(npcImage(n.name), t.x - 74, t.y - 162 + bob, 148, 174, 1);
+  X.shadowBlur = 14;
+  contain(npcImage(n.name), t.x - 42, t.y - 92 + bob, 84, 99, 1);
   X.restore();
-  artLabel(n.name, t.x - 70, t.y - 185 + bob, 140, 44, 15, "#fff8ce", 0.98);
+  artLabel(n.name, t.x - 58, t.y - 124 + bob, 116, 36, 13, "#fff8ce", 0.98);
 }
 function buildingImage(t) {
   if (t.owner < 0 || t.level < 1) return null;
@@ -2494,6 +2507,7 @@ function result() {
   }
 }
 let AUDIO_CTX = null,
+  MUSIC_AUDIO = null,
   MUSIC_TIMER = 0,
   MUSIC_STEP = 0;
 function audioGesture() {
@@ -2501,7 +2515,13 @@ function audioGesture() {
     if (!AUDIO_CTX)
       AUDIO_CTX = new (window.AudioContext || window.webkitAudioContext)();
     if (AUDIO_CTX.state === "suspended") AUDIO_CTX.resume();
-    if (!MUSIC_TIMER) MUSIC_TIMER = setInterval(musicTick, 880);
+    if (!MUSIC_AUDIO) {
+      MUSIC_AUDIO = new Audio(A + "audio/once_upon_a_time_loop_cc0.mp3");
+      MUSIC_AUDIO.loop = true;
+      MUSIC_AUDIO.preload = "auto";
+    }
+    musicTick();
+    if (!MUSIC_TIMER) MUSIC_TIMER = setInterval(musicTick, 1000);
   } catch (e) {}
 }
 function audioTone(freq, dur, level, type = "sine") {
@@ -2519,16 +2539,11 @@ function audioTone(freq, dur, level, type = "sine") {
   o.stop(now + dur + 0.03);
 }
 function musicTick() {
-  if (
-    document.hidden ||
-    !S.settings ||
-    S.settings.master <= 0 ||
-    S.settings.bgm <= 0
-  )
-    return;
-  const notes = [523.25, 659.25, 783.99, 659.25, 587.33, 698.46, 880, 698.46],
-    gain = 0.018 * (S.settings.master / 100) * (S.settings.bgm / 100);
-  audioTone(notes[MUSIC_STEP++ % notes.length], 0.7, gain, "triangle");
+  if (!MUSIC_AUDIO || !S.settings) return;
+  const enabled = !document.hidden && S.settings.master > 0 && S.settings.bgm > 0;
+  MUSIC_AUDIO.volume = Math.min(1, 0.34 * (S.settings.master / 100) * (S.settings.bgm / 100));
+  if (enabled) MUSIC_AUDIO.play().catch(() => {});
+  else MUSIC_AUDIO.pause();
 }
 function sfx(kind) {
   if (!S.settings || S.settings.master <= 0 || S.settings.sfx <= 0) return;
