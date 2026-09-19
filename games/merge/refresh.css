@@ -1,0 +1,32 @@
+body,body.night{--ink:#fff1cf;--accent:#f1d085;--ground:#102e2e;--button-ink:#fff6df;--input:#17433f;--shade:#071e27ed;background:#102e2e url('../storybook/art-20260914/merge-scene.webp') center/cover fixed;color:var(--ink)}
+body[data-game=merge] #home.mobile-home{background-image:url('../storybook/art-20260914/merge-scene.webp')}
+body.lobby-open main{max-width:1100px}
+body[data-game=merge] .lobby-logo{left:10%;top:3%;width:80%;height:28%}
+body[data-game=merge] .lobby-logo img{object-fit:contain}
+body[data-game=merge] .cast-caption strong,body[data-game=merge] .cast-caption small{color:#fff0c3}
+body[data-game=merge] .cast-caption{background:#102e2ee8;padding:8px 12px;top:54%}
+.cast-caption small,.mode-ticket small,.dock-button,.choice-card small{font-size:14px}
+button,.paper,.strip,.choice-card,.role-choice[aria-pressed=true]{background-image:url('../storybook/art-20260914/game-panel.webp');color:#fff1cf}
+button,.lobby-start,.mode-ticket{background-image:url('../storybook/art-20260914/game-button.webp')}
+.role-choice{background:none}
+.paper,.strip{padding:24px}
+.hud strong{color:#f9df9a}
+.workbench{width:100%;max-width:440px}
+.workbench canvas{display:block;width:auto;height:auto;max-width:100%;max-height:calc(100dvh - 245px);margin:auto}
+.workmate p,.status-line,.mobile-drop button{font-size:16px}
+.menu-sheet,.choice-card{color:#fff1cf}
+dialog.paper{background-color:#102e2e}
+.collection{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ball-preview{background:none;width:100%;height:auto}
+body[data-game=merge] .hud{padding:14px 32px}
+@media(max-width:700px) and (orientation:portrait){
+body[data-game=merge] .workmate{display:flex;padding:12px 18px}
+body[data-game=merge] .workmate #mission-info{font-size:14px}
+body[data-game=merge] .workbench canvas{max-height:calc(100dvh - 295px)}
+body[data-game=merge] .cast-stage{top:29%;height:23%}
+body[data-game=merge] .lobby-start{bottom:13%;font-size:25px}
+}
+@media(orientation:landscape){
+body[data-game=merge] .lobby-logo{left:3%;top:5%;width:44%;height:32%}
+body[data-game=merge] .cast-caption{left:4%;top:80%;width:42%}
+}

@@ -1,0 +1,17 @@
+{
+  "method": "built-in imagegen; one complete image per asset; no sheet cutting",
+  "panels": [
+    [
+      "bubble-panel",
+      "Use case: stylized-concept. One standalone raster mobile game UI panel, not a mockup, not a sprite sheet. Wide 3:1 horizontal rounded glass plaque with a thin pearlescent turquoise rim and subtle soap-bubble iridescence. Dark teal almost uniform interior occupying 85 percent, quiet opaque surface for readable white text added in code. Tiny opal bubble ornaments at corners only. Polished whimsical magic academy aesthetic. Straight front view, perfectly symmetric, no perspective. Full object visible with 3 percent transparent margin, actual transparent alpha outside. No text, no icons, no characters, no scenery, no watermark. Make only this one panel."
+    ],
+    [
+      "dream-panel",
+      "Use case: stylized-concept. One standalone raster mobile puzzle game UI panel, not a mockup, not a sprite sheet. Wide 3:1 horizontal enchanted midnight-purple fabric plaque, thin silver lunar trim, tiny crescent moon ornament on leftmost edge and a small star on rightmost edge. Deep indigo quiet matte interior occupying 85 percent, designed for legible white text added in code. Elegant cozy moonlight storybook aesthetic, hand painted dimensional texture. Straight front view, symmetric frame. Full object visible with 3 percent transparent margin, actual transparent alpha outside. No text, no other icons, no characters, no scene, no watermark. One panel only."
+    ],
+    [
+      "defense-panel",
+      "Use case: stylized-concept. One standalone raster mobile tower defense UI panel, not a mockup, not a sprite sheet. Wide 3:1 horizontal carved warm walnut wood plaque framed by restrained dark green leaves and two small bronze corner rivets. Quiet dark forest green leather inset occupying 85 percent, designed for readable ivory text added later. Cozy handcrafted woodland fortress aesthetic, clean painted game art. Straight front view, symmetric, no perspective. Full object visible, 3 percent transparent margin and actual transparent alpha outside. No text, no characters, no scenery, no watermark. One panel only."
+    ]
+  ]
+}

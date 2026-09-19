@@ -1,0 +1,13 @@
+body{font-family:'Microsoft JhengHei',system-ui,sans-serif}
+.sprite.cast{object-fit:contain;background:none}
+.sprite.props{object-fit:contain;background:none}
+button:not(.hole),.primary{background:transparent url('../storybook/art-20260914/game-button.webp') center/100% 100% no-repeat;color:#fff7df;font-size:17px}
+.paper,dialog{background:#102b32 url('../storybook/art-20260914/game-panel.webp') center/100% 100% no-repeat;color:#fff3d1}
+h1,.subtitle,.play-heading,#feedback,.legend,.pop:not(:empty){background:transparent url('../storybook/art-20260914/game-panel.webp') center/100% 100% no-repeat;color:#fff3d1}
+h1{font-size:clamp(32px,7vw,52px);padding:24px 20px;font-family:inherit}
+.subtitle,#feedback,.legend{font-size:16px;padding:18px 24px}
+.modes button{font-size:16px;padding:14px 20px}
+.difficulty,#rule{font-size:16px;line-height:1.5}
+.hole .target .sprite{width:100%;height:100%;object-fit:contain}
+.hole{background:none}
+@media(max-width:600px){.legend{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:22px 34px}.legend>span{white-space:nowrap;font-size:15px}.play-heading{padding:16px 30px;gap:8px;font-size:15px}}

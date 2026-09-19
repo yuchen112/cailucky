@@ -1,0 +1,130 @@
+/* Independent raster assets. CSS is restricted to layout, typography and motion. */
+body[data-game=magic-bubble] .game-entry{background:#10262e url('art-20260914/bubble-scene.webp') center/cover no-repeat}
+body[data-game=dream-match] .game-entry{background:#101a32 url('art-20260914/dream-scene.webp') center/cover no-repeat}
+body[data-game=fairytale-defense] .game-entry{background:#16302b url('art-20260914/tower-ground.webp') center/cover no-repeat}
+body[data-game=dream-match] .charge{background:url('art-20260920/dream-panel.webp') center/100% 100% no-repeat;border:0;border-radius:0}
+body[data-game=dream-match] .charge i{background:transparent url('art-20260920-batch/dream-line.webp') center/100% 100% no-repeat}
+body[data-game=dino] #play canvas{aspect-ratio:auto!important;width:100%!important;height:100%!important;max-width:none!important}
+@media(orientation:portrait){body[data-game=magic-bubble] .stage{grid-template-rows:116px minmax(0,1fr) 74px}body[data-game=magic-bubble] .hero{height:116px;padding:10px 28px;grid-template-rows:32px 56px;gap:8px;background:none}body[data-game=magic-bubble] .hero .stat{font-size:19px;padding:6px 12px;background:var(--game-plaque) center/100% 100% no-repeat}body[data-game=magic-bubble] .hero #skill{height:56px;min-height:56px;padding:12px 25px;justify-self:center;width:78%;font-size:18px}body[data-game=magic-bubble] .hero .stat span{font-size:16px}}
+body[data-game=dino] #play .hud,body[data-game=dino] #play .controls{position:static;inset:auto;margin:0}
+body[data-game=dino] #play .hud{padding:8px 80px 8px 72px;grid-row:1;background-image:var(--button-art);color:#392d1a}
+body[data-game=dino] #play .hud small,body[data-game=dino] #play .hud #route-label{font-size:16px;color:#392d1a}
+body[data-game=dino] #play .hud strong{font-size:24px;color:#392d1a}
+body[data-game=dino] #play canvas{grid-row:2;margin:0;image-rendering:auto}
+body[data-game=dino] #play .controls{grid-row:3;align-items:center}
+body[data-game=dino] #play .controls .status-line{background-image:var(--button-art);color:#392d1a;font-size:16px;padding:12px 30px;margin:0}
+body[data-game=dino] .role-art,body[data-game=dino] button,body[data-game=dino] .paper,body[data-game=dino] .strip{image-rendering:auto}
+body[data-game=dino] .paper,body[data-game=dino] .strip{background-image:url('art-20260920/defense-panel.webp');color:#fff4db}
+body[data-game=flappy] .flight-hud,body[data-game=flappy] #status{background-image:var(--button-art);color:#163c59}
+body[data-game=flappy] .flight-hud small{font-size:16px}
+body[data-game=flappy] #play canvas{aspect-ratio:auto!important;width:100%!important;height:100%!important;margin:0}
+body[data-game=merge] #play:not([hidden]){grid-template-columns:minmax(0,1fr);width:100%;min-width:0}
+body[data-game=merge] .workbench{min-width:0;width:100%;grid-template-columns:minmax(0,1fr)}
+body[data-game=merge] .workmate{overflow:hidden;min-width:0;display:flex;align-items:center}
+body[data-game=merge] .workmate #mission-info{flex:1;margin:0}
+body[data-game=merge] .workbench canvas{height:100%;width:auto;max-height:100%;max-width:100%;margin:0 auto;min-height:0}
+body[data-game=mines],body[data-game=mines] #home.mobile-home{background-image:url('art-20260920-batch/mines-scene.webp')}
+body[data-game=flappy],body[data-game=flappy] #home.mobile-home{background-image:url('art-20260920-batch/flappy-scene.webp')}
+body[data-game=dino],body[data-game=dino] #home.mobile-home{background-image:url('art-20260920-batch/dino-scene.webp')}
+.mine-number{display:block;width:85%;height:85%;object-fit:contain;margin:auto;pointer-events:none}
+body[data-game=mines] .field-notes,body[data-game=mines] .hud,body[data-game=mines] .tools,body[data-game=mines] .status-line{color:#3d2b19;text-shadow:none}
+body[data-game=mines] .hud strong,body[data-game=mines] .hud small,body[data-game=mines] .field-notes p,body[data-game=mines] .tools label{color:#3d2b19;font-size:17px}
+body[data-game=mines] .hud strong{font-size:24px}
+body[data-game=mines] select{color:#302213!important;background-color:#fff8e8!important}
+body[data-game=mines].session-playing .topbar{display:none}
+body[data-game=mines].session-playing main{padding-top:64px}
+body[data-game=mines] .field-notes #hint-text{font-size:16px;line-height:1.4}
+body[data-game=mines] .tools button{font-size:17px;min-height:48px}
+body[data-game=mines] .status-line{font-size:17px}
+body[data-game=mines] #status{font-size:17px;min-height:56px;line-height:1.5;padding:12px 20px}
+body[data-game=mines] .field-notes #mode-label{font-size:17px}
+.game-surface .sheet-content .role-choice[aria-pressed=true]::after{display:none}
+body[data-game=whack] .field{min-width:0;width:100%}
+body[data-game=whack] #board{grid-template-columns:repeat(3,minmax(0,1fr));min-width:0}
+body[data-game=whack] .hole{min-width:0;max-width:100%}
+body[data-game=whack] .hud{padding:12px 64px 12px 14px;gap:5px}
+body[data-game=whack] .hud button{min-width:54px;padding:12px 8px;font-size:15px}
+body[data-game=whack] .hud #lives .sprite{width:18px;height:18px}
+body[data-game=whack] .modes{grid-template-columns:repeat(2,minmax(0,1fr))}
+body[data-game=magic-bubble]{--button-art:url('art-20260920-batch/bubble-button.webp');--ink:#163e53}
+body[data-game=dream-match]{--button-art:url('art-20260920/dream-button.webp');--ink:#fff5eb}
+body[data-game=fairytale-defense]{--button-art:url('art-20260920-batch/defense-button.webp');--ink:#fff3d6}
+body[data-game=whack]{--button-art:url('art-20260920-batch/whack-button.webp');--ink:#412713}
+body[data-game=merge]{--button-art:url('art-20260920-batch/merge-button.webp');--ink:#fff6d6}
+body[data-game=flappy]{--button-art:url('art-20260920-batch/flappy-button.webp');--ink:#163c59}
+body[data-game=dino]{--button-art:url('art-20260920-batch/dino-button.webp');--ink:#362818}
+body[data-game=mines]{--button-art:url('art-20260920-batch/mines-button.webp');--ink:#fff1d4}
+.game-surface button:not(.cell):not(.hole):not(.role-choice):not(.cast-hero):not(.cast-arrow):not(.dock-button):not(.audio-button):not(.mobile-sound):not(.tower):not(.choice-card){background-color:transparent;background-image:var(--button-art);background-size:100% 100%;background-repeat:no-repeat;background-position:center;border:0;box-shadow:none;color:var(--ink);text-shadow:none;font-weight:800;line-height:1.3}
+.game-surface button:not(.cell):not(.hole){touch-action:manipulation}
+.game-surface .game-entry article{background:none;border:0;box-shadow:none;display:flex;flex-direction:column;align-items:center;gap:12px;max-height:100%;overflow:auto;padding:20px 16px}
+.game-surface .game-entry article>img{width:min(92vw,600px);height:min(36dvh,350px);object-fit:contain;border-radius:0}
+.game-surface .game-entry article>p{max-width:520px;margin:0;padding:18px 30px;background:var(--game-plaque) center/100% 100% no-repeat;color:#fff9e9;font-size:18px;line-height:1.6}
+.game-surface .game-entry article>label{display:flex;gap:12px;align-items:center;justify-content:space-between;width:min(94%,480px);font-size:18px;color:#fff8e9;text-shadow:0 1px 3px #142432}
+.game-surface .game-entry select{font:700 17px/1.4 system-ui;min-height:46px;max-width:66%;padding:8px 14px}
+.game-surface .game-entry article>button{min-height:64px;width:min(90%,350px);font-size:24px;margin:0}
+.game-surface .lobby-logo img{border-radius:0}
+.game-surface .cast-caption{background:var(--button-art) center/100% 100% no-repeat!important;border-radius:0!important;padding:14px 32px!important;color:var(--ink)!important;min-height:64px}
+.game-surface .cast-caption strong,.game-surface .cast-caption small{color:var(--ink)!important;text-shadow:none}
+.game-surface .lobby-dock{background:var(--button-art) center/100% 100% no-repeat!important;box-shadow:none!important;padding:12px 25px}
+.game-surface .lobby-dock .dock-button{background:none!important;color:var(--ink)!important;border:0;box-shadow:none;font-size:15px!important}
+.game-surface .menu-sheet,.game-surface .paper,.game-surface .overlay>section,.game-surface dialog{max-height:90dvh;overflow:auto}
+.game-surface .sheet-content .choice-card{background:var(--button-art) center/100% 100% no-repeat;color:var(--ink);border:0;border-radius:0;box-shadow:none;padding:18px 22px;min-height:112px}
+.game-surface .choice-card small,.game-surface .choice-card strong{color:inherit!important}
+.game-surface .role-choice{background:none!important;box-shadow:none!important}
+.game-surface .role-choice[aria-pressed=true],.game-surface .choice-card[aria-pressed=true]{outline:3px solid #e6af3c;outline-offset:-3px}
+.game-surface .sheet-close{min-width:100px}
+.game-surface .sheet-header h2{font-size:24px}.game-surface .sheet-content{font-size:18px}
+.game-surface button:disabled{opacity:.48;cursor:not-allowed}
+.game-surface #sound,.game-surface #cxq-audio{min-width:52px;min-height:52px;width:52px;height:52px;background:none!important;border:0;box-shadow:none;padding:2px}
+.game-surface #sound img,.game-surface #cxq-audio img{width:100%;height:100%;object-fit:contain}
+body[data-game=dream-match] .cell{background:transparent url('art-20260920-batch/dream-cell.webp') center/contain no-repeat;padding:0;min-width:0;min-height:0;position:relative}
+body[data-game=dream-match] .cell .gem{width:84%;height:84%;object-fit:contain;display:block;margin:auto}
+.special-mark{position:absolute;left:20%;top:53%;width:60%;height:35%;object-fit:contain;pointer-events:none}.special-mark.column{transform:rotate(90deg);top:31%;left:45%;width:45%;height:30%}
+body[data-game=dream-match] #toast{background:var(--button-art) center/100% 100% no-repeat;border-radius:0;padding:22px 30px;font-size:22px;color:#fff5e4}
+.hit-hammer{position:fixed;width:92px;height:100px;object-fit:contain;z-index:15000;pointer-events:none}
+.hole.warning .burrow{animation:burrow-cue .18s ease-in-out infinite alternate}.hole.warning .target{opacity:0!important}
+@keyframes burrow-cue{to{transform:translate(-50%,-4px) rotate(3deg)}}
+body[data-game=mines] #board{touch-action:pan-x pan-y}
+body[data-game=mines] .cell{position:relative;touch-action:pan-x pan-y;font-size:clamp(20px,3vw,28px);font-weight:900}
+.hold-preview{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;z-index:3}
+body[data-game=fairytale-defense] aside{overflow:auto}
+body[data-game=fairytale-defense] .tower{min-height:70px;background:var(--button-art) center/100% 100% no-repeat;border:0;box-shadow:none;color:#fff6db;padding:12px 22px}
+body[data-game=fairytale-defense] #selected{background:none;color:#fff8dc}body[data-game=fairytale-defense] #selected button{width:100%;font-size:16px;min-height:48px;padding:12px 18px}
+body[data-game=fairytale-defense] #selected p{font-size:15px}
+body[data-game=fairytale-defense] .hud{gap:8px}body[data-game=fairytale-defense] .hud button{min-width:82px;font-size:16px;padding:12px}
+@media(orientation:landscape) and (max-height:600px){
+ .game-surface .game-entry article{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:95vw;max-width:1100px;gap:8px 22px;overflow:auto}
+ .game-surface .game-entry article>img{grid-column:1;grid-row:1/5;width:100%;height:82dvh;object-fit:contain}
+ .game-surface .game-entry article>p,.game-surface .game-entry article>label,.game-surface .game-entry article>button{grid-column:2;width:100%;font-size:16px}
+ .game-surface .game-entry article>p{padding:12px 28px}
+ .game-surface .game-entry article>button{min-height:52px}
+ body[data-game=fairytale-defense] main{height:100dvh;min-height:0;display:grid;grid-template-rows:48px 62px minmax(0,1fr);padding:0 8px 4px}
+ body[data-game=fairytale-defense] header{min-height:0;height:48px;padding-right:58px}body[data-game=fairytale-defense] header h1{font-size:23px}body[data-game=fairytale-defense] header p{font-size:14px;margin:0}
+ body[data-game=fairytale-defense] .game{height:100%;grid-template-columns:minmax(0,1fr) 210px;min-height:0}
+ body[data-game=fairytale-defense] .canvasWrap{height:100%;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) 24px}body[data-game=fairytale-defense] canvas{height:100%;width:100%;object-fit:contain;min-height:0}
+ body[data-game=fairytale-defense] aside{padding:3px}body[data-game=fairytale-defense] aside h2{font-size:18px;margin:0}body[data-game=fairytale-defense] .tower{min-height:64px;margin:3px 0}body[data-game=fairytale-defense] .tower small{font-size:13px}
+ body[data-game=dino].session-playing .topbar{display:none}body[data-game=dino].session-playing main{padding:0 8px;height:100dvh;min-height:0}
+ body[data-game=dino] #play:not([hidden]){display:grid;height:100%;width:100%;max-width:none;grid-template-rows:62px minmax(0,1fr) 62px;gap:2px}
+ body[data-game=dino] #play canvas{max-height:100%;width:auto;height:100%;max-width:100%;justify-self:center;align-self:center;min-height:0}
+ body[data-game=dino] .controls button{font-size:17px;min-height:52px;padding:12px 22px}body[data-game=dino] .controls .status-line{font-size:15px}
+}
+@media(orientation:portrait){
+ body[data-game=flappy].session-playing .topbar{display:none}body[data-game=flappy].session-playing main{padding:0 8px;height:100dvh;min-height:0}
+ body[data-game=flappy] #play:not([hidden]){display:grid;height:100%;width:100%;max-width:none;grid-template-rows:76px minmax(0,1fr) 62px;gap:2px}
+ body[data-game=flappy] #play canvas{height:100%;width:auto;max-width:100%;max-height:100%;min-height:0;object-fit:contain;justify-self:center;align-self:center}
+ body[data-game=flappy] #status{font-size:18px;margin:0;padding:15px 28px}
+ body[data-game=dream-match] .layout{grid-template-rows:110px minmax(0,1fr) 156px}body[data-game=dream-match] .mission{padding:20px 30px}.game-surface .score{font-size:16px}
+ body[data-game=dream-match] .boardWrap{padding:20px;width:min(100%,calc(100dvh - 332px))}.game-surface .powers button{font-size:16px!important}
+}
+@media(prefers-reduced-motion:reduce){.game-surface .hole.warning .burrow{animation:none}}
+.game-surface.reduced-motion *{animation:none!important;scroll-behavior:auto!important}
+.game-surface #sound,.game-surface #cxq-audio{position:fixed!important;top:max(8px,env(safe-area-inset-top))!important;right:max(8px,env(safe-area-inset-right))!important;bottom:auto!important;z-index:150}
+.game-surface main>header,.game-surface .flight-hud,.game-surface .play-heading,.game-surface .workmate{padding-right:68px!important}
+body[data-game=dream-match] .mission{margin:0;align-self:stretch;grid-template-columns:42px 1fr 1fr;grid-template-rows:30px 40px;gap:0 8px}
+body[data-game=dream-match] .mission .score{display:flex;align-items:center;gap:4px;justify-content:space-between;font-size:15px}
+body[data-game=dream-match] .mission .score b{font-size:22px}
+body[data-game=dream-match] #goals{align-self:center;grid-column:1/4;justify-content:space-evenly;font-size:17px}
+body[data-game=dream-match] .powers{height:180px;padding:8px 12px;grid-template-rows:70px 14px 56px;align-self:stretch}
+body[data-game=dream-match] .powers button{min-height:56px!important;height:100%;padding:12px 18px!important}
+body[data-game=dream-match] .powers button small{font-size:12px;line-height:1.2}
+@media(orientation:portrait){body[data-game=dream-match] .layout{grid-template-rows:110px minmax(0,1fr) 180px}body[data-game=dream-match] .boardWrap{width:min(100%,calc(100dvh - 355px))}}

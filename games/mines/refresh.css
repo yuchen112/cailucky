@@ -1,0 +1,9 @@
+.cell.detonated{position:relative;z-index:10;overflow:visible}
+.cell.detonated::after{content:'';position:absolute;pointer-events:none;width:220%;height:220%;left:-60%;top:-60%;background:url('../storybook/art-20260914/explosion.webp') center/contain no-repeat;animation:mine-explosion .85s ease-out both}
+@keyframes mine-explosion{0%{transform:scale(.1);opacity:0}25%{transform:scale(1.2);opacity:1}70%{transform:scale(1);opacity:1}100%{transform:scale(1.25);opacity:0}}
+.tile-icon{background-size:contain!important;background-position:center!important;background-repeat:no-repeat!important}
+.cell:not(.mine) .tile-icon{background-image:url('../storybook/art-20260914/mines-flag.webp')!important}
+.cell.mine .tile-icon{background-image:url('../storybook/art-20260914/whack-bomb.webp')!important}
+.cell{background-image:url('../storybook/art-20260914/mines-tile.webp');background-size:100% 100%;background-position:center}
+.cell.open{background-image:url('../storybook/art-20260914/mines-open.webp');background-position:center;font-family:'Microsoft JhengHei',sans-serif;text-shadow:0 1px #fff}
+.cell.open[data-n='1']{color:#173e75}

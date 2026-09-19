@@ -1,0 +1,40 @@
+/* Readability without changing artwork bounds or board geometry. */
+html { -webkit-text-size-adjust:100%; }
+body { line-height:1.45; }
+button, select { touch-action:manipulation; font:inherit; }
+button:not(.cell):not(.hole):not(.tile):not(.role-choice) { min-height:48px; }
+button:focus-visible,select:focus-visible { outline:3px solid #ffe29a; outline-offset:4px; }
+button:disabled { cursor:not-allowed; }
+dialog { max-height:90dvh; overflow:auto; }
+dialog p,.sheet-tip,#status { font-size:16px; line-height:1.5; }
+canvas { max-width:100%; object-fit:contain; }
+.topbar { gap:12px; }
+.role-choice span:last-child { font-size:14px; line-height:1.35; }
+.cell { min-width:0; min-height:0; padding:0; aspect-ratio:1; }
+.game-entry { position:fixed; inset:0; z-index:60; overflow:auto; display:grid; place-items:center; padding:20px; background:#101b2f; }
+.game-entry[hidden] { display:none; }
+.game-entry article { width:min(680px,100%); text-align:center; color:#fff5dc; }
+.game-entry img { display:block; width:100%; height:auto; border-radius:20px; }
+.game-entry h1 { margin:16px 0 8px; }
+.game-entry p { font-size:18px; margin:12px auto; max-width:32em; }
+.game-entry button { min-width:180px; font-size:22px; margin:8px; padding:18px 32px; }
+.game-entry select { min-height:48px; padding:8px; font-size:18px; }
+@media (orientation:landscape) and (max-height:600px) {
+  .game-entry article { width:min(1000px,100%); display:grid; grid-template-columns:minmax(0,1.15fr) minmax(260px,1fr); gap:8px 24px; align-items:center; }
+  .game-entry img { grid-column:1; grid-row:1 / 4; max-height:calc(100dvh - 40px); object-fit:contain; }
+  .game-entry p,.game-entry label,.game-entry button { grid-column:2; margin:0; }
+  .game-entry p { font-size:16px; }
+  .game-entry button { padding:12px 20px; }
+}
+.orientation-gate { position:fixed; inset:0; z-index:100; background:#101b2f; color:#fff5dc; display:grid; place-content:center; text-align:center; padding:28px; }
+.orientation-gate[hidden] { display:none; }
+.orientation-gate img { width:150px; margin:auto; }
+.orientation-gate h2 { font-size:28px; }
+.orientation-gate p { font-size:18px; }
+@media(max-width:600px) {
+  .topbar { min-height:54px; height:auto; }
+  .game-entry { padding:12px; }
+  .game-entry p { font-size:16px; }
+  dialog p,.sheet-tip,#status { font-size:16px; }
+}
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; } }

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ruby",
+    "prompt": "Use case: stylized-concept. Exactly ONE standalone bubble shooter sprite, square image. One round glossy magical bubble, dominant saturated ruby red, with a bold simple white heart centered inside. Entire bubble including rim is strongly saturated ruby red, color differentiation more important than ornament. Premium cute hand-painted mobile game art, clean readable at 32 pixels. Subtle soft upper-left highlight, thin rim, no golden filigree. Centered circle fills 88 percent of square, entire circle visible with safe margin. True transparent alpha outside, no drop shadow outside circle. No text, no other objects, no scene, no sprite sheet or collage."
+  },
+  {
+    "id": "aqua",
+    "prompt": "Use case: stylized-concept. Exactly ONE standalone bubble shooter sprite, square image. One round glossy magical bubble, dominant bright cyan blue, with a bold simple white water droplet centered inside. Entire bubble including rim is strongly bright cyan blue, color differentiation more important than ornament. Premium cute hand-painted mobile game art, clean readable at 32 pixels. Subtle soft upper-left highlight, thin rim, no golden filigree. Centered circle fills 88 percent of square, entire circle visible with safe margin. True transparent alpha outside, no drop shadow outside circle. No text, no other objects, no scene, no sprite sheet or collage."
+  },
+  {
+    "id": "gold",
+    "prompt": "Use case: stylized-concept. Exactly ONE standalone bubble shooter sprite, square image. One round glossy magical bubble, dominant sunshine yellow, with a bold simple white five-point star centered inside. Entire bubble including rim is strongly sunshine yellow, color differentiation more important than ornament. Premium cute hand-painted mobile game art, clean readable at 32 pixels. Subtle soft upper-left highlight, thin rim, no golden filigree. Centered circle fills 88 percent of square, entire circle visible with safe margin. True transparent alpha outside, no drop shadow outside circle. No text, no other objects, no scene, no sprite sheet or collage."
+  },
+  {
+    "id": "violet",
+    "prompt": "Use case: stylized-concept. Exactly ONE standalone bubble shooter sprite, square image. One round glossy magical bubble, dominant rich violet purple, with a bold simple white crescent moon centered inside. Entire bubble including rim is strongly rich violet purple, color differentiation more important than ornament. Premium cute hand-painted mobile game art, clean readable at 32 pixels. Subtle soft upper-left highlight, thin rim, no golden filigree. Centered circle fills 88 percent of square, entire circle visible with safe margin. True transparent alpha outside, no drop shadow outside circle. No text, no other objects, no scene, no sprite sheet or collage."
+  },
+  {
+    "id": "leaf",
+    "prompt": "Use case: stylized-concept. Exactly ONE standalone bubble shooter sprite, square image. One round glossy magical bubble, dominant emerald green, with a bold simple white leaf centered inside. Entire bubble including rim is strongly emerald green, color differentiation more important than ornament. Premium cute hand-painted mobile game art, clean readable at 32 pixels. Subtle soft upper-left highlight, thin rim, no golden filigree. Centered circle fills 88 percent of square, entire circle visible with safe margin. True transparent alpha outside, no drop shadow outside circle. No text, no other objects, no scene, no sprite sheet or collage."
+  },
+  {
+    "id": "orange",
+    "prompt": "Use case: stylized-concept. Exactly ONE standalone bubble shooter sprite, square image. One round glossy magical bubble, dominant tangerine orange, with a bold simple white sun centered inside. Entire bubble including rim is strongly tangerine orange, color differentiation more important than ornament. Premium cute hand-painted mobile game art, clean readable at 32 pixels. Subtle soft upper-left highlight, thin rim, no golden filigree. Centered circle fills 88 percent of square, entire circle visible with safe margin. True transparent alpha outside, no drop shadow outside circle. No text, no other objects, no scene, no sprite sheet or collage."
+  }
+]

@@ -1,0 +1,385 @@
+{
+  "created": "2026-09-20",
+  "method": "built-in image generation, one independent image per asset; whole-image resize and WebP encoding, no atlas cutting",
+  "assets": [
+    {
+      "file": "bubble-scene.webp",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "dino-branch.webp",
+      "width": 512,
+      "height": 256,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "dino-crate.webp",
+      "width": 512,
+      "height": 341,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "dino-log.webp",
+      "width": 512,
+      "height": 341,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "dream-scene.webp",
+      "width": 1280,
+      "height": 853,
+      "alpha": false,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "enemy-0.webp",
+      "width": 512,
+      "height": 468,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "enemy-1.webp",
+      "width": 512,
+      "height": 427,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "enemy-2.webp",
+      "width": 512,
+      "height": 505,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "enemy-3.webp",
+      "width": 500,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "explosion.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "flight-pillar.webp",
+      "width": 341,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "flight-plane.webp",
+      "width": 512,
+      "height": 341,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "game-button.webp",
+      "width": 512,
+      "height": 171,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "game-panel.webp",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "gem-0.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "gem-1.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "gem-2.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "gem-3.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "gem-4.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "gem-5.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "icon-arrow.webp",
+      "width": 512,
+      "height": 341,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "icon-gear.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "icon-trophy.webp",
+      "width": 506,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "mail.webp",
+      "width": 512,
+      "height": 396,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "merge-ball-0.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "merge-ball-1.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "merge-ball-10.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "merge-ball-11.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "merge-ball-2.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "merge-ball-3.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "merge-ball-5.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "merge-ball-6.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "merge-ball-7.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "merge-ball-8.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "merge-ball-9.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "merge-panel.webp",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "merge-scene.webp",
+      "width": 1024,
+      "height": 1536,
+      "alpha": false,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "mines-flag.webp",
+      "width": 493,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "mines-open.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": false,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "mines-tile.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": false,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "road-tile.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "tower-dream.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "tower-ground.webp",
+      "width": 1280,
+      "height": 756,
+      "alpha": false,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "tower-growth.webp",
+      "width": 512,
+      "height": 460,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "tower-luck.webp",
+      "width": 512,
+      "height": 477,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "whack-bomb.webp",
+      "width": 512,
+      "height": 512,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    },
+    {
+      "file": "whack-burrow.webp",
+      "width": 512,
+      "height": 427,
+      "alpha": true,
+      "source": "individually generated image",
+      "sheet": false
+    }
+  ],
+  "replacements": {
+    "merge-ball-4.webp": "../art-20260920-batch/merge-ball-memory.webp"
+  }
+}

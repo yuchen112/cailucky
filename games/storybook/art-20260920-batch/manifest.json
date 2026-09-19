@@ -1,0 +1,326 @@
+[
+  {
+    "name": "flight-hope",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-7a5014dd-7e63-4158-bd72-347dc52884d8.png",
+    "prompt": "Use case: identity-preserve. Single independent transparent PNG game sprite, NOT a sheet or montage. Reference is original CxQ Hope character; preserve exact white bob hair, blue butterfly ornament, big violet blue eyes, pale blue bow and cloud dress identity and plush premium 3D look. Redraw her seated naturally INSIDE an ivory and sky-blue small fantasy propeller airplane flying to the RIGHT, side three-quarter view, hands on controls, visible smiling face above cockpit, lower body correctly occluded by fuselage. One integrated character-and-vehicle object only, full wings/tail/propeller contained, occupying 90% width with modest transparent margin. Actual transparent background, no scenery, shadow floor, text, panel, other poses or white rectangle. Intended as Flappy playable sprite.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "growth-run-0",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0c56a7fd-fa44-4d2f-9bfd-9a0d0e363835.png",
+    "prompt": "Use case: identity-preserve. Reference image is CxQ Growth original IP. Preserve exactly leaf hood with sprout, short brown hair, brown eyes, cream tunic, green cloak and brown boots and satchel, same cute plush 3D illustration. Single independent full-body game sprite running to the RIGHT, side three-quarter view, left foot forward and right foot back, arms pumping, cloak flowing. No staff for this running action. Feet aligned near bottom, whole body within frame, 8% margin. Actual transparent background with clean alpha, NO glow halo, no ground, no shadow rectangle. ONE pose only, no sheet, no collage, no text.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "growth-run-1",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-af2108b6-0150-4a72-84aa-ab6e882e8cce.png",
+    "prompt": "Use case: identity-preserve. ONE transparent sprite of same CxQ leaf hood Growth child from reference. Same exact face, brown hair, leaf sprout hood, green cloak, cream clothes, boots, shoulder satchel, toy-like render. Change pose substantially: running recovery stride to the RIGHT, both knees underneath torso and bent, right heel raised backward toward the butt, left boot planted directly below torso, arms close to body. Do NOT repeat wide split-leg stride of reference. FULL body one pose only on clean truly transparent background, no glow, no scenery, no ground, no sheet. Consistent proportions and side three-quarter facing right.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "growth-jump",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-df10aea2-f25e-4261-85e6-041a24a25a94.png",
+    "prompt": "Use case: identity-preserve. ONE independent transparent PNG game sprite of exact CxQ Growth child from reference, preserve leaf sprout hood, short brown hair, brown eyes, green cloak, cream tunic, boots, satchel and plush 3D style. Full body facing RIGHT side three-quarter view, all parts within canvas. No staff, no text, no floor, no glow, no scenery, no sheet or collage. Clean alpha. Jumping airborne with both knees tucked up and arms out for balance, happy determined face, cloak lifting behind.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "growth-slide",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-65bf181f-a67c-41c7-9c96-e933c12f868c.png",
+    "prompt": "Use case: identity-preserve. ONE independent transparent PNG game sprite of exact CxQ Growth child from reference, preserve leaf sprout hood, short brown hair, brown eyes, green cloak, cream tunic, boots, satchel and plush 3D style. Full body facing RIGHT side three-quarter view, all parts within canvas. No staff, no text, no floor, no glow, no scenery, no sheet or collage. Clean alpha. Low seated sliding action, legs extended forward to right, upper body leaning backward low, head lowered; landscape framing, height compact. Not standing, not running.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "dream-cell",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-d6354e50-2ee0-4afd-9d68-ffa9a9cb79bd.png",
+    "prompt": "Use case: stylized-concept. ONE independent mobile game UI asset, not atlas, not collage. Premium polished cute 3D fantasy game render, clean silhouette, genuinely transparent background, no scenery, no text, no glow outside silhouette, 8% transparent margin. A single square recessed indigo velvet gemstone socket, thin silver lunar rim, straight-on top view, square 1:1, empty uniform dark navy inner 85% for a game piece.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "dream-line",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-07543198-5f8b-49ef-ba20-b8c00798f65f.png",
+    "prompt": "Use case: stylized-concept. ONE independent mobile game UI asset, not atlas, not collage. Premium polished cute 3D fantasy game render, clean silhouette, genuinely transparent background, no scenery, no text, no glow outside silhouette, 8% transparent margin. One luminous cyan crystal arrow pointing horizontally BOTH left and right inside a tiny silver oval brooch, special match-three line-clearing token. Wide clear silhouette.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "dream-prism",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0962463e-fd16-4280-84f0-71353e216dea.png",
+    "prompt": "Use case: stylized-concept. ONE independent mobile game UI asset, not atlas, not collage. Premium polished cute 3D fantasy game render, clean silhouette, genuinely transparent background, no scenery, no text, no glow outside silhouette, 8% transparent margin. One rainbow faceted orb held by a slender silver crescent, match-three color-clearing special piece, jewel-like warm rainbow colors, round compact silhouette.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "whack-hammer",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-ebd856d1-7727-4eaa-a89c-f34494c1facb.png",
+    "prompt": "Use case: stylized-concept. ONE independent mobile game UI asset, not atlas, not collage. Premium polished cute 3D fantasy game render, clean silhouette, genuinely transparent background, no scenery, no text, no glow outside silhouette, 8% transparent margin. One cheerful toy mallet, honey colored wooden head with a teal heart inlay and red ribbon on short wooden handle, diagonal handle pointing bottom right, entire hammer visible, no hand. Forest fair arcade game tool.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "bubble-button",
+    "prompt": "Use case: stylized-concept. One SINGLE standalone game button backing only, no sheet, no collage. iridescent turquoise glass framed in pearl white with tiny lilac crystal end caps. Polished cute 3D painted mobile game quality. Horizontal 3:1 rounded rectangular silhouette, straight-on camera, symmetrical left/right, flat EMPTY center 75% for a readable label placed later. Fill 94% of canvas width and height, no large outside margins, no text, no symbols in center, no extra objects. Actual transparent background, no shadow floor, no outer glow. Entire button visible.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-03f0a3dd-9847-4dbb-87cb-943552482718.png",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "defense-button",
+    "prompt": "Use case: stylized-concept. One SINGLE standalone game button backing only, no sheet, no collage. warm carved oak and moss-green inset with small brass leaf rivets. Polished cute 3D painted mobile game quality. Horizontal 3:1 rounded rectangular silhouette, straight-on camera, symmetrical left/right, flat EMPTY center 75% for a readable label placed later. Fill 94% of canvas width and height, no large outside margins, no text, no symbols in center, no extra objects. Actual transparent background, no shadow floor, no outer glow. Entire button visible.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-ca6fd06a-8de7-42cb-b27d-1eda17b78dfe.png",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "whack-button",
+    "prompt": "Use case: stylized-concept. One SINGLE standalone game button backing only, no sheet, no collage. honey wood carnival sign with coral-red enamel inset, turquoise ribbon ends. Polished cute 3D painted mobile game quality. Horizontal 3:1 rounded rectangular silhouette, straight-on camera, symmetrical left/right, flat EMPTY center 75% for a readable label placed later. Fill 94% of canvas width and height, no large outside margins, no text, no symbols in center, no extra objects. Actual transparent background, no shadow floor, no outer glow. Entire button visible.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-d59dab71-3d5f-490d-882e-5d928ad4cfee.png",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "merge-button",
+    "prompt": "Use case: stylized-concept. One SINGLE standalone game button backing only, no sheet, no collage. deep jade ceramic inset in ivory porcelain with delicate copper edges. Polished cute 3D painted mobile game quality. Horizontal 3:1 rounded rectangular silhouette, straight-on camera, symmetrical left/right, flat EMPTY center 75% for a readable label placed later. Fill 94% of canvas width and height, no large outside margins, no text, no symbols in center, no extra objects. Actual transparent background, no shadow floor, no outer glow. Entire button visible.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-37b208f5-1e6e-41da-9d34-832afb982279.png",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "flappy-button",
+    "prompt": "Use case: stylized-concept. One SINGLE standalone game button backing only, no sheet, no collage. sky-blue enamel inset with ivory cloud-shaped beveled rim. Polished cute 3D painted mobile game quality. Horizontal 3:1 rounded rectangular silhouette, straight-on camera, symmetrical left/right, flat EMPTY center 75% for a readable label placed later. Fill 94% of canvas width and height, no large outside margins, no text, no symbols in center, no extra objects. Actual transparent background, no shadow floor, no outer glow. Entire button visible.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-4b104e8f-1811-4061-949e-7722c11f7e07.png",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "dino-button",
+    "prompt": "Use case: stylized-concept. One SINGLE standalone game button backing only, no sheet, no collage. cream canvas inset with leather brown frame and olive leaf corner stitching. Polished cute 3D painted mobile game quality. Horizontal 3:1 rounded rectangular silhouette, straight-on camera, symmetrical left/right, flat EMPTY center 75% for a readable label placed later. Fill 94% of canvas width and height, no large outside margins, no text, no symbols in center, no extra objects. Actual transparent background, no shadow floor, no outer glow. Entire button visible.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-fb22f641-e638-4976-902d-8af349e17866.png",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "mines-button",
+    "prompt": "Use case: stylized-concept. One SINGLE standalone game button backing only, no sheet, no collage. burgundy expedition leather inset with aged brass frame. Polished cute 3D painted mobile game quality. Horizontal 3:1 rounded rectangular silhouette, straight-on camera, symmetrical left/right, flat EMPTY center 75% for a readable label placed later. Fill 94% of canvas width and height, no large outside margins, no text, no symbols in center, no extra objects. Actual transparent background, no shadow floor, no outer glow. Entire button visible.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0fa91b4b-0184-4aca-bc5b-eb721efef168.png",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "flight-luck",
+    "prompt": "Use case: identity-preserve. SINGLE independent transparent playable sprite. Image1 is the exact original CxQ luck IP character; Image2 provides plane shape, viewpoint and integrated seating only, NOT its white-haired character. Draw ONLY character from Image1 piloting the same small ivory and sky-blue plane facing RIGHT, side three-quarter view. Preserve Image1 face, species, hair/ears/hood, clothing colors and accessories identity. Hands/paws hold controls, torso inside cockpit, lower body occluded correctly. Remove handheld props to allow piloting. Same premium plush 3D style. Whole plane and character contained with5% margin. One sprite, no sheet, no other poses, no scenery, no ground, no text, clean actual transparent alpha background with NO outer glow or haze.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-07123e50-c319-441b-8a1d-22ac49fbd2b5.png",
+    "method": "builtin imagegen; independent full image; no crop"
+  },
+  {
+    "name": "flight-healing",
+    "prompt": "Use case: identity-preserve. SINGLE independent transparent playable sprite. Image1 is the exact original CxQ healing IP character; Image2 provides plane shape, viewpoint and integrated seating only, NOT its white-haired character. Draw ONLY character from Image1 piloting the same small ivory and sky-blue plane facing RIGHT, side three-quarter view. Preserve Image1 face, species, hair/ears/hood, clothing colors and accessories identity. Hands/paws hold controls, torso inside cockpit, lower body occluded correctly. Remove handheld props to allow piloting. Same premium plush 3D style. Whole plane and character contained with5% margin. One sprite, no sheet, no other poses, no scenery, no ground, no text, clean actual transparent alpha background with NO outer glow or haze.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-4af4fd8b-a174-41cb-ae31-5fe056c3c893.png",
+    "method": "builtin imagegen; independent full image; no crop"
+  },
+  {
+    "name": "flight-growth",
+    "prompt": "Use case: identity-preserve. SINGLE independent transparent playable sprite. Image1 is the exact original CxQ growth IP character; Image2 provides plane shape, viewpoint and integrated seating only, NOT its white-haired character. Draw ONLY character from Image1 piloting the same small ivory and sky-blue plane facing RIGHT, side three-quarter view. Preserve Image1 face, species, hair/ears/hood, clothing colors and accessories identity. Hands/paws hold controls, torso inside cockpit, lower body occluded correctly. Remove handheld props to allow piloting. Same premium plush 3D style. Whole plane and character contained with5% margin. One sprite, no sheet, no other poses, no scenery, no ground, no text, clean actual transparent alpha background with NO outer glow or haze.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-87fc5223-3b65-4635-b6ff-3d4e040b7e7d.png",
+    "method": "builtin imagegen; independent full image; no crop"
+  },
+  {
+    "name": "flight-memory",
+    "prompt": "Use case: identity-preserve. SINGLE independent transparent playable sprite. Image1 is the exact original CxQ memory IP character; Image2 provides plane shape, viewpoint and integrated seating only, NOT its white-haired character. Draw ONLY character from Image1 piloting the same small ivory and sky-blue plane facing RIGHT, side three-quarter view. Preserve Image1 face, species, hair/ears/hood, clothing colors and accessories identity. Hands/paws hold controls, torso inside cockpit, lower body occluded correctly. Remove handheld props to allow piloting. Same premium plush 3D style. Whole plane and character contained with5% margin. One sprite, no sheet, no other poses, no scenery, no ground, no text, clean actual transparent alpha background with NO outer glow or haze.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-85d06e61-7536-44fd-acf0-e31abab61f49.png",
+    "method": "builtin imagegen; independent full image; no crop"
+  },
+  {
+    "name": "flight-joy",
+    "prompt": "Use case: identity-preserve. SINGLE independent transparent playable sprite. Image1 is the exact original CxQ joy IP character; Image2 provides plane shape, viewpoint and integrated seating only, NOT its white-haired character. Draw ONLY character from Image1 piloting the same small ivory and sky-blue plane facing RIGHT, side three-quarter view. Preserve Image1 face, species, hair/ears/hood, clothing colors and accessories identity. Hands/paws hold controls, torso inside cockpit, lower body occluded correctly. Remove handheld props to allow piloting. Same premium plush 3D style. Whole plane and character contained with5% margin. One sprite, no sheet, no other poses, no scenery, no ground, no text, clean actual transparent alpha background with NO outer glow or haze.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-f324fffc-e3bc-4690-8e34-b9c7f74dd36c.png",
+    "method": "builtin imagegen; independent full image; no crop"
+  },
+  {
+    "name": "flight-night",
+    "prompt": "Use case: identity-preserve. SINGLE independent transparent playable sprite. Image1 is the exact original CxQ night IP character; Image2 provides plane shape, viewpoint and integrated seating only, NOT its white-haired character. Draw ONLY character from Image1 piloting the same small ivory and sky-blue plane facing RIGHT, side three-quarter view. Preserve Image1 face, species, hair/ears/hood, clothing colors and accessories identity. Hands/paws hold controls, torso inside cockpit, lower body occluded correctly. Remove handheld props to allow piloting. Same premium plush 3D style. Whole plane and character contained with5% margin. One sprite, no sheet, no other poses, no scenery, no ground, no text, clean actual transparent alpha background with NO outer glow or haze.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-5dfef591-72ba-4dfe-8b04-612b34be5429.png",
+    "method": "builtin imagegen; independent full image; no crop"
+  },
+  {
+    "name": "flight-trust",
+    "prompt": "Use case: identity-preserve. SINGLE independent transparent playable sprite. Image1 is the exact original CxQ trust IP character; Image2 provides plane shape, viewpoint and integrated seating only, NOT its white-haired character. Draw ONLY character from Image1 piloting the same small ivory and sky-blue plane facing RIGHT, side three-quarter view. Preserve Image1 face, species, hair/ears/hood, clothing colors and accessories identity. Hands/paws hold controls, torso inside cockpit, lower body occluded correctly. Remove handheld props to allow piloting. Same premium plush 3D style. Whole plane and character contained with5% margin. One sprite, no sheet, no other poses, no scenery, no ground, no text, clean actual transparent alpha background with NO outer glow or haze.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-c4ab9641-5eaf-44dd-bacd-88f5a08fff25.png",
+    "method": "builtin imagegen; independent full image; no crop"
+  },
+  {
+    "name": "flight-dream",
+    "prompt": "Use case: identity-preserve. SINGLE independent transparent playable sprite. Image1 is the exact original CxQ dream IP character; Image2 provides plane shape, viewpoint and integrated seating only, NOT its white-haired character. Draw ONLY character from Image1 piloting the same small ivory and sky-blue plane facing RIGHT, side three-quarter view. Preserve Image1 face, species, hair/ears/hood, clothing colors and accessories identity. Hands/paws hold controls, torso inside cockpit, lower body occluded correctly. Remove handheld props to allow piloting. Same premium plush 3D style. Whole plane and character contained with5% margin. One sprite, no sheet, no other poses, no scenery, no ground, no text, clean actual transparent alpha background with NO outer glow or haze.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-8dc1c981-4f8c-4c21-b5e6-fb613ff366c3.png",
+    "method": "builtin imagegen; independent full image; no crop"
+  },
+  {
+    "name": "flight-sadness",
+    "prompt": "Use case: identity-preserve. SINGLE independent transparent playable sprite. Image1 is the exact original CxQ sadness IP character; Image2 provides plane shape, viewpoint and integrated seating only, NOT its white-haired character. Draw ONLY character from Image1 piloting the same small ivory and sky-blue plane facing RIGHT, side three-quarter view. Preserve Image1 face, species, hair/ears/hood, clothing colors and accessories identity. Hands/paws hold controls, torso inside cockpit, lower body occluded correctly. Remove handheld props to allow piloting. Same premium plush 3D style. Whole plane and character contained with5% margin. One sprite, no sheet, no other poses, no scenery, no ground, no text, clean actual transparent alpha background with NO outer glow or haze.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-e9a853b7-ad20-464b-b820-3906087bc9f5.png",
+    "method": "builtin imagegen; independent full image; no crop"
+  },
+  {
+    "name": "dino-scene",
+    "prompt": "Landscape 8:3 background for SIDE SCROLLING forest courier game. Cute high-end storybook 3D painted forest, moss green leaves, warm amber sun, distant cozy treehouse postal hut. Camera strictly side-on, flat horizontal walking surface at 81 percent image height, bottom19 percent brown cut-earth and tiny roots. The foreground path is empty with no obstacles, characters, text or UI. Clear playable central band, background details lower contrast. Full bleed scene, no frame, no blur, NOT an atlas.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-d27dfd75-5986-4234-a508-f0c6e5e04bc3.png",
+    "method": "builtin imagegen; independent full image; no crop"
+  },
+  {
+    "name": "flappy-scene",
+    "prompt": "Portrait 2:3 complete background for cute sky courier game. High-end 3D painted ivory clouds, azure and peach dawn sky, floating post-office islands and tiny windmills confined to very bottom and far side edges; very open readable center for moving obstacles. Warm adventurous sky, no pink overload, no characters, UI, text, borders, no blur. Full bleed one scene, not a sheet.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-8d64008c-f405-448c-9b65-95de20c8f221.png",
+    "method": "builtin imagegen; independent full image; no crop"
+  },
+  {
+    "name": "mines-scene",
+    "prompt": "Portrait 2:3 complete top-down explorer desk game background. Warm walnut desk, subtle parchment chart spread flat in center covering80 percent, restrained burgundy compass case and tiny brass compass at far corners, green ivy edge. Premium cute hand-painted 3D fantasy expedition props. Large calm open parchment area so independent gameboard stands out. No text, no numbers, no grid, no buttons, no characters, no blur, no frame. One scene not a sheet.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-673a974d-ea0e-42a4-8085-31c780a6ae05.png",
+    "method": "builtin imagegen; independent full image; no crop"
+  },
+  {
+    "name": "tower-trust",
+    "prompt": "Use case: stylized-concept. ONE isolated independent support tower building for a cute CxQ forest tower defense game. A squat navy-blue and warm oak little sanctuary tower, brass key emblem on front, two leaf eaves and ivory stone base, small blue crystal on roof, friendly plush storybook3D, isometric three-quarter view. No character, no text, no landscape, no second building, no sprite sheet. Entire building visible and centered, bottom anchored, clean genuinely transparent background with no outer glow. Broad low silhouette, readable at80 pixels. This belongs to the bear guardian Trust.",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-5def2eaf-55f3-4883-b546-8d747fff4648.png",
+    "method": "builtin imagegen; independent full image; no crop"
+  },
+  {
+    "name": "luck-run-0",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-f2dfd65e-6048-4599-b159-077c795d889c.png",
+    "prompt": "Use case: identity-preserve. ONE independent full-body game sprite of the exact CxQ character in the reference, running right in a wide split-leg stride with front foot extended. Preserve exact species, face, hair/ears/hood, clothing palette and characteristic accessories. Same premium cute plush3D render. Side three-quarter facing right. No held lantern or staff to free the hands, but preserve clothing and attached accessories. Entire silhouette within frame, 6 percent clean margin. TRUE transparent background, NO outer glow or fog, NO ground, NO rectangle, NO text. One pose only, not a sprite sheet or montage.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "luck-run-1",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-86f89535-2c7e-4b6c-8b1c-36bf095b820f.png",
+    "prompt": "Use case: identity-preserve. ONE independent full-body game sprite of the exact CxQ character in the reference, running right in a compact recovery stride, one boot planted beneath torso and other heel lifted behind, knees close together. Preserve exact species, face, hair/ears/hood, clothing palette and characteristic accessories. Same premium cute plush3D render. Side three-quarter facing right. No held lantern or staff to free the hands, but preserve clothing and attached accessories. Entire silhouette within frame, 6 percent clean margin. TRUE transparent background, NO outer glow or fog, NO ground, NO rectangle, NO text. One pose only, not a sprite sheet or montage.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "luck-jump",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-ad4c026f-035b-4cd7-b8b5-50d30791ce18.png",
+    "prompt": "Use case: identity-preserve. ONE independent full-body game sprite of the exact CxQ character in the reference, jumping airborne to right, both knees tucked up and arms spread for balance. Preserve exact species, face, hair/ears/hood, clothing palette and characteristic accessories. Same premium cute plush3D render. Side three-quarter facing right. No held lantern or staff to free the hands, but preserve clothing and attached accessories. Entire silhouette within frame, 6 percent clean margin. TRUE transparent background, NO outer glow or fog, NO ground, NO rectangle, NO text. One pose only, not a sprite sheet or montage.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "luck-slide",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6b642852-5c03-48cc-b933-5854747ef858.png",
+    "prompt": "Use case: identity-preserve. ONE independent full-body game sprite of the exact CxQ character in the reference, sliding low to right, seated with both legs extended forward and torso leaning back low. Preserve exact species, face, hair/ears/hood, clothing palette and characteristic accessories. Same premium cute plush3D render. Side three-quarter facing right. No held lantern or staff to free the hands, but preserve clothing and attached accessories. Entire silhouette within frame, 6 percent clean margin. TRUE transparent background, NO outer glow or fog, NO ground, NO rectangle, NO text. One pose only, not a sprite sheet or montage.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "healing-run-0",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-5a1b98d2-cc55-4a6e-bb73-07f43aadc56a.png",
+    "prompt": "Use case: identity-preserve. ONE independent full-body game sprite of the exact CxQ character in the reference, running right in a wide split-leg stride with front foot extended. Preserve exact species, face, hair/ears/hood, clothing palette and characteristic accessories. Same premium cute plush3D render. Side three-quarter facing right. No held lantern or staff to free the hands, but preserve clothing and attached accessories. Entire silhouette within frame, 6 percent clean margin. TRUE transparent background, NO outer glow or fog, NO ground, NO rectangle, NO text. One pose only, not a sprite sheet or montage.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "healing-run-1",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-e26bf2bc-7a05-4c2e-a46e-2b61b5100094.png",
+    "prompt": "Use case: identity-preserve. ONE independent full-body game sprite of the exact CxQ character in the reference, running right in a compact recovery stride, one boot planted beneath torso and other heel lifted behind, knees close together. Preserve exact species, face, hair/ears/hood, clothing palette and characteristic accessories. Same premium cute plush3D render. Side three-quarter facing right. No held lantern or staff to free the hands, but preserve clothing and attached accessories. Entire silhouette within frame, 6 percent clean margin. TRUE transparent background, NO outer glow or fog, NO ground, NO rectangle, NO text. One pose only, not a sprite sheet or montage.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "healing-jump",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-43b7c9e3-f5bb-4d8d-a2cd-ada65c814064.png",
+    "prompt": "Use case: identity-preserve. ONE independent full-body game sprite of the exact CxQ character in the reference, jumping airborne to right, both knees tucked up and arms spread for balance. Preserve exact species, face, hair/ears/hood, clothing palette and characteristic accessories. Same premium cute plush3D render. Side three-quarter facing right. No held lantern or staff to free the hands, but preserve clothing and attached accessories. Entire silhouette within frame, 6 percent clean margin. TRUE transparent background, NO outer glow or fog, NO ground, NO rectangle, NO text. One pose only, not a sprite sheet or montage.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "healing-slide",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-12d31d7c-59fe-4028-9c68-4227bd51c829.png",
+    "prompt": "Use case: identity-preserve. ONE independent full-body game sprite of the exact CxQ character in the reference, sliding low to right, seated with both legs extended forward and torso leaning back low. Preserve exact species, face, hair/ears/hood, clothing palette and characteristic accessories. Same premium cute plush3D render. Side three-quarter facing right. No held lantern or staff to free the hands, but preserve clothing and attached accessories. Entire silhouette within frame, 6 percent clean margin. TRUE transparent background, NO outer glow or fog, NO ground, NO rectangle, NO text. One pose only, not a sprite sheet or montage.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "night-run-0",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-7feca1e3-b865-48f4-b444-5f9c869cccc9.png",
+    "prompt": "Use case: identity-preserve. ONE independent full-body game sprite of the exact CxQ character in the reference, running right in a wide split-leg stride with front foot extended. Preserve exact species, face, hair/ears/hood, clothing palette and characteristic accessories. Same premium cute plush3D render. Side three-quarter facing right. No held lantern or staff to free the hands, but preserve clothing and attached accessories. Entire silhouette within frame, 6 percent clean margin. TRUE transparent background, NO outer glow or fog, NO ground, NO rectangle, NO text. One pose only, not a sprite sheet or montage.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "night-run-1",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-20df6c3b-3199-4e7c-aa82-41c1baca2bba.png",
+    "prompt": "Use case: identity-preserve. ONE independent full-body game sprite of the exact CxQ character in the reference, running right in a compact recovery stride, one boot planted beneath torso and other heel lifted behind, knees close together. Preserve exact species, face, hair/ears/hood, clothing palette and characteristic accessories. Same premium cute plush3D render. Side three-quarter facing right. No held lantern or staff to free the hands, but preserve clothing and attached accessories. Entire silhouette within frame, 6 percent clean margin. TRUE transparent background, NO outer glow or fog, NO ground, NO rectangle, NO text. One pose only, not a sprite sheet or montage.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "night-jump",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-f13b228f-65ab-4dd6-9630-bb7b2a01b296.png",
+    "prompt": "Use case: identity-preserve. ONE independent full-body game sprite of the exact CxQ character in the reference, jumping airborne to right, both knees tucked up and arms spread for balance. Preserve exact species, face, hair/ears/hood, clothing palette and characteristic accessories. Same premium cute plush3D render. Side three-quarter facing right. No held lantern or staff to free the hands, but preserve clothing and attached accessories. Entire silhouette within frame, 6 percent clean margin. TRUE transparent background, NO outer glow or fog, NO ground, NO rectangle, NO text. One pose only, not a sprite sheet or montage.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "night-slide",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0287cc09-90d1-4292-b771-2c5e84718300.png",
+    "prompt": "Use case: identity-preserve. ONE independent full-body game sprite of the exact CxQ character in the reference, sliding low to right, seated with both legs extended forward and torso leaning back low. Preserve exact species, face, hair/ears/hood, clothing palette and characteristic accessories. Same premium cute plush3D render. Side three-quarter facing right. No held lantern or staff to free the hands, but preserve clothing and attached accessories. Entire silhouette within frame, 6 percent clean margin. TRUE transparent background, NO outer glow or fog, NO ground, NO rectangle, NO text. One pose only, not a sprite sheet or montage.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "flappy-forest",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-24d65e68-4c47-417b-9556-ff807b7c5556.png",
+    "prompt": "Portrait2:3 cute high-end painted fantasy sky game background. Open pale teal sky framed by distant floating forest treehouse postal islands along edges, warm afternoon rays, no trees or branches across central75% flight corridor. Emerald/cream palette. Full scene, no frame, text, UI, characters or blur.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "flappy-moon",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-cd022033-b738-484f-9175-7ba9f30185fc.png",
+    "prompt": "Portrait2:3 cute high-end painted fantasy sky game background. Open deep sapphire night sky with silver moon uppercorner, low contrast distant stars and distant floating postal islands at bottom edges, center75% calm open sky for flight. Navy/silver palette. Full scene, no frame, text, UI, characters or blur.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "dino-rain",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-aabd1000-9f1a-4b7c-a4b8-892695895a0a.png",
+    "prompt": "Landscape8:3 SIDE VIEW side-scrolling cute high-end painted forest courier background, gentle rain afterglow teal leaves, distant flower postal hut. Flat continuous horizontal empty footpath exactly at72 percent height, bottom28 percent cutaway brown earth. Keep central playable area clear, detail in back. No foreground obstacles or characters, no text, UI, frame or blur.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "dino-moon",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-9a28d0ed-a796-49d0-92a8-e9ce93f9c018.png",
+    "prompt": "Landscape8:3 SIDE VIEW side-scrolling cute high-end painted forest courier background, calm indigo moonlit forest with softlylit lantern postal treehouse in distance. Flat continuous horizontal empty footpath exactly at72 percent height, bottom28 percent cutaway brown earth. Keep central playable area clear. No obstacles or characters, no text, UI, frame or blur.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "mines-number-1",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-a477ab7b-3179-4b00-9f68-17353ad1aaad.png",
+    "prompt": "Use case: stylized-concept. A SINGLE numeral '1' only, exact one digit centered filling80% of square canvas. Bold rounded highly readable game lettering in cobalt blue enamel with subtle ivory beveled edge, premium cute expedition puzzle game, frontal orthographic view. TRUE transparent background. No tile or badge, no shadow background, no glow, no other digits, no text or decoration. One individual icon, NOT sprite sheet.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "mines-number-2",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-628e4ad7-c969-415d-a0b0-bdd56d38ce79.png",
+    "prompt": "Use case: stylized-concept. A SINGLE numeral '2' only, exact one digit centered filling80% of square canvas. Bold rounded highly readable game lettering in forest green enamel with subtle ivory beveled edge, premium cute expedition puzzle game, frontal orthographic view. TRUE transparent background. No tile or badge, no shadow background, no glow, no other digits, no text or decoration. One individual icon, NOT sprite sheet.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "mines-number-3",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-dabaeaa6-bba0-40dd-a923-bd24b0d493d5.png",
+    "prompt": "Use case: stylized-concept. A SINGLE numeral '3' only, exact one digit centered filling80% of square canvas. Bold rounded highly readable game lettering in burgundy red enamel with subtle ivory beveled edge, premium cute expedition puzzle game, frontal orthographic view. TRUE transparent background. No tile or badge, no shadow background, no glow, no other digits, no text or decoration. One individual icon, NOT sprite sheet.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "mines-number-4",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-47d2ea33-324c-4411-a526-7e37c1247504.png",
+    "prompt": "Use case: stylized-concept. A SINGLE numeral '4' only, exact one digit centered filling80% of square canvas. Bold rounded highly readable game lettering in dark violet enamel with subtle ivory beveled edge, premium cute expedition puzzle game, frontal orthographic view. TRUE transparent background. No tile or badge, no shadow background, no glow, no other digits, no text or decoration. One individual icon, NOT sprite sheet.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "mines-number-5",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-2174b6c3-a2b5-4ea4-9774-1a5cfd7e15ff.png",
+    "prompt": "Use case: stylized-concept. A SINGLE numeral '5' only, exact one digit centered filling80% of square canvas. Bold rounded highly readable game lettering in chocolate brown enamel with subtle ivory beveled edge, premium cute expedition puzzle game, frontal orthographic view. TRUE transparent background. No tile or badge, no shadow background, no glow, no other digits, no text or decoration. One individual icon, NOT sprite sheet.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "mines-number-6",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-4eb1a6b0-8bb1-48d2-904b-c82cae9a298a.png",
+    "prompt": "Use case: stylized-concept. A SINGLE numeral '6' only, exact one digit centered filling80% of square canvas. Bold rounded highly readable game lettering in deep teal enamel with subtle ivory beveled edge, premium cute expedition puzzle game, frontal orthographic view. TRUE transparent background. No tile or badge, no shadow background, no glow, no other digits, no text or decoration. One individual icon, NOT sprite sheet.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "mines-number-7",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-31117b8f-0ccd-4881-af4a-fd27edea907c.png",
+    "prompt": "Use case: stylized-concept. A SINGLE numeral '7' only, exact one digit centered filling80% of square canvas. Bold rounded highly readable game lettering in charcoal enamel with subtle ivory beveled edge, premium cute expedition puzzle game, frontal orthographic view. TRUE transparent background. No tile or badge, no shadow background, no glow, no other digits, no text or decoration. One individual icon, NOT sprite sheet.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "mines-number-8",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-9150d2fa-9049-4786-94dd-04550b901c50.png",
+    "prompt": "Use case: stylized-concept. A SINGLE numeral '8' only, exact one digit centered filling80% of square canvas. Bold rounded highly readable game lettering in dark navy enamel with subtle ivory beveled edge, premium cute expedition puzzle game, frontal orthographic view. TRUE transparent background. No tile or badge, no shadow background, no glow, no other digits, no text or decoration. One individual icon, NOT sprite sheet.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  },
+  {
+    "name": "merge-ball-memory",
+    "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0c6a68e0-df01-4bde-910a-c32569456bb1.png",
+    "prompt": "Use case: background-extraction. Edit target: the single green gold memory photograph orb in reference. Preserve the exact spherical emerald glass, gold filigree, sepia photograph inside, size and composition. Remove ALL the grey/white checkerboard outside the orb and replace with genuine transparent alpha. The checkerboard is an unwanted opaque background, NOT part of the asset. One circular game ball only, edge-to-edge circle with 3% transparent margin. NO rectangle, NO checkerboard pattern, NO white backdrop, NO floor shadow. Deliver true transparent PNG. Do not produce a sheet or other variants.",
+    "method": "builtin imagegen; one independent image per call; full-image export, no crop"
+  }
+]

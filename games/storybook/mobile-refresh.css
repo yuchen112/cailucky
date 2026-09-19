@@ -1,0 +1,36 @@
+body{font-family:'Microsoft JhengHei',system-ui,sans-serif}
+body.lobby-open{overflow:auto}
+body.lobby-open main{width:100%;max-width:1000px;min-height:100svh;height:auto}
+#home.mobile-home{min-height:760px;height:100svh;max-height:none;background-size:cover}
+.lobby-logo,body[data-game=flappy] .lobby-logo{top:3%;left:10%;width:80%;height:27%}
+.lobby-logo img{object-fit:contain;border-radius:16px}
+.cast-stage,body[data-game=flappy] .cast-stage,body[data-game=merge] .cast-stage,body[data-game=mines] .cast-stage{top:31%;height:22%}
+.cast-caption,body[data-game=mines] .cast-caption,body[data-game=merge] .cast-caption{top:54%;padding:8px 18px;background:#102a35ed;color:#fff2cf;border-radius:12px}
+.cast-caption strong,body[data-game=merge] .cast-caption strong,body[data-game=dino] .cast-caption strong{color:#ffebbc;font-size:18px}
+.cast-caption small,body[data-game=merge] .cast-caption small{color:#fff2cf;font-size:14px}
+.mode-ticket,body[data-game=flappy] .mode-ticket{top:65%;height:8%;padding:12px 30px;left:10%;width:80%;color:#fff4dd;background:transparent url('art-20260914/game-button.webp') center/100% 100% no-repeat}
+.mode-ticket small{font-size:13px}.mode-ticket b{font-size:17px}
+#home .lobby-start,body[data-game=merge] #home .lobby-start{top:75%;bottom:auto;height:10%;font-size:26px;background:transparent url('art-20260914/game-button.webp') center/100% 100% no-repeat;color:#fff4dd}
+.lobby-dock{bottom:2%;height:10%;background:transparent url('art-20260914/game-panel.webp') center/100% 100% no-repeat;padding:6px 12px}
+.lobby-dock .dock-button,body[data-game=dino] .lobby-dock .dock-button{font-size:14px;color:#fff2cf}
+.menu-icon,body[data-game=dino] .menu-icon{object-fit:contain;image-rendering:auto}
+.sheet-content .role-choice[aria-pressed=true]::after{display:none}
+.sheet-content .role-choice[aria-pressed=true]{outline:3px solid #d0a753;outline-offset:-3px}
+.sheet-content .role-choice span:last-child{font-size:14px}
+.choice-card strong{font-size:16px}.choice-card small{font-size:14px}
+.sheet-close{font-size:16px}
+.map-stops{top:63%;height:8%}
+body[data-game=mines] .mode-ticket{top:71%;height:7%}
+body[data-game=mines] #home .lobby-start{top:79%;height:8%}
+@media(orientation:landscape){
+#home.mobile-home{min-height:520px}
+.lobby-logo,body[data-game=flappy] .lobby-logo,body[data-game=merge] .lobby-logo{left:3%;top:4%;width:43%;height:39%}
+.cast-stage,body[data-game=flappy] .cast-stage,body[data-game=merge] .cast-stage,body[data-game=mines] .cast-stage{left:4%;top:43%;width:42%;height:34%}
+.cast-caption,body[data-game=mines] .cast-caption,body[data-game=merge] .cast-caption{left:4%;top:79%;width:42%}
+.mode-ticket,body[data-game=flappy] .mode-ticket{left:53%;top:21%;width:40%;height:15%}
+#home .lobby-start,body[data-game=merge] #home .lobby-start{left:51%;top:42%;width:45%;height:18%}
+.lobby-dock{left:51%;width:45%;bottom:7%;height:19%}
+.map-stops{left:53%;top:5%;width:40%;height:13%}
+body[data-game=mines] .mode-ticket{left:53%;top:24%;width:40%;height:14%}
+body[data-game=mines] #home .lobby-start{left:51%;top:43%;width:45%;height:18%}
+}

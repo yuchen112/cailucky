@@ -1,1 +1,104 @@
-(()=>{const N=7,colors=['#ff668c','#5bdcff','#ffd65a','#9c6fff','#65e391','#ff994d'],names=['愛心','水晶','星光'],board=document.querySelector('#board'),$=s=>document.querySelector(s);let a,selected,moves,score,charge,shuffle,goals,busy=false;const rnd=()=>Math.floor(Math.random()*colors.length),id=(r,c)=>r*N+c;function fresh(){do{a=Array.from({length:N*N},rnd)}while(matches().size);selected=null;moves=24;score=0;charge=0;shuffle=2;goals=[{color:0,need:12,got:0},{color:1,need:12,got:0},{color:2,need:12,got:0}];render()}function matches(){const m=new Set;for(let r=0;r<N;r++){let s=0;for(let c=1;c<=N;c++)if(c<N&&a[id(r,c)]===a[id(r,c-1)]){}else{if(c-s>=3)for(let q=s;q<c;q++)m.add(id(r,q));s=c}}for(let c=0;c<N;c++){let s=0;for(let r=1;r<=N;r++)if(r<N&&a[id(r,c)]===a[id(r-1,c)]){}else{if(r-s>=3)for(let q=s;q<r;q++)m.add(id(q,c));s=r}}return m}function render(pop=new Set){board.innerHTML='';a.forEach((v,i)=>{const cell=document.createElement('button');cell.className='cell'+(i===selected?' selected':'')+(pop.has(i)?' pop':'');cell.dataset.i=i;const g=document.createElement('i');g.className='gem';g.style.backgroundImage=`url('assets/gem-v2-0${v}.png')`;cell.append(g);board.append(cell)});$('#score').textContent=score.toLocaleString();$('#moves').textContent=moves;$('#charge').style.width=charge+'%';$('#burst').disabled=charge<100;$('#shuffle').disabled=shuffle<=0;$('#shuffleCount').textContent=`剩餘 ${shuffle} 次`;$('#goals').innerHTML=goals.map(g=>`<div class="goal"><img class="gemMini" src="assets/gem-v2-0${g.color}.png" alt=""><span>${names[g.color]}</span><b>${Math.min(g.got,g.need)}/${g.need}</b></div>`).join('')}async function click(i){if(busy)return;if(selected===null){selected=i;render();return}const r=Math.floor(i/N),c=i%N,sr=Math.floor(selected/N),sc=selected%N;if(Math.abs(r-sr)+Math.abs(c-sc)!==1){selected=i;render();return}busy=true;[a[i],a[selected]]=[a[selected],a[i]];selected=null;let m=matches();if(!m.size){[a[i],a[Math.floor(sr*N+sc)]]=[a[Math.floor(sr*N+sc)],a[i]];busy=false;render();CxQ.sound('miss');return}moves--;await cascade(m);busy=false;render();check()}async function cascade(m){let combo=1;while(m.size){render(m);await wait(230);m.forEach(i=>{const v=a[i];const g=goals.find(x=>x.color===v);if(g)g.got++;a[i]=-1});score+=m.size*100*combo;charge=Math.min(100,charge+m.size*5);for(let c=0;c<N;c++){const vals=[];for(let r=N-1;r>=0;r--)if(a[id(r,c)]>=0)vals.push(a[id(r,c)]);for(let r=N-1;r>=0;r--)a[id(r,c)]=vals[N-1-r]??rnd()}CxQ.sound('match');render();await wait(170);m=matches();combo++;if(combo>2)toast(`${combo-1} 連鎖！`)} }function wait(ms){return new Promise(r=>setTimeout(r,ms))}function toast(t){$('#toast').textContent=t;setTimeout(()=>$('#toast').textContent='',700)}function check(){const win=goals.every(g=>g.got>=g.need);if(win||moves<=0){$('#resultTitle').textContent=win?'美夢修復完成！':'今晚再試一次';$('#resultText').textContent=`獲得 ${score.toLocaleString()} 分`;$('#result').hidden=false;CxQ.sound(win?'win':'lose')}}board.onclick=e=>{const c=e.target.closest('.cell');if(c)click(+c.dataset.i)};$('#burst').onclick=async()=>{if(charge<100||busy)return;busy=true;const counts=colors.map((_,v)=>a.filter(x=>x===v).length),v=counts.indexOf(Math.max(...counts)),m=new Set(a.map((x,i)=>x===v?i:-1).filter(i=>i>=0));charge=0;moves--;await cascade(m);busy=false;render();check()};$('#shuffle').onclick=()=>{if(!shuffle||busy)return;shuffle--;a.sort(()=>Math.random()-.5);while(matches().size)a.sort(()=>Math.random()-.5);render();CxQ.sound('flip')};$('#restart').onclick=$('#again').onclick=()=>{$('#result').hidden=true;fresh()};$('#guideBtn').onclick=()=>$('#guide').showModal();$('#guide button').onclick=()=>$('#guide').close();CxQ.configure({music:'heavenly',save:()=>CxQ.write('cxq-match-best',Math.max(score,CxQ.read('cxq-match-best',0)))});fresh()})();
+(() => {
+  'use strict';
+  const R=DreamRules,N=R.N,$=s=>document.querySelector(s),board=$('#board');
+  const names=['愛心','水晶','星光','夢晶','葉芽','琥珀'],art='../storybook/art-20260914/',newArt='../storybook/art-20260920-batch/';
+  let mode='classic',chapter=0,a=[],special={},selected=null,moves=0,score=0,charge=0,shuffle=2,goals=[],busy=false,ended=false,lastInput=0;
+  const rnd=()=>Math.floor(Math.random()*6),wait=async ms=>{await new Promise(r=>setTimeout(r,ms));await window.CxQSession?.waitReady();};
+  const chapters=['星光花園','月影圖書室','雲端鐘樓','極光夢境'];
+  function fresh(){
+    if(busy)return;
+    do{a=Array.from({length:N*N},rnd);}while(R.match(a).size||!R.move(a));
+    special={};selected=null;ended=false;moves=(mode==='relaxed'?34:26)-chapter;score=0;charge=0;shuffle=2;
+    goals=[0,1,2].map((_,i)=>({color:(i+chapter)%6,need:(mode==='relaxed'?10:12)+chapter*3,got:0}));
+    $('#result').hidden=true;document.querySelector('header p').textContent='第 '+(chapter+1)+' 章 · '+chapters[chapter];
+    lastInput=performance.now();render();
+  }
+  function render(pop=new Set,fall=false){
+    board.replaceChildren();
+    a.forEach((v,i)=>{
+      const cell=document.createElement('button');cell.className='cell'+(i===selected?' selected':'')+(pop.has(i)?' pop':'');
+      cell.dataset.i=i;cell.setAttribute('aria-label',names[v]+' '+(special[i]==='prism'?'彩虹魔晶':special[i]?'直線魔晶':'')+' 第'+(Math.floor(i/N)+1)+'列第'+(i%N+1)+'格');
+      const gem=document.createElement('img');gem.className='gem';gem.alt='';gem.draggable=false;
+      gem.src=special[i]==='prism'?newArt+'dream-prism.webp':art+'gem-'+v+'.webp';cell.append(gem);
+      if(special[i]&&special[i]!=='prism'){const mark=new Image();mark.src=newArt+'dream-line.webp';mark.className='special-mark '+special[i];mark.alt='';cell.append(mark);}
+      if(fall)cell.animate([{transform:'translateY(-28px)',opacity:.4},{transform:'translateY(0)',opacity:1}],{duration:260,easing:'cubic-bezier(.2,.7,.3,1)'});
+      board.append(cell);
+    });
+    $('#score').textContent=score.toLocaleString();$('#moves').textContent=moves;$('#charge').style.width=charge+'%';
+    $('#burst').disabled=charge<100||busy||ended;$('#shuffle').disabled=shuffle<=0||busy||ended;$('#shuffleCount').textContent='剩餘 '+shuffle+' 次';
+    $('#goals').innerHTML=goals.map(g=>'<div class="goal"><img class="gemMini" src="'+art+'gem-'+g.color+'.webp" alt="'+names[g.color]+'"><b>'+Math.min(g.got,g.need)+'/'+g.need+'</b></div>').join('');
+  }
+  function exchange(i,j){[a[i],a[j]]=[a[j],a[i]];const si=special[i],sj=special[j];delete special[i];delete special[j];if(si)special[j]=si;if(sj)special[i]=sj;}
+  async function animateSwap(i,j){
+    const A=board.children[i],B=board.children[j],a=A.getBoundingClientRect(),b=B.getBoundingClientRect();
+    await Promise.all([A.animate([{transform:'translate(0,0)'},{transform:'translate('+(b.x-a.x)+'px,'+(b.y-a.y)+'px)'}],{duration:220}).finished,B.animate([{transform:'translate(0,0)'},{transform:'translate('+(a.x-b.x)+'px,'+(a.y-b.y)+'px)'}],{duration:220}).finished]);await window.CxQSession?.waitReady();
+  }
+  async function click(i){
+    if(busy||ended||window.CxQSession?.blocked())return;
+    lastInput=performance.now();
+    if(selected===null){selected=i;render();return;}
+    const j=selected;
+    if(i===j){selected=null;render();return;}
+    if(Math.abs(Math.floor(i/N)-Math.floor(j/N))+Math.abs(i%N-j%N)!==1){selected=i;render();return;}
+    busy=true;await animateSwap(i,j);exchange(i,j);selected=null;
+    let m=R.match(a),combo=false;
+    if(special[i]==='prism'||special[j]==='prism'){
+      combo=true;const both=special[i]==='prism'&&special[j]==='prism',color=special[i]==='prism'?a[j]:a[i];
+      a.forEach((v,k)=>{if(both||v===color)m.add(k);});m.add(i);m.add(j);
+    }else if(special[i]&&special[j]){combo=true;m.add(i);m.add(j);}
+    if(!m.size){render();await animateSwap(i,j);exchange(i,j);busy=false;render();toast('需要三個相同圖案連成一線');CxQ.sound('miss');return;}
+    moves--;await cascade(m,combo?[]:[i,j],combo);busy=false;render();check();
+  }
+  async function cascade(initial,preferred=[],forced=false){
+    let m=initial,combo=1;
+    while(m.size){
+      const made=forced?{}:R.specials(a,special,preferred);
+      m=R.expand(a,special,m);
+      for(const key of Object.keys(made)){special[key]=made[key];m.delete(+key);}
+      render(m);toast((combo>1?combo+' 連鎖！':'消除 '+m.size+' 個')+' · +'+m.size*100*combo);
+      await wait(340);
+      for(const i of m){const g=goals.find(g=>g.color===a[i]);if(g)g.got++;a[i]=-1;delete special[i];}
+      score+=m.size*100*combo;charge=Math.min(100,charge+m.size*5);
+      const nextSpecial={};
+      for(let c=0;c<N;c++){
+        const kept=[];for(let r=N-1;r>=0;r--){const i=r*N+c;if(a[i]>=0)kept.push({v:a[i],s:special[i]});}
+        for(let r=N-1;r>=0;r--){const i=r*N+c,p=kept[N-1-r];a[i]=p?p.v:rnd();if(p?.s)nextSpecial[i]=p.s;}
+      }
+      special=nextSpecial;CxQ.sound('match');render(new Set,true);await wait(280);
+      m=R.match(a);combo++;preferred=[];forced=false;
+    }
+    lastInput=performance.now();
+  }
+  function reshuffle(){
+    const pieces=a.map((v,i)=>({v,s:special[i]}));
+    let tries=0;
+    do{for(let i=pieces.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pieces[i],pieces[j]]=[pieces[j],pieces[i]];}
+      a=pieces.map(p=>p.v);special={};pieces.forEach((p,i)=>{if(p.s)special[i]=p.s;});
+      if(++tries>200){a=Array.from({length:N*N},rnd);special={};pieces.splice(0,pieces.length,...a.map(v=>({v})));}
+    }while(R.match(a).size||!R.move(a,special));selected=null;lastInput=performance.now();
+  }
+  function check(){
+    const win=goals.every(g=>g.got>=g.need);
+    if(win||moves<=0){
+      ended=true;$('#resultTitle').textContent=win?chapters[chapter]+'修復完成！':'再試一次，夢境等著你';
+      $('#resultText').textContent='獲得 '+score.toLocaleString()+' 分 · 剩餘 '+moves+' 步';
+      const best=Math.max(score,CxQ.read('cxq-match-best',0));CxQ.write('cxq-match-best',best);
+      if(win)CxQ.write('cxq-match-chapter',Math.max(chapter+1,CxQ.read('cxq-match-chapter',0)));
+      $('#again').textContent=win&&chapter<3?'前往下一章':'再挑戰一次';
+      $('#again').onclick=()=>{if(win&&chapter<3)chapter++;fresh();};$('#result').hidden=false;CxQ.sound(win?'win':'lose');return;
+    }
+    if(!R.move(a,special)){reshuffle();render();toast('沒有可消除的組合，已免費重整');}
+  }
+  let toastTimer;function toast(t){clearTimeout(toastTimer);$('#toast').textContent=t;toastTimer=setTimeout(()=>$('#toast').textContent='',1900);}
+  board.onclick=e=>{const c=e.target.closest('.cell');if(c)click(+c.dataset.i);};
+  $('#burst').onclick=async()=>{if(charge<100||busy||ended||window.CxQSession?.blocked())return;busy=true;const counts=names.map((_,v)=>a.filter(x=>x===v).length),v=counts.indexOf(Math.max(...counts));charge=0;await cascade(new Set(a.map((x,i)=>x===v?i:-1).filter(i=>i>=0)),[],true);busy=false;render();check();};
+  $('#shuffle').onclick=()=>{if(!shuffle||busy||ended||window.CxQSession?.blocked())return;shuffle--;reshuffle();render();CxQ.sound('flip');};
+  $('#restart').onclick=()=>fresh();$('#again').onclick=()=>fresh();
+  $('#guideBtn').onclick=()=>$('#guide').showModal();$('#guide button').onclick=()=>$('#guide').close();
+  $('#guide p').textContent='交換相鄰寶石，三連消除；四連留下直線魔晶，五連留下彩虹魔晶。彩虹與任意寶石交換可清除同色；兩顆特殊魔晶交換可連動。每章完成三項收集目標，無路可走會免費重整。';
+  const home=document.createElement('button');home.textContent='返回夢境入口';home.onclick=()=>{if(busy)return;$('#result').hidden=true;document.querySelector('.game-entry').hidden=false;document.querySelector('main').inert=true;};$('#result section').append(home);
+  setInterval(()=>{if(busy||ended||window.CxQSession?.blocked()||!document.querySelector('.game-entry[hidden]')||performance.now()-lastInput<6500)return;const hint=R.move(a,special);if(hint)for(const i of hint)board.children[i]?.animate([{filter:'brightness(1)',transform:'scale(1)'},{filter:'brightness(1.7)',transform:'scale(1.08)'},{filter:'brightness(1)',transform:'scale(1)'}],{duration:1000});lastInput=performance.now();},1200);
+  CxQ.configure({music:'heavenly'});
+  addEventListener('cxq-start',e=>{mode=e.detail.mode;chapter=Math.max(0,Math.min(3,Number(e.detail.chapter)||0));fresh();});
+  fresh();
+})();
