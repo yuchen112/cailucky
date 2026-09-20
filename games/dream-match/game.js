@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const R=DreamRules,N=R.N,$=s=>document.querySelector(s),board=$('#board');
-  const names=['愛心','水晶','星光','夢晶','葉芽','琥珀'],art='../storybook/art-20260914/',newArt='../storybook/art-20260920-batch/';
+  const names=['愛心','水滴','星光','月光','葉芽','暖陽'],art='../storybook/art-studio/',newArt='../storybook/art-20260920-batch/';
   let mode='classic',chapter=0,a=[],special={},selected=null,moves=0,score=0,charge=0,shuffle=2,goals=[],busy=false,ended=false,lastInput=0;
   const rnd=()=>Math.floor(Math.random()*6),wait=async ms=>{await new Promise(r=>setTimeout(r,ms));await window.CxQSession?.waitReady();};
   const chapters=['星光花園','月影圖書室','雲端鐘樓','極光夢境'];
@@ -19,14 +19,14 @@
       const cell=document.createElement('button');cell.className='cell'+(i===selected?' selected':'')+(pop.has(i)?' pop':'');
       cell.dataset.i=i;cell.setAttribute('aria-label',names[v]+' '+(special[i]==='prism'?'彩虹魔晶':special[i]?'直線魔晶':'')+' 第'+(Math.floor(i/N)+1)+'列第'+(i%N+1)+'格');
       const gem=document.createElement('img');gem.className='gem';gem.alt='';gem.draggable=false;
-      gem.src=special[i]==='prism'?newArt+'dream-prism.webp':art+'gem-'+v+'.webp';cell.append(gem);
+      gem.src=special[i]==='prism'?newArt+'dream-prism.webp':art+'dream-gem-'+v+'.webp';cell.append(gem);
       if(special[i]&&special[i]!=='prism'){const mark=new Image();mark.src=newArt+'dream-line.webp';mark.className='special-mark '+special[i];mark.alt='';cell.append(mark);}
       if(fall)cell.animate([{transform:'translateY(-28px)',opacity:.4},{transform:'translateY(0)',opacity:1}],{duration:260,easing:'cubic-bezier(.2,.7,.3,1)'});
       board.append(cell);
     });
     $('#score').textContent=score.toLocaleString();$('#moves').textContent=moves;$('#charge').style.width=charge+'%';
     $('#burst').disabled=charge<100||busy||ended;$('#shuffle').disabled=shuffle<=0||busy||ended;$('#shuffleCount').textContent='剩餘 '+shuffle+' 次';$('#shuffle small').textContent='剩餘 '+shuffle+' 次';$('#burst small').textContent=charge>=100?'點擊施放':'能量 '+charge+'%';
-    $('#goals').innerHTML=goals.map(g=>'<div class="goal"><img class="gemMini" src="'+art+'gem-'+g.color+'.webp" alt="'+names[g.color]+'"><b>'+Math.min(g.got,g.need)+'/'+g.need+'</b></div>').join('');
+    $('#goals').innerHTML=goals.map(g=>'<div class="goal"><img class="gemMini" src="'+art+'dream-gem-'+g.color+'.webp" alt="'+names[g.color]+'"><b>'+Math.min(g.got,g.need)+'/'+g.need+'</b></div>').join('');
   }
   function exchange(i,j){[a[i],a[j]]=[a[j],a[i]];const si=special[i],sj=special[j];delete special[i];delete special[j];if(si)special[j]=si;if(sj)special[i]=sj;}
   async function animateSwap(i,j){

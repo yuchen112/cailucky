@@ -1,6 +1,6 @@
 'use strict';
 const G=(()=>{
- const $=s=>document.querySelector(s),clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),roles=['四葉草鈴鐺','療癒毛毯','森林葉帽','回憶照片','慶典氣球','月夜貓頭鷹','守護鑰匙','心光夢線','雨露花傘','星願信封'];
+ const $=s=>document.querySelector(s),clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),roles=['幸運','療癒','成長','回憶','快樂','夜晚陪伴','信任','夢想','悲傷','希望'];
  let cfg={},data={},music,unlocked=false,held=false,active=false,pauseFn=()=>{},lastSfx={},pool=new Map();const images={};const roleFiles=['luck','healing','growth','memory','joy','night','trust','dream','sadness','hope'].map(n=>'../../assets/characters/cxq-role-'+n+'.webp');
  const read=(k,f)=>{try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}};
  function save(){try{localStorage.setItem('cxq-'+cfg.id+'-v1',JSON.stringify(data));return true}catch{toast('瀏覽器無法儲存，這次仍可繼續遊玩。');return false}}

@@ -1,0 +1,145 @@
+/* Independent AI raster surfaces. No CSS-drawn scenery, sprites or decorative icons. */
+body[data-game=merge]{--studio-panel:url('art-studio/merge-panel.webp')}
+body[data-game=magic-bubble]{--studio-panel:url('art-studio/bubble-panel.webp')}
+body[data-game=dream-match]{--studio-panel:url('art-studio/dream-panel.webp')}
+body[data-game=fairytale-defense]{--studio-panel:url('art-studio/tower-panel.webp')}
+body[data-game=whack]{--studio-panel:url('art-studio/whack-panel.webp')}
+body[data-game=flappy]{--studio-panel:url('art-studio/flappy-panel.webp')}
+body[data-game=dino]{--studio-panel:url('art-studio/dino-panel-opaque.webp')}
+body[data-game=mines]{--studio-panel:url('art-studio/mines-panel.webp')}
+.studio{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+.studio input,.studio textarea{user-select:text;-webkit-user-select:text}
+.studio *{box-sizing:border-box}
+.studio button,.studio select{font-size:18px;line-height:1.4;min-height:52px}
+.studio button:focus-visible{outline:3px solid #fff2a1;outline-offset:2px}
+.studio :is(dialog,.menu-sheet,.overlay>section,.result>div){background:var(--studio-panel) center/100% 100% no-repeat!important;background-color:transparent!important;color:#fff7e8!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:32px!important;max-height:90dvh;font-size:18px;line-height:1.6}
+.studio :is(dialog,.menu-sheet,.overlay>section) :is(h2,h3,p,label,small){color:#fff7e8!important;text-shadow:none!important}
+.studio dialog::backdrop{background:#071321cc;backdrop-filter:none}
+.studio dialog{overflow:hidden!important;padding:28px!important}
+.studio .studio-dialog-body{max-height:calc(90dvh - 56px);overflow:auto;overscroll-behavior:contain;padding:4px 6px;scrollbar-gutter:stable}
+.studio .studio-dialog-body .sheet-header{top:-4px}
+.studio #audio-dialog label,.studio #cxq-audio-panel label{margin:12px 0!important}
+.studio #audio-dialog form>button,.studio #cxq-audio-panel form>button{margin:8px auto!important}
+.studio .choice-card{background:var(--studio-panel) center/100% 100% no-repeat!important;color:#fff7e8!important;padding:14px!important}
+.studio .role-choice{background:var(--studio-panel) center/100% 100% no-repeat!important;color:#fff7e8!important}
+.studio .role-choice[aria-pressed=true],.studio .choice-card[aria-pressed=true]{outline:3px solid #ffe187;outline-offset:-4px}
+.studio .sheet-content .role-choice span:last-child{font-size:20px}
+.studio .sheet-content .role-choice .role-art{height:116px}
+.studio .sheet-header{position:sticky;top:-32px;z-index:2;background:var(--studio-panel) center/100% 100% no-repeat;padding:12px 8px!important;gap:8px}
+.studio .sheet-header h2{font-size:23px;margin:0}.studio .sheet-close{min-width:78px;padding:8px}
+.studio .session-settings .session-actions{grid-template-columns:1fr}
+.studio .session-settings label{flex-wrap:wrap;gap:6px}.studio .session-settings label input[type=range]{flex:1;min-width:90px}
+.studio #sound,.studio #cxq-audio{width:60px!important;height:60px!important;min-height:60px!important;padding:4px!important}
+.studio .topbar{display:none!important}
+.studio #home.director-home,.studio #home,.studio .game-entry.director-entry{background-size:cover!important;background-position:center!important;filter:none!important;max-width:none!important}
+.studio #home.director-home,.studio[data-game=whack] #home,.studio .director-entry article{display:grid!important;grid-template-rows:minmax(0,1fr) auto!important;gap:0!important;width:100%!important;height:100dvh!important;min-height:0!important;padding:max(64px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))!important;overflow:hidden!important}
+.studio-showcase{display:grid;grid-template-rows:auto minmax(80px,1fr) auto;min-height:0;position:relative;align-items:center;justify-items:center;align-self:stretch;min-width:0;width:100%;height:100%;overflow:hidden}
+.studio #home.director-home,.studio[data-game=whack] #home,.studio .director-entry article{grid-template-columns:minmax(0,1fr)!important;align-content:stretch!important;align-items:stretch!important;justify-content:stretch!important}
+.studio .studio-showcase :is(.home-title,.entry-title){position:static!important;inset:auto!important;width:100%!important;height:auto!important;text-align:center!important;padding:0!important;min-height:0!important}
+.studio .studio-showcase :is(.home-title,.entry-title) small{display:block;font:700 16px/1.4 'Microsoft JhengHei',sans-serif;letter-spacing:2px;color:#fff6df;text-shadow:0 1px 3px #15303b}
+.studio .studio-showcase :is(.home-title,.entry-title) h1,.studio[data-game=whack] .studio-showcase h1{position:static!important;inset:auto!important;width:100%!important;padding:0!important;margin:4px 0!important;height:clamp(80px,13dvh,140px)!important;min-height:0!important;line-height:1!important;background:none!important}
+.studio .studio-title{display:block;width:100%;height:100%;object-fit:contain}
+.studio .studio-showcase .cast-stage{position:relative!important;inset:auto!important;width:100%!important;height:100%!important;min-height:0!important;gap:2px!important;display:flex;align-items:center;justify-content:center}
+.studio .cast-stage .cast-hero{height:100%!important;width:calc(100% - 104px)!important;max-width:360px;min-height:0!important}
+.studio .cast-stage .cast-hero img{height:100%!important;width:100%!important;object-fit:contain}
+.studio .cast-stage .cast-arrow{width:52px;height:64px;flex:0 0 52px;background:var(--button-art) center/100% 100% no-repeat!important;padding:6px}
+.studio .cast-stage .cast-arrow .menu-icon{width:32px;height:32px}
+.studio .studio-showcase .cast-caption{position:static!important;inset:auto!important;width:100%!important;min-height:68px!important;height:auto!important;padding:9px 24px!important;background:var(--studio-panel) center/100% 100% no-repeat!important;color:#fff7e8!important;display:flex!important;flex-direction:column;justify-content:center}
+.studio .studio-showcase .cast-caption strong,.studio .studio-showcase .cast-caption small{color:#fff7e8!important;text-shadow:none!important;line-height:1.4}
+.studio .studio-showcase .cast-caption strong{font-size:23px!important}.studio .studio-showcase .cast-caption small{font-size:16px!important}
+.studio-controls{display:grid;gap:8px;min-height:0;margin:8px auto 0;width:100%;max-width:540px;align-content:end}
+.studio .studio-controls :is(.mode-ticket,.lobby-start,.lobby-dock){position:static!important;inset:auto!important;margin:0!important;width:100%!important;max-width:none!important;height:auto!important;min-height:58px!important;padding:8px 24px!important}
+.studio .studio-controls .mode-ticket{display:flex;justify-content:center;align-items:center;gap:12px}
+.studio .studio-controls .mode-ticket span{display:flex;flex-direction:column;align-items:center}.studio .studio-controls .mode-ticket small{font-size:16px;line-height:1.25}
+.studio .studio-controls .lobby-start,.studio .studio-controls .studio-start,.studio[data-game=whack] #start{font-size:25px!important;min-height:64px!important;line-height:1.4!important;display:flex!important;justify-content:center;align-items:center;letter-spacing:2px;padding:10px 24px!important}
+.studio .studio-controls .lobby-dock{display:flex;gap:0;background:var(--studio-panel) center/100% 100% no-repeat!important;padding:8px 16px!important;min-height:74px!important}
+.studio .studio-controls .lobby-dock .dock-button{min-width:0;min-height:54px!important;max-width:none;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:16px!important;color:#fff7e8!important;text-shadow:none!important;gap:1px}
+.studio .studio-controls .lobby-dock .menu-icon{width:28px;height:28px}
+.studio .director-entry .entry-cast{position:static!important;inset:auto!important;height:100%!important;width:76%!important;min-height:0;display:flex;justify-content:center;align-items:end;grid-row:2/4}
+.studio .entry-cast img{width:100%;height:100%;object-fit:contain}
+.studio .studio-instructions{display:block!important;position:static!important;inset:auto!important;margin:0!important;padding:12px 22px!important;background:var(--studio-panel) center/100% 100% no-repeat!important;color:#fff7e8!important;font-size:17px!important;line-height:1.5!important;text-align:center;max-width:none!important;width:100%!important;height:auto!important}
+.studio .studio-controls>label{position:static!important;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:18px;color:#fff7e8!important;background:var(--studio-panel) center/100% 100% no-repeat;padding:8px 22px;width:100%!important;height:auto!important;margin:0!important;min-height:60px}
+.studio .studio-controls select{background:var(--button-art) center/100% 100% no-repeat!important;color:var(--ink)!important;border:0;min-height:48px;max-width:66%;font-size:18px;padding:6px 16px}
+.studio .studio-controls select option{color:#172633;background:#fff9eb}
+.studio .studio-help{height:50px;min-height:50px!important;font-size:18px!important;padding:8px}
+.studio[data-game=whack] .studio-showcase{grid-template-rows:22px auto minmax(0,1fr)}
+.studio[data-game=whack] .studio-showcase>.eyebrow{position:static!important;width:100%;text-align:center;font-size:16px;color:#233b26;padding:0;margin:0}
+.studio[data-game=whack] .mascot{position:static!important;width:100%!important;height:100%!important;min-height:0;display:flex;align-items:end;overflow:hidden}
+.studio[data-game=whack] .mascot .sprite{max-height:100%;height:100%;object-fit:contain}
+.studio[data-game=whack] #home>.studio-controls{position:static!important;width:100%!important;height:auto!important;margin:0!important;padding:0!important;background:none!important;gap:6px}
+.studio[data-game=whack] #home>.subtitle{display:none}
+.studio[data-game=whack] #home .modes{margin:0;gap:8px}.studio[data-game=whack] #home .modes button{font-size:18px;padding:8px}
+.studio[data-game=whack] #home .studio-controls>h2{display:none}
+.studio[data-game=whack] #home #records{width:100%;margin:0;height:50px;min-height:50px;font-size:18px}
+.studio[data-game=whack] #home #start{margin:0;width:100%;height:64px}
+.studio[data-game=whack] #rule{display:none!important}
+.studio[data-game=magic-bubble]{background:#052b51 url('art-studio/bubble-field.webp') center/cover fixed!important}
+.studio[data-game=magic-bubble] .board{background:none!important}.studio[data-game=magic-bubble] .board canvas{background:none!important}
+.studio[data-game=dream-match]{background:#101334 url('art-studio/dream-field.webp') center/cover fixed!important}
+.studio[data-game=dream-match] .boardWrap{background:var(--studio-panel) center/100% 100% no-repeat!important;padding:12px!important}
+.studio[data-game=dream-match] .mission,.studio[data-game=dream-match] .powers{background:var(--studio-panel) center/100% 100% no-repeat!important;color:#fff7e8!important}
+.studio[data-game=dream-match] .cell{border:0!important;border-radius:0!important;box-shadow:none!important}
+.studio[data-game=dream-match] .cell{background:transparent url('art-studio/dream-cell.webp') center/contain no-repeat!important}
+.studio[data-game=dream-match] .cell .gem{width:84%;height:84%;object-fit:contain}
+.studio[data-game=dream-match] .boardWrap{padding:18px!important}
+.studio[data-game=dream-match] #goals{align-self:center;height:32px}
+.studio[data-game=dream-match] .mission{grid-template-rows:32px 32px!important;padding:10px 24px!important}
+.studio[data-game=dream-match] .mission>img{grid-column:1;grid-row:1!important;height:32px!important;width:32px!important}
+.studio[data-game=dream-match] .mission .score{grid-row:1!important}
+.studio[data-game=dream-match] #goals{grid-row:2!important;grid-column:1/-1!important;margin:0}
+.studio[data-game=dream-match] .goal{margin:0;align-items:center}
+.studio[data-game=dream-match] .powers{padding:10px!important}.studio[data-game=dream-match] .score b{color:#fff7e8!important}
+.studio[data-game=merge] .workmate,.studio[data-game=merge] .hud,.studio[data-game=merge] #status{background:var(--studio-panel) center/100% 100% no-repeat!important;color:#fff7e8!important}
+.studio[data-game=merge] .workbench{max-width:none!important}.studio[data-game=merge] #drop{font-size:22px!important}
+.studio[data-game=merge] .workbench canvas{touch-action:none;display:block}
+.studio .session-settings{font-size:18px}
+.studio[data-game=fairytale-defense] .hud>div,.studio[data-game=fairytale-defense] aside{background:var(--studio-panel) center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+.studio[data-game=fairytale-defense] .hud>div{padding:6px 14px}.studio[data-game=fairytale-defense] aside{padding:8px!important}
+.studio[data-game=fairytale-defense] .tower{background:var(--button-art) center/100% 100% no-repeat!important}
+.studio[data-game=fairytale-defense] .tower b{font-size:18px!important}.studio[data-game=fairytale-defense] .tower em{font-size:17px!important}
+.studio[data-game=magic-bubble] .aimHint{background:var(--studio-panel) center/100% 100% no-repeat!important;padding:8px 18px;color:#fff6e8}
+.studio[data-game=whack] .studio-showcase>.eyebrow{background:none!important}
+.studio[data-game=mines] .field-notes{background:var(--studio-panel) center/100% 100% no-repeat!important;padding:20px 14px!important;gap:8px;color:#fff7e8!important}
+.studio[data-game=mines] .field-notes .hud{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;height:auto;min-height:66px;padding:0!important;background:none!important;width:100%;color:#fff7e8!important}
+.studio[data-game=mines] .field-notes .hud small{font-size:16px!important;color:#fff7e8!important;white-space:nowrap}
+.studio[data-game=mines] .field-notes .hud strong{font:700 21px/1.4 system-ui!important;color:#fff7e8!important;white-space:nowrap}
+.studio[data-game=mines] .field-notes .tools{display:flex;flex-wrap:wrap;height:auto;gap:6px;justify-content:center;padding:0!important}
+.studio[data-game=mines] .field-notes .tools button{flex:1;min-width:68px;min-height:50px;font-size:19px}
+.studio[data-game=mines] .field-notes .tools label{font-size:17px!important;color:#fff7e8!important;margin:0;display:flex;align-items:center;gap:6px}
+.studio[data-game=mines] .field-notes .tools select{font-size:17px!important;min-height:44px}
+.studio[data-game=mines] #mode-label,.studio[data-game=mines] .studio-mines-hint{display:none!important}
+.studio[data-game=mines] .field-notes button{margin:0;min-height:48px;font-size:18px}
+.studio[data-game=mines] .map-area{grid-template-rows:minmax(0,1fr)!important;position:relative}
+.studio[data-game=mines] #map-scroll{height:100%!important;max-height:none!important;display:grid;align-items:start;justify-items:center}
+.studio[data-game=mines] #board{margin:0!important;align-self:start}
+.studio[data-game=mines] #status{position:absolute;bottom:4px;left:5%;right:5%;opacity:0;pointer-events:none;transition:opacity .3s;background:var(--studio-panel) center/100% 100% no-repeat!important;padding:20px;color:#fff7e8!important;font-size:18px!important;z-index:5}
+.studio[data-game=mines] #status.studio-feedback{opacity:1}
+.studio[data-game=mines] .field-notes.show-hint .studio-mines-hint{display:block!important;color:#fff7e8!important;font-size:17px}
+@media(orientation:landscape){
+ .studio #home.director-home,.studio .director-entry article{grid-template-columns:minmax(0,1fr) minmax(300px,.85fr)!important;grid-template-rows:minmax(0,1fr)!important;gap:24px!important;padding:max(12px,env(safe-area-inset-top)) max(76px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))!important}
+ .studio-showcase{grid-template-rows:auto minmax(0,1fr) auto}
+ .studio .studio-showcase :is(.home-title,.entry-title) h1{height:clamp(72px,22dvh,130px)!important}
+ .studio .studio-showcase .cast-caption{min-height:60px!important;padding:6px 20px!important}
+ .studio-controls{align-self:center;gap:10px;max-height:100%;margin:0;overflow:auto}
+ .studio .studio-controls .lobby-dock{min-height:66px!important}
+ .studio .studio-controls .lobby-dock .dock-button{flex-direction:row;gap:4px;font-size:16px!important}
+ .studio[data-game=fairytale-defense] .studio-instructions{font-size:16px!important;line-height:1.4!important;padding:10px 18px!important}
+ .studio[data-game=fairytale-defense] .studio-controls{gap:6px}.studio[data-game=fairytale-defense] .studio-controls>label{min-height:52px;padding:4px 20px}
+ .studio[data-game=fairytale-defense] .studio-help{display:none}.studio[data-game=fairytale-defense] .entry-cast{width:90%!important}
+}
+@media(max-height:650px) and (orientation:portrait){
+ .studio #home.director-home,.studio[data-game=whack] #home,.studio .director-entry article{padding-top:58px!important;padding-bottom:6px!important}
+ .studio .studio-showcase :is(.home-title,.entry-title) h1,.studio[data-game=whack] .studio-showcase h1{height:72px!important}
+ .studio .studio-showcase :is(.home-title,.entry-title) small{display:none}
+ .studio .studio-showcase .cast-caption{min-height:54px!important;padding:5px 20px!important}
+ .studio .studio-controls{gap:4px;margin-top:4px}.studio .studio-controls .lobby-dock{min-height:58px!important;padding:4px 12px!important}
+ .studio .studio-controls .lobby-dock .dock-button{min-height:48px!important}
+ .studio .studio-controls .lobby-start,.studio .studio-controls .studio-start{min-height:56px!important;height:56px!important}
+ .studio .studio-controls .mode-ticket{min-height:52px!important;padding:5px 18px!important}
+ .studio .studio-instructions{font-size:16px!important;padding:10px 20px!important}
+ .studio .studio-controls>label{min-height:54px!important;padding:4px 18px}
+ .studio .studio-help{height:46px;min-height:46px!important}
+ .studio[data-game=whack] .studio-showcase>.eyebrow{display:none}.studio[data-game=whack] .studio-showcase{grid-template-rows:auto minmax(0,1fr)}
+}
+@media(prefers-reduced-motion:no-preference){.studio .entry-cast img{animation:studio-hover 4s ease-in-out infinite}@keyframes studio-hover{50%{transform:translateY(-6px)}}}
+.studio #home[hidden],.studio #home.director-home[hidden],.studio #play[hidden],.studio .game-entry.director-entry[hidden],.studio .studio-controls [hidden]{display:none!important}
