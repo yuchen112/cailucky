@@ -1,0 +1,157 @@
+{
+  "version": "20260921-polish1",
+  "settings": [
+    {
+      "id": "magic-bubble",
+      "result": "\"{\\\"dialog\\\":true,\\\"plainButtons\\\":[],\\\"nativeRanges\\\":0,\\\"broken\\\":0}\"",
+      "errors": ""
+    },
+    {
+      "id": "dream-match",
+      "result": "\"{\\\"dialog\\\":true,\\\"plainButtons\\\":[],\\\"nativeRanges\\\":0,\\\"broken\\\":0}\"",
+      "errors": ""
+    },
+    {
+      "id": "whack",
+      "result": "\"{\\\"dialog\\\":true,\\\"plainButtons\\\":[],\\\"nativeRanges\\\":0,\\\"broken\\\":0}\"",
+      "errors": ""
+    },
+    {
+      "id": "merge",
+      "result": "\"{\\\"dialog\\\":true,\\\"plainButtons\\\":[],\\\"nativeRanges\\\":0,\\\"broken\\\":0}\"",
+      "errors": ""
+    },
+    {
+      "id": "flappy",
+      "result": "\"{\\\"dialog\\\":true,\\\"plainButtons\\\":[],\\\"nativeRanges\\\":0,\\\"broken\\\":0}\"",
+      "errors": ""
+    },
+    {
+      "id": "fairytale-defense",
+      "result": "\"{\\\"dialog\\\":true,\\\"plainButtons\\\":[],\\\"nativeRanges\\\":0,\\\"broken\\\":0}\"",
+      "errors": ""
+    },
+    {
+      "id": "dino",
+      "result": "\"{\\\"dialog\\\":true,\\\"plainButtons\\\":[],\\\"nativeRanges\\\":0,\\\"broken\\\":0}\"",
+      "errors": ""
+    },
+    {
+      "id": "mines",
+      "result": "\"{\\\"dialog\\\":true,\\\"plainButtons\\\":[],\\\"nativeRanges\\\":0,\\\"broken\\\":0}\"",
+      "errors": ""
+    }
+  ],
+  "small": [
+    {
+      "id": "merge",
+      "home": "\"{\\\"overflow\\\":false,\\\"start\\\":{\\\"visible\\\":true,\\\"disabled\\\":false},\\\"selects\\\":0}\"",
+      "confirm": true,
+      "returned": "true",
+      "errors": ""
+    },
+    {
+      "id": "magic-bubble",
+      "home": "\"{\\\"overflow\\\":false,\\\"start\\\":{\\\"visible\\\":true,\\\"disabled\\\":false},\\\"selects\\\":0}\"",
+      "confirm": true,
+      "returned": "true",
+      "errors": ""
+    },
+    {
+      "id": "dream-match",
+      "home": "\"{\\\"overflow\\\":false,\\\"start\\\":{\\\"visible\\\":true,\\\"disabled\\\":false},\\\"selects\\\":0}\"",
+      "confirm": true,
+      "returned": "true",
+      "errors": ""
+    },
+    {
+      "id": "whack",
+      "home": "\"{\\\"overflow\\\":false,\\\"start\\\":{\\\"visible\\\":true,\\\"disabled\\\":false},\\\"selects\\\":0}\"",
+      "confirm": true,
+      "returned": "true",
+      "errors": ""
+    },
+    {
+      "id": "flappy",
+      "home": "\"{\\\"overflow\\\":false,\\\"start\\\":{\\\"visible\\\":true,\\\"disabled\\\":false},\\\"selects\\\":0}\"",
+      "confirm": true,
+      "returned": "true",
+      "errors": ""
+    },
+    {
+      "id": "fairytale-defense",
+      "home": "\"{\\\"overflow\\\":false,\\\"start\\\":{\\\"visible\\\":true,\\\"disabled\\\":false},\\\"selects\\\":0}\"",
+      "confirm": true,
+      "returned": "true",
+      "errors": ""
+    },
+    {
+      "id": "dino",
+      "home": "\"{\\\"overflow\\\":false,\\\"start\\\":{\\\"visible\\\":true,\\\"disabled\\\":false},\\\"selects\\\":0}\"",
+      "confirm": true,
+      "returned": "true",
+      "errors": ""
+    },
+    {
+      "id": "mines",
+      "home": "\"{\\\"overflow\\\":false,\\\"start\\\":{\\\"visible\\\":true,\\\"disabled\\\":false},\\\"selects\\\":0}\"",
+      "confirm": true,
+      "returned": "true",
+      "errors": ""
+    }
+  ],
+  "gameplay": [
+    {
+      "id": "merge",
+      "result": "\"{\\\"gradients\\\":[],\\\"nativeSelects\\\":0,\\\"overflow\\\":false}\"",
+      "gate": "true",
+      "errors": ""
+    },
+    {
+      "id": "magic-bubble",
+      "result": "\"{\\\"gradients\\\":[],\\\"nativeSelects\\\":0,\\\"overflow\\\":false}\"",
+      "gate": "true",
+      "errors": ""
+    },
+    {
+      "id": "dream-match",
+      "result": "\"{\\\"gradients\\\":[],\\\"nativeSelects\\\":0,\\\"overflow\\\":false}\"",
+      "gate": "true",
+      "errors": ""
+    },
+    {
+      "id": "whack",
+      "result": "\"{\\\"gradients\\\":[],\\\"nativeSelects\\\":0,\\\"overflow\\\":false}\"",
+      "gate": "true",
+      "errors": ""
+    },
+    {
+      "id": "flappy",
+      "result": "\"{\\\"gradients\\\":[],\\\"nativeSelects\\\":0,\\\"overflow\\\":false}\"",
+      "gate": "true",
+      "errors": ""
+    },
+    {
+      "id": "fairytale-defense",
+      "result": "\"{\\\"gradients\\\":[],\\\"nativeSelects\\\":0,\\\"overflow\\\":false}\"",
+      "gate": "true",
+      "errors": ""
+    },
+    {
+      "id": "dino",
+      "result": "\"{\\\"gradients\\\":[],\\\"nativeSelects\\\":0,\\\"overflow\\\":false}\"",
+      "gate": "true",
+      "errors": ""
+    },
+    {
+      "id": "mines",
+      "result": "\"{\\\"gradients\\\":[],\\\"nativeSelects\\\":0,\\\"overflow\\\":false}\"",
+      "gate": "true",
+      "errors": ""
+    }
+  ],
+  "limits": [
+    "Chromium viewport emulation, not physical mobile hardware",
+    "No claim that every possible board or win condition was exercised"
+  ]
+}

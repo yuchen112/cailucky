@@ -4,7 +4,9 @@
   const palette=['ruby','aqua','gold','violet','leaf','orange'];
   const load=src=>{const q=new Image;q.src=src;return q;};
   const art=palette.map(n=>load('../storybook/art-20260920/bubble-'+n+'.webp'));
-  const launcher=load('../../assets/characters/cxq-role-dream.webp'),burst=load('../storybook/art-20260914/explosion.webp'),rescueArt=load('../../assets/characters/cxq-role-hope.webp');
+  const launcher=load('../../assets/characters/cxq-role-dream.webp'),burst=load('../storybook/art-polish/bubble-burst.webp'),rescueArt=load('../../assets/characters/cxq-role-hope.webp');
+  let firedAt=-1000;
+  const reduced=()=>document.body.classList.contains('reduced-motion')||matchMedia('(prefers-reduced-motion: reduce)').matches;
   let grid=[],tokens=new Set,effects=[],mode='classic',chapter=0,score=0,shots=0,skill=0,ball=0,next=0,over=false,aim=null,flight=null,last=0,clock=0,pending=null,collected=0,rescued=0;
   const key=(r,q)=>r+','+q,pos=(r,q)=>({x:56+q*70+(r%2)*35,y:46+r*61});
   const near=(r,q)=>[[r,q-1],[r,q+1],[r-1,q-(r%2?0:1)],[r-1,q+(r%2?1:0)],[r+1,q-(r%2?0:1)],[r+1,q+(r%2?1:0)]].filter(([r,q])=>r>=0&&r<ROWS&&q>=0&&q<C);
@@ -77,17 +79,17 @@
       let target=null;for(let k=0;k<450;k++){const hit=step(p,4);x.lineTo(p.x,p.y);if(hit||p.y<=46){target=destination(p.x,p.y,hit);break;}}
       x.stroke();x.setLineDash([]);if(target){const q=pos(...target);x.globalAlpha=.45;bubble(q.x,q.y,ball);x.globalAlpha=1;}
     }
-    if(launcher.naturalWidth)x.drawImage(launcher,255,OY-135,210,255);
-    if(!flight)bubble(OX,OY,ball);else bubble(flight.x,flight.y,ball);
+    if(launcher.naturalWidth){const kick=reduced()?0:Math.max(0,1-(clock-firedAt)/260);x.save();x.translate(OX,OY+105);x.rotate(-.08*Math.sin(kick*Math.PI));x.drawImage(launcher,-105,-240+Math.sin(kick*Math.PI)*8,210,255);x.restore();}
+    if(!flight)bubble(OX,OY,ball);else{if(!reduced()){for(let i=3;i>0;i--){x.save();x.globalAlpha=.18/i;bubble(flight.x-flight.vx*i*19,flight.y-flight.vy*i*19,ball,R*(1-i*.18));x.restore();}}bubble(flight.x,flight.y,ball);}
     effects=effects.filter(e=>clock-e.born<(e.fall?900:500));
-    for(const e of effects){const t=(clock-e.born)/1000;x.save();x.globalAlpha=Math.max(0,1-t/(e.fall?.9:.5));if(e.fall)bubble(e.x,e.y+470*t*t,e.v);else if(burst.naturalWidth){const s=70+t*90;x.drawImage(burst,e.x-s/2,e.y-s/2,s,s);}x.restore();}
+    for(const e of effects){const t=(clock-e.born)/1000;x.save();x.globalAlpha=Math.max(0,1-t/(e.fall?.9:.5));if(e.fall)bubble(e.x,e.y+470*t*t,e.v);else if(burst.naturalWidth){const s=reduced()?70:70+t*90;x.drawImage(burst,e.x-s/2,e.y-s/2,s,s);}x.restore();}
   }
   let feedbackTimer;function feedback(t){clearTimeout(feedbackTimer);$('#aimHint').textContent=t;feedbackTimer=setTimeout(()=>$('#aimHint').textContent=goal()+' · 按住瞄準，放開發射',2200);}
   function sync(){$('#score').textContent=score.toLocaleString();$('#shots').textContent=shots;$('#skillFill').style.width=skill+'%';$('#skill').disabled=skill<100||over;$('#skill').textContent=skill>=100?'施放星願魔法':'星願魔法 '+skill+'%';$('#next').style.backgroundImage="url('../storybook/art-20260920/bubble-"+palette[next]+".webp')";}
   const pointer=e=>{const b=c.getBoundingClientRect();return{x:(e.clientX-b.left)*c.width/b.width,y:(e.clientY-b.top)*c.height/b.height};};
   c.onpointerdown=e=>{if(over||flight||window.CxQSession?.blocked())return;e.preventDefault();aim=pointer(e);c.setPointerCapture(e.pointerId);};
   c.onpointermove=e=>{if(aim)aim=pointer(e);};
-  c.onpointerup=e=>{if(!aim)return;const p=pointer(e);aim=null;if(over||flight||window.CxQSession?.blocked()||p.y>OY-60)return;flight=velocity(p);shots--;sync();};
+  c.onpointerup=e=>{if(!aim)return;const p=pointer(e);aim=null;if(over||flight||window.CxQSession?.blocked()||p.y>OY-60)return;flight=velocity(p);firedAt=clock;shots--;sync();};
   c.onpointercancel=()=>aim=null;
   function swap(){if(over||flight||window.CxQSession?.blocked())return;[ball,next]=[next,ball];sync();CxQ.sound('flip');}
   $('#next').tabIndex=0;$('#next').setAttribute('role','button');$('#next').setAttribute('aria-label','交換目前與下一顆泡泡');$('#next').onclick=swap;$('#next').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();swap();}};

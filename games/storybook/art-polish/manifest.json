@@ -1,0 +1,100 @@
+[
+  {
+    "name": "control-thumb",
+    "prompt": "Use case: stylized-concept. Asset type: one independent raster mobile game UI component. ONE round pearl-gold and turquoise crystal thumb knob for a game volume slider. Square canvas, circular silhouette fills 88%. Soft 3D storybook enamel, clear edge. No track, no letters. Premium handcrafted painted 3D storybook style matching CxQ games. Genuine transparent background. Entire isolated single asset, NOT a sheet, NO multiple variants, no text or watermark. No cropping needed.",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-14b4b146-3255-43b1-984b-e4f4ffdcf076.png",
+    "method": "built-in imagegen; independent full-image export; no slicing"
+  },
+  {
+    "name": "control-track",
+    "prompt": "Use case: stylized-concept. Asset type: one independent raster mobile game UI component. ONE horizontal recessed volume slider rail, thin brass rim, dark teal interior, width to height 12:1, centered on a wide 3:1 transparent canvas. Keep the rail near middle, minimal detail, no knob, no markings or text. Premium handcrafted painted 3D storybook style matching CxQ games. Genuine transparent background. Entire isolated single asset, NOT a sheet, NO multiple variants, no text or watermark. No cropping needed.",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-8b2a100c-c2b9-41a5-aa3a-86bc79511803.png",
+    "method": "built-in imagegen; independent full-image export; no slicing"
+  },
+  {
+    "name": "check-on",
+    "prompt": "Use case: stylized-concept. Asset type: one independent raster mobile game UI component. ONE rounded square ivory-enamel and gold game checkbox with a big emerald checkmark, square canvas, object fills 86%, front view. No text, no other objects. Premium handcrafted painted 3D storybook style matching CxQ games. Genuine transparent background. Entire isolated single asset, NOT a sheet, NO multiple variants, no text or watermark. No cropping needed.",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-313af344-1d8b-4ef4-9b01-1ffbfc212d41.png",
+    "method": "built-in imagegen; independent full-image export; no slicing"
+  },
+  {
+    "name": "check-off",
+    "prompt": "Use case: stylized-concept. Asset type: one independent raster mobile game UI component. ONE rounded square ivory-enamel and gold game checkbox, empty dark navy inset center, square canvas, object fills 86%, front view. No checkmark, no text, no other objects. Premium handcrafted painted 3D storybook style matching CxQ games. Genuine transparent background. Entire isolated single asset, NOT a sheet, NO multiple variants, no text or watermark. No cropping needed.",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-dac707fe-a388-4688-9d86-98e4e9b3d2ac.png",
+    "method": "built-in imagegen; independent full-image export; no slicing"
+  },
+  {
+    "name": "bubble-banner",
+    "prompt": "Use case: stylized-concept. Asset type: one independent raster mobile game UI component. ONE horizontal 4:1 message plaque, turquoise pearl ceramic trim and opaque deep navy center, front view. Thin clean borders 6% height, large quiet text safe center. Wide 3:1 canvas minimal transparent margins. No letters, no buttons, no ornaments in center. Premium handcrafted painted 3D storybook style matching CxQ games. Genuine transparent background. Entire isolated single asset, NOT a sheet, NO multiple variants, no text or watermark. No cropping needed.",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-374d6e1f-8036-4b7b-8b81-cdda210a592f.png",
+    "method": "built-in imagegen; independent full-image export; no slicing"
+  },
+  {
+    "name": "bubble-burst",
+    "prompt": "Use case: stylized-concept. Asset type: one independent raster mobile game UI component. ONE game bubble pop VFX sprite: delicate broken circular iridescent aqua soap ring with 6 tiny pearl droplets radiating outward. Soft luminous cartoon fantasy, empty transparent center, no white disk or opaque background. Square composition fills 80%. Premium handcrafted painted 3D storybook style matching CxQ games. Genuine transparent background. Entire isolated single asset, NOT a sheet, NO multiple variants, no text or watermark. No cropping needed.",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-fa0d4ae5-de6e-4f3d-87e5-c454f479e7f7.png",
+    "method": "built-in imagegen; independent full-image export; no slicing"
+  },
+  {
+    "name": "dream-burst",
+    "prompt": "Use case: stylized-concept. Asset type: one independent raster mobile game UI component. ONE game gem-clear VFX sprite: violet and warm gold star sparkle burst, 5 small crystal glints radiating from bright tiny central star, clear elegant cartoon fantasy, mostly transparent negative space, no solid circular background. Square composition fills 85%. Premium handcrafted painted 3D storybook style matching CxQ games. Genuine transparent background. Entire isolated single asset, NOT a sheet, NO multiple variants, no text or watermark. No cropping needed.",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-622608fe-8307-46c6-a5e5-038a5ed865e6.png",
+    "method": "built-in imagegen; independent full-image export; no slicing"
+  },
+  {
+    "name": "bubble-settings-solid",
+    "prompt": "Use case: precise-object-edit. Input image is edit target. Preserve the exact illustrated frame, proportions and theme. Fix the center: replace the ENTIRE inner panel surface with a completely uniform, opaque, deep dark navy matte painted material (#101c2a approximate), no patches, no holes, no transparent areas, no lighting gradients. Keep all frame ornaments unchanged. Fill every pixel OUTSIDE the frame with the same opaque dark navy. Output a normal fully OPAQUE rectangular 3:4 image, NO transparent background anywhere. Do not treat the dark panel as background to remove. No words or extra objects. One standalone modal backing, no slicing.",
+    "reference": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-9c49e778-02be-499e-9663-7fec044da476.png",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5468da1b-f83f-418f-b09c-93f0c820787f.png",
+    "method": "built-in imagegen edit; full opaque single panel; no slicing"
+  },
+  {
+    "name": "dream-settings-solid",
+    "prompt": "Use case: precise-object-edit. Input image is edit target. Preserve the exact illustrated frame, proportions and theme. Fix the center: replace the ENTIRE inner panel surface with a completely uniform, opaque, deep dark navy matte painted material (#101c2a approximate), no patches, no holes, no transparent areas, no lighting gradients. Keep all frame ornaments unchanged. Fill every pixel OUTSIDE the frame with the same opaque dark navy. Output a normal fully OPAQUE rectangular 3:4 image, NO transparent background anywhere. Do not treat the dark panel as background to remove. No words or extra objects. One standalone modal backing, no slicing.",
+    "reference": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-456e270a-b593-411b-ab3a-7693a3f695e3.png",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-0630492c-f6b3-4bce-a0fc-ec774988cd3b.png",
+    "method": "built-in imagegen edit; full opaque single panel; no slicing"
+  },
+  {
+    "name": "tower-settings-solid",
+    "prompt": "Use case: precise-object-edit. Input image is edit target. Preserve the exact illustrated frame, proportions and theme. Fix the center: replace the ENTIRE inner panel surface with a completely uniform, opaque, deep dark navy matte painted material (#101c2a approximate), no patches, no holes, no transparent areas, no lighting gradients. Keep all frame ornaments unchanged. Fill every pixel OUTSIDE the frame with the same opaque dark navy. Output a normal fully OPAQUE rectangular 3:4 image, NO transparent background anywhere. Do not treat the dark panel as background to remove. No words or extra objects. One standalone modal backing, no slicing.",
+    "reference": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-8345910e-94eb-496b-9963-f3da9882fd5f.png",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-087aa549-4d75-4c47-a879-6803a75cf88d.png",
+    "method": "built-in imagegen edit; full opaque single panel; no slicing"
+  },
+  {
+    "name": "whack-settings-solid",
+    "prompt": "Use case: precise-object-edit. Input image is edit target. Preserve the exact illustrated frame, proportions and theme. Fix the center: replace the ENTIRE inner panel surface with a completely uniform, opaque, deep dark navy matte painted material (#101c2a approximate), no patches, no holes, no transparent areas, no lighting gradients. Keep all frame ornaments unchanged. Fill every pixel OUTSIDE the frame with the same opaque dark navy. Output a normal fully OPAQUE rectangular 3:4 image, NO transparent background anywhere. Do not treat the dark panel as background to remove. No words or extra objects. One standalone modal backing, no slicing.",
+    "reference": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-b2b15251-f357-453f-abfe-90d70fde2c24.png",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-57aa0e12-dddf-4e7a-93b5-1e133d500637.png",
+    "method": "built-in imagegen edit; full opaque single panel; no slicing"
+  },
+  {
+    "name": "merge-settings-solid",
+    "prompt": "Use case: precise-object-edit. Input image is edit target. Preserve the exact illustrated frame, proportions and theme. Fix the center: replace the ENTIRE inner panel surface with a completely uniform, opaque, deep dark navy matte painted material (#101c2a approximate), no patches, no holes, no transparent areas, no lighting gradients. Keep all frame ornaments unchanged. Fill every pixel OUTSIDE the frame with the same opaque dark navy. Output a normal fully OPAQUE rectangular 3:4 image, NO transparent background anywhere. Do not treat the dark panel as background to remove. No words or extra objects. One standalone modal backing, no slicing.",
+    "reference": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c28a7e52-66d0-4579-b469-3a0ebce6638b.png",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-41f9bc89-c32c-432c-9c5b-5c81636fa39a.png",
+    "method": "built-in imagegen edit; full opaque single panel; no slicing"
+  },
+  {
+    "name": "flappy-settings-solid",
+    "prompt": "Use case: precise-object-edit. Input image is edit target. Preserve the exact illustrated frame, proportions and theme. Fix the center: replace the ENTIRE inner panel surface with a completely uniform, opaque, deep dark navy matte painted material (#101c2a approximate), no patches, no holes, no transparent areas, no lighting gradients. Keep all frame ornaments unchanged. Fill every pixel OUTSIDE the frame with the same opaque dark navy. Output a normal fully OPAQUE rectangular 3:4 image, NO transparent background anywhere. Do not treat the dark panel as background to remove. No words or extra objects. One standalone modal backing, no slicing.",
+    "reference": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-69d33ac9-6bcd-4156-9ce2-469dc9f8bea3.png",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c0172c08-d490-4090-9555-8afb7b1b8d64.png",
+    "method": "built-in imagegen edit; full opaque single panel; no slicing"
+  },
+  {
+    "name": "dino-settings-solid",
+    "prompt": "Use case: precise-object-edit. Input image is edit target. Preserve the exact illustrated frame, proportions and theme. Fix the center: replace the ENTIRE inner panel surface with a completely uniform, opaque, deep dark navy matte painted material (#101c2a approximate), no patches, no holes, no transparent areas, no lighting gradients. Keep all frame ornaments unchanged. Fill every pixel OUTSIDE the frame with the same opaque dark navy. Output a normal fully OPAQUE rectangular 3:4 image, NO transparent background anywhere. Do not treat the dark panel as background to remove. No words or extra objects. One standalone modal backing, no slicing.",
+    "reference": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-627acd7b-4b67-43ac-8539-0ce14a982ae8.png",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-31e7def1-df9e-4f6b-97f1-41a6e5a86d91.png",
+    "method": "built-in imagegen edit; full opaque single panel; no slicing"
+  },
+  {
+    "name": "mines-settings-solid",
+    "prompt": "Use case: precise-object-edit. Input image is edit target. Preserve the exact illustrated frame, proportions and theme. Fix the center: replace the ENTIRE inner panel surface with a completely uniform, opaque, deep dark navy matte painted material (#101c2a approximate), no patches, no holes, no transparent areas, no lighting gradients. Keep all frame ornaments unchanged. Fill every pixel OUTSIDE the frame with the same opaque dark navy. Output a normal fully OPAQUE rectangular 3:4 image, NO transparent background anywhere. Do not treat the dark panel as background to remove. No words or extra objects. One standalone modal backing, no slicing.",
+    "reference": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-70c23165-38f2-4759-9523-f65116e80d2d.png",
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-48414321-8fb2-43d8-8312-fb0de6ca531f.png",
+    "method": "built-in imagegen edit; full opaque single panel; no slicing"
+  }
+]

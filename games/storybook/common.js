@@ -19,7 +19,30 @@ const G=(()=>{
  function dialog(title,body,actions){let d=$('#game-dialog');if(!d){d=document.createElement('dialog');d.id='game-dialog';d.className='paper';document.body.append(d)}d.innerHTML=sprite(data.role,'dialog-role')+'<h2>'+title+'</h2>'+body+'<div class="dialog-actions"></div>';for(const [label,fn]of actions){const b=document.createElement('button');b.textContent=label;b.onclick=()=>{d.close();fn?.()};d.querySelector('.dialog-actions').append(b)}d.oncancel=e=>{e.preventDefault()};if(!d.open)d.showModal();return d}
  function rolePicker(sel,allowed=roles.map((_,i)=>i),onChange=()=>{}){if(!allowed.includes(data.role))data.role=allowed[0];const n=$(sel);n.innerHTML=allowed.map(i=>'<button class="role-choice" data-role="'+i+'" aria-pressed="'+(i===data.role)+'">'+sprite(i)+'<span>'+roles[i]+'</span></button>').join('');n.querySelectorAll('button').forEach(b=>b.onclick=()=>{data.role=+b.dataset.role;save();n.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));sound('tap');onChange(data.role)});onChange(data.role)}
  let pendingLoads=0,loadFailed=false,readyLabel='';
- async function load(names){const start=$('#start');if(!pendingLoads&&start)readyLabel=start.dataset.label||start.textContent;pendingLoads++;if(start){start.disabled=true;start.textContent='準備美術中…';}try{await Promise.all([...new Set(names)].map(src=>new Promise((resolve,reject)=>{if(images[src])return resolve();const i=new Image();i.onload=()=>{images[src]=i;resolve();};i.onerror=()=>reject(new Error('Image load failed: '+src));i.src=src;})));return images;}catch(e){loadFailed=true;throw e;}finally{pendingLoads--;if(!pendingLoads&&start){start.disabled=false;start.textContent=loadFailed?'重新載入圖片':start.dataset.label||readyLabel;if(loadFailed){start.onclick=()=>location.reload();toast('部分圖片沒有載入，請重新載入後再開始。');}}}}
+ const loadingImages=new Map();let completedImages=0,totalImages=0;
+ function progress(){const start=$('#start');if(start&&pendingLoads){start.disabled=true;start.textContent='準備美術 '+completedImages+'/'+totalImages;}}
+ function imageReady(src){
+  if(images[src])return Promise.resolve(images[src]);
+  if(loadingImages.has(src))return loadingImages.get(src);
+  totalImages++;progress();
+  const request=attempt=>new Promise((resolve,reject)=>{
+   const image=new Image();let done=false;
+   const finish=error=>{if(done)return;done=true;clearTimeout(timer);image.onload=image.onerror=null;if(error)reject(error);else resolve(image);};
+   const timer=setTimeout(()=>finish(new Error('Image load timed out: '+src)),15000);
+   image.onload=()=>image.naturalWidth?finish():finish(new Error('Empty image: '+src));
+   image.onerror=()=>finish(new Error('Image load failed: '+src));
+   const url=new URL(src,location.href);if(attempt)url.searchParams.set('asset_retry',String(attempt));image.src=url.href;
+  });
+  const pending=request(0).catch(()=>request(1)).then(image=>{images[src]=image;completedImages++;progress();return image;}).finally(()=>loadingImages.delete(src));
+  loadingImages.set(src,pending);return pending;
+ }
+ async function load(names){
+  const start=$('#start');if(!pendingLoads){readyLabel=start?.dataset.label||start?.textContent||'開始遊戲';loadFailed=false;completedImages=totalImages=0;}
+  pendingLoads++;progress();
+  try{await Promise.all([...new Set(names)].map(imageReady));return images;}
+  catch(error){loadFailed=true;console.error('[CxQ assets]',error.message);throw error;}
+  finally{pendingLoads--;if(!pendingLoads&&start){start.disabled=false;start.textContent=loadFailed?'圖片載入失敗，點此重試':start.dataset.label||readyLabel;if(loadFailed)start.onclick=()=>location.reload();}}
+ }
  function drawRole(ctx,id,x,y,w,h){const img=images[roleFiles[id]];if(!img?.naturalWidth)return;const scale=Math.min(w/img.naturalWidth,h/img.naturalHeight),dw=img.naturalWidth*scale,dh=img.naturalHeight*scale;ctx.drawImage(img,x+(w-dw)/2,y+(h-dh)/2,dw,dh)}
  function settings(ids){let p=data.preferences;if(!p||typeof p!=='object'||Array.isArray(p))p=data.preferences={};for(const id of ids){const e=$('#'+id);if(!e)continue;const v=p[id];if(e.type==='checkbox'){if(typeof v==='boolean')e.checked=v}else if(v!==undefined){if(e.tagName==='SELECT'){if([...e.options].some(o=>o.value===String(v)&&!o.disabled))e.value=String(v)}else if(Number.isFinite(Number(v))){const n=Number(v),min=e.min===''?-Infinity:+e.min,max=e.max===''?Infinity:+e.max;if(n>=min&&n<=max)e.value=String(n)}}e.dispatchEvent(new Event('change'));e.addEventListener('change',()=>{p[id]=e.type==='checkbox'?e.checked:e.value;save()})}}
  function records(bucket,score,extra={}){const list=Array.isArray(data.records[bucket])?data.records[bucket].filter(r=>r&&Number.isFinite(r.score)):[];list.push({score:Math.max(0,Math.round(score)),date:Date.now(),...extra});data.records[bucket]=list.sort((a,b)=>b.score-a.score).slice(0,10);save();return data.records[bucket][0].score}
