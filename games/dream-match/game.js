@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const R=DreamRules,N=R.N,$=s=>document.querySelector(s),board=$('#board');
+  const R=DreamRules,M=DreamMotion,N=R.N,$=s=>document.querySelector(s),board=$('#board');
   const names=['愛心','水滴','星光','月光','葉芽','暖陽'],art='../storybook/art-studio/',newArt='../storybook/art-20260920-batch/';
   let mode='classic',chapter=0,a=[],special={},selected=null,moves=0,score=0,charge=0,shuffle=2,goals=[],busy=false,ended=false,lastInput=0;
   const rnd=()=>Math.floor(Math.random()*6),wait=async ms=>{await new Promise(r=>setTimeout(r,ms));await window.CxQSession?.waitReady();};
@@ -14,7 +14,8 @@
     lastInput=performance.now();render();
   }
   const reduced=()=>document.body.classList.contains('reduced-motion')||matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function render(pop=new Set,fall=null){
+  function render(pop=new Set){
+    board.setAttribute('aria-busy',String(busy));
     board.replaceChildren();
     a.forEach((v,i)=>{
       const cell=document.createElement('button');cell.className='cell'+(i===selected?' selected':'')+(pop.has(i)?' pop':'');
@@ -22,7 +23,6 @@
       const gem=document.createElement('img');gem.className='gem';gem.alt='';gem.draggable=false;
       gem.src=special[i]==='prism'?newArt+'dream-prism.webp':art+'dream-gem-'+v+'.webp';cell.append(gem);
       if(special[i]&&special[i]!=='prism'){const mark=new Image();mark.src=newArt+'dream-line.webp';mark.className='special-mark '+special[i];mark.alt='';cell.append(mark);}
-      if(fall?.[i]&&!reduced()){const step=(board.clientWidth+(parseFloat(getComputedStyle(board).gap)||0))/N;gem.animate([{transform:'translateY('+(-fall[i]*step)+'px)',opacity:.5},{transform:'translateY(0)',opacity:1}],{duration:340,easing:'cubic-bezier(.3,.65,.45,1)'});}
       board.append(cell);
     });
     $('#score').textContent=score.toLocaleString();$('#moves').textContent=moves;$('#charge').style.width=charge+'%';
@@ -31,9 +31,7 @@
   }
   function exchange(i,j){[a[i],a[j]]=[a[j],a[i]];const si=special[i],sj=special[j];delete special[i];delete special[j];if(si)special[j]=si;if(sj)special[i]=sj;}
   async function animateSwap(i,j){
-    if(reduced())return;
-    const A=board.children[i],B=board.children[j],a=A.getBoundingClientRect(),b=B.getBoundingClientRect();
-    await Promise.all([A.animate([{transform:'translate(0,0)'},{transform:'translate('+(b.x-a.x)+'px,'+(b.y-a.y)+'px)'}],{duration:220}).finished,B.animate([{transform:'translate(0,0)'},{transform:'translate('+(a.x-b.x)+'px,'+(a.y-b.y)+'px)'}],{duration:220}).finished]);await window.CxQSession?.waitReady();
+    await M.swap(board,i,j);await window.CxQSession?.waitReady();
   }
   async function click(i){
     if(busy||ended||window.CxQSession?.blocked())return;
@@ -42,23 +40,23 @@
     const j=selected;
     if(i===j){selected=null;render();return;}
     if(Math.abs(Math.floor(i/N)-Math.floor(j/N))+Math.abs(i%N-j%N)!==1){selected=i;render();return;}
-    busy=true;await animateSwap(i,j);exchange(i,j);selected=null;
+    busy=true;render();await animateSwap(i,j);exchange(i,j);selected=null;
     let m=R.match(a),combo=false;
     if(special[i]==='prism'||special[j]==='prism'){
       combo=true;const both=special[i]==='prism'&&special[j]==='prism',color=special[i]==='prism'?a[j]:a[i];
       a.forEach((v,k)=>{if(both||v===color)m.add(k);});m.add(i);m.add(j);
     }else if(special[i]&&special[j]){combo=true;m.add(i);m.add(j);}
     if(!m.size){render();await animateSwap(i,j);exchange(i,j);busy=false;render();toast('需要三個相同圖案連成一線');CxQ.sound('miss');return;}
-    moves--;await cascade(m,combo?[]:[i,j],combo);busy=false;render();check();
+    moves--;await cascade(m,combo?[]:[i,j],combo);busy=false;render();await check();
   }
   async function cascade(initial,preferred=[],forced=false){
     let m=initial,combo=1;
     while(m.size){
-      const made=forced?{}:R.specials(a,special,preferred);
+      const activated={...special},made=forced?{}:R.specials(a,special,preferred);
       m=R.expand(a,special,m);
       for(const key of Object.keys(made)){special[key]=made[key];m.delete(+key);}
       render(m);toast((combo>1?combo+' 連鎖！':'消除 '+m.size+' 個')+' · +'+m.size*100*combo);
-      await wait(340);
+      await M.clear(board,m,made,activated,a,goals);await wait(reduced()?60:30);
       for(const i of m){const g=goals.find(g=>g.color===a[i]);if(g)g.got++;a[i]=-1;delete special[i];}
       score+=m.size*100*combo;charge=Math.min(100,charge+m.size*5);
       const nextSpecial={},fall={};
@@ -66,7 +64,7 @@
         const kept=[];for(let r=N-1;r>=0;r--){const i=r*N+c;if(a[i]>=0)kept.push({v:a[i],s:special[i],row:r});}
         for(let r=N-1;r>=0;r--){const i=r*N+c,p=kept[N-1-r];a[i]=p?p.v:rnd();fall[i]=p?r-p.row:N-kept.length;if(p?.s)nextSpecial[i]=p.s;}
       }
-      special=nextSpecial;CxQ.sound('match');render(new Set,fall);await wait(reduced()?80:360);
+      special=nextSpecial;CxQ.sound('match');render();await M.fall(board,fall);await wait(reduced()?60:70);
       m=R.match(a);combo++;preferred=[];forced=false;
     }
     lastInput=performance.now();
@@ -79,7 +77,10 @@
       if(++tries>200){a=Array.from({length:N*N},rnd);special={};pieces.splice(0,pieces.length,...a.map(v=>({v})));}
     }while(R.match(a).size||!R.move(a,special));selected=null;lastInput=performance.now();
   }
-  function check(){
+  async function animateReshuffle(){
+    busy=true;render();await M.shuffle(board,true);await window.CxQSession?.waitReady();reshuffle();render();await M.shuffle(board,false);await window.CxQSession?.waitReady();busy=false;render();
+  }
+  async function check(){
     const win=goals.every(g=>g.got>=g.need);
     if(win||moves<=0){
       ended=true;$('#resultTitle').textContent=win?chapters[chapter]+'修復完成！':'再試一次，夢境等著你';
@@ -89,17 +90,16 @@
       $('#again').textContent='再挑戰一次';
       $('#again').onclick=()=>fresh();$('#result').hidden=false;CxQ.sound(win?'win':'lose');return;
     }
-    if(!R.move(a,special)){reshuffle();render();toast('沒有可消除的組合，已免費重整');}
+    if(!R.move(a,special)){toast('沒有可消除的組合，免費重整中');await animateReshuffle();toast('夢境重整完成，不扣步數');}
   }
-  let toastTimer;function toast(t){clearTimeout(toastTimer);$('#toast').textContent=t;toastTimer=setTimeout(()=>$('#toast').textContent='',1900);}
+  let toastTimer;function toast(t){clearTimeout(toastTimer);$('#toast').textContent=t;M.feedback($('#toast'));toastTimer=setTimeout(()=>$('#toast').textContent='',1900);}
   board.onclick=e=>{const c=e.target.closest('.cell');if(c)click(+c.dataset.i);};
-  $('#burst').onclick=async()=>{if(charge<100||busy||ended||window.CxQSession?.blocked())return;busy=true;const counts=names.map((_,v)=>a.filter(x=>x===v).length),v=counts.indexOf(Math.max(...counts));charge=0;await cascade(new Set(a.map((x,i)=>x===v?i:-1).filter(i=>i>=0)),[],true);busy=false;render();check();};
-  $('#shuffle').onclick=()=>{if(!shuffle||busy||ended||window.CxQSession?.blocked())return;shuffle--;reshuffle();render();CxQ.sound('flip');};
+  $('#burst').onclick=async()=>{if(charge<100||busy||ended||window.CxQSession?.blocked())return;busy=true;render();const counts=names.map((_,v)=>a.filter(x=>x===v).length),v=counts.indexOf(Math.max(...counts));charge=0;await cascade(new Set(a.map((x,i)=>x===v?i:-1).filter(i=>i>=0)),[],true);busy=false;render();await check();};
+  $('#shuffle').onclick=async()=>{if(!shuffle||busy||ended||window.CxQSession?.blocked())return;shuffle--;toast('重整夢境中');CxQ.sound('flip');await animateReshuffle();toast('重整完成，不扣步數');};
   $('#restart').onclick=()=>fresh();$('#again').onclick=()=>fresh();
   $('#guideBtn').onclick=()=>$('#guide').showModal();$('#guide button').onclick=()=>$('#guide').close();
-  $('#guide p').textContent='交換相鄰寶石，三連消除；四連留下直線魔晶，五連留下彩虹魔晶。彩虹與任意寶石交換可清除同色；兩顆特殊魔晶交換可連動。每局完成三項收集目標，無路可走會免費重整。';
   const home=document.createElement('button');home.textContent='返回夢境入口';home.onclick=()=>{if(busy)return;$('#result').hidden=true;document.querySelector('.game-entry').hidden=false;document.querySelector('main').inert=true;};$('#result section').append(home);
-  setInterval(()=>{if(busy||ended||window.CxQSession?.blocked()||!document.querySelector('.game-entry[hidden]')||performance.now()-lastInput<6500)return;const hint=R.move(a,special);if(hint)for(const i of hint)board.children[i]?.animate([{filter:'brightness(1)',transform:'scale(1)'},{filter:'brightness(1.7)',transform:'scale(1.08)'},{filter:'brightness(1)',transform:'scale(1)'}],{duration:1000});lastInput=performance.now();},1200);
+  setInterval(()=>{if(busy||ended||window.CxQSession?.blocked()||!document.querySelector('.game-entry[hidden]')||performance.now()-lastInput<6500)return;const hint=R.move(a,special);if(hint)M.hint(board,hint);lastInput=performance.now();},1200);
   window.CxQGame={restart:fresh,busy:()=>busy,home:()=>{ended=true;$('#result').hidden=true;document.querySelector('.game-entry').hidden=false;document.querySelector('main').inert=true;}};
   CxQ.configure({music:'heavenly'});
   addEventListener('cxq-start',e=>{mode=e.detail.mode;chapter=0;fresh();});

@@ -1,0 +1,9 @@
+/* Raster artwork moves independently of the stationary board tiles. */
+.studio[data-game=dream-match] .cell{overflow:visible}
+.studio[data-game=dream-match] .cell.pop .gem{animation:none!important}
+.studio[data-game=dream-match] .cell.pop::after{display:none!important}
+.dream-motion-spark{position:absolute!important;inset:-15%!important;width:130%!important;height:130%!important;object-fit:contain;pointer-events:none;z-index:6}
+.dream-collection-flight{position:fixed!important;object-fit:contain;pointer-events:none;z-index:30;border:0!important;box-shadow:none!important}
+.studio[data-game=dream-match] #board{isolation:isolate}
+.studio[data-game=dream-match] #guide p{text-align:left}
+.studio[data-game=dream-match] #guide strong{color:#ffe6a4}
