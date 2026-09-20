@@ -1,11 +1,11 @@
 # Eight-game director pass — 2026-09-20
-Version: `20260920-director1`
+Version: `20260920-director2`
 
 ## Scope
 - Only merge, magic-bubble, dream-match, fairytale-defense, whack, flappy, dino, mines and their shared presentation.
 - Richman game files and the pre-existing modified game-cover PNGs were not changed by this pass.
 - Original CxQ character references retained. 40 individually generated full-image assets: 8 home environments, 30 integrated rider/vehicle illustrations, 2 burrow occlusion layers. No atlas slicing.
-- Character/vehicle files load on selection. Total new WebP footprint approximately 9.4 MB, not all downloaded on first play.
+- Character/vehicle files load on selection. Total new WebP footprint approximately 9.4 MB, not all downloaded on first play. Flight loads only the selected rider and route; unused legacy background preloads removed. Original role-picker images are lazy-loaded; shared loader no longer fetches ten unused character images for each call.
 
 ## Implemented
 - Five portrait-only games; tower defense, dino and mines landscape-only. Direction gate applies to home and gameplay.
@@ -30,7 +30,7 @@ Version: `20260920-director1`
 - Dream: a visible adjacent swap yielded 300 points and reduced moves from 26 to 25.
 - Tower: build for 80, dismantle for 56, balance 280 → 200 → 256; confirmation exercised.
 - Dino: difficulty selection, HUD, live crouch pose and orientation gate checked.
-- Flappy: paper-envelope selection matches home and play illustration; all four options present.
+- Flappy: paper-envelope and leaf-glider selections match home and play illustration; all four options present.
 - Whack: live emergence/occlusion and score readability inspected.
 - Mines: safe first reveal, illustrated numbers, detonation and loss/result flow exercised.
 
