@@ -21,15 +21,16 @@
   ];
   const enemyTypes=[{name:'漫步夢魘',hp:1,speed:1,armor:1},{name:'疾走夢魘',hp:.65,speed:1.65,armor:1},{name:'重甲夢魘',hp:1.85,speed:.72,armor:.68},{name:'夢魘首領',hp:4.5,speed:.55,armor:.85}];
   let map=0,mode='classic',towers=[],enemies=[],shots=[],effects=[],coins=0,life=0,wave=0,running=false,selected=-1,speed=1,clock=0,last=0,spawnLeft=0,spawnAt=0,over=false,kills=0,path,pads,lengths;
-  const supportButton=document.createElement('button');supportButton.className='tower';supportButton.dataset.kind='trust';supportButton.innerHTML='<img src="../../assets/characters/cxq-role-trust-thumb.webp" alt=""><span><b>信任・守護之約</b><small>範圍增幅／修復城堡</small><em>100 星幣</em></span>';$('#selected').before(supportButton);
+  const supportButton=document.createElement('button');supportButton.className='tower';supportButton.dataset.kind='trust';supportButton.innerHTML='<img src="../../assets/characters/cxq-role-trust-thumb.webp" alt=""><span><b>守護支援</b><small>範圍增幅／修復城堡</small><em>100 星幣</em></span>';$('#selected').before(supportButton);
   const pauseBtn=document.createElement('button');pauseBtn.textContent='暫停';pauseBtn.id='battlePause';$('.hud').append(pauseBtn);
   const pausePanel=document.createElement('dialog');pausePanel.innerHTML='<h2>防線已暫停</h2><p>敵人、守護者與技能時間都停在這一刻。</p><button data-resume>繼續守護</button><button data-home>返回守護入口</button>';document.body.append(pausePanel);pauseBtn.onclick=()=>pausePanel.showModal();pausePanel.querySelector('[data-resume]').onclick=()=>pausePanel.close();pausePanel.querySelector('[data-home]').onclick=()=>{pausePanel.close();home();};
   function home(){running=false;over=true;$('#result').hidden=true;document.querySelector('.game-entry').hidden=false;document.querySelector('main').inert=true;}
   function reset(){
-    ({path,pads}=maps[map]);lengths=path.slice(1).map((p,i)=>Math.hypot(p[0]-path[i][0],p[1]-path[i][1]));
+    layoutMap();
     towers=Array(8).fill(null);enemies=[];shots=[];effects=[];coins=mode==='relaxed'?380:280;life=mode==='relaxed'?30:20;wave=0;running=false;selected=-1;speed=1;clock=0;spawnLeft=0;over=false;kills=0;$('#result').hidden=true;
     document.querySelector('header p').textContent=maps[map].name+' · 八波守護';sync();draw();
   }
+  function layoutMap(){path=maps[map].path.map(([px,py])=>[px,py*c.height/650]);pads=maps[map].pads.map(([px,py])=>[px,py*c.height/650]);lengths=path.slice(1).map((p,i)=>Math.hypot(p[0]-path[i][0],p[1]-path[i][1]));}
   const total=()=>lengths.reduce((a,b)=>a+b,0);
   function route(p){let rest=p;for(let i=0;i<lengths.length;i++){if(rest<=lengths[i]){const t=rest/lengths[i];return[path[i][0]+(path[i+1][0]-path[i][0])*t,path[i][1]+(path[i+1][1]-path[i][1])*t];}rest-=lengths[i];}return path.at(-1);}
   function stats(t){const d=defs[t.kind],power=1+(t.level-1)*.35;return{...d,damage:d.damage*power*(t.branch==='power'?1.4:1),range:d.range+(t.branch==='reach'?65:0),rate:d.rate*(t.branch==='reach'?.8:1),splash:(d.splash||0)*(t.branch==='power'?1.4:1)};}
@@ -38,15 +39,17 @@
     $('#startWave').textContent=running?'夢魘來襲中':'開始第 '+Math.min(8,wave+1)+' 波';$('#startWave').disabled=running||over||wave>=8;
     $('.canvasWrap p').textContent=running?'留意疾走與重甲，搭配緩速和範圍攻擊。':'下一波：'+(wave>=6?'首領＋重甲混合':wave>=3?'重甲＋疾走':wave>=1?'疾走＋漫步':'漫步夢魘')+' · 點守護台部署';
     document.querySelectorAll('.tower').forEach(b=>{b.disabled=selected<0||!!towers[selected]||coins<defs[b.dataset.kind].cost||over;b.classList.toggle('active',towers[selected]?.kind===b.dataset.kind);});
-    const t=towers[selected],panel=$('#selected');
+    const t=towers[selected],panel=$('#selected');document.querySelector('aside').classList.toggle('has-tower',!!t);
     if(!t){panel.innerHTML='<h3>'+(selected<0?'點選地圖守護台':'第 '+(selected+1)+' 座守護台')+'</h3><p>選擇上方夥伴部署。信任可增幅附近夥伴。</p>';return;}
     const d=stats(t),branch=t.branch==='power'?'強化專精':t.branch==='reach'?'廣域專精':'尚未專精';
     panel.innerHTML='<h3>'+names[t.kind]+' Lv.'+t.level+' · '+branch+'</h3><p>'+(d.support?'範圍內攻擊增幅 '+Math.round((.2+t.level*.08)*100)+'%':'攻擊 '+Math.round(d.damage)+' · 射程 '+d.range)+'<br>累計貢獻 '+Math.round(t.dealt)+'</p>';
+    const sell=document.createElement('button');sell.className='sell-tower';const refund=Math.floor((t.invested??defs[t.kind].cost)*.7);sell.textContent='拆除 · 返還 '+refund+' 星幣';sell.onclick=()=>{if(over||window.CxQSession?.blocked())return;const dialog=document.createElement('dialog');dialog.innerHTML='<h2>拆除這座守護塔？</h2><p>返還 '+refund+' 星幣，位置可重新建造。</p><button data-cancel>保留</button><button data-sell>確認拆除</button>';document.body.append(dialog);dialog.querySelector('[data-cancel]').onclick=()=>dialog.close();dialog.querySelector('[data-sell]').onclick=()=>{coins+=refund;towers[selected]=null;dialog.close();sync();CxQ.sound('flip');};dialog.addEventListener('close',()=>dialog.remove());dialog.showModal();};panel.append(sell);
     if(t.level<3){
       const choices=t.level===1?[['power',d.support?'修復專精':'強化專精'],['reach','廣域專精']]:[[t.branch,'升至 Lv.3']];
       for(const [branch,title]of choices){const b=document.createElement('button');b.textContent=title+' · '+70*t.level+' 星幣';b.disabled=coins<70*t.level;b.onclick=()=>upgrade(branch);panel.append(b);}
     }
   }
+  window.CxQGame={home,restart:reset};
   function start(){if(running||over||wave>=8||window.CxQSession?.blocked())return;wave++;running=true;spawnLeft=5+wave*2;spawnAt=clock;sync();CxQ.sound('upgrade');}
   function spawn(){const count=5+wave*2-spawnLeft,type=wave===8&&count===0?3:wave>=4&&count%3===0?2:wave>=2&&count%3===1?1:0,D=enemyTypes[type],hp=(32+wave*15)*(1+map*.13)*D.hp;enemies.push({p:0,hp,max:hp,speed:(33+wave*2)*D.speed,slow:1,slowUntil:0,reward:12+wave*2,type,flash:0});}
   function damage(t,e,n){const amount=Math.min(e.hp,n*(t.kind==='dream'?1:enemyTypes[e.type].armor));e.hp-=amount;t.dealt+=amount;e.flash=.1;}
@@ -69,7 +72,7 @@
   }
   function sprite(im,px,py,w,h){if(im?.naturalWidth)x.drawImage(im,px,py,w,h);}
   function draw(){
-    x.clearRect(0,0,c.width,c.height);sprite(bg,0,0,c.width,c.height);
+    x.clearRect(0,0,c.width,c.height);if(bg.naturalWidth){const scale=Math.max(c.width/bg.naturalWidth,c.height/bg.naturalHeight),w=bg.naturalWidth*scale,h=bg.naturalHeight*scale;sprite(bg,(c.width-w)/2,(c.height-h)/2,w,h);}
     for(let d=0;d<=total();d+=30){const p=route(d);sprite(road,p[0]-38,p[1]-38,76,76);}
     pads.forEach((p,i)=>{
       const t=towers[i];if(!t){sprite(road,p[0]-35,p[1]-25,70,50);x.fillStyle='#233924';x.font='bold 25px sans-serif';x.textAlign='center';x.fillText(i+1,p[0],p[1]+8);}
@@ -81,12 +84,12 @@
     for(const e of effects){x.globalAlpha=1-e.t/.4;sprite(burst,e.x-40,e.y-40,80,80);}x.globalAlpha=1;
   }
   c.onclick=e=>{if(over||window.CxQSession?.blocked())return;const b=c.getBoundingClientRect(),scale=Math.min(b.width/c.width,b.height/c.height),px=(e.clientX-b.left-(b.width-c.width*scale)/2)/scale,py=(e.clientY-b.top-(b.height-c.height*scale)/2)/scale;let best=-1,dist=60;pads.forEach((p,i)=>{const d=Math.hypot(p[0]-px,p[1]-py);if(d<dist){best=i;dist=d;}});if(best>=0){selected=best;sync();}};
-  document.querySelectorAll('.tower').forEach(b=>b.onclick=()=>{if(over||window.CxQSession?.blocked()||selected<0||towers[selected])return;const kind=b.dataset.kind,d=defs[kind];if(coins<d.cost)return;coins-=d.cost;towers[selected]={kind,level:1,branch:null,ready:0,fired:-1,dealt:0};sync();CxQ.sound('match');});
-  function upgrade(branch){const t=towers[selected];if(!t||t.level>=3||coins<70*t.level||window.CxQSession?.blocked())return;coins-=70*t.level;t.level++;t.branch=branch;sync();CxQ.sound('upgrade');}
+  document.querySelectorAll('.tower').forEach(b=>b.onclick=()=>{if(over||window.CxQSession?.blocked()||selected<0||towers[selected])return;const kind=b.dataset.kind,d=defs[kind];if(coins<d.cost)return;coins-=d.cost;towers[selected]={kind,invested:d.cost,level:1,branch:null,ready:0,fired:-1,dealt:0};sync();CxQ.sound('match');});
+  function upgrade(branch){const t=towers[selected];if(!t||t.level>=3||coins<70*t.level||window.CxQSession?.blocked())return;t.invested=(t.invested??defs[t.kind].cost)+70*t.level;coins-=70*t.level;t.level++;t.branch=branch;sync();CxQ.sound('upgrade');}
   function finish(win){over=true;running=false;$('#resultTitle').textContent=win?'花園守住了！':'再調整一次防線';const top=towers.filter(Boolean).sort((a,b)=>b.dealt-a.dealt)[0];$('#resultText').textContent=maps[map].name+' · 第 '+wave+' 波 · 擊退 '+kills+' 隻'+(top?' · 最佳貢獻：'+names[top.kind]:'');$('#result').hidden=false;CxQ.write('cxq-defense-best',Math.max(wave,CxQ.read('cxq-defense-best',0)));CxQ.sound(win?'win':'lose');}
   const back=document.createElement('button');back.textContent='返回守護入口';back.onclick=home;$('#result section').append(back);
   $('#startWave').onclick=start;$('#speed').onclick=()=>{speed=speed===1?2:1;sync();};$('#again').onclick=reset;$('#guideBtn').onclick=()=>$('#guide').showModal();$('#guide button').onclick=()=>$('#guide').close();
   $('#guide p').textContent='點守護台部署：成長快速單體、夢想範圍攻擊並穿透重甲、幸運緩速、信任增幅附近夥伴。升級時選擇強化或廣域專精；信任的修復專精會在每波結束補充城堡生命。守住八波獲勝。';
   CxQ.configure({music:'sherwood'});addEventListener('cxq-start',e=>{mode=e.detail.mode;map=Math.max(0,Math.min(2,Number(e.detail.chapter)||0));reset();});
-  reset();function frame(t){const dt=last?Math.min(.04,(t-last)/1000)*speed:0;last=t;if(!over&&!window.CxQSession?.blocked()&&!document.querySelector('.game-entry:not([hidden])')){clock+=dt;update(dt);}draw();requestAnimationFrame(frame);}requestAnimationFrame(frame);
+  reset();new ResizeObserver(()=>{const box=c.getBoundingClientRect();if(!box.width||!box.height)return;const h=Math.round(1100*box.height/box.width);if(c.height===h)return;const oldTotal=total();c.height=h;layoutMap();const ratio=total()/oldTotal;enemies.forEach(e=>e.p*=ratio);shots=[];draw();}).observe(c);function frame(t){const dt=last?Math.min(.04,(t-last)/1000)*speed:0;last=t;if(!over&&!window.CxQSession?.blocked()&&!document.querySelector('.game-entry:not([hidden])')){clock+=dt;update(dt);}draw();requestAnimationFrame(frame);}requestAnimationFrame(frame);
 })();

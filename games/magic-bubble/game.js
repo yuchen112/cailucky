@@ -77,13 +77,13 @@
       let target=null;for(let k=0;k<450;k++){const hit=step(p,4);x.lineTo(p.x,p.y);if(hit||p.y<=46){target=destination(p.x,p.y,hit);break;}}
       x.stroke();x.setLineDash([]);if(target){const q=pos(...target);x.globalAlpha=.45;bubble(q.x,q.y,ball);x.globalAlpha=1;}
     }
-    if(launcher.naturalWidth)x.drawImage(launcher,290,OY-85,140,170);
+    if(launcher.naturalWidth)x.drawImage(launcher,255,OY-135,210,255);
     if(!flight)bubble(OX,OY,ball);else bubble(flight.x,flight.y,ball);
     effects=effects.filter(e=>clock-e.born<(e.fall?900:500));
     for(const e of effects){const t=(clock-e.born)/1000;x.save();x.globalAlpha=Math.max(0,1-t/(e.fall?.9:.5));if(e.fall)bubble(e.x,e.y+470*t*t,e.v);else if(burst.naturalWidth){const s=70+t*90;x.drawImage(burst,e.x-s/2,e.y-s/2,s,s);}x.restore();}
   }
   let feedbackTimer;function feedback(t){clearTimeout(feedbackTimer);$('#aimHint').textContent=t;feedbackTimer=setTimeout(()=>$('#aimHint').textContent=goal()+' · 按住瞄準，放開發射',2200);}
-  function sync(){$('#score').textContent=score.toLocaleString();$('#shots').textContent=shots;$('#skillFill').style.width=skill+'%';$('#skill').disabled=skill<100||over;$('#next').style.backgroundImage="url('../storybook/art-20260920/bubble-"+palette[next]+".webp')";}
+  function sync(){$('#score').textContent=score.toLocaleString();$('#shots').textContent=shots;$('#skillFill').style.width=skill+'%';$('#skill').disabled=skill<100||over;$('#skill').textContent=skill>=100?'施放星願魔法':'星願魔法 '+skill+'%';$('#next').style.backgroundImage="url('../storybook/art-20260920/bubble-"+palette[next]+".webp')";}
   const pointer=e=>{const b=c.getBoundingClientRect();return{x:(e.clientX-b.left)*c.width/b.width,y:(e.clientY-b.top)*c.height/b.height};};
   c.onpointerdown=e=>{if(over||flight||window.CxQSession?.blocked())return;e.preventDefault();aim=pointer(e);c.setPointerCapture(e.pointerId);};
   c.onpointermove=e=>{if(aim)aim=pointer(e);};
@@ -94,12 +94,13 @@
   $('#skill').onclick=()=>{if(skill<100||flight||over||window.CxQSession?.blocked())return;const counts=palette.map((_,i)=>grid.flat().filter(v=>v===i).length),v=counts.indexOf(Math.max(...counts));let n=0;grid.forEach((row,r)=>row.forEach((value,q)=>{if(value===v){remove(r,q);n++;}}));score+=n*150;skill=0;drop();ball=random();next=random();sync();check();CxQ.sound('upgrade');};
   $('#restart').onclick=reset;$('#again').onclick=reset;$('#help').onclick=()=>$('#guide').showModal();$('#guide button').onclick=()=>$('#guide').close();
   const back=document.createElement('button');back.textContent='返回魔法花園';back.onclick=()=>{$('#result').hidden=true;document.querySelector('.game-entry').hidden=false;document.querySelector('main').inert=true;};$('#result>div').append(back);
+  window.CxQGame={restart:reset,home:()=>{flight=null;aim=null;pending=null;over=true;$('#result').hidden=true;document.querySelector('.game-entry').hidden=false;document.querySelector('main').inert=true;}};
   CxQ.configure({music:'heavenly'});
-  addEventListener('cxq-start',e=>{mode=e.detail.mode;chapter=Math.max(0,Math.min(5,Number(e.detail.chapter)||0));reset();});
+  addEventListener('cxq-start',e=>{mode=e.detail.mode;chapter=0;reset();});
   function frame(t){const dt=last?Math.min(40,t-last):0;last=t;if(!window.CxQSession?.blocked()&&!document.querySelector('.game-entry:not([hidden])')){
     clock+=dt;if(flight){for(let k=0;k<4&&flight;k++){const hit=step(flight,dt*.65/4);if(hit||flight.y<=46)place(destination(flight.x,flight.y,hit));}}
     if(pending&&clock>=pending.at){const p=pending;pending=null;result(p.win);}
   }draw();requestAnimationFrame(frame);}
-  function fit(){const holder=c.parentElement;if(innerHeight>innerWidth&&holder.clientWidth>0){const height=Math.max(820,Math.round((holder.clientHeight-28)*720/holder.clientWidth));if(c.height!==height)c.height=height;OY=height-85;}else{c.height=820;OY=735;}}
+  function fit(){const holder=c.parentElement;if(innerHeight>innerWidth&&holder.clientWidth>0){const height=Math.max(820,Math.round((holder.clientHeight-28)*720/holder.clientWidth));if(c.height!==height)c.height=height;OY=height-125;}else{c.height=820;OY=735;}}
   new ResizeObserver(fit).observe(c.parentElement);addEventListener('resize',fit);fit();reset();requestAnimationFrame(frame);
 })();

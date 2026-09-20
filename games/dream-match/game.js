@@ -25,7 +25,7 @@
       board.append(cell);
     });
     $('#score').textContent=score.toLocaleString();$('#moves').textContent=moves;$('#charge').style.width=charge+'%';
-    $('#burst').disabled=charge<100||busy||ended;$('#shuffle').disabled=shuffle<=0||busy||ended;$('#shuffleCount').textContent='剩餘 '+shuffle+' 次';
+    $('#burst').disabled=charge<100||busy||ended;$('#shuffle').disabled=shuffle<=0||busy||ended;$('#shuffleCount').textContent='剩餘 '+shuffle+' 次';$('#shuffle small').textContent='剩餘 '+shuffle+' 次';$('#burst small').textContent=charge>=100?'點擊施放':'能量 '+charge+'%';
     $('#goals').innerHTML=goals.map(g=>'<div class="goal"><img class="gemMini" src="'+art+'gem-'+g.color+'.webp" alt="'+names[g.color]+'"><b>'+Math.min(g.got,g.need)+'/'+g.need+'</b></div>').join('');
   }
   function exchange(i,j){[a[i],a[j]]=[a[j],a[i]];const si=special[i],sj=special[j];delete special[i];delete special[j];if(si)special[j]=si;if(sj)special[i]=sj;}
@@ -84,8 +84,8 @@
       $('#resultText').textContent='獲得 '+score.toLocaleString()+' 分 · 剩餘 '+moves+' 步';
       const best=Math.max(score,CxQ.read('cxq-match-best',0));CxQ.write('cxq-match-best',best);
       if(win)CxQ.write('cxq-match-chapter',Math.max(chapter+1,CxQ.read('cxq-match-chapter',0)));
-      $('#again').textContent=win&&chapter<3?'前往下一章':'再挑戰一次';
-      $('#again').onclick=()=>{if(win&&chapter<3)chapter++;fresh();};$('#result').hidden=false;CxQ.sound(win?'win':'lose');return;
+      $('#again').textContent='再挑戰一次';
+      $('#again').onclick=()=>fresh();$('#result').hidden=false;CxQ.sound(win?'win':'lose');return;
     }
     if(!R.move(a,special)){reshuffle();render();toast('沒有可消除的組合，已免費重整');}
   }
@@ -95,10 +95,11 @@
   $('#shuffle').onclick=()=>{if(!shuffle||busy||ended||window.CxQSession?.blocked())return;shuffle--;reshuffle();render();CxQ.sound('flip');};
   $('#restart').onclick=()=>fresh();$('#again').onclick=()=>fresh();
   $('#guideBtn').onclick=()=>$('#guide').showModal();$('#guide button').onclick=()=>$('#guide').close();
-  $('#guide p').textContent='交換相鄰寶石，三連消除；四連留下直線魔晶，五連留下彩虹魔晶。彩虹與任意寶石交換可清除同色；兩顆特殊魔晶交換可連動。每章完成三項收集目標，無路可走會免費重整。';
+  $('#guide p').textContent='交換相鄰寶石，三連消除；四連留下直線魔晶，五連留下彩虹魔晶。彩虹與任意寶石交換可清除同色；兩顆特殊魔晶交換可連動。每局完成三項收集目標，無路可走會免費重整。';
   const home=document.createElement('button');home.textContent='返回夢境入口';home.onclick=()=>{if(busy)return;$('#result').hidden=true;document.querySelector('.game-entry').hidden=false;document.querySelector('main').inert=true;};$('#result section').append(home);
   setInterval(()=>{if(busy||ended||window.CxQSession?.blocked()||!document.querySelector('.game-entry[hidden]')||performance.now()-lastInput<6500)return;const hint=R.move(a,special);if(hint)for(const i of hint)board.children[i]?.animate([{filter:'brightness(1)',transform:'scale(1)'},{filter:'brightness(1.7)',transform:'scale(1.08)'},{filter:'brightness(1)',transform:'scale(1)'}],{duration:1000});lastInput=performance.now();},1200);
+  window.CxQGame={restart:fresh,busy:()=>busy,home:()=>{ended=true;$('#result').hidden=true;document.querySelector('.game-entry').hidden=false;document.querySelector('main').inert=true;}};
   CxQ.configure({music:'heavenly'});
-  addEventListener('cxq-start',e=>{mode=e.detail.mode;chapter=Math.max(0,Math.min(3,Number(e.detail.chapter)||0));fresh();});
+  addEventListener('cxq-start',e=>{mode=e.detail.mode;chapter=0;fresh();});
   fresh();
 })();

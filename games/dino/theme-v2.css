@@ -16,7 +16,7 @@ main{max-width:1300px}h1,h2,h3,.station h1{font-family:'Courier New','Microsoft 
 @media(orientation:landscape) and (max-height:600px){body.in-game main{padding:5px 10px;min-height:100dvh}body.in-game .topbar{height:31px;margin-bottom:4px}#play{position:relative}#play canvas{width:100%;max-width:100%;max-height:calc(100dvh - 48px);height:auto;object-fit:contain}#play .hud{position:absolute;top:0;left:0;right:0;z-index:2;background-size:100% 100%;padding:6px 20px;font-size:10px}#play .hud small{font-size:9px}#play .hud strong{font-size:18px}#play .controls{position:absolute;bottom:0;left:0;right:0;z-index:2;gap:5px;margin:0}#play .controls button{min-height:42px;padding:8px 22px}#play .controls .status-line{font-size:10px}body.in-game .audio-button{top:3px;min-height:30px;padding:6px 18px}.station h1{font-size:32px}.dispatch .crew .role-art{max-width:110px}}
 @media(max-width:700px) and (orientation:portrait){.dispatch{display:block}.station{padding:22px}.station h1{font-size:33px}.crew .role-art{max-width:100px}.routes{margin-top:18px}}
 
-.role-art.styled-cast{background-size:300% 200%}.styled-cast.cast-a{background-image:url('art-v2/cast-a.webp')}.styled-cast.cast-b{background-image:url('art-v2/cast-b.webp')}
+
 
 body:not(.in-game) .audio-button{top:10px;bottom:auto;right:12px}body:not(.in-game) .topbar{padding-right:80px}
 @media(min-width:701px){#home .dispatch .paper{padding:38px 42px}}

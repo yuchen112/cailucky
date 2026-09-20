@@ -1,6 +1,6 @@
 /* Scoped to the eight refreshed games, never loaded by Richman. */
 (() => {
-  const rules={'magic-bubble':'portrait','dream-match':'portrait','fairytale-defense':'landscape',whack:'portrait',merge:'portrait',flappy:'portrait',dino:'landscape',mines:'adaptive'};
+  const rules={'magic-bubble':'portrait','dream-match':'portrait','fairytale-defense':'landscape',whack:'portrait',merge:'portrait',flappy:'portrait',dino:'landscape',mines:'landscape'};
   const id=location.pathname.split('/').find(x=>rules[x]);if(!id)return;
   document.body.dataset.game=id;document.body.classList.add('game-surface');
   let interrupted=false,wrong=false,remaining=0,last=0,raf=0;
@@ -9,8 +9,8 @@
   const playing=()=>{const play=document.querySelector('#play');return play?!play.hidden:!!document.querySelector('.game-entry[hidden]')&&!document.querySelector('#result:not([hidden])');};
   function direction(){if(rules[id]!=='adaptive')return rules[id];return document.querySelectorAll('#board .cell').length&&parseInt(document.querySelector('#board').style.getPropertyValue('--cols'))>10?'landscape':'portrait';}
   function blocked(){return document.hidden||wrong||interrupted||remaining>0||!!document.querySelector('dialog[open]');}
-  function paint(){const show=playing()&&(wrong||interrupted||remaining>0);gate.hidden=!show;document.body.classList.toggle('session-playing',playing());document.body.classList.toggle('session-blocked',show);if(show){main.inert=true;gate.querySelector('h2').textContent=wrong?(direction()==='portrait'?'請直拿手機':'請橫拿手機'):remaining>0?'準備繼續 '+Math.ceil(remaining/1000):'遊戲已暫停';gate.querySelector('button').hidden=wrong||remaining>0;}else if(!document.querySelector('.game-entry:not([hidden])'))main.inert=false;}
-  function resize(){if(!playing()){interrupted=false;remaining=0;cancelAnimationFrame(raf);}const phone=matchMedia('(pointer:coarse)').matches||Math.min(innerWidth,innerHeight)<=600;const mismatch=playing()&&phone&&(direction()==='portrait'?innerWidth>innerHeight:innerHeight>innerWidth);if(mismatch&&!wrong)interrupted=true;wrong=mismatch;if(wrong){remaining=0;cancelAnimationFrame(raf)}paint();}
+  function paint(){const show=wrong||(playing()&&(interrupted||remaining>0));gate.hidden=!show;document.body.classList.toggle('session-playing',playing());document.body.classList.toggle('session-blocked',show);main.inert=show||!!document.querySelector('.game-entry:not([hidden])');const entry=document.querySelector('.game-entry');if(entry)entry.inert=show;if(show){gate.querySelector('h2').textContent=wrong?(direction()==='portrait'?'請直向遊玩':'請橫向遊玩'):remaining>0?'準備繼續 '+Math.ceil(remaining/1000):'遊戲已暫停';gate.querySelector('p').textContent=wrong?'旋轉裝置或調整視窗方向，即可'+(playing()?'繼續遊戲。':'開始遊戲。'):'進度已保留。';gate.querySelector('button').hidden=wrong||remaining>0;}}
+  function resize(){if(!playing()){interrupted=false;remaining=0;cancelAnimationFrame(raf);}const mismatch=direction()==='portrait'?innerWidth>innerHeight:innerHeight>innerWidth;if(mismatch&&!wrong&&playing())interrupted=true;wrong=mismatch;if(wrong){remaining=0;cancelAnimationFrame(raf)}paint();}
   gate.querySelector('button').onclick=()=>{if(wrong||document.hidden)return;interrupted=false;remaining=2000;last=performance.now();function step(t){if(document.hidden||wrong){remaining=0;interrupted=true;paint();return}remaining=Math.max(0,remaining-(t-last));last=t;paint();if(remaining)raf=requestAnimationFrame(step);else if(typeof CxQ!=='undefined')CxQ.resume();}raf=requestAnimationFrame(step);paint();};
   document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing()){interrupted=true;remaining=0;cancelAnimationFrame(raf)}resize()});
   addEventListener('resize',resize);addEventListener('orientationchange',resize);
