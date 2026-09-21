@@ -16,18 +16,21 @@
   const reduced=()=>document.body.classList.contains('reduced-motion')||matchMedia('(prefers-reduced-motion: reduce)').matches;
   function render(pop=new Set){
     board.setAttribute('aria-busy',String(busy));
-    board.replaceChildren();
+    // Keep the 49 board cells and their artwork alive across animation phases.
+    if(board.children.length!==N*N)board.replaceChildren(...Array.from({length:N*N},()=>{const cell=document.createElement('button'),gem=document.createElement('img');gem.className='gem';gem.alt='';gem.draggable=false;cell.append(gem);return cell;}));
+    board.getAnimations({subtree:true}).forEach(animation=>animation.cancel());
     a.forEach((v,i)=>{
-      const cell=document.createElement('button');cell.className='cell'+(i===selected?' selected':'')+(pop.has(i)?' pop':'');
+      const cell=board.children[i];cell.className='cell'+(i===selected?' selected':'')+(pop.has(i)?' pop':'');
       cell.dataset.i=i;cell.setAttribute('aria-label',names[v]+' '+(special[i]==='prism'?'彩虹魔晶':special[i]?'直線魔晶':'')+' 第'+(Math.floor(i/N)+1)+'列第'+(i%N+1)+'格');
-      const gem=document.createElement('img');gem.className='gem';gem.alt='';gem.draggable=false;
-      gem.src=special[i]==='prism'?newArt+'dream-prism.webp':art+'dream-gem-'+v+'.webp';cell.append(gem);
-      if(special[i]&&special[i]!=='prism'){const mark=new Image();mark.src=newArt+'dream-line.webp';mark.className='special-mark '+special[i];mark.alt='';cell.append(mark);}
-      board.append(cell);
+      const gem=cell.querySelector('.gem'),src=special[i]==='prism'?newArt+'dream-prism.webp':art+'dream-gem-'+v+'.webp';
+      if(gem.getAttribute('src')!==src)gem.src=src;
+      let mark=cell.querySelector('.special-mark');
+      if(special[i]&&special[i]!=='prism'){if(!mark){mark=new Image();mark.src=newArt+'dream-line.webp';mark.alt='';cell.append(mark);}mark.className='special-mark '+special[i];}else mark?.remove();
     });
     $('#score').textContent=score.toLocaleString();$('#moves').textContent=moves;$('#charge').style.width=charge+'%';
     $('#burst').disabled=charge<100||busy||ended;$('#shuffle').disabled=shuffle<=0||busy||ended;$('#shuffleCount').textContent='剩餘 '+shuffle+' 次';$('#shuffle small').textContent='剩餘 '+shuffle+' 次';$('#burst small').textContent=charge>=100?'點擊施放':'能量 '+charge+'%';
-    $('#goals').innerHTML=goals.map(g=>'<div class="goal"><img class="gemMini" src="'+art+'dream-gem-'+g.color+'.webp" alt="'+names[g.color]+'"><b>'+Math.min(g.got,g.need)+'/'+g.need+'</b></div>').join('');
+    if($('#goals').children.length!==goals.length)$('#goals').innerHTML=goals.map(g=>'<div class="goal"><img class="gemMini" src="'+art+'dream-gem-'+g.color+'.webp" alt="'+names[g.color]+'"><b></b></div>').join('');
+    goals.forEach((g,i)=>{$('#goals').children[i].querySelector('b').textContent=Math.min(g.got,g.need)+'/'+g.need;});
   }
   function exchange(i,j){[a[i],a[j]]=[a[j],a[i]];const si=special[i],sj=special[j];delete special[i];delete special[j];if(si)special[j]=si;if(sj)special[i]=sj;}
   async function animateSwap(i,j){
@@ -64,7 +67,7 @@
         const kept=[];for(let r=N-1;r>=0;r--){const i=r*N+c;if(a[i]>=0)kept.push({v:a[i],s:special[i],row:r});}
         for(let r=N-1;r>=0;r--){const i=r*N+c,p=kept[N-1-r];a[i]=p?p.v:rnd();fall[i]=p?r-p.row:N-kept.length;if(p?.s)nextSpecial[i]=p.s;}
       }
-      special=nextSpecial;CxQ.sound('match');render();await M.fall(board,fall);await wait(reduced()?60:70);
+      special=nextSpecial;CxQ.sound('match');render();await M.fall(board,fall);await wait(reduced()?60:35);
       m=R.match(a);combo++;preferred=[];forced=false;
     }
     lastInput=performance.now();

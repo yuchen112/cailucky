@@ -8,6 +8,8 @@ const M=context.window.DreamMotion,board={clientWidth:343,children:Array.from({l
 (async()=>{
  await M.swap(board,0,1);assert.equal(calls.length,3,'gem and special marker both travel');assert.equal(calls[0].frames[1].translate,'50px 0px');assert.equal(board.children[0].style.zIndex,'');
  calls.length=0;await M.fall(board,{0:3,1:0,7:1});assert.equal(calls.length,3);assert.equal(calls[0].frames[0].translate,'0 -150px');assert.equal(calls[0].frames.at(-1).translate,'0 0');
+ assert(calls.every(c=>c.frames.length===2&&c.frames.every(f=>f.opacity===1)),'fall never fades survivors or bounces past destination');
+ assert(calls.every(c=>c.options.duration===calls[0].options.duration&&!c.options.delay),'pieces settle together without staggered snaps');
  calls.length=0;await M.clear(board,new Set([0,1,7]),{2:'prism'},{0:'row'},Array(49).fill(0),[{color:0,got:0,need:12}]);assert(calls.some(c=>c.options.delay===168),'row sweep reaches last column');assert(added.every(e=>e.removed),'temporary artwork cleaned');
  calls.length=0;await M.shuffle(board,true);assert.equal(calls.length,50);await M.shuffle(board,false);assert.equal(calls.length,100);
  calls.length=0;reduced=true;await M.swap(board,0,1);await M.fall(board,{0:4});await M.clear(board,new Set([0]),{},{},[],[]);await M.shuffle(board,true);await M.feedback(element());M.hint(board,[0,1]);assert.equal(calls.length,0,'reduced motion skips all effects');
