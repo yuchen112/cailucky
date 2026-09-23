@@ -11,6 +11,9 @@
       const place=()=>{if(play.hidden)origin.after(gear);else dock.append(gear);};
       new MutationObserver(place).observe(play,{attributes:true,attributeFilter:['hidden']});place();
     }
+    const longPress=q('#longpress');
+    const showDelay=()=>{const label=(Number(longPress.value)/1000).toFixed(2)+' 秒';longPress.setAttribute('aria-label','長按插旗時間');longPress.setAttribute('aria-valuetext',label);if(longPress.previousElementSibling?.matches('output'))longPress.previousElementSibling.textContent=label;};
+    longPress.addEventListener('input',showDelay);document.addEventListener('click',()=>requestAnimationFrame(showDelay));showDelay();
     q('#contrast').addEventListener('change',()=>document.body.classList.toggle('high-contrast',q('#contrast').checked));
   }
   if(game==='fairytale-defense'){
