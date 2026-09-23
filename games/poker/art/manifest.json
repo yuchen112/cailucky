@@ -1,0 +1,554 @@
+{
+  "tool": "built-in image_gen",
+  "policy": "Individual assets, no crops",
+  "assets": [
+    {
+      "id": "cover",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-375d1384-d068-43c6-9001-f126184512f6.png",
+      "review": "title and three IP characters visually inspected",
+      "prompt": "Single landscape cover: exact title CxQ 撲克館; referenced clover fox, lavender star witch, leaf-hood child playing cards in a Taiwanese wood tea house with subtle star/moon details."
+    },
+    {
+      "id": "room-big2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-7e134f8b-a198-4963-90fe-cdf8deb584c0.png",
+      "prompt": "Use case: stylized-concept. One single finished landscape 16:9 mobile poker room background, no sheet, no text, no people, no cards or chips. Premium cozy tactile 3D Taiwanese tea house with walnut lattice windows, amber lanterns, jade ceramic teapot at far edge, tiny magical clover details. Camera elevated front-facing looking down at an enormous empty deep emerald felt poker table. Empty playable center dominates 80% width and 65% height, bottom edge leaves room for a hand of cards. Rich wood table rim, decorative room details only along perimeter. Crisp polished storybook rendering, soft warm shadows, high readability dark quiet felt. All corners complete, no blur filling.",
+      "review": "visually checked"
+    },
+    {
+      "id": "ui-button",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-b7ee131a-4e44-41ce-9a5a-ea35bf28196e.png",
+      "prompt": "Use case: stylized-concept. Exactly one horizontal mobile game button artwork, 3:1 aspect ratio, single asset not a sheet. A finely carved walnut rounded plaque with understated antique gold rim, jade-green inset velvet face. Taiwanese tea house meets whimsical storybook game, very polished tactile 3D. Large dark unmarked center for readable text overlay, tiny clover flourish at ends only. Front facing orthographic. Entire button fills canvas with small uniform transparent margin. GENUINE transparent background, no lettering, no icons, no shadow outside button, no extra objects.",
+      "review": "visually checked"
+    },
+    {
+      "id": "ui-panel",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-e0415cfb-943b-4b83-8bac-b9e58e070511.png",
+      "prompt": "Use case: stylized-concept. One landscape 3:2 game dialogue panel artwork, not a sheet. Premium storybook tea-house UI, walnut frame with restrained gold corner joinery, deep dark emerald fabric center completely blank and quiet for readable menus. Orthographic front facing. Whole rectangular panel visible, small rounded corners and small consistent margin. Genuine transparent background outside frame, no scene, no text, no objects, no cards. Subtle bevels, no huge decorations, suitable for mobile game settings and results.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-SA",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-6516bbd1-4a0b-4492-90bc-f1b59a8c477a.png",
+      "prompt": "Use case: product-mockup. SINGLE finished playing card ACE OF SPADES, front-facing flat orthographic 2:3 portrait full canvas. Ivory paper face, fine dark gold inset hairline border, rounded card corners, no external scene or extra margin. Top-left index exactly A with black spade symbol directly beneath. Bottom-right index exactly A with black spade directly beneath, both rotated 180 degrees as standard playing card. Center EXACTLY ONE large elegant BLACK SPADE. Subtle tea-house gold filigree ONLY at perimeter, center clean. Rank and suit huge and exceptionally clear on a phone. No other pips, no words, no secondary cards, no mockup table, no hands, no perspective, no watermark. One asset only, never a sheet.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-S2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-6083bca7-22e0-4edb-ba36-1d0b3785551d.png",
+      "prompt": "One SINGLE finished playing card 2 OF SPADES. Use reference only for exact ivory face, thin gold perimeter filigree, font, border and flat portrait 2:3 framing. Change rank to '2' in top left and rotated bottom right, both with black spade underneath. Center exactly 2 black spade pips in standard symmetrical playing-card layout, count carefully, corner suit icons are separate from the 2 center pips. No other ranks or suits. Entire single card fills image, no table, no shadow, no perspective, no spritesheet, no watermark. High-contrast and readable. Generate this card alone, not a crop from any sheet.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-S3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-916861cc-a9a2-4868-8112-81d8d22c1f71.png",
+      "prompt": "One SINGLE finished playing card 3 OF SPADES. Use reference only for exact ivory face, thin gold perimeter filigree, font, border and flat portrait 2:3 framing. Change rank to '3' in top left and rotated bottom right, both with black spade underneath. Center exactly 3 black spade pips in standard symmetrical playing-card layout, count carefully, corner suit icons are separate from the 3 center pips. No other ranks or suits. Entire single card fills image, no table, no shadow, no perspective, no spritesheet, no watermark. High-contrast and readable. Generate this card alone, not a crop from any sheet.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-S4",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d35125f1-d377-4c78-b3a9-580cbed9427f.png",
+      "prompt": "One SINGLE finished playing card 4 OF SPADES. Use reference only for exact ivory face, thin gold perimeter filigree, font, border and flat portrait 2:3 framing. Change rank to '4' in top left and rotated bottom right, both with black spade underneath. Center exactly 4 black spade pips in standard symmetrical playing-card layout, count carefully, corner suit icons are separate from the 4 center pips. No other ranks or suits. Entire single card fills image, no table, no shadow, no perspective, no spritesheet, no watermark. High-contrast and readable. Generate this card alone, not a crop from any sheet.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-S5",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-725d2e4a-f813-4b71-a555-341119dcb26a.png",
+      "prompt": "One SINGLE finished playing card 5 OF SPADES. Use reference only for exact ivory face, thin gold perimeter filigree, font, border and flat portrait 2:3 framing. Change rank to '5' in top left and rotated bottom right, both with black spade underneath. Center exactly 5 black spade pips in standard symmetrical playing-card layout, count carefully, corner suit icons are separate from the 5 center pips. No other ranks or suits. Entire single card fills image, no table, no shadow, no perspective, no spritesheet, no watermark. High-contrast and readable. Generate this card alone, not a crop from any sheet.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-S6",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-684f7f56-5beb-43a3-8984-0569105028f7.png",
+      "prompt": "One SINGLE finished playing card 6 OF SPADES. Reference is the exact ivory face, thin gold border and font style. Flat front-facing portrait 2:3 card, full image. Index '6' in upper left and rotated lower right, black spade beneath each. Center EXACTLY 6 BLACK SPADE pips, normal symmetric standard playing-card layout: two columns of three. Count center pips precisely; corner icons not included in count. No other rank or suit, no words, no table, no multiple cards, no collage, no watermark. Clearly readable mobile card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-S7",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-e11adb5c-a46d-470d-9576-f49656da825e.png",
+      "prompt": "One SINGLE finished playing card 7 OF SPADES. Reference is the exact ivory face, thin gold border and font style. Flat front-facing portrait 2:3 card, full image. Index '7' in upper left and rotated lower right, black spade beneath each. Center EXACTLY 7 BLACK SPADE pips, normal symmetric standard playing-card layout: two columns of three plus one central upper pip. Count center pips precisely; corner icons not included in count. No other rank or suit, no words, no table, no multiple cards, no collage, no watermark. Clearly readable mobile card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-S8",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-ef1b0df8-1355-47ec-8055-ccea4ddbeab2.png",
+      "prompt": "One SINGLE finished playing card 8 OF SPADES. Reference is the exact ivory face, thin gold border and font style. Flat front-facing portrait 2:3 card, full image. Index '8' in upper left and rotated lower right, black spade beneath each. Center EXACTLY 8 BLACK SPADE pips, normal symmetric standard playing-card layout: two columns of three plus two central pips. Count center pips precisely; corner icons not included in count. No other rank or suit, no words, no table, no multiple cards, no collage, no watermark. Clearly readable mobile card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-S9",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-54da9724-59e3-472e-a70d-0098d8988be5.png",
+      "prompt": "One SINGLE finished playing card 9 OF SPADES. Reference is the exact ivory face, thin gold border and font style. Flat front-facing portrait 2:3 card, full image. Index '9' in upper left and rotated lower right, black spade beneath each. Center EXACTLY 9 BLACK SPADE pips, normal symmetric standard playing-card layout: two columns of four plus one center pip. Count center pips precisely; corner icons not included in count. No other rank or suit, no words, no table, no multiple cards, no collage, no watermark. Clearly readable mobile card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-S10",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-e4a94878-ec5e-4b73-a69a-37472ae588e8.png",
+      "prompt": "One SINGLE finished playing card 10 OF SPADES. Reference is the exact ivory face, thin gold border and font style. Flat front-facing portrait 2:3 card, full image. Index '10' in upper left and rotated lower right, black spade beneath each. Center EXACTLY 10 BLACK SPADE pips, normal symmetric standard playing-card layout: two columns of four plus two center pips. Count center pips precisely; corner icons not included in count. No other rank or suit, no words, no table, no multiple cards, no collage, no watermark. Clearly readable mobile card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-SJ",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-91137c15-4240-4cc8-acfd-6f5bd70df4ad.png",
+      "prompt": "SINGLE complete J OF SPADES playing card, portrait 2:3, flat front. Match first reference ivory paper, gold thin border, large corner typography. Upper left 'J' with BLACK SPADE below; lower right same index rotated 180 degrees. Central court illustration is a tasteful mirrored two-ended depiction of the exact IP character from second reference, preserve their appearance and costume: clover fox with gold bells. Elegant petite storybook court portrait, clear ivory space around indices. No other letters, no other suits, no other cards, no sheet, no perspective, no watermark. Full one-card image.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-SQ",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-3ea9a932-7e63-4e47-9940-219aa979c214.png",
+      "prompt": "SINGLE complete Q OF SPADES playing card, portrait 2:3, flat front. Match first reference ivory paper, gold thin border, large corner typography. Upper left 'Q' with BLACK SPADE below; lower right same index rotated 180 degrees. Central court illustration is a tasteful mirrored two-ended depiction of the exact IP character from second reference, preserve their appearance and costume: lavender star witch girl. Elegant petite storybook court portrait, clear ivory space around indices. No other letters, no other suits, no other cards, no sheet, no perspective, no watermark. Full one-card image.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-SK",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-0050a1ce-4a53-4e17-b7b6-57a741ccd66e.png",
+      "prompt": "SINGLE complete K OF SPADES playing card, portrait 2:3, flat front. Match first reference ivory paper, gold thin border, large corner typography. Upper left 'K' with BLACK SPADE below; lower right same index rotated 180 degrees. Central court illustration is a tasteful mirrored two-ended depiction of the exact IP character from second reference, preserve their appearance and costume: green leaf-hood forest child. Elegant petite storybook court portrait, clear ivory space around indices. No other letters, no other suits, no other cards, no sheet, no perspective, no watermark. Full one-card image.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-HA",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-8ef1372d-4798-4b4c-9654-46306ea67680.png",
+      "prompt": "Make ONE complete HEARTS A card as a new independent finished asset, not a sheet. Reference is the same-rank SPADES card. Preserve ivory face, gold perimeter, rank 'A', full portrait 2:3 geometry, and exact central pip count of 1. Change ALL suit symbols from spades to bright crimson RED HEARTS, including both corners; change corner rank lettering to matching crimson. Do not leave any black spade symbols. Upper left upright rank and heart; lower right same rotated 180 degrees. Center has exactly 1 red heart pips, corner mini heart symbols excluded. No extra text, no other cards, no perspective, no cropping, no watermark.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-H2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-20a273c5-52bb-4cd3-a8f8-a36a40a59906.png",
+      "prompt": "Make ONE complete HEARTS 2 card as a new independent finished asset, not a sheet. Reference is the same-rank SPADES card. Preserve ivory face, gold perimeter, rank '2', full portrait 2:3 geometry, and exact central pip count of 2. Change ALL suit symbols from spades to bright crimson RED HEARTS, including both corners; change corner rank lettering to matching crimson. Do not leave any black spade symbols. Upper left upright rank and heart; lower right same rotated 180 degrees. Center has exactly 2 red heart pips, corner mini heart symbols excluded. No extra text, no other cards, no perspective, no cropping, no watermark.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-H4",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-f1f6d58b-e781-4a32-8f00-042ce4b2e9d4.png",
+      "prompt": "Make ONE complete HEARTS 4 card as a new independent finished asset, not a sheet. Reference is the same-rank SPADES card. Preserve ivory face, gold perimeter, rank '4', full portrait 2:3 geometry, and exact central pip count of 4. Change ALL suit symbols from spades to bright crimson RED HEARTS, including both corners; change corner rank lettering to matching crimson. Do not leave any black spade symbols. Upper left upright rank and heart; lower right same rotated 180 degrees. Center has exactly 4 red heart pips, corner mini heart symbols excluded. No extra text, no other cards, no perspective, no cropping, no watermark.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-H3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-fbfc27e6-c6fd-483a-9192-7aebfd76797c.png",
+      "prompt": "Make ONE complete HEARTS 3 card as a new independent finished asset, not a sheet. Reference is the same-rank SPADES card. Preserve ivory face, gold perimeter, rank '3', full portrait 2:3 geometry, and exact central pip count of 3. Change ALL suit symbols from spades to bright crimson RED HEARTS, including both corners; change corner rank lettering to matching crimson. Do not leave any black spade symbols. Upper left upright rank and heart; lower right same rotated 180 degrees. Center has exactly 3 red heart pips, corner mini heart symbols excluded. No extra text, no other cards, no perspective, no cropping, no watermark.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-H5",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d9bae95c-414b-442b-bad4-6ca4d4c29ecf.png",
+      "prompt": "Make ONE complete HEARTS 5 card as a new independent finished asset, not a sheet. Reference is the same-rank SPADES card. Preserve ivory face, gold perimeter, rank '5', full portrait 2:3 geometry, and exact central pip count of 5. Change ALL suit symbols from spades to bright crimson RED HEARTS, including both corners; change corner rank lettering to matching crimson. Do not leave any black spade symbols. Upper left upright rank and heart; lower right same rotated 180 degrees. Center has exactly 5 red heart pips, corner mini heart symbols excluded. No extra text, no other cards, no perspective, no cropping, no watermark.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-H8",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-dd15aec1-aa30-4518-a129-d1002406e548.png",
+      "prompt": "Make ONE complete HEARTS 8 card as a new independent finished asset, not a sheet. Reference is the same-rank SPADES card. Preserve ivory face, gold perimeter, rank '8', full portrait 2:3 geometry, and exact central pip count of 8. Change ALL suit symbols from spades to bright crimson RED HEARTS, including both corners; change corner rank lettering to matching crimson. Do not leave any black spade symbols. Upper left upright rank and heart; lower right same rotated 180 degrees. Center has exactly 8 red heart pips, corner mini heart symbols excluded. No extra text, no other cards, no perspective, no cropping, no watermark.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-H6",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d7510fa2-9f28-439f-ac73-3d3af5a560f1.png",
+      "prompt": "Make ONE complete HEARTS 6 card as a new independent finished asset, not a sheet. Reference is the same-rank SPADES card. Preserve ivory face, gold perimeter, rank '6', full portrait 2:3 geometry, and exact central pip count of 6. Change ALL suit symbols from spades to bright crimson RED HEARTS, including both corners; change corner rank lettering to matching crimson. Do not leave any black spade symbols. Upper left upright rank and heart; lower right same rotated 180 degrees. Center has exactly 6 red heart pips, corner mini heart symbols excluded. No extra text, no other cards, no perspective, no cropping, no watermark.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-H7",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-95cc1da7-afb5-494e-97e4-293d673e29ec.png",
+      "prompt": "Make ONE complete HEARTS 7 card as a new independent finished asset, not a sheet. Reference is the same-rank SPADES card. Preserve ivory face, gold perimeter, rank '7', full portrait 2:3 geometry, and exact central pip count of 7. Change ALL suit symbols from spades to bright crimson RED HEARTS, including both corners; change corner rank lettering to matching crimson. Do not leave any black spade symbols. Upper left upright rank and heart; lower right same rotated 180 degrees. Center has exactly 7 red heart pips, corner mini heart symbols excluded. No extra text, no other cards, no perspective, no cropping, no watermark.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-H9",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-cfbf2993-2851-430a-9ad5-cd6588e2c527.png",
+      "prompt": "Make ONE complete HEARTS 9 card as a new independent finished asset, not a sheet. Reference is the same-rank SPADES card. Preserve ivory face, gold perimeter, rank '9', full portrait 2:3 geometry, and exact central pip count of 9. Change ALL suit symbols from spades to bright crimson RED HEARTS, including both corners; change corner rank lettering to matching crimson. Do not leave any black spade symbols. Upper left upright rank and heart; lower right same rotated 180 degrees. Center has exactly 9 red heart pips, corner mini heart symbols excluded. No extra text, no other cards, no perspective, no cropping, no watermark.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-H10",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-ba82278f-341e-4fa1-987f-199848a3fbc6.png",
+      "prompt": "Make ONE complete HEARTS 10 card as a new independent finished asset, not a sheet. Reference is the same-rank SPADES card. Preserve ivory face, gold perimeter, rank '10', full portrait 2:3 geometry, and exact central pip count of 10. Change ALL suit symbols from spades to bright crimson RED HEARTS, including both corners; change corner rank lettering to matching crimson. Do not leave any black spade symbols. Upper left upright rank and heart; lower right same rotated 180 degrees. Center has exactly 10 red heart pips, corner mini heart symbols excluded. No extra text, no other cards, no perspective, no cropping, no watermark.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-HJ",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d7d1f7da-44db-47ba-836b-acab78376917.png",
+      "prompt": "Make ONE complete HEARTS J card as a new independent finished asset, not a sheet. Reference is the same-rank SPADES card. Preserve ivory face, gold perimeter, rank 'J', full portrait 2:3 geometry, and exact central IP court illustration. Change ALL suit symbols from spades to bright crimson RED HEARTS, including both corners; change corner rank lettering to matching crimson. Do not leave any black spade symbols. Upper left upright rank and heart; lower right same rotated 180 degrees. Keep character identity and mirrored arrangement unchanged. No extra text, no other cards, no perspective, no cropping, no watermark.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-HQ",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-10ca72c4-b55b-4339-b1c9-d977e6be2434.png",
+      "prompt": "Make ONE complete HEARTS Q card as a new independent finished asset, not a sheet. Reference is the same-rank SPADES card. Preserve ivory face, gold perimeter, rank 'Q', full portrait 2:3 geometry, and exact central IP court illustration. Change ALL suit symbols from spades to bright crimson RED HEARTS, including both corners; change corner rank lettering to matching crimson. Do not leave any black spade symbols. Upper left upright rank and heart; lower right same rotated 180 degrees. Keep character identity and mirrored arrangement unchanged. No extra text, no other cards, no perspective, no cropping, no watermark.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-HK",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-fb8629b6-dc25-4edf-83de-d4f1420616a6.png",
+      "prompt": "Make ONE complete HEARTS K card as a new independent finished asset, not a sheet. Reference is the same-rank SPADES card. Preserve ivory face, gold perimeter, rank 'K', full portrait 2:3 geometry, and exact central IP court illustration. Change ALL suit symbols from spades to bright crimson RED HEARTS, including both corners; change corner rank lettering to matching crimson. Do not leave any black spade symbols. Upper left upright rank and heart; lower right same rotated 180 degrees. Keep character identity and mirrored arrangement unchanged. No extra text, no other cards, no perspective, no cropping, no watermark.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-DA",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-f5642302-8c93-4c54-8c88-0a242b2b9063.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the A of spades. Change ONLY all spade suit symbols to crimson red DIAMONDS (rhombuses) and corner rank A color to crimson red. Keep exact rank A, original pip arrangement and same central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-D2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-ad3ae612-73b2-4671-8eae-acceac1da17d.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 2 of spades. Change ONLY all spade suit symbols to crimson red DIAMONDS (rhombuses) and corner rank 2 color to crimson red. Keep exact rank 2, original pip arrangement and 2 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-D4",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-11e07365-8d0e-4c06-be89-44ec3081625e.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 4 of spades. Change ONLY all spade suit symbols to crimson red DIAMONDS (rhombuses) and corner rank 4 color to crimson red. Keep exact rank 4, original pip arrangement and 4 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-D3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-b8ca9b8b-6c67-424f-b1af-90cedd812588.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 3 of spades. Change ONLY all spade suit symbols to crimson red DIAMONDS (rhombuses) and corner rank 3 color to crimson red. Keep exact rank 3, original pip arrangement and 3 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-D5",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-269096b5-ddca-4601-82b3-9d73cfa768ce.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 5 of spades. Change ONLY all spade suit symbols to crimson red DIAMONDS (rhombuses) and corner rank 5 color to crimson red. Keep exact rank 5, original pip arrangement and 5 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-D6",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-b6c8fec6-a547-41cd-9667-54957bdd9e5b.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 6 of spades. Change ONLY all spade suit symbols to crimson red DIAMONDS (rhombuses) and corner rank 6 color to crimson red. Keep exact rank 6, original pip arrangement and 6 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-D7",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-409c7408-db9e-4d92-9e20-4399fdedcf61.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 7 of spades. Change ONLY all spade suit symbols to crimson red DIAMONDS (rhombuses) and corner rank 7 color to crimson red. Keep exact rank 7, original pip arrangement and 7 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-D8",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-ab0a8040-56e3-4b8b-b854-8a497e2aa54b.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 8 of spades. Change ONLY all spade suit symbols to crimson red DIAMONDS (rhombuses) and corner rank 8 color to crimson red. Keep exact rank 8, original pip arrangement and 8 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-D9",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-2b3a6330-658f-4148-837b-a062fdf058d3.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 9 of spades. Change ONLY all spade suit symbols to crimson red DIAMONDS (rhombuses) and corner rank 9 color to crimson red. Keep exact rank 9, original pip arrangement and 9 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-DJ",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-da0ad01b-4c67-4e00-978e-6ae38ed5e71c.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the J of spades. Change ONLY all spade suit symbols to crimson red DIAMONDS (rhombuses) and corner rank J color to crimson red. Keep exact rank J, original pip arrangement and same central pip count, ivory paper, full gold frame, large corner indices, the exact same mirrored CxQ IP character illustration and costume, rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-D10",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-22d1ed11-29f4-4401-959c-81d287ea0706.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 10 of spades. Change ONLY all spade suit symbols to crimson red DIAMONDS (rhombuses) and corner rank 10 color to crimson red. Keep exact rank 10, original pip arrangement and 10 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-DQ",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-22042ca9-7725-4d8f-9989-210c9cff0b1b.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the Q of spades. Change ONLY all spade suit symbols to crimson red DIAMONDS (rhombuses) and corner rank Q color to crimson red. Keep exact rank Q, original pip arrangement and same central pip count, ivory paper, full gold frame, large corner indices, the exact same mirrored CxQ IP character illustration and costume, rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-C2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-f405a192-71df-43f3-95e6-a057418c3d49.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 2 of spades. Change ONLY all spade suit symbols to black CLUBS (three rounded lobes and a stem) and corner rank 2 color to black. Keep exact rank 2, original pip arrangement and 2 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-DK",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-a809c14d-4af6-412e-81d3-a73d3a4c5418.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the K of spades. Change ONLY all spade suit symbols to crimson red DIAMONDS (rhombuses) and corner rank K color to crimson red. Keep exact rank K, original pip arrangement and same central pip count, ivory paper, full gold frame, large corner indices, the exact same mirrored CxQ IP character illustration and costume, rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-C3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d19b5f54-4c54-43c4-9ea8-568d4f31847f.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 3 of spades. Change ONLY all spade suit symbols to black CLUBS (three rounded lobes and a stem) and corner rank 3 color to black. Keep exact rank 3, original pip arrangement and 3 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-CA",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-12397992-6058-46e9-a1b8-7d4fcbc7fef9.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the A of spades. Change ONLY all spade suit symbols to black CLUBS (three rounded lobes and a stem) and corner rank A color to black. Keep exact rank A, original pip arrangement and same central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-C6",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-2d4ad41f-e9e9-4a3a-b783-e554a3ddc969.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 6 of spades. Change ONLY all spade suit symbols to black CLUBS (three rounded lobes and a stem) and corner rank 6 color to black. Keep exact rank 6, original pip arrangement and 6 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-C4",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-a1610558-5c50-4f52-8058-280d75b63747.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 4 of spades. Change ONLY all spade suit symbols to black CLUBS (three rounded lobes and a stem) and corner rank 4 color to black. Keep exact rank 4, original pip arrangement and 4 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-C5",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-0c0a831a-071a-4410-8913-d34f9d818082.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 5 of spades. Change ONLY all spade suit symbols to black CLUBS (three rounded lobes and a stem) and corner rank 5 color to black. Keep exact rank 5, original pip arrangement and 5 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-C7",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c69477a4-959b-40e7-8110-f4d1af37749b.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 7 of spades. Change ONLY all spade suit symbols to black CLUBS (three rounded lobes and a stem) and corner rank 7 color to black. Keep exact rank 7, original pip arrangement and 7 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-C8",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-aad5950e-f5c4-497d-8bbb-41575e171594.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 8 of spades. Change ONLY all spade suit symbols to black CLUBS (three rounded lobes and a stem) and corner rank 8 color to black. Keep exact rank 8, original pip arrangement and 8 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-C9",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-7b4d0c7c-bb60-4060-bae0-6435d624ebbe.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 9 of spades. Change ONLY all spade suit symbols to black CLUBS (three rounded lobes and a stem) and corner rank 9 color to black. Keep exact rank 9, original pip arrangement and 9 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-C10",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c91b236b-4bac-4a84-bb54-36d8d3c9c93b.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the 10 of spades. Change ONLY all spade suit symbols to black CLUBS (three rounded lobes and a stem) and corner rank 10 color to black. Keep exact rank 10, original pip arrangement and 10 central pip count, ivory paper, full gold frame, large corner indices,  rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-CQ",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-93ffd125-4975-4566-bf71-11dfb361b891.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the Q of spades. Change ONLY all spade suit symbols to black CLUBS (three rounded lobes and a stem) and corner rank Q color to black. Keep exact rank Q, original pip arrangement and same central pip count, ivory paper, full gold frame, large corner indices, the exact same mirrored CxQ IP character illustration and costume, rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-CJ",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-130ee7d6-87f8-48b5-aadb-19abc70fe961.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the J of spades. Change ONLY all spade suit symbols to black CLUBS (three rounded lobes and a stem) and corner rank J color to black. Keep exact rank J, original pip arrangement and same central pip count, ivory paper, full gold frame, large corner indices, the exact same mirrored CxQ IP character illustration and costume, rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-CK",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-095305c3-518b-4e1d-9279-861865203f6f.png",
+      "prompt": "Use case: precise-object-edit. Single production playing card for CxQ poker, portrait 2:3. Input image is edit target: the K of spades. Change ONLY all spade suit symbols to black CLUBS (three rounded lobes and a stem) and corner rank K color to black. Keep exact rank K, original pip arrangement and same central pip count, ivory paper, full gold frame, large corner indices, the exact same mirrored CxQ IP character illustration and costume, rectangular framing unchanged. No spades, no hearts, no other suit, no extra numerals. Exactly one card, full frame, no crop, no montage, no shadow outside card.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-back",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-0ea7a5d1-3b1c-47ce-be22-e25cf182b167.png",
+      "prompt": "Use case: stylized-concept. Asset type: one independently generated production game asset. CxQ premium cute tea-house mobile poker game, extremely clean detailed render. portrait 2:3. One complete rectangular playing-card back design edge-to-edge: rich emerald woven velvet, fine ivory/gold full border, perfectly centered small golden clover and moon crest. Bilaterally and rotationally symmetric, NO face, NO ranks, NO text, NO card stack, NO scene, NO outer shadow. Ivory corners consistent with playing-card reference. Single image, no sprite sheet, no multiple views, no collage.",
+      "review": "visually checked"
+    },
+    {
+      "id": "helper-tea-0",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-4c3fd359-a448-423d-97cf-6250da22a8f6.png",
+      "prompt": "Use case: stylized-concept. Asset type: one independently generated production game asset. CxQ premium cute tea-house mobile poker game, extremely clean detailed render. square single isolated celadon tea cup with warm amber tea and a tiny leaf ornament, centered full object. Transparent background, no plate, no text. Single image, no sprite sheet, no multiple views, no collage.",
+      "review": "visually checked"
+    },
+    {
+      "id": "card-JOKER",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-f420c56e-956c-48e8-a50a-4cc478eec672.png",
+      "prompt": "Use case: stylized-concept. Asset type: one independently generated production game asset. CxQ premium cute tea-house mobile poker game, extremely clean detailed render. portrait 2:3. One complete ivory playing card, thin gold full perimeter matching card reference. Exact corner text 'JOKER' upright upper-left and rotated lower-right. Center is one very cute tiny cream-white smiling ghost wearing a tiny plum jester hat, star wand, chubby friendly storybook 3D character. No standard suits or pip symbols, no scary face, no other text. Single image, no sprite sheet, no multiple views, no collage.",
+      "review": "visually checked"
+    },
+    {
+      "id": "helper-tea-1",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-aafcee8f-9139-478f-a69b-a8d185c36d27.png",
+      "prompt": "Use case: stylized-concept. Asset type: one independently generated production game asset. CxQ premium cute tea-house mobile poker game, extremely clean detailed render. square single isolated walnut plate holding one triangular golden pineapple cake with leaf-shaped pastry stamp, centered full object. Transparent background, no cup, no text. Single image, no sprite sheet, no multiple views, no collage.",
+      "review": "visually checked"
+    },
+    {
+      "id": "helper-tea-2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5c112200-47b6-460d-a589-231d65b960c2.png",
+      "prompt": "Use case: stylized-concept. Asset type: one independently generated production game asset. CxQ premium cute tea-house mobile poker game, extremely clean detailed render. square single isolated ivory bowl of colorful round tangyuan dumplings in clear sweet soup, centered full object. Transparent background, no extra utensils, no text. Single image, no sprite sheet, no multiple views, no collage.",
+      "review": "visually checked"
+    },
+    {
+      "id": "helper-star",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d4eaa440-350f-4c93-b4e7-c3bf08474522.png",
+      "prompt": "Use case: stylized-concept. Asset type: one independently generated production game asset. CxQ premium cute tea-house mobile poker game, extremely clean detailed render. square single isolated plump glowing golden five-point star with warm ivory core, soft 3D mobile-game treasure, transparent background, NO surrounding sparkles, no text. Single image, no sprite sheet, no multiple views, no collage.",
+      "review": "visually checked"
+    },
+    {
+      "id": "helper-tea-3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-f31b26e4-56dd-4ebb-b1bc-69d15e35e25d.png",
+      "prompt": "Use case: stylized-concept. Asset type: one independently generated production game asset. CxQ premium cute tea-house mobile poker game, extremely clean detailed render. square single isolated bamboo steamer containing one white bunny-shaped steamed bun, centered full object. Transparent background, no other food, no text. Single image, no sprite sheet, no multiple views, no collage.",
+      "review": "visually checked"
+    },
+    {
+      "id": "helper-basket",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-ffab7615-187a-4062-a781-d79b08ea8f4d.png",
+      "prompt": "Use case: stylized-concept. Asset type: one independently generated production game asset. CxQ premium cute tea-house mobile poker game, extremely clean detailed render. square single isolated small open woven walnut-brown wicker basket with green clover ribbon, view slightly from above so opening visible, transparent background, no contents, no text. Single image, no sprite sheet, no multiple views, no collage.",
+      "review": "visually checked"
+    },
+    {
+      "id": "room-thirteen",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-22c6f37b-f6fd-487c-aa61-b0df0f6dc66b.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. midnight star observatory, deep indigo velvet table. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "visually checked"
+    },
+    {
+      "id": "room-highlow",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-e2ad8ad6-9bf6-41a1-a768-5f847460fabd.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. sunny jade courtyard with citrus trees. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "visually checked"
+    },
+    {
+      "id": "room-blackjack",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-1c435803-d09f-49c5-a81c-2718845c79a0.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. cozy midnight library with teal felt. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "visually checked"
+    },
+    {
+      "id": "room-dragon",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-f97ec5f5-aaad-4cca-8b10-bd4183e233ac.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. Taiwanese waterside pavilion and golden dragon finials. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "visually checked"
+    },
+    {
+      "id": "room-redpoint",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c2e0f75a-65bc-424b-b46c-6b485ce3796d.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. autumn maple tea house and burgundy felt. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "visually checked"
+    },
+    {
+      "id": "room-sevens",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5176beed-5ce3-4239-b86c-6b172c0f626a.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. four-season floral conservatory and sage felt. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "visually checked"
+    },
+    {
+      "id": "room-oldmaid",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-9a3bf9be-018d-44ba-9c51-45d86529d733.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. enchanted attic and friendly ghost lanterns. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "visually checked"
+    },
+    {
+      "id": "home",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-b3d895ef-67df-4ac7-b2cd-f0a4778f4b62.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. 21:9 home title screen, exact IP luck/dream/growth on left, right35% reserved for menu. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "visually checked"
+    },
+    {
+      "id": "cover-big2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-2cc39f14-5b68-4b29-8c4a-847171ed8663.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. Luck holding cards, 大老二. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "visually checked"
+    },
+    {
+      "id": "cover-blackjack",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-0b964dd8-d2fe-4aa3-8d29-97f5e5231935.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. Night companion holding ace/king in library, 21 點. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "visually checked"
+    },
+    {
+      "id": "cover-highlow",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-1d883f7a-2a7c-4b0c-8eea-5d373eb0e7e8.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. Joy revealing oversized card in courtyard, 比大小. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "visually checked"
+    },
+    {
+      "id": "cover-redpoint",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-700821fd-936c-415e-8df5-163337ccaf4c.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. Memory collecting red cards in maple tea room, 撿紅點. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "visually checked"
+    },
+    {
+      "id": "cover-oldmaid",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-1281d8e6-bd26-406a-9af2-e72eff596865.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. Healing with friendly ghost in attic, 抽鬼牌. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "visually checked"
+    },
+    {
+      "id": "cover-sevens-v2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-01fe0cfe-63bf-4a78-bbe5-605a94d23852.png",
+      "prompt": "Use case: precise-object-edit. Edit complete game cover, keep exact character identity, background, lighting, camera, title text and frame unchanged. Replace ONLY cards on table with one row of seven HEART suit cards whose upper-left ranks left to right read 4,5,6,7,8,9,10. Not repeated sevens. Preserve separate 7 card in character hand. One complete landscape cover; no crop, no collage.",
+      "review": "visually checked"
+    },
+    {
+      "id": "cover-thirteen-v2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-06c5fef1-7ca0-4252-afba-2ddbafdc510a.png",
+      "prompt": "Use case: precise-object-edit. Edit complete game cover, keep exact character identity, background, lighting, camera, title text and frame unchanged. Replace ONLY the playing cards on tabletop with exactly THIRTEEN purple FACE-DOWN cards arranged in three clearly separated horizontal rows: nearest character THREE cards, middle FIVE cards, foreground FIVE cards. 3+5+5=13, not 15. No exposed ranks, no extra tabletop cards. One complete landscape cover; no crop, no collage.",
+      "review": "visually checked"
+    },
+    {
+      "id": "ui-check-off",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c305f5d5-eebb-47db-aaf7-4da22a05be6a.png",
+      "prompt": "Use case: stylized-concept. ONE independently generated premium mobile game UI component for CxQ tea-house poker. Cute detailed 3D rendered material, clean edges. square jewel checkbox icon: one small carved gold/walnut rounded square frame, dark emerald inset, EMPTY center. Full object, thin frame, no outer margin, transparent exterior. No mark, no text. No collage, no sprite sheet.",
+      "review": "visually checked"
+    },
+    {
+      "id": "ui-check-on",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-1a0a5296-fe45-46a0-93ff-eaff938c25bd.png",
+      "prompt": "Use case: stylized-concept. ONE independently generated premium mobile game UI component for CxQ tea-house poker. Cute detailed 3D rendered material, clean edges. square jewel checkbox icon: one small carved gold/walnut rounded square frame, dark emerald inset, large unmistakable ivory check mark centered. Full object, thin frame, no outer margin, transparent exterior. No text. No collage, no sprite sheet.",
+      "review": "visually checked"
+    },
+    {
+      "id": "ui-gear",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-358e356c-1f0d-43d6-bef2-d2360433977e.png",
+      "prompt": "Use case: stylized-concept. ONE independently generated premium mobile game UI component for CxQ tea-house poker. Cute detailed 3D rendered material, clean edges. square isolated ornate walnut and gold six-tooth settings gear, green jade central jewel with circular opening, readable bold silhouette, transparent background, no letters or words. No collage, no sprite sheet.",
+      "review": "visually checked"
+    },
+    {
+      "id": "ui-knob",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-0ba6caaf-2b17-4864-9d08-2e3ff5c0ba84.png",
+      "prompt": "Use case: stylized-concept. ONE independently generated premium mobile game UI component for CxQ tea-house poker. Cute detailed 3D rendered material, clean edges. square isolated circular polished jade volume slider knob, thin gold rim, small clover engraving, transparent exterior, no text. No collage, no sprite sheet.",
+      "review": "visually checked"
+    },
+    {
+      "id": "ui-nameplate",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-104a55a0-3e15-4616-99c0-6a8d1078031c.png",
+      "prompt": "Use case: stylized-concept. ONE independently generated premium mobile game UI component for CxQ tea-house poker. Cute detailed 3D rendered material, clean edges. 3:1 horizontal name plaque for text overlay. Edge-to-edge dark emerald felt, very thin gold carved border flush with outer edge and tiny clover corner detail. Almost whole center dark and empty. No text, no margins, no shadow. One full rectangular asset. No collage, no sprite sheet.",
+      "review": "visually checked"
+    },
+    {
+      "id": "ui-rail",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-f57ad578-c552-489d-bf57-9557f4e27cd9.png",
+      "prompt": "Use case: stylized-concept. ONE independently generated premium mobile game UI component for CxQ tea-house poker. Cute detailed 3D rendered material, clean edges. 3:1 horizontal volume-slider track. One narrow carved dark walnut channel with gold edges and emerald interior. Full width, centered, transparent outside. No knob, no text. No collage, no sprite sheet.",
+      "review": "visually checked"
+    },
+    {
+      "id": "cover-dragon-v4",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-aff50f7b-a8d4-4a3a-828f-d22d5d9d7e1e.png",
+      "prompt": "Use case: precise-object-edit. Edit full cover ONLY THREE CARD FACES. Simplify decorative cover cards to ONE upper-left index each, NO bottom-right indices anywhere. Left held card: upper-left 3 spade, center exactly 3 spades, completely blank lower-right corner. Right held card: upper-left K heart, center heart/crown, completely blank lower-right corner. Flying center card: upper-left 8 spade, center exactly 8 spades, completely blank lower-right corner. This is decorative cover not playable card. Erase all lower-right numerals and small lower-right suit icons. Preserve character identity, hands, title 射龍門, scenery, camera lighting and full framing. One complete cover, no crop.",
+      "review": "visually checked; 3 < 8 < K, single-corner decorative ranks"
+    },
+    {
+      "id": "home-tablet",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-b00e2418-db8a-4a12-9e55-9eae6eae0482.png",
+      "prompt": "Use case: identity-preserve. Input image is exact IP identity and tea-house art reference. Create ONE complete premium tablet game home background, 4:3 LANDSCAPE aspect ratio. Preserve exact three characters: green-haired clover fox Luck, lavender-haired purple star witch Dream, brown-haired green leaf-hood Growth, exact faces costumes. Same polished adorable tactile 3D rendering, warm Taiwanese wood tea-house, moonlit windows. Recompose to fit whole title 'CxQ 撲克館' centered near top with all three characters playing cards across middle upper half. Lower 38% must be one continuous spacious dark emerald felt tabletop seen in perspective, blank and quiet at center for menu overlay, ornate table edges only far left/right. Entire illustration is one seamless scene with consistent camera, lighting, perspective. No horizontal seam, no second panel, no fake UI buttons, no collage, no blurred filler. Full title and characters away from edges. Any visible card only ONE correct upper-left rank/suit index; no contradictory small rank corners. Single independent finished asset, not sheet or crop.",
+      "review": "Full 4:3 scene, title, IP identity and menu safe area visually checked"
+    }
+  ],
+  "superseded": [
+    {
+      "id": "cover-thirteen",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-6bbc7154-a1a5-463a-9ff7-9f98190dec9c.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. Dream arranging cards in observatory, 13 支. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "superseded; not deployed"
+    },
+    {
+      "id": "cover-dragon",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-17663738-3f43-45b4-a9ea-336cafa3c4cf.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. Trust with gate cards and flying third card in waterside pavilion, 射龍門. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "superseded; not deployed"
+    },
+    {
+      "id": "cover-sevens",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-408d3e0f-fc15-4689-b5fe-db8f38a39cb6.png",
+      "prompt": "Use case: stylized-concept / ads-marketing. One independently generated full CxQ premium cute storybook 3D game artwork; walnut/gold tea-house family. Hope placing seven in floral conservatory, 排七. Preserve referenced IP identity, no collage, no cropping. Room assets have clear empty playing surface and no text. Cover exact Traditional Chinese title at bottom, single character.",
+      "review": "superseded; not deployed"
+    },
+    {
+      "id": "cover-dragon-v2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-1790c42a-fcfc-4568-8919-6788dcb8848f.png",
+      "prompt": "Use case: precise-object-edit. Edit complete game cover, keep exact character identity, background, lighting, camera, title text and frame unchanged. Change ONLY ranks of three large cards: left gate is 3 of spades; right gate is K of hearts; center flying card is 8 of spades. No contradictory ranks. Illustrate 3<8<K. One complete landscape cover; no crop, no collage.",
+      "review": "superseded; not deployed"
+    }
+  ]
+}

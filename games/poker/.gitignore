@@ -1,0 +1,3 @@
+# Preserve high-resolution masters locally; deploy optimized individual images.
+art/*.png
+art/records/
