@@ -12,10 +12,15 @@
   const p=document.createElement('p');p.textContent=config[1];article.append(p);
   const label=document.createElement('label');label.textContent='遊玩方式　';const mode=document.createElement('select');mode.setAttribute('aria-label','遊玩方式');mode.innerHTML='<option value="classic">經典挑戰</option><option value="relaxed">輕鬆遊玩</option>';label.append(mode);article.append(label);const start=document.createElement('button');start.textContent=config[2];article.append(start);entry.append(article);document.body.append(entry);
   const main=document.querySelector('main');main.inert=true;
-  const chapters=slug==='fairytale-defense'?['花園入口','蜿蜒林徑','城堡防線']:[];
-  const chapterLabel=document.createElement('label');chapterLabel.textContent=slug==='fairytale-defense'?'守護地圖　':'冒險章節　';
+  const chapters=slug==='dream-match'?DreamCampaign.levels.map(l=>l.name):slug==='fairytale-defense'?['花園入口','蜿蜒林徑','城堡防線']:[];
+  const chapterLabel=document.createElement('label');chapterLabel.textContent=slug==='fairytale-defense'?'守護地圖　':'挑戰關卡　';
   const chapter=document.createElement('select');chapter.setAttribute('aria-label',chapterLabel.textContent.trim());
   chapters.forEach((name,i)=>{const option=document.createElement('option');option.value=i;option.textContent=(i+1)+' · '+name;chapter.append(option);});chapterLabel.append(chapter);if(chapters.length)article.insertBefore(chapterLabel,start);
-  start.onclick=()=>{entry.hidden=true;main.inert=false;dispatchEvent(new CustomEvent('cxq-start',{detail:{mode:mode.value,chapter:Number(chapter.value)||0}}));document.querySelector('canvas,#board')?.focus({preventScroll:true});};
+  if(slug==='dream-match'){
+ mode.options[0].textContent='經典闖關';mode.options[1].textContent='輕鬆單局';
+ const sync=()=>{const cleared=DreamCampaign.cleared(CxQ.read('cxq-dream-campaign-v1',0));chapterLabel.hidden=mode.value==='relaxed';p.textContent=mode.value==='relaxed'?'36 步的獨立一局，收集三種寶石；不影響闖關進度。':'12 關連續挑戰，完成各關目標後前往下一關，進度自動保存。';Array.from(chapter.options).forEach((o,i)=>o.disabled=i>cleared);chapter.value=Math.min(cleared,11);};
+ mode.addEventListener('change',sync);new MutationObserver(sync).observe(entry,{attributes:true,attributeFilter:['hidden']});sync();
+}
+start.onclick=()=>{entry.hidden=true;main.inert=false;dispatchEvent(new CustomEvent('cxq-start',{detail:{mode:mode.value,chapter:Number(chapter.value)||0}}));document.querySelector('canvas,#board')?.focus({preventScroll:true});};
 
 })();

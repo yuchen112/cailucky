@@ -4,13 +4,15 @@
   const names=['愛心','水滴','星光','月光','葉芽','暖陽'],art='../storybook/art-studio/',newArt='../storybook/art-20260920-batch/';
   let mode='classic',chapter=0,a=[],special={},selected=null,moves=0,score=0,charge=0,shuffle=2,goals=[],busy=false,ended=false,lastInput=0;
   const rnd=()=>Math.floor(Math.random()*6),wait=async ms=>{await new Promise(r=>setTimeout(r,ms));await window.CxQSession?.waitReady();};
-  const chapters=['星光花園','月影圖書室','雲端鐘樓','極光夢境'];
+  const levels=DreamCampaign.levels,chapters=levels.map(l=>l.name);let bestChain=1;
+  const campaignKey='cxq-dream-campaign-v1';
+  const cleared=()=>DreamCampaign.cleared(CxQ.read(campaignKey,0));
   function fresh(){
     if(busy)return;
     do{a=Array.from({length:N*N},rnd);}while(R.match(a).size||!R.move(a));
-    special={};selected=null;ended=false;moves=(mode==='relaxed'?34:26)-chapter;score=0;charge=0;shuffle=2;
-    goals=[0,1,2].map((_,i)=>({color:(i+chapter)%6,need:(mode==='relaxed'?10:12)+chapter*3,got:0}));
-    $('#result').hidden=true;document.querySelector('header p').textContent='第 '+(chapter+1)+' 章 · '+chapters[chapter];
+    special={};selected=null;ended=false;bestChain=1;moves=mode==='relaxed'?36:levels[chapter].moves;score=0;charge=0;shuffle=2;
+    goals=(mode==='relaxed'?[[0,10],[1,10],[2,10]]:levels[chapter].targets).map(([color,need])=>({color,need,got:0}));$('#goals').replaceChildren();
+    $('#result').hidden=true;document.querySelector('header p').textContent=mode==='relaxed'?'輕鬆單局':'第 '+(chapter+1)+' 關 · '+chapters[chapter];
     lastInput=performance.now();render();
   }
   const reduced=()=>document.body.classList.contains('reduced-motion')||matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -27,6 +29,7 @@
       let mark=cell.querySelector('.special-mark');
       if(special[i]&&special[i]!=='prism'){if(!mark){mark=new Image();mark.src=newArt+'dream-line.webp';mark.alt='';cell.append(mark);}mark.className='special-mark '+special[i];}else mark?.remove();
     });
+    const level=levels[chapter],objective=mode==='relaxed'?'獨立一局 · 收集三種寶石':level.chain?'最高連鎖 '+bestChain+'/'+level.chain:level.score?'目標分數 '+score+'/'+level.score:'收集三種寶石';if($('#journey-status'))$('#journey-status').textContent=(mode==='relaxed'?'輕鬆單局':'第 '+(chapter+1)+' / '+levels.length+' 關')+' · '+objective;
     $('#score').textContent=score.toLocaleString();$('#moves').textContent=moves;$('#charge').style.width=charge+'%';
     $('#burst').disabled=charge<100||busy||ended;$('#shuffle').disabled=shuffle<=0||busy||ended;$('#shuffleCount').textContent='剩餘 '+shuffle+' 次';$('#shuffle small').textContent='剩餘 '+shuffle+' 次';$('#burst small').textContent=charge>=100?'點擊施放':'能量 '+charge+'%';
     if($('#goals').children.length!==goals.length)$('#goals').innerHTML=goals.map(g=>'<div class="goal"><img class="gemMini" src="'+art+'dream-gem-'+g.color+'.webp" alt="'+names[g.color]+'"><b></b></div>').join('');
@@ -61,7 +64,7 @@
       render(m);toast((combo>1?combo+' 連鎖！':'消除 '+m.size+' 個')+' · +'+m.size*100*combo);
       await M.clear(board,m,made,activated,a,goals);await wait(reduced()?60:30);
       for(const i of m){const g=goals.find(g=>g.color===a[i]);if(g)g.got++;a[i]=-1;delete special[i];}
-      score+=m.size*100*combo;charge=Math.min(100,charge+m.size*5);
+      bestChain=Math.max(bestChain,combo);score+=m.size*100*combo;charge=Math.min(100,charge+m.size*5);
       const nextSpecial={},fall={};
       for(let c=0;c<N;c++){
         const kept=[];for(let r=N-1;r>=0;r--){const i=r*N+c;if(a[i]>=0)kept.push({v:a[i],s:special[i],row:r});}
@@ -84,14 +87,15 @@
     busy=true;render();await M.shuffle(board,true);await window.CxQSession?.waitReady();reshuffle();render();await M.shuffle(board,false);await window.CxQSession?.waitReady();busy=false;render();
   }
   async function check(){
-    const win=goals.every(g=>g.got>=g.need);
+    const level=levels[chapter],win=goals.every(g=>g.got>=g.need)&&(mode==='relaxed'||((!level.chain||bestChain>=level.chain)&&(!level.score||score>=level.score)));
     if(win||moves<=0){
-      ended=true;$('#resultTitle').textContent=win?chapters[chapter]+'修復完成！':'再試一次，夢境等著你';
+      ended=true;$('#resultTitle').textContent=win?(mode==='relaxed'?'美夢完成！':chapters[chapter]+'修復完成！'):'再試一次，夢境等著你';
       $('#resultText').textContent='獲得 '+score.toLocaleString()+' 分 · 剩餘 '+moves+' 步';
       const best=Math.max(score,CxQ.read('cxq-match-best',0));CxQ.write('cxq-match-best',best);
-      if(win)CxQ.write('cxq-match-chapter',Math.max(chapter+1,CxQ.read('cxq-match-chapter',0)));
-      $('#again').textContent='再挑戰一次';
-      $('#again').onclick=()=>fresh();$('#result').hidden=false;CxQ.sound(win?'win':'lose');return;
+      if(win&&mode==='classic')CxQ.write(campaignKey,Math.max(chapter+1,cleared()));
+      const next=win&&mode==='classic'&&chapter<levels.length-1;
+      $('#again').textContent=next?'前往第 '+(chapter+2)+' 關':mode==='relaxed'?'再玩一局':win?'重玩這一關':'重試這一關';
+      $('#again').onclick=()=>{if(next)chapter++;fresh();};$('#result').hidden=false;CxQ.sound(win?'win':'lose');return;
     }
     if(!R.move(a,special)){toast('沒有可消除的組合，免費重整中');await animateReshuffle();toast('夢境重整完成，不扣步數');}
   }
@@ -105,6 +109,6 @@
   setInterval(()=>{if(busy||ended||window.CxQSession?.blocked()||!document.querySelector('.game-entry[hidden]')||performance.now()-lastInput<6500)return;const hint=R.move(a,special);if(hint)M.hint(board,hint);lastInput=performance.now();},1200);
   window.CxQGame={restart:fresh,busy:()=>busy,home:()=>{ended=true;$('#result').hidden=true;document.querySelector('.game-entry').hidden=false;document.querySelector('main').inert=true;}};
   CxQ.configure({music:'heavenly'});
-  addEventListener('cxq-start',e=>{mode=e.detail.mode;chapter=0;fresh();});
+  addEventListener('cxq-start',e=>{mode=e.detail.mode;chapter=mode==='relaxed'?0:DreamCampaign.clamp(e.detail.chapter??Math.min(cleared(),levels.length-1));fresh();});
   fresh();
 })();

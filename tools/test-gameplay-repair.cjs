@@ -29,7 +29,7 @@ check('retreating target rejects late hits',()=>{vm.runInContext('index=seed();s
 check('miss waits until retreat animation finishes',()=>{vm.runInContext('index=seed();state.elapsed=state.holes[index].expires;update(1)',w);assert.equal(vm.runInContext('state.misses',w),0);vm.runInContext('update(180)',w);assert.equal(vm.runInContext('state.misses',w),1)});
 const dino=read('games/dino/game.js'),d=vm.createContext({Math});
 vm.runInContext(`let state={slide:0,y:260};function runnerPose(){return {width:100,height:112}}
-${section(dino,'function playerHitbox()','function start()')}`,d);
+${section(dino,'function playerHitbox()','let starting=false;')}`,d);
 check('runner collision excludes decorative silhouette edges',()=>{const box=vm.runInContext('playerHitbox()',d);assert.ok(box.left>110&&box.right<210);assert.equal(box.bottom,255)});
 check('runner slide clears low branch without shrinking standing hitbox',()=>{const standing=vm.runInContext('playerHitbox().top',d);vm.runInContext('state.slide=.7',d);assert.ok(vm.runInContext('playerHitbox().top',d)>standing);assert.ok(vm.runInContext('playerHitbox().top',d)>202)});
 

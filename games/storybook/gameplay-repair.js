@@ -1,7 +1,7 @@
 /* Only the five audited games load this file. */
 (() => {
   const q=s=>document.querySelector(s),game=document.body.dataset.game;
-  document.documentElement.dataset.release='20260923-repair1';
+  document.documentElement.dataset.release='20260924-mobile1';
   if(game==='mines'){
     const gear=q('#sound'),notes=q('.field-notes'),play=q('#play');
     if(gear&&notes){

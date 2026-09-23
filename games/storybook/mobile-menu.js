@@ -20,7 +20,7 @@ castSheet.id='character-sheet';adventure.id='adventure-sheet';settings.id='play-
 const roles=q('#roles');castSheet.querySelector('.sheet-content').append(roles);
 const detail=document.createElement('p');detail.className='character-detail';castSheet.querySelector('.sheet-content').append(detail);
 const allowed=[...roles.querySelectorAll('[data-role]')].map(b=>+b.dataset.role);
-const skillText={2:'森林輕躍 · 葉披風讓下落更輕緩',0:'幸運吸信 · 靠近信件就能收集',1:'毛毯守護 · 抵擋一次碰撞',5:'月光緩行 · 放慢沿途障礙'};
+const skillText={2:'森林輕躍 · 葉披風讓下落更輕緩',0:'幸運吸信 · 靠近信件就能收集',1:'毛毯守護 · 抵擋一次碰撞',5:'月光緩行 · 放慢沿途障礙',3:'回憶信箋 · 每封信件算兩封',4:'快樂節奏 · 收信時短暫緩行',6:'信任守護 · 抵擋一次碰撞',7:'夢想輕躍 · 下落更輕緩',8:'雨中滑行 · 下滑維持一秒',9:'希望採集 · 擴大收信範圍'};
 function choose(delta){const n=allowed.indexOf(G.data.role);roles.querySelector('[data-role="'+allowed[(n+delta+allowed.length)%allowed.length]+'"]').click();update()}
 q('.cast-arrow.previous').onclick=()=>choose(-1);q('.cast-arrow.next').onclick=()=>choose(1);
 let touch=null,swiped=false;const hero=q('.cast-hero');hero.addEventListener('pointerdown',e=>{touch={x:e.clientX,y:e.clientY}});hero.addEventListener('pointerup',e=>{if(touch&&Math.abs(e.clientX-touch.x)>40&&Math.abs(e.clientY-touch.y)<65){choose(e.clientX<touch.x?1:-1);swiped=true}touch=null});hero.addEventListener('pointercancel',()=>touch=null);hero.onclick=()=>{if(swiped){swiped=false;return}open(castSheet)};

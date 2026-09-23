@@ -1,0 +1,20 @@
+.studio[data-game=dino] .mode-ticket small{display:none!important}
+.studio[data-game=dino] #play:not([hidden]){grid-template-rows:56px minmax(0,1fr) 92px!important}
+.studio[data-game=dino] .controls{display:grid!important;grid-template-columns:120px minmax(0,1fr) 120px!important;grid-template-rows:1fr!important;height:92px!important;padding:4px max(12px,env(safe-area-inset-right)) 4px max(12px,env(safe-area-inset-left))!important;gap:12px!important;position:static!important}
+.studio[data-game=dino] #slide,.studio[data-game=dino] #jump{position:static!important;width:120px!important;height:84px!important;min-height:84px!important;font-size:23px!important;padding:8px!important;grid-row:1!important;transform:none!important}
+.studio[data-game=dino] #slide{grid-column:1!important}.studio[data-game=dino] #jump{grid-column:3!important}
+.studio[data-game=dino].left-hand #slide{grid-column:3!important}.studio[data-game=dino].left-hand #jump{grid-column:1!important}
+.studio[data-game=dino] #skill{grid-column:2!important;grid-row:1!important;align-self:center!important;justify-self:center!important;position:static!important;min-width:140px!important;max-width:230px!important;height:64px!important;font-size:18px!important;padding:8px 22px!important}
+.studio[data-game=dino] #status{display:none!important}
+.studio[data-game=dino] #play .hud{height:56px!important;min-height:0!important}
+.studio[data-game=whack]:has(#home:not([hidden])){background-image:url('art-mobile24/whack-home.webp')!important;background-position:center!important;background-size:cover!important}
+.studio[data-game=whack] #home{background:none!important;grid-template-rows:minmax(0,1fr) auto!important;gap:4px!important}
+.studio[data-game=whack] .mascot,.studio[data-game=whack] .studio-showcase>.eyebrow{display:none!important}
+.studio[data-game=whack] .studio-showcase{display:block!important;align-self:start!important;padding-top:4px!important}
+.studio[data-game=whack] #home>.studio-controls{gap:4px!important;padding:4px!important;overflow:auto!important;max-height:49svh!important}
+.studio[data-game=whack] #home #rule{font-size:15px!important;line-height:1.3!important;padding:6px 18px!important}
+.studio[data-game=whack] #home #start{min-height:58px!important}
+.studio[data-game=whack] #home #records{min-height:46px!important;font-size:17px!important}
+.studio[data-game=dream-match] #journey-status{display:block!important;font-size:14px!important;line-height:18px!important;padding:0!important;margin:0!important;color:#fff!important;grid-column:1/-1!important;text-align:center!important}
+@media(orientation:portrait){.studio[data-game=dream-match] .layout{grid-template-rows:104px auto 110px!important}.studio[data-game=dream-match] .mission{height:104px!important}.studio[data-game=dream-match] .boardWrap{width:min(100%,calc(100svh - 284px - env(safe-area-inset-top) - env(safe-area-inset-bottom)))!important}}
+.studio[data-game=dino] #jump,.studio[data-game=dino] #slide{background:none!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;color:#fff9df!important}.studio[data-game=dino] #jump::before,.studio[data-game=dino] #slide::before{content:""!important;display:block!important;width:64px!important;height:64px!important;flex:none!important;background:center/contain no-repeat!important}.studio[data-game=dino] #jump::before{background-image:url("art-mobile24/control-jump.webp")!important}.studio[data-game=dino] #slide::before{background-image:url("art-mobile24/control-slide.webp")!important}.studio[data-game=dino] #jump img,.studio[data-game=dino] #slide img{display:none!important}

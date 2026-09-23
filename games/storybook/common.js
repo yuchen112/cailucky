@@ -1,7 +1,7 @@
 'use strict';
 const G=(()=>{
  const $=s=>document.querySelector(s),clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),roles=['幸運','療癒','成長','回憶','快樂','夜晚陪伴','信任','夢想','悲傷','希望'];
- let cfg={},data={},music,unlocked=false,held=false,active=false,pauseFn=()=>{},lastSfx={},pool=new Map();const images={};const roleFiles=['luck','healing','growth','memory','joy','night','trust','dream','sadness','hope'].map(n=>'../../assets/characters/cxq-role-'+n+'.webp');
+ let cfg={},data={},music,unlocked=false,held=false,active=false,pauseFn=()=>{},lastSfx={},pool=new Map();const images={};const roleFiles=['luck','healing','growth','memory','joy','night','trust','dream','sadness','hope'].map(n=>'../storybook/art-mobile24/portrait-'+n+'.webp');
  const read=(k,f)=>{try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}};
  function save(){try{localStorage.setItem('cxq-'+cfg.id+'-v1',JSON.stringify(data));return true}catch{toast('瀏覽器無法儲存，這次仍可繼續遊玩。');return false}}
  const sprite=(i,cls='')=>{i=clamp(Math.floor(i)||0,0,9);return '<img loading="lazy" decoding="async" aria-hidden="true" class="role-art individual-cast '+cls+'" src="'+roleFiles[i]+'" alt="" style="object-fit:contain;background:none">'};
