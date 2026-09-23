@@ -5,7 +5,7 @@
   document.body.dataset.game=id;document.body.classList.add('game-surface');
   let interrupted=false,wrong=false,remaining=0,last=0,raf=0;
   const main=document.querySelector('main');
-  const gate=document.createElement('section');gate.id='session-gate';gate.hidden=true;gate.setAttribute('role','dialog');gate.setAttribute('aria-modal','true');gate.innerHTML='<div><img src="../../assets/characters/cxq-role-'+({dino:'growth','fairytale-defense':'trust','dream-match':'night',whack:'joy',merge:'healing',flappy:'hope',mines:'memory'}[id]||'dream')+'.webp" alt=""><h2></h2><p>進度已保留。</p><button type="button">繼續遊戲</button></div>';document.body.append(gate);
+  const gate=document.createElement('section');gate.id='session-gate';gate.hidden=true;gate.setAttribute('role','dialog');gate.setAttribute('aria-modal','true');gate.innerHTML='<div><img src="../storybook/art-mobile24/portrait-'+({dino:'growth','fairytale-defense':'trust','dream-match':'night',whack:'joy',merge:'healing',flappy:'hope',mines:'memory'}[id]||'dream')+'.webp" alt=""><h2></h2><p>進度已保留。</p><button type="button">繼續遊戲</button></div>';document.body.append(gate);
   const playing=()=>{const play=document.querySelector('#play');return play?!play.hidden:!!document.querySelector('.game-entry[hidden]')&&!document.querySelector('#result:not([hidden])');};
   function direction(){if(rules[id]!=='adaptive')return rules[id];return document.querySelectorAll('#board .cell').length&&parseInt(document.querySelector('#board').style.getPropertyValue('--cols'))>10?'landscape':'portrait';}
   function blocked(){return document.hidden||wrong||interrupted||remaining>0||!!document.querySelector('dialog[open]');}

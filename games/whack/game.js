@@ -3,7 +3,7 @@ const $=s=>document.querySelector(s),MODES={timed:['慶典挑戰','60 秒收集�
 const SPEED={easy:[1000,1250],normal:[760,1000],hard:[560,790],expert:[420,620]},KEY='cxq-whack-v1';
 let mode='timed',difficulty='normal',state=null,last=0,rank=CxQ.read(KEY,[]);if(!Array.isArray(rank))rank=[];rank=rank.filter(r=>MODES[r.mode]&&SPEED[r.difficulty]&&Number.isFinite(r.score)).slice(0,240);
 const CAST=['幸運','療癒','成長','回憶','快樂','夜晚陪伴','信任','夢想','悲傷','希望'];
-function sprite(id,extra=''){const name=['luck','healing','growth','memory','joy','night','trust','dream','sadness','hope'][id];return '<img aria-hidden="true" class="sprite cast '+extra+'" src="../../assets/characters/cxq-role-'+name+'.webp" alt="" style="object-fit:contain;background:none">'}
+function sprite(id,extra=''){const name=['luck','healing','growth','memory','joy','night','trust','dream','sadness','hope'][id];return '<img aria-hidden="true" class="sprite cast '+extra+'" src="../storybook/art-mobile24/portrait-'+name+'.webp" alt="" style="object-fit:contain;background:none">'}
 function prop(id,extra=''){return '<img aria-hidden="true" class="sprite props '+extra+'" src="../storybook/art-20260914/'+['whack-burrow','whack-bomb','gem-0','gem-2','icon-gear','explosion'][id]+'.webp" alt="" style="object-fit:contain;background:none">'}
 $('#cast-list').innerHTML=CAST.map((name,i)=>'<div>'+sprite(i)+'<small>'+name+'</small></div>').join('');
 $('.mascot').innerHTML=sprite(2)+sprite(0)+sprite(9);
@@ -23,7 +23,7 @@ $('#start').onclick=start;$('#pause').onclick=pause;$('#records').onclick=()=>{c
 
 addEventListener('DOMContentLoaded',()=>{const sound=$('#cxq-audio');sound.innerHTML=prop(4);});
 
-const artFiles=[...['luck','healing','growth','memory','joy','night','trust','dream','sadness','hope'].map(n=>'../../assets/characters/cxq-role-'+n+'.webp'),'../storybook/art-director/burrow-back.webp','../storybook/art-director/burrow-front.webp','assets/garden-v3.webp',...['whack-burrow','whack-bomb','gem-0','gem-2','icon-gear','explosion'].map(n=>'../storybook/art-20260914/'+n+'.webp')];
+const artFiles=[...['luck','healing','growth','memory','joy','night','trust','dream','sadness','hope'].map(n=>'../storybook/art-mobile24/portrait-'+n+'.webp'),'../storybook/art-director/burrow-back.webp','../storybook/art-director/burrow-front.webp','assets/garden-v3.webp',...['whack-burrow','whack-bomb','gem-0','gem-2','icon-gear','explosion'].map(n=>'../storybook/art-20260914/'+n+'.webp')];
 $('#start').disabled=true;$('#start').textContent='夥伴準備中…';
 Promise.all(artFiles.map(name=>new Promise((resolve,reject)=>{const img=new Image();img.onload=resolve;img.onerror=reject;img.src=name}))).then(()=>{$('#start').disabled=false;$('#start').textContent='進入森林'}).catch(()=>{$('#start').disabled=false;$('#start').textContent='重新載入美術';$('#start').onclick=()=>location.reload();$('#rule').textContent='部分夥伴圖片尚未載入，請重新載入後再開始。'});
 

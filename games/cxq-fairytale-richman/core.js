@@ -181,58 +181,66 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260913-0640";
-function load(k, u, priority = "auto") {
-  const i = new Image();
-  i.decoding = "async";
-  i.fetchPriority = priority;
-  i.onload = () => {
-    IM[k] = i;
-  };
-  i.onerror = () => {
-    IM[k] = null;
-  };
-  i.src = u + "?v=" + ASSET_REV;
-  IM[k] = i;
-  return i;
+const ASSET_REV = "20260924-speed2";
+const ASSET_REQUESTS = new Map(), ASSET_QUEUE = [];
+let assetActive = 0, assetPumpScheduled = false;
+function pumpAssets() {
+  assetPumpScheduled = false;
+  ASSET_QUEUE.sort((a,b)=>(b.priority==="high")-(a.priority==="high"));
+  while(assetActive<6&&ASSET_QUEUE.length){
+    const task=ASSET_QUEUE.shift();assetActive++;
+    let attempts=0;
+    const done=()=>{assetActive--;pumpAssets();};
+    task.image.onload=done;
+    task.image.onerror=()=>{if(attempts++===0){task.image.src=task.url+"&retry=1";return;}task.keys.forEach(key=>IM[key]=null);done();};
+    task.image.src=task.url;
+  }
+}
+function load(k,u,priority="auto"){
+  const url=u+"?v="+ASSET_REV,existing=ASSET_REQUESTS.get(url);
+  if(existing){existing.keys.push(k);IM[k]=existing.image;return existing.image;}
+  const image=new Image();image.decoding="async";image.fetchPriority=priority;
+  const task={url,image,priority,keys:[k]};ASSET_REQUESTS.set(url,task);IM[k]=image;ASSET_QUEUE.push(task);
+  if(!assetPumpScheduled){assetPumpScheduled=true;queueMicrotask(pumpAssets);}
+  return image;
 }
 load("homeBg", A + "backgrounds/home_scene_v7.webp", "high");
-load("homeMenuNew", A + "ui/home_menu_new_v4.png", "high");
-load("homeMenuContinue", A + "ui/home_menu_continue_v4.png", "high");
-load("homeMenuHelp", A + "ui/home_menu_help_v4.png", "high");
-load("homeMenuSettings", A + "ui/home_menu_settings_v4.png", "high");
-load("homeMenuGallery", A + "ui/home_menu_gallery_v1.png", "high");
-load("btnBlue", A + "ui/btn_blue_v5.png", "high");
-load("btnRed", A + "ui/btn_red_v5.png", "high");
+load("homeMenuNew", A + "ui/home_menu_new_v4.speed24.webp", "high");
+load("homeMenuContinue", A + "ui/home_menu_continue_v4.speed24.webp", "high");
+load("homeMenuHelp", A + "ui/home_menu_help_v4.speed24.webp", "high");
+load("homeMenuSettings", A + "ui/home_menu_settings_v4.speed24.webp", "high");
+load("homeMenuGallery", A + "ui/home_menu_gallery_v1.speed24.webp", "high");
+load("btnBlue", A + "ui/btn_blue_v5.speed24.webp", "high");
+load("btnRed", A + "ui/btn_red_v5.speed24.webp", "high");
 load("setupBg", A + "backgrounds/setup_scene_v4.webp", "high");
-load("playerSeat", A + "ui/player_plate_v5.png");
-load("roleInfo", A + "ui/tooltip_plate_v5.png");
-load("characterStage", A + "ui/modal_frame_v6.png");
-load("abilityPanel", A + "ui/modal_frame_v6.png");
-load("actionConsole", A + "ui/info_panel_v5.png");
-load("settingsFrame", A + "ui/settings_frame_v5.png");
-load("settingsIcon", A + "ui/settings_icon_v6.png", "high");
-load("diceFrame", A + "ui/dice_frame_v5.png");
-load("mapCardFrame", A + "ui/info_panel_v5.png");
+load("playerSeat", A + "ui/player_plate_v5.speed24.webp");
+load("roleInfo", A + "ui/tooltip_plate_v5.speed24.webp");
+load("characterStage", A + "ui/modal_frame_v6.speed24.webp");
+load("abilityPanel", A + "ui/modal_frame_v6.speed24.webp");
+load("actionConsole", A + "ui/info_panel_v5.speed24.webp");
+load("settingsFrame", A + "ui/settings_frame_v5.speed24.webp");
+load("settingsIcon", A + "ui/settings_icon_v6.speed24.webp", "high");
+load("diceFrame", A + "ui/dice_frame_v5.speed24.webp");
+load("mapCardFrame", A + "ui/info_panel_v5.speed24.webp");
 for (let i = 0; i < 4; i++)
-  load("playerSeatP" + i, A + "ui/player_plate_v5.png");
-load("statusHuman", A + "ui/btn_red_v5.png");
-load("statusAi", A + "ui/btn_blue_v5.png");
-load("statusOff", A + "ui/tooltip_plate_v5.png");
+  load("playerSeatP" + i, A + "ui/player_plate_v5.speed24.webp");
+load("statusHuman", A + "ui/btn_red_v5.speed24.webp");
+load("statusAi", A + "ui/btn_blue_v5.speed24.webp");
+load("statusOff", A + "ui/tooltip_plate_v5.speed24.webp");
 MAPS.forEach((m, i) =>
   load("mapWorld" + i, A + "maps/map_world_" + m.key + "_v2.webp"),
 );
 MAPS.forEach((m, i) =>
   load("mapPreview" + i, A + "maps/map_world_" + m.key + "_v2.webp"),
 );
-load("tile_land", A + "tiles/land_v4.png");
-load("tile_event", A + "tiles/event_v4.png");
-load("tile_start", A + "tiles/start_v4.png");
-load("diceAction", A + "dice/dice_action_v4.png");
+load("tile_land", A + "tiles/land_v4.speed24.webp");
+load("tile_event", A + "tiles/event_v4.speed24.webp");
+load("tile_start", A + "tiles/start_v4.speed24.webp");
+load("diceAction", A + "dice/dice_action_v4.speed24.webp");
 // Known-corrupt start/event rasters are intentionally not loaded. They are visually quarantined.
 for (let i = 1; i <= 6; i++) load("dice" + i, A + "dice/dice_" + i + ".webp");
 for (let i = 1; i <= 6; i++)
-  load("diceThrow" + i, A + `dice/dice_throw_${i}_v3.png`);
+  load("diceThrow" + i, A + `dice/dice_throw_${i}_v3.speed24.webp`);
 MAPS.forEach((m, i) =>
   load("eventScene" + i, A + `events/${m.key}_event_v1.webp`),
 );
@@ -259,38 +267,38 @@ load("event_systemRentPayment", A + "events/system_rent_payment_v1.webp");
 load("event_systemBuildUpgrade", A + "events/system_build_upgrade_v1.webp");
 load("facilityMagic", A + "facilities/magic_token_v2.webp");
 load("roadNode", A + "tiles/road_node_v3.webp");
-load("npcWealth", A + "npc/wealth_v6.png");
-load("npcFortune", A + "npc/fortune_v6.png");
-load("npcPoverty", A + "npc/poverty_v6.png");
-load("npcMisfortune", A + "npc/misfortune_v6.png");
-load("npcLand", A + "npc/land_v6.png");
-load("npcAngel", A + "npc/angel_v6.png");
-load("npcDemon", A + "npc/demon_v6.png");
-load("npcDeath", A + "npc/death_v6.png");
-for (let i = 0; i < 4; i++) load("playerFlag" + i, A + `ui/flag_p${i + 1}_v4.png`);
+load("npcWealth", A + "npc/wealth_v6.speed24.webp");
+load("npcFortune", A + "npc/fortune_v6.speed24.webp");
+load("npcPoverty", A + "npc/poverty_v6.speed24.webp");
+load("npcMisfortune", A + "npc/misfortune_v6.speed24.webp");
+load("npcLand", A + "npc/land_v6.speed24.webp");
+load("npcAngel", A + "npc/angel_v6.speed24.webp");
+load("npcDemon", A + "npc/demon_v6.speed24.webp");
+load("npcDeath", A + "npc/death_v6.speed24.webp");
+for (let i = 0; i < 4; i++) load("playerFlag" + i, A + `ui/flag_p${i + 1}_v4.speed24.webp`);
 CHAR_KEYS.forEach((k, i) => {
-  load("c" + i, A + "characters/" + k + "/idle_v7.png");
-  load("portrait" + i, A + "characters/" + k + "/idle_v7.png");
-  load(k + "Dice", A + "characters/" + k + "/dice_v7.png");
-  load(k + "Surprise", A + "characters/" + k + "/surprise_v7.png");
-  load(k + "Victory", A + "characters/" + k + "/victory_v7.png");
+  load("c" + i, A + "characters/" + k + "/idle_v7.speed24.webp");
+  load("portrait" + i, A + "characters/" + k + "/idle_v7.speed24.webp");
+  load(k + "Dice", A + "characters/" + k + "/dice_v7.speed24.webp");
+  load(k + "Surprise", A + "characters/" + k + "/surprise_v7.speed24.webp");
+  load(k + "Victory", A + "characters/" + k + "/victory_v7.speed24.webp");
 });
 CHAR_KEYS.forEach((k) => {
-  load(k + "WalkRightContact", A + "characters/" + k + "/walk_right_contact_v7.png");
-  load(k + "WalkRightPassing", A + "characters/" + k + "/walk_right_passing_v7.png");
+  load(k + "WalkRightContact", A + "characters/" + k + "/walk_right_contact_v7.speed24.webp");
+  load(k + "WalkRightPassing", A + "characters/" + k + "/walk_right_passing_v7.speed24.webp");
 });
 MAPS.forEach((m, mi) => {
   for (let level = 1; level <= 5; level++)
-    load(`building${mi}_${level}`, A + `buildings/shared_l${Math.min(4, level)}_v4.png`);
+    load(`building${mi}_${level}`, A + `buildings/shared_l${Math.min(4, level)}_v4.speed24.webp`);
 });
 CHAR_KEYS.forEach((key) =>
-  load(`landmark_${key}`, A + `buildings/landmark_${key}_v4.png`),
+  load(`landmark_${key}`, A + `buildings/landmark_${key}_v4.speed24.webp`),
 );
 load("resultVictory", A + "results/victory_v4.webp");
 load("resultDefeat", A + "results/defeat_v4.webp");
 [
   "deed", "toolkit", "charm", "guardian", "bell", "boots", "compass", "manual",
-].forEach((key) => load("equip_" + key, A + "equipment/" + key + "_v4.png"));
+].forEach((key) => load("equip_" + key, A + "equipment/" + key + "_v4.speed24.webp"));
 
 const VIEW = { scale: 1, ox: 0, oy: 0, visibleX: 0, visibleY: 0, visibleW: W, visibleH: H, uiScale: 1, uiOx: 0, uiOy: 0 };
 let UI_FIT_ACTIVE = false;
