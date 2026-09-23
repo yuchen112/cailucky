@@ -31,10 +31,34 @@
 @media(max-width:380px){.stage{right:-3px}.dpad{grid-template-columns:repeat(3,46px)}.actionKeys{grid-template-columns:repeat(2,60px)}.actionKeys .ctl{width:60px}.controls{padding-left:5px;padding-right:5px;grid-template-columns:1fr 62px 1fr}.systemKeys .ctl{width:60px}.mobile-character-bar{right:58px}}
 </style>
 <style id="cxq-mobile-fix-v2">
-@media(max-width:720px){.app{height:100dvh!important;min-height:100dvh!important}.controls{height:132px!important;padding-top:9px!important;padding-bottom:max(6px,env(safe-area-inset-bottom))!important}.stage{inset:82px 0 137px!important}.mobile-character-bar{top:41px!important;height:36px!important}.mobile-character-bar img{width:38px!important;height:38px!important}.ctl{height:43px!important}.dpad{grid-template-rows:repeat(2,43px)!important}.actionKeys .ctl{height:55px!important}.systemKeys .ctl{height:38px!important}}
-@media(max-width:720px) and (max-height:700px){.hud-card{padding:2px!important}.hud-card small{font-size:6px!important}.hud-card strong{font-size:11px!important}.mobile-character-bar{top:37px!important;height:32px!important}.mobile-character-bar img{width:34px!important;height:34px!important}.stage{inset:72px 0 115px!important}.controls{height:110px!important;padding:5px 7px max(4px,env(safe-area-inset-bottom))!important}.dpad{grid-template-columns:repeat(3,43px)!important;grid-template-rows:repeat(2,36px)!important}.ctl{width:43px!important;height:36px!important;font-size:15px!important}.actionKeys{grid-template-columns:repeat(2,56px)!important}.actionKeys .ctl{width:56px!important;height:48px!important}.systemKeys .ctl{width:54px!important;height:32px!important;font-size:9px!important}.controls{grid-template-columns:1fr 56px 1fr!important}.control-label{font-size:7px!important}}
+/* One layout budget: controls first, board uses the remaining visible height. */
+@media(max-width:720px){
+ .app{height:var(--game-height,100dvh)!important;min-height:0!important}
+ .controls{height:144px!important;left:0;right:0;bottom:0;box-sizing:border-box;
+ padding:8px max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))!important;
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:16px!important}
+ .dpad{width:100%;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:repeat(2,52px)!important;gap:4px}
+ .ctl{width:100%!important;height:52px!important;min-width:0!important;min-height:48px!important;font-size:20px!important}
+ .actionKeys{width:100%;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px}
+ .actionKeys .ctl{width:100%!important;height:66px!important;background-size:100% 100%;font-size:22px!important}
+ .systemKeys{position:fixed;right:max(7px,env(safe-area-inset-right));top:48px;width:58px;gap:5px}
+ .systemKeys .ctl{width:58px!important;height:48px!important;font-size:12px!important}
+ .control-label{font-size:11px!important}
+ .stage{inset:92px 0 calc(148px + env(safe-area-inset-bottom))!important;padding:4px 6px;align-items:center}
+ .side{align-self:center;width:48px}
+ .mobile-character-bar{top:46px!important;right:72px;height:40px!important}
+ .mobile-character-bar span{font-size:10px}
+ .hud-card small{font-size:11px!important}
+ .hud-card strong{font-size:14px!important}
+}
+@media(max-width:720px) and (max-height:620px){
+ .controls{height:124px!important}.dpad{grid-template-rows:repeat(2,48px)!important}
+ .ctl{height:48px!important}.actionKeys .ctl{height:60px!important}
+ .stage{bottom:calc(128px + env(safe-area-inset-bottom))!important}
+ .mobile-character-bar span{display:none}
+}
 </style>
-<link rel="stylesheet" href="../shared/runtime.css?v=20260924-speed2"><script src="../shared/runtime.js?v=20260924-speed2"></script><style>#cxq-audio{bottom:calc(116px + env(safe-area-inset-bottom))}.deck-btn,.dpad button{min-width:44px;min-height:44px}.hud small{font-size:12px!important}.hud b{font-size:22px!important}#pause .panel{background:#fff5e6f5!important;color:#3e4a3b!important;border:1px solid #c7ad76;border-radius:24px}</style></head>
+<link rel="stylesheet" href="../shared/runtime.css?v=20260924-controls3"><script src="../shared/runtime.js?v=20260924-controls3"></script><style>#cxq-audio{bottom:calc(116px + env(safe-area-inset-bottom))}.deck-btn,.dpad button{min-width:44px;min-height:44px}.hud small{font-size:12px!important}.hud b{font-size:22px!important}#pause .panel{background:#fff5e6f5!important;color:#3e4a3b!important;border:1px solid #c7ad76;border-radius:24px}</style></head>
 <body>
 <main class="app" id="app">
   <div class="brand"><b>心境織境</b><span>BLOCK TALES</span></div>
@@ -79,16 +103,31 @@ function ghost(){let y=cur.y;while(!collide({...cur,y},0,1))y++;return y}
 function cellDraw(c,x,y,type,a=1,size=cell){const px=x*size,py=y*size;c.save();c.globalAlpha=a;c.drawImage(blockImg,px+1,py+1,size-2,size-2);c.globalCompositeOperation='source-over';c.globalAlpha=a*.78;c.fillStyle=COLORS[type];c.fillRect(px+2,py+2,size-4,size-4);c.restore()}
 function draw(){if(!board)return;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.strokeStyle='#e8d5a217';for(let x=0;x<=COLS;x++){ctx.beginPath();ctx.moveTo(x*cell,0);ctx.lineTo(x*cell,ROWS*cell);ctx.stroke()}for(let y=0;y<=ROWS;y++){ctx.beginPath();ctx.moveTo(0,y*cell);ctx.lineTo(COLS*cell,y*cell);ctx.stroke()}board.forEach((r,y)=>r.forEach((v,x)=>v&&cellDraw(ctx,x,y,v)));const gy=ghost();cur.m.forEach((r,y)=>r.forEach((v,x)=>v&&cellDraw(ctx,cur.x+x,gy+y,cur.type,.18)));cur.m.forEach((r,y)=>r.forEach((v,x)=>v&&cellDraw(ctx,cur.x+x,cur.y+y,cur.type)));mini(nextCtx,next);mini(holdCtx,hold);const danger=board.slice(0,5).some(r=>r.some(Boolean));$('#companion').classList.toggle('danger',danger);if(danger)setFace('danger')}
 function mini(c,p){c.clearRect(0,0,84,84);if(!p)return;const s=17,ox=(84-p.m[0].length*s)/2,oy=(84-p.m.length*s)/2;p.m.forEach((r,y)=>r.forEach((v,x)=>v&&cellDraw(c,ox/s+x,oy/s+y,p.type,1,s)))}
-function resize(){CxQ.orientation('portrait',running);const rect=$('.stage').getBoundingClientRect(),side=window.innerWidth<720?62:112,comp=window.innerWidth<720?0:Math.min(205,window.innerWidth*.16);cell=Math.max(15,Math.min(34,Math.floor(Math.min((rect.width-side-comp-42)/COLS,(rect.height-24)/ROWS))));canvas.width=COLS*cell;canvas.height=ROWS*cell;draw()}
+function resize(){document.documentElement.style.setProperty('--game-height',(window.visualViewport?.height||innerHeight)+'px');CxQ.orientation('portrait',running);const rect=$('.stage').getBoundingClientRect(),side=window.innerWidth<720?62:112,comp=window.innerWidth<720?0:Math.min(205,window.innerWidth*.16);cell=Math.max(6,Math.min(34,Math.floor(Math.min((rect.width-side-comp-42)/COLS,(rect.height-24)/ROWS))));canvas.width=COLS*cell;canvas.height=ROWS*cell;draw()}
 function update(){$('#score').textContent=score||0;$('#level').textContent=level||1;$('#lines').textContent=lines||0;$('#best').textContent=Math.max(best,score||0);$('#skillText').textContent=(charge||0)+'/4';$('#skill').disabled=charge<4||!$('#blessingMode').checked}
 function setFace(state){if(charIndex!==0){$('#companionImg').src='assets/characters/'+chars[charIndex][2];return}const file={win:'01-victory.speed24.webp',danger:'02-danger.speed24.webp',think:'03-thinking.speed24.webp',pause:'04-pause.speed24.webp',excited:'05-excited.speed24.webp',sad:'06-sad.speed24.webp',surprised:'07-surprised.speed24.webp',proud:'08-proud.speed24.webp',laugh:'09-laugh.speed24.webp',determined:'10-determined.speed24.webp',dizzy:'11-dizzy.speed24.webp',magic:'12-magic.speed24.webp',relieved:'13-relieved.speed24.webp',love:'14-love.speed24.webp',tetris:'15-tetris.speed24.webp',wave:'16-wave.speed24.webp'}[state];if(file)$('#companionImg').src='assets/stickers/'+file}
 function toast(t){const el=$('#toast');el.textContent=t;el.classList.remove('show');void el.offsetWidth;el.classList.add('show')}
-function pause(){if(!running)return;paused=true;setFace('pause');$('#pause').classList.add('show')}function resume(){if(CxQ.orientation('portrait',running))return;CxQ.countdown(()=>{if(CxQ.orientation('portrait',running))return;CxQ.resume();paused=false;last=0;setFace('think');$('#pause').classList.remove('show')})}
+function pause(){releaseControls();if(!running)return;paused=true;setFace('pause');$('#pause').classList.add('show')}function resume(){if(CxQ.orientation('portrait',running))return;CxQ.countdown(()=>{if(CxQ.orientation('portrait',running))return;CxQ.resume();paused=false;last=0;setFace('think');$('#pause').classList.remove('show')})}
 function act(a){if(!running||paused)return;({left:()=>move(-1),right:()=>move(1),rotate,soft,drop:hard,hold:doHold}[a]||(()=>{}))()}
 function loop(t){if(!last)last=t;const dt=t-last;last=t;if(running&&!paused){slowLeft=Math.max(0,slowLeft-dt);acc+=Math.min(100,dt);if(acc>dropMs+(slowLeft>0?220:0)){soft();acc=0}}requestAnimationFrame(loop)}
 chars.forEach((c,i)=>{const b=document.createElement('button');b.className='char'+(i===0?' active':'');b.innerHTML=`<img src="assets/characters/${c[2]}" alt="${c[0]}"><b>${c[0]}</b>`;b.onclick=()=>{charIndex=i;document.querySelectorAll('.char').forEach(x=>x.classList.remove('active'));b.classList.add('active');const src=`assets/characters/${c[2]}`;$('.hero-art').src=src;$('#charName').textContent=c[0];$('#charPower').textContent=c[1];$('#mobileCharImg').src=src;$('#mobileCharName').textContent=c[0];$('#mobileCharPower').textContent=c[1];$('#detailCharImg').src=src;$('#detailCharName').textContent=c[0]+'・'+charTypes[i];$('#detailCharPower').textContent=charDescriptions[i];setFace('love')};$('#roster').appendChild(b)});
-document.querySelectorAll('[data-act]').forEach(b=>{let timer,repeat;b.onpointerdown=e=>{e.preventDefault();act(b.dataset.act);if(['left','right','soft'].includes(b.dataset.act))timer=setTimeout(()=>repeat=setInterval(()=>act(b.dataset.act),70),180)};const up=()=>{clearTimeout(timer);clearInterval(repeat)};b.onpointerup=up;b.onpointercancel=up;b.onpointerleave=up});
-$('#enterSetup').onclick=()=>{$('#homeScreen').classList.remove('show');$('#menu').classList.add('show')};$('#backHome').onclick=()=>{$('#menu').classList.remove('show');$('#homeScreen').classList.add('show')};$('#showHowto').onclick=()=>$('#howto').classList.toggle('show');$('#quickClassic').onclick=()=>{$('#blessingMode').checked=false;reset()};$('#start').onclick=reset;$('#pauseBtn').onclick=pause;$('#deckPause').onclick=pause;$('#resume').onclick=resume;$('#restart').onclick=reset;$('#home').onclick=()=>{running=false;setFace('wave');$('#pause').classList.remove('show');$('#homeScreen').classList.add('show')};$('#skill').onclick=activate;$('#blessingMode').onchange=update;window.onresize=resize;document.onkeydown=e=>{if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Space'].includes(e.code))e.preventDefault();if(e.key==='Escape')paused?resume():pause();if(e.key==='ArrowLeft')act('left');if(e.key==='ArrowRight')act('right');if(e.key==='ArrowUp')act('rotate');if(e.key==='ArrowDown')act('soft');if(e.code==='Space'){e.preventDefault();act('drop')}if(e.key.toLowerCase()==='c')act('hold')};CxQ.configure({music:'arcade',pause});blockImg.onload=draw;update();requestAnimationFrame(loop);
+let inputTimer=0,inputRepeat=0,inputPointer=null;
+function releaseControls(){clearTimeout(inputTimer);clearInterval(inputRepeat);inputPointer=null;}
+document.querySelectorAll('[data-act]').forEach(b=>{
+ b.onpointerdown=e=>{
+  if(e.button!==0||inputPointer!==null)return;
+  e.preventDefault();releaseControls();inputPointer=e.pointerId;
+  b.setPointerCapture?.(e.pointerId);act(b.dataset.act);
+  if(['left','right','soft'].includes(b.dataset.act))
+   inputTimer=setTimeout(()=>inputRepeat=setInterval(()=>act(b.dataset.act),70),220);
+ };
+ b.onpointerup=releaseControls;b.onpointercancel=releaseControls;b.onlostpointercapture=releaseControls;
+ b.onclick=e=>{if(e.detail===0)act(b.dataset.act);};
+});
+addEventListener('pointerup',releaseControls);addEventListener('blur',releaseControls);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)releaseControls();});
+
+$('#enterSetup').onclick=()=>{$('#homeScreen').classList.remove('show');$('#menu').classList.add('show')};$('#backHome').onclick=()=>{$('#menu').classList.remove('show');$('#homeScreen').classList.add('show')};$('#showHowto').onclick=()=>$('#howto').classList.toggle('show');$('#quickClassic').onclick=()=>{$('#blessingMode').checked=false;reset()};$('#start').onclick=reset;$('#pauseBtn').onclick=pause;$('#deckPause').onclick=pause;$('#resume').onclick=resume;$('#restart').onclick=reset;$('#home').onclick=()=>{running=false;setFace('wave');$('#pause').classList.remove('show');$('#homeScreen').classList.add('show')};$('#skill').onclick=activate;$('#blessingMode').onchange=update;window.onresize=resize;window.visualViewport?.addEventListener('resize',resize);document.onkeydown=e=>{if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Space'].includes(e.code))e.preventDefault();if(e.key==='Escape')paused?resume():pause();if(e.key==='ArrowLeft')act('left');if(e.key==='ArrowRight')act('right');if(e.key==='ArrowUp')act('rotate');if(e.key==='ArrowDown')act('soft');if(e.code==='Space'){e.preventDefault();act('drop')}if(e.key.toLowerCase()==='c')act('hold')};CxQ.configure({music:'arcade',pause});blockImg.onload=draw;update();requestAnimationFrame(loop);
 })();
 </script>
 </body>

@@ -1156,3 +1156,90 @@ body {
     font-size: 15px;
   }
 }
+/* Mobile table presentation: artwork stays intact; measured hands never overflow. */
+#app{height:100dvh;min-height:0}
+.table-screen{grid-template-rows:48px minmax(0,1fr) auto 52px}
+.table-screen .bar{height:48px}
+.arena{grid-template-columns:128px minmax(0,1fr) 128px;grid-template-rows:76px minmax(0,1fr);gap:2px;padding:0 8px}
+.seat{isolation:isolate}
+.seat .table-character{width:110px;height:112px;object-fit:contain;animation:none;transform-origin:50% 85%}
+.seat.s2 .table-character{width:84px;height:84px}
+.seat.s2{overflow:visible;gap:4px;z-index:2}
+.seat.s1,.seat.s3{align-self:center;gap:0}
+.seat>div{padding:6px 12px;font-size:14px;line-height:1.25;z-index:2}
+.seat.active strong{text-decoration:underline;text-underline-offset:4px}
+.opponent-hand{display:flex;position:absolute;left:50%;top:50%;translate:-50% 0;pointer-events:none;height:27px;z-index:1}
+.opponent-hand img{width:20px!important;height:29px!important;margin-left:-9px;rotate:calc((var(--fan) - 2)*7deg);animation:none!important}
+.s2 .opponent-hand{left:39%;top:58%}
+.play-area{overflow:auto;min-height:0;gap:5px;padding:2px 4px}
+.message{font-size:14px;line-height:1.35;padding:6px 18px;max-width:100%}
+.hand-wrap{padding:0 10px;gap:6px;min-height:0}
+.player-info{flex-basis:110px;position:relative}
+.player-info .table-character{height:82px;width:100%;object-fit:contain}
+.player-info>div{padding:4px 8px;font-size:14px}
+.hand{position:relative;display:block;overflow:visible;touch-action:manipulation;padding:0;--cardH:108px;min-width:0}
+.hand .card{transition:transform .15s;touch-action:manipulation}
+.hand .card.selected{transform:translateY(-16px)}
+.hand .card:focus-visible{z-index:90!important}
+.hand .card.selected::after{font-size:11px;bottom:5px}
+.actions{overflow:visible;gap:8px;padding:2px max(10px,env(safe-area-inset-right)) max(2px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left))}
+.actions .btn{min-height:46px;padding:8px 18px}
+.table-stacks{position:absolute;left:12px;top:4px;display:flex;gap:14px;pointer-events:none;z-index:0}
+.deck-stack,.discard-stack{position:relative;width:36px;height:58px}
+.table-stacks img{position:absolute;width:29px;height:43px;left:calc(var(--layer)*1px);top:calc(var(--layer)*-1px);rotate:calc(var(--layer)*1deg)}
+.table-stacks small{position:absolute;top:44px;white-space:nowrap;font-size:11px;left:-3px}
+.motion-card{position:fixed;z-index:60;pointer-events:none;object-fit:contain}
+[data-game="big2"] .play-area>.cards{gap:0;flex-wrap:nowrap}
+[data-game="big2"] .play-area>.cards .card+.card{margin-left:-9px}
+[data-game="oldmaid"] .play-area>.cards{overflow:visible;justify-content:center;gap:0}
+[data-game="oldmaid"] .play-area>.cards .card+.card{margin-left:-20px}
+[data-game="redpoint"] .play-area>.cards{flex-wrap:wrap;overflow:visible;justify-content:center;gap:3px}
+[data-game="thirteen"] .table-stacks{display:none}
+[data-game="thirteen"] .hand{--cardH:84px;padding:0}
+[data-game="thirteen"]:not(.is-ended) .seat .table-character{height:60px;width:60px}
+[data-game="thirteen"]:not(.is-ended) .arena{grid-template-rows:64px minmax(0,1fr)}
+[data-game="thirteen"] .opponent-hand{display:none}
+.is-ended .table-stacks{display:none}
+@media(max-height:460px){
+ .table-screen{grid-template-rows:44px minmax(0,1fr) auto 48px}
+ .table-screen .bar{height:44px}
+ .arena{grid-template-columns:104px minmax(0,1fr) 104px;grid-template-rows:56px minmax(0,1fr)}
+ .seat .table-character{width:80px;height:82px}
+ .seat.s2 .table-character{width:66px;height:66px}
+ .seat>div{font-size:13px;padding:4px 10px}
+ .hand{--cardH:88px}
+ .player-info{flex-basis:100px;display:flex;align-items:center;flex-direction:column}
+ .player-info .table-character{height:53px}
+ .player-info>div,.large .player-info>div{font-size:13px;padding:2px 8px}
+ .large .seat.s1 .table-character,.large .seat.s3 .table-character{height:82px}
+ .message{font-size:13px;padding:4px 12px}
+ .play-area .card.small{width:42px;height:63px}
+ .table-stacks{gap:8px}
+ .actions .btn{min-width:88px;min-height:44px}
+ [data-game="thirteen"] .pile .card{width:32px;height:48px}
+ [data-game="thirteen"]:not(.is-ended) .arena{grid-template-rows:52px minmax(0,1fr)}
+ [data-game="thirteen"]:not(.is-ended) .seat .table-character{height:50px;width:50px}
+ [data-game="thirteen"] .hand{--cardH:72px}
+}
+@media(max-height:350px){
+ .hand{--cardH:76px}.arena{grid-template-rows:46px minmax(0,1fr);grid-template-columns:96px minmax(0,1fr) 96px}
+ .seat .table-character{height:66px}.seat.s2 .table-character{height:50px}
+ .message{font-size:12px}.play-area .card.small{height:54px;width:36px}
+ .player-info .table-character{height:42px}
+}
+
+.empty-hand{height:0}
+.empty-hand .player-info{position:absolute;left:12px;bottom:58px;width:100px}
+.is-ended .empty-hand{display:none}
+[data-game="big2"][data-last-seat="1"] .play-area>.cards{align-self:flex-start}
+[data-game="big2"][data-last-seat="3"] .play-area>.cards{align-self:flex-end}
+.result-grid img{height:78px!important}
+.motion-chip{position:fixed;z-index:62;width:36px;height:36px;object-fit:contain;pointer-events:none}
+@media(max-height:380px){.result-grid img{height:56px!important}}
+
+.hand-preview{position:fixed;width:80px;height:120px;object-fit:contain;pointer-events:none;z-index:65}
+.hand .card{touch-action:none}
+
+.seat-action{position:fixed;z-index:60;pointer-events:none;width:80px;padding:10px;text-align:center;background:url('art/ui-button.webp') center/100% 100% no-repeat}
+
+@media(max-height:380px){.result-panel>.cards .card.small{width:44px;height:66px}}

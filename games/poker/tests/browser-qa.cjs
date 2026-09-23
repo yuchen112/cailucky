@@ -51,6 +51,7 @@ for (let chunk = 0; chunk < 8; chunk++) {
   if (result.includes('"finished": true')) break;
   if (chunk === 7) throw Error("UI round did not finish");
 }
+console.log(evaluate('(async()=>{while(document.querySelector("#app").getAttribute("aria-busy")==="true")await new Promise(r=>setTimeout(r,50));await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));return "animations settled";})()'));
 console.log(run("snapshot", "-i"));
 console.log(
   run(
@@ -60,7 +61,7 @@ console.log(
 );
 console.log(
   evaluate(
-    `(()=>{const bad=[...document.images].filter(i=>!i.complete||!i.naturalWidth).map(i=>i.src);return {brokenImages:bad,overflow:document.documentElement.scrollWidth>innerWidth};})()`,
+    `(()=>{const bad=[...document.images].filter(i=>!i.complete||!i.naturalWidth).map(i=>i.src);if(bad.length)throw Error("Broken images: "+bad.join(","));if(document.documentElement.scrollWidth>innerWidth)throw Error("Horizontal overflow");return {brokenImages:bad,overflow:false};})()`,
   ),
 );
 console.log(

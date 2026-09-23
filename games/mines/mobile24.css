@@ -1,18 +1,30 @@
-.studio[data-game=mines] #play:not([hidden]){display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:64px minmax(0,1fr) 68px!important;gap:4px!important;height:100%!important;padding:4px!important;overflow:hidden}
-.studio[data-game=mines] .field-notes{display:flex!important;flex-direction:row!important;align-items:center!important;padding:4px 12px!important;gap:8px!important;height:64px!important;min-height:0!important;margin:0!important}
-.studio[data-game=mines] .settings-dock{order:2}.studio[data-game=mines] .settings-dock strong{display:none}
-.studio[data-game=mines] .field-notes .hud{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-auto-rows:auto!important;min-height:0!important;height:56px!important;flex:1!important;padding:4px 12px!important;margin:0!important}
-.studio[data-game=mines] .field-notes .hud>span{display:flex!important;flex-direction:column!important;justify-content:center!important;gap:0!important}
-.studio[data-game=mines] .hud small{font-size:14px!important;line-height:1.2!important}.studio[data-game=mines] .hud strong{font-size:22px!important;line-height:1.2!important}
-.studio[data-game=mines] .map-area{display:flex!important;flex-direction:column!important;min-height:0!important;height:100%!important;overflow:hidden!important}
-.studio[data-game=mines] #map-scroll{flex:1!important;min-height:0!important;max-height:none!important;height:auto!important;padding:4px!important}
-.studio[data-game=mines] #board{margin:auto!important;padding:4px!important}
-.studio[data-game=mines] #status{position:static!important;flex:none!important;font-size:14px!important;line-height:20px!important;padding:0 14px!important;margin:0!important;min-height:20px!important;max-height:40px;overflow:auto}
-.studio[data-game=mines] #play>.tools{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:center!important;gap:8px!important;height:68px!important;margin:0!important;padding:4px 12px!important;position:static!important}
-.studio[data-game=mines] .tools button{min-height:54px!important;height:54px!important;min-width:100px!important;padding:6px 20px!important;font-size:19px!important;margin:0!important}
-.studio[data-game=mines] .tools button[aria-pressed=true]{text-decoration:underline!important;text-underline-offset:5px}
-.studio[data-game=mines] .tools label{display:flex!important;align-items:center;gap:6px;font-size:16px!important;margin:0!important}
-.studio[data-game=mines] .tools select{min-height:48px!important;font-size:17px!important;padding:4px 16px!important}
-.studio[data-game=mines] .tools [hidden]{display:none!important}
-@media(max-height:390px){.studio[data-game=mines] #play:not([hidden]){grid-template-rows:56px minmax(0,1fr) 60px!important}.studio[data-game=mines] .field-notes{height:56px!important}.studio[data-game=mines] #play>.tools{height:60px!important}.studio[data-game=mines] .tools button{height:50px!important;min-height:50px!important}}
-.studio[data-game=mines] .field-notes{overflow:hidden!important}.studio[data-game=mines] .settings-dock #sound{width:56px!important;height:56px!important;min-height:56px!important}
+.studio[data-game=mines] #play:not([hidden]){
+ display:grid!important;grid-template-columns:130px minmax(0,1fr)!important;
+ grid-template-rows:minmax(0,1fr)!important;gap:6px!important;
+ height:100%!important;min-height:0!important;padding:4px!important;overflow:hidden
+}
+.studio[data-game=mines] .field-notes{
+ display:flex!important;flex-direction:column!important;align-items:stretch!important;
+ height:100%!important;min-height:0!important;padding:8px!important;gap:8px!important;margin:0!important;overflow:auto
+}
+.studio[data-game=mines] .settings-dock{justify-content:center!important;order:2}
+.studio[data-game=mines] .settings-dock strong{display:none}
+.studio[data-game=mines] .field-notes .hud{
+ display:grid!important;grid-template-columns:1fr!important;grid-auto-rows:minmax(48px,1fr)!important;
+ flex:1!important;min-height:0!important;height:auto!important;padding:0!important;margin:0!important
+}
+.studio[data-game=mines] .hud>span{display:flex!important;flex-direction:column!important;justify-content:center!important;gap:2px}
+.studio[data-game=mines] .hud small{font-size:16px!important;line-height:1.2!important}
+.studio[data-game=mines] .hud strong{font-size:24px!important;line-height:1.2!important}
+.studio[data-game=mines] .map-area{display:block!important;min-height:0!important;height:100%!important;overflow:hidden!important}
+.studio[data-game=mines] #map-scroll{
+ display:block!important;height:100%!important;max-height:none!important;padding:4px!important;
+ overflow:auto!important;touch-action:pan-x pan-y;scrollbar-width:thin
+}
+.studio[data-game=mines] #board{margin:auto!important;padding:4px!important;touch-action:pan-x pan-y}
+.studio[data-game=mines] .cell{touch-action:pan-x pan-y!important;user-select:none;-webkit-user-select:none}
+.studio[data-game=mines] #status,.studio[data-game=mines] .tools,
+.studio[data-game=mines] [hidden]{display:none!important}
+.studio[data-game=mines] .settings-dock #sound{width:56px!important;height:56px!important;min-height:56px!important;position:static!important}
+.studio[data-game=mines] .hold-preview{pointer-events:none}
+@media(max-height:330px){.studio[data-game=mines] #play:not([hidden]){grid-template-columns:112px minmax(0,1fr)!important}.studio[data-game=mines] .hud strong{font-size:21px!important}}

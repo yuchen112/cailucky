@@ -1,0 +1,144 @@
+{
+  "assets": [
+    {
+      "id": "seat-dream",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-64781596-6585-4ba6-9821-8e3c69b0db97.png",
+      "prompt": "Use case: identity-preserve. Single transparent game sprite, one character only, not a sheet. Reference is the exact original CxQ character: preserve lavender hair, purple star witch hat, warm chibi clay-doll face, purple cream-trimmed costume and proportions. Redraw her seated on a small understated walnut chair, front three-quarter view toward camera, holding a fan of green-backed playing cards near her chest, other hand resting forward ready to play. Show head through seated knees, compact silhouette, face fully visible, elegant polished 3D storybook mobile game art. No table, no scenery, no text, no labels, no numbers, no watermark. True transparent background. This is a dedicated seated portrait sprite, not a crop of a scene.",
+      "tool": "built-in imagegen",
+      "reference": "../storybook/art-mobile24/portrait-dream.webp"
+    },
+    {
+      "id": "seat-joy",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-64744884-82ab-44d6-a2bb-c9808ad46855.png",
+      "prompt": "Use case: identity-preserve. One transparent individual CxQ game character sprite, not a sheet. Use reference as exact identity: preserve face, species, hair, headwear, costume colors, accessories and chibi clay-doll proportions. Redraw THIS character seated on a small walnut chair, three-quarter frontal view toward camera, holding a fan of green-backed playing cards near chest, other hand/paw extended naturally ready to play. Replace oversized handheld props with cards, retain signature costume motifs. Full compact seated figure, feet included, face clear. Premium warm 3D storybook mobile-game art. No table, no background, no text, no watermark, no extra characters. Genuine transparent alpha background. One pose only.",
+      "tool": "built-in imagegen",
+      "reference": "../storybook/art-mobile24/portrait-joy.webp"
+    },
+    {
+      "id": "seat-night",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5f5288c2-26ff-4f00-8d07-70e5f68e9110.png",
+      "prompt": "Use case: identity-preserve. One transparent individual CxQ game character sprite, not a sheet. Use reference as exact identity: preserve face, species, hair, headwear, costume colors, accessories and chibi clay-doll proportions. Redraw THIS character seated on a small walnut chair, three-quarter frontal view toward camera, holding a fan of green-backed playing cards near chest, other hand/paw extended naturally ready to play. Replace oversized handheld props with cards, retain signature costume motifs. Full compact seated figure, feet included, face clear. Premium warm 3D storybook mobile-game art. No table, no background, no text, no watermark, no extra characters. Genuine transparent alpha background. One pose only.",
+      "tool": "built-in imagegen",
+      "reference": "../storybook/art-mobile24/portrait-night.webp"
+    },
+    {
+      "id": "seat-sadness",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-f75e5077-37ac-44e8-8e0c-3384a7f31401.png",
+      "prompt": "Use case: identity-preserve. One transparent individual CxQ game character sprite, not a sheet. Use reference as exact identity: preserve face, species, hair, headwear, costume colors, accessories and chibi clay-doll proportions. Redraw THIS character seated on a small walnut chair, three-quarter frontal view toward camera, holding a fan of green-backed playing cards near chest, other hand/paw extended naturally ready to play. Replace oversized handheld props with cards, retain signature costume motifs. Full compact seated figure, feet included, face clear. Premium warm 3D storybook mobile-game art. No table, no background, no text, no watermark, no extra characters. Genuine transparent alpha background. One pose only.",
+      "tool": "built-in imagegen",
+      "reference": "../storybook/art-mobile24/portrait-sadness.webp"
+    },
+    {
+      "id": "seat-healing",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-bb9c1794-a589-4f7a-a8a4-ea48c6b8df98.png",
+      "prompt": "Use case: identity-preserve. One transparent individual CxQ game character sprite, not a sheet. Use reference as exact identity: preserve face, species, hair, headwear, costume colors, accessories and chibi clay-doll proportions. Redraw THIS character seated on a small walnut chair, three-quarter frontal view toward camera, holding a fan of green-backed playing cards near chest, other hand/paw extended naturally ready to play. Replace oversized handheld props with cards, retain signature costume motifs. Full compact seated figure, feet included, face clear. Premium warm 3D storybook mobile-game art. No table, no background, no text, no watermark, no extra characters. Genuine transparent alpha background. One pose only.",
+      "tool": "built-in imagegen",
+      "reference": "../storybook/art-mobile24/portrait-healing.webp"
+    },
+    {
+      "id": "seat-growth",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-68a250b4-a44a-43c9-92e7-cafbaf4ead1d.png",
+      "prompt": "Use case: identity-preserve. One transparent individual CxQ game character sprite, not a sheet. Use reference as exact identity: preserve face, species, hair, headwear, costume colors, accessories and chibi clay-doll proportions. Redraw THIS character seated on a small walnut chair, three-quarter frontal view toward camera, holding a fan of green-backed playing cards near chest, other hand/paw extended naturally ready to play. Replace oversized handheld props with cards, retain signature costume motifs. Full compact seated figure, feet included, face clear. Premium warm 3D storybook mobile-game art. No table, no background, no text, no watermark, no extra characters. Genuine transparent alpha background. One pose only.",
+      "tool": "built-in imagegen",
+      "reference": "../storybook/art-mobile24/portrait-growth.webp"
+    },
+    {
+      "id": "seat-trust",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-0e64d9fe-3e2f-4b64-879a-7fb0b69cf710.png",
+      "prompt": "Use case: identity-preserve. One transparent individual CxQ game character sprite, not a sheet. Use reference as exact identity: preserve face, species, hair, headwear, costume colors, accessories and chibi clay-doll proportions. Redraw THIS character seated on a small walnut chair, three-quarter frontal view toward camera, holding a fan of green-backed playing cards near chest, other hand/paw extended naturally ready to play. Replace oversized handheld props with cards, retain signature costume motifs. Full compact seated figure, feet included, face clear. Premium warm 3D storybook mobile-game art. No table, no background, no text, no watermark, no extra characters. Genuine transparent alpha background. One pose only.",
+      "tool": "built-in imagegen",
+      "reference": "../storybook/art-mobile24/portrait-trust.webp"
+    },
+    {
+      "id": "seat-hope",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d63b850c-8b52-445e-86ee-be642648d9a0.png",
+      "prompt": "Use case: identity-preserve. One transparent individual CxQ game character sprite, not a sheet. Use reference as exact identity: preserve face, species, hair, headwear, costume colors, accessories and chibi clay-doll proportions. Redraw THIS character seated on a small walnut chair, three-quarter frontal view toward camera, holding a fan of green-backed playing cards near chest, other hand/paw extended naturally ready to play. Replace oversized handheld props with cards, retain signature costume motifs. Full compact seated figure, feet included, face clear. Premium warm 3D storybook mobile-game art. No table, no background, no text, no watermark, no extra characters. Genuine transparent alpha background. One pose only.",
+      "tool": "built-in imagegen",
+      "reference": "../storybook/art-mobile24/portrait-hope.webp"
+    },
+    {
+      "id": "seat-luck",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-34bf54a5-d961-4216-b158-ef8d2ff451d5.png",
+      "prompt": "Use case: identity-preserve. One transparent individual CxQ game character sprite, not a sheet. Use reference as exact identity: preserve face, species, hair, headwear, costume colors, accessories and chibi clay-doll proportions. Redraw THIS character seated on a small walnut chair, three-quarter frontal view toward camera, holding a fan of green-backed playing cards near chest, other hand/paw extended naturally ready to play. Replace oversized handheld props with cards, retain signature costume motifs. Full compact seated figure, feet included, face clear. Premium warm 3D storybook mobile-game art. No table, no background, no text, no watermark, no extra characters. Genuine transparent alpha background. One pose only.",
+      "tool": "built-in imagegen",
+      "reference": "../storybook/art-mobile24/portrait-luck.webp"
+    },
+    {
+      "id": "seat-memory",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-b2e7e0d0-c030-4d94-b6fd-26364d129b07.png",
+      "prompt": "Use case: identity-preserve. One transparent individual CxQ game character sprite, not a sheet. Use reference as exact identity: preserve face, species, hair, headwear, costume colors, accessories and chibi clay-doll proportions. Redraw THIS character seated on a small walnut chair, three-quarter frontal view toward camera, holding a fan of green-backed playing cards near chest, other hand/paw extended naturally ready to play. Replace oversized handheld props with cards, retain signature costume motifs. Full compact seated figure, feet included, face clear. Premium warm 3D storybook mobile-game art. No table, no background, no text, no watermark, no extra characters. Genuine transparent alpha background. One pose only.",
+      "tool": "built-in imagegen",
+      "reference": "../storybook/art-mobile24/portrait-memory.webp"
+    },
+    {
+      "id": "seat-joy-win",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c20cbc0a-e701-4298-b407-818e2d8bfcc1.png",
+      "prompt": "Use case: identity-preserve. Reference is the exact seated CxQ character game sprite. Create ONE separate victory reaction sprite on true transparent background, not a sheet. Preserve the identical character, species, face identity, hair, hat, costume, walnut chair, camera view, seated body proportions and framing. Change ONLY expression and arm pose: delighted warm closed-eye smile, one hand/paw raised in a small happy cheer, other hand holding cards safely near chest. Keep the character recognizable, no extra ornaments, no scenery, no text, no watermarks. Premium softly lit 3D chibi clay storybook game asset. Entire seated figure visible with transparent margins. No table.",
+      "tool": "built-in imagegen",
+      "reference": "seat-joy.png"
+    },
+    {
+      "id": "seat-dream-win",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5e27cd1e-b7f2-451c-9585-f169c05b185d.png",
+      "prompt": "Use case: identity-preserve. Reference is the exact seated CxQ character game sprite. Create ONE separate victory reaction sprite on true transparent background, not a sheet. Preserve the identical character, species, face identity, hair, hat, costume, walnut chair, camera view, seated body proportions and framing. Change ONLY expression and arm pose: delighted warm closed-eye smile, one hand/paw raised in a small happy cheer, other hand holding cards safely near chest. Keep the character recognizable, no extra ornaments, no scenery, no text, no watermarks. Premium softly lit 3D chibi clay storybook game asset. Entire seated figure visible with transparent margins. No table.",
+      "tool": "built-in imagegen",
+      "reference": "seat-dream.png"
+    },
+    {
+      "id": "seat-night-win",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-04f2c6a3-f3bb-4909-99bb-ae4a900a30ce.png",
+      "prompt": "Use case: identity-preserve. Reference is the exact seated CxQ character game sprite. Create ONE separate victory reaction sprite on true transparent background, not a sheet. Preserve the identical character, species, face identity, hair, hat, costume, walnut chair, camera view, seated body proportions and framing. Change ONLY expression and arm pose: delighted warm closed-eye smile, one hand/paw raised in a small happy cheer, other hand holding cards safely near chest. Keep the character recognizable, no extra ornaments, no scenery, no text, no watermarks. Premium softly lit 3D chibi clay storybook game asset. Entire seated figure visible with transparent margins. No table.",
+      "tool": "built-in imagegen",
+      "reference": "seat-night.png"
+    },
+    {
+      "id": "seat-sadness-win",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-550999fd-c45d-425f-a7bc-613abf85fd50.png",
+      "prompt": "Use case: identity-preserve. Reference is the exact seated CxQ character game sprite. Create ONE separate victory reaction sprite on true transparent background, not a sheet. Preserve the identical character, species, face identity, hair, hat, costume, walnut chair, camera view, seated body proportions and framing. Change ONLY expression and arm pose: delighted warm closed-eye smile, one hand/paw raised in a small happy cheer, other hand holding cards safely near chest. Keep the character recognizable, no extra ornaments, no scenery, no text, no watermarks. Premium softly lit 3D chibi clay storybook game asset. Entire seated figure visible with transparent margins. No table.",
+      "tool": "built-in imagegen",
+      "reference": "seat-sadness.png"
+    },
+    {
+      "id": "seat-trust-win",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-aa71c872-c59f-46f1-8b9c-2c72c60f2246.png",
+      "prompt": "Use case: identity-preserve. Reference is the exact seated CxQ character game sprite. Create ONE separate victory reaction sprite on true transparent background, not a sheet. Preserve the identical character, species, face identity, hair, hat, costume, walnut chair, camera view, seated body proportions and framing. Change ONLY expression and arm pose: delighted warm closed-eye smile, one hand/paw raised in a small happy cheer, other hand holding cards safely near chest. Keep the character recognizable, no extra ornaments, no scenery, no text, no watermarks. Premium softly lit 3D chibi clay storybook game asset. Entire seated figure visible with transparent margins. No table.",
+      "tool": "built-in imagegen",
+      "reference": "seat-trust.png"
+    },
+    {
+      "id": "seat-memory-win",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-49577a11-adfd-4107-a394-8be1d1f736e5.png",
+      "prompt": "Use case: identity-preserve. Reference is the exact seated CxQ character game sprite. Create ONE separate victory reaction sprite on true transparent background, not a sheet. Preserve the identical character, species, face identity, hair, hat, costume, walnut chair, camera view, seated body proportions and framing. Change ONLY expression and arm pose: delighted warm closed-eye smile, one hand/paw raised in a small happy cheer, other hand holding cards safely near chest. Keep the character recognizable, no extra ornaments, no scenery, no text, no watermarks. Premium softly lit 3D chibi clay storybook game asset. Entire seated figure visible with transparent margins. No table.",
+      "tool": "built-in imagegen",
+      "reference": "seat-memory.png"
+    },
+    {
+      "id": "seat-growth-win",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-a92e5a2e-7adf-4cb3-9791-f82f8592d5a8.png",
+      "prompt": "Use case: identity-preserve. Reference is the exact seated CxQ character game sprite. Create ONE separate victory reaction sprite on true transparent background, not a sheet. Preserve the identical character, species, face identity, hair, hat, costume, walnut chair, camera view, seated body proportions and framing. Change ONLY expression and arm pose: delighted warm closed-eye smile, one hand/paw raised in a small happy cheer, other hand holding cards safely near chest. Keep the character recognizable, no extra ornaments, no scenery, no text, no watermarks. Premium softly lit 3D chibi clay storybook game asset. Entire seated figure visible with transparent margins. No table.",
+      "tool": "built-in imagegen",
+      "reference": "seat-growth.png"
+    },
+    {
+      "id": "seat-healing-win",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-30d62754-7532-4311-ba4f-18ae2dcd3948.png",
+      "prompt": "Use case: identity-preserve. Reference is the exact seated CxQ character game sprite. Create ONE separate victory reaction sprite on true transparent background, not a sheet. Preserve the identical character, species, face identity, hair, hat, costume, walnut chair, camera view, seated body proportions and framing. Change ONLY expression and arm pose: delighted warm closed-eye smile, one hand/paw raised in a small happy cheer, other hand holding cards safely near chest. Keep the character recognizable, no extra ornaments, no scenery, no text, no watermarks. Premium softly lit 3D chibi clay storybook game asset. Entire seated figure visible with transparent margins. No table.",
+      "tool": "built-in imagegen",
+      "reference": "seat-healing.png"
+    },
+    {
+      "id": "seat-luck-win",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-af892a1b-37cb-449a-b429-0067e905b4a6.png",
+      "prompt": "Use case: identity-preserve. Reference is the exact seated CxQ character game sprite. Create ONE separate victory reaction sprite on true transparent background, not a sheet. Preserve the identical character, species, face identity, hair, hat, costume, walnut chair, camera view, seated body proportions and framing. Change ONLY expression and arm pose: delighted warm closed-eye smile, one hand/paw raised in a small happy cheer, other hand holding cards safely near chest. Keep the character recognizable, no extra ornaments, no scenery, no text, no watermarks. Premium softly lit 3D chibi clay storybook game asset. Entire seated figure visible with transparent margins. No table.",
+      "tool": "built-in imagegen",
+      "reference": "seat-luck.png"
+    },
+    {
+      "id": "seat-hope-win",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-972589c6-b990-40ab-828b-ce14cc7f77fa.png",
+      "prompt": "Use case: identity-preserve. Reference is the exact seated CxQ character game sprite. Create ONE separate victory reaction sprite on true transparent background, not a sheet. Preserve the identical character, species, face identity, hair, hat, costume, walnut chair, camera view, seated body proportions and framing. Change ONLY expression and arm pose: delighted warm closed-eye smile, one hand/paw raised in a small happy cheer, other hand holding cards safely near chest. Keep the character recognizable, no extra ornaments, no scenery, no text, no watermarks. Premium softly lit 3D chibi clay storybook game asset. Entire seated figure visible with transparent margins. No table.",
+      "tool": "built-in imagegen",
+      "reference": "seat-hope.png"
+    }
+  ]
+}
