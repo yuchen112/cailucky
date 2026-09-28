@@ -1,4 +1,4 @@
-import {fitHands,capture,animateTable,cancelMotion} from "./presentation.mjs?v=20260924-controls3";
+import {fitHands,capture,animateTable,cancelMotion} from "./presentation.mjs?v=20260929-motion2";
 import * as R from "./rules.mjs";
 import { reduce, autoAction } from "./engine.mjs";
 import * as Store from "./storage.mjs";

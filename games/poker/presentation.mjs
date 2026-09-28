@@ -24,13 +24,26 @@ export function fitHands(root){
     });
   }
 }
+// A bounded arc makes the direction readable without sending cards off-screen.
+export function cardFlight(origin, target, {flip=false, lift=18}={}){
+  const dx=origin.x+origin.width/2-target.x-target.width/2;
+  const dy=origin.y+origin.height/2-target.y-target.height/2;
+  const arc=Math.min(lift,Math.hypot(dx,dy)*.12);
+  return [
+    {opacity:1,translate:`${dx}px ${dy}px`,scale:.78,rotate:`${Math.sign(dx)*8}deg`,transform:flip?'perspective(600px) rotateY(85deg)':'none'},
+    {opacity:1,translate:`${dx*.45}px ${dy*.45-arc}px`,scale:.94,rotate:`${Math.sign(dx)*3}deg`,offset:.48},
+    {opacity:1,translate:'0 -2px',scale:1.025,rotate:'0deg',offset:.88},
+    {opacity:1,translate:'0 0',scale:1,rotate:'0deg',transform:'perspective(600px) rotateY(0deg)'}
+  ];
+}
 export function capture(root){
   const cards=[...root.querySelectorAll('.hand .card,.play-area .card')].map(el=>({
     key:el.dataset.face||null,rect:el.getBoundingClientRect(),src:el.querySelector('img')?.src,
     zone:el.closest('.hand')?'hand':'table'
   }));
   const seats=[root.querySelector('.player-info'),...[1,2,3].map(i=>root.querySelector('.s'+i))].map(el=>el?.getBoundingClientRect());
-  return {cards,seats,deck:root.querySelector('.deck-stack')?.getBoundingClientRect()};
+  const hands=[root.querySelector('.player-info'),...[1,2,3].map(i=>root.querySelector('.s'+i+' .opponent-hand'))].map(el=>el?.getBoundingClientRect());
+  return {cards,seats,hands,deck:root.querySelector('.deck-stack')?.getBoundingClientRect()};
 }
 let active=[],ghosts=[];
 export function cancelMotion(){
@@ -46,7 +59,7 @@ export async function animateTable(root, before, action, settings, cue=()=>{}){
     active.push(a);pending.push(a.finished.catch(()=>{}));return a;
   };
   const current=[...root.querySelectorAll('.hand .card,.play-area .card')];
-  const source=before.seats?.[action.seat??0]||root.querySelector('.player-info')?.getBoundingClientRect();
+  const source=before.hands?.[action.seat??0]||before.seats?.[action.seat??0]||root.querySelector('.player-info')?.getBoundingClientRect();
   const deck=root.querySelector('.deck-stack')?.getBoundingClientRect();
   const arena=root.querySelector('.arena')?.getBoundingClientRect();
   const dealing=['deal','next'].includes(action.type);
@@ -63,18 +76,15 @@ export async function animateTable(root, before, action, settings, cue=()=>{}){
   let order=0;
   for(const el of current){
     const rect=el.getBoundingClientRect(),key=el.dataset.face;
-    const old=key&&before.cards?.find(c=>c.key===key);
+    // New rounds can contain the same card: it must still be dealt again.
+    const old=!dealing&&key&&before.cards?.find(c=>c.key===key);
     if(old&&old.zone===(el.closest('.hand')?'hand':'table')){
       if(Math.abs(old.rect.x-rect.x)+Math.abs(old.rect.y-rect.y)>1)
         animate(el,[{translate:(old.rect.x-rect.x)+'px '+(old.rect.y-rect.y)+'px'},{translate:'0 0'}]);
       continue;
     }
     const origin=old?.rect||(['deal','next','hit','double','bet'].includes(action.type)?fallback:source||fallback);
-    animate(el,[
-      {opacity:0,translate:(origin.x+origin.width/2-rect.x-rect.width/2)+'px '+(origin.y+origin.height/2-rect.y-rect.height/2)+'px',rotate:el.closest('.hand')?'0deg':'-9deg',scale:.72,transform:['bet','hit','double'].includes(action.type)?'perspective(600px) rotateY(85deg)':'none'},
-      {opacity:1,translate:'0 -3px',rotate:'1deg',scale:1.025,offset:.83},
-      {opacity:1,translate:'0 0',rotate:'0deg',scale:1,transform:'perspective(600px) rotateY(0deg)'}
-    ],order++*(settings.fast?12:28));
+    animate(el,cardFlight(origin,rect,{flip:['bet','hit','double'].includes(action.type)}),order++*(settings.fast?12:28));
   }
   // Only copy already-public images; never derive a back-facing opponent card's identity.
   const visibleKeys=new Set(current.map(e=>e.dataset.face).filter(Boolean));
@@ -92,9 +102,17 @@ export async function animateTable(root, before, action, settings, cue=()=>{}){
   }
   const actor=action.seat===0?root.querySelector('.player-info .table-character'):root.querySelector('.s'+action.seat+' .table-character');
   if(actor)animate(actor,[{translate:'0 0'},{translate:'0 -5px',rotate:'-2deg',offset:.4},{translate:'0 0',rotate:'0deg'}],0,ms*1.2);
-  if(['deal','next'].includes(action.type)){
-    for(const el of root.querySelectorAll('.opponent-hand img'))
-      animate(el,[{opacity:0,translate:'0 15px',rotate:'-20deg'},{opacity:1,translate:'0 0',rotate:'0deg'}],order++*12);
+  if(dealing){
+    // Distribute face-down cards from the deck, alternating seats each beat.
+    // Preserve each fan's resting rotation; never use hidden card identities.
+    for(const [seat,hand] of [...root.querySelectorAll('.opponent-hand')].entries()){
+      for(const [i,el] of [...hand.querySelectorAll('img')].entries()){
+        const frames=cardFlight(fallback,el.getBoundingClientRect());
+        const rotate=getComputedStyle(el).rotate;
+        frames.forEach(frame=>frame.rotate=rotate);
+        animate(el,frames,(i*3+seat)*(settings.fast?12:28));
+      }
+    }
   }
   if(action.reveal){
     const el=document.createElement('aside');el.className='draw-reveal';
