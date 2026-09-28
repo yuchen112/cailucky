@@ -1,4 +1,5 @@
 /* Raster control skins. Layout, typography and animation remain accessible HTML. */
+.studio dialog .dialog-close-dock{position:sticky!important;top:0!important;z-index:20;display:block!important;margin:0 0 8px auto!important;width:110px!important;min-height:48px!important;font-size:18px!important;flex:none}
 .studio dialog::backdrop{background:#06131be8!important;backdrop-filter:none!important}
 .studio.game-surface dialog{isolation:isolate;position:fixed!important;inset:0!important;margin:auto!important;width:min(480px,94vw,67.5dvh)!important;height:auto!important;aspect-ratio:3/4;max-height:90dvh!important;max-width:94vw!important;padding:clamp(36px,11vw,58px) clamp(32px,10vw,52px)!important;background:none!important;overflow:hidden!important;color:#fff8e8!important}
 .studio dialog::before{content:'';position:absolute;inset:0;z-index:-1;background:var(--portrait-panel) center/contain no-repeat;pointer-events:none}

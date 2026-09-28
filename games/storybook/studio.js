@@ -55,7 +55,9 @@
     if(dialogObservers.has(d))return;dialogObservers.add(d);
     const wrap=()=>{if(d.children.length===1&&d.firstElementChild.classList.contains('studio-dialog-body'))return;
       const inner=document.createElement('div');inner.className='studio-dialog-body';
-      while(d.firstChild)inner.append(d.firstChild);d.append(inner);
+      while(d.firstChild)inner.append(d.firstChild);
+      if(d.matches('#audio-dialog,#cxq-audio-panel,#guide')){const close=document.createElement('button');close.type='button';close.className='dialog-close-dock';close.textContent='關閉';close.setAttribute('aria-label','關閉視窗並返回遊戲');close.onclick=()=>d.close();inner.prepend(close);}
+      d.append(inner);
     };
     wrap();new MutationObserver(wrap).observe(d,{childList:true});
   }

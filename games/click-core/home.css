@@ -1,0 +1,11 @@
+#clicker-home{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;padding:24px;background:#243824 url('assets/backgrounds/village-main.speed24.webp') center/cover no-repeat;color:#fff9e4;text-shadow:0 2px 4px #142819}
+#clicker-home[hidden]{display:none}
+#clicker-home h1{font-size:42px;margin:0}#clicker-home p{font-size:18px;line-height:1.6;max-width:420px;margin:0}
+#clicker-home img{height:36dvh;max-height:300px;object-fit:contain}
+#clicker-home button,#clicker-title{background:url('assets/ui/button-clear-primary.speed24.webp') center/100% 100% no-repeat;border:0;color:#243d25;font-weight:800}
+#clicker-home button{width:min(320px,90vw);min-height:60px;font-size:22px}
+#clicker-home .save-note{font-size:14px;padding:14px 26px;background:url('assets/ui/panel-clear.speed24.webp') center/100% 100% no-repeat;color:#263a23;text-shadow:none}
+#clicker-title{position:fixed;right:64px;bottom:72px;z-index:80;min-height:48px;padding:8px 20px}
+body:has(#clicker-home:not([hidden])) #clicker-title{display:none}
+#cxq-audio{bottom:72px}
+@media(max-height:560px){#clicker-home{gap:6px}#clicker-home img{height:24dvh}#clicker-home h1{font-size:30px}#clicker-home p{font-size:15px}}

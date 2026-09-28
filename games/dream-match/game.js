@@ -100,7 +100,15 @@
     if(!R.move(a,special)){toast('沒有可消除的組合，免費重整中');await animateReshuffle();toast('夢境重整完成，不扣步數');}
   }
   let toastTimer;function toast(t){clearTimeout(toastTimer);$('#toast').textContent=t;M.feedback($('#toast'));toastTimer=setTimeout(()=>$('#toast').textContent='',1900);}
-  board.onclick=e=>{const c=e.target.closest('.cell');if(c)click(+c.dataset.i);};
+  let swipe=null,suppressTapUntil=0;
+  board.addEventListener('pointerdown',e=>{if(busy||ended||e.isPrimary===false||window.CxQSession?.blocked())return;const cell=e.target.closest('.cell');if(cell)swipe={id:e.pointerId,i:+cell.dataset.i,x:e.clientX,y:e.clientY};});
+  board.addEventListener('pointerup',e=>{if(!swipe||swipe.id!==e.pointerId)return;const p=swipe;swipe=null;const dx=e.clientX-p.x,dy=e.clientY-p.y;if(Math.max(Math.abs(dx),Math.abs(dy))<20)return;
+    suppressTapUntil=performance.now()+400;const row=Math.floor(p.i/N),col=p.i%N,dr=Math.abs(dy)>Math.abs(dx)?Math.sign(dy):0,dc=dr?0:Math.sign(dx);
+    if(row+dr<0||row+dr>=N||col+dc<0||col+dc>=N)return;selected=p.i;click(p.i+dr*N+dc);
+  });
+  board.addEventListener('pointercancel',()=>swipe=null);
+  board.style.touchAction='none';
+  board.onclick=e=>{if(performance.now()<suppressTapUntil)return;const c=e.target.closest('.cell');if(c)click(+c.dataset.i);};
   $('#burst').onclick=async()=>{if(charge<100||busy||ended||window.CxQSession?.blocked())return;busy=true;render();const counts=names.map((_,v)=>a.filter(x=>x===v).length),v=counts.indexOf(Math.max(...counts));charge=0;await cascade(new Set(a.map((x,i)=>x===v?i:-1).filter(i=>i>=0)),[],true);busy=false;render();await check();};
   $('#shuffle').onclick=async()=>{if(!shuffle||busy||ended||window.CxQSession?.blocked())return;shuffle--;toast('重整夢境中');CxQ.sound('flip');await animateReshuffle();toast('重整完成，不扣步數');};
   $('#restart').onclick=()=>fresh();$('#again').onclick=()=>fresh();
