@@ -479,6 +479,12 @@ export function reduce(profile, action, random = Math.random) {
     p.settings = { ...p.settings, ...a.values };
   } else if (a.type === "ack") {
     p.acknowledged = true;
+  } else if (a.type === "closeTable") {
+    // Explicitly confirmed exit, including an unfinished round. Only committed
+    // chips return: no imaginary win/loss, refund of old buy-in, or extra fee.
+    requireThat(t && a.tableId === t.id, "牌桌已變更，請重新確認離桌");
+    record(p, t.id + ":exit", t.players[0].chips, "確認結束牌桌，籌碼結回");
+    p.table = null;
   } else if (a.type === "leave") {
     requireThat(
       t && ["roundEnd", "tableEnd"].includes(t.phase),

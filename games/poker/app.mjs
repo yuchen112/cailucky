@@ -1,11 +1,11 @@
 import {fitHands,capture,animateTable,cancelMotion} from "./presentation.mjs?v=20260929-motion2";
 import * as R from "./rules.mjs";
-import { reduce, autoAction } from "./engine.mjs";
-import * as Store from "./storage.mjs";
+import { reduce, autoAction } from "./engine.mjs?v=20260929-switch1";
+import * as Store from "./storage.mjs?v=20260929-switch1";
 const app = document.querySelector("#app"),
   modal = document.querySelector("#modal"),
   toastEl = document.querySelector("#toast");
-let damagedRaw = null;
+let damagedRaw = null, pendingExit = null;
 let profile,
   view = "home",
   game = "big2",
@@ -77,14 +77,29 @@ function note(message) {
   noticeTimer = setTimeout(() => toastEl.classList.remove("show"), 3500);
 }
 function show(title, body, actions = btn("返回", "close")) {
+  pendingExit = null;
   cancelPresentation();
   clearTimeout(timer);
   modal.innerHTML = `<h2>${title}</h2><div class="dialog-body">${body}</div><div class="toolbar">${actions}</div>`;
   if (!modal.open) modal.showModal();
 }
 function close() {
+  const resumeExit = !!pendingExit && view === "table";
+  pendingExit = null;
   modal.close();
-  schedule();
+  if (resumeExit) { paused = false; render(); }
+  else schedule();
+}
+function confirmTableExit(nextGame = null) {
+  if (busy) return note("正在完成理牌，請稍候再切換。");
+  const t = profile.table;
+  if (!t) return;
+  show(
+    nextGame ? "切換至「" + R.GAMES[nextGame] + "」？" : "結束牌桌並換遊戲？",
+    `<p>目前正在玩「${R.GAMES[t.type]}」。確認後結束這張牌桌，將 <strong>${t.players[0].chips.toLocaleString()} 籌碼</strong>帶回錢包，不額外收費。</p><p>已結算的輸贏保留；未結算部分取消，不列入勝負紀錄。目前這局將無法繼續，想保留請先存檔備份。</p>`,
+    btn("取消，保留牌局", "close", "data-exit-choice") + btn(nextGame ? "確認結束並切換" : "確認結束並選遊戲", "confirm-exit", "data-exit-choice"),
+  );
+  pendingExit = {tableId:t.id, nextGame};
 }
 function dispatch(a) {
   if (busy || visualBusy) return false;
@@ -446,14 +461,33 @@ document.addEventListener("click", async (e) => {
     }
     if (a === "choose") {
       if (profile.table) {
-        view = "table";
-        render();
-        note("現有牌局尚未結束，請先完成或存檔。");
+        if (profile.table.type === b.dataset.game) {
+          view = "table";
+          paused = false;
+          render();
+        } else confirmTableExit(b.dataset.game);
         return;
       }
       game = b.dataset.game;
       view = "setup";
       render();
+      return;
+    }
+    if (a === "change-game") return confirmTableExit();
+    if (a === "confirm-exit") {
+      if (!pendingExit || !modal.open || busy) return;
+      const {tableId, nextGame} = pendingExit;
+      // Persist before dismissing the dialog. A failed write keeps this table.
+      profile = Store.commit(profile, {type:"closeTable", tableId});
+      cancelPresentation();
+      clearTimeout(timer);
+      selected = []; target = null; arr = {front:[],middle:[],back:[]};
+      paused = false;
+      if (nextGame) game = nextGame;
+      view = nextGame ? "setup" : "lobby";
+      close();
+      render();
+      note("籌碼已結回錢包，可以選擇新的牌局。");
       return;
     }
     if (a === "roles") return showRoles();
@@ -577,11 +611,12 @@ document.addEventListener("click", async (e) => {
       paused = true;
       show(
         "牌局暫停",
-        "<p>進度已自動記錄。未結束的回合需保留，不能重新發牌。</p>",
+        "<p>進度已自動記錄。可保留牌局稍後繼續，或確認結束目前牌桌後換遊戲。</p>",
         btn("繼續", "unpause") +
           btn("存檔備份", "saves") +
           btn("遊戲設定", "settings") +
-          btn("返回館內大廳", "pause-lobby"),
+          btn("保留牌局・返回大廳", "pause-lobby") +
+          btn("結束牌桌並換遊戲", "change-game"),
       );
       return;
     }
