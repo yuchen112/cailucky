@@ -1242,5 +1242,6 @@ body {
 
 .seat-action{position:fixed;z-index:60;pointer-events:none;width:80px;padding:10px;text-align:center;background:url('art/ui-button.webp') center/100% 100% no-repeat}
 #modal .btn[data-exit-choice]{min-height:44px}
+.play-area .card.selected{transform:none}
 
 @media(max-height:380px){.result-panel>.cards .card.small{width:44px;height:66px}}

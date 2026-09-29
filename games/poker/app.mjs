@@ -2,6 +2,7 @@ import {fitHands,capture,animateTable,cancelMotion} from "./presentation.mjs?v=2
 import * as R from "./rules.mjs";
 import { reduce, autoAction } from "./engine.mjs?v=20260929-switch1";
 import * as Store from "./storage.mjs?v=20260929-switch1";
+import {selectionFeedback} from "./selection.mjs?v=20260929-feedback1";
 const app = document.querySelector("#app"),
   modal = document.querySelector("#modal"),
   toastEl = document.querySelector("#toast");
@@ -257,6 +258,27 @@ function renderTable() {
   app.innerHTML = `<main class="table-screen ${ended(t) ? "is-ended" : ""}" data-game="${t.type}" data-last-seat="${t.lastSeat??0}"><header class="bar"><strong>${R.GAMES[t.type]}・第 ${t.round} 局</strong><span>${t.mode === "quick" ? "快速桌 5 局" : "持續桌"}</span><div>${btn("說明", "help")}${btn("暫停", "pause")}</div></header><section class="arena">${stacksHTML(t)}${[1, 2, 3].map((i) => `<div class="seat s${i} ${i === t.turn && !ended(t) ? "active" : ""}"><img class="table-character" src="art/seat-${t.players[i].role}.webp" alt="${name(t.players[i].role)}坐在牌桌旁">${opponentCards(t.players[i].hand.length)}<div><strong>${name(t.players[i].role)}</strong><br>${t.players[i].chips} 籌碼<br>${t.type === "blackjack" && t.players[i].hand.length ? R.bj(t.players[i].hand).total + " 點" : t.players[i].hand.length + " 張"}</div></div>`).join("")}<div class="play-area"><p class="message">${ended(t) ? "本局已完成" : busy ? "正在理牌…" : paused ? "已暫停" : t.phase === "arrange" ? "請完成三墩排牌" : drawFrom ? `向 ${drawFrom} 抽牌` : `輪到 ${name(t.players[t.turn].role)}`} · ${t.type==="big2"&&t.last?`${name(t.players[t.lastSeat].role)} 出牌 · `:""}${escape(t.message)}</p>${center}</div></section>${hand.length ? `<section class="hand-wrap"><div class="player-info"><img class="table-character" src="art/seat-${t.players[0].role}.webp" alt="${name(t.players[0].role)}"><div>${name(t.players[0].role)}<br>${t.players[0].chips} 籌碼${t.type === "blackjack" ? "<br>" + R.bj(t.players[0].hand).total + " 點" : ""}</div></div><div class="hand">${hand.map((c) => cardHTML(c, t.type === "thirteen" ? "place" : ["oldmaid", "blackjack"].includes(t.type) ? "" : "select")).join("")}</div></section>` : `<section class="empty-hand"><div class="player-info"><img class="table-character" src="art/seat-${t.players[0].role}.webp" alt="${name(t.players[0].role)}"><div>${name(t.players[0].role)}<br>${t.players[0].chips} 籌碼</div></div></section>`}<footer class="actions">${actions}</footer></main>`;
   const el = app.querySelector(".hand");
   fitHands(app);
+  const feedback = selectionFeedback(profile, selected, target);
+  if (feedback) {
+    const play = app.querySelector('[data-action="play"]');
+    if (play) {
+      play.disabled = !human || busy || !feedback.ok;
+      play.setAttribute('aria-describedby','selection-feedback');
+      if (selected.length) play.textContent += `（${selected.length}）`;
+    }
+    const message = app.querySelector('.message');
+    message.id = 'selection-feedback';
+    if (human && !busy && !paused) {
+      message.textContent = feedback.message;
+      message.setAttribute('role','status');
+    }
+    if (selected.length) app.querySelector('.actions').insertAdjacentHTML('beforeend',btn('清除選牌','clear-selection'));
+    for (const card of app.querySelectorAll('[data-action="target"]')) {
+      const chosen=card.dataset.card===feedback.action.target;
+      card.classList.toggle('selected',chosen);
+      card.setAttribute('aria-pressed',String(chosen));
+    }
+  }
 }
 function schedule() {
   clearTimeout(timer);
@@ -789,6 +811,9 @@ document.addEventListener("click", async (e) => {
       return;
     }
     if (t.turn !== 0 || paused || busy || visualBusy || ended(t)) return;
+    if (a === "clear-selection") {
+      selected = []; target = null; render(); return;
+    }
     if (a === "select") {
       const c = b.dataset.card;
       const beforeSelect=captureCards();
@@ -813,7 +838,7 @@ document.addEventListener("click", async (e) => {
       if (!R.redMatch(selected[0], b.dataset.card))
         return note("這兩張牌無法配對");
       target = b.dataset.card;
-      note("已選桌牌：" + R.card(target).label);
+      render();
       return;
     }
     if (a === "hint") {
@@ -828,11 +853,9 @@ document.addEventListener("click", async (e) => {
     }
     let action;
     if (a === "play") {
-      action = { type: "play", seat: 0, cards: [...selected], target };
-      if (t.type === "redpoint" && !target && selected.length === 1) {
-        const matches = t.board.filter((c) => R.redMatch(selected[0], c));
-        if (matches.length === 1) action.target = matches[0];
-      }
+      const feedback = selectionFeedback(profile, selected, target);
+      if (!feedback?.ok) return note(feedback?.message || "請先選牌");
+      action = feedback.action;
     }
     if (["pass", "hit", "stand", "double"].includes(a))
       action = { type: a, seat: 0 };
@@ -845,9 +868,10 @@ document.addEventListener("click", async (e) => {
     if (a === "draw")
       action = { type: "draw", seat: 0, index: Number(b.dataset.index) };
     if (action) {
+      const priorSelection = selected, priorTarget = target;
       selected = [];
       target = null;
-      dispatch(action);
+      if (!dispatch(action)) { selected = priorSelection; target = priorTarget; }
     }
   } catch (error) {
     note(error.message);
