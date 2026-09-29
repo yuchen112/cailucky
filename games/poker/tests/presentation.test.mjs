@@ -3,7 +3,16 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {ROLES} from '../rules.mjs';
-import {handLayout,cardFlight,animateTable,playPosePath,warmPlayPose} from '../presentation.mjs';
+import {handLayout,cardFlight,animateTable,playPosePath,warmPlayPose,actionTiming} from '../presentation.mjs';
+test('play releases only after the pose is visible and recovers after the card lands',()=>{
+ for(const fast of [false,true]){
+  const t=actionTiming('play',fast);
+  assert.ok(t.release>t.gesture*.16);
+  assert.ok(t.gesture>t.release+t.duration);
+  assert.ok(t.gesture<800);
+  for(const action of ['deal','next','hit','pass','bet'])assert.equal(actionTiming(action,fast).release,0);
+ }
+});
 test('pose preloader reuses decoded images and allows failed requests to retry',async()=>{
  const saved=Object.getOwnPropertyDescriptor(globalThis,'Image');let attempts=0;
  try{

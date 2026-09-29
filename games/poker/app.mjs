@@ -1,4 +1,4 @@
-import {fitHands,capture,animateTable,cancelMotion,playPosePath,warmPlayPose} from "./presentation.mjs?v=20260930-poses2";
+import {fitHands,capture,animateTable,cancelMotion,playPosePath,warmPlayPose} from "./presentation.mjs?v=20260930-motion3";
 import * as R from "./rules.mjs";
 import { reduce, autoAction } from "./engine.mjs?v=20260929-switch1";
 import * as Store from "./storage.mjs?v=20260929-switch1";

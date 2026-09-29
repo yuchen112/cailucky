@@ -5,7 +5,7 @@
   function play(el,frames,options){
     if(!el||reduced())return Promise.resolve();
     const animation=el.animate(frames,options);active.add(animation);
-    return animation.finished.catch(()=>{}).finally(()=>{active.delete(animation);if(options.fill!=='forwards')animation.cancel();});
+    return animation.finished.catch(()=>{}).finally(()=>{active.delete(animation);if(!['forwards','both'].includes(options.fill))animation.cancel();});
   }
   const pieces=cell=>cell?[...cell.querySelectorAll('.gem,.special-mark')]:[];
   async function swap(board,i,j){
@@ -20,16 +20,24 @@
     const duration=Math.min(620,320+Math.max(0,...Object.values(distances))*45);
     return Promise.all(Object.entries(distances).filter(([,d])=>d>0).flatMap(([i,d])=>pieces(board.children[i]).map(el=>play(el,[{translate:'0 '+(-d*step)+'px',opacity:1},{translate:'0 0',opacity:1}],{duration,easing:'cubic-bezier(.35,0,.45,1)',fill:'backwards'}))));
   }
-  function spark(cell){
+  function spark(cell,delay=0){
     const img=new Image();img.src='../storybook/art-polish/dream-burst.webp';img.alt='';img.className='dream-motion-spark';cell.append(img);
-    return play(img,[{scale:.3,opacity:0},{scale:1.2,opacity:1,offset:.4},{scale:1.6,opacity:0}],{duration:420,easing:'ease-out'}).finally(()=>img.remove());
+    return play(img,[{scale:.3,opacity:0},{scale:1.2,opacity:1,offset:.4},{scale:1.6,opacity:0}],{duration:420,delay,fill:'backwards',easing:'ease-out'}).finally(()=>img.remove());
+  }
+  function sweepDelay(index,activated){
+    const distances=Object.entries(activated).flatMap(([origin,kind])=>{
+      const sameRow=Math.floor(index/7)===Math.floor(origin/7),sameColumn=index%7===origin%7;
+      return kind==='row'&&sameRow?[Math.abs(index-origin)]:kind==='column'&&sameColumn?[Math.abs(index-origin)/7]:[];
+    });
+    return distances.length?Math.min(...distances)*28:0;
   }
   async function clear(board,indices,made,activated,colors,goals){
     if(reduced())return;
     const work=[],flying=new Set();
     for(const i of indices){
       const cell=board.children[i];
-      work.push(...pieces(cell).map(el=>play(el,[{scale:1,opacity:1},{scale:1.045,opacity:1,offset:.25},{scale:.85,opacity:0}],{duration:280,fill:'forwards',easing:'ease-out'})),spark(cell));
+      const delay=sweepDelay(i,activated);
+      work.push(...pieces(cell).map(el=>play(el,[{scale:1,opacity:1},{scale:1.045,opacity:1,offset:.25},{scale:.85,opacity:0}],{duration:280,delay,fill:'both',easing:'ease-out'})),spark(cell,delay));
       const g=goals.findIndex(g=>g.color===colors[i]&&g.got<g.need);
       if(g>=0&&!flying.has(g)){
         flying.add(g);const source=cell.querySelector('.gem'),target=document.querySelectorAll('#goals .gemMini')[g];
@@ -41,7 +49,7 @@
     for(const [i,kind] of Object.entries(activated)){
       if(!indices.has(+i))continue;
       const cells=kind==='row'?[...board.children].slice(Math.floor(i/7)*7,Math.floor(i/7)*7+7):kind==='column'?[...board.children].filter((_,n)=>n%7===i%7):[];
-      for(const [n,cell] of cells.entries())work.push(play(cell,[{filter:'brightness(1)'},{filter:'brightness(1.65)'},{filter:'brightness(1)'}],{duration:280,delay:n*28}));
+      for(const cell of cells)work.push(play(cell,[{filter:'brightness(1)'},{filter:'brightness(1.65)'},{filter:'brightness(1)'}],{duration:280,delay:sweepDelay([...board.children].indexOf(cell),{[i]:kind})}));
     }
     await Promise.all(work);
   }
@@ -51,5 +59,5 @@
   function stopIfReduced(){if(reduced())for(const animation of active)animation.cancel();}
   new MutationObserver(stopIfReduced).observe(document.body,{attributes:true,attributeFilter:['class']});
   matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',stopIfReduced);
-  window.DreamMotion={swap,fall,clear,shuffle,feedback,hint};
+  window.DreamMotion={swap,fall,clear,shuffle,feedback,hint,sweepDelay};
 })();

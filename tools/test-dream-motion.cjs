@@ -6,6 +6,12 @@ const context={window:{},Image:function(){return element()},Promise,Set,Object,M
 vm.runInNewContext(fs.readFileSync('games/dream-match/motion.js','utf8'),context);
 const M=context.window.DreamMotion,board={clientWidth:343,children:Array.from({length:49},(_,i)=>{const c=element(i%7*50,Math.floor(i/7)*50);c.pieces=[element(i%7*50,Math.floor(i/7)*50)];if(i===0)c.pieces.push(element());return c})};
 (async()=>{
+ assert.equal(M.sweepDelay(0,{3:'row'}),84,'special spreads left from its actual origin');
+ assert.equal(M.sweepDelay(6,{3:'row'}),84,'special spreads right symmetrically');
+ assert.equal(M.sweepDelay(3,{3:'row'}),0,'origin activates first');
+ assert.equal(M.sweepDelay(7,{3:'row'}),0,'unrelated row is not delayed');
+ assert.equal(M.sweepDelay(45,{3:'column'}),168,'column propagates vertically');
+ assert.equal(M.sweepDelay(3,{0:'row',3:'column'}),0,'intersecting effects use earliest arrival');
  await M.swap(board,0,1);assert.equal(calls.length,3,'gem and special marker both travel');assert.equal(calls[0].frames[1].translate,'50px 0px');assert.equal(board.children[0].style.zIndex,'');
  calls.length=0;await M.fall(board,{0:3,1:0,7:1});assert.equal(calls.length,3);assert.equal(calls[0].frames[0].translate,'0 -150px');assert.equal(calls[0].frames.at(-1).translate,'0 0');
  assert(calls.every(c=>c.frames.length===2&&c.frames.every(f=>f.opacity===1)),'fall never fades survivors or bounces past destination');

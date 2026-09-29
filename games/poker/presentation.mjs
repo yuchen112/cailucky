@@ -62,13 +62,20 @@ export function capture(root){
   return {cards,seats,hands,deck:root.querySelector('.deck-stack')?.getBoundingClientRect()};
 }
 let active=[],ghosts=[];
+// Shared beats keep the hand gesture, released cards and recovery in sync.
+export function actionTiming(type,fast=false){
+  const duration=fast?190:430;
+  const release=type==='play'?Math.round(duration*.36):0;
+  return {duration,release,stagger:fast?12:28,gesture:release+duration+Math.round(duration*.28)};
+}
 export function cancelMotion(){
   active.forEach(a=>a.cancel());active=[];ghosts.forEach(e=>e.remove());ghosts=[];
 }
 export async function animateTable(root, before, action, settings, cue=()=>{}){
   cancelMotion();
   if(settings.reduced)return;
-  const ms=settings.fast?190:430, pending=[],myGhosts=[];
+  const timing=actionTiming(action.type,settings.fast);
+  const ms=timing.duration, pending=[],myGhosts=[];
   const keepGhost=e=>{ghosts.push(e);myGhosts.push(e);};
   const animate=(el,frames,delay=0,duration=ms)=>{
     const a=el.animate(frames,{duration,delay,fill:'backwards',easing:'cubic-bezier(.2,.75,.25,1)'});
@@ -96,11 +103,11 @@ export async function animateTable(root, before, action, settings, cue=()=>{}){
     const old=!dealing&&key&&before.cards?.find(c=>c.key===key);
     if(old&&old.zone===(el.closest('.hand')?'hand':'table')){
       if(Math.abs(old.rect.x-rect.x)+Math.abs(old.rect.y-rect.y)>1)
-        animate(el,[{translate:(old.rect.x-rect.x)+'px '+(old.rect.y-rect.y)+'px'},{translate:'0 0'}]);
+        animate(el,[{translate:(old.rect.x-rect.x)+'px '+(old.rect.y-rect.y)+'px'},{translate:'0 0'}],timing.release);
       continue;
     }
     const origin=old?.rect||(['deal','next','hit','double','bet'].includes(action.type)?fallback:source||fallback);
-    animate(el,cardFlight(origin,rect,{flip:['bet','hit','double'].includes(action.type)}),order++*(settings.fast?12:28));
+    animate(el,cardFlight(origin,rect,{flip:['bet','hit','double'].includes(action.type)}),timing.release+order++*timing.stagger);
   }
   // Only copy already-public images; never derive a back-facing opponent card's identity.
   const visibleKeys=new Set(current.map(e=>e.dataset.face).filter(Boolean));
@@ -114,7 +121,7 @@ export async function animateTable(root, before, action, settings, cue=()=>{}){
       {translate:'0 0',opacity:1},
       {translate:(dest.x-old.rect.x)+'px '+(dest.y-old.rect.y)+'px',scale:.65,rotate:'7deg',opacity:.8,offset:.8},
       {translate:(dest.x-old.rect.x)+'px '+(dest.y-old.rect.y)+'px',scale:.6,opacity:0}
-    ]);
+    ],old.zone==='hand'?timing.release:0);
   }
   const actor=action.seat===0?root.querySelector('.player-info .table-character'):root.querySelector('.s'+action.seat+' .table-character');
   let posed=false;
@@ -129,8 +136,8 @@ export async function animateTable(root, before, action, settings, cue=()=>{}){
         pose.className='motion-card';pose.alt='';pose.setAttribute('aria-hidden','true');
         Object.assign(pose.style,{left:r.x+'px',top:r.y+'px',width:r.width+'px',height:r.height+'px',objectPosition:getComputedStyle(actor).objectPosition});
         document.body.append(pose);keepGhost(pose);
-        animate(actor,[{opacity:1},{opacity:0,offset:.16},{opacity:0,offset:.8},{opacity:1}],0,ms*1.4);
-        animate(pose,[{opacity:0},{opacity:1,offset:.16},{opacity:1,offset:.8},{opacity:0}],0,ms*1.4);
+        animate(actor,[{opacity:1},{opacity:0,offset:.16},{opacity:0,offset:.76},{opacity:1}],0,timing.gesture);
+        animate(pose,[{opacity:0},{opacity:1,offset:.16},{opacity:1,offset:.76},{opacity:0}],0,timing.gesture);
         posed=true;
       }
     }
