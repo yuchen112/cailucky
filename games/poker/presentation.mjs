@@ -1,6 +1,6 @@
 // Presentation state is deliberately separate from saved game state.
 export function playPosePath(source='') {
-  const role=source.match(/(?:^|\/)seat-(luck|dream|growth|joy)\.webp(?:\?.*)?$/)?.[1];
+  const role=source.match(/(?:^|\/)seat-(luck|dream|growth|joy|night|sadness|trust|memory|healing|hope)\.webp(?:\?.*)?$/)?.[1];
   return role ? `art/seat-${role}-play-v1.webp` : null;
 }
 const poseCache=new Map();

@@ -1,5 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {ROLES} from '../rules.mjs';
 import {handLayout,cardFlight,animateTable,playPosePath,warmPlayPose} from '../presentation.mjs';
 test('pose preloader reuses decoded images and allows failed requests to retry',async()=>{
  const saved=Object.getOwnPropertyDescriptor(globalThis,'Image');let attempts=0;
@@ -14,10 +17,22 @@ test('pose preloader reuses decoded images and allows failed requests to retry',
  }finally{if(saved)Object.defineProperty(globalThis,'Image',saved);else delete globalThis.Image;}
 });
 test('only individually produced role poses are used; unsupported roles keep their original art',()=>{
- for(const role of ['luck','dream','growth','joy'])assert.equal(playPosePath(`art/seat-${role}.webp`),`art/seat-${role}-play-v1.webp`);
- assert.equal(playPosePath('art/seat-night.webp'),null);
+ for(const role of ['luck','dream','growth','joy','night','sadness','trust','memory','healing','hope'])assert.equal(playPosePath(`art/seat-${role}.webp`),`art/seat-${role}-play-v1.webp`);
+ assert.equal(playPosePath('art/seat-unknown.webp'),null);
  assert.equal(playPosePath('art/seat-luck-win.webp'),null);
  assert.equal(playPosePath(''),null);
+});
+test('every official character resolves to an existing distinct WebP pose',()=>{
+ const hashes=new Set();
+ for(const [role] of ROLES){
+  const path=playPosePath(`art/seat-${role}.webp`);
+  assert.ok(path,role);
+  const bytes=readFileSync(new URL('../'+path,import.meta.url));
+  assert.equal(bytes.toString('ascii',0,4),'RIFF');
+  assert.equal(bytes.toString('ascii',8,12),'WEBP');
+  hashes.add(createHash('sha256').update(bytes).digest('hex'));
+ }
+ assert.equal(hashes.size,ROLES.length,'no character shares another character artwork');
 });
 test('all hand cards stay within mobile widths, including 26-card stress case',()=>{
  for(const width of [220,320,420,520,690,1000])for(let count=1;count<=26;count++){

@@ -1,0 +1,43 @@
+{
+  "tool": "built-in imagegen",
+  "prompt": "Use case: identity-preserve. Image 1 is the edit target and exact CxQ IP character identity anchor. Create ONE standalone transparent poker-game sprite, ONE pose only, NOT an atlas or sheet. Keep the exact character face, species, hair, headwear, colors, clothes, accessories, same walnut chair, camera angle, body scale and canvas registration as the reference. Keep head, torso, feet and chair in exactly the same location and dimensions. Change ONLY the forward hand/paw and arm into a clearly readable card-playing gesture: reach forward slightly down toward the viewer, fingers/paw gently releasing ONE green-backed playing card. The other hand keeps the existing small fan of green-backed cards at the chest. Keep face unobscured and both arms anatomically clear. Polished same warm chibi clay storybook rendering and lighting. No table, no background, no ground plane, no text, no card ranks, no extra limbs, no extra characters, no motion trails. Genuine alpha transparency. Preserve original framing; do not zoom or crop. Make the reaching hand visibly lower and farther forward than in the reference, while keeping every other body anchor fixed.",
+  "assets": [
+    {
+      "role": "night",
+      "reference": "seat-night.webp",
+      "output": "seat-night-play-v1.webp",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-a77bf447-1af2-44b1-adc8-94304a9b00d7.png"
+    },
+    {
+      "role": "sadness",
+      "reference": "seat-sadness.webp",
+      "output": "seat-sadness-play-v1.webp",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-a38df03b-daad-4744-8aae-b60ca5e469e1.png"
+    },
+    {
+      "role": "trust",
+      "reference": "seat-trust.webp",
+      "output": "seat-trust-play-v1.webp",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-a0e1f505-0c2b-441f-be76-0a6936b1e52a.png"
+    },
+    {
+      "role": "memory",
+      "reference": "seat-memory.webp",
+      "output": "seat-memory-play-v1.webp",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-25b3f205-6c53-4ed7-a631-4e7c5dd95d1a.png"
+    },
+    {
+      "role": "healing",
+      "reference": "seat-healing.webp",
+      "output": "seat-healing-play-v1.webp",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-af764449-b159-405a-b857-0a12b89dd24e.png"
+    },
+    {
+      "role": "hope",
+      "reference": "seat-hope.webp",
+      "output": "seat-hope-play-v1.webp",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-8e893e45-26d1-49f5-958d-553dbe7155bd.png"
+    }
+  ],
+  "processing": "Whole-image proportional resize to each reference canvas size, transparent WebP. No cropping, atlas, or slicing."
+}
