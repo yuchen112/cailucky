@@ -21,6 +21,8 @@ const ctx=new Proxy({},{get:()=>()=>{}}),canvas=el('#game');canvas.width=720;can
 const context={BubbleMotion:M,BubbleEndless:require('../games/magic-bubble/endless-core.js'),Image:class{naturalWidth=100},Set,Math,Number,Array,Object,console,innerHeight:360,innerWidth:800,requestAnimationFrame(){},addEventListener(){},setTimeout(){},clearTimeout(){},ResizeObserver:class{observe(){}},matchMedia:()=>({matches:false}),CxQ:{read:(k,v)=>v,write(){},configure(){},sound(){}},document:{querySelector:s=>s==='.game-entry:not([hidden])'?null:el(s),createElement:()=>el('button'),body:{classList:{contains:()=>reduced}}},window:{CxQSession:{blocked:()=>paused}}};
 let source=fs.readFileSync('games/magic-bubble/game.js','utf8');
 source=source.replace('fit();reset();requestAnimationFrame(frame);',`fit();reset();globalThis.qa={place,frame,draw,reset,locked,check,setMode:v=>mode=v,state:()=>({clock,settleUntil,advanceAt,descending,score,shots,turns,effects,grid,pending,over}),seed(){reset();grid=Array.from({length:10},()=>Array(9).fill(-1));grid[0][0]=0;grid[1][0]=0;grid[2][1]=1;grid[0][8]=2;ball=0;flight={x:55,y:160};}};`);
+context.CxQOrbArt=require('../games/shared/orb-art.js');
+vm.runInNewContext(fs.readFileSync('games/magic-bubble/art-orbs-v2/geometry.js','utf8'),context);
 vm.runInNewContext(source,context);const Q=context.qa;
 Q.seed();Q.place([2,0]);let s=Q.state();
 assert.equal(s.score,600,'three matched balls plus one unsupported ball');assert.equal(s.effects.length,4);assert(Q.locked());

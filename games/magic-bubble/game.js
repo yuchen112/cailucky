@@ -3,7 +3,7 @@
   const c=document.querySelector('#game'),x=c.getContext('2d'),$=s=>document.querySelector(s),R=32,C=9,ROWS=10,OX=360;let OY=735;
   const palette=['ruby','aqua','gold','violet','leaf','orange'];
   const load=src=>{const q=new Image;q.src=src;return q;};
-  const art=palette.map(n=>load('../storybook/art-20260920/bubble-'+n+'.webp'));
+  const art=palette.map(n=>load('art-orbs-v2/'+n+'.webp'));
   const launcher=load('../../assets/characters/cxq-role-dream.webp'),burst=load('../storybook/art-polish/bubble-burst.webp'),rescueArt=load('../../assets/characters/cxq-role-hope.webp');
   let firedAt=-1000,turns=0,offset=0,advanceAt=null,descending=null,difficulty='classic',settleUntil=0,docking=null;
   const endless=()=>mode==='endless',locked=()=>!!flight||advanceAt!==null||!!descending||clock<settleUntil;
@@ -82,7 +82,7 @@
     $('#again').textContent=win&&chapter<5?'前往下一關':'再挑戰一次';
     $('#again').onclick=()=>{if(win&&chapter<5)chapter++;reset();};$('#result').hidden=false;CxQ.sound(win?'win':'lose');
   }
-  function bubble(px,py,v,size=R){if(art[v]?.naturalWidth)x.drawImage(art[v],px-size,py-size,size*2,size*2);}
+  function bubble(px,py,v,size=R){CxQOrbArt.draw(x,art[v],CxQOrbGeometry.bubble[v],px,py,size);}
   function velocity(p){const dx=p.x-OX,dy=Math.min(-80,p.y-OY),l=Math.hypot(dx,dy);return{x:OX,y:OY,vx:dx/l,vy:dy/l};}
   function draw(){
     x.clearRect(0,0,c.width,c.height);
@@ -99,7 +99,7 @@
     for(const e of effects){const p=BubbleMotion.sample(e,clock,reduced());x.save();x.translate(p.x,p.y);x.rotate(p.angle);x.globalAlpha=p.alpha;bubble(0,0,e.v,R*p.scale);if(p.burst>0&&burst.naturalWidth){x.globalAlpha=p.burst;const s=90*p.burstScale;x.drawImage(burst,-s/2,-s/2,s,s);}x.restore();}
   }
   let feedbackTimer;function feedback(t){clearTimeout(feedbackTimer);$('#aimHint').textContent=t;feedbackTimer=setTimeout(()=>$('#aimHint').textContent=goal()+' · 按住瞄準，放開發射',2200);}
-  function sync(){$('#score').textContent=score.toLocaleString();$('#shots').textContent=endless()?turns:shots;$('#shots').previousElementSibling.textContent=endless()?'完成回合':'剩餘發射';c.setAttribute('aria-label',endless()?'無盡泡泡棋盤，第 '+turns+' 回合':'闖關泡泡棋盤，第 '+(chapter+1)+' 關');c.dataset.busy=String(locked());$('#skillFill').style.width=skill+'%';$('#skill').disabled=skill<100||over||locked();$('#skill').textContent=skill>=100?'施放星願魔法':'星願魔法 '+skill+'%';$('#next').style.backgroundImage="url('../storybook/art-20260920/bubble-"+palette[next]+".webp')";}
+  function sync(){$('#score').textContent=score.toLocaleString();$('#shots').textContent=endless()?turns:shots;$('#shots').previousElementSibling.textContent=endless()?'完成回合':'剩餘發射';c.setAttribute('aria-label',endless()?'無盡泡泡棋盤，第 '+turns+' 回合':'闖關泡泡棋盤，第 '+(chapter+1)+' 關');c.dataset.busy=String(locked());$('#skillFill').style.width=skill+'%';$('#skill').disabled=skill<100||over||locked();$('#skill').textContent=skill>=100?'施放星願魔法':'星願魔法 '+skill+'%';$('#next').style.backgroundImage="url('art-orbs-v2/"+palette[next]+".webp')";}
   const pointer=e=>{const b=c.getBoundingClientRect();return{x:(e.clientX-b.left)*c.width/b.width,y:(e.clientY-b.top)*c.height/b.height};};
   c.onpointerdown=e=>{if(over||locked()||window.CxQSession?.blocked())return;e.preventDefault();aim=pointer(e);c.setPointerCapture(e.pointerId);};
   c.onpointermove=e=>{if(aim)aim=pointer(e);};

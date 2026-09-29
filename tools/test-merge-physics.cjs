@@ -6,6 +6,8 @@ function game(source){
  const $=s=>{if(!nodes.has(s))nodes.set(s,node());return nodes.get(s)};
  const G={$,init:()=>data,clamp:(v,a,b)=>Math.max(a,Math.min(b,v)),rolePicker(){},sprite:()=>'',roles:['幸運'],images:{},load:()=>Promise.resolve(),save(){},sound(){},playing(){},frame(){},settings(){},records(){},dialog(){},toast(){}};
  const context={Matter,G,console,Math,Set,window:{},document:{body:node(),querySelector:()=>null},addEventListener(){}};
+ context.CxQOrbArt=require('../games/shared/orb-art.js');
+ vm.runInNewContext(fs.readFileSync('games/merge/art-orbs-v2/geometry.js','utf8'),context);
  vm.runInNewContext(source+'\nglobalThis.test={start,make,balls,mergePairs,step:()=>{Engine.update(engine,1000/60);mergePairs()},pair:(a,b)=>queue.push([a,b]),engine:()=>engine,data};',context);
  const t=context.test;t.start();return {t,nodes,data};
 }
