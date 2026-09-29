@@ -1,6 +1,24 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {handLayout,cardFlight,animateTable} from '../presentation.mjs';
+import {handLayout,cardFlight,animateTable,playPosePath,warmPlayPose} from '../presentation.mjs';
+test('pose preloader reuses decoded images and allows failed requests to retry',async()=>{
+ const saved=Object.getOwnPropertyDescriptor(globalThis,'Image');let attempts=0;
+ try{
+  globalThis.Image=class{set src(value){attempts++;queueMicrotask(()=>value==='test-failure'?this.onerror():this.onload());}};
+  const first=warmPlayPose('test-success');
+  assert.equal(first,warmPlayPose('test-success'));
+  assert.equal(await first,true);assert.equal(attempts,1);
+  assert.equal(await warmPlayPose('test-failure'),false);
+  assert.equal(await warmPlayPose('test-failure'),false);
+  assert.equal(attempts,3);
+ }finally{if(saved)Object.defineProperty(globalThis,'Image',saved);else delete globalThis.Image;}
+});
+test('only individually produced role poses are used; unsupported roles keep their original art',()=>{
+ for(const role of ['luck','dream','growth','joy'])assert.equal(playPosePath(`art/seat-${role}.webp`),`art/seat-${role}-play-v1.webp`);
+ assert.equal(playPosePath('art/seat-night.webp'),null);
+ assert.equal(playPosePath('art/seat-luck-win.webp'),null);
+ assert.equal(playPosePath(''),null);
+});
 test('all hand cards stay within mobile widths, including 26-card stress case',()=>{
  for(const width of [220,320,420,520,690,1000])for(let count=1;count<=26;count++){
   const l=handLayout(width,count,72,108);

@@ -1,4 +1,4 @@
-import {fitHands,capture,animateTable,cancelMotion} from "./presentation.mjs?v=20260929-motion2";
+import {fitHands,capture,animateTable,cancelMotion,playPosePath,warmPlayPose} from "./presentation.mjs?v=20260929-poses1";
 import * as R from "./rules.mjs";
 import { reduce, autoAction } from "./engine.mjs?v=20260929-switch1";
 import * as Store from "./storage.mjs?v=20260929-switch1";
@@ -1216,6 +1216,12 @@ if (!(await acquireTab())) {
     note(error.message);
   }
 const loadedImages = new Map();
+function warmPlayPoses(){
+  for(const role of profile?.seats||[]){
+    const path=playPosePath(`art/seat-${role}.webp`);
+    if(path)void warmPlayPose(path);
+  }
+}
 function warmImage(src) {
   if (loadedImages.has(src)) return loadedImages.get(src);
   const p = new Promise((resolve, reject) => {
@@ -1231,6 +1237,7 @@ function warmImage(src) {
   return p;
 }
 async function prepareGame(type) {
+  warmPlayPoses();
   const queue = [
     ...R.deck(type === "oldmaid").map((c) => "art/card-" + c + ".webp"),
     "art/card-back.webp",
@@ -1249,6 +1256,7 @@ async function prepareGame(type) {
   toastEl.classList.remove("show");
 }
 // Sliding over an overlapping hand previews one public card, selecting only on release.
+if(profile?.table)warmPlayPoses();
 function clearHandPreview(){handPreview?.remove();handPreview=null;handGesture=null;}
 document.addEventListener('pointerdown',e=>{
  if(visualBusy||paused||e.button!==0||e.isPrimary===false)return;

@@ -1,4 +1,20 @@
 // Presentation state is deliberately separate from saved game state.
+export function playPosePath(source='') {
+  const role=source.match(/(?:^|\/)seat-(luck|dream|growth|joy)\.webp(?:\?.*)?$/)?.[1];
+  return role ? `art/seat-${role}-play-v1.webp` : null;
+}
+const poseCache=new Map();
+export function warmPlayPose(path){
+  if(!path)return Promise.resolve(false);
+  if(poseCache.has(path))return poseCache.get(path).promise;
+  const entry={image:new Image(),ready:false};
+  entry.promise=new Promise(resolve=>{
+    entry.image.onload=()=>{entry.ready=true;resolve(true);};
+    entry.image.onerror=()=>{poseCache.delete(path);resolve(false);};
+  });
+  poseCache.set(path,entry);entry.image.src=path;
+  return entry.promise;
+}
 export function handLayout(width, count, cardWidth, cardHeight) {
   if (!count) return {height:0,positions:[]};
   const w=Math.max(1,width-12), cw=Math.min(cardWidth,w);
@@ -101,7 +117,25 @@ export async function animateTable(root, before, action, settings, cue=()=>{}){
     ]);
   }
   const actor=action.seat===0?root.querySelector('.player-info .table-character'):root.querySelector('.s'+action.seat+' .table-character');
-  if(actor)animate(actor,[{translate:'0 0'},{translate:'0 -5px',rotate:'-2deg',offset:.4},{translate:'0 0',rotate:'0deg'}],0,ms*1.2);
+  let posed=false;
+  if(actor && action.type==='play'){
+    const path=playPosePath(actor.getAttribute('src'));
+    if(path){
+      const cached=poseCache.get(path),pose=cached?.image;
+      if(!cached)void warmPlayPose(path);
+      // Optional artwork never blocks a committed turn on a slow connection.
+      if(cached?.ready && pose.naturalWidth>0){
+        const r=actor.getBoundingClientRect();
+        pose.className='motion-card';pose.alt='';pose.setAttribute('aria-hidden','true');
+        Object.assign(pose.style,{left:r.x+'px',top:r.y+'px',width:r.width+'px',height:r.height+'px',objectPosition:getComputedStyle(actor).objectPosition});
+        document.body.append(pose);keepGhost(pose);
+        animate(actor,[{opacity:1},{opacity:0,offset:.16},{opacity:0,offset:.8},{opacity:1}],0,ms*1.4);
+        animate(pose,[{opacity:0},{opacity:1,offset:.16},{opacity:1,offset:.8},{opacity:0}],0,ms*1.4);
+        posed=true;
+      }
+    }
+  }
+  if(actor&&!posed)animate(actor,[{translate:'0 0'},{translate:'0 -5px',rotate:'-2deg',offset:.4},{translate:'0 0',rotate:'0deg'}],0,ms*1.2);
   if(dealing){
     // Distribute face-down cards from the deck, alternating seats each beat.
     // Preserve each fan's resting rotation; never use hidden card identities.

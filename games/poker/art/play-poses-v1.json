@@ -1,0 +1,31 @@
+{
+  "tool": "built-in imagegen",
+  "prompt": "Use case: identity-preserve. Image 1 is the edit target and exact CxQ IP character identity anchor. Create ONE standalone transparent poker-game sprite, ONE pose only, NOT an atlas or sheet. Keep the exact character face, species, hair, headwear, colors, clothes, accessories, same walnut chair, camera angle, body scale and canvas registration as the reference. Keep head, torso, feet and chair in exactly the same location and dimensions. Change ONLY the forward hand/paw and arm into a clearly readable card-playing gesture: reach forward slightly down toward the viewer, fingers/paw gently releasing ONE green-backed playing card. The other hand keeps the existing small fan of green-backed cards at the chest. Keep face unobscured and both arms anatomically clear. Polished same warm chibi clay storybook rendering and lighting. No table, no background, no ground plane, no text, no card ranks, no extra limbs, no extra characters, no motion trails. Genuine alpha transparency. Preserve original framing; do not zoom or crop.",
+  "assets": [
+    {
+      "role": "luck",
+      "reference": "seat-luck.webp",
+      "output": "seat-luck-play-v1.webp",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-764a8f2e-738b-4bd1-91ed-09ca9c2403b2.png"
+    },
+    {
+      "role": "dream",
+      "reference": "seat-dream.webp",
+      "output": "seat-dream-play-v1.webp",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-079e37cb-201d-43a2-afaf-aed01b9ff837.png"
+    },
+    {
+      "role": "growth",
+      "reference": "seat-growth.webp",
+      "output": "seat-growth-play-v1.webp",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d3ed7d66-7bb1-4547-98fd-25dba4a24867.png"
+    },
+    {
+      "role": "joy",
+      "reference": "seat-joy.webp",
+      "output": "seat-joy-play-v1.webp",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-35b3250a-406c-4cb2-8afe-761c9aa44c64.png"
+    }
+  ],
+  "processing": "Whole-image proportional resize to 480x480 WebP with transparent alpha; no cropping or atlas slicing."
+}
