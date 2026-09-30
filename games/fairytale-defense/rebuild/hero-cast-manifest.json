@@ -1,0 +1,86 @@
+{
+  "method": "Built-in imagegen; one independent identity-preserving release pose per call; whole image resized without cropping.",
+  "jobs": [
+    {
+      "id": "dream-cast",
+      "prompt": "Use case: identity-preserve. ONE individual animation RELEASE POSE for the exact original IP character in the reference image. Preserve exact face, species, hairstyle, colors, clothing, signature accessories, proportions and soft tactile 3D storybook rendering. Change pose only: extend her star-casting hand decisively to screen right while holding her envelope safely in the other hand. Whole body, three-quarter facing screen right, both feet baseline at 93 percent canvas height, head remains centered above feet. Square canvas, 7 percent safety margin including props. No new costume, weapon or character. Genuine transparent background, no ground, no ground shadow, no added large magic effect, no text, no sheet, no collage. One sprite only.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-dream.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-99c16b7e-85c8-4ff2-983a-2f15aa57e320.png",
+      "output": "games/fairytale-defense/rebuild/art/dream-cast.webp"
+    },
+    {
+      "id": "luck-cast",
+      "prompt": "Use case: identity-preserve. ONE individual animation RELEASE POSE for the exact original IP character in the reference image. Preserve exact face, species, hairstyle, colors, clothing, signature accessories, proportions and soft tactile 3D storybook rendering. Change pose only: plant both feet and thrust one paw forward to screen right, bells and clover bag trailing slightly. Whole body, three-quarter facing screen right, both feet baseline at 93 percent canvas height, head remains centered above feet. Square canvas, 7 percent safety margin including props. No new costume, weapon or character. Genuine transparent background, no ground, no ground shadow, no added large magic effect, no text, no sheet, no collage. One sprite only.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-luck.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-afd41482-16a6-4662-9207-d408ba9f762c.png",
+      "output": "games/fairytale-defense/rebuild/art/luck-cast.webp"
+    },
+    {
+      "id": "joy-cast",
+      "prompt": "Use case: identity-preserve. ONE individual animation RELEASE POSE for the exact original IP character in the reference image. Preserve exact face, species, hairstyle, colors, clothing, signature accessories, proportions and soft tactile 3D storybook rendering. Change pose only: aim her party popper forward to screen right with a joyful confident expression, keep balloons behind. Whole body, three-quarter facing screen right, both feet baseline at 93 percent canvas height, head remains centered above feet. Square canvas, 7 percent safety margin including props. No new costume, weapon or character. Genuine transparent background, no ground, no ground shadow, no added large magic effect, no text, no sheet, no collage. One sprite only.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-joy.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-9ea2a540-034b-4d8d-bfab-bb46849208ae.png",
+      "output": "games/fairytale-defense/rebuild/art/joy-cast.webp"
+    },
+    {
+      "id": "night-cast",
+      "prompt": "Use case: identity-preserve. ONE individual animation RELEASE POSE for the exact original IP character in the reference image. Preserve exact face, species, hairstyle, colors, clothing, signature accessories, proportions and soft tactile 3D storybook rendering. Change pose only: lift the crescent lantern forward to screen right, cloak sweeps slightly back, owl perched securely. Whole body, three-quarter facing screen right, both feet baseline at 93 percent canvas height, head remains centered above feet. Square canvas, 7 percent safety margin including props. No new costume, weapon or character. Genuine transparent background, no ground, no ground shadow, no added large magic effect, no text, no sheet, no collage. One sprite only.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-night.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-51f4f30a-3bba-45f5-aadb-78257c7e16c1.png",
+      "output": "games/fairytale-defense/rebuild/art/night-cast.webp"
+    },
+    {
+      "id": "sadness-cast",
+      "prompt": "Use case: identity-preserve. ONE individual animation RELEASE POSE for the exact original IP character in the reference image. Preserve exact face, species, hairstyle, colors, clothing, signature accessories, proportions and soft tactile 3D storybook rendering. Change pose only: angle her rain umbrella forward toward screen right, free hand casting a small rain gesture. Whole body, three-quarter facing screen right, both feet baseline at 93 percent canvas height, head remains centered above feet. Square canvas, 7 percent safety margin including props. No new costume, weapon or character. Genuine transparent background, no ground, no ground shadow, no added large magic effect, no text, no sheet, no collage. One sprite only.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-sadness.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-958bab0d-26c3-4290-a767-3d0344af9fa7.png",
+      "output": "games/fairytale-defense/rebuild/art/sadness-cast.webp"
+    },
+    {
+      "id": "trust-cast",
+      "prompt": "Use case: identity-preserve. ONE individual animation RELEASE POSE for the exact original IP character in the reference image. Preserve exact face, species, hairstyle, colors, clothing, signature accessories, proportions and soft tactile 3D storybook rendering. Change pose only: brace and present the key staff toward screen right in a protective two-paw stance. Whole body, three-quarter facing screen right, both feet baseline at 93 percent canvas height, head remains centered above feet. Square canvas, 7 percent safety margin including props. No new costume, weapon or character. Genuine transparent background, no ground, no ground shadow, no added large magic effect, no text, no sheet, no collage. One sprite only.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-trust.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-36571119-8946-416d-84c6-bc0648a09cca.png",
+      "output": "games/fairytale-defense/rebuild/art/trust-cast.webp"
+    },
+    {
+      "id": "memory-cast",
+      "prompt": "Use case: identity-preserve. ONE individual animation RELEASE POSE for the exact original IP character in the reference image. Preserve exact face, species, hairstyle, colors, clothing, signature accessories, proportions and soft tactile 3D storybook rendering. Change pose only: extend the hand holding her photograph toward screen right, other hand keeps her bag steady. Whole body, three-quarter facing screen right, both feet baseline at 93 percent canvas height, head remains centered above feet. Square canvas, 7 percent safety margin including props. No new costume, weapon or character. Genuine transparent background, no ground, no ground shadow, no added large magic effect, no text, no sheet, no collage. One sprite only.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-memory.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-ad3ebd5c-185e-46a7-9890-cee7469b0550.png",
+      "output": "games/fairytale-defense/rebuild/art/memory-cast.webp"
+    },
+    {
+      "id": "healing-cast",
+      "prompt": "Use case: identity-preserve. ONE individual animation RELEASE POSE for the exact original IP character in the reference image. Preserve exact face, species, hairstyle, colors, clothing, signature accessories, proportions and soft tactile 3D storybook rendering. Change pose only: spread both paws forward toward screen right with a gentle healing embrace gesture, keep peach cape and pouch. Whole body, three-quarter facing screen right, both feet baseline at 93 percent canvas height, head remains centered above feet. Square canvas, 7 percent safety margin including props. No new costume, weapon or character. Genuine transparent background, no ground, no ground shadow, no added large magic effect, no text, no sheet, no collage. One sprite only.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-healing.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-098b53b7-bbf5-4eb0-9fe1-e7357c14f879.png",
+      "output": "games/fairytale-defense/rebuild/art/healing-cast.webp"
+    },
+    {
+      "id": "hope-cast",
+      "prompt": "Use case: identity-preserve. ONE individual animation RELEASE POSE for the exact original IP character in the reference image. Preserve exact face, species, hairstyle, colors, clothing, signature accessories, proportions and soft tactile 3D storybook rendering. Change pose only: extend luminous-thread hand toward screen right while holding the spool in the other hand, determined gentle expression. Whole body, three-quarter facing screen right, both feet baseline at 93 percent canvas height, head remains centered above feet. Square canvas, 7 percent safety margin including props. No new costume, weapon or character. Genuine transparent background, no ground, no ground shadow, no added large magic effect, no text, no sheet, no collage. One sprite only.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-hope.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-e777ba3a-14ee-44d4-baeb-76a00e749ad5.png",
+      "output": "games/fairytale-defense/rebuild/art/hope-cast.webp"
+    }
+  ]
+}

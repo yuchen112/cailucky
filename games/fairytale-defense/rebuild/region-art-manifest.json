@@ -1,0 +1,17 @@
+{
+  "method": "Individual built-in imagegen whole terrain backgrounds, no cropping.",
+  "jobs": [
+    {
+      "id": "meadow-moon",
+      "prompt": "Use case: stylized-concept. ONE portrait 2:3 top-down orthographic terrain background for a premium cute storybook tower defense. moonlit silver-blue meadow, subtle blue luminous plants, violet woodland edges. Match reference terrain scale, overhead camera and soft painterly 3D foliage. The entire central 80 percent must be flat uninterrupted quiet grass for a separate winding road overlay; tiny scenery only at extreme perimeter, no objects intruding into play space. No roads, paths, buildings, characters, text, UI, frames, collage or blur. Full bleed continuous game terrain, one image only.",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-9588653b-c92e-4e0d-9869-b061d6df7e81.png",
+      "output": "games/fairytale-defense/rebuild/art/meadow-moon.webp"
+    },
+    {
+      "id": "meadow-dawn",
+      "prompt": "Use case: stylized-concept. ONE portrait 2:3 top-down orthographic terrain background for a premium cute storybook tower defense. warm dawn ivory-gold meadow, pale flowering shrubs, distant crystal outcrops at extreme edges. Match reference terrain scale, overhead camera and soft painterly 3D foliage. The entire central 80 percent must be flat uninterrupted quiet grass for a separate winding road overlay; tiny scenery only at extreme perimeter, no objects intruding into play space. No roads, paths, buildings, characters, text, UI, frames, collage or blur. Full bleed continuous game terrain, one image only.",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-fdde642a-d3e8-4710-be5a-9f905faf3bdb.png",
+      "output": "games/fairytale-defense/rebuild/art/meadow-dawn.webp"
+    }
+  ]
+}

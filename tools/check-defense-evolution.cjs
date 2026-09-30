@@ -1,0 +1,18 @@
+// Isolated browser fixtures test rendering and persistence, not earned player progression.
+const {execFileSync}=require('node:child_process'),fs=require('node:fs'),os=require('node:os'),path=require('node:path');
+const browser='C:/Users/User/AppData/Local/npm-cache/_npx/6de2aa2fded2970c/node_modules/agent-browser/bin/agent-browser-win32-x64.exe';
+const folder=fs.mkdtempSync(path.join(os.tmpdir(),'cxq-evolution-')),log=path.join(folder,'command.log'),session='evolution-qa';
+function run(...args){const fd=fs.openSync(log,'w');try{execFileSync(browser,['--session',session,...args],{stdio:['ignore',fd,fd],timeout:30000});}finally{fs.closeSync(fd);}const text=fs.readFileSync(log,'utf8');console.log(text.trim());return text;}
+const url='http://127.0.0.1:4173/games/fairytale-defense/rebuild/army.html';
+try{
+ run('set','device','Pixel 7');run('set','viewport','390','700');run('open',url);run('wait','[data-ready=true]');run('snapshot','-i');
+ for(const level of [3,4,5]){
+  run('eval',`(async()=>{const c=await import('./core.mjs'),a=await import('./army-save.mjs');const save=a.newArmySave();save.campaign={unlocked:15,cleared:Array.from({length:14},(_,i)=>i+1)};const fixture=a.prepareArmyExpedition(save,{hero:'hope',stage:${1+(level-3)*5}},'visual-fixture');fixture.battle.gold=10000;let pad=0;for(const role of ['archer','cannon','frost','firefly'])for(const branch of c.UNIT_BRANCHES[role]){c.deploy(fixture.battle,pad,role);for(let n=2;n<=${level};n++)c.upgrade(fixture.battle,pad,n===3?branch.id:undefined);pad++;}localStorage.setItem('cxq.defense.army.v3',JSON.stringify(a.settleArmySave(fixture.save,fixture.battle,'visual-fixture')));return 'fixture saved';})()`);
+  run('open',url);run('wait','[data-ready=true]');run('snapshot','-i');run('click','#cover-resume');run('snapshot','-i');
+  run('eval',`(()=>{window.draws=new Set();const p=CanvasRenderingContext2D.prototype,f=p.drawImage;p.drawImage=function(...args){if(args[0]?.src)draws.add(args[0].src.split('/').pop());return f.apply(this,args)};return true;})()`);run('wait','100');
+  run('eval',`(async()=>{const {EVOLUTION_ART}=await import('./unit-presentation.mjs');for(const id of EVOLUTION_ART.filter(id=>id.endsWith('-${level}')))if(!draws.has(id+'.webp'))throw Error('not rendered '+id);if(!draws.has('dream-core.webp'))throw Error('core missing');return 'all eight level ${level} branch sprites rendered';})()`);run('screenshot');
+  run('click','[aria-label="部署位置 1"]');run('snapshot','-i');run('screenshot');run('eval',`(()=>{for(const im of document.querySelectorAll('#troops img'))if(!im.complete||!im.naturalWidth)throw Error('broken upgrade image');const r=document.querySelector('#troops [data-close]').getBoundingClientRect();if(r.bottom>innerHeight||r.top<0)throw Error('close obscured');return 'upgrade panel fits';})()`);run('click','#troops [data-close]');
+ }
+ for(const [w,h]of [[360,640],[412,915]]){run('set','viewport',String(w),String(h));run('eval',`(()=>{const f=document.getElementById('field').getBoundingClientRect(),b=document.getElementById('skill').getBoundingClientRect();if(f.top<0||f.bottom>innerHeight||b.bottom>innerHeight||document.documentElement.scrollWidth>innerWidth)throw Error('overflow');return {field:f.toJSON(),scroll:[scrollX,scrollY],touchAction:getComputedStyle(document.querySelector('canvas')).touchAction};})()`);run('screenshot');}
+ if(run('errors').trim())throw Error('Browser errors');console.log('PASS: all 24 evolution sprites rendered, restored Lv3/Lv4/Lv5 branches, core and upgrade controls. Test fixtures only, not balance acceptance.');
+}finally{try{run('close');}finally{fs.unlinkSync(log);fs.rmdirSync(folder);}}

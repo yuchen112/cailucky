@@ -1,0 +1,59 @@
+{
+  "method": "Built-in imagegen; one call per asset; whole image resized without cropping.",
+  "jobs": [
+    {
+      "id": "fx-star",
+      "prompt": "Use case: stylized-concept. ONE standalone transparent magic projectile / spell effect asset for a premium cute 3D storybook tower defense mobile game: lavender comet with one faceted five-point gold star core and curved violet stardust tail. Single cohesive effect centered in a square canvas, polished hand-painted volumetric rendering, bold silhouette readable at 24px, transparent soft glow with no background. Facing screen right where directional. All particles contained in central 80 percent, no cropped edges, no text, no characters, no sheet, no collage. One asset only.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-e38d0534-b2ba-467f-b1d8-a5f32fd50400.png",
+      "output": "games/fairytale-defense/rebuild/art/fx-star.webp"
+    },
+    {
+      "id": "fx-clover",
+      "prompt": "Use case: stylized-concept. ONE standalone transparent magic projectile / spell effect asset for a premium cute 3D storybook tower defense mobile game: emerald four-leaf clover charm encircled by a small golden luck spiral. Single cohesive effect centered in a square canvas, polished hand-painted volumetric rendering, bold silhouette readable at 24px, transparent soft glow with no background. Facing screen right where directional. All particles contained in central 80 percent, no cropped edges, no text, no characters, no sheet, no collage. One asset only.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d4e84471-3d8e-473c-9aca-ea6579eb5c7c.png",
+      "output": "games/fairytale-defense/rebuild/art/fx-clover.webp"
+    },
+    {
+      "id": "fx-spark",
+      "prompt": "Use case: stylized-concept. ONE standalone transparent magic projectile / spell effect asset for a premium cute 3D storybook tower defense mobile game: warm orange joyous firework spark with three rounded gold rays. Single cohesive effect centered in a square canvas, polished hand-painted volumetric rendering, bold silhouette readable at 24px, transparent soft glow with no background. Facing screen right where directional. All particles contained in central 80 percent, no cropped edges, no text, no characters, no sheet, no collage. One asset only.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-103e0f41-55fa-4f4d-bac3-2d80a4f94b20.png",
+      "output": "games/fairytale-defense/rebuild/art/fx-spark.webp"
+    },
+    {
+      "id": "fx-moon",
+      "prompt": "Use case: stylized-concept. ONE standalone transparent magic projectile / spell effect asset for a premium cute 3D storybook tower defense mobile game: indigo crescent moon blade with silver rim and a short blue vapor trail. Single cohesive effect centered in a square canvas, polished hand-painted volumetric rendering, bold silhouette readable at 24px, transparent soft glow with no background. Facing screen right where directional. All particles contained in central 80 percent, no cropped edges, no text, no characters, no sheet, no collage. One asset only.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-55121459-5fbc-47f4-9ba9-6fc42a7e9e0d.png",
+      "output": "games/fairytale-defense/rebuild/art/fx-moon.webp"
+    },
+    {
+      "id": "fx-rain",
+      "prompt": "Use case: stylized-concept. ONE standalone transparent magic projectile / spell effect asset for a premium cute 3D storybook tower defense mobile game: icy blue crystalline raindrop with three tiny droplets trailing behind. Single cohesive effect centered in a square canvas, polished hand-painted volumetric rendering, bold silhouette readable at 24px, transparent soft glow with no background. Facing screen right where directional. All particles contained in central 80 percent, no cropped edges, no text, no characters, no sheet, no collage. One asset only.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-6d917a1d-1fd7-4456-81e4-322d01b398d4.png",
+      "output": "games/fairytale-defense/rebuild/art/fx-rain.webp"
+    },
+    {
+      "id": "fx-rune",
+      "prompt": "Use case: stylized-concept. ONE standalone transparent magic projectile / spell effect asset for a premium cute 3D storybook tower defense mobile game: interlocking turquoise protective rune rings around a pearl core. Single cohesive effect centered in a square canvas, polished hand-painted volumetric rendering, bold silhouette readable at 24px, transparent soft glow with no background. Facing screen right where directional. All particles contained in central 80 percent, no cropped edges, no text, no characters, no sheet, no collage. One asset only.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-ac58920d-3cee-46a0-84e6-8b6eb1de5408.png",
+      "output": "games/fairytale-defense/rebuild/art/fx-rune.webp"
+    },
+    {
+      "id": "fx-echo",
+      "prompt": "Use case: stylized-concept. ONE standalone transparent magic projectile / spell effect asset for a premium cute 3D storybook tower defense mobile game: rose-gold concentric echo arcs wrapped around a small translucent memory crystal. Single cohesive effect centered in a square canvas, polished hand-painted volumetric rendering, bold silhouette readable at 24px, transparent soft glow with no background. Facing screen right where directional. All particles contained in central 80 percent, no cropped edges, no text, no characters, no sheet, no collage. One asset only.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5756f007-6969-4c8d-93a4-1d3f3249b08c.png",
+      "output": "games/fairytale-defense/rebuild/art/fx-echo.webp"
+    },
+    {
+      "id": "fx-petal",
+      "prompt": "Use case: stylized-concept. ONE standalone transparent magic projectile / spell effect asset for a premium cute 3D storybook tower defense mobile game: soft jade healing bud with ivory petals and a luminous mint heart. Single cohesive effect centered in a square canvas, polished hand-painted volumetric rendering, bold silhouette readable at 24px, transparent soft glow with no background. Facing screen right where directional. All particles contained in central 80 percent, no cropped edges, no text, no characters, no sheet, no collage. One asset only.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-0b6f636c-9fcb-468a-9855-0c2bab9d0d54.png",
+      "output": "games/fairytale-defense/rebuild/art/fx-petal.webp"
+    },
+    {
+      "id": "fx-light",
+      "prompt": "Use case: stylized-concept. ONE standalone transparent magic projectile / spell effect asset for a premium cute 3D storybook tower defense mobile game: bright ivory-gold spear of light with a small wing-shaped halo. Single cohesive effect centered in a square canvas, polished hand-painted volumetric rendering, bold silhouette readable at 24px, transparent soft glow with no background. Facing screen right where directional. All particles contained in central 80 percent, no cropped edges, no text, no characters, no sheet, no collage. One asset only.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-7835ca61-e923-4341-bbf2-642e5cb70fe9.png",
+      "output": "games/fairytale-defense/rebuild/art/fx-light.webp"
+    }
+  ]
+}

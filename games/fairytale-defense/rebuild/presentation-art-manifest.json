@@ -1,0 +1,57 @@
+{
+  "method": "Built-in imagegen. One image per call. Whole image resized, never atlas cropped.",
+  "jobs": [
+    {
+      "id": "cover-scene",
+      "prompt": "ONE portrait 2:3 cinematic storybook tower defense game cover illustration. Use reference as exact identity of green leaf-hood child hero, keep face and costume. Hero at center around 55 percent height, leading tiny friendly woodland guardians on a winding ivory stone bridge toward a distant luminous tree citadel. Foreground foliage framing, warm sunlight versus deep emerald magical forest, adventurous welcoming mood, premium tactile 3D illustration. Clear quiet top 22 percent for separately overlaid game logo, quiet bottom 22 percent for separately overlaid buttons. Full bleed art, no text, no UI, no frames, no collage. One complete cover scene, not a sprite sheet.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/growth-cast.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-9e3fb710-ecd4-4689-ad38-17a5f576ba73.png",
+      "output": "games/fairytale-defense/rebuild/art/cover-scene.webp"
+    },
+    {
+      "id": "command-podium",
+      "prompt": "ONE standalone small hero COMMAND PODIUM for a cute premium 3D storybook tower defense game. Low circular ivory limestone platform, teal-and-gold edge, subtle carved leaf motif, small rolled map resting at front edge. Empty clear top center for a separate hero standing sprite. Slight top-down orthographic view matching miniature mobile game, wide 3:2 composition, entire asset with 8 percent transparent margin. No hero, no text, no scene, no floor shadow. Genuine transparent background. One asset only.",
+      "references": [],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-901612d1-cefb-410d-860c-96e9b65de2f3.png",
+      "output": "games/fairytale-defense/rebuild/art/command-podium.webp"
+    },
+    {
+      "id": "unit-archer-veteran",
+      "prompt": "ONE independent upgraded level-two unit sprite, preserve exactly the reference character species, face, pose, body proportions, colors and weapon category. Upgrade equipment visibly: reinforced teal bronze shoulder guards and a sturdier double-limbed crossbow with a small bolt magazine. Same premium tactile 3D storybook finish. Do not enlarge body or change pose. Keep whole sprite centered, feet baseline at 93 percent, 7 percent margin, transparent background, no ground shadow, no text, no sheet, no additional unit. One sprite only.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-archer.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d99410fb-1761-4e68-a7c3-c08828947873.png",
+      "output": "games/fairytale-defense/rebuild/art/unit-archer-veteran.webp"
+    },
+    {
+      "id": "unit-cannon-veteran",
+      "prompt": "ONE independent upgraded level-two unit sprite, preserve exactly the reference character species, face, pose, body proportions, colors and weapon category. Upgrade equipment visibly: bronze bands and teal aiming fittings on the acorn mortar, reinforced carriage and small shoulder armor. Same premium tactile 3D storybook finish. Do not enlarge body or change pose. Keep whole sprite centered, feet baseline at 93 percent, 7 percent margin, transparent background, no ground shadow, no text, no sheet, no additional unit. One sprite only.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-cannon.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d4f7e424-6270-4a47-a809-0dc95e3240bb.png",
+      "output": "games/fairytale-defense/rebuild/art/unit-cannon-veteran.webp"
+    },
+    {
+      "id": "unit-frost-veteran",
+      "prompt": "ONE independent upgraded level-two unit sprite, preserve exactly the reference character species, face, pose, body proportions, colors and weapon category. Upgrade equipment visibly: a more structured ice crown, silver teal mantle clasp and a larger three-pronged ice staff. Same premium tactile 3D storybook finish. Do not enlarge body or change pose. Keep whole sprite centered, feet baseline at 93 percent, 7 percent margin, transparent background, no ground shadow, no text, no sheet, no additional unit. One sprite only.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-frost.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-e35b9116-49cb-4265-83ae-620f6c9f3ee0.png",
+      "output": "games/fairytale-defense/rebuild/art/unit-frost-veteran.webp"
+    },
+    {
+      "id": "unit-firefly-veteran",
+      "prompt": "ONE independent upgraded level-two unit sprite, preserve exactly the reference character species, face, pose, body proportions, colors and weapon category. Upgrade equipment visibly: bronze teal shoulder guards, reinforced longbow and brighter gold inlay on the existing folded wings. Same premium tactile 3D storybook finish. Do not enlarge body or change pose. Keep whole sprite centered, feet baseline at 93 percent, 7 percent margin, transparent background, no ground shadow, no text, no sheet, no additional unit. One sprite only.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-firefly.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d26c7f4e-c616-44c7-b17a-cf5563750d5a.png",
+      "output": "games/fairytale-defense/rebuild/art/unit-firefly-veteran.webp"
+    }
+  ]
+}

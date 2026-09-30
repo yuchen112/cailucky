@@ -1,0 +1,11 @@
+/* Responsive composition only; all decorative artwork is independently generated. */
+body[data-region=moon]{background-image:url('art/meadow-moon.webp')}
+body[data-region=dawn]{background-image:url('art/meadow-dawn.webp')}
+#troops[open]{height:fit-content;max-height:88svh;min-height:0}
+#troops .scroll-body{flex:0 1 auto;max-height:calc(88svh - 155px)}
+#troop-content .upgrade-preview{display:block;width:100px;height:100px;object-fit:contain;margin:12px auto 0}
+#troop-content .upgrade-comparison{margin:6px 0;line-height:1.45}
+#troop-content button{min-height:56px}
+#troops .upgrade-portrait{width:76px;height:76px}
+.result-portrait{display:block;margin:auto;width:120px;height:120px;object-fit:contain}
+#result{max-height:90svh;overflow:auto}#result-text{font-size:17px;text-align:left}

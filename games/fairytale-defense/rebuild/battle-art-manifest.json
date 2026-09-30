@@ -1,0 +1,35 @@
+{
+  "method": "Individual built-in imagegen calls; whole-image resizing; no cropping.",
+  "jobs": [
+    {
+      "id": "dream-core",
+      "prompt": "Use case: stylized-concept. ONE isolated dream core guardian objective building for a cute premium tactile 3D storybook mobile tower defense game. A luminous aqua crystal heart enclosed by three ivory stone leaf arches, tiny gold fasteners, compact round mossy stone plinth. Clear friendly protected-object silhouette, low front three-quarter orthographic camera. Full complete single object centered with 10 percent transparent margin, no text, no UI, no extra objects, no scene, no ground shadow. Match soft teal bronze woodland miniature aesthetic. Genuine transparent background. One asset only, never sheet.",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-d0b13cec-8737-48a5-8eef-42ede959b7e3.png",
+      "output": "games/fairytale-defense/rebuild/art/dream-core.webp"
+    },
+    {
+      "id": "projectile-bolt",
+      "prompt": "Use case: stylized-concept. ONE transparent standalone projectile sprite for a premium cute tactile 3D woodland tower defense game: a single wooden crossbow bolt with teal fletching and bronze arrowhead pointing right. Centered fully visible, strong readable silhouette at 24 pixels, transparent margins, no text, no sheet, no background, no hands, no extra projectiles. One asset only.",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-f30eba27-2e6d-42b4-b3dc-9258687c19c7.png",
+      "output": "games/fairytale-defense/rebuild/art/projectile-bolt.webp"
+    },
+    {
+      "id": "projectile-spore",
+      "prompt": "Use case: stylized-concept. ONE transparent standalone projectile sprite for a premium cute tactile 3D woodland tower defense game: a single round amber spore cannonball with small glowing flecks. Centered fully visible, strong readable silhouette at 24 pixels, transparent margins, no text, no sheet, no background, no hands, no extra projectiles. One asset only.",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-a58c4376-3967-4bc8-af9e-3a33c597278f.png",
+      "output": "games/fairytale-defense/rebuild/art/projectile-spore.webp"
+    },
+    {
+      "id": "projectile-frost",
+      "prompt": "Use case: stylized-concept. ONE transparent standalone projectile sprite for a premium cute tactile 3D woodland tower defense game: a single sharply pointed cyan ice shard pointing right. Centered fully visible, strong readable silhouette at 24 pixels, transparent margins, no text, no sheet, no background, no hands, no extra projectiles. One asset only.",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-11d15de4-78d1-4877-8c83-10e0603635ab.png",
+      "output": "games/fairytale-defense/rebuild/art/projectile-frost.webp"
+    },
+    {
+      "id": "projectile-glow",
+      "prompt": "Use case: stylized-concept. ONE transparent standalone projectile sprite for a premium cute tactile 3D woodland tower defense game: a single golden luminous arrow with tiny amber spark trail pointing right. Centered fully visible, strong readable silhouette at 24 pixels, transparent margins, no text, no sheet, no background, no hands, no extra projectiles. One asset only.",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-b26f8388-06d8-4aaf-b0a9-14b67c0dd384.png",
+      "output": "games/fairytale-defense/rebuild/art/projectile-glow.webp"
+    }
+  ]
+}

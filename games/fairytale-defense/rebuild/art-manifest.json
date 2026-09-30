@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "method": "Built-in imagegen, one call per independent asset. Whole image resized, no crop.",
+  "status": "development; not release approved",
+  "jobs": [
+{"id":"camp-scene","prompt":"Use case: stylized-concept. ONE full-screen portrait mobile fantasy game HOME CAMP BACKGROUND, aspect ratio 2:3. Premium tactile 3D storybook forest sanctuary, warm ivory limestone circular dais at center lower-middle for a separate hero sprite, elegant teal-roof tiny pavilion at far left edge, luminous ancient tree at far right edge, soft distant woodland architecture. Morning golden light, restrained emerald/teal/ivory palette. Camera looks slightly downward, welcoming magical depth. Central 55 percent width is quiet open space with low-contrast foliage behind a hero; dais centered at x50 percent y58 percent. Top 15 percent quiet sky/foliage for separate logo, bottom 28 percent calm deep teal stone/shadow for separate controls. Environment only: NO characters, NO text, NO buttons, NO UI borders, NO panels, NO collage. Crisp painted sculptural detail, not photoreal, no blur filler, no heavy foreground objects across center. Image used whole as one background, not sliced.","source":"C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-04c61f28-967e-44fe-969c-78427623134d.png","output":"games/fairytale-defense/rebuild/art/camp-scene.webp"},
+{"id":"unit-frost","prompt":"Use case: stylized-concept. ONE transparent ordinary allied tower defense unit. a small round icy-blue frost sprite, translucent ice crystal crown, ivory body, teal short cloak, holding a single snowflake crystal staff, two little feet planted. Not human, not acorn. Gentle determined expression. Reference image is STYLE ONLY: premium tactile 3D storybook materials, soft light and cute proportions. Different species and silhouette from the reference. Whole individual body and weapon, three-quarter facing screen right, no floor, no cast ground shadow. Square canvas, 7 percent clear margin all sides, feet at 92 percent height. Readable at 55px, not ornate. No text, no sheet, no collage, no scene.","source":"C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-14421939-f9c3-4387-b649-b49446ee0766.png","output":"games/fairytale-defense/rebuild/art/unit-frost.webp","status":"base-pose; awaiting army UI integration and animation variants"},
+ {"id":"unit-firefly","prompt":"Use case: stylized-concept. ONE transparent ordinary allied tower defense unit. a small friendly firefly sentinel, ivory and teal chitin armor, folded translucent gold wings, luminous amber abdomen, holding an upward-aimed compact enchanted bow. Six-limbed insect-inspired chibi body with two stable feet, clear airborne-targeting weapon silhouette. Reference image is STYLE ONLY: premium tactile 3D storybook materials, soft light and cute proportions. Different species and silhouette from the reference. Whole individual body and weapon, three-quarter facing screen right, no floor, no cast ground shadow. Square canvas, 7 percent clear margin all sides, feet at 92 percent height. Readable at 55px, not ornate. No text, no sheet, no collage, no scene.","source":"C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d18271b4-2647-481e-8c80-085ca53caeff.png","output":"games/fairytale-defense/rebuild/art/unit-firefly.webp","status":"base-pose; awaiting army UI integration and animation variants"},
+{"id":"unit-archer","prompt":"Use case: stylized-concept. ONE individual ordinary allied tower-defense unit: a tiny friendly ivory ceramic woodland construct wearing a teal leaf tunic and acorn cap, holding a compact clearly readable wooden CROSSBOW in both hands, stable two feet planted ready stance. Premium tactile 3D storybook mobile game. Reference for rendering material and lighting ONLY, NOT character identity: ally must differ from the brown acorn enemy, no burgundy scarf, no bag. Three-quarter facing screen right, entire body including weapon visible. Square transparent canvas, all edges at least 7 percent clear margin, feet at 92 percent height. Small readable silhouette, restrained detail. No scene, text, shadow floor, sheet or collage. One asset only.","source":"C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-2f0a5794-f03e-4a81-968e-784ce44b4b15.png","output":"games/fairytale-defense/rebuild/art/unit-archer.webp","status":"base-pose; awaiting army UI integration and animation variants"},
+ {"id":"unit-cannon","prompt":"Use case: stylized-concept. ONE individual ordinary allied tower-defense unit: a tiny friendly cream mushroom artillery creature with a teal spotted mushroom cap, operating ONE squat wooden acorn mortar cannon attached in front of its body, sturdy two feet planted, clear broad silhouette. Premium tactile 3D storybook mobile game. Reference for rendering material and lighting ONLY, NOT character identity: ally must differ from the brown acorn enemy, no burgundy scarf, no bag. Three-quarter facing screen right, entire body including weapon visible. Square transparent canvas, all edges at least 7 percent clear margin, feet at 92 percent height. Small readable silhouette, restrained detail. No scene, text, shadow floor, sheet or collage. One asset only.","source":"C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-e70c561f-a80e-4afd-b525-cda3d27f59a0.png","output":"games/fairytale-defense/rebuild/art/unit-cannon.webp","status":"base-pose; awaiting army UI integration and animation variants"},
+{"id":"runner","prompt":"Use case: stylized-concept. ONE individual transparent tower-defense enemy sprite: a nimble cream rabbit courier enemy with long swept-back ears, orange leaf scarf and tiny brown leather boots, lively running pose. Reference image is STYLE ONLY, do not copy its acorn character. Same premium soft tactile 3D storybook finish and gentle lighting. Whole body, three-quarter camera facing screen right, square canvas, feet baseline at 94 percent height, entire character inside 5 percent safety margin. Clear silhouette readable at 50 pixels. No floor, no shadow ground, no text, no other characters, no sheet or collage.","source":"C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-bad77b76-fa39-4744-aff9-7b10e671a2e5.png","output":"games/fairytale-defense/rebuild/art/runner.webp"},
+ {"id":"armored","prompt":"Use case: stylized-concept. ONE individual transparent tower-defense enemy sprite: a stout cute woodland turtle enemy with broad layered walnut-shell armor, teal skin, small bronze brow plate, slow determined walking pose. Reference image is STYLE ONLY, do not copy its acorn character. Same premium soft tactile 3D storybook finish and gentle lighting. Whole body, three-quarter camera facing screen right, square canvas, feet baseline at 94 percent height, entire character inside 5 percent safety margin. Clear silhouette readable at 50 pixels. No floor, no shadow ground, no text, no other characters, no sheet or collage.","source":"C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-11e5514e-9c51-4834-ae2d-1c1bf4194ea6.png","output":"games/fairytale-defense/rebuild/art/armored.webp"},
+ {"id":"boss","prompt":"Use case: stylized-concept. ONE individual transparent tower-defense enemy sprite: a cute imposing forest boar chieftain enemy, round chestnut fur, small ivory tusks, moss shoulder mantle and carved wooden crown, broad confident walking stance. Reference image is STYLE ONLY, do not copy its acorn character. Same premium soft tactile 3D storybook finish and gentle lighting. Whole body, three-quarter camera facing screen right, square canvas, feet baseline at 94 percent height, entire character inside 5 percent safety margin. Clear silhouette readable at 50 pixels. No floor, no shadow ground, no text, no other characters, no sheet or collage.","source":"C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-355461b3-7540-4db9-b906-a2e555ca7cdd.png","output":"games/fairytale-defense/rebuild/art/boss.webp"},
+    {
+      "id": "meadow",
+      "prompt": "Use case: stylized-concept. Asset type: ONE portrait mobile tower defense battlefield ground illustration, 1024x1536. Premium tactile storybook miniature diorama, warm sage grass, turquoise stream glimpses and leafy forest only at outer edges, small flowers and limestone. Orthographic top-down with very slight tilt, consistent scale throughout. The middle 80 percent is a broad clean open mossy clearing, low contrast and unobstructed, ready for separately placed road and characters. No path, no deployment pads, no buildings, no characters, no UI, no lettering. Soft midday lighting. Full bleed, no blur borders. This is a single terrain asset, not a collage or sheet.",
+      "references": [],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-e90751f5-858a-4747-a4f7-29f878171af9.png",
+      "output": "games/fairytale-defense/rebuild/art/meadow.webp"
+    },
+    {
+      "id": "road",
+      "prompt": "Use case: stylized-concept. Asset type: ONE complete transparent mobile tower defense winding road asset, portrait 1024x1536. A continuous warm ivory limestone cobblestone footpath on transparent background, orthographic top down, premium soft storybook miniature. Precise route center coordinates in percentages of canvas: (50,0) down to (50,12), left to (12,12), down to (12,36), right to (88,36), down to (88,60), left to (12,60), down to (12,84), right to (50,84), down to (50,100). Constant path width 11 percent of canvas width, soft rounded corners. Entire route visible. A few tiny tufts at edges only. NO background terrain, characters, UI, text, forks, other roads, pads. ONE indivisible winding road, not tiles or spritesheet.",
+      "references": [],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-e05c40d8-63ad-4c8d-acaa-aa5212bb0a04.png",
+      "output": "games/fairytale-defense/rebuild/art/road.webp"
+    },
+    {
+      "id": "pad",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone transparent deployment pedestal for a premium storybook mobile tower defense. Small circular moss-edged ivory stone disc, subtle carved leaf relief and turquoise inlaid rim. Orthographic slightly elevated top down, width to height about 1.6, centered with generous transparent margin. Soft warm lighting, readable at 64 pixels. Flat empty top for standing character, no character, no text, no glow cloud, no grid, no collage. Single individual object.",
+      "references": [],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-e34fe6e3-b18d-452f-947e-35241eee4667.png",
+      "output": "games/fairytale-defense/rebuild/art/pad.webp"
+    },
+    {
+      "id": "button",
+      "prompt": "Use case: stylized-concept. ONE premium forest game UI button, TRANSPARENT image 1536x512. The BUTTON MUST FILL nearly the entire canvas, from y=10 to y=502 and x=10 to x=1526. An elegantly rounded rectangular deep teal enamel central surface, thin ivory and gold leaf border, restrained tiny ornaments at left and right tips. The dark inner area must be at least 75 percent of the image height, so large white game text can fit later. Tight outer margin 1 percent, not huge empty margins. No text, no gem in center, no sheet, no other objects, no background.",
+      "references": [],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d81c5021-f37a-403f-9c84-64fbf4afa0da.png",
+      "output": "games/fairytale-defense/rebuild/art/button.webp"
+    },
+    {
+      "id": "growth-cast",
+      "prompt": "Use case: identity-preserve. Input reference is the original CxQ character 成長. Create ONE independent attack-release animation pose, full body, transparent background, square canvas. Preserve exactly the same brown wavy hair, large dark eyes, green leaf hood with sprout, green cape, cream tunic, brown boots and satchel, wooden staff. Three-quarter facing right, planted feet, thrust wooden staff forward to the right with both hands, determined cute expression. Staff tip unlit, effects are separate assets. Premium tactile soft 3D storybook rendering matching reference. Full silhouette within canvas with 8 percent safety padding, feet at 88 percent height. No pedestal, no shadow floor, no text, no multiple poses, no sheet.",
+      "references": [
+        "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-growth.webp"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-59bdaf6c-eb77-4e29-93c1-98c8fdc80369.png",
+      "output": "games/fairytale-defense/rebuild/art/growth-cast.webp"
+    },
+    {
+      "id": "walker",
+      "prompt": "Use case: stylized-concept. ONE original enemy sprite for a cozy CxQ forest tower defense game, transparent square canvas. A cute small round acorn bandit wearing a burgundy leaf kerchief, walnut shell helmet, tiny stubby boots, carrying a little burlap bag. Non-human friendly mischievous woodland creature, no weapons. Full body three-quarter facing right, first walking pose left foot forward, 80 percent image height, both feet visible. Premium soft tactile 3D storybook miniature; warm ivory highlights and chestnut shell, polished but not realistic. No background, text, floor, other objects, no sheet.",
+      "references": [],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-665fcb65-8b05-4e90-9c23-2f6e284932eb.png",
+      "output": "games/fairytale-defense/rebuild/art/walker.webp"
+    },
+    {
+      "id": "growth-ready",
+      "prompt": "Use case: identity-preserve. This reference is CxQ 成長's attack-release sprite. Make ONE separate anticipation pose for the SAME character and same camera/framing/proportions. Change only pose: plant both feet, bend knees slightly and pull the wooden staff diagonally back toward the left shoulder, preparing to cast to the right. Keep same brown hair, green leaf hood sprout, cape, cream tunic, satchel and boots. Full body entirely within square image, feet at 92 percent height, hood at 5 percent. Same premium tactile rendering. Transparent background. No magic effect, no text, no floor, no pose sheet.",
+      "references": [
+        "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-59bdaf6c-eb77-4e29-93c1-98c8fdc80369.png"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-9bedfa38-f977-4b66-86c2-869b6a1a932b.png",
+      "output": "games/fairytale-defense/rebuild/art/growth-ready.webp"
+    },
+    {
+      "id": "walker-step",
+      "prompt": "Use case: identity-preserve. Edit the reference acorn bandit into the OPPOSITE walking phase. CRITICAL CHANGE: the boot on the RIGHT SIDE OF THE IMAGE must now be behind the body with its TOE POINTING DOWN touching the ground, sole NOT visible. The boot on the LEFT SIDE OF THE IMAGE must lift and stretch forward toward lower left with its sole visible. These are two deliberately opposite leg positions from the reference. Do not retain the reference's right-image boot lifted sole-forward. Keep SAME head and body center and size, walnut helmet, burgundy scarf and burlap sack. Single full body sprite, transparent background, same square framing, no sheet.",
+      "references": [
+        "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-665fcb65-8b05-4e90-9c23-2f6e284932eb.png"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d73ec5ae-6c18-4b52-912c-006286b4f23d.png",
+      "output": "games/fairytale-defense/rebuild/art/walker-step.webp"
+    },
+    {
+      "id": "seed",
+      "prompt": "Use case: stylized-concept. ONE standalone transparent magical seed projectile sprite for premium cute forest mobile tower defense. A tiny luminous emerald seed with two tender leaf wings and a short soft golden spark trail pointing left, traveling right. Clear concentrated silhouette, vibrant emerald green center and ivory highlights, soft tactile 3D storybook materials. Centered on square transparent canvas with wide safety margin. No background, no floor, no letters, no sheet, no multiple projectiles.",
+      "references": [],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-97ab8593-785e-43d6-a5aa-d470f542d240.png",
+      "output": "games/fairytale-defense/rebuild/art/seed.webp"
+    },
+    {
+      "id": "panel",
+      "prompt": "Use case: stylized-concept. ONE standalone portrait game menu panel on transparent background, 3:4 aspect ratio. Premium CxQ forest storybook mobile UI. Elegant ivory limestone thin frame with gold leaf corner ornaments and tiny turquoise cabochons. The large inner surface is a solid deep dark teal enamel, uniformly dark and quiet to hold readable white menu text; about 85 percent is empty usable inner space. Whole object fills canvas with tiny safety border. No text, no icons, no buttons, no scenery, no multiple panels. Single asset, not a sheet.",
+      "references": [],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-2b551676-6ece-4680-8230-dd24826cbdac.png",
+      "output": "games/fairytale-defense/rebuild/art/panel.webp"
+    },
+    {
+      "id": "impact",
+      "prompt": "Use case: stylized-concept. ONE single magical emerald seed impact effect sprite on transparent square background for a premium cute forest tower defense. A compact luminous emerald starburst with ivory bright center, six small leaf-shaped sparks radiating out, warm golden tiny motes, painterly 3D magical energy. Strong coherent silhouette, 70 percent canvas occupancy. No character, no environment, no text, no floor, no sprite sheet, no multiple frames. Single one-shot hit effect asset.",
+      "references": [],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c799b6eb-6cf7-4b69-8ee5-c48de796578a.png",
+      "output": "games/fairytale-defense/rebuild/art/impact.webp"
+    },
+    {
+      "id": "growth-idle",
+      "prompt": "Use case: identity-preserve. One independent neutral READY-IDLE standing sprite of exactly reference CxQ 成長, same face, hair, leaf hood, sprout, cape, outfit, satchel, wooden staff, same 3D tactile style. Full body facing 3/4 right, BOTH BOOTS planted flat side by side, feet at 93 percent image height, hood top 5 percent, similar head and torso scale. Staff held gently diagonally in front across torso, not thrust, relaxed smile, no magic. Transparent square canvas, single pose, no sheet, no floor, no text. Change ONLY pose, not identity.",
+      "references": [
+        "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-59bdaf6c-eb77-4e29-93c1-98c8fdc80369.png"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-6c0861b3-b409-4a61-a925-8ac6959e56b4.png",
+      "output": "games/fairytale-defense/rebuild/art/growth-idle.webp"
+    },
+    {
+      "id": "title",
+      "prompt": "Use case: logo-brand. ONE transparent premium mobile fantasy game title lettering asset. Exact Traditional Chinese text \"童話塔防\" on ONE line, smaller \"CxQ\" centered above. Rounded bold dimensional ivory lettering with tasteful antique gold bevel and deep teal outline, forest leaf flourishes only at sides, a tiny emerald crystal at top. Professional readable mobile game logo, strong silhouette. Wide 2:1 composition, entire lettering visible, transparent background. No other words, no characters, no landscape, no collage or sprite sheet.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-4d35eef3-e6d8-438d-a3c4-b9935f3c5d33.png",
+      "output": "games/fairytale-defense/rebuild/art/title.webp"
+    },
+    {
+      "id": "campaign-button",
+      "prompt": "Use case: stylized-concept. ONE finished mobile game button with exact Traditional Chinese text \"開始闖關\". Wide rounded rectangular deep teal enamel surface with thin ivory-gold border and restrained leaf corner decoration. Large bold ivory-gold dimensional Chinese lettering centered inside, comfortable safe padding. Entire button fills canvas with 3 percent transparent margin. Premium forest fantasy mobile game interface. Aspect ratio 4:1. ONE object, no extra text, no scene, no sheet.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-e2c67217-432c-4ff0-b84b-2fa5e09193f5.png",
+      "output": "games/fairytale-defense/rebuild/art/campaign-button.webp"
+    },
+    {
+      "id": "endless-button",
+      "prompt": "Use case: stylized-concept. ONE finished mobile game button with exact Traditional Chinese text \"無盡守護\". Wide rounded rectangular midnight blue enamel surface with thin ivory-gold border and restrained star corner decoration. Large bold ivory-gold dimensional Chinese lettering centered inside, comfortable safe padding. Entire button fills canvas with 3 percent transparent margin. Premium forest fantasy mobile game interface. Aspect ratio 4:1. ONE object, no extra text, no scene, no sheet.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-a84b62f9-9d26-4d1a-bfda-5e2a514d0a35.png",
+      "output": "games/fairytale-defense/rebuild/art/endless-button.webp"
+    },
+    {
+      "id": "range",
+      "prompt": "Use case: stylized-concept. ONE transparent game attack-range indicator asset, square image. Perfect circular TOP-DOWN ring, no perspective ellipse. Thin luminous turquoise magical circumference centered exactly in square, outer edge at 8 percent margin from every side. Delicate pale gold leaf rune ticks within rim, extremely subtle translucent teal inner disc. Entire ring visible, crisp and readable but not dense, no extraneous glow outside ring, no text, no characters, no background, no second ring or sheet. Used as accurately scaled tactical range marker in a forest mobile tower defense.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-6ae229f0-533c-49b8-9462-a8eed5c67de5.png",
+      "output": "games/fairytale-defense/rebuild/art/range.webp"
+    },
+    {
+      "id": "aura-range",
+      "prompt": "Use case: stylized-concept. ONE transparent perfectly circular top-down SUPPORT RANGE ring, thin amber gold dotted ring with a few ivory leaf runes, almost entirely clear transparent center. Square canvas; circle centered at 50% 50%, outer radius42% canvas. No perspective, no opaque fill, no background, no text, no other rings or objects. Premium forest tactical mobile game asset, readable but quiet, one individual asset not sheet.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d7b7600d-d0d3-4ef1-aab3-0fa06f425fda.png",
+      "output": "games/fairytale-defense/rebuild/art/aura-range.webp"
+    },
+    {
+      "id": "health-track",
+      "prompt": "Use case: stylized-concept. ONE tiny game enemy health bar empty track, horizontal 8:1 ratio, almost black dark teal recessed center and restrained thin ivory edge, rounded ends. Standalone transparent asset with tightly framed entire object, no numbers or text or other UI. Crisp readable at 40 pixels wide. Premium storybook mobile game. NOT a spritesheet.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-142d8b96-5b9e-4165-b39b-9f13314d9e80.png",
+      "output": "games/fairytale-defense/rebuild/art/health-track.webp"
+    },
+    {
+      "id": "health-fill",
+      "prompt": "Use case: stylized-concept. ONE tiny game health bar fill, horizontal 8:1 ratio, bright emerald green enamel capsule with small pale mint specular along upper edge, no external frame. Standalone genuinely transparent asset tightly framed, entire shape visible. No numbers, no text, no UI collage. Crisp at 40 pixels wide. Premium storybook mobile game. This is ONE bar fill only.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-3ae0f8eb-5a4d-4515-a9ec-be0f78391c84.png",
+      "output": "games/fairytale-defense/rebuild/art/health-fill.webp"
+    },
+    {
+      "id": "target",
+      "prompt": "Use case: stylized-concept. ONE small transparent game target marker, golden faceted small downward-pointing arrowhead, subtle ivory inner face and teal edge, premium enchanted forest mobile game. Bold simple silhouette, centered with 10 percent transparent safety margin, no text, no background, no other icons, no sheet. Readable at 20 pixels.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-4c83bf3a-993f-43ea-976b-722e00722f48.png",
+      "output": "games/fairytale-defense/rebuild/art/target.webp"
+    }
+  ],
+  "discardedCandidates": [
+    {
+      "id": "button",
+      "prompt": "Use case: stylized-concept. ONE horizontal mobile game button art asset on genuinely transparent background. Premium enchanted forest storybook, rounded ivory stone frame with subtle gold leaf metal corners and turquoise enamel inset. WIDE 4:1 object silhouette on wide canvas. Very broad calm deep teal central face, high contrast empty center for readable white Chinese text added by code. Minimal ornament on ends only, no text, no symbols, no second button, no collage, no background scene. Tactile dimensional finish, crisp details, entire object inside image with 4 percent safety margins.",
+      "references": [],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-acb151ce-8869-4751-9aa5-291e43d7508a.png",
+      "output": "games/fairytale-defense/rebuild/art/button.webp",
+      "reason": "Insufficient text-safe inner height"
+    },
+    {
+      "id": "walker-step",
+      "prompt": "Use case: identity-preserve. Make ONE second walking animation pose of exactly this cute acorn bandit. Same walnut helmet, burgundy kerchief, big eyes, burlap bag, boots, proportions and camera facing right. Change only legs: right foot forward and left foot backward, alternate from reference. The center of body and head must stay in same location and scale, all within transparent square canvas. Entire individual character, not a collage or sheet, no background or text.",
+      "references": [
+        "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-665fcb65-8b05-4e90-9c23-2f6e284932eb.png"
+      ],
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-03b4ab70-4079-40d7-9fe6-3ea74bd2565e.png",
+      "output": "games/fairytale-defense/rebuild/art/walker-step.webp",
+      "reason": "Second step did not alternate legs"
+    }
+  ]
+}
