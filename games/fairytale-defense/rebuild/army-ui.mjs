@@ -5,11 +5,17 @@ import {newArmySave,decodeArmySave,prepareArmyExpedition,settleArmySave} from '.
 import {restoreCheckpoint} from './checkpoint.mjs';
 import {CAMPAIGN} from './encounters.mjs';
 import {SPELL_ART,actorMotion,projectilePose} from './motion.mjs';
-import {unitArt,EVOLUTION_ART,branchGuide} from './unit-presentation.mjs';
+import {unitArt,branchGuide} from './unit-presentation.mjs';
 import {SPRITE_LAYOUT} from './sprite-layout.mjs';
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const $=id=>document.getElementById(id),ctx=$('canvas').getContext('2d'),images={},key='cxq.defense.army.v3';
 let profile=newArmySave(),battle=createBattle({hero:'growth'}),hero='growth',specialization=null,talents={},last=0,ready=false,failed=false,selectedPad=null,stage=1;
+const artPromises=new Map();let transitioning=false;
+const loadingStatus=document.createElement('dialog');loadingStatus.id='loading-status';loadingStatus.setAttribute('aria-label','準備戰場美術');loadingStatus.addEventListener('cancel',e=>e.preventDefault());document.body.append(loadingStatus);
+function loadArt(id){if(images[id])return Promise.resolve();if(artPromises.has(id))return artPromises.get(id);const promise=(async()=>{const im=new Image();im.src=id in ROLES?`../../../assets/characters/cxq-role-${id}.webp`:`art/${id}.webp`;await im.decode();images[id]=im;})().catch(e=>{artPromises.delete(id);throw e;});artPromises.set(id,promise);return promise;}
+function heroArt(id){return [id,id+'-cast',...(id==='growth'?['growth-idle','growth-ready']:[]),SPELL_ART[ROLES[id].kind]];}
+function ensureBattleArt(s){const ids=['button','road','pad','seed','impact','target','health-track','health-fill','command-podium','dream-core','walker','runner','armored','boss','range','aura-range','fx-light',...['bolt','spore','frost','glow'].map(id=>'projectile-'+id),...s.loadout.map(id=>'unit-'+id),...s.towers.map(unitArt),...heroArt(s.hero.role),s.stage<=5?'meadow':s.stage<=10?'meadow-moon':'meadow-dawn'];return Promise.all([...new Set(ids)].map(loadArt));}
+async function transition(fn){if(transitioning||failed)return;transitioning=true;loadingStatus.textContent='準備戰場美術…';loadingStatus.showModal();syncPause();try{await fn();}catch(e){error(e);}finally{transitioning=false;loadingStatus.close();syncPause();}}
 function error(e){failed=true;$('error').hidden=false;$('error').textContent=`已暫停：${e.message}。未覆蓋原始存檔。請先保留備份再重新載入。`;syncPause();}
 try{const raw=localStorage.getItem(key);if(raw)profile=decodeArmySave(raw);}catch(e){error(e);}
 function persist(next){localStorage.setItem(key,JSON.stringify(next));profile=next;}
@@ -23,8 +29,8 @@ document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>b.closest('di
 function optionGroup(label,choices,value,locked,onchange){const wrapper=document.createElement('label');wrapper.textContent=label;const select=document.createElement('select');select.disabled=locked;select.add(new Option(locked?'熟練度不足':'不裝備',''));for(const c of choices)select.add(new Option(c.name,c.id));select.value=value||'';const detail=document.createElement('p');const update=()=>{detail.textContent=choices.find(c=>c.id===select.value)?.description||'可在出戰前自由選擇，戰鬥中不能更換。';};select.onchange=()=>{onchange(select.value||null);update();};wrapper.append(select);$('build').append(wrapper,detail);update();}
 function renderHero(){for(const b of $('heroes').children)b.setAttribute('aria-pressed',String(b.dataset.hero===hero));const xp=profile.mastery.xp[hero],level=masteryLevel(xp);$('hero-portrait').src=`../../../assets/characters/cxq-role-${hero}.webp`;$('hero-portrait').alt=ROLES[hero].name;$('hero-info').textContent=`${ROLES[hero].name} · 熟練 Lv.${level}`;$('cultivation-info').textContent=`${ROLES[hero].name} · ${xp} XP`;$('hero-summary').textContent=({growth:'培育精銳 · 附近部隊強化',dream:'夢印連動 · 星光清場',luck:'幸運補給 · 次數暴擊',joy:'連擊加速 · 全隊鼓舞',night:'遠距追擊 · 集中重擊',sadness:'細雨緩速 · 防線控場',trust:'職業協同 · 連結支援',memory:'記錄傷害 · 回響爆發',healing:'波次修復 · 生命庇護',hope:'穿甲之光 · 強敵對策'})[hero];$('build').replaceChildren();optionGroup('三級英雄專精',HERO_SPECIALIZATIONS[hero],specialization,level<3,v=>specialization=v);for(const [slot,tier] of Object.entries(HERO_TALENTS))optionGroup(`${tier.level} 級戰術`,tier.choices,talents[slot],level<tier.level,v=>talents[slot]=v);$('resume').hidden=!profile.checkpoint;$('cover-resume').hidden=!profile.checkpoint;}
 $('cultivate').onclick=()=>show('cultivation');$('squad-info').onclick=()=>show('squad');
-for(const [id,r] of Object.entries(ROLES)){const b=document.createElement('button');b.dataset.hero=id;b.innerHTML=`<img src="../../../assets/characters/cxq-role-${id}.webp" alt=""><span>${r.name}</span>`;b.onclick=()=>{hero=id;specialization=null;talents={};renderHero();};$('heroes').append(b);}
-function perform(fn){try{const draft=structuredClone(battle);draft.paused=false;if(!fn(draft))return;if(['planning','intermission'].includes(draft.phase))persist(settleArmySave(profile,draft,profile.mastery.activeRun.id));battle=draft;closeAll();}catch(e){error(e);}}
+for(const [id,r] of Object.entries(ROLES)){const b=document.createElement('button');b.dataset.hero=id;b.innerHTML=`<img loading="lazy" decoding="async" src="../../../assets/characters/cxq-role-${id}.webp" alt=""><span>${r.name}</span>`;b.onclick=()=>{hero=id;specialization=null;talents={};renderHero();Promise.all(heroArt(id).map(loadArt)).catch(()=>{});};$('heroes').append(b);}
+function perform(fn){return transition(async()=>{const draft=structuredClone(battle);draft.paused=false;if(!fn(draft))return;await ensureBattleArt(draft);if(['planning','intermission'].includes(draft.phase))persist(settleArmySave(profile,draft,profile.mastery.activeRun.id));battle=draft;closeAll();});}
 function openPad(i){if(!ready||failed||['victory','defeat'].includes(battle.phase))return;selectedPad=i;const t=battle.towers.find(t=>t.pad===i),content=$('troop-content');content.replaceChildren();$('troop-title').textContent=t?`${UNITS[t.role].name} · Lv.${t.level}`:`部署位置 ${i+1}`;
  const button=(text,fn,disabled=false)=>{const b=document.createElement('button');b.textContent=text;b.disabled=disabled;b.onclick=()=>perform(fn);content.append(b);};
  if(!t){for(const id of battle.loadout){const r=UNITS[id],b=document.createElement('button');b.innerHTML=`<img src="art/unit-${id}.webp" alt=""> ${r.name} · ${r.cost}`;b.disabled=battle.gold<r.cost;b.onclick=()=>perform(s=>deploy(s,i,id));content.append(b);}}
@@ -33,7 +39,7 @@ function openPad(i){if(!ready||failed||['victory','defeat'].includes(battle.phas
  if(t.level===2)for(const branch of UNIT_BRANCHES[t.role])offer(branch);else if(t.level<5)offer();else button('已達最高等級',()=>false,true);button(`撤回 · +${Math.floor(t.spent*.7)}`,s=>sell(s,i));}
  show('troops');}
 PADS.forEach((p,i)=>{const b=document.createElement('button');b.className='pad-hit';b.style.left=p.x/390*100+'%';b.style.top=p.y/585*100+'%';b.setAttribute('aria-label',`部署位置 ${i+1}`);b.onclick=()=>openPad(i);$('pads').append(b);});
-function start(){try{const next=prepareArmyExpedition(profile,{hero,specialization,talents,stage},crypto.randomUUID());persist(next.save);battle=next.battle;closeAll();}catch(e){error(e);}}
+function start(){return transition(async()=>{const next=prepareArmyExpedition(profile,{hero,specialization,talents,stage},crypto.randomUUID());await ensureBattleArt(next.battle);persist(next.save);battle=next.battle;closeAll();});}
 function briefing(){const c=CAMPAIGN[stage-1];$('briefing-title').textContent=`第 ${stage} 關 · ${c.name}`;$('briefing-tip').textContent=c.tip;$('briefing-team').textContent=`指揮英雄：${ROLES[hero].name} · 橡果弩手／蘑菇炮手／霜露精靈／螢光射手`;$('briefing-enemies').replaceChildren();for(const kind of new Set(c.waves.flat())){const f=document.createElement('figure'),im=document.createElement('img'),label=document.createElement('figcaption');im.src=`art/${kind}.webp`;label.textContent=({walker:'步兵',runner:'快腳',armored:'重甲',boss:'頭目'})[kind];f.append(im,label);$('briefing-enemies').append(f);}campaignDialog.close();show('briefing');}
 $('briefing-start').onclick=()=>profile.checkpoint?show('replace'):start();
 $('briefing').querySelector('[data-close]').onclick=()=>{$('briefing').close();selectStage();};
@@ -46,9 +52,9 @@ const squadDescriptions=['橡果弩手｜連弩／重弩','蘑菇炮手｜擴散
 $('squad').querySelectorAll('figcaption').forEach((e,i)=>e.textContent=squadDescriptions[i]);
 const resultPortrait=document.createElement('img');resultPortrait.className='result-portrait';resultPortrait.alt='';$('result-title').after(resultPortrait);
 const nextStage=document.createElement('button');nextStage.id='next-stage';nextStage.textContent='前往下一關';$('result').insertBefore(nextStage,$('result-home'));nextStage.onclick=()=>{if(battle.phase!=='victory'||battle.stage>=15)return;stage=battle.stage+1;hero=battle.hero.role;specialization=battle.hero.specialization;talents={...battle.hero.talents};start();};
-$('enter-camp').onclick=()=>{closeAll();renderHero();show('camp');};$('camp-cover').onclick=()=>{closeAll();show('cover');};$('cover-settings').onclick=()=>show('cover-help');
+$('enter-camp').onclick=()=>{closeAll();renderHero();show('camp');ensureBattleArt(battle).catch(()=>{});};$('camp-cover').onclick=()=>{closeAll();show('cover');};$('cover-settings').onclick=()=>show('cover-help');
 $('cover-resume').onclick=()=> $('resume').click();
-$('resume').onclick=()=>{try{battle=restoreCheckpoint(profile.checkpoint);closeAll();}catch(e){error(e);}};
+$('resume').onclick=()=>transition(async()=>{const restored=restoreCheckpoint(profile.checkpoint);await ensureBattleArt(restored);battle=restored;closeAll();});
 $('wave').onclick=()=>{try{saveBoundary();startWave(battle);}catch(e){error(e);}};
 $('skill').onclick=()=>castHero(battle);$('settings').onclick=()=>show('options');
 function home(){closeAll();battle=createBattle({hero});renderHero();show('camp');}
@@ -119,6 +125,6 @@ function frame(now){const dt=last?Math.min((now-last)/1000,.1):0;last=now;syncPa
  }requestAnimationFrame(frame);}
 function setText(id,value){if($(id).textContent!==value)$(id).textContent=value;}
 renderHero();show('cover');resize();
-// Load every evolution before enabling a battle: never show a blank upgraded unit.
-try{await Promise.all([...EVOLUTION_ART,'button','dream-core','meadow-moon','meadow-dawn',...['bolt','spore','frost','glow'].map(id=>'projectile-'+id)].map(async id=>{const im=new Image();im.src=`art/${id}.webp`;await im.decode();images[id]=im;}));}catch(e){error(e);}
-try{const ids=['meadow','road','pad','seed','impact','target','health-track','health-fill','camp-scene','cover-scene','command-podium','walker','runner','armored','boss','growth-idle','growth-ready','growth-cast','range','aura-range',...Object.values(SPELL_ART).filter(id=>id!=='seed'),...Object.keys(ROLES).filter(id=>id!=='growth').map(id=>id+'-cast'),...battle.loadout.flatMap(id=>['unit-'+id,'unit-'+id+'-veteran'])];await Promise.all([...ids.map(id=>[id,`art/${id}.webp`]),...Object.keys(ROLES).map(id=>[id,`../../../assets/characters/cxq-role-${id}.webp`])].map(async([id,src])=>{const im=new Image();im.src=src;await im.decode();images[id]=im;}));ready=true;$('start').disabled=failed;$('enter-camp').disabled=failed;document.body.dataset.ready='true';}catch(e){error(e);}requestAnimationFrame(frame);
+// The cover and camp do not wait for late-game sprites. Battle transitions decode
+// exactly the selected hero, region and saved unit levels before showing the field.
+ready=true;$('start').disabled=failed;$('enter-camp').disabled=failed;document.body.dataset.ready='true';requestAnimationFrame(frame);

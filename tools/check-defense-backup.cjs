@@ -1,7 +1,7 @@
 const {execFileSync}=require('node:child_process'),fs=require('node:fs'),os=require('node:os'),path=require('node:path');
 const browser='C:/Users/User/AppData/Local/npm-cache/_npx/6de2aa2fded2970c/node_modules/agent-browser/bin/agent-browser-win32-x64.exe';
 const folder=fs.mkdtempSync(path.join(os.tmpdir(),'cxq-backup-')),log=path.join(folder,'command.log'),good=path.join(folder,'good.json'),bad=path.join(folder,'bad.json');
-function run(...args){const fd=fs.openSync(log,'w');try{execFileSync(browser,['--session','defense-backup',...args],{stdio:['ignore',fd,fd],timeout:30000});}finally{fs.closeSync(fd);}const text=fs.readFileSync(log,'utf8');console.log(text.trim());return text;}
+function run(...args){const fd=fs.openSync(log,'w');try{execFileSync(browser,['--session','defense-backup',...args],{stdio:['ignore',fd,fd],timeout:60000});}catch(e){console.error(fs.readFileSync(log,'utf8'));throw e;}finally{fs.closeSync(fd);}const text=fs.readFileSync(log,'utf8');console.log(text.trim());return text;}
 (async()=>{try{
  const a=await import('../games/fairytale-defense/rebuild/army-save.mjs');const p=a.prepareArmyExpedition(a.newArmySave(),{hero:'hope'},'backup-test');fs.writeFileSync(good,JSON.stringify(p.save));fs.writeFileSync(bad,'{"version":3,"mastery":{}}');
  run('set','viewport','360','640');run('open',process.env.DEFENSE_QA_URL||'http://127.0.0.1:4173/games/fairytale-defense/index.html');run('wait','[data-ready=true]');run('snapshot','-i');run('click','#enter-camp');run('snapshot','-i');run('click','#start');run('snapshot','-i');run('click','[data-stage="1"]');run('snapshot','-i');run('click','#briefing-start');run('snapshot','-i');run('click','#settings');run('snapshot','-i');

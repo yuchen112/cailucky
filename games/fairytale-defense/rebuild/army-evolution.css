@@ -9,3 +9,4 @@ body[data-region=dawn]{background-image:url('art/meadow-dawn.webp')}
 #troops .upgrade-portrait{width:76px;height:76px}
 .result-portrait{display:block;margin:auto;width:120px;height:120px;object-fit:contain}
 #result{max-height:90svh;overflow:auto}#result-text{font-size:17px;text-align:left}
+#loading-status{height:fit-content;padding:36px 24px;text-align:center;font-size:20px;color:#fff8dc}

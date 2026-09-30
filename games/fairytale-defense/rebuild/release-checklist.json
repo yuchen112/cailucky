@@ -1,7 +1,7 @@
 {
   "status": "public-playtest-candidate",
   "publicEntryMustStayClosed": false,
-  "releaseVersion": "20261001-evolution1",
+  "releaseVersion": "20261001-evolution2",
   "scope": "Playable army campaign presentation update; full roadmap is not complete. See RELEASE-evolution1.md for current evidence; older pending entries below are historical.",
   "verified": {
     "deterministicCombatRules": true,
