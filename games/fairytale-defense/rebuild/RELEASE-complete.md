@@ -1,4 +1,4 @@
-# 夢境守護整合版 · 20261001-complete2
+# 夢境守護整合版 · 20261001-complete3
 
 ## 本次完成
 
@@ -12,6 +12,7 @@
 - 波次與首通獎勵防重複；招募先成功存檔才演出；寫入失敗不扣款，舊分頁不能覆寫另一分頁新進度。
 - 三首 CC0 音樂可自行選擇或跟隨區域，操作／戰鬥音效、音量、減少動態選項。首次互動後播放，背景分頁暫停。
 - 分批載入、已解碼素材重用、明確進度與失敗重試；沿用存檔、匯入確認及損毀存檔恢復。
+- 正式站慢連線檢查後，啟動程式合併為單一約 76 KiB 模組；隱藏畫面圖片延後載入，戰場圖片限制四個並行請求，計時從真正開始請求起算。音樂等戰場美術完成再載入，避免搶占首次進場頻寬。
 
 ## 驗證證據
 
@@ -33,3 +34,7 @@
 - CSS 用於布局、可讀文字、狀態與移動，不用 CSS 圖形冒充角色、道路、面板或特效。
 - 素材輸出：`art/`。完整提示詞與來源：`complete-art-manifest.json`、`routes-art-manifest.json`、`troop-motion-manifest.json`。
 - 音檔對應與授權：`audio/CREDITS.md`。發布後另以遠端檔案比對和正式站瀏覽器測試確認實裝，不能只憑 Git push 判定上線。
+
+## 重新建置
+
+保留各個原始 `.mjs` 供開發與規則測試。發布前先執行 `node tools/release-defense-complete.cjs`，再使用 `npx --yes esbuild@0.25.10 games/fairytale-defense/rebuild/army-ui.mjs --bundle --format=esm --minify --charset=utf8 --target=es2022 --outfile=games/fairytale-defense/rebuild/army-bundle.mjs`。重新執行完整瀏覽器驗證後才發布。

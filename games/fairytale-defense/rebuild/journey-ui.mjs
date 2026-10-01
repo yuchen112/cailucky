@@ -1,6 +1,6 @@
-import {GRADES,DRAW_COST,RECRUIT_UNITS,drawOdds,recruit,trainingRanks} from './recruitment.mjs?v=20261001-complete2';
-import {UNITS,UNIT_BRANCHES} from './army.mjs?v=20261001-complete2';
-import {branchGuide,unitArt} from './unit-presentation.mjs?v=20261001-complete2';
+import {GRADES,DRAW_COST,RECRUIT_UNITS,drawOdds,recruit,trainingRanks} from './recruitment.mjs?v=20261001-complete3';
+import {UNITS,UNIT_BRANCHES} from './army.mjs?v=20261001-complete3';
+import {branchGuide,unitArt} from './unit-presentation.mjs?v=20261001-complete3';
 const guides={archer:['穩定單體火力','便宜、出手快，適合補足前中後段火力。連弩處理快腳；重弩提高單次傷害。'],cannon:['群怪與範圍清場','攻速較慢，敵群聚集時最有效；擴散增加覆蓋，穿甲針對重甲。'],frost:['緩速與節奏控制','傷害較低，需與輸出伙伴搭配。長效緩速延長控制，凝霜每第三擊短暫定身。'],firefly:['遠距離持續輸出','適合補防線死角。遠射增加覆蓋範圍，連射提升攻擊頻率。']};
 export function installJourney({getProfile,commit,show,syncPause,audio,onMotion}){
  const $=id=>document.getElementById(id);

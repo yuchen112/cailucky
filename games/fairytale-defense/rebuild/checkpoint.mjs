@@ -1,4 +1,4 @@
-import {createBattle,ROLES,UNITS,UNIT_BRANCHES,PADS,SPECIALIZATIONS,BLESSINGS,validateProfile} from './core.mjs?v=20261001-complete2';
+import {createBattle,ROLES,UNITS,UNIT_BRANCHES,PADS,SPECIALIZATIONS,BLESSINGS,validateProfile} from './core.mjs?v=20261001-complete3';
 const int=(v,min,max)=>Number.isSafeInteger(v)&&v>=min&&v<=max;
 export function captureCheckpoint(s){
  if(!['planning','intermission'].includes(s.phase))return null;
