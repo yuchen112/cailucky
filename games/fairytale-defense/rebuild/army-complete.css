@@ -1,4 +1,10 @@
 /* Layout, typography and motion only. Decorative surfaces are individual AI images. */
+#briefing-enemies{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}#briefing-enemies figure{width:auto;min-width:0;margin:4px 0}#briefing-enemies img{width:100%;max-width:64px}
+.pad-hit{width:clamp(44px,16.4%,64px);height:clamp(44px,9.6%,56px)}.commander-hit{min-width:44px}
+#rotate{width:100vw;max-width:none;height:100svh;max-height:none;margin:0;border:0}#rotate:focus{outline:none}#rotate::backdrop{background:#174337}
+#options>#home{flex:none;min-height:48px;margin:4px 0}
+#app>header,#app>footer{flex-shrink:0}
+#squad[open],#briefing[open],#result[open]{display:flex;flex-direction:column;max-height:90svh;overflow:hidden}#squad[open]{height:88svh}#squad>h2,#briefing>h2,#result>h2,#squad>button,#briefing>button,#result>button{flex:none}#squad .dialog-content,#briefing .dialog-content,#result .dialog-content{min-height:0;overflow:auto;overscroll-behavior:contain;flex:1}
 #cover-help[open]{display:flex;flex-direction:column;height:88svh;overflow:hidden}#cover-help h2,#cover-help>[data-close]{flex:none}#cover-help p{font-size:17px;text-align:left;line-height:1.55}
 #confirm-command{flex:none;min-height:44px}.tactical-toolbar #coverage-toggle,.tactical-toolbar #wave-intel{min-height:44px}
 #troops h2,#troops>[data-close]{flex:none}#troops .scroll-body{flex:1;min-height:0;max-height:none}.troop-confirm-actions{display:flex;gap:6px;flex:none}.troop-confirm-actions button{flex:1;min-width:0;font-size:15px;padding:8px;min-height:48px;margin:4px 0}

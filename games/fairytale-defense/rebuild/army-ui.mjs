@@ -1,18 +1,18 @@
-import {renderHeroGuide} from './hero-guide.mjs?v=20261002-tactics1';
-import {createBattleClock} from './battle-clock.mjs?v=20261002-tactics1';
-import {installTactics} from './tactical-ui.mjs?v=20261002-tactics1';
-import {ROLES,UNITS,UNIT_BRANCHES,PADS,pointAt,createBattle,deploy,upgrade,sell,upgradeCost,towerStats,startWave,advance,chooseBlessing,BLESSINGS} from './core.mjs?v=20261002-tactics1';
-import {HERO_SPECIALIZATIONS,HERO_TALENTS,supportFor} from './hero-rules.mjs?v=20261002-tactics1';
-import {masteryLevel} from './mastery.mjs?v=20261002-tactics1';
-import {newArmySave,decodeArmySave,prepareArmyExpedition,settleArmySave} from './army-save.mjs?v=20261002-tactics1';
-import {restoreCheckpoint} from './checkpoint.mjs?v=20261002-tactics1';
-import {CAMPAIGN} from './encounters.mjs?v=20261002-tactics1';
-import {SPELL_ART,actorMotion,projectilePose} from './motion.mjs?v=20261002-tactics1';
-import {unitArt,branchGuide} from './unit-presentation.mjs?v=20261002-tactics1';
-import {SPRITE_LAYOUT} from './sprite-layout.mjs?v=20261002-tactics1';
-import {routePads,regionFor,alignCommander} from './routes.mjs?v=20261002-tactics1';
-import {createAudio} from './audio.mjs?v=20261002-tactics1';
-import {installJourney} from './journey-ui.mjs?v=20261002-tactics1';
+import {renderHeroGuide} from './hero-guide.mjs?v=20261002-layout2';
+import {createBattleClock} from './battle-clock.mjs?v=20261002-layout2';
+import {installTactics} from './tactical-ui.mjs?v=20261002-layout2';
+import {ROLES,UNITS,UNIT_BRANCHES,PADS,pointAt,createBattle,deploy,upgrade,sell,upgradeCost,towerStats,startWave,advance,chooseBlessing,BLESSINGS} from './core.mjs?v=20261002-layout2';
+import {HERO_SPECIALIZATIONS,HERO_TALENTS,supportFor} from './hero-rules.mjs?v=20261002-layout2';
+import {masteryLevel} from './mastery.mjs?v=20261002-layout2';
+import {newArmySave,decodeArmySave,prepareArmyExpedition,settleArmySave} from './army-save.mjs?v=20261002-layout2';
+import {restoreCheckpoint} from './checkpoint.mjs?v=20261002-layout2';
+import {CAMPAIGN} from './encounters.mjs?v=20261002-layout2';
+import {SPELL_ART,actorMotion,projectilePose} from './motion.mjs?v=20261002-layout2';
+import {unitArt,branchGuide} from './unit-presentation.mjs?v=20261002-layout2';
+import {SPRITE_LAYOUT} from './sprite-layout.mjs?v=20261002-layout2';
+import {routePads,regionFor,alignCommander} from './routes.mjs?v=20261002-layout2';
+import {createAudio} from './audio.mjs?v=20261002-layout2';
+import {installJourney} from './journey-ui.mjs?v=20261002-layout2';
 const audio=createAudio(),systemMotion=matchMedia('(prefers-reduced-motion: reduce)'),reducedMotion={get matches(){return systemMotion.matches||audio.preferences.reducedMotion;}};
 audio.hold(true);
 let journey=null,tactics=null,storedRaw=null;const battleClock=createBattleClock();
@@ -31,11 +31,17 @@ function error(e){failed=true;$('error').hidden=false;$('error').textContent=`�
 try{const raw=localStorage.getItem(key);storedRaw=raw;if(raw)profile=decodeArmySave(raw);}catch(e){error(e);}
 function persist(next){if(localStorage.getItem(key)!==storedRaw)throw Error('另一個分頁更新了進度，請重新載入後再操作');const canonical=decodeArmySave(next),raw=JSON.stringify(canonical);localStorage.setItem(key,raw);storedRaw=raw;profile=canonical;journey?.updateWallet();}
 function saveBoundary(){persist(settleArmySave(profile,battle,profile.mastery.activeRun.id));}
-function syncPause(){battle.paused=failed||document.hidden||innerWidth>innerHeight||!!document.querySelector('dialog[open]');$('rotate').hidden=innerWidth<=innerHeight;}
+function syncPause(){const rotate=$('rotate'),landscape=innerWidth>innerHeight;rotate.hidden=!landscape;if(landscape){if(rotate.open&&document.activeElement.closest('dialog')!==rotate)rotate.close();if(!rotate.open)rotate.showModal();}else if(rotate.open)rotate.close();battle.paused=failed||document.hidden||landscape||!!document.querySelector('dialog[open]');}
 function show(id){if(id==='options'){$('home').hidden=$('cover').open||$('camp').open;$('options').querySelector('[data-close]').textContent=$('home').hidden?'返回':'繼續戰鬥';}$(id).showModal();if(id==='cover'){$(id).tabIndex=-1;$(id).focus({preventScroll:true});}syncPause();}
-function closeAll(){document.querySelectorAll('dialog[open]').forEach(d=>d.close());syncPause();}
+function closeAll(){document.querySelectorAll('dialog[open]:not(#rotate)').forEach(d=>d.close());syncPause();}
 function resize(){const scale=Math.min(innerWidth/390,Math.max(100,$('app').clientHeight-document.querySelector('header').offsetHeight-document.querySelector('footer').offsetHeight)/585);$('field').style.width=390*scale+'px';$('field').style.height=585*scale+'px';syncPause();}
 window.addEventListener('resize',resize);document.addEventListener('visibilitychange',()=>{last=0;syncPause();});
+// HUD text and the tactical toolbar can change height after the first layout.
+// Refit the board whenever chrome changes, not only when the viewport rotates.
+const chromeObserver=new ResizeObserver(resize);for(const el of [document.querySelector('header'),document.querySelector('footer')])chromeObserver.observe(el);
+window.visualViewport?.addEventListener('resize',resize);
+$('rotate').addEventListener('cancel',e=>e.preventDefault());
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&['rotate','cover','camp','blessing','result','loading-status'].includes(document.activeElement.closest('dialog')?.id)){e.preventDefault();e.stopImmediatePropagation();}},true);
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>b.closest('dialog').close());document.querySelectorAll('dialog').forEach(d=>{d.addEventListener('close',syncPause);d.addEventListener('cancel',e=>{if(['cover','camp','blessing','result'].includes(d.id))e.preventDefault();});});
 function optionGroup(label,choices,value,locked,onchange){const wrapper=document.createElement('label');wrapper.textContent=label;const select=document.createElement('select');select.disabled=locked;select.add(new Option(locked?'熟練度不足':'不裝備',''));for(const c of choices)select.add(new Option(c.name,c.id));select.value=value||'';const detail=document.createElement('p');const update=()=>{detail.textContent=choices.find(c=>c.id===select.value)?.description||'可在出戰前自由選擇，戰鬥中不能更換。';};select.onchange=()=>{onchange(select.value||null);renderHero();};wrapper.append(select);$('build').append(wrapper,detail);update();}
 function renderHero(){for(const b of $('heroes').children)b.setAttribute('aria-pressed',String(b.dataset.hero===hero));const xp=profile.mastery.xp[hero],level=masteryLevel(xp);$('hero-portrait').src=`../../../assets/characters/cxq-role-${hero}.webp`;$('hero-portrait').alt=ROLES[hero].name;$('hero-info').textContent=`${ROLES[hero].name} · 熟練 Lv.${level}`;$('cultivation-info').textContent=`${ROLES[hero].name} · ${xp} XP`;$('hero-summary').textContent=({growth:'培育精銳 · 附近部隊強化',dream:'夢印連動 · 星光清場',luck:'幸運補給 · 次數暴擊',joy:'連擊加速 · 全隊鼓舞',night:'遠距追擊 · 集中重擊',sadness:'細雨緩速 · 防線控場',trust:'職業協同 · 連結支援',memory:'記錄傷害 · 回響爆發',healing:'波次修復 · 生命庇護',hope:'穿甲之光 · 強敵對策'})[hero];$('build').replaceChildren();renderHeroGuide($('build'),hero,xp,level,{specialization,talents});optionGroup('三級英雄專精',HERO_SPECIALIZATIONS[hero],specialization,level<3,v=>specialization=v);for(const [slot,tier] of Object.entries(HERO_TALENTS))optionGroup(`${tier.level} 級戰術`,tier.choices,talents[slot],level<tier.level,v=>talents[slot]=v);$('resume').hidden=!profile.checkpoint;$('cover-resume').hidden=!profile.checkpoint;}
@@ -65,6 +71,7 @@ $('squad').querySelector('p').textContent='同種可重複部署，占用空地�
 const squadDescriptions=['橡果弩手｜連弩／重弩','蘑菇炮手｜擴散／穿甲','霜露精靈｜長效緩速／定身','螢光射手｜遠射／連射'];
 $('squad').querySelectorAll('figcaption').forEach((e,i)=>e.textContent=squadDescriptions[i]);
 const resultPortrait=document.createElement('img');resultPortrait.className='result-portrait';resultPortrait.alt='';$('result-title').after(resultPortrait);
+for(const id of ['squad','briefing','result']){const d=$(id),body=document.createElement('div');body.className='dialog-content';for(const e of [...d.children])if(e.tagName!=='H2'&&e.tagName!=='BUTTON')body.append(e);d.querySelector('h2').after(body);}
 const nextStage=document.createElement('button');nextStage.id='next-stage';nextStage.textContent='前往下一關';$('result').insertBefore(nextStage,$('result-home'));nextStage.onclick=()=>{if(battle.phase!=='victory'||battle.stage>=15)return;stage=battle.stage+1;hero=battle.hero.role;specialization=battle.hero.specialization;talents={...battle.hero.talents};start();};
 $('enter-camp').onclick=()=>{closeAll();renderHero();show('camp');ensureBattleArt(battle).catch(()=>{});};$('camp-cover').onclick=()=>{closeAll();show('cover');};$('cover-settings').onclick=()=>show('cover-help');
 $('cover-resume').onclick=()=> $('resume').click();
@@ -73,7 +80,7 @@ $('wave').onclick=()=>{try{saveBoundary();startWave(battle);}catch(e){error(e);}
 $('skill').onclick=()=>castHero(battle);$('settings').onclick=()=>show('options');
 function home(){closeAll();battle=createBattle({hero});alignCommander(battle);renderHero();show('camp');}
 $('home').onclick=()=>battle.phase==='battle'?show('leave'):home();$('confirm-home').onclick=home;$('result-home').onclick=home;
-$('export').onclick=()=>{const a=document.createElement('a'),url=URL.createObjectURL(new Blob([failed&&storedRaw?storedRaw:JSON.stringify(profile,null,2)],{type:'application/json'}));a.href=url;a.download='cxq-defense-army.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+$('export').onclick=()=>{const a=document.createElement('a'),url=URL.createObjectURL(new Blob([failed&&storedRaw?storedRaw:JSON.stringify(profile,null,2)],{type:'application/json'}));a.href=url;a.download='cxq-defense-army.json';a.hidden=true;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);};
 let pendingImport=null;
 const backupInput=document.createElement('input');backupInput.type='file';backupInput.accept='.json,application/json';backupInput.id='backup-file';backupInput.hidden=true;document.body.append(backupInput);
 const importButton=document.createElement('button');importButton.id='import';importButton.textContent='匯入備份';$('export').after(importButton);

@@ -1,0 +1,52 @@
+{
+  "version": "20261002-layout2",
+  "scope": "Tower defense layout and controls",
+  "fixes": [
+    "Resize battle board when HUD/footer or visual viewport changes, preventing action buttons from falling below short screens",
+    "Fixed title and action areas with independently scrolling squad, briefing and result content",
+    "Keep Return to camp outside settings scroller",
+    "Four-column responsive enemy preview without horizontal cropping",
+    "44px minimum deployment/hero hit targets with responsive sizes",
+    "Top-layer landscape blocker across cover, menus and battle; restore prior screen on portrait; prevent Escape bypass",
+    "Attach export download anchor and retain blob URL longer"
+  ],
+  "checks": {
+    "screenMatrix": {
+      "count": 80,
+      "viewports": [
+        [
+          360,
+          560
+        ],
+        [
+          390,
+          700
+        ],
+        [
+          412,
+          915
+        ],
+        [
+          768,
+          1024
+        ]
+      ],
+      "issues": 0
+    },
+    "additionalSmallScreenHorizontalOverflowChecks": 20,
+    "logicSuites": 16,
+    "interactionChecks": [
+      "10 selectable IP heroes",
+      "4 specialization/talent selectors applied to battle",
+      "Deployment, upgrade, movement, cancellation and 70 percent sell refund",
+      "Single/ten recruitment, saved results, interruption, 3x speed and skill preview",
+      "Settings saved after reload",
+      "Blessing choice applied",
+      "Real simulated wave victory and next-stage; defeat and return to camp",
+      "Quota/stale-tab/corrupt-save handling",
+      "Backup import and exported payload validation"
+    ],
+    "physicalAndroid": false,
+    "downloadFileVerification": "Blocked in automation: both independent Blob and data URL JSON downloads were canceled in HeadlessChrome 154 on Windows. Exported payload validated separately; real-device file saving not claimed."
+  }
+}

@@ -1,8 +1,8 @@
-import {ROLES,UNITS,towerStats,pointAt,castHero,enemyStats,moveHero} from './core.mjs?v=20261002-tactics1';
-import {encounterWave} from './encounters.mjs?v=20261002-tactics1';
-import {heroRange,supportRadius} from './hero-rules.mjs?v=20261002-tactics1';
-import {skillSpec} from './skill-spec.mjs?v=20261002-tactics1';
-import {routePads,commandPoints,regionFor} from './routes.mjs?v=20261002-tactics1';
+import {ROLES,UNITS,towerStats,pointAt,castHero,enemyStats,moveHero} from './core.mjs?v=20261002-layout2';
+import {encounterWave} from './encounters.mjs?v=20261002-layout2';
+import {heroRange,supportRadius} from './hero-rules.mjs?v=20261002-layout2';
+import {skillSpec} from './skill-spec.mjs?v=20261002-layout2';
+import {routePads,commandPoints,regionFor} from './routes.mjs?v=20261002-layout2';
 export function installTactics({getBattle,clock,show,syncPause,audio,perform}){
  const $=id=>document.getElementById(id);let coverage=false,preview=null,notice='',noticeUntil=0,commandPreview=null;
  $('command').addEventListener('close',()=>commandPreview=null);

@@ -1,7 +1,7 @@
-import {RECRUIT_UNITS} from './recruitment.mjs?v=20261002-tactics1';
-import {UNITS,UNIT_BRANCHES} from './army.mjs?v=20261002-tactics1';
-import {branchGuide,unitArt} from './unit-presentation.mjs?v=20261002-tactics1';
-import {installRecruitment} from './recruitment-ui.mjs?v=20261002-tactics1';
+import {RECRUIT_UNITS} from './recruitment.mjs?v=20261002-layout2';
+import {UNITS,UNIT_BRANCHES} from './army.mjs?v=20261002-layout2';
+import {branchGuide,unitArt} from './unit-presentation.mjs?v=20261002-layout2';
+import {installRecruitment} from './recruitment-ui.mjs?v=20261002-layout2';
 const guides={archer:['穩定單體火力','便宜、出手快，適合補足前中後段火力。連弩處理快腳；重弩提高單次傷害。'],cannon:['群怪與範圍清場','攻速較慢，敵群聚集時最有效；擴散增加覆蓋，穿甲針對重甲。'],frost:['緩速與節奏控制','傷害較低，需與輸出伙伴搭配。長效緩速延長控制，凝霜每第三擊短暫定身。'],firefly:['遠距離持續輸出','適合補防線死角。遠射增加覆蓋範圍，連射提升攻擊頻率。']};
 export function installJourney({getProfile,commit,show,syncPause,audio,onMotion}){
  const $=id=>document.getElementById(id);
@@ -18,6 +18,6 @@ export function installJourney({getProfile,commit,show,syncPause,audio,onMotion}
  const controls=document.createElement('div');controls.className='audio-controls';controls.innerHTML='<label><input type="checkbox" id="music-enabled"> 背景音樂</label><label><input type="checkbox" id="sound-enabled"> 操作與戰鬥音效</label><label>音樂曲目<select id="music-track"><option value="auto">隨區域切換</option><option value="forest">翠林 · Back to Nature</option><option value="moon">月露 · Fairy Lights</option><option value="dawn">晨曦 · Jaunt</option></select></label><label>音量<input id="audio-volume" type="range" min="0" max="1" step="0.05"></label><label><input type="checkbox" id="motion-reduced"> 減少動態效果</label><details><summary>音樂與音效來源</summary><p>音樂：troubadour；音效：Kenney。皆採 CC0 授權。</p><a href="audio/CREDITS.md" target="_blank" rel="noopener">完整授權紀錄</a></details>';$('options').querySelector('p').after(controls);
  const prefs=audio.preferences;$('music-enabled').checked=prefs.music;$('sound-enabled').checked=prefs.sound;$('music-track').value=prefs.track;$('audio-volume').value=prefs.volume;$('motion-reduced').checked=prefs.reducedMotion;
  controls.onchange=()=>{audio.set({music:$('music-enabled').checked,sound:$('sound-enabled').checked,track:$('music-track').value,volume:Number($('audio-volume').value),reducedMotion:$('motion-reduced').checked});onMotion();};
- const optionsBody=document.createElement('div');optionsBody.className='options-body';const close=$('options').querySelector('[data-close]');for(const child of [...$('options').children])if(child.tagName!=='H2'&&child!==close)optionsBody.append(child);close.before(optionsBody);
+ const optionsBody=document.createElement('div');optionsBody.className='options-body';const close=$('options').querySelector('[data-close]');for(const child of [...$('options').children])if(child.tagName!=='H2'&&child!==close&&child.id!=='home')optionsBody.append(child);close.before(optionsBody,$('home'));
  updateWallet();return {updateWallet};
 }
