@@ -1,5 +1,5 @@
 // Data shared by combat and descriptions. No duplicated display-only upgrade values.
-import {UNIT_BRANCHES} from './army.mjs?v=20261001-complete3';
+import {UNIT_BRANCHES} from './army.mjs?v=20261001-complete4';
 export const SPECIALIZATIONS = {
  growth:[{id:'rapid',name:'萌芽連射',description:'攻擊間隔縮短 28%。',interval:.72},{id:'pierce',name:'古木重擊',description:'傷害提高 35%，無視護甲。',damage:1.35,pierce:true}],
  dream:[{id:'wide',name:'繁星擴散',description:'星光波及半徑增加 30。',splash:30},{id:'burst',name:'聚夢星核',description:'傷害提高 70%，波及半徑減少 20。',damage:1.7,splash:-20}],

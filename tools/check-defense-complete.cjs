@@ -14,7 +14,9 @@ const diagnostic=`const m=await import(document.querySelector('script[type=modul
  for(const [w,h] of [[360,640],[412,915],[390,844]]){run('set','viewport',String(w),String(h));fit('#start');fit('#open-collection');click('#camp-settings');fit('#options [data-close]');run('screenshot',`preview/defense-complete-options${w}.png`);click('#options [data-close]');}
  click('#start');click('[data-stage="1"]');click('#briefing-start');
  if(run('eval','document.querySelector("#replace").open').includes('true'))click('#confirm-start');
- click('.pad-hit:nth-child(1)');click('#troop-content button:first-child');check(`${diagnostic};if(d.battle.towers.length!==1)throw Error('deploy failed')`);
+ let hit=JSON.parse(run('eval',`(()=>{const r=document.querySelector('.pad-hit').getBoundingClientRect();window.padOrigin={x:r.x,y:r.y};return {x:r.x+r.width/2,y:r.y+r.height/2}})()`));if(typeof hit==='string')hit=JSON.parse(hit);
+ run('mouse','move',String(Math.round(hit.x)),String(Math.round(hit.y)));run('mouse','down');run('wait','350');check(`const r=document.querySelector('.pad-hit').getBoundingClientRect();if(Math.abs(r.x-window.padOrigin.x)>1||Math.abs(r.y-window.padOrigin.y)>1)throw Error('deployment hitbox moves while pressed')`);run('mouse','up');check(`if(!document.querySelector('#troops').open)throw Error('real pointer deployment failed')`);
+ click('#troop-content button:first-child');check(`${diagnostic};if(d.battle.towers.length!==1)throw Error('deploy failed')`);
  click('.commander-hit');click('#command-zones button:first-child');check(`${diagnostic};const h=d.battle.hero,r=document.querySelector('.commander-hit').style;if(h.x!==355||h.y!==145||!r.left)throw Error('commander visual/logical mismatch')`);
  click('.pad-hit:nth-child(1)');click('#troop-content button:first-of-type');check(`${diagnostic};if(d.battle.towers[0].level!==2)throw Error('upgrade failed')`);
  click('#wave');run('wait','1500');run('screenshot','preview/defense-complete-battle.png');check(`${diagnostic};if(d.battle.phase!=='battle'||d.battle.time<=0||!d.art.includes('unit-archer-ready'))throw Error('battle inactive');window.t=d.battle.time`);

@@ -1,5 +1,5 @@
-import {ROLES} from './core.mjs?v=20261001-complete3';
-import {MASTERY_THRESHOLDS} from './mastery.mjs?v=20261001-complete3';
+import {ROLES} from './core.mjs?v=20261001-complete4';
+import {MASTERY_THRESHOLDS} from './mastery.mjs?v=20261001-complete4';
 const abilities={
  growth:['精銳培育','附近部隊依等級獲得傷害加成。','森林祝福','短時間強化附近部隊，適合在敵群進入集中火力區時使用。'],
  dream:['夢境刻印','命中留下夢印，部隊後續攻擊可消耗夢印追加傷害。','星雨','對最接近終點的敵人施放範圍星光，適合密集敵群。'],
