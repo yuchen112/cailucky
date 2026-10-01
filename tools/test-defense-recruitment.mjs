@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {newCollection,recruit,drawOdds,trainingRanks,validateCollection,rewardCollection} from '../games/fairytale-defense/rebuild/recruitment.mjs';
+let c=newCollection();let {collection,result}=recruit(c,()=>0);assert.equal(c.coins,300);assert.equal(collection.coins,200);assert.equal(result.duplicate,false);({collection,result}=recruit(collection,()=>0));assert.equal(collection.coins,120);assert.equal(result.refund,20);
+c={...newCollection(),total:29,sinceGold:9,sincePrism:29};assert.deepEqual(drawOdds(c),[0,0,100]);assert.equal(recruit(c,()=>0).result.grade,'prism');
+c={...newCollection(),total:9,sinceGold:9,sincePrism:9};assert.deepEqual(drawOdds(c),[0,95,5]);assert.equal(recruit(c,()=>0).result.grade,'gold');
+assert.throws(()=>recruit({...newCollection(),coins:99}));assert.throws(()=>validateCollection({...newCollection(),sinceGold:10}));assert.throws(()=>validateCollection({...newCollection(),owned:['bad']}));
+c=newCollection();c.training.archer=10000;assert.equal(trainingRanks(c).archer,8);assert.equal(rewardCollection(c,{waves:6,firstClearStage:1}).coins,420);
+console.log('PASS: migration defaults, immutable draw, exact base/pity odds, duplicate refund, insufficient funds, rank cap and reward amounts');
+const {newArmySave,prepareArmyExpedition,settleArmySave,decodeArmySave}=await import('../games/fairytale-defense/rebuild/army-save.mjs');
+let p=newArmySave(),next=prepareArmyExpedition(p,{hero:'growth'},'reward-test');next.battle.wave=6;next.battle.phase='victory';p=settleArmySave(next.save,next.battle,'reward-test');assert.equal(p.collection.coins,420);assert.deepEqual(settleArmySave(p,next.battle,'reward-test'),p);
+const malformed=prepareArmyExpedition(newArmySave(),{hero:'growth'},'rank-test').save;malformed.checkpoint.training.archer=8;assert.throws(()=>decodeArmySave(malformed),/訓練/);
+console.log('PASS: first-clear and wave reward idempotency, checkpoint/profile training consistency');

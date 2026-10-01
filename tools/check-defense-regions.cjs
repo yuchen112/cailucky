@@ -1,0 +1,21 @@
+// Isolated fixture rendering and failure recovery. Not player-earned progression.
+const {execFileSync}=require('node:child_process'),fs=require('node:fs'),os=require('node:os'),path=require('node:path');
+const browser='C:/Users/User/AppData/Local/npm-cache/_npx/6de2aa2fded2970c/node_modules/agent-browser/bin/agent-browser-win32-x64.exe',session='defense-regions',folder=fs.mkdtempSync(path.join(os.tmpdir(),'cxq-regions-')),log=path.join(folder,'log');
+function run(...args){const fd=fs.openSync(log,'w');try{execFileSync(browser,['--session',session,...args],{stdio:['ignore',fd,fd],timeout:40000});}catch(e){console.error(fs.readFileSync(log,'utf8'));throw e;}finally{fs.closeSync(fd);}const text=fs.readFileSync(log,'utf8');console.log(text.trim());return text;}
+const url=process.env.DEFENSE_QA_URL||'http://127.0.0.1:4173/games/fairytale-defense/rebuild/army.html';
+const diag=`const m=await import(document.querySelector('script[type=module]').src),d=m.diagnostics();`;
+function check(js){run('eval',`(async()=>{${js};return 'PASS';})()`);}
+try{
+ run('set','viewport','390','844');run('open',url);run('wait','[data-ready=true]');
+ for(const stage of [6,11]){
+  check(`const c=await import('./core.mjs'),a=await import('./army-save.mjs'),p=a.newArmySave();p.campaign={unlocked:15,cleared:Array.from({length:14},(_,i)=>i+1)};const f=a.prepareArmyExpedition(p,{hero:'dream',stage:${stage}},'region-fixture');f.battle.gold=10000;let pad=0;for(const role of ['archer','cannon','frost','firefly'])for(const b of c.UNIT_BRANCHES[role]){c.deploy(f.battle,pad,role);for(let n=2;n<=5;n++)c.upgrade(f.battle,pad,n===3?b.id:undefined);pad++;}localStorage.setItem('cxq.defense.army.v3',JSON.stringify(a.settleArmySave(f.save,f.battle,'region-fixture')))`);
+  run('open',url);run('wait','[data-ready=true]');
+  if(stage===6)check(`const original=HTMLImageElement.prototype.decode;let once=true;HTMLImageElement.prototype.decode=function(){if(once&&this.src.includes('road-moon.webp')){once=false;return Promise.reject(Error('QA decode failure'));}return original.call(this)}`);
+  run('click','#cover-resume');
+  if(stage===6){run('wait','#loading-status button');run('snapshot','-i');check(`${diag}if(d.failed||!document.querySelector('#loading-status').textContent.includes('重試')||!JSON.parse(localStorage.getItem('cxq.defense.army.v3')).checkpoint)throw Error('failure recovery missing')`);run('click','#loading-status button:first-of-type');}
+  run('wait','body:not(:has(#loading-status[open]))');run('snapshot','-i');check(`${diag}if(d.failed||d.battle.stage!==${stage}||d.battle.towers.length!==8||!d.art.includes('road-'+(${stage}===6?'moon':'dawn')))throw Error('region restore failed');for(const b of document.querySelectorAll('.pad-hit,.commander-hit')){const r=b.getBoundingClientRect();if(r.top<0||r.bottom>innerHeight||r.left<0||r.right>innerWidth)throw Error('hotspot clipped')}`);
+  run('screenshot',`preview/defense-complete-region${stage}.png`);run('click','.pad-hit:nth-child(1)');run('snapshot','-i');check(`const r=document.querySelector('#troops [data-close]').getBoundingClientRect();if(r.bottom>innerHeight)throw Error('upgrade close clipped')`);run('click','#troops [data-close]');run('click','#wave');run('wait','2500');check(`${diag}if(d.battle.phase!=='battle')throw Error('battle did not start');if(${stage}===6&&new Set([...d.battle.enemies,...d.battle.queue].map(e=>e.route)).size!==2)throw Error('two entrance assignment absent')`);run('screenshot',`preview/defense-complete-region${stage}-battle.png`);
+ }
+ run('click','#settings');run('select','#music-track','moon');run('wait','1000');check(`${diag}if(d.audio.current!=='moon'||d.audio.readyState<2)throw Error('moon audio not decoded')`);run('select','#music-track','dawn');run('wait','1000');check(`${diag}if(d.audio.current!=='dawn'||d.audio.readyState<2)throw Error('dawn audio not decoded')`);
+ if(run('errors').trim())throw Error('browser errors');console.log('PASS: independent moon/dawn routes, Lv5 branches, deliberate image failure/retry without save loss, three audio files decoded.');
+}finally{run('close');fs.unlinkSync(log);fs.rmdirSync(folder);}

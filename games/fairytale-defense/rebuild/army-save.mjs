@@ -1,13 +1,15 @@
-import {captureCheckpoint,restoreCheckpoint} from './checkpoint.mjs';
-import {newMastery,validateMastery,beginMasteryRun,awardCompletedWaves} from './mastery.mjs';
-import {createBattle} from './core.mjs';
+import {alignCommander} from './routes.mjs?v=20261001-complete1';
+import {captureCheckpoint,restoreCheckpoint} from './checkpoint.mjs?v=20261001-complete1';
+import {newMastery,validateMastery,beginMasteryRun,awardCompletedWaves} from './mastery.mjs?v=20261001-complete1';
+import {createBattle} from './core.mjs?v=20261001-complete1';
+import {newCollection,validateCollection,rewardCollection,trainingRanks} from './recruitment.mjs?v=20261001-complete1';
 // Separate envelope from the legacy preview. Persist one JSON value atomically.
-export function newArmySave(){return {version:3,mastery:newMastery(),campaign:{unlocked:1,cleared:[]},checkpoint:null};}
+export function newArmySave(){return {version:3,mastery:newMastery(),collection:newCollection(),campaign:{unlocked:1,cleared:[]},checkpoint:null};}
 // UI entry point: XP is read only from the saved profile, never from a form field.
 export function prepareArmyExpedition(save,{hero,stage=1,mode='campaign',loadout,specialization=null,talents={}},runId){
  const profile=decodeArmySave(save);
- const battle=createBattle({hero,stage,mode,loadout,specialization,talents,masteryXp:profile.mastery.xp[hero]});
- if(!battle.army)throw Error('請選擇一位英雄');
+ const battle=createBattle({hero,stage,mode,loadout,specialization,talents,masteryXp:profile.mastery.xp[hero],training:trainingRanks(profile.collection)});
+ if(!battle.army)throw Error('請選擇一位英雄');alignCommander(battle);
  return {battle,save:beginArmySave(profile,battle,runId)};
 }
 export function beginArmySave(save,battle,runId){
@@ -27,7 +29,8 @@ export function settleArmySave(save,battle,runId,{practice=false}={}){
    if(!campaign.cleared.includes(battle.stage))campaign.cleared.push(battle.stage);
    campaign.cleared.sort((a,b)=>a-b);campaign.unlocked=Math.min(15,Math.max(campaign.unlocked,battle.stage+1));
  }
- return {version:3,mastery,campaign,checkpoint:captureCheckpoint(battle)};
+ const collection=rewardCollection(old.collection,{waves:practice?0:Math.max(0,completed-active.claimed),firstClearStage:!practice&&battle.phase==='victory'&&!old.campaign.cleared.includes(battle.stage)&&battle.mode==='campaign'?battle.stage:0});
+ return {version:3,mastery,campaign,collection,checkpoint:captureCheckpoint(battle)};
 }
 export function decodeArmySave(raw){
  const v=typeof raw==='string'?JSON.parse(raw):raw;
@@ -39,5 +42,6 @@ export function decodeArmySave(raw){
  const checkpoint=v.checkpoint==null?null:captureCheckpoint(restoreCheckpoint(v.checkpoint));
  if(checkpoint&&checkpoint.hero.masteryXp>mastery.xp[checkpoint.hero.role])throw Error('英雄熟練度與存檔不一致');
  if(checkpoint?.mode==='campaign'&&checkpoint.stage>campaign.unlocked)throw Error('存檔超過已開放關卡');
- return {version:3,mastery,campaign:{unlocked:campaign.unlocked,cleared:[...campaign.cleared].sort((a,b)=>a-b)},checkpoint};
+ const collection=validateCollection(v.collection),ranks=trainingRanks(collection);if(checkpoint&&Object.entries(checkpoint.training||{}).some(([id,n])=>n>(ranks[id]||0)))throw Error('部隊訓練與存檔不一致');
+ return {version:3,mastery,collection,campaign:{unlocked:campaign.unlocked,cleared:[...campaign.cleared].sort((a,b)=>a-b)},checkpoint};
 }

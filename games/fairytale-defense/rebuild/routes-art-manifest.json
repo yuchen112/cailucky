@@ -1,0 +1,17 @@
+{
+  "method": "built-in image_gen; independent road overlays, no slicing",
+  "jobs": [
+    {
+      "id": "road-moon",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-96009f9d-fa13-4049-aabd-2f6b56fcc95b.png",
+      "output": "games/fairytale-defense/rebuild/art/road-moon.webp",
+      "prompt": "One transparent top-down ivory cobblestone overlay, two top entrance lanes at 17% and 83% canvas width running down to 78% height, merging at center 84% height and continuing to bottom. Reference original road for material only. No atlas, no text, no background."
+    },
+    {
+      "id": "road-dawn",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6b5db963-7a3a-4989-87be-072c87328966.png",
+      "output": "games/fairytale-defense/rebuild/art/road-dawn.webp",
+      "prompt": "Use case: stylized-concept. ONE portrait 2:3 transparent top-down road overlay for a mobile tower-defense map. Reference image is material style ONLY, not layout. New zigzag serpentine layout: begins TOP edge x50%, down to y10%, turns RIGHT to x85%, down to y32%, turns LEFT to x15%, down to y54%, turns RIGHT to x85%, down to y76%, turns LEFT to x50%, then straight down to BOTTOM. Smooth rounded 90-degree corners, uniform road thickness 8% of canvas width. Ivory rounded cobblestones, subtle gold edging and tiny moss accents. Entire rest of canvas genuinely transparent, no wide shadows or haze, no grass field. Three horizontal runs clearly separated by large empty transparent areas for towers. Orthographic overhead, polished carved stone toy fantasy rendering. No text, characters, tower pads, border, atlas, or sprite sheet. One complete road image."
+    }
+  ]
+}

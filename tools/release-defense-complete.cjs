@@ -1,0 +1,6 @@
+// Scoped release/version rewrite; does not touch other games or their artwork.
+const fs=require('node:fs'),path=require('node:path'),root='games/fairytale-defense/rebuild/',version='20261001-complete1';
+for(const file of fs.readdirSync(root).filter(n=>n.endsWith('.mjs'))){const p=root+file,s=fs.readFileSync(p,'utf8');fs.writeFileSync(p,s.replace(/(from\s+['"])(\.\/[^'"]+\.mjs)(?:\?[^'"]*)?(['"])/g,`$1$2?v=${version}$3`));}
+for(const p of ['index.html','games/fairytale-defense/index.html',root+'army.html']){let s=fs.readFileSync(p,'utf8').replaceAll('20261001-evolution2',version);if(p.endsWith('army.html'))s=s.replace(/href="(army-[^"?]+\.css|preview\.css)(?:\?[^\"]*)?"/g,`href="$1?v=${version}"`);fs.writeFileSync(p,s);}
+let bundle=fs.readFileSync('assets/index-XdRDscQx.js','utf8');const old='label:"英雄守護 · 重製試玩",url:"games/fairytale-defense/index.html?v=20261001-evolution2"',next=`label:"夢境守護 · 英雄戰役",url:"games/fairytale-defense/index.html?v=${version}"`;if(!bundle.includes(next)){if(bundle.split(old).length!==2)throw Error('Unexpected tower entry');bundle=bundle.replace(old,next);}fs.writeFileSync('assets/index-XdRDscQx.js',bundle);
+const css=root+'army-polish.css';fs.writeFileSync(css,fs.readFileSync(css,'utf8').replaceAll('art/cover-scene.webp','art/cover-complete.webp'));

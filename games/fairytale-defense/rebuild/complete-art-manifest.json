@@ -1,0 +1,144 @@
+{
+  "method": "built-in image_gen; one call per image; no atlas slicing",
+  "jobs": [
+    {
+      "id": "cover-complete",
+      "prompt": "Use case: stylized-concept. Create ONE premium portrait mobile tower-defense game cover, no text, no UI. Reference image 1 is the user's original CxQ Growth hero, preserve precisely the brown hair, large brown eyes, leafy green hood with sprout, cream tunic, brown boots, staff and satchel. Reference image 2 is the established acorn crossbow troop, preserve its distinct design. Compose these recognizable characters as allies guarding a luminous mint dream crystal in an ornate little pedestal on a woodland stone terrace. Growth hero center, acorn defender at the side, small distant dark whimsical monster silhouettes approaching along a path. Rich handcrafted storybook toy/clay rendering matching both references. Hero scene concentrated in middle 30%-70%; peaceful sky and forest canopy top 22% reserved for title overlay, clear bottom 25% terrace for separate buttons. Cohesive teal, forest green and warm gold lighting, vivid readable silhouettes, not realistic humans. Full bleed portrait 2:3 composition. This is one complete background illustration, never a contact sheet or sprite atlas. No written words, letters, borders, watermark. Keep reference IP identity exactly.",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-a22943cf-7fb4-4488-aadd-e43fbd52481f.png",
+      "output": "games/fairytale-defense/rebuild/art/cover-complete.webp"
+    },
+    {
+      "id": "growth-victory",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ growth IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: victory celebration: proud gentle smile, one arm lifted in a small cheer, the signature prop remains visible, feet visible in a stable stance. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-growth.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-7855760c-e6d7-4f09-bff8-dcddd784effe.png",
+      "output": "games/fairytale-defense/rebuild/art/growth-victory.webp"
+    },
+    {
+      "id": "dream-ready",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ dream IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: battle anticipation: feet firmly planted, slight forward lean, arms and signature prop drawn inward ready to cast; focused but adorable expression. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-dream.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-ef0300ca-8250-44cd-8cec-f3a965beef5a.png",
+      "output": "games/fairytale-defense/rebuild/art/dream-ready.webp"
+    },
+    {
+      "id": "dream-victory",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ dream IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: victory celebration: proud gentle smile, one arm lifted in a small cheer, the signature prop remains visible, feet visible in a stable stance. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-dream.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-31111501-fd8d-445a-9754-391be7d21c69.png",
+      "output": "games/fairytale-defense/rebuild/art/dream-victory.webp"
+    },
+    {
+      "id": "luck-ready",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ luck IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: battle anticipation: feet firmly planted, slight forward lean, arms and signature prop drawn inward ready to cast; focused but adorable expression. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-luck.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-54ac87ce-859e-4fc0-aaad-d30a150ad435.png",
+      "output": "games/fairytale-defense/rebuild/art/luck-ready.webp"
+    },
+    {
+      "id": "luck-victory",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ luck IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: victory celebration: proud gentle smile, one arm lifted in a small cheer, the signature prop remains visible, feet visible in a stable stance. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-luck.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-92433c2a-110e-4e59-8a0a-7b3bf08e727f.png",
+      "output": "games/fairytale-defense/rebuild/art/luck-victory.webp"
+    },
+    {
+      "id": "joy-ready",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ joy IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: battle anticipation: feet firmly planted, slight forward lean, arms and signature prop drawn inward ready to cast; focused but adorable expression. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-joy.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6d0e9a34-8636-4ffc-906d-712af01c9573.png",
+      "output": "games/fairytale-defense/rebuild/art/joy-ready.webp"
+    },
+    {
+      "id": "joy-victory",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ joy IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: victory celebration: proud gentle smile, one arm lifted in a small cheer, the signature prop remains visible, feet visible in a stable stance. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-joy.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-fa7b2a4f-2b12-4d04-bfd1-406cae7858fe.png",
+      "output": "games/fairytale-defense/rebuild/art/joy-victory.webp"
+    },
+    {
+      "id": "night-ready",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ night IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: battle anticipation: feet firmly planted, slight forward lean, arms and signature prop drawn inward ready to cast; focused but adorable expression. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-night.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-29bf0b11-b0bf-4689-bc35-af2382c8c6d4.png",
+      "output": "games/fairytale-defense/rebuild/art/night-ready.webp"
+    },
+    {
+      "id": "night-victory",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ night IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: victory celebration: proud gentle smile, one arm lifted in a small cheer, the signature prop remains visible, feet visible in a stable stance. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-night.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-e72059c8-5243-4b7f-ad2e-e042a1dedb04.png",
+      "output": "games/fairytale-defense/rebuild/art/night-victory.webp"
+    },
+    {
+      "id": "sadness-ready",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ sadness IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: battle anticipation: feet firmly planted, slight forward lean, arms and signature prop drawn inward ready to cast; focused but adorable expression. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-sadness.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-be8c7415-79be-48f8-a670-fb58d8493e08.png",
+      "output": "games/fairytale-defense/rebuild/art/sadness-ready.webp"
+    },
+    {
+      "id": "sadness-victory",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ sadness IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: victory celebration: proud gentle smile, one arm lifted in a small cheer, the signature prop remains visible, feet visible in a stable stance. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-sadness.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-60ab4fcd-3370-474b-b486-dfea668e44e3.png",
+      "output": "games/fairytale-defense/rebuild/art/sadness-victory.webp"
+    },
+    {
+      "id": "trust-ready",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ trust IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: battle anticipation: feet firmly planted, slight forward lean, arms and signature prop drawn inward ready to cast; focused but adorable expression. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-trust.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-2378ca42-090b-46b7-baf8-5b9c329bda44.png",
+      "output": "games/fairytale-defense/rebuild/art/trust-ready.webp"
+    },
+    {
+      "id": "trust-victory",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ trust IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: victory celebration: proud gentle smile, one arm lifted in a small cheer, the signature prop remains visible, feet visible in a stable stance. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-trust.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-fedb96d9-d131-4443-be33-76b85bb42ef4.png",
+      "output": "games/fairytale-defense/rebuild/art/trust-victory.webp"
+    },
+    {
+      "id": "memory-ready",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ memory IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: battle anticipation: feet firmly planted, slight forward lean, arms and signature prop drawn inward ready to cast; focused but adorable expression. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-memory.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6896a85c-a3d5-40d3-b4ba-ef0018923a49.png",
+      "output": "games/fairytale-defense/rebuild/art/memory-ready.webp"
+    },
+    {
+      "id": "memory-victory",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ memory IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: victory celebration: proud gentle smile, one arm lifted in a small cheer, the signature prop remains visible, feet visible in a stable stance. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-memory.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-4af2a380-fb02-4a8f-afa9-0d03978529ca.png",
+      "output": "games/fairytale-defense/rebuild/art/memory-victory.webp"
+    },
+    {
+      "id": "healing-ready",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ healing IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: battle anticipation: feet firmly planted, slight forward lean, arms and signature prop drawn inward ready to cast; focused but adorable expression. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-healing.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-c2786c0b-e360-450e-bd09-92e6ee08a7f4.png",
+      "output": "games/fairytale-defense/rebuild/art/healing-ready.webp"
+    },
+    {
+      "id": "healing-victory",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ healing IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: victory celebration: proud gentle smile, one arm lifted in a small cheer, the signature prop remains visible, feet visible in a stable stance. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-healing.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0be7f286-bcc9-41b4-95dd-44e7f569a340.png",
+      "output": "games/fairytale-defense/rebuild/art/healing-victory.webp"
+    },
+    {
+      "id": "hope-ready",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ hope IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: battle anticipation: feet firmly planted, slight forward lean, arms and signature prop drawn inward ready to cast; focused but adorable expression. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-hope.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0dda9d8a-3e47-4153-90e7-9ffc6320ce32.png",
+      "output": "games/fairytale-defense/rebuild/art/hope-ready.webp"
+    },
+    {
+      "id": "hope-victory",
+      "prompt": "Use case: identity-preserve. Reference image 1 is the exact original CxQ hope IP character; preserve the same face, species, hairstyle, clothing, colours and all signature accessories. Make ONE transparent full-body game animation key pose of this SAME character, NOT a redesign. Pose: victory celebration: proud gentle smile, one arm lifted in a small cheer, the signature prop remains visible, feet visible in a stable stance. Preserve the handcrafted soft clay storybook 3D rendering of the reference. Three-quarter front angle, same facing direction as reference, centered, full body and every accessory safely inside frame with 12 percent margin all around. No platform, no scenic background, no text, no shadows outside the feet, no extra characters. Genuine transparent alpha background. Single individual image only, never sprite sheet or multi-panel.",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/assets/characters/cxq-role-hope.webp",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-4c7d2b51-49c7-47b3-a98d-88838cce1e1a.png",
+      "output": "games/fairytale-defense/rebuild/art/hope-victory.webp"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+/* Layout, typography and motion only. Decorative surfaces are individual AI images. */
+#cover[open]{background-image:url('art/cover-complete.webp')}
+#cover-options{position:absolute;right:12px;top:max(12px,env(safe-area-inset-top));width:70px;min-height:44px;font-size:16px;padding:8px}
+#cover .art-title{width:min(76vw,360px);margin-top:34px}
+.cover-actions{padding-bottom:4px}.cover-actions p{font-size:14px}
+.commander-hit{bottom:auto;transform:translate(-50%,-50%);width:17%;height:14%;min-height:44px;background:none}
+.commander-hit:active:not(:disabled){transform:translate(-50%,-50%)}
+.camp-links{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px}.camp-links button{width:100%;font-size:17px;min-height:44px;margin:0}
+#camp-wallet{font-size:16px;line-height:1.3;margin:3px 0;padding:5px 20px;background:url('art/button.webp') center/100% 100% no-repeat}
+#hero-summary,#hint{background:url('art/button.webp') center/100% 100% no-repeat;padding:8px 20px}
+.hero-showcase{min-height:125px}#hero-portrait{min-height:56px}
+.journey-dialog[open],#options[open]{display:flex;flex-direction:column;max-height:90svh;height:auto;overflow:hidden;padding:40px 24px 20px}
+.journey-dialog[open]{height:88svh}.journey-body,.options-body{min-height:0;overflow:auto;overscroll-behavior:contain;flex:1;padding:0 4px 12px}
+.journey-dialog h2,#options h2{flex:none;margin:0 0 10px}.journey-close,#options>[data-close]{flex:none;min-height:48px;margin:8px 0 0}
+.journey-body p,.audio-controls label{font-size:17px;line-height:1.55;text-align:left}
+.journey-body details{margin:14px 0;text-align:left}.journey-body summary,.audio-controls summary{font-size:17px;min-height:44px;padding:10px 0;cursor:pointer}
+.collection-grid,.branch-guides{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.collection-grid button{min-width:0;padding:12px 6px;font-size:16px;background:url('art/panel.webp') center/100% 100% no-repeat}
+.collection-grid img{width:100%;height:110px;object-fit:contain}.collection-grid span,.collection-grid small{display:block;line-height:1.5}
+.recruit-portrait{height:145px;width:100%;object-fit:contain}#recruit-result:empty{display:none}
+.unit-showcase{position:relative;height:180px}.guide-range{position:absolute;width:210px;height:180px;object-fit:contain;left:50%;transform:translateX(-50%);bottom:0}.guide-unit{position:absolute;width:140px;height:150px;object-fit:contain;left:50%;transform:translateX(-50%);bottom:15px}
+.branch-guides figure{margin:0}.branch-guides img{height:130px;width:100%;object-fit:contain}.branch-guides p{font-size:16px}.unit-detail{font-size:15px;min-height:44px;padding:8px!important}
+.audio-controls{display:grid;gap:8px}.audio-controls label{display:block}.audio-controls select,.audio-controls input[type=range]{display:block;width:100%;min-height:44px;font:inherit}.audio-controls input[type=checkbox]{width:22px;height:22px;vertical-align:middle;accent-color:#8feac8}.audio-controls select{color:#fff8dc;background:#183f36;padding:8px}.audio-controls a{color:#b7fff1}
+.hero-guide img{display:block;width:140px;height:150px;object-fit:contain;margin:auto}.hero-guide h3{font-size:19px;margin:14px 0 4px;text-align:left}.hero-guide p{line-height:1.6}
+#loading-status button{min-height:48px}#squad{max-height:90svh;overflow:auto}
+body[data-motion=full] #hero-portrait{animation:camp-breathe 4s ease-in-out infinite}
+@keyframes camp-breathe{50%{transform:translateY(-3px) scale(1.012)}}
+.cover-wisp{position:absolute;pointer-events:none;width:28px;height:28px;object-fit:contain;opacity:.6;animation:wisp 4s ease-in-out infinite}body[data-motion=reduced] .cover-wisp{animation:none;opacity:.3}
+@keyframes wisp{50%{transform:translateY(-12px) scale(1.2);opacity:.95}}
+@media(max-height:700px){#camp .art-title{max-height:65px}.hero-showcase{min-height:100px}#hero-info{font-size:19px!important}#hero-summary{font-size:14px;padding:6px 12px}.camp-links button{font-size:16px;min-height:44px}#camp-wallet{font-size:14px}#heroes button{min-height:70px}#heroes img{height:44px;width:44px}.cover-actions button{min-height:48px}.cover-tagline{font-size:16px}}

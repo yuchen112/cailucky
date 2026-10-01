@@ -1,4 +1,4 @@
-import {UNIT_BRANCHES,DEFAULT_LOADOUT} from './army.mjs';
+import {UNIT_BRANCHES,DEFAULT_LOADOUT} from './army.mjs?v=20261001-complete1';
 export function unitArt(t){
  if(t.level>=3&&UNIT_BRANCHES[t.role]?.some(b=>b.id===t.branch))return `unit-${t.role}-${t.branch}-${t.level}`;
  return `unit-${t.role}${t.level>=2?'-veteran':''}`;

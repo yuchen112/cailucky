@@ -7,7 +7,7 @@ manifest.jobs.push(...require('../games/fairytale-defense/rebuild/presentation-a
 manifest.jobs.push(...require('../games/fairytale-defense/rebuild/evolution-art-manifest.json').jobs.filter(job=>job.source));
 manifest.jobs.push(...require('../games/fairytale-defense/rebuild/battle-art-manifest.json').jobs);
 manifest.jobs.push(...require('../games/fairytale-defense/rebuild/region-art-manifest.json').jobs);
-(async()=>{for(const job of manifest.jobs){
+(async()=>{for(const job of manifest.jobs.filter(job=>!job.retired)){
  fs.mkdirSync(path.dirname(job.output),{recursive:true});
  const large=['meadow','road','camp-scene','cover-scene','meadow-moon','meadow-dawn'].includes(job.id);
  await sharp(job.source).resize(large?780:512,large?1170:512,{fit:'inside',withoutEnlargement:true}).webp({quality:87,alphaQuality:100}).toFile(job.output);

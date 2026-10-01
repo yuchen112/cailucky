@@ -1,11 +1,13 @@
+import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261001-complete1';
 // Deterministic simulation. Visuals consume events; animation never grants damage.
-import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs';
-import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs';
-import {heroBuild,supportFor,supportRadius,heroRange,activeModifiers} from './hero-rules.mjs';
-import {CAMPAIGN,encounterWave} from './encounters.mjs';
+import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261001-complete1';
+import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261001-complete1';
+import {heroBuild,supportFor,supportRadius,heroRange,activeModifiers} from './hero-rules.mjs?v=20261001-complete1';
+import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261001-complete1';
 export {UNITS,UNIT_BRANCHES};
 export {SPECIALIZATIONS,BLESSINGS};
-export const towerStats=(t,s)=>statsFor(ROLES[t.role]||UNITS[t.role],t,s?.buffs);
+export const towerStats=(t,s)=>{const r=statsFor(ROLES[t.role]||UNITS[t.role],t,s?.buffs);if(s?.army)r.damage*=1+(s.training?.[t.role]||0)*.01;return r;};
+export function validateTraining(value={}){if(!value||typeof value!=='object'||Array.isArray(value)||Object.entries(value).some(([id,n])=>!Object.hasOwn(UNITS,id)||!Number.isInteger(n)||n<0||n>8))throw Error('部隊訓練不正確');return {...value};}
 export const WORLD = Object.freeze({width:390,height:585});
 // Calibrated against the actual independent road image, not its generation prompt.
 export const PATH = [[197,0],[197,32],[186,59],[164,71],[76,71],[56,85],[51,107],[51,150],[66,173],[88,183],[306,183],[329,195],[337,218],[337,270],[327,293],[305,308],[79,308],[60,326],[52,351],[52,389],[65,410],[89,416],[176,416],[191,431],[198,456],[198,585]];
@@ -30,7 +32,8 @@ export const ENEMIES = Object.freeze({
 });
 const lengths = PATH.slice(1).map((p,i)=>Math.hypot(p[0]-PATH[i][0],p[1]-PATH[i][1]));
 export const PATH_LENGTH = lengths.reduce((a,b)=>a+b,0);
-export function pointAt(distance){
+export function pointAt(distance,s=null,route=0){
+  const routed=routePoint(distance,s,route);if(routed)return routed;
   let d=Math.max(0,distance);
   for(let i=0;i<lengths.length;i++){
     if(d<=lengths[i]){const t=d/lengths[i];return {x:PATH[i][0]+(PATH[i+1][0]-PATH[i][0])*t,y:PATH[i][1]+(PATH[i+1][1]-PATH[i][1])*t};}
@@ -38,25 +41,25 @@ export function pointAt(distance){
   }
   return {x:198,y:585};
 }
-export function createBattle({mode='campaign',stage=1,hero=null,loadout=DEFAULT_LOADOUT,masteryXp=0,specialization=null,talents={}}={}){
+export function createBattle({mode='campaign',stage=1,hero=null,loadout=DEFAULT_LOADOUT,masteryXp=0,specialization=null,talents={},training={}}={}){
   if(!['campaign','endless'].includes(mode)||!Number.isInteger(stage)||stage<1||stage>30)throw Error('無效戰役');
   if(hero!==null&&!Object.hasOwn(ROLES,hero))throw Error('無效英雄');
-  const army=hero!==null;
+  const army=hero!==null;training=validateTraining(training);
   if(army&&stage>15)throw Error('英雄戰役目前規劃十五關');
-  return {version:1,mode,stage,army,loadout:army?validateLoadout(loadout):[],hero:army?{role:hero,...heroBuild(hero,masteryXp,specialization,talents),x:195,y:215,ready:0,skillReady:0,attacks:0,moves:0,echo:0,focus:0,guardianUsed:false}:null,phase:'planning',time:0,remainder:0,paused:false,gold:360,hp:20,maxHp:20,shield:0,buffs:{power:0,reach:0},blessingChoices:[],wave:0,maxWaves:6,kills:0,nextId:1,towers:[],enemies:[],shots:[],pending:[],queue:[],events:[],eventId:0};
+  return {version:1,mode,stage,army,training,loadout:army?validateLoadout(loadout):[],hero:army?{role:hero,...heroBuild(hero,masteryXp,specialization,talents),x:195,y:215,ready:0,skillReady:0,attacks:0,moves:0,echo:0,focus:0,guardianUsed:false}:null,phase:'planning',time:0,remainder:0,paused:false,gold:360,hp:20,maxHp:20,shield:0,buffs:{power:0,reach:0},blessingChoices:[],wave:0,maxWaves:6,kills:0,nextId:1,towers:[],enemies:[],shots:[],pending:[],queue:[],events:[],eventId:0};
 }
 function event(s,type,data={}){s.events.push({id:++s.eventId,type,time:s.time,...data});}
 export function moveHero(s,x,y){
- const h=s.hero;if(!h||s.paused||!['planning','battle','intermission'].includes(s.phase)||!Number.isFinite(x)||!Number.isFinite(y)||x<30||x>360||y<60||y>500||(h.moveReady||0)>s.time)return false;
- h.x=x;h.y=y;h.moves++;h.moveReady=s.time+(h.moves===1?0:20);event(s,'hero-move',{x,y});return true;
+ const h=s.hero;if(!h||s.paused||!['planning','battle','intermission'].includes(s.phase)||!Number.isFinite(x)||!Number.isFinite(y)||x<30||x>360||y<60||y>550||(h.moveReady||0)>s.time)return false;
+ const from={x:h.x,y:h.y};h.x=x;h.y=y;h.moves++;h.moveReady=s.time+(h.moves===1?0:20);event(s,'hero-move',{x,y,from});return true;
 }
 export function castHero(s,targetId){
  const h=s.hero;if(!h||s.paused||s.phase!=='battle'||h.skillReady>s.time)return false;
  const target=s.enemies.find(e=>e.id===targetId&&e.hp>0)||s.enemies.filter(e=>e.hp>0).sort((a,b)=>b.distance-a.distance)[0];
  if(['dream','night','sadness','memory','hope'].includes(h.role)&&!target)return false;
- const p=target?pointAt(target.distance):h;
+ const p=target?pointAt(target.distance,s,target.route):h;
  const modifiers=activeModifiers(h),radius=supportRadius(h)+(h.role==='growth'&&h.specialization==='grove'?55:0);
- const nearby=s.towers.filter(t=>Math.hypot(PADS[t.pad].x-h.x,PADS[t.pad].y-h.y)<=radius);
+ const nearby=s.towers.filter(t=>Math.hypot(routePads(s)[t.pad].x-h.x,routePads(s)[t.pad].y-h.y)<=radius);
  if(h.role==='growth')for(const t of nearby)t.heroPowerUntil=s.time+6+modifiers.duration;
  else if(h.role==='trust'){for(const t of nearby)t.trustUntil=s.time+6+modifiers.duration;s.shield+=h.specialization==='shelter'?4:2;}
  else if(h.role==='joy')h.hasteUntil=s.time+(h.specialization==='festival'?9:6)+modifiers.duration;
@@ -99,19 +102,19 @@ export function startWave(s){
   s.shield=s.towers.reduce((n,t)=>n+towerStats(t,s).shield,0);
   if(s.hero){Object.assign(s.hero,{ready:s.time,skillReady:s.time,moveReady:s.time,moves:0,hasteUntil:0,echo:0,focus:0,focusId:null,guardianUsed:false});for(const t of s.towers)Object.assign(t,{heroPowerUntil:0,trustUntil:0,luckyCharges:0});}
   s.wave++;s.phase='battle';
-  s.queue=kindsFor(s,s.wave).map((kind,i)=>({at:s.time+i*(s.army&&s.mode==='campaign'?CAMPAIGN[s.stage-1].interval:.95),kind}));
+  s.queue=kindsFor(s,s.wave).map((kind,i)=>({at:s.time+i*(s.army&&s.mode==='campaign'?CAMPAIGN[s.stage-1].interval:.95),kind,route:i%2}));
   event(s,'wave',{wave:s.wave});return true;
 }
 function spawn(s,q){
   const p=ENEMIES[q.kind],scale=1+(s.stage-1)*.18+(s.wave-1)*.14;
-  s.enemies.push({id:s.nextId++,kind:q.kind,hp:p.hp*scale,maxHp:p.hp*scale,speed:p.speed,armor:p.armor,reward:p.reward,leak:p.leak,distance:0,slow:1,slowUntil:0});
+  s.enemies.push({id:s.nextId++,kind:q.kind,route:regionFor(s)==='moon'?(q.route||0):0,hp:p.hp*scale*(regionFor(s)==='moon'?.72:1),maxHp:p.hp*scale*(regionFor(s)==='moon'?.72:1),speed:p.speed*(regionFor(s)==='moon'?.85:1),armor:p.armor,reward:p.reward,leak:p.leak,distance:0,slow:1,slowUntil:0});
   event(s,q.kind==='boss'?'boss-enter':'spawn',{kind:q.kind});
 }
 function hit(s,shot){
   const target=s.enemies.find(e=>e.id===shot.targetId&&e.hp>0);
-  if(!target)return;const p=pointAt(target.distance);
-  const victims=shot.splash?s.enemies.filter(e=>e.hp>0&&Math.hypot(pointAt(e.distance).x-p.x,pointAt(e.distance).y-p.y)<=shot.splash):[target];
-  if(shot.bounces&&!shot.splash){let last=target;for(let i=0;i<shot.bounces;i++){const at=pointAt(last.distance),next=s.enemies.filter(e=>e.hp>0&&!victims.includes(e)&&Math.hypot(pointAt(e.distance).x-at.x,pointAt(e.distance).y-at.y)<=75).sort((a,b)=>Math.abs(a.distance-last.distance)-Math.abs(b.distance-last.distance)||a.id-b.id)[0];if(!next)break;victims.push(next);last=next;}}
+  if(!target)return;const p=pointAt(target.distance,s,target.route);
+  const victims=shot.splash?s.enemies.filter(e=>e.hp>0&&Math.hypot(pointAt(e.distance,s,e.route).x-p.x,pointAt(e.distance,s,e.route).y-p.y)<=shot.splash):[target];
+  if(shot.bounces&&!shot.splash){let last=target;for(let i=0;i<shot.bounces;i++){const at=pointAt(last.distance,s,last.route),next=s.enemies.filter(e=>e.hp>0&&!victims.includes(e)&&Math.hypot(pointAt(e.distance,s,e.route).x-at.x,pointAt(e.distance,s,e.route).y-at.y)<=75).sort((a,b)=>Math.abs(a.distance-last.distance)-Math.abs(b.distance-last.distance)||a.id-b.id)[0];if(!next)break;victims.push(next);last=next;}}
   for(const e of victims){
     const armor=Math.max(0,Math.min(.75,e.armor+(e.wardUntil>s.time?.25:0))-(e.shredUntil>s.time?e.shred:0));
     let damage=shot.damage*(shot.pierce?1:1-armor)*(shot.bounces?Math.pow(.8,victims.indexOf(e)):1);
@@ -123,7 +126,7 @@ function hit(s,shot){
     if(shot.slow){e.slow=Math.min(e.slow,shot.slow);e.slowUntil=Math.max(e.slowUntil,s.time+(shot.slowDuration||2));}
     if(shot.root&&!(e.rootImmuneUntil>s.time)){const duration=shot.root*(e.kind==='boss'?.35:1);e.rootUntil=s.time+duration;e.rootImmuneUntil=s.time+duration+1;}
     if(shot.shred){e.shred=Math.max(e.shred||0,shot.shred);e.shredUntil=s.time+3;}
-    event(s,'hit',{enemyId:e.id,damage,x:pointAt(e.distance).x,y:pointAt(e.distance).y,kind:shot.kind});
+    event(s,'hit',{enemyId:e.id,damage,x:pointAt(e.distance,s,e.route).x,y:pointAt(e.distance,s,e.route).y,kind:shot.kind});
   }
 }
 function tick(s,dt){
@@ -135,35 +138,35 @@ function tick(s,dt){
     if(e.kind==='boss'){
       e.nextSkill??=s.time+5;
       if(e.castUntil&&s.time>=e.castUntil){
-        const p=pointAt(e.distance);
-        for(const ally of s.enemies)if(ally.hp>0&&Math.hypot(pointAt(ally.distance).x-p.x,pointAt(ally.distance).y-p.y)<=100)ally.wardUntil=s.time+3;
+        const p=pointAt(e.distance,s,e.route);
+        for(const ally of s.enemies)if(ally.hp>0&&Math.hypot(pointAt(ally.distance,s,ally.route).x-p.x,pointAt(ally.distance,s,ally.route).y-p.y)<=100)ally.wardUntil=s.time+3;
         event(s,'boss-ward',{enemyId:e.id,...p});e.castUntil=0;e.nextSkill=s.time+8;
       }else if(!e.castUntil&&s.time>=e.nextSkill){
-        e.castUntil=s.time+1.2;event(s,'boss-warning',{enemyId:e.id,...pointAt(e.distance)});
+        e.castUntil=s.time+1.2;event(s,'boss-warning',{enemyId:e.id,...pointAt(e.distance,s,e.route)});
       }
     }
     if(!(e.rootUntil>s.time)&&!e.castUntil)e.distance+=e.speed*e.slow*dt;
   }
-  for(const e of s.enemies.filter(e=>e.distance>=PATH_LENGTH&&e.hp>0)){const absorbed=Math.min(s.shield,e.leak);s.shield-=absorbed;s.hp=Math.max(0,s.hp-e.leak+absorbed);event(s,'leak',{enemyId:e.id,amount:e.leak-absorbed,absorbed});if(s.hp===0&&s.hero?.talents?.ultimate==='guardian'&&!s.hero.guardianUsed){s.hero.guardianUsed=true;s.hp=1;event(s,'hero-rescue',{role:s.hero.role});}}
-  s.enemies=s.enemies.filter(e=>e.distance<PATH_LENGTH);
+  for(const e of s.enemies.filter(e=>e.distance>=(routeLength(s,e.route)||PATH_LENGTH)&&e.hp>0)){const absorbed=Math.min(s.shield,e.leak);s.shield-=absorbed;s.hp=Math.max(0,s.hp-e.leak+absorbed);event(s,'leak',{enemyId:e.id,amount:e.leak-absorbed,absorbed});if(s.hp===0&&s.hero?.talents?.ultimate==='guardian'&&!s.hero.guardianUsed){s.hero.guardianUsed=true;s.hp=1;event(s,'hero-rescue',{role:s.hero.role});}}
+  s.enemies=s.enemies.filter(e=>e.distance<(routeLength(s,e.route)||PATH_LENGTH));
   if(s.hp===0){s.phase='defeat';s.pending=[];s.shots=[];s.queue=[];event(s,'defeat');return;}
   // Release after the actual anticipation period, only while the tower still exists.
   for(const a of s.pending.filter(a=>a.releaseAt<=s.time)){
     const tower=a.hero?s.hero:s.towers.find(t=>t.id===a.towerId),target=s.enemies.find(e=>e.id===a.targetId&&e.hp>0);
-    if(tower&&target){const shot={...a,from:a.hero?{x:tower.x,y:tower.y}:{...PADS[tower.pad]},born:s.time,arriveAt:s.time+.28};s.shots.push(shot);event(s,'release',{pad:tower.pad,hero:!!a.hero,role:tower.role,targetId:target.id});}
+    if(tower&&target){const shot={...a,from:a.hero?{x:tower.x,y:tower.y}:{...routePads(s)[tower.pad]},born:s.time,arriveAt:s.time+.28};s.shots.push(shot);event(s,'release',{pad:tower.pad,hero:!!a.hero,role:tower.role,targetId:target.id});}
   }
   s.pending=s.pending.filter(a=>a.releaseAt>s.time);
   for(const shot of s.shots.filter(p=>p.arriveAt<=s.time))hit(s,shot);
   s.shots=s.shots.filter(p=>p.arriveAt>s.time);
   // Award each defeated enemy exactly once, even on simultaneous splash impacts.
-  for(const e of s.enemies.filter(e=>e.hp<=0)){s.gold+=e.reward;s.kills++;if(s.hero?.role==='luck'&&s.kills%5===0)s.gold+=s.hero.specialization==='fortune'?12:8;event(s,'defeat-enemy',{enemyId:e.id,...pointAt(e.distance),kind:e.kind});}
+  for(const e of s.enemies.filter(e=>e.hp<=0)){s.gold+=e.reward;s.kills++;if(s.hero?.role==='luck'&&s.kills%5===0)s.gold+=s.hero.specialization==='fortune'?12:8;event(s,'defeat-enemy',{enemyId:e.id,...pointAt(e.distance,s,e.route),kind:e.kind});}
   s.enemies=s.enemies.filter(e=>e.hp>0);
   for(const t of s.towers){
-    if(t.ready>s.time)continue;const role=towerStats(t,s),pos=PADS[t.pad];
-    const target=s.enemies.filter(e=>{const distance=Math.hypot(pointAt(e.distance).x-pos.x,pointAt(e.distance).y-pos.y);return distance<=role.range&&distance>=(role.minRange||0)&&(!e.air||role.air);}).sort((a,b)=>(role.air?Number(!!b.air)-Number(!!a.air):0)||(t.priority==='strong'?b.hp-a.hp:t.priority==='armor'?b.armor-a.armor:0)||b.distance-a.distance||a.id-b.id)[0];
+    if(t.ready>s.time)continue;const role=towerStats(t,s),pos=routePads(s)[t.pad];
+    const target=s.enemies.filter(e=>{const distance=Math.hypot(pointAt(e.distance,s,e.route).x-pos.x,pointAt(e.distance,s,e.route).y-pos.y);return distance<=role.range&&distance>=(role.minRange||0)&&(!e.air||role.air);}).sort((a,b)=>(role.air?Number(!!b.air)-Number(!!a.air):0)||(t.priority==='strong'?b.hp-a.hp:t.priority==='armor'?b.armor-a.armor:0)||b.distance-a.distance||a.id-b.id)[0];
     if(!target)continue;
-    const supporters=s.towers.filter(other=>other.id!==t.id&&Math.hypot(PADS[other.pad].x-pos.x,PADS[other.pad].y-pos.y)<=155).map(other=>towerStats(other,s));
-    const heroSupport=supportFor(s,t,PADS);
+    const supporters=s.towers.filter(other=>other.id!==t.id&&Math.hypot(routePads(s)[other.pad].x-pos.x,routePads(s)[other.pad].y-pos.y)<=155).map(other=>towerStats(other,s));
+    const heroSupport=supportFor(s,t,routePads(s));
     const buff=Math.max(1,...supporters.map(r=>r.aura))*heroSupport.damage,haste=Math.min(1,...supporters.map(r=>r.haste))*heroSupport.interval;
     t.attacks++;t.ready=s.time+role.interval*haste;
     const crit=(role.crit&&t.attacks%role.crit===0)||t.luckyCharges>0;if(t.luckyCharges>0)t.luckyCharges--;
@@ -172,7 +175,7 @@ function tick(s,dt){
     event(s,'anticipate',{pad:t.pad,role:t.role,targetId:target.id});
   }
   if(s.hero&&s.hero.ready<=s.time){
-    const h=s.hero,r=ROLES[h.role],target=s.enemies.filter(e=>Math.hypot(pointAt(e.distance).x-h.x,pointAt(e.distance).y-h.y)<=heroRange(h,r.range)).sort((a,b)=>b.distance-a.distance)[0];
+    const h=s.hero,r=ROLES[h.role],target=s.enemies.filter(e=>Math.hypot(pointAt(e.distance,s,e.route).x-h.x,pointAt(e.distance,s,e.route).y-h.y)<=heroRange(h,r.range)).sort((a,b)=>b.distance-a.distance)[0];
     if(target){h.attacks++;h.ready=s.time+r.interval;h.focus=h.focusId===target.id?Math.min(3,h.focus+1):0;h.focusId=target.id;
       const multiplier=h.role==='night'?1+h.focus*(h.specialization==='focus'?.15:.1):h.role==='hope'&&(target.armor>0||target.kind==='boss')?(h.specialization==='breaker'?1.35:1.2):1;
       s.pending.push({id:s.nextId++,hero:true,targetId:target.id,releaseAt:s.time+.22,damage:r.damage*multiplier*(h.talents.passive==='focus'?1.15:1),kind:r.kind,splash:r.splash||0,pierce:!!r.pierce,slow:r.slow||0});event(s,'anticipate',{hero:true,role:h.role,targetId:target.id});}

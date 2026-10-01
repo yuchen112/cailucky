@@ -1,0 +1,53 @@
+{
+  "method": "built-in image_gen, one independent pose per call",
+  "jobs": [
+    {
+      "id": "unit-archer-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-551f6ddd-47c5-4346-9432-24f269e41f62.png",
+      "output": "games/fairytale-defense/rebuild/art/unit-archer-ready.webp",
+      "prompt": "Use case: identity-preserve. Reference is the exact game character to retain. Make ONE individual full-body ready animation key pose: crossbow pulled back with both hands, knees flexed, focusing aim before firing. Preserve exactly the reference face, species, outfit, weapon, colours, body proportions, accessories and handcrafted clay fantasy material. Same three-quarter view facing right, same soft upper-left light. Centered character, full feet visible, 12 percent empty margin all sides including weapon tips. No redesign, no background, no platform, no text, no extra characters or effects beyond the small action light, no atlas or sprite sheet. Genuine transparent alpha background."
+    },
+    {
+      "id": "unit-cannon-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-2653ff2c-ac3b-4d4e-9a48-bcffa09de3b4.png",
+      "output": "games/fairytale-defense/rebuild/art/unit-cannon-ready.webp",
+      "prompt": "Use case: identity-preserve. Reference is the exact game character to retain. Make ONE individual full-body ready animation key pose: crouching to brace the cannon, cannon barrel tilted slightly upward before recoil. Preserve exactly the reference face, species, outfit, weapon, colours, body proportions, accessories and handcrafted clay fantasy material. Same three-quarter view facing right, same soft upper-left light. Centered character, full feet visible, 12 percent empty margin all sides including weapon tips. No redesign, no background, no platform, no text, no extra characters or effects beyond the small action light, no atlas or sprite sheet. Genuine transparent alpha background."
+    },
+    {
+      "id": "unit-frost-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-665d41d8-cdd8-4458-a0fa-4cde60651528.png",
+      "output": "games/fairytale-defense/rebuild/art/unit-frost-ready.webp",
+      "prompt": "Use case: identity-preserve. Reference is the exact game character to retain. Make ONE individual full-body ready animation key pose: staff pulled back at chest height gathering a small crystal light, knees flexed. Preserve exactly the reference face, species, outfit, weapon, colours, body proportions, accessories and handcrafted clay fantasy material. Same three-quarter view facing right, same soft upper-left light. Centered character, full feet visible, 12 percent empty margin all sides including weapon tips. No redesign, no background, no platform, no text, no extra characters or effects beyond the small action light, no atlas or sprite sheet. Genuine transparent alpha background."
+    },
+    {
+      "id": "unit-firefly-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-81bef77a-76dd-4715-80ea-ebf683f749d0.png",
+      "output": "games/fairytale-defense/rebuild/art/unit-firefly-ready.webp",
+      "prompt": "Use case: identity-preserve. Reference is the exact game character to retain. Make ONE individual full-body ready animation key pose: bowstring pulled back to cheek with a glowing arrow, wings drawn back ready for a shot. Preserve exactly the reference face, species, outfit, weapon, colours, body proportions, accessories and handcrafted clay fantasy material. Same three-quarter view facing right, same soft upper-left light. Centered character, full feet visible, 12 percent empty margin all sides including weapon tips. No redesign, no background, no platform, no text, no extra characters or effects beyond the small action light, no atlas or sprite sheet. Genuine transparent alpha background."
+    },
+    {
+      "id": "runner-step",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-d86c6573-370f-436c-a1d1-2403a58a3a5a.png",
+      "output": "games/fairytale-defense/rebuild/art/runner-step.webp",
+      "prompt": "Use case: identity-preserve. Reference is the exact game character to retain. Make ONE individual full-body step animation key pose: opposite walking stride from the reference, rear foot now forward, both feet visible. Preserve exactly the reference face, species, outfit, weapon, colours, body proportions, accessories and handcrafted clay fantasy material. Same three-quarter view facing right, same soft upper-left light. Centered character, full feet visible, 12 percent empty margin all sides including weapon tips. No redesign, no background, no platform, no text, no extra characters or effects beyond the small action light, no atlas or sprite sheet. Genuine transparent alpha background."
+    },
+    {
+      "id": "armored-step",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-2d2bb890-7f9a-4f96-9148-07e82083fc2a.png",
+      "output": "games/fairytale-defense/rebuild/art/armored-step.webp",
+      "prompt": "Use case: identity-preserve. Reference is the exact game character to retain. Make ONE individual full-body step animation key pose: opposite walking stride, front near leg lifted forward slightly, heavy shell unchanged. Preserve exactly the reference face, species, outfit, weapon, colours, body proportions, accessories and handcrafted clay fantasy material. Same three-quarter view facing right, same soft upper-left light. Centered character, full feet visible, 12 percent empty margin all sides including weapon tips. No redesign, no background, no platform, no text, no extra characters or effects beyond the small action light, no atlas or sprite sheet. Genuine transparent alpha background."
+    },
+    {
+      "id": "boss-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-f6ae72a9-5ef8-448e-b1f6-06c3b8d6559b.png",
+      "output": "games/fairytale-defense/rebuild/art/boss-ready.webp",
+      "prompt": "Use case: identity-preserve. Reference is the exact game character to retain. Make ONE individual full-body ready animation key pose: both feet planted, shoulders lowered, arms spread preparing to roar. Preserve exactly the reference face, species, outfit, weapon, colours, body proportions, accessories and handcrafted clay fantasy material. Same three-quarter view facing right, same soft upper-left light. Centered character, full feet visible, 12 percent empty margin all sides including weapon tips. No redesign, no background, no platform, no text, no extra characters or effects beyond the small action light, no atlas or sprite sheet. Genuine transparent alpha background."
+    },
+    {
+      "id": "boss-cast",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-42a46298-86ca-4a68-8343-cf8343cd2230.png",
+      "output": "games/fairytale-defense/rebuild/art/boss-cast.webp",
+      "prompt": "Use case: identity-preserve. Reference is the exact game character to retain. Make ONE individual full-body cast animation key pose: head raised and mouth open in a strong magical roar, one forepaw raised, feet grounded. Preserve exactly the reference face, species, outfit, weapon, colours, body proportions, accessories and handcrafted clay fantasy material. Same three-quarter view facing right, same soft upper-left light. Centered character, full feet visible, 12 percent empty margin all sides including weapon tips. No redesign, no background, no platform, no text, no extra characters or effects beyond the small action light, no atlas or sprite sheet. Genuine transparent alpha background."
+    }
+  ]
+}
