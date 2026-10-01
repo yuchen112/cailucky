@@ -6,7 +6,7 @@ import {newArmySave,beginArmySave,settleArmySave,decodeArmySave} from '../games/
 for(const hero of Object.keys(ROLES)){
  const s=createBattle({hero});assert.equal(s.hero.role,hero);assert(!deploy(s,0,hero));assert(deploy(s,0,'archer'));assert(deploy(s,1,'archer'));assert(!deploy(s,0,'archer'));assert(!deploy(s,2,'clockwork'));
  assert.deepEqual(captureCheckpoint(restoreCheckpoint(captureCheckpoint(s))),captureCheckpoint(s));
- assert(moveHero(s,100,200));assert(!moveHero(s,NaN,200));assert(moveHero(s,150,200));assert(!moveHero(s,200,200));
+ assert(moveHero(s,100,200));assert(!moveHero(s,NaN,200));assert(!moveHero(s,150,200));s.time+=20;assert(moveHero(s,150,200));assert(!moveHero(s,200,200));
  assert(startWave(s));advance(s,.1);assert(castHero(s));assert(!castHero(s));const before=JSON.stringify(s);s.paused=true;advance(s,.25);assert(!castHero(s));s.paused=false;assert.equal(JSON.stringify(s),before);
 }
 for(const [unit,branches] of Object.entries(UNIT_BRANCHES))for(const branch of branches){

@@ -1,0 +1,47 @@
+{
+  "release": "20261002-tactics1",
+  "tool": "image_gen.imagegen",
+  "mode": "generate",
+  "oneAssetPerGeneration": true,
+  "noAtlasOrCropping": true,
+  "processing": "Whole-image resize and WebP encode only; no crop or assembly.",
+  "assets": [
+    {
+      "file": "art/summon-seal.webp",
+      "dimensions": [
+        400,
+        400
+      ],
+      "bytes": 51702,
+      "source": "exec-1a270070-d327-4e0c-bc1b-08ac6f3af307.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone mobile fantasy game summoning seal sprite, not a sheet. An exquisite round teal crystal medallion enclosed in sculpted gold vines, small pearl silver leaf details and a bright emerald central star. Fairy tale premium painted 3D game art, readable silhouette, restrained highlights. Exact top down circular view, centered full object with 10 percent margin, genuinely transparent background. No text, no characters, no ground, no separate icons, no atlas. This is one individual asset for the CxQ forest tower defense summoning animation. Square canvas."
+    },
+    {
+      "file": "art/summon-card.webp",
+      "dimensions": [
+        400,
+        600
+      ],
+      "bytes": 54518,
+      "source": "exec-2d28ec30-34be-469f-a2b1-f1e58936d9da.png",
+      "prompt": "Use case: stylized-concept. ONE individual portrait collectible card frame for a premium cute fairy tale forest mobile tower defense game. Sculpted gold twig and leaf border, small teal gems, ivory parchment inner field completely blank for displaying a separate troop sprite and readable dynamic text. Front orthographic view, perfectly symmetrical rectangular portrait frame, rounded corners, 2:3 card proportion centered in canvas with transparent margin. Detailed painted 3D illustration consistent with teal and gold forest game menus. No text, no characters, no multiple cards, no grid, no atlas, no surrounding scene. One standalone asset only."
+    },
+    {
+      "file": "art/support-range.webp",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 53044,
+      "source": "exec-d3bf8da2-9b19-413c-9857-55ae08e837dd.png",
+      "prompt": "Use case: stylized-concept. ONE standalone circular support-range indicator sprite for a premium painted fairy tale mobile tower defense game. Perfect top-down circular ring centered at the exact center of a square image, equal horizontal and vertical diameter. Broad clearly visible violet crystal dashed arcs with bright ivory edges and dark plum outer edging, evenly spaced silver leaf markers along ring. No fill: inside and outside the ring genuinely transparent. Keep ring within 10% canvas margin. High contrast readable over green grass, gold roads and blue terrain. No text, no background, no perspective ellipse, no extra icons, no atlas, no multiple views. One independent game art asset only.",
+      "calibration": {
+        "centerX": 0.4990234375,
+        "centerY": 0.494140625,
+        "ringRadius": 0.4228515625,
+        "note": "Decorative stroke varies around numeric collision boundary; gameplay always uses shared world-space numeric radius."
+      }
+    }
+  ],
+  "verification": "Generated candidates inspected individually and in browser. Dynamic labels remain selectable-font rendering disabled in game, not baked into artwork."
+}

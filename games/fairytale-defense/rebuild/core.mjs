@@ -1,9 +1,10 @@
-import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261001-complete4';
+import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261002-tactics1';
 // Deterministic simulation. Visuals consume events; animation never grants damage.
-import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261001-complete4';
-import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261001-complete4';
-import {heroBuild,supportFor,supportRadius,heroRange,activeModifiers} from './hero-rules.mjs?v=20261001-complete4';
-import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261001-complete4';
+import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261002-tactics1';
+import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261002-tactics1';
+import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261002-tactics1';
+import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261002-tactics1';
+import {skillSpec} from './skill-spec.mjs?v=20261002-tactics1';
 export {UNITS,UNIT_BRANCHES};
 export {SPECIALIZATIONS,BLESSINGS};
 export const towerStats=(t,s)=>{const r=statsFor(ROLES[t.role]||UNITS[t.role],t,s?.buffs);if(s?.army)r.damage*=1+(s.training?.[t.role]||0)*.01;return r;};
@@ -51,24 +52,23 @@ export function createBattle({mode='campaign',stage=1,hero=null,loadout=DEFAULT_
 function event(s,type,data={}){s.events.push({id:++s.eventId,type,time:s.time,...data});}
 export function moveHero(s,x,y){
  const h=s.hero;if(!h||s.paused||!['planning','battle','intermission'].includes(s.phase)||!Number.isFinite(x)||!Number.isFinite(y)||x<30||x>360||y<60||y>550||(h.moveReady||0)>s.time)return false;
- const from={x:h.x,y:h.y};h.x=x;h.y=y;h.moves++;h.moveReady=s.time+(h.moves===1?0:20);event(s,'hero-move',{x,y,from});return true;
+ const from={x:h.x,y:h.y};h.x=x;h.y=y;h.moves++;h.moveReady=s.time+20;event(s,'hero-move',{x,y,from});return true;
 }
 export function castHero(s,targetId){
  const h=s.hero;if(!h||s.paused||s.phase!=='battle'||h.skillReady>s.time)return false;
  const target=s.enemies.find(e=>e.id===targetId&&e.hp>0)||s.enemies.filter(e=>e.hp>0).sort((a,b)=>b.distance-a.distance)[0];
  if(['dream','night','sadness','memory','hope'].includes(h.role)&&!target)return false;
  const p=target?pointAt(target.distance,s,target.route):h;
- const modifiers=activeModifiers(h),radius=supportRadius(h)+(h.role==='growth'&&h.specialization==='grove'?55:0);
+ const spec=skillSpec(h,ROLES[h.role]),radius=spec.radius;
  const nearby=s.towers.filter(t=>Math.hypot(routePads(s)[t.pad].x-h.x,routePads(s)[t.pad].y-h.y)<=radius);
- if(h.role==='growth')for(const t of nearby)t.heroPowerUntil=s.time+6+modifiers.duration;
- else if(h.role==='trust'){for(const t of nearby)t.trustUntil=s.time+6+modifiers.duration;s.shield+=h.specialization==='shelter'?4:2;}
- else if(h.role==='joy')h.hasteUntil=s.time+(h.specialization==='festival'?9:6)+modifiers.duration;
- else if(h.role==='luck')for(const t of nearby)t.luckyCharges=h.specialization==='critical'?4:3;
- else if(h.role==='healing'){s.hp=Math.min(s.maxHp,s.hp+3);s.shield+=h.specialization==='protect'?5:3;}
- else {const r=ROLES[h.role];s.shots.push({id:s.nextId++,hero:true,targetId:target.id,from:{x:h.x,y:h.y},born:s.time,arriveAt:s.time+.6,damage:h.role==='sadness'?20:h.role==='memory'?r.damage*2+h.echo:r.damage*(h.specialization==='hunt'?5:4),kind:r.kind,splash:h.role==='dream'?(h.specialization==='wide'?115:85):h.role==='sadness'?85:h.role==='hope'?(h.specialization==='dawn'?65:40):h.role==='memory'&&h.specialization==='spread'?45:0,pierce:['memory','hope'].includes(h.role),slow:h.role==='sadness'?.4:0,slowDuration:h.specialization==='rain'?6:4,root:h.specialization==='still'?.6:0});if(h.role==='memory')h.echo=0;}
- const shot=s.shots.findLast(shot=>shot.hero&&shot.born===s.time&&shot.arriveAt===s.time+.6);
- if(shot){shot.damage*=modifiers.damage;shot.slowDuration+=modifiers.duration;}
- h.skillReady=s.time+modifiers.cooldown;event(s,'hero-skill',{role:h.role,...p});return true;
+ if((['growth','luck'].includes(h.role)&&!nearby.length)||(h.role==='joy'&&!s.towers.length))return false;
+ if(h.role==='growth')for(const t of nearby)t.heroPowerUntil=s.time+spec.duration;
+ else if(h.role==='trust'){for(const t of nearby)t.trustUntil=s.time+spec.duration;s.shield+=spec.shield;}
+ else if(h.role==='joy')h.hasteUntil=s.time+spec.duration;
+ else if(h.role==='luck')for(const t of nearby)t.luckyCharges=spec.charges;
+ else if(h.role==='healing'){s.hp=Math.min(s.maxHp,s.hp+spec.heal);s.shield+=spec.shield;}
+ else {s.shots.push({id:s.nextId++,hero:true,targetId:target.id,from:{x:h.x,y:h.y},born:s.time,arriveAt:s.time+.6,damage:spec.damage,kind:ROLES[h.role].kind,splash:spec.splash,pierce:spec.pierce,slow:spec.slow,slowDuration:spec.slowDuration,root:spec.root});if(h.role==='memory')h.echo=0;}
+ h.skillReady=s.time+spec.cooldown;event(s,'hero-skill',{role:h.role,...p});return true;
 }
 export function deploy(s,pad,role){
   const catalog=s.army?UNITS:ROLES;
@@ -105,9 +105,10 @@ export function startWave(s){
   s.queue=kindsFor(s,s.wave).map((kind,i)=>({at:s.time+i*(s.army&&s.mode==='campaign'?CAMPAIGN[s.stage-1].interval:.95),kind,route:i%2}));
   event(s,'wave',{wave:s.wave});return true;
 }
+export function enemyStats(kind,s,wave=s.wave){const p=ENEMIES[kind],scale=1+(s.stage-1)*.18+(wave-1)*.14;return {...p,hp:p.hp*scale*(regionFor(s)==='moon'?.72:1),speed:p.speed*(regionFor(s)==='moon'?.85:1)};}
 function spawn(s,q){
-  const p=ENEMIES[q.kind],scale=1+(s.stage-1)*.18+(s.wave-1)*.14;
-  s.enemies.push({id:s.nextId++,kind:q.kind,route:regionFor(s)==='moon'?(q.route||0):0,hp:p.hp*scale*(regionFor(s)==='moon'?.72:1),maxHp:p.hp*scale*(regionFor(s)==='moon'?.72:1),speed:p.speed*(regionFor(s)==='moon'?.85:1),armor:p.armor,reward:p.reward,leak:p.leak,distance:0,slow:1,slowUntil:0});
+  const p=enemyStats(q.kind,s);
+  s.enemies.push({id:s.nextId++,kind:q.kind,route:regionFor(s)==='moon'?(q.route||0):0,hp:p.hp,maxHp:p.hp,speed:p.speed,armor:p.armor,reward:p.reward,leak:p.leak,distance:0,slow:1,slowUntil:0});
   event(s,q.kind==='boss'?'boss-enter':'spawn',{kind:q.kind});
 }
 function hit(s,shot){

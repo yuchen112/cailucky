@@ -1,0 +1,37 @@
+{
+  "version": "20261002-tactics1",
+  "scope": "CxQ 童話塔防 only; website entry version updated",
+  "features": [
+    "1x/2x/3x fixed-step battle speed",
+    "Atomic single/ten recruitment with per-draw pity and persisted last-batch results",
+    "Sequential reveal, skip and reload-safe results",
+    "Shared exact skill rules for descriptions and simulation",
+    "Paused skill confirmation, cancellation and optional quick cast",
+    "Calibrated support/attack overlays, deployment and upgrade previews",
+    "Hero relocation preview with 20-second cooldown after every move",
+    "Wave intelligence from the actual spawn-stat function",
+    "Buff duration, critical charges and core shield visibility",
+    "Three individually generated AI art assets, whole-image WebP conversion only"
+  ],
+  "validation": {
+    "logicSuites": 16,
+    "skillBuilds": 90,
+    "browserChecks": [
+      "complete cover/camp/recruit/guide/battle/upgrade/move/pause/home/reload flow",
+      "360x640,390x844,412x915 mobile viewport checks",
+      "ten draw animation interrupted by reload; no lost or duplicate reward",
+      "quota failure does not debit; stale-tab write rejected; corrupt save recovery",
+      "regional routes, Lv5 branches, intentional image decode failure/retry",
+      "three existing audio files decoded",
+      "backup import confirmation and malformed import rejection"
+    ],
+    "androidPhysicalDevice": false,
+    "performanceOnLowEndDevice": false,
+    "production": "Verify after GitHub Pages deploy using tools/verify-defense-production.cjs"
+  },
+  "boundaries": [
+    "No claim of physical Android validation.",
+    "This release does not introduce additional enemy types, new regions or redraw the entire existing hero animation set.",
+    "Existing 15-stage campaign, 10 IP heroes and unit evolution art are retained."
+  ]
+}
