@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+const events={},plays=[];
+globalThis.localStorage={getItem:()=>null,setItem:()=>{}};
+globalThis.document={hidden:false,addEventListener:(name,fn)=>events[name]=fn};
+globalThis.Audio=class{constructor(src=''){this.src=src;this.paused=true;this.readyState=4;}play(){plays.push(this.src);this.paused=false;return Promise.resolve();}pause(){this.paused=true;}};
+const {createAudio}=await import('../games/fairytale-defense/rebuild/audio.mjs');
+const a=createAudio();assert.equal(plays.length,0);events.pointerdown();assert(plays.includes('audio/forest.mp3'));
+const s={time:1,eventId:1,paused:false,events:[{id:1,type:'upgrade'}]};a.consume(s);a.consume(structuredClone(s));assert.equal(plays.filter(p=>p==='audio/upgrade.ogg').length,1);
+a.consume({...s,time:2,eventId:2,events:[...s.events,{id:2,type:'deploy'}]});assert.equal(plays.filter(p=>p==='audio/click.ogg').length,1);
+a.consume({time:0,eventId:0,paused:false,events:[]});a.consume(s);assert.equal(plays.filter(p=>p==='audio/upgrade.ogg').length,2);
+document.hidden=true;events.visibilitychange();assert(a.debug().paused);const before=plays.length;a.sound('victory');assert.equal(plays.length,before);
+console.log('PASS: interaction-gated audio, immutable-state replacement does not replay old effects, new run resets events, background pause.');

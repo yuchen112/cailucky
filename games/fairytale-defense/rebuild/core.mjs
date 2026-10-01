@@ -1,9 +1,9 @@
-import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261001-complete1';
+import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261001-complete2';
 // Deterministic simulation. Visuals consume events; animation never grants damage.
-import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261001-complete1';
-import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261001-complete1';
-import {heroBuild,supportFor,supportRadius,heroRange,activeModifiers} from './hero-rules.mjs?v=20261001-complete1';
-import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261001-complete1';
+import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261001-complete2';
+import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261001-complete2';
+import {heroBuild,supportFor,supportRadius,heroRange,activeModifiers} from './hero-rules.mjs?v=20261001-complete2';
+import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261001-complete2';
 export {UNITS,UNIT_BRANCHES};
 export {SPECIALIZATIONS,BLESSINGS};
 export const towerStats=(t,s)=>{const r=statsFor(ROLES[t.role]||UNITS[t.role],t,s?.buffs);if(s?.army)r.damage*=1+(s.training?.[t.role]||0)*.01;return r;};
