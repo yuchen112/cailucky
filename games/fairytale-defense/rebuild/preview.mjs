@@ -1,6 +1,6 @@
-import {WORLD,PADS,ROLES,createBattle,pointAt,deploy,upgrade,sell,startWave,advance,newProfile,recordResult,upgradeCost,towerStats,SPECIALIZATIONS,BLESSINGS,chooseBlessing,setPriority,wavePreview} from './core.mjs?v=20261002-layout2';
-import {ROLE_GUIDES} from './progression.mjs?v=20261002-layout2';
-import {captureCheckpoint,restoreCheckpoint,decodeSave} from './checkpoint.mjs?v=20261002-layout2';
+import {WORLD,PADS,ROLES,createBattle,pointAt,deploy,upgrade,sell,startWave,advance,newProfile,recordResult,upgradeCost,towerStats,SPECIALIZATIONS,BLESSINGS,chooseBlessing,setPriority,wavePreview} from './core.mjs?v=20261003-collection1';
+import {ROLE_GUIDES} from './progression.mjs?v=20261003-collection1';
+import {captureCheckpoint,restoreCheckpoint,decodeSave} from './checkpoint.mjs?v=20261003-collection1';
 const $=id=>document.getElementById(id),ctx=$('canvas').getContext('2d'),images={},key='cxq.defense.rebuild.v2';
 let battle=createBattle(),profile=newProfile(),checkpoint=null,selectedPad=0,selectedRole=null,ready=false,resultShown=false,last=0,mode='campaign';
 try{const raw=localStorage.getItem(key)||localStorage.getItem('cxq.defense.rebuild.v1');if(raw)({profile,checkpoint}=decodeSave(raw));}catch{$('hint').textContent='讀取存檔失敗，未刪除原始資料。';}

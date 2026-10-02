@@ -1,5 +1,5 @@
 // Data shared by combat and descriptions. No duplicated display-only upgrade values.
-import {UNIT_BRANCHES} from './army.mjs?v=20261002-layout2';
+import {UNIT_BRANCHES} from './army.mjs?v=20261003-collection1';
 export const SPECIALIZATIONS = {
  growth:[{id:'rapid',name:'萌芽連射',description:'攻擊間隔縮短 28%。',interval:.72},{id:'pierce',name:'古木重擊',description:'傷害提高 35%，無視護甲。',damage:1.35,pierce:true}],
  dream:[{id:'wide',name:'繁星擴散',description:'星光波及半徑增加 30。',splash:30},{id:'burst',name:'聚夢星核',description:'傷害提高 70%，波及半徑減少 20。',damage:1.7,splash:-20}],
@@ -25,6 +25,9 @@ export const ROLE_GUIDES = {
  hope:{tag:'穿甲範圍',strength:'護甲敵人與小群敵人',weakness:'部署成本與攻擊間隔較高',partner:'搭配信任提升範圍收益'}
 };
 export const BLESSINGS={
+ shatter:{name:'碎冰協奏',description:'攻擊被緩速敵人時，直接傷害增加 12%，可累加。'},
+ command:{name:'指揮節拍',description:'英雄自動支援攻擊間隔縮短 6%，最多八次；不影響主動冷卻。'},
+ repair:{name:'核心修補',description:'立即修復最多 4 點核心生命，不超過上限。'},
  supplies:{name:'林間補給',description:'立即獲得 100 金幣。'},
  power:{name:'伙伴共鳴',description:'本場全隊基礎傷害增加 8%，可累加。'},
  reach:{name:'遠望祝福',description:'本場全隊射程增加 8，可累加。'}
@@ -32,5 +35,5 @@ export const BLESSINGS={
 export function statsFor(base,tower,buffs={power:0,reach:0}){
  const p=(SPECIALIZATIONS[tower.role]||UNIT_BRANCHES[tower.role])?.find(p=>p.id===tower.branch)||{};
  return {...base,damage:base.damage*(1+.45*(tower.level-1))*(p.damage||1)*(1+(buffs.power||0)*.08),interval:base.interval*(tower.level>=2?.94:1)*(p.interval||1)*(tower.level>=4?.9:1),range:base.range+(p.range||0)+(buffs.reach||0)*8,
- splash:Math.max(0,(base.splash||0)+(p.splash||0)+(tower.level===5&&p.splash>0?10:0)),pierce:p.pierce||base.pierce||false,crit:p.crit||base.crit||0,slowDuration:p.slowDuration||2,rootEvery:p.rootEvery||0,rootDuration:p.rootDuration||0,aura:p.aura||base.aura||0,haste:p.haste||1,auraRange:155,heal:p.heal||base.heal||0,shield:p.shield||0};
+ splash:Math.max(0,(base.splash||0)+(p.splash||0)+(tower.level===5&&p.splash>0?10:0)),pierce:p.pierce||base.pierce||false,crit:p.crit||base.crit||0,slowDuration:p.slowDuration||2,rootEvery:p.rootEvery||base.rootEvery||0,rootDuration:p.rootDuration||base.rootDuration||0,aura:p.aura||base.aura||0,haste:p.haste||1,auraRange:155,heal:p.heal||base.heal||0,shield:p.shield||0};
 }

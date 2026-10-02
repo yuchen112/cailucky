@@ -1,3 +1,4 @@
+import {storyMap} from '../games/fairytale-defense/rebuild/expedition.mjs';
 import {createBattle,deploy,upgrade,upgradeCost,startWave,advance,castHero,chooseBlessing,UNIT_BRANCHES} from '../games/fairytale-defense/rebuild/core.mjs';
 import {newArmySave,prepareArmyExpedition,settleArmySave,decodeArmySave} from '../games/fairytale-defense/rebuild/army-save.mjs';
 import assert from 'node:assert/strict';
@@ -8,7 +9,7 @@ const hero=process.argv[2]||'hope';
 // A reproducible legal-input baseline, not an assertion that every build should win.
 for(let stage=1;stage<=15;stage++){
  const level=masteryLevel(profile.mastery.xp[hero]),cultivate=process.argv.includes('--cultivate'),build=cultivate?{specialization:level>=3?HERO_SPECIALIZATIONS[hero][0].id:null,talents:{...(level>=5?{passive:'reach'}:{}),...(level>=7?{active:'swift'}:{})}}:{};
- const runId='campaign-qa-'+stage,next=prepareArmyExpedition(profile,{hero,stage,...build},runId);profile=next.save;const s=next.battle;const plan=[[0,'archer'],[1,'archer'],[3,'frost'],[4,'cannon'],[2,'archer'],[5,'cannon'],[6,'archer'],[7,'cannon'],[8,'archer']];let steps=0;
+ const runId='campaign-qa-'+stage,next=prepareArmyExpedition(profile,{hero,stage,map:storyMap(stage),...build},runId);profile=next.save;const s=next.battle;const plan=[[0,'archer'],[1,'archer'],[3,'frost'],[4,'cannon'],[2,'archer'],[5,'cannon'],[6,'archer'],[7,'cannon'],[8,'archer']];let steps=0;
  while(!['victory','defeat'].includes(s.phase)&&steps++<60000){
   if(s.blessingChoices.length)chooseBlessing(s,s.blessingChoices.includes('power')?'power':s.blessingChoices[0]);
   for(const [pad,role] of plan)if(!s.towers.some(t=>t.pad===pad)){if(!deploy(s,pad,role))break;}

@@ -1,14 +1,16 @@
-import {alignCommander} from './routes.mjs?v=20261002-layout2';
-import {captureCheckpoint,restoreCheckpoint} from './checkpoint.mjs?v=20261002-layout2';
-import {newMastery,validateMastery,beginMasteryRun,awardCompletedWaves} from './mastery.mjs?v=20261002-layout2';
-import {createBattle} from './core.mjs?v=20261002-layout2';
-import {newCollection,validateCollection,rewardCollection,trainingRanks} from './recruitment.mjs?v=20261002-layout2';
+import {STARTER_UNITS,validateLoadout} from './army.mjs?v=20261003-collection1';
+import {alignCommander} from './routes.mjs?v=20261003-collection1';
+import {captureCheckpoint,restoreCheckpoint} from './checkpoint.mjs?v=20261003-collection1';
+import {newMastery,validateMastery,beginMasteryRun,awardCompletedWaves} from './mastery.mjs?v=20261003-collection1';
+import {createBattle} from './core.mjs?v=20261003-collection1';
+import {newCollection,validateCollection,rewardCollection,trainingRanks} from './recruitment.mjs?v=20261003-collection1';
 // Separate envelope from the legacy preview. Persist one JSON value atomically.
-export function newArmySave(){return {version:3,mastery:newMastery(),collection:newCollection(),campaign:{unlocked:1,cleared:[]},checkpoint:null};}
+export function newArmySave(){return {version:3,mastery:newMastery(),collection:newCollection(),campaign:{unlocked:1,cleared:[]},loadout:[...STARTER_UNITS],formations:[],endless:{forest:0,moon:0,dawn:0,ruins:0},checkpoint:null};}
 // UI entry point: XP is read only from the saved profile, never from a form field.
-export function prepareArmyExpedition(save,{hero,stage=1,mode='campaign',loadout,specialization=null,talents={}},runId){
+export function prepareArmyExpedition(save,{hero,stage=1,mode='campaign',loadout,specialization=null,talents={},map=null},runId){
  const profile=decodeArmySave(save);
- const battle=createBattle({hero,stage,mode,loadout,specialization,talents,masteryXp:profile.mastery.xp[hero],training:trainingRanks(profile.collection)});
+ loadout=loadout??profile.loadout;if(loadout.some(id=>!profile.collection.owned.includes(id)))throw Error('編隊包含未取得兵種');
+ const battle=createBattle({hero,stage,mode,map,loadout,specialization,talents,masteryXp:profile.mastery.xp[hero],training:trainingRanks(profile.collection)});
  if(!battle.army)throw Error('請選擇一位英雄');alignCommander(battle);
  return {battle,save:beginArmySave(profile,battle,runId)};
 }
@@ -30,7 +32,8 @@ export function settleArmySave(save,battle,runId,{practice=false}={}){
    campaign.cleared.sort((a,b)=>a-b);campaign.unlocked=Math.min(15,Math.max(campaign.unlocked,battle.stage+1));
  }
  const collection=rewardCollection(old.collection,{waves:practice?0:Math.max(0,completed-active.claimed),firstClearStage:!practice&&battle.phase==='victory'&&!old.campaign.cleared.includes(battle.stage)&&battle.mode==='campaign'?battle.stage:0});
- return {version:3,mastery,campaign,collection,checkpoint:captureCheckpoint(battle)};
+ const endless={...old.endless};if(battle.mode==='endless'&&!practice)endless[battle.map||'forest']=Math.max(endless[battle.map||'forest'],completed);
+ return {...old,mastery,campaign,collection,endless,checkpoint:captureCheckpoint(battle)};
 }
 export function decodeArmySave(raw){
  const v=typeof raw==='string'?JSON.parse(raw):raw;
@@ -43,5 +46,8 @@ export function decodeArmySave(raw){
  if(checkpoint&&checkpoint.hero.masteryXp>mastery.xp[checkpoint.hero.role])throw Error('英雄熟練度與存檔不一致');
  if(checkpoint?.mode==='campaign'&&checkpoint.stage>campaign.unlocked)throw Error('存檔超過已開放關卡');
  const collection=validateCollection(v.collection),ranks=trainingRanks(collection);if(checkpoint&&Object.entries(checkpoint.training||{}).some(([id,n])=>n>(ranks[id]||0)))throw Error('部隊訓練與存檔不一致');
- return {version:3,mastery,collection,campaign:{unlocked:campaign.unlocked,cleared:[...campaign.cleared].sort((a,b)=>a-b)},checkpoint};
+ const loadout=validateLoadout(v.loadout??(v.collection?.version===1?['archer','cannon','frost','firefly']:STARTER_UNITS));if(loadout.some(id=>!collection.owned.includes(id)))throw Error('編隊兵種尚未解鎖');
+ const endless=v.endless??{forest:0,moon:0,dawn:0,ruins:0};if(['forest','moon','dawn','ruins'].some(id=>!Number.isSafeInteger(endless[id])||endless[id]<0||endless[id]>99999))throw Error('無盡紀錄不正確');
+ const formations=v.formations??[];if(!Array.isArray(formations)||formations.length>3)throw Error('常用編隊不正確');for(const f of formations){validateLoadout(f);if(f.some(id=>!collection.owned.includes(id)))throw Error('常用編隊包含未取得兵種');}
+ return {version:3,mastery,collection,loadout,formations:formations.map(f=>[...f]),endless:{...endless},campaign:{unlocked:campaign.unlocked,cleared:[...campaign.cleared].sort((a,b)=>a-b)},checkpoint};
 }

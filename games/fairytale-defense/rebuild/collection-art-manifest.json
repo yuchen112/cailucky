@@ -1,0 +1,131 @@
+{
+  "tool": "built-in image_gen",
+  "policy": "One independent generation per asset, no sheet slicing.",
+  "jobs": [
+    {
+      "id": "unit-crystal",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-2adea4e4-6198-49ac-8573-58fbaf617c14.png",
+      "prompt": "Single transparent chibi ivory crystal-horn guard, blue crystal armor and mace, handcrafted storybook toy style, full body facing right; no sheet or background."
+    },
+    {
+      "id": "unit-chime",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-4b4808b4-f76a-434c-86cc-c154593137c3.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone transparent-background game character sprite, not a sprite sheet or collage. CxQ fairytale tower-defense ordinary troop: 風鈴術士: tiny cream-colored woodland bird mage, jade scarf and bronze wind chime staff, feather hood, holding staff forward. Premium handcrafted 3D storybook toy aesthetic, warm soft studio lighting, large expressive dark eyes, tactile fabric/wood materials, friendly chibi proportions. Full body completely within frame with 8% padding, feet baseline at 90% of frame, three-quarter view facing right, active combat-ready pose, readable silhouette at 64px. No text, no border, no scenery, no floor, no baked background, no other characters. Single finished asset only."
+    },
+    {
+      "id": "unit-blossom",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-8d895e44-b823-4ce9-98bb-71a1ff70f40c.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone transparent-background game character sprite, not a sprite sheet or collage. CxQ fairytale tower-defense ordinary troop: 花苞祭司: tiny peach-colored flower bud creature priest, petal hat and green leaf robe, holding a blossom blessing wand. Premium handcrafted 3D storybook toy aesthetic, warm soft studio lighting, large expressive dark eyes, tactile fabric/wood materials, friendly chibi proportions. Full body completely within frame with 8% padding, feet baseline at 90% of frame, three-quarter view facing right, active combat-ready pose, readable silhouette at 64px. No text, no border, no scenery, no floor, no baked background, no other characters. Single finished asset only."
+    },
+    {
+      "id": "unit-clockwork",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-7074144f-6d4c-428b-b204-6943ea2a9ae3.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone transparent-background game character sprite, not a sprite sheet or collage. CxQ fairytale tower-defense ordinary troop: 發條投手: cute brass clockwork squirrel artillery engineer with walnut armor and a shoulder-mounted miniature long-range acorn catapult, visible winding key. Premium handcrafted 3D storybook toy aesthetic, warm soft studio lighting, large expressive dark eyes, tactile fabric/wood materials, friendly chibi proportions. Full body completely within frame with 8% padding, feet baseline at 90% of frame, three-quarter view facing right, active combat-ready pose, readable silhouette at 64px. No text, no border, no scenery, no floor, no baked background, no other characters. Single finished asset only."
+    },
+    {
+      "id": "unit-alchemist",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c80c5fe0-20e9-4342-b533-c6f8698af3c0.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone transparent-background game character sprite, not a sprite sheet or collage. CxQ fairytale tower-defense ordinary troop: 琥珀藥師: cute round woodland mouse alchemist with amber goggles, honey-brown apron and a glass amber potion sprayer. Premium handcrafted 3D storybook toy aesthetic, warm soft studio lighting, large expressive dark eyes, tactile fabric/wood materials, friendly chibi proportions. Full body completely within frame with 8% padding, feet baseline at 90% of frame, three-quarter view facing right, active combat-ready pose, readable silhouette at 64px. No text, no border, no scenery, no floor, no baked background, no other characters. Single finished asset only."
+    },
+    {
+      "id": "unit-vine",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-75ea0897-8a97-4ad0-a08a-16c49da6d0e9.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone transparent-background game character sprite, not a sprite sheet or collage. CxQ fairytale tower-defense ordinary troop: 藤蔓園丁: tiny friendly green sprout creature gardener with broad leaf hat, curled vine staff and leaf boots. Premium handcrafted 3D storybook toy aesthetic, warm soft studio lighting, large expressive dark eyes, tactile fabric/wood materials, friendly chibi proportions. Full body completely within frame with 8% padding, feet baseline at 90% of frame, three-quarter view facing right, active combat-ready pose, readable silhouette at 64px. No text, no border, no scenery, no floor, no baked background, no other characters. Single finished asset only."
+    },
+    {
+      "id": "unit-oracle",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5ad68047-f225-4a6c-b857-0607a2b39420.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone transparent-background game character sprite, not a sprite sheet or collage. CxQ fairytale tower-defense ordinary troop: 星砂預言師: tiny cream-colored owl oracle with midnight-blue star-embroidered robe and gold crescent headpiece, a small floating star crystal between its hands. Premium handcrafted 3D storybook toy aesthetic, warm soft studio lighting, large expressive dark eyes, tactile fabric/wood materials, friendly chibi proportions. Full body completely within frame with 8% padding, feet baseline at 90% of frame, three-quarter view facing right, active combat-ready pose, readable silhouette at 64px. No text, no border, no scenery, no floor, no baked background, no other characters. Single finished asset only."
+    },
+    {
+      "id": "unit-dragon",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-7c9502b4-4ff1-4b56-8f74-655c2f2260ed.png",
+      "prompt": "Use case: stylized-concept. Create ONE standalone transparent-background game character sprite, not a sprite sheet or collage. CxQ fairytale tower-defense ordinary troop: 燈火幼龍: adorable small orange-red lantern dragon with cream belly, tiny wings and glowing flame-shaped horns, one small flame above its mouth. Premium handcrafted 3D storybook toy aesthetic, warm soft studio lighting, large expressive dark eyes, tactile fabric/wood materials, friendly chibi proportions. Full body completely within frame with 8% padding, feet baseline at 90% of frame, three-quarter view facing right, active combat-ready pose, readable silhouette at 64px. No text, no border, no scenery, no floor, no baked background, no other characters. Single finished asset only."
+    },
+    {
+      "id": "road-ruins",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-cceeabc6-bb72-441f-a048-6d8df2fc7e48.png",
+      "prompt": "Use case: stylized-concept. ONE complete portrait tower-defense battlefield background, 2:3 aspect ratio, straight overhead orthographic view, no perspective. Premium cute handcrafted 3D storybook miniature ancient jade ruins, warm ivory stone and moss, no characters, no towers, no text or interface. ONE continuous clearly visible pale ivory stone road, width about 7% of canvas. Exact route on normalized canvas: enter top at (12%,0%), travel vertically down left edge to (12%,80%), curve right to (20%,87%), travel right to (78%,87%), curve up to (88%,80%), travel up the right edge to (88%,21%), curve left to (79%,15%), travel left to (32%,15%), curve down to (25%,21%), travel down to (25%,58%), curve right to (33%,64%), travel right to (59%,64%), curve down to (67%,70%), exit bottom at (67%,100%). This is an open spiral route NOT a closed ring; absolutely no additional paths or intersections. Keep interior ground spacious, low-detail and unobstructed for game units; decorative columns and foliage only in outer corners. Flat even readable lighting, no fog, no blurred border. Entire battlefield is a single finished image, not collage, no tile sheet. Road must stay fully visible. No built-in tower pads."
+    },
+    {
+      "id": "unit-crystal-rapid",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-a3149c2c-20d2-4051-965e-20fac4052184.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to lighter twin crystal batons and agile crystalline bracers. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-crystal-heavy",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d0a4cd01-6162-41b1-b552-2fe858ef2e24.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to a massive two-handed faceted crystal hammer and broad shoulder plates. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-chime-rapid",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-28669303-2aec-4c3f-88d4-6ecf9b308546.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to three small floating bronze wind bells and a light jade wand. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-chime-heavy",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5c31d792-2d14-4cdc-a5af-63cc8a9345a7.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to one large ornate bronze resonating bell staff with gold tassels. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-blossom-power",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-08c11557-c114-4b6f-b2c5-70319610b239.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to a radiant fully opened golden flower wand and red petal mantle. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-blossom-haste",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-2d3fd39a-9540-4701-b615-9e5dee056aef.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to flowing pale mint ribbons, small wind blossoms and a slender spring flower wand. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-clockwork-far",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-030f413b-6607-4408-b75e-1d90d253ccd4.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to an elongated precision wooden catapult with brass sight and telescope. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-clockwork-wide",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-46d81b44-912a-4034-98e0-b101091a0679.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to a wide triple-cup walnut launcher with a cluster of small acorns. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-alchemist-wide",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-49839c5e-6fdc-491b-be21-17c4e1b3477d.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to a wide brass mist nozzle and two blue amber potion tanks. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-alchemist-heavy",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-428fd266-123f-4c10-af1a-14634ddba49d.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to a large concentrated amber potion flask and reinforced narrow sprayer. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-vine-root",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5829eff6-8721-42be-9f95-9a91c0f16873.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to thick braided root staff, sturdy root boots and a deep green leaf mantle. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-vine-rapid",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-4c9ad305-ecfa-4a0f-a9b1-79227d3502ab.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to two slender vine whips with fresh pale green leaves and light gardener clothes. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-oracle-heavy",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c1b56349-7278-4b19-a514-221d5b999118.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to one large gold star crystal, ornate dark blue ceremonial robe and crescent crown. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-oracle-wide",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-fd8dbaef-a710-448b-a613-1c09b178577c.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to three orbiting small star crystals and a broad midnight blue constellation cape. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-dragon-wide",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-6fb4fef4-c96f-4d45-a8bc-656c0919455f.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to larger fan-shaped orange wings, broad golden flame horns and a larger lantern tail. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    },
+    {
+      "id": "unit-dragon-rapid",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-67f480e1-3ac6-4e75-a3c9-72796e71856b.png",
+      "prompt": "Use case: identity-preserve. Edit the supplied character into ONE upgraded branch appearance. Keep exactly the same species, face, colors, friendly chibi identity, handmade 3D toy art style, right-facing three-quarter view and full-body framing. Change equipment to sleeker golden wing bracers, paired tiny flame horns and bright scarf, ready to spit rapid small flames. Clearly stronger equipment silhouette without changing identity. Isolated single character with true transparent background, full body and all equipment within frame with padding. No floor, no text, no montage or sprite sheet. One finished sprite only."
+    }
+  ]
+}

@@ -1,14 +1,14 @@
-import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261002-layout2';
+import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261003-collection1';
 // Deterministic simulation. Visuals consume events; animation never grants damage.
-import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261002-layout2';
-import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261002-layout2';
-import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261002-layout2';
-import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261002-layout2';
-import {skillSpec} from './skill-spec.mjs?v=20261002-layout2';
+import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261003-collection1';
+import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261003-collection1';
+import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261003-collection1';
+import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261003-collection1';
+import {skillSpec} from './skill-spec.mjs?v=20261003-collection1';
 export {UNITS,UNIT_BRANCHES};
 export {SPECIALIZATIONS,BLESSINGS};
 export const towerStats=(t,s)=>{const r=statsFor(ROLES[t.role]||UNITS[t.role],t,s?.buffs);if(s?.army)r.damage*=1+(s.training?.[t.role]||0)*.01;return r;};
-export function validateTraining(value={}){if(!value||typeof value!=='object'||Array.isArray(value)||Object.entries(value).some(([id,n])=>!Object.hasOwn(UNITS,id)||!Number.isInteger(n)||n<0||n>8))throw Error('部隊訓練不正確');return {...value};}
+export function validateTraining(value={}){if(!value||typeof value!=='object'||Array.isArray(value)||Object.entries(value).some(([id,n])=>!Object.hasOwn(UNITS,id)||!Number.isInteger(n)||n<0||n>57))throw Error('部隊訓練不正確');return {...value};}
 export const WORLD = Object.freeze({width:390,height:585});
 // Calibrated against the actual independent road image, not its generation prompt.
 export const PATH = [[197,0],[197,32],[186,59],[164,71],[76,71],[56,85],[51,107],[51,150],[66,173],[88,183],[306,183],[329,195],[337,218],[337,270],[327,293],[305,308],[79,308],[60,326],[52,351],[52,389],[65,410],[89,416],[176,416],[191,431],[198,456],[198,585]];
@@ -42,25 +42,23 @@ export function pointAt(distance,s=null,route=0){
   }
   return {x:198,y:585};
 }
-export function createBattle({mode='campaign',stage=1,hero=null,loadout=DEFAULT_LOADOUT,masteryXp=0,specialization=null,talents={},training={}}={}){
+export function createBattle({mode='campaign',stage=1,hero=null,loadout=DEFAULT_LOADOUT,masteryXp=0,specialization=null,talents={},training={},map=null}={}){
   if(!['campaign','endless'].includes(mode)||!Number.isInteger(stage)||stage<1||stage>30)throw Error('無效戰役');
   if(hero!==null&&!Object.hasOwn(ROLES,hero))throw Error('無效英雄');
   const army=hero!==null;training=validateTraining(training);
   if(army&&stage>15)throw Error('英雄戰役目前規劃十五關');
-  return {version:1,mode,stage,army,training,loadout:army?validateLoadout(loadout):[],hero:army?{role:hero,...heroBuild(hero,masteryXp,specialization,talents),x:195,y:215,ready:0,skillReady:0,attacks:0,moves:0,echo:0,focus:0,guardianUsed:false}:null,phase:'planning',time:0,remainder:0,paused:false,gold:360,hp:20,maxHp:20,shield:0,buffs:{power:0,reach:0},blessingChoices:[],wave:0,maxWaves:6,kills:0,nextId:1,towers:[],enemies:[],shots:[],pending:[],queue:[],events:[],eventId:0};
+  if(map!==null&&!['forest','moon','dawn','ruins'].includes(map))throw Error('無效地圖');
+  return {version:1,mode,stage,map,army,training,loadout:army?validateLoadout(loadout):[],hero:army?{role:hero,...heroBuild(hero,masteryXp,specialization,talents),x:195,y:215,ready:0,skillReady:0,attacks:0,moves:0,echo:0,focus:0,guardianUsed:false}:null,phase:'planning',time:0,remainder:0,paused:false,gold:360,hp:20,maxHp:20,shield:0,buffs:{power:0,reach:0},blessingChoices:[],wave:0,maxWaves:6,kills:0,nextId:1,towers:[],enemies:[],shots:[],pending:[],queue:[],events:[],eventId:0};
 }
 function event(s,type,data={}){s.events.push({id:++s.eventId,type,time:s.time,...data});}
-export function moveHero(s,x,y){
- const h=s.hero;if(!h||s.paused||!['planning','battle','intermission'].includes(s.phase)||!Number.isFinite(x)||!Number.isFinite(y)||x<30||x>360||y<60||y>550||(h.moveReady||0)>s.time)return false;
- const from={x:h.x,y:h.y};h.x=x;h.y=y;h.moves++;h.moveReady=s.time+20;event(s,'hero-move',{x,y,from});return true;
-}
+export function moveHero(){return false;} // Fixed commander; retained for legacy callers.
 export function castHero(s,targetId){
  const h=s.hero;if(!h||s.paused||s.phase!=='battle'||h.skillReady>s.time)return false;
  const target=s.enemies.find(e=>e.id===targetId&&e.hp>0)||s.enemies.filter(e=>e.hp>0).sort((a,b)=>b.distance-a.distance)[0];
  if(['dream','night','sadness','memory','hope'].includes(h.role)&&!target)return false;
  const p=target?pointAt(target.distance,s,target.route):h;
  const spec=skillSpec(h,ROLES[h.role]),radius=spec.radius;
- const nearby=s.towers.filter(t=>Math.hypot(routePads(s)[t.pad].x-h.x,routePads(s)[t.pad].y-h.y)<=radius);
+ const nearby=s.towers;
  if((['growth','luck'].includes(h.role)&&!nearby.length)||(h.role==='joy'&&!s.towers.length))return false;
  if(h.role==='growth')for(const t of nearby)t.heroPowerUntil=s.time+spec.duration;
  else if(h.role==='trust'){for(const t of nearby)t.trustUntil=s.time+spec.duration;s.shield+=spec.shield;}
@@ -86,9 +84,9 @@ export function upgrade(s,pad,branch){
   const cost=upgradeCost(t);s.gold-=cost;t.spent+=cost;t.level++;event(s,'upgrade',{pad,level:t.level});return true;
 }
 export function setPriority(s,pad,priority){const t=s.towers.find(t=>t.pad===pad);if(s.paused||!t||!['planning','battle','intermission'].includes(s.phase)||!['first','strong','armor'].includes(priority))return false;t.priority=priority;return true;}
-export function chooseBlessing(s,id){if(s.paused||s.phase!=='intermission'||!s.blessingChoices.includes(id))return false;if(id==='supplies')s.gold+=100;else if(id==='power')s.buffs.power++;else if(id==='reach')s.buffs.reach++;s.blessingChoices=[];event(s,'blessing',{kind:id});return true;}
-const waveKinds=wave=>{const count=5+wave*2;return Array.from({length:count},(_,i)=>wave%3===0&&i===count-1?'boss':wave>=3&&i%4===2?'armored':wave>=2&&i%3===1?'runner':'walker');};
-const kindsFor=(s,wave)=>s.army&&s.mode==='campaign'?encounterWave(s.stage,wave):waveKinds(wave);
+export function chooseBlessing(s,id){if(s.paused||s.phase!=='intermission'||!s.blessingChoices.includes(id))return false;if(id==='supplies')s.gold+=100;else if(id==='power')s.buffs.power++;else if(id==='reach')s.buffs.reach++;else if(id==='repair')s.hp=Math.min(s.maxHp,s.hp+4);else s.buffs[id]=(s.buffs[id]||0)+1;s.blessingChoices=[];event(s,'blessing',{kind:id});return true;}
+const waveKinds=wave=>{const count=Math.min(40,5+wave*2);return Array.from({length:count},(_,i)=>wave%3===0&&i===count-1?'boss':wave>=3&&i%4===2?'armored':wave>=2&&i%3===1?'runner':'walker');};
+export const kindsFor=(s,wave)=>s.army&&s.mode==='campaign'?encounterWave(s.stage,wave):waveKinds(wave);
 export function wavePreview(s){return kindsFor(s,s.mode==='campaign'?Math.min(s.maxWaves,s.wave+1):s.wave+1).reduce((counts,kind)=>(counts[kind]=(counts[kind]||0)+1,counts),{});}
 export function sell(s,pad){
   const t=s.towers.find(t=>t.pad===pad);
@@ -99,13 +97,14 @@ export function sell(s,pad){
 }
 export function startWave(s){
   if(s.paused||!['planning','intermission'].includes(s.phase)||!s.towers.length||s.blessingChoices.length)return false;
+  if(s.mode==='endless'&&s.wave>=99999)return false;
   s.shield=s.towers.reduce((n,t)=>n+towerStats(t,s).shield,0);
   if(s.hero){Object.assign(s.hero,{ready:s.time,skillReady:s.time,moveReady:s.time,moves:0,hasteUntil:0,echo:0,focus:0,focusId:null,guardianUsed:false});for(const t of s.towers)Object.assign(t,{heroPowerUntil:0,trustUntil:0,luckyCharges:0});}
   s.wave++;s.phase='battle';
   s.queue=kindsFor(s,s.wave).map((kind,i)=>({at:s.time+i*(s.army&&s.mode==='campaign'?CAMPAIGN[s.stage-1].interval:.95),kind,route:i%2}));
   event(s,'wave',{wave:s.wave});return true;
 }
-export function enemyStats(kind,s,wave=s.wave){const p=ENEMIES[kind],scale=1+(s.stage-1)*.18+(wave-1)*.14;return {...p,hp:p.hp*scale*(regionFor(s)==='moon'?.72:1),speed:p.speed*(regionFor(s)==='moon'?.85:1)};}
+export function enemyStats(kind,s,wave=s.wave){const p=ENEMIES[kind],scale=s.mode==='endless'?1+(wave-1)*.17+Math.max(0,wave-20)*.06:(1+(s.stage-1)*.18+(wave-1)*.14)*(1+Math.max(0,s.stage-5)*.12);return {...p,hp:p.hp*scale*(regionFor(s)==='moon'?.72:1),speed:p.speed*(regionFor(s)==='moon'?.85:1)};}
 function spawn(s,q){
   const p=enemyStats(q.kind,s);
   s.enemies.push({id:s.nextId++,kind:q.kind,route:regionFor(s)==='moon'?(q.route||0):0,hp:p.hp,maxHp:p.hp,speed:p.speed,armor:p.armor,reward:p.reward,leak:p.leak,distance:0,slow:1,slowUntil:0});
@@ -118,14 +117,17 @@ function hit(s,shot){
   if(shot.bounces&&!shot.splash){let last=target;for(let i=0;i<shot.bounces;i++){const at=pointAt(last.distance,s,last.route),next=s.enemies.filter(e=>e.hp>0&&!victims.includes(e)&&Math.hypot(pointAt(e.distance,s,e.route).x-at.x,pointAt(e.distance,s,e.route).y-at.y)<=75).sort((a,b)=>Math.abs(a.distance-last.distance)-Math.abs(b.distance-last.distance)||a.id-b.id)[0];if(!next)break;victims.push(next);last=next;}}
   for(const e of victims){
     const armor=Math.max(0,Math.min(.75,e.armor+(e.wardUntil>s.time?.25:0))-(e.shredUntil>s.time?e.shred:0));
-    let damage=shot.damage*(shot.pierce?1:1-armor)*(shot.bounces?Math.pow(.8,victims.indexOf(e)):1);
+    let damage=shot.damage*(e.slowUntil>s.time?1+(s.buffs.shatter||0)*.12:1)*(shot.pierce?1:1-armor)*(shot.bounces?Math.pow(.8,victims.indexOf(e)):1);
     if(shot.hero&&s.hero?.talents?.ultimate==='resolve'&&e.kind==='boss')damage*=1.25;
     if(!shot.hero&&e.dreamUntil>s.time){damage+=s.hero?.specialization==='mark'?20:12;e.dreamUntil=0;}
+    if(e.markUntil>s.time)damage*=e.mark;
     const actual=Math.min(e.hp,damage);e.hp-=damage;
     if(s.hero?.role==='memory'&&!shot.hero)s.hero.echo=Math.min(s.hero.specialization==='deep'?260:180,s.hero.echo+actual*.25);
     if(s.hero?.role==='dream'&&shot.hero)e.dreamUntil=s.time+4;
     if(shot.slow){e.slow=Math.min(e.slow,shot.slow);e.slowUntil=Math.max(e.slowUntil,s.time+(shot.slowDuration||2));}
     if(shot.root&&!(e.rootImmuneUntil>s.time)){const duration=shot.root*(e.kind==='boss'?.35:1);e.rootUntil=s.time+duration;e.rootImmuneUntil=s.time+duration+1;}
+    if(shot.poison){e.poison=Math.max(e.poison||0,shot.poison);e.poisonUntil=s.time+3;}
+    if(shot.mark){e.mark=shot.mark;e.markUntil=s.time+4;}
     if(shot.shred){e.shred=Math.max(e.shred||0,shot.shred);e.shredUntil=s.time+3;}
     event(s,'hit',{enemyId:e.id,damage,x:pointAt(e.distance,s,e.route).x,y:pointAt(e.distance,s,e.route).y,kind:shot.kind});
   }
@@ -136,6 +138,8 @@ function tick(s,dt){
   while(s.queue.length&&s.queue[0].at<=s.time)spawn(s,s.queue.shift());
   for(const e of s.enemies){
     if(e.slowUntil<=s.time)e.slow=1;
+    if(e.poisonUntil>s.time)e.hp-=(e.poison||0)*dt;
+    if(e.hp<=0)continue;
     if(e.kind==='boss'){
       e.nextSkill??=s.time+5;
       if(e.castUntil&&s.time>=e.castUntil){
@@ -148,7 +152,7 @@ function tick(s,dt){
     }
     if(!(e.rootUntil>s.time)&&!e.castUntil)e.distance+=e.speed*e.slow*dt;
   }
-  for(const e of s.enemies.filter(e=>e.distance>=(routeLength(s,e.route)||PATH_LENGTH)&&e.hp>0)){const absorbed=Math.min(s.shield,e.leak);s.shield-=absorbed;s.hp=Math.max(0,s.hp-e.leak+absorbed);event(s,'leak',{enemyId:e.id,amount:e.leak-absorbed,absorbed});if(s.hp===0&&s.hero?.talents?.ultimate==='guardian'&&!s.hero.guardianUsed){s.hero.guardianUsed=true;s.hp=1;event(s,'hero-rescue',{role:s.hero.role});}}
+  for(const e of s.enemies.filter(e=>e.distance>=(routeLength(s,e.route)||PATH_LENGTH)&&e.hp>0)){const absorbed=Math.min(s.shield,e.leak);s.shield-=absorbed;s.hp=Math.max(0,s.hp-e.leak+absorbed);s.leaks??={};s.leaks[e.kind]=(s.leaks[e.kind]||0)+1;event(s,'leak',{enemyId:e.id,amount:e.leak-absorbed,absorbed});if(s.hp===0&&s.hero?.talents?.ultimate==='guardian'&&!s.hero.guardianUsed){s.hero.guardianUsed=true;s.hp=1;event(s,'hero-rescue',{role:s.hero.role});}}
   s.enemies=s.enemies.filter(e=>e.distance<(routeLength(s,e.route)||PATH_LENGTH));
   if(s.hp===0){s.phase='defeat';s.pending=[];s.shots=[];s.queue=[];event(s,'defeat');return;}
   // Release after the actual anticipation period, only while the tower still exists.
@@ -172,18 +176,18 @@ function tick(s,dt){
     t.attacks++;t.ready=s.time+role.interval*haste;
     const crit=(role.crit&&t.attacks%role.crit===0)||t.luckyCharges>0;if(t.luckyCharges>0)t.luckyCharges--;
     const damage=role.damage*buff*(crit?2:1);
-    s.pending.push({id:s.nextId++,towerId:t.id,targetId:target.id,releaseAt:s.time+.22,damage,kind:role.kind,splash:role.splash||0,bounces:role.bounces||0,pierce:!!role.pierce,slow:role.slow||0,shred:role.shred||0,slowDuration:role.slowDuration,root:role.rootEvery&&t.attacks%role.rootEvery===0?role.rootDuration:0});
+    s.pending.push({id:s.nextId++,towerId:t.id,targetId:target.id,releaseAt:s.time+.22,damage,kind:role.kind,splash:role.splash||0,bounces:role.bounces||0,pierce:!!role.pierce,slow:role.slow||0,shred:role.shred||0,poison:role.poison||0,mark:role.mark||0,slowDuration:role.slowDuration,root:role.rootEvery&&t.attacks%role.rootEvery===0?role.rootDuration:0});
     event(s,'anticipate',{pad:t.pad,role:t.role,targetId:target.id});
   }
   if(s.hero&&s.hero.ready<=s.time){
-    const h=s.hero,r=ROLES[h.role],target=s.enemies.filter(e=>Math.hypot(pointAt(e.distance,s,e.route).x-h.x,pointAt(e.distance,s,e.route).y-h.y)<=heroRange(h,r.range)).sort((a,b)=>b.distance-a.distance)[0];
-    if(target){h.attacks++;h.ready=s.time+r.interval;h.focus=h.focusId===target.id?Math.min(3,h.focus+1):0;h.focusId=target.id;
+    const h=s.hero,r=ROLES[h.role],target=s.enemies.filter(e=>e.hp>0).sort((a,b)=>b.distance-a.distance)[0];
+    if(target){h.attacks++;h.ready=s.time+r.interval*(h.talents.passive==='reach'?.9:1)*Math.pow(.94,Math.min(8,s.buffs.command||0));h.focus=h.focusId===target.id?Math.min(3,h.focus+1):0;h.focusId=target.id;
       const multiplier=h.role==='night'?1+h.focus*(h.specialization==='focus'?.15:.1):h.role==='hope'&&(target.armor>0||target.kind==='boss')?(h.specialization==='breaker'?1.35:1.2):1;
       s.pending.push({id:s.nextId++,hero:true,targetId:target.id,releaseAt:s.time+.22,damage:r.damage*multiplier*(h.talents.passive==='focus'?1.15:1),kind:r.kind,splash:r.splash||0,pierce:!!r.pierce,slow:r.slow||0});event(s,'anticipate',{hero:true,role:h.role,targetId:target.id});}
   }
   if(!s.queue.length&&!s.enemies.length){
     s.pending=[];s.shots=[];s.gold+=45;s.hp=Math.min(s.maxHp,s.hp+s.towers.reduce((n,t)=>n+towerStats(t,s).heal,0)+(s.hero?.role==='healing'?(s.hero.specialization==='restore'?2:1):0));
-    s.phase=s.mode==='campaign'&&s.wave>=s.maxWaves?'victory':'intermission';if(s.phase==='intermission'&&s.wave%2===0)s.blessingChoices=Object.keys(BLESSINGS);event(s,s.phase,{wave:s.wave});
+    s.phase=s.mode==='campaign'&&s.wave>=s.maxWaves?'victory':'intermission';if(s.phase==='intermission'&&s.wave%2===0){const choices=Object.keys(BLESSINGS),shift=(Math.floor(s.wave/2)-1)%choices.length;s.blessingChoices=Array.from({length:3},(_,i)=>choices[(shift+i)%choices.length]);}event(s,s.phase,{wave:s.wave});
   }
 }
 export function advance(s,seconds){

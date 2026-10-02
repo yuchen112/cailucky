@@ -1,12 +1,10 @@
+import './test-defense-collection.mjs';
 import assert from 'node:assert/strict';
-import {newCollection,recruit,drawOdds,trainingRanks,validateCollection,rewardCollection} from '../games/fairytale-defense/rebuild/recruitment.mjs';
-let c=newCollection();let {collection,result}=recruit(c,()=>0);assert.equal(c.coins,300);assert.equal(collection.coins,200);assert.equal(result.duplicate,false);({collection,result}=recruit(collection,()=>0));assert.equal(collection.coins,120);assert.equal(result.refund,20);
-c={...newCollection(),total:29,sinceGold:9,sincePrism:29};assert.deepEqual(drawOdds(c),[0,0,100]);assert.equal(recruit(c,()=>0).result.grade,'prism');
-c={...newCollection(),total:9,sinceGold:9,sincePrism:9};assert.deepEqual(drawOdds(c),[0,95,5]);assert.equal(recruit(c,()=>0).result.grade,'gold');
-assert.throws(()=>recruit({...newCollection(),coins:99}));assert.throws(()=>validateCollection({...newCollection(),sinceGold:10}));assert.throws(()=>validateCollection({...newCollection(),owned:['bad']}));
-c=newCollection();c.training.archer=10000;assert.equal(trainingRanks(c).archer,8);assert.equal(rewardCollection(c,{waves:6,firstClearStage:1}).coins,420);
-console.log('PASS: migration defaults, immutable draw, exact base/pity odds, duplicate refund, insufficient funds, rank cap and reward amounts');
-const {newArmySave,prepareArmyExpedition,settleArmySave,decodeArmySave}=await import('../games/fairytale-defense/rebuild/army-save.mjs');
-let p=newArmySave(),next=prepareArmyExpedition(p,{hero:'growth'},'reward-test');next.battle.wave=6;next.battle.phase='victory';p=settleArmySave(next.save,next.battle,'reward-test');assert.equal(p.collection.coins,420);assert.deepEqual(settleArmySave(p,next.battle,'reward-test'),p);
-const malformed=prepareArmyExpedition(newArmySave(),{hero:'growth'},'rank-test').save;malformed.checkpoint.training.archer=8;assert.throws(()=>decodeArmySave(malformed),/訓練/);
-console.log('PASS: first-clear and wave reward idempotency, checkpoint/profile training consistency');
+import {newCollection,validateCollection,recruit,drawOdds} from '../games/fairytale-defense/rebuild/recruitment.mjs';
+const c=newCollection();
+for(const patch of [{coins:-1},{coins:NaN},{points:-1},{sinceRare:10},{sinceEpic:30},{sinceLegendary:80},{owned:['fake']},{training:{}},{history:[{number:1,unit:'archer',grade:'legendary',duplicate:true}]}])assert.throws(()=>validateCollection({...c,...patch}));
+assert.throws(()=>recruit(c,()=>Infinity));
+assert.throws(()=>recruit(c,()=>-1));
+assert.deepEqual(drawOdds(c),[70,23,6,1]);
+console.log('PASS collection validation and invalid RNG guards.');
+

@@ -1,0 +1,20 @@
+/* Layout only: all visible panel/button/character art uses independent raster assets. */
+#app>header .commander-hit{position:static;transform:none;flex:0 0 54px;width:54px;height:62px;min-height:48px;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;inset:auto;overflow:hidden}
+.commander-hit img{width:44px;height:44px;object-fit:contain}.commander-hit span{font-size:12px;line-height:16px}
+#status{min-width:0;flex:1}#app>header{gap:4px}#battle-speed,#settings{min-width:44px;padding:6px}
+#troop-dock{display:flex;justify-content:center;gap:4px;margin:2px auto;max-width:420px}#troop-dock button{min-width:44px;width:18%;height:54px;min-height:54px;padding:2px;position:relative;display:flex;align-items:center;justify-content:center}#troop-dock img{width:40px;height:44px;object-fit:contain}#troop-dock span{font-size:14px;padding:0 3px;background-image:url('art/button.webp');background-size:100% 100%;position:absolute;bottom:0;right:2px}#troop-dock [aria-pressed=true]{outline:3px solid #f5d67e;outline-offset:-3px}
+.loadout-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.loadout-grid section{min-width:0;text-align:center;background:url('art/panel.webp') center/100% 100%;padding:10px}.loadout-grid img{width:100%;height:100px;object-fit:contain}.loadout-grid h3{font-size:17px;margin:4px 0}.loadout-grid p{font-size:14px;line-height:1.5;margin:4px 0}.loadout-grid button{width:100%;min-height:46px;padding:8px 4px;font-size:15px}.loadout-grid [aria-pressed=true]{outline:2px solid #f5d67e;outline-offset:-4px}
+.formation-presets{display:grid;grid-template-columns:1fr 1fr;gap:4px}.formation-presets button{min-height:44px;font-size:14px;padding:8px 4px}
+#endless-maps .journey-body>button{display:block;width:100%;margin:8px 0;padding:14px;min-height:80px}#endless-maps small{display:block;line-height:1.6;font-size:14px}#start-endless{min-height:48px}
+.collection-grid>section{min-width:0}.collection-grid>section>button{width:100%}.recruit-card[data-grade=legendary]{background-image:url('art/panel.webp')}
+#retreat{font-size:14px;min-width:80px;grid-column:1/-1}.actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.actions button{width:100%;min-width:0}#command-zones p{font-size:16px;line-height:1.6}
+@media(max-height:650px){#troop-dock{margin:0}#troop-dock button{height:46px;min-height:46px}#troop-dock img{height:36px}#app>header .commander-hit{height:52px}.commander-hit img{height:35px}.tactical-toolbar button{min-height:40px}footer #hint{font-size:13px;margin:2px 0}.loadout-grid img{height:80px}}
+#endless-maps .journey-body>button img{float:left;width:64px;height:88px;object-fit:contain;margin-right:12px}#endless-maps .journey-body>button{min-height:112px;text-align:left}
+#camp .fixed-actions{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px}
+#camp .fixed-actions #resume{grid-column:1/-1}
+#camp .fixed-actions button{min-width:0;margin:0;min-height:48px}
+#camp .fixed-actions #start img{width:100%;object-fit:contain}
+@media(max-height:650px){#camp .hero-showcase{min-height:80px}#camp .art-title{max-height:58px}#camp #hero-summary{font-size:13px}#camp .fixed-actions button{min-height:44px}#camp #heroes button{min-height:65px}#camp #heroes img{height:38px}}
+#app>header .commander-hit:active:not(:disabled){transform:none}
+
+
