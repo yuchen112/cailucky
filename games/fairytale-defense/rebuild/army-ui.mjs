@@ -1,20 +1,20 @@
-import {installExpedition} from './expedition-ui.mjs?v=20261003-collection1';
-import {MAPS,storyFor,storyMap} from './expedition.mjs?v=20261003-collection1';
-import {renderHeroGuide} from './hero-guide.mjs?v=20261003-collection1';
-import {createBattleClock} from './battle-clock.mjs?v=20261003-collection1';
-import {installTactics} from './tactical-ui.mjs?v=20261003-collection1';
-import {ROLES,UNITS,UNIT_BRANCHES,PADS,pointAt,createBattle,deploy,upgrade,sell,setPriority,upgradeCost,towerStats,startWave,advance,chooseBlessing,BLESSINGS} from './core.mjs?v=20261003-collection1';
-import {HERO_SPECIALIZATIONS,HERO_TALENTS,supportFor} from './hero-rules.mjs?v=20261003-collection1';
-import {masteryLevel} from './mastery.mjs?v=20261003-collection1';
-import {newArmySave,decodeArmySave,prepareArmyExpedition,settleArmySave} from './army-save.mjs?v=20261003-collection1';
-import {restoreCheckpoint} from './checkpoint.mjs?v=20261003-collection1';
-import {CAMPAIGN} from './encounters.mjs?v=20261003-collection1';
-import {SPELL_ART,actorMotion,projectilePose} from './motion.mjs?v=20261003-collection1';
-import {unitArt,branchGuide} from './unit-presentation.mjs?v=20261003-collection1';
-import {SPRITE_LAYOUT} from './sprite-layout.mjs?v=20261003-collection1';
-import {routePads,regionFor,alignCommander} from './routes.mjs?v=20261003-collection1';
-import {createAudio} from './audio.mjs?v=20261003-collection1';
-import {installJourney} from './journey-ui.mjs?v=20261003-collection1';
+import {installExpedition} from './expedition-ui.mjs?v=20261003-collection2';
+import {MAPS,storyFor,storyMap} from './expedition.mjs?v=20261003-collection2';
+import {renderHeroGuide} from './hero-guide.mjs?v=20261003-collection2';
+import {createBattleClock} from './battle-clock.mjs?v=20261003-collection2';
+import {installTactics} from './tactical-ui.mjs?v=20261003-collection2';
+import {ROLES,UNITS,UNIT_BRANCHES,PADS,pointAt,createBattle,deploy,upgrade,sell,setPriority,upgradeCost,towerStats,startWave,advance,chooseBlessing,BLESSINGS} from './core.mjs?v=20261003-collection2';
+import {HERO_SPECIALIZATIONS,HERO_TALENTS,supportFor} from './hero-rules.mjs?v=20261003-collection2';
+import {masteryLevel} from './mastery.mjs?v=20261003-collection2';
+import {newArmySave,decodeArmySave,prepareArmyExpedition,settleArmySave} from './army-save.mjs?v=20261003-collection2';
+import {restoreCheckpoint} from './checkpoint.mjs?v=20261003-collection2';
+import {CAMPAIGN} from './encounters.mjs?v=20261003-collection2';
+import {SPELL_ART,actorMotion,projectilePose} from './motion.mjs?v=20261003-collection2';
+import {unitArt,branchGuide} from './unit-presentation.mjs?v=20261003-collection2';
+import {SPRITE_LAYOUT} from './sprite-layout.mjs?v=20261003-collection2';
+import {routePads,regionFor,alignCommander} from './routes.mjs?v=20261003-collection2';
+import {createAudio} from './audio.mjs?v=20261003-collection2';
+import {installJourney} from './journey-ui.mjs?v=20261003-collection2';
 const audio=createAudio(),systemMotion=matchMedia('(prefers-reduced-motion: reduce)'),reducedMotion={get matches(){return systemMotion.matches||audio.preferences.reducedMotion;}};
 audio.hold(true);
 let practice=false,autoNextAt=0;let expedition=null,mode='campaign',map=null,chosenUnit=null;let journey=null,tactics=null,storedRaw=null;const battleClock=createBattleClock();
@@ -25,7 +25,7 @@ let profile=newArmySave(),battle=createBattle({hero:'growth'}),hero='growth',spe
 const artPromises=new Map(),artQueue=[];let transitioning=false,activeImages=0;
 function pumpImages(){while(activeImages<4&&artQueue.length){activeImages++;const task=artQueue.shift();task().finally(()=>{activeImages--;pumpImages();if(!activeImages&&!artQueue.length)audio.hold(false);});}}
 const loadingStatus=document.createElement('dialog');loadingStatus.id='loading-status';loadingStatus.setAttribute('aria-label','準備戰場美術');loadingStatus.addEventListener('cancel',e=>e.preventDefault());document.body.append(loadingStatus);
-function loadArt(id){if(images[id])return Promise.resolve();if(artPromises.has(id))return artPromises.get(id);audio.hold(true);const promise=new Promise((resolve,reject)=>{artQueue.push(async()=>{const im=new Image();im.fetchPriority=id.startsWith('road')?'high':'auto';im.src=id in ROLES?`../../../assets/characters/cxq-role-${id}.webp`:`art/${id}.webp`;let timer;try{await Promise.race([im.decode(),new Promise((_,fail)=>timer=setTimeout(()=>fail(Error('載入逾時')),60000))]);images[id]=im;resolve();}catch(e){artPromises.delete(id);reject(Error('美術載入失敗：'+id));}finally{clearTimeout(timer);}});});artPromises.set(id,promise);pumpImages();return promise;}
+function loadArt(id){if(images[id])return Promise.resolve();if(artPromises.has(id))return artPromises.get(id);audio.hold(true);const promise=new Promise((resolve,reject)=>{artQueue.push(async()=>{const src=id in ROLES?`../../../assets/characters/cxq-role-${id}.webp`:`art/${id}.webp`;for(let attempt=0;attempt<3;attempt++){const im=new Image();im.fetchPriority=id.startsWith('road')?'high':'auto';im.src=src+'?v=20261003-collection2'+(attempt?'&retry='+attempt:'');let timer;try{await Promise.race([im.decode(),new Promise((_,fail)=>timer=setTimeout(()=>fail(Error('載入逾時')),15000))]);images[id]=im;resolve();return;}catch(e){im.src='';if(attempt===2){artPromises.delete(id);reject(Error('美術載入失敗：'+id));}}finally{clearTimeout(timer);}}});});artPromises.set(id,promise);pumpImages();return promise;}
 function heroArt(id){return [id,id+'-cast',id+'-ready',id+'-victory',...(id==='growth'?['growth-idle']:[]),SPELL_ART[ROLES[id].kind]];}
 function ensureBattleArt(s){const ids=['button',regionFor(s)==='forest'?'road':'road-'+regionFor(s),'walker-step','runner-step','armored-step','boss-ready','boss-cast',...s.loadout.filter(id=>['archer','cannon','frost','firefly'].includes(id)).map(id=>'unit-'+id+'-ready'),'pad','seed','impact','target','health-track','health-fill','command-podium','dream-core','walker','runner','armored','boss','range','aura-range','support-range','fx-light',...['bolt','spore','frost','glow'].map(id=>'projectile-'+id),...s.loadout.map(id=>'unit-'+id),...s.towers.map(unitArt),...heroArt(s.hero.role),regionFor(s)==='forest'?'meadow':regionFor(s)==='moon'?'meadow-moon':'meadow-dawn'];const unique=[...new Set(ids)];let count=0;return Promise.all(unique.map(async id=>{await loadArt(id);if(transitioning)loadingStatus.textContent='準備戰場美術… '+(++count)+' / '+unique.length;}));}
 async function transition(fn){if(transitioning||failed)return;transitioning=true;loadingStatus.textContent='準備戰場美術…';loadingStatus.showModal();syncPause();try{await fn(); }catch(e){loadingStatus.replaceChildren();const message=document.createElement('p');message.textContent=e.message+'。原進度保留，請重試。';const retry=document.createElement('button');retry.textContent='重新載入';retry.onclick=()=>{loadingStatus.close();transition(fn);};const cancel=document.createElement('button');cancel.textContent='返回';cancel.onclick=()=>loadingStatus.close();loadingStatus.append(message,retry,cancel);return;}finally{transitioning=false;if(!loadingStatus.querySelector('button'))loadingStatus.close();syncPause();}}

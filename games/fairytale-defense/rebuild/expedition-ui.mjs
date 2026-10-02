@@ -1,6 +1,6 @@
-import {UNITS,UNIT_GUIDES,UNIT_RARITY} from './army.mjs?v=20261003-collection1';
-import {GRADES,unitLevel} from './recruitment.mjs?v=20261003-collection1';
-import {MAPS} from './expedition.mjs?v=20261003-collection1';
+import {UNITS,UNIT_GUIDES,UNIT_RARITY} from './army.mjs?v=20261003-collection2';
+import {GRADES,unitLevel} from './recruitment.mjs?v=20261003-collection2';
+import {MAPS} from './expedition.mjs?v=20261003-collection2';
 export function installExpedition({getProfile,commit,show,syncPause,openUnit,startEndless}){
  const $=id=>document.getElementById(id),body=$('squad').querySelector('.dialog-content');
  function render(){const p=getProfile();body.replaceChildren();const text=document.createElement('p');text.id='loadout-summary';text.textContent=`已選 ${p.loadout.length} / 5 種。英雄不占名額，同種可重複部署。部署只消耗當局金幣。`;body.append(text);

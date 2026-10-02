@@ -1,7 +1,7 @@
 const {execFileSync}=require('node:child_process'),fs=require('node:fs'),os=require('node:os'),path=require('node:path');
 const bin='C:/Users/User/AppData/Local/npm-cache/_npx/6de2aa2fded2970c/node_modules/agent-browser/bin/agent-browser-win32-x64.exe',session='defense-collection-qa',tmp=fs.mkdtempSync(path.join(os.tmpdir(),'cxq-collection-')),log=path.join(tmp,'log');
 function run(...args){if(args[0]==='screenshot')args[1]=path.resolve(args[1]);const fd=fs.openSync(log,'w');try{execFileSync(bin,['--session',session,...args],{stdio:['ignore',fd,fd],timeout:90000});}catch(e){console.error(fs.readFileSync(log,'utf8'));throw e;}finally{fs.closeSync(fd);}return fs.readFileSync(log,'utf8').trim();}
-function click(s){run('scrollintoview',s);run('click',s);run('wait','body:not(:has(#loading-status[open]))');run('snapshot','-i');}
+function click(s){run('scrollintoview',s);run('click',s);for(let n=0;n<90;n++){if(run('eval','!document.querySelector("#loading-status[open]")').includes('true'))break;if(run('eval','!!document.querySelector("#loading-status button")').includes('true'))throw Error(run('eval','document.querySelector("#loading-status").textContent'));run('wait','1000');}run('snapshot','-i');}
 function check(js,label){if(!run('eval',js).includes('true'))throw Error(label);}
 const url=process.env.DEFENSE_QA_URL||'http://127.0.0.1:4173/games/fairytale-defense/rebuild/army.html';
 try{
