@@ -19,4 +19,12 @@ body[data-region=ruins]{background-image:url('art/meadow-ruins-ui.webp')}#battle
 #cover[open]{background-image:url('art/camp-living.webp')}#cover-selected-hero{display:block;width:100%;min-height:60px;max-height:380px;height:100%;flex:1;object-fit:contain;margin:6px 0}#cover .cover-actions{flex:none;margin-top:0}body[data-motion=full] #cover-selected-hero{animation:camp-breathe 4s ease-in-out infinite}
 .unit-showcase .guide-range,.unit-showcase .guide-unit{max-width:100%}.branch-guides figure,.unit-facts span{min-width:0}
 /* Keep in-game art proportions independent of text scaling. */
+/* Battle sheets never reflow the board or its touch coordinates. */
+#app footer:has(#troops[open])>#troop-dock,#app footer:has(#troops[open])>#hint,#app footer:has(#troops[open])>.actions{display:flex;visibility:hidden;pointer-events:none}
+#app footer:has(#troops[open])>#hint{display:block}
+#app footer #troops[open]{position:absolute;inset:auto 0 0;background:transparent url('art/panel.webp') center/100% 100% no-repeat;padding-bottom:max(8px,env(safe-area-inset-bottom))}
+#app footer #hint{height:41px;min-height:41px;overflow:auto;overscroll-behavior:contain;overflow-wrap:anywhere}
+#status{min-width:0;flex:1}#status .hud-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#app{position:fixed;inset:0;height:100svh;overflow:hidden;overflow-anchor:none}
+#field{overflow-anchor:none}
 #recruit-skip{flex-shrink:0;min-height:44px;margin:0 16px 4px}#collection:has(#recruit-skip){grid-template-rows:auto minmax(0,1fr) auto auto}.recruit-progress{font-weight:700;color:#ffedab}.commander-hit img{transform-origin:50% 80%}

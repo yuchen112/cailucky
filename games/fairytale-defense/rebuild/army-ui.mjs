@@ -1,25 +1,25 @@
-import {ANIMATION_LAYOUT} from './animation-layout.mjs?v=20261004-animation1';
-import {installMenuMotion} from './menu-motion.mjs?v=20261004-animation1';
-import {EFFECT_ART,troopPose,enemyPose,heroPose} from './animation-state.mjs?v=20261004-animation1';
-import {drawCombatEffects} from './combat-effects.mjs?v=20261004-animation1';
-import {installInterface} from './interface-ui.mjs?v=20261004-animation1';
-import {installExpedition} from './expedition-ui.mjs?v=20261004-animation1';
-import {MAPS,storyFor,storyMap} from './expedition.mjs?v=20261004-animation1';
-import {renderHeroGuide} from './hero-guide.mjs?v=20261004-animation1';
-import {createBattleClock} from './battle-clock.mjs?v=20261004-animation1';
-import {installTactics} from './tactical-ui.mjs?v=20261004-animation1';
-import {ROLES,UNITS,UNIT_BRANCHES,PADS,pointAt,createBattle,deploy,upgrade,sell,setPriority,upgradeCost,towerStats,startWave,advance,chooseBlessing,BLESSINGS} from './core.mjs?v=20261004-animation1';
-import {HERO_SPECIALIZATIONS,HERO_TALENTS,supportFor} from './hero-rules.mjs?v=20261004-animation1';
-import {masteryLevel} from './mastery.mjs?v=20261004-animation1';
-import {newArmySave,decodeArmySave,prepareArmyExpedition,settleArmySave} from './army-save.mjs?v=20261004-animation1';
-import {restoreCheckpoint} from './checkpoint.mjs?v=20261004-animation1';
-import {CAMPAIGN} from './encounters.mjs?v=20261004-animation1';
-import {SPELL_ART,projectilePose} from './motion.mjs?v=20261004-animation1';
-import {unitArt,branchGuide} from './unit-presentation.mjs?v=20261004-animation1';
-import {SPRITE_LAYOUT} from './sprite-layout.mjs?v=20261004-animation1';
-import {routePads,regionFor,alignCommander} from './routes.mjs?v=20261004-animation1';
-import {createAudio} from './audio.mjs?v=20261004-animation1';
-import {installJourney} from './journey-ui.mjs?v=20261004-animation1';
+import {ANIMATION_LAYOUT} from './animation-layout.mjs?v=20261004-layout2';
+import {installMenuMotion} from './menu-motion.mjs?v=20261004-layout2';
+import {EFFECT_ART,troopPose,enemyPose,heroPose} from './animation-state.mjs?v=20261004-layout2';
+import {drawCombatEffects} from './combat-effects.mjs?v=20261004-layout2';
+import {installInterface} from './interface-ui.mjs?v=20261004-layout2';
+import {installExpedition} from './expedition-ui.mjs?v=20261004-layout2';
+import {MAPS,storyFor,storyMap} from './expedition.mjs?v=20261004-layout2';
+import {renderHeroGuide} from './hero-guide.mjs?v=20261004-layout2';
+import {createBattleClock} from './battle-clock.mjs?v=20261004-layout2';
+import {installTactics} from './tactical-ui.mjs?v=20261004-layout2';
+import {ROLES,UNITS,UNIT_BRANCHES,PADS,pointAt,createBattle,deploy,upgrade,sell,setPriority,upgradeCost,towerStats,startWave,advance,chooseBlessing,BLESSINGS} from './core.mjs?v=20261004-layout2';
+import {HERO_SPECIALIZATIONS,HERO_TALENTS,supportFor} from './hero-rules.mjs?v=20261004-layout2';
+import {masteryLevel} from './mastery.mjs?v=20261004-layout2';
+import {newArmySave,decodeArmySave,prepareArmyExpedition,settleArmySave} from './army-save.mjs?v=20261004-layout2';
+import {restoreCheckpoint} from './checkpoint.mjs?v=20261004-layout2';
+import {CAMPAIGN} from './encounters.mjs?v=20261004-layout2';
+import {SPELL_ART,projectilePose} from './motion.mjs?v=20261004-layout2';
+import {unitArt,branchGuide} from './unit-presentation.mjs?v=20261004-layout2';
+import {SPRITE_LAYOUT} from './sprite-layout.mjs?v=20261004-layout2';
+import {routePads,regionFor,alignCommander} from './routes.mjs?v=20261004-layout2';
+import {createAudio} from './audio.mjs?v=20261004-layout2';
+import {installJourney} from './journey-ui.mjs?v=20261004-layout2';
 const audio=createAudio(),systemMotion=matchMedia('(prefers-reduced-motion: reduce)'),reducedMotion={get matches(){return systemMotion.matches||audio.preferences.reducedMotion;}};
 audio.hold(true);
 let interfaceUI=null;
@@ -42,7 +42,7 @@ function saveBoundary(){if(practice)return;const coins=profile.collection.coins,
 function syncPause(){const rotate=$('rotate'),landscape=innerWidth>innerHeight;rotate.hidden=!landscape;if(landscape){if(rotate.open&&document.activeElement.closest('dialog')!==rotate)rotate.close();if(!rotate.open)rotate.showModal();}else if(rotate.open)rotate.close();battle.paused=failed||document.hidden||landscape||!!document.querySelector('dialog[open]:not(#troops)');}
 function show(id){if(id==='options'){$('home').hidden=$('cover').open||$('camp').open;$('options').querySelector('[data-close]').textContent=$('home').hidden?'返回':'繼續戰鬥';}if(id==='troops'){if(!$(id).open)$(id).show();}else $(id).showModal();if(id==='cover'){$(id).tabIndex=-1;$(id).focus({preventScroll:true});}syncPause();}
 function closeAll(){document.querySelectorAll('dialog[open]:not(#rotate)').forEach(d=>d.close());syncPause();}
-function resize(){const scale=Math.min(innerWidth/390,Math.max(100,$('app').clientHeight-document.querySelector('header').offsetHeight-document.querySelector('footer').offsetHeight)/585);$('field').style.width=390*scale+'px';$('field').style.height=585*scale+'px';syncPause();}
+function resize(){const app=$('app'),style=getComputedStyle(app),available=app.clientHeight-parseFloat(style.paddingTop)-parseFloat(style.paddingBottom)-document.querySelector('header').getBoundingClientRect().height-document.querySelector('footer').getBoundingClientRect().height;const scale=Math.min(app.clientWidth/390,Math.max(0,available)/585);$('field').style.width=390*scale+'px';$('field').style.height=585*scale+'px';syncPause();}
 window.addEventListener('resize',resize);document.addEventListener('visibilitychange',()=>{last=0;syncPause();});
 // HUD text and the tactical toolbar can change height after the first layout.
 // Refit the board whenever chrome changes, not only when the viewport rotates.
