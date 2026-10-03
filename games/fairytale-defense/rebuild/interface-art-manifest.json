@@ -1,0 +1,45 @@
+{
+  "tool": "built-in image_gen",
+  "policy": "Each of 7 assets generated separately. Resized as whole images; no sheet slicing.",
+  "jobs": [
+    {
+      "id": "camp-living",
+      "prompt": "Use case: stylized-concept. ONE full portrait 2:3 background illustration for premium chibi fairytale tower defense mobile game CxQ. A welcoming woodland expedition camp at warm sunrise: cream canvas tents and tiny training yard at the far sides, distant emerald hills and storybook stone arch, warm lanterns, lush foliage. Central middle foreground is an open softly lit circular stone clearing for a separate hero sprite; leave this space EMPTY. Lower third calm mossy paving for overlaid interface. Handcrafted miniature 3D storybook aesthetic, tactile wood and stone, charming but sophisticated restrained teal, ivory, amber palette, sharp detailed finish. No characters, no text, no letters, no buttons, no interface, no panels, no collage. ONE complete background, not sprite sheet. Full bleed scene.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-0e3c4ebe-f51e-4f26-9a41-624ef4318583.png"
+    },
+    {
+      "id": "entry-chapters",
+      "prompt": "Use case: stylized-concept. ONE standalone landscape 3:2 illustration for a mobile fairytale game's chapter entry card: an open ivory storybook with a miniature winding forest trail and small teal-roof castle rising from pages, warm sunrise, tiny brass compass, rich tactile handcrafted miniature 3D aesthetic, emerald and gold palette. Strong central silhouette, calm dark teal bottom margin reserved for native text later. No text, no lettering, no interface mockup, no collage, no multiple cards. Single full illustration.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-936fef53-1d34-4328-8855-d04a4c107014.png"
+    },
+    {
+      "id": "entry-endless",
+      "prompt": "Use case: stylized-concept. ONE standalone landscape 3:2 illustration for a mobile fairytale tower defense endless-mode entry card: a glowing circular celestial gate hovering over an ancient mossy stone dais, distant repeating guardian towers beneath a deep twilight sky, swirling starlight, refined handcrafted miniature 3D storybook aesthetic, indigo, turquoise and gentle gold. Strong central silhouette; calm deep indigo lower margin for native label later. No text, no lettering, no collage, no interface mockup. Single full illustration.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-a099d042-5cc3-4e75-b893-1c8c967f0bc2.png"
+    },
+    {
+      "id": "nav-heroes",
+      "prompt": "Use case: stylized-concept. ONE standalone mobile game navigation icon on transparent background: a charming gold guardian crest containing an ivory shield, emerald central gem and small leaf-shaped crown, premium handcrafted 3D storybook toy aesthetic. Bold readable silhouette at 48 pixels, soft warm lighting, restrained teal and gold. Centered complete object with 8% padding. No text, no letters, no background or UI panel, no sheet, no collage.",
+      "transparent": true,
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-89fa32f4-c0f6-44e6-b79f-5f7a58563ccb.png"
+    },
+    {
+      "id": "nav-squad",
+      "prompt": "Use case: stylized-concept. ONE standalone mobile game navigation icon on transparent background: three miniature wooden troop banners grouped as ONE emblem, green leaf banner in front with two ivory crossed training spears behind, rounded handcrafted storybook 3D toy aesthetic, restrained teal emerald gold, readable at 48px. Entire emblem centered with 8% padding, no text, no letters, no background, no sheet, no collage.",
+      "transparent": true,
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-214840e2-d22f-4865-9fba-58f7e1a393db.png"
+    },
+    {
+      "id": "nav-recruit",
+      "prompt": "Use case: stylized-concept. ONE standalone mobile game navigation icon on transparent background: small ornate gold lantern bottle holding a glowing turquoise star, friendly rounded handcrafted 3D storybook toy aesthetic, refined teal ivory gold, bold readable silhouette at 48px. Entire object centered with 8% padding. No text, no letters, no background, no panel, no sheet, no collage.",
+      "transparent": true,
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-72ccc137-09c4-46bf-97b2-b18d6884d906.png"
+    },
+    {
+      "id": "meadow-ruins-ui",
+      "prompt": "Use case: stylized-concept. ONE full portrait 2:3 overhead environment background for a miniature fairytale tower defense game. Ancient ivory limestone ruins surrounding a quiet olive-green moss courtyard, weathered column fragments and low stone walls at far edges, tiny turquoise pools at corners, scattered stone chips and very subtle grass texture centrally. Uniform TOP DOWN view, no horizon, warm diffuse daylight, finely rendered 3D handcrafted miniature diorama. Quiet low contrast central 70 percent. No roads, no paths, no characters, no text, no UI. Single continuous full bleed environment, not a sheet.",
+      "transparent": false,
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-9f7607d1-60b6-41ea-9040-c81e438cc0a6.png"
+    }
+  ]
+}

@@ -1,10 +1,10 @@
-import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261003-collection2';
+import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261003-interface1';
 // Deterministic simulation. Visuals consume events; animation never grants damage.
-import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261003-collection2';
-import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261003-collection2';
-import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261003-collection2';
-import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261003-collection2';
-import {skillSpec} from './skill-spec.mjs?v=20261003-collection2';
+import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261003-interface1';
+import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261003-interface1';
+import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261003-interface1';
+import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261003-interface1';
+import {skillSpec} from './skill-spec.mjs?v=20261003-interface1';
 export {UNITS,UNIT_BRANCHES};
 export {SPECIALIZATIONS,BLESSINGS};
 export const towerStats=(t,s)=>{const r=statsFor(ROLES[t.role]||UNITS[t.role],t,s?.buffs);if(s?.army)r.damage*=1+(s.training?.[t.role]||0)*.01;return r;};
@@ -126,7 +126,7 @@ function hit(s,shot){
     if(s.hero?.role==='dream'&&shot.hero)e.dreamUntil=s.time+4;
     if(shot.slow){e.slow=Math.min(e.slow,shot.slow);e.slowUntil=Math.max(e.slowUntil,s.time+(shot.slowDuration||2));}
     if(shot.root&&!(e.rootImmuneUntil>s.time)){const duration=shot.root*(e.kind==='boss'?.35:1);e.rootUntil=s.time+duration;e.rootImmuneUntil=s.time+duration+1;}
-    if(shot.poison){e.poison=Math.max(e.poison||0,shot.poison);e.poisonUntil=s.time+3;}
+    if(shot.poison){e.poison=Math.max(e.poison||0,shot.poison);e.poisonUntil=s.time+3;e.poisonKind=shot.kind;}
     if(shot.mark){e.mark=shot.mark;e.markUntil=s.time+4;}
     if(shot.shred){e.shred=Math.max(e.shred||0,shot.shred);e.shredUntil=s.time+3;}
     event(s,'hit',{enemyId:e.id,damage,x:pointAt(e.distance,s,e.route).x,y:pointAt(e.distance,s,e.route).y,kind:shot.kind});
