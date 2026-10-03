@@ -1,25 +1,29 @@
-import {installInterface} from './interface-ui.mjs?v=20261003-interface1';
-import {installExpedition} from './expedition-ui.mjs?v=20261003-interface1';
-import {MAPS,storyFor,storyMap} from './expedition.mjs?v=20261003-interface1';
-import {renderHeroGuide} from './hero-guide.mjs?v=20261003-interface1';
-import {createBattleClock} from './battle-clock.mjs?v=20261003-interface1';
-import {installTactics} from './tactical-ui.mjs?v=20261003-interface1';
-import {ROLES,UNITS,UNIT_BRANCHES,PADS,pointAt,createBattle,deploy,upgrade,sell,setPriority,upgradeCost,towerStats,startWave,advance,chooseBlessing,BLESSINGS} from './core.mjs?v=20261003-interface1';
-import {HERO_SPECIALIZATIONS,HERO_TALENTS,supportFor} from './hero-rules.mjs?v=20261003-interface1';
-import {masteryLevel} from './mastery.mjs?v=20261003-interface1';
-import {newArmySave,decodeArmySave,prepareArmyExpedition,settleArmySave} from './army-save.mjs?v=20261003-interface1';
-import {restoreCheckpoint} from './checkpoint.mjs?v=20261003-interface1';
-import {CAMPAIGN} from './encounters.mjs?v=20261003-interface1';
-import {SPELL_ART,actorMotion,projectilePose} from './motion.mjs?v=20261003-interface1';
-import {unitArt,branchGuide} from './unit-presentation.mjs?v=20261003-interface1';
-import {SPRITE_LAYOUT} from './sprite-layout.mjs?v=20261003-interface1';
-import {routePads,regionFor,alignCommander} from './routes.mjs?v=20261003-interface1';
-import {createAudio} from './audio.mjs?v=20261003-interface1';
-import {installJourney} from './journey-ui.mjs?v=20261003-interface1';
+import {ANIMATION_LAYOUT} from './animation-layout.mjs?v=20261004-animation1';
+import {installMenuMotion} from './menu-motion.mjs?v=20261004-animation1';
+import {EFFECT_ART,troopPose,enemyPose,heroPose} from './animation-state.mjs?v=20261004-animation1';
+import {drawCombatEffects} from './combat-effects.mjs?v=20261004-animation1';
+import {installInterface} from './interface-ui.mjs?v=20261004-animation1';
+import {installExpedition} from './expedition-ui.mjs?v=20261004-animation1';
+import {MAPS,storyFor,storyMap} from './expedition.mjs?v=20261004-animation1';
+import {renderHeroGuide} from './hero-guide.mjs?v=20261004-animation1';
+import {createBattleClock} from './battle-clock.mjs?v=20261004-animation1';
+import {installTactics} from './tactical-ui.mjs?v=20261004-animation1';
+import {ROLES,UNITS,UNIT_BRANCHES,PADS,pointAt,createBattle,deploy,upgrade,sell,setPriority,upgradeCost,towerStats,startWave,advance,chooseBlessing,BLESSINGS} from './core.mjs?v=20261004-animation1';
+import {HERO_SPECIALIZATIONS,HERO_TALENTS,supportFor} from './hero-rules.mjs?v=20261004-animation1';
+import {masteryLevel} from './mastery.mjs?v=20261004-animation1';
+import {newArmySave,decodeArmySave,prepareArmyExpedition,settleArmySave} from './army-save.mjs?v=20261004-animation1';
+import {restoreCheckpoint} from './checkpoint.mjs?v=20261004-animation1';
+import {CAMPAIGN} from './encounters.mjs?v=20261004-animation1';
+import {SPELL_ART,projectilePose} from './motion.mjs?v=20261004-animation1';
+import {unitArt,branchGuide} from './unit-presentation.mjs?v=20261004-animation1';
+import {SPRITE_LAYOUT} from './sprite-layout.mjs?v=20261004-animation1';
+import {routePads,regionFor,alignCommander} from './routes.mjs?v=20261004-animation1';
+import {createAudio} from './audio.mjs?v=20261004-animation1';
+import {installJourney} from './journey-ui.mjs?v=20261004-animation1';
 const audio=createAudio(),systemMotion=matchMedia('(prefers-reduced-motion: reduce)'),reducedMotion={get matches(){return systemMotion.matches||audio.preferences.reducedMotion;}};
 audio.hold(true);
 let interfaceUI=null;
-let practice=false,autoNextAt=0;let expedition=null,mode='campaign',map=null,chosenUnit=null;let journey=null,tactics=null,storedRaw=null;const battleClock=createBattleClock();
+let lastSettlement={coins:0,xp:0};let practice=false,autoNextAt=0;let expedition=null,mode='campaign',map=null,chosenUnit=null;let journey=null,tactics=null,storedRaw=null;const battleClock=createBattleClock();
 function motionPreference(){document.body.dataset.motion=reducedMotion.matches?'reduced':'full';}
 systemMotion.addEventListener('change',motionPreference);motionPreference();
 const $=id=>document.getElementById(id),ctx=$('canvas').getContext('2d'),images={},key='cxq.defense.army.v3';
@@ -27,14 +31,14 @@ let profile=newArmySave(),battle=createBattle({hero:'growth'}),hero='growth',spe
 const artPromises=new Map(),artQueue=[];let transitioning=false,activeImages=0;
 function pumpImages(){while(activeImages<4&&artQueue.length){activeImages++;const task=artQueue.shift();task().finally(()=>{activeImages--;pumpImages();if(!activeImages&&!artQueue.length)audio.hold(false);});}}
 const loadingStatus=document.createElement('dialog');loadingStatus.id='loading-status';loadingStatus.setAttribute('aria-label','準備戰場美術');loadingStatus.addEventListener('cancel',e=>e.preventDefault());document.body.append(loadingStatus);
-function loadArt(id){if(images[id])return Promise.resolve();if(artPromises.has(id))return artPromises.get(id);audio.hold(true);const promise=new Promise((resolve,reject)=>{artQueue.push(async()=>{const src=id in ROLES?`../../../assets/characters/cxq-role-${id}.webp`:`art/${id}.webp`;for(let attempt=0;attempt<3;attempt++){const im=new Image();im.fetchPriority=id.startsWith('road')?'high':'auto';im.src=src+'?v=20261003-collection2'+(attempt?'&retry='+attempt:'');let timer;try{await Promise.race([im.decode(),new Promise((_,fail)=>timer=setTimeout(()=>fail(Error('載入逾時')),15000))]);images[id]=im;resolve();return;}catch(e){im.src='';if(attempt===2){artPromises.delete(id);reject(Error('美術載入失敗：'+id));}}finally{clearTimeout(timer);}}});});artPromises.set(id,promise);pumpImages();return promise;}
+function loadArt(id){if(images[id])return Promise.resolve();if(artPromises.has(id))return artPromises.get(id);audio.hold(true);const promise=new Promise((resolve,reject)=>{artQueue.push(async()=>{const src=id in ROLES?`../../../assets/characters/cxq-role-${id}.webp`:`art/${id}.webp`;for(let attempt=0;attempt<3;attempt++){const im=new Image();im.fetchPriority=id.startsWith('road')?'high':'auto';im.src=src+'?v=20261004-animation1'+(attempt?'&retry='+attempt:'');let timer;try{await Promise.race([im.decode(),new Promise((_,fail)=>timer=setTimeout(()=>fail(Error('載入逾時')),15000))]);images[id]=im;resolve();return;}catch(e){im.src='';if(attempt===2){artPromises.delete(id);reject(Error('美術載入失敗：'+id));}}finally{clearTimeout(timer);}}});});artPromises.set(id,promise);pumpImages();return promise;}
 function heroArt(id){return [id,id+'-cast',id+'-ready',id+'-victory',...(id==='growth'?['growth-idle']:[]),SPELL_ART[ROLES[id].kind]];}
-function ensureBattleArt(s){const ids=['button',regionFor(s)==='forest'?'road':'road-'+regionFor(s),'walker-step','runner-step','armored-step','boss-ready','boss-cast',...s.loadout.filter(id=>['archer','cannon','frost','firefly'].includes(id)).map(id=>'unit-'+id+'-ready'),'pad','seed','impact','target','health-track','health-fill','command-podium','dream-core','walker','runner','armored','boss','range','aura-range','support-range','fx-light','fx-spark',...['bolt','spore','frost','glow'].map(id=>'projectile-'+id),...s.loadout.map(id=>'unit-'+id),...s.towers.map(unitArt),...heroArt(s.hero.role),regionFor(s)==='forest'?'meadow':regionFor(s)==='moon'?'meadow-moon':regionFor(s)==='ruins'?'meadow-ruins-ui':'meadow-dawn'];const unique=[...new Set(ids)];let count=0;return Promise.all(unique.map(async id=>{await loadArt(id);if(transitioning)loadingStatus.textContent='準備戰場美術… '+(++count)+' / '+unique.length;}));}
+function ensureBattleArt(s){const ids=[...EFFECT_ART,...s.loadout.map(id=>'unit-'+id+'-release'),'fx-clover',...Object.values(SPELL_ART),'button',regionFor(s)==='forest'?'road':'road-'+regionFor(s),'walker-step','runner-step','armored-step','boss-ready','boss-cast',...s.loadout.map(id=>'unit-'+id+'-ready'),'pad','seed','impact','target','health-track','health-fill','command-podium','dream-core','walker','runner','armored','boss','range','aura-range','support-range','fx-light','fx-spark',...['bolt','spore','frost','glow'].map(id=>'projectile-'+id),...s.loadout.map(id=>'unit-'+id),...s.towers.map(unitArt),...heroArt(s.hero.role),regionFor(s)==='forest'?'meadow':regionFor(s)==='moon'?'meadow-moon':regionFor(s)==='ruins'?'meadow-ruins-ui':'meadow-dawn'];const unique=[...new Set(ids)];let count=0;return Promise.all(unique.map(async id=>{await loadArt(id);if(transitioning)loadingStatus.textContent='準備戰場美術… '+(++count)+' / '+unique.length;}));}
 async function transition(fn){if(transitioning||failed)return;transitioning=true;loadingStatus.textContent='準備戰場美術…';loadingStatus.showModal();syncPause();try{await fn(); }catch(e){loadingStatus.replaceChildren();const message=document.createElement('p');message.textContent=e.message+'。原進度保留，請重試。';const retry=document.createElement('button');retry.textContent='重新載入';retry.onclick=()=>{loadingStatus.close();transition(fn);};const cancel=document.createElement('button');cancel.textContent='返回';cancel.onclick=()=>loadingStatus.close();loadingStatus.append(message,retry,cancel);return;}finally{transitioning=false;if(!loadingStatus.querySelector('button'))loadingStatus.close();syncPause();}}
 function error(e){failed=true;$('error').hidden=false;$('error').textContent=`已暫停：${e.message}。未覆蓋原始存檔。請先保留備份再重新載入。`;syncPause();}
 try{const raw=localStorage.getItem(key);storedRaw=raw;if(raw)profile=decodeArmySave(raw);const savedHero=localStorage.getItem('cxq.defense.camp-hero')||profile.checkpoint?.hero.role;if(savedHero&&Object.hasOwn(ROLES,savedHero))hero=savedHero;}catch(e){error(e);}
 function persist(next){if(localStorage.getItem(key)!==storedRaw)throw Error('另一個分頁更新了進度，請重新載入後再操作');const canonical=decodeArmySave(next),raw=JSON.stringify(canonical);if(storedRaw&&JSON.parse(storedRaw).collection?.version===1&&!localStorage.getItem(key+'.before-collection2'))localStorage.setItem(key+'.before-collection2',storedRaw);localStorage.setItem(key,raw);storedRaw=raw;profile=canonical;journey?.updateWallet();interfaceUI?.refresh();}
-function saveBoundary(){if(practice)return;persist(settleArmySave(profile,battle,profile.mastery.activeRun.id));}
+function saveBoundary(){if(practice)return;const coins=profile.collection.coins,xp=profile.mastery.xp[battle.hero.role];persist(settleArmySave(profile,battle,profile.mastery.activeRun.id));lastSettlement={coins:profile.collection.coins-coins,xp:profile.mastery.xp[battle.hero.role]-xp};}
 function syncPause(){const rotate=$('rotate'),landscape=innerWidth>innerHeight;rotate.hidden=!landscape;if(landscape){if(rotate.open&&document.activeElement.closest('dialog')!==rotate)rotate.close();if(!rotate.open)rotate.showModal();}else if(rotate.open)rotate.close();battle.paused=failed||document.hidden||landscape||!!document.querySelector('dialog[open]:not(#troops)');}
 function show(id){if(id==='options'){$('home').hidden=$('cover').open||$('camp').open;$('options').querySelector('[data-close]').textContent=$('home').hidden?'返回':'繼續戰鬥';}if(id==='troops'){if(!$(id).open)$(id).show();}else $(id).showModal();if(id==='cover'){$(id).tabIndex=-1;$(id).focus({preventScroll:true});}syncPause();}
 function closeAll(){document.querySelectorAll('dialog[open]:not(#rotate)').forEach(d=>d.close());syncPause();}
@@ -108,17 +112,30 @@ $('cancel-import').onclick=()=>{pendingImport=null;importDialog.close();};
 $('apply-import').onclick=()=>{if(!pendingImport)return;try{persist(pendingImport);failed=false;$('error').hidden=true;$('start').disabled=false;$('enter-camp').disabled=false;pendingImport=null;hero=profile.checkpoint?.hero.role||'growth';specialization=null;talents={};home();}catch(e){$('import-summary').textContent=`無法儲存：${e.message}。請保留備份。`;}};
 function image(id,x,y,w,h,alpha=1){if(!images[id])return;ctx.globalAlpha=alpha;ctx.drawImage(images[id],x,y,w,h);ctx.globalAlpha=1;}
 function centeredImage(id,size,alpha=1){const im=images[id];if(!im)return;const scale=size/Math.max(im.width,im.height),w=im.width*scale,h=im.height*scale;image(id,-w/2,-h/2,w,h,alpha);}
-function sprite(id,x,y,h){const im=images[id];if(im){const a=SPRITE_LAYOUT[id]||{anchorX:.5,anchorY:.93,visibleHeight:1},height=h/a.visibleHeight,w=height*im.width/im.height;image(id,x-w*a.anchorX,y-height*a.anchorY,w,height);}}
+function sprite(id,x,y,h,alpha=1){if(alpha>0)renderedActors.push(id);const im=images[id];if(im){const a=ANIMATION_LAYOUT[id]||SPRITE_LAYOUT[id]||{anchorX:.5,anchorY:.93,visibleHeight:1},height=h/a.visibleHeight,w=height*im.width/im.height;image(id,x-w*a.anchorX,y-height*a.anchorY,w,height,alpha);}}
+let renderedActors=[];
 const facingByActor=new Map();let facingBattle=null;
-function actor(id,x,y,h,identity){if(facingBattle!==battle){facingByActor.clear();facingBattle=battle;}const key=identity.hero?'hero':identity.pad,event=battle.events.findLast(e=>['anticipate','release'].includes(e.type)&&!!e.hero===!!identity.hero&&(identity.hero||e.pad===identity.pad)),target=battle.enemies.find(e=>e.id===event?.targetId);if(target)facingByActor.set(key,pointAt(target.distance,battle,target.route).x<x?-1:1);const direction=facingByActor.get(key)||1;const m=actorMotion(battle,identity,reducedMotion.matches);let art=id;if(identity.hero){const pre=battle.pending.some(a=>a.hero),release=battle.events.findLast(e=>(e.type==='release'&&e.hero)||e.type==='hero-skill');const age=release?battle.time-release.time:99;art=!reducedMotion.matches&&age<.38?`${id}-cast`:!reducedMotion.matches&&pre?`${id}-ready`:id==='growth'?'growth-idle':id;}else if(!reducedMotion.matches&&battle.pending.some(a=>!a.hero&&a.towerId===battle.towers.find(t=>t.pad===identity.pad)?.id)&&images[id+'-ready'])art=id+'-ready';ctx.save();ctx.translate(x+direction*m.offset,y);ctx.scale(direction,1);ctx.rotate(identity.hero&&art.endsWith('-cast')?0:m.angle);sprite(art,0,0,h);ctx.restore();}
+function actor(id,x,y,h,identity){
+ if(facingBattle!==battle){facingByActor.clear();facingBattle=battle;}
+ const t=battle.towers.find(t=>t.pad===identity.pad),event=battle.events.findLast(e=>['anticipate','release'].includes(e.type)&&!e.hero&&e.pad===identity.pad),target=battle.enemies.find(e=>e.id===event?.targetId);
+ if(target)facingByActor.set(identity.pad,pointAt(target.distance,battle,target.route).x<x?-1:1);
+ const direction=facingByActor.get(identity.pad)||1,m=troopPose(battle,t,reducedMotion.matches);let art=id;
+ // Never swap a developed branch back to the base character during an attack.
+ if(!reducedMotion.matches&&id==='unit-'+t.role){if(m.phase==='windup'&&images[id+'-ready'])art=id+'-ready';else if(m.phase==='release')art=id+'-release';}
+ const upgradeEvent=battle.events.findLast(e=>e.type==='upgrade'&&e.pad===t.pad&&battle.time-e.time<.28);
+ ctx.save();ctx.translate(x+m.x*direction,y+m.y);ctx.scale(direction*m.sx,m.sy);ctx.rotate(m.angle);
+ if(upgradeEvent?.before&&!reducedMotion.matches){const k=(battle.time-upgradeEvent.time)/.28;sprite(unitArt(upgradeEvent.before),0,0,h,1-k);sprite(art,0,0,h,k);}else sprite(art,0,0,h);
+ ctx.restore();
+}
 function rangeArt(id,p,r,alpha=.7){const support=id==='aura-range',ratio=support?.4228515625:.423242,size=r/ratio,cx=support?.4990234375:.5,cy=support?.494140625:.5;image(support?'support-range':id,p.x-size*cx,p.y-size*cy,size,size,alpha);}
 function health(e,p,height){
  const y=p.y-height-4,track={x:.015625,y:.357143,w:.96875,h:.274725},fill={x:.048828,y:.333333,w:.902344,h:.333333};
  image('health-track',p.x-20-track.x*40/track.w,y-track.y*6/track.h,40/track.w,6/track.h);
  ctx.save();ctx.beginPath();ctx.rect(p.x-18,y+1,36*Math.max(0,e.hp/e.maxHp),4);ctx.clip();image('health-fill',p.x-18-fill.x*36/fill.w,y+1-fill.y*4/fill.h,36/fill.w,4/fill.h);ctx.restore();
 }
-let lastLayout='',heroEvent=0;
+let lastLayout='';
 function draw(){
+ renderedActors=[];
  const region=regionFor(battle),pads=routePads(battle);audio.region(region);const layout=[region,battle.hero.x,battle.hero.y].join(':');if(layout!==lastLayout){lastLayout=layout;for(const [i,b] of [...$('pads').querySelectorAll('.pad-hit')].entries()){b.style.left=pads[i].x/390*100+'%';b.style.top=pads[i].y/585*100+'%';}commandHit.querySelector('img').src=`../../../assets/characters/cxq-role-${battle.hero.role}.webp`;}if(document.body.dataset.region!==region)document.body.dataset.region=region;
  ctx.setTransform(2,0,0,2,0,0);ctx.clearRect(0,0,390,585);image(region==='forest'?'road':'road-'+region,0,0,390,585);
  for(const p of pads)image('pad',p.x-40,p.y-24,80,50);
@@ -136,26 +153,19 @@ function draw(){
  const coreLabel=`核心 ${battle.hp}/${battle.maxHp}${battle.shield?' · 護盾 '+battle.shield:''}`;ctx.strokeText(coreLabel,200,580);ctx.fillText(coreLabel,200,580);
 
 
- for(const e of battle.enemies){const p=pointAt(e.distance,battle,e.route),height=e.kind==='boss'?80:52;objects.push({y:p.y,draw:()=>{ctx.save();ctx.translate(p.x,p.y);if(pointAt(Math.max(0,e.distance-2),battle,e.route).x>p.x)ctx.scale(-1,1);const stepping=!reducedMotion.matches&&Math.floor(battle.time*5+e.id)%2===1,art=e.kind==='boss'&&e.castUntil>battle.time?'boss-ready':e.kind==='boss'&&battle.events.some(v=>v.type==='boss-ward'&&v.enemyId===e.id&&battle.time-v.time<.5)?'boss-cast':stepping&&images[e.kind+'-step']?e.kind+'-step':e.kind;sprite(art,0,0,height);if(e.slowUntil>battle.time)image('projectile-frost',-16,-12,32,32,.5);ctx.restore();health(e,p,height);const status=[];if(e.poisonUntil>battle.time)status.push(e.poisonKind==='spark'?'fx-spark':'projectile-spore');if(e.shredUntil>battle.time)status.push('target');if(e.markUntil>battle.time)status.push('fx-light');for(const [i,icon] of status.slice(0,2).entries())image(icon,p.x+18+i*18,p.y-height,20,20);}});}
+ for(const e of battle.enemies){const p=pointAt(e.distance,battle,e.route),height=e.kind==='boss'?80:52;objects.push({y:p.y,draw:()=>{ctx.save();ctx.translate(p.x,p.y);if(pointAt(Math.max(0,e.distance-2),battle,e.route).x>p.x)ctx.scale(-1,1);const motion=enemyPose(battle,e,reducedMotion.matches);ctx.translate(motion.x,motion.y);ctx.rotate(motion.angle);const stepping=motion.step,art=e.kind==='boss'&&e.castUntil>battle.time?'boss-ready':e.kind==='boss'&&battle.events.some(v=>v.type==='boss-ward'&&v.enemyId===e.id&&battle.time-v.time<.5)?'boss-cast':stepping&&images[e.kind+'-step']?e.kind+'-step':e.kind;sprite(art,0,0,height);if(e.slowUntil>battle.time)image('projectile-frost',-16,-12,32,32,.5);ctx.restore();health(e,p,height);const status=[];if(e.poisonUntil>battle.time)status.push(e.poisonKind==='spark'?'fx-spark':'projectile-spore');if(e.shredUntil>battle.time)status.push('target');if(e.markUntil>battle.time)status.push('fx-light');for(const [i,icon] of status.slice(0,2).entries())image(icon,p.x+18+i*18,p.y-height,20,20);}});}
  objects.sort((a,b)=>a.y-b.y).forEach(o=>o.draw());for(const t of battle.towers){const p=pads[t.pad],remaining=Math.ceil(Math.max(t.heroPowerUntil||0,t.trustUntil||0,battle.hero.hasteUntil||0)-battle.time),charges=t.luckyCharges||0;if(remaining>0||charges>0){image('button',p.x-30,p.y-76,60,22);ctx.font='bold 12px system-ui';ctx.textAlign='center';ctx.fillStyle='#fff8dc';ctx.fillText(remaining>0?`增益 ${remaining}秒`:`暴擊 ${charges}次`,p.x,p.y-60);}}
  for(const t of battle.towers){const p=pads[t.pad];image('button',p.x-24,p.y+3,48,22);ctx.font='bold 14px system-ui';ctx.fillStyle='#fff8dc';ctx.textAlign='center';ctx.fillText(`Lv.${t.level}`,p.x,p.y+19);}
  for(const shot of battle.shots){
   const e=battle.enemies.find(e=>e.id===shot.targetId);if(!e)continue;
-  const visual=shot,p=projectilePose(visual,pointAt(e.distance,battle,e.route),battle.time,reducedMotion.matches),size=shot.hero?34:shot.kind==='spore'?26:32,id=images[`projectile-${shot.kind}`]?`projectile-${shot.kind}`:SPELL_ART[shot.kind]||'seed';
-  if(!reducedMotion.matches){const tail=projectilePose(visual,pointAt(e.distance,battle,e.route),battle.time-.035,false);ctx.save();ctx.translate(tail.x,tail.y);ctx.rotate(tail.angle);centeredImage(id,size*.8,.25);ctx.restore();}
+  const visual=shot,p=projectilePose(visual,pointAt(e.distance,battle,e.route),battle.time,reducedMotion.matches),size=shot.hero?34:shot.kind==='spore'?26:32,id=images[`projectile-${shot.kind}`]?`projectile-${shot.kind}`:({crystal:'fx-light',wind:'fx-rune',bloom:'fx-petal',gear:'projectile-spore'})[shot.kind]||SPELL_ART[shot.kind]||'seed';
+  if(!reducedMotion.matches&&document.body.dataset.effects!=='simple'){const tail=projectilePose(visual,pointAt(e.distance,battle,e.route),battle.time-.035,false);ctx.save();ctx.translate(tail.x,tail.y);ctx.rotate(tail.angle);centeredImage(id,size*.8,.25);ctx.restore();}
   ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle);centeredImage(id,size);ctx.restore();
  }
- for(const e of battle.events.slice(-48)){const age=battle.time-e.time;
-  if(e.type==='hero-move'&&age<.6&&!reducedMotion.matches){for(const p of [e.from,e]){if(!p)continue;const size=45+age*65;image('fx-light',p.x-size/2,p.y-size,size,size,1-age/.6);}}
-  if(e.type==='upgrade'&&age<.8){const p=pads[e.pad],size=reducedMotion.matches?52:42+age*45;image('fx-light',p.x-size/2,p.y-40-size/2,size,size,1-age/.8);ctx.font='bold 17px system-ui';ctx.textAlign='center';ctx.fillStyle='#fff8dc';ctx.strokeStyle='#163c32';ctx.lineWidth=3;const text=`升級 Lv.${e.level}`;ctx.strokeText(text,p.x,p.y-65-age*12);ctx.fillText(text,p.x,p.y-65-age*12);}
-  if(e.type==='hit'&&age<.35){const size=reducedMotion.matches?30:22+(e.kind==='spore'?65:30)*age/.35;image(({frost:'projectile-frost',glow:'fx-light'})[e.kind]||SPELL_ART[e.kind]||'impact',e.x-size/2,e.y-size/2,size,size,1-age/.35);}
-  if(e.type==='hero-skill'&&age<.8){const size=reducedMotion.matches?72:50+80*age/.8;const p=e.role==='healing'?{x:200,y:550}:['growth','trust','joy','luck'].includes(e.role)?battle.hero:e;image(SPELL_ART[ROLES[e.role].kind],p.x-size/2,p.y-size/2,size,size,(1-age/.8)*.85);}
-  if(e.type==='boss-warning'&&age<1.2){const size=reducedMotion.matches?44:40+Math.sin(age*12)*6;image('target',e.x-size/2,e.y-size/2,size,size);}
-  if(e.type==='defeat-enemy'&&age<.3&&!reducedMotion.matches){ctx.save();ctx.globalAlpha=1-age/.3;const h=e.kind==='boss'?80:52,im=images[e.kind],w=h*im.width/im.height;image(e.kind,e.x-w/2,e.y-h*.93-age*12,w,h,1-age/.3);ctx.restore();}
- }
+ drawCombatEffects({s:battle,pads,image,sprite,ctx,roles:ROLES,reduced:reducedMotion.matches,simple:document.body.dataset.effects==='simple'});
 }
 function frame(now){const dt=last?(now-last)/1000:0;last=now;syncPause();const before=battle.phase;battleClock.tick(dt,battle.paused,step=>{advance(battle,step);return battle.phase===before;});if(before!==battle.phase&&['intermission','victory','defeat'].includes(battle.phase)){try{saveBoundary();}catch(e){error(e);}}
- audio.consume(battle);const castEvent=battle.events.findLast(e=>e.type==='hero-skill');if(castEvent&&castEvent.id!==heroEvent){heroEvent=castEvent.id;commandHit.querySelector('img').src=`art/${battle.hero.role}-cast.webp`;if(!reducedMotion.matches)commandHit.animate([{transform:'scale(1)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:500});setTimeout(()=>commandHit.querySelector('img').src=`../../../assets/characters/cxq-role-${battle.hero.role}.webp`,600);}draw();const status=`<span class="hud-name">${practice?'試用 · ':''}${ROLES[battle.hero.role].name} · ${battle.mode==='endless'?'無盡':`第 ${battle.stage} 關`} · ${battle.wave} 波</span><span>生命 ${battle.hp}</span><span>金幣 ${battle.gold}</span>`;if($('status').innerHTML!==status)$('status').innerHTML=status;
+ audio.consume(battle);const pose=heroPose(battle,reducedMotion.matches),portrait=commandHit.querySelector('img'),src=pose.art===battle.hero.role?'../../../assets/characters/cxq-role-'+pose.art+'.webp':'art/'+pose.art+'.webp';if(portrait.getAttribute('src')!==src)portrait.src=src;portrait.style.transform='scale('+pose.scale+')';commandHit.dataset.phase=pose.phase;draw();const status=`<span class="hud-name">${practice?'試用 · ':''}${ROLES[battle.hero.role].name} · ${battle.mode==='endless'?'無盡':`第 ${battle.stage} 關`} · ${battle.wave} 波</span><span>生命 ${battle.hp}</span><span>金幣 ${battle.gold}</span>`;if($('status').innerHTML!==status)$('status').innerHTML=status;
  $('wave').disabled=!ready||battle.paused||!['planning','intermission'].includes(battle.phase)||!battle.towers.length||!!battle.blessingChoices.length;setText('wave',battle.phase==='battle'?'守護中':'開始下一波');const remaining=Math.max(0,Math.ceil(battle.hero.skillReady-battle.time));$('skill').disabled=!ready||battle.paused||battle.phase!=='battle'||remaining>0;setText('hint',chosenUnit&&battle.phase!=='battle'?`已選 ${UNITS[chosenUnit].name}，點空地台部署`:battle.phase==='battle'?'守住道路，把握英雄技能時機':battle.towers.length?'準備完成後，開始下一波':'點選石台，部署你的部隊');
  if(battle.blessingChoices.length&&!document.querySelector('dialog[open]')){$('blessings').replaceChildren();for(const id of battle.blessingChoices){const b=document.createElement('button');b.textContent=BLESSINGS[id].name+'：'+BLESSINGS[id].description;b.onclick=()=>perform(s=>chooseBlessing(s,id));$('blessings').append(b);}show('blessing');}
  if(!failed&&before!==battle.phase&&['victory','defeat'].includes(battle.phase)){
@@ -166,6 +176,7 @@ function frame(now){const dt=last?(now-last)/1000:0;last=now;syncPause();const b
   if(battle.mode==='endless')$('result-text').textContent=`${MAPS[battle.map||'forest'].name} · 完成 ${Math.max(0,battle.wave-1)} 波 · 擊退 ${battle.kills} 名敵人。已取得獎勵保留；本地紀錄 ${profile.endless[battle.map||'forest']} 波。`;
   else if(won)$('result-text').textContent+=' '+(battle.stage===15||storyMap(battle.stage+1)!==storyMap(battle.stage)?storyFor(battle.stage).end:'伙伴們整理防線，帶著新的線索繼續前進。');
   if(!won&&battle.leaks){const most=Object.entries(battle.leaks).sort((a,b)=>b[1]-a[1])[0];if(most)$('result-text').textContent+=' 本局漏怪最多：'+({runner:'快速敵人，建議加強緩速。',armored:'重甲敵人，建議增加破甲或穿甲。',boss:'頭目，建議集中高傷與英雄大招。',walker:'普通敵人，建議補足火力覆蓋。'})[most[0]];}
+  $('result').querySelector('.reward-receipt')?.remove();if(!practice){const receipt=document.createElement('p');receipt.className='reward-receipt';receipt.textContent=`本波已入帳：星露 +${lastSettlement.coins} · 熟練度 +${lastSettlement.xp} XP`; $('result-text').after(receipt);}
   show('result');
  }if(practice&&['victory','defeat'].includes(battle.phase)){$('result-title').textContent='試用結束';$('result-text').textContent='本次試用不消耗資源、不取得獎勵；正式戰場存檔保留。';$('next-stage').hidden=true;}
  if(autoWaves.checked&&!practice&&!battle.paused&&battle.phase==='intermission'&&!battle.blessingChoices.length){autoNextAt||=now+4000;setText('hint',`自動接波 · ${Math.max(0,Math.ceil((autoNextAt-now)/1000))} 秒`);if(now>=autoNextAt){try{saveBoundary();startWave(battle);}catch(e){error(e);}autoNextAt=0;}}else autoNextAt=0;
@@ -180,13 +191,14 @@ const retreat=document.createElement('button');retreat.id='retreat';retreat.text
 retreat.onclick=()=>{try{saveBoundary();persist({...profile,checkpoint:null});$('result-title').textContent='無盡守護 · 安全撤離';$('result-text').textContent=`完成 ${battle.wave} 波，已取得的星露與熟練度保留。最高紀錄 ${profile.endless[battle.map||'forest']} 波。`;$('next-stage').hidden=true;show('result');}catch(e){error(e);}};
 
 // Read-only diagnostics for release acceptance; callers receive a detached snapshot.
-export function diagnostics(){return {battle:structuredClone(battle),art:Object.keys(images),audio:audio.debug(),failed,transitioning};}
+export function diagnostics(){return {battle:structuredClone(battle),art:Object.keys(images),audio:audio.debug(),animation:{actors:[...renderedActors],heroPhase:commandHit.dataset.phase,effects:document.body.dataset.effects},failed,transitioning};}
 journey=installJourney({getProfile:()=>profile,commit:persist,show,syncPause,audio,onMotion:motionPreference,onTrial:id=>startTrial(id)});
 expedition=installExpedition({getProfile:()=>profile,commit:persist,show,syncPause,openUnit:id=>journey.openUnit(id),startEndless:id=>{mode='endless';map=id;stage=1;briefing();}});
 tactics=installTactics({getBattle:()=>battle,clock:battleClock,show,syncPause,audio,perform});
 
 for(const [i,position] of [[0,[12,58]],[1,[83,39]],[2,[62,70]]]){const w=document.createElement('img');w.src='art/fx-light.webp';w.alt='';w.className='cover-wisp';w.style.left=position[0]+'%';w.style.top=position[1]+'%';w.style.animationDelay=(-i*1.2)+'s';$('cover').append(w);}
 interfaceUI=installInterface({getProfile:()=>profile,getHero:()=>hero,getBattle:()=>battle,show,syncPause,refreshHero:renderHero,audio,reducedMotion,openUnit:id=>journey.openUnit(id)});
+installMenuMotion({reducedMotion});
 alignCommander(battle);renderHero();show('cover');resize();
 // The cover and camp do not wait for late-game sprites. Battle transitions decode
 // exactly the selected hero, region and saved unit levels before showing the field.

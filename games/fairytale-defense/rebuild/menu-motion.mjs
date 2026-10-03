@@ -1,0 +1,11 @@
+// Web Animations only transform authored artwork/layout; no generated CSS graphics.
+export function installMenuMotion({reducedMotion}){
+ const options=document.querySelector('#options .options-body'),label=document.createElement('label');label.className='readability-control';label.innerHTML='<span>戰鬥特效</span><select id="effect-quality"><option value="full">完整演出</option><option value="simple">精簡特效（低負擔）</option></select>';options.append(label);const select=label.querySelector('select');try{select.value=localStorage.getItem('cxq.defense.effects')==='simple'?'simple':'full';}catch{}const apply=()=>{document.body.dataset.effects=select.value;};apply();select.onchange=()=>{apply();try{localStorage.setItem('cxq.defense.effects',select.value);}catch{}};
+ const active=new Set();
+ function animate(el,frames,options){if(reducedMotion.matches||document.hidden)return;const a=el.animate(frames,options);active.add(a);a.finished.catch(()=>{}).finally(()=>active.delete(a));return a;}
+ document.addEventListener('pointerdown',e=>{const b=e.target.closest('button:not(:disabled)');if(b)animate(b,[{scale:'1'},{scale:'.97'},{scale:'1'}],{duration:150,easing:'ease-out'});});
+ const observer=new MutationObserver(records=>{for(const r of records){const el=r.target;if(el.tagName==='DIALOG'&&el.open&&!['rotate','loading-status'].includes(el.id)){animate(el,[{opacity:.6,translate:'0 6px'},{opacity:1,translate:'0 0'}],{duration:160,easing:'ease-out'});if(el.id==='result'){for(const [i,part] of [...el.querySelectorAll('img,h2,p')].entries())animate(part,[{opacity:0,translate:'0 5px'},{opacity:1,translate:'0 0'}],{duration:320,delay:Math.min(i*80,240),fill:'backwards'});}}}});observer.observe(document.body,{subtree:true,attributes:true,attributeFilter:['open']});
+ const hiddenAnimations=new Set();document.addEventListener('visibilitychange',()=>{if(document.hidden){for(const a of document.getAnimations())if(a.playState==='running'){hiddenAnimations.add(a);a.pause();}}else{for(const a of hiddenAnimations)if(a.playState==='paused')a.play();hiddenAnimations.clear();}});
+ const motionWatch=setInterval(()=>{if(reducedMotion.matches)for(const a of document.getAnimations())a.cancel();},250);
+ return {animate,dispose(){observer.disconnect();clearInterval(motionWatch);for(const a of active)a.cancel();}};
+}

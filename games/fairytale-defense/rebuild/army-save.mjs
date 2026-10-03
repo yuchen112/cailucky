@@ -1,9 +1,9 @@
-import {STARTER_UNITS,validateLoadout} from './army.mjs?v=20261003-interface1';
-import {alignCommander} from './routes.mjs?v=20261003-interface1';
-import {captureCheckpoint,restoreCheckpoint} from './checkpoint.mjs?v=20261003-interface1';
-import {newMastery,validateMastery,beginMasteryRun,awardCompletedWaves} from './mastery.mjs?v=20261003-interface1';
-import {createBattle} from './core.mjs?v=20261003-interface1';
-import {newCollection,validateCollection,rewardCollection,trainingRanks} from './recruitment.mjs?v=20261003-interface1';
+import {STARTER_UNITS,validateLoadout} from './army.mjs?v=20261004-animation1';
+import {alignCommander} from './routes.mjs?v=20261004-animation1';
+import {captureCheckpoint,restoreCheckpoint} from './checkpoint.mjs?v=20261004-animation1';
+import {newMastery,validateMastery,beginMasteryRun,awardCompletedWaves} from './mastery.mjs?v=20261004-animation1';
+import {createBattle} from './core.mjs?v=20261004-animation1';
+import {newCollection,validateCollection,rewardCollection,trainingRanks} from './recruitment.mjs?v=20261004-animation1';
 // Separate envelope from the legacy preview. Persist one JSON value atomically.
 export function newArmySave(){return {version:3,mastery:newMastery(),collection:newCollection(),campaign:{unlocked:1,cleared:[]},loadout:[...STARTER_UNITS],formations:[],endless:{forest:0,moon:0,dawn:0,ruins:0},checkpoint:null};}
 // UI entry point: XP is read only from the saved profile, never from a form field.

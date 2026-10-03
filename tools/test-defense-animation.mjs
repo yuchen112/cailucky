@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {attackPhase,troopPose,enemyPose,heroPose,activeEffects,TROOP_MOTION} from '../games/fairytale-defense/rebuild/animation-state.mjs';
+import {createBattle,deploy,upgrade,startWave,advance,ROLES} from '../games/fairytale-defense/rebuild/core.mjs';
+const s=createBattle({hero:'growth'});deploy(s,0,'archer');const before=structuredClone(s.towers[0]);upgrade(s,0);assert.deepEqual(s.events.at(-1).before,{role:before.role,level:1,branch:null});
+for(const role of Object.keys(TROOP_MOTION)){const t={role,pad:0};const a={...s,time:1.1,events:[{id:1,type:'anticipate',time:1,pad:0}]};assert.equal(troopPose(a,t).phase,'windup');a.time=1.25;a.events.push({id:2,type:'release',time:1.22,pad:0});assert.equal(troopPose(a,t).phase,'release');a.time=1.5;assert.equal(troopPose(a,t).phase,'recover');a.time=2;assert.equal(troopPose(a,t).phase,'idle');assert.equal(troopPose(a,t,true).sx,1);assert.equal(troopPose(a,t,true).angle,0);assert.equal(attackPhase(a,{pad:1}).phase,'idle');}
+for(const role of Object.keys(ROLES)){const a={hero:{role},time:1.3,events:[{type:'hero-skill',hero:true,time:1,role}]};assert.equal(heroPose(a).art,role+'-cast');assert.equal(heroPose({...a,phase:'victory'}).art,role+'-victory');}
+const sample={time:1.1,events:[{type:'hit',time:1,enemyId:5,damage:20}]},enemy={id:5,distance:20,kind:'walker'};assert(enemyPose(sample,enemy).hit>0);assert.equal(enemyPose(sample,enemy,true).x,0);assert.equal(enemyPose(sample,{...enemy,rootUntil:2}).step,false);
+const crowded={time:1,events:Array.from({length:100},(_,id)=>({id,type:'hit',time:.9}))};assert.equal(activeEffects(crowded).length,64);assert.equal(activeEffects(crowded,{simple:true}).length,24);assert.equal(activeEffects(crowded,{reduced:true}).length,12);
+startWave(s);for(let i=0;i<600;i++)advance(s,1/60);s.paused=true;const snapshot=JSON.stringify(s);for(let i=0;i<60;i++){troopPose(s,s.towers[0]);heroPose(s);activeEffects(s);advance(s,.1);}assert.equal(JSON.stringify(s),snapshot);
+console.log('PASS 12 troop timelines, 10 hero poses, isolated hits, root stops steps, effect budgets, upgrade snapshot and paused read-only animation.');

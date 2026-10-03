@@ -1,0 +1,172 @@
+{
+  "mode": "built-in imagegen",
+  "version": "20261004-animation1",
+  "individualAssets": true,
+  "cropped": false,
+  "assets": [
+    {
+      "id": "unit-archer-release",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-archer.webp",
+      "prompt": "Use case: identity-preserve. Asset type: ONE isolated full-body mobile tower defense attack animation frame, not a sheet. Image 1 is the exact character identity and style reference. Redraw the SAME character releasing its crossbow bolt, bowstring relaxed, elbows following through, facing right in the SAME three-quarter view. Preserve every costume, weapon, face, color and species detail; same proportions and head size. Keep feet near the same baseline, whole body and weapon fully visible with transparent padding. Polished adorable crafted 3D storybook miniature, matching reference. Change pose only. No large projectile, no extra characters, no ground or shadow plate, no lettering, no background, no montage, no sprite sheet. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c69ceeeb-3242-48b2-a001-c8104f6548c6.png",
+      "output": "art/unit-archer-release.webp"
+    },
+    {
+      "id": "unit-cannon-release",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-cannon.webp",
+      "prompt": "Use case: identity-preserve. Asset type: ONE isolated full-body mobile tower defense attack animation frame, not a sheet. Image 1 is the exact character identity and style reference. Redraw the SAME character firing its wooden cannon, leaning back in slight recoil, wheels and both feet grounded, facing right in the SAME three-quarter view. Preserve every costume, weapon, face, color and species detail; same proportions and head size. Keep feet near the same baseline, whole body and weapon fully visible with transparent padding. Polished adorable crafted 3D storybook miniature, matching reference. Change pose only. No large projectile, no extra characters, no ground or shadow plate, no lettering, no background, no montage, no sprite sheet. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-ac55a16e-684d-40ae-87fb-ebe785f05c18.png",
+      "output": "art/unit-cannon-release.webp"
+    },
+    {
+      "id": "unit-frost-release",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-frost.webp",
+      "prompt": "Use case: identity-preserve. Asset type: ONE isolated full-body mobile tower defense attack animation frame, not a sheet. Image 1 is the exact character identity and style reference. Redraw the SAME character thrusting the crystal staff forward to release a spell, facing right in the SAME three-quarter view. Preserve every costume, weapon, face, color and species detail; same proportions and head size. Keep feet near the same baseline, whole body and weapon fully visible with transparent padding. Polished adorable crafted 3D storybook miniature, matching reference. Change pose only. No large projectile, no extra characters, no ground or shadow plate, no lettering, no background, no montage, no sprite sheet. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5f193450-a973-4f21-a20c-c54732f588e5.png",
+      "output": "art/unit-frost-release.webp"
+    },
+    {
+      "id": "unit-firefly-release",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-firefly.webp",
+      "prompt": "Use case: identity-preserve. Asset type: ONE isolated full-body mobile tower defense attack animation frame, not a sheet. Image 1 is the exact character identity and style reference. Redraw the SAME character releasing its luminous bow, drawing hand beside cheek, bowstring relaxed, facing right in the SAME three-quarter view. Preserve every costume, weapon, face, color and species detail; same proportions and head size. Keep feet near the same baseline, whole body and weapon fully visible with transparent padding. Polished adorable crafted 3D storybook miniature, matching reference. Change pose only. No large projectile, no extra characters, no ground or shadow plate, no lettering, no background, no montage, no sprite sheet. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-499c5aa8-3d4e-4779-af22-4faa1853e14e.png",
+      "output": "art/unit-firefly-release.webp"
+    },
+    {
+      "id": "unit-crystal-release",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-crystal.webp",
+      "prompt": "Use case: identity-preserve. Asset type: ONE isolated full-body mobile tower defense attack animation frame, not a sheet. Image 1 is the exact character identity and style reference. Redraw the SAME character swinging its crystal mace forward in a short controlled strike, facing right in the SAME three-quarter view. Preserve every costume, weapon, face, color and species detail; same proportions and head size. Keep feet near the same baseline, whole body and weapon fully visible with transparent padding. Polished adorable crafted 3D storybook miniature, matching reference. Change pose only. No large projectile, no extra characters, no ground or shadow plate, no lettering, no background, no montage, no sprite sheet. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-a9ca8451-7b0b-4b4c-a7a9-d351fdf820c4.png",
+      "output": "art/unit-crystal-release.webp"
+    },
+    {
+      "id": "unit-chime-release",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-chime.webp",
+      "prompt": "Use case: identity-preserve. Asset type: ONE isolated full-body mobile tower defense attack animation frame, not a sheet. Image 1 is the exact character identity and style reference. Redraw the SAME character swinging its bell staff forward so the bell tilts, one wing supporting it, facing right in the SAME three-quarter view. Preserve every costume, weapon, face, color and species detail; same proportions and head size. Keep feet near the same baseline, whole body and weapon fully visible with transparent padding. Polished adorable crafted 3D storybook miniature, matching reference. Change pose only. No large projectile, no extra characters, no ground or shadow plate, no lettering, no background, no montage, no sprite sheet. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-3d3ca63f-1d92-4bf8-82a9-1f4e2d3677a0.png",
+      "output": "art/unit-chime-release.webp"
+    },
+    {
+      "id": "unit-blossom-release",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-blossom.webp",
+      "prompt": "Use case: identity-preserve. Asset type: ONE isolated full-body mobile tower defense attack animation frame, not a sheet. Image 1 is the exact character identity and style reference. Redraw the SAME character extending its flower staff and open free hand in a blessing gesture, facing right in the SAME three-quarter view. Preserve every costume, weapon, face, color and species detail; same proportions and head size. Keep feet near the same baseline, whole body and weapon fully visible with transparent padding. Polished adorable crafted 3D storybook miniature, matching reference. Change pose only. No large projectile, no extra characters, no ground or shadow plate, no lettering, no background, no montage, no sprite sheet. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-4bd67452-bd38-4b48-b7d8-3dc4cabfcc1a.png",
+      "output": "art/unit-blossom-release.webp"
+    },
+    {
+      "id": "unit-clockwork-release",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-clockwork.webp",
+      "prompt": "Use case: identity-preserve. Asset type: ONE isolated full-body mobile tower defense attack animation frame, not a sheet. Image 1 is the exact character identity and style reference. Redraw the SAME character launching its acorn catapult, cup now empty and arm forward, braced feet, facing right in the SAME three-quarter view. Preserve every costume, weapon, face, color and species detail; same proportions and head size. Keep feet near the same baseline, whole body and weapon fully visible with transparent padding. Polished adorable crafted 3D storybook miniature, matching reference. Change pose only. No large projectile, no extra characters, no ground or shadow plate, no lettering, no background, no montage, no sprite sheet. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-f5a4d98c-60be-4539-b4ae-1a8303cc466b.png",
+      "output": "art/unit-clockwork-release.webp"
+    },
+    {
+      "id": "unit-alchemist-release",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-alchemist.webp",
+      "prompt": "Use case: identity-preserve. Asset type: ONE isolated full-body mobile tower defense attack animation frame, not a sheet. Image 1 is the exact character identity and style reference. Redraw the SAME character squeezing its amber sprayer with arm extended, subtle shoulder recoil, facing right in the SAME three-quarter view. Preserve every costume, weapon, face, color and species detail; same proportions and head size. Keep feet near the same baseline, whole body and weapon fully visible with transparent padding. Polished adorable crafted 3D storybook miniature, matching reference. Change pose only. No large projectile, no extra characters, no ground or shadow plate, no lettering, no background, no montage, no sprite sheet. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-24c76eee-1671-4c83-aafc-8710e29558fb.png",
+      "output": "art/unit-alchemist-release.webp"
+    },
+    {
+      "id": "unit-vine-release",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-vine.webp",
+      "prompt": "Use case: identity-preserve. Asset type: ONE isolated full-body mobile tower defense attack animation frame, not a sheet. Image 1 is the exact character identity and style reference. Redraw the SAME character sweeping its wooden vine staff forward, free hand open, facing right in the SAME three-quarter view. Preserve every costume, weapon, face, color and species detail; same proportions and head size. Keep feet near the same baseline, whole body and weapon fully visible with transparent padding. Polished adorable crafted 3D storybook miniature, matching reference. Change pose only. No large projectile, no extra characters, no ground or shadow plate, no lettering, no background, no montage, no sprite sheet. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-65db6c54-854a-441e-9e8c-68bc8161fd2e.png",
+      "output": "art/unit-vine-release.webp"
+    },
+    {
+      "id": "unit-oracle-release",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-oracle.webp",
+      "prompt": "Use case: identity-preserve. Asset type: ONE isolated full-body mobile tower defense attack animation frame, not a sheet. Image 1 is the exact character identity and style reference. Redraw the SAME character extending its wing-hands to release the star spell, facing right in the SAME three-quarter view. Preserve every costume, weapon, face, color and species detail; same proportions and head size. Keep feet near the same baseline, whole body and weapon fully visible with transparent padding. Polished adorable crafted 3D storybook miniature, matching reference. Change pose only. No large projectile, no extra characters, no ground or shadow plate, no lettering, no background, no montage, no sprite sheet. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-1c616a70-bca4-432d-bfc7-5b1f05dfd7fe.png",
+      "output": "art/unit-oracle-release.webp"
+    },
+    {
+      "id": "unit-dragon-release",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-dragon.webp",
+      "prompt": "Use case: identity-preserve. Asset type: ONE isolated full-body mobile tower defense attack animation frame, not a sheet. Image 1 is the exact character identity and style reference. Redraw the SAME character leaning forward breathing a small flame at the mouth, wings raised, feet grounded, facing right in the SAME three-quarter view. Preserve every costume, weapon, face, color and species detail; same proportions and head size. Keep feet near the same baseline, whole body and weapon fully visible with transparent padding. Polished adorable crafted 3D storybook miniature, matching reference. Change pose only. No large projectile, no extra characters, no ground or shadow plate, no lettering, no background, no montage, no sprite sheet. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-739b5cd7-f301-4dca-97ce-acf0ba5c2311.png",
+      "output": "art/unit-dragon-release.webp"
+    },
+    {
+      "id": "anim-impact",
+      "prompt": "Use case: stylized-concept. ONE isolated mobile storybook tower defense visual effect asset. A single compact golden ivory starburst impact, carved-painterly magical sparkle with 5 short asymmetric rays, warm amber center, no smoke, readable at 32 pixels. Polished 3D-painted fairy-tale game aesthetic, soft highlights, crisp silhouette. Centered complete effect with 12 percent transparent margins. True transparent background. No text, no ground, no sheet, no grid, no multiple variants.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-53d48834-43e3-468b-9e70-ea0aed245f98.png",
+      "output": "art/anim-impact.webp"
+    },
+    {
+      "id": "anim-shatter",
+      "prompt": "Use case: stylized-concept. ONE isolated mobile storybook tower defense visual effect asset. A single circular scattering of translucent blue crystal shield fragments, hollow transparent center, 7 chunky shards, gentle cyan magic glints, readable at 40 pixels. Polished 3D-painted fairy-tale game aesthetic, soft highlights, crisp silhouette. Centered complete effect with 12 percent transparent margins. True transparent background. No text, no ground, no sheet, no grid, no multiple variants.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-10a519b0-69b9-4383-8a68-19fba466c74e.png",
+      "output": "art/anim-shatter.webp"
+    },
+    {
+      "id": "anim-rise",
+      "prompt": "Use case: stylized-concept. ONE isolated mobile storybook tower defense visual effect asset. One upward swirl of warm gold and emerald magic around a small hollow oval base, elegant rising leaf-shaped energy ribbons, clear transparent center for a character, no solid disc, game upgrade effect. Polished 3D-painted fairy-tale game aesthetic, soft highlights, crisp silhouette. Centered complete effect with 12 percent transparent margins. True transparent background. No text, no ground, no sheet, no grid, no multiple variants.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d054769c-67dd-42ea-88f7-95ee387e5b03.png",
+      "output": "art/anim-rise.webp"
+    },
+    {
+      "id": "anim-dissolve",
+      "prompt": "Use case: stylized-concept. ONE isolated mobile storybook tower defense visual effect asset. One compact soft blue mint magical puff dissolving into 5 small gold star sparks, gentle cute defeated-enemy departure effect, no character, no skull, no violence. Polished 3D-painted fairy-tale game aesthetic, soft highlights, crisp silhouette. Centered complete effect with 12 percent transparent margins. True transparent background. No text, no ground, no sheet, no grid, no multiple variants.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-257a4745-f5d8-47da-b57a-d661a56cfaec.png",
+      "output": "art/anim-dissolve.webp"
+    },
+    {
+      "id": "unit-crystal-ready",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-crystal.webp",
+      "prompt": "Use case: identity-preserve. One isolated full-body mobile tower defense WINDUP animation pose, not a sheet. Image 1 is the exact character reference. Redraw the SAME character drawing the crystal mace back beside its shoulder, preparing a strike, both feet firmly planted. Keep the exact species, costume, colors, face and proportions of the input. Facing RIGHT with the same three-quarter camera. Keep head size and feet baseline consistent. Entire character and weapon fully visible with transparent padding. Adorable polished crafted 3D storybook miniature. No projectile, no dramatic effect, no other character, no text, no ground, no shadow plate, no grid, no montage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-71089088-b64b-43ae-a8e0-e955276a3fc3.png",
+      "output": "art/unit-crystal-ready.webp"
+    },
+    {
+      "id": "unit-chime-ready",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-chime.webp",
+      "prompt": "Use case: identity-preserve. One isolated full-body mobile tower defense WINDUP animation pose, not a sheet. Image 1 is the exact character reference. Redraw the SAME character lifting its bell staff close to its shoulder, bell hanging down, wings braced for a spell. Keep the exact species, costume, colors, face and proportions of the input. Facing RIGHT with the same three-quarter camera. Keep head size and feet baseline consistent. Entire character and weapon fully visible with transparent padding. Adorable polished crafted 3D storybook miniature. No projectile, no dramatic effect, no other character, no text, no ground, no shadow plate, no grid, no montage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-ee2eff9b-404a-41e2-b8c2-4209dac3d37c.png",
+      "output": "art/unit-chime-ready.webp"
+    },
+    {
+      "id": "unit-blossom-ready",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-blossom.webp",
+      "prompt": "Use case: identity-preserve. One isolated full-body mobile tower defense WINDUP animation pose, not a sheet. Image 1 is the exact character reference. Redraw the SAME character holding its flower staff upright near the chest and gathering a blessing, free hand cupped. Keep the exact species, costume, colors, face and proportions of the input. Facing RIGHT with the same three-quarter camera. Keep head size and feet baseline consistent. Entire character and weapon fully visible with transparent padding. Adorable polished crafted 3D storybook miniature. No projectile, no dramatic effect, no other character, no text, no ground, no shadow plate, no grid, no montage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-1d9d060b-d35a-4109-8848-814bd3038bbe.png",
+      "output": "art/unit-blossom-ready.webp"
+    },
+    {
+      "id": "unit-clockwork-ready",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-clockwork.webp",
+      "prompt": "Use case: identity-preserve. One isolated full-body mobile tower defense WINDUP animation pose, not a sheet. Image 1 is the exact character reference. Redraw the SAME character bracing its loaded acorn catapult, launch cup pulled back with the acorn still present, feet grounded. Keep the exact species, costume, colors, face and proportions of the input. Facing RIGHT with the same three-quarter camera. Keep head size and feet baseline consistent. Entire character and weapon fully visible with transparent padding. Adorable polished crafted 3D storybook miniature. No projectile, no dramatic effect, no other character, no text, no ground, no shadow plate, no grid, no montage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-6d7f70b2-87b3-42ba-8321-e5a69bd3c218.png",
+      "output": "art/unit-clockwork-ready.webp"
+    },
+    {
+      "id": "unit-alchemist-ready",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-alchemist.webp",
+      "prompt": "Use case: identity-preserve. One isolated full-body mobile tower defense WINDUP animation pose, not a sheet. Image 1 is the exact character reference. Redraw the SAME character holding its amber sprayer close, squeezing the pump with both hands before spraying. Keep the exact species, costume, colors, face and proportions of the input. Facing RIGHT with the same three-quarter camera. Keep head size and feet baseline consistent. Entire character and weapon fully visible with transparent padding. Adorable polished crafted 3D storybook miniature. No projectile, no dramatic effect, no other character, no text, no ground, no shadow plate, no grid, no montage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-cb447457-3c49-4d19-9b6a-1cddf4c932d6.png",
+      "output": "art/unit-alchemist-ready.webp"
+    },
+    {
+      "id": "unit-vine-ready",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-vine.webp",
+      "prompt": "Use case: identity-preserve. One isolated full-body mobile tower defense WINDUP animation pose, not a sheet. Image 1 is the exact character reference. Redraw the SAME character raising its wooden vine staff beside the body, free hand cupped to gather seed energy. Keep the exact species, costume, colors, face and proportions of the input. Facing RIGHT with the same three-quarter camera. Keep head size and feet baseline consistent. Entire character and weapon fully visible with transparent padding. Adorable polished crafted 3D storybook miniature. No projectile, no dramatic effect, no other character, no text, no ground, no shadow plate, no grid, no montage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-4a23a0e3-ce5a-441f-93a1-b3e0166f3b85.png",
+      "output": "art/unit-vine-ready.webp"
+    },
+    {
+      "id": "unit-oracle-ready",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-oracle.webp",
+      "prompt": "Use case: identity-preserve. One isolated full-body mobile tower defense WINDUP animation pose, not a sheet. Image 1 is the exact character reference. Redraw the SAME character holding its two wing-hands close to its chest around the little star, gathering energy. Keep the exact species, costume, colors, face and proportions of the input. Facing RIGHT with the same three-quarter camera. Keep head size and feet baseline consistent. Entire character and weapon fully visible with transparent padding. Adorable polished crafted 3D storybook miniature. No projectile, no dramatic effect, no other character, no text, no ground, no shadow plate, no grid, no montage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-0b02c397-4b9f-4d64-919f-ba7770133134.png",
+      "output": "art/unit-oracle-ready.webp"
+    },
+    {
+      "id": "unit-dragon-ready",
+      "ref": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/fairytale-defense/rebuild/art/unit-dragon.webp",
+      "prompt": "Use case: identity-preserve. One isolated full-body mobile tower defense WINDUP animation pose, not a sheet. Image 1 is the exact character reference. Redraw the SAME character drawing its head back and opening its mouth slightly, wings tucked as it inhales before breathing fire. Keep the exact species, costume, colors, face and proportions of the input. Facing RIGHT with the same three-quarter camera. Keep head size and feet baseline consistent. Entire character and weapon fully visible with transparent padding. Adorable polished crafted 3D storybook miniature. No projectile, no dramatic effect, no other character, no text, no ground, no shadow plate, no grid, no montage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-e253cf55-c208-4e77-9036-665861e4c564.png",
+      "output": "art/unit-dragon-ready.webp"
+    }
+  ]
+}

@@ -1,10 +1,10 @@
-import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261003-interface1';
+import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261004-animation1';
 // Deterministic simulation. Visuals consume events; animation never grants damage.
-import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261003-interface1';
-import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261003-interface1';
-import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261003-interface1';
-import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261003-interface1';
-import {skillSpec} from './skill-spec.mjs?v=20261003-interface1';
+import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261004-animation1';
+import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261004-animation1';
+import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261004-animation1';
+import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261004-animation1';
+import {skillSpec} from './skill-spec.mjs?v=20261004-animation1';
 export {UNITS,UNIT_BRANCHES};
 export {SPECIALIZATIONS,BLESSINGS};
 export const towerStats=(t,s)=>{const r=statsFor(ROLES[t.role]||UNITS[t.role],t,s?.buffs);if(s?.army)r.damage*=1+(s.training?.[t.role]||0)*.01;return r;};
@@ -66,7 +66,7 @@ export function castHero(s,targetId){
  else if(h.role==='luck')for(const t of nearby)t.luckyCharges=spec.charges;
  else if(h.role==='healing'){s.hp=Math.min(s.maxHp,s.hp+spec.heal);s.shield+=spec.shield;}
  else {s.shots.push({id:s.nextId++,hero:true,targetId:target.id,from:{x:h.x,y:h.y},born:s.time,arriveAt:s.time+.6,damage:spec.damage,kind:ROLES[h.role].kind,splash:spec.splash,pierce:spec.pierce,slow:spec.slow,slowDuration:spec.slowDuration,root:spec.root});if(h.role==='memory')h.echo=0;}
- h.skillReady=s.time+spec.cooldown;event(s,'hero-skill',{role:h.role,...p});return true;
+ h.skillReady=s.time+spec.cooldown;event(s,'hero-skill',{hero:true,role:h.role,duration:spec.duration||0,radius:spec.radius||0,...p});return true;
 }
 export function deploy(s,pad,role){
   const catalog=s.army?UNITS:ROLES;
@@ -80,8 +80,8 @@ export function upgrade(s,pad,branch){
   const t=s.towers.find(t=>t.pad===pad);
   if(s.paused||!['planning','battle','intermission'].includes(s.phase)||!t||t.level>=5||s.gold<upgradeCost(t))return false;
   if(t.level===2&&!(s.army?UNIT_BRANCHES:SPECIALIZATIONS)[t.role].some(p=>p.id===branch))return false;
-  if(t.level===2)t.branch=branch;
-  const cost=upgradeCost(t);s.gold-=cost;t.spent+=cost;t.level++;event(s,'upgrade',{pad,level:t.level});return true;
+  const before={role:t.role,level:t.level,branch:t.branch};if(t.level===2)t.branch=branch;
+  const cost=upgradeCost(t);s.gold-=cost;t.spent+=cost;t.level++;event(s,'upgrade',{pad,level:t.level,before});return true;
 }
 export function setPriority(s,pad,priority){const t=s.towers.find(t=>t.pad===pad);if(s.paused||!t||!['planning','battle','intermission'].includes(s.phase)||!['first','strong','armor'].includes(priority))return false;t.priority=priority;return true;}
 export function chooseBlessing(s,id){if(s.paused||s.phase!=='intermission'||!s.blessingChoices.includes(id))return false;if(id==='supplies')s.gold+=100;else if(id==='power')s.buffs.power++;else if(id==='reach')s.buffs.reach++;else if(id==='repair')s.hp=Math.min(s.maxHp,s.hp+4);else s.buffs[id]=(s.buffs[id]||0)+1;s.blessingChoices=[];event(s,'blessing',{kind:id});return true;}
@@ -129,7 +129,7 @@ function hit(s,shot){
     if(shot.poison){e.poison=Math.max(e.poison||0,shot.poison);e.poisonUntil=s.time+3;e.poisonKind=shot.kind;}
     if(shot.mark){e.mark=shot.mark;e.markUntil=s.time+4;}
     if(shot.shred){e.shred=Math.max(e.shred||0,shot.shred);e.shredUntil=s.time+3;}
-    event(s,'hit',{enemyId:e.id,damage,x:pointAt(e.distance,s,e.route).x,y:pointAt(e.distance,s,e.route).y,kind:shot.kind});
+    event(s,'hit',{enemyId:e.id,damage,critical:!!shot.critical,splash:shot.splash||0,x:pointAt(e.distance,s,e.route).x,y:pointAt(e.distance,s,e.route).y,kind:shot.kind});
   }
 }
 function tick(s,dt){
@@ -138,6 +138,7 @@ function tick(s,dt){
   while(s.queue.length&&s.queue[0].at<=s.time)spawn(s,s.queue.shift());
   for(const e of s.enemies){
     if(e.slowUntil<=s.time)e.slow=1;
+    if(e.wardUntil&&e.wardUntil<=s.time){event(s,'shield-break',{enemyId:e.id,...pointAt(e.distance,s,e.route)});e.wardUntil=0;}
     if(e.poisonUntil>s.time)e.hp-=(e.poison||0)*dt;
     if(e.hp<=0)continue;
     if(e.kind==='boss'){
@@ -176,7 +177,7 @@ function tick(s,dt){
     t.attacks++;t.ready=s.time+role.interval*haste;
     const crit=(role.crit&&t.attacks%role.crit===0)||t.luckyCharges>0;if(t.luckyCharges>0)t.luckyCharges--;
     const damage=role.damage*buff*(crit?2:1);
-    s.pending.push({id:s.nextId++,towerId:t.id,targetId:target.id,releaseAt:s.time+.22,damage,kind:role.kind,splash:role.splash||0,bounces:role.bounces||0,pierce:!!role.pierce,slow:role.slow||0,shred:role.shred||0,poison:role.poison||0,mark:role.mark||0,slowDuration:role.slowDuration,root:role.rootEvery&&t.attacks%role.rootEvery===0?role.rootDuration:0});
+    s.pending.push({id:s.nextId++,towerId:t.id,targetId:target.id,releaseAt:s.time+.22,damage,critical:!!crit,kind:role.kind,splash:role.splash||0,bounces:role.bounces||0,pierce:!!role.pierce,slow:role.slow||0,shred:role.shred||0,poison:role.poison||0,mark:role.mark||0,slowDuration:role.slowDuration,root:role.rootEvery&&t.attacks%role.rootEvery===0?role.rootDuration:0});
     event(s,'anticipate',{pad:t.pad,role:t.role,targetId:target.id});
   }
   if(s.hero&&s.hero.ready<=s.time){
