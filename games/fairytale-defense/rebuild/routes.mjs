@@ -14,4 +14,4 @@ function spec(s,route=0){const list=specs[regionFor(s)];return list?.[route%list
 export function routeLength(s,route=0){const v=spec(s,route);return v?.lengths.reduce((a,b)=>a+b,0);}
 export function routePoint(distance,s,route=0){const v=spec(s,route);if(!v)return null;let d=Math.max(0,distance);for(let i=0;i<v.lengths.length;i++){const n=v.lengths[i];if(d<=n){const t=d/n;return {x:v.path[i][0]+(v.path[i+1][0]-v.path[i][0])*t,y:v.path[i][1]+(v.path[i+1][1]-v.path[i][1])*t};}d-=n;}const p=v.path.at(-1);return {x:p[0],y:p[1]};}
 export function commandPoints(s){return regionFor(s)==='moon'?[{x:125,y:165},{x:265,y:165},{x:90,y:530}]:regionFor(s)==='dawn'?[{x:35,y:145},{x:355,y:275},{x:35,y:410}]:[{x:355,y:145},{x:35,y:273},{x:355,y:401}];}
-export function alignCommander(s){if(s.hero)Object.assign(s.hero,{x:195,y:545});return s;}
+export function alignCommander(s){if(s.hero)Object.assign(s.hero,regionFor(s)==='moon'?{x:195,y:190}:regionFor(s)==='ruins'?{x:170,y:550}:regionFor(s)==='dawn'?{x:32,y:130}:{x:355,y:145});return s;}

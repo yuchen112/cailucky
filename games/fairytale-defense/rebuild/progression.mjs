@@ -1,5 +1,5 @@
 // Data shared by combat and descriptions. No duplicated display-only upgrade values.
-import {UNIT_BRANCHES} from './army.mjs?v=20261004-layout2';
+import {UNIT_BRANCHES} from './army.mjs?v=20261004-army3';
 export const SPECIALIZATIONS = {
  growth:[{id:'rapid',name:'萌芽連射',description:'攻擊間隔縮短 28%。',interval:.72},{id:'pierce',name:'古木重擊',description:'傷害提高 35%，無視護甲。',damage:1.35,pierce:true}],
  dream:[{id:'wide',name:'繁星擴散',description:'星光波及半徑增加 30。',splash:30},{id:'burst',name:'聚夢星核',description:'傷害提高 70%，波及半徑減少 20。',damage:1.7,splash:-20}],
@@ -34,6 +34,6 @@ export const BLESSINGS={
 };
 export function statsFor(base,tower,buffs={power:0,reach:0}){
  const p=(SPECIALIZATIONS[tower.role]||UNIT_BRANCHES[tower.role])?.find(p=>p.id===tower.branch)||{};
- return {...base,damage:base.damage*(1+.45*(tower.level-1))*(p.damage||1)*(1+(buffs.power||0)*.08),interval:base.interval*(tower.level>=2?.94:1)*(p.interval||1)*(tower.level>=4?.9:1),range:base.range+(p.range||0)+(buffs.reach||0)*8,
- splash:Math.max(0,(base.splash||0)+(p.splash||0)+(tower.level===5&&p.splash>0?10:0)),pierce:p.pierce||base.pierce||false,crit:p.crit||base.crit||0,slowDuration:p.slowDuration||2,rootEvery:p.rootEvery||base.rootEvery||0,rootDuration:p.rootDuration||base.rootDuration||0,aura:p.aura||base.aura||0,haste:p.haste||1,auraRange:155,heal:p.heal||base.heal||0,shield:p.shield||0};
+ return {...base,...Object.fromEntries(['cone','bounces','blockCapacity','blockStamina','zoneRadius','zoneDamage','income'].filter(k=>p[k]!==undefined).map(k=>[k,p[k]])),damage:base.damage*(1+.45*(tower.level-1))*(p.damage||1)*(1+(buffs.power||0)*.08),interval:base.interval*(tower.level>=2?.94:1)*(p.interval||1)*(tower.level>=4?.9:1),range:base.range+(p.range||0)+(buffs.reach||0)*8,
+ splash:Math.max(0,(base.splash||0)+(p.splash||0)+(tower.level===5&&p.splash>0?10:0)),pierce:p.pierce||base.pierce||false,crit:p.crit||base.crit||0,slowDuration:p.slowDuration||2,rootEvery:p.rootEvery||base.rootEvery||0,rootDuration:p.rootDuration||base.rootDuration||0,aura:p.aura||base.aura||0,haste:p.haste||1,auraRange:155,income:base.income?(p.income||base.income)+2*(tower.level-1):0,heal:(p.heal||base.heal||0)+(base.income&&p.heal&&tower.level===5?1:0),shield:p.shield||0};
 }

@@ -1,4 +1,4 @@
-import {UNITS,STARTER_UNITS,UNIT_RARITY} from './army.mjs?v=20261004-layout2';
+import {UNITS,STARTER_UNITS,UNIT_RARITY} from './army.mjs?v=20261004-army3';
 export const RECRUIT_UNITS=Object.keys(UNITS),DRAW_COST=100,MAX_LEVEL=20;
 export const GRADES=[{id:'common',name:'一般',chance:70},{id:'rare',name:'稀有',chance:23},{id:'epic',name:'史詩',chance:6},{id:'legendary',name:'傳說',chance:1}];
 const integer=(n,max=100000000)=>Number.isSafeInteger(n)&&n>=0&&n<=max;
@@ -15,6 +15,8 @@ export function validateCollection(raw){
   next.sinceRare=Math.min(9,v.sinceGold||0);next.sinceEpic=Math.min(29,v.sincePrism||0);next.sinceLegendary=Math.min(79,v.sincePrism||0);
   next.history=v.history.map(h=>({...h,grade:UNIT_RARITY[h.unit],training:0,refund:0,levelBefore:unitLevel(next.training[h.unit]),levelAfter:unitLevel(next.training[h.unit]),legacy:true}));next.lastBatch=v.lastBatch??null;v=next;
  }
+ // Older version-2 saves gain only the newly introduced zero-XP fields.
+ if(v.version===2&&v.training&&typeof v.training==='object'){v={...v,training:{...v.training}};for(const id of ['scout','warden','storm','bramble','artisan'])if(!Object.hasOwn(v.training,id))v.training[id]=0;}
  if(v.version!==2||!integer(v.coins)||!integer(v.total,10000000)||!integer(v.points)||!integer(v.sinceRare,9)||!integer(v.sinceEpic,29)||!integer(v.sinceLegendary,79)||!Array.isArray(v.owned)||v.owned.length>RECRUIT_UNITS.length||new Set(v.owned).size!==v.owned.length||v.owned.some(id=>!RECRUIT_UNITS.includes(id))||STARTER_UNITS.some(id=>!v.owned.includes(id))||!v.training||RECRUIT_UNITS.some(id=>!integer(v.training[id]))||!Array.isArray(v.history)||v.history.length>20)throw Error('兵種收藏格式不正確');
  if(v.history.some(h=>!integer(h.number,v.total)||h.number<1||!RECRUIT_UNITS.includes(h.unit)||h.grade!==UNIT_RARITY[h.unit]||typeof h.duplicate!=='boolean')||new Set(v.history.map(h=>h.number)).size!==v.history.length)throw Error('招募歷史不正確');
  const batch=v.lastBatch??null;if(batch&&(![1,10].includes(batch.count)||!integer(batch.first,v.total)||batch.first<1||batch.first+batch.count-1!==v.total||v.history.filter(h=>h.number>=batch.first).length!==batch.count))throw Error('招募批次紀錄不正確');

@@ -1,8 +1,8 @@
-import {activeEffects,clamp,skillRecipients} from './animation-state.mjs?v=20261004-layout2';
-import {SPELL_ART} from './motion.mjs?v=20261004-layout2';
+import {activeEffects,clamp,skillRecipients} from './animation-state.mjs?v=20261004-army3';
+import {SPELL_ART} from './motion.mjs?v=20261004-army3';
 const impactArt={bolt:'anim-impact',crystal:'anim-shatter',gear:'anim-impact',spore:'projectile-spore',frost:'projectile-frost',glow:'fx-light',wind:'fx-rune',bloom:'fx-petal'};
 // All decorative marks are independently authored raster assets, never canvas shapes.
-export function drawCombatEffects({s,pads,image,sprite,ctx,roles,reduced=false,simple=false}){
+export function drawCombatEffects({s,pads,corePoint,image,sprite,ctx,roles,reduced=false,simple=false}){
  const text=(value,x,y,alpha=1,color='#fff8dc')=>{ctx.save();ctx.globalAlpha=clamp(alpha);ctx.font='bold 15px system-ui';ctx.textAlign='center';ctx.fillStyle=color;ctx.strokeStyle='#153d32';ctx.lineWidth=3;const px=clamp(x,45,345),py=clamp(y,18,565);ctx.strokeText(value,px,py);ctx.fillText(value,px,py);ctx.restore();};
  const mark=(id,x,y,size,alpha=1)=>image(id,x-size/2,y-size/2,size,size,clamp(alpha));
  const particles=(id,x,y,age,count=5)=>{if(reduced||simple)return;for(let i=0;i<count;i++){const a=i*Math.PI*2/count;mark(id,x+Math.cos(a)*age*42,y+Math.sin(a)*age*28-age*16,8+age*7,(1-age)*.65);}};
@@ -30,7 +30,7 @@ export function drawCombatEffects({s,pads,image,sprite,ctx,roles,reduced=false,s
   if(e.type==='boss-warning'){const k=age/1.2;mark('target',e.x,e.y,42+(reduced?0:Math.sin(k*Math.PI*4)*4));}
   if(e.type==='hero-skill'){
    const offensive=['dream','night','sadness','memory','hope'].includes(e.role);if(offensive)continue;const k=age/.9,art=SPELL_ART[roles[e.role].kind];
-   for(const p of skillRecipients(s,e,pads)){mark(art,p.x,p.y-20,reduced?40:36+35*k,(1-k)*.75);particles(art,p.x,p.y-20,k,3);}
+   for(const p of skillRecipients(s,e,pads,corePoint)){mark(art,p.x,p.y-20,reduced?40:36+35*k,(1-k)*.75);particles(art,p.x,p.y-20,k,3);}
   }
  }
  // Persistent statuses track actual expiration times, not a decorative timer.

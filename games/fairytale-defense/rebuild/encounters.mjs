@@ -16,6 +16,6 @@ const entries=[
  ['王座外庭','兩次頭目波，保留應急技能與金幣。',['aaarrraarr','rrraaaarrr','baarrraab','rrrraaarrr','aaaarrraaa','baarrrabb']],
  ['最後守護','三段頭目考驗，全線部署再迎戰。',['arrarrarra','baarrraar','rrrraaaarr','abrrraaab','aaaarrrraaa','barabarrb']]
 ];
-const kinds={w:'walker',r:'runner',a:'armored',b:'boss'};
-export const CAMPAIGN=entries.map(([name,tip,waves],i)=>Object.freeze({stage:i+1,name,tip,region:['翠林','月露','晨曦'][Math.floor(i/5)],waves:waves.map(s=>Object.freeze([...s].map(c=>kinds[c]))),interval:Math.max(.65,.98-i*.02)}));
+const kinds={w:'walker',r:'runner',a:'armored',b:'boss',m:'moth'};
+export const CAMPAIGN=entries.map(([name,tip,waves],i)=>Object.freeze({stage:i+1,name,tip:tip+(i>=5?' 飛蛾從第二波混入；準備對空兵或英雄技能。':''),region:['翠林','月露','晨曦'][Math.floor(i/5)],waves:waves.map((s,w)=>Object.freeze([...s].map((c,n)=>kinds[i>=5&&w>=1&&c==='r'&&n%4===1?'m':c]))),interval:Math.max(.65,.98-i*.02)}));
 export function encounterWave(stage,wave){const level=CAMPAIGN[stage-1];if(!level||wave<1||wave>6)throw Error('Invalid encounter');return [...level.waves[wave-1]];}

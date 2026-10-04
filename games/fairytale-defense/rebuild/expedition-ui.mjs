@@ -1,12 +1,10 @@
-import {UNITS,UNIT_GUIDES,UNIT_RARITY} from './army.mjs?v=20261004-layout2';
-import {GRADES,unitLevel} from './recruitment.mjs?v=20261004-layout2';
-import {MAPS} from './expedition.mjs?v=20261004-layout2';
+import {installFormation} from './formation-ui.mjs?v=20261004-army3';
+import {UNITS,UNIT_GUIDES,UNIT_RARITY} from './army.mjs?v=20261004-army3';
+import {GRADES,unitLevel} from './recruitment.mjs?v=20261004-army3';
+import {MAPS} from './expedition.mjs?v=20261004-army3';
 export function installExpedition({getProfile,commit,show,syncPause,openUnit,startEndless}){
  const $=id=>document.getElementById(id),body=$('squad').querySelector('.dialog-content');
- function render(){const p=getProfile();body.replaceChildren();const text=document.createElement('p');text.id='loadout-summary';text.textContent=`已選 ${p.loadout.length} / 5 種。英雄不占名額，同種可重複部署。部署只消耗當局金幣。`;body.append(text);
- const selected=document.createElement('p');selected.textContent=p.loadout.map(id=>UNITS[id].name).join('／');body.append(selected);
- const presets=document.createElement('section');presets.className='formation-presets';for(let i=0;i<3;i++){const b=document.createElement('button');b.textContent=p.formations[i]?'套用隊伍 '+(i+1):'保存隊伍 '+(i+1);b.onclick=()=>{const current=getProfile();if(current.formations[i])commit({...current,loadout:current.formations[i]});else{const formations=[...current.formations];formations.push([...current.loadout]);commit({...current,formations});}render();};presets.append(b);}const reset=document.createElement('button');reset.textContent='重設常用隊伍';reset.onclick=()=>{commit({...getProfile(),formations:[]});render();};presets.append(reset);body.append(presets);
- const grid=document.createElement('div');grid.className='loadout-grid';for(const [id,r] of Object.entries(UNITS)){const owned=p.collection.owned.includes(id),active=p.loadout.includes(id),card=document.createElement('section');card.innerHTML=`<img loading="lazy" src="art/unit-${id}.webp" alt=""><h3>${r.name}</h3><p>${GRADES.find(g=>g.id===UNIT_RARITY[id]).name} · ${owned?'Lv.'+unitLevel(p.collection.training[id]):'招募取得'}</p><p>${UNIT_GUIDES[id][0]} · 部署 ${r.cost}</p>`;const toggle=document.createElement('button');toggle.dataset.unit=id;toggle.setAttribute('aria-pressed',String(active));toggle.textContent=active?'已編入 · 移除':owned?'編入隊伍':'尚未取得';toggle.disabled=!owned||(active&&p.loadout.length===1)||(!active&&p.loadout.length===5);toggle.onclick=()=>{const current=getProfile(),loadout=active?current.loadout.filter(u=>u!==id):[...current.loadout,id];commit({...current,loadout});render();};const detail=document.createElement('button');detail.textContent='能力與升級';detail.onclick=()=>openUnit(id);card.append(toggle,detail);grid.append(card);}body.append(grid);}
+ const formation=installFormation({dialog:$('squad'),body,getProfile,commit,openUnit});const render=()=>formation.render();
  $('squad-info').onclick=()=>{render();show('squad');};
  const endless=document.createElement('button');endless.id='start-endless';endless.textContent='無盡守城';$('start').after(endless);
  const mapDialog=document.createElement('dialog');mapDialog.id='endless-maps';mapDialog.className='journey-dialog';mapDialog.innerHTML='<h2>無盡守城 · 選擇戰場</h2><div class="journey-body"></div><button class="journey-close">返回營地</button>';mapDialog.querySelector('button').onclick=()=>mapDialog.close();mapDialog.addEventListener('close',syncPause);document.body.append(mapDialog);

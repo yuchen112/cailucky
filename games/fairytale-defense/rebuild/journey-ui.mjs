@@ -1,7 +1,8 @@
-import {RECRUIT_UNITS,unitLevel} from './recruitment.mjs?v=20261004-layout2';
-import {UNITS,UNIT_BRANCHES,UNIT_GUIDES} from './army.mjs?v=20261004-layout2';
-import {branchGuide,unitArt} from './unit-presentation.mjs?v=20261004-layout2';
-import {installRecruitment} from './recruitment-ui.mjs?v=20261004-layout2';
+import {attackType,shapeDescription} from './attack-shapes.mjs?v=20261004-army3';
+import {RECRUIT_UNITS,unitLevel} from './recruitment.mjs?v=20261004-army3';
+import {UNITS,UNIT_BRANCHES,UNIT_GUIDES} from './army.mjs?v=20261004-army3';
+import {branchGuide,unitArt} from './unit-presentation.mjs?v=20261004-army3';
+import {installRecruitment} from './recruitment-ui.mjs?v=20261004-army3';
 const guides={archer:['穩定單體火力','便宜、出手快，適合補足前中後段火力。連弩處理快腳；重弩提高單次傷害。'],cannon:['群怪與範圍清場','攻速較慢，敵群聚集時最有效；擴散增加覆蓋，穿甲針對重甲。'],frost:['緩速與節奏控制','傷害較低，需與輸出伙伴搭配。長效緩速延長控制，凝霜每第三擊短暫定身。'],firefly:['遠距離持續輸出','適合補防線死角。遠射增加覆蓋範圍，連射提升攻擊頻率。']};
 export function installJourney({getProfile,commit,show,syncPause,audio,onMotion,onTrial}){
  const $=id=>document.getElementById(id);
@@ -20,10 +21,11 @@ export function installJourney({getProfile,commit,show,syncPause,audio,onMotion,
  let demoToken=0;unitDialog.addEventListener('close',()=>demoToken++,{once:true});
  const demo=document.createElement('button');demo.id='unit-demo';demo.textContent='播放出手動作（示意）';demo.onclick=async()=>{const im=d.querySelector('.guide-unit'),original=im.getAttribute('src'),token=++demoToken;if(document.body.dataset.motion==='reduced')return;demo.disabled=true;const base=original==='art/unit-'+id+'.webp';try{if(base){await Promise.all(['ready','release'].map(async pose=>{const next=new Image();next.src='art/unit-'+id+'-'+pose+'.webp';await next.decode();}));if(token!==demoToken||!unitDialog.open)return;}if(base)im.src='art/unit-'+id+'-ready.webp';await im.animate([{translate:'0 0'},{translate:'-3px 0'}],{duration:220,fill:'none'}).finished;if(token!==demoToken||!unitDialog.open||im.getAttribute('src')!==(base?'art/unit-'+id+'-ready.webp':original))return;if(base)im.src='art/unit-'+id+'-release.webp';audio.sound('hit');await im.animate([{translate:'2px 0'},{translate:'0 0'}],{duration:340}).finished;}catch{}finally{if(token===demoToken){im.src=original;demo.disabled=false;}}};variants.after(demo);
  const match={archer:'搭配晶角破甲，應對重甲；搭配緩速延長輸出。',cannon:'搭配藤蔓或霜露，把敵群留在爆炸範圍。',frost:'搭配炮手或重型狙擊，讓緩速換成更多命中。',firefly:'補足其他部隊的遠端火力空隙。',crystal:'搭配高攻速兵種，放大破甲的整隊效益。',chime:'適合雙路匯合或敵人密集的區域。',blossom:'放在多個輸出兵種附近，支援收益較高。',clockwork:'搭配前方緩速部隊，避免敵人快速進入近距死角。',alchemist:'適合前段掛上持續傷害，再由後方火力收尾。',vine:'搭配範圍炮擊，集中處理被定身的敵群。',oracle:'標記強敵，搭配其他輸出集中攻擊。',dragon:'搭配緩速與聚集路段，發揮範圍吐息。'};
- const pairing=document.createElement('section');pairing.className='ability-card';pairing.innerHTML=`<h3>搭配方向</h3><p>${match[id]}</p>`;d.append(pairing);
+ const geometry=document.createElement('section');geometry.className='ability-card';geometry.innerHTML=`<h3>攻擊判定 · ${attackType(r)}</h3><p>${shapeDescription(r)}</p><p>${r.air?'可對空與地面':'只攻擊地面'}${r.pierce?' · 穿甲是無視護甲，不是直線貫穿':''}</p><p>收藏培養等級為永久加成；戰場 Lv.1–5 為本局金幣升級。兩者分開。</p>`;d.append(geometry);
+ const pairing=document.createElement('section');pairing.className='ability-card';pairing.innerHTML=`<h3>搭配方向</h3><p>${match[id]||UNIT_GUIDES[id][1]}</p>`;d.append(pairing);
  const grid=document.createElement('div');grid.className='branch-guides';for(const b of UNIT_BRANCHES[id]){const f=document.createElement('figure');f.innerHTML=`<img src="art/${unitArt({role:id,level:5,branch:b.id})}.webp" alt="${b.name} 五級造型"><figcaption>${b.name}</figcaption><p>${branchGuide(id,b.id)}</p>`;grid.append(f);}d.append(grid);
  const note=document.createElement('p');note.textContent='三級選定分支後，本次部署不能更換；撤回退還累計投入的 70%。';d.append(note);
- const trial=document.createElement('button');trial.id='unit-trial';trial.textContent='免費試用 · 不影響進度';trial.onclick=()=>onTrial(id);d.append(trial);unitDialog.querySelector('.journey-close').textContent='返回';show('unit-guide');
+ if(r.income){const help=document.createElement('p');help.textContent='工匠不攻擊，試用場會提供弩手搭配；先部署兩者，再完成一波觀察補給。';d.append(help);}const trial=document.createElement('button');trial.id='unit-trial';trial.textContent='免費試用 · 不影響進度';trial.onclick=()=>onTrial(id);d.append(trial);unitDialog.querySelector('.journey-close').textContent='返回';show('unit-guide');
  }
  const recruitment=installRecruitment({dialog:collection,getProfile,commit,audio,updateWallet,openUnit});summon.onclick=()=>{recruitment.render();show('collection');};$('camp').addEventListener('focusin',updateWallet);
  $('squad').querySelectorAll('figure').forEach((f,i)=>{const b=document.createElement('button');b.className='unit-detail';b.textContent='能力與升級';b.onclick=()=>openUnit(RECRUIT_UNITS[i]);f.append(b);});

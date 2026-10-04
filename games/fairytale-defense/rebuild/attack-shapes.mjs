@@ -1,0 +1,5 @@
+// Shared deterministic geometry for judgment and raster-effect placement.
+export function inCone(origin,aim,p,range,angle){const dx=p.x-origin.x,dy=p.y-origin.y,d=Math.hypot(dx,dy);if(d>range)return false;if(d<.001)return true;const ax=aim.x-origin.x,ay=aim.y-origin.y,a=Math.hypot(ax,ay);return a>.001&&(dx*ax+dy*ay)/(d*a)>=Math.cos(angle/2)-1e-9;}
+export const attackType=r=>r.income?'波次補給':r.zoneRadius?'持續區域':r.cone?'扇形':r.splash?'圓形範圍':r.bounces?'連鎖':r.aura?'範圍輔助':'單體';
+export const troopGroup=id=>['frost','vine','warden','bramble'].includes(id)?'control':['blossom','artisan'].includes(id)?'support':'damage';
+export function shapeDescription(r){return r.income?`每波 +${r.income} 金幣；全隊同類上限 36`:r.zoneRadius?`地面區域半徑 ${r.zoneRadius}，${r.zoneDuration} 秒，每秒 ${r.zoneDamage} 傷害`:r.cone?`朝目標 ${(r.cone*180/Math.PI).toFixed(0)}° 扇形，長度 ${r.range}`:r.splash?`命中點周圍半徑 ${r.splash}`:r.bounces?`最多 ${r.bounces+1} 個目標，跳距 ${r.chainRange||75}，每跳傷害 ×0.8`:r.blockCapacity?`阻擋 ${r.blockCapacity} 名地面敵人，每次 ${r.blockDuration} 秒；每波 ${r.blockStamina} 敵秒`:r.aura?'附近友軍傷害增益，不累乘':'只命中一名目標';}

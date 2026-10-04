@@ -7,4 +7,4 @@ for(const role of Object.keys(ROLES)){const a={hero:{role},time:1.3,events:[{typ
 const sample={time:1.1,events:[{type:'hit',time:1,enemyId:5,damage:20}]},enemy={id:5,distance:20,kind:'walker'};assert(enemyPose(sample,enemy).hit>0);assert.equal(enemyPose(sample,enemy,true).x,0);assert.equal(enemyPose(sample,{...enemy,rootUntil:2}).step,false);
 const crowded={time:1,events:Array.from({length:100},(_,id)=>({id,type:'hit',time:.9}))};assert.equal(activeEffects(crowded).length,64);assert.equal(activeEffects(crowded,{simple:true}).length,24);assert.equal(activeEffects(crowded,{reduced:true}).length,12);
 startWave(s);for(let i=0;i<600;i++)advance(s,1/60);s.paused=true;const snapshot=JSON.stringify(s);for(let i=0;i<60;i++){troopPose(s,s.towers[0]);heroPose(s);activeEffects(s);advance(s,.1);}assert.equal(JSON.stringify(s),snapshot);
-console.log('PASS 12 troop timelines, 10 hero poses, isolated hits, root stops steps, effect budgets, upgrade snapshot and paused read-only animation.');
+console.log('PASS 17 troop timelines, 10 hero poses, isolated hits, root stops steps, effect budgets, upgrade snapshot and paused read-only animation.');

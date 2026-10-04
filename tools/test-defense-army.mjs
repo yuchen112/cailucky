@@ -10,7 +10,7 @@ for(const hero of Object.keys(ROLES)){
  assert(startWave(s));advance(s,.1);assert(castHero(s));assert(!castHero(s));const before=JSON.stringify(s);s.paused=true;advance(s,.25);assert(!castHero(s));s.paused=false;assert.equal(JSON.stringify(s),before);
 }
 for(const [unit,branches] of Object.entries(UNIT_BRANCHES))for(const branch of branches){
- const loadout=[unit,...Object.keys(UNITS).filter(x=>x!==unit).slice(0,3)],s=createBattle({hero:'growth',loadout});s.gold=5000;assert(deploy(s,0,unit));assert(upgrade(s,0));assert(!upgrade(s,0,'invalid'));assert(upgrade(s,0,branch.id));assert(upgrade(s,0));assert(upgrade(s,0));assert(towerStats(s.towers[0],s).damage>0);assert.deepEqual(captureCheckpoint(restoreCheckpoint(captureCheckpoint(s))),captureCheckpoint(s));
+ const loadout=[unit,...Object.keys(UNITS).filter(x=>x!==unit).slice(0,3)],s=createBattle({hero:'growth',loadout});s.gold=5000;assert(deploy(s,0,unit));assert(upgrade(s,0));assert(!upgrade(s,0,'invalid'));assert(upgrade(s,0,branch.id));assert(upgrade(s,0));assert(upgrade(s,0));assert(towerStats(s.towers[0],s).damage>0||towerStats(s.towers[0],s).income>0);assert.deepEqual(captureCheckpoint(restoreCheckpoint(captureCheckpoint(s))),captureCheckpoint(s));
 }
 assert.throws(()=>createBattle({hero:'unknown'}));assert.throws(()=>createBattle({hero:'growth',loadout:['archer','archer','frost','cannon']}));
 const s=createBattle({hero:'growth'});deploy(s,0,'archer');const c=captureCheckpoint(s);assert.throws(()=>restoreCheckpoint({...c,hero:{role:'growth',x:Infinity,y:100}}));assert.throws(()=>restoreCheckpoint({...c,towers:[c.towers[0],c.towers[0]]}));

@@ -1,0 +1,213 @@
+{
+  "mode": "built-in imagegen",
+  "version": "20261004-army3",
+  "individualAssets": true,
+  "cropped": false,
+  "assets": [
+    {
+      "id": "unit-scout",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-af7cfe61-246d-4ab3-b04f-af7b291ec06c.png",
+      "output": "art/unit-scout.webp",
+      "promptSummary": "A teal swallow aviator scout with goggles, feather cloak and wind crossbow. One isolated crafted 3D storybook full-body miniature, facing right, genuine transparent alpha, no sheet or crop."
+    },
+    {
+      "id": "unit-warden",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-3143d0e2-6d9d-465e-b8c2-445b22c1e415.png",
+      "output": "art/unit-warden.webp",
+      "promptSummary": "A sturdy badger guardian in mossy stone armor carrying an oval rock shield and mallet. One isolated crafted 3D storybook full-body miniature, facing right, genuine transparent alpha, no sheet or crop."
+    },
+    {
+      "id": "unit-storm",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6dee4686-2885-45e0-8800-0f14b69396bc.png",
+      "output": "art/unit-storm.webp",
+      "promptSummary": "A lavender squirrel mage in a violet hood, silver trim and forked lightning staff. One isolated crafted 3D storybook full-body miniature, facing right, genuine transparent alpha, no sheet or crop."
+    },
+    {
+      "id": "unit-bramble",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-edecec53-0b80-4c4c-badf-24536c5ed4a8.png",
+      "output": "art/unit-bramble.webp",
+      "promptSummary": "A green hedgehog gardener with leaf apron, rosebud hat and planting wand. One isolated crafted 3D storybook full-body miniature, facing right, genuine transparent alpha, no sheet or crop."
+    },
+    {
+      "id": "unit-artisan",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-bee89b5b-501d-4b80-a247-f7e681bf7d45.png",
+      "output": "art/unit-artisan.webp",
+      "promptSummary": "A golden beaver engineer with turquoise apron, copper goggles and a star-dew collector pouch. One isolated crafted 3D storybook full-body miniature, facing right, genuine transparent alpha, no sheet or crop."
+    },
+    {
+      "id": "unit-scout-ready",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-af7cfe61-246d-4ab3-b04f-af7b291ec06c.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact character reference. One standalone full-body animation pose of SAME character, pulling equipped weapon/tool back to prepare. Keep exact face, species, costume, equipment, color and three-quarter camera facing RIGHT. Feet planted and entire body/equipment visible with transparent padding. Crafted 3D storybook miniature. No ground, projectile, text, extra character, atlas or collage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-b50cfbf2-4353-4bfa-b4bc-c102297e6f33.png",
+      "output": "art/unit-scout-ready.webp"
+    },
+    {
+      "id": "unit-scout-release",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-af7cfe61-246d-4ab3-b04f-af7b291ec06c.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact character reference. One standalone full-body animation pose of SAME character, extending equipped weapon/tool forward in a clear follow-through. Keep exact face, species, costume, equipment, color and three-quarter camera facing RIGHT. Feet planted and entire body/equipment visible with transparent padding. Crafted 3D storybook miniature. No ground, projectile, text, extra character, atlas or collage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-ab833774-9952-4670-a636-6d9c23c9296f.png",
+      "output": "art/unit-scout-release.webp"
+    },
+    {
+      "id": "unit-warden-ready",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-3143d0e2-6d9d-465e-b8c2-445b22c1e415.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact character reference. One standalone full-body animation pose of SAME character, pulling equipped weapon/tool back to prepare. Keep exact face, species, costume, equipment, color and three-quarter camera facing RIGHT. Feet planted and entire body/equipment visible with transparent padding. Crafted 3D storybook miniature. No ground, projectile, text, extra character, atlas or collage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-30316794-a8be-477c-a709-797055a294ec.png",
+      "output": "art/unit-warden-ready.webp"
+    },
+    {
+      "id": "unit-warden-release",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-3143d0e2-6d9d-465e-b8c2-445b22c1e415.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact character reference. One standalone full-body animation pose of SAME character, extending equipped weapon/tool forward in a clear follow-through. Keep exact face, species, costume, equipment, color and three-quarter camera facing RIGHT. Feet planted and entire body/equipment visible with transparent padding. Crafted 3D storybook miniature. No ground, projectile, text, extra character, atlas or collage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5dee7484-417c-4c0a-b072-c05e3b68a494.png",
+      "output": "art/unit-warden-release.webp"
+    },
+    {
+      "id": "unit-storm-ready",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6dee4686-2885-45e0-8800-0f14b69396bc.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact character reference. One standalone full-body animation pose of SAME character, pulling equipped weapon/tool back to prepare. Keep exact face, species, costume, equipment, color and three-quarter camera facing RIGHT. Feet planted and entire body/equipment visible with transparent padding. Crafted 3D storybook miniature. No ground, projectile, text, extra character, atlas or collage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-cc11b2fb-5d68-4ecc-ad53-c8b2dff9ffce.png",
+      "output": "art/unit-storm-ready.webp"
+    },
+    {
+      "id": "unit-storm-release",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6dee4686-2885-45e0-8800-0f14b69396bc.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact character reference. One standalone full-body animation pose of SAME character, extending equipped weapon/tool forward in a clear follow-through. Keep exact face, species, costume, equipment, color and three-quarter camera facing RIGHT. Feet planted and entire body/equipment visible with transparent padding. Crafted 3D storybook miniature. No ground, projectile, text, extra character, atlas or collage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-bc585b84-55c3-4f00-b843-86456aa1658c.png",
+      "output": "art/unit-storm-release.webp"
+    },
+    {
+      "id": "unit-bramble-ready",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-edecec53-0b80-4c4c-badf-24536c5ed4a8.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact character reference. One standalone full-body animation pose of SAME character, pulling equipped weapon/tool back to prepare. Keep exact face, species, costume, equipment, color and three-quarter camera facing RIGHT. Feet planted and entire body/equipment visible with transparent padding. Crafted 3D storybook miniature. No ground, projectile, text, extra character, atlas or collage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-91d3b36d-c541-427b-9119-3e01e97141fd.png",
+      "output": "art/unit-bramble-ready.webp"
+    },
+    {
+      "id": "unit-bramble-release",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-edecec53-0b80-4c4c-badf-24536c5ed4a8.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact character reference. One standalone full-body animation pose of SAME character, extending equipped weapon/tool forward in a clear follow-through. Keep exact face, species, costume, equipment, color and three-quarter camera facing RIGHT. Feet planted and entire body/equipment visible with transparent padding. Crafted 3D storybook miniature. No ground, projectile, text, extra character, atlas or collage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5b25150b-3e39-4e04-8bc5-4c1b947e7e71.png",
+      "output": "art/unit-bramble-release.webp"
+    },
+    {
+      "id": "unit-artisan-ready",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-bee89b5b-501d-4b80-a247-f7e681bf7d45.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact character reference. One standalone full-body animation pose of SAME character, pulling equipped weapon/tool back to prepare. Keep exact face, species, costume, equipment, color and three-quarter camera facing RIGHT. Feet planted and entire body/equipment visible with transparent padding. Crafted 3D storybook miniature. No ground, projectile, text, extra character, atlas or collage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-ec0017ea-dfd7-4888-8d97-aceb55c7e363.png",
+      "output": "art/unit-artisan-ready.webp"
+    },
+    {
+      "id": "unit-artisan-release",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-bee89b5b-501d-4b80-a247-f7e681bf7d45.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact character reference. One standalone full-body animation pose of SAME character, extending equipped weapon/tool forward in a clear follow-through. Keep exact face, species, costume, equipment, color and three-quarter camera facing RIGHT. Feet planted and entire body/equipment visible with transparent padding. Crafted 3D storybook miniature. No ground, projectile, text, extra character, atlas or collage. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5b1bbb3d-b7ba-4631-afc3-5dea49d6ec48.png",
+      "output": "art/unit-artisan-release.webp"
+    },
+    {
+      "id": "unit-scout-rapid",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-af7cfe61-246d-4ab3-b04f-af7b291ec06c.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact base troop reference. ONE isolated full-body upgraded branch of SAME character. Add extra feather bolt rack and reinforced crossbow; retain exact species, face, clothing palette, chibi proportions and three-quarter camera facing RIGHT. High-end crafted storybook miniature. Feet planted, entire body and equipment visible, transparent padding. No ground, text, montage, extra character or atlas. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-227eb4b8-fd52-4ba2-b128-2dda6dc34594.png",
+      "output": "art/unit-scout-rapid.webp"
+    },
+    {
+      "id": "unit-scout-far",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-af7cfe61-246d-4ab3-b04f-af7b291ec06c.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact base troop reference. ONE isolated full-body upgraded branch of SAME character. Add tall feather sight and polished telescope attachment; retain exact species, face, clothing palette, chibi proportions and three-quarter camera facing RIGHT. High-end crafted storybook miniature. Feet planted, entire body and equipment visible, transparent padding. No ground, text, montage, extra character or atlas. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-9613ef05-5b67-4232-a1fe-5c4ca79c46d2.png",
+      "output": "art/unit-scout-far.webp"
+    },
+    {
+      "id": "unit-warden-root",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-3143d0e2-6d9d-465e-b8c2-445b22c1e415.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact base troop reference. ONE isolated full-body upgraded branch of SAME character. Add larger layered moss rock shield with sturdy gold rim; retain exact species, face, clothing palette, chibi proportions and three-quarter camera facing RIGHT. High-end crafted storybook miniature. Feet planted, entire body and equipment visible, transparent padding. No ground, text, montage, extra character or atlas. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-9387ab2f-4f35-48fb-81b5-fc1669fcaf76.png",
+      "output": "art/unit-warden-root.webp"
+    },
+    {
+      "id": "unit-warden-heavy",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-3143d0e2-6d9d-465e-b8c2-445b22c1e415.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact base troop reference. ONE isolated full-body upgraded branch of SAME character. Add bigger rune-carved heavy stone hammer; retain exact species, face, clothing palette, chibi proportions and three-quarter camera facing RIGHT. High-end crafted storybook miniature. Feet planted, entire body and equipment visible, transparent padding. No ground, text, montage, extra character or atlas. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-cc8aedf3-5fd5-4738-8924-994c00ff3d8e.png",
+      "output": "art/unit-warden-heavy.webp"
+    },
+    {
+      "id": "unit-storm-wide",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6dee4686-2885-45e0-8800-0f14b69396bc.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact base troop reference. ONE isolated full-body upgraded branch of SAME character. Add four small charged crystal branches on the staff; retain exact species, face, clothing palette, chibi proportions and three-quarter camera facing RIGHT. High-end crafted storybook miniature. Feet planted, entire body and equipment visible, transparent padding. No ground, text, montage, extra character or atlas. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-59a8e57b-e01f-4ac1-a807-092985d34540.png",
+      "output": "art/unit-storm-wide.webp"
+    },
+    {
+      "id": "unit-storm-heavy",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6dee4686-2885-45e0-8800-0f14b69396bc.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact base troop reference. ONE isolated full-body upgraded branch of SAME character. Add one large amethyst lightning orb on the staff; retain exact species, face, clothing palette, chibi proportions and three-quarter camera facing RIGHT. High-end crafted storybook miniature. Feet planted, entire body and equipment visible, transparent padding. No ground, text, montage, extra character or atlas. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-f87b1b9d-5ca2-4034-85de-0d71f6d89006.png",
+      "output": "art/unit-storm-heavy.webp"
+    },
+    {
+      "id": "unit-bramble-wide",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-edecec53-0b80-4c4c-badf-24536c5ed4a8.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact base troop reference. ONE isolated full-body upgraded branch of SAME character. Add broad flowering thorn staff and lush leaf cloak; retain exact species, face, clothing palette, chibi proportions and three-quarter camera facing RIGHT. High-end crafted storybook miniature. Feet planted, entire body and equipment visible, transparent padding. No ground, text, montage, extra character or atlas. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-1617e3a9-64f0-4feb-9f57-76243e7c5655.png",
+      "output": "art/unit-bramble-wide.webp"
+    },
+    {
+      "id": "unit-bramble-heavy",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-edecec53-0b80-4c4c-badf-24536c5ed4a8.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact base troop reference. ONE isolated full-body upgraded branch of SAME character. Add sharper dark thorn staff with ruby rose buds; retain exact species, face, clothing palette, chibi proportions and three-quarter camera facing RIGHT. High-end crafted storybook miniature. Feet planted, entire body and equipment visible, transparent padding. No ground, text, montage, extra character or atlas. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c6515ef6-e83d-482a-82df-0365108ef543.png",
+      "output": "art/unit-bramble-heavy.webp"
+    },
+    {
+      "id": "unit-artisan-power",
+      "ref": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-bee89b5b-501d-4b80-a247-f7e681bf7d45.png",
+      "prompt": "Use case: identity-preserve. Image 1 exact base troop reference. ONE isolated full-body upgraded branch of SAME character. Add improved large gold star-dew collector; retain exact species, face, clothing palette, chibi proportions and three-quarter camera facing RIGHT. High-end crafted storybook miniature. Feet planted, entire body and equipment visible, transparent padding. No ground, text, montage, extra character or atlas. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5fc0868f-7374-471b-8dac-5c632d041d20.png",
+      "output": "art/unit-artisan-power.webp"
+    },
+    {
+      "id": "army-card",
+      "prompt": "One standalone premium mobile game troop card background, portrait aspect, carved forest wood frame with elegant small gold leaf corners and deep teal blank center, readable subdued interior for text and creature portrait. Entire rectangular frame visible, transparent outside corners, no characters, no lettering, no icons, no atlas. Polished crafted 3D storybook UI.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-40447860-c957-486f-b914-30edbce2693f.png",
+      "output": "art/army-card.webp"
+    },
+    {
+      "id": "army-slot",
+      "prompt": "One standalone square mobile game equipped troop slot frame, beveled forest wood with gold leaf trim, dark teal blank center for a character image. Entire square visible with transparent padding, no character, no lettering, no icons, no atlas. Polished crafted 3D storybook UI.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-6ed558c8-9cd2-4ec1-953b-1d7e153dd759.png",
+      "output": "art/army-slot.webp"
+    },
+    {
+      "id": "hero-dais",
+      "prompt": "One isolated low circular forest commander podium, mossy carved wood and ivory stone rim, a tiny gold leaf emblem on the FRONT. Viewed from elevated three-quarter game camera. Low and open flat top, no back wall, no canopy, no character, no text, no large ground, no atlas. Crafted 3D storybook miniature, genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-0999f4b4-632d-48a8-b437-0b369049f96b.png",
+      "output": "art/hero-dais.webp"
+    },
+    {
+      "id": "thorn-zone",
+      "prompt": "One standalone top-down circular thorn spell effect for a mobile tower defense game. Delicate luminous green thorn vines and tiny rosebuds arranged in a flat round magical patch; outer edge clear, center translucent and sparse so enemies remain readable. Circle occupies 85 percent canvas, genuine transparent alpha; no solid plate, no ground, no text, no other assets, no atlas. Crafted storybook style.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-f32d8334-aa88-4db8-9f45-61fb68530e7e.png",
+      "output": "art/thorn-zone.webp"
+    },
+    {
+      "id": "flame-cone",
+      "prompt": "One standalone TOP-DOWN magical golden orange flame breath texture, fan shape pointing RIGHT with apex at LEFT center, translucent wispy flames expanding to a rounded edge. Clear gentle luminous edges, no dark smoke, no character, no weapon, no text, no ground or atlas. Premium adorable storybook game effect on genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-f3d66f30-fd31-46e4-b683-fa3ecc71af2e.png",
+      "output": "art/flame-cone.webp"
+    },
+    {
+      "id": "moth",
+      "prompt": "One isolated adorable tiny enemy purple night moth, big curious eyes, round fuzzy lavender body, four wing lobes with violet moon patterns, facing RIGHT three-quarter camera, hovering with wings raised. Crafted 3D storybook miniature, whole creature visible with transparent padding. No ground, shadow plate, text, montage or other characters. Genuine transparent alpha.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-1ef41ec5-810b-4439-bbb5-9be9ce7075ad.png",
+      "output": "art/moth.webp"
+    },
+    {
+      "id": "unit-artisan-haste",
+      "prompt": "Use case: identity-preserve. Image 1 exact base troop reference. ONE isolated full-body upgraded branch of SAME character. Add copper repair toolkit and sturdy wrench; retain exact species, face, clothing palette, chibi proportions and three-quarter camera facing RIGHT. High-end crafted storybook miniature. Feet planted, entire body and equipment visible, transparent padding. No ground, text, montage, extra character or atlas. Genuine transparent alpha.",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-7b5d0a3f-b1de-475d-b4df-140d1b51e3e5.png",
+      "output": "art/unit-artisan-haste.webp"
+    }
+  ]
+}
