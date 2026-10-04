@@ -1,5 +1,5 @@
-import {UNITS,STARTER_UNITS,UNIT_RARITY} from './army.mjs?v=20261004-army4';
-export const RECRUIT_UNITS=Object.keys(UNITS),DRAW_COST=100,MAX_LEVEL=20;
+import {UNITS,STARTER_UNITS,UNIT_RARITY} from './army.mjs?v=20261005-growth1';
+export const RECRUIT_UNITS=Object.keys(UNITS),DRAW_COST=100,MAX_LEVEL=30;
 export const GRADES=[{id:'common',name:'一般',chance:70},{id:'rare',name:'稀有',chance:23},{id:'epic',name:'史詩',chance:6},{id:'legendary',name:'傳說',chance:1}];
 const integer=(n,max=100000000)=>Number.isSafeInteger(n)&&n>=0&&n<=max;
 export const xpForLevel=level=>level*(level-1)/2;
@@ -20,7 +20,7 @@ export function validateCollection(raw){
  if(v.version!==2||!integer(v.coins)||!integer(v.total,10000000)||!integer(v.points)||!integer(v.sinceRare,9)||!integer(v.sinceEpic,29)||!integer(v.sinceLegendary,79)||!Array.isArray(v.owned)||v.owned.length>RECRUIT_UNITS.length||new Set(v.owned).size!==v.owned.length||v.owned.some(id=>!RECRUIT_UNITS.includes(id))||STARTER_UNITS.some(id=>!v.owned.includes(id))||!v.training||RECRUIT_UNITS.some(id=>!integer(v.training[id]))||!Array.isArray(v.history)||v.history.length>20)throw Error('兵種收藏格式不正確');
  if(v.history.some(h=>!integer(h.number,v.total)||h.number<1||!RECRUIT_UNITS.includes(h.unit)||h.grade!==UNIT_RARITY[h.unit]||typeof h.duplicate!=='boolean')||new Set(v.history.map(h=>h.number)).size!==v.history.length)throw Error('招募歷史不正確');
  const batch=v.lastBatch??null;if(batch&&(![1,10].includes(batch.count)||!integer(batch.first,v.total)||batch.first<1||batch.first+batch.count-1!==v.total||v.history.filter(h=>h.number>=batch.first).length!==batch.count))throw Error('招募批次紀錄不正確');
- return {version:2,coins:v.coins,total:v.total,points:v.points,sinceRare:v.sinceRare,sinceEpic:v.sinceEpic,sinceLegendary:v.sinceLegendary,owned:[...v.owned],training:Object.fromEntries(RECRUIT_UNITS.map(id=>[id,v.training[id]])),history:v.history.map(h=>({number:h.number,unit:h.unit,grade:h.grade,duplicate:h.duplicate,training:integer(h.training,1)?h.training:0,refund:0,points:integer(h.points,10)?h.points:0,levelBefore:integer(h.levelBefore,20)&&h.levelBefore>0?h.levelBefore:1,levelAfter:integer(h.levelAfter,20)&&h.levelAfter>0?h.levelAfter:1,...(h.legacy===true?{legacy:true}:{})})),lastBatch:batch?{...batch}:null};
+ return {version:2,coins:v.coins,total:v.total,points:v.points,sinceRare:v.sinceRare,sinceEpic:v.sinceEpic,sinceLegendary:v.sinceLegendary,owned:[...v.owned],training:Object.fromEntries(RECRUIT_UNITS.map(id=>[id,v.training[id]])),history:v.history.map(h=>({number:h.number,unit:h.unit,grade:h.grade,duplicate:h.duplicate,training:integer(h.training,1)?h.training:0,refund:0,points:integer(h.points,10)?h.points:0,levelBefore:integer(h.levelBefore,MAX_LEVEL)&&h.levelBefore>0?h.levelBefore:1,levelAfter:integer(h.levelAfter,MAX_LEVEL)&&h.levelAfter>0?h.levelAfter:1,...(h.legacy===true?{legacy:true}:{})})),lastBatch:batch?{...batch}:null};
 }
 export function drawOdds(value){const v=validateCollection(value);return v.sinceLegendary===79?[0,0,0,100]:v.sinceEpic===29?[0,0,99,1]:v.sinceRare===9?[0,93,6,1]:[70,23,6,1];}
 export function secureInt(max){if(!Number.isSafeInteger(max)||max<1||max>4294967296)throw Error('Invalid random bound');const a=new Uint32Array(1),limit=Math.floor(4294967296/max)*max;do{crypto.getRandomValues(a);}while(a[0]>=limit);return a[0]%max;}

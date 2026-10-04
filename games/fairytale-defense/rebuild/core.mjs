@@ -1,18 +1,18 @@
-import {addDamageStack,tickDamageStacks} from './damage-stacks.mjs?v=20261004-army4';
-import {validateDungeon,dungeonWave} from './dungeons.mjs?v=20261004-army4';
-import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261004-army4';
-import {inCone} from './attack-shapes.mjs?v=20261004-army4';
-import {tickZones,tickBlocking} from './troop-mechanics.mjs?v=20261004-army4';
+import {addDamageStack,tickDamageStacks} from './damage-stacks.mjs?v=20261005-growth1';
+import {validateDungeon,dungeonWave} from './dungeons.mjs?v=20261005-growth1';
+import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261005-growth1';
+import {inCone} from './attack-shapes.mjs?v=20261005-growth1';
+import {tickZones,tickBlocking} from './troop-mechanics.mjs?v=20261005-growth1';
 // Deterministic simulation. Visuals consume events; animation never grants damage.
-import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261004-army4';
-import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261004-army4';
-import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261004-army4';
-import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261004-army4';
-import {skillSpec} from './skill-spec.mjs?v=20261004-army4';
+import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261005-growth1';
+import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261005-growth1';
+import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261005-growth1';
+import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261005-growth1';
+import {skillSpec} from './skill-spec.mjs?v=20261005-growth1';
 export {UNITS,UNIT_BRANCHES};
 export {SPECIALIZATIONS,BLESSINGS};
 export const towerStats=(t,s)=>{const r=statsFor(ROLES[t.role]||UNITS[t.role],t,s?.buffs);if(s?.army)r.damage*=1+(s.training?.[t.role]||0)*.01;return r;};
-export function validateTraining(value={}){if(!value||typeof value!=='object'||Array.isArray(value)||Object.entries(value).some(([id,n])=>!Object.hasOwn(UNITS,id)||!Number.isInteger(n)||n<0||n>57))throw Error('部隊訓練不正確');return {...value};}
+export function validateTraining(value={}){if(!value||typeof value!=='object'||Array.isArray(value)||Object.entries(value).some(([id,n])=>!Object.hasOwn(UNITS,id)||!Number.isInteger(n)||n<0||n>87))throw Error('部隊訓練不正確');return {...value};}
 export const WORLD = Object.freeze({width:390,height:585});
 // Calibrated against the actual independent road image, not its generation prompt.
 export const PATH = [[197,0],[197,32],[186,59],[164,71],[76,71],[56,85],[51,107],[51,150],[66,173],[88,183],[306,183],[329,195],[337,218],[337,270],[327,293],[305,308],[79,308],[60,326],[52,351],[52,389],[65,410],[89,416],[176,416],[191,431],[198,456],[198,585]];
@@ -84,7 +84,7 @@ export function deploy(s,pad,role){
 export const upgradeCost=t=>80*t.level;
 export function upgrade(s,pad,branch){
   const t=s.towers.find(t=>t.pad===pad);
-  if(s.paused||!['planning','battle','intermission'].includes(s.phase)||!t||t.level>=5||s.gold<upgradeCost(t))return false;
+  if(s.paused||!['planning','battle','intermission'].includes(s.phase)||!t||t.level>=(s.army?10:5)||s.gold<upgradeCost(t))return false;
   if(t.level===2&&!(s.army?UNIT_BRANCHES:SPECIALIZATIONS)[t.role].some(p=>p.id===branch))return false;
   const oldStamina=towerStats(t,s).blockStamina||0;const before={role:t.role,level:t.level,branch:t.branch};if(t.level===2)t.branch=branch;
   const cost=upgradeCost(t);s.gold-=cost;t.spent+=cost;t.level++;t.blockBudget=(t.blockBudget||0)+Math.max(0,(towerStats(t,s).blockStamina||0)-oldStamina);event(s,'upgrade',{pad,level:t.level,before});return true;
@@ -103,7 +103,7 @@ export function sell(s,pad){
 }
 export function startWave(s){
   if(s.paused||!['planning','intermission'].includes(s.phase)||!s.towers.length||s.blessingChoices.length)return false;
-  if(s.mode==='endless'&&s.wave>=99999)return false;
+  if(s.mode==='endless'&&s.wave>=(s.army?99:99999))return false;
   if(!s.towers.some(t=>towerStats(t,s).damage>0))return false;for(const t of s.towers)t.blockBudget=towerStats(t,s).blockStamina||0;s.zones=[];
   s.shield=s.towers.reduce((n,t)=>n+towerStats(t,s).shield,0);
   if(s.hero){Object.assign(s.hero,{ready:s.time,skillReady:s.time,moveReady:s.time,moves:0,hasteUntil:0,echo:0,focus:0,focusId:null,guardianUsed:false});for(const t of s.towers)Object.assign(t,{heroPowerUntil:0,trustUntil:0,luckyCharges:0});}
@@ -199,7 +199,7 @@ function tick(s,dt){
   }
   if(!s.queue.length&&!s.enemies.length){
     s.pending=[];s.shots=[];s.zones=[];const income=Math.min(36,s.towers.reduce((n,t)=>n+(towerStats(t,s).income||0),0));s.gold+=45+income;if(income)event(s,'supply',{amount:income});s.hp=Math.min(s.maxHp,s.hp+s.towers.reduce((n,t)=>n+towerStats(t,s).heal,0)+(s.hero?.role==='healing'?(s.hero.specialization==='restore'?2:1):0));
-    s.phase=s.mode==='campaign'&&s.wave>=s.maxWaves?'victory':'intermission';if(s.phase==='intermission'&&s.wave%2===0){const choices=Object.keys(BLESSINGS),shift=(Math.floor(s.wave/2)-1)%choices.length;s.blessingChoices=Array.from({length:3},(_,i)=>choices[(shift+i)%choices.length]);}event(s,s.phase,{wave:s.wave});
+    s.phase=(s.mode==='campaign'&&s.wave>=s.maxWaves)||(s.army&&s.mode==='endless'&&s.wave>=99)?'victory':'intermission';if(s.phase==='intermission'&&s.wave%2===0){const choices=Object.keys(BLESSINGS),shift=(Math.floor(s.wave/2)-1)%choices.length;s.blessingChoices=Array.from({length:3},(_,i)=>choices[(shift+i)%choices.length]);}event(s,s.phase,{wave:s.wave});
   }
 }
 export function advance(s,seconds){

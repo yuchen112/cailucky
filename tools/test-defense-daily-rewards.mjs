@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {awardEndless,taiwanDay,floorReward} from '../games/fairytale-defense/rebuild/endless-rewards.mjs';
+import {useTrainingBooks} from '../games/fairytale-defense/rebuild/training-books.mjs';
+import {newArmySave,decodeArmySave} from '../games/fairytale-defense/rebuild/army-save.mjs';
+const before=Date.parse('2026-10-04T15:59:59Z'),after=before+1000;
+assert.equal(taiwanDay(before),'2026-10-04');assert.equal(taiwanDay(after),'2026-10-05');
+const a=awardEndless(null,0,20,before),repeat=awardEndless(a.ledger,0,20,before),next=awardEndless(a.ledger,0,20,after);
+assert.ok(a.reward.dailyCoins>0);assert.equal(repeat.reward.dailyCoins,0);assert.equal(repeat.reward.basicCoins,a.reward.basicCoins);assert.equal(next.reward.dailyCoins,a.reward.dailyCoins);
+assert.equal(awardEndless(a.ledger,20,20,before).reward.coins,0);
+const full=awardEndless(null,0,99,before);assert.equal(full.reward.firstCoins,1000);assert.equal(awardEndless(full.ledger,0,99,after).reward.firstCoins,0);
+assert.ok(floorReward(90).coins>floorReward(10).coins);assert.throws(()=>awardEndless(null,0,100));
+const profile=decodeArmySave({...newArmySave(),books:5});const trained=useTrainingBooks(profile,'archer',3);assert.equal(trained.profile.books,2);assert.equal(profile.books,5);assert.equal(trained.profile.collection.training.archer,3);assert.deepEqual(decodeArmySave(trained.profile),trained.profile);assert.throws(()=>useTrainingBooks(profile,'dragon',1));
+console.log('PASS Taiwan midnight reset, daily plus repeat payouts, per-run boundaries, lifetime 99 bonus and atomic targeted training books.');

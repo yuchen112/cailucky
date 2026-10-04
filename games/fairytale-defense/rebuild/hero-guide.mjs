@@ -1,7 +1,7 @@
-import {ROLES} from './core.mjs?v=20261004-army4';
-import {MASTERY_THRESHOLDS} from './mastery.mjs?v=20261004-army4';
-import {skillSpec} from './skill-spec.mjs?v=20261004-army4';
-import {heroRange,passiveDescription} from './hero-rules.mjs?v=20261004-army4';
+import {ROLES} from './core.mjs?v=20261005-growth1';
+import {MASTERY_THRESHOLDS} from './mastery.mjs?v=20261005-growth1';
+import {skillSpec} from './skill-spec.mjs?v=20261005-growth1';
+import {heroRange,passiveDescription} from './hero-rules.mjs?v=20261005-growth1';
 const abilities={
  growth:['精銳培育','全場部隊依等級獲得傷害加成。','森林祝福','短時間強化全場部隊，適合在敵群進入集中火力區時使用。'],
  dream:['夢境刻印','命中留下夢印，部隊後續攻擊可消耗夢印追加傷害。','星雨','對最接近終點的敵人施放範圍星光，適合密集敵群。'],

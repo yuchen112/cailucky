@@ -1,4 +1,4 @@
-import {UNITS} from './army.mjs?v=20261004-army4';
+import {UNITS} from './army.mjs?v=20261005-growth1';
 export function installVictoryGallery(dialog,getBattle,reduced){
  const strip=document.createElement('div');strip.className='victory-troops';strip.setAttribute('aria-label','出戰伙伴');document.getElementById('result-text').before(strip);let animations=[];
  const cancel=()=>{for(const a of animations)a.cancel();animations=[];strip.replaceChildren();};

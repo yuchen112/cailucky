@@ -1,37 +1,37 @@
-import {ADVANCED_MOTION_LAYOUT} from './advanced-motion-layout.mjs?v=20261004-army4';
-import {advancedMotionArt,advancedMotionAssets} from './advanced-motion.mjs?v=20261004-army4';
-import {installCampaignSelection} from './campaign-ui.mjs?v=20261004-army4';
-import {installVictoryGallery} from './victory-gallery.mjs?v=20261004-army4';
-import {ARMY4_LAYOUT} from './army4-layout.mjs?v=20261004-army4';
-import {installDungeons} from './dungeon-ui.mjs?v=20261004-army4';
-import {DUNGEONS,dungeonReward,dungeonWave} from './dungeons.mjs?v=20261004-army4';
-import {installCommanderTabs} from './commander-ui.mjs?v=20261004-army4';
-import {rememberCommander} from './commander-config.mjs?v=20261004-army4';
-import {ARMY3_LAYOUT} from './army3-layout.mjs?v=20261004-army4';
-import {drawAttackFootprint,drawArmyMechanics} from './army3-effects.mjs?v=20261004-army4';
-import {shapeDescription} from './attack-shapes.mjs?v=20261004-army4';
-import {ANIMATION_LAYOUT} from './animation-layout.mjs?v=20261004-army4';
-import {installMenuMotion} from './menu-motion.mjs?v=20261004-army4';
-import {EFFECT_ART,troopPose,enemyPose,heroPose} from './animation-state.mjs?v=20261004-army4';
-import {drawCombatEffects} from './combat-effects.mjs?v=20261004-army4';
-import {installInterface} from './interface-ui.mjs?v=20261004-army4';
-import {installExpedition} from './expedition-ui.mjs?v=20261004-army4';
-import {MAPS,storyFor,storyMap} from './expedition.mjs?v=20261004-army4';
-import {renderHeroGuide} from './hero-guide.mjs?v=20261004-army4';
-import {createBattleClock} from './battle-clock.mjs?v=20261004-army4';
-import {installTactics} from './tactical-ui.mjs?v=20261004-army4';
-import {ROLES,UNITS,UNIT_BRANCHES,PADS,pointAt,createBattle,deploy,upgrade,sell,setPriority,upgradeCost,towerStats,startWave,advance,chooseBlessing,BLESSINGS} from './core.mjs?v=20261004-army4';
-import {HERO_SPECIALIZATIONS,HERO_TALENTS,supportFor} from './hero-rules.mjs?v=20261004-army4';
-import {masteryLevel} from './mastery.mjs?v=20261004-army4';
-import {newArmySave,decodeArmySave,prepareArmyExpedition,settleArmySave} from './army-save.mjs?v=20261004-army4';
-import {restoreCheckpoint} from './checkpoint.mjs?v=20261004-army4';
-import {CAMPAIGN} from './encounters.mjs?v=20261004-army4';
-import {SPELL_ART,projectilePose} from './motion.mjs?v=20261004-army4';
-import {unitArt,branchGuide} from './unit-presentation.mjs?v=20261004-army4';
-import {SPRITE_LAYOUT} from './sprite-layout.mjs?v=20261004-army4';
-import {routePads,regionFor,alignCommander} from './routes.mjs?v=20261004-army4';
-import {createAudio} from './audio.mjs?v=20261004-army4';
-import {installJourney} from './journey-ui.mjs?v=20261004-army4';
+import {ADVANCED_MOTION_LAYOUT} from './advanced-motion-layout.mjs?v=20261005-growth1';
+import {advancedMotionArt,advancedMotionAssets} from './advanced-motion.mjs?v=20261005-growth1';
+import {installCampaignSelection} from './campaign-ui.mjs?v=20261005-growth1';
+import {installVictoryGallery} from './victory-gallery.mjs?v=20261005-growth1';
+import {ARMY4_LAYOUT} from './army4-layout.mjs?v=20261005-growth1';
+import {installDungeons} from './dungeon-ui.mjs?v=20261005-growth1';
+import {DUNGEONS,dungeonReward,dungeonWave} from './dungeons.mjs?v=20261005-growth1';
+import {installCommanderTabs} from './commander-ui.mjs?v=20261005-growth1';
+import {rememberCommander} from './commander-config.mjs?v=20261005-growth1';
+import {ARMY3_LAYOUT} from './army3-layout.mjs?v=20261005-growth1';
+import {drawAttackFootprint,drawArmyMechanics} from './army3-effects.mjs?v=20261005-growth1';
+import {shapeDescription} from './attack-shapes.mjs?v=20261005-growth1';
+import {ANIMATION_LAYOUT} from './animation-layout.mjs?v=20261005-growth1';
+import {installMenuMotion} from './menu-motion.mjs?v=20261005-growth1';
+import {EFFECT_ART,troopPose,enemyPose,heroPose} from './animation-state.mjs?v=20261005-growth1';
+import {drawCombatEffects} from './combat-effects.mjs?v=20261005-growth1';
+import {installInterface} from './interface-ui.mjs?v=20261005-growth1';
+import {installExpedition} from './expedition-ui.mjs?v=20261005-growth1';
+import {MAPS,storyFor,storyMap} from './expedition.mjs?v=20261005-growth1';
+import {renderHeroGuide} from './hero-guide.mjs?v=20261005-growth1';
+import {createBattleClock} from './battle-clock.mjs?v=20261005-growth1';
+import {installTactics} from './tactical-ui.mjs?v=20261005-growth1';
+import {ROLES,UNITS,UNIT_BRANCHES,PADS,pointAt,createBattle,deploy,upgrade,sell,setPriority,upgradeCost,towerStats,startWave,advance,chooseBlessing,BLESSINGS} from './core.mjs?v=20261005-growth1';
+import {HERO_SPECIALIZATIONS,HERO_TALENTS,supportFor} from './hero-rules.mjs?v=20261005-growth1';
+import {masteryLevel} from './mastery.mjs?v=20261005-growth1';
+import {newArmySave,decodeArmySave,prepareArmyExpedition,settleArmySave} from './army-save.mjs?v=20261005-growth1';
+import {restoreCheckpoint} from './checkpoint.mjs?v=20261005-growth1';
+import {CAMPAIGN} from './encounters.mjs?v=20261005-growth1';
+import {SPELL_ART,projectilePose} from './motion.mjs?v=20261005-growth1';
+import {unitArt,branchGuide} from './unit-presentation.mjs?v=20261005-growth1';
+import {SPRITE_LAYOUT} from './sprite-layout.mjs?v=20261005-growth1';
+import {routePads,regionFor,alignCommander} from './routes.mjs?v=20261005-growth1';
+import {createAudio} from './audio.mjs?v=20261005-growth1';
+import {installJourney} from './journey-ui.mjs?v=20261005-growth1';
 const audio=createAudio(),systemMotion=matchMedia('(prefers-reduced-motion: reduce)'),reducedMotion={get matches(){return systemMotion.matches||audio.preferences.reducedMotion;}};
 audio.hold(true);
 let interfaceUI=null;
@@ -44,7 +44,7 @@ let profile=newArmySave(),battle=createBattle({hero:'growth'}),hero='growth',spe
 const artPromises=new Map(),artQueue=[];let transitioning=false,activeImages=0;
 function pumpImages(){while(activeImages<4&&artQueue.length){activeImages++;const task=artQueue.shift();task().finally(()=>{activeImages--;pumpImages();if(!activeImages&&!artQueue.length)audio.hold(false);});}}
 const loadingStatus=document.createElement('dialog');loadingStatus.id='loading-status';loadingStatus.setAttribute('aria-label','準備戰場美術');loadingStatus.addEventListener('cancel',e=>e.preventDefault());document.body.append(loadingStatus);
-function loadArt(id){if(images[id])return Promise.resolve();if(artPromises.has(id))return artPromises.get(id);audio.hold(true);const promise=new Promise((resolve,reject)=>{artQueue.push(async()=>{const src=id in ROLES?`../../../assets/characters/cxq-role-${id}.webp`:`art/${id}.webp`;for(let attempt=0;attempt<3;attempt++){const im=new Image();im.fetchPriority=id.startsWith('road')?'high':'auto';im.src=src+'?v=20261004-army4'+(attempt?'&retry='+attempt:'');let timer;try{await Promise.race([im.decode(),new Promise((_,fail)=>timer=setTimeout(()=>fail(Error('載入逾時')),30000))]);images[id]=im;resolve();return;}catch(e){im.src='';if(attempt===2){artPromises.delete(id);reject(Error('美術載入失敗：'+id));}}finally{clearTimeout(timer);}}});});artPromises.set(id,promise);pumpImages();return promise;}
+function loadArt(id){if(images[id])return Promise.resolve();if(artPromises.has(id))return artPromises.get(id);audio.hold(true);const promise=new Promise((resolve,reject)=>{artQueue.push(async()=>{const src=id in ROLES?`../../../assets/characters/cxq-role-${id}.webp`:`art/${id}.webp`;for(let attempt=0;attempt<3;attempt++){const im=new Image();im.fetchPriority=id.startsWith('road')?'high':'auto';im.src=src+'?v=20261005-growth1'+(attempt?'&retry='+attempt:'');let timer;try{await Promise.race([im.decode(),new Promise((_,fail)=>timer=setTimeout(()=>fail(Error('載入逾時')),30000))]);images[id]=im;resolve();return;}catch(e){im.src='';if(attempt===2){artPromises.delete(id);reject(Error('美術載入失敗：'+id));}}finally{clearTimeout(timer);}}});});artPromises.set(id,promise);pumpImages();return promise;}
 function heroArt(id){return [id,id+'-cast',id+'-ready',id+'-victory',...(id==='growth'?['growth-idle']:[]),SPELL_ART[ROLES[id].kind]];}
 function ensureBattleArt(s){const ids=['hero-dais',...(s.loadout.includes('bramble')?['thorn-zone']:[]),...(s.loadout.includes('dragon')?['flame-cone']:[]),...(s.mode==='endless'||s.stage>=6?['moth']:[]),...EFFECT_ART,...s.loadout.map(id=>'unit-'+id+'-release'),...(s.hero.role==='luck'?['fx-clover']:[]),...new Set([SPELL_ART[ROLES[s.hero.role].kind],...s.loadout.map(id=>SPELL_ART[UNITS[id].kind])].filter(Boolean)),'button',regionFor(s)==='forest'?'road':'road-'+regionFor(s),'walker-step','runner-step','armored-step','boss-ready','boss-cast',...s.loadout.map(id=>'unit-'+id+'-ready'),'pad','seed','impact','target','health-track','health-fill','command-podium','dream-core','walker','runner','armored','boss','range','aura-range','support-range','fx-light','fx-spark',...['bolt','spore','frost','glow'].map(id=>'projectile-'+id),...s.loadout.map(id=>'unit-'+id),...s.towers.map(unitArt),...s.towers.flatMap(t=>advancedMotionAssets(unitArt(t))),...heroArt(s.hero.role),regionFor(s)==='forest'?'meadow':regionFor(s)==='moon'?'meadow-moon':regionFor(s)==='ruins'?'meadow-ruins-ui':'meadow-dawn'];const unique=[...new Set(ids)];let count=0;return Promise.all(unique.map(async id=>{await loadArt(id);if(transitioning)loadingStatus.textContent='準備戰場美術… '+(++count)+' / '+unique.length;}));}
 async function transition(fn){if(transitioning||failed)return;transitioning=true;loadingStatus.textContent='準備戰場美術…';loadingStatus.showModal();syncPause();try{await fn(); }catch(e){loadingStatus.replaceChildren();const message=document.createElement('p');message.textContent=e.message+'。原進度保留，請重試。';const retry=document.createElement('button');retry.textContent='重新載入';retry.onclick=()=>{loadingStatus.close();transition(fn);};const cancel=document.createElement('button');cancel.textContent='返回';cancel.onclick=()=>loadingStatus.close();loadingStatus.append(message,retry,cancel);return;}finally{transitioning=false;if(!loadingStatus.querySelector('button'))loadingStatus.close();syncPause();}}
@@ -81,7 +81,7 @@ function openPad(i){
  const stats=towerStats(t,battle),head=document.createElement('div');head.className='unit-panel-head';head.innerHTML=`<img src="art/${unitArt(t)}.webp" alt="${UNITS[t.role].name}"><p>${stats.income?'每波補給 '+stats.income+' 金幣（全隊上限 36）':'傷害 '+stats.damage.toFixed(1)+' · 射程 '+stats.range+'<br>每 '+stats.interval.toFixed(2)+' 秒攻擊'}<br>${shapeDescription(stats)}</p>`;content.append(head);
  const grid=document.createElement('div');grid.className='unit-upgrades';content.append(grid);
  const offer=(branch=null)=>{const next={...t,level:t.level+1,branch:branch?.id??t.branch},after=towerStats(next,battle),button=document.createElement('button');button.innerHTML=`<img src="art/${unitArt(next)}.webp" alt=""><span>${branch?.name||'升至 Lv.'+next.level}</span><small>${stats.income?'補給 '+stats.income+'→'+after.income:stats.damage.toFixed(0)+'→'+after.damage.toFixed(0)} · ${upgradeCost(t)} 金幣</small>`;button.dataset.cost=upgradeCost(t);button.disabled=battle.gold<upgradeCost(t);button.onclick=()=>previewUpgrade(i,next);grid.append(button);};
- if(t.level===2)UNIT_BRANCHES[t.role].forEach(offer);else if(t.level<5)offer();else{const p=document.createElement('p');p.textContent='已達最高等級';grid.append(p);}
+ if(t.level===2)UNIT_BRANCHES[t.role].forEach(offer);else if(t.level<10)offer();else{const p=document.createElement('p');p.textContent='已達最高等級';grid.append(p);}
  const tools=document.createElement('div');tools.className='unit-panel-tools';const priority=document.createElement('select');priority.setAttribute('aria-label','攻擊優先順序');for(const [v,label] of [['first','接近終點'],['strong','最高生命'],['armor','重甲優先']])priority.add(new Option(label,v));priority.value=t.priority||'first';priority.onchange=()=>perform(s=>setPriority(s,i,priority.value));const detail=document.createElement('button');detail.textContent='介紹';detail.onclick=()=>journey.openUnit(t.role);const sellButton=document.createElement('button');sellButton.textContent=`撤回 +${Math.floor(t.spent*.7)}`;sellButton.onclick=()=>{content.replaceChildren();const p=document.createElement('p');p.textContent=`撤回 ${UNITS[t.role].name}？退還 ${Math.floor(t.spent*.7)} 金幣（投入的 70%）。`;content.append(p);const yes=document.createElement('button');yes.id='confirm-sell';yes.textContent='確認撤回';yes.onclick=()=>perform(s=>sell(s,i));const no=document.createElement('button');no.textContent='保留部隊';no.onclick=()=>openPad(i);troopConfirm(yes,no);};tools.append(priority,detail,sellButton);content.append(tools);
  }
  show('troops');content.scrollTop=0;
@@ -195,7 +195,7 @@ function frame(now){const dt=last?(now-last)/1000:0;last=now;syncPause();const b
   $('result-title').textContent=won?(battle.stage===CAMPAIGN.length?'主線守護完成':'守護成功'):'整隊，再出發';
   $('next-stage').hidden=!!battle.dungeon||!won||battle.stage>=CAMPAIGN.length||battle.mode==='endless';
   $('result-text').textContent=`第 ${battle.stage} 關 · ${c.name}｜擊退 ${battle.kills} 名敵人｜核心 ${battle.hp}/${battle.maxHp}。${ROLES[battle.hero.role].name} 累積熟練度 ${profile.mastery.xp[battle.hero.role]} XP。${won?'前往下一關，迎接新的敵群。':`戰術提醒：${c.tip} 可調整編隊，或在後段補上緩速與火力。未完成的波次不發獎。`}`;
-  if(battle.mode==='endless')$('result-text').textContent=`${MAPS[battle.map||'forest'].name} · 完成 ${Math.max(0,battle.wave-1)} 波 · 擊退 ${battle.kills} 名敵人。已取得獎勵保留；本地紀錄 ${profile.endless[battle.map||'forest']} 波。`;
+  if(battle.mode==='endless')$('result-text').textContent=`${MAPS[battle.map||'forest'].name} · 完成 ${battle.phase==='victory'?battle.wave:Math.max(0,battle.wave-1)} / 99 層 · 擊退 ${battle.kills} 名敵人。已取得獎勵保留；本地紀錄 ${profile.endless[battle.map||'forest']} 波。`;
   else if(won&&!battle.dungeon)$('result-text').textContent+=' '+(battle.stage===CAMPAIGN.length||storyMap(battle.stage+1)!==storyMap(battle.stage)?storyFor(battle.stage).end:'伙伴們整理防線，帶著新的線索繼續前進。');
   if(!won&&battle.leaks){const most=Object.entries(battle.leaks).sort((a,b)=>b[1]-a[1])[0];if(most)$('result-text').textContent+=' 本局漏怪最多：'+({runner:'快速敵人，建議加強緩速。',armored:'重甲敵人，建議增加破甲或穿甲。',boss:'頭目，建議集中高傷與英雄大招。',walker:'普通敵人，建議補足火力覆蓋。'})[most[0]];}
   $('result').querySelector('.reward-receipt')?.remove();if(!practice){const receipt=document.createElement('p');receipt.className='reward-receipt';receipt.textContent=`本波已入帳：星露 +${lastSettlement.coins} · 熟練度 +${lastSettlement.xp} XP`; $('result-text').after(receipt);}

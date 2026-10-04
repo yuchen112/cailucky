@@ -1,7 +1,7 @@
-import {UNIT_BRANCHES,DEFAULT_LOADOUT} from './army.mjs?v=20261004-army4';
+import {UNIT_BRANCHES,DEFAULT_LOADOUT} from './army.mjs?v=20261005-growth1';
 export function unitArt(t){
  if(!['archer','cannon','frost','firefly'].includes(t.role))return `unit-${t.role}${t.level>=3&&t.branch?'-'+t.branch:''}`;
- if(t.level>=3&&UNIT_BRANCHES[t.role]?.some(b=>b.id===t.branch))return `unit-${t.role}-${t.branch}-${t.level}`;
+ if(t.level>=3&&UNIT_BRANCHES[t.role]?.some(b=>b.id===t.branch))return `unit-${t.role}-${t.branch}-${Math.min(5,t.level)}`;
  return `unit-${t.role}${t.level>=2?'-veteran':''}`;
 }
 export const EVOLUTION_ART=DEFAULT_LOADOUT.flatMap(role=>UNIT_BRANCHES[role].flatMap(b=>[3,4,5].map(level=>unitArt({role,branch:b.id,level}))));

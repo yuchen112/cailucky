@@ -1,5 +1,5 @@
-import {CAMPAIGN} from './encounters.mjs?v=20261004-army4';
-import {createBattle,ROLES,UNITS,UNIT_BRANCHES,PADS,SPECIALIZATIONS,BLESSINGS,validateProfile} from './core.mjs?v=20261004-army4';
+import {CAMPAIGN} from './encounters.mjs?v=20261005-growth1';
+import {createBattle,ROLES,UNITS,UNIT_BRANCHES,PADS,SPECIALIZATIONS,BLESSINGS,validateProfile} from './core.mjs?v=20261005-growth1';
 const int=(v,min,max)=>Number.isSafeInteger(v)&&v>=min&&v<=max;
 export function captureCheckpoint(s){
  if(!['planning','intermission'].includes(s.phase))return null;
@@ -14,7 +14,7 @@ export function restoreCheckpoint(c){
  const s=createBattle({dungeon:c.dungeon??null,mode:c.mode,stage:c.stage,map:c.map??null,...(army?{hero:c.hero.role,loadout:c.loadout,masteryXp:c.hero.masteryXp??0,specialization:c.hero.specialization??null,talents:c.hero.talents??{},training:c.training??{}}:{})}),pads=new Set(),roles=new Set(),catalog=army?UNITS:ROLES,branches=army?UNIT_BRANCHES:SPECIALIZATIONS;
  if(army)Object.assign(s.hero,{x:c.hero.x,y:c.hero.y});
  s.towers=c.towers.map(t=>{
-  if(!t||!int(t.pad,0,PADS.length-1)||!Object.hasOwn(catalog,t.role)||pads.has(t.pad)||(!army&&roles.has(t.role))||(army&&!s.loadout.includes(t.role))||!int(t.level,1,5)||!['first','strong','armor'].includes(t.priority))throw Error('角色存檔格式不正確');
+  if(!t||!int(t.pad,0,PADS.length-1)||!Object.hasOwn(catalog,t.role)||pads.has(t.pad)||(!army&&roles.has(t.role))||(army&&!s.loadout.includes(t.role))||!int(t.level,1,army?10:5)||!['first','strong','armor'].includes(t.priority))throw Error('角色存檔格式不正確');
   if(t.level<3?t.branch!==null:!branches[t.role].some(p=>p.id===t.branch))throw Error('專精存檔不正確');
   if(t.spent!==catalog[t.role].cost+40*t.level*(t.level-1))throw Error('升級費用存檔不正確');
   pads.add(t.pad);roles.add(t.role);return {...t,id:s.nextId++,ready:.2,attacks:0};

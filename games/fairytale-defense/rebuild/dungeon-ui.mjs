@@ -1,4 +1,4 @@
-import {DUNGEONS,dungeonReward} from './dungeons.mjs?v=20261004-army4';
+import {DUNGEONS,dungeonReward} from './dungeons.mjs?v=20261005-growth1';
 export function installDungeons({show,syncPause,onChoose}){
  const dialog=document.createElement('dialog');dialog.id='dungeons';dialog.className='journey-dialog';dialog.innerHTML='<h2>資源副本</h2><div class="journey-body dungeon-body"></div><button class="journey-close">返回營地</button>';dialog.querySelector('button').onclick=()=>dialog.close();dialog.addEventListener('close',syncPause);document.body.append(dialog);
  const entry=document.createElement('button');entry.id='start-dungeons';entry.textContent='金錢／熟練度副本';document.getElementById('start-endless').after(entry);

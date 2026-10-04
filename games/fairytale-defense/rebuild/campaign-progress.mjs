@@ -1,4 +1,4 @@
-import {CAMPAIGN} from './encounters.mjs?v=20261004-army4';
+import {CAMPAIGN} from './encounters.mjs?v=20261005-growth1';
 // IDs survive appended/reordered content; numbers are retained for legacy clients.
 export function validateCampaignProgress(raw={unlocked:1,cleared:[]},catalog=CAMPAIGN){
  const count=catalog.length,ids=catalog.map(c=>c.id);

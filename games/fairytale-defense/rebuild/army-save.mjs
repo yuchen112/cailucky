@@ -1,13 +1,15 @@
-import {validateCampaignProgress} from './campaign-progress.mjs?v=20261004-army4';
-import {CAMPAIGN} from './encounters.mjs?v=20261004-army4';
-import {validateDungeon,dungeonReward} from './dungeons.mjs?v=20261004-army4';
-import {STARTER_UNITS,validateLoadout} from './army.mjs?v=20261004-army4';
-import {validateCommanderConfigs,rememberCommander} from './commander-config.mjs?v=20261004-army4';
-import {alignCommander} from './routes.mjs?v=20261004-army4';
-import {captureCheckpoint,restoreCheckpoint} from './checkpoint.mjs?v=20261004-army4';
-import {newMastery,validateMastery,beginMasteryRun,awardCompletedWaves} from './mastery.mjs?v=20261004-army4';
-import {createBattle} from './core.mjs?v=20261004-army4';
-import {newCollection,validateCollection,rewardCollection,trainingRanks} from './recruitment.mjs?v=20261004-army4';
+import {awardEndless,validateRewardLedger} from './endless-rewards.mjs?v=20261005-growth1';
+import {validateBooks} from './training-books.mjs?v=20261005-growth1';
+import {validateCampaignProgress} from './campaign-progress.mjs?v=20261005-growth1';
+import {CAMPAIGN} from './encounters.mjs?v=20261005-growth1';
+import {validateDungeon,dungeonReward} from './dungeons.mjs?v=20261005-growth1';
+import {STARTER_UNITS,validateLoadout} from './army.mjs?v=20261005-growth1';
+import {validateCommanderConfigs,rememberCommander} from './commander-config.mjs?v=20261005-growth1';
+import {alignCommander} from './routes.mjs?v=20261005-growth1';
+import {captureCheckpoint,restoreCheckpoint} from './checkpoint.mjs?v=20261005-growth1';
+import {newMastery,validateMastery,beginMasteryRun,awardCompletedWaves} from './mastery.mjs?v=20261005-growth1';
+import {createBattle} from './core.mjs?v=20261005-growth1';
+import {newCollection,validateCollection,rewardCollection,trainingRanks} from './recruitment.mjs?v=20261005-growth1';
 // Separate envelope from the legacy preview. Persist one JSON value atomically.
 export function newArmySave(){return {version:3,mastery:newMastery(),collection:newCollection(),campaign:{unlocked:1,cleared:[]},loadout:[...STARTER_UNITS],formations:[],endless:{forest:0,moon:0,dawn:0,ruins:0},checkpoint:null};}
 // UI entry point: XP is read only from the saved profile, never from a form field.
@@ -35,10 +37,13 @@ export function settleArmySave(save,battle,runId,{practice=false}={}){
    if(!campaign.cleared.includes(battle.stage))campaign.cleared.push(battle.stage);
    campaign.cleared.sort((a,b)=>a-b);campaign.unlocked=Math.min(CAMPAIGN.length,Math.max(campaign.unlocked,battle.stage+1));
  }
- const collection=rewardCollection(old.collection,{waves:practice?0:Math.max(0,completed-active.claimed),firstClearStage:!practice&&!battle.dungeon&&battle.phase==='victory'&&!old.campaign.cleared.includes(battle.stage)&&battle.mode==='campaign'?battle.stage:0});
+ const collection=rewardCollection(old.collection,{waves:practice||battle.mode==='endless'?0:Math.max(0,completed-active.claimed),firstClearStage:!practice&&!battle.dungeon&&battle.phase==='victory'&&!old.campaign.cleared.includes(battle.stage)&&battle.mode==='campaign'?battle.stage:0});
+ let books=old.books,rewardLedger=old.rewardLedger;
+ if(!practice&&!battle.dungeon&&battle.mode==='campaign'&&battle.phase==='victory'&&completed>active.claimed)books=Math.min(100000000,books+(old.campaign.cleared.includes(battle.stage)?1:3));
+ if(!practice&&battle.mode==='endless'){const payout=awardEndless(rewardLedger,Math.min(99,active.claimed),Math.min(99,completed));rewardLedger=payout.ledger;books=Math.min(100000000,books+payout.reward.books);collection.coins=Math.min(100000000,collection.coins+payout.reward.coins);}
  const endless={...old.endless};if(battle.mode==='endless'&&!practice)endless[battle.map||'forest']=Math.max(endless[battle.map||'forest'],completed);
  let dungeonRun=old.dungeonRun??null;if(!practice&&battle.dungeon&&battle.phase==='victory'&&dungeonRun&&!dungeonRun.claimed){if(dungeonRun.id!==runId||dungeonRun.type!==battle.dungeon.type||dungeonRun.difficulty!==battle.dungeon.difficulty||completed!==3||battle.maxWaves!==3)throw Error('副本獎勵不符');const reward=dungeonReward(battle.dungeon);collection.coins=Math.min(100000000,collection.coins+reward.coins);mastery.xp[battle.hero.role]=Math.min(10000000,mastery.xp[battle.hero.role]+reward.xp);dungeonRun={...dungeonRun,claimed:true};}
- return {...old,dungeonRun,mastery,campaign:validateCampaignProgress({clearedIds:campaign.cleared.map(n=>CAMPAIGN[n-1].id)}),collection,endless,checkpoint:captureCheckpoint(battle)};
+ return {...old,books,rewardLedger,dungeonRun,mastery,campaign:validateCampaignProgress({clearedIds:campaign.cleared.map(n=>CAMPAIGN[n-1].id)}),collection,endless,checkpoint:captureCheckpoint(battle)};
 }
 export function decodeArmySave(raw){
  const v=typeof raw==='string'?JSON.parse(raw):raw;
@@ -56,5 +61,5 @@ export function decodeArmySave(raw){
  const dungeonRun=v.dungeonRun??null;if(dungeonRun){validateDungeon(dungeonRun);if(dungeonRun.id!==mastery.activeRun?.id||typeof dungeonRun.claimed!=='boolean')throw Error('副本結算紀錄不正確');}
  if(checkpoint?.dungeon&&(!dungeonRun||checkpoint.dungeon.type!==dungeonRun.type||checkpoint.dungeon.difficulty!==dungeonRun.difficulty||dungeonRun.claimed))throw Error('副本戰場與紀錄不一致');
  const commanders=validateCommanderConfigs(v.commanders,mastery,checkpoint);
- return {version:3,dungeonRun,mastery,commanders,collection,loadout,formations:formations.map(f=>[...f]),endless:{...endless},campaign:validateCampaignProgress(campaign),checkpoint};
+ return {version:3,books:validateBooks(v.books),rewardLedger:validateRewardLedger(v.rewardLedger),dungeonRun,mastery,commanders,collection,loadout,formations:formations.map(f=>[...f]),endless:{...endless},campaign:validateCampaignProgress(campaign),checkpoint};
 }
