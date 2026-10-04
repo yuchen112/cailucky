@@ -1,8 +1,8 @@
-import {ROLES,UNITS,towerStats,pointAt,castHero,enemyStats,kindsFor} from './core.mjs?v=20261004-army3';
-import {encounterWave} from './encounters.mjs?v=20261004-army3';
-import {heroRange,supportRadius} from './hero-rules.mjs?v=20261004-army3';
-import {skillSpec} from './skill-spec.mjs?v=20261004-army3';
-import {routePads,commandPoints,regionFor} from './routes.mjs?v=20261004-army3';
+import {ROLES,UNITS,towerStats,pointAt,castHero,enemyStats,kindsFor} from './core.mjs?v=20261004-army4';
+import {encounterWave} from './encounters.mjs?v=20261004-army4';
+import {heroRange,supportRadius} from './hero-rules.mjs?v=20261004-army4';
+import {skillSpec} from './skill-spec.mjs?v=20261004-army4';
+import {routePads,commandPoints,regionFor} from './routes.mjs?v=20261004-army4';
 export function installTactics({getBattle,clock,show,syncPause,audio,perform}){
  const $=id=>document.getElementById(id);let coverage=false,preview=null,notice='',noticeUntil=0,commandPreview=null;
  $('command').addEventListener('close',()=>commandPreview=null);

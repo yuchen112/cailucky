@@ -1,4 +1,4 @@
-import {masteryLevel,HERO_IDS} from './mastery.mjs?v=20261004-army3';
+import {masteryLevel,HERO_IDS} from './mastery.mjs?v=20261004-army4';
 
 // Shared by gameplay and the future hero screen. First specialization tier only.
 export const HERO_SPECIALIZATIONS=Object.freeze({

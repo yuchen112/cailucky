@@ -1,5 +1,5 @@
-import {ROLES,UNITS} from './core.mjs?v=20261004-army3';
-import {unitArt} from './unit-presentation.mjs?v=20261004-army3';
+import {ROLES,UNITS} from './core.mjs?v=20261004-army4';
+import {unitArt} from './unit-presentation.mjs?v=20261004-army4';
 
 // Presentation only. Player saves and combat rules remain owned by army-ui.
 export function installInterface({getProfile,getHero,getBattle,show,syncPause,refreshHero,audio,reducedMotion,openUnit}){

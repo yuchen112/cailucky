@@ -1,4 +1,4 @@
-import {UNITS,STARTER_UNITS,UNIT_RARITY} from './army.mjs?v=20261004-army3';
+import {UNITS,STARTER_UNITS,UNIT_RARITY} from './army.mjs?v=20261004-army4';
 export const RECRUIT_UNITS=Object.keys(UNITS),DRAW_COST=100,MAX_LEVEL=20;
 export const GRADES=[{id:'common',name:'一般',chance:70},{id:'rare',name:'稀有',chance:23},{id:'epic',name:'史詩',chance:6},{id:'legendary',name:'傳說',chance:1}];
 const integer=(n,max=100000000)=>Number.isSafeInteger(n)&&n>=0&&n<=max;

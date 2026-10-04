@@ -1,0 +1,23 @@
+#cultivation{display:none;max-height:calc(100dvh - 24px);overflow:hidden;padding-bottom:max(12px,env(safe-area-inset-bottom));}
+#cultivation[open]{display:flex;flex-direction:column;gap:8px;}
+#cultivation>h2,#cultivation>p,#cultivation>nav,#cultivation>button{flex-shrink:0;margin:0;}
+#cultivation #build{flex:1;min-height:0;max-height:none;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable;padding:8px 8px 24px;}
+#cultivation .commander-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+#cultivation .commander-tabs button{min-height:48px;font-size:17px;}
+#cultivation .commander-tabs button[aria-pressed=true]{filter:brightness(1.2);font-weight:700;}
+#cultivation .commander-save-note{font-size:15px;line-height:1.5;}
+#cultivation #build [hidden]{display:none!important;}
+#cultivation #build label{display:block;font-size:19px;margin-top:12px;}
+#cultivation #build select{display:block;width:100%;min-height:48px;font-size:18px;}
+.dungeon-card{position:relative;isolation:isolate;margin:12px 0;overflow:hidden;}
+.dungeon-card>img{display:block;width:100%;height:auto;}
+.dungeon-card-content{position:absolute;bottom:3%;left:6%;right:6%;color:#fff;text-shadow:0 2px 3px #000;}
+.dungeon-card-content h3{font-size:23px;margin:0 0 8px;}
+.dungeon-card-content p{font-size:16px;line-height:1.45;}
+.dungeon-card-content button{display:block;width:100%;min-height:48px;font-size:16px;margin:6px 0;}
+.dungeon-body{overscroll-behavior:contain;touch-action:pan-y;}
+.victory-troops{display:flex;justify-content:center;gap:4px;margin:8px 0;}
+.victory-troops figure{flex:1;min-width:0;max-width:90px;margin:0;text-align:center;}
+.victory-troops img{width:100%;height:auto;object-fit:contain;}
+.victory-troops figcaption{font-size:13px;line-height:1.4;}
+#result{max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain;touch-action:pan-y;}

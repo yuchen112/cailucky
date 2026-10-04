@@ -1,0 +1,121 @@
+{
+  "mode": "built-in imagegen",
+  "individualAssets": true,
+  "cropped": false,
+  "assets": [
+    {
+      "id": "unit-archer-victory",
+      "prompt": "Use case: identity-preserve. Asset type: ONE individual victory animation keyframe for a mobile tower-defense troop. Input image is the identity and proportion anchor. Preserve exactly this small creature, face, headwear, costume, equipment, palette, materials, camera angle and full-body scale. Change only the pose: a cheerful victory salute, raising its weapon or staff slightly with a confident smile, both feet at the same baseline. Single full creature centered, generous 8% transparent margins, polished cute 3D render, genuinely transparent background. No text, no sheet, no collage, no duplicate characters, no scenery. Keep equipment and all limbs intact. Used as a whole independent image, not cropped.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-0213d3af-385b-49af-b19e-e89bfec5f7d2.png",
+      "output": "art/unit-archer-victory.webp"
+    },
+    {
+      "id": "unit-cannon-victory",
+      "prompt": "Use case: identity-preserve. Asset type: ONE individual victory animation keyframe for a mobile tower-defense troop. Input image is the identity and proportion anchor. Preserve exactly this small creature, face, headwear, costume, equipment, palette, materials, camera angle and full-body scale. Change only the pose: a cheerful victory salute, raising its weapon or staff slightly with a confident smile, both feet at the same baseline. Single full creature centered, generous 8% transparent margins, polished cute 3D render, genuinely transparent background. No text, no sheet, no collage, no duplicate characters, no scenery. Keep equipment and all limbs intact. Used as a whole independent image, not cropped.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c6aa1f4f-ea72-4505-9e07-ad3f0b17c725.png",
+      "output": "art/unit-cannon-victory.webp"
+    },
+    {
+      "id": "unit-frost-victory",
+      "prompt": "Use case: identity-preserve. Asset type: ONE individual victory animation keyframe for a mobile tower-defense troop. Input image is the identity and proportion anchor. Preserve exactly this small creature, face, headwear, costume, equipment, palette, materials, camera angle and full-body scale. Change only the pose: a cheerful victory salute, raising its weapon or staff slightly with a confident smile, both feet at the same baseline. Single full creature centered, generous 8% transparent margins, polished cute 3D render, genuinely transparent background. No text, no sheet, no collage, no duplicate characters, no scenery. Keep equipment and all limbs intact. Used as a whole independent image, not cropped.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-cc30ef09-39bb-4e9d-9aeb-224f2d946440.png",
+      "output": "art/unit-frost-victory.webp"
+    },
+    {
+      "id": "unit-firefly-victory",
+      "prompt": "Use case: identity-preserve. Asset type: ONE individual victory animation keyframe for a mobile tower-defense troop. Input image is the identity and proportion anchor. Preserve exactly this small creature, face, headwear, costume, equipment, palette, materials, camera angle and full-body scale. Change only the pose: a cheerful victory salute, raising its weapon or staff slightly with a confident smile, both feet at the same baseline. Single full creature centered, generous 8% transparent margins, polished cute 3D render, genuinely transparent background. No text, no sheet, no collage, no duplicate characters, no scenery. Keep equipment and all limbs intact. Used as a whole independent image, not cropped.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-add0cb57-4517-4e1c-91da-d8b3a7d1941d.png",
+      "output": "art/unit-firefly-victory.webp"
+    },
+    {
+      "id": "unit-crystal-victory",
+      "prompt": "Use case: identity-preserve. Asset type: ONE individual victory animation keyframe for a mobile tower-defense troop. Input image is the identity and proportion anchor. Preserve this exact creature, face, headwear, costume, equipment, palette, materials, camera angle and full-body scale. Change only pose to a cheerful victory salute with its own existing weapon raised slightly and a joyful smile; feet at same baseline. Do not change species or equipment. Full creature centered with 8% transparent margins; polished cute 3D render, genuinely transparent background. One character only, no text, no sheet, no collage, no scenery. Keep all limbs intact. Entire image displayed without cropping.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-423f919d-2df7-49d9-882b-86afdd858807.png",
+      "output": "art/unit-crystal-victory.webp"
+    },
+    {
+      "id": "unit-chime-victory",
+      "prompt": "Use case: identity-preserve. Asset type: ONE individual victory animation keyframe for a mobile tower-defense troop. Input image is the identity and proportion anchor. Preserve this exact creature, face, headwear, costume, equipment, palette, materials, camera angle and full-body scale. Change only pose to a cheerful victory salute with its own existing weapon raised slightly and a joyful smile; feet at same baseline. Do not change species or equipment. Full creature centered with 8% transparent margins; polished cute 3D render, genuinely transparent background. One character only, no text, no sheet, no collage, no scenery. Keep all limbs intact. Entire image displayed without cropping.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c265143b-874e-47ae-a9bd-845e123108d7.png",
+      "output": "art/unit-chime-victory.webp"
+    },
+    {
+      "id": "unit-blossom-victory",
+      "prompt": "Use case: identity-preserve. Asset type: ONE individual victory animation keyframe for a mobile tower-defense troop. Input image is the identity and proportion anchor. Preserve this exact creature, face, headwear, costume, equipment, palette, materials, camera angle and full-body scale. Change only pose to a cheerful victory salute with its own existing weapon raised slightly and a joyful smile; feet at same baseline. Do not change species or equipment. Full creature centered with 8% transparent margins; polished cute 3D render, genuinely transparent background. One character only, no text, no sheet, no collage, no scenery. Keep all limbs intact. Entire image displayed without cropping.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-daa8f157-c9dc-4028-8baf-b98a67d46244.png",
+      "output": "art/unit-blossom-victory.webp"
+    },
+    {
+      "id": "unit-clockwork-victory",
+      "prompt": "Use case: identity-preserve. Asset type: ONE individual victory animation keyframe for a mobile tower-defense troop. Input image is the identity and proportion anchor. Preserve this exact creature, face, headwear, costume, equipment, palette, materials, camera angle and full-body scale. Change only pose to a cheerful victory salute with its own existing weapon raised slightly and a joyful smile; feet at same baseline. Do not change species or equipment. Full creature centered with 8% transparent margins; polished cute 3D render, genuinely transparent background. One character only, no text, no sheet, no collage, no scenery. Keep all limbs intact. Entire image displayed without cropping.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-c7028ade-a402-448c-ac58-832a400a6039.png",
+      "output": "art/unit-clockwork-victory.webp"
+    },
+    {
+      "id": "unit-alchemist-victory",
+      "prompt": "Use case: identity-preserve. ONE individual victory keyframe for CxQ tower-defense troop. Reference image is exact identity anchor. Preserve exact creature species, face, costume, equipment, palette, materials, camera and full-body proportions. Change only action to a cheerful victory salute with its own existing weapon raised slightly and a joyful smile. Both feet stay on same baseline, no new weapons or props. Single full creature centered with generous transparent margins, polished cute 3D render, genuinely transparent background. No text, no sheet, no collage, no scenery, no cropped limbs. Full image will be used intact.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-2c7955e9-caca-4667-8ec3-3eced91e0603.png",
+      "output": "art/unit-alchemist-victory.webp"
+    },
+    {
+      "id": "unit-vine-victory",
+      "prompt": "Use case: identity-preserve. ONE individual victory keyframe for CxQ tower-defense troop. Reference image is exact identity anchor. Preserve exact creature species, face, costume, equipment, palette, materials, camera and full-body proportions. Change only action to a cheerful victory salute with its own existing weapon raised slightly and a joyful smile. Both feet stay on same baseline, no new weapons or props. Single full creature centered with generous transparent margins, polished cute 3D render, genuinely transparent background. No text, no sheet, no collage, no scenery, no cropped limbs. Full image will be used intact.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-f4a98fd5-c7ca-4271-8dec-8ab1774d350d.png",
+      "output": "art/unit-vine-victory.webp"
+    },
+    {
+      "id": "unit-oracle-victory",
+      "prompt": "Use case: identity-preserve. ONE individual victory keyframe for CxQ tower-defense troop. Reference image is exact identity anchor. Preserve exact creature species, face, costume, equipment, palette, materials, camera and full-body proportions. Change only action to same owl presenting its existing glowing star crystal joyfully. Both feet stay on same baseline, no new weapons or props. Single full creature centered with generous transparent margins, polished cute 3D render, genuinely transparent background. No text, no sheet, no collage, no scenery, no cropped limbs. Full image will be used intact.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-495da4a8-adb9-458f-81f9-edaccef577b7.png",
+      "output": "art/unit-oracle-victory.webp"
+    },
+    {
+      "id": "unit-dragon-victory",
+      "prompt": "Use case: identity-preserve. ONE individual victory keyframe for CxQ tower-defense troop. Reference image is exact identity anchor. Preserve exact creature species, face, costume, equipment, palette, materials, camera and full-body proportions. Change only action to same baby dragon proudly raising its foreclaw, wings slightly spread and flame lantern horns intact. Both feet stay on same baseline, no new weapons or props. Single full creature centered with generous transparent margins, polished cute 3D render, genuinely transparent background. No text, no sheet, no collage, no scenery, no cropped limbs. Full image will be used intact.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-50d0b674-e483-47f6-b5bc-91d72122432d.png",
+      "output": "art/unit-dragon-victory.webp"
+    },
+    {
+      "id": "unit-scout-victory",
+      "prompt": "Use case: identity-preserve. ONE individual victory animation keyframe for CxQ tower-defense troop. Reference image is the exact identity anchor. Preserve exact creature species, face, headwear, costume, weapon, tools, palette, materials, camera angle and full-body proportions. Change only pose to joyful victory salute: raise existing tool or weapon slightly, free hand celebrates, happy smile. Feet same baseline. Do not add props or replace equipment. Full creature centered, generous transparent margins, polished cute 3D render on genuinely transparent background. One single character only, no text, no sheet, no collage, no scenery, no cropped body. Entire image used intact.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-2b7b7766-5a96-4f05-b55f-da66bfc017e1.png",
+      "output": "art/unit-scout-victory.webp"
+    },
+    {
+      "id": "unit-warden-victory",
+      "prompt": "Use case: identity-preserve. ONE individual victory animation keyframe for CxQ tower-defense troop. Reference image is the exact identity anchor. Preserve exact creature species, face, headwear, costume, weapon, tools, palette, materials, camera angle and full-body proportions. Change only pose to joyful victory salute: raise existing tool or weapon slightly, free hand celebrates, happy smile. Feet same baseline. Do not add props or replace equipment. Full creature centered, generous transparent margins, polished cute 3D render on genuinely transparent background. One single character only, no text, no sheet, no collage, no scenery, no cropped body. Entire image used intact.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5c79fc5e-7bdf-45ef-a421-1ef1536a7786.png",
+      "output": "art/unit-warden-victory.webp"
+    },
+    {
+      "id": "unit-storm-victory",
+      "prompt": "Use case: identity-preserve. ONE individual victory animation keyframe for CxQ tower-defense troop. Reference image is the exact identity anchor. Preserve exact creature species, face, headwear, costume, weapon, tools, palette, materials, camera angle and full-body proportions. Change only pose to joyful victory salute: raise existing tool or weapon slightly, free hand celebrates, happy smile. Feet same baseline. Do not add props or replace equipment. Full creature centered, generous transparent margins, polished cute 3D render on genuinely transparent background. One single character only, no text, no sheet, no collage, no scenery, no cropped body. Entire image used intact.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-4d36f5ed-dc43-4727-aee7-d8f301258e27.png",
+      "output": "art/unit-storm-victory.webp"
+    },
+    {
+      "id": "unit-bramble-victory",
+      "prompt": "Use case: identity-preserve. ONE individual victory animation keyframe for CxQ tower-defense troop. Reference image is the exact identity anchor. Preserve exact creature species, face, headwear, costume, weapon, tools, palette, materials, camera angle and full-body proportions. Change only pose to joyful victory salute: raise existing tool or weapon slightly, free hand celebrates, happy smile. Feet same baseline. Do not add props or replace equipment. Full creature centered, generous transparent margins, polished cute 3D render on genuinely transparent background. One single character only, no text, no sheet, no collage, no scenery, no cropped body. Entire image used intact.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-ce69a29f-3769-4836-9649-91e0506ceeeb.png",
+      "output": "art/unit-bramble-victory.webp"
+    },
+    {
+      "id": "unit-artisan-victory",
+      "prompt": "Use case: identity-preserve. ONE individual victory animation keyframe for CxQ tower-defense troop. Reference image is the exact identity anchor. Preserve exact creature species, face, headwear, costume, weapon, tools, palette, materials, camera angle and full-body proportions. Change only pose to joyful victory salute: raise existing tool or weapon slightly, free hand celebrates, happy smile. Feet same baseline. Do not add props or replace equipment. Full creature centered, generous transparent margins, polished cute 3D render on genuinely transparent background. One single character only, no text, no sheet, no collage, no scenery, no cropped body. Entire image used intact.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-be4ee91c-344e-404c-b9ed-13ce1e35f31b.png",
+      "output": "art/unit-artisan-victory.webp"
+    },
+    {
+      "id": "dungeon-money",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5e6f7dbe-c261-4370-aca3-a1afbfbf995a.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone portrait dungeon selection card for CxQ fairytale tower defense. A precious golden crystal supply wagon travelling a whimsical lush forest road toward a glowing sanctuary, soft polished chibi 3D mobile game art, clear emerald and gold palette, no characters, no enemies. Portrait 2:3 composition with focal wagon at upper center and calm dark green blank lower quarter for readable external interface labels. ONE single coherent illustration, no sheets no panels no icons grid, no text no logos no watermark. Entire image will be displayed without cropping.",
+      "output": "art/dungeon-money.webp"
+    },
+    {
+      "id": "dungeon-mastery",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-0eb7b535-d80e-48b2-bc97-50ea09891228.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone portrait dungeon selection card for CxQ fairytale tower defense. An enchanting moonlit training sanctuary with a floating open spellbook, violet-blue crystals and a glowing small tactical map of a forest path on a stone lectern. Polished cute 3D mobile game illustration, moonlight silver lavender and teal, no characters. Portrait 2:3 full composition, focal book upper center, calm dark violet lower quarter for external readable interface labels. One whole image, NOT a sheet or collage, no panels, no text or logos, no watermark, no cropping.",
+      "output": "art/dungeon-mastery.webp"
+    }
+  ]
+}

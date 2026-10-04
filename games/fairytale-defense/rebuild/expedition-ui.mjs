@@ -1,7 +1,7 @@
-import {installFormation} from './formation-ui.mjs?v=20261004-army3';
-import {UNITS,UNIT_GUIDES,UNIT_RARITY} from './army.mjs?v=20261004-army3';
-import {GRADES,unitLevel} from './recruitment.mjs?v=20261004-army3';
-import {MAPS} from './expedition.mjs?v=20261004-army3';
+import {installFormation} from './formation-ui.mjs?v=20261004-army4';
+import {UNITS,UNIT_GUIDES,UNIT_RARITY} from './army.mjs?v=20261004-army4';
+import {GRADES,unitLevel} from './recruitment.mjs?v=20261004-army4';
+import {MAPS} from './expedition.mjs?v=20261004-army4';
 export function installExpedition({getProfile,commit,show,syncPause,openUnit,startEndless}){
  const $=id=>document.getElementById(id),body=$('squad').querySelector('.dialog-content');
  const formation=installFormation({dialog:$('squad'),body,getProfile,commit,openUnit});const render=()=>formation.render();

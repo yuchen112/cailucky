@@ -1,3 +1,4 @@
+import {unitMotion} from './troop-animation.mjs?v=20261004-army4';
 // Pure presentation functions: never advance combat or award resources.
 export const TROOP_MOTION={scout:'ranged',warden:'heavy',storm:'magic',bramble:'magic',artisan:'magic',archer:'ranged',cannon:'heavy',frost:'magic',firefly:'ranged',crystal:'heavy',chime:'magic',blossom:'magic',clockwork:'heavy',alchemist:'ranged',vine:'magic',oracle:'magic',dragon:'heavy'};
 export const EFFECT_ART=['anim-impact','anim-shatter','anim-rise','anim-dissolve'];
@@ -12,12 +13,10 @@ export function attackPhase(s,{hero=false,pad=null}){
  return {phase:'idle',progress:0};
 }
 export function troopPose(s,t,reduced=false){
- const a=attackPhase(s,{pad:t.pad}),style=TROOP_MOTION[t.role]||'magic';
+ let a=attackPhase(s,{pad:t.pad});
+ if(a.phase==='idle'&&['artisan','warden'].includes(t.role)){const e=s.events.findLast(e=>t.role==='artisan'?e.type==='supply':e.type==='block'&&e.pad===t.pad);const age=e?s.time-e.time:99;if(age>=0&&age<.34)a={phase:age<.16?'release':'recover',progress:age/.34,event:e};}
  if(reduced)return {...a,x:0,y:0,angle:0,sx:1,sy:1};
- const p=a.progress,heavy=style==='heavy',pulse=Math.sin(Math.PI*p);
- if(a.phase==='windup')return {...a,x:-(heavy?2:1)*p,y:0,angle:-(heavy?.035:.025)*p,sx:1,sy:1-.025*p};
- if(a.phase==='release'||a.phase==='recover')return {...a,x:(heavy?-3:2)*pulse,y:style==='magic'?-1.5*pulse:0,angle:(heavy?-.035:.035)*pulse,sx:1,sy:1+.018*pulse};
- return {...a,x:0,y:0,angle:0,sx:1,sy:1+Math.sin(s.time*2+(t.pad||0))*.006};
+ return {...a,...unitMotion(a,t,s.time)};
 }
 export function enemyPose(s,e,reduced=false){
  const hit=s.events.findLast(v=>v.type==='hit'&&v.enemyId===e.id),age=hit?s.time-hit.time:99,stopped=e.rootUntil>s.time||e.blockedUntil>s.time||e.castUntil>s.time;

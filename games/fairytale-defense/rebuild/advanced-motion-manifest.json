@@ -1,0 +1,19 @@
+{
+  "mode": "built-in-imagegen",
+  "individualAssets": true,
+  "cropped": false,
+  "assets": [
+    {
+      "id": "unit-archer-rapid-5-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-f2ed5102-6db2-46a4-8cbe-b64ed202ddcb.png",
+      "prompt": "Use case: identity-preserve. Asset type: single transparent game sprite keyframe, not a sheet. Input Image 1 is exact identity and level-five rapid archer equipment reference. Redraw ONLY the attack anticipation pose: same adorable acorn soldier, emerald gold leaf armor, acorn helmet, huge multi-barrel emerald crossbow, quiver, proportions, palette, painterly polished mobile-game rendering. Both feet planted at same baseline, facing right three-quarter; bend knees slightly and draw crossbow close to chest angled forward, hands gripping it as if cocking to fire. Preserve all advanced equipment. Full character and weapon entirely visible with 6% clear padding. Genuine transparent background, no scenery, no text, no shadow floor, no border, no spritesheet, no duplicated character. This is ONE image for ONE pose.",
+      "output": "art/unit-archer-rapid-5-ready.webp"
+    },
+    {
+      "id": "unit-archer-rapid-5-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0b6fe5cf-5650-4a85-9fe9-cf924beab6cf.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE transparent full-body attack-release animation keyframe. Image 1: exact level-five rapid archer identity/equipment anchor. Preserve acorn helmet, emerald gold leaf armor, wooden/golden multi-barrel emerald crossbow, quiver, boots, cute face, body proportions and painterly mobile game style. Change pose clearly: lean upper body back from recoil, crossbow aimed horizontally right with arms extended, cheeks focused and eyes alert. Weapon string relaxed after firing; a small emerald flash at muzzle but NO large projectile outside character. Both feet at same baseline. Complete full character/weapon in square canvas with 6% margin. True transparent background, no scenery, no ground slab, no words, no multiple poses, no sheet, no crop.",
+      "output": "art/unit-archer-rapid-5-release.webp"
+    }
+  ]
+}

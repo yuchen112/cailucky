@@ -1,12 +1,14 @@
-import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261004-army3';
-import {inCone} from './attack-shapes.mjs?v=20261004-army3';
-import {tickZones,tickBlocking} from './troop-mechanics.mjs?v=20261004-army3';
+import {addDamageStack,tickDamageStacks} from './damage-stacks.mjs?v=20261004-army4';
+import {validateDungeon,dungeonWave} from './dungeons.mjs?v=20261004-army4';
+import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261004-army4';
+import {inCone} from './attack-shapes.mjs?v=20261004-army4';
+import {tickZones,tickBlocking} from './troop-mechanics.mjs?v=20261004-army4';
 // Deterministic simulation. Visuals consume events; animation never grants damage.
-import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261004-army3';
-import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261004-army3';
-import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261004-army3';
-import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261004-army3';
-import {skillSpec} from './skill-spec.mjs?v=20261004-army3';
+import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261004-army4';
+import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261004-army4';
+import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261004-army4';
+import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261004-army4';
+import {skillSpec} from './skill-spec.mjs?v=20261004-army4';
 export {UNITS,UNIT_BRANCHES};
 export {SPECIALIZATIONS,BLESSINGS};
 export const towerStats=(t,s)=>{const r=statsFor(ROLES[t.role]||UNITS[t.role],t,s?.buffs);if(s?.army)r.damage*=1+(s.training?.[t.role]||0)*.01;return r;};
@@ -45,13 +47,14 @@ export function pointAt(distance,s=null,route=0){
   }
   return {x:198,y:585};
 }
-export function createBattle({mode='campaign',stage=1,hero=null,loadout=DEFAULT_LOADOUT,masteryXp=0,specialization=null,talents={},training={},map=null}={}){
-  if(!['campaign','endless'].includes(mode)||!Number.isInteger(stage)||stage<1||stage>30)throw Error('無效戰役');
+export function createBattle({dungeon=null,mode='campaign',stage=1,hero=null,loadout=DEFAULT_LOADOUT,masteryXp=0,specialization=null,talents={},training={},map=null}={}){
+  dungeon=validateDungeon(dungeon);if(dungeon&&mode!=='campaign')throw Error('副本模式不正確');
+  if(!['campaign','endless'].includes(mode)||!Number.isInteger(stage)||stage<1||stage>Math.max(30,CAMPAIGN.length))throw Error('無效戰役');
   if(hero!==null&&!Object.hasOwn(ROLES,hero))throw Error('無效英雄');
   const army=hero!==null;training=validateTraining(training);
-  if(army&&stage>15)throw Error('英雄戰役目前規劃十五關');
+  if(army&&stage>CAMPAIGN.length)throw Error('關卡尚未製作');
   if(map!==null&&!['forest','moon','dawn','ruins'].includes(map))throw Error('無效地圖');
-  return {version:1,mode,stage,map,army,training,loadout:army?validateLoadout(loadout):[],hero:army?{role:hero,...heroBuild(hero,masteryXp,specialization,talents),x:195,y:215,ready:0,skillReady:0,attacks:0,moves:0,echo:0,focus:0,guardianUsed:false}:null,phase:'planning',time:0,remainder:0,paused:false,gold:360,hp:20,maxHp:20,shield:0,buffs:{power:0,reach:0},blessingChoices:[],wave:0,maxWaves:6,kills:0,nextId:1,towers:[],enemies:[],shots:[],pending:[],zones:[],queue:[],events:[],eventId:0};
+  return {version:1,dungeon,mode,stage,map,army,training,loadout:army?validateLoadout(loadout):[],hero:army?{role:hero,...heroBuild(hero,masteryXp,specialization,talents),x:195,y:215,ready:0,skillReady:0,attacks:0,moves:0,echo:0,focus:0,guardianUsed:false}:null,phase:'planning',time:0,remainder:0,paused:false,gold:360,hp:20,maxHp:20,shield:0,buffs:{power:0,reach:0},blessingChoices:[],wave:0,maxWaves:dungeon?3:army&&mode==='campaign'?CAMPAIGN[stage-1].waves.length:6,kills:0,nextId:1,towers:[],enemies:[],shots:[],pending:[],zones:[],queue:[],events:[],eventId:0};
 }
 function event(s,type,data={}){s.events.push({id:++s.eventId,type,time:s.time,...data});}
 export function moveHero(){return false;} // Fixed commander; retained for legacy callers.
@@ -89,7 +92,7 @@ export function upgrade(s,pad,branch){
 export function setPriority(s,pad,priority){const t=s.towers.find(t=>t.pad===pad);if(s.paused||!t||!['planning','battle','intermission'].includes(s.phase)||!['first','strong','armor'].includes(priority))return false;t.priority=priority;return true;}
 export function chooseBlessing(s,id){if(s.paused||s.phase!=='intermission'||!s.blessingChoices.includes(id))return false;if(id==='supplies')s.gold+=100;else if(id==='power')s.buffs.power++;else if(id==='reach')s.buffs.reach++;else if(id==='repair')s.hp=Math.min(s.maxHp,s.hp+4);else s.buffs[id]=(s.buffs[id]||0)+1;s.blessingChoices=[];event(s,'blessing',{kind:id});return true;}
 const waveKinds=wave=>{const count=Math.min(40,5+wave*2);return Array.from({length:count},(_,i)=>wave%3===0&&i===count-1?'boss':wave>=3&&i%4===2?'armored':wave>=5&&i%7===1?'moth':wave>=2&&i%3===1?'runner':'walker');};
-export const kindsFor=(s,wave)=>s.army&&s.mode==='campaign'?encounterWave(s.stage,wave):waveKinds(wave);
+export const kindsFor=(s,wave)=>s.dungeon?dungeonWave(s.dungeon,wave):s.army&&s.mode==='campaign'?encounterWave(s.stage,wave):waveKinds(wave);
 export function wavePreview(s){return kindsFor(s,s.mode==='campaign'?Math.min(s.maxWaves,s.wave+1):s.wave+1).reduce((counts,kind)=>(counts[kind]=(counts[kind]||0)+1,counts),{});}
 export function sell(s,pad){
   const t=s.towers.find(t=>t.pad===pad);
@@ -105,10 +108,10 @@ export function startWave(s){
   s.shield=s.towers.reduce((n,t)=>n+towerStats(t,s).shield,0);
   if(s.hero){Object.assign(s.hero,{ready:s.time,skillReady:s.time,moveReady:s.time,moves:0,hasteUntil:0,echo:0,focus:0,focusId:null,guardianUsed:false});for(const t of s.towers)Object.assign(t,{heroPowerUntil:0,trustUntil:0,luckyCharges:0});}
   s.wave++;s.phase='battle';
-  s.queue=kindsFor(s,s.wave).map((kind,i)=>({at:s.time+i*(s.army&&s.mode==='campaign'?CAMPAIGN[s.stage-1].interval:.95),kind,route:i%2}));
+  s.queue=kindsFor(s,s.wave).map((kind,i)=>({at:s.time+i*(s.army&&s.mode==='campaign'&&!s.dungeon?CAMPAIGN[s.stage-1].interval:.95),kind,route:i%2}));
   event(s,'wave',{wave:s.wave});return true;
 }
-export function enemyStats(kind,s,wave=s.wave){const p=ENEMIES[kind],scale=s.mode==='endless'?1+(wave-1)*.17+Math.max(0,wave-20)*.06:(1+(s.stage-1)*.18+(wave-1)*.14)*(1+Math.max(0,s.stage-5)*.12);return {...p,hp:p.hp*scale*(regionFor(s)==='moon'?.72:1),speed:p.speed*(regionFor(s)==='moon'?.85:1)};}
+export function enemyStats(kind,s,wave=s.wave){const p=ENEMIES[kind],scale=s.dungeon?1+(s.dungeon.difficulty-1)*.65+(wave-1)*.18:s.mode==='endless'?1+(wave-1)*.17+Math.max(0,wave-20)*.06:(1+(s.stage-1)*.18+(wave-1)*.14)*(1+Math.max(0,s.stage-5)*.12);return {...p,hp:p.hp*scale*(regionFor(s)==='moon'?.72:1),speed:p.speed*(regionFor(s)==='moon'?.85:1)};}
 function spawn(s,q){
   const p=enemyStats(q.kind,s);
   s.enemies.push({id:s.nextId++,kind:q.kind,route:regionFor(s)==='moon'?(q.route||0):0,hp:p.hp,maxHp:p.hp,speed:p.speed,armor:p.armor,reward:p.reward,leak:p.leak,distance:0,air:!!p.air,slow:1,slowUntil:0});
@@ -133,7 +136,7 @@ function hit(s,shot){
     if(s.hero?.role==='dream'&&shot.hero)e.dreamUntil=s.time+4;
     if(shot.slow){e.slow=Math.min(e.slow,shot.slow);e.slowUntil=Math.max(e.slowUntil,s.time+(shot.slowDuration||2));}
     if(shot.root&&!(e.rootImmuneUntil>s.time)){const duration=shot.root*(e.kind==='boss'?.35:1);e.rootUntil=s.time+duration;e.rootImmuneUntil=s.time+duration+1;}
-    if(shot.poison){e.poison=Math.max(e.poison||0,shot.poison);e.poisonUntil=s.time+3;e.poisonKind=shot.kind;}
+    if(shot.poison)addDamageStack(e,shot,s.time);
     if(shot.mark){e.mark=shot.mark;e.markUntil=s.time+4;}
     if(shot.shred){e.shred=Math.max(e.shred||0,shot.shred);e.shredUntil=s.time+3;}
     event(s,'hit',{enemyId:e.id,damage,critical:!!shot.critical,splash:shot.splash||0,x:pointAt(e.distance,s,e.route).x,y:pointAt(e.distance,s,e.route).y,kind:shot.kind});
@@ -147,7 +150,7 @@ function tick(s,dt){
   for(const e of s.enemies){
     if(e.slowUntil<=s.time)e.slow=1;
     if(e.wardUntil&&e.wardUntil<=s.time){event(s,'shield-break',{enemyId:e.id,...pointAt(e.distance,s,e.route)});e.wardUntil=0;}
-    if(e.poisonUntil>s.time)e.hp-=(e.poison||0)*dt;
+    tickDamageStacks(e,s.time,dt);
     if(e.hp<=0)continue;
     if(e.kind==='boss'){
       e.nextSkill??=s.time+5;

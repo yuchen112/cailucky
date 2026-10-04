@@ -16,6 +16,9 @@ const entries=[
  ['王座外庭','兩次頭目波，保留應急技能與金幣。',['aaarrraarr','rrraaaarrr','baarrraab','rrrraaarrr','aaaarrraaa','baarrrabb']],
  ['最後守護','三段頭目考驗，全線部署再迎戰。',['arrarrarra','baarrraar','rrrraaaarr','abrrraaab','aaaarrrraaa','barabarrb']]
 ];
+// Public save identifiers: never rename these when adding or rearranging chapters.
+const STAGE_IDS=['forest-entrance','forest-creek','forest-moss','forest-watch','forest-gate','moon-bank','moon-fork','moon-island','moon-bridge','moon-source','dawn-outpost','dawn-crystal','ruins-corridor','ruins-court','ruins-throne'];
+if(STAGE_IDS.length!==entries.length)throw Error('Every authored stage requires a permanent ID');
 const kinds={w:'walker',r:'runner',a:'armored',b:'boss',m:'moth'};
-export const CAMPAIGN=entries.map(([name,tip,waves],i)=>Object.freeze({stage:i+1,name,tip:tip+(i>=5?' 飛蛾從第二波混入；準備對空兵或英雄技能。':''),region:['翠林','月露','晨曦'][Math.floor(i/5)],waves:waves.map((s,w)=>Object.freeze([...s].map((c,n)=>kinds[i>=5&&w>=1&&c==='r'&&n%4===1?'m':c]))),interval:Math.max(.65,.98-i*.02)}));
-export function encounterWave(stage,wave){const level=CAMPAIGN[stage-1];if(!level||wave<1||wave>6)throw Error('Invalid encounter');return [...level.waves[wave-1]];}
+export const CAMPAIGN=entries.map(([name,tip,waves],i)=>Object.freeze({id:STAGE_IDS[i],stage:i+1,name,tip:tip+(i>=5?' 飛蛾從第二波混入；準備對空兵或英雄技能。':''),map:i<5?'forest':i<10?'moon':i<12?'dawn':'ruins',region:i<5?'翠林':i<10?'月露':i<12?'晨曦':'遺跡',waves:waves.map((s,w)=>Object.freeze([...s].map((c,n)=>kinds[i>=5&&w>=1&&c==='r'&&n%4===1?'m':c]))),interval:Math.max(.65,.98-i*.02)}));
+export function encounterWave(stage,wave){const level=CAMPAIGN[stage-1];if(!level||wave<1||wave>level.waves.length)throw Error('Invalid encounter');return [...level.waves[wave-1]];}

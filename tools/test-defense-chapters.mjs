@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {CAMPAIGN} from '../games/fairytale-defense/rebuild/encounters.mjs';
+import {campaignChapters} from '../games/fairytale-defense/rebuild/campaign-ui.mjs';
+import {advancedMotionAssets,advancedMotionArt} from '../games/fairytale-defense/rebuild/advanced-motion.mjs';
+const groups=campaignChapters(CAMPAIGN,{unlocked:1,cleared:[],clearedIds:[]});
+assert.deepEqual(groups.map(g=>[g.id,g.stages.length]),[['forest',5],['moon',5],['dawn',2],['ruins',3]]);
+assert.equal(groups.flatMap(g=>g.stages).filter(c=>c.available).length,1);
+const revisit=campaignChapters(CAMPAIGN,{unlocked:1,cleared:[15],clearedIds:[CAMPAIGN[14].id]});
+assert.equal(revisit[3].stages[2].available,true);
+assert.equal(revisit[3].cleared,1);
+const id='unit-archer-rapid-5';assert.deepEqual(advancedMotionAssets(id),[id+'-ready',id+'-release']);
+for(const phase of ['idle','windup','release','recover'])assert.ok(advancedMotionArt(id,phase).startsWith(id));
+assert.equal(advancedMotionArt('unit-archer-heavy-4','release'),'unit-archer-heavy-4');
+console.log('PASS chapter counts/map grouping, completed-stage replay after insertion and exact upgraded identity keyframe selection.');

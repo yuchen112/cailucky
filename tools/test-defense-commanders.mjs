@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {newArmySave,decodeArmySave,prepareArmyExpedition} from '../games/fairytale-defense/rebuild/army-save.mjs';
+import {rememberCommander} from '../games/fairytale-defense/rebuild/commander-config.mjs';
+let save=newArmySave();save.mastery.xp.growth=2000;save.mastery.xp.hope=2000;
+save=rememberCommander(save,'growth','grove',{passive:'focus',active:'lasting',ultimate:'guardian'});
+save=rememberCommander(save,'hope','breaker',{active:'swift'});
+const loaded=decodeArmySave(JSON.stringify(save));
+assert.equal(loaded.commanders.growth.specialization,'grove');assert.equal(loaded.commanders.hope.specialization,'breaker');
+assert.equal(loaded.commanders.growth.talents.active,'lasting');assert.equal(loaded.mastery.xp.growth,2000);
+assert.throws(()=>rememberCommander(loaded,'dream','mark',{}));
+const old=structuredClone(loaded);delete old.commanders;
+const run=prepareArmyExpedition(old,{hero:'growth',specialization:'elite',talents:{active:'swift'}},'legacy-run');
+delete run.save.commanders;
+const migrated=decodeArmySave(run.save);assert.equal(migrated.commanders.growth.specialization,'elite');assert.equal(migrated.commanders.growth.talents.active,'swift');
+assert.equal(migrated.collection.coins,old.collection.coins);
+const invalid=structuredClone(loaded);invalid.commanders.hope.specialization='made-up';assert.throws(()=>decodeArmySave(invalid));
+console.log('PASS commander per-hero configuration, legacy checkpoint migration, backup roundtrip and locked choices');
