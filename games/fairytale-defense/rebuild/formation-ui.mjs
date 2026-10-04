@@ -1,6 +1,6 @@
-import {UNITS,UNIT_GUIDES,UNIT_RARITY} from './army.mjs?v=20261005-story1';
-import {GRADES,unitLevel} from './recruitment.mjs?v=20261005-story1';
-import {attackType,troopGroup} from './attack-shapes.mjs?v=20261005-story1';
+import {UNITS,UNIT_GUIDES,UNIT_RARITY} from './army.mjs?v=20261005-motion1';
+import {GRADES,unitLevel} from './recruitment.mjs?v=20261005-motion1';
+import {attackType,troopGroup} from './attack-shapes.mjs?v=20261005-motion1';
 export function installFormation({dialog,body,getProfile,commit,openUnit}){
  const dock=document.createElement('section');dock.className='formation-dock';dock.innerHTML='<p id="loadout-summary"></p><div class="formation-slots"></div><div class="formation-filters"><label>定位<select id="squad-role"><option value="all">全部定位</option><option value="damage">輸出</option><option value="control">控制</option><option value="support">支援</option></select></label><label>稀有度<select id="squad-rarity"><option value="all">全部階級</option>'+GRADES.map(g=>`<option value="${g.id}">${g.name}</option>`).join('')+'</select></label><label><input id="squad-owned" type="checkbox">只看已取得</label></div><p class="formation-message" role="status"></p>';body.before(dock);
  let drag=null,moved=false;body.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY};moved=false;},{passive:true});body.addEventListener('pointermove',e=>{if(drag&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>10)moved=true;},{passive:true});body.addEventListener('click',e=>{if(moved&&e.detail!==0){e.preventDefault();e.stopImmediatePropagation();}},true);body.addEventListener('pointercancel',()=>moved=true);

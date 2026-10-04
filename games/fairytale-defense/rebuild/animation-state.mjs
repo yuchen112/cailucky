@@ -1,4 +1,4 @@
-import {unitMotion} from './troop-animation.mjs?v=20261005-story1';
+import {unitMotion} from './troop-animation.mjs?v=20261005-motion1';
 // Pure presentation functions: never advance combat or award resources.
 export const TROOP_MOTION={scout:'ranged',warden:'heavy',storm:'magic',bramble:'magic',artisan:'magic',archer:'ranged',cannon:'heavy',frost:'magic',firefly:'ranged',crystal:'heavy',chime:'magic',blossom:'magic',clockwork:'heavy',alchemist:'ranged',vine:'magic',oracle:'magic',dragon:'heavy'};
 export const EFFECT_ART=['anim-impact','anim-shatter','anim-rise','anim-dissolve'];

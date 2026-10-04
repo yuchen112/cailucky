@@ -14,6 +14,60 @@
       "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0b6fe5cf-5650-4a85-9fe9-cf924beab6cf.png",
       "prompt": "Use case: identity-preserve. Asset type: ONE transparent full-body attack-release animation keyframe. Image 1: exact level-five rapid archer identity/equipment anchor. Preserve acorn helmet, emerald gold leaf armor, wooden/golden multi-barrel emerald crossbow, quiver, boots, cute face, body proportions and painterly mobile game style. Change pose clearly: lean upper body back from recoil, crossbow aimed horizontally right with arms extended, cheeks focused and eyes alert. Weapon string relaxed after firing; a small emerald flash at muzzle but NO large projectile outside character. Both feet at same baseline. Complete full character/weapon in square canvas with 6% margin. True transparent background, no scenery, no ground slab, no words, no multiple poses, no sheet, no crop.",
       "output": "art/unit-archer-rapid-5-release.webp"
+    },
+    {
+      "id": "unit-archer-heavy-5-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-b4e0cfb9-e08d-45c7-901e-f73c55657d9c.png",
+      "prompt": "Use case: identity-preserve. Asset: ONE isolated advanced troop attack windup frame. Reference image is the exact level5 heavy acorn crossbow archer identity. Preserve cream face, big brown eyes, acorn helmet, blue gold armor, blue crystal scoped heavy crossbow, all equipment and silhouette. Change ONLY action: crouch knees slightly, lean back and firmly load/tension the heavy crossbow with BOTH hands, intent eyes, weapon aimed horizontally RIGHT. Same three-quarter viewpoint, full body, feet near bottom at equal groundline, generous transparent margins; no platform, ground, text, multiple frames, extra characters, cropped weapons. High quality cute painted fantasy mobile-game sprite. Actual transparent background, one character in one single image.",
+      "output": "art/unit-archer-heavy-5-ready.webp"
+    },
+    {
+      "id": "unit-archer-heavy-5-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-9eadb7f5-af1a-4530-8212-578a3898d6bd.png",
+      "prompt": "Use case: identity-preserve. ONE isolated heavy acorn crossbow archer level5 ATTACK RELEASE keyframe. Reference exact identity: cream face, acorn helmet, blue gold armor, blue crystal scoped heavy crossbow. Preserve clothes, proportions, camera and entire character. Change ONLY pose: fired rightwards, bowstring now relaxed, right hand withdrawn by shoulder, body leans a little backward with recoil, left hand supports same weapon, bright short blue magical muzzle spark contained near bow tip. Not loaded arrow. Full body BOTH feet visible at common groundline, generous margins, transparent background, no floor/platform/background/text, no extra figure, no spritesheet. Cute polished painterly mobile game art.",
+      "output": "art/unit-archer-heavy-5-release.webp"
+    },
+    {
+      "id": "unit-cannon-wide-5-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-e98d944f-c10b-419c-be9d-3cec1424f927.png",
+      "prompt": "Use case: identity-preserve. ONE isolated advanced troop WINDUP frame. Reference is exact level5 orange mushroom mortar operator, cream furry face, orange spotted cap with teal/gold plating, orange boots, ornate teal orange gold mushroom mortar on its wheeled support. Keep identity, entire equipment, palette, three-quarter view. Change only action: operator bends both knees and pulls mortar charging handle back with both hands, torso leaning back; mortar chamber shows a small contained amber charge, barrel toward RIGHT, NO outgoing projectile. Whole body and whole mortar visible with 8 percent transparent margin. Same proportions, feet grounded, no floor/platform, no text, no extra figure, no sheet/collage. Cute premium painted mobile tower defense art, transparent alpha.",
+      "output": "art/unit-cannon-wide-5-ready.webp"
+    },
+    {
+      "id": "unit-cannon-wide-5-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0e269349-d479-4699-8e59-919cf9f56141.png",
+      "prompt": "Use case identity-preserve. ONE single attack RELEASE keyframe of exactly referenced level5 mushroom mortar operator with orange spotted teal gold helmet, cream face, ornate huge teal orange gold cannon on wheeled support. Change only action: cannon has fired, short compact orange spore flash at barrel lip toward RIGHT, operator arms recoiling bent close to chest, knees bent leaning backwards, same feet groundline and full equipment. Preserve identity, materials, proportion, three-quarter camera, no design changes. Entire cannon and character visible, clear transparent margin, no background/ground/platform/text/sheet/multiple poses/extra figure. Premium cute polished painterly mobile defense sprite. Transparent alpha.",
+      "output": "art/unit-cannon-wide-5-release.webp"
+    },
+    {
+      "id": "unit-frost-root-5-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-48704703-20f0-413d-8628-cec509db739e.png",
+      "prompt": "Use case identity-preserve. ONE single WINDUP animation keyframe of exact referenced level5 frost root sprite: cream round magical face big teal eyes, towering jagged ice crystal gold crown, blue gold leaf robe/cape, ornate ice crystal branch staff. Preserve identity equipment colors camera. Change only action: both hands pull the staff back beside the left shoulder, body twists slightly back, knees flex, concentrating on collecting a SMALL frost light at staff crystal; staff is lifted diagonally preparing to cast RIGHT. Full body both bare feet visible on common groundline, whole staff and crown intact with clear transparent margins. One character, no panel, no text, no platform, no backdrop, no spritesheet, no giant spell outside frame. Cute polished painterly mobile defense art, true alpha.",
+      "output": "art/unit-frost-root-5-ready.webp"
+    },
+    {
+      "id": "unit-frost-root-5-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-f04a20e9-ece3-4dd9-a149-b31992a694ba.png",
+      "prompt": "Use case identity-preserve. ONE single attack RELEASE keyframe of exact referenced level5 frost-root fairy: cream face, teal big eyes, jagged ice crystal crown with gold trim, blue gold robe/cape and crystal branch staff. Preserve all identity equipment colors and three-quarter perspective. Change ONLY action: body leans forward into cast, arms extend the staff horizontally-diagonally toward RIGHT, mouth a tiny focused open smile, small compact icy flash at staff tip, no giant external projectile. Feet both firmly at same common groundline, entire full body crown cape staff within transparent margins. No background, no ground slab, no text, no spritesheet, no duplicates. Polished cute painterly mobile game character transparent alpha.",
+      "output": "art/unit-frost-root-5-release.webp"
+    },
+    {
+      "id": "unit-archer-rapid-10",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-a23d9c74-bb9b-4f50-88c3-4bfe0c36e702.png",
+      "prompt": "Use case identity-preserve. ONE single fullbody transparent game sprite: level TEN evolution of exactly referenced rapid acorn crossbow soldier. Preserve same cute cream face/brown eyes, rounded acorn silhouette and emerald leaf ranger identity. Advance equipment visibly beyond level5: acorn helmet crowned by three slim emerald crystal leaves, ivory gold shoulder plates over layered emerald armor, longer split leaf cloak, elaborate double-tier six-barrel wooden gold emerald repeating crossbow with two crystal arc arms. Still a small ordinary acorn troop, NOT a human hero. Neutral idle ready stance facing RIGHT three-quarter, two hands hold weapon level, both boots planted. Match polished painterly mobile fantasy art. Full body weapon entirely visible with 7 percent transparent margins, no platform/background/text/watermark/sheet/extra character. True alpha transparency.",
+      "output": "art/unit-archer-rapid-10.webp"
+    },
+    {
+      "id": "unit-archer-rapid-10-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-91671736-0229-408d-8f3b-c5c3dd03b82e.png",
+      "prompt": "Use case identity-preserve. ONE level10 rapid acorn ranger WINDUP game animation keyframe. Input is EXACT level10 anchor; keep cream face, acorn helmet with three emerald leaves, ivory gold shoulder plates, long emerald split cloak, double tier repeating crossbow, body proportions materials palette. Change only pose: pull large repeating crossbow close to chest, right hand draws charging lever/string toward shoulder, both knees bend in planted stance, focused eyes. Same three-quarter facing RIGHT view. Full body feet cloak weapon visible with clear margin, no redesign, no extra figure, no ground/platform/text/sheet/collage. True transparent background; polished painterly cute mobile game sprite.",
+      "output": "art/unit-archer-rapid-10-ready.webp"
+    },
+    {
+      "id": "unit-archer-rapid-10-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6e99824b-70a6-43b9-91f7-eb4c5db6c44d.png",
+      "prompt": "Use case identity-preserve. ONE level10 rapid acorn ranger ATTACK RELEASE game sprite. Exact anchor in reference: acorn helmet with three emerald leaf crystals, cute cream face brown eyes, ivory gold pauldrons, emerald leaf armor long cloak, double-tier repeating crossbow. Keep all appearance materials body proportions three-quarter right view. Change ONLY pose: weapon aimed RIGHT, string relaxed after discharge, one hand pulled back by shoulder, supporting arm forward, shoulders recoil backward, both knees flex, small compact green sparks at repeating bow muzzle, no long outgoing projectile. Entire full body weapon cloak feet with transparent margins. No background/ground/platform, text, collage, sheet, duplicate, redesign. Polished cute painterly mobile game sprite, genuine alpha.",
+      "output": "art/unit-archer-rapid-10-release.webp"
     }
   ]
 }

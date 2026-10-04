@@ -1,5 +1,6 @@
-import {UNIT_BRANCHES,DEFAULT_LOADOUT} from './army.mjs?v=20261005-story1';
+import {UNIT_BRANCHES,DEFAULT_LOADOUT} from './army.mjs?v=20261005-motion1';
 export function unitArt(t){
+ if(t.role==='archer'&&t.branch==='rapid'&&t.level>=10)return 'unit-archer-rapid-10';
  if(!['archer','cannon','frost','firefly'].includes(t.role))return `unit-${t.role}${t.level>=3&&t.branch?'-'+t.branch:''}`;
  if(t.level>=3&&UNIT_BRANCHES[t.role]?.some(b=>b.id===t.branch))return `unit-${t.role}-${t.branch}-${Math.min(5,t.level)}`;
  return `unit-${t.role}${t.level>=2?'-veteran':''}`;

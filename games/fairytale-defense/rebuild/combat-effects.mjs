@@ -1,5 +1,5 @@
-import {activeEffects,clamp,skillRecipients} from './animation-state.mjs?v=20261005-story1';
-import {SPELL_ART} from './motion.mjs?v=20261005-story1';
+import {activeEffects,clamp,skillRecipients} from './animation-state.mjs?v=20261005-motion1';
+import {SPELL_ART} from './motion.mjs?v=20261005-motion1';
 const impactArt={bolt:'anim-impact',crystal:'anim-shatter',gear:'anim-impact',spore:'projectile-spore',frost:'projectile-frost',glow:'fx-light',wind:'fx-rune',bloom:'fx-petal'};
 // All decorative marks are independently authored raster assets, never canvas shapes.
 export function drawCombatEffects({s,pads,corePoint,image,sprite,ctx,roles,reduced=false,simple=false}){

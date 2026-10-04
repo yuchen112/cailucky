@@ -7,7 +7,7 @@ assert.equal(MAX_LEVEL,30);assert.equal(unitLevel(xpForLevel(30)),30);
 const c=newCollection();c.training.archer=xpForLevel(30);assert.equal(trainingRanks(c).archer,87);
 const s=createBattle({hero:'growth',training:trainingRanks(c)});s.gold=99999;deploy(s,0,'archer');
 while(s.towers[0].level<10)assert.equal(upgrade(s,0,'rapid'),true);
-assert.equal(upgrade(s,0,'rapid'),false);assert.equal(restoreCheckpoint(captureCheckpoint(s)).towers[0].level,10);assert.equal(unitArt(s.towers[0]),'unit-archer-rapid-5');assert.ok(towerStats(s.towers[0],s).damage>100);
+assert.equal(upgrade(s,0,'rapid'),false);assert.equal(restoreCheckpoint(captureCheckpoint(s)).towers[0].level,10);assert.equal(unitArt(s.towers[0]),'unit-archer-rapid-10');assert.ok(towerStats(s.towers[0],s).damage>100);
 const legacy=createBattle();legacy.gold=99999;deploy(legacy,0,'growth');while(legacy.towers[0].level<5)assert.ok(upgrade(legacy,0,'rapid'));assert.equal(upgrade(legacy,0),false);
 const final=createBattle({hero:'growth',mode:'endless'});deploy(final,0,'archer');final.wave=98;assert.ok(startWave(final));final.queue=[];final.enemies=[];advance(final,1/60);assert.equal(final.phase,'victory');assert.equal(startWave(final),false);
 console.log('PASS permanent level30, battle level10/cost/checkpoint, legacy cap5 and endless victory at99. Advanced visual tiers remain separate art work.');

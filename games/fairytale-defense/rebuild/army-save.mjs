@@ -1,15 +1,15 @@
-import {awardEndless,validateRewardLedger} from './endless-rewards.mjs?v=20261005-story1';
-import {validateBooks} from './training-books.mjs?v=20261005-story1';
-import {validateCampaignProgress} from './campaign-progress.mjs?v=20261005-story1';
-import {CAMPAIGN} from './encounters.mjs?v=20261005-story1';
-import {validateDungeon,dungeonReward} from './dungeons.mjs?v=20261005-story1';
-import {STARTER_UNITS,validateLoadout} from './army.mjs?v=20261005-story1';
-import {validateCommanderConfigs,rememberCommander} from './commander-config.mjs?v=20261005-story1';
-import {alignCommander} from './routes.mjs?v=20261005-story1';
-import {captureCheckpoint,restoreCheckpoint} from './checkpoint.mjs?v=20261005-story1';
-import {newMastery,validateMastery,beginMasteryRun,awardCompletedWaves} from './mastery.mjs?v=20261005-story1';
-import {createBattle} from './core.mjs?v=20261005-story1';
-import {newCollection,validateCollection,rewardCollection,trainingRanks} from './recruitment.mjs?v=20261005-story1';
+import {awardEndless,validateRewardLedger} from './endless-rewards.mjs?v=20261005-motion1';
+import {validateBooks} from './training-books.mjs?v=20261005-motion1';
+import {validateCampaignProgress} from './campaign-progress.mjs?v=20261005-motion1';
+import {CAMPAIGN} from './encounters.mjs?v=20261005-motion1';
+import {validateDungeon,dungeonReward} from './dungeons.mjs?v=20261005-motion1';
+import {STARTER_UNITS,validateLoadout} from './army.mjs?v=20261005-motion1';
+import {validateCommanderConfigs,rememberCommander} from './commander-config.mjs?v=20261005-motion1';
+import {alignCommander} from './routes.mjs?v=20261005-motion1';
+import {captureCheckpoint,restoreCheckpoint} from './checkpoint.mjs?v=20261005-motion1';
+import {newMastery,validateMastery,beginMasteryRun,awardCompletedWaves} from './mastery.mjs?v=20261005-motion1';
+import {createBattle} from './core.mjs?v=20261005-motion1';
+import {newCollection,validateCollection,rewardCollection,trainingRanks} from './recruitment.mjs?v=20261005-motion1';
 // Separate envelope from the legacy preview. Persist one JSON value atomically.
 export function newArmySave(){return {version:3,mastery:newMastery(),collection:newCollection(),campaign:{unlocked:1,cleared:[]},loadout:[...STARTER_UNITS],formations:[],endless:{forest:0,moon:0,dawn:0,ruins:0},checkpoint:null};}
 // UI entry point: XP is read only from the saved profile, never from a form field.
