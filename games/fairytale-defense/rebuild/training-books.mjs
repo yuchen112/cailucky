@@ -1,4 +1,4 @@
-import {validateCollection,unitLevel,xpForLevel,MAX_LEVEL} from './recruitment.mjs?v=20261005-growth1';
+import {validateCollection,unitLevel,xpForLevel,MAX_LEVEL} from './recruitment.mjs?v=20261005-story1';
 export const BOOK_XP=1;
 export function validateBooks(value=0){if(!Number.isSafeInteger(value)||value<0||value>100000000)throw Error('訓練書數量不正確');return value;}
 export function trainingPreview(profile,id,count=1){

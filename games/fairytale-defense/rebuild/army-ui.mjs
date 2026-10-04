@@ -1,37 +1,37 @@
-import {ADVANCED_MOTION_LAYOUT} from './advanced-motion-layout.mjs?v=20261005-growth1';
-import {advancedMotionArt,advancedMotionAssets} from './advanced-motion.mjs?v=20261005-growth1';
-import {installCampaignSelection} from './campaign-ui.mjs?v=20261005-growth1';
-import {installVictoryGallery} from './victory-gallery.mjs?v=20261005-growth1';
-import {ARMY4_LAYOUT} from './army4-layout.mjs?v=20261005-growth1';
-import {installDungeons} from './dungeon-ui.mjs?v=20261005-growth1';
-import {DUNGEONS,dungeonReward,dungeonWave} from './dungeons.mjs?v=20261005-growth1';
-import {installCommanderTabs} from './commander-ui.mjs?v=20261005-growth1';
-import {rememberCommander} from './commander-config.mjs?v=20261005-growth1';
-import {ARMY3_LAYOUT} from './army3-layout.mjs?v=20261005-growth1';
-import {drawAttackFootprint,drawArmyMechanics} from './army3-effects.mjs?v=20261005-growth1';
-import {shapeDescription} from './attack-shapes.mjs?v=20261005-growth1';
-import {ANIMATION_LAYOUT} from './animation-layout.mjs?v=20261005-growth1';
-import {installMenuMotion} from './menu-motion.mjs?v=20261005-growth1';
-import {EFFECT_ART,troopPose,enemyPose,heroPose} from './animation-state.mjs?v=20261005-growth1';
-import {drawCombatEffects} from './combat-effects.mjs?v=20261005-growth1';
-import {installInterface} from './interface-ui.mjs?v=20261005-growth1';
-import {installExpedition} from './expedition-ui.mjs?v=20261005-growth1';
-import {MAPS,storyFor,storyMap} from './expedition.mjs?v=20261005-growth1';
-import {renderHeroGuide} from './hero-guide.mjs?v=20261005-growth1';
-import {createBattleClock} from './battle-clock.mjs?v=20261005-growth1';
-import {installTactics} from './tactical-ui.mjs?v=20261005-growth1';
-import {ROLES,UNITS,UNIT_BRANCHES,PADS,pointAt,createBattle,deploy,upgrade,sell,setPriority,upgradeCost,towerStats,startWave,advance,chooseBlessing,BLESSINGS} from './core.mjs?v=20261005-growth1';
-import {HERO_SPECIALIZATIONS,HERO_TALENTS,supportFor} from './hero-rules.mjs?v=20261005-growth1';
-import {masteryLevel} from './mastery.mjs?v=20261005-growth1';
-import {newArmySave,decodeArmySave,prepareArmyExpedition,settleArmySave} from './army-save.mjs?v=20261005-growth1';
-import {restoreCheckpoint} from './checkpoint.mjs?v=20261005-growth1';
-import {CAMPAIGN} from './encounters.mjs?v=20261005-growth1';
-import {SPELL_ART,projectilePose} from './motion.mjs?v=20261005-growth1';
-import {unitArt,branchGuide} from './unit-presentation.mjs?v=20261005-growth1';
-import {SPRITE_LAYOUT} from './sprite-layout.mjs?v=20261005-growth1';
-import {routePads,regionFor,alignCommander} from './routes.mjs?v=20261005-growth1';
-import {createAudio} from './audio.mjs?v=20261005-growth1';
-import {installJourney} from './journey-ui.mjs?v=20261005-growth1';
+import {ADVANCED_MOTION_LAYOUT} from './advanced-motion-layout.mjs?v=20261005-story1';
+import {advancedMotionArt,advancedMotionAssets} from './advanced-motion.mjs?v=20261005-story1';
+import {installCampaignSelection} from './campaign-ui.mjs?v=20261005-story1';
+import {installVictoryGallery} from './victory-gallery.mjs?v=20261005-story1';
+import {ARMY4_LAYOUT} from './army4-layout.mjs?v=20261005-story1';
+import {installDungeons} from './dungeon-ui.mjs?v=20261005-story1';
+import {DUNGEONS,dungeonReward,dungeonWave} from './dungeons.mjs?v=20261005-story1';
+import {installCommanderTabs} from './commander-ui.mjs?v=20261005-story1';
+import {rememberCommander} from './commander-config.mjs?v=20261005-story1';
+import {ARMY3_LAYOUT} from './army3-layout.mjs?v=20261005-story1';
+import {drawAttackFootprint,drawArmyMechanics} from './army3-effects.mjs?v=20261005-story1';
+import {shapeDescription} from './attack-shapes.mjs?v=20261005-story1';
+import {ANIMATION_LAYOUT} from './animation-layout.mjs?v=20261005-story1';
+import {installMenuMotion} from './menu-motion.mjs?v=20261005-story1';
+import {EFFECT_ART,troopPose,enemyPose,heroPose} from './animation-state.mjs?v=20261005-story1';
+import {drawCombatEffects} from './combat-effects.mjs?v=20261005-story1';
+import {installInterface} from './interface-ui.mjs?v=20261005-story1';
+import {installExpedition} from './expedition-ui.mjs?v=20261005-story1';
+import {MAPS,storyFor,storyMap} from './expedition.mjs?v=20261005-story1';
+import {renderHeroGuide} from './hero-guide.mjs?v=20261005-story1';
+import {createBattleClock} from './battle-clock.mjs?v=20261005-story1';
+import {installTactics} from './tactical-ui.mjs?v=20261005-story1';
+import {ROLES,UNITS,UNIT_BRANCHES,PADS,pointAt,createBattle,deploy,upgrade,sell,setPriority,upgradeCost,towerStats,startWave,advance,chooseBlessing,BLESSINGS} from './core.mjs?v=20261005-story1';
+import {HERO_SPECIALIZATIONS,HERO_TALENTS,supportFor} from './hero-rules.mjs?v=20261005-story1';
+import {masteryLevel} from './mastery.mjs?v=20261005-story1';
+import {newArmySave,decodeArmySave,prepareArmyExpedition,settleArmySave} from './army-save.mjs?v=20261005-story1';
+import {restoreCheckpoint} from './checkpoint.mjs?v=20261005-story1';
+import {CAMPAIGN} from './encounters.mjs?v=20261005-story1';
+import {SPELL_ART,projectilePose} from './motion.mjs?v=20261005-story1';
+import {unitArt,branchGuide} from './unit-presentation.mjs?v=20261005-story1';
+import {SPRITE_LAYOUT} from './sprite-layout.mjs?v=20261005-story1';
+import {routePads,regionFor,alignCommander} from './routes.mjs?v=20261005-story1';
+import {createAudio} from './audio.mjs?v=20261005-story1';
+import {installJourney} from './journey-ui.mjs?v=20261005-story1';
 const audio=createAudio(),systemMotion=matchMedia('(prefers-reduced-motion: reduce)'),reducedMotion={get matches(){return systemMotion.matches||audio.preferences.reducedMotion;}};
 audio.hold(true);
 let interfaceUI=null;
@@ -44,7 +44,7 @@ let profile=newArmySave(),battle=createBattle({hero:'growth'}),hero='growth',spe
 const artPromises=new Map(),artQueue=[];let transitioning=false,activeImages=0;
 function pumpImages(){while(activeImages<4&&artQueue.length){activeImages++;const task=artQueue.shift();task().finally(()=>{activeImages--;pumpImages();if(!activeImages&&!artQueue.length)audio.hold(false);});}}
 const loadingStatus=document.createElement('dialog');loadingStatus.id='loading-status';loadingStatus.setAttribute('aria-label','準備戰場美術');loadingStatus.addEventListener('cancel',e=>e.preventDefault());document.body.append(loadingStatus);
-function loadArt(id){if(images[id])return Promise.resolve();if(artPromises.has(id))return artPromises.get(id);audio.hold(true);const promise=new Promise((resolve,reject)=>{artQueue.push(async()=>{const src=id in ROLES?`../../../assets/characters/cxq-role-${id}.webp`:`art/${id}.webp`;for(let attempt=0;attempt<3;attempt++){const im=new Image();im.fetchPriority=id.startsWith('road')?'high':'auto';im.src=src+'?v=20261005-growth1'+(attempt?'&retry='+attempt:'');let timer;try{await Promise.race([im.decode(),new Promise((_,fail)=>timer=setTimeout(()=>fail(Error('載入逾時')),30000))]);images[id]=im;resolve();return;}catch(e){im.src='';if(attempt===2){artPromises.delete(id);reject(Error('美術載入失敗：'+id));}}finally{clearTimeout(timer);}}});});artPromises.set(id,promise);pumpImages();return promise;}
+function loadArt(id){if(images[id])return Promise.resolve();if(artPromises.has(id))return artPromises.get(id);audio.hold(true);const promise=new Promise((resolve,reject)=>{artQueue.push(async()=>{const src=id in ROLES?`../../../assets/characters/cxq-role-${id}.webp`:`art/${id}.webp`;for(let attempt=0;attempt<3;attempt++){const im=new Image();im.fetchPriority=id.startsWith('road')?'high':'auto';im.src=src+'?v=20261005-story1'+(attempt?'&retry='+attempt:'');let timer;try{await Promise.race([im.decode(),new Promise((_,fail)=>timer=setTimeout(()=>fail(Error('載入逾時')),30000))]);images[id]=im;resolve();return;}catch(e){im.src='';if(attempt===2){artPromises.delete(id);reject(Error('美術載入失敗：'+id));}}finally{clearTimeout(timer);}}});});artPromises.set(id,promise);pumpImages();return promise;}
 function heroArt(id){return [id,id+'-cast',id+'-ready',id+'-victory',...(id==='growth'?['growth-idle']:[]),SPELL_ART[ROLES[id].kind]];}
 function ensureBattleArt(s){const ids=['hero-dais',...(s.loadout.includes('bramble')?['thorn-zone']:[]),...(s.loadout.includes('dragon')?['flame-cone']:[]),...(s.mode==='endless'||s.stage>=6?['moth']:[]),...EFFECT_ART,...s.loadout.map(id=>'unit-'+id+'-release'),...(s.hero.role==='luck'?['fx-clover']:[]),...new Set([SPELL_ART[ROLES[s.hero.role].kind],...s.loadout.map(id=>SPELL_ART[UNITS[id].kind])].filter(Boolean)),'button',regionFor(s)==='forest'?'road':'road-'+regionFor(s),'walker-step','runner-step','armored-step','boss-ready','boss-cast',...s.loadout.map(id=>'unit-'+id+'-ready'),'pad','seed','impact','target','health-track','health-fill','command-podium','dream-core','walker','runner','armored','boss','range','aura-range','support-range','fx-light','fx-spark',...['bolt','spore','frost','glow'].map(id=>'projectile-'+id),...s.loadout.map(id=>'unit-'+id),...s.towers.map(unitArt),...s.towers.flatMap(t=>advancedMotionAssets(unitArt(t))),...heroArt(s.hero.role),regionFor(s)==='forest'?'meadow':regionFor(s)==='moon'?'meadow-moon':regionFor(s)==='ruins'?'meadow-ruins-ui':'meadow-dawn'];const unique=[...new Set(ids)];let count=0;return Promise.all(unique.map(async id=>{await loadArt(id);if(transitioning)loadingStatus.textContent='準備戰場美術… '+(++count)+' / '+unique.length;}));}
 async function transition(fn){if(transitioning||failed)return;transitioning=true;loadingStatus.textContent='準備戰場美術…';loadingStatus.showModal();syncPause();try{await fn(); }catch(e){loadingStatus.replaceChildren();const message=document.createElement('p');message.textContent=e.message+'。原進度保留，請重試。';const retry=document.createElement('button');retry.textContent='重新載入';retry.onclick=()=>{loadingStatus.close();transition(fn);};const cancel=document.createElement('button');cancel.textContent='返回';cancel.onclick=()=>loadingStatus.close();loadingStatus.append(message,retry,cancel);return;}finally{transitioning=false;if(!loadingStatus.querySelector('button'))loadingStatus.close();syncPause();}}
@@ -97,7 +97,7 @@ function previewUpgrade(pad,next){
 }
 PADS.forEach((p,i)=>{const b=document.createElement('button');b.className='pad-hit';b.style.left=p.x/390*100+'%';b.style.top=p.y/585*100+'%';b.setAttribute('aria-label',`部署位置 ${i+1}`);b.onclick=()=>openPad(i);$('pads').append(b);});
 function start(){practice=false;return transition(async()=>{const next=prepareArmyExpedition(profile,{hero,dungeon,specialization,talents,stage,mode,map:dungeon?DUNGEONS[dungeon.type].map:mode==='campaign'?storyMap(stage):map,loadout:profile.loadout},crypto.randomUUID());await ensureBattleArt(next.battle);persist(next.save);battle=next.battle;chosenUnit=null;renderDock();tactics?.reset();closeAll();});}
-function briefing(){const c=CAMPAIGN[stage-1];$('briefing-title').textContent=mode==='endless'?`無盡守城 · ${MAPS[map].name}`:`第 ${stage} 關 · ${c.name}`;$('briefing-tip').textContent=mode==='endless'?MAPS[map].intro+' 無盡模式：每兩波選擇祝福、每五波可撤離。':storyFor(stage).text+' 戰術：'+c.tip;$('briefing-team').textContent=`指揮英雄：${ROLES[hero].name} · ${profile.loadout.map(id=>UNITS[id].name).join('／')}`;$('briefing-enemies').replaceChildren();for(const kind of new Set(dungeon?[1,2,3].flatMap(w=>dungeonWave(dungeon,w)):c.waves.flat())){const f=document.createElement('figure'),im=document.createElement('img'),label=document.createElement('figcaption');im.src=`art/${kind}.webp`;label.textContent=({walker:'步兵',runner:'快腳',armored:'重甲',boss:'頭目',moth:'夜羽飛蛾（空中）'})[kind];f.append(im,label);$('briefing-enemies').append(f);}if(dungeon){const reward=dungeonReward(dungeon);$('briefing-title').textContent=DUNGEONS[dungeon.type].name+' · '+['一般','進階','困難'][dungeon.difficulty-1];$('briefing-tip').textContent=DUNGEONS[dungeon.type].description+' 通關額外 '+reward.coins+' 星露、'+reward.xp+' 熟練度。三波挑戰，不推進主線。';}campaignDialog.close();show('briefing');}
+function briefing(){const c=CAMPAIGN[stage-1];$('briefing-title').textContent=mode==='endless'?`無盡守城 · ${MAPS[map].name}`:`${storyFor(stage).label} · ${c.name}`;$('briefing-tip').textContent=mode==='endless'?MAPS[map].intro+' 無盡模式：每兩波選擇祝福、每五波可撤離。':storyFor(stage).text+' 戰術：'+c.tip;$('briefing-team').textContent=`指揮英雄：${ROLES[hero].name} · ${profile.loadout.map(id=>UNITS[id].name).join('／')}`;$('briefing-enemies').replaceChildren();for(const kind of new Set(dungeon?[1,2,3].flatMap(w=>dungeonWave(dungeon,w)):c.waves.flat())){const f=document.createElement('figure'),im=document.createElement('img'),label=document.createElement('figcaption');im.src=`art/${kind}.webp`;label.textContent=({walker:'步兵',runner:'快腳',armored:'重甲',boss:'頭目',moth:'夜羽飛蛾（空中）'})[kind];f.append(im,label);$('briefing-enemies').append(f);}if(dungeon){const reward=dungeonReward(dungeon);$('briefing-title').textContent=DUNGEONS[dungeon.type].name+' · '+['一般','進階','困難'][dungeon.difficulty-1];$('briefing-tip').textContent=DUNGEONS[dungeon.type].description+' 通關額外 '+reward.coins+' 星露、'+reward.xp+' 熟練度、'+reward.books+' 本訓練書。三波挑戰，不推進主線。';}campaignDialog.close();show('briefing');}
 $('briefing-start').onclick=()=>profile.checkpoint?show('replace'):start();
 $('briefing').querySelector('[data-close]').onclick=()=>{$('briefing').close();if(dungeon)dungeonUI.open();else if(mode==='endless')$('start-endless').click();else selectStage();};
 const battlefieldHero=document.createElement('button');battlefieldHero.id='battle-hero';battlefieldHero.className='battle-hero-hit';battlefieldHero.setAttribute('aria-label','英雄技能與全場支援說明');battlefieldHero.onclick=()=>commandHit.click();$('pads').append(battlefieldHero);
@@ -196,11 +196,11 @@ function frame(now){const dt=last?(now-last)/1000:0;last=now;syncPause();const b
   $('next-stage').hidden=!!battle.dungeon||!won||battle.stage>=CAMPAIGN.length||battle.mode==='endless';
   $('result-text').textContent=`第 ${battle.stage} 關 · ${c.name}｜擊退 ${battle.kills} 名敵人｜核心 ${battle.hp}/${battle.maxHp}。${ROLES[battle.hero.role].name} 累積熟練度 ${profile.mastery.xp[battle.hero.role]} XP。${won?'前往下一關，迎接新的敵群。':`戰術提醒：${c.tip} 可調整編隊，或在後段補上緩速與火力。未完成的波次不發獎。`}`;
   if(battle.mode==='endless')$('result-text').textContent=`${MAPS[battle.map||'forest'].name} · 完成 ${battle.phase==='victory'?battle.wave:Math.max(0,battle.wave-1)} / 99 層 · 擊退 ${battle.kills} 名敵人。已取得獎勵保留；本地紀錄 ${profile.endless[battle.map||'forest']} 波。`;
-  else if(won&&!battle.dungeon)$('result-text').textContent+=' '+(battle.stage===CAMPAIGN.length||storyMap(battle.stage+1)!==storyMap(battle.stage)?storyFor(battle.stage).end:'伙伴們整理防線，帶著新的線索繼續前進。');
+  else if(won&&!battle.dungeon)$('result-text').textContent+=' '+(battle.stage===CAMPAIGN.length||storyFor(battle.stage+1).id!==storyFor(battle.stage).id?storyFor(battle.stage).end:'伙伴們整理防線，帶著新的線索繼續前進。');
   if(!won&&battle.leaks){const most=Object.entries(battle.leaks).sort((a,b)=>b[1]-a[1])[0];if(most)$('result-text').textContent+=' 本局漏怪最多：'+({runner:'快速敵人，建議加強緩速。',armored:'重甲敵人，建議增加破甲或穿甲。',boss:'頭目，建議集中高傷與英雄大招。',walker:'普通敵人，建議補足火力覆蓋。'})[most[0]];}
   $('result').querySelector('.reward-receipt')?.remove();if(!practice){const receipt=document.createElement('p');receipt.className='reward-receipt';receipt.textContent=`本波已入帳：星露 +${lastSettlement.coins} · 熟練度 +${lastSettlement.xp} XP`; $('result-text').after(receipt);}
   show('result');
- }if(battle.dungeon&&['victory','defeat'].includes(battle.phase)){const reward=dungeonReward(battle.dungeon);$('result-title').textContent=battle.phase==='victory'?'副本完成':'副本挑戰結束';$('result-text').textContent=DUNGEONS[battle.dungeon.type].name+' · 完成 '+(battle.phase==='defeat'?Math.max(0,battle.wave-1):battle.wave)+' 波。'+(battle.phase==='victory'?'通關加碼 '+reward.coins+' 星露、'+reward.xp+' 熟練度，已自動保存。':'已完成波次收益保留，未取得通關加碼。');$('next-stage').hidden=true;}if(practice&&['victory','defeat'].includes(battle.phase)){$('result-title').textContent='試用結束';$('result-text').textContent='本次試用不消耗資源、不取得獎勵；正式戰場存檔保留。';$('next-stage').hidden=true;}
+ }if(battle.dungeon&&['victory','defeat'].includes(battle.phase)){const reward=dungeonReward(battle.dungeon);$('result-title').textContent=battle.phase==='victory'?'副本完成':'副本挑戰結束';$('result-text').textContent=DUNGEONS[battle.dungeon.type].name+' · 完成 '+(battle.phase==='defeat'?Math.max(0,battle.wave-1):battle.wave)+' 波。'+(battle.phase==='victory'?'通關加碼 '+reward.coins+' 星露、'+reward.xp+' 熟練度、'+reward.books+' 本訓練書，已自動保存。':'已完成波次收益保留，未取得通關加碼。');$('next-stage').hidden=true;}if(practice&&['victory','defeat'].includes(battle.phase)){$('result-title').textContent='試用結束';$('result-text').textContent='本次試用不消耗資源、不取得獎勵；正式戰場存檔保留。';$('next-stage').hidden=true;}
  if(autoWaves.checked&&!practice&&!battle.paused&&battle.phase==='intermission'&&!battle.blessingChoices.length){autoNextAt||=now+4000;setText('hint',`自動接波 · ${Math.max(0,Math.ceil((autoNextAt-now)/1000))} 秒`);if(now>=autoNextAt){try{saveBoundary();startWave(battle);}catch(e){error(e);}autoNextAt=0;}}else autoNextAt=0;
  retreat.hidden=!(!practice&&battle.mode==='endless'&&battle.phase==='intermission'&&battle.wave>0&&battle.wave%5===0);tactics?.update();interfaceUI?.update(battle,selectedPad);requestAnimationFrame(frame);}
 function setText(id,value){if($(id).textContent!==value)$(id).textContent=value;}

@@ -1,0 +1,12 @@
+{
+  "mode": "built-in-imagegen",
+  "cropped": false,
+  "assets": [
+    {
+      "id": "dungeon-training",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-03c42356-9126-404b-97c7-291dbd14f1b0.png",
+      "output": "art/dungeon-training.webp",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone portrait illustration for a premium cute fairytale mobile tower defense training dungeon. A beautiful woodland military training pavilion, open emerald-and-gold training book glowing on a wooden lectern in the foreground, archery practice targets and small wooden sparring dummies in a mossy clearing behind, golden fireflies and warm morning light. Painterly polished storybook mobile game rendering, readable at small size, rich material detail, harmonious teal green and gold. Entire composition fits the full portrait image, no collage, no sheet, no panels, no lettering, no watermark. Scene depicts troop training, not hero portraits and not a battle map. No human or IP character redesign."
+    }
+  ]
+}

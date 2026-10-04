@@ -1,14 +1,14 @@
-import {addDamageStack,tickDamageStacks} from './damage-stacks.mjs?v=20261005-growth1';
-import {validateDungeon,dungeonWave} from './dungeons.mjs?v=20261005-growth1';
-import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261005-growth1';
-import {inCone} from './attack-shapes.mjs?v=20261005-growth1';
-import {tickZones,tickBlocking} from './troop-mechanics.mjs?v=20261005-growth1';
+import {addDamageStack,tickDamageStacks} from './damage-stacks.mjs?v=20261005-story1';
+import {validateDungeon,dungeonWave} from './dungeons.mjs?v=20261005-story1';
+import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261005-story1';
+import {inCone} from './attack-shapes.mjs?v=20261005-story1';
+import {tickZones,tickBlocking} from './troop-mechanics.mjs?v=20261005-story1';
 // Deterministic simulation. Visuals consume events; animation never grants damage.
-import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261005-growth1';
-import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261005-growth1';
-import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261005-growth1';
-import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261005-growth1';
-import {skillSpec} from './skill-spec.mjs?v=20261005-growth1';
+import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261005-story1';
+import {UNITS,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261005-story1';
+import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261005-story1';
+import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261005-story1';
+import {skillSpec} from './skill-spec.mjs?v=20261005-story1';
 export {UNITS,UNIT_BRANCHES};
 export {SPECIALIZATIONS,BLESSINGS};
 export const towerStats=(t,s)=>{const r=statsFor(ROLES[t.role]||UNITS[t.role],t,s?.buffs);if(s?.army)r.damage*=1+(s.training?.[t.role]||0)*.01;return r;};

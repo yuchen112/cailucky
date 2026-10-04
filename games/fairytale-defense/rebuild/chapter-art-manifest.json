@@ -1,0 +1,21 @@
+{
+  "mode": "built-in-imagegen",
+  "cropped": false,
+  "assets": [
+    {
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-5c2b250d-7c7d-4edb-ba06-cb8652b9e498.png",
+      "output": "art/chapter-lantern.webp",
+      "prompt": "Use case: illustration-story. Asset type: ONE standalone square story chapter cover for premium cute fairytale tower defense. Chapter theme: the guiding lights in a forest are fading. A small extinguished ornate golden lantern on a mossy stone gate dominates foreground; behind it a winding woodland path with several dim lanterns leads toward a mysterious ivy-covered gate, one hopeful green-gold spark remains. Rich painterly polished storybook game illustration, emerald forest with warm gold light, readable visual story at thumbnail size. No characters, no text, no UI, no map/top-down view, no collage, no multiple panels, no watermark. Entire composition on one image with focal object centered and full object visible."
+    },
+    {
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-594a35e9-22ad-43e5-9bb7-f15a57cbb5ce.png",
+      "output": "art/chapter-stardew.webp",
+      "prompt": "One standalone square premium polished cute fairytale mobile game story chapter cover, NOT sprite sheet or collage. A luminous pearl vial collecting lost stardew at the meeting of two moonlit blue rivers, elegant ivy stone bridges, distant emerald golden dream castle. Violet blue silver magical night lighting, clear large centered focal vial, rich painterly game art coherent with emerald gold fairytale defense. No text, no characters, no UI, no top down map, no panels, no watermark. Whole composition full focal object visible."
+    },
+    {
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-a8c9d020-4eb6-4002-8c22-5b3a019d1b50.png",
+      "output": "art/chapter-dreamgate.webp",
+      "prompt": "One standalone square premium cute fairytale mobile game story chapter cover. Theme awakening the dream gate: enormous ornate emerald gold arched gate with luminous star crystal at its center atop an ancient circular ruin beyond a sunlit mountain pathway, dawn peach sky, magical hopeful particles. Strong clear centered gate focal point, polished painterly mobile game art, emerald/gold world style. No characters, no lettering, no UI, no topdown map, no collage, no sprite sheet, no watermark, entire composition one independent image."
+    }
+  ]
+}

@@ -1,5 +1,5 @@
-import {GRADES,DRAW_COST,RECRUIT_UNITS,drawOdds,recruitBatch,trainingRanks,unitLevel,xpForLevel,MAX_LEVEL,exchangeCost,exchangeUnit} from './recruitment.mjs?v=20261005-growth1';
-import {UNITS,UNIT_RARITY} from './army.mjs?v=20261005-growth1';
+import {GRADES,DRAW_COST,RECRUIT_UNITS,drawOdds,recruitBatch,trainingRanks,unitLevel,xpForLevel,MAX_LEVEL,exchangeCost,exchangeUnit} from './recruitment.mjs?v=20261005-story1';
+import {UNITS,UNIT_RARITY} from './army.mjs?v=20261005-story1';
 export function installRecruitment({dialog,getProfile,commit,audio,updateWallet,openUnit}){
  const body=dialog.querySelector('.journey-body');let busy=false,generation=0,animations=[],pending=null;
  const reduced=()=>audio.preferences.reducedMotion||matchMedia('(prefers-reduced-motion:reduce)').matches;

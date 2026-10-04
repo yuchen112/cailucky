@@ -1,5 +1,5 @@
-import {pointAt} from './core.mjs?v=20261005-growth1';
-import {routeLength} from './routes.mjs?v=20261005-growth1';
+import {pointAt} from './core.mjs?v=20261005-story1';
+import {routeLength} from './routes.mjs?v=20261005-story1';
 function aimAt(s,p,pad){const event=s.events.findLast(e=>e.pad===pad&&['anticipate','release'].includes(e.type)),target=s.enemies.find(e=>e.id===event?.targetId);if(target)return pointAt(target.distance,s,target.route);let aim=null,best=Infinity;for(let d=0;d<(routeLength(s)||1800);d+=12){const at=pointAt(d,s),distance=Math.hypot(at.x-p.x,at.y-p.y);if(distance<best){best=distance;aim=at;}}return aim||{x:p.x+1,y:p.y};}
 function coneClip(ctx,p,aim,r,angle){const a=Math.atan2(aim.y-p.y,aim.x-p.x);ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.arc(p.x,p.y,r,a-angle/2,a+angle/2);ctx.closePath();ctx.clip();return a;}
 export function drawAttackFootprint({s,p,r,image,rangeArt,ctx,selectedPad}){const aim=aimAt(s,p,selectedPad);if(r.cone){ctx.save();coneClip(ctx,p,aim,r.range,r.cone);rangeArt('aura-range',p,r.range,.85);ctx.restore();}else if(r.splash||r.zoneRadius){rangeArt('aura-range',aim,r.splash||r.zoneRadius,.85);}else if(r.bounces){rangeArt('aura-range',aim,r.chainRange||75,.8);}if(r.income)return;image('target',aim.x-12,aim.y-12,24,24,.8);}
