@@ -1,0 +1,23 @@
+{
+  "mode": "built-in image generation, each asset generated independently; whole-image resizing only",
+  "assets": [
+    {
+      "id": "commander-hall",
+      "prompt": "Use case: stylized-concept. Asset type: individual full portrait mobile game background. A cozy forest hero command hall interior, carved oak beams, teal banners, a round empty commander dais in the upper middle, soft sunlight from a forest window, small tactical map table near the edges. Polished cute storybook 3D painted game art, emerald and warm gold palette matching a fantasy woodland tower defense. Portrait composition, detailed edges and upper third, lower two thirds subdued dark teal wood/stone surfaces with very little clutter for readable UI overlay. No characters, no text, no buttons, no logo, no watermark, no collage, no multi-panel, only one standalone background.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5d7a178b-cabd-470c-b371-86f14715abb2.png",
+      "output": "art/commander-hall.webp"
+    },
+    {
+      "id": "summon-sanctuary",
+      "prompt": "Use case: stylized-concept. Asset type: individual full portrait mobile game background. A magical forest recruitment sanctuary, luminous crystal fountain and empty summoning circle in the upper middle, ivy stone pillars, small floating golden motes, twilight teal atmosphere. Polished cute storybook 3D painted game art, emerald and warm gold palette matching a fantasy woodland tower defense. Portrait composition, detailed edges and upper third, lower two thirds subdued dark teal wood/stone surfaces with very little clutter for readable UI overlay. No characters, no text, no buttons, no logo, no watermark, no collage, no multi-panel, only one standalone background.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-1510af23-789e-42bc-ad8d-ab5543a72a4b.png",
+      "output": "art/summon-sanctuary.webp"
+    },
+    {
+      "id": "supply-room",
+      "prompt": "Use case: stylized-concept. Asset type: individual full portrait mobile game background. A cozy forest supply room, neatly organized wooden shelves of training books and sealed chests along the sides, an open empty counter in the upper middle, amber lantern light. Polished cute storybook 3D painted game art, emerald and warm gold palette matching a fantasy woodland tower defense. Portrait composition, detailed edges and upper third, lower two thirds subdued dark teal wood/stone surfaces with very little clutter for readable UI overlay. No characters, no text, no buttons, no logo, no watermark, no collage, no multi-panel, only one standalone background.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-9128424c-fc42-431d-ac7d-2741a132f2fe.png",
+      "output": "art/supply-room.webp"
+    }
+  ]
+}

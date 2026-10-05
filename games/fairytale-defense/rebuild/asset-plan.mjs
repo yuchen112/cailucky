@@ -1,0 +1,17 @@
+import {createBattle,ROLES,UNITS,UNIT_BRANCHES,kindsFor} from './core.mjs';
+import {CAMPAIGN} from './encounters.mjs';
+import {chapterFor,CHAPTERS} from './chapters.mjs';
+import {storyMap} from './expedition.mjs';
+import {regionFor} from './routes.mjs';
+import {ENEMY_IDS,enemyArtAssets} from './enemy-catalog.mjs';
+import {EFFECT_ART} from './animation-state.mjs';
+import {SPELL_ART} from './motion.mjs';
+import {unitArt} from './unit-presentation.mjs';
+import {advancedMotionAssets} from './advanced-motion.mjs';
+export const COMMON_ART=['button','pad','seed','impact','target','health-track','health-fill','command-podium','dream-core','hero-dais','range','aura-range','support-range','fx-light','fx-spark','fx-rune','fx-petal','fx-clover','thorn-zone','flame-cone',...EFFECT_ART,...['bolt','spore','frost','glow'].map(x=>'projectile-'+x)];
+export const heroAssets=id=>[id,id+'-cast',id+'-ready',id+'-victory',...(id==='growth'?['growth-idle']:[]),SPELL_ART[ROLES[id].kind]];
+export function evolutionAssets(id){const ids=new Set();for(let level=1;level<=10;level++)for(const branch of UNIT_BRANCHES[id]){const art=unitArt({role:id,level,branch:branch.id});ids.add(art);ids.add('unit-'+id+'-victory');for(const pose of advancedMotionAssets(art))ids.add(pose);}return [...ids];}
+export function battleAssets(s){const region=regionFor(s),enemyKinds=s.mode==='endless'?ENEMY_IDS:[...new Set(Array.from({length:s.maxWaves},(_,i)=>kindsFor(s,i+1)).flat())];return [...new Set([...COMMON_ART,...enemyKinds.flatMap(enemyArtAssets),...s.loadout.flatMap(evolutionAssets),...s.loadout.map(x=>SPELL_ART[UNITS[x].kind]),...heroAssets(s.hero.role),'weapon-'+s.hero.role,region==='forest'?'road':'road-'+region,region==='forest'?'meadow':region==='moon'?'meadow-moon':region==='ruins'?'meadow-ruins-ui':'meadow-dawn'].filter(Boolean))];}
+export function chapterAssets(s,chapter=chapterFor(s.stage)){const ids=new Set();for(let stage=chapter.first;stage<=chapter.last;stage++){const draft=createBattle({hero:s.hero.role,loadout:s.loadout,stage,map:storyMap(stage)});for(const id of battleAssets(draft))ids.add(id);}return [...ids];}
+export const sessionAssets=s=>s.mode==='campaign'&&!s.dungeon?chapterAssets(s):battleAssets(s);
+export function followingChapter(s){if(s.mode!=='campaign'||s.dungeon)return null;const current=chapterFor(s.stage);return CHAPTERS.find(x=>x.number===current.number+1)||null;}
