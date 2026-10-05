@@ -1,7 +1,7 @@
 import {fitHands,capture,animateTable,cancelMotion,playPosePath,warmPlayPose} from "./presentation.mjs?v=20260930-motion3";
 import * as R from "./rules.mjs";
-import { reduce, autoAction } from "./engine.mjs?v=20260929-switch1";
-import * as Store from "./storage.mjs?v=20260929-switch1";
+import { reduce, autoAction } from "./engine.mjs?v=20261006-pace1";
+import * as Store from "./storage.mjs?v=20261006-pace1";
 import {selectionFeedback} from "./selection.mjs?v=20260929-feedback1";
 const app = document.querySelector("#app"),
   modal = document.querySelector("#modal"),
@@ -57,7 +57,7 @@ const help = {
   highlow:
     "四家各翻一張，A 最大、2 最小。同點比較黑桃＞紅心＞方塊＞梅花；最大者收其餘三家底注，最多支付現有桌上籌碼。",
   dragon:
-    "A 算 14。第三張嚴格落在兩張門牌之間即贏；等於門牌為撞柱；外側為未進門。門牌同點重發。各家輪流一回合，結算後才輪下一家。收益與虧損由虛擬莊家結算。",
+    "A 算 14。第三張嚴格落在兩張門牌之間即贏；等於門牌為撞柱；外側為未進門。門牌同點重發。四家各射一次為一輪；電腦回合自動接續，整輪完成才結算。快速桌共五輪，你每輪都能射門或跳過。收益與虧損由虛擬莊家結算。",
   redpoint:
     "每家起手 6 張，桌面 4 張。每回合先出一張手牌，再翻一張牌庫牌；翻牌有配對時自動撿取紅點較高的桌牌。手牌與桌牌點數湊 10 即可撿取；A 算 1，10/J/Q/K 須同牌面配對。紅 A 20 分，紅 2～9 按點數，紅 10/J/Q/K 10 分；黑桃 A 可設為 30 分。最後桌牌歸最後撿牌者。按四家分差結算。",
   sevens:
@@ -146,7 +146,7 @@ function render() {
 function renderSetup() {
   app.innerHTML =
     header(R.GAMES[game] + "・開桌") +
-    `<main class="screen setup"><section class="panel"><h2>${label[game]}</h2><div class="seat-summary">${profile.seats.map((k, i) => `<div><img src="${portrait(k)}" alt=""><strong>${i === 0 ? "你" : "對手 " + i}</strong><span>${name(k)}</span></div>`).join("")}</div><div class="toolbar">${btn("選擇角色", "roles")}${btn("全部隨機", "random-all")}</div><details class="rules"><summary>玩法與規則</summary><p>${help[game]}</p></details></section><section class="panel"><label class="field">桌上本金<input id="buy" type="number" value="${Math.min(500, profile.wallet)}" min="100" max="10000" step="100"></label><label class="field">底注／每分<input id="unit" type="number" value="10" min="1" max="1000"></label><label class="field">牌桌<select id="mode"><option value="quick">快速桌・5 局</option><option value="continuous">持續桌</option></select></label>${["big2", "blackjack"].includes(game) ? '<label class="field">難度<select id="level"><option value="easy">簡單</option><option selected value="normal">普通</option><option value="hard">進階</option></select></label>' : '<input id="level" type="hidden" value="normal">'}<details class="rules"><summary>進階規則</summary>${ruleFields()}</details><div class="toolbar">${btn("返回", "lobby")}${btn("開始開桌", "open")}</div><small>只有桌上本金參與本桌輸贏，錢包其餘餘額不受影響。</small></section></main>`;
+    `<main class="screen setup"><section class="panel"><h2>${label[game]}</h2><div class="seat-summary">${profile.seats.map((k, i) => `<div><img src="${portrait(k)}" alt=""><strong>${i === 0 ? "你" : "對手 " + i}</strong><span>${name(k)}</span></div>`).join("")}</div><div class="toolbar">${btn("選擇角色", "roles")}${btn("全部隨機", "random-all")}</div><details class="rules"><summary>玩法與規則</summary><p>${help[game]}</p></details></section><section class="panel"><label class="field">桌上本金<input id="buy" type="number" value="${Math.min(500, profile.wallet)}" min="100" max="10000" step="100"></label><label class="field">底注／每分<input id="unit" type="number" value="10" min="1" max="1000"></label><label class="field">牌桌<select id="mode"><option value="quick">快速桌・5 ${game==="dragon"?"輪":"局"}</option><option value="continuous">持續桌</option></select></label>${["big2", "blackjack"].includes(game) ? '<label class="field">難度<select id="level"><option value="easy">簡單</option><option selected value="normal">普通</option><option value="hard">進階</option></select></label>' : '<input id="level" type="hidden" value="normal">'}<details class="rules"><summary>進階規則</summary>${ruleFields()}</details><div class="toolbar">${btn("返回", "lobby")}${btn("開始開桌", "open")}</div><small>只有桌上本金參與本桌輸贏，錢包其餘餘額不受影響。</small></section></main>`;
 }
 function seatsHTML() {
   return `<div class="seats">${profile.seats.map((k, i) => `<div class="seat-editor"><img src="${portrait(k)}" alt="${name(k)}"><strong>${i === 0 ? "你" : `對手 ${i}`}</strong><select data-seat="${i}" aria-label="${i === 0 ? "玩家" : "對手" + i}角色">${R.ROLES.map(([key, n]) => `<option value="${key}" ${key === k ? "selected" : ""}>${n}</option>`).join("")}</select><label><input type="checkbox" data-lock="${i}" ${profile.locks[i] ? "checked" : ""}>鎖定</label><button data-action="random-one" data-seat="${i}">隨機</button></div>`).join("")}</div>`;
@@ -249,13 +249,13 @@ function renderTable() {
   }
   if (ended(t)) {
     hand = [];
-    center = `<section class="panel result-panel"><h2>${t.phase === "tableEnd" ? "本桌結束" : "本局結算"}</h2><p>${escape(t.result.detail)}</p>${["highlow", "dragon", "big2", "sevens"].includes(t.type) ? '<div class="cards result-reveal">' + (["big2","sevens"].includes(t.type)?t.shown:t.board).map((c, i) => "<div>" + cardHTML(c, "", true) + (t.type === "highlow" ? "<small>" + name(t.players[i].role) + "</small>" : "") + "</div>").join("") + "</div>" : ""}${t.type === "blackjack" ? "<p>莊家 " + R.bj(t.dealer).total + ' 點</p><div class="cards">' + t.dealer.map((c) => cardHTML(c, "", true)).join("") + "</div>" : ""}<div class="result-grid">${t.players.map((x, i) => `<div data-delta="${t.result.deltas[i]}"><img src="art/seat-${x.role}${t.result.deltas[i]>0?"-win":""}.webp" alt="${name(x.role)}"><strong>${name(x.role)}</strong><div class="delta">${t.result.deltas[i] > 0 ? "+" : ""}${t.result.deltas[i]}</div><small>桌上 ${x.chips}</small></div>`).join("")}</div></section>`;
+    center = `<section class="panel result-panel"><h2>${t.phase === "tableEnd" ? "本桌結束" : t.type==="dragon"?"本輪結算":"本局結算"}</h2><p>${escape(t.result.detail)}</p>${["highlow", "dragon", "big2", "sevens"].includes(t.type) ? '<div class="cards result-reveal">' + (["big2","sevens"].includes(t.type)?t.shown:t.type==="dragon"?(t.dragonTurns?.find(x=>x.seat===0)?.cards||t.board):t.board).map((c, i) => "<div>" + cardHTML(c, "", true) + (t.type === "highlow" ? "<small>" + name(t.players[i].role) + "</small>" : "") + "</div>").join("") + "</div>" : ""}${t.type === "blackjack" ? "<p>莊家 " + R.bj(t.dealer).total + ' 點</p><div class="cards">' + t.dealer.map((c) => cardHTML(c, "", true)).join("") + "</div>" : ""}<div class="result-grid">${t.players.map((x, i) => `<div data-delta="${t.result.deltas[i]}"><img src="art/seat-${x.role}${t.result.deltas[i]>0?"-win":""}.webp" alt="${name(x.role)}"><strong>${name(x.role)}</strong><div class="delta">${t.result.deltas[i] > 0 ? "+" : ""}${t.result.deltas[i]}</div><small>桌上 ${x.chips}</small>${t.type==="dragon"?`<small> · ${escape(t.dragonTurns?.find(y=>y.seat===i)?.label||(t.dragonTurns?"尚未射門":i===t.turn?t.result.detail:"—"))}</small>`:""}</div>`).join("")}</div></section>`;
     actions =
-      (t.phase === "roundEnd" ? btn("下一局", "next") : "") +
+      (t.phase === "roundEnd" ? btn(t.type==="dragon"?"下一輪":"下一局", "next") : "") +
       btn("結回錢包並離桌", "leave") +
       btn("牌局明細", "details");
   }
-  app.innerHTML = `<main class="table-screen ${ended(t) ? "is-ended" : ""}" data-game="${t.type}" data-last-seat="${t.lastSeat??0}"><header class="bar"><strong>${R.GAMES[t.type]}・第 ${t.round} 局</strong><span>${t.mode === "quick" ? "快速桌 5 局" : "持續桌"}</span><div>${btn("說明", "help")}${btn("暫停", "pause")}</div></header><section class="arena">${stacksHTML(t)}${[1, 2, 3].map((i) => `<div class="seat s${i} ${i === t.turn && !ended(t) ? "active" : ""}"><img class="table-character" src="art/seat-${t.players[i].role}.webp" alt="${name(t.players[i].role)}坐在牌桌旁">${opponentCards(t.players[i].hand.length)}<div><strong>${name(t.players[i].role)}</strong><br>${t.players[i].chips} 籌碼<br>${t.type === "blackjack" && t.players[i].hand.length ? R.bj(t.players[i].hand).total + " 點" : t.players[i].hand.length + " 張"}</div></div>`).join("")}<div class="play-area"><p class="message">${ended(t) ? "本局已完成" : busy ? "正在理牌…" : paused ? "已暫停" : t.phase === "arrange" ? "請完成三墩排牌" : drawFrom ? `向 ${drawFrom} 抽牌` : `輪到 ${name(t.players[t.turn].role)}`} · ${t.type==="big2"&&t.last?`${name(t.players[t.lastSeat].role)} 出牌 · `:""}${escape(t.message)}</p>${center}</div></section>${hand.length ? `<section class="hand-wrap"><div class="player-info"><img class="table-character" src="art/seat-${t.players[0].role}.webp" alt="${name(t.players[0].role)}"><div>${name(t.players[0].role)}<br>${t.players[0].chips} 籌碼${t.type === "blackjack" ? "<br>" + R.bj(t.players[0].hand).total + " 點" : ""}</div></div><div class="hand">${hand.map((c) => cardHTML(c, t.type === "thirteen" ? "place" : ["oldmaid", "blackjack"].includes(t.type) ? "" : "select")).join("")}</div></section>` : `<section class="empty-hand"><div class="player-info"><img class="table-character" src="art/seat-${t.players[0].role}.webp" alt="${name(t.players[0].role)}"><div>${name(t.players[0].role)}<br>${t.players[0].chips} 籌碼</div></div></section>`}<footer class="actions">${actions}</footer></main>`;
+  app.innerHTML = `<main class="table-screen ${ended(t) ? "is-ended" : ""}" data-game="${t.type}" data-last-seat="${t.lastSeat??0}"><header class="bar"><strong>${R.GAMES[t.type]}・第 ${t.round} ${t.type==="dragon"?"輪":"局"}</strong><span>${t.mode === "quick" ? (t.type==="dragon"?"快速桌 5 輪":"快速桌 5 局") : "持續桌"}</span><div>${btn("說明", "help")}${btn("暫停", "pause")}</div></header><section class="arena">${stacksHTML(t)}${[1, 2, 3].map((i) => `<div class="seat s${i} ${i === t.turn && !ended(t) ? "active" : ""}"><img class="table-character" src="art/seat-${t.players[i].role}.webp" alt="${name(t.players[i].role)}坐在牌桌旁">${opponentCards(t.players[i].hand.length)}<div><strong>${name(t.players[i].role)}</strong><br>${t.players[i].chips} 籌碼<br>${t.type === "blackjack" && t.players[i].hand.length ? R.bj(t.players[i].hand).total + " 點" : t.players[i].hand.length + " 張"}</div></div>`).join("")}<div class="play-area"><p class="message">${ended(t) ? (t.type==="dragon"?"本輪已完成":"本局已完成") : busy ? "正在理牌…" : paused ? "已暫停" : t.phase === "arrange" ? "請完成三墩排牌" : drawFrom ? `向 ${drawFrom} 抽牌` : `輪到 ${name(t.players[t.turn].role)}`} · ${t.type==="big2"&&t.last?`${name(t.players[t.lastSeat].role)} 出牌 · `:""}${escape(t.message)}</p>${center}</div></section>${hand.length ? `<section class="hand-wrap"><div class="player-info"><img class="table-character" src="art/seat-${t.players[0].role}.webp" alt="${name(t.players[0].role)}"><div>${name(t.players[0].role)}<br>${t.players[0].chips} 籌碼${t.type === "blackjack" ? "<br>" + R.bj(t.players[0].hand).total + " 點" : ""}</div></div><div class="hand">${hand.map((c) => cardHTML(c, t.type === "thirteen" ? "place" : ["oldmaid", "blackjack"].includes(t.type) ? "" : "select")).join("")}</div></section>` : `<section class="empty-hand"><div class="player-info"><img class="table-character" src="art/seat-${t.players[0].role}.webp" alt="${name(t.players[0].role)}"><div>${name(t.players[0].role)}<br>${t.players[0].chips} 籌碼</div></div></section>`}<footer class="actions">${actions}</footer></main>`;
   const el = app.querySelector(".hand");
   fitHands(app);
   const feedback = selectionFeedback(profile, selected, target);
@@ -300,7 +300,7 @@ function schedule() {
     if (t.arrangements[0]) timer = setTimeout(completeArrangers, 100);
     return;
   }
-  if (t.turn === 0) return;
+  if (t.turn === 0 && !(t.type==="dragon"&&t.phase==="playing")) return;
   timer = setTimeout(
     () => {
       if (paused || modal.open || document.hidden || innerHeight > innerWidth)
@@ -315,7 +315,7 @@ function schedule() {
       };
       dispatch(action);
     },
-    profile.settings.fast ? 350 : 1000,
+    t.type==="dragon"?(t.phase==="playing"?(t.turn===0?700:80):120):t.type==="blackjack"?120:profile.settings.fast ? 350 : 1000,
   );
 }
 async function arrange(hand) {
@@ -1129,7 +1129,7 @@ async function animateCards(previous,action){
  visualBusy=view==='table';clearTimeout(timer);
  app.setAttribute('aria-busy',String(visualBusy));
  try{
-   if(view==='table')await animateTable(app,previous instanceof Map?{cards:[],seats:[]}:previous,action,profile.settings,sound);
+   if(view==='table')await animateTable(app,previous instanceof Map?{cards:[],seats:[]}:previous,action,{...profile.settings,fast:profile.settings.fast||((["dragon","blackjack"].includes(profile.table?.type))&&action.seat>0)},sound);
  }catch(error){
    cancelMotion();console.warn('Presentation skipped; committed game state preserved',error);
  }finally{

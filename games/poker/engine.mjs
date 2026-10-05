@@ -180,6 +180,7 @@ export function validateProfile(p) {
           R.safeInt(r[1], 7, 13),
         "排七欄位異常",
       );
+    if(t.dragonTurns!==undefined)requireThat(Array.isArray(t.dragonTurns)&&t.dragonTurns.length<=4&&new Set(t.dragonTurns.map(x=>x.seat)).size===t.dragonTurns.length&&t.dragonTurns.every(x=>R.safeInt(x.seat,0,3)&&Number.isSafeInteger(x.delta)&&typeof x.label==="string"&&x.label.length<40&&Array.isArray(x.cards)&&[2,3].includes(x.cards.length)&&x.cards.every(c=>R.deck().includes(c))),"射門紀錄異常");
     if (t.draft) {
       requireThat(
         ["front", "middle", "back"].every(
@@ -271,6 +272,7 @@ function newRound(t, random) {
   t.arrangements = [];
   t.draft = { front: [], middle: [], back: [] };
   t.result = null;
+  if(t.type==="dragon")t.dragonTurns=[];
   t.moveCount = 0;
   t.bets = [0, 0, 0, 0];
   t.players.forEach((x) => {
@@ -310,7 +312,7 @@ function newRound(t, random) {
   }
   if (["blackjack", "highlow", "dragon"].includes(t.type)) t.phase = "betting";
   if (t.type === "dragon") {
-    t.turn = (t.round - 1) % 4;
+    t.turn = 0;
     drawDoor(t, random);
   }
 }
@@ -621,7 +623,12 @@ export function reduce(profile, action, random = Math.random) {
         }
       }
     } else if (t.type === "dragon") {
-      requireThat(["bet", "pass"].includes(a.type), "請下注或跳過");
+      if(a.type==="advance"){
+        requireThat(t.phase==="playing","尚未完成射門");
+        t.discard.push(...t.board);t.turn=(t.turn+1)%4;t.phase="betting";drawDoor(t,random);t.message="請下注或跳過";
+      }else{
+      requireThat(t.phase==="betting"&&["bet", "pass"].includes(a.type), "請下注或跳過");
+      const opening=who.chips;
       if (a.type === "bet") {
         const bet = validBet(t, a.amount, a.seat),
           [lo, hi] = t.board.map((c) => R.card(c).r).sort((a, b) => a - b),
@@ -639,7 +646,12 @@ export function reduce(profile, action, random = Math.random) {
         t.message =
           delta > 0 ? "射中" : r === lo || r === hi ? "撞柱" : "未進門";
       } else t.message = "跳過";
-      finish(p, t, t.message);
+      t.dragonTurns??=[];
+      requireThat(!t.dragonTurns.some(x=>x.seat===a.seat),"本輪已完成射門");
+      t.dragonTurns.push({seat:a.seat,delta:who.chips-opening,label:t.message,cards:[...t.board]});
+      if(t.dragonTurns.length===4||t.players.some(x=>x.chips===0))finish(p,t,"本輪射門完成"+(t.dragonTurns.find(x=>x.seat===0)?" · 你的結果："+t.dragonTurns.find(x=>x.seat===0).label:""));
+      else t.phase="playing";
+      }
     } else if (t.type === "redpoint") {
       requireThat(a.type === "play" && a.cards?.length === 1, "請選一張手牌");
       const c = a.cards[0],
@@ -869,6 +881,7 @@ export function autoAction(t, random = Math.random) {
       : { ...base, type: "pass" };
   }
   if (t.type === "dragon") {
+    if(t.phase==="playing")return {...base,type:"advance"};
     const [lo, hi] = t.board.map((c) => R.card(c).r).sort((a, b) => a - b),
       gap = hi - lo - 1;
     return {

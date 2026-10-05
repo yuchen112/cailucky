@@ -1,4 +1,4 @@
-import { createProfile, validateProfile, reduce } from "./engine.mjs?v=20260929-switch1";
+import { createProfile, validateProfile, reduce } from "./engine.mjs?v=20261006-pace1";
 export const KEY = "cxq.poker.v1";
 export const WARNING =
   "進度只儲存在目前瀏覽器，並非雲端存檔。清除網站資料、使用無痕模式或更換裝置可能遺失進度。請定期匯出備份；本機與備份皆遺失時無法恢復。";
