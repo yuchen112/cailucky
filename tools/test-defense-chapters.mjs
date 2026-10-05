@@ -10,5 +10,5 @@ assert.equal(revisit[2].stages[4].available,true);
 assert.equal(revisit[2].cleared,1);
 const id='unit-archer-rapid-5';assert.deepEqual(advancedMotionAssets(id),[id+'-ready',id+'-release']);
 for(const phase of ['idle','windup','release','recover'])assert.ok(advancedMotionArt(id,phase).startsWith(id));
-assert.equal(advancedMotionArt('unit-archer-heavy-4','release'),'unit-archer-heavy-4');
+assert.equal(advancedMotionArt('unit-archer-heavy-4','release'),'unit-archer-heavy-4-release');
 console.log('PASS story chapter counts independent of maps, completed-stage replay after insertion and exact upgraded identity keyframe selection.');

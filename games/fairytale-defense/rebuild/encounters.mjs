@@ -19,6 +19,7 @@ const entries=[
 // Public save identifiers: never rename these when adding or rearranging chapters.
 const STAGE_IDS=['forest-entrance','forest-creek','forest-moss','forest-watch','forest-gate','moon-bank','moon-fork','moon-island','moon-bridge','moon-source','dawn-outpost','dawn-crystal','ruins-corridor','ruins-court','ruins-throne'];
 if(STAGE_IDS.length!==entries.length)throw Error('Every authored stage requires a permanent ID');
+import {isBoss} from './enemy-catalog.mjs';
 const kinds={w:'walker',r:'runner',a:'armored',b:'boss',m:'moth'};
 export const CAMPAIGN=entries.map(([name,tip,waves],i)=>Object.freeze({id:STAGE_IDS[i],stage:i+1,name,tip:tip+(i>=5?' 飛蛾從第二波混入；準備對空兵或英雄技能。':''),map:i<5?'forest':i<10?'moon':i<12?'dawn':'ruins',region:i<5?'翠林':i<10?'月露':i<12?'晨曦':'遺跡',waves:waves.map((s,w)=>Object.freeze([...s].map((c,n)=>kinds[i>=5&&w>=1&&c==='r'&&n%4===1?'m':c]))),interval:Math.max(.65,.98-i*.02)}));
-export function encounterWave(stage,wave){const level=CAMPAIGN[stage-1];if(!level||wave<1||wave>level.waves.length)throw Error('Invalid encounter');return [...level.waves[wave-1]];}
+export function encounterWave(stage,wave){const level=CAMPAIGN[stage-1];if(!level||wave<1||wave>level.waves.length)throw Error('Invalid encounter');return level.waves[wave-1].map((kind,i)=>isBoss(kind)&&stage>=10?(stage>=15?'clocklord':stage>=13?'emberlord':'frostlord'):stage>=6&&wave>=3&&i%9===3&&kind==='walker'?'medic':stage>=11&&i%5===2&&kind==='armored'?'shieldling':stage>=8&&i%7===4&&kind==='runner'?'berserker':kind);}

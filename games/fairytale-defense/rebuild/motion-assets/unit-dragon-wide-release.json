@@ -1,0 +1,12 @@
+{
+  "id": "unit-dragon-wide-release",
+  "role": "dragon",
+  "branch": "wide",
+  "level": 5,
+  "name": "燈火燎原",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-12624029-f711-4cdf-a46f-3dfc6cbe48ff.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 燈火燎原 troop at level 5. Change ONLY action: exhale compact flame RIGHT with mouth clearly open and head extended forward, stable feet and same armor. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-dragon-wide-release.webp",
+  "individual": true,
+  "cropped": false
+}

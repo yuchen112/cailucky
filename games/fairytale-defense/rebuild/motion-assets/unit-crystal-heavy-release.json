@@ -1,0 +1,12 @@
+{
+  "id": "unit-crystal-heavy-release",
+  "role": "crystal",
+  "branch": "heavy",
+  "level": 5,
+  "name": "碎甲重擊",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-3d7f138e-0e7c-4181-ad15-65c8b390422b.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 碎甲重擊 troop at level 5. Change ONLY action: swing existing crystal hammer decisively RIGHT, hammer head ahead of face; if reference has paired batons strike RIGHT with BOTH existing batons instead, never replace equipment. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-crystal-heavy-release.webp",
+  "individual": true,
+  "cropped": false
+}

@@ -1,0 +1,751 @@
+[
+  {
+    "id": "unit-scout-rapid-7",
+    "role": "scout",
+    "branch": "rapid",
+    "level": 7,
+    "name": "風羽連射"
+  },
+  {
+    "id": "unit-scout-rapid-10",
+    "role": "scout",
+    "branch": "rapid",
+    "level": 10,
+    "name": "風羽連射"
+  },
+  {
+    "id": "unit-scout-far-7",
+    "role": "scout",
+    "branch": "far",
+    "level": 7,
+    "name": "高空瞭望"
+  },
+  {
+    "id": "unit-scout-far-10",
+    "role": "scout",
+    "branch": "far",
+    "level": 10,
+    "name": "高空瞭望"
+  },
+  {
+    "id": "unit-warden-root-7",
+    "role": "warden",
+    "branch": "root",
+    "level": 7,
+    "name": "堅岩壁壘"
+  },
+  {
+    "id": "unit-warden-root-10",
+    "role": "warden",
+    "branch": "root",
+    "level": 10,
+    "name": "堅岩壁壘"
+  },
+  {
+    "id": "unit-warden-heavy-7",
+    "role": "warden",
+    "branch": "heavy",
+    "level": 7,
+    "name": "岩盾反擊"
+  },
+  {
+    "id": "unit-warden-heavy-10",
+    "role": "warden",
+    "branch": "heavy",
+    "level": 10,
+    "name": "岩盾反擊"
+  },
+  {
+    "id": "unit-storm-wide-7",
+    "role": "storm",
+    "branch": "wide",
+    "level": 7,
+    "name": "雷枝分流"
+  },
+  {
+    "id": "unit-storm-wide-10",
+    "role": "storm",
+    "branch": "wide",
+    "level": 10,
+    "name": "雷枝分流"
+  },
+  {
+    "id": "unit-storm-heavy-7",
+    "role": "storm",
+    "branch": "heavy",
+    "level": 7,
+    "name": "雷霆重擊"
+  },
+  {
+    "id": "unit-storm-heavy-10",
+    "role": "storm",
+    "branch": "heavy",
+    "level": 10,
+    "name": "雷霆重擊"
+  },
+  {
+    "id": "unit-bramble-wide-7",
+    "role": "bramble",
+    "branch": "wide",
+    "level": 7,
+    "name": "荊棘繁生"
+  },
+  {
+    "id": "unit-bramble-wide-10",
+    "role": "bramble",
+    "branch": "wide",
+    "level": 10,
+    "name": "荊棘繁生"
+  },
+  {
+    "id": "unit-bramble-heavy-7",
+    "role": "bramble",
+    "branch": "heavy",
+    "level": 7,
+    "name": "尖刺纏林"
+  },
+  {
+    "id": "unit-bramble-heavy-10",
+    "role": "bramble",
+    "branch": "heavy",
+    "level": 10,
+    "name": "尖刺纏林"
+  },
+  {
+    "id": "unit-artisan-power-7",
+    "role": "artisan",
+    "branch": "power",
+    "level": 7,
+    "name": "精煉星露"
+  },
+  {
+    "id": "unit-artisan-power-10",
+    "role": "artisan",
+    "branch": "power",
+    "level": 10,
+    "name": "精煉星露"
+  },
+  {
+    "id": "unit-artisan-haste-7",
+    "role": "artisan",
+    "branch": "haste",
+    "level": 7,
+    "name": "維修工坊"
+  },
+  {
+    "id": "unit-artisan-haste-10",
+    "role": "artisan",
+    "branch": "haste",
+    "level": 10,
+    "name": "維修工坊"
+  },
+  {
+    "id": "unit-archer-veteran",
+    "role": "archer",
+    "branch": "heavy",
+    "level": 2,
+    "name": "重弩"
+  },
+  {
+    "id": "unit-archer-rapid-3",
+    "role": "archer",
+    "branch": "rapid",
+    "level": 3,
+    "name": "連弩"
+  },
+  {
+    "id": "unit-archer-rapid-4",
+    "role": "archer",
+    "branch": "rapid",
+    "level": 4,
+    "name": "連弩"
+  },
+  {
+    "id": "unit-archer-rapid-7",
+    "role": "archer",
+    "branch": "rapid",
+    "level": 7,
+    "name": "連弩"
+  },
+  {
+    "id": "unit-archer-heavy-3",
+    "role": "archer",
+    "branch": "heavy",
+    "level": 3,
+    "name": "重弩"
+  },
+  {
+    "id": "unit-archer-heavy-4",
+    "role": "archer",
+    "branch": "heavy",
+    "level": 4,
+    "name": "重弩"
+  },
+  {
+    "id": "unit-archer-heavy-7",
+    "role": "archer",
+    "branch": "heavy",
+    "level": 7,
+    "name": "重弩"
+  },
+  {
+    "id": "unit-archer-heavy-10",
+    "role": "archer",
+    "branch": "heavy",
+    "level": 10,
+    "name": "重弩"
+  },
+  {
+    "id": "unit-cannon-veteran",
+    "role": "cannon",
+    "branch": "pierce",
+    "level": 2,
+    "name": "破甲砲"
+  },
+  {
+    "id": "unit-cannon-wide-3",
+    "role": "cannon",
+    "branch": "wide",
+    "level": 3,
+    "name": "孢子擴散"
+  },
+  {
+    "id": "unit-cannon-wide-4",
+    "role": "cannon",
+    "branch": "wide",
+    "level": 4,
+    "name": "孢子擴散"
+  },
+  {
+    "id": "unit-cannon-wide-7",
+    "role": "cannon",
+    "branch": "wide",
+    "level": 7,
+    "name": "孢子擴散"
+  },
+  {
+    "id": "unit-cannon-wide-10",
+    "role": "cannon",
+    "branch": "wide",
+    "level": 10,
+    "name": "孢子擴散"
+  },
+  {
+    "id": "unit-cannon-pierce-3",
+    "role": "cannon",
+    "branch": "pierce",
+    "level": 3,
+    "name": "破甲砲"
+  },
+  {
+    "id": "unit-cannon-pierce-4",
+    "role": "cannon",
+    "branch": "pierce",
+    "level": 4,
+    "name": "破甲砲"
+  },
+  {
+    "id": "unit-cannon-pierce-5",
+    "role": "cannon",
+    "branch": "pierce",
+    "level": 5,
+    "name": "破甲砲"
+  },
+  {
+    "id": "unit-cannon-pierce-7",
+    "role": "cannon",
+    "branch": "pierce",
+    "level": 7,
+    "name": "破甲砲"
+  },
+  {
+    "id": "unit-cannon-pierce-10",
+    "role": "cannon",
+    "branch": "pierce",
+    "level": 10,
+    "name": "破甲砲"
+  },
+  {
+    "id": "unit-frost-veteran",
+    "role": "frost",
+    "branch": "root",
+    "level": 2,
+    "name": "凝霜"
+  },
+  {
+    "id": "unit-frost-long-3",
+    "role": "frost",
+    "branch": "long",
+    "level": 3,
+    "name": "綿長霜露"
+  },
+  {
+    "id": "unit-frost-long-4",
+    "role": "frost",
+    "branch": "long",
+    "level": 4,
+    "name": "綿長霜露"
+  },
+  {
+    "id": "unit-frost-long-5",
+    "role": "frost",
+    "branch": "long",
+    "level": 5,
+    "name": "綿長霜露"
+  },
+  {
+    "id": "unit-frost-long-7",
+    "role": "frost",
+    "branch": "long",
+    "level": 7,
+    "name": "綿長霜露"
+  },
+  {
+    "id": "unit-frost-long-10",
+    "role": "frost",
+    "branch": "long",
+    "level": 10,
+    "name": "綿長霜露"
+  },
+  {
+    "id": "unit-frost-root-3",
+    "role": "frost",
+    "branch": "root",
+    "level": 3,
+    "name": "凝霜"
+  },
+  {
+    "id": "unit-frost-root-4",
+    "role": "frost",
+    "branch": "root",
+    "level": 4,
+    "name": "凝霜"
+  },
+  {
+    "id": "unit-frost-root-7",
+    "role": "frost",
+    "branch": "root",
+    "level": 7,
+    "name": "凝霜"
+  },
+  {
+    "id": "unit-frost-root-10",
+    "role": "frost",
+    "branch": "root",
+    "level": 10,
+    "name": "凝霜"
+  },
+  {
+    "id": "unit-crystal-rapid",
+    "role": "crystal",
+    "branch": "rapid",
+    "level": 5,
+    "name": "晶角連擊"
+  },
+  {
+    "id": "unit-crystal-rapid-7",
+    "role": "crystal",
+    "branch": "rapid",
+    "level": 7,
+    "name": "晶角連擊"
+  },
+  {
+    "id": "unit-crystal-rapid-10",
+    "role": "crystal",
+    "branch": "rapid",
+    "level": 10,
+    "name": "晶角連擊"
+  },
+  {
+    "id": "unit-crystal-heavy",
+    "role": "crystal",
+    "branch": "heavy",
+    "level": 5,
+    "name": "碎甲重擊"
+  },
+  {
+    "id": "unit-crystal-heavy-7",
+    "role": "crystal",
+    "branch": "heavy",
+    "level": 7,
+    "name": "碎甲重擊"
+  },
+  {
+    "id": "unit-crystal-heavy-10",
+    "role": "crystal",
+    "branch": "heavy",
+    "level": 10,
+    "name": "碎甲重擊"
+  },
+  {
+    "id": "unit-firefly-veteran",
+    "role": "firefly",
+    "branch": "rapid",
+    "level": 2,
+    "name": "流螢連射"
+  },
+  {
+    "id": "unit-firefly-far-3",
+    "role": "firefly",
+    "branch": "far",
+    "level": 3,
+    "name": "遠空追擊"
+  },
+  {
+    "id": "unit-firefly-far-4",
+    "role": "firefly",
+    "branch": "far",
+    "level": 4,
+    "name": "遠空追擊"
+  },
+  {
+    "id": "unit-firefly-far-5",
+    "role": "firefly",
+    "branch": "far",
+    "level": 5,
+    "name": "遠空追擊"
+  },
+  {
+    "id": "unit-firefly-far-7",
+    "role": "firefly",
+    "branch": "far",
+    "level": 7,
+    "name": "遠空追擊"
+  },
+  {
+    "id": "unit-firefly-far-10",
+    "role": "firefly",
+    "branch": "far",
+    "level": 10,
+    "name": "遠空追擊"
+  },
+  {
+    "id": "unit-firefly-rapid-3",
+    "role": "firefly",
+    "branch": "rapid",
+    "level": 3,
+    "name": "流螢連射"
+  },
+  {
+    "id": "unit-firefly-rapid-4",
+    "role": "firefly",
+    "branch": "rapid",
+    "level": 4,
+    "name": "流螢連射"
+  },
+  {
+    "id": "unit-firefly-rapid-5",
+    "role": "firefly",
+    "branch": "rapid",
+    "level": 5,
+    "name": "流螢連射"
+  },
+  {
+    "id": "unit-firefly-rapid-7",
+    "role": "firefly",
+    "branch": "rapid",
+    "level": 7,
+    "name": "流螢連射"
+  },
+  {
+    "id": "unit-firefly-rapid-10",
+    "role": "firefly",
+    "branch": "rapid",
+    "level": 10,
+    "name": "流螢連射"
+  },
+  {
+    "id": "unit-chime-rapid",
+    "role": "chime",
+    "branch": "rapid",
+    "level": 5,
+    "name": "疾風鈴"
+  },
+  {
+    "id": "unit-chime-rapid-7",
+    "role": "chime",
+    "branch": "rapid",
+    "level": 7,
+    "name": "疾風鈴"
+  },
+  {
+    "id": "unit-chime-rapid-10",
+    "role": "chime",
+    "branch": "rapid",
+    "level": 10,
+    "name": "疾風鈴"
+  },
+  {
+    "id": "unit-chime-heavy",
+    "role": "chime",
+    "branch": "heavy",
+    "level": 5,
+    "name": "重奏"
+  },
+  {
+    "id": "unit-chime-heavy-7",
+    "role": "chime",
+    "branch": "heavy",
+    "level": 7,
+    "name": "重奏"
+  },
+  {
+    "id": "unit-chime-heavy-10",
+    "role": "chime",
+    "branch": "heavy",
+    "level": 10,
+    "name": "重奏"
+  },
+  {
+    "id": "unit-blossom-power",
+    "role": "blossom",
+    "branch": "power",
+    "level": 5,
+    "name": "繁花祝福"
+  },
+  {
+    "id": "unit-blossom-power-7",
+    "role": "blossom",
+    "branch": "power",
+    "level": 7,
+    "name": "繁花祝福"
+  },
+  {
+    "id": "unit-blossom-power-10",
+    "role": "blossom",
+    "branch": "power",
+    "level": 10,
+    "name": "繁花祝福"
+  },
+  {
+    "id": "unit-blossom-haste",
+    "role": "blossom",
+    "branch": "haste",
+    "level": 5,
+    "name": "春風祝福"
+  },
+  {
+    "id": "unit-blossom-haste-7",
+    "role": "blossom",
+    "branch": "haste",
+    "level": 7,
+    "name": "春風祝福"
+  },
+  {
+    "id": "unit-blossom-haste-10",
+    "role": "blossom",
+    "branch": "haste",
+    "level": 10,
+    "name": "春風祝福"
+  },
+  {
+    "id": "unit-clockwork-far",
+    "role": "clockwork",
+    "branch": "far",
+    "level": 5,
+    "name": "遠投機構"
+  },
+  {
+    "id": "unit-clockwork-far-7",
+    "role": "clockwork",
+    "branch": "far",
+    "level": 7,
+    "name": "遠投機構"
+  },
+  {
+    "id": "unit-clockwork-far-10",
+    "role": "clockwork",
+    "branch": "far",
+    "level": 10,
+    "name": "遠投機構"
+  },
+  {
+    "id": "unit-clockwork-wide",
+    "role": "clockwork",
+    "branch": "wide",
+    "level": 5,
+    "name": "散射機構"
+  },
+  {
+    "id": "unit-clockwork-wide-7",
+    "role": "clockwork",
+    "branch": "wide",
+    "level": 7,
+    "name": "散射機構"
+  },
+  {
+    "id": "unit-clockwork-wide-10",
+    "role": "clockwork",
+    "branch": "wide",
+    "level": 10,
+    "name": "散射機構"
+  },
+  {
+    "id": "unit-alchemist-wide",
+    "role": "alchemist",
+    "branch": "wide",
+    "level": 5,
+    "name": "琥珀霧"
+  },
+  {
+    "id": "unit-alchemist-wide-7",
+    "role": "alchemist",
+    "branch": "wide",
+    "level": 7,
+    "name": "琥珀霧"
+  },
+  {
+    "id": "unit-alchemist-wide-10",
+    "role": "alchemist",
+    "branch": "wide",
+    "level": 10,
+    "name": "琥珀霧"
+  },
+  {
+    "id": "unit-alchemist-heavy",
+    "role": "alchemist",
+    "branch": "heavy",
+    "level": 5,
+    "name": "濃縮配方"
+  },
+  {
+    "id": "unit-alchemist-heavy-7",
+    "role": "alchemist",
+    "branch": "heavy",
+    "level": 7,
+    "name": "濃縮配方"
+  },
+  {
+    "id": "unit-alchemist-heavy-10",
+    "role": "alchemist",
+    "branch": "heavy",
+    "level": 10,
+    "name": "濃縮配方"
+  },
+  {
+    "id": "unit-vine-root",
+    "role": "vine",
+    "branch": "root",
+    "level": 5,
+    "name": "深根纏繞"
+  },
+  {
+    "id": "unit-vine-root-7",
+    "role": "vine",
+    "branch": "root",
+    "level": 7,
+    "name": "深根纏繞"
+  },
+  {
+    "id": "unit-vine-root-10",
+    "role": "vine",
+    "branch": "root",
+    "level": 10,
+    "name": "深根纏繞"
+  },
+  {
+    "id": "unit-vine-rapid",
+    "role": "vine",
+    "branch": "rapid",
+    "level": 5,
+    "name": "疾生蔓"
+  },
+  {
+    "id": "unit-vine-rapid-7",
+    "role": "vine",
+    "branch": "rapid",
+    "level": 7,
+    "name": "疾生蔓"
+  },
+  {
+    "id": "unit-vine-rapid-10",
+    "role": "vine",
+    "branch": "rapid",
+    "level": 10,
+    "name": "疾生蔓"
+  },
+  {
+    "id": "unit-oracle-heavy",
+    "role": "oracle",
+    "branch": "heavy",
+    "level": 5,
+    "name": "星辰裁決"
+  },
+  {
+    "id": "unit-oracle-heavy-7",
+    "role": "oracle",
+    "branch": "heavy",
+    "level": 7,
+    "name": "星辰裁決"
+  },
+  {
+    "id": "unit-oracle-heavy-10",
+    "role": "oracle",
+    "branch": "heavy",
+    "level": 10,
+    "name": "星辰裁決"
+  },
+  {
+    "id": "unit-oracle-wide",
+    "role": "oracle",
+    "branch": "wide",
+    "level": 5,
+    "name": "星砂漣漪"
+  },
+  {
+    "id": "unit-oracle-wide-7",
+    "role": "oracle",
+    "branch": "wide",
+    "level": 7,
+    "name": "星砂漣漪"
+  },
+  {
+    "id": "unit-oracle-wide-10",
+    "role": "oracle",
+    "branch": "wide",
+    "level": 10,
+    "name": "星砂漣漪"
+  },
+  {
+    "id": "unit-dragon-wide",
+    "role": "dragon",
+    "branch": "wide",
+    "level": 5,
+    "name": "燈火燎原"
+  },
+  {
+    "id": "unit-dragon-wide-7",
+    "role": "dragon",
+    "branch": "wide",
+    "level": 7,
+    "name": "燈火燎原"
+  },
+  {
+    "id": "unit-dragon-wide-10",
+    "role": "dragon",
+    "branch": "wide",
+    "level": 10,
+    "name": "燈火燎原"
+  },
+  {
+    "id": "unit-dragon-rapid",
+    "role": "dragon",
+    "branch": "rapid",
+    "level": 5,
+    "name": "飛焰吐息"
+  },
+  {
+    "id": "unit-dragon-rapid-7",
+    "role": "dragon",
+    "branch": "rapid",
+    "level": 7,
+    "name": "飛焰吐息"
+  },
+  {
+    "id": "unit-dragon-rapid-10",
+    "role": "dragon",
+    "branch": "rapid",
+    "level": 10,
+    "name": "飛焰吐息"
+  }
+]

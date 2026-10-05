@@ -1,0 +1,12 @@
+{
+  "id": "unit-vine-root-10-ready",
+  "role": "vine",
+  "branch": "root",
+  "level": 10,
+  "name": "深根纏繞",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-2181fddd-3c34-4250-baa2-a444d8940a24.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 深根纏繞 troop at level 10. Change ONLY action: prepare existing gardening tool or vine staff with arm drawn back, keep exact existing tool design. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-vine-root-10-ready.webp",
+  "individual": true,
+  "cropped": false
+}

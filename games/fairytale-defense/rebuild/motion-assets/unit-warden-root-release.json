@@ -1,0 +1,12 @@
+{
+  "id": "unit-warden-root-release",
+  "role": "warden",
+  "branch": "root",
+  "level": 5,
+  "name": "根盾守衛",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-63368987-f536-4b00-8dcd-195e8ebd6c1d.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 根盾守衛 troop at level 5. Change ONLY action: swing existing hammer decisively RIGHT, hammer head ahead of face on RIGHT with extended arms; keep shield in other hand. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-warden-root-release.webp",
+  "individual": true,
+  "cropped": false
+}

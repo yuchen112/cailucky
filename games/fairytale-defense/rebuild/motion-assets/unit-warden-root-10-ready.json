@@ -1,0 +1,12 @@
+{
+  "id": "unit-warden-root-10-ready",
+  "role": "warden",
+  "branch": "root",
+  "level": 10,
+  "name": "堅岩壁壘",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-9dacb88d-550e-407e-95ce-b6bca9efaa7f.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 堅岩壁壘 troop at level 10. Change ONLY action: lift the existing hammer behind shoulder, bend elbows in a clear wind-up with feet planted. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-warden-root-10-ready.webp",
+  "individual": true,
+  "cropped": false
+}

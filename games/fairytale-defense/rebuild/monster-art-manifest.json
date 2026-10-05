@@ -1,0 +1,151 @@
+{
+  "mode": "builtin-imagegen",
+  "individual": true,
+  "cropped": false,
+  "assets": [
+    {
+      "id": "shieldling",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-032aa958-d464-4bf8-88a3-833c03f121a5.png",
+      "prompt": "Use case: stylized-concept. Asset type: exactly ONE independently illustrated full-body enemy game sprite for a premium cute fairytale mobile tower-defense game. Subject: small mischievous green sprout creature with angry eyebrows, red berry neck scarf, chunky translucent aqua crystal shield and bronze helmet, stubby boots, both feet visible. Three-quarter facing RIGHT, idle walking-ready stance, grounded common foot baseline, readable silhouette and expressive face, polished painterly 3D toy-like fantasy materials, not photorealistic. Preserve cute cohesive handcrafted wood/leaf/crystal theme. Entire body and all appendages fit with 8% margin. Genuine transparent background, no scenery, no shadow-floor slab, no text, no HUD, no grid, no sheet, no other creature.",
+      "output": "art/shieldling.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "medic",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6fa8d48b-98cd-44c2-aa6f-2d7699a7e653.png",
+      "prompt": "Use case: stylized-concept. Asset type: exactly ONE independently illustrated full-body enemy game sprite for a premium cute fairytale mobile tower-defense game. Subject: small lavender moth healer with luminous petal lantern, violet and rose wings, red-orange eyes, satchel of flowers, tiny complete legs, visibly a mischievous ENEMY not a friendly hero. Three-quarter facing RIGHT, idle walking-ready stance, grounded common foot baseline, readable silhouette and expressive face, polished painterly 3D toy-like fantasy materials, not photorealistic. Preserve cute cohesive handcrafted wood/leaf/crystal theme. Entire body and all appendages fit with 8% margin. Genuine transparent background, no scenery, no shadow-floor slab, no text, no HUD, no grid, no sheet, no other creature.",
+      "output": "art/medic.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "berserker",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-d2b0c0aa-f3fc-4dee-ad3e-33b725ace1cc.png",
+      "prompt": "Use case: stylized-concept. Asset type: exactly ONE independently illustrated full-body enemy game sprite for a premium cute fairytale mobile tower-defense game. Subject: small chunky red-brown wild boar with amber eyes, red autumn leaf mane, bronze tusk guards, rugged leather harness, four complete hooves, braced full-body stance. Three-quarter facing RIGHT, idle walking-ready stance, grounded common foot baseline, readable silhouette and expressive face, polished painterly 3D toy-like fantasy materials, not photorealistic. Preserve cute cohesive handcrafted wood/leaf/crystal theme. Entire body and all appendages fit with 8% margin. Genuine transparent background, no scenery, no shadow-floor slab, no text, no HUD, no grid, no sheet, no other creature.",
+      "output": "art/berserker.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "frostlord",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-bfa79c33-2456-4a4e-82fb-0aad35f3ce90.png",
+      "prompt": "Use case: stylized-concept. Asset type: exactly ONE independently illustrated full-body enemy game sprite for a premium cute fairytale mobile tower-defense game. Subject: majestic but adorable squat ice-blue deer monarch with branching frosted antlers, turquoise crystal crown, dark navy royal mantle edged silver, four full hooves, determined enemy gaze. Three-quarter facing RIGHT, idle walking-ready stance, grounded common foot baseline, readable silhouette and expressive face, polished painterly 3D toy-like fantasy materials, not photorealistic. Preserve cute cohesive handcrafted wood/leaf/crystal theme. Entire body and all appendages fit with 8% margin. Genuine transparent background, no scenery, no shadow-floor slab, no text, no HUD, no grid, no sheet, no other creature.",
+      "output": "art/frostlord.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "emberlord",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6adcacd6-6689-422e-8385-1257bbddaf28.png",
+      "prompt": "Use case: stylized-concept. Asset type: exactly ONE independently illustrated full-body enemy game sprite for a premium cute fairytale mobile tower-defense game. Subject: adorable chunky orange-red dragon monarch with golden lantern belly, ember horns, short crimson wings, bronze crown, curled tail, clawed complete feet, assertive enemy gaze. Three-quarter facing RIGHT, idle walking-ready stance, grounded common foot baseline, readable silhouette and expressive face, polished painterly 3D toy-like fantasy materials, not photorealistic. Preserve cute cohesive handcrafted wood/leaf/crystal theme. Entire body and all appendages fit with 8% margin. Genuine transparent background, no scenery, no shadow-floor slab, no text, no HUD, no grid, no sheet, no other creature.",
+      "output": "art/emberlord.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "clocklord",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-2fa54655-b0ef-49af-9f61-5ad0bb07ae72.png",
+      "prompt": "Use case: stylized-concept. Asset type: exactly ONE independently illustrated full-body enemy game sprite for a premium cute fairytale mobile tower-defense game. Subject: squat monumental bronze clockwork golem with huge round gear shoulders, amber clock face embedded chest, red crystal eyes, heavy articulated arms and boots, gold engraved vine trim, enemy boss stance. Three-quarter facing RIGHT, idle walking-ready stance, grounded common foot baseline, readable silhouette and expressive face, polished painterly 3D toy-like fantasy materials, not photorealistic. Preserve cute cohesive handcrafted wood/leaf/crystal theme. Entire body and all appendages fit with 8% margin. Genuine transparent background, no scenery, no shadow-floor slab, no text, no HUD, no grid, no sheet, no other creature.",
+      "output": "art/clocklord.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "detail-card",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-e2d3a5c8-4a70-4a96-b1f2-ae6129993a93.png",
+      "prompt": "Use case: stylized-concept. Independent premium hand-painted mobile fairytale UI artwork. ONE upright portrait mobile fantasy information-panel background, thin restrained gold-and-emerald frame with very small acorn corner accents, dark deep teal opaque interior, large uninterrupted plain safe area from 12% to 88% width and 6% to 94% height. No huge central ornament, no header ornament, no partitions. 3:4 aspect ratio. Genuine transparent outside frame. No text, no letters, no numbers, no buttons inside, no multiple panels, no collage, no sheet. The entire one panel visible with minimal external padding. High contrast polished materials matching a green-gold forest tower-defense game.",
+      "output": "art/detail-card.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "number-field",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-8af31182-e8d0-4243-9401-2dbf2694e685.png",
+      "prompt": "Use case: stylized-concept. Independent premium hand-painted mobile fairytale UI artwork. ONE wide horizontal fantasy game numeric input-field background, simple narrow gold and turquoise rectangular rounded frame, dark opaque teal interior, tiny corner jewel accents, uninterrupted blank center, generous clear text safe area. 4:1 aspect ratio. Genuine transparent outside frame. No text, no letters, no numbers, no buttons inside, no multiple panels, no collage, no sheet. The entire one panel visible with minimal external padding. High contrast polished materials matching a green-gold forest tower-defense game.",
+      "output": "art/number-field.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "shieldling-step",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-2ed8108c-38f0-4139-adfe-fdd2fcb031b2.png",
+      "prompt": "Use case: identity-preserve. Exactly ONE independently illustrated full-body enemy animation keyframe. Preserve precisely the SAME creature as reference, face/species, colors, all equipment/appendages, silhouette scale and premium cute 3D fairytale rendering. New action: a clearly different walking stride, left foot forward and right foot back, shield held close. Three-quarter facing RIGHT. Complete entire character with 8% clear margin, all feet and head visible, common bottom baseline. True transparent background. No scene, floor slab, text, collage, sprite sheet, duplicated characters or cropped body.",
+      "output": "art/shieldling-step.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "medic-step",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-ea5aab3b-3f50-48aa-b71a-e99bc637ffab.png",
+      "prompt": "Use case: identity-preserve. Exactly ONE independently illustrated full-body enemy animation keyframe. Preserve precisely the SAME creature as reference, face/species, colors, all equipment/appendages, silhouette scale and premium cute 3D fairytale rendering. New action: flying wing-down beat with wings partially folded downward, lantern still fully visible. Three-quarter facing RIGHT. Complete entire character with 8% clear margin, all feet and head visible, common bottom baseline. True transparent background. No scene, floor slab, text, collage, sprite sheet, duplicated characters or cropped body.",
+      "output": "art/medic-step.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "berserker-step",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-498f2de3-b900-4acc-95d6-dbdb7dc50bec.png",
+      "prompt": "Use case: identity-preserve. Exactly ONE independently illustrated full-body enemy animation keyframe. Preserve precisely the SAME creature as reference, face/species, colors, all equipment/appendages, silhouette scale and premium cute 3D fairytale rendering. New action: a running stride, front left hoof extended forward, other front hoof tucked, no extra legs. Three-quarter facing RIGHT. Complete entire character with 8% clear margin, all feet and head visible, common bottom baseline. True transparent background. No scene, floor slab, text, collage, sprite sheet, duplicated characters or cropped body.",
+      "output": "art/berserker-step.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "frostlord-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-f14e752b-5301-4d77-b020-cf2f32c3517c.png",
+      "prompt": "Use case: identity-preserve. Exactly ONE independently illustrated full-body enemy animation keyframe. Preserve precisely the SAME creature as reference, face/species, colors, all equipment/appendages, silhouette scale and premium cute 3D fairytale rendering. New action: lower head, bend front knees, frost energy gathered between antlers, preparing a spell. Three-quarter facing RIGHT. Complete entire character with 8% clear margin, all feet and head visible, common bottom baseline. True transparent background. No scene, floor slab, text, collage, sprite sheet, duplicated characters or cropped body.",
+      "output": "art/frostlord-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "frostlord-cast",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-396fd912-8b6c-4ab1-b7ec-f35d5e6f808e.png",
+      "prompt": "Use case: identity-preserve. Exactly ONE independently illustrated full-body enemy animation keyframe. Preserve precisely the SAME creature as reference, face/species, colors, all equipment/appendages, silhouette scale and premium cute 3D fairytale rendering. New action: raise head and one front hoof, wide luminous icy aura contained close to the antlers, a clear completed spell-cast pose. Three-quarter facing RIGHT. Complete entire character with 8% clear margin, all feet and head visible, common bottom baseline. True transparent background. No scene, floor slab, text, collage, sprite sheet, duplicated characters or cropped body.",
+      "output": "art/frostlord-cast.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "emberlord-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-85545be4-a59f-4c4e-afc9-d91db7bd073f.png",
+      "prompt": "Use case: identity-preserve. Exactly ONE independently illustrated full-body enemy animation keyframe. Preserve precisely the SAME creature as reference, face/species, colors, all equipment/appendages, silhouette scale and premium cute 3D fairytale rendering. New action: inhale, arms drawn inward, cheeks puffed, belly lantern softly charging. Three-quarter facing RIGHT. Complete entire character with 8% clear margin, all feet and head visible, common bottom baseline. True transparent background. No scene, floor slab, text, collage, sprite sheet, duplicated characters or cropped body.",
+      "output": "art/emberlord-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "emberlord-cast",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-33a06c18-93f4-46ff-b2e0-254187ad5853.png",
+      "prompt": "Use case: identity-preserve. Exactly ONE independently illustrated full-body enemy animation keyframe. Preserve precisely the SAME creature as reference, face/species, colors, all equipment/appendages, silhouette scale and premium cute 3D fairytale rendering. New action: roaring toward the right with both arms spread, belly lantern flaring with small contained flame wisps, summoning spell pose, no additional creatures. Three-quarter facing RIGHT. Complete entire character with 8% clear margin, all feet and head visible, common bottom baseline. True transparent background. No scene, floor slab, text, collage, sprite sheet, duplicated characters or cropped body.",
+      "output": "art/emberlord-cast.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "clocklord-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-f33c27cc-5e10-44e0-acaa-ee82f0c99444.png",
+      "prompt": "Use case: identity-preserve. Exactly ONE independently illustrated full-body enemy animation keyframe. Preserve precisely the SAME creature as reference, face/species, colors, all equipment/appendages, silhouette scale and premium cute 3D fairytale rendering. New action: draw both great fists close toward the chest clock, shoulders hunched, clock energy charging. Three-quarter facing RIGHT. Complete entire character with 8% clear margin, all feet and head visible, common bottom baseline. True transparent background. No scene, floor slab, text, collage, sprite sheet, duplicated characters or cropped body.",
+      "output": "art/clocklord-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "clocklord-cast",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-1731b85e-d2ff-49e9-bfe9-326f50525d7a.png",
+      "prompt": "Use case: identity-preserve. Exactly ONE independently illustrated full-body enemy animation keyframe. Preserve precisely the SAME creature as reference, face/species, colors, all equipment/appendages, silhouette scale and premium cute 3D fairytale rendering. New action: extend both arms forward and outward, chest clock radiating a contained golden pulse, a clearly different completed spell-cast pose. Three-quarter facing RIGHT. Complete entire character with 8% clear margin, all feet and head visible, common bottom baseline. True transparent background. No scene, floor slab, text, collage, sprite sheet, duplicated characters or cropped body.",
+      "output": "art/clocklord-cast.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "moth-step",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-2e01a7f8-e775-4100-8c5a-5180eeda28a3.png",
+      "prompt": "Use case: identity-preserve. Exactly ONE independently illustrated full-body enemy animation keyframe. Preserve precisely the SAME creature as reference, face/species, colors, all equipment/appendages, silhouette scale and premium cute 3D fairytale rendering. New action: a visibly different wing-down flutter beat, wings angled diagonally downward rather than spread upward, same body and tiny legs. Three-quarter facing RIGHT. Complete entire character with 8% clear margin, all feet and head visible, common bottom baseline. True transparent background. No scene, floor slab, text, collage, sprite sheet, duplicated characters or cropped body.",
+      "output": "art/moth-step.webp",
+      "individual": true,
+      "cropped": false
+    }
+  ]
+}

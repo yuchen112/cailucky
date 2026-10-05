@@ -1,0 +1,12 @@
+{
+  "id": "unit-bramble-heavy-10-release",
+  "role": "bramble",
+  "branch": "heavy",
+  "level": 10,
+  "name": "尖刺纏林",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-ff8b0b2c-d0a0-4c2b-9582-3dc153f9c28b.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 尖刺纏林 troop at level 10. Change ONLY action: throw one glowing seed decisively toward RIGHT with throwing arm forward; preserve thorn staff in other hand. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-bramble-heavy-10-release.webp",
+  "individual": true,
+  "cropped": false
+}

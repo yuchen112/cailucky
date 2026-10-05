@@ -1,0 +1,12 @@
+{
+  "id": "unit-artisan-power-7-release",
+  "role": "artisan",
+  "branch": "power",
+  "level": 7,
+  "name": "精煉星露",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-55011a5a-c3b8-46a5-9d62-a202dce872bf.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 精煉星露 troop at level 7. Change ONLY action: operate the existing tool with clearly changed arm pose and a small star-dew or gear sparkle; this is a SUPPORT WORK action, not a weapon attack. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-artisan-power-7-release.webp",
+  "individual": true,
+  "cropped": false
+}

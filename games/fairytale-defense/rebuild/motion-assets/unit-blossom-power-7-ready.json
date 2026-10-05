@@ -1,0 +1,12 @@
+{
+  "id": "unit-blossom-power-7-ready",
+  "role": "blossom",
+  "branch": "power",
+  "level": 7,
+  "name": "繁花祝福",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-e235c05f-fd33-4767-b479-f93b15aef1ad.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 繁花祝福 troop at level 7. Change ONLY action: draw existing flower staff backward while gathering a compact blessing light. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-blossom-power-7-ready.webp",
+  "individual": true,
+  "cropped": false
+}

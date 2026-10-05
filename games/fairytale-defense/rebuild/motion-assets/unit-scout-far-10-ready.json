@@ -1,0 +1,12 @@
+{
+  "id": "unit-scout-far-10-ready",
+  "role": "scout",
+  "branch": "far",
+  "level": 10,
+  "name": "高空瞭望",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-489d530e-2809-4f83-9023-7e013eec1aa0.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 高空瞭望 troop at level 10. Change ONLY action: crouch slightly, aim the existing crossbow carefully RIGHT, pull/load string with clearly changed wing/arm pose. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-scout-far-10-ready.webp",
+  "individual": true,
+  "cropped": false
+}

@@ -1,0 +1,12 @@
+{
+  "id": "unit-artisan-haste-10-release",
+  "role": "artisan",
+  "branch": "haste",
+  "level": 10,
+  "name": "維修工坊",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-7b74518e-55ee-40b0-a6ab-2f75e9525422.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 維修工坊 troop at level 10. Change ONLY action: operate the existing tool with clearly changed arm pose and a small star-dew or gear sparkle; this is a SUPPORT WORK action, not a weapon attack. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-artisan-haste-10-release.webp",
+  "individual": true,
+  "cropped": false
+}

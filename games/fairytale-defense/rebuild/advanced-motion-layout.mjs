@@ -1,5 +1,6 @@
+import {SPRITE_LAYOUT} from './sprite-layout.mjs';
 // Complete transparent images, foot-aligned; no cropping.
-export const ADVANCED_MOTION_LAYOUT={
+const MEASURED_LEGACY_LAYOUT={
   "unit-archer-rapid-5-ready": {
     "anchorX": 0.4267578125,
     "anchorY": 0.95703125,
@@ -56,3 +57,4 @@ export const ADVANCED_MOTION_LAYOUT={
     "visibleHeight": 0.884765625
   }
 };
+export const ADVANCED_MOTION_LAYOUT={...SPRITE_LAYOUT,...MEASURED_LEGACY_LAYOUT};

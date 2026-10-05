@@ -1,0 +1,12 @@
+{
+  "id": "unit-dragon-rapid-release",
+  "role": "dragon",
+  "branch": "rapid",
+  "level": 5,
+  "name": "飛焰吐息",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-52681c39-d5a9-48be-8e47-754d0f588d14.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 飛焰吐息 troop at level 5. Change ONLY action: exhale compact flame RIGHT with mouth clearly open and head extended forward, stable feet and same armor. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-dragon-rapid-release.webp",
+  "individual": true,
+  "cropped": false
+}

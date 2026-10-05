@@ -32,3 +32,19 @@
 - hit.ogg ← Impact Sounds / impactWood_light_000.ogg
 - core.ogg ← Impact Sounds / impactWood_heavy_000.ogg
 - frost.ogg ← Impact Sounds / impactGlass_light_000.ogg
+
+## 新增音效（2026-10-05）
+
+Kenney RPG Audio，官方來源 https://kenney.nl/assets/rpg-audio ，CC0；原授權檔保存為 LICENSE-Kenney-RPG.txt。
+
+- coin.ogg ← handleCoins.ogg
+- training.ogg ← bookOpen.ogg
+- synthesis.ogg ← bookClose.ogg
+- sell.ogg ← handleSmallLeather.ogg
+- boss-warning.ogg ← doorOpen_1.ogg
+- shield.ogg ← metalPot1.ogg
+- block.ogg ← metalPot2.ogg
+- shot.ogg ← drawKnife1.ogg
+- wave.ogg ← metalLatch.ogg
+
+原音檔完整使用，未更改授權。战鬥同類音效節流，避免密集攻擊重疊失真。

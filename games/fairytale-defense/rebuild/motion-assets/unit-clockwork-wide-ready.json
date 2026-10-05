@@ -1,0 +1,12 @@
+{
+  "id": "unit-clockwork-wide-ready",
+  "role": "clockwork",
+  "branch": "wide",
+  "level": 5,
+  "name": "散射機構",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-b1f08307-804d-4e8b-8c62-06278fbf4be1.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 散射機構 troop at level 5. Change ONLY action: draw back the existing launcher mechanism, brace legs and prepare firing RIGHT. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-clockwork-wide-ready.webp",
+  "individual": true,
+  "cropped": false
+}

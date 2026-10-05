@@ -1,0 +1,167 @@
+{
+  "mode": "builtin-imagegen",
+  "individual": true,
+  "cropped": false,
+  "assets": [
+    {
+      "id": "unit-scout-rapid-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-bc171ff1-450a-4be4-97de-2686fd165380.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 風羽連射 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to drawing the crossbow string and aiming with a slightly crouched stance. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-scout-rapid-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-scout-rapid-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-7bb02189-459e-4a5d-8032-c093cf7e6464.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 風羽連射 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to firing the crossbow toward the right, extended arms, relaxed string, small muzzle flash, visible upper-body recoil. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-scout-rapid-release.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-scout-far-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-9799ff07-200b-48d4-95bb-32e6eade4a45.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 高空瞭望 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to drawing the crossbow string and aiming with a slightly crouched stance. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-scout-far-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-scout-far-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6c62c4eb-7a0c-44e6-8dac-cb9fefdaa35a.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 高空瞭望 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to firing the crossbow toward the right, extended arms, relaxed string, small muzzle flash, visible upper-body recoil. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-scout-far-release.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-warden-root-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-3239d8d2-eb71-479b-b214-7a74d6e1c7ed.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 堅岩壁壘 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to raising the shield before the body while drawing the hammer back. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-warden-root-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-warden-root-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-fc6e7455-00fb-45af-bb66-d398196e5fd1.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 堅岩壁壘 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to a decisive forward hammer swing and shield bash, bent front knee, shield still fully visible. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-warden-root-release.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-warden-heavy-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-aa78c41a-ae42-436e-8c44-53ad39d703e7.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 岩盾反擊 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to raising the shield before the body while drawing the hammer back. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-warden-heavy-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-warden-heavy-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-4c6da0b8-fc4d-4f23-9341-3da9a4dd2653.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 岩盾反擊 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to a decisive forward hammer swing and shield bash, bent front knee, shield still fully visible. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-warden-heavy-release.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-storm-wide-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-66d08ceb-89a5-4eb3-a9d8-913870041205.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 雷枝分流 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to drawing the staff close, other hand gathering a small contained violet energy orb. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-storm-wide-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-storm-wide-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-a06349bb-9320-48b5-99b5-0ed1de65df5b.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 雷枝分流 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to pointing the staff diagonally toward the right while the casting hand extends, a contained fork of violet lightning at the staff tip. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-storm-wide-release.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-storm-heavy-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-45c9e404-60ff-4c31-be6d-641a6d87586b.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 雷霆重擊 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to drawing the staff close, other hand gathering a small contained violet energy orb. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-storm-heavy-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-storm-heavy-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-4f758dc5-b845-4aa0-9919-4884f30f850c.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 雷霆重擊 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to pointing the staff diagonally toward the right while the casting hand extends, a contained fork of violet lightning at the staff tip. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-storm-heavy-release.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-bramble-wide-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-c3a49d28-6815-4d1f-8b26-961bd3e7c3ee.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 荊棘繁生 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to raising the thorn staff and preparing seeds with the free paw. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-bramble-wide-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-bramble-wide-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-ff262dd1-eeb2-442e-9f11-b8ce244723bd.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 荊棘繁生 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to planting the staff forward and scattering a small arc of thorn seeds from the free paw. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-bramble-wide-release.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-bramble-heavy-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-8177ad58-0ee1-485b-aee9-bbb9ab048d87.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 尖刺纏林 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to raising the thorn staff and preparing seeds with the free paw. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-bramble-heavy-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-bramble-heavy-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-baca0cbc-00ec-48be-bb83-846bbb97ce74.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 尖刺纏林 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to planting the staff forward and scattering a small arc of thorn seeds from the free paw. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-bramble-heavy-release.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-artisan-power-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-19b058df-39cb-4613-9137-01d2c4009905.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 精煉星露 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to holding the tool ready close to chest, inspecting it with focused eyes. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-artisan-power-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-artisan-power-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-720346db-12a6-4065-bbfa-f0563de7b19e.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 精煉星露 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to actively operating the golden extractor or turning the wrench forward, tool and both hands fully visible. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-artisan-power-release.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-artisan-haste-ready",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-4c3d5fc2-c183-41fb-a4a0-3143ccf46d15.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 維修工坊 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to holding the tool ready close to chest, inspecting it with focused eyes. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-artisan-haste-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-artisan-haste-release",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-051976e2-b986-4023-b911-4346d8e2efeb.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently redrawn full-body mobile tower-defense sprite keyframe. The input is the exact 維修工坊 advanced troop identity, equipment, materials and palette. Preserve the SAME species, face, every upgraded weapon/shield/staff/tool, costume and character proportions. Change pose clearly to actively operating the golden extractor or turning the wrench forward, tool and both hands fully visible. Three-quarter facing right, feet planted on one common baseline near bottom, complete entire character and equipment with 8% padding, polished cute premium painterly 3D fairytale game rendering. This is one pose, not a spritesheet, no collage, no ground slab, no scene, no text. True transparent background. Do NOT revert to basic troop outfit.",
+      "output": "art/unit-artisan-haste-release.webp",
+      "individual": true,
+      "cropped": false
+    }
+  ]
+}

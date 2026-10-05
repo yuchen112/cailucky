@@ -1,5 +1,6 @@
-import {activeEffects,clamp,skillRecipients} from './animation-state.mjs?v=20261005-motion1';
-import {SPELL_ART} from './motion.mjs?v=20261005-motion1';
+import {isBoss} from './enemy-catalog.mjs';
+import {activeEffects,clamp,skillRecipients} from './animation-state.mjs?v=20261005-complete1';
+import {SPELL_ART} from './motion.mjs?v=20261005-complete1';
 const impactArt={bolt:'anim-impact',crystal:'anim-shatter',gear:'anim-impact',spore:'projectile-spore',frost:'projectile-frost',glow:'fx-light',wind:'fx-rune',bloom:'fx-petal'};
 // All decorative marks are independently authored raster assets, never canvas shapes.
 export function drawCombatEffects({s,pads,corePoint,image,sprite,ctx,roles,reduced=false,simple=false}){
@@ -21,12 +22,16 @@ export function drawCombatEffects({s,pads,corePoint,image,sprite,ctx,roles,reduc
   }
   if(e.type==='sell'){const p=pads[e.pad];mark('anim-dissolve',p.x,p.y-24,50,1-age/.5);}
   if(e.type==='defeat-enemy'){
-   const k=age/.65,h=e.kind==='boss'?80:52;
+   const k=age/.65,h=isBoss(e.kind)?80:52;
    if(!reduced&&k<.6){ctx.save();ctx.translate(e.x,e.y);ctx.rotate(k*.22);sprite(e.kind,0,0,h,1-k/.6);ctx.restore();}
    mark('anim-dissolve',e.x,e.y-h*.4,reduced?32:32+30*k,(1-k)*.65);particles('fx-light',e.x,e.y-20,k,4);
   }
   if(e.type==='shield-break'){const k=age/.65;mark('anim-shatter',e.x,e.y-20,44+k*20,1-k);}
-  if(e.type==='boss-ward')mark('fx-rune',e.x,e.y-24,70,1-age/.65);
+  if(e.type==='enemy-heal'){mark('fx-petal',e.x,e.y-20,48,1-age/.9);text('敵方治療',e.x,e.y-54,1-age/.9);}
+  if(e.type==='enemy-rage'){mark('fx-spark',e.x,e.y-20,42,1-age/.8);text('狂暴加速',e.x,e.y-54,1-age/.8);}
+  if(e.type==='enemy-shield'){mark('fx-rune',e.x,e.y-20,48,1-age/.8);text('護甲強化',e.x,e.y-54,1-age/.8);}
+  if(e.type==='cast-interrupted'){text('技能打斷',e.x,e.y-54,1-age/.8);}
+  if(e.type==='boss-ward'){const k=age/.65,art={chill:'projectile-frost',summon:'fx-spark',haste:'anim-impact',ward:'fx-rune'}[e.ability]||'fx-rune';mark(art,e.x,e.y-24,reduced?64:64+26*k,1-k);text({chill:'冰霜壓制',summon:'援軍召喚',haste:'發條加速',ward:'群體護甲'}[e.ability]||'群體護甲',e.x,e.y-70,1-k);if(e.ability==='chill')for(const t of s.towers)if(t.chillUntil>s.time){const p=pads[t.pad];mark('projectile-frost',p.x,p.y-24,32,(1-k)*.7);}particles(art,e.x,e.y-24,k,4);}
   if(e.type==='boss-warning'){const k=age/1.2;mark('target',e.x,e.y,42+(reduced?0:Math.sin(k*Math.PI*4)*4));}
   if(e.type==='hero-skill'){
    const offensive=['dream','night','sadness','memory','hope'].includes(e.role);if(offensive)continue;const k=age/.9,art=SPELL_ART[roles[e.role].kind];

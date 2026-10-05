@@ -10,7 +10,7 @@ export function validateRewardLedger(raw){
 }
 export function floorReward(floor){
  if(!Number.isInteger(floor)||floor<1||floor>99)throw Error('層數不正確');
- return {coins:10+Math.floor(floor/10)*3+(floor%5===0?20:0),books:floor%5===0?1+Math.floor(floor/30):0,dailyCoins:20+Math.floor(floor/10)*5,dailyBooks:floor%10===0?2:0};
+ return {coins:10+Math.floor(floor/10)*3+(floor%5===0?20:0),books:10+Math.floor(floor/10)*2+(floor%5===0?20:0),dailyCoins:20+Math.floor(floor/10)*5,dailyBooks:floor%10===0?100:5};
 }
 export function awardEndless(value,from,to,time=Date.now()){
  if(!Number.isInteger(from)||!Number.isInteger(to)||from<0||to<from||to>99)throw Error('守城結算層數不正確');
@@ -19,7 +19,7 @@ export function awardEndless(value,from,to,time=Date.now()){
  for(let floor=from+1;floor<=to;floor++){
   const r=floorReward(floor);reward.basicCoins+=r.coins;reward.books+=r.books;
   if(!ledger.daily.includes(floor)){ledger.daily.push(floor);reward.dailyCoins+=r.dailyCoins;reward.books+=r.dailyBooks;}
-  if(floor===99&&!ledger.first99){ledger.first99=true;reward.firstCoins+=1000;reward.books+=20;}
+  if(floor===99&&!ledger.first99){ledger.first99=true;reward.firstCoins+=1000;reward.books+=1000;}
  }
  ledger.daily.sort((a,b)=>a-b);reward.coins=reward.basicCoins+reward.dailyCoins+reward.firstCoins;
  return {ledger,reward};

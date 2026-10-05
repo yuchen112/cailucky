@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {ENEMY_CATALOG,isBoss,tickEnemyAbility} from '../games/fairytale-defense/rebuild/enemy-catalog.mjs';
+import {validateAssists,selectAutoBlessing,shouldAutoSkill} from '../games/fairytale-defense/rebuild/assists.mjs';
+import {createBattle,enemyStats,kindsFor,deploy,startWave,advance} from '../games/fairytale-defense/rebuild/core.mjs';
+import {skillSpec} from '../games/fairytale-defense/rebuild/skill-spec.mjs';
+import {ROLES} from '../games/fairytale-defense/rebuild/core.mjs';
+assert.deepEqual(validateAssists(),{autoSkill:false,autoBlessing:false,strategy:'balanced'});
+const prefs={autoSkill:true,autoBlessing:true,strategy:'balanced'},s=createBattle({hero:'growth',mode:'endless'});
+s.phase='intermission';s.blessingChoices=['power','repair','supplies'];s.hp=3;assert.equal(selectAutoBlessing(s,prefs),'repair');s.paused=true;assert.equal(selectAutoBlessing(s,prefs),null);assert.equal(shouldAutoSkill(s,prefs),false);s.paused=false;s.phase='battle';s.enemies=[{hp:30}];s.towers=[{role:'artisan'}];assert.equal(shouldAutoSkill(s,prefs),false);s.towers.push({role:'archer'});assert.equal(shouldAutoSkill(s,prefs),true);
+for(const id of Object.keys(ENEMY_CATALOG))assert(enemyStats(id,s,99).hp>0);
+assert(enemyStats('walker',s,99).hp>enemyStats('walker',s,60).hp);assert(kindsFor(s,99).some(isBoss));assert(kindsFor(s,20).includes('medic'));
+const point=d=>({x:d,y:0}),events=[],emit=(id,data)=>events.push({id,...data});
+const medic={id:1,kind:'medic',distance:0,hp:92,maxHp:92,nextSkill:6},ally={id:2,kind:'walker',distance:20,hp:20,maxHp:100};const state={time:6,enemies:[medic,ally],towers:[]};tickEnemyAbility(state,medic,point,emit,()=>{});assert.equal(ally.hp,30);assert.equal(medic.hp,92);
+const lord={id:3,kind:'frostlord',distance:20,hp:100,maxHp:100,castUntil:6};state.towers=[{pad:0}];tickEnemyAbility(state,lord,point,emit,()=>{},[{x:40,y:0}]);assert.equal(state.towers[0].chillUntil,10);
+const summoner={id:4,kind:'emberlord',distance:50,hp:100,maxHp:100,castUntil:6};const summons=[];tickEnemyAbility(state,summoner,point,emit,q=>summons.push(q));assert.equal(summons.length,2);assert(summons.every(q=>q.kind==='berserker'&&q.distance>=0));
+const interrupt={id:5,kind:'clocklord',distance:0,hp:100,maxHp:100,castUntil:7,rootUntil:7};tickEnemyAbility(state,interrupt,point,emit,()=>{});assert.equal(interrupt.castUntil,0);assert(events.some(e=>e.id==='cast-interrupted'));
+const h=createBattle({hero:'hope'}).hero,base=skillSpec(h,ROLES.hope);h.weaponLevel=10;assert(Math.abs(skillSpec(h,ROLES.hope).damage-base.damage*1.3)<1e-6);
+console.log('PASS enemy diversity, heal/chill/summon/interrupt mechanics, skill weapon scaling, safe paused automation and 99-floor escalation.');

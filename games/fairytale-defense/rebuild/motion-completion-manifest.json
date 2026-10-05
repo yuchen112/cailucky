@@ -1,0 +1,55 @@
+{
+  "mode": "builtin-imagegen",
+  "individual": true,
+  "cropped": false,
+  "assets": [
+    {
+      "id": "unit-scout-rapid-7-ready",
+      "role": "scout",
+      "branch": "rapid",
+      "level": 7,
+      "name": "風羽連射",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-cf4db86c-fe3d-4197-a7a6-230d871fc553.png",
+      "prompt": "Use case: identity-preserve. Image 1 is the EXACT character identity and equipment reference. Independently draw ONE full-body animation pose of this SAME cute bird scout, same face, goggles, feathers, armor, crossbow, proportions, colors and premium 3D mobile-game rendering. Change ONLY action to attack wind-up: slightly crouched stable feet, carefully aiming crossbow toward RIGHT, pulling/loading its string with clearly changed wing/arm pose. Preserve same three-quarter camera facing RIGHT, grounded feet and complete weapon. Transparent background, single character, 8 percent padding, no scene, no text, no collage, no sheet. Do not redesign equipment or add figures.",
+      "output": "art/unit-scout-rapid-7-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-scout-rapid-7-release",
+      "role": "scout",
+      "branch": "rapid",
+      "level": 7,
+      "name": "風羽連射",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-2e3a4edd-34f8-4ec5-b79d-f4b2dcfe4d79.png",
+      "prompt": "Use case: identity-preserve. Image 1 is the EXACT character identity and equipment reference. Independently draw ONE full-body animation pose of this SAME cute bird scout, same face, goggles, feathers, armor, crossbow, proportions, colors and premium 3D mobile-game rendering. Change ONLY action to attack release: crossbow fired toward RIGHT, small right-facing bolt and restrained muzzle sparkle, firing arm extended, subtle shoulder recoil; visibly distinct from idle. Preserve same three-quarter camera facing RIGHT, grounded feet and complete weapon. Transparent background, single character, 8 percent padding, no scene, no text, no collage, no sheet. Do not redesign equipment or add figures.",
+      "output": "art/unit-scout-rapid-7-release.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-scout-rapid-10-ready",
+      "role": "scout",
+      "branch": "rapid",
+      "level": 10,
+      "name": "風羽連射",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-b1cecb77-bb0e-45d8-940d-13391a0fa022.png",
+      "prompt": "Use case: identity-preserve. Image 1 is the EXACT character identity and equipment reference. Independently draw ONE full-body animation pose of this SAME cute bird scout, same face, goggles, feathers, armor, crossbow, proportions, colors and premium 3D mobile-game rendering. Change ONLY action to attack wind-up: slightly crouched stable feet, carefully aiming crossbow toward RIGHT, pulling/loading its string with clearly changed wing/arm pose. Preserve same three-quarter camera facing RIGHT, grounded feet and complete weapon. Transparent background, single character, 8 percent padding, no scene, no text, no collage, no sheet. Do not redesign equipment or add figures.",
+      "output": "art/unit-scout-rapid-10-ready.webp",
+      "individual": true,
+      "cropped": false
+    },
+    {
+      "id": "unit-scout-rapid-10-release",
+      "role": "scout",
+      "branch": "rapid",
+      "level": 10,
+      "name": "風羽連射",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-ee785af6-d953-4bac-bf60-f3731b008901.png",
+      "prompt": "Use case: identity-preserve. Image 1 is the EXACT character identity and equipment reference. Independently draw ONE full-body animation pose of this SAME cute bird scout, same face, goggles, feathers, armor, crossbow, proportions, colors and premium 3D mobile-game rendering. Change ONLY action to attack release: crossbow fired toward RIGHT, small right-facing bolt and restrained muzzle sparkle, firing arm extended, subtle shoulder recoil; visibly distinct from idle. Preserve same three-quarter camera facing RIGHT, grounded feet and complete weapon. Transparent background, single character, 8 percent padding, no scene, no text, no collage, no sheet. Do not redesign equipment or add figures.",
+      "output": "art/unit-scout-rapid-10-release.webp",
+      "individual": true,
+      "cropped": false
+    }
+  ]
+}

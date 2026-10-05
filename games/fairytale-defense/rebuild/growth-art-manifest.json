@@ -1,0 +1,220 @@
+{
+  "assets": [
+    {
+      "id": "training-book-common",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-a4499322-1d8b-40bc-ba7e-1a543a56c811.png",
+      "prompt": "Use case: stylized-concept. Asset type: single mobile fantasy tower-defense inventory icon. Exactly ONE common-rarity troop training manual, green cloth-bound chunky storybook with embossed bronze acorn and leaf emblem, modest leather corners, readable strong silhouette, cute premium hand-painted 3D fairytale game style, three-quarter view closed book. Centered entire object with generous transparent padding. No letters, no numbers, no scene, no other books, no grid, no sheet, no watermark. Genuine transparent background.",
+      "output": "art/training-book-common.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "training-book-rare",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-992bff83-1ad2-4aa4-afb5-74580bd215e4.png",
+      "prompt": "Use case: stylized-concept. Single premium mobile fairytale tower-defense inventory icon. Exactly ONE rare troop training manual, deep sapphire-blue leather, polished silver binding, raised silver feather emblem with a small blue jewel. Closed thick book in three-quarter view, cute polished hand-painted 3D style. Entire object centered with generous padding. Transparent background, no text, no numbers, no other objects or books, no sprite sheet, no grid, no watermark. Unique standalone asset, not a crop.",
+      "output": "art/training-book-rare.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "training-book-epic",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-98d65f7f-3595-4337-a251-ba1183859b6e.png",
+      "prompt": "Use case: stylized-concept. Single premium mobile fairytale tower-defense inventory icon. Exactly ONE epic troop training manual, royal violet velvet-bound leather, ornate golden binding, raised golden lightning-and-star emblem with violet crystal. Closed thick book in three-quarter view, cute polished hand-painted 3D style. Entire object centered with generous padding. Transparent background, no text, no numbers, no other objects or books, no sprite sheet, no grid, no watermark. Unique standalone asset, not a crop.",
+      "output": "art/training-book-epic.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "training-book-legendary",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-f66306ef-926f-48c2-af13-f32b41ad30eb.png",
+      "prompt": "Use case: stylized-concept. Single premium mobile fairytale tower-defense inventory icon. Exactly ONE legendary troop training manual, ivory and deep gold leather, elaborate gilded binding, raised radiant dragon-crown emblem with amber crystal. Closed thick book in three-quarter view, cute polished hand-painted 3D style. Entire object centered with generous padding. Transparent background, no text, no numbers, no other objects or books, no sprite sheet, no grid, no watermark. Unique standalone asset, not a crop.",
+      "output": "art/training-book-legendary.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "weapon-growth",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6d04335c-ba99-43d4-b1f7-7ef12579e6e9.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone exclusive hero weapon inventory icon for premium cute fairytale mobile tower defense. Subject: a gnarled wooden commander staff topped with fresh jade leaves and an acorn, olive cloth binding, warm bronze fittings. Match the reference character's materials and color vocabulary; reference is STYLE only, do not depict character. Soft handmade clay-like 3D storybook render, beautifully finished, readable simple silhouette. Entire single weapon centered, generous transparent margins, no hands, no character, no background, no text, no sheet, no collage, no watermark.",
+      "output": "art/weapon-growth.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "weapon-dream",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-5f07a144-1382-4697-b969-50b6a4447286.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone exclusive hero weapon inventory icon for premium cute fairytale mobile tower defense. Subject: a lavender wizard wand with a large cream-gold five-point star, tiny hanging stars, violet ribbon and soft starlight. Match the reference character's materials and color vocabulary; reference is STYLE only, do not depict character. Soft handmade clay-like 3D storybook render, beautifully finished, readable simple silhouette. Entire single weapon centered, generous transparent margins, no hands, no character, no background, no text, no sheet, no collage, no watermark.",
+      "output": "art/weapon-dream.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "weapon-luck",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0367907e-3e1c-4bac-98ca-7c5b6feae65b.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone exclusive hero weapon inventory icon for premium cute fairytale mobile tower defense. Subject: a mint-green clover scepter with four-leaf jade charm, golden lucky bells and braided brown handle. Match the reference character's materials and color vocabulary; reference is STYLE only, do not depict character. Soft handmade clay-like 3D storybook render, beautifully finished, readable simple silhouette. Entire single weapon centered, generous transparent margins, no hands, no character, no background, no text, no sheet, no collage, no watermark.",
+      "output": "art/weapon-luck.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "weapon-joy",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0b22555e-847e-4b13-9a09-93a95dc453b6.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone exclusive hero weapon inventory icon for premium cute fairytale mobile tower defense. Subject: a pink and mint party handbell, golden bell body shaped like a star with cheerful pastel ribbons and bow. Match the reference character's materials and color vocabulary; reference is STYLE only, do not depict character. Soft handmade clay-like 3D storybook render, beautifully finished, readable simple silhouette. Entire single weapon centered, generous transparent margins, no hands, no character, no background, no text, no sheet, no collage, no watermark.",
+      "output": "art/weapon-joy.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "weapon-night",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-c0a4a7a4-8abd-491a-a4a2-f3bbd194a841.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone exclusive hero weapon inventory icon for premium cute fairytale mobile tower defense. Subject: an indigo crescent moon longbow with owl-feather carved details, gold star fittings and ivory bowstring. Match the reference character's materials and color vocabulary; reference is STYLE only, do not depict character. Soft handmade clay-like 3D storybook render, beautifully finished, readable simple silhouette. Entire single weapon centered, generous transparent margins, no hands, no character, no background, no text, no sheet, no collage, no watermark.",
+      "output": "art/weapon-night.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "weapon-sadness",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-065ad1f7-163a-46c7-964c-d4e83fee3a1f.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone exclusive hero weapon inventory icon for premium cute fairytale mobile tower defense. Subject: a pale blue rain crystal wand with silver droplet and hydrangea petals, pearl-grey handle and delicate blue ribbon. Match the reference character's materials and color vocabulary; reference is STYLE only, do not depict character. Soft handmade clay-like 3D storybook render, beautifully finished, readable simple silhouette. Entire single weapon centered, generous transparent margins, no hands, no character, no background, no text, no sheet, no collage, no watermark.",
+      "output": "art/weapon-sadness.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "weapon-trust",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-ea29c1c0-a0b1-4530-9377-1e052d32c9d7.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone exclusive hero weapon inventory icon for premium cute fairytale mobile tower defense. Subject: a navy and bronze guardian shield, interlocking golden key-and-lock crest, warm leather strap. Match the reference character's materials and color vocabulary; reference is STYLE only, do not depict character. Soft handmade clay-like 3D storybook render, beautifully finished, readable simple silhouette. Entire single weapon centered, generous transparent margins, no hands, no character, no background, no text, no sheet, no collage, no watermark.",
+      "output": "art/weapon-trust.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "weapon-memory",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-e4e5f76b-1e55-4364-b67c-54974c9ee097.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone exclusive hero weapon inventory icon for premium cute fairytale mobile tower defense. Subject: a warm beige and dusty rose closed remembrance grimoire, sepia photo-shaped cameo WITHOUT human picture, envelope seal and soft cloth binding. Match the reference character's materials and color vocabulary; reference is STYLE only, do not depict character. Soft handmade clay-like 3D storybook render, beautifully finished, readable simple silhouette. Entire single weapon centered, generous transparent margins, no hands, no character, no background, no text, no sheet, no collage, no watermark.",
+      "output": "art/weapon-memory.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "weapon-healing",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6422ab94-7ba7-4458-9ec7-ee98d615c5c3.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone exclusive hero weapon inventory icon for premium cute fairytale mobile tower defense. Subject: a peach and mint healing staff with soft heart-shaped crystal and cream flower petals, rounded comforting silhouette. Match the reference character's materials and color vocabulary; reference is STYLE only, do not depict character. Soft handmade clay-like 3D storybook render, beautifully finished, readable simple silhouette. Entire single weapon centered, generous transparent margins, no hands, no character, no background, no text, no sheet, no collage, no watermark.",
+      "output": "art/weapon-healing.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "weapon-hope",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6a5603f9-e00c-4270-b753-95a047b51f98.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone exclusive hero weapon inventory icon for premium cute fairytale mobile tower defense. Subject: an ivory and sky blue dawn spear with luminous butterfly-wing star tip, pearl metal and pastel ribbon. Match the reference character's materials and color vocabulary; reference is STYLE only, do not depict character. Soft handmade clay-like 3D storybook render, beautifully finished, readable simple silhouette. Entire single weapon centered, generous transparent margins, no hands, no character, no background, no text, no sheet, no collage, no watermark.",
+      "output": "art/weapon-hope.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "hero-portrait-growth",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-e679c138-709c-4e18-addb-923c21e99d19.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently illustrated mobile game commander head portrait, not a crop. Reference image is the exact user-owned original character identity. Draw the SAME character's head and shoulders, front three-quarter friendly expression, same face, hair/fur, ears, distinctive hat/hood and outfit colors. Preserve recognizable identity exactly, no redesign. Soft premium clay-like fairytale rendering consistent with reference. No hands or weapons, entire hat and ears visible, head fills roughly 75 percent of square with transparent generous margins. Genuine transparent background, no frame, no text, no additional characters, no sprite sheet.",
+      "output": "art/hero-portrait-growth.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "hero-portrait-dream",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-9c5ad1ed-f590-40c8-8c84-060e389e5125.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently illustrated mobile game commander head portrait, not a crop. Reference image is the exact user-owned original character identity. Draw the SAME character's head and shoulders, front three-quarter friendly expression, same face, hair/fur, ears, distinctive hat/hood and outfit colors. Preserve recognizable identity exactly, no redesign. Soft premium clay-like fairytale rendering consistent with reference. No hands or weapons, entire hat and ears visible, head fills roughly 75 percent of square with transparent generous margins. Genuine transparent background, no frame, no text, no additional characters, no sprite sheet.",
+      "output": "art/hero-portrait-dream.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "hero-portrait-luck",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-f5edf28c-97a7-49b9-9bf0-12d2dd895b52.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently illustrated mobile game commander head portrait, not a crop. Reference image is the exact user-owned original character identity. Draw the SAME character's head and shoulders, front three-quarter friendly expression, same face, hair/fur, ears, distinctive hat/hood and outfit colors. Preserve recognizable identity exactly, no redesign. Soft premium clay-like fairytale rendering consistent with reference. No hands or weapons, entire hat and ears visible, head fills roughly 75 percent of square with transparent generous margins. Genuine transparent background, no frame, no text, no additional characters, no sprite sheet.",
+      "output": "art/hero-portrait-luck.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "hero-portrait-joy",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-79462ab3-3400-4a3e-93a9-fa4a20b54b18.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently illustrated mobile game commander head portrait, not a crop. Reference image is the exact user-owned original character identity. Draw the SAME character's head and shoulders, front three-quarter friendly expression, same face, hair/fur, ears, distinctive hat/hood and outfit colors. Preserve recognizable identity exactly, no redesign. Soft premium clay-like fairytale rendering consistent with reference. No hands or weapons, entire hat and ears visible, head fills roughly 75 percent of square with transparent generous margins. Genuine transparent background, no frame, no text, no additional characters, no sprite sheet.",
+      "output": "art/hero-portrait-joy.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "hero-portrait-night",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-dd931319-2a2d-4245-9fbf-163d3df2fb23.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently illustrated mobile game commander head portrait, not a crop. Reference image is the exact user-owned original character identity. Draw the SAME character's head and shoulders, front three-quarter friendly expression, same face, hair/fur, ears, distinctive hat/hood and outfit colors. Preserve recognizable identity exactly, no redesign. Soft premium clay-like fairytale rendering consistent with reference. No hands or weapons, entire hat and ears visible, head fills roughly 75 percent of square with transparent generous margins. Genuine transparent background, no frame, no text, no additional characters, no sprite sheet.",
+      "output": "art/hero-portrait-night.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "hero-portrait-sadness",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0efa77de-581a-4843-a578-06da66fefc90.png",
+      "prompt": "Use case: identity-preserve. Exactly ONE independently illustrated premium chibi mobile-game hero head-and-shoulders portrait of the SAME girl in the reference. Preserve grey-brown bob hair, grey eyes, blue-grey rain bonnet, flower hair clip and hood, rain-themed palette and face identity. Preserve her defining gentle SAD WORRIED expression: raised inner eyebrows, tiny downturned mouth, NO smile, no happy grin. Portrait facing camera, head and entire hood visible, shoulders and bow beneath head, NO umbrella because this is a readable HUD face portrait. Beautiful polished fairytale rendering matching reference, complete silhouette generous margin, genuine transparent background. No words, no grid, no collage, no border.",
+      "output": "art/hero-portrait-sadness.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "hero-portrait-trust",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-e228f1cc-a7b0-4b0f-9bc6-e55f82def84b.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently illustrated mobile game commander head portrait, not a crop. Reference image is the exact user-owned original character identity. Draw the SAME character's head and shoulders, front three-quarter friendly expression, same face, hair/fur, ears, distinctive hat/hood and outfit colors. Preserve recognizable identity exactly, no redesign. Soft premium clay-like fairytale rendering consistent with reference. No hands or weapons, entire hat and ears visible, head fills roughly 75 percent of square with transparent generous margins. Genuine transparent background, no frame, no text, no additional characters, no sprite sheet.",
+      "output": "art/hero-portrait-trust.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "hero-portrait-memory",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-6fcc1e25-df22-485f-958c-90c68d99e3b9.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently illustrated mobile game commander head portrait, not a crop. Reference image is the exact user-owned original character identity. Draw the SAME character's head and shoulders, front three-quarter friendly expression, same face, hair/fur, ears, distinctive hat/hood and outfit colors. Preserve recognizable identity exactly, no redesign. Soft premium clay-like fairytale rendering consistent with reference. No hands or weapons, entire hat and ears visible, head fills roughly 75 percent of square with transparent generous margins. Genuine transparent background, no frame, no text, no additional characters, no sprite sheet.",
+      "output": "art/hero-portrait-memory.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "hero-portrait-healing",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0a74de5d-97af-4079-a3b7-4cb3a3e8a6db.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently illustrated mobile game commander head portrait, not a crop. Reference image is the exact user-owned original character identity. Draw the SAME character's head and shoulders, front three-quarter friendly expression, same face, hair/fur, ears, distinctive hat/hood and outfit colors. Preserve recognizable identity exactly, no redesign. Soft premium clay-like fairytale rendering consistent with reference. No hands or weapons, entire hat and ears visible, head fills roughly 75 percent of square with transparent generous margins. Genuine transparent background, no frame, no text, no additional characters, no sprite sheet.",
+      "output": "art/hero-portrait-healing.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    },
+    {
+      "id": "hero-portrait-hope",
+      "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-dcc7465e-da31-4e86-94fd-0053c3151c48.png",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independently illustrated mobile game commander head portrait, not a crop. Reference image is the exact user-owned original character identity. Draw the SAME character's head and shoulders, front three-quarter friendly expression, same face, hair/fur, ears, distinctive hat/hood and outfit colors. Preserve recognizable identity exactly, no redesign. Soft premium clay-like fairytale rendering consistent with reference. No hands or weapons, entire hat and ears visible, head fills roughly 75 percent of square with transparent generous margins. Genuine transparent background, no frame, no text, no additional characters, no sprite sheet.",
+      "output": "art/hero-portrait-hope.webp",
+      "individual": true,
+      "cropped": false,
+      "mode": "builtin"
+    }
+  ]
+}

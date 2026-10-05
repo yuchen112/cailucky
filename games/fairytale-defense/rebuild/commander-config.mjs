@@ -1,5 +1,5 @@
-import {HERO_IDS} from './mastery.mjs?v=20261005-motion1';
-import {heroBuild} from './hero-rules.mjs?v=20261005-motion1';
+import {HERO_IDS} from './mastery.mjs?v=20261005-complete1';
+import {heroBuild} from './hero-rules.mjs?v=20261005-complete1';
 
 // All configurations live in the same atomic envelope as XP and backups.
 export function validateCommanderConfigs(raw,mastery,checkpoint=null){

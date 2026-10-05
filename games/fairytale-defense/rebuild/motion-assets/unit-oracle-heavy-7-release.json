@@ -1,0 +1,12 @@
+{
+  "id": "unit-oracle-heavy-7-release",
+  "role": "oracle",
+  "branch": "heavy",
+  "level": 7,
+  "name": "星辰裁決",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-a129f21e-8f6f-44de-a552-81f670e1fca5.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 星辰裁決 troop at level 7. Change ONLY action: extend existing star staff RIGHT with arm forward and compact star-light release. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-oracle-heavy-7-release.webp",
+  "individual": true,
+  "cropped": false
+}

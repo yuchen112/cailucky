@@ -1,0 +1,12 @@
+{
+  "id": "unit-firefly-veteran-ready",
+  "role": "firefly",
+  "branch": "rapid",
+  "level": 2,
+  "name": "流螢連射",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-0c70805e-0f8a-4555-9daa-258c4b3a14d1.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 流螢連射 troop at level 2. Change ONLY action: pull the existing bow string fully back, aiming RIGHT. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-firefly-veteran-ready.webp",
+  "individual": true,
+  "cropped": false
+}

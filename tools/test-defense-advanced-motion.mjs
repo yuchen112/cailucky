@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import {ADVANCED_MOTION_IDS,advancedMotionAssets,advancedMotionArt,hasAdvancedMotion} from '../games/fairytale-defense/rebuild/advanced-motion.mjs';
 import {unitArt} from '../games/fairytale-defense/rebuild/unit-presentation.mjs';
 import {spritePlacement} from '../games/fairytale-defense/rebuild/sprite-placement.mjs';
-import {UNITS} from '../games/fairytale-defense/rebuild/army.mjs';
+import {UNITS,UNIT_BRANCHES} from '../games/fairytale-defense/rebuild/army.mjs';
 import {statsFor} from '../games/fairytale-defense/rebuild/progression.mjs';
 import {ADVANCED_MOTION_LAYOUT} from '../games/fairytale-defense/rebuild/advanced-motion-layout.mjs';
 const root=new URL('../games/fairytale-defense/rebuild/',import.meta.url);
@@ -21,7 +21,11 @@ for(const id of ADVANCED_MOTION_IDS){
  }
 }
 assert.equal(unitArt({role:'archer',branch:'rapid',level:10}),'unit-archer-rapid-10');
-assert.equal(unitArt({role:'archer',branch:'heavy',level:10}),'unit-archer-heavy-5');
-assert(!hasAdvancedMotion('unit-archer-heavy-4'));
+assert.equal(unitArt({role:'archer',branch:'heavy',level:10}),'unit-archer-heavy-10');
+assert(hasAdvancedMotion('unit-archer-heavy-4'));
 for(const level of [5,6,7,8,9,10])assert.equal(statsFor(UNITS.artisan,{role:'artisan',branch:'haste',level}).heal,2);
-console.log('PASS exact advanced identity poses, available files/foot anchors, honest unmade tier fallback and retained Lv5 repair bonus.');
+for(const role of Object.keys(UNITS))for(let level=1;level<=10;level++)for(const branch of level>=3?UNIT_BRANCHES[role].map(b=>b.id):[null]){
+ const id=unitArt({role,level,branch});assert(hasAdvancedMotion(id),role+' Lv.'+level+' '+branch+' lacks independent poses');
+ assert(fs.existsSync(new URL('art/'+id+'.webp',root)),id+' missing idle');
+}
+console.log('PASS all 17 troops and all Lv1-10 branches; registered advanced identity poses, available files/foot anchors, high-tier identity mapping and retained Lv5 repair bonus; no static attack fallback.');

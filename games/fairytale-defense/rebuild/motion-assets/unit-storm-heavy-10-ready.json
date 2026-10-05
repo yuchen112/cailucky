@@ -1,0 +1,12 @@
+{
+  "id": "unit-storm-heavy-10-ready",
+  "role": "storm",
+  "branch": "heavy",
+  "level": 10,
+  "name": "雷霆重擊",
+  "source": "C:/Users/User/.codex/generated_images/01a02dfa-784c-7e60-b27a-4cfa42cbd2cd/exec-093cbf12-e9fc-43e8-a764-1e37188a8e49.png",
+  "prompt": "Use case: identity-preserve. Image 1 is the EXACT full-body identity and equipment reference. Draw independently ONE animation pose of this SAME 雷霆重擊 troop at level 10. Change ONLY action: draw the existing staff backward, gather a compact lightning orb while leaning back slightly. Preserve EXACT species, face, hair/feathers, armor, colors, weapon design, body proportions, same cute polished 3D mobile game rendering. Three-quarter facing RIGHT, stable feet at bottom center, entire body and weapon inside 8 percent margin. True transparent background. No platform, scene, text, extra character, collage, sheet or multiple frames. Make the action readable and distinctly different from idle without redesign.",
+  "output": "art/unit-storm-heavy-10-ready.webp",
+  "individual": true,
+  "cropped": false
+}
