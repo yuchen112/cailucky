@@ -1845,6 +1845,11 @@ export const SPRITE_LAYOUT = {
     "anchorY": 0.9140625,
     "visibleHeight": 0.845703125
   },
+  "unit-gallery-stage": {
+    "anchorX": 0.5,
+    "anchorY": 1,
+    "visibleHeight": 1
+  },
   "unit-oracle-heavy-10-ready": {
     "anchorX": 0.54296875,
     "anchorY": 0.96875,

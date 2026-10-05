@@ -1,0 +1,15 @@
+{
+  "method": "Independent built-in AI generation, one image per asset, whole-image resizing, no atlas slicing",
+  "assets": [
+    {
+      "id": "practice-target",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-3d2e4b96-6e4f-4c11-b952-1e3f789986e7.png",
+      "output": "art/practice-target.webp"
+    },
+    {
+      "id": "unit-gallery-stage",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d03d5166-bf4b-4026-9103-68e3eafdf719.png",
+      "output": "art/unit-gallery-stage.webp"
+    }
+  ]
+}
