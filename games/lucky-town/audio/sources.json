@@ -1,0 +1,51 @@
+{
+  "effects": [
+    {
+      "author": "Kenney",
+      "license": "CC0",
+      "source": "https://kenney.nl/assets/casino-audio"
+    },
+    {
+      "author": "Kenney",
+      "license": "CC0",
+      "source": "https://kenney.nl/assets/ui-audio"
+    },
+    {
+      "author": "Kenney",
+      "license": "CC0",
+      "source": "https://kenney.nl/assets/rpg-audio"
+    }
+  ],
+  "music": [
+    {
+      "title": "Carefree",
+      "author": "Kevin MacLeod",
+      "license": "CC BY 4.0",
+      "source": "https://incompetech.com/music/royalty-free/",
+      "file": "carefree.mp3"
+    },
+    {
+      "title": "Daily Beetle",
+      "author": "Kevin MacLeod",
+      "license": "CC BY 4.0",
+      "source": "https://incompetech.com/music/royalty-free/",
+      "file": "daily-beetle.mp3"
+    },
+    {
+      "title": "Pixelland",
+      "author": "Kevin MacLeod",
+      "license": "CC BY 4.0",
+      "source": "https://incompetech.com/music/royalty-free/",
+      "file": "pixelland.mp3"
+    },
+    {
+      "title": "Wallpaper",
+      "author": "Kevin MacLeod",
+      "license": "CC BY 4.0",
+      "source": "https://incompetech.com/music/royalty-free/",
+      "file": "wallpaper.mp3"
+    }
+  ],
+  "musicLicense": "https://creativecommons.org/licenses/by/4.0/",
+  "modifications": "Edited loops with fades and loudness balancing for game use."
+}

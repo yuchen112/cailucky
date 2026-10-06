@@ -1,0 +1,246 @@
+{
+  "tool": "image_gen.imagegen",
+  "release": "20261006-town3",
+  "direction": "Premium tactile miniature fairy-tale game. Teal velvet, cream, brass gold; original ten identities retained. Separate transparent character/object images; independent scene art. No atlas slicing or recoloring. Records below describe actual batch directions, inputs and output names.",
+  "scenes": [
+    [
+      "town-premium",
+      "Premium mobile cozy fairytale game environment, full painted 3D clay miniature town plaza seen from slightly elevated camera, six clearly separated small buildings around an open central cobblestone square: illuminated ornate clover arcade upper left, charming scratch ticket kiosk lower left, couture boutique upper right, furniture workshop lower right, home residence at center rear, tiny animal adoption cottage at right center. Rich teal roofs, cream stone, warm gold and rose accents, soft sunset, greenery, beautiful layered atmospheric depth, high production game art. No characters, no text or letters, no UI. Landscape 16:9."
+    ],
+    [
+      "stage-premium",
+      "Premium fairytale mobile game character selection stage interior, a beautiful arched theatrical alcove with velvety midnight teal curtains, warm brass filigree, circular empty stone podium at center bottom, star shaped hanging lamps, rose and sage floral ornaments framing the sides. Rich dimensional lighting and material detail, elegant and welcoming. Center blank for one large character overlay. No people, no text, no UI, landscape 3:2."
+    ],
+    [
+      "arcade-premium",
+      "Premium fairytale mobile game arcade interior background, deep teal vaulted room, brass and warm cream columns, star canopy, clover stained glass, rich wooden floor, luminous gold lamps and ornate decorative edges. Spacious blank center foreground for overlay of slot cabinet. Cozy high quality sculpted miniature style. No people, no slot machines, no text, landscape 16:9."
+    ],
+    [
+      "scratch-desk",
+      "Premium cozy mobile fairytale game scratch card counter, close slightly elevated view of a polished dark teal and honey wood desk with fine brass edges, little warm lamp at upper left, ticket display and sealed envelope at upper right, elegant vignette, central work surface entirely blank for scratch ticket overlay. Clay miniature aesthetic with rich realistic material textures. No people, no text, landscape 3:2."
+    ],
+    [
+      "pet-cloud",
+      "One adorable tiny cloud kitten pet for premium cozy miniature fairytale mobile game, white round fluffy kitten, two normal cat ears, four little paws, soft blue ear interiors, tiny lavender collar, big expressive eyes. Full body standing 3/4 front, clean silhouette, warm studio lighting, same soft sculpted felt/clay style as CxQ characters. No extra limbs, no objects, transparent background."
+    ],
+    [
+      "pet-sprout",
+      "One adorable tiny round woodland rabbit pet, cream fur, two long leaf green tipped ears, four little paws, tiny clover collar, big expressive eyes. Full body standing 3/4 front, premium CxQ sculpted felt/clay miniature aesthetic, clean silhouette, warm studio light. No props, transparent background."
+    ],
+    [
+      "pet-star",
+      "One adorable tiny golden fluffy puppy pet, warm cream and honey fur, two floppy ears, four short paws, tiny star collar, expressive dark eyes. Full body standing 3/4 front, premium CxQ sculpted felt/clay miniature aesthetic, clean silhouette. No extra limbs, no props, transparent background."
+    ],
+    [
+      "pet-moon",
+      "One adorable tiny round pale lavender hedgehog pet, soft stylized rounded spines, cream face, four little feet, tiny crescent collar. Full body standing 3/4 front, premium CxQ sculpted felt/clay miniature aesthetic, clean silhouette, expressive eyes, warm studio light. No objects, transparent background."
+    ]
+  ],
+  "suits": [
+    [
+      "joy",
+      "甜點烘焙服",
+      "pastel strawberry bakery apron dress, cream chef beret, peach shoes"
+    ],
+    [
+      "joy",
+      "慶典小禮服",
+      "rose gold festive ball dress, pink bow headband, matching elegant shoes"
+    ],
+    [
+      "dream",
+      "星願書房服",
+      "lavender academic blouse and skirt, embroidered star cardigan, small soft scholarly cap"
+    ],
+    [
+      "dream",
+      "銀河晚禮服",
+      "deep violet celestial gown, elegant moon and star head ornament, lavender shoes"
+    ],
+    [
+      "night",
+      "月光日常服",
+      "navy knitted cardigan, cream shirt, tailored blue shorts, navy soft slippers, no animal ears except original hat design"
+    ],
+    [
+      "night",
+      "守夜禮服",
+      "midnight blue elegant crescent cloak and tailored suit, star clasp, deep blue boots"
+    ],
+    [
+      "sadness",
+      "雨後花園服",
+      "dusty blue gardening dress, floral bonnet, cream boots, gentle happy expression"
+    ],
+    [
+      "sadness",
+      "霧藍晚禮服",
+      "silver blue embroidered dress, tiny flower hair ornament, matching satin shoes"
+    ],
+    [
+      "trust",
+      "暖心店長服",
+      "navy and honey tailored waistcoat, cream sleeves, striped trousers, rounded shoes; retain animal identity"
+    ],
+    [
+      "trust",
+      "金鑰慶典服",
+      "elegant dark teal royal jacket, gold key brooch, cream trousers; retain animal identity"
+    ],
+    [
+      "memory",
+      "回憶書店服",
+      "warm brown knitted librarian cardigan, cream pinafore dress, little beige beret"
+    ],
+    [
+      "memory",
+      "玫瑰茶會服",
+      "dusty rose vintage tea dress, lace collar, cocoa ribbon and shoes"
+    ],
+    [
+      "growth",
+      "花園工作服",
+      "sage green gardening overalls over cream blouse, leaf bonnet, brown boots"
+    ],
+    [
+      "growth",
+      "春日花祭服",
+      "layered emerald and cream floral dress, leaf crown, brown shoes"
+    ],
+    [
+      "healing",
+      "暖心烘焙服",
+      "peach baker apron and cream soft cap, mint button, retain plush puppy species and long ears"
+    ],
+    [
+      "healing",
+      "冬日絨絨服",
+      "cream warm knitted jacket with peach trim and mint scarf, retain plush puppy species and long ears"
+    ],
+    [
+      "luck",
+      "幸運店長服",
+      "sage waistcoat and cream shirt, brown tailored pants, small clover bowtie; retain fox ears tail markings"
+    ],
+    [
+      "luck",
+      "四葉慶典服",
+      "emerald silk festival tunic, golden clover trim and cream trousers; retain fox ears tail markings"
+    ],
+    [
+      "hope",
+      "晨光日常服",
+      "white and sky blue soft knit dress, little pastel hair bow, blue shoes"
+    ],
+    [
+      "hope",
+      "虹光禮服",
+      "pearl white iridescent formal dress with sky blue flower ornament and translucent pastel cape"
+    ]
+  ],
+  "ui": [
+    [
+      "ticket-match",
+      "ONE premium mobile game scratch lottery ticket blank artwork, vertical rounded rectangular thick cream card with ornate emerald clover border, polished brass corners, small sculpted clover and golden coin ornaments only along top edge. Wide completely blank cream central area covering 75 percent height for 3x3 scratch overlay. Beautiful high-end miniature illustrated material, no text, no numbers, no panels inside, no UI. Transparent outside card."
+    ],
+    [
+      "ticket-number",
+      "ONE premium mobile game scratch lottery ticket blank artwork, vertical rounded rectangular deep midnight teal card with ornate gold crescent border, polished brass corners, small sculpted moon and star ornaments only along top edge. Wide completely blank dark teal central area covering 75 percent height for scratch overlay. Beautiful high-end miniature illustrated material, no text, no numbers, no panels inside, no UI. Transparent outside card."
+    ],
+    [
+      "ticket-home",
+      "ONE premium mobile game scratch lottery ticket blank artwork, vertical rounded rectangular rose cream card with ornate floral gold border, polished brass corners, small sculpted cozy house and flowers only along top edge. Wide completely blank cream central area covering 75 percent height for scratch overlay. Beautiful high-end miniature illustrated material, no text, no numbers, no panels inside, no UI. Transparent outside card."
+    ],
+    [
+      "button-premium",
+      "One single wide horizontal premium fairytale mobile game button cutout, elegant deep teal enamel inset with polished sculpted brass rim, dimensional raised rounded rectangle, tiny symmetrical clover filigree only on outer ends, totally blank center for text overlay, glowing warm edge highlights, not excessively ornate, clean professional mobile game UI art. Transparent background."
+    ],
+    [
+      "panel-premium",
+      "One single premium fairytale mobile game rectangular panel cutout, elegant midnight teal enamel header rim with polished sculpted brass corners, warm ivory parchment blank central interior, refined dimensional edge with subtle floral filigree, rounded rectangle 4:3, clean large empty center for interface content, no text, no symbols inside, transparent outside."
+    ],
+    [
+      "cover-premium",
+      "Use case: compositing. Image1 and Image2 are original CxQ character identity references. Premium mobile fairytale game cover illustration, landscape 3:2. Exactly TWO characters: original brown-haired peach party girl on left and original lavender-haired star witch on right, calmly standing in a cozy ornate clover arcade doorway. One small fluffy white kitten sits between their feet. Preserve their exact faces, original costumes, proportions; remove handheld items from both; TWO clear arms and TWO clear legs each, empty relaxed hands, both feet firmly on ground. No floating extra limbs, no overlapping bodies. Rich teal and brass arcade architecture, visible tasteful slot cabinet in rear, warm light, distant tiny cottage. Sophisticated sculpted clay miniature game art, layered depth, restrained composition, clear silhouettes, no text, no logos."
+    ]
+  ],
+  "icons": [
+    [
+      "scratch-home-scene",
+      "One cozy premium miniature fairytale game furnished living room illustration, warm sun through arched window, cream sofa with tiny pillows, sage chair, small round wooden tea table with cup and flower vase, beautiful bookcase, pastel rug and a pet bed. Rich soft light and dimensional tactile clay/felt materials, elegant detailed but uncluttered, camera front slightly elevated, 3:2 landscape. No characters, no text, no UI."
+    ],
+    [
+      "icon-home",
+      "One single premium fairytale mobile game navigation icon of a tiny cream cottage with dark teal roof and glowing brass framed door, tactile sculpted miniature, simple readable silhouette, warm light, full object centered, transparent background, no text."
+    ],
+    [
+      "icon-wardrobe",
+      "One single premium fairytale mobile game navigation icon of an elegant pastel rose dress on a brass hanger, tactile sculpted miniature, simple readable silhouette, warm light, full object centered, transparent background, no text."
+    ],
+    [
+      "icon-pet",
+      "One single premium fairytale mobile game navigation icon of a round ivory paw medallion with sage enamel and brass rim, tactile sculpted miniature, simple readable silhouette, warm light, centered, transparent background, no text."
+    ],
+    [
+      "icon-scratch",
+      "One single premium fairytale mobile game navigation icon of two ornate cream and teal scratch lottery cards with small clover seal and a gold coin, tactile sculpted miniature, simple readable silhouette, warm light, full object centered, transparent background, no text."
+    ],
+    [
+      "icon-shop",
+      "One single premium fairytale mobile game navigation icon of a cream canvas shopping bag with teal handles and brass clover seal, tactile sculpted miniature, simple readable silhouette, warm light, centered, transparent background, no text."
+    ]
+  ],
+  "poseBatches": [
+    {
+      "ids": [
+        "joy",
+        "dream",
+        "night",
+        "sadness",
+        "trust",
+        "memory",
+        "growth",
+        "healing",
+        "luck",
+        "hope"
+      ],
+      "reference": "assets/characters/cxq-role-<role>.webp",
+      "outputs": "walk-<role>-a/b",
+      "direction": "Two independent walking poses with opposite stepping feet; exact referenced species, face, clothing, colors; empty hands where walking requires."
+    },
+    {
+      "ids": [
+        "joy",
+        "dream",
+        "night",
+        "sadness",
+        "trust",
+        "memory",
+        "growth",
+        "healing",
+        "luck",
+        "hope"
+      ],
+      "reference": "art/outfit-<role>.webp",
+      "outputs": "walk-outfit-<role>-a/b",
+      "direction": "Two independent walking poses, opposite stepping feet, exact existing home clothing and character identity."
+    },
+    {
+      "reference": "art/outfit-<role>-day/gala.webp",
+      "outputs": "sit-outfit-<role>-day/gala and walk-outfit-<role>-day/gala-a/b",
+      "direction": "One separate seated pose without chair and two opposite-step walking poses for each new suit. Preserve outfit details and identity, transparent background."
+    },
+    {
+      "ids": [
+        "cloud",
+        "sprout",
+        "star",
+        "moon"
+      ],
+      "reference": "art/pet-<id>.webp",
+      "outputs": "pet-<id>-sleep/walk-a/walk-b",
+      "direction": "Preserve each exact pet; curled sleeping pose and two independent opposite-foot walking poses, transparent."
+    }
+  ]
+}
+

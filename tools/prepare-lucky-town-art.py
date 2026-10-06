@@ -9,11 +9,11 @@ for path in art.glob('*.png'):
     im=Image.open(path).convert('RGBA')
     original=im.size
     # Only trim empty alpha margins for objects / UI, preserving each independent asset.
-    if path.stem.startswith(('furniture-','outfit-','sit-','symbol-','accessory-')) or path.stem=='button':
+    if path.stem.startswith(('furniture-','outfit-','sit-','walk-','pet-','symbol-','accessory-','ticket-')) or path.stem.startswith(('button','panel')):
         alpha=im.getchannel('A')
         bbox=alpha.point(lambda x:255 if x>12 else 0).getbbox()
         if bbox: im=im.crop(bbox)
-    edge=1200 if path.stem in ('cover','town','room','room-rose','room-night') else 850 if path.stem.startswith(('outfit-','sit-','machine-')) else 520
+    edge=1600 if path.stem in ('cover-premium','town-premium','stage-premium','arcade-premium','scratch-desk') else 1200 if path.stem in ('cover','town','room','room-rose','room-night') else 700 if path.stem.startswith(('outfit-','sit-','walk-','machine-')) else 520
     im.thumbnail((edge,edge),Image.Resampling.LANCZOS)
     target=path.with_suffix('.webp')
     im.save(target,'WEBP',quality=90,method=4)
