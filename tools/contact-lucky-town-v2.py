@@ -21,4 +21,3 @@ for row,pet in enumerate(['cloud','sprout','star','moon']):
   p=art/('pet-'+pet+pose+'.webp');im=Image.open(p).convert('RGBA');im.thumbnail((220,170));sheet.paste(im,(col*240+(240-im.width)//2,row*200+8),im);d.text((col*240+8,row*200+180),p.stem,fill='#172d2c')
 sheet.save(out/'pet-pose-contact.jpg')
 print('QA-only contacts for all 40 looks and 16 pet poses saved.')
-
