@@ -1,4 +1,4 @@
-export const RELEASE='20261006-town4';
+export const RELEASE='20261006-town5';
 export const ROLES=[
  ['joy','快樂','派對小彩星','把日常變成值得笑的時刻。'],['dream','夢想','星願魔法師','替願望點亮下一步。'],['night','夜晚陪伴','月夜守護者','陪你度過安靜的夜晚。'],['sadness','悲傷','雨天陪伴者','陪你把難過慢慢放下。'],['trust','信任','鑰匙守護者','守住約定與安心感。'],['memory','回憶','回憶收藏家','把重要片段收進生活裡。'],['growth','成長','森林旅伴','一起照顧慢慢長大的日子。'],['healing','療癒','暖心絨絨','在柔軟的小屋裡歇一歇。'],['luck','幸運','四葉鈴狐','帶著剛剛好的好運同行。'],['hope','希望','光線編織者','溫柔地把明天點亮。']
 ].map(([id,name,title,desc])=>({id,name,title,desc,original:`../../assets/characters/cxq-role-${id}.webp`,outfit:`art/outfit-${id}.webp`}));

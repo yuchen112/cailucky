@@ -1,14 +1,14 @@
-import './landscape.mjs?v=20261006-town4';
-import {startLife,openCells} from './room-life.mjs?v=20261006-town4';
-import * as views from './views.mjs?v=20261006-town4';
-import * as sounds from './audio.mjs?v=20261006-town4';
-import {spinReels,payout,winningCells,skipPresentation,beginPresentation,cascade,specialEvent} from './presentation.mjs?v=20261006-town4';
-import {buyTicket,saveScratch,settleTicket} from './scratch.mjs?v=20261006-town4';
-import {bindScratch} from './scratch-view.mjs?v=20261006-town4';
-import {ROLES,ROLE_MAP,MACHINES,SYMBOLS,FURNITURE,CLOTHES,ACCESSORIES,CATALOG,BY_ID,THEMES,RELEASE,BETS,PETS,PET_MAP} from './data.mjs?v=20261006-town4';
-import * as store from './store.mjs?v=20261006-town4';
-import {beginSpin,settle,toyReroll} from './slots.mjs?v=20261006-town4';
-import {canPlace,supports,move} from './room.mjs?v=20261006-town4';
+import './landscape.mjs?v=20261006-town5';
+import {startLife,openCells} from './room-life.mjs?v=20261006-town5';
+import * as views from './views.mjs?v=20261006-town5';
+import * as sounds from './audio.mjs?v=20261006-town5';
+import {spinReels,payout,winningCells,skipPresentation,beginPresentation,cascade,specialEvent} from './presentation.mjs?v=20261006-town5';
+import {buyTicket,saveScratch,settleTicket} from './scratch.mjs?v=20261006-town5';
+import {bindScratch} from './scratch-view.mjs?v=20261006-town5';
+import {ROLES,ROLE_MAP,MACHINES,SYMBOLS,FURNITURE,CLOTHES,ACCESSORIES,CATALOG,BY_ID,THEMES,RELEASE,BETS,PETS,PET_MAP} from './data.mjs?v=20261006-town5';
+import * as store from './store.mjs?v=20261006-town5';
+import {beginSpin,settle,toyReroll} from './slots.mjs?v=20261006-town5';
+import {canPlace,supports,move} from './room.mjs?v=20261006-town5';
 const $=s=>document.querySelector(s),root=$('#app'),dialog=$('#dialog');
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number=n=>n.toLocaleString('zh-TW');
@@ -20,7 +20,7 @@ function avatar(role,s=store.get(),cls=''){return views.avatar(role,s,cls)}
 function toast(message){$('#toast').textContent=message;$('#toast').classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#toast').classList.remove('show'),4200)}
 let audio;function sound(win=false){sounds.play(win?'coin':'click')}
 function modal(title,content){dialog.innerHTML=`<div class="modal-top"><h2>${title}</h2>${button('關閉','close-dialog','','small')}</div>${content}`;if(!dialog.open)dialog.showModal()}
-function confirmAction(title,message,label,fn){modal(title,`<p>${message}</p><div class="actions">${button('取消','close-dialog')}${button(label,'confirm','','primary')}</div>`);dialog.querySelector('[data-action="confirm"]').onclick=async()=>{dialog.close();await guarded(fn)}}
+function confirmAction(title,message,label,fn){modal(title,`<p>${message}</p><div class="actions">${button('取消','close-dialog')}${button(label,'confirm','','primary')}</div>`);dialog.querySelector('[data-action="confirm"]').onclick=async e=>{if(ignoredTap(e))return;dialog.close();await guarded(fn)}}
 async function guarded(fn){if(operation)return;operation=true;try{await fn()}catch(e){toast(e.message||'操作無法完成')}finally{operation=false;}}
 function header(s){const r=ROLE_MAP[s.role];return `<header class="topbar"><b class="game-brand">幸運小鎮</b><button class="identity" data-action="characters">${picture(r.original,r.name)}<span>${r.name}<small>更換夥伴</small></span></button><div class="wallet">${picture('art/coin.webp','金幣')}<b>${number(s.coins)}</b><small>金幣</small></div>${button('全螢幕','fullscreen','','small')}${button('設定','settings','','small')}</header>`}
 const navs=[['town','小鎮'],['arcade','拉霸館'],['home','小屋'],['wardrobe','衣櫃'],['shop','商店']];
@@ -65,8 +65,8 @@ async function photo(){photoMode=true;life?.stop();const canvas=$('#room-canvas'
 async function capture(){const canvas=$('#room-canvas');if(!photoMode)await drawRoom(canvas);const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));if(!blob)throw Error('照片無法產生');const s=store.get(),name=`${ROLE_MAP[s.role].name}-${s.rooms[s.role].name}`;download(blob,`${name}-${Date.now()}.png`);await store.change(s=>{s.albums[s.role].unshift({name,at:Date.now()});s.albums[s.role]=s.albums[s.role].slice(0,20)});toast('照片已下載，拍照紀念也已儲存。')}
 function roomSettings(){const s=store.get(),room=s.rooms[s.role];modal('我的房間',`<label class="field">房間名稱<input id="room-name" maxlength="40" value="${esc(room.name)}"></label>${button('儲存名稱','rename-room')}<h3>牆面與地板主題</h3><div class="theme-grid">${THEMES.map(t=>`<button data-action="room-theme" data-theme="${t.id}">${picture(t.art,t.name)}<b>${t.name}</b><small>${room.theme===t.id?'使用中':s.themes.includes(t.id)?'已解鎖，免費切換':t.price+' 金幣解鎖'}</small></button>`).join('')}</div><h3>擴建空間</h3><p>目前 ${room.size}×${room.size} 格。${room.size===6?'800 金幣擴建到 8×8 格，保留已有布置。':'已擴建完成。'}</p>${room.size===6?button('擴建這個角色的小屋','expand-room',s.coins<800?'disabled':''):''}`)}
 document.addEventListener('pointerdown',()=>sounds.unlock(),{passive:true});document.addEventListener('click',e=>{if(e.target.closest('[data-action]'))sounds.play('click')});document.addEventListener('click',e=>{if(e.target.closest('[data-action=skip-animation]'))skipPresentation()});
-let lastTap=null;root.addEventListener('pointerdown',e=>{if(!e.isPrimary)return;const now=performance.now(),duplicate=!!lastTap&&now-lastTap.at<320&&Math.hypot(e.clientX-lastTap.x,e.clientY-lastTap.y)<22;lastTap={x:e.clientX,y:e.clientY,at:now,duplicate};},{capture:true});
-root.addEventListener('click',e=>{if(e.detail>1||(e.detail>0&&lastTap?.duplicate))return;const b=e.target.closest('[data-action]');if(b&&!b.disabled)handle(b).catch(err=>toast(err.message))});dialog.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(b&&!b.disabled&&b.dataset.action!=='confirm')handle(b).catch(err=>toast(err.message))});dialog.addEventListener('close',()=>{clearInterval(aidTimer);if(photoMode){photoMode=false;render()}});
+let lastTap=null;function trackTap(e){if(!e.isPrimary)return;const now=performance.now(),duplicate=!!lastTap&&now-lastTap.at<320&&Math.hypot(e.clientX-lastTap.x,e.clientY-lastTap.y)<22;lastTap={x:e.clientX,y:e.clientY,at:now,duplicate};}function ignoredTap(e){return e.detail>1||(e.detail>0&&lastTap?.duplicate)}for(const target of [root,dialog])target.addEventListener('pointerdown',trackTap,{capture:true});
+root.addEventListener('click',e=>{if(ignoredTap(e))return;const b=e.target.closest('[data-action]');if(b&&!b.disabled)handle(b).catch(err=>toast(err.message))});dialog.addEventListener('click',e=>{if(ignoredTap(e))return;const b=e.target.closest('[data-action]');if(b&&!b.disabled&&b.dataset.action!=='confirm')handle(b).catch(err=>toast(err.message))});dialog.addEventListener('close',()=>{clearInterval(aidTimer);if(photoMode){photoMode=false;render()}});
 async function handle(b){const a=b.dataset.action;if(a==='skip-animation'){skipPresentation();return}if(a==='close-dialog'){dialog.close();return}if(a==='fullscreen'){await window.luckyTownFullscreen();return}if((busy||operation)&&!['close-dialog','skip-animation'].includes(a))return;if(a==='shop-page'){shopPage+=+b.dataset.step;render();return}if(a==='select-role'){selectedRole=b.dataset.role;render();return}if(a==='navigate'){await navigate(b.dataset.page);return}if(a==='characters'){if(draft){await navigate('characters');return}if(busy||store.get().pending)throw Error('請先完成旋轉。');selectedRole=store.get().role;page='characters';render();return}if(a==='continue'){page='town';render();return}if(a==='open-machine'){machine=b.dataset.machine;lastGrid=null;lastResult=null;page='machine';render();return}if(a==='product'){product(b.dataset.item);return}if(a==='shop-filter'){shopFilter=b.dataset.filter;shopTheme='all';shopPage=0;render();return}if(a==='rules'){const m=MACHINES.find(m=>m.id===machine);modal(m.name+'玩法',`<p>${m.desc}</p><p>${m.rules}</p><p>每次扣 ${m.cost} 金幣。六種圖案等機率出現，所有角色使用相同機率。金幣只用於本遊戲，沒有現金兌換。</p><div class="symbol-guide">${SYMBOLS.map(x=>`<div>${picture(x.art,x.name)}<small>${x.name}</small></div>`).join('')}</div>`);return}if(a==='settings'){settings();return}if(a==='saves'){saves();return}if(a==='export'){exportSave();return}if(a==='import'){$('#import-file').click();return}if(a==='export-damaged'){download(new Blob([JSON.stringify(store.damagedCopies())],{type:'application/json'}),'CxQ-受損存檔原始資料.json');return}if(a==='restore'){const entry=store.backups()[+bIndex(b)];confirmRestore(entry.raw,entry.state);return}if(a==='aid'){aid();return}if(a==='aid-start'){startAid(b.dataset.job);return}if(a==='aid-click'){b.disabled=true;b.classList.add('done');aidClicks++;sound();return}if(a==='tasks'){tasks();return}if(a==='collection'){collection();return}if(a==='room-settings'){roomSettings();return}if(a==='photo'){await photo();return}if(a==='finish-photo'){dialog.close();return}if(a==='to-welcome'){dialog.close();await navigate('welcome');return}
  await guarded(async()=>{
  if(a==='bet'){await store.change(s=>{if(!BETS.includes(+b.dataset.bet))throw Error('倍率不正確');s.bets[machine]=+b.dataset.bet});render();return;}
