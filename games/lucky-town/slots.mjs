@@ -1,0 +1,17 @@
+import {MACHINES} from './data.mjs';
+export function random(){const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]/4294967296}
+const grid=(m,rng)=>Array.from({length:m.rows},()=>Array.from({length:m.cols},()=>Math.floor(rng()*6)));
+const count=(g,v)=>g.flat().filter(x=>x===v).length;
+function lines(g,base){let win=0,cells=[];g.forEach((row,y)=>{for(let x=0;x<row.length;){let end=x+1;while(end<row.length&&row[end]===row[x])end++;if(end-x>=3){win+=base+(end-x-3)*8;for(let i=x;i<end;i++)cells.push([y,i])}x=end}});return {win,cells}}
+function classic(g,base,two){const a=g[0];if(a.every(x=>x===a[0]))return base+(a[0]===0?base:0);return new Set(a).size===2?two:0}
+export function roll(machine,progress,rng=random){const m=MACHINES.find(x=>x.id===machine);if(!m)throw Error('找不到機台');let g=grid(m,rng),frames=[structuredClone(g)],win=0,note='',garden=progress.garden,photo=progress.photo,phase='ready';
+ if(machine==='classic'){win=classic(g,100,22);note=win?'幸運圖案連線！':'這次沒有連線，下一次會有新驚喜。'}
+ if(machine==='toy'){win=classic(g,110,20);phase='choice';note='可收下目前獎金，或選一軸保留、免費重轉一次。'}
+ if(machine==='sweet'){for(let i=0;i<3;i++){const l=lines(g,75);if(!l.win)break;win+=l.win*(i+1);note=`完成 ${i+1} 次甜點連鎖`;if(i<2){for(const[y,x]of l.cells)g[y][x]=Math.floor(rng()*6);frames.push(structuredClone(g));}}if(!note)note='這次甜點沒有連成一排。';}
+ if(machine==='moon'){let n=count(g,1);win=n*2;if(n>=3){for(let i=0;i<2;i++){g=g.map(row=>row.map(v=>v===1?1:Math.floor(rng()*6)));frames.push(structuredClone(g));win+=count(g,1)*2}note=`鎖星成功！兩次免費重轉後收集 ${count(g,1)} 顆星。`}else note=`收集 ${n} 顆星，三顆可啟動鎖星重轉。`;}
+ if(machine==='garden'){const n=count(g,3);garden+=n;const flowers=Math.floor(garden/18);garden%=18;win=(n>=3?n*3:0)+lines(g,12).win+flowers*55;note=flowers?'花園開花！額外得到 55 金幣。':`這次收集 ${n} 片葉子，花園進度 ${garden}/18。`;}
+ if(machine==='photo'){const n=count(g,4);photo+=n;const pages=Math.floor(photo/12);photo%=12;win=n*5+pages*50;if(g[0].some(v=>count(g,v)>=3))win+=18;note=pages?'相簿完成一頁！額外得到 50 金幣。':`收集 ${n} 個相機，相簿進度 ${photo}/12。`;}
+ return {id:crypto.randomUUID(),machine,phase,grid:g,frames,win,note,garden,photo};}
+export function toyReroll(p,keep,rng=random){if(p.machine!=='toy'||p.phase!=='choice'||!Number.isInteger(keep)||keep<0||keep>2)throw Error('無法重轉');const next=structuredClone(p);next.grid=[p.grid[0].map((v,i)=>i===keep?v:Math.floor(rng()*6))];next.frames=[structuredClone(next.grid)];next.win=classic(next.grid,110,20);next.phase='ready';next.note=`保留第 ${keep+1} 軸，免費重轉已完成。`;return next}
+export async function beginSpin(store,machine){const m=MACHINES.find(x=>x.id===machine);return store.change(s=>{if(s.coins<m.cost)throw Error('金幣不足，可以到櫃台申請生活補助。');s.coins-=m.cost;s.pending=roll(machine,s.progress);s.stats.spins++;if(!s.stats.visited.includes(machine))s.stats.visited.push(machine)})}
+export function settle(store){return store.change(s=>{const p=s.pending;if(!p||p.phase!=='ready')throw Error('尚未完成旋轉選擇');s.coins+=p.win;s.stats.won+=p.win;s.stats.biggest=Math.max(s.stats.biggest,p.win);s.progress={garden:p.garden,photo:p.photo};s.pending=null},{allowPending:true})}

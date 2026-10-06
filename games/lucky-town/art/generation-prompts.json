@@ -1,0 +1,315 @@
+{
+  "tool": "image_gen.imagegen",
+  "direction": "CxQ cozy felt and clay miniature storybook village. Warm cream, wood, sage and peach; consistent soft light and handmade materials. Original ten character identities preserved from reference images. Independent transparent object and character cutouts; independent rooms, cabinets and cover. No sprite atlas slicing, CSS art substitutes, text labels or emoji.",
+  "groups": [
+    {
+      "key": "artjobs",
+      "subjects": [
+        [
+          "cover",
+          "Wide landscape premium storybook game cover, warm tactile clay and felt miniatures matching references exactly for characters. A cozy European fairytale village: a furnished cottage open at left, an elegant wooden slot-machine arcade at right, warm golden sunset. Reference joy child with balloons, lavender dream witch, green lucky fox together in foreground carrying a cushion and shopping bag, correct original identities. Clear atmospheric sky upper center for HTML title overlay. No lettering, no watermark. Cohesive collectible miniature style, cream peach sage lavender. Landscape 3:2.",
+          [
+            "joy",
+            "dream",
+            "luck"
+          ],
+          false
+        ],
+        [
+          "town",
+          "Landscape 3:2 miniature fairytale village plaza game background. Warm tactile clay and felt, cream peach sage lavender, golden daylight. Five distinct welcoming storefronts arranged around open central cobblestone plaza: ornate wooden slot arcade upper left, cozy cottage upper right, furniture store lower left, clothing boutique lower right, photo kiosk back center. Visible empty open foreground to composite original characters. No people, no lettering, no UI. Soft detailed storybook toy material.",
+          [],
+          false
+        ],
+        [
+          "room",
+          "Landscape 3:2 empty dollhouse room game background in tactile felt and hand painted clay miniature style. Camera gently elevated looking straight into room, back wall and subtle side walls, pale cream wall, oak plank floor fills lower 65 percent, arched window at upper left with sunset outside, no furniture no rug no characters no lettering. Floor spacious to independently place furniture. Consistent cozy sage peach ivory storybook style.",
+          [],
+          false
+        ],
+        [
+          "button",
+          "Single wide horizontal rounded wooden game button asset, soft ivory glazed ceramic center with warm peach trim and delicate gold bevel, tactile miniature storybook rendering. Front facing, empty center for HTML label, no letters, no symbols, no extra objects. Transparent background. Button occupies 90% width and 45% height of image.",
+          [],
+          true
+        ],
+        [
+          "panel",
+          "Single front facing rectangular game UI panel asset, ivory textured parchment center, rounded polished warm walnut and fine champagne gold frame, gentle carved leaf corner details. Wide landscape 3:2, empty usable center, no text no objects. Tactile storybook toy style. Transparent outside panel.",
+          [],
+          true
+        ]
+      ]
+    },
+    {
+      "key": "machinejobs",
+      "subjects": [
+        [
+          "machine-classic",
+          "Front facing ornate walnut and cream three-reel slot machine cabinet. Central reel window empty dark ivory rectangle at 24%-76% x and 32%-63% y for HTML reels, delicate clover decoration, top empty wooden marquee, red side lever. Entire cabinet isolated."
+        ],
+        [
+          "machine-sweet",
+          "Front facing candy-shop five-reel slot cabinet, strawberry pink frosting canopy, cupcake and cookie decoration. Large empty rectangular central ivory reel window at 18%-82% x and 32%-64% y for HTML reels. Entire cabinet isolated."
+        ],
+        [
+          "machine-moon",
+          "Front facing midnight navy and gold five-reel slot cabinet, crescent arch and stars, glowing moon lanterns. Large empty rectangular central ivory reel window at 18%-82% x and 32%-64% y for HTML reels. Entire cabinet isolated."
+        ],
+        [
+          "machine-garden",
+          "Front facing sage green four-reel slot cabinet styled as a miniature greenhouse with leafy carved wood. Large empty rectangular central ivory reel window at 18%-82% x and 32%-64% y for HTML reels. Entire cabinet isolated."
+        ],
+        [
+          "machine-toy",
+          "Front facing peach and sky-blue three-reel toy shop slot cabinet, carved teddy and blocks, rounded wooden canopy. Empty central rectangular ivory reel window at 24%-76% x and 32%-63% y. Entire cabinet isolated."
+        ],
+        [
+          "machine-photo",
+          "Front facing vintage sepia and gold five-reel slot cabinet, polaroid frames and antique camera decoration. Large empty rectangular central ivory reel window at 18%-82% x and 32%-64% y. Entire cabinet isolated."
+        ]
+      ]
+    },
+    {
+      "key": "furniturejobs1",
+      "subjects": [
+        [
+          "sofa",
+          "Cream two seat sofa with peach cushions and rounded oak feet"
+        ],
+        [
+          "bed",
+          "Lavender moon and star bed with ivory duvet, pillow, curved wooden headboard"
+        ],
+        [
+          "table",
+          "Small round oak tea table with ivory ceramic top, no tea set"
+        ],
+        [
+          "chair",
+          "Sage upholstered small oak chair"
+        ],
+        [
+          "plant",
+          "Four-leaf clover plant in cream terracotta pot"
+        ],
+        [
+          "lamp",
+          "Standing gold crescent moon floor lamp with walnut base"
+        ],
+        [
+          "shelf",
+          "Warm oak low bookcase filled with pastel storybooks"
+        ],
+        [
+          "rug",
+          "Oval strawberry pink woven floor rug, viewed from above at gentle angle"
+        ],
+        [
+          "tea",
+          "Single compact tea tray with teapot and two cups as one furniture object"
+        ],
+        [
+          "cushion",
+          "Soft fluffy cream cloud shaped floor cushion"
+        ],
+        [
+          "desk",
+          "Lavender star themed drawing desk with sketchbook"
+        ],
+        [
+          "record",
+          "Vintage wooden record player on little stand with gold horn"
+        ]
+      ]
+    },
+    {
+      "key": "furniturejobs2",
+      "subjects": [
+        [
+          "vanity",
+          "Peach petal vanity dressing table with round mirror and little drawers"
+        ],
+        [
+          "cake-stand",
+          "Strawberry cream tiered dessert stand with tiny pastries as a single object"
+        ],
+        [
+          "flower",
+          "Small vase with pastel sunrise bouquet"
+        ],
+        [
+          "toy-bear",
+          "Cream stuffed teddy bear with peach ribbon"
+        ],
+        [
+          "ottoman",
+          "Sage leaf themed wooden footstool"
+        ],
+        [
+          "cabinet",
+          "Ivory glazed two-door low storage cabinet with oak top"
+        ],
+        [
+          "pillow",
+          "Lavender gold star shaped pillow"
+        ],
+        [
+          "basket",
+          "Small woven picnic basket with cream cloth and fruit"
+        ],
+        [
+          "mirror",
+          "Standing gold star-framed full length mirror with walnut base"
+        ],
+        [
+          "clock",
+          "Tiny fairytale walnut mantel clock, simple clock face no letters"
+        ],
+        [
+          "planter",
+          "Low sage wooden planter stand holding three pots"
+        ],
+        [
+          "stool",
+          "Small round strawberry pink upholstered stool"
+        ]
+      ]
+    },
+    {
+      "key": "outfitjobs",
+      "subjects": [
+        [
+          "joy",
+          "peach party-print pajamas, no balloons, a little hair bow, cheerful"
+        ],
+        [
+          "dream",
+          "lavender star nightdress, small soft cap instead of oversized witch hat"
+        ],
+        [
+          "night",
+          "navy crescent pajamas, soft night cap, no lantern or owl"
+        ],
+        [
+          "sadness",
+          "pale powder blue cozy knit home dress, remove umbrella, gentle calm expression"
+        ],
+        [
+          "trust",
+          "cream and navy soft home cardigan and trousers, same bear face, no key staff"
+        ],
+        [
+          "memory",
+          "warm sepia knit sweater and ivory skirt, remove held photographs"
+        ],
+        [
+          "growth",
+          "sage leaf home tunic and shorts, remove staff"
+        ],
+        [
+          "healing",
+          "peach soft robe tied at waist on same cream long-eared creature, no bag"
+        ],
+        [
+          "luck",
+          "sage clover embroidered cozy home jacket and brown shorts on same fox, preserve ears tail and mint tuft"
+        ],
+        [
+          "hope",
+          "ivory pastel rainbow soft lounge dress, no held spool, same white hair and face"
+        ]
+      ]
+    },
+    {
+      "key": "symboljobs",
+      "subjects": [
+        [
+          "symbol-clover",
+          "four leaf sage clover with small gold bell"
+        ],
+        [
+          "symbol-star",
+          "soft gold five point plush star"
+        ],
+        [
+          "symbol-cake",
+          "one strawberry cream cupcake"
+        ],
+        [
+          "symbol-leaf",
+          "one sage green leaf"
+        ],
+        [
+          "symbol-camera",
+          "one vintage cream and gold camera"
+        ],
+        [
+          "symbol-gift",
+          "one peach gift box with gold ribbon"
+        ],
+        [
+          "accessory-bow",
+          "one peach satin hair bow, front view"
+        ],
+        [
+          "accessory-brooch",
+          "one small clover gold brooch, front view"
+        ],
+        [
+          "accessory-bag",
+          "one lavender star crossbody pouch with short strap, front view"
+        ]
+      ]
+    },
+    {
+      "key": "roomjobs",
+      "subjects": [
+        [
+          "room-rose",
+          "Change wall to muted strawberry pink with subtle tiny flower pattern, trim cream and oak floor pale warm oak, afternoon outside window"
+        ],
+        [
+          "room-night",
+          "Change wall to muted lavender with subtle tiny gold star pattern, trim cream and oak floor soft warm wood, moonlit blue evening outside window"
+        ]
+      ]
+    },
+    {
+      "key": "sittingjobs",
+      "subjects": [
+        "joy",
+        "dream",
+        "night",
+        "sadness",
+        "trust",
+        "memory",
+        "growth",
+        "healing",
+        "luck",
+        "hope"
+      ]
+    },
+    {
+      "key": "sitoutfitjobs",
+      "subjects": [
+        "joy",
+        "dream",
+        "sadness",
+        "trust",
+        "memory",
+        "growth",
+        "healing",
+        "luck",
+        "hope"
+      ]
+    }
+  ],
+  "additional": [
+    "coin: independent embossed gold coin with clover relief, transparent background",
+    "outfit-night corrected: retain human night character; navy sleepwear; no animal ears or tail",
+    "sit-outfit-night: identical corrected human navy sleepwear, sitting on an invisible low chair",
+    "seated poses: preserve each original identity or assigned outfit; transparent background; no visible chair, no held props"
+  ],
+  "usage": "PNG originals remain local; alpha trim, proportional resize and WebP encoding only. All 77 game assets are independent generations."
+}

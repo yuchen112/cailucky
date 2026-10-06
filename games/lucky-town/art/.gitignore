@@ -1,0 +1,3 @@
+# Full-resolution individual AI source images stay in this local art directory.
+# Optimized alpha-preserving WebP assets are the production deliverables.
+*.png
