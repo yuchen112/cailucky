@@ -1,6 +1,6 @@
 const assert=require('node:assert/strict');
 const {chromium}=require('C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
-(async()=>{const b=await chromium.launch({headless:true,channel:'msedge'});try{
+(async()=>{const b=await chromium.launch({headless:true,channel:'msedge',args:process.env.LUCKY_TOWN_HTTP1?['--disable-http2']:[]});try{
  const p=await b.newPage();await p.goto(process.env.LUCKY_TOWN_URL||'http://127.0.0.1:4179/games/lucky-town/');await p.getByRole('button',{name:'開始生活',exact:true}).waitFor();
  const raw=await p.evaluate(async()=>{const s=await import('./store.mjs?v=20261006-town7');await s.change(x=>{x.coins=1234;x.started=true;});return s.pack(s.get());});
  await p.evaluate(async()=>{localStorage.setItem('cxq-lucky-town-v1','bad-primary');localStorage.setItem('cxq-lucky-town-v1-collection-v3','bad-protected');localStorage.removeItem('cxq-lucky-town-v1-collection-v3-backups');localStorage.removeItem('cxq-lucky-town-v1-backups');const req=indexedDB.open('cxq-lucky-town-v1');await new Promise((resolve,reject)=>{req.onsuccess=()=>{const db=req.result;const tx=db.transaction('saves','readwrite');tx.objectStore('saves').clear();tx.oncomplete=resolve;tx.onerror=reject;};req.onerror=reject;});});

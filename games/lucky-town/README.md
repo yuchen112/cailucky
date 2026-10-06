@@ -60,3 +60,5 @@
 執行 `node tools/test-lucky-town-v4.mjs` 驗證收益、圖案結算、收藏與舊存檔升級。`node tools/check-lucky-town-full.cjs` 驗證橫式尺寸、連續刮卡、連點防護、十二種背景、購買、九十種造型、機台、音效、存檔與網站入口；使用獨立瀏覽器存檔，不改動玩家紀錄。設置 `LUCKY_TOWN_URL` 與 `CAILUCKY_URL` 可測公開站。
 
 音樂與音效沿用已收錄的十七個音訊檔，授權與出處見 `audio/` 內的紀錄。
+
+測試主機的 Edge HTTP/2 連線曾造成部分圖片請求持續等待；HTTP/1.1 可正常載入。同一套瀏覽器流程可設置 LUCKY_TOWN_HTTP1=1 重現此連線設定，不修改遊戲規則或素材。實際 Android／iOS 裝置尚未驗證。
