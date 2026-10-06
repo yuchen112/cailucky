@@ -1,5 +1,5 @@
 /* Image/audio cache only. Never reads or writes player saves. */
-const BUILD='e62d29ce94e76aba';
+const BUILD='e6b5e149177fd7ed';
 const CACHE='cxq-defense-art-v1',ROOT=new URL('./',self.location.href);let manifest;
 async function revisions(){return manifest||(manifest=(async()=>{const cache=await caches.open(CACHE),key=new URL('asset-revisions.json?build='+BUILD,ROOT).href;try{const response=await fetch(new URL('asset-revisions.json',ROOT),{cache:'no-cache'});if(!response.ok)throw Error('manifest');const data=await response.clone().json();try{await cache.put(key,response);}catch{}return data;}catch{const saved=await cache.match(key);return saved?await saved.json():{files:{}};}})());}
 self.addEventListener('install',e=>e.waitUntil(revisions().then(()=>self.skipWaiting())));

@@ -1,0 +1,75 @@
+{
+  "generator": "Built-in image_gen; each asset generated separately. Whole-image proportional resizing only; no cropping or atlas.",
+  "assets": [
+    {
+      "id": "entry-story-v2",
+      "transparent": true,
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone square mobile fantasy game navigation button, not a mockup. Polished cute 3D storybook painted woodland tower-defense art. Entire single square button fills the canvas, emerald leather inset with warm sculpted gold oak-leaf border, rounded square corners, all sides visible. Upper 58% a single big readable illustrated subject, lower 36% integrated dark emerald title plaque with large embossed cream/gold Traditional Chinese characters in exactly two centered lines. No additional text, no characters, no watermark, no collage, no sprite sheet. Transparent outside rounded corners only. Subject: an open magical storybook with a small fairytale castle and forest path rising from its pages, warm daylight. Text verbatim: first line \"章節\", second line \"冒險\".",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-6dd54af0-ed7b-47a1-8e1d-ba549d141548.png",
+      "file": "art/entry-story-v2.webp"
+    },
+    {
+      "id": "entry-tower-v2",
+      "transparent": true,
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone square mobile fantasy game navigation button, not a mockup. Polished cute 3D storybook painted woodland tower-defense art. Entire single square button fills the canvas, emerald leather inset with warm sculpted gold oak-leaf border, rounded square corners, all sides visible. Upper 58% a single big readable illustrated subject, lower 36% integrated dark emerald title plaque with large embossed cream/gold Traditional Chinese characters in exactly two centered lines. No additional text, no characters, no watermark, no collage, no sprite sheet. Transparent outside rounded corners only. Subject: a majestic cute enchanted guardian tower rising through moonlit blue clouds, glowing golden star at its peak. Text verbatim: first line \"99層\", second line \"守塔\".",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5f8aefe6-209e-4ea0-97f0-e0ca9fe7bea2.png",
+      "file": "art/entry-tower-v2.webp"
+    },
+    {
+      "id": "entry-resources-v2",
+      "transparent": true,
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone square mobile fantasy game navigation button, not a mockup. Polished cute 3D storybook painted woodland tower-defense art. Entire single square button fills the canvas, emerald leather inset with warm sculpted gold oak-leaf border, rounded square corners, all sides visible. Upper 58% a single big readable illustrated subject, lower 36% integrated dark emerald title plaque with large embossed cream/gold Traditional Chinese characters in exactly two centered lines. No additional text, no characters, no watermark, no collage, no sprite sheet. Transparent outside rounded corners only. Subject: a single open treasure chest containing gold coins, a teal glowing training book and a small star crystal, warm amber light. Text verbatim: first line \"資源\", second line \"副本\".",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-5618a37b-360b-4db7-b42c-b566763a7eef.png",
+      "file": "art/entry-resources-v2.webp"
+    },
+    {
+      "id": "bag-interior-v2",
+      "transparent": false,
+      "prompt": "Use case: stylized-concept. Asset type: one portrait full-screen mobile fantasy inventory background. Close front-facing view inside an open woodland adventurer backpack, soft dark emerald suede and canvas, warm brown leather edges, brass clasps, stitched seams along the extreme left and right sides, subtle fabric texture. Quiet flat dark teal fabric throughout central 85% for item UI overlay, small rolled strap and buckle detail ONLY upper corners. No drawn slots, no items, no text, no logos, no watermark, no grid, no collage. Polished cute fairytale 3D painted game art. Portrait 2:3 composition, not a bag object on a background.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-a7f37443-d4b5-4a5c-90f3-f75a0c231437.png",
+      "file": "art/bag-interior-v2.webp"
+    },
+    {
+      "id": "bag-slot-v2",
+      "transparent": true,
+      "prompt": "Use case: stylized-concept. Asset type: one standalone square inventory slot tile. Front-on square emerald suede pocket with thick softly rounded brown leather rim, fine stitches and four tiny brass corner studs. Interior dark clean teal leather with NO item, fully opaque inside; transparent outside corners only. Polished cute woodland storybook game UI. Fill square canvas with the whole slot and 2% margin, no text, no grid, no multiple assets.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-6bd9f8f5-9363-49bb-9163-f9c6ca33cfa8.png",
+      "file": "art/bag-slot-v2.webp"
+    },
+    {
+      "id": "bag-selected-v2",
+      "transparent": true,
+      "prompt": "Use case: stylized-concept. Asset type: ONE square selected inventory slot overlay frame. Thick rounded gold/brass edge, small oak-leaf corners, tiny amber highlights, transparent empty center and transparent outside. Front-on, matching emerald woodland leather inventory art, frame fills square canvas with 2% margin. No item, no background filling center, no text, no sparkle scene, no grid, no multiple frames.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-bec9c52e-a61b-4e58-8284-1d8adf61bb21.png",
+      "file": "art/bag-selected-v2.webp"
+    },
+    {
+      "id": "bag-tab-v2",
+      "transparent": true,
+      "prompt": "Use case: stylized-concept. Asset type: ONE horizontal mobile fantasy inventory category tab, aspect ratio 3:1. Soft rounded emerald leather rectangle with thin stitched brown edge and tiny brass rivets at far ends, dark matte teal interior reserved entirely for readable overlay text. Whole single tab fills wide canvas with very little margin, front-on. Transparent outside corners only, no text, no items, no symbols, no collage. Polished cute woodland storybook game UI.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-d60a7e19-57b7-43f7-97dc-3dceb8fef5ae.png",
+      "file": "art/bag-tab-v2.webp"
+    },
+    {
+      "id": "bag-tab-active-v2",
+      "transparent": true,
+      "prompt": "Use case: stylized-concept. Asset type: ONE horizontal SELECTED inventory category tab, aspect ratio 3:1. Soft rounded illuminated emerald leather rectangle with bright warm golden embossed border, oak-leaf end caps, brighter teal matte interior reserved for overlay text. Whole single tab fills wide canvas with little margin, front-on. Transparent outside corners only, no text, no item, no symbol, no collage. Polished cute woodland storybook mobile game UI.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-2030aa7e-7ae8-4255-bce8-f9947f4fc499.png",
+      "file": "art/bag-tab-active-v2.webp"
+    },
+    {
+      "id": "bag-action-v2",
+      "transparent": true,
+      "prompt": "Use case: stylized-concept. Asset type: ONE wide horizontal mobile fantasy inventory action button, aspect ratio 3:1. Rounded forest-green leather panel with hand-painted embossed golden metal outline and subtle carved leaf decorations confined to left and right ends. Large clean dark emerald center for overlay text, no lettering. Front-facing whole button visible with 2% margin, transparent outside, opaque inside, not a UI sheet, no scene. Polished cute 3D storybook woodland game art.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-2a389189-29b7-4899-a94c-e8868d1dc804.png",
+      "file": "art/bag-action-v2.webp"
+    },
+    {
+      "id": "nav-bag-v2",
+      "transparent": true,
+      "prompt": "Use case: stylized-concept. Asset type: ONE standalone inventory navigation icon. A cute emerald canvas adventurer backpack with rounded brown leather straps, one brass leaf-shaped clasp, a small rolled blanket attached at top, three-quarter front view. Bold simple recognizable silhouette, polished 3D storybook forest fantasy game art. Entire bag centered and fills square canvas, no floor or shadow plane, no text, no frame, no collage, transparent background.",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a02dfa-784c-7e60-b27a-4cfa42cbd2cd\\exec-2c115530-e5d0-48de-ab63-ea4d99de62bd.png",
+      "file": "art/nav-bag-v2.webp"
+    }
+  ]
+}
