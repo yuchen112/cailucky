@@ -3204,5 +3204,1045 @@
     ],
     "alpha": true,
     "bytes": 117280
+  },
+  {
+    "id": "cover-landscape",
+    "file": "cover-landscape.webp",
+    "size": [
+      1600,
+      900
+    ],
+    "alpha": false,
+    "bytes": 294758
+  },
+  {
+    "id": "ticket-match-20",
+    "file": "ticket-match-20.webp",
+    "size": [
+      1600,
+      900
+    ],
+    "alpha": true,
+    "bytes": 247486
+  },
+  {
+    "id": "ticket-match-100",
+    "file": "ticket-match-100.webp",
+    "size": [
+      1600,
+      900
+    ],
+    "alpha": true,
+    "bytes": 247040
+  },
+  {
+    "id": "ticket-match-500",
+    "file": "ticket-match-500.webp",
+    "size": [
+      1600,
+      900
+    ],
+    "alpha": true,
+    "bytes": 309774
+  },
+  {
+    "id": "ticket-number-20",
+    "file": "ticket-number-20.webp",
+    "size": [
+      1600,
+      900
+    ],
+    "alpha": true,
+    "bytes": 286312
+  },
+  {
+    "id": "ticket-number-100",
+    "file": "ticket-number-100.webp",
+    "size": [
+      1600,
+      900
+    ],
+    "alpha": true,
+    "bytes": 281884
+  },
+  {
+    "id": "ticket-number-500",
+    "file": "ticket-number-500.webp",
+    "size": [
+      1600,
+      901
+    ],
+    "alpha": true,
+    "bytes": 310696
+  },
+  {
+    "id": "ticket-home-20",
+    "file": "ticket-home-20.webp",
+    "size": [
+      1600,
+      900
+    ],
+    "alpha": true,
+    "bytes": 264200
+  },
+  {
+    "id": "ticket-home-100",
+    "file": "ticket-home-100.webp",
+    "size": [
+      1600,
+      900
+    ],
+    "alpha": true,
+    "bytes": 257990
+  },
+  {
+    "id": "ticket-home-500",
+    "file": "ticket-home-500.webp",
+    "size": [
+      1600,
+      900
+    ],
+    "alpha": true,
+    "bytes": 294254
+  },
+  {
+    "id": "cheer-joy",
+    "file": "cheer-joy.webp",
+    "size": [
+      632,
+      700
+    ],
+    "alpha": true,
+    "bytes": 126292
+  },
+  {
+    "id": "cheer-dream",
+    "file": "cheer-dream.webp",
+    "size": [
+      614,
+      700
+    ],
+    "alpha": true,
+    "bytes": 121952
+  },
+  {
+    "id": "cheer-night",
+    "file": "cheer-night.webp",
+    "size": [
+      696,
+      700
+    ],
+    "alpha": true,
+    "bytes": 121336
+  },
+  {
+    "id": "cheer-sadness",
+    "file": "cheer-sadness.webp",
+    "size": [
+      550,
+      700
+    ],
+    "alpha": true,
+    "bytes": 87630
+  },
+  {
+    "id": "cheer-trust",
+    "file": "cheer-trust.webp",
+    "size": [
+      692,
+      700
+    ],
+    "alpha": true,
+    "bytes": 135390
+  },
+  {
+    "id": "cheer-memory",
+    "file": "cheer-memory.webp",
+    "size": [
+      558,
+      700
+    ],
+    "alpha": true,
+    "bytes": 92132
+  },
+  {
+    "id": "cheer-growth",
+    "file": "cheer-growth.webp",
+    "size": [
+      539,
+      700
+    ],
+    "alpha": true,
+    "bytes": 106308
+  },
+  {
+    "id": "cheer-healing",
+    "file": "cheer-healing.webp",
+    "size": [
+      685,
+      700
+    ],
+    "alpha": true,
+    "bytes": 87520
+  },
+  {
+    "id": "cheer-luck",
+    "file": "cheer-luck.webp",
+    "size": [
+      663,
+      700
+    ],
+    "alpha": true,
+    "bytes": 129320
+  },
+  {
+    "id": "cheer-hope",
+    "file": "cheer-hope.webp",
+    "size": [
+      632,
+      700
+    ],
+    "alpha": true,
+    "bytes": 70744
+  },
+  {
+    "id": "pet-cloud-cheer",
+    "file": "pet-cloud-cheer.webp",
+    "size": [
+      629,
+      700
+    ],
+    "alpha": true,
+    "bytes": 80766
+  },
+  {
+    "id": "pet-sprout-cheer",
+    "file": "pet-sprout-cheer.webp",
+    "size": [
+      480,
+      700
+    ],
+    "alpha": true,
+    "bytes": 83988
+  },
+  {
+    "id": "pet-star-cheer",
+    "file": "pet-star-cheer.webp",
+    "size": [
+      612,
+      700
+    ],
+    "alpha": true,
+    "bytes": 113168
+  },
+  {
+    "id": "pet-moon-cheer",
+    "file": "pet-moon-cheer.webp",
+    "size": [
+      700,
+      652
+    ],
+    "alpha": true,
+    "bytes": 120962
+  },
+  {
+    "id": "walk-joy-c",
+    "file": "walk-joy-c.webp",
+    "size": [
+      377,
+      700
+    ],
+    "alpha": true,
+    "bytes": 72322
+  },
+  {
+    "id": "walk-joy-d",
+    "file": "walk-joy-d.webp",
+    "size": [
+      375,
+      700
+    ],
+    "alpha": true,
+    "bytes": 73408
+  },
+  {
+    "id": "walk-outfit-joy-c",
+    "file": "walk-outfit-joy-c.webp",
+    "size": [
+      440,
+      700
+    ],
+    "alpha": true,
+    "bytes": 76710
+  },
+  {
+    "id": "walk-outfit-joy-d",
+    "file": "walk-outfit-joy-d.webp",
+    "size": [
+      442,
+      700
+    ],
+    "alpha": true,
+    "bytes": 78862
+  },
+  {
+    "id": "walk-outfit-joy-day-c",
+    "file": "walk-outfit-joy-day-c.webp",
+    "size": [
+      376,
+      700
+    ],
+    "alpha": true,
+    "bytes": 73558
+  },
+  {
+    "id": "walk-outfit-joy-day-d",
+    "file": "walk-outfit-joy-day-d.webp",
+    "size": [
+      381,
+      700
+    ],
+    "alpha": true,
+    "bytes": 82600
+  },
+  {
+    "id": "walk-outfit-joy-gala-c",
+    "file": "walk-outfit-joy-gala-c.webp",
+    "size": [
+      410,
+      700
+    ],
+    "alpha": true,
+    "bytes": 88562
+  },
+  {
+    "id": "walk-outfit-joy-gala-d",
+    "file": "walk-outfit-joy-gala-d.webp",
+    "size": [
+      417,
+      700
+    ],
+    "alpha": true,
+    "bytes": 93100
+  },
+  {
+    "id": "walk-dream-c",
+    "file": "walk-dream-c.webp",
+    "size": [
+      519,
+      700
+    ],
+    "alpha": true,
+    "bytes": 84010
+  },
+  {
+    "id": "walk-dream-d",
+    "file": "walk-dream-d.webp",
+    "size": [
+      535,
+      700
+    ],
+    "alpha": true,
+    "bytes": 89132
+  },
+  {
+    "id": "walk-outfit-dream-c",
+    "file": "walk-outfit-dream-c.webp",
+    "size": [
+      473,
+      700
+    ],
+    "alpha": true,
+    "bytes": 86984
+  },
+  {
+    "id": "walk-outfit-dream-d",
+    "file": "walk-outfit-dream-d.webp",
+    "size": [
+      476,
+      700
+    ],
+    "alpha": true,
+    "bytes": 88694
+  },
+  {
+    "id": "walk-outfit-dream-day-c",
+    "file": "walk-outfit-dream-day-c.webp",
+    "size": [
+      427,
+      700
+    ],
+    "alpha": true,
+    "bytes": 84068
+  },
+  {
+    "id": "walk-outfit-dream-day-d",
+    "file": "walk-outfit-dream-day-d.webp",
+    "size": [
+      445,
+      700
+    ],
+    "alpha": true,
+    "bytes": 85898
+  },
+  {
+    "id": "walk-outfit-dream-gala-c",
+    "file": "walk-outfit-dream-gala-c.webp",
+    "size": [
+      516,
+      700
+    ],
+    "alpha": true,
+    "bytes": 119376
+  },
+  {
+    "id": "walk-outfit-dream-gala-d",
+    "file": "walk-outfit-dream-gala-d.webp",
+    "size": [
+      505,
+      700
+    ],
+    "alpha": true,
+    "bytes": 128096
+  },
+  {
+    "id": "walk-night-c",
+    "file": "walk-night-c.webp",
+    "size": [
+      511,
+      700
+    ],
+    "alpha": true,
+    "bytes": 86898
+  },
+  {
+    "id": "walk-night-d",
+    "file": "walk-night-d.webp",
+    "size": [
+      518,
+      700
+    ],
+    "alpha": true,
+    "bytes": 90546
+  },
+  {
+    "id": "walk-outfit-night-c",
+    "file": "walk-outfit-night-c.webp",
+    "size": [
+      467,
+      700
+    ],
+    "alpha": true,
+    "bytes": 75580
+  },
+  {
+    "id": "walk-outfit-night-d",
+    "file": "walk-outfit-night-d.webp",
+    "size": [
+      462,
+      700
+    ],
+    "alpha": true,
+    "bytes": 80968
+  },
+  {
+    "id": "walk-outfit-night-day-c",
+    "file": "walk-outfit-night-day-c.webp",
+    "size": [
+      452,
+      700
+    ],
+    "alpha": true,
+    "bytes": 75248
+  },
+  {
+    "id": "walk-outfit-night-day-d",
+    "file": "walk-outfit-night-day-d.webp",
+    "size": [
+      456,
+      700
+    ],
+    "alpha": true,
+    "bytes": 84058
+  },
+  {
+    "id": "walk-outfit-night-gala-c",
+    "file": "walk-outfit-night-gala-c.webp",
+    "size": [
+      484,
+      700
+    ],
+    "alpha": true,
+    "bytes": 93522
+  },
+  {
+    "id": "walk-outfit-night-gala-d",
+    "file": "walk-outfit-night-gala-d.webp",
+    "size": [
+      499,
+      700
+    ],
+    "alpha": true,
+    "bytes": 95730
+  },
+  {
+    "id": "walk-sadness-c",
+    "file": "walk-sadness-c.webp",
+    "size": [
+      371,
+      700
+    ],
+    "alpha": true,
+    "bytes": 83446
+  },
+  {
+    "id": "walk-sadness-d",
+    "file": "walk-sadness-d.webp",
+    "size": [
+      372,
+      700
+    ],
+    "alpha": true,
+    "bytes": 90412
+  },
+  {
+    "id": "walk-outfit-sadness-c",
+    "file": "walk-outfit-sadness-c.webp",
+    "size": [
+      406,
+      700
+    ],
+    "alpha": true,
+    "bytes": 82678
+  },
+  {
+    "id": "walk-outfit-sadness-d",
+    "file": "walk-outfit-sadness-d.webp",
+    "size": [
+      413,
+      700
+    ],
+    "alpha": true,
+    "bytes": 87310
+  },
+  {
+    "id": "walk-outfit-sadness-day-c",
+    "file": "walk-outfit-sadness-day-c.webp",
+    "size": [
+      445,
+      700
+    ],
+    "alpha": true,
+    "bytes": 100572
+  },
+  {
+    "id": "walk-outfit-sadness-day-d",
+    "file": "walk-outfit-sadness-day-d.webp",
+    "size": [
+      434,
+      700
+    ],
+    "alpha": true,
+    "bytes": 100580
+  },
+  {
+    "id": "walk-outfit-sadness-gala-c",
+    "file": "walk-outfit-sadness-gala-c.webp",
+    "size": [
+      379,
+      700
+    ],
+    "alpha": true,
+    "bytes": 96870
+  },
+  {
+    "id": "walk-outfit-sadness-gala-d",
+    "file": "walk-outfit-sadness-gala-d.webp",
+    "size": [
+      384,
+      700
+    ],
+    "alpha": true,
+    "bytes": 103254
+  },
+  {
+    "id": "walk-trust-c",
+    "file": "walk-trust-c.webp",
+    "size": [
+      593,
+      700
+    ],
+    "alpha": true,
+    "bytes": 104166
+  },
+  {
+    "id": "walk-trust-d",
+    "file": "walk-trust-d.webp",
+    "size": [
+      600,
+      700
+    ],
+    "alpha": true,
+    "bytes": 110232
+  },
+  {
+    "id": "walk-outfit-trust-c",
+    "file": "walk-outfit-trust-c.webp",
+    "size": [
+      390,
+      700
+    ],
+    "alpha": true,
+    "bytes": 87756
+  },
+  {
+    "id": "walk-outfit-trust-d",
+    "file": "walk-outfit-trust-d.webp",
+    "size": [
+      401,
+      700
+    ],
+    "alpha": true,
+    "bytes": 99488
+  },
+  {
+    "id": "walk-outfit-trust-day-c",
+    "file": "walk-outfit-trust-day-c.webp",
+    "size": [
+      420,
+      700
+    ],
+    "alpha": true,
+    "bytes": 94812
+  },
+  {
+    "id": "walk-outfit-trust-day-d",
+    "file": "walk-outfit-trust-day-d.webp",
+    "size": [
+      427,
+      700
+    ],
+    "alpha": true,
+    "bytes": 94968
+  },
+  {
+    "id": "walk-outfit-trust-gala-c",
+    "file": "walk-outfit-trust-gala-c.webp",
+    "size": [
+      494,
+      700
+    ],
+    "alpha": true,
+    "bytes": 118610
+  },
+  {
+    "id": "walk-outfit-trust-gala-d",
+    "file": "walk-outfit-trust-gala-d.webp",
+    "size": [
+      492,
+      700
+    ],
+    "alpha": true,
+    "bytes": 114924
+  },
+  {
+    "id": "walk-memory-c",
+    "file": "walk-memory-c.webp",
+    "size": [
+      415,
+      700
+    ],
+    "alpha": true,
+    "bytes": 73434
+  },
+  {
+    "id": "walk-memory-d",
+    "file": "walk-memory-d.webp",
+    "size": [
+      411,
+      700
+    ],
+    "alpha": true,
+    "bytes": 83154
+  },
+  {
+    "id": "walk-outfit-memory-c",
+    "file": "walk-outfit-memory-c.webp",
+    "size": [
+      394,
+      700
+    ],
+    "alpha": true,
+    "bytes": 73540
+  },
+  {
+    "id": "walk-outfit-memory-d",
+    "file": "walk-outfit-memory-d.webp",
+    "size": [
+      385,
+      700
+    ],
+    "alpha": true,
+    "bytes": 79504
+  },
+  {
+    "id": "walk-outfit-memory-day-c",
+    "file": "walk-outfit-memory-day-c.webp",
+    "size": [
+      352,
+      700
+    ],
+    "alpha": true,
+    "bytes": 71910
+  },
+  {
+    "id": "walk-outfit-memory-day-d",
+    "file": "walk-outfit-memory-day-d.webp",
+    "size": [
+      373,
+      700
+    ],
+    "alpha": true,
+    "bytes": 77252
+  },
+  {
+    "id": "walk-outfit-memory-gala-c",
+    "file": "walk-outfit-memory-gala-c.webp",
+    "size": [
+      386,
+      700
+    ],
+    "alpha": true,
+    "bytes": 90076
+  },
+  {
+    "id": "walk-outfit-memory-gala-d",
+    "file": "walk-outfit-memory-gala-d.webp",
+    "size": [
+      394,
+      700
+    ],
+    "alpha": true,
+    "bytes": 97792
+  },
+  {
+    "id": "walk-growth-c",
+    "file": "walk-growth-c.webp",
+    "size": [
+      450,
+      700
+    ],
+    "alpha": true,
+    "bytes": 79752
+  },
+  {
+    "id": "walk-growth-d",
+    "file": "walk-growth-d.webp",
+    "size": [
+      427,
+      700
+    ],
+    "alpha": true,
+    "bytes": 79986
+  },
+  {
+    "id": "walk-outfit-growth-c",
+    "file": "walk-outfit-growth-c.webp",
+    "size": [
+      388,
+      700
+    ],
+    "alpha": true,
+    "bytes": 75474
+  },
+  {
+    "id": "walk-outfit-growth-d",
+    "file": "walk-outfit-growth-d.webp",
+    "size": [
+      383,
+      700
+    ],
+    "alpha": true,
+    "bytes": 80418
+  },
+  {
+    "id": "walk-outfit-growth-day-c",
+    "file": "walk-outfit-growth-day-c.webp",
+    "size": [
+      368,
+      700
+    ],
+    "alpha": true,
+    "bytes": 71990
+  },
+  {
+    "id": "walk-outfit-growth-day-d",
+    "file": "walk-outfit-growth-day-d.webp",
+    "size": [
+      372,
+      700
+    ],
+    "alpha": true,
+    "bytes": 77654
+  },
+  {
+    "id": "walk-outfit-growth-gala-c",
+    "file": "walk-outfit-growth-gala-c.webp",
+    "size": [
+      340,
+      700
+    ],
+    "alpha": true,
+    "bytes": 82642
+  },
+  {
+    "id": "walk-outfit-growth-gala-d",
+    "file": "walk-outfit-growth-gala-d.webp",
+    "size": [
+      358,
+      700
+    ],
+    "alpha": true,
+    "bytes": 88318
+  },
+  {
+    "id": "walk-healing-c",
+    "file": "walk-healing-c.webp",
+    "size": [
+      596,
+      700
+    ],
+    "alpha": true,
+    "bytes": 70922
+  },
+  {
+    "id": "walk-healing-d",
+    "file": "walk-healing-d.webp",
+    "size": [
+      610,
+      700
+    ],
+    "alpha": true,
+    "bytes": 70620
+  },
+  {
+    "id": "walk-outfit-healing-c",
+    "file": "walk-outfit-healing-c.webp",
+    "size": [
+      579,
+      700
+    ],
+    "alpha": true,
+    "bytes": 70722
+  },
+  {
+    "id": "walk-outfit-healing-d",
+    "file": "walk-outfit-healing-d.webp",
+    "size": [
+      587,
+      700
+    ],
+    "alpha": true,
+    "bytes": 71338
+  },
+  {
+    "id": "walk-outfit-healing-day-c",
+    "file": "walk-outfit-healing-day-c.webp",
+    "size": [
+      560,
+      700
+    ],
+    "alpha": true,
+    "bytes": 77002
+  },
+  {
+    "id": "walk-outfit-healing-day-d",
+    "file": "walk-outfit-healing-day-d.webp",
+    "size": [
+      565,
+      700
+    ],
+    "alpha": true,
+    "bytes": 79118
+  },
+  {
+    "id": "walk-outfit-healing-gala-c",
+    "file": "walk-outfit-healing-gala-c.webp",
+    "size": [
+      567,
+      700
+    ],
+    "alpha": true,
+    "bytes": 86474
+  },
+  {
+    "id": "walk-outfit-healing-gala-d",
+    "file": "walk-outfit-healing-gala-d.webp",
+    "size": [
+      572,
+      700
+    ],
+    "alpha": true,
+    "bytes": 92862
+  },
+  {
+    "id": "walk-luck-c",
+    "file": "walk-luck-c.webp",
+    "size": [
+      542,
+      700
+    ],
+    "alpha": true,
+    "bytes": 87526
+  },
+  {
+    "id": "walk-luck-d",
+    "file": "walk-luck-d.webp",
+    "size": [
+      538,
+      700
+    ],
+    "alpha": true,
+    "bytes": 87944
+  },
+  {
+    "id": "walk-outfit-luck-c",
+    "file": "walk-outfit-luck-c.webp",
+    "size": [
+      562,
+      700
+    ],
+    "alpha": true,
+    "bytes": 114894
+  },
+  {
+    "id": "walk-outfit-luck-d",
+    "file": "walk-outfit-luck-d.webp",
+    "size": [
+      563,
+      700
+    ],
+    "alpha": true,
+    "bytes": 117218
+  },
+  {
+    "id": "walk-outfit-luck-day-c",
+    "file": "walk-outfit-luck-day-c.webp",
+    "size": [
+      465,
+      700
+    ],
+    "alpha": true,
+    "bytes": 92846
+  },
+  {
+    "id": "walk-outfit-luck-day-d",
+    "file": "walk-outfit-luck-day-d.webp",
+    "size": [
+      463,
+      700
+    ],
+    "alpha": true,
+    "bytes": 92820
+  },
+  {
+    "id": "walk-outfit-luck-gala-c",
+    "file": "walk-outfit-luck-gala-c.webp",
+    "size": [
+      490,
+      700
+    ],
+    "alpha": true,
+    "bytes": 100858
+  },
+  {
+    "id": "walk-outfit-luck-gala-d",
+    "file": "walk-outfit-luck-gala-d.webp",
+    "size": [
+      486,
+      700
+    ],
+    "alpha": true,
+    "bytes": 104848
+  },
+  {
+    "id": "walk-hope-c",
+    "file": "walk-hope-c.webp",
+    "size": [
+      484,
+      700
+    ],
+    "alpha": true,
+    "bytes": 51992
+  },
+  {
+    "id": "walk-hope-d",
+    "file": "walk-hope-d.webp",
+    "size": [
+      504,
+      700
+    ],
+    "alpha": true,
+    "bytes": 55906
+  },
+  {
+    "id": "walk-outfit-hope-c",
+    "file": "walk-outfit-hope-c.webp",
+    "size": [
+      494,
+      700
+    ],
+    "alpha": true,
+    "bytes": 58312
+  },
+  {
+    "id": "walk-outfit-hope-d",
+    "file": "walk-outfit-hope-d.webp",
+    "size": [
+      506,
+      700
+    ],
+    "alpha": true,
+    "bytes": 63216
+  },
+  {
+    "id": "walk-outfit-hope-day-c",
+    "file": "walk-outfit-hope-day-c.webp",
+    "size": [
+      447,
+      700
+    ],
+    "alpha": true,
+    "bytes": 58122
+  },
+  {
+    "id": "walk-outfit-hope-day-d",
+    "file": "walk-outfit-hope-day-d.webp",
+    "size": [
+      457,
+      700
+    ],
+    "alpha": true,
+    "bytes": 58352
+  },
+  {
+    "id": "walk-outfit-hope-gala-c",
+    "file": "walk-outfit-hope-gala-c.webp",
+    "size": [
+      568,
+      700
+    ],
+    "alpha": true,
+    "bytes": 82602
+  },
+  {
+    "id": "walk-outfit-hope-gala-d",
+    "file": "walk-outfit-hope-gala-d.webp",
+    "size": [
+      567,
+      700
+    ],
+    "alpha": true,
+    "bytes": 77000
   }
 ]

@@ -1,7 +1,3 @@
-// Complete current-release browser verification. Each script uses an isolated save context.
+// Each verification script uses an isolated save context.
 const {spawnSync}=require('node:child_process'),path=require('node:path');
-for(const name of ['check-lucky-town-v2.cjs','check-lucky-town-persistence-v2.cjs','check-lucky-town-house-backup.cjs','check-lucky-town-recovery.cjs','check-lucky-town-life-audio.cjs','check-lucky-town-assets.cjs','check-lucky-town-entry.cjs']){
- const result=spawnSync(process.execPath,[path.join(__dirname,name)],{stdio:'inherit',env:process.env});
- if(result.error)throw result.error;
- if(result.status!==0)process.exit(result.status||1);
-}
+for(const name of ['check-lucky-town-v3.cjs','check-lucky-town-machines-v3.cjs','check-lucky-town-life-v3.cjs','check-lucky-town-persistence-v2.cjs','check-lucky-town-house-backup.cjs','check-lucky-town-recovery.cjs','check-lucky-town-life-audio.cjs','check-lucky-town-assets.cjs','check-lucky-town-entry.cjs']){const result=spawnSync(process.execPath,[path.join(__dirname,name)],{stdio:'inherit',env:process.env});if(result.error)throw result.error;if(result.status!==0)process.exit(result.status||1);}

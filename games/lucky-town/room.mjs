@@ -1,4 +1,4 @@
-import {BY_ID} from './data.mjs?v=20261006-town3';
+import {BY_ID} from './data.mjs?v=20261006-town4';
 const SURFACES=['table','desk','cabinet','shelf','vanity'];
 const SMALL=['tea','flower','toy-bear','clock','basket','plant'];
 export function size(p){const i=BY_ID[p.item];return {w:i.w,h:i.h}}
