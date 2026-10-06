@@ -1,5 +1,5 @@
-import {SYMBOLS} from './data.mjs?v=20261006-town6';
-import {play} from './audio.mjs?v=20261006-town6';
+import {SYMBOLS} from './data.mjs?v=20261006-town7';
+import {play} from './audio.mjs?v=20261006-town7';
 let animations=[],skipped=false;
 export function beginPresentation(){skipped=false;}
 export function skipPresentation(){skipped=true;for(const a of animations)try{a.finish()}catch{}}

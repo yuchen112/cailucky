@@ -3,8 +3,8 @@ const {chromium}=require('C:/Users/User/.cache/codex-runtimes/codex-primary-runt
 const root=path.resolve(__dirname,'..'),qa=path.join(root,'preview/lucky-town');fs.mkdirSync(qa,{recursive:true});
 const url=process.env.LUCKY_TOWN_URL||'http://127.0.0.1:4179/games/lucky-town/';
 (async()=>{const browser=await chromium.launch({headless:true,channel:'msedge'});const context=await browser.newContext({viewport:{width:1280,height:900},acceptDownloads:true});const page=await context.newPage();const errors=[],failed=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});page.on('response',r=>{if(r.status()>=400)failed.push(r.status()+' '+r.url())});
- const state=()=>page.evaluate(async()=>JSON.parse(JSON.stringify((await import('./store.mjs?v=20261006-town6')).get())));
- const mutate=fn=>page.evaluate(async fn=>{const store=await import('./store.mjs?v=20261006-town6');await store.change(new Function('s',fn))},fn);
+ const state=()=>page.evaluate(async()=>JSON.parse(JSON.stringify((await import('./store.mjs?v=20261006-town7')).get())));
+ const mutate=fn=>page.evaluate(async fn=>{const store=await import('./store.mjs?v=20261006-town7');await store.change(new Function('s',fn))},fn);
  const click=async(action,attr='')=>{await page.locator(`[data-action="${action}"]${attr}`).first().click();if(action==='enter')await page.waitForFunction(()=>document.body.dataset.page==='town');else await page.waitForTimeout(150)};
  const check=async()=>{const body=await page.locator('body').innerText();assert.ok(!body.includes('存檔暫時無法載入'));assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,'horizontal overflow');};
  await page.goto(url);await page.getByRole('button',{name:'開始生活',exact:true}).click();await page.locator('[data-action="enter"]').click();await page.waitForFunction(()=>!!document.querySelector('.premium-plaza'));assert.equal((await state()).coins,1000);await check();

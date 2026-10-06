@@ -1,16 +1,16 @@
-import {shop as collectionShop,wardrobe as collectionWardrobe,styleItem} from './collection-ui.mjs?v=20261006-town6';
-import {windowImage,drawWindow} from './window-scene.mjs?v=20261006-town6';
-import './landscape.mjs?v=20261006-town6';
-import {startLife,openCells} from './room-life.mjs?v=20261006-town6';
-import * as views from './views.mjs?v=20261006-town6';
-import * as sounds from './audio.mjs?v=20261006-town6';
-import {spinReels,payout,winningCells,skipPresentation,beginPresentation,cascade,specialEvent} from './presentation.mjs?v=20261006-town6';
-import {buyTicket,saveScratch,settleTicket} from './scratch.mjs?v=20261006-town6';
-import {bindScratch} from './scratch-view.mjs?v=20261006-town6';
-import {ROLES,ROLE_MAP,MACHINES,SYMBOLS,FURNITURE,CLOTHES,ACCESSORIES,CATALOG,BY_ID,THEMES,RELEASE,BETS,PETS,PET_MAP,WINDOW_SCENES,SERIES} from './data.mjs?v=20261006-town6';
-import * as store from './store.mjs?v=20261006-town6';
-import {beginSpin,settle,toyReroll} from './slots.mjs?v=20261006-town6';
-import {canPlace,supports,move} from './room.mjs?v=20261006-town6';
+import {shop as collectionShop,wardrobe as collectionWardrobe,styleItem} from './collection-ui.mjs?v=20261006-town7';
+import {windowImage,drawWindow} from './window-scene.mjs?v=20261006-town7';
+import './landscape.mjs?v=20261006-town7';
+import {startLife,openCells} from './room-life.mjs?v=20261006-town7';
+import * as views from './views.mjs?v=20261006-town7';
+import * as sounds from './audio.mjs?v=20261006-town7';
+import {spinReels,payout,winningCells,skipPresentation,beginPresentation,cascade,specialEvent} from './presentation.mjs?v=20261006-town7';
+import {buyTicket,saveScratch,settleTicket} from './scratch.mjs?v=20261006-town7';
+import {bindScratch} from './scratch-view.mjs?v=20261006-town7';
+import {ROLES,ROLE_MAP,MACHINES,SYMBOLS,FURNITURE,CLOTHES,ACCESSORIES,CATALOG,BY_ID,THEMES,RELEASE,BETS,PETS,PET_MAP,WINDOW_SCENES,SERIES} from './data.mjs?v=20261006-town7';
+import * as store from './store.mjs?v=20261006-town7';
+import {beginSpin,settle,toyReroll} from './slots.mjs?v=20261006-town7';
+import {canPlace,supports,move} from './room.mjs?v=20261006-town7';
 const $=s=>document.querySelector(s),root=$('#app'),dialog=$('#dialog');
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number=n=>n.toLocaleString('zh-TW');
@@ -119,5 +119,5 @@ try{const result=await store.init();selectedRole=store.get().role;recovery=!!res
 addEventListener('beforeunload',e=>{if(draft){e.preventDefault();e.returnValue=''}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)audio?.suspend();else store.sync()});
 
-async function styleProduct(kind,id){const s=store.get(),item=styleItem(kind,id);if(!item)throw Error('找不到房間收藏');const room=structuredClone(s.rooms[s.role]);room[kind==='theme'?'theme':'window']=id;const owned=kind==='theme'?s.themes.includes(id):s.windows.includes(id);modal(item.name,`<div class="style-preview"><canvas id="style-canvas" width="1200" height="800" aria-label="自己的家具與角色搭配預覽"></canvas><div><p>預覽 ${ROLE_MAP[s.role].name}目前的小屋；家具位置保留，購買一次全角色共用。</p><h3>${number(item.price)} 金幣</h3><p>${owned?'已收藏，可免費切換。':'目前 '+number(s.coins)+' 金幣。'}</p>${button(owned?'套用到我的小屋':'購買並套用','buy-style',`data-kind="${kind}" data-item="${id}" ${!owned&&s.coins<item.price?'disabled':''}`,'primary')}</div></div>`);await drawRoom($('#style-canvas'),room)}
-async function previewSeries(id){const series=SERIES.find(t=>t.id===id),s=store.get(),list=FURNITURE.filter(i=>i.theme===id),room={...structuredClone(s.rooms[s.role]),theme:THEMES.some(t=>t.id===id)?id:s.rooms[s.role].theme,items:[]};for(const i of list){const spot=emptySpot(room,i.id);if(spot)room.items.push(spot)}const missing=list.filter(i=>!s.owned[i.id]),price=missing.reduce((n,i)=>n+i.price,0);modal(series.name+'・整套搭配',`<div class="style-preview"><canvas id="series-canvas" width="1200" height="800" aria-label="系列家具搭配預覽"></canvas><div><p>已收藏 ${list.length-missing.length}／${list.length} 件。預覽不修改你的布置。</p><p>房間背景另外購買。只購買尚未擁有的家具，不重複扣款。</p><h3>${number(price)} 金幣</h3>${button(missing.length?'收藏剩餘 '+missing.length+' 件':'系列已完整收藏','buy-series',`data-series="${id}" ${!missing.length||s.coins<price?'disabled':''}`,'primary')}</div></div>`);await drawRoom($('#series-canvas'),room)}
+async function styleProduct(kind,id){const s=store.get(),item=styleItem(kind,id);if(!item)throw Error('找不到房間收藏');const room=structuredClone(s.rooms[s.role]);room[kind==='theme'?'theme':'window']=id;const owned=kind==='theme'?s.themes.includes(id):s.windows.includes(id);modal(item.name,`<div class="style-preview"><canvas id="style-canvas" width="1200" height="800" aria-label="自己的家具與角色搭配預覽"></canvas><div><p>預覽 ${ROLE_MAP[s.role].name}目前的小屋；家具位置保留，購買一次全角色共用。</p><h3>${number(item.price)} 金幣</h3><p>${owned?'已收藏，可免費切換。':'目前 '+number(s.coins)+' 金幣。'}</p>${button(owned?'套用到我的小屋':'購買並套用','buy-style',`data-kind="${kind}" data-item="${id}" ${!owned&&s.coins<item.price?'disabled':''}`,'primary')}</div></div>`);void drawRoom($('#style-canvas'),room)}
+async function previewSeries(id){const series=SERIES.find(t=>t.id===id),s=store.get(),list=FURNITURE.filter(i=>i.theme===id),room={...structuredClone(s.rooms[s.role]),theme:THEMES.some(t=>t.id===id)?id:s.rooms[s.role].theme,items:[]};for(const i of list){const spot=emptySpot(room,i.id);if(spot)room.items.push(spot)}const missing=list.filter(i=>!s.owned[i.id]),price=missing.reduce((n,i)=>n+i.price,0);modal(series.name+'・整套搭配',`<div class="style-preview"><canvas id="series-canvas" width="1200" height="800" aria-label="系列家具搭配預覽"></canvas><div><p>已收藏 ${list.length-missing.length}／${list.length} 件。預覽不修改你的布置。</p><p>房間背景另外購買。只購買尚未擁有的家具，不重複扣款。</p><h3>${number(price)} 金幣</h3>${button(missing.length?'收藏剩餘 '+missing.length+' 件':'系列已完整收藏','buy-series',`data-series="${id}" ${!missing.length||s.coins<price?'disabled':''}`,'primary')}</div></div>`);void drawRoom($('#series-canvas'),room)}

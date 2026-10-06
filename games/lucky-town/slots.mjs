@@ -1,4 +1,4 @@
-import {MACHINES,BETS} from './data.mjs?v=20261006-town6';
+import {MACHINES,BETS} from './data.mjs?v=20261006-town7';
 export function random(){const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]/4294967296}
 const pick=(rng,n)=>Math.min(n-1,Math.floor(rng()*n));
 const grid=(m,rng)=>Array.from({length:m.rows},()=>Array.from({length:m.cols},()=>pick(rng,6)));

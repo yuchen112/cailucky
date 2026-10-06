@@ -1,5 +1,5 @@
-import {ROLES,ROLE_MAP,MACHINES,CLOTHES,BY_ID,PETS,PET_MAP,BETS,SYMBOLS} from './data.mjs?v=20261006-town6';
-import {SCRATCH_TYPES,ticketLayout,ticketName} from './scratch.mjs?v=20261006-town6';
+import {ROLES,ROLE_MAP,MACHINES,CLOTHES,BY_ID,PETS,PET_MAP,BETS,SYMBOLS} from './data.mjs?v=20261006-town7';
+import {SCRATCH_TYPES,ticketLayout,ticketName} from './scratch.mjs?v=20261006-town7';
 const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>v.toLocaleString('zh-TW');
 const img=(src,alt,cls='')=>`<img src="${src}" alt="${esc(alt)}" class="${cls}" draggable="false">`;
