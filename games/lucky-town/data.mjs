@@ -1,6 +1,6 @@
-import {EXTRA_FURNITURE,makeExtraClothes,EXTRA_THEMES,WINDOW_SCENES,SERIES} from './collection-data.mjs?v=20261006-town7';
+import {EXTRA_FURNITURE,makeExtraClothes,EXTRA_THEMES,WINDOW_SCENES,SERIES} from './collection-data.mjs?v=20261007-town8';
 export {WINDOW_SCENES,SERIES};
-export const RELEASE='20261006-town7';
+export const RELEASE='20261007-town8';
 export const ROLES=[
  ['joy','快樂','派對小彩星','把日常變成值得笑的時刻。'],['dream','夢想','星願魔法師','替願望點亮下一步。'],['night','夜晚陪伴','月夜守護者','陪你度過安靜的夜晚。'],['sadness','悲傷','雨天陪伴者','陪你把難過慢慢放下。'],['trust','信任','鑰匙守護者','守住約定與安心感。'],['memory','回憶','回憶收藏家','把重要片段收進生活裡。'],['growth','成長','森林旅伴','一起照顧慢慢長大的日子。'],['healing','療癒','暖心絨絨','在柔軟的小屋裡歇一歇。'],['luck','幸運','四葉鈴狐','帶著剛剛好的好運同行。'],['hope','希望','光線編織者','溫柔地把明天點亮。']
 ].map(([id,name,title,desc])=>({id,name,title,desc,original:`../../assets/characters/cxq-role-${id}.webp`,outfit:`art/outfit-${id}.webp`}));
@@ -18,8 +18,10 @@ const furniture=[
 ];
 export const FURNITURE=[...furniture.map(([id,name,price,w,h,action,theme])=>({id,name,price:Math.round(price*2.5/10)*10,w,h,action,theme,kind:'furniture',art:`art/furniture-${id}.webp`})),...EXTRA_FURNITURE];
 export const CLOTHES=[...ROLES.flatMap(r=>[{id:'outfit-'+r.id,name:r.name+'・居家新衣',price:880,role:r.id,kind:'outfit',art:r.outfit},...['day','gala'].map((v,i)=>({id:'outfit-'+r.id+'-'+v,name:r.name+'・'+(i?'特色盛裝':'日常套裝'),price:i?2250:1380,role:r.id,kind:'outfit',art:'art/outfit-'+r.id+'-'+v+'.webp'}))]),...makeExtraClothes(ROLES)];
-export const BETS=[1,5,10,25,50];
+export const BETS=[1,5,10,25,50,100,250,500];
+export const validBet=n=>Number.isSafeInteger(n)&&n>=1&&n<=500;
 export const PETS=[['cloud','雲朵貓',400,'安靜又黏人的小夥伴'],['sprout','葉芽兔',400,'喜歡在花園散步'],['star','星糖犬',500,'總是開心跟在身邊'],['moon','月光刺蝟',500,'慢慢靠近你的溫柔朋友']].map(([id,name,price,desc])=>({id,name,price,desc,art:'art/pet-'+id+'.webp'}));
+PETS.push(...[['kitten','奶油花貓',900,'愛窩在窗邊的花貓'],['lop','棉糖垂耳兔',1000,'喜歡慢慢探索每個角落'],['shiba','柴柴小隊長',1250,'精神十足的小隊長'],['fox','楓葉小狐狸',1500,'輕巧靈敏的森林朋友'],['hedgehog','栗子刺蝟',1100,'慢慢散步的小栗子'],['deer','晨露小鹿',1800,'優雅的清晨旅伴'],['owl','星羽貓頭鷹',1600,'喜歡安靜看書的小朋友'],['slime','泡泡史萊姆',2000,'搖搖晃晃的透明小泡泡']].map(([id,name,price,desc])=>({id,name,price,desc,art:'art/pet-'+id+'.webp'})));
 export const PET_MAP=Object.fromEntries(PETS.map(p=>[p.id,p]));
 export const suitArt=(role,suit,pose='stand')=>pose==='stand'?(suit==='original'?ROLE_MAP[role].original:BY_ID[suit].art):'art/'+pose+'-'+(suit==='original'?role:suit.replace('outfit-','outfit-'))+'.webp';
 export const ACCESSORIES=[['bow','暖桃蝴蝶結',140],['brooch','幸運胸針',180],['bag','星願小提袋',220]].map(([id,name,price])=>({id:`accessory-${id}`,name,price,kind:'accessory',art:`art/accessory-${id}.webp`}));

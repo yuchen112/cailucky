@@ -1,4 +1,4 @@
-import {WINDOW_SCENES,THEMES} from './data.mjs?v=20261006-town7';
+import {WINDOW_SCENES,THEMES} from './data.mjs?v=20261007-town8';
 const cache=new Map();
 export function windowArt(room){return WINDOW_SCENES.find(w=>w.id===room.window)?.art||null}
 export function windowImage(room){const src=windowArt(room);if(!src)return Promise.resolve(null);if(!cache.has(src))cache.set(src,new Promise(resolve=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>{cache.delete(src);resolve(null)};im.src=src}));return cache.get(src)}
