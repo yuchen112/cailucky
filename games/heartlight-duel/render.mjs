@@ -1,5 +1,5 @@
-import {BY_ID,STAGES} from './cast.mjs?v=20261007-duel5';
-import {WIDTH,FLOOR} from './core.mjs?v=20261007-duel5';
+import {BY_ID,STAGES} from './cast.mjs?v=20261007-duel6';
+import {WIDTH,FLOOR} from './core.mjs?v=20261007-duel6';
 const HEIGHT=788;
 export function renderer(canvas,preferences){const ctx=canvas.getContext('2d',{alpha:false}),images=new Map(),effects=[];let lastEvent=0,shake=0,resizeNeeded=true;
  const resize=()=>{const rect=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,preferences().quality==='low'?1:1.5);const w=Math.max(1,Math.round(rect.width*dpr)),h=Math.max(1,Math.round(rect.height*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}resizeNeeded=false;};

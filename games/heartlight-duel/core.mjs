@@ -1,4 +1,4 @@
-import {BY_ID,STAGES} from './cast.mjs?v=20261007-duel5';
+import {BY_ID,STAGES} from './cast.mjs?v=20261007-duel6';
 export const WIDTH=1400,FLOOR=594,DT=1/60;
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 export function random(seed){let value=seed>>>0;return()=>{value=(Math.imul(value,1664525)+1013904223)>>>0;return value/4294967296}};

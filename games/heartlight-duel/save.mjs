@@ -1,5 +1,5 @@
-import {BY_ID,CONTROLS,STAGES} from './cast.mjs?v=20261007-duel5';
-import {restore,snapshot} from './core.mjs?v=20261007-duel5';
+import {BY_ID,CONTROLS,STAGES} from './cast.mjs?v=20261007-duel6';
+import {restore,snapshot} from './core.mjs?v=20261007-duel6';
 export const KEY='cxq-heartlight-duel-v1';
 const fresh=()=>({version:1,settings:{quality:'auto',reducedMotion:false,sound:true,music:true,volume:.25,buttonSize:1,opacity:.85,offsetX:0,offsetY:0,showFps:true,hitboxes:false,keys:structuredClone(CONTROLS)},story:{},records:[],unlocks:[],active:null,run:null,revision:0,savedAt:0});
 function check(s){if(!s||s.version!==1||!s.settings||!['auto','high','low'].includes(s.settings.quality)||!Number.isFinite(s.settings.volume)||s.settings.volume<0||s.settings.volume>1||!s.story||typeof s.story!=='object'||Array.isArray(s.story)||!Array.isArray(s.records)||s.records.length>50||!Array.isArray(s.unlocks)||s.unlocks.some(k=>!BY_ID[k])||!Number.isInteger(s.revision)||s.revision<0)throw Error('存檔格式不正確');
