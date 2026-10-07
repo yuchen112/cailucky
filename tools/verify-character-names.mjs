@@ -5,6 +5,7 @@ import {ROLES} from '../games/lucky-town/data.mjs?v=20261007-names1';
 import {fresh,pack,unpack} from '../games/lucky-town/store.mjs?v=20261007-names1';
 import {ROLES as heroes} from '../games/fairytale-defense/rebuild/core.mjs?v=20261007-names1';
 import {ROLES as poker} from '../games/poker/rules.mjs?v=20261007-names1';
+fs.mkdirSync('outputs',{recursive:true});
 const cast=[['joy','快樂','朵莉'],['dream','夢想','露緹'],['night','夜晚陪伴','米洛'],['sadness','悲傷','汐寧'],['trust','信任','伯恩'],['memory','回憶','緹雅'],['growth','成長','森芽'],['healing','療癒','糯糯'],['luck','幸運','鈴可'],['hope','希望','曦羽']];
 const s=fresh();s.coins=654321;s.rooms.joy.name='快樂的小屋';s.rooms.dream.name='我的夢想小屋';s.rooms.sadness.name='悲傷的小屋';s.layouts.sadness=[{name:'收藏配置',room:structuredClone(s.rooms.sadness)}];
 const restored=unpack(pack(s));assert.equal(restored.coins,654321);assert.equal(restored.rooms.joy.name,'朵莉的小屋');assert.equal(restored.rooms.sadness.name,'汐寧的小屋');assert.equal(restored.rooms.dream.name,'我的夢想小屋');assert.equal(restored.layouts.sadness[0].room.name,'汐寧的小屋');assert.equal(restored.role,s.role);
