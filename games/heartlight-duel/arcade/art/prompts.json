@@ -1,0 +1,1007 @@
+{
+  "method": "builtin-imagegen",
+  "individualAssets": true,
+  "montageExtraction": false,
+  "assets": [
+    {
+      "id": "growth-walk-a",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 森芽 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk contact keyframe: left foot confidently forward on ground, right heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, green leaf hood, wooden staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "file": "art/growth-walk-a.webp",
+      "source": "exec-2c961821-c2c0-4736-9ca6-6fe2544ffb75.png"
+    },
+    {
+      "id": "growth-walk-b",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 森芽 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk opposite contact keyframe: right foot confidently forward on ground, left heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, green leaf hood, wooden staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "file": "art/growth-walk-b.webp",
+      "source": "exec-fffa6e2b-c135-44ce-91ed-9dc3b264074a.png"
+    },
+    {
+      "id": "growth-jump",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 森芽 identity and costume. Redraw this SAME character in a distinctly different pose: airborne forward jump keyframe: knees bent and lifted, body upright, signature prop secure, distinctly airborne silhouette, facing right. Preserve exact face, green leaf hood, wooden staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "file": "art/growth-jump.webp",
+      "source": "exec-b0e7adcc-fc2a-4bd1-b764-e2d05f7163d6.png"
+    },
+    {
+      "id": "growth-light",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 森芽 identity and costume. Redraw this SAME character in a distinctly different pose: light attack active keyframe: short quick forward strike clearly extended toward right at chest height, one foot forward, low shoulder, decisive attacking expression; use signature prop naturally. Preserve exact face, green leaf hood, wooden staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "file": "art/growth-light.webp",
+      "source": "exec-87146154-ac29-4916-acb3-a12417860f41.png"
+    },
+    {
+      "id": "joy-walk-a",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 朵莉 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk contact keyframe: left foot confidently forward on ground, right heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, pink dress, ribbon, balloons and wand, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/joy-ready.webp",
+      "file": "art/joy-walk-a.webp",
+      "source": "exec-6120a88d-343d-4996-8caa-fa5732bb44af.png"
+    },
+    {
+      "id": "joy-walk-b",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 朵莉 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk opposite contact keyframe: right foot confidently forward on ground, left heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, pink dress, ribbon, balloons and wand, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/joy-ready.webp",
+      "file": "art/joy-walk-b.webp",
+      "source": "exec-f338b39d-7dcc-418b-8297-372a373f6f25.png"
+    },
+    {
+      "id": "joy-jump",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 朵莉 identity and costume. Redraw this SAME character in a distinctly different pose: airborne forward jump keyframe: knees bent and lifted, body upright, signature prop secure, distinctly airborne silhouette, facing right. Preserve exact face, pink dress, ribbon, balloons and wand, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/joy-ready.webp",
+      "file": "art/joy-jump.webp",
+      "source": "exec-2fc2b1ae-450f-4d3b-aabb-0db718f90628.png"
+    },
+    {
+      "id": "joy-crouch",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 朵莉 identity and costume. Redraw this SAME character in a distinctly different pose: deep crouching low guard keyframe: both knees deeply bent, low center of gravity, signature prop tucked close, facing right. Preserve exact face, pink dress, ribbon, balloons and wand, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/joy-ready.webp",
+      "file": "art/joy-crouch.webp",
+      "source": "exec-b8808deb-2192-4317-bba6-79b9da0d2fa7.png"
+    },
+    {
+      "id": "joy-guard",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 朵莉 identity and costume. Redraw this SAME character in a distinctly different pose: standing blocking keyframe: both forearms or signature prop firmly raised before face and chest to block an incoming attack from the right, determined face, braced stance. Preserve exact face, pink dress, ribbon, balloons and wand, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/joy-ready.webp",
+      "file": "art/joy-guard.webp",
+      "source": "exec-4f82a2be-d360-4688-8dfb-2cf6e39f922c.png"
+    },
+    {
+      "id": "joy-hurt",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 朵莉 identity and costume. Redraw this SAME character in a distinctly different pose: taking a non-graphic strike from right keyframe: torso recoils backward toward left, arms flinch, mouth surprised, knees buckled, preserve all signature props. Preserve exact face, pink dress, ribbon, balloons and wand, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/joy-ready.webp",
+      "file": "art/joy-hurt.webp",
+      "source": "exec-e437c434-b8de-42c0-beff-aaad3a7d768f.png"
+    },
+    {
+      "id": "joy-down",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 朵莉 identity and costume. Redraw this SAME character in a distinctly different pose: knocked down recovery keyframe: lying horizontally with head to left and feet to right, dazed but unharmed, entire full character and signature props visible. Preserve exact face, pink dress, ribbon, balloons and wand, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/joy-ready.webp",
+      "file": "art/joy-down.webp",
+      "source": "exec-d253d8e4-9b66-4bfd-ad25-32d3e3b92147.png"
+    },
+    {
+      "id": "joy-light",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 朵莉 identity and costume. Redraw this SAME character in a distinctly different pose: light attack active keyframe: short quick forward strike clearly extended toward right at chest height, one foot forward, low shoulder, decisive attacking expression; use signature prop naturally. Preserve exact face, pink dress, ribbon, balloons and wand, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/joy-ready.webp",
+      "file": "art/joy-light.webp",
+      "source": "exec-3996de89-80f9-4b71-8969-9324f27a6c79.png"
+    },
+    {
+      "id": "joy-heavy",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 朵莉 identity and costume. Redraw this SAME character in a distinctly different pose: heavy attack active keyframe: strong fully extended horizontal strike toward right with signature prop or powerful kick, deeply bent forward knee, unmistakable attack silhouette, not a spellcasting stance. Preserve exact face, pink dress, ribbon, balloons and wand, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/joy-ready.webp",
+      "file": "art/joy-heavy.webp",
+      "source": "exec-c30e54c5-d920-44fe-af57-002a8362c282.png"
+    },
+    {
+      "id": "joy-super",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 朵莉 identity and costume. Redraw this SAME character in a distinctly different pose: unique ultimate move active keyframe: dramatic wide confident stance facing right, both arms and signature prop extending right to unleash their signature magical power, tiny local glow only, no huge beam or background. Preserve exact face, pink dress, ribbon, balloons and wand, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/joy-ready.webp",
+      "file": "art/joy-super.webp",
+      "source": "exec-4c2bad04-2cd9-4856-ae6f-972a94b955ef.png"
+    },
+    {
+      "id": "dream-walk-a",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 露緹 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk contact keyframe: left foot confidently forward on ground, right heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, purple witch hat and star staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/dream-ready.webp",
+      "file": "art/dream-walk-a.webp",
+      "source": "exec-4ed03d3d-5599-479a-9518-3d1143155c7d.png"
+    },
+    {
+      "id": "dream-walk-b",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 露緹 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk opposite contact keyframe: right foot confidently forward on ground, left heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, purple witch hat and star staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/dream-ready.webp",
+      "file": "art/dream-walk-b.webp",
+      "source": "exec-07977a49-f9c2-49d2-987b-3589def5dcca.png"
+    },
+    {
+      "id": "dream-jump",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 露緹 identity and costume. Redraw this SAME character in a distinctly different pose: airborne forward jump keyframe: knees bent and lifted, body upright, signature prop secure, distinctly airborne silhouette, facing right. Preserve exact face, purple witch hat and star staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/dream-ready.webp",
+      "file": "art/dream-jump.webp",
+      "source": "exec-ef8ba53c-be67-461d-b2cf-3912fadc7f34.png"
+    },
+    {
+      "id": "dream-crouch",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 露緹 identity and costume. Redraw this SAME character in a distinctly different pose: deep crouching low guard keyframe: both knees deeply bent, low center of gravity, signature prop tucked close, facing right. Preserve exact face, purple witch hat and star staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/dream-ready.webp",
+      "file": "art/dream-crouch.webp",
+      "source": "exec-7a1149da-fc63-4601-b9ab-778f6f3fdd08.png"
+    },
+    {
+      "id": "dream-guard",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 露緹 identity and costume. Redraw this SAME character in a distinctly different pose: standing blocking keyframe: both forearms or signature prop firmly raised before face and chest to block an incoming attack from the right, determined face, braced stance. Preserve exact face, purple witch hat and star staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/dream-ready.webp",
+      "file": "art/dream-guard.webp",
+      "source": "exec-27de4617-0779-4e9f-9556-cf201d6f1c57.png"
+    },
+    {
+      "id": "dream-hurt",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 露緹 identity and costume. Redraw this SAME character in a distinctly different pose: taking a non-graphic strike from right keyframe: torso recoils backward toward left, arms flinch, mouth surprised, knees buckled, preserve all signature props. Preserve exact face, purple witch hat and star staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/dream-ready.webp",
+      "file": "art/dream-hurt.webp",
+      "source": "exec-a38a9e5d-a56e-4430-bc4d-a5a630def4bf.png"
+    },
+    {
+      "id": "dream-down",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 露緹 identity and costume. Redraw this SAME character in a distinctly different pose: knocked down recovery keyframe: lying horizontally with head to left and feet to right, dazed but unharmed, entire full character and signature props visible. Preserve exact face, purple witch hat and star staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/dream-ready.webp",
+      "file": "art/dream-down.webp",
+      "source": "exec-f24f74d3-46b5-4d97-b08b-a6fb9be17753.png"
+    },
+    {
+      "id": "dream-light",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 露緹 identity and costume. Redraw this SAME character in a distinctly different pose: light attack active keyframe: short quick forward strike clearly extended toward right at chest height, one foot forward, low shoulder, decisive attacking expression; use signature prop naturally. Preserve exact face, purple witch hat and star staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/dream-ready.webp",
+      "file": "art/dream-light.webp",
+      "source": "exec-f1dbcd2d-3071-465d-8365-01357492205d.png"
+    },
+    {
+      "id": "dream-heavy",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 露緹 identity and costume. Redraw this SAME character in a distinctly different pose: heavy attack active keyframe: strong fully extended horizontal strike toward right with signature prop or powerful kick, deeply bent forward knee, unmistakable attack silhouette, not a spellcasting stance. Preserve exact face, purple witch hat and star staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/dream-ready.webp",
+      "file": "art/dream-heavy.webp",
+      "source": "exec-3fd10f3b-8798-4dd4-b4d2-67ebdee6a507.png"
+    },
+    {
+      "id": "dream-super",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 露緹 identity and costume. Redraw this SAME character in a distinctly different pose: unique ultimate move active keyframe: dramatic wide confident stance facing right, both arms and signature prop extending right to unleash their signature magical power, tiny local glow only, no huge beam or background. Preserve exact face, purple witch hat and star staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/dream-ready.webp",
+      "file": "art/dream-super.webp",
+      "source": "exec-7899871d-8902-4d90-a320-e57dfeda01f8.png"
+    },
+    {
+      "id": "night-walk-a",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 米洛 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk contact keyframe: left foot confidently forward on ground, right heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, blue cat-ear hood, lantern and owl, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/night-ready.webp",
+      "file": "art/night-walk-a.webp",
+      "source": "exec-c4175629-f940-4aeb-bc44-c1e241770bb5.png"
+    },
+    {
+      "id": "night-walk-b",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 米洛 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk opposite contact keyframe: right foot confidently forward on ground, left heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, blue cat-ear hood, lantern and owl, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/night-ready.webp",
+      "file": "art/night-walk-b.webp",
+      "source": "exec-06a4fa6e-1564-4882-aeee-6e8d9d4fde17.png"
+    },
+    {
+      "id": "night-jump",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 米洛 identity and costume. Redraw this SAME character in a distinctly different pose: airborne forward jump keyframe: knees bent and lifted, body upright, signature prop secure, distinctly airborne silhouette, facing right. Preserve exact face, blue cat-ear hood, lantern and owl, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/night-ready.webp",
+      "file": "art/night-jump.webp",
+      "source": "exec-dfef8fad-8099-47f4-b470-e619f5ddb60c.png"
+    },
+    {
+      "id": "night-crouch",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 米洛 identity and costume. Redraw this SAME character in a distinctly different pose: deep crouching low guard keyframe: both knees deeply bent, low center of gravity, signature prop tucked close, facing right. Preserve exact face, blue cat-ear hood, lantern and owl, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/night-ready.webp",
+      "file": "art/night-crouch.webp",
+      "source": "exec-9d6cae82-240e-4bc2-bfe6-4c8991c4600d.png"
+    },
+    {
+      "id": "night-guard",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 米洛 identity and costume. Redraw this SAME character in a distinctly different pose: standing blocking keyframe: both forearms or signature prop firmly raised before face and chest to block an incoming attack from the right, determined face, braced stance. Preserve exact face, blue cat-ear hood, lantern and owl, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/night-ready.webp",
+      "file": "art/night-guard.webp",
+      "source": "exec-3a899cd3-5f0c-4b88-bac3-e2dc3b222689.png"
+    },
+    {
+      "id": "night-hurt",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 米洛 identity and costume. Redraw this SAME character in a distinctly different pose: taking a non-graphic strike from right keyframe: torso recoils backward toward left, arms flinch, mouth surprised, knees buckled, preserve all signature props. Preserve exact face, blue cat-ear hood, lantern and owl, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/night-ready.webp",
+      "file": "art/night-hurt.webp",
+      "source": "exec-521085f4-4104-4e98-a0ca-5506c5ecd1f1.png"
+    },
+    {
+      "id": "night-down",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 米洛 identity and costume. Redraw this SAME character in a distinctly different pose: knocked down recovery keyframe: lying horizontally with head to left and feet to right, dazed but unharmed, entire full character and signature props visible. Preserve exact face, blue cat-ear hood, lantern and owl, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/night-ready.webp",
+      "file": "art/night-down.webp",
+      "source": "exec-1005f8db-de75-4c38-8d00-670324197985.png"
+    },
+    {
+      "id": "night-light",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 米洛 identity and costume. Redraw this SAME character in a distinctly different pose: light attack active keyframe: short quick forward strike clearly extended toward right at chest height, one foot forward, low shoulder, decisive attacking expression; use signature prop naturally. Preserve exact face, blue cat-ear hood, lantern and owl, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/night-ready.webp",
+      "file": "art/night-light.webp",
+      "source": "exec-7c75101a-bbd7-4641-83cf-0ef1cf754bac.png"
+    },
+    {
+      "id": "night-heavy",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 米洛 identity and costume. Redraw this SAME character in a distinctly different pose: heavy attack active keyframe: strong fully extended horizontal strike toward right with signature prop or powerful kick, deeply bent forward knee, unmistakable attack silhouette, not a spellcasting stance. Preserve exact face, blue cat-ear hood, lantern and owl, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/night-ready.webp",
+      "file": "art/night-heavy.webp",
+      "source": "exec-7b72e1a1-f714-4308-9ec0-83080f804aa9.png"
+    },
+    {
+      "id": "night-super",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 米洛 identity and costume. Redraw this SAME character in a distinctly different pose: unique ultimate move active keyframe: dramatic wide confident stance facing right, both arms and signature prop extending right to unleash their signature magical power, tiny local glow only, no huge beam or background. Preserve exact face, blue cat-ear hood, lantern and owl, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/night-ready.webp",
+      "file": "art/night-super.webp",
+      "source": "exec-0974c4ad-12dd-4542-b299-2b8f605ccba8.png"
+    },
+    {
+      "id": "sadness-walk-a",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 汐寧 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk contact keyframe: left foot confidently forward on ground, right heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, rain hood and umbrella, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/sadness-ready.webp",
+      "file": "art/sadness-walk-a.webp",
+      "source": "exec-b4883172-be30-4ba3-b292-e22bc3820d77.png"
+    },
+    {
+      "id": "sadness-walk-b",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 汐寧 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk opposite contact keyframe: right foot confidently forward on ground, left heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, rain hood and umbrella, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/sadness-ready.webp",
+      "file": "art/sadness-walk-b.webp",
+      "source": "exec-9417a635-574b-418b-9ba2-f1a8dced8749.png"
+    },
+    {
+      "id": "sadness-jump",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 汐寧 identity and costume. Redraw this SAME character in a distinctly different pose: airborne forward jump keyframe: knees bent and lifted, body upright, signature prop secure, distinctly airborne silhouette, facing right. Preserve exact face, rain hood and umbrella, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/sadness-ready.webp",
+      "file": "art/sadness-jump.webp",
+      "source": "exec-03c1cd60-7bb9-4e95-89cd-fb9eaf212ab4.png"
+    },
+    {
+      "id": "sadness-crouch",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 汐寧 identity and costume. Redraw this SAME character in a distinctly different pose: deep crouching low guard keyframe: both knees deeply bent, low center of gravity, signature prop tucked close, facing right. Preserve exact face, rain hood and umbrella, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/sadness-ready.webp",
+      "file": "art/sadness-crouch.webp",
+      "source": "exec-915f99ea-0066-4854-92c3-f0818113f198.png"
+    },
+    {
+      "id": "sadness-guard",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 汐寧 identity and costume. Redraw this SAME character in a distinctly different pose: standing blocking keyframe: both forearms or signature prop firmly raised before face and chest to block an incoming attack from the right, determined face, braced stance. Preserve exact face, rain hood and umbrella, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/sadness-ready.webp",
+      "file": "art/sadness-guard.webp",
+      "source": "exec-13990707-e14f-4ac9-b1ab-c637445bd491.png"
+    },
+    {
+      "id": "sadness-hurt",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 汐寧 identity and costume. Redraw this SAME character in a distinctly different pose: taking a non-graphic strike from right keyframe: torso recoils backward toward left, arms flinch, mouth surprised, knees buckled, preserve all signature props. Preserve exact face, rain hood and umbrella, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/sadness-ready.webp",
+      "file": "art/sadness-hurt.webp",
+      "source": "exec-c6a2c99d-2c64-42bf-af07-38b7d0bd4ac8.png"
+    },
+    {
+      "id": "sadness-down",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 汐寧 identity and costume. Redraw this SAME character in a distinctly different pose: knocked down recovery keyframe: lying horizontally with head to left and feet to right, dazed but unharmed, entire full character and signature props visible. Preserve exact face, rain hood and umbrella, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/sadness-ready.webp",
+      "file": "art/sadness-down.webp",
+      "source": "exec-dce22762-3c88-4c0b-aed6-4171994b3e9c.png"
+    },
+    {
+      "id": "sadness-light",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 汐寧 identity and costume. Redraw this SAME character in a distinctly different pose: light attack active keyframe: short quick forward strike clearly extended toward right at chest height, one foot forward, low shoulder, decisive attacking expression; use signature prop naturally. Preserve exact face, rain hood and umbrella, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/sadness-ready.webp",
+      "file": "art/sadness-light.webp",
+      "source": "exec-40caa1d5-cc3b-4a63-bcc2-1145b40b21c1.png"
+    },
+    {
+      "id": "sadness-heavy",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 汐寧 identity and costume. Redraw this SAME character in a distinctly different pose: heavy attack active keyframe: strong fully extended horizontal strike toward right with signature prop or powerful kick, deeply bent forward knee, unmistakable attack silhouette, not a spellcasting stance. Preserve exact face, rain hood and umbrella, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/sadness-ready.webp",
+      "file": "art/sadness-heavy.webp",
+      "source": "exec-603056de-8754-49b9-afd3-f87ea8c5c0e1.png"
+    },
+    {
+      "id": "sadness-super",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 汐寧 identity and costume. Redraw this SAME character in a distinctly different pose: unique ultimate move active keyframe: dramatic wide confident stance facing right, both arms and signature prop extending right to unleash their signature magical power, tiny local glow only, no huge beam or background. Preserve exact face, rain hood and umbrella, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/sadness-ready.webp",
+      "file": "art/sadness-super.webp",
+      "source": "exec-2ca0ba0f-6265-472b-b65a-ab31a7b8be7d.png"
+    },
+    {
+      "id": "trust-walk-a",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 伯恩 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk contact keyframe: left foot confidently forward on ground, right heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, brown dog, blue hood and golden key, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/trust-ready.webp",
+      "file": "art/trust-walk-a.webp",
+      "source": "exec-3b36343b-5fa8-4d2d-aca9-af5dcd404487.png"
+    },
+    {
+      "id": "trust-walk-b",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 伯恩 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk opposite contact keyframe: right foot confidently forward on ground, left heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, brown dog, blue hood and golden key, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/trust-ready.webp",
+      "file": "art/trust-walk-b.webp",
+      "source": "exec-7e946c4f-1aeb-4b0d-9ee2-822da9a5c42b.png"
+    },
+    {
+      "id": "trust-jump",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 伯恩 identity and costume. Redraw this SAME character in a distinctly different pose: airborne forward jump keyframe: knees bent and lifted, body upright, signature prop secure, distinctly airborne silhouette, facing right. Preserve exact face, brown dog, blue hood and golden key, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/trust-ready.webp",
+      "file": "art/trust-jump.webp",
+      "source": "exec-b1839d9c-f8b1-4c2c-b6a7-41fc98f80dd4.png"
+    },
+    {
+      "id": "trust-crouch",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 伯恩 identity and costume. Redraw this SAME character in a distinctly different pose: deep crouching low guard keyframe: both knees deeply bent, low center of gravity, signature prop tucked close, facing right. Preserve exact face, brown dog, blue hood and golden key, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/trust-ready.webp",
+      "file": "art/trust-crouch.webp",
+      "source": "exec-89956c3d-a307-4def-a11a-cd0dabb1e085.png"
+    },
+    {
+      "id": "trust-guard",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 伯恩 identity and costume. Redraw this SAME character in a distinctly different pose: standing blocking keyframe: both forearms or signature prop firmly raised before face and chest to block an incoming attack from the right, determined face, braced stance. Preserve exact face, brown dog, blue hood and golden key, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/trust-ready.webp",
+      "file": "art/trust-guard.webp",
+      "source": "exec-f9134239-0af9-4d30-a2be-65f74c940c4a.png"
+    },
+    {
+      "id": "trust-hurt",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 伯恩 identity and costume. Redraw this SAME character in a distinctly different pose: taking a non-graphic strike from right keyframe: torso recoils backward toward left, arms flinch, mouth surprised, knees buckled, preserve all signature props. Preserve exact face, brown dog, blue hood and golden key, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/trust-ready.webp",
+      "file": "art/trust-hurt.webp",
+      "source": "exec-2155cd7e-34f2-4f58-b4d2-2ebe753ec5b0.png"
+    },
+    {
+      "id": "trust-down",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 伯恩 identity and costume. Redraw this SAME character in a distinctly different pose: knocked down recovery keyframe: lying horizontally with head to left and feet to right, dazed but unharmed, entire full character and signature props visible. Preserve exact face, brown dog, blue hood and golden key, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/trust-ready.webp",
+      "file": "art/trust-down.webp",
+      "source": "exec-23a93509-f686-43e8-a206-2eee64e65898.png"
+    },
+    {
+      "id": "trust-light",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 伯恩 identity and costume. Redraw this SAME character in a distinctly different pose: light attack active keyframe: short quick forward strike clearly extended toward right at chest height, one foot forward, low shoulder, decisive attacking expression; use signature prop naturally. Preserve exact face, brown dog, blue hood and golden key, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/trust-ready.webp",
+      "file": "art/trust-light.webp",
+      "source": "exec-29e91a63-4dcf-435d-8e46-34e3ecc27f80.png"
+    },
+    {
+      "id": "trust-heavy",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 伯恩 identity and costume. Redraw this SAME character in a distinctly different pose: heavy attack active keyframe: strong fully extended horizontal strike toward right with signature prop or powerful kick, deeply bent forward knee, unmistakable attack silhouette, not a spellcasting stance. Preserve exact face, brown dog, blue hood and golden key, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/trust-ready.webp",
+      "file": "art/trust-heavy.webp",
+      "source": "exec-da023574-00c7-47cc-ac1c-3b4baf07d8e3.png"
+    },
+    {
+      "id": "trust-super",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 伯恩 identity and costume. Redraw this SAME character in a distinctly different pose: unique ultimate move active keyframe: dramatic wide confident stance facing right, both arms and signature prop extending right to unleash their signature magical power, tiny local glow only, no huge beam or background. Preserve exact face, brown dog, blue hood and golden key, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/trust-ready.webp",
+      "file": "art/trust-super.webp",
+      "source": "exec-cd552749-8a7b-4b7b-9373-0e89383f9e26.png"
+    },
+    {
+      "id": "memory-walk-a",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 緹雅 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk contact keyframe: left foot confidently forward on ground, right heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, beige brown hood and photographs, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/memory-ready.webp",
+      "file": "art/memory-walk-a.webp",
+      "source": "exec-e945f64e-74d2-4610-b45d-caeb67ce73b4.png"
+    },
+    {
+      "id": "memory-walk-b",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 緹雅 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk opposite contact keyframe: right foot confidently forward on ground, left heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, beige brown hood and photographs, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/memory-ready.webp",
+      "file": "art/memory-walk-b.webp",
+      "source": "exec-3d620e10-26b3-4a20-8248-835a6c7f0b68.png"
+    },
+    {
+      "id": "memory-jump",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 緹雅 identity and costume. Redraw this SAME character in a distinctly different pose: airborne forward jump keyframe: knees bent and lifted, body upright, signature prop secure, distinctly airborne silhouette, facing right. Preserve exact face, beige brown hood and photographs, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/memory-ready.webp",
+      "file": "art/memory-jump.webp",
+      "source": "exec-215cc9ef-95b7-414f-a6ef-2b5d7d05d8f5.png"
+    },
+    {
+      "id": "memory-crouch",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 緹雅 identity and costume. Redraw this SAME character in a distinctly different pose: deep crouching low guard keyframe: both knees deeply bent, low center of gravity, signature prop tucked close, facing right. Preserve exact face, beige brown hood and photographs, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/memory-ready.webp",
+      "file": "art/memory-crouch.webp",
+      "source": "exec-d8cc521d-f1b4-4167-8c67-eb6d2abd0669.png"
+    },
+    {
+      "id": "memory-guard",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 緹雅 identity and costume. Redraw this SAME character in a distinctly different pose: standing blocking keyframe: both forearms or signature prop firmly raised before face and chest to block an incoming attack from the right, determined face, braced stance. Preserve exact face, beige brown hood and photographs, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/memory-ready.webp",
+      "file": "art/memory-guard.webp",
+      "source": "exec-a9843201-b6c0-420e-9552-f83b4c7b74b1.png"
+    },
+    {
+      "id": "memory-hurt",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 緹雅 identity and costume. Redraw this SAME character in a distinctly different pose: taking a non-graphic strike from right keyframe: torso recoils backward toward left, arms flinch, mouth surprised, knees buckled, preserve all signature props. Preserve exact face, beige brown hood and photographs, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/memory-ready.webp",
+      "file": "art/memory-hurt.webp",
+      "source": "exec-69baaf74-3267-4c62-93bf-ba44e5f3f059.png"
+    },
+    {
+      "id": "memory-down",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 緹雅 identity and costume. Redraw this SAME character in a distinctly different pose: knocked down recovery keyframe: lying horizontally with head to left and feet to right, dazed but unharmed, entire full character and signature props visible. Preserve exact face, beige brown hood and photographs, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/memory-ready.webp",
+      "file": "art/memory-down.webp",
+      "source": "exec-05e4444c-82c0-4c2c-abbd-8166065b4c08.png"
+    },
+    {
+      "id": "memory-light",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 緹雅 identity and costume. Redraw this SAME character in a distinctly different pose: light attack active keyframe: short quick forward strike clearly extended toward right at chest height, one foot forward, low shoulder, decisive attacking expression; use signature prop naturally. Preserve exact face, beige brown hood and photographs, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/memory-ready.webp",
+      "file": "art/memory-light.webp",
+      "source": "exec-99e80b62-d098-4e96-a2f5-f4e983b5eae1.png"
+    },
+    {
+      "id": "memory-heavy",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 緹雅 identity and costume. Redraw this SAME character in a distinctly different pose: heavy attack active keyframe: strong fully extended horizontal strike toward right with signature prop or powerful kick, deeply bent forward knee, unmistakable attack silhouette, not a spellcasting stance. Preserve exact face, beige brown hood and photographs, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/memory-ready.webp",
+      "file": "art/memory-heavy.webp",
+      "source": "exec-2b1d0f0b-3eca-42c7-919d-b201f3997ed2.png"
+    },
+    {
+      "id": "memory-super",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 緹雅 identity and costume. Redraw this SAME character in a distinctly different pose: unique ultimate move active keyframe: dramatic wide confident stance facing right, both arms and signature prop extending right to unleash their signature magical power, tiny local glow only, no huge beam or background. Preserve exact face, beige brown hood and photographs, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/memory-ready.webp",
+      "file": "art/memory-super.webp",
+      "source": "exec-8721d3d7-67c8-4b67-aac5-4203fb633f13.png"
+    },
+    {
+      "id": "growth-crouch",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 森芽 identity and costume. Redraw this SAME character in a distinctly different pose: deep crouching low guard keyframe: both knees deeply bent, low center of gravity, signature prop tucked close, facing right. Preserve exact face, green leaf hood and wooden staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/growth-ready.webp",
+      "file": "art/growth-crouch.webp",
+      "source": "exec-8eaf951d-29ec-4abc-b33f-c7a2fc94d611.png"
+    },
+    {
+      "id": "growth-guard",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 森芽 identity and costume. Redraw this SAME character in a distinctly different pose: standing blocking keyframe: both forearms or signature prop firmly raised before face and chest to block an incoming attack from the right, determined face, braced stance. Preserve exact face, green leaf hood and wooden staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/growth-ready.webp",
+      "file": "art/growth-guard.webp",
+      "source": "exec-82a5d345-514a-489d-91a9-5f5678625984.png"
+    },
+    {
+      "id": "growth-hurt",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 森芽 identity and costume. Redraw this SAME character in a distinctly different pose: taking a non-graphic strike from right keyframe: torso recoils backward toward left, arms flinch, mouth surprised, knees buckled, preserve all signature props. Preserve exact face, green leaf hood and wooden staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/growth-ready.webp",
+      "file": "art/growth-hurt.webp",
+      "source": "exec-90d9ffeb-9e3e-4269-8fd4-a2b70677e13b.png"
+    },
+    {
+      "id": "growth-down",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 森芽 identity and costume. Redraw this SAME character in a distinctly different pose: knocked down recovery keyframe: lying horizontally with head to left and feet to right, dazed but unharmed, entire full character and signature props visible. Preserve exact face, green leaf hood and wooden staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/growth-ready.webp",
+      "file": "art/growth-down.webp",
+      "source": "exec-4469a249-489f-4fbd-8081-9866f9b3e893.png"
+    },
+    {
+      "id": "growth-heavy",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 森芽 identity and costume. Redraw this SAME character in a distinctly different pose: heavy attack active keyframe: strong fully extended horizontal strike toward right with signature prop or powerful kick, deeply bent forward knee, unmistakable attack silhouette, not a spellcasting stance. Preserve exact face, green leaf hood and wooden staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/growth-ready.webp",
+      "file": "art/growth-heavy.webp",
+      "source": "exec-5fe7d820-0ebb-444f-9b23-48da4f9318da.png"
+    },
+    {
+      "id": "growth-super",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 森芽 identity and costume. Redraw this SAME character in a distinctly different pose: unique ultimate move active keyframe: dramatic wide confident stance facing right, both arms and signature prop extending right to unleash their signature magical power, tiny local glow only, no huge beam or background. Preserve exact face, green leaf hood and wooden staff, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/growth-ready.webp",
+      "file": "art/growth-super.webp",
+      "source": "exec-42bd90df-3fa6-4f1f-b664-77e39a583bc5.png"
+    },
+    {
+      "id": "healing-walk-a",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 糯糯 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk contact keyframe: left foot confidently forward on ground, right heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, white peach plush dog and pink scarf, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/healing-ready.webp",
+      "file": "art/healing-walk-a.webp",
+      "source": "exec-3c0f1a33-3f22-4b77-8098-99629c2a03a6.png"
+    },
+    {
+      "id": "healing-walk-b",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 糯糯 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk opposite contact keyframe: right foot confidently forward on ground, left heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, white peach plush dog and pink scarf, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/healing-ready.webp",
+      "file": "art/healing-walk-b.webp",
+      "source": "exec-9f8168a8-1107-43af-9095-17ff9976702f.png"
+    },
+    {
+      "id": "healing-jump",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 糯糯 identity and costume. Redraw this SAME character in a distinctly different pose: airborne forward jump keyframe: knees bent and lifted, body upright, signature prop secure, distinctly airborne silhouette, facing right. Preserve exact face, white peach plush dog and pink scarf, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/healing-ready.webp",
+      "file": "art/healing-jump.webp",
+      "source": "exec-8ef14d9d-c1e7-47ca-aaf5-467e213edfc8.png"
+    },
+    {
+      "id": "healing-crouch",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 糯糯 identity and costume. Redraw this SAME character in a distinctly different pose: deep crouching low guard keyframe: both knees deeply bent, low center of gravity, signature prop tucked close, facing right. Preserve exact face, white peach plush dog and pink scarf, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/healing-ready.webp",
+      "file": "art/healing-crouch.webp",
+      "source": "exec-474ac015-07c2-48b0-af16-0dd1b64813c1.png"
+    },
+    {
+      "id": "healing-guard",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 糯糯 identity and costume. Redraw this SAME character in a distinctly different pose: standing blocking keyframe: both forearms or signature prop firmly raised before face and chest to block an incoming attack from the right, determined face, braced stance. Preserve exact face, white peach plush dog and pink scarf, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/healing-ready.webp",
+      "file": "art/healing-guard.webp",
+      "source": "exec-e30b74e6-c439-4868-a8fc-fa4c99b21892.png"
+    },
+    {
+      "id": "healing-hurt",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 糯糯 identity and costume. Redraw this SAME character in a distinctly different pose: taking a non-graphic strike from right keyframe: torso recoils backward toward left, arms flinch, mouth surprised, knees buckled, preserve all signature props. Preserve exact face, white peach plush dog and pink scarf, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/healing-ready.webp",
+      "file": "art/healing-hurt.webp",
+      "source": "exec-9dd6aa7d-a28d-4c40-8e64-7aa6784f5d37.png"
+    },
+    {
+      "id": "healing-down",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 糯糯 identity and costume. Redraw this SAME character in a distinctly different pose: knocked down recovery keyframe: lying horizontally with head to left and feet to right, dazed but unharmed, entire full character and signature props visible. Preserve exact face, white peach plush dog and pink scarf, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/healing-ready.webp",
+      "file": "art/healing-down.webp",
+      "source": "exec-bbf42dad-784a-4c8f-82a9-b262ea856280.png"
+    },
+    {
+      "id": "healing-light",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 糯糯 identity and costume. Redraw this SAME character in a distinctly different pose: light attack active keyframe: short quick forward strike clearly extended toward right at chest height, one foot forward, low shoulder, decisive attacking expression; use signature prop naturally. Preserve exact face, white peach plush dog and pink scarf, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/healing-ready.webp",
+      "file": "art/healing-light.webp",
+      "source": "exec-fcca9cdc-d520-4802-aa94-f6159c588559.png"
+    },
+    {
+      "id": "healing-heavy",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 糯糯 identity and costume. Redraw this SAME character in a distinctly different pose: heavy attack active keyframe: strong fully extended horizontal strike toward right with signature prop or powerful kick, deeply bent forward knee, unmistakable attack silhouette, not a spellcasting stance. Preserve exact face, white peach plush dog and pink scarf, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/healing-ready.webp",
+      "file": "art/healing-heavy.webp",
+      "source": "exec-7ce63162-c596-4188-bd4f-6f70cb609bf1.png"
+    },
+    {
+      "id": "healing-super",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 糯糯 identity and costume. Redraw this SAME character in a distinctly different pose: unique ultimate move active keyframe: dramatic wide confident stance facing right, both arms and signature prop extending right to unleash their signature magical power, tiny local glow only, no huge beam or background. Preserve exact face, white peach plush dog and pink scarf, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/healing-ready.webp",
+      "file": "art/healing-super.webp",
+      "source": "exec-7e74f072-638f-4646-b73a-b2515a046dda.png"
+    },
+    {
+      "id": "luck-walk-a",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 鈴可 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk contact keyframe: left foot confidently forward on ground, right heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, green clover fox and bells, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/luck-ready.webp",
+      "file": "art/luck-walk-a.webp",
+      "source": "exec-68b2e6f8-9898-4154-9e38-2458aaaeafd5.png"
+    },
+    {
+      "id": "luck-walk-b",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 鈴可 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk opposite contact keyframe: right foot confidently forward on ground, left heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, green clover fox and bells, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/luck-ready.webp",
+      "file": "art/luck-walk-b.webp",
+      "source": "exec-82feeb91-fc8b-4c8e-bcb5-6768936c9ec1.png"
+    },
+    {
+      "id": "luck-jump",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 鈴可 identity and costume. Redraw this SAME character in a distinctly different pose: airborne forward jump keyframe: knees bent and lifted, body upright, signature prop secure, distinctly airborne silhouette, facing right. Preserve exact face, green clover fox and bells, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/luck-ready.webp",
+      "file": "art/luck-jump.webp",
+      "source": "exec-13651ff1-241b-41e1-bfe1-767cff94fc66.png"
+    },
+    {
+      "id": "luck-crouch",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 鈴可 identity and costume. Redraw this SAME character in a distinctly different pose: deep crouching low guard keyframe: both knees deeply bent, low center of gravity, signature prop tucked close, facing right. Preserve exact face, green clover fox and bells, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/luck-ready.webp",
+      "file": "art/luck-crouch.webp",
+      "source": "exec-3f55b58d-09ef-46ec-a892-e33fdb87088f.png"
+    },
+    {
+      "id": "luck-guard",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 鈴可 identity and costume. Redraw this SAME character in a distinctly different pose: standing blocking keyframe: both forearms or signature prop firmly raised before face and chest to block an incoming attack from the right, determined face, braced stance. Preserve exact face, green clover fox and bells, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/luck-ready.webp",
+      "file": "art/luck-guard.webp",
+      "source": "exec-c10eaba2-7716-41af-a55f-dcb137264616.png"
+    },
+    {
+      "id": "luck-hurt",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 鈴可 identity and costume. Redraw this SAME character in a distinctly different pose: taking a non-graphic strike from right keyframe: torso recoils backward toward left, arms flinch, mouth surprised, knees buckled, preserve all signature props. Preserve exact face, green clover fox and bells, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/luck-ready.webp",
+      "file": "art/luck-hurt.webp",
+      "source": "exec-3b5af777-4693-4cd8-8083-bf0c0b7a9e26.png"
+    },
+    {
+      "id": "luck-down",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 鈴可 identity and costume. Redraw this SAME character in a distinctly different pose: knocked down recovery keyframe: lying horizontally with head to left and feet to right, dazed but unharmed, entire full character and signature props visible. Preserve exact face, green clover fox and bells, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/luck-ready.webp",
+      "file": "art/luck-down.webp",
+      "source": "exec-1b6ac659-f791-4fcf-8abd-139938b1dfd8.png"
+    },
+    {
+      "id": "luck-light",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 鈴可 identity and costume. Redraw this SAME character in a distinctly different pose: light attack active keyframe: short quick forward strike clearly extended toward right at chest height, one foot forward, low shoulder, decisive attacking expression; use signature prop naturally. Preserve exact face, green clover fox and bells, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/luck-ready.webp",
+      "file": "art/luck-light.webp",
+      "source": "exec-27a2f918-a489-44c9-a6ee-3c9673e2809a.png"
+    },
+    {
+      "id": "luck-heavy",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 鈴可 identity and costume. Redraw this SAME character in a distinctly different pose: heavy attack active keyframe: strong fully extended horizontal strike toward right with signature prop or powerful kick, deeply bent forward knee, unmistakable attack silhouette, not a spellcasting stance. Preserve exact face, green clover fox and bells, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/luck-ready.webp",
+      "file": "art/luck-heavy.webp",
+      "source": "exec-c9e7ad35-d8a5-4512-b7e2-050bf9f47691.png"
+    },
+    {
+      "id": "luck-super",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 鈴可 identity and costume. Redraw this SAME character in a distinctly different pose: unique ultimate move active keyframe: dramatic wide confident stance facing right, both arms and signature prop extending right to unleash their signature magical power, tiny local glow only, no huge beam or background. Preserve exact face, green clover fox and bells, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/luck-ready.webp",
+      "file": "art/luck-super.webp",
+      "source": "exec-e372d2d2-28b3-4c30-b49f-5bc7e6ab5145.png"
+    },
+    {
+      "id": "hope-walk-a",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 曦羽 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk contact keyframe: left foot confidently forward on ground, right heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, white pastel outfit and ribbon light, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/hope-ready.webp",
+      "file": "art/hope-walk-a.webp",
+      "source": "exec-ac77bf12-bdfe-4c68-b90c-851b2dabbd8d.png"
+    },
+    {
+      "id": "hope-walk-b",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 曦羽 identity and costume. Redraw this SAME character in a distinctly different pose: forward walk opposite contact keyframe: right foot confidently forward on ground, left heel lifted behind, arms counter-swinging naturally; full character in clear side-view facing right. Preserve exact face, white pastel outfit and ribbon light, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/hope-ready.webp",
+      "file": "art/hope-walk-b.webp",
+      "source": "exec-ae23d01f-1b3e-4ead-a966-429ff2e8d7c3.png"
+    },
+    {
+      "id": "hope-jump",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 曦羽 identity and costume. Redraw this SAME character in a distinctly different pose: airborne forward jump keyframe: knees bent and lifted, body upright, signature prop secure, distinctly airborne silhouette, facing right. Preserve exact face, white pastel outfit and ribbon light, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/hope-ready.webp",
+      "file": "art/hope-jump.webp",
+      "source": "exec-28e65916-4106-48b0-8c2a-bf9902fe14a2.png"
+    },
+    {
+      "id": "hope-crouch",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 曦羽 identity and costume. Redraw this SAME character in a distinctly different pose: deep crouching low guard keyframe: both knees deeply bent, low center of gravity, signature prop tucked close, facing right. Preserve exact face, white pastel outfit and ribbon light, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/hope-ready.webp",
+      "file": "art/hope-crouch.webp",
+      "source": "exec-acc8a89e-1e36-415f-a89e-bead1b63c59a.png"
+    },
+    {
+      "id": "hope-guard",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 曦羽 identity and costume. Redraw this SAME character in a distinctly different pose: standing blocking keyframe: both forearms or signature prop firmly raised before face and chest to block an incoming attack from the right, determined face, braced stance. Preserve exact face, white pastel outfit and ribbon light, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/hope-ready.webp",
+      "file": "art/hope-guard.webp",
+      "source": "exec-cf53ca19-34dc-4d66-956b-33e5a5995072.png"
+    },
+    {
+      "id": "hope-hurt",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 曦羽 identity and costume. Redraw this SAME character in a distinctly different pose: taking a non-graphic strike from right keyframe: torso recoils backward toward left, arms flinch, mouth surprised, knees buckled, preserve all signature props. Preserve exact face, white pastel outfit and ribbon light, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/hope-ready.webp",
+      "file": "art/hope-hurt.webp",
+      "source": "exec-a6ccc72e-64d0-4f48-93f1-f471b2e3a741.png"
+    },
+    {
+      "id": "hope-down",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 曦羽 identity and costume. Redraw this SAME character in a distinctly different pose: knocked down recovery keyframe: lying horizontally with head to left and feet to right, dazed but unharmed, entire full character and signature props visible. Preserve exact face, white pastel outfit and ribbon light, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/hope-ready.webp",
+      "file": "art/hope-down.webp",
+      "source": "exec-fc92491f-8f55-4fff-a2b6-7fab863aace7.png"
+    },
+    {
+      "id": "hope-light",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 曦羽 identity and costume. Redraw this SAME character in a distinctly different pose: light attack active keyframe: short quick forward strike clearly extended toward right at chest height, one foot forward, low shoulder, decisive attacking expression; use signature prop naturally. Preserve exact face, white pastel outfit and ribbon light, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/hope-ready.webp",
+      "file": "art/hope-light.webp",
+      "source": "exec-5517c1a7-ff7f-4891-a242-78cb5e60038c.png"
+    },
+    {
+      "id": "hope-heavy",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 曦羽 identity and costume. Redraw this SAME character in a distinctly different pose: heavy attack active keyframe: strong fully extended horizontal strike toward right with signature prop or powerful kick, deeply bent forward knee, unmistakable attack silhouette, not a spellcasting stance. Preserve exact face, white pastel outfit and ribbon light, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/hope-ready.webp",
+      "file": "art/hope-heavy.webp",
+      "source": "exec-31876291-b681-45cf-9810-099edc2e2358.png"
+    },
+    {
+      "id": "hope-super",
+      "kind": "sprite",
+      "prompt": "Use case: identity-preserve. Asset type: ONE independent full-body arcade fighting animation keyframe. Image 1 is exact CxQ 曦羽 identity and costume. Redraw this SAME character in a distinctly different pose: unique ultimate move active keyframe: dramatic wide confident stance facing right, both arms and signature prop extending right to unleash their signature magical power, tiny local glow only, no huge beam or background. Preserve exact face, white pastel outfit and ribbon light, costume, colors, species and proportions. Polished tactile 3D storybook game render, clear near-side view looking RIGHT. Entire character and props visible, generous transparent padding, no text, no background, no floor, no montage, no sprite sheet. Genuine transparent alpha. One character, ONE pose. Grounded poses have soles near lower 88 percent, consistent camera and full-body scale.",
+      "reference": "../../fairytale-defense/rebuild/art/hope-ready.webp",
+      "file": "art/hope-super.webp",
+      "source": "exec-b23d3bf7-9e55-4933-84d9-2ab46dd212aa.png"
+    },
+    {
+      "id": "menu-backdrop",
+      "kind": "background",
+      "prompt": "ONE full-screen 16:9 background illustration for a premium original fairytale arcade fighting game. A moonlit teal and gold tournament pavilion with huge luminous lanterns, ornamental arch and cinematic golden light, a broad empty flat foreground. No text, characters, interface or collage. Clear silhouettes, bold arcade contrast, tactile painterly storybook 3D world.",
+      "file": "art/menu-backdrop.webp",
+      "source": "exec-118b910d-c750-41c7-95e4-e3be80a23c0d.png"
+    },
+    {
+      "id": "select-backdrop",
+      "kind": "background",
+      "prompt": "ONE full-screen 16:9 CHARACTER SELECT background for a premium original fairytale arcade fighting game. A dark teal tournament hall with grand carved gold arches framing left and right empty character display areas, a subtle glowing central heartlight portal, dark lower area reserved for portrait roster. No text, no characters, no painted interface, no collage. Rich arcade mood, tactile 3D fairytale materials.",
+      "file": "art/select-backdrop.webp",
+      "source": "exec-8729013a-10bd-42cf-98f4-d31b3bd0d4d2.png"
+    },
+    {
+      "id": "title-logo",
+      "kind": "ui",
+      "prompt": "ONE isolated original game title logo reading exactly '心光對決' with smaller 'CxQ' above, metallic ivory gold bold arcade display typography, thick dark teal enamel outlines, two subtle clover wings and one heart gem, dynamic yet readable. No backdrop, genuine transparent alpha, no collage, no other text.",
+      "file": "art/title-logo.webp",
+      "source": "exec-a396d33f-c6bf-4d6a-925c-e972632e4aa9.png"
+    },
+    {
+      "id": "portrait-frame",
+      "kind": "ui",
+      "prompt": "ONE isolated square portrait selection frame for original fairytale arcade fighting game, polished brass gold and dark teal enamel, small heart gem on top, empty clear transparent center, strong simple beveled edges, no letters or portrait, genuine transparent background.",
+      "file": "art/portrait-frame.webp",
+      "source": "exec-a20c93b9-77ba-4b18-861a-4784eefc3040.png"
+    },
+    {
+      "id": "menu-button",
+      "kind": "ui",
+      "prompt": "ONE isolated wide horizontal arcade menu button art, width to height ratio 5:1, dark teal enamel inset with carved gold beveled edge and subtle heart gem at left, empty central label area, no text, genuine transparent background.",
+      "file": "art/menu-button.webp",
+      "source": "exec-122258ec-e8d0-45ae-adaf-0a40266620d3.png"
+    },
+    {
+      "id": "panel-frame",
+      "kind": "ui",
+      "prompt": "ONE isolated wide 16:9 ornamental arcade information panel frame, dark teal recessed center, restrained polished brass gold bevel, large quiet interior for readable text, no text or icons, genuine transparent background outside panel.",
+      "file": "art/panel-frame.webp",
+      "source": "exec-e6e3c3e8-aef1-46aa-8aa0-27768b5daab8.png"
+    },
+    {
+      "id": "life-frame",
+      "kind": "ui",
+      "prompt": "ONE isolated elongated horizontal arcade life-bar FRAME, ratio 7:1, polished brass with sharp winged outer corners and a small heart gem at left. Central rectangular bar slot entirely transparent, lower thin slot for guard bar. No filled bars, no numbers, no text, true transparent background.",
+      "file": "art/life-frame.webp",
+      "source": "exec-bde1564d-577e-4014-9754-e51091ee7ac9.png"
+    },
+    {
+      "id": "life-fill",
+      "kind": "ui",
+      "prompt": "ONE isolated simple long horizontal life-bar fill texture ratio 12:1, bright molten honey gold with ivory top highlight, solid rectangular shape suitable for clipping from right, very clean, no surrounding frame, no text, true transparent background.",
+      "file": "art/life-fill.webp",
+      "source": "exec-da9a44da-2c9b-4482-95bc-5277160c4aea.png"
+    },
+    {
+      "id": "energy-frame",
+      "kind": "ui",
+      "prompt": "ONE isolated elongated horizontal arcade SUPER-energy bar FRAME ratio 6:1, silver gold beveled edges with a small clover jewel, empty clear transparent rectangular slot, no numbers or text, true transparent background.",
+      "file": "art/energy-frame.webp",
+      "source": "exec-648b5484-8cbe-488c-81ba-3cdcd2476230.png"
+    },
+    {
+      "id": "energy-fill",
+      "kind": "ui",
+      "prompt": "ONE isolated long horizontal super-energy fill texture ratio 12:1, luminous turquoise crystal with thin ivory highlight, simple rectangular clip-friendly shape, no frame, no text, true transparent background.",
+      "file": "art/energy-fill.webp",
+      "source": "exec-2f9b78bc-371f-415c-95c2-561efd7dbbfe.png"
+    },
+    {
+      "id": "control-stick",
+      "kind": "ui",
+      "prompt": "ONE isolated round arcade virtual joystick base, dark teal enamel recessed circular pad, polished brass rim, four subtle etched directional arrow marks, empty center for movable knob, tactile fairytale game art, no text, true transparent background.",
+      "file": "art/control-stick.webp",
+      "source": "exec-0618f059-1f75-489b-bdf3-b44e114f872d.png"
+    },
+    {
+      "id": "control-knob",
+      "kind": "ui",
+      "prompt": "ONE isolated round arcade joystick knob, tactile polished turquoise stone and brass rim, centered heartlight glint, readable rounded top shading, no text, true transparent background.",
+      "file": "art/control-knob.webp",
+      "source": "exec-ac53f89e-84bd-48ab-aac3-24929769ab2a.png"
+    },
+    {
+      "id": "control-light",
+      "kind": "ui",
+      "prompt": "ONE isolated round arcade game control button, polished brass rim, honey gold enamel face, large centered sculpted icon of a swift fist, strong contrast and no text or letters, tactile 3D fairytale game artwork, true transparent background.",
+      "file": "art/control-light.webp",
+      "source": "exec-374cb8c1-fb5b-4bdc-a36c-d77fd3fc6818.png"
+    },
+    {
+      "id": "control-heavy",
+      "kind": "ui",
+      "prompt": "ONE isolated round arcade game control button, polished brass rim, warm orange enamel face, large centered sculpted icon of a powerful boot kick, strong contrast and no text or letters, tactile 3D fairytale game artwork, true transparent background.",
+      "file": "art/control-heavy.webp",
+      "source": "exec-84f7c95f-54fe-47d8-adb3-7af66f13b0c4.png"
+    },
+    {
+      "id": "control-skill",
+      "kind": "ui",
+      "prompt": "ONE isolated round arcade game control button, polished brass rim, violet enamel face, large centered sculpted icon of a magical star burst, strong contrast and no text or letters, tactile 3D fairytale game artwork, true transparent background.",
+      "file": "art/control-skill.webp",
+      "source": "exec-2a0d664f-c980-4285-bbf2-d49ff0150a84.png"
+    },
+    {
+      "id": "control-jump",
+      "kind": "ui",
+      "prompt": "ONE isolated round arcade game control button, polished brass rim, sky blue enamel face, large centered sculpted icon of an upward arrow, strong contrast and no text or letters, tactile 3D fairytale game artwork, true transparent background.",
+      "file": "art/control-jump.webp",
+      "source": "exec-8fb47405-ab9c-4fc2-a1c8-4b901932647c.png"
+    },
+    {
+      "id": "control-guard",
+      "kind": "ui",
+      "prompt": "ONE isolated round arcade game control button, polished brass rim, steel teal enamel face, large centered sculpted icon of a defensive shield, strong contrast and no text or letters, tactile 3D fairytale game artwork, true transparent background.",
+      "file": "art/control-guard.webp",
+      "source": "exec-27dcc3c3-4180-441d-bdce-456704e9cb1c.png"
+    },
+    {
+      "id": "control-super",
+      "kind": "ui",
+      "prompt": "ONE isolated round arcade game control button, polished brass rim, ruby red enamel face, large centered sculpted icon of a blazing heart, strong contrast and no text or letters, tactile 3D fairytale game artwork, true transparent background.",
+      "file": "art/control-super.webp",
+      "source": "exec-da9107f3-4077-4675-b50d-844bfdf184c6.png"
+    },
+    {
+      "id": "text-ready",
+      "kind": "ui",
+      "prompt": "ONE isolated arcade announcement logo reading exactly 'READY' in enormous bold ivory-gold lettering with dark teal outline, dramatic but clean readable arcade typography, true transparent background, no other text or objects.",
+      "file": "art/text-ready.webp",
+      "source": "exec-533fd331-9ca6-4d3d-95c8-0b26998cca49.png"
+    },
+    {
+      "id": "text-fight",
+      "kind": "ui",
+      "prompt": "ONE isolated arcade announcement logo reading exactly 'FIGHT' in enormous bold golden-orange lettering with dark crimson outline, dynamic slanted arcade typography, true transparent background, no other text or objects.",
+      "file": "art/text-fight.webp",
+      "source": "exec-ca80e0f7-f5ee-47a0-a2b3-a009e4dfa3eb.png"
+    },
+    {
+      "id": "text-ko",
+      "kind": "ui",
+      "prompt": "ONE isolated arcade announcement logo reading exactly 'K.O.' in enormous bold red and ivory lettering with metallic gold outline, powerful arcade typography, true transparent background, no other text or objects.",
+      "file": "art/text-ko.webp",
+      "source": "exec-893f93ad-d427-47f0-b65a-bc5ee863e579.png"
+    },
+    {
+      "id": "text-win",
+      "kind": "ui",
+      "prompt": "ONE isolated arcade result logo reading exactly 'VICTORY' in bold gold ivory lettering with dark teal outline, clean triumphant arcade typography, true transparent background, no other text or objects.",
+      "file": "art/text-win.webp",
+      "source": "exec-681ad57b-45ad-43c7-aae3-8165582f5fa2.png"
+    },
+    {
+      "id": "text-lose",
+      "kind": "ui",
+      "prompt": "ONE isolated arcade result logo reading exactly 'TRY AGAIN' in bold ivory and muted silver lettering with dark teal outline, clean readable arcade typography, true transparent background, no other text or objects.",
+      "file": "art/text-lose.webp",
+      "source": "exec-e8fe870e-4c9b-41b5-83f7-da40a81df7ed.png"
+    },
+    {
+      "id": "fx-hit",
+      "kind": "ui",
+      "prompt": "ONE isolated impact flash sprite: brilliant ivory center with pointed gold orange starburst rays and short sparks, compact readable fighting game hit effect, no objects or text, genuine transparent background.",
+      "file": "art/fx-hit.webp",
+      "source": "exec-718a3ce2-d2e5-482e-9bd1-bd9b10e65dbe.png"
+    },
+    {
+      "id": "fx-block",
+      "kind": "ui",
+      "prompt": "ONE isolated defensive impact effect sprite: glowing icy turquoise circular crescent shield ripple with clean bright rim and a few tiny gold sparks, fighting game block effect, no objects or text, genuine transparent background.",
+      "file": "art/fx-block.webp",
+      "source": "exec-4dcda9e0-d3ed-4ea2-b811-766e0b01245c.png"
+    },
+    {
+      "id": "fx-projectile",
+      "kind": "ui",
+      "prompt": "ONE isolated magical fighting game projectile sprite, glowing golden heartlight core with three teal clover leaves, short luminous tail pointing left so projectile travels right, compact crisp silhouette, no text, genuine transparent background.",
+      "file": "art/fx-projectile.webp",
+      "source": "exec-60faa5c0-55ef-442f-9df4-89b24a7565f5.png"
+    },
+    {
+      "id": "cover",
+      "kind": "background",
+      "prompt": "Use case: stylized-concept. Asset type: ONE original CxQ fighting game thumbnail, landscape 16:9. Image 1 is 森芽 green leaf hood girl with wooden staff, Image 2 is 鈴可 clover fox with bells. Preserve BOTH exact original character identities and costume. Depict them facing off in an exciting friendly arcade duel on the golden teal lantern tournament stage, clearly readable side-view fighting poses, full figures, bold cinematic lighting, gold impact spark between them, premium tactile storybook 3D artwork. Large original title reading exactly '心光對決' with small CxQ above. Not a screenshot, no HUD, no button controls, no collage or divided panels. One polished illustration.",
+      "reference": [
+        "../../fairytale-defense/rebuild/art/growth-ready.webp",
+        "../../fairytale-defense/rebuild/art/luck-ready.webp"
+      ],
+      "file": "art/cover.webp",
+      "source": "exec-9bb46028-eaf4-4d73-a952-804d0f9250c4.png"
+    },
+    {
+      "id": "thumbnail",
+      "kind": "background",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square 1:1 game-center thumbnail for original CxQ arcade fighting game. Image 1 is 森芽 green leaf hood girl with wooden staff, Image 2 is 鈴可 clover fox with bells; preserve both exact character identities and costume. Balanced compact square composition, characters facing off in exciting friendly side-view fighting poses, both recognizable faces entirely visible in left and right lower halves. Teal golden lantern tournament stage, bold gold impact spark, polished tactile storybook 3D render. Large fully readable title exactly '心光對決' across TOP with small CxQ above. Suitable for small square icon. No HUD, no control buttons, no collage or montage, no divided panels. One standalone illustrated cover.",
+      "reference": [
+        "../../fairytale-defense/rebuild/art/growth-ready.webp",
+        "../../fairytale-defense/rebuild/art/luck-ready.webp"
+      ],
+      "file": "art/thumbnail.webp",
+      "source": "exec-c4268cb4-8115-4d1b-9782-04db2e40aae4.png"
+    }
+  ]
+}

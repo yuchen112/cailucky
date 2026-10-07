@@ -1,0 +1,2896 @@
+{
+  "method": "builtin-imagegen",
+  "individualAssets": true,
+  "montageExtraction": false,
+  "assets": [
+    {
+      "id": "growth-walk-a",
+      "file": "art/growth-walk-a.webp",
+      "source": "exec-2c961821-c2c0-4736-9ca6-6fe2544ffb75.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0828125,
+        "y": 0.040625,
+        "w": 0.771875,
+        "h": 0.903125
+      },
+      "feet": 0.94375,
+      "anchorX": 0.6395862598211108,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "growth-walk-b",
+      "file": "art/growth-walk-b.webp",
+      "source": "exec-fffa6e2b-c135-44ce-91ed-9dc3b264074a.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0640625,
+        "y": 0.021875,
+        "w": 0.8984375,
+        "h": 0.925
+      },
+      "feet": 0.946875,
+      "anchorX": 0.6240851884846699,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "growth-jump",
+      "file": "art/growth-jump.webp",
+      "source": "exec-b0e7adcc-fc2a-4bd1-b764-e2d05f7163d6.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0796875,
+        "y": 0.0515625,
+        "w": 0.846875,
+        "h": 0.8765625
+      },
+      "feet": 0.928125,
+      "anchorX": 0.3074399638240559,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "growth-light",
+      "file": "art/growth-light.webp",
+      "source": "exec-87146154-ac29-4916-acb3-a12417860f41.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.01875,
+        "y": 0.0625,
+        "w": 0.96875,
+        "h": 0.8640625
+      },
+      "feet": 0.9265625,
+      "anchorX": 0.5270292415882455,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "joy-walk-a",
+      "file": "art/joy-walk-a.webp",
+      "source": "exec-6120a88d-343d-4996-8caa-fa5732bb44af.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0484375,
+        "y": 0.025,
+        "w": 0.9203125,
+        "h": 0.9390625
+      },
+      "feet": 0.9640625,
+      "anchorX": 0.5766927261435149,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "joy-guard",
+      "file": "art/joy-guard.webp",
+      "source": "exec-4f82a2be-d360-4688-8dfb-2cf6e39f922c.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.053125,
+        "y": 0.03125,
+        "w": 0.896875,
+        "h": 0.9328125
+      },
+      "feet": 0.9640625,
+      "anchorX": 0.5155966105944257,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "joy-walk-b",
+      "file": "art/joy-walk-b.webp",
+      "source": "exec-f338b39d-7dcc-418b-8297-372a373f6f25.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0359375,
+        "y": 0.0265625,
+        "w": 0.925,
+        "h": 0.9296875
+      },
+      "feet": 0.95625,
+      "anchorX": 0.5854313636990913,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "joy-hurt",
+      "file": "art/joy-hurt.webp",
+      "source": "exec-e437c434-b8de-42c0-beff-aaad3a7d768f.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.034375,
+        "y": 0.040625,
+        "w": 0.94375,
+        "h": 0.928125
+      },
+      "feet": 0.96875,
+      "anchorX": 0.5759740326506922,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "joy-jump",
+      "file": "art/joy-jump.webp",
+      "source": "exec-2fc2b1ae-450f-4d3b-aabb-0db718f90628.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0390625,
+        "y": 0.0265625,
+        "w": 0.93125,
+        "h": 0.9265625
+      },
+      "feet": 0.953125,
+      "anchorX": 0.3399581826125904,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "joy-down",
+      "file": "art/joy-down.webp",
+      "source": "exec-d253d8e4-9b66-4bfd-ad25-32d3e3b92147.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0296875,
+        "y": 0.121875,
+        "w": 0.9375,
+        "h": 0.7109375
+      },
+      "feet": 0.8328125,
+      "anchorX": 0.5177475007927306,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "joy-crouch",
+      "file": "art/joy-crouch.webp",
+      "source": "exec-b8808deb-2192-4317-bba6-79b9da0d2fa7.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.04375,
+        "y": 0.0515625,
+        "w": 0.9234375,
+        "h": 0.8875
+      },
+      "feet": 0.9390625,
+      "anchorX": 0.5758944862292514,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "joy-light",
+      "file": "art/joy-light.webp",
+      "source": "exec-3996de89-80f9-4b71-8969-9324f27a6c79.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.05,
+        "y": 0.0546875,
+        "w": 0.915625,
+        "h": 0.86875
+      },
+      "feet": 0.9234375,
+      "anchorX": 0.4411715289684361,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "joy-heavy",
+      "file": "art/joy-heavy.webp",
+      "source": "exec-c30e54c5-d920-44fe-af57-002a8362c282.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0265625,
+        "y": 0.053125,
+        "w": 0.95625,
+        "h": 0.88125
+      },
+      "feet": 0.934375,
+      "anchorX": 0.4665744765274072,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "joy-super",
+      "file": "art/joy-super.webp",
+      "source": "exec-4c2bad04-2cd9-4856-ae6f-972a94b955ef.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0203125,
+        "y": 0.0390625,
+        "w": 0.9484375,
+        "h": 0.9171875
+      },
+      "feet": 0.95625,
+      "anchorX": 0.4961859941965896,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "dream-walk-a",
+      "file": "art/dream-walk-a.webp",
+      "source": "exec-4ed03d3d-5599-479a-9518-3d1143155c7d.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.1171875,
+        "y": 0.065625,
+        "w": 0.7921875,
+        "h": 0.8765625
+      },
+      "feet": 0.9421875,
+      "anchorX": 0.6055817633647327,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "dream-walk-b",
+      "file": "art/dream-walk-b.webp",
+      "source": "exec-07977a49-f9c2-49d2-987b-3589def5dcca.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.075,
+        "y": 0.0578125,
+        "w": 0.8796875,
+        "h": 0.884375
+      },
+      "feet": 0.9421875,
+      "anchorX": 0.6239444283715047,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "dream-jump",
+      "file": "art/dream-jump.webp",
+      "source": "exec-ef8ba53c-be67-461d-b2cf-3912fadc7f34.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.071875,
+        "y": 0.053125,
+        "w": 0.8796875,
+        "h": 0.884375
+      },
+      "feet": 0.9375,
+      "anchorX": 0.3148019460096285,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "dream-crouch",
+      "file": "art/dream-crouch.webp",
+      "source": "exec-7a1149da-fc63-4601-b9ab-778f6f3fdd08.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0796875,
+        "y": 0.1015625,
+        "w": 0.8046875,
+        "h": 0.8171875
+      },
+      "feet": 0.91875,
+      "anchorX": 0.5694354665281227,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "dream-guard",
+      "file": "art/dream-guard.webp",
+      "source": "exec-27de4617-0779-4e9f-9556-cf201d6f1c57.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0859375,
+        "y": 0.0625,
+        "w": 0.7953125,
+        "h": 0.884375
+      },
+      "feet": 0.946875,
+      "anchorX": 0.5323260095739344,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "growth-hurt",
+      "file": "art/growth-hurt.webp",
+      "source": "exec-90d9ffeb-9e3e-4269-8fd4-a2b70677e13b.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.1546875,
+        "y": 0.04375,
+        "w": 0.8171875,
+        "h": 0.903125
+      },
+      "feet": 0.946875,
+      "anchorX": 0.6240672278775028,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "dream-hurt",
+      "file": "art/dream-hurt.webp",
+      "source": "exec-a38a9e5d-a56e-4430-bc4d-a5a630def4bf.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0859375,
+        "y": 0.0765625,
+        "w": 0.8796875,
+        "h": 0.8671875
+      },
+      "feet": 0.94375,
+      "anchorX": 0.6367389005832057,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "dream-down",
+      "file": "art/dream-down.webp",
+      "source": "exec-f24f74d3-46b5-4d97-b08b-a6fb9be17753.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0328125,
+        "y": 0.246875,
+        "w": 0.9296875,
+        "h": 0.5875
+      },
+      "feet": 0.834375,
+      "anchorX": 0.644901702666391,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "growth-down",
+      "file": "art/growth-down.webp",
+      "source": "exec-4469a249-489f-4fbd-8081-9866f9b3e893.png",
+      "kind": "sprite",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0359375,
+        "y": 0.18266978922716628,
+        "w": 0.9390625,
+        "h": 0.6510538641686182
+      },
+      "feet": 0.8337236533957846,
+      "anchorX": 0.5583253920832816,
+      "exportWidth": 640,
+      "exportHeight": 427
+    },
+    {
+      "id": "dream-light",
+      "file": "art/dream-light.webp",
+      "source": "exec-f1dbcd2d-3071-465d-8365-01357492205d.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0375,
+        "y": 0.071875,
+        "w": 0.9375,
+        "h": 0.8578125
+      },
+      "feet": 0.9296875,
+      "anchorX": 0.5554292121925288,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "healing-walk-a",
+      "file": "art/healing-walk-a.webp",
+      "source": "exec-3c0f1a33-3f22-4b77-8098-99629c2a03a6.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.090625,
+        "y": 0.07142857142857142,
+        "w": 0.8234375,
+        "h": 0.8242857142857143
+      },
+      "feet": 0.8957142857142857,
+      "anchorX": 0.60208868816324,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "dream-heavy",
+      "file": "art/dream-heavy.webp",
+      "source": "exec-3fd10f3b-8798-4dd4-b4d2-67ebdee6a507.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.015625,
+        "y": 0.140625,
+        "w": 0.98125,
+        "h": 0.7078125
+      },
+      "feet": 0.8484375,
+      "anchorX": 0.4423154659602509,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "growth-heavy",
+      "file": "art/growth-heavy.webp",
+      "source": "exec-5fe7d820-0ebb-444f-9b23-48da4f9318da.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.009375,
+        "y": 0.096875,
+        "w": 0.9828125,
+        "h": 0.796875
+      },
+      "feet": 0.89375,
+      "anchorX": 0.46226089085338556,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "growth-super",
+      "file": "art/growth-super.webp",
+      "source": "exec-42bd90df-3fa6-4f1f-b664-77e39a583bc5.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.01875,
+        "y": 0.078125,
+        "w": 0.975,
+        "h": 0.834375
+      },
+      "feet": 0.9125,
+      "anchorX": 0.48101012903336493,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "dream-super",
+      "file": "art/dream-super.webp",
+      "source": "exec-7899871d-8902-4d90-a320-e57dfeda01f8.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0515625,
+        "y": 0.1015625,
+        "w": 0.9203125,
+        "h": 0.8140625
+      },
+      "feet": 0.915625,
+      "anchorX": 0.5601264451956747,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "cover",
+      "file": "art/cover.webp",
+      "source": "exec-9bb46028-eaf4-4d73-a952-804d0f9250c4.png",
+      "kind": "background",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "healing-walk-b",
+      "file": "art/healing-walk-b.webp",
+      "source": "exec-9f8168a8-1107-43af-9095-17ff9976702f.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.1265625,
+        "y": 0.07285714285714286,
+        "w": 0.73125,
+        "h": 0.8328571428571429
+      },
+      "feet": 0.9057142857142857,
+      "anchorX": 0.6048382062316738,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "night-walk-a",
+      "file": "art/night-walk-a.webp",
+      "source": "exec-c4175629-f940-4aeb-bc44-c1e241770bb5.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0375,
+        "y": 0.03125,
+        "w": 0.90625,
+        "h": 0.9078125
+      },
+      "feet": 0.9390625,
+      "anchorX": 0.6183731882289427,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "healing-jump",
+      "file": "art/healing-jump.webp",
+      "source": "exec-8ef14d9d-c1e7-47ca-aaf5-467e213edfc8.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0734375,
+        "y": 0.07285714285714286,
+        "w": 0.8890625,
+        "h": 0.8142857142857143
+      },
+      "feet": 0.8871428571428571,
+      "anchorX": 0.4168307723522088,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "night-walk-b",
+      "file": "art/night-walk-b.webp",
+      "source": "exec-06a4fa6e-1564-4882-aeee-6e8d9d4fde17.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.09375,
+        "y": 0.0765625,
+        "w": 0.8125,
+        "h": 0.846875
+      },
+      "feet": 0.9234375,
+      "anchorX": 0.6040279276606906,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "healing-crouch",
+      "file": "art/healing-crouch.webp",
+      "source": "exec-474ac015-07c2-48b0-af16-0dd1b64813c1.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.05,
+        "y": 0.08,
+        "w": 0.940625,
+        "h": 0.8
+      },
+      "feet": 0.88,
+      "anchorX": 0.5851496105255937,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "night-jump",
+      "file": "art/night-jump.webp",
+      "source": "exec-dfef8fad-8099-47f4-b470-e619f5ddb60c.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0828125,
+        "y": 0.0546875,
+        "w": 0.85625,
+        "h": 0.846875
+      },
+      "feet": 0.9015625,
+      "anchorX": 0.5624823129675811,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "healing-guard",
+      "file": "art/healing-guard.webp",
+      "source": "exec-e30b74e6-c439-4868-a8fc-fa4c99b21892.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.084375,
+        "y": 0.07714285714285714,
+        "w": 0.8328125,
+        "h": 0.8171428571428572
+      },
+      "feet": 0.8942857142857142,
+      "anchorX": 0.5048345763990107,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "night-crouch",
+      "file": "art/night-crouch.webp",
+      "source": "exec-9d6cae82-240e-4bc2-bfe6-4c8991c4600d.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0421875,
+        "y": 0.0875,
+        "w": 0.928125,
+        "h": 0.8171875
+      },
+      "feet": 0.9046875,
+      "anchorX": 0.5803154479953303,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "healing-hurt",
+      "file": "art/healing-hurt.webp",
+      "source": "exec-9dd6aa7d-a28d-4c40-8e64-7aa6784f5d37.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.046875,
+        "y": 0.09285714285714286,
+        "w": 0.946875,
+        "h": 0.8042857142857143
+      },
+      "feet": 0.8971428571428571,
+      "anchorX": 0.5524436679663843,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "night-guard",
+      "file": "art/night-guard.webp",
+      "source": "exec-3a899cd3-5f0c-4b88-bac3-e2dc3b222689.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0390625,
+        "y": 0.06875,
+        "w": 0.921875,
+        "h": 0.859375
+      },
+      "feet": 0.928125,
+      "anchorX": 0.5235047041591614,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "healing-down",
+      "file": "art/healing-down.webp",
+      "source": "exec-bbf42dad-784a-4c8f-82a9-b262ea856280.png",
+      "kind": "sprite",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "bounds": {
+        "x": 0.046875,
+        "y": 0.1756440281030445,
+        "w": 0.9109375,
+        "h": 0.6440281030444965
+      },
+      "feet": 0.819672131147541,
+      "anchorX": 0.4504075728529733,
+      "exportWidth": 640,
+      "exportHeight": 427
+    },
+    {
+      "id": "night-hurt",
+      "file": "art/night-hurt.webp",
+      "source": "exec-521085f4-4104-4e98-a0ca-5506c5ecd1f1.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.075,
+        "y": 0.0359375,
+        "w": 0.865625,
+        "h": 0.89375
+      },
+      "feet": 0.9296875,
+      "anchorX": 0.6170458809480055,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "healing-light",
+      "file": "art/healing-light.webp",
+      "source": "exec-fcca9cdc-d520-4802-aa94-f6159c588559.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.040625,
+        "y": 0.08714285714285715,
+        "w": 0.9359375,
+        "h": 0.7814285714285715
+      },
+      "feet": 0.8685714285714285,
+      "anchorX": 0.45029847510845944,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "thumbnail",
+      "file": "art/thumbnail.webp",
+      "source": "exec-c4268cb4-8115-4d1b-9782-04db2e40aae4.png",
+      "kind": "background",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "night-down",
+      "file": "art/night-down.webp",
+      "source": "exec-1005f8db-de75-4c38-8d00-670324197985.png",
+      "kind": "sprite",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0703125,
+        "y": 0.14988290398126464,
+        "w": 0.90625,
+        "h": 0.7540983606557377
+      },
+      "feet": 0.9039812646370023,
+      "anchorX": 0.18279001177887982,
+      "exportWidth": 640,
+      "exportHeight": 427
+    },
+    {
+      "id": "healing-heavy",
+      "file": "art/healing-heavy.webp",
+      "source": "exec-7ce63162-c596-4188-bd4f-6f70cb609bf1.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.040625,
+        "y": 0.15,
+        "w": 0.9359375,
+        "h": 0.7042857142857143
+      },
+      "feet": 0.8542857142857143,
+      "anchorX": 0.497312929332248,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "night-light",
+      "file": "art/night-light.webp",
+      "source": "exec-7c75101a-bbd7-4641-83cf-0ef1cf754bac.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0078125,
+        "y": 0.0890625,
+        "w": 0.9859375,
+        "h": 0.815625
+      },
+      "feet": 0.9046875,
+      "anchorX": 0.4816003373399743,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "healing-super",
+      "file": "art/healing-super.webp",
+      "source": "exec-7e74f072-638f-4646-b73a-b2515a046dda.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0421875,
+        "y": 0.10714285714285714,
+        "w": 0.9421875,
+        "h": 0.7642857142857142
+      },
+      "feet": 0.8714285714285714,
+      "anchorX": 0.5168100758042098,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "night-heavy",
+      "file": "art/night-heavy.webp",
+      "source": "exec-7b72e1a1-f714-4308-9ec0-83080f804aa9.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.025,
+        "y": 0.103125,
+        "w": 0.9625,
+        "h": 0.7765625
+      },
+      "feet": 0.8796875,
+      "anchorX": 0.5772218144450969,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "luck-walk-a",
+      "file": "art/luck-walk-a.webp",
+      "source": "exec-68b2e6f8-9898-4154-9e38-2458aaaeafd5.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.1296875,
+        "y": 0.05,
+        "w": 0.6546875,
+        "h": 0.88125
+      },
+      "feet": 0.93125,
+      "anchorX": 0.5743586833455859,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "night-super",
+      "file": "art/night-super.webp",
+      "source": "exec-0974c4ad-12dd-4542-b299-2b8f605ccba8.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0171875,
+        "y": 0.109375,
+        "w": 0.9734375,
+        "h": 0.7796875
+      },
+      "feet": 0.8890625,
+      "anchorX": 0.4892069586908037,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "sadness-walk-a",
+      "file": "art/sadness-walk-a.webp",
+      "source": "exec-b4883172-be30-4ba3-b292-e22bc3820d77.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.1390625,
+        "y": 0.0328125,
+        "w": 0.690625,
+        "h": 0.9265625
+      },
+      "feet": 0.959375,
+      "anchorX": 0.6210041492715936,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "luck-walk-b",
+      "file": "art/luck-walk-b.webp",
+      "source": "exec-82feeb91-fc8b-4c8e-bcb5-6768936c9ec1.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0953125,
+        "y": 0.0484375,
+        "w": 0.753125,
+        "h": 0.878125
+      },
+      "feet": 0.9265625,
+      "anchorX": 0.622199314911819,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "sadness-walk-b",
+      "file": "art/sadness-walk-b.webp",
+      "source": "exec-9417a635-574b-418b-9ba2-f1a8dced8749.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.140625,
+        "y": 0.0203125,
+        "w": 0.625,
+        "h": 0.93125
+      },
+      "feet": 0.9515625,
+      "anchorX": 0.582183173071617,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "luck-jump",
+      "file": "art/luck-jump.webp",
+      "source": "exec-13651ff1-241b-41e1-bfe1-767cff94fc66.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0609375,
+        "y": 0.0328125,
+        "w": 0.834375,
+        "h": 0.91875
+      },
+      "feet": 0.9515625,
+      "anchorX": 0.36583209637859865,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "luck-crouch",
+      "file": "art/luck-crouch.webp",
+      "source": "exec-3f55b58d-09ef-46ec-a892-e33fdb87088f.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0703125,
+        "y": 0.1015625,
+        "w": 0.8984375,
+        "h": 0.8078125
+      },
+      "feet": 0.909375,
+      "anchorX": 0.5506794237943772,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "sadness-jump",
+      "file": "art/sadness-jump.webp",
+      "source": "exec-03c1cd60-7bb9-4e95-89cd-fb9eaf212ab4.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.1296875,
+        "y": 0.0203125,
+        "w": 0.740625,
+        "h": 0.91875
+      },
+      "feet": 0.9390625,
+      "anchorX": 0.3911396985435739,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "luck-guard",
+      "file": "art/luck-guard.webp",
+      "source": "exec-c10eaba2-7716-41af-a55f-dcb137264616.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0875,
+        "y": 0.053125,
+        "w": 0.78125,
+        "h": 0.8859375
+      },
+      "feet": 0.9390625,
+      "anchorX": 0.5537811190848851,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "sadness-crouch",
+      "file": "art/sadness-crouch.webp",
+      "source": "exec-915f99ea-0066-4854-92c3-f0818113f198.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.2140625,
+        "y": 0.05,
+        "w": 0.71875,
+        "h": 0.896875
+      },
+      "feet": 0.946875,
+      "anchorX": 0.47478406384580796,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "luck-hurt",
+      "file": "art/luck-hurt.webp",
+      "source": "exec-3b5af777-4693-4cd8-8083-bf0c0b7a9e26.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.065625,
+        "y": 0.05,
+        "w": 0.9,
+        "h": 0.8734375
+      },
+      "feet": 0.9234375,
+      "anchorX": 0.49007132506512097,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "sadness-guard",
+      "file": "art/sadness-guard.webp",
+      "source": "exec-13990707-e14f-4ac9-b1ab-c637445bd491.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.2234375,
+        "y": 0.0671875,
+        "w": 0.6875,
+        "h": 0.8734375
+      },
+      "feet": 0.940625,
+      "anchorX": 0.4924322726817141,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "luck-down",
+      "file": "art/luck-down.webp",
+      "source": "exec-1b6ac659-f791-4fcf-8abd-139938b1dfd8.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0296875,
+        "y": 0.2359375,
+        "w": 0.959375,
+        "h": 0.553125
+      },
+      "feet": 0.7890625,
+      "anchorX": 0.503494590299455,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "sadness-hurt",
+      "file": "art/sadness-hurt.webp",
+      "source": "exec-c6a2c99d-2c64-42bf-af07-38b7d0bd4ac8.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.1140625,
+        "y": 0.0296875,
+        "w": 0.7953125,
+        "h": 0.9203125
+      },
+      "feet": 0.95,
+      "anchorX": 0.6939376611788446,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "luck-light",
+      "file": "art/luck-light.webp",
+      "source": "exec-27a2f918-a489-44c9-a6ee-3c9673e2809a.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0078125,
+        "y": 0.0484375,
+        "w": 0.9390625,
+        "h": 0.8984375
+      },
+      "feet": 0.946875,
+      "anchorX": 0.49885823449630246,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "luck-heavy",
+      "file": "art/luck-heavy.webp",
+      "source": "exec-c9e7ad35-d8a5-4512-b7e2-050bf9f47691.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.028125,
+        "y": 0.090625,
+        "w": 0.9671875,
+        "h": 0.8109375
+      },
+      "feet": 0.9015625,
+      "anchorX": 0.4028823979838929,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "sadness-down",
+      "file": "art/sadness-down.webp",
+      "source": "exec-dce22762-3c88-4c0b-aed6-4171994b3e9c.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.015625,
+        "y": 0.23125,
+        "w": 0.9609375,
+        "h": 0.546875
+      },
+      "feet": 0.778125,
+      "anchorX": 0.6322777891774817,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "luck-super",
+      "file": "art/luck-super.webp",
+      "source": "exec-e372d2d2-28b3-4c30-b49f-5bc7e6ab5145.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0296875,
+        "y": 0.1015625,
+        "w": 0.96875,
+        "h": 0.8125
+      },
+      "feet": 0.9140625,
+      "anchorX": 0.440067075297989,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "sadness-light",
+      "file": "art/sadness-light.webp",
+      "source": "exec-40caa1d5-cc3b-4a63-bcc2-1145b40b21c1.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.05625,
+        "y": 0.1640625,
+        "w": 0.9125,
+        "h": 0.740625
+      },
+      "feet": 0.9046875,
+      "anchorX": 0.39866147447365297,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "hope-walk-a",
+      "file": "art/hope-walk-a.webp",
+      "source": "exec-ac77bf12-bdfe-4c68-b90c-851b2dabbd8d.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.059375,
+        "y": 0.06571428571428571,
+        "w": 0.8765625,
+        "h": 0.8471428571428572
+      },
+      "feet": 0.9128571428571428,
+      "anchorX": 0.5966064296396265,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "sadness-heavy",
+      "file": "art/sadness-heavy.webp",
+      "source": "exec-603056de-8754-49b9-afd3-f87ea8c5c0e1.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.03125,
+        "y": 0.1578125,
+        "w": 0.9546875,
+        "h": 0.7140625
+      },
+      "feet": 0.871875,
+      "anchorX": 0.3434530403258072,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "hope-walk-b",
+      "file": "art/hope-walk-b.webp",
+      "source": "exec-ae23d01f-1b3e-4ead-a966-429ff2e8d7c3.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.05625,
+        "y": 0.07285714285714286,
+        "w": 0.89375,
+        "h": 0.8571428571428571
+      },
+      "feet": 0.93,
+      "anchorX": 0.6188293823899751,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "sadness-super",
+      "file": "art/sadness-super.webp",
+      "source": "exec-2ca0ba0f-6265-472b-b65a-ab31a7b8be7d.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0578125,
+        "y": 0.178125,
+        "w": 0.9234375,
+        "h": 0.746875
+      },
+      "feet": 0.925,
+      "anchorX": 0.362442541928315,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "trust-walk-a",
+      "file": "art/trust-walk-a.webp",
+      "source": "exec-3b36343b-5fa8-4d2d-aca9-af5dcd404487.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.065625,
+        "y": 0.109375,
+        "w": 0.821875,
+        "h": 0.815625
+      },
+      "feet": 0.925,
+      "anchorX": 0.6323870682065993,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "hope-jump",
+      "file": "art/hope-jump.webp",
+      "source": "exec-28e65916-4106-48b0-8c2a-bf9902fe14a2.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.059375,
+        "y": 0.07571428571428572,
+        "w": 0.925,
+        "h": 0.82
+      },
+      "feet": 0.8957142857142857,
+      "anchorX": 0.4049650762202335,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "trust-walk-b",
+      "file": "art/trust-walk-b.webp",
+      "source": "exec-7e946c4f-1aeb-4b0d-9ee2-822da9a5c42b.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0765625,
+        "y": 0.1203125,
+        "w": 0.890625,
+        "h": 0.7984375
+      },
+      "feet": 0.91875,
+      "anchorX": 0.5958941585704818,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "hope-crouch",
+      "file": "art/hope-crouch.webp",
+      "source": "exec-acc8a89e-1e36-415f-a89e-bead1b63c59a.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.059375,
+        "y": 0.14142857142857143,
+        "w": 0.925,
+        "h": 0.7485714285714286
+      },
+      "feet": 0.89,
+      "anchorX": 0.5467144166221609,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "trust-jump",
+      "file": "art/trust-jump.webp",
+      "source": "exec-b1839d9c-f8b1-4c2c-b6a7-41fc98f80dd4.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.034375,
+        "y": 0.0609375,
+        "w": 0.9421875,
+        "h": 0.859375
+      },
+      "feet": 0.9203125,
+      "anchorX": 0.2944615939371484,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "trust-crouch",
+      "file": "art/trust-crouch.webp",
+      "source": "exec-89956c3d-a307-4def-a11a-cd0dabb1e085.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0234375,
+        "y": 0.175,
+        "w": 0.959375,
+        "h": 0.6953125
+      },
+      "feet": 0.8703125,
+      "anchorX": 0.5568886250127423,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "hope-guard",
+      "file": "art/hope-guard.webp",
+      "source": "exec-cf53ca19-34dc-4d66-956b-33e5a5995072.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0453125,
+        "y": 0.06,
+        "w": 0.903125,
+        "h": 0.8528571428571429
+      },
+      "feet": 0.9128571428571428,
+      "anchorX": 0.5514003422285463,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "trust-guard",
+      "file": "art/trust-guard.webp",
+      "source": "exec-f9134239-0af9-4d30-a2be-65f74c940c4a.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.10625,
+        "y": 0.0640625,
+        "w": 0.7734375,
+        "h": 0.8671875
+      },
+      "feet": 0.93125,
+      "anchorX": 0.5332685521342794,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "hope-hurt",
+      "file": "art/hope-hurt.webp",
+      "source": "exec-a6ccc72e-64d0-4f48-93f1-f471b2e3a741.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0859375,
+        "y": 0.1,
+        "w": 0.846875,
+        "h": 0.7885714285714286
+      },
+      "feet": 0.8885714285714286,
+      "anchorX": 0.6245042093004307,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "trust-hurt",
+      "file": "art/trust-hurt.webp",
+      "source": "exec-2155cd7e-34f2-4f58-b4d2-2ebe753ec5b0.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0421875,
+        "y": 0.1421875,
+        "w": 0.93125,
+        "h": 0.771875
+      },
+      "feet": 0.9140625,
+      "anchorX": 0.6120676878434101,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "hope-down",
+      "file": "art/hope-down.webp",
+      "source": "exec-fc92491f-8f55-4fff-a2b6-7fab863aace7.png",
+      "kind": "sprite",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "bounds": {
+        "x": 0.05,
+        "y": 0.1522248243559719,
+        "w": 0.921875,
+        "h": 0.7213114754098361
+      },
+      "feet": 0.8735362997658079,
+      "anchorX": 0.5366006020931094,
+      "exportWidth": 640,
+      "exportHeight": 427
+    },
+    {
+      "id": "trust-down",
+      "file": "art/trust-down.webp",
+      "source": "exec-23a93509-f686-43e8-a206-2eee64e65898.png",
+      "kind": "sprite",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0078125,
+        "y": 0.17096018735362997,
+        "w": 0.9828125,
+        "h": 0.667447306791569
+      },
+      "feet": 0.8384074941451991,
+      "anchorX": 0.30824120768154256,
+      "exportWidth": 640,
+      "exportHeight": 427
+    },
+    {
+      "id": "hope-light",
+      "file": "art/hope-light.webp",
+      "source": "exec-5517c1a7-ff7f-4891-a242-78cb5e60038c.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.03125,
+        "y": 0.11571428571428571,
+        "w": 0.96875,
+        "h": 0.7714285714285715
+      },
+      "feet": 0.8871428571428571,
+      "anchorX": 0.5174594540028747,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "trust-light",
+      "file": "art/trust-light.webp",
+      "source": "exec-29e91a63-4dcf-435d-8e46-34e3ecc27f80.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0109375,
+        "y": 0.159375,
+        "w": 0.98125,
+        "h": 0.7125
+      },
+      "feet": 0.871875,
+      "anchorX": 0.4735683843716651,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "hope-heavy",
+      "file": "art/hope-heavy.webp",
+      "source": "exec-31876291-b681-45cf-9810-099edc2e2358.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.01875,
+        "y": 0.15857142857142856,
+        "w": 0.98125,
+        "h": 0.6857142857142857
+      },
+      "feet": 0.8442857142857143,
+      "anchorX": 0.45368638848861087,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "trust-heavy",
+      "file": "art/trust-heavy.webp",
+      "source": "exec-da023574-00c7-47cc-ac1c-3b4baf07d8e3.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0109375,
+        "y": 0.18125,
+        "w": 0.984375,
+        "h": 0.6578125
+      },
+      "feet": 0.8390625,
+      "anchorX": 0.4466966401247473,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "hope-super",
+      "file": "art/hope-super.webp",
+      "source": "exec-b23d3bf7-9e55-4933-84d9-2ab46dd212aa.png",
+      "kind": "sprite",
+      "width": 1199,
+      "height": 1312,
+      "alpha": true,
+      "bounds": {
+        "x": 0.040625,
+        "y": 0.10857142857142857,
+        "w": 0.94375,
+        "h": 0.7814285714285715
+      },
+      "feet": 0.89,
+      "anchorX": 0.5258585974145533,
+      "exportWidth": 640,
+      "exportHeight": 700
+    },
+    {
+      "id": "trust-super",
+      "file": "art/trust-super.webp",
+      "source": "exec-cd552749-8a7b-4b7b-9373-0e89383f9e26.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0125,
+        "y": 0.2140625,
+        "w": 0.9859375,
+        "h": 0.6453125
+      },
+      "feet": 0.859375,
+      "anchorX": 0.4537827334570202,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "menu-backdrop",
+      "file": "art/menu-backdrop.webp",
+      "source": "exec-118b910d-c750-41c7-95e4-e3be80a23c0d.png",
+      "kind": "background",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "memory-walk-a",
+      "file": "art/memory-walk-a.webp",
+      "source": "exec-e945f64e-74d2-4610-b45d-caeb67ce73b4.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.18125,
+        "y": 0.0859375,
+        "w": 0.6015625,
+        "h": 0.8359375
+      },
+      "feet": 0.921875,
+      "anchorX": 0.590310136336871,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "select-backdrop",
+      "file": "art/select-backdrop.webp",
+      "source": "exec-8729013a-10bd-42cf-98f4-d31b3bd0d4d2.png",
+      "kind": "background",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "title-logo",
+      "file": "art/title-logo.webp",
+      "source": "exec-a396d33f-c6bf-4d6a-925c-e972632e4aa9.png",
+      "kind": "ui",
+      "width": 1774,
+      "height": 887,
+      "alpha": true,
+      "bounds": {
+        "x": 0.006,
+        "y": 0.026,
+        "w": 0.989,
+        "h": 0.902
+      },
+      "feet": 0.928,
+      "anchorX": 0.49994630462410794,
+      "exportWidth": 1000,
+      "exportHeight": 500
+    },
+    {
+      "id": "portrait-frame",
+      "file": "art/portrait-frame.webp",
+      "source": "exec-a20c93b9-77ba-4b18-861a-4784eefc3040.png",
+      "kind": "ui",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.025,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.928
+      },
+      "feet": 0.948,
+      "anchorX": 0.49967999029812515,
+      "exportWidth": 1000,
+      "exportHeight": 1000,
+      "slot": {
+        "x": 0.159,
+        "y": 0.192,
+        "w": 0.682,
+        "h": 0.624,
+        "count": 417785
+      }
+    },
+    {
+      "id": "memory-walk-b",
+      "file": "art/memory-walk-b.webp",
+      "source": "exec-3d620e10-26b3-4a20-8248-835a6c7f0b68.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.153125,
+        "y": 0.053125,
+        "w": 0.66875,
+        "h": 0.8765625
+      },
+      "feet": 0.9296875,
+      "anchorX": 0.5762960029332161,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "menu-button",
+      "file": "art/menu-button.webp",
+      "source": "exec-122258ec-e8d0-45ae-adaf-0a40266620d3.png",
+      "kind": "ui",
+      "width": 2172,
+      "height": 724,
+      "alpha": true,
+      "bounds": {
+        "x": 0,
+        "y": 0.15315315315315314,
+        "w": 1,
+        "h": 0.6216216216216216
+      },
+      "feet": 0.7747747747747747,
+      "anchorX": 0.5095373084787169,
+      "exportWidth": 1000,
+      "exportHeight": 333
+    },
+    {
+      "id": "memory-jump",
+      "file": "art/memory-jump.webp",
+      "source": "exec-215cc9ef-95b7-414f-a6ef-2b5d7d05d8f5.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.134375,
+        "y": 0.053125,
+        "w": 0.7578125,
+        "h": 0.8421875
+      },
+      "feet": 0.8953125,
+      "anchorX": 0.3733681828832464,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "panel-frame",
+      "file": "art/panel-frame.webp",
+      "source": "exec-e6e3c3e8-aef1-46aa-8aa0-27768b5daab8.png",
+      "kind": "ui",
+      "width": 1672,
+      "height": 941,
+      "alpha": true,
+      "bounds": {
+        "x": 0.014,
+        "y": 0.11545293072824156,
+        "w": 0.973,
+        "h": 0.7513321492007105
+      },
+      "feet": 0.866785079928952,
+      "anchorX": 0.5002443479771272,
+      "exportWidth": 1000,
+      "exportHeight": 563
+    },
+    {
+      "id": "memory-crouch",
+      "file": "art/memory-crouch.webp",
+      "source": "exec-d8cc521d-f1b4-4167-8c67-eb6d2abd0669.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.09375,
+        "y": 0.0734375,
+        "w": 0.771875,
+        "h": 0.853125
+      },
+      "feet": 0.9265625,
+      "anchorX": 0.38580441571142576,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "life-frame",
+      "file": "art/life-frame.webp",
+      "source": "exec-bde1564d-577e-4014-9754-e51091ee7ac9.png",
+      "kind": "ui",
+      "width": 2141,
+      "height": 734,
+      "alpha": true,
+      "bounds": {
+        "x": 0.007,
+        "y": 0.18950437317784258,
+        "w": 0.985,
+        "h": 0.4956268221574344
+      },
+      "feet": 0.685131195335277,
+      "anchorX": 0.4712593702835239,
+      "exportWidth": 1000,
+      "exportHeight": 343,
+      "slot": {
+        "x": 0.156,
+        "y": 0.3935860058309038,
+        "w": 0.714,
+        "h": 0.13994169096209913,
+        "count": 33470
+      }
+    },
+    {
+      "id": "memory-guard",
+      "file": "art/memory-guard.webp",
+      "source": "exec-a9843201-b6c0-420e-9552-f83b4c7b74b1.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.175,
+        "y": 0.0734375,
+        "w": 0.6296875,
+        "h": 0.8609375
+      },
+      "feet": 0.934375,
+      "anchorX": 0.5276526401568811,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "life-fill",
+      "file": "art/life-fill.webp",
+      "source": "exec-da9a44da-2c9b-4482-95bc-5277160c4aea.png",
+      "kind": "ui",
+      "width": 2172,
+      "height": 724,
+      "alpha": true,
+      "bounds": {
+        "x": 0.024,
+        "y": 0.3933933933933934,
+        "w": 0.952,
+        "h": 0.21021021021021022
+      },
+      "feet": 0.6036036036036037,
+      "anchorX": 0.49938347287668644,
+      "exportWidth": 1000,
+      "exportHeight": 333
+    },
+    {
+      "id": "memory-hurt",
+      "file": "art/memory-hurt.webp",
+      "source": "exec-69baaf74-3267-4c62-93bf-ba44e5f3f059.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.090625,
+        "y": 0.090625,
+        "w": 0.8515625,
+        "h": 0.8359375
+      },
+      "feet": 0.9265625,
+      "anchorX": 0.5829401128466549,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "energy-frame",
+      "file": "art/energy-frame.webp",
+      "source": "exec-648b5484-8cbe-488c-81ba-3cdcd2476230.png",
+      "kind": "ui",
+      "width": 2172,
+      "height": 724,
+      "alpha": true,
+      "bounds": {
+        "x": 0.025,
+        "y": 0.2702702702702703,
+        "w": 0.95,
+        "h": 0.44144144144144143
+      },
+      "feet": 0.7117117117117117,
+      "anchorX": 0.5006679872331442,
+      "exportWidth": 1000,
+      "exportHeight": 333,
+      "slot": {
+        "x": 0.128,
+        "y": 0.3993993993993994,
+        "w": 0.743,
+        "h": 0.18018018018018017,
+        "count": 43896
+      }
+    },
+    {
+      "id": "memory-down",
+      "file": "art/memory-down.webp",
+      "source": "exec-05e4444c-82c0-4c2c-abbd-8166065b4c08.png",
+      "kind": "sprite",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0796875,
+        "y": 0.11241217798594848,
+        "w": 0.875,
+        "h": 0.7540983606557377
+      },
+      "feet": 0.8665105386416861,
+      "anchorX": 0.5449995328362571,
+      "exportWidth": 640,
+      "exportHeight": 427
+    },
+    {
+      "id": "energy-fill",
+      "file": "art/energy-fill.webp",
+      "source": "exec-2f9b78bc-371f-415c-95c2-561efd7dbbfe.png",
+      "kind": "ui",
+      "width": 1374,
+      "height": 1145,
+      "alpha": true,
+      "bounds": {
+        "x": 0.022,
+        "y": 0.4597839135654262,
+        "w": 0.958,
+        "h": 0.07923169267707082
+      },
+      "feet": 0.539015606242497,
+      "anchorX": 0.5005967710420158,
+      "exportWidth": 1000,
+      "exportHeight": 833
+    },
+    {
+      "id": "memory-light",
+      "file": "art/memory-light.webp",
+      "source": "exec-99e80b62-d098-4e96-a2f5-f4e983b5eae1.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0703125,
+        "y": 0.128125,
+        "w": 0.875,
+        "h": 0.8
+      },
+      "feet": 0.928125,
+      "anchorX": 0.5448095561760943,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "control-stick",
+      "file": "art/control-stick.webp",
+      "source": "exec-0618f059-1f75-489b-bdf3-b44e114f872d.png",
+      "kind": "ui",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.037,
+        "y": 0.041,
+        "w": 0.926,
+        "h": 0.919
+      },
+      "feet": 0.96,
+      "anchorX": 0.4985908733288315,
+      "exportWidth": 1000,
+      "exportHeight": 1000
+    },
+    {
+      "id": "control-knob",
+      "file": "art/control-knob.webp",
+      "source": "exec-ac53f89e-84bd-48ab-aac3-24929769ab2a.png",
+      "kind": "ui",
+      "width": 1269,
+      "height": 1240,
+      "alpha": true,
+      "bounds": {
+        "x": 0.142,
+        "y": 0.033776867963152504,
+        "w": 0.716,
+        "h": 0.9344933469805528
+      },
+      "feet": 0.9682702149437052,
+      "anchorX": 0.49904387021886903,
+      "exportWidth": 1000,
+      "exportHeight": 977
+    },
+    {
+      "id": "memory-heavy",
+      "file": "art/memory-heavy.webp",
+      "source": "exec-2b1d0f0b-3eca-42c7-919d-b201f3997ed2.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0265625,
+        "y": 0.1234375,
+        "w": 0.959375,
+        "h": 0.7390625
+      },
+      "feet": 0.8625,
+      "anchorX": 0.465824424700157,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "control-light",
+      "file": "art/control-light.webp",
+      "source": "exec-374cb8c1-fb5b-4bdc-a36c-d77fd3fc6818.png",
+      "kind": "ui",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.032,
+        "y": 0.032,
+        "w": 0.936,
+        "h": 0.933
+      },
+      "feet": 0.965,
+      "anchorX": 0.4982654460866724,
+      "exportWidth": 1000,
+      "exportHeight": 1000
+    },
+    {
+      "id": "memory-super",
+      "file": "art/memory-super.webp",
+      "source": "exec-8721d3d7-67c8-4b67-aac5-4203fb633f13.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0640625,
+        "y": 0.103125,
+        "w": 0.8921875,
+        "h": 0.825
+      },
+      "feet": 0.928125,
+      "anchorX": 0.5498897997680521,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "growth-crouch",
+      "file": "art/growth-crouch.webp",
+      "source": "exec-8eaf951d-29ec-4abc-b33f-c7a2fc94d611.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0390625,
+        "y": 0.0828125,
+        "w": 0.9328125,
+        "h": 0.8296875
+      },
+      "feet": 0.9125,
+      "anchorX": 0.6032037149774746,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "control-heavy",
+      "file": "art/control-heavy.webp",
+      "source": "exec-84f7c95f-54fe-47d8-adb3-7af66f13b0c4.png",
+      "kind": "ui",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.048,
+        "y": 0.046,
+        "w": 0.904,
+        "h": 0.909
+      },
+      "feet": 0.955,
+      "anchorX": 0.49695483416443453,
+      "exportWidth": 1000,
+      "exportHeight": 1000
+    },
+    {
+      "id": "growth-guard",
+      "file": "art/growth-guard.webp",
+      "source": "exec-82a5d345-514a-489d-91a9-5f5678625984.png",
+      "kind": "sprite",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.0859375,
+        "y": 0.0359375,
+        "w": 0.8453125,
+        "h": 0.909375
+      },
+      "feet": 0.9453125,
+      "anchorX": 0.5826648289847923,
+      "exportWidth": 640,
+      "exportHeight": 640
+    },
+    {
+      "id": "control-skill",
+      "file": "art/control-skill.webp",
+      "source": "exec-2a0d664f-c980-4285-bbf2-d49ff0150a84.png",
+      "kind": "ui",
+      "width": 1232,
+      "height": 1277,
+      "alpha": true,
+      "bounds": {
+        "x": 0.036,
+        "y": 0.037608486017357765,
+        "w": 0.928,
+        "h": 0.9218900675024108
+      },
+      "feet": 0.9594985535197685,
+      "anchorX": 0.494908723240802,
+      "exportWidth": 1000,
+      "exportHeight": 1037
+    },
+    {
+      "id": "control-jump",
+      "file": "art/control-jump.webp",
+      "source": "exec-8fb47405-ab9c-4fc2-a1c8-4b901932647c.png",
+      "kind": "ui",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.048,
+        "y": 0.044,
+        "w": 0.902,
+        "h": 0.901
+      },
+      "feet": 0.945,
+      "anchorX": 0.4986213426674724,
+      "exportWidth": 1000,
+      "exportHeight": 1000
+    },
+    {
+      "id": "control-guard",
+      "file": "art/control-guard.webp",
+      "source": "exec-27dcc3c3-4180-441d-bdce-456704e9cb1c.png",
+      "kind": "ui",
+      "width": 1254,
+      "height": 1254,
+      "alpha": true,
+      "bounds": {
+        "x": 0.036,
+        "y": 0.031,
+        "w": 0.926,
+        "h": 0.929
+      },
+      "feet": 0.96,
+      "anchorX": 0.4970042773449119,
+      "exportWidth": 1000,
+      "exportHeight": 1000
+    },
+    {
+      "id": "control-super",
+      "file": "art/control-super.webp",
+      "source": "exec-da9107f3-4077-4675-b50d-844bfdf184c6.png",
+      "kind": "ui",
+      "width": 1278,
+      "height": 1230,
+      "alpha": true,
+      "bounds": {
+        "x": 0.03,
+        "y": 0.02182952182952183,
+        "w": 0.934,
+        "h": 0.9490644490644491
+      },
+      "feet": 0.9708939708939709,
+      "anchorX": 0.49232423148342697,
+      "exportWidth": 1000,
+      "exportHeight": 962
+    },
+    {
+      "id": "text-ready",
+      "file": "art/text-ready.webp",
+      "source": "exec-533fd331-9ca6-4d3d-95c8-0b26998cca49.png",
+      "kind": "ui",
+      "width": 2172,
+      "height": 724,
+      "alpha": true,
+      "bounds": {
+        "x": 0.006,
+        "y": 0.10810810810810811,
+        "w": 0.988,
+        "h": 0.8408408408408409
+      },
+      "feet": 0.948948948948949,
+      "anchorX": 0.6536544117647058,
+      "exportWidth": 1000,
+      "exportHeight": 333
+    },
+    {
+      "id": "text-fight",
+      "file": "art/text-fight.webp",
+      "source": "exec-ca80e0f7-f5ee-47a0-a2b3-a009e4dfa3eb.png",
+      "kind": "ui",
+      "width": 1960,
+      "height": 802,
+      "alpha": true,
+      "bounds": {
+        "x": 0.004,
+        "y": 0.009779951100244499,
+        "w": 0.994,
+        "h": 0.9828850855745721
+      },
+      "feet": 0.9926650366748166,
+      "anchorX": 0.28032239295654365,
+      "exportWidth": 1000,
+      "exportHeight": 409
+    },
+    {
+      "id": "text-ko",
+      "file": "art/text-ko.webp",
+      "source": "exec-893f93ad-d427-47f0-b65a-bc5ee863e579.png",
+      "kind": "ui",
+      "width": 1774,
+      "height": 887,
+      "alpha": true,
+      "bounds": {
+        "x": 0.002,
+        "y": 0.084,
+        "w": 0.99,
+        "h": 0.816
+      },
+      "feet": 0.9,
+      "anchorX": 0.45563155437658104,
+      "exportWidth": 1000,
+      "exportHeight": 500
+    },
+    {
+      "id": "text-win",
+      "file": "art/text-win.webp",
+      "source": "exec-681ad57b-45ad-43c7-aae3-8165582f5fa2.png",
+      "kind": "ui",
+      "width": 2127,
+      "height": 739,
+      "alpha": true,
+      "bounds": {
+        "x": 0.009,
+        "y": 0.1585014409221902,
+        "w": 0.982,
+        "h": 0.6974063400576369
+      },
+      "feet": 0.8559077809798271,
+      "anchorX": 0.1889124688448955,
+      "exportWidth": 1000,
+      "exportHeight": 347
+    },
+    {
+      "id": "text-lose",
+      "file": "art/text-lose.webp",
+      "source": "exec-e8fe870e-4c9b-41b5-83f7-da40a81df7ed.png",
+      "kind": "ui",
+      "width": 2100,
+      "height": 749,
+      "alpha": true,
+      "bounds": {
+        "x": 0.037,
+        "y": 0.2184873949579832,
+        "w": 0.941,
+        "h": 0.5798319327731093
+      },
+      "feet": 0.7983193277310925,
+      "anchorX": 0.4860155770132247,
+      "exportWidth": 1000,
+      "exportHeight": 357
+    },
+    {
+      "id": "fx-hit",
+      "file": "art/fx-hit.webp",
+      "source": "exec-718a3ce2-d2e5-482e-9bd1-bd9b10e65dbe.png",
+      "kind": "ui",
+      "width": 1278,
+      "height": 1230,
+      "alpha": true,
+      "bounds": {
+        "x": 0.041,
+        "y": 0.014553014553014554,
+        "w": 0.911,
+        "h": 0.9501039501039501
+      },
+      "feet": 0.9646569646569647,
+      "anchorX": 0.5001963239858573,
+      "exportWidth": 1000,
+      "exportHeight": 962
+    },
+    {
+      "id": "fx-block",
+      "file": "art/fx-block.webp",
+      "source": "exec-4dcda9e0-d3ed-4ea2-b811-766e0b01245c.png",
+      "kind": "ui",
+      "width": 1271,
+      "height": 1237,
+      "alpha": true,
+      "bounds": {
+        "x": 0.13,
+        "y": 0.02877697841726619,
+        "w": 0.849,
+        "h": 0.9486125385405961
+      },
+      "feet": 0.9773895169578622,
+      "anchorX": 0.44402810740471194,
+      "exportWidth": 1000,
+      "exportHeight": 973
+    },
+    {
+      "id": "fx-projectile",
+      "file": "art/fx-projectile.webp",
+      "source": "exec-60faa5c0-55ef-442f-9df4-89b24a7565f5.png",
+      "kind": "ui",
+      "width": 1536,
+      "height": 1024,
+      "alpha": true,
+      "bounds": {
+        "x": 0.099,
+        "y": 0.1679160419790105,
+        "w": 0.797,
+        "h": 0.5652173913043478
+      },
+      "feet": 0.7331334332833583,
+      "anchorX": 0.6840753030202649,
+      "exportWidth": 1000,
+      "exportHeight": 667
+    },
+    {
+      "id": "joy-idle",
+      "file": "../../fairytale-defense/rebuild/art/joy-ready.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.048828125,
+        "y": 0.046875,
+        "w": 0.921875,
+        "h": 0.904296875
+      },
+      "feet": 0.951171875,
+      "anchorX": 0.5066119173793644,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "joy-skill",
+      "file": "../../fairytale-defense/rebuild/art/joy-cast.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.05078125,
+        "y": 0.041015625,
+        "w": 0.923828125,
+        "h": 0.912109375
+      },
+      "feet": 0.953125,
+      "anchorX": 0.5088715373958415,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "joy-victory",
+      "file": "../../fairytale-defense/rebuild/art/joy-victory.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.08203125,
+        "y": 0.041015625,
+        "w": 0.8671875,
+        "h": 0.916015625
+      },
+      "feet": 0.95703125,
+      "anchorX": 0.5039619497252984,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "dream-idle",
+      "file": "../../fairytale-defense/rebuild/art/dream-ready.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.0859375,
+        "y": 0.06640625,
+        "w": 0.849609375,
+        "h": 0.873046875
+      },
+      "feet": 0.939453125,
+      "anchorX": 0.4776309795627733,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "dream-skill",
+      "file": "../../fairytale-defense/rebuild/art/dream-cast.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.109375,
+        "y": 0.06640625,
+        "w": 0.828125,
+        "h": 0.876953125
+      },
+      "feet": 0.943359375,
+      "anchorX": 0.5501717608269584,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "dream-victory",
+      "file": "../../fairytale-defense/rebuild/art/dream-victory.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.13671875,
+        "y": 0.072265625,
+        "w": 0.75390625,
+        "h": 0.880859375
+      },
+      "feet": 0.953125,
+      "anchorX": 0.4754755460407202,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "night-idle",
+      "file": "../../fairytale-defense/rebuild/art/night-ready.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.123046875,
+        "y": 0.072265625,
+        "w": 0.81640625,
+        "h": 0.861328125
+      },
+      "feet": 0.93359375,
+      "anchorX": 0.4618656200165924,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "night-skill",
+      "file": "../../fairytale-defense/rebuild/art/night-cast.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.0703125,
+        "y": 0.09765625,
+        "w": 0.91015625,
+        "h": 0.80859375
+      },
+      "feet": 0.90625,
+      "anchorX": 0.6139931719489885,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "night-victory",
+      "file": "../../fairytale-defense/rebuild/art/night-victory.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.0703125,
+        "y": 0.052734375,
+        "w": 0.880859375,
+        "h": 0.900390625
+      },
+      "feet": 0.953125,
+      "anchorX": 0.4715772027383144,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "sadness-idle",
+      "file": "../../fairytale-defense/rebuild/art/sadness-ready.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.09375,
+        "y": 0.0390625,
+        "w": 0.703125,
+        "h": 0.91015625
+      },
+      "feet": 0.94921875,
+      "anchorX": 0.5506397758366555,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "sadness-skill",
+      "file": "../../fairytale-defense/rebuild/art/sadness-cast.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.2109375,
+        "y": 0.013671875,
+        "w": 0.65625,
+        "h": 0.962890625
+      },
+      "feet": 0.9765625,
+      "anchorX": 0.5171629835417915,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "sadness-victory",
+      "file": "../../fairytale-defense/rebuild/art/sadness-victory.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.09375,
+        "y": 0.0546875,
+        "w": 0.720703125,
+        "h": 0.8984375
+      },
+      "feet": 0.953125,
+      "anchorX": 0.5896226279613895,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "trust-idle",
+      "file": "../../fairytale-defense/rebuild/art/trust-ready.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.087890625,
+        "y": 0.0859375,
+        "w": 0.853515625,
+        "h": 0.8515625
+      },
+      "feet": 0.9375,
+      "anchorX": 0.5090570550803291,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "trust-skill",
+      "file": "../../fairytale-defense/rebuild/art/trust-cast.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.0390625,
+        "y": 0.083984375,
+        "w": 0.943359375,
+        "h": 0.826171875
+      },
+      "feet": 0.91015625,
+      "anchorX": 0.5170741678215066,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "trust-victory",
+      "file": "../../fairytale-defense/rebuild/art/trust-victory.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.07421875,
+        "y": 0.087890625,
+        "w": 0.890625,
+        "h": 0.84375
+      },
+      "feet": 0.931640625,
+      "anchorX": 0.5335845209940026,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "memory-idle",
+      "file": "../../fairytale-defense/rebuild/art/memory-ready.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.232421875,
+        "y": 0.072265625,
+        "w": 0.615234375,
+        "h": 0.875
+      },
+      "feet": 0.947265625,
+      "anchorX": 0.5353696404962883,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "memory-skill",
+      "file": "../../fairytale-defense/rebuild/art/memory-cast.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.181640625,
+        "y": 0.05859375,
+        "w": 0.712890625,
+        "h": 0.884765625
+      },
+      "feet": 0.943359375,
+      "anchorX": 0.49664021356327126,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "memory-victory",
+      "file": "../../fairytale-defense/rebuild/art/memory-victory.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.248046875,
+        "y": 0.068359375,
+        "w": 0.552734375,
+        "h": 0.869140625
+      },
+      "feet": 0.9375,
+      "anchorX": 0.513175210100499,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "growth-idle",
+      "file": "../../fairytale-defense/rebuild/art/growth-ready.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.09765625,
+        "y": 0.0390625,
+        "w": 0.861328125,
+        "h": 0.90625
+      },
+      "feet": 0.9453125,
+      "anchorX": 0.5733201971643683,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "growth-skill",
+      "file": "../../fairytale-defense/rebuild/art/growth-cast.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.056640625,
+        "y": 0.041015625,
+        "w": 0.90625,
+        "h": 0.904296875
+      },
+      "feet": 0.9453125,
+      "anchorX": 0.5337367650728472,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "growth-victory",
+      "file": "../../fairytale-defense/rebuild/art/growth-victory.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.17578125,
+        "y": 0.03515625,
+        "w": 0.6484375,
+        "h": 0.912109375
+      },
+      "feet": 0.947265625,
+      "anchorX": 0.49997227730497534,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "healing-idle",
+      "file": "../../fairytale-defense/rebuild/art/healing-ready.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.10683760683760683,
+        "y": 0.08984375,
+        "w": 0.8589743589743589,
+        "h": 0.794921875
+      },
+      "feet": 0.884765625,
+      "anchorX": 0.5246346902441703,
+      "exportWidth": 468,
+      "exportHeight": 512
+    },
+    {
+      "id": "healing-skill",
+      "file": "../../fairytale-defense/rebuild/art/healing-cast.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.12109375,
+        "y": 0.02734375,
+        "w": 0.8046875,
+        "h": 0.91796875
+      },
+      "feet": 0.9453125,
+      "anchorX": 0.519610057791812,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "healing-victory",
+      "file": "../../fairytale-defense/rebuild/art/healing-victory.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.13675213675213677,
+        "y": 0.07421875,
+        "w": 0.7628205128205128,
+        "h": 0.833984375
+      },
+      "feet": 0.908203125,
+      "anchorX": 0.5207548890328889,
+      "exportWidth": 468,
+      "exportHeight": 512
+    },
+    {
+      "id": "luck-idle",
+      "file": "../../fairytale-defense/rebuild/art/luck-ready.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.12890625,
+        "y": 0.095703125,
+        "w": 0.80078125,
+        "h": 0.830078125
+      },
+      "feet": 0.92578125,
+      "anchorX": 0.497424931298837,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "luck-skill",
+      "file": "../../fairytale-defense/rebuild/art/luck-cast.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.052734375,
+        "y": 0.07421875,
+        "w": 0.8515625,
+        "h": 0.865234375
+      },
+      "feet": 0.939453125,
+      "anchorX": 0.5476356456551059,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "luck-victory",
+      "file": "../../fairytale-defense/rebuild/art/luck-victory.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.1328125,
+        "y": 0.0546875,
+        "w": 0.75,
+        "h": 0.900390625
+      },
+      "feet": 0.955078125,
+      "anchorX": 0.4858090017614568,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "hope-idle",
+      "file": "../../fairytale-defense/rebuild/art/hope-ready.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.08333333333333333,
+        "y": 0.10546875,
+        "w": 0.8589743589743589,
+        "h": 0.794921875
+      },
+      "feet": 0.900390625,
+      "anchorX": 0.5388956370591474,
+      "exportWidth": 468,
+      "exportHeight": 512
+    },
+    {
+      "id": "hope-skill",
+      "file": "../../fairytale-defense/rebuild/art/hope-cast.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.037109375,
+        "y": 0.068359375,
+        "w": 0.9375,
+        "h": 0.861328125
+      },
+      "feet": 0.9296875,
+      "anchorX": 0.48240061514795735,
+      "exportWidth": 512,
+      "exportHeight": 512
+    },
+    {
+      "id": "hope-victory",
+      "file": "../../fairytale-defense/rebuild/art/hope-victory.webp",
+      "kind": "reference",
+      "alpha": true,
+      "bounds": {
+        "x": 0.07478632478632478,
+        "y": 0.095703125,
+        "w": 0.8482905982905983,
+        "h": 0.810546875
+      },
+      "feet": 0.90625,
+      "anchorX": 0.5330065826623294,
+      "exportWidth": 468,
+      "exportHeight": 512
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "cover",
+    "prompt": "Use case: stylized-concept. Asset type: ONE original CxQ fighting game thumbnail, landscape 16:9. Image 1 is 森芽 green leaf hood girl with wooden staff, Image 2 is 鈴可 clover fox with bells. Preserve BOTH exact original character identities and costume. Depict them facing off in an exciting friendly arcade duel on the golden teal lantern tournament stage, clearly readable side-view fighting poses, full figures, bold cinematic lighting, gold impact spark between them, premium tactile storybook 3D artwork. Large original title reading exactly '心光對決' with small CxQ above. Not a screenshot, no HUD, no button controls, no collage or divided panels. One polished illustration.",
+    "kind": "background",
+    "reference": [
+      "../../fairytale-defense/rebuild/art/growth-ready.webp",
+      "../../fairytale-defense/rebuild/art/luck-ready.webp"
+    ]
+  },
+  {
+    "id": "thumbnail",
+    "prompt": "Use case: stylized-concept. Asset type: ONE square 1:1 game-center thumbnail for original CxQ arcade fighting game. Image 1 is 森芽 green leaf hood girl with wooden staff, Image 2 is 鈴可 clover fox with bells; preserve both exact character identities and costume. Balanced compact square composition, characters facing off in exciting friendly side-view fighting poses, both recognizable faces entirely visible in left and right lower halves. Teal golden lantern tournament stage, bold gold impact spark, polished tactile storybook 3D render. Large fully readable title exactly '心光對決' across TOP with small CxQ above. Suitable for small square icon. No HUD, no control buttons, no collage or montage, no divided panels. One standalone illustrated cover.",
+    "kind": "background",
+    "reference": [
+      "../../fairytale-defense/rebuild/art/growth-ready.webp",
+      "../../fairytale-defense/rebuild/art/luck-ready.webp"
+    ]
+  }
+]

@@ -1,0 +1,5 @@
+const fs=require('fs'),base='games/heartlight-duel/arcade/',manifest=JSON.parse(fs.readFileSync(base+'art/manifest.json')),planned=JSON.parse(fs.readFileSync(base+'art/asset-plan.json')),covers=JSON.parse(fs.readFileSync(base+'art/cover-prompts.json'));
+const all=[...planned,...covers].map(({id,kind,prompt,ref,reference})=>{const asset=manifest.assets.find(a=>a.id===id);if(!asset||!fs.existsSync(base+asset.file))throw Error('Missing final asset '+id);return{id,kind,prompt,reference:reference||(ref?'../../fairytale-defense/rebuild/art/'+ref.split(/[\\/]/).pop():undefined),file:asset.file,source:asset.source};});
+if(new Set(all.map(a=>a.id)).size!==128)throw Error('Expected 128 distinct generated assets');
+fs.writeFileSync(base+'art/asset-plan.json',JSON.stringify(all,null,2));fs.writeFileSync(base+'art/prompts.json',JSON.stringify({method:'builtin-imagegen',individualAssets:true,montageExtraction:false,assets:all},null,2));
+console.log('Verified and documented '+all.length+' independent generated assets');
