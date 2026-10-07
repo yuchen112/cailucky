@@ -1,8 +1,8 @@
-import {FLOOR as floor,background} from './room-space.mjs?v=20261007-town8';
-import {windowImage,drawWindow} from './window-scene.mjs?v=20261007-town8';
-import {BY_ID,ROLE_MAP,PET_MAP,THEMES} from './data.mjs?v=20261007-town8';
-import {size} from './room.mjs?v=20261007-town8';
-import {play} from './audio.mjs?v=20261007-town8';
+import {FLOOR as floor,background} from './room-space.mjs?v=20261007-town9';
+import {windowImage,drawWindow} from './window-scene.mjs?v=20261007-town9';
+import {BY_ID,ROLE_MAP,PET_MAP,THEMES} from './data.mjs?v=20261007-town9';
+import {size} from './room.mjs?v=20261007-town9';
+import {play} from './audio.mjs?v=20261007-town9';
 const actors=new Map(),petActors=new Map(),cache=new Map();
 function load(src){if(!cache.has(src))cache.set(src,new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=()=>reject(Error('生活素材載入失敗：'+src));i.src=src;}));return cache.get(src)}
 export function openCells(room){const blocked=new Set();for(const p of room.items){if(p.onTop)continue;const b=size(p);for(let y=p.y;y<p.y+b.h;y++)for(let x=p.x;x<p.x+b.w;x++)blocked.add(x+','+y);}const cells=[];for(let y=0;y<room.size;y++)for(let x=0;x<room.size;x++)if(!blocked.has(x+','+y))cells.push({x,y});return cells;}
