@@ -1,5 +1,5 @@
-import {BY_ID,STAGES} from './cast.mjs?v=20261007-duel3';
-import {WIDTH,FLOOR} from './core.mjs?v=20261007-duel3';
+import {BY_ID,STAGES} from './cast.mjs?v=20261007-duel4';
+import {WIDTH,FLOOR} from './core.mjs?v=20261007-duel4';
 const HEIGHT=788;
 export function renderer(canvas,preferences){const ctx=canvas.getContext('2d',{alpha:false}),images=new Map(),effects=[];let lastEvent=0,shake=0,resizeNeeded=true;
  const resize=()=>{const rect=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,preferences().quality==='low'?1:1.5);const w=Math.max(1,Math.round(rect.width*dpr)),h=Math.max(1,Math.round(rect.height*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}resizeNeeded=false;};
@@ -22,7 +22,7 @@ export function renderer(canvas,preferences){const ctx=canvas.getContext('2d',{a
   const bob=f.y===FLOOR&&!f.knock?Math.sin(phase)*(walk?3:1.6):0;
   if(isWinner&&victory)mesh(victory,-w/2,-h+bob,w,h,phase,0);
   else {mesh(ready,-w/2,-h+bob,w,h,phase,walk,1-Math.min(1,castAmount));if(castAmount>.01&&cast)mesh(cast,-w/2+castAmount*5,-h+bob,w,h,phase,0,Math.min(1,castAmount));}
-  
+
   ctx.restore();
   if(f.shield>0||f.held.guard&&!f.action){ctx.save();ctx.strokeStyle=f.shield>0?'#f8d7b5':'#b9eff4';ctx.lineWidth=4;ctx.globalAlpha=.65;ctx.beginPath();ctx.ellipse(f.x+f.facing*14,f.y-130,83,135,0,-Math.PI*.55,Math.PI*.55);ctx.stroke();ctx.restore();}
  }

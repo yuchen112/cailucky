@@ -1,8 +1,8 @@
-import {CAST,BY_ID,STAGES,ENDINGS,CONTROLS,ACTION_NAMES,VERSION} from './cast.mjs?v=20261007-duel3';
-import {createMatch,step,DT,restore,nextRound,clearInputs} from './core.mjs?v=20261007-duel3';
-import {storage} from './save.mjs?v=20261007-duel3';
-import {renderer} from './render.mjs?v=20261007-duel3';
-import {input} from './input.mjs?v=20261007-duel3';
+import {CAST,BY_ID,STAGES,ENDINGS,CONTROLS,ACTION_NAMES,VERSION} from './cast.mjs?v=20261007-duel4';
+import {createMatch,step,DT,restore,nextRound,clearInputs} from './core.mjs?v=20261007-duel4';
+import {storage} from './save.mjs?v=20261007-duel4';
+import {renderer} from './render.mjs?v=20261007-duel4';
+import {input} from './input.mjs?v=20261007-duel4';
 const root=document.querySelector('#app'),modal=document.querySelector('#modal'),db=storage(),$=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let page='home',selected={mode:'story',p1:'growth',p2:'luck',stage:'festival',difficulty:'normal',player:0},match=null,run=null,paint=null,paused=false,loading=false,handledRound=0,eventCursor=0,lastSave=0,messageUntil=0,messageText='',inputHistory=[],resumeAt=0,bindTarget=null;
 let music=null,musicId='',audioUnlocked=false,soundContext=null,soundAt=0,frameCount=0,fpsTime=0,fps=0,lowWindows=0,lastFrame=performance.now(),accumulator=0,hudAt=0;
@@ -31,7 +31,7 @@ function start(options,restored=null){controls.reset();selected={...selected,...
 function resumeSave(){try{const s=db.get();run=s.run;if(!s.active&&run){start(optionsForRun());return;}const m=restore(s.active);start(m.options,m);paused=true;if(m.phase==='round')roundDialog();else dialog('繼續上次對戰',`<p>${BY_ID[m.fighters[0].id].name} 對 ${BY_ID[m.fighters[1].id].name} · 第 ${m.round} 回合</p><div class="actions">${button('繼續','unpause','','primary')}${button('返回選角','leave')}</div>`);}catch(e){toast(e.message);}}
 function roundDialog(){paused=true;controls.reset();handledRound=match.round;const r=match.result,name=r.winner<0?'雙方平手':BY_ID[match.fighters[r.winner].id].name+'拿下回合';dialog(r.reason==='KO'?'回合結束':'時間到',`<h3>${name}</h3><p>比分 ${match.wins[0]}：${match.wins[1]}${r.winner<0?' · 同分重賽，未增加勝場':''}</p><div class="actions">${button(r.matchOver?'查看本場結果':'下一回合',r.matchOver?'finish':'next-round','','primary')}${button('保存並返回選角','leave')}</div>`);capture();sound('round');}
 let finalRecord=null;
-function finish(){modal.close();const win=match.result.winner===0;finalRecord={hero:match.fighters[0].id,opponent:match.fighters[1].id,win,mode:match.mode,wins:[...match.wins],damage:Math.round(match.fighters[0].damage),combo:match.training.maxCombo,rounds:match.round,stage:match.stage,journey:run?{...run}:null};
+function finish(){modal.close();const win=match.result.winner===0;finalRecord={hero:match.fighters[0].id,opponent:match.fighters[1].id,win,mode:match.mode,wins:[...match.wins],damage:Math.round(match.fighters[0].damage),combo:match.bestCombo[0],rounds:match.round,stage:match.stage,journey:run?{...run}:null};
  if(run&&win){run.wins++;if(run.mode==='survival'){run.health=Math.min(match.fighters[0].maxHp,match.fighters[0].hp+match.fighters[0].maxHp*.2);run.index++;}else{run.index++;const best=db.get().story[run.hero]||{cleared:0,completed:false};best.cleared=Math.max(best.cleared,run.index);best.completed=best.completed||run.index>=5;db.get().story[run.hero]=best;}}
  db.finish(finalRecord);if(run&&win&&(run.mode==='survival'||run.index<5)){db.get().run=structuredClone(run);db.save();}else{run=null;}
  page='result';paused=false;render();syncAudio();sound(win?'win':'lose');}
