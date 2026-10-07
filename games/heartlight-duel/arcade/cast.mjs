@@ -1,7 +1,7 @@
-import {CAST as ORIGINAL,STAGES as ARENAS,ENDINGS,CONTROLS,ACTION_NAMES} from '../cast.mjs?v=arcade2';
-import {POSE_METRICS} from './pose-metrics.mjs?v=arcade2';
+import {CAST as ORIGINAL,STAGES as ARENAS,ENDINGS,CONTROLS,ACTION_NAMES} from '../cast.mjs?v=arcade3';
+import {POSE_METRICS} from './pose-metrics.mjs?v=arcade3';
 export {ENDINGS,CONTROLS,ACTION_NAMES};
-export const VERSION='20261007-arcade2';
+export const VERSION='20261007-arcade3';
 export const ACTIONS=['walk-a','walk-b','jump','crouch','guard','hurt','down','light','heavy','super'];
 const speeds={joy:400,dream:355,night:365,sadness:350,trust:325,memory:375,growth:385,healing:345,luck:425,hope:365};
 export const CAST=ORIGINAL.map(c=>({...c,speed:speeds[c.id],portrait:`../../../assets/characters/cxq-role-${c.id}.webp`,height:c.id==='joy'||c.id==='sadness'?305:280,poses:{idle:`../../fairytale-defense/rebuild/art/${c.id}-ready.webp`,skill:`../../fairytale-defense/rebuild/art/${c.id}-cast.webp`,victory:`../../fairytale-defense/rebuild/art/${c.id}-victory.webp`,...Object.fromEntries(ACTIONS.map(a=>[a,`art/${c.id}-${a}.webp`]))}}));

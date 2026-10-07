@@ -1,5 +1,5 @@
-import {CONTROLS} from './cast.mjs?v=arcade2';
-import {command,setHeld,clearInputs} from './core.mjs?v=arcade2';
+import {CONTROLS} from './cast.mjs?v=arcade3';
+import {command,setHeld,clearInputs} from './core.mjs?v=arcade3';
 const heldKeys=['left','right','down','guard'];
 export class Input {
  constructor(stage,getMatch,active,settings,menu){this.stage=stage;this.getMatch=getMatch;this.active=active;this.settings=settings;this.menu=menu;this.sources=new Map();this.taps=[{},{}];this.gamepadPrevious=[];this.pointerMoves=new Map();this.stickId=null;this.bind=null;

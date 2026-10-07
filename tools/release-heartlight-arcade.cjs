@@ -1,6 +1,6 @@
 const fs=require('fs'),assert=require('node:assert/strict');
 const sharp=require('C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/sharp');
-const version='20261007-arcade2',bundle='assets/index-XdRDscQx.js';
+const version='20261007-arcade3',bundle='assets/index-XdRDscQx.js';
 (async()=>{
 const old='id:"heartlight-duel",title:"CxQ 心光對決",label:"十位夥伴・童話格鬥武鬥祭",cover:"assets/game-covers/heartlight-duel.webp?v=20261007-duel6",url:"games/heartlight-duel/index.html?v=20261007-duel6"';
 const next=`id:"heartlight-duel",title:"CxQ 心光對決",label:"十位心光角色・橫向街機格鬥",cover:"assets/game-covers/heartlight-duel.webp?v=${version}",url:"games/heartlight-duel/arcade/index.html?v=${version}"`;
