@@ -1,4 +1,4 @@
-import {BY_ID,STAGES} from './cast.mjs?v=arcade1';
+import {BY_ID,STAGES} from './cast.mjs?v=arcade2';
 export const WIDTH=1280,HEIGHT=720,FLOOR=546,DT=1/60;
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const finite=(n,a=0,b=1e8)=>Number.isFinite(n)&&n>=a&&n<=b;
