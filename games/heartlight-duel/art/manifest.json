@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "method": "Independent imagegen illustration per asset; no montage extraction",
+  "assets": [
+    {
+      "id": "cover",
+      "source": "exec-a3ee2539-6df8-4ab9-a819-9c6d2546dd60.png",
+      "path": "art/cover.webp",
+      "brief": "森芽與鈴可保留原角色身分的童話格鬥封面"
+    },
+    {
+      "id": "arena-festival",
+      "source": "exec-7dc69143-6d71-424f-b3a4-dcbe62e5b8e2.png",
+      "path": "art/arena-festival.webp",
+      "brief": "日間心光慶典廣場，側視水平平台"
+    },
+    {
+      "id": "arena-moon",
+      "source": "exec-ab46d291-9b22-4515-ac05-6b20b1cea6fb.png",
+      "path": "art/arena-moon.webp",
+      "brief": "月夜郵站，側視水平平台"
+    },
+    {
+      "id": "arena-rain",
+      "source": "exec-9449f147-8076-46a3-9e61-0f68b5dce8c4.png",
+      "path": "art/arena-rain.webp",
+      "brief": "雨中花園，側視水平平台"
+    },
+    {
+      "id": "arena-workshop",
+      "source": "exec-57dba9ad-68d4-4c66-b12d-46d940381aad.png",
+      "path": "art/arena-workshop.webp",
+      "brief": "星願工坊，側視水平平台"
+    }
+  ],
+  "fighters": {
+    "ids": [
+      "joy",
+      "dream",
+      "night",
+      "sadness",
+      "trust",
+      "memory",
+      "growth",
+      "healing",
+      "luck",
+      "hope"
+    ],
+    "source": "../fairytale-defense/rebuild/art/{id}-{ready,cast,victory}.webp",
+    "animation": "Original independent ready/cast/victory imagery, runtime mesh deformation and pose transitions; fixed 60 Hz simulation independent of rendering FPS."
+  }
+}
