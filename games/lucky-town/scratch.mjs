@@ -1,6 +1,6 @@
-import {ticketProduct,makeProductTicket,productLayout,productReward} from './ticket-catalog.mjs?v=20261007-town9';
-import {EXTRA_TICKETS,makeExtraTicket,extraLayout} from './scratch-mechanics.mjs?v=20261007-town9';
-import {random} from './slots.mjs?v=20261007-town9';
+import {ticketProduct,makeProductTicket,productLayout,productReward} from './ticket-catalog.mjs?v=20261007-names1';
+import {EXTRA_TICKETS,makeExtraTicket,extraLayout} from './scratch-mechanics.mjs?v=20261007-names1';
+import {random} from './slots.mjs?v=20261007-names1';
 export const SCRATCH_TYPES=[{id:'match',name:'三個小幸運',desc:'找到三個相同圖案，金幣獎項藏在幸運章',art:'art/ticket-match.webp'},{id:'number',name:'幸運號碼',desc:'比對幸運號碼；高面額另有加碼區',art:'art/ticket-number.webp'},{id:'home',name:'小屋驚喜',desc:'探索房間中的驚喜，收集各處金幣',art:'art/ticket-home.webp'}];
 SCRATCH_TYPES.push(...EXTRA_TICKETS);
 export function ticketLayout(t){if(t.layoutVersion===5)return productLayout(t);if(t.layoutVersion===4)return extraLayout(t);const legacy=!t.layoutVersion;const count=legacy?9:t.cost===20?6:t.cost===100?10:15;const columns=legacy?3:t.kind==='home'?3:t.cost===20?3:5,rows=Math.ceil(count/columns);return Array.from({length:count},(_,i)=>{if(!legacy&&t.cost===500&&t.kind!=='match'){if(i>=12)return{x:.08+(i-12)*.28,y:.74,w:.26,h:.14};return{x:.08+(i%4)*.21,y:.23+Math.floor(i/4)*.16,w:.195,h:.145};}if(!legacy&&t.kind==='home'){const layouts={20:[[.13,.24,.22,.23],[.42,.22,.23,.25],[.72,.25,.2,.23],[.13,.57,.23,.25],[.44,.6,.21,.22],[.72,.57,.21,.25]],100:null,500:null};if(layouts[t.cost]){const [x,y,w,h]=layouts[t.cost][i];return{x,y,w,h};}}return{x:.08+(i%columns)*.84/columns,y:.23+Math.floor(i/columns)*.64/rows,w:.84/columns-.016,h:.64/rows-.025};});}

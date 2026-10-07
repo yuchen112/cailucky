@@ -1,11 +1,11 @@
-import {sharedAssets,assetUrl} from './asset-loader.mjs';
-import {UNITS,UNIT_BRANCHES,UNIT_GUIDES,UNIT_RARITY} from './army.mjs';
-import {GRADES} from './recruitment.mjs';
-import {trainingInfo,trainingPreview,useTrainingBooks,BOOK_NAMES} from './training-books.mjs';
-import {unitArt,branchGuide} from './unit-presentation.mjs';
-import {advancedMotionAssets} from './advanced-motion.mjs';
-import {spritePlacement} from './sprite-placement.mjs';
-import {attackType,shapeDescription} from './attack-shapes.mjs';
+import {sharedAssets,assetUrl} from './asset-loader.mjs?v=20261007-names1';
+import {UNITS,UNIT_BRANCHES,UNIT_GUIDES,UNIT_RARITY} from './army.mjs?v=20261007-names1';
+import {GRADES} from './recruitment.mjs?v=20261007-names1';
+import {trainingInfo,trainingPreview,useTrainingBooks,BOOK_NAMES} from './training-books.mjs?v=20261007-names1';
+import {unitArt,branchGuide} from './unit-presentation.mjs?v=20261007-names1';
+import {advancedMotionAssets} from './advanced-motion.mjs?v=20261007-names1';
+import {spritePlacement} from './sprite-placement.mjs?v=20261007-names1';
+import {attackType,shapeDescription} from './attack-shapes.mjs?v=20261007-names1';
 export function installUnitGallery({dialog,getProfile,commit,show,onTrial,audio}){
  let id='archer',level=1,branch=null,tab='intro',token=0,raf=0,started=0,poses=[],loaded=[],idle=null,stageImage=null;
  dialog.classList.add('unit-gallery');dialog.innerHTML='<div class="unit-gallery-header"><div><p class="unit-rarity"></p><h2></h2></div><button class="gallery-back">返回</button></div><div class="unit-gallery-stage"><canvas width="390" height="270" aria-label="兵種展示"></canvas><p class="unit-stage-caption"></p></div><nav aria-label="兵種資料分頁"><button data-unit-tab="intro">介紹</button><button data-unit-tab="training">培養</button><button data-unit-tab="evolution">進階</button></nav><div class="unit-gallery-body"></div><div class="unit-gallery-actions"><button id="unit-trial">開始演練</button></div>';

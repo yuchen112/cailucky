@@ -1,11 +1,11 @@
-import {nextThreat} from './battle-guidance.mjs';
-import {ENEMY_CATALOG} from './enemy-catalog.mjs';
-import {shouldAutoSkill} from './assists.mjs';
-import {ROLES,UNITS,towerStats,pointAt,castHero,enemyStats,kindsFor,BLESSINGS} from './core.mjs?v=20261005-complete1';
-import {encounterWave} from './encounters.mjs?v=20261005-complete1';
-import {heroRange,supportRadius} from './hero-rules.mjs?v=20261005-complete1';
-import {skillSpec} from './skill-spec.mjs?v=20261005-complete1';
-import {routePads,commandPoints,regionFor} from './routes.mjs?v=20261005-complete1';
+import {nextThreat} from './battle-guidance.mjs?v=20261007-names1';
+import {ENEMY_CATALOG} from './enemy-catalog.mjs?v=20261007-names1';
+import {shouldAutoSkill} from './assists.mjs?v=20261007-names1';
+import {ROLES,UNITS,towerStats,pointAt,castHero,enemyStats,kindsFor,BLESSINGS} from './core.mjs?v=20261007-names1';
+import {encounterWave} from './encounters.mjs?v=20261007-names1';
+import {heroRange,supportRadius} from './hero-rules.mjs?v=20261007-names1';
+import {skillSpec} from './skill-spec.mjs?v=20261007-names1';
+import {routePads,commandPoints,regionFor} from './routes.mjs?v=20261007-names1';
 export function installTactics({getBattle,clock,show,syncPause,audio,perform,getProfile,commit}){
  const $=id=>document.getElementById(id);let coverage=false,preview=null,notice='',noticeUntil=0,commandPreview=null;
  $('command').addEventListener('close',()=>commandPreview=null);

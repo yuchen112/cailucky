@@ -1,6 +1,6 @@
-import {isBoss} from './enemy-catalog.mjs';
-import {activeEffects,clamp,skillRecipients} from './animation-state.mjs?v=20261005-complete1';
-import {SPELL_ART} from './motion.mjs?v=20261005-complete1';
+import {isBoss} from './enemy-catalog.mjs?v=20261007-names1';
+import {activeEffects,clamp,skillRecipients} from './animation-state.mjs?v=20261007-names1';
+import {SPELL_ART} from './motion.mjs?v=20261007-names1';
 const impactArt={bolt:'anim-impact',crystal:'anim-shatter',gear:'anim-impact',spore:'projectile-spore',frost:'projectile-frost',glow:'fx-light',wind:'fx-rune',bloom:'fx-petal'};
 // All decorative marks are independently authored raster assets, never canvas shapes.
 export function drawCombatEffects({s,pads,corePoint,image,sprite,ctx,roles,reduced=false,simple=false}){

@@ -1,6 +1,6 @@
-import {sharedAssets,assetUrl} from './asset-loader.mjs';
-import {ROLES,UNITS} from './core.mjs?v=20261005-complete1';
-import {unitArt} from './unit-presentation.mjs?v=20261005-complete1';
+import {sharedAssets,assetUrl} from './asset-loader.mjs?v=20261007-names1';
+import {ROLES,UNITS} from './core.mjs?v=20261007-names1';
+import {unitArt} from './unit-presentation.mjs?v=20261007-names1';
 
 // Presentation only. Player saves and combat rules remain owned by army-ui.
 export function installInterface({getProfile,getHero,getBattle,show,syncPause,refreshHero,audio,reducedMotion,openUnit}){

@@ -3,7 +3,7 @@
   const $=s=>document.querySelector(s),c=$('#field'),x=c.getContext('2d');
   const load=s=>{const i=new Image;i.src=s;return i;},A='../storybook/art-20260914/',B='../storybook/art-20260920-batch/';
   const bg=load(A+'tower-ground.webp'),road=load(A+'road-tile.webp'),burst=load(A+'explosion.webp');
-  const kinds=['growth','dream','luck','trust'],names={growth:'成長',dream:'夢想',luck:'幸運',trust:'信任'};
+  const kinds=['growth','dream','luck','trust'],names={growth:'森芽',dream:'露緹',luck:'鈴可',trust:'伯恩'};
   const chars=Object.fromEntries(kinds.map(k=>[k,load('../../assets/characters/cxq-role-'+k+'.webp')]));
   const towersArt=Object.fromEntries(kinds.map(k=>[k,load(k==='trust'?B+'tower-trust.webp':A+'tower-'+k+'.webp')]));
   const bullets=Object.fromEntries(kinds.map((k,i)=>[k,load(A+'gem-'+[4,3,2,1][i]+'.webp')]));
@@ -40,7 +40,7 @@
     $('.canvasWrap p').textContent=running?'留意疾走與重甲，搭配緩速和範圍攻擊。':'下一波：'+(wave>=6?'首領＋重甲混合':wave>=3?'重甲＋疾走':wave>=1?'疾走＋漫步':'漫步夢魘')+' · 點守護台部署';
     document.querySelectorAll('.tower').forEach(b=>{b.disabled=selected<0||!!towers[selected]||coins<defs[b.dataset.kind].cost||over;b.classList.toggle('active',towers[selected]?.kind===b.dataset.kind);});
     const t=towers[selected],panel=$('#selected');document.querySelector('aside').classList.toggle('has-tower',!!t);
-    if(!t){panel.innerHTML='<h3>'+(selected<0?'點選地圖守護台':'第 '+(selected+1)+' 座守護台')+'</h3><p>選擇上方夥伴部署。信任可增幅附近夥伴。</p>';return;}
+    if(!t){panel.innerHTML='<h3>'+(selected<0?'點選地圖守護台':'第 '+(selected+1)+' 座守護台')+'</h3><p>選擇上方夥伴部署。伯恩可增幅附近夥伴。</p>';return;}
     const d=stats(t),branch=t.branch==='power'?'強化專精':t.branch==='reach'?'廣域專精':'尚未專精';
     panel.innerHTML='<h3>'+names[t.kind]+' Lv.'+t.level+' · '+branch+'</h3><p>'+(d.support?'範圍內攻擊增幅 '+Math.round((.2+t.level*.08)*100)+'%':'攻擊 '+Math.round(d.damage)+' · 射程 '+d.range)+'<br>累計貢獻 '+Math.round(t.dealt)+'</p>';
     const sell=document.createElement('button');sell.className='sell-tower';const refund=Math.floor((t.invested??defs[t.kind].cost)*.7);sell.textContent='拆除 · 返還 '+refund+' 星幣';sell.onclick=()=>{if(over||window.CxQSession?.blocked())return;const dialog=document.createElement('dialog');dialog.innerHTML='<h2>拆除這座守護塔？</h2><p>返還 '+refund+' 星幣，位置可重新建造。</p><button data-cancel>保留</button><button data-sell>確認拆除</button>';document.body.append(dialog);dialog.querySelector('[data-cancel]').onclick=()=>dialog.close();dialog.querySelector('[data-sell]').onclick=()=>{coins+=refund;towers[selected]=null;dialog.close();sync();CxQ.sound('flip');};dialog.addEventListener('close',()=>dialog.remove());dialog.showModal();};panel.append(sell);
@@ -102,7 +102,7 @@
   function finish(win){over=true;running=false;$('#resultTitle').textContent=win?'花園守住了！':'再調整一次防線';const top=towers.filter(Boolean).sort((a,b)=>b.dealt-a.dealt)[0];$('#resultText').textContent=maps[map].name+' · 第 '+wave+' 波 · 擊退 '+kills+' 隻'+(top?' · 最佳貢獻：'+names[top.kind]:'');$('#result').hidden=false;CxQ.write('cxq-defense-best',Math.max(wave,CxQ.read('cxq-defense-best',0)));CxQ.sound(win?'win':'lose');}
   const back=document.createElement('button');back.textContent='返回守護入口';back.onclick=home;$('#result section').append(back);
   $('#startWave').onclick=start;$('#speed').onclick=()=>{speed=speed===1?2:1;sync();};$('#again').onclick=reset;$('#guideBtn').onclick=()=>$('#guide').showModal();$('#guide button').onclick=()=>$('#guide').close();
-  $('#guide p').textContent='點守護台部署：成長快速單體、夢想範圍攻擊並穿透重甲、幸運緩速、信任增幅附近夥伴。升級時選擇強化或廣域專精；信任的修復專精會在每波結束補充城堡生命。守住八波獲勝。';
+  $('#guide p').textContent='點守護台部署：森芽快速單體、露緹範圍攻擊並穿透重甲、鈴可緩速、伯恩增幅附近夥伴。升級時選擇強化或廣域專精；伯恩的修復專精會在每波結束補充城堡生命。守住八波獲勝。';
   CxQ.configure({music:'sherwood'});addEventListener('cxq-start',e=>{mode=e.detail.mode;map=Math.max(0,Math.min(2,Number(e.detail.chapter)||0));reset();});
   c.width=1100;c.height=650;reset();new ResizeObserver(()=>draw()).observe(c);function frame(t){const dt=last?Math.min(.04,(t-last)/1000)*speed:0;last=t;if(!over&&!window.CxQSession?.blocked()&&!document.querySelector('.game-entry:not([hidden])')){clock+=dt;update(dt);}draw();requestAnimationFrame(frame);}requestAnimationFrame(frame);
 })();

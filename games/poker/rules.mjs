@@ -26,16 +26,16 @@ export const GAMES = {
   oldmaid: "抽鬼牌",
 };
 export const ROLES = [
-  ["joy", "快樂"],
-  ["dream", "夢想"],
-  ["night", "夜晚陪伴"],
-  ["sadness", "悲傷"],
-  ["trust", "信任"],
-  ["memory", "回憶"],
-  ["growth", "成長"],
-  ["healing", "療癒"],
-  ["luck", "幸運"],
-  ["hope", "希望"],
+  ["joy", "朵莉"],
+  ["dream", "露緹"],
+  ["night", "米洛"],
+  ["sadness", "汐寧"],
+  ["trust", "伯恩"],
+  ["memory", "緹雅"],
+  ["growth", "森芽"],
+  ["healing", "糯糯"],
+  ["luck", "鈴可"],
+  ["hope", "曦羽"],
 ];
 export const DEFAULT_RULES = {
   c3: true,

@@ -1,4 +1,4 @@
-import {chapterFor} from './chapters.mjs';
+import {chapterFor} from './chapters.mjs?v=20261007-names1';
 export const MAPS={
  forest:{name:'翠林入口',tag:'彎道集中火力',stage:1,intro:'森林裡的引路光一盞盞熄滅。伙伴們決定守住入口，找出讓夢境失去方向的原因。',end:'入口的燈重新亮起，卻照出通往月露河谷的破碎足跡。'},
  moon:{name:'月露雙河',tag:'雙路匯合防守',stage:6,intro:'散落的星露沿兩條河道流失。必須同時保住左右路，才能讓月露重新匯入夢境核心。',end:'兩道星露終於匯流；伙伴們發現晨曦高地的信號塔仍然沉默。'},

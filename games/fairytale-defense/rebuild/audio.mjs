@@ -1,4 +1,4 @@
-import {fileUrl} from './asset-loader.mjs';
+import {fileUrl} from './asset-loader.mjs?v=20261007-names1';
 const key='cxq.defense.preferences.v1';
 const defaults={music:true,sound:true,volume:.3,track:'auto',reducedMotion:false};
 export function readPreferences(){try{const raw=JSON.parse(localStorage.getItem(key)||'null');if(!raw)return {...defaults};return {music:typeof raw.music==='boolean'?raw.music:true,sound:typeof raw.sound==='boolean'?raw.sound:true,volume:Number.isFinite(raw.volume)?Math.max(0,Math.min(1,raw.volume)):.3,track:['auto','forest','moon','dawn'].includes(raw.track)?raw.track:'auto',reducedMotion:raw.reducedMotion===true};}catch{return {...defaults};}}

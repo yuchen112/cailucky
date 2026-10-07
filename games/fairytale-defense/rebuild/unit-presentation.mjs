@@ -1,4 +1,4 @@
-import {UNIT_BRANCHES,DEFAULT_LOADOUT} from './army.mjs?v=20261005-complete1';
+import {UNIT_BRANCHES,DEFAULT_LOADOUT} from './army.mjs?v=20261007-names1';
 export function unitArt(t){
  if(t.level>=7&&UNIT_BRANCHES[t.role]?.some(b=>b.id===t.branch))return `unit-${t.role}-${t.branch}-${t.level>=10?10:7}`;
  if(!['archer','cannon','frost','firefly'].includes(t.role))return `unit-${t.role}${t.level>=3&&t.branch?'-'+t.branch:''}`;

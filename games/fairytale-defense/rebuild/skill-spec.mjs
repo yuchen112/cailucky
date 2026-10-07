@@ -1,5 +1,5 @@
-import {weaponBonus} from './hero-weapons.mjs';
-import {activeModifiers,supportRadius} from './hero-rules.mjs?v=20261005-complete1';
+import {weaponBonus} from './hero-weapons.mjs?v=20261007-names1';
+import {activeModifiers,supportRadius} from './hero-rules.mjs?v=20261007-names1';
 const names={growth:'森林祝福',dream:'星雨',luck:'幸運祝福',joy:'歡樂鼓舞',night:'月夜重擊',sadness:'雨幕',trust:'守護連結',memory:'回憶重現',healing:'生命庇護',hope:'曙光'};
 const uses={growth:'敵群進入集中火力區時強化全場部隊。',dream:'敵人聚集時清理群體。',luck:'搭配高傷害部隊，在強敵到來前準備暴擊。',joy:'多處防線同時接敵時提高全隊火力。',night:'集中處理最接近終點的強敵。',sadness:'敵群快要突破防線時爭取輸出時間。',trust:'強化全場部隊並以核心護盾增加容錯。',memory:'先累積回響，再釋放較強的穿甲攻擊。',healing:'核心受損時修復；生命已滿仍可獲得護盾。',hope:'針對密集重甲與頭目使用穿甲光芒。'};
 export function skillSpec(h,r){

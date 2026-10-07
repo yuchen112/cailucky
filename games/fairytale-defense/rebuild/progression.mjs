@@ -1,5 +1,5 @@
 // Data shared by combat and descriptions. No duplicated display-only upgrade values.
-import {UNIT_BRANCHES} from './army.mjs?v=20261005-complete1';
+import {UNIT_BRANCHES} from './army.mjs?v=20261007-names1';
 export const SPECIALIZATIONS = {
  growth:[{id:'rapid',name:'萌芽連射',description:'攻擊間隔縮短 28%。',interval:.72},{id:'pierce',name:'古木重擊',description:'傷害提高 35%，無視護甲。',damage:1.35,pierce:true}],
  dream:[{id:'wide',name:'繁星擴散',description:'星光波及半徑增加 30。',splash:30},{id:'burst',name:'聚夢星核',description:'傷害提高 70%，波及半徑減少 20。',damage:1.7,splash:-20}],
@@ -13,16 +13,16 @@ export const SPECIALIZATIONS = {
  hope:[{id:'dawn',name:'曙光綻放',description:'波及半徑增加 30，射程增加 15。',splash:30,range:15},{id:'beacon',name:'希望燈塔',description:'傷害提高 60%，保留穿甲與小範圍波及。',damage:1.6}]
 };
 export const ROLE_GUIDES = {
- growth:{tag:'單體輸出',strength:'穩定處理一般敵人',weakness:'未選穿甲專精前較怕護甲',partner:'搭配悲傷延長輸出時間'},
- dream:{tag:'範圍清場',strength:'聚集的小群敵人',weakness:'攻擊間隔較長',partner:'搭配悲傷聚集敵人'},
- luck:{tag:'節奏爆發',strength:'固定次數觸發雙倍傷害',weakness:'不是每次攻擊都有爆發',partner:'搭配信任強化傷害'},
- joy:{tag:'快速輸出',strength:'快速補刀',weakness:'單發傷害較低且射程較短',partner:'搭配夜晚陪伴處理殘血'},
- night:{tag:'長程重擊',strength:'長距離追擊強敵',weakness:'攻擊較慢，怕大量小怪',partner:'搭配夢想負責群體敵人'},
- sadness:{tag:'控制減速',strength:'延長伙伴可攻擊時間',weakness:'自身傷害較低',partner:'搭配成長或夢想'},
+ growth:{tag:'單體輸出',strength:'穩定處理一般敵人',weakness:'未選穿甲專精前較怕護甲',partner:'搭配汐寧延長輸出時間'},
+ dream:{tag:'範圍清場',strength:'聚集的小群敵人',weakness:'攻擊間隔較長',partner:'搭配汐寧聚集敵人'},
+ luck:{tag:'節奏爆發',strength:'固定次數觸發雙倍傷害',weakness:'不是每次攻擊都有爆發',partner:'搭配伯恩強化傷害'},
+ joy:{tag:'快速輸出',strength:'快速補刀',weakness:'單發傷害較低且射程較短',partner:'搭配米洛處理殘血'},
+ night:{tag:'長程重擊',strength:'長距離追擊強敵',weakness:'攻擊較慢，怕大量小怪',partner:'搭配露緹負責群體敵人'},
+ sadness:{tag:'控制減速',strength:'延長伙伴可攻擊時間',weakness:'自身傷害較低',partner:'搭配森芽或露緹'},
  trust:{tag:'伙伴支援',strength:'增強 155 範圍內其他伙伴',weakness:'獨自部署收益較小',partner:'放在兩位以上輸出伙伴附近'},
- memory:{tag:'穿甲輸出',strength:'無視敵人護甲',weakness:'初期沒有範圍傷害',partner:'搭配快樂清小怪'},
- healing:{tag:'守護恢復',strength:'波次間恢復守護目標生命',weakness:'不能取代主力輸出',partner:'搭配希望或夜晚陪伴'},
- hope:{tag:'穿甲範圍',strength:'護甲敵人與小群敵人',weakness:'部署成本與攻擊間隔較高',partner:'搭配信任提升範圍收益'}
+ memory:{tag:'穿甲輸出',strength:'無視敵人護甲',weakness:'初期沒有範圍傷害',partner:'搭配朵莉清小怪'},
+ healing:{tag:'守護恢復',strength:'波次間恢復守護目標生命',weakness:'不能取代主力輸出',partner:'搭配曦羽或米洛'},
+ hope:{tag:'穿甲範圍',strength:'護甲敵人與小群敵人',weakness:'部署成本與攻擊間隔較高',partner:'搭配伯恩提升範圍收益'}
 };
 export const BLESSINGS={
  shatter:{name:'碎冰協奏',description:'攻擊被緩速敵人時，直接傷害增加 12%，可累加。'},

@@ -1,16 +1,16 @@
-import {ENEMY_CATALOG,isBoss,tickEnemyAbility} from './enemy-catalog.mjs';
-import {weaponBonus} from './hero-weapons.mjs';
-import {addDamageStack,tickDamageStacks} from './damage-stacks.mjs?v=20261005-complete1';
-import {validateDungeon,dungeonWave} from './dungeons.mjs?v=20261005-complete1';
-import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261005-complete1';
-import {inCone} from './attack-shapes.mjs?v=20261005-complete1';
-import {tickZones,tickBlocking} from './troop-mechanics.mjs?v=20261005-complete1';
+import {ENEMY_CATALOG,isBoss,tickEnemyAbility} from './enemy-catalog.mjs?v=20261007-names1';
+import {weaponBonus} from './hero-weapons.mjs?v=20261007-names1';
+import {addDamageStack,tickDamageStacks} from './damage-stacks.mjs?v=20261007-names1';
+import {validateDungeon,dungeonWave} from './dungeons.mjs?v=20261007-names1';
+import {routePoint,routeLength,routePads,regionFor} from './routes.mjs?v=20261007-names1';
+import {inCone} from './attack-shapes.mjs?v=20261007-names1';
+import {tickZones,tickBlocking} from './troop-mechanics.mjs?v=20261007-names1';
 // Deterministic simulation. Visuals consume events; animation never grants damage.
-import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261005-complete1';
-import {UNITS,UNIT_RARITY,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261005-complete1';
-import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261005-complete1';
-import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261005-complete1';
-import {skillSpec} from './skill-spec.mjs?v=20261005-complete1';
+import {SPECIALIZATIONS,statsFor,BLESSINGS} from './progression.mjs?v=20261007-names1';
+import {UNITS,UNIT_RARITY,UNIT_BRANCHES,DEFAULT_LOADOUT,validateLoadout} from './army.mjs?v=20261007-names1';
+import {heroBuild,supportFor,supportRadius,heroRange} from './hero-rules.mjs?v=20261007-names1';
+import {CAMPAIGN,encounterWave} from './encounters.mjs?v=20261007-names1';
+import {skillSpec} from './skill-spec.mjs?v=20261007-names1';
 export {UNITS,UNIT_BRANCHES};
 export {SPECIALIZATIONS,BLESSINGS};
 export const towerStats=(t,s)=>{const base=ROLES[t.role]||UNITS[t.role],r=statsFor(base,t,s?.buffs);if(s?.army){const growth=1+(s.training?.[t.role]||0)*.01;r.damage*=growth;if(base.income)r.income=Math.floor(r.income*growth);}if(s?.hero)r.damage*=1+weaponBonus(s.hero.role,s.hero.weaponLevel??0).armyDamage;if(base.poison)r.poison=base.poison*(r.damage/base.damage);return r;};
@@ -20,16 +20,16 @@ export const WORLD = Object.freeze({width:390,height:585});
 export const PATH = [[197,0],[197,32],[186,59],[164,71],[76,71],[56,85],[51,107],[51,150],[66,173],[88,183],[306,183],[329,195],[337,218],[337,270],[327,293],[305,308],[79,308],[60,326],[52,351],[52,389],[65,410],[89,416],[176,416],[191,431],[198,456],[198,585]];
 export const PADS = [130,258,386].flatMap(y=>[102,195,288].map(x=>({x,y})));
 export const ROLES = Object.freeze({
-  growth:{name:'成長',cost:100,damage:24,interval:.95,range:145,kind:'seed',description:'穩定單體攻擊，適合前排守路。'},
-  dream:{name:'夢想',cost:140,damage:19,interval:1.6,range:150,splash:55,kind:'star',description:'星光命中後波及附近敵人。'},
-  luck:{name:'幸運',cost:120,damage:21,interval:1.1,range:145,crit:3,kind:'clover',description:'每第三次攻擊造成雙倍傷害。'},
-  joy:{name:'快樂',cost:100,damage:13,interval:.55,range:125,kind:'spark',description:'快速攻擊，擅長處理小群敵人。'},
-  night:{name:'夜晚陪伴',cost:140,damage:42,interval:1.7,range:205,kind:'moon',description:'長射程重擊，優先追擊最接近終點的敵人。'},
-  sadness:{name:'悲傷',cost:120,damage:14,interval:1.1,range:145,slow:.48,kind:'rain',description:'命中減慢敵人，效果不會無限疊加。'},
-  trust:{name:'信任',cost:120,damage:12,interval:1.2,range:130,aura:1.2,kind:'rune',description:'提升附近伙伴的攻擊傷害。'},
-  memory:{name:'回憶',cost:130,damage:21,interval:1.3,range:150,pierce:true,kind:'echo',description:'回響攻擊無視敵人的護甲。'},
-  healing:{name:'療癒',cost:110,damage:15,interval:1.25,range:135,heal:1,kind:'petal',description:'完成一波後恢復守護目標一點生命。'},
-  hope:{name:'希望',cost:160,damage:34,interval:1.6,range:155,splash:35,pierce:true,kind:'light',description:'光芒穿透護甲並波及小範圍。'}
+  growth:{name:'森芽',cost:100,damage:24,interval:.95,range:145,kind:'seed',description:'穩定單體攻擊，適合前排守路。'},
+  dream:{name:'露緹',cost:140,damage:19,interval:1.6,range:150,splash:55,kind:'star',description:'星光命中後波及附近敵人。'},
+  luck:{name:'鈴可',cost:120,damage:21,interval:1.1,range:145,crit:3,kind:'clover',description:'每第三次攻擊造成雙倍傷害。'},
+  joy:{name:'朵莉',cost:100,damage:13,interval:.55,range:125,kind:'spark',description:'快速攻擊，擅長處理小群敵人。'},
+  night:{name:'米洛',cost:140,damage:42,interval:1.7,range:205,kind:'moon',description:'長射程重擊，優先追擊最接近終點的敵人。'},
+  sadness:{name:'汐寧',cost:120,damage:14,interval:1.1,range:145,slow:.48,kind:'rain',description:'命中減慢敵人，效果不會無限疊加。'},
+  trust:{name:'伯恩',cost:120,damage:12,interval:1.2,range:130,aura:1.2,kind:'rune',description:'提升附近伙伴的攻擊傷害。'},
+  memory:{name:'緹雅',cost:130,damage:21,interval:1.3,range:150,pierce:true,kind:'echo',description:'回響攻擊無視敵人的護甲。'},
+  healing:{name:'糯糯',cost:110,damage:15,interval:1.25,range:135,heal:1,kind:'petal',description:'完成一波後恢復守護目標一點生命。'},
+  hope:{name:'曦羽',cost:160,damage:34,interval:1.6,range:155,splash:35,pierce:true,kind:'light',description:'光芒穿透護甲並波及小範圍。'}
 });
 export const ENEMIES = ENEMY_CATALOG;
 const lengths = PATH.slice(1).map((p,i)=>Math.hypot(p[0]-PATH[i][0],p[1]-PATH[i][1]));

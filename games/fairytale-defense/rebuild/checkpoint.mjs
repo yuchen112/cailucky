@@ -1,6 +1,6 @@
-import {ENEMY_IDS} from './enemy-catalog.mjs';
-import {CAMPAIGN} from './encounters.mjs?v=20261005-complete1';
-import {createBattle,ROLES,UNITS,UNIT_BRANCHES,PADS,SPECIALIZATIONS,BLESSINGS,validateProfile,upgradeCost} from './core.mjs?v=20261005-complete1';
+import {ENEMY_IDS} from './enemy-catalog.mjs?v=20261007-names1';
+import {CAMPAIGN} from './encounters.mjs?v=20261007-names1';
+import {createBattle,ROLES,UNITS,UNIT_BRANCHES,PADS,SPECIALIZATIONS,BLESSINGS,validateProfile,upgradeCost} from './core.mjs?v=20261007-names1';
 const int=(v,min,max)=>Number.isSafeInteger(v)&&v>=min&&v<=max;
 export function captureCheckpoint(s){
  if(!['planning','intermission'].includes(s.phase))return null;

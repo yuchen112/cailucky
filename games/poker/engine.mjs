@@ -1,4 +1,4 @@
-import * as R from "./rules.mjs";
+import * as R from "./rules.mjs?v=20261007-names1";
 const clone = (x) => structuredClone(x);
 function requireThat(ok, message) {
   if (!ok) throw Error(message);

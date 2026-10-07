@@ -1,6 +1,6 @@
-import {bookInventory,BOOK_GRADES,BOOK_NAMES} from './training-books.mjs';
-import {validateWeapons,WEAPONS,weaponSummary} from './hero-weapons.mjs';
-import {ROLES} from './core.mjs';
+import {bookInventory,BOOK_GRADES,BOOK_NAMES} from './training-books.mjs?v=20261007-names1';
+import {validateWeapons,WEAPONS,weaponSummary} from './hero-weapons.mjs?v=20261007-names1';
+import {ROLES} from './core.mjs?v=20261007-names1';
 export function inventoryItems(profile){
  const books=bookInventory(profile),weapons=validateWeapons(profile.weapons);
  return [...BOOK_GRADES.map(grade=>({key:'book-'+grade,kind:'books',grade,name:BOOK_NAMES[grade]+'訓練書',shortName:BOOK_NAMES[grade],art:'training-book-'+grade,count:books[grade],stamp:books[grade]})),...Object.entries(weapons).filter(([,w])=>w.unlocked).map(([hero,w])=>({key:'weapon-'+hero,kind:'weapons',hero,name:WEAPONS[hero].name,shortName:ROLES[hero].name,art:'weapon-'+hero,count:1,stamp:w.drops+1,summary:weaponSummary(hero,w)}))];

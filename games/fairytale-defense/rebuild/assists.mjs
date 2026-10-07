@@ -1,6 +1,6 @@
-import {PATH_LENGTH} from './core.mjs';
-import {routeLength} from './routes.mjs';
-import {isBoss} from './enemy-catalog.mjs';
+import {PATH_LENGTH} from './core.mjs?v=20261007-names1';
+import {routeLength} from './routes.mjs?v=20261007-names1';
+import {isBoss} from './enemy-catalog.mjs?v=20261007-names1';
 export const ASSIST_STRATEGIES=Object.freeze({damage:['power','shatter','command','reach','supplies','repair'],control:['reach','shatter','command','power','repair','supplies'],survival:['repair','reach','supplies','power','shatter','command'],balanced:['power','reach','command','shatter','supplies','repair']});
 export function validateAssists(value={}){if(!value||typeof value!=='object'||Array.isArray(value)||typeof (value.autoSkill??false)!=='boolean'||typeof (value.autoBlessing??false)!=='boolean'||!Object.hasOwn(ASSIST_STRATEGIES,value.strategy??'balanced'))throw Error('輔助設定不正確');return {autoSkill:value.autoSkill??false,autoBlessing:value.autoBlessing??false,strategy:value.strategy??'balanced'};}
 export function selectAutoBlessing(s,prefs){const p=validateAssists(prefs);if(!p.autoBlessing||s.paused||s.phase!=='intermission'||!s.blessingChoices.length)return null;const order=[...ASSIST_STRATEGIES[p.strategy]];if(p.strategy==='balanced'&&s.hp<=s.maxHp*.4){order.splice(order.indexOf('repair'),1);order.unshift('repair');}return order.find(id=>s.blessingChoices.includes(id))??null;}

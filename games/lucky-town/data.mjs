@@ -1,9 +1,10 @@
-import {EXTRA_FURNITURE,makeExtraClothes,EXTRA_THEMES,WINDOW_SCENES,SERIES} from './collection-data.mjs?v=20261007-town9';
+import {EXTRA_FURNITURE,makeExtraClothes,EXTRA_THEMES,WINDOW_SCENES,SERIES} from './collection-data.mjs?v=20261007-names1';
 export {WINDOW_SCENES,SERIES};
 export const RELEASE='20261007-town9';
+const CHARACTER_WORDS={"joy":"快樂","dream":"夢想","night":"夜晚陪伴","sadness":"悲傷","trust":"信任","memory":"回憶","growth":"成長","healing":"療癒","luck":"幸運","hope":"希望"};
 export const ROLES=[
- ['joy','快樂','派對小彩星','把日常變成值得笑的時刻。'],['dream','夢想','星願魔法師','替願望點亮下一步。'],['night','夜晚陪伴','月夜守護者','陪你度過安靜的夜晚。'],['sadness','悲傷','雨天陪伴者','陪你把難過慢慢放下。'],['trust','信任','鑰匙守護者','守住約定與安心感。'],['memory','回憶','回憶收藏家','把重要片段收進生活裡。'],['growth','成長','森林旅伴','一起照顧慢慢長大的日子。'],['healing','療癒','暖心絨絨','在柔軟的小屋裡歇一歇。'],['luck','幸運','四葉鈴狐','帶著剛剛好的好運同行。'],['hope','希望','光線編織者','溫柔地把明天點亮。']
-].map(([id,name,title,desc])=>({id,name,title,desc,original:`../../assets/characters/cxq-role-${id}.webp`,outfit:`art/outfit-${id}.webp`}));
+ ['joy','朵莉','派對小彩星','把日常變成值得笑的時刻。'],['dream','露緹','星願魔法師','替願望點亮下一步。'],['night','米洛','月夜守護者','陪你度過安靜的夜晚。'],['sadness','汐寧','雨天陪伴者','陪你把難過慢慢放下。'],['trust','伯恩','鑰匙守護者','守住約定與安心感。'],['memory','緹雅','回憶收藏家','把重要片段收進生活裡。'],['growth','森芽','森林旅伴','一起照顧慢慢長大的日子。'],['healing','糯糯','暖心絨絨','在柔軟的小屋裡歇一歇。'],['luck','鈴可','四葉鈴狐','帶著剛剛好的好運同行。'],['hope','曦羽','光線編織者','溫柔地把明天點亮。']
+].map(([id,name,title,desc])=>({id,name,representative:CHARACTER_WORDS[id],title,desc,original:`../../assets/characters/cxq-role-${id}.webp`,outfit:`art/outfit-${id}.webp`}));
 export const MACHINES=[
  {id:'classic',name:'四葉幸運',tag:'三軸・中央連線',cols:3,rows:1,cost:10,desc:'中央三個相同得到大獎；兩個相同也有小獎。',rules:'三同：100～200 金幣；兩同：22 金幣。其餘為 0。六種圖案等機率。',theme:'forest'},
  {id:'sweet',name:'甜點連連',tag:'五軸・消除連鎖',cols:5,rows:3,cost:15,desc:'三個相鄰的橫向圖案消除補落，最多連鎖三次。',rules:'每條橫向三連起獎 75 金幣，每多一格加 8。第 2／3 次連鎖倍率 2／3；每輪最多結算三次。',theme:'rose'},

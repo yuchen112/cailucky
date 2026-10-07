@@ -1,8 +1,8 @@
-import {installInventory} from './inventory-ui.mjs';
-import {installUnitGallery} from './unit-gallery.mjs';
-import {bookInventory,BOOK_GRADES,BOOK_NAMES} from './training-books.mjs?v=20261005-complete1';
-import {RECRUIT_UNITS} from './recruitment.mjs?v=20261005-complete1';
-import {installRecruitment} from './recruitment-ui.mjs?v=20261005-complete1';
+import {installInventory} from './inventory-ui.mjs?v=20261007-names1';
+import {installUnitGallery} from './unit-gallery.mjs?v=20261007-names1';
+import {bookInventory,BOOK_GRADES,BOOK_NAMES} from './training-books.mjs?v=20261007-names1';
+import {RECRUIT_UNITS} from './recruitment.mjs?v=20261007-names1';
+import {installRecruitment} from './recruitment-ui.mjs?v=20261007-names1';
 export function installJourney({getProfile,commit,show,syncPause,audio,onMotion,onTrial}){
  const $=id=>document.getElementById(id);
  function dialog(id,title){const d=document.createElement('dialog');d.id=id;d.className='journey-dialog';d.innerHTML=`<h2>${title}</h2><div class="journey-body"></div><button class="journey-close">返回營地</button>`;d.querySelector('button').onclick=()=>d.close();d.addEventListener('close',syncPause);document.body.append(d);return d;}

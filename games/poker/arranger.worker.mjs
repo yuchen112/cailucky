@@ -1,4 +1,4 @@
-import { arrange13 } from "./rules.mjs";
+import { arrange13 } from "./rules.mjs?v=20261007-names1";
 self.onmessage = (e) => {
   const { id, hand } = e.data;
   try {

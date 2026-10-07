@@ -1,7 +1,7 @@
-import {inventoryItems,bookSource,weaponSource} from './inventory.mjs';
-import {BOOK_GRADES,BOOK_NAMES,bookInventory,synthesizeBooks} from './training-books.mjs';
-import {UNITS,UNIT_RARITY} from './army.mjs';
-import {assetUrl} from './asset-loader.mjs';
+import {inventoryItems,bookSource,weaponSource} from './inventory.mjs?v=20261007-names1';
+import {BOOK_GRADES,BOOK_NAMES,bookInventory,synthesizeBooks} from './training-books.mjs?v=20261007-names1';
+import {UNITS,UNIT_RARITY} from './army.mjs?v=20261007-names1';
+import {assetUrl} from './asset-loader.mjs?v=20261007-names1';
 export function installInventory({getProfile,commit,show,syncPause,audio,openUnit,updateWallet}){
  const $=id=>document.getElementById(id),seenKey='cxq.defense.bag-seen.v1';let filter='all',selected=null,seen={};
  try{const v=JSON.parse(localStorage.getItem(seenKey)||'{}');if(v&&typeof v==='object'&&!Array.isArray(v))seen=v;}catch{}

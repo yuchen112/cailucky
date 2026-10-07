@@ -1,5 +1,5 @@
-import {validateCollection,unitLevel,xpForLevel,MAX_LEVEL} from './recruitment.mjs?v=20261005-complete1';
-import {UNIT_RARITY} from './army.mjs?v=20261005-complete1';
+import {validateCollection,unitLevel,xpForLevel,MAX_LEVEL} from './recruitment.mjs?v=20261007-names1';
+import {UNIT_RARITY} from './army.mjs?v=20261007-names1';
 export const BOOK_XP=1;
 export const BOOK_GRADES=Object.freeze(['common','rare','epic','legendary']);
 export const BOOK_NAMES=Object.freeze({common:'一般',rare:'稀有',epic:'史詩',legendary:'傳說'});

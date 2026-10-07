@@ -1,4 +1,4 @@
-import {SPRITE_LAYOUT} from './sprite-layout.mjs';
+import {SPRITE_LAYOUT} from './sprite-layout.mjs?v=20261007-names1';
 // Complete transparent images, foot-aligned; no cropping.
 const MEASURED_LEGACY_LAYOUT={
   "unit-archer-rapid-5-ready": {

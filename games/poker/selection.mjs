@@ -1,5 +1,5 @@
-import {reduce} from './engine.mjs?v=20260929-switch1';
-import * as R from './rules.mjs';
+import {reduce} from './engine.mjs?v=20261007-names1';
+import * as R from './rules.mjs?v=20261007-names1';
 
 // Dry-run the actual engine on its immutable clone: no second set of UI rules,
 // no storage writes, and no speculative result is shown to the player.

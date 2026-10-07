@@ -1,4 +1,4 @@
-import {CHAPTERS,chapterFor} from './chapters.mjs';
+import {CHAPTERS,chapterFor} from './chapters.mjs?v=20261007-names1';
 export function campaignChapters(catalog,progress){
  const groups=new Map();for(const c of catalog){const definition=chapterFor(c.stage);if(!groups.has(definition.id))groups.set(definition.id,{...definition,stages:[],cleared:0});const chapter=groups.get(definition.id),cleared=progress.clearedIds?.includes(c.id)??progress.cleared.includes(c.stage);chapter.stages.push({...c,cleared,available:cleared||c.stage<=progress.unlocked});if(cleared)chapter.cleared++;}return [...groups.values()];
 }

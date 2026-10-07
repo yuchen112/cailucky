@@ -1,4 +1,4 @@
-import {ASSET_REVISIONS} from './asset-revisions.mjs';
+import {ASSET_REVISIONS} from './asset-revisions.mjs?v=20261007-names1';
 const base=new URL('./',import.meta.url);
 export function artPath(id){if(ASSET_REVISIONS.files['art/play-'+id+'.webp'])return 'art/play-'+id+'.webp';return id in ASSET_REVISIONS.characters?'../../../assets/characters/cxq-role-'+id+'.webp':'art/'+id+'.webp';}
 export function fileUrl(p){return new URL(p+'?r='+(ASSET_REVISIONS.files[p]||'1'),base).href;}

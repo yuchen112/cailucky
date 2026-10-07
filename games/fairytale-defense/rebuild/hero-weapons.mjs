@@ -1,4 +1,4 @@
-import {HERO_IDS,MASTERY_THRESHOLDS} from './mastery.mjs?v=20261005-complete1';
+import {HERO_IDS,MASTERY_THRESHOLDS} from './mastery.mjs?v=20261007-names1';
 export const HERO_CAP=MASTERY_THRESHOLDS.at(-1),WEAPON_CAP=10,WEAPON_DROP_CHANCE=.1,WEAPON_DROP_XP=100;
 export const WEAPONS=Object.freeze({
  growth:{name:'翠芽指揮杖',effect:'全隊傷害',kind:'armyDamage'},

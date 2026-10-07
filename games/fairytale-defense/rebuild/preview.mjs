@@ -1,6 +1,6 @@
-import {WORLD,PADS,ROLES,createBattle,pointAt,deploy,upgrade,sell,startWave,advance,newProfile,recordResult,upgradeCost,towerStats,SPECIALIZATIONS,BLESSINGS,chooseBlessing,setPriority,wavePreview} from './core.mjs?v=20261005-complete1';
-import {ROLE_GUIDES} from './progression.mjs?v=20261005-complete1';
-import {captureCheckpoint,restoreCheckpoint,decodeSave} from './checkpoint.mjs?v=20261005-complete1';
+import {WORLD,PADS,ROLES,createBattle,pointAt,deploy,upgrade,sell,startWave,advance,newProfile,recordResult,upgradeCost,towerStats,SPECIALIZATIONS,BLESSINGS,chooseBlessing,setPriority,wavePreview} from './core.mjs?v=20261007-names1';
+import {ROLE_GUIDES} from './progression.mjs?v=20261007-names1';
+import {captureCheckpoint,restoreCheckpoint,decodeSave} from './checkpoint.mjs?v=20261007-names1';
 const $=id=>document.getElementById(id),ctx=$('canvas').getContext('2d'),images={},key='cxq.defense.rebuild.v2';
 let battle=createBattle(),profile=newProfile(),checkpoint=null,selectedPad=0,selectedRole=null,ready=false,resultShown=false,last=0,mode='campaign';
 try{const raw=localStorage.getItem(key)||localStorage.getItem('cxq.defense.rebuild.v1');if(raw)({profile,checkpoint}=decodeSave(raw));}catch{$('hint').textContent='讀取存檔失敗，未刪除原始資料。';}
@@ -97,7 +97,7 @@ function showBlessing(){if(!$('blessing').open&&!document.querySelector('dialog[
 function frame(now){const dt=last?Math.min((now-last)/1000,.1):0;last=now;syncPause();const previous=battle.phase;advance(battle,dt);if(previous!==battle.phase&&battle.phase==='intermission')saveBoundary();draw();$('status').textContent=`生命 ${battle.hp}${battle.shield?'＋盾'+battle.shield:''} · 金幣 ${battle.gold} · ${battle.wave} 波`;
  $('wave').disabled=!ready||battle.paused||!['planning','intermission'].includes(battle.phase)||!battle.towers.length||!!battle.blessingChoices.length;$('wave').textContent=battle.phase==='battle'?'守護中…':battle.phase==='intermission'?'迎接下一波':'開始守護';
  if(['planning','intermission'].includes(battle.phase))$('hint').textContent='下一波：'+Object.entries(wavePreview(battle)).map(([id,n])=>({walker:'普通',runner:'快速',armored:'護甲',boss:'頭目'}[id])+` ×${n}`).join(' · ');
- if(battle.phase==='battle')$('hint').textContent=battle.enemies.some(e=>e.castUntil)?'頭目蓄力：即將替周圍敵人施加護甲！':battle.enemies.some(e=>e.wardUntil>battle.time)?'護甲加持中：回憶、希望的穿甲仍有效。':`第 ${battle.wave} 波守護中`;
+ if(battle.phase==='battle')$('hint').textContent=battle.enemies.some(e=>e.castUntil)?'頭目蓄力：即將替周圍敵人施加護甲！':battle.enemies.some(e=>e.wardUntil>battle.time)?'護甲加持中：緹雅、曦羽的穿甲仍有效。':`第 ${battle.wave} 波守護中`;
  if(battle.blessingChoices.length)showBlessing();
  if(!resultShown&&['victory','defeat'].includes(battle.phase)){resultShown=true;profile=recordResult(profile,battle);checkpoint=null;save();updateHome();$('result-title').textContent=battle.phase==='victory'?'守護成功':'再試一次';$('result-text').textContent=`完成 ${battle.phase==='victory'?battle.wave:Math.max(0,battle.wave-1)} 波，擊退 ${battle.kills} 位敵人。`;show('result');}requestAnimationFrame(frame);
 }

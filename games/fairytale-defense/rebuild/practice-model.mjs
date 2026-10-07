@@ -1,5 +1,5 @@
-import {createBattle,deploy,startWave,advance,pointAt,PATH_LENGTH,towerStats} from './core.mjs';
-import {UNITS,UNIT_BRANCHES} from './army.mjs';
+import {createBattle,deploy,startWave,advance,pointAt,PATH_LENGTH,towerStats} from './core.mjs?v=20261007-names1';
+import {UNITS,UNIT_BRANCHES} from './army.mjs?v=20261007-names1';
 export function createPractice({id,level=1,branch=null,target='single',training=0}={}){
  if(!UNITS[id]||!Number.isInteger(level)||level<1||level>10||!['single','group','armor','air'].includes(target))throw Error('請選擇兵種與演練目標');
  if(level>=3&&!UNIT_BRANCHES[id].some(b=>b.id===branch))throw Error('請選擇進階分支');

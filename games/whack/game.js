@@ -2,7 +2,7 @@
 const $=s=>document.querySelector(s),MODES={timed:['慶典挑戰','60 秒收集心光，連擊提高分數。看清夥伴，避開炸彈。'],relaxed:['悠閒同樂','90 秒輕鬆遊玩，沒有炸彈與生命扣除，慢慢跟夥伴打招呼。']};
 const SPEED={easy:[1000,1250],normal:[760,1000],hard:[560,790],expert:[420,620]},KEY='cxq-whack-v1';
 let mode='timed',difficulty='normal',state=null,last=0,rank=CxQ.read(KEY,[]);if(!Array.isArray(rank))rank=[];rank=rank.filter(r=>MODES[r.mode]&&SPEED[r.difficulty]&&Number.isFinite(r.score)).slice(0,240);
-const CAST=['幸運','療癒','成長','回憶','快樂','夜晚陪伴','信任','夢想','悲傷','希望'];
+const CAST=['鈴可','糯糯','森芽','緹雅','朵莉','米洛','伯恩','露緹','汐寧','曦羽'];
 function sprite(id,extra=''){const name=['luck','healing','growth','memory','joy','night','trust','dream','sadness','hope'][id];return '<img aria-hidden="true" class="sprite cast '+extra+'" src="../storybook/art-mobile24/portrait-'+name+'.webp" alt="" style="object-fit:contain;background:none">'}
 function prop(id,extra=''){return '<img aria-hidden="true" class="sprite props '+extra+'" src="../storybook/art-20260914/'+['whack-burrow','whack-bomb','gem-0','gem-2','icon-gear','explosion'][id]+'.webp" alt="" style="object-fit:contain;background:none">'}
 $('#cast-list').innerHTML=CAST.map((name,i)=>'<div>'+sprite(i)+'<small>'+name+'</small></div>').join('');

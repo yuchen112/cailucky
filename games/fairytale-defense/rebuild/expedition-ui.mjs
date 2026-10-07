@@ -1,8 +1,8 @@
-import {floorReward,towerDaily,validateRewardLedger} from './endless-rewards.mjs';
-import {installFormation} from './formation-ui.mjs?v=20261005-complete1';
-import {UNITS,UNIT_GUIDES,UNIT_RARITY} from './army.mjs?v=20261005-complete1';
-import {GRADES,unitLevel} from './recruitment.mjs?v=20261005-complete1';
-import {MAPS} from './expedition.mjs?v=20261005-complete1';
+import {floorReward,towerDaily,validateRewardLedger} from './endless-rewards.mjs?v=20261007-names1';
+import {installFormation} from './formation-ui.mjs?v=20261007-names1';
+import {UNITS,UNIT_GUIDES,UNIT_RARITY} from './army.mjs?v=20261007-names1';
+import {GRADES,unitLevel} from './recruitment.mjs?v=20261007-names1';
+import {MAPS} from './expedition.mjs?v=20261007-names1';
 export function installExpedition({getProfile,commit,show,syncPause,openUnit,startEndless}){
  const $=id=>document.getElementById(id),body=$('squad').querySelector('.dialog-content');
  const formation=installFormation({dialog:$('squad'),body,getProfile,commit,openUnit});const render=()=>formation.render();

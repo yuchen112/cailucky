@@ -1,8 +1,8 @@
-import {fitHands,capture,animateTable,cancelMotion,playPosePath,warmPlayPose} from "./presentation.mjs?v=20260930-motion3";
-import * as R from "./rules.mjs";
-import { reduce, autoAction } from "./engine.mjs?v=20261006-pace1";
-import * as Store from "./storage.mjs?v=20261006-pace1";
-import {selectionFeedback} from "./selection.mjs?v=20260929-feedback1";
+import {fitHands,capture,animateTable,cancelMotion,playPosePath,warmPlayPose} from "./presentation.mjs?v=20261007-names1";
+import * as R from "./rules.mjs?v=20261007-names1";
+import { reduce, autoAction } from "./engine.mjs?v=20261007-names1";
+import * as Store from "./storage.mjs?v=20261007-names1";
+import {selectionFeedback} from "./selection.mjs?v=20261007-names1";
 const app = document.querySelector("#app"),
   modal = document.querySelector("#modal"),
   toastEl = document.querySelector("#toast");
@@ -383,7 +383,7 @@ function showSettings() {
       )
       .join(
         "",
-      )}<p><a href="credits.html" target="_blank" rel="noopener">音樂授權與製作名單</a></p>`,
+      )}<p><a href="credits.html?v=20261007-names1" target="_blank" rel="noopener">音樂授權與製作名單</a></p>`,
     btn("全螢幕", "fullscreen") +
       btn("套用設定", "settings-save") +
       btn("返回", "close"),
