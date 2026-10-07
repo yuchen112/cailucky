@@ -1,5 +1,5 @@
-import {CONTROLS} from './cast.mjs?v=20261007-duel4';
-import {command,setHeld,clearInputs} from './core.mjs?v=20261007-duel4';
+import {CONTROLS} from './cast.mjs?v=20261007-duel5';
+import {command,setHeld,clearInputs} from './core.mjs?v=20261007-duel5';
 export function input({getMatch,active,preferences,onPause,onAction}){const pressed=new Set(),pointers=new Map(),padPrevious=[{},{}];let destroyed=false;
  function set(index,action,value){const m=getMatch();if(!m||!active())return;if(['left','right','down','guard'].includes(action))setHeld(m,index,action,value);if(value&&['jump','light','heavy','skill','super'].includes(action)){if((action==='light'&&pressed.has(keyFor(index,'heavy')))||(action==='heavy'&&pressed.has(keyFor(index,'light'))))command(m,index,'throw');else command(m,index,action);onAction?.(index,action);} }
  const mapping=()=>preferences().keys||CONTROLS;
