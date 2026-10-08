@@ -1,0 +1,225 @@
+{
+  "version": "20261008-complete1",
+  "games": [
+    {
+      "id": "heartlight-duel",
+      "name": "心光對決",
+      "description": "選擇夥伴，挑戰橫向街機對決。",
+      "url": "games/heartlight-duel/arcade/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "lucky-town",
+      "name": "幸運小鎮",
+      "description": "玩拉霸、刮票券，打造自己的小鎮生活。",
+      "url": "games/lucky-town/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "richman",
+      "name": "童話大富翁",
+      "description": "擲骰買地，展開童話棋盤冒險。",
+      "url": "games/cxq-fairytale-richman/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "magic-bubble",
+      "name": "魔法泡泡龍",
+      "description": "瞄準泡泡，施展魔法消除。",
+      "url": "games/magic-bubble/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "dream-match",
+      "name": "夢境消除",
+      "description": "交換寶石，完成夢境消除挑戰。",
+      "url": "games/dream-match/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "fortune",
+      "name": "每日占卜",
+      "description": "抽一張牌，留下今天的小提醒。",
+      "url": "games/fortune/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "link",
+      "name": "夢境織光・角色連連看",
+      "description": "連起相同夥伴，完成織光地圖。",
+      "url": "games/link/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "brick",
+      "name": "心光旅團：記憶核心",
+      "description": "反彈心光，擊破記憶磚塊。",
+      "url": "games/brick-breaker/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "clickcore",
+      "name": "星願旅團：點亮夢境",
+      "description": "點亮星願，照顧夢境村莊。",
+      "url": "games/click-core/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "twenty48",
+      "name": "星願 2048",
+      "description": "滑動合成，完成星願 2048。",
+      "url": "games/2048/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "memory",
+      "name": "暮光回憶收藏室",
+      "description": "翻開卡片，尋找相同的回憶。",
+      "url": "games/memory/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "tetris",
+      "name": "心境織境・方塊物語",
+      "description": "排列方塊，織出完整心境。",
+      "url": "games/tetris/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "whack",
+      "name": "森林敲敲樂",
+      "description": "看準地洞，敲出森林好節奏。",
+      "url": "games/whack/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "merge",
+      "name": "心光合成屋",
+      "description": "合成相同夥伴，創造更大的心光。",
+      "url": "games/merge/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "flappy",
+      "name": "星願飛行郵差",
+      "description": "穿越障礙，送出星願郵件。",
+      "url": "games/flappy/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "dino",
+      "name": "森林急件快遞",
+      "description": "跳躍閃避，送達森林急件。",
+      "url": "games/dino/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "poker",
+      "name": "撲克館",
+      "description": "選擇牌桌，挑戰八種撲克玩法。",
+      "url": "games/poker/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "mines",
+      "name": "四葉草探險地圖",
+      "description": "依照線索，探索四葉草地圖。",
+      "url": "games/mines/index.html?v=20261008-complete1"
+    },
+    {
+      "id": "fairytale-defense",
+      "name": "童話塔防",
+      "description": "集結英雄與部隊，守護童話世界。",
+      "url": "games/fairytale-defense/index.html?v=20261008-complete1"
+    }
+  ],
+  "characters": [
+    {
+      "id": "joy",
+      "name": "朵莉"
+    },
+    {
+      "id": "dream",
+      "name": "露緹"
+    },
+    {
+      "id": "night",
+      "name": "米洛"
+    },
+    {
+      "id": "sadness",
+      "name": "汐寧"
+    },
+    {
+      "id": "trust",
+      "name": "伯恩"
+    },
+    {
+      "id": "memory",
+      "name": "緹雅"
+    },
+    {
+      "id": "growth",
+      "name": "森芽"
+    },
+    {
+      "id": "healing",
+      "name": "糯糯"
+    },
+    {
+      "id": "luck",
+      "name": "鈴可"
+    },
+    {
+      "id": "hope",
+      "name": "曦羽"
+    }
+  ],
+  "tickets": [
+    {
+      "id": "trio20",
+      "name": "午茶三連",
+      "cost": 20,
+      "mode": "trio"
+    },
+    {
+      "id": "coins20",
+      "name": "口袋零錢",
+      "cost": 20,
+      "mode": "coins"
+    },
+    {
+      "id": "numbers50",
+      "name": "星願號碼",
+      "cost": 50,
+      "mode": "numbers"
+    },
+    {
+      "id": "keys50",
+      "name": "雙島尋寶",
+      "cost": 50,
+      "mode": "keys"
+    },
+    {
+      "id": "garden100",
+      "name": "四季花園",
+      "cost": 100,
+      "mode": "garden"
+    },
+    {
+      "id": "bags100",
+      "name": "加倍郵局",
+      "cost": 100,
+      "mode": "bags"
+    },
+    {
+      "id": "bingo200",
+      "name": "小鎮賓果夜",
+      "cost": 200,
+      "mode": "bingo"
+    },
+    {
+      "id": "trail200",
+      "name": "森林小徑",
+      "cost": 200,
+      "mode": "trail"
+    },
+    {
+      "id": "vault500",
+      "name": "黃金保險庫",
+      "cost": 500,
+      "mode": "vault"
+    },
+    {
+      "id": "stars500",
+      "name": "星際五連",
+      "cost": 500,
+      "mode": "stars"
+    }
+  ],
+  "newMotionFrames": 120,
+  "artJobs": 164
+}

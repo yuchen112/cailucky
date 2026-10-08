@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#17201d">
-<title>心境織境・方塊物語</title>
+<title>CxQ 心境織境・方塊物語</title>
 <style>
 :root{--cream:#fff6df;--ink:#302a2a;--sage:#98ae79;--rose:#d9898e;--navy:#263044;--gold:#d8ad59;--cell:28px}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:"Microsoft JhengHei",system-ui,sans-serif;color:var(--cream);background:#111722}button{font:inherit;color:inherit}
@@ -141,5 +141,5 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)releaseCont
 $('#enterSetup').onclick=()=>{$('#homeScreen').classList.remove('show');$('#menu').classList.add('show')};$('#backHome').onclick=()=>{$('#menu').classList.remove('show');$('#homeScreen').classList.add('show')};$('#showHowto').onclick=()=>$('#howto').classList.toggle('show');$('#quickClassic').onclick=()=>{$('#blessingMode').checked=false;reset()};$('#start').onclick=reset;$('#pauseBtn').onclick=pause;$('#deckPause').onclick=pause;$('#resume').onclick=resume;$('#restart').onclick=reset;$('#home').onclick=()=>{running=false;setFace('wave');$('#pause').classList.remove('show');$('#homeScreen').classList.add('show')};$('#skill').onclick=activate;$('#blessingMode').onchange=update;window.onresize=resize;window.visualViewport?.addEventListener('resize',resize);document.onkeydown=e=>{if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Space'].includes(e.code))e.preventDefault();if(e.key==='Escape')paused?resume():pause();if(e.key==='ArrowLeft')act('left');if(e.key==='ArrowRight')act('right');if(e.key==='ArrowUp')act('rotate');if(e.key==='ArrowDown')act('soft');if(e.code==='Space'){e.preventDefault();act('drop')}if(e.key.toLowerCase()==='c')act('hold')};CxQ.configure({music:'arcade',pause});blockImg.onload=draw;update();requestAnimationFrame(loop);
 })();
 </script>
-</body>
+<script src="../shared/game-entry-v2.js?v=20261008-complete1" data-game='{"host":"#homeScreen","slot":".home-copy","sub":".lead","css":"#homeScreen .game-center-return{width:270px;height:60px;margin:8px auto}","name":"心境織境・方塊物語","desc":"排列方塊，織出完整心境。","art":"games/tetris/art/return-center-v2.webp"}'></script></body>
 </html>

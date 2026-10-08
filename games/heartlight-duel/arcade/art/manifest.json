@@ -2891,6 +2891,1926 @@
       "anchorX": 0.5330065826623294,
       "exportWidth": 468,
       "exportHeight": 512
+    },
+    {
+      "id": "joy-launcher-0",
+      "file": "art/v2/joy-launcher-0.webp",
+      "source": "exec-d7441305-b2a0-45eb-a59d-445ee4445be6.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.08984375,
+        "y": 0.09765625,
+        "w": 0.8828125,
+        "h": 0.826171875
+      },
+      "feet": 0.923828125,
+      "anchorX": 0.39461162457129567,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "joy-launcher-1",
+      "file": "art/v2/joy-launcher-1.webp",
+      "source": "exec-f5a87702-92db-4ead-b8f5-f28f448e27e0.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.041015625,
+        "y": 0.005859375,
+        "w": 0.931640625,
+        "h": 0.95703125
+      },
+      "feet": 0.962890625,
+      "anchorX": 0.5322751672373036,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "joy-launcher-2",
+      "file": "art/v2/joy-launcher-2.webp",
+      "source": "exec-beb31d85-5aa5-4027-bda6-64f25c0a40fd.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0390625,
+        "y": 0.03125,
+        "w": 0.94140625,
+        "h": 0.919921875
+      },
+      "feet": 0.951171875,
+      "anchorX": 0.516126765959243,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "joy-sweep-0",
+      "file": "art/v2/joy-sweep-0.webp",
+      "source": "exec-5b78ea06-5760-40c2-9725-96cadc950c73.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.068359375,
+        "y": 0.0546875,
+        "w": 0.830078125,
+        "h": 0.873046875
+      },
+      "feet": 0.927734375,
+      "anchorX": 0.5200496599972074,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "joy-sweep-1",
+      "file": "art/v2/joy-sweep-1.webp",
+      "source": "exec-4f7da8c6-ba92-4440-a74e-e56413d865e2.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.05078125,
+        "y": 0.08203125,
+        "w": 0.943359375,
+        "h": 0.826171875
+      },
+      "feet": 0.908203125,
+      "anchorX": 0.4768983587698233,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "joy-sweep-2",
+      "file": "art/v2/joy-sweep-2.webp",
+      "source": "exec-40ea6b4c-6406-4003-b668-57d76b174bfc.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.064453125,
+        "y": 0.0859375,
+        "w": 0.923828125,
+        "h": 0.837890625
+      },
+      "feet": 0.923828125,
+      "anchorX": 0.490793260685596,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "joy-air-0",
+      "file": "art/v2/joy-air-0.webp",
+      "source": "exec-0901c13b-234d-4ab7-b37f-c5319bb9105b.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.15625,
+        "y": 0.041015625,
+        "w": 0.69140625,
+        "h": 0.8515625
+      },
+      "feet": 0.892578125,
+      "anchorX": 0.5644763339080395,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "joy-air-1",
+      "file": "art/v2/joy-air-1.webp",
+      "source": "exec-cc825ea8-d209-406c-bb31-1a57e3378d22.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.080078125,
+        "y": 0.04296875,
+        "w": 0.8828125,
+        "h": 0.87109375
+      },
+      "feet": 0.9140625,
+      "anchorX": 0.6735977916672041,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "joy-air-2",
+      "file": "art/v2/joy-air-2.webp",
+      "source": "exec-02f38ce0-39e2-4152-9e36-ba4e25158beb.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.056640625,
+        "y": 0.04296875,
+        "w": 0.9296875,
+        "h": 0.900390625
+      },
+      "feet": 0.943359375,
+      "anchorX": 0.2297627433553889,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "joy-finisher-0",
+      "file": "art/v2/joy-finisher-0.webp",
+      "source": "exec-d0c906e2-a6f3-4208-bb0b-bb6cc1aa7644.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.021484375,
+        "y": 0.01953125,
+        "w": 0.94921875,
+        "h": 0.921875
+      },
+      "feet": 0.94140625,
+      "anchorX": 0.40526740519903914,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "joy-finisher-1",
+      "file": "art/v2/joy-finisher-1.webp",
+      "source": "exec-077f07d0-12fc-43b4-9b67-9b6c66a79905.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.025390625,
+        "y": 0.109375,
+        "w": 0.962890625,
+        "h": 0.8046875
+      },
+      "feet": 0.9140625,
+      "anchorX": 0.420640170168536,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "joy-finisher-2",
+      "file": "art/v2/joy-finisher-2.webp",
+      "source": "exec-29e65f3b-5480-422c-ac12-03c2f4401c18.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0546875,
+        "y": 0.05078125,
+        "w": 0.912109375,
+        "h": 0.88671875
+      },
+      "feet": 0.9375,
+      "anchorX": 0.5585164691987033,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "dream-launcher-0",
+      "file": "art/v2/dream-launcher-0.webp",
+      "source": "exec-d35cb5e6-ebfb-49b2-af2e-0f8b41e50ad5.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0625,
+        "y": 0.177734375,
+        "w": 0.904296875,
+        "h": 0.70703125
+      },
+      "feet": 0.884765625,
+      "anchorX": 0.5483341048242818,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "dream-launcher-1",
+      "file": "art/v2/dream-launcher-1.webp",
+      "source": "exec-571b6ff0-6305-4499-b8c1-6255a5ab8e49.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.080078125,
+        "y": 0.037109375,
+        "w": 0.884765625,
+        "h": 0.908203125
+      },
+      "feet": 0.9453125,
+      "anchorX": 0.5110897036677243,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "dream-launcher-2",
+      "file": "art/v2/dream-launcher-2.webp",
+      "source": "exec-9b748271-5de1-4708-858f-a6a3a11848c4.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.111328125,
+        "y": 0.04296875,
+        "w": 0.876953125,
+        "h": 0.90234375
+      },
+      "feet": 0.9453125,
+      "anchorX": 0.45035979588052927,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "dream-sweep-0",
+      "file": "art/v2/dream-sweep-0.webp",
+      "source": "exec-4d7b2b19-4b85-49a8-8991-73bc3dfa2aa2.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.005859375,
+        "y": 0.2265625,
+        "w": 0.962890625,
+        "h": 0.59375
+      },
+      "feet": 0.8203125,
+      "anchorX": 0.4789790931896081,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "dream-sweep-1",
+      "file": "art/v2/dream-sweep-1.webp",
+      "source": "exec-047985bf-cd78-4aba-beb2-9bfdd89734c3.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.044921875,
+        "y": 0.193359375,
+        "w": 0.94140625,
+        "h": 0.685546875
+      },
+      "feet": 0.87890625,
+      "anchorX": 0.6168299758797108,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "dream-sweep-2",
+      "file": "art/v2/dream-sweep-2.webp",
+      "source": "exec-0db77bf2-7cb3-420d-bfba-19d8b67201c2.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.033203125,
+        "y": 0.18359375,
+        "w": 0.95703125,
+        "h": 0.65234375
+      },
+      "feet": 0.8359375,
+      "anchorX": 0.5111907828482855,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "dream-air-0",
+      "file": "art/v2/dream-air-0.webp",
+      "source": "exec-d825b5bc-677e-4433-9626-6134c39bcce6.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.091796875,
+        "y": 0.056640625,
+        "w": 0.7578125,
+        "h": 0.798828125
+      },
+      "feet": 0.85546875,
+      "anchorX": 0.5794303927968593,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "dream-air-1",
+      "file": "art/v2/dream-air-1.webp",
+      "source": "exec-d63dce79-2c2f-403e-969b-d68cd4ceb911.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.041015625,
+        "y": 0.0859375,
+        "w": 0.9375,
+        "h": 0.82421875
+      },
+      "feet": 0.91015625,
+      "anchorX": 0.7601092781087155,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "dream-air-2",
+      "file": "art/v2/dream-air-2.webp",
+      "source": "exec-a63620ec-898d-458b-82e5-e3b58dbd6370.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.025390625,
+        "y": 0.123046875,
+        "w": 0.962890625,
+        "h": 0.76171875
+      },
+      "feet": 0.884765625,
+      "anchorX": 0.3213978517074231,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "dream-finisher-0",
+      "file": "art/v2/dream-finisher-0.webp",
+      "source": "exec-7bfb838b-7ea2-4651-afd7-2a252a731eb2.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.048828125,
+        "y": 0.08984375,
+        "w": 0.912109375,
+        "h": 0.814453125
+      },
+      "feet": 0.904296875,
+      "anchorX": 0.40590646206645065,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "dream-finisher-1",
+      "file": "art/v2/dream-finisher-1.webp",
+      "source": "exec-0ea9f8a6-3830-4e8c-a4b6-716df798791a.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.03125,
+        "y": 0.173828125,
+        "w": 0.966796875,
+        "h": 0.66015625
+      },
+      "feet": 0.833984375,
+      "anchorX": 0.4590559088322566,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "dream-finisher-2",
+      "file": "art/v2/dream-finisher-2.webp",
+      "source": "exec-62cab2cf-d0dc-40f9-8a9c-b7b08989d3f4.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.017578125,
+        "y": 0.154296875,
+        "w": 0.94140625,
+        "h": 0.736328125
+      },
+      "feet": 0.890625,
+      "anchorX": 0.4814123638524472,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "night-launcher-0",
+      "file": "art/v2/night-launcher-0.webp",
+      "source": "exec-b83d30f9-951e-428d-9d1b-76e17f579f36.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.029296875,
+        "y": 0.173828125,
+        "w": 0.9609375,
+        "h": 0.6953125
+      },
+      "feet": 0.869140625,
+      "anchorX": 0.5482452176948288,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "night-launcher-1",
+      "file": "art/v2/night-launcher-1.webp",
+      "source": "exec-2ed90c7a-9c6c-4417-ac20-08412a32613a.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.04296875,
+        "y": 0.0546875,
+        "w": 0.94140625,
+        "h": 0.900390625
+      },
+      "feet": 0.955078125,
+      "anchorX": 0.5122107001035912,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "night-launcher-2",
+      "file": "art/v2/night-launcher-2.webp",
+      "source": "exec-31424b14-19c5-4639-b9ca-92b135c41e2b.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.033203125,
+        "y": 0.095703125,
+        "w": 0.955078125,
+        "h": 0.80078125
+      },
+      "feet": 0.896484375,
+      "anchorX": 0.5010881137647816,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "night-sweep-0",
+      "file": "art/v2/night-sweep-0.webp",
+      "source": "exec-bece0be9-f83b-460d-b0c3-4a54b7ef43e2.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.03515625,
+        "y": 0.236328125,
+        "w": 0.923828125,
+        "h": 0.611328125
+      },
+      "feet": 0.84765625,
+      "anchorX": 0.4779347383656854,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "night-sweep-1",
+      "file": "art/v2/night-sweep-1.webp",
+      "source": "exec-b96a4dab-90b7-4f50-80c0-0df10995d8dc.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.009765625,
+        "y": 0.197265625,
+        "w": 0.98046875,
+        "h": 0.65625
+      },
+      "feet": 0.853515625,
+      "anchorX": 0.46450446236102166,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "night-sweep-2",
+      "file": "art/v2/night-sweep-2.webp",
+      "source": "exec-6811fe46-4c60-4329-99f1-36c6579da56e.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.044921875,
+        "y": 0.166015625,
+        "w": 0.939453125,
+        "h": 0.68359375
+      },
+      "feet": 0.849609375,
+      "anchorX": 0.48109182570739745,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "night-air-0",
+      "file": "art/v2/night-air-0.webp",
+      "source": "exec-59576d50-7f3f-4d2d-8fb4-dcf5f35628a3.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0234375,
+        "y": 0.1171875,
+        "w": 0.96875,
+        "h": 0.767578125
+      },
+      "feet": 0.884765625,
+      "anchorX": 0.730688803652442,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "night-air-1",
+      "file": "art/v2/night-air-1.webp",
+      "source": "exec-ecc3e56a-1c91-4801-aa19-940b64935356.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor. IMPORTANT: Create a substantially different active attack drawing: the crescent lantern arm reaches diagonally DOWN AND RIGHT, both feet trail behind in an airborne plunge, torso leaning forward 45 degrees. Do not repeat a tucked-knee anticipation pose.",
+      "bounds": {
+        "x": 0.033203125,
+        "y": 0.125,
+        "w": 0.94921875,
+        "h": 0.787109375
+      },
+      "feet": 0.912109375,
+      "anchorX": 0.45,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "night-air-2",
+      "file": "art/v2/night-air-2.webp",
+      "source": "exec-d8fa9214-ed10-4ba8-81ae-f509a5c4bbda.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.044921875,
+        "y": 0.107421875,
+        "w": 0.9375,
+        "h": 0.76953125
+      },
+      "feet": 0.876953125,
+      "anchorX": 0.17898254345438788,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "night-finisher-0",
+      "file": "art/v2/night-finisher-0.webp",
+      "source": "exec-ead65788-2d3f-4b98-b6ac-6e28ef57e29b.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0546875,
+        "y": 0.107421875,
+        "w": 0.919921875,
+        "h": 0.779296875
+      },
+      "feet": 0.88671875,
+      "anchorX": 0.34255840064902804,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "night-finisher-1",
+      "file": "art/v2/night-finisher-1.webp",
+      "source": "exec-ebbc1f69-9779-425c-9b01-b9ca06609d1f.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0078125,
+        "y": 0.1640625,
+        "w": 0.990234375,
+        "h": 0.689453125
+      },
+      "feet": 0.853515625,
+      "anchorX": 0.4759694300038021,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "night-finisher-2",
+      "file": "art/v2/night-finisher-2.webp",
+      "source": "exec-79e050e0-2d69-4b3f-a245-64e301afbbf1.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.03125,
+        "y": 0.12890625,
+        "w": 0.8828125,
+        "h": 0.73828125
+      },
+      "feet": 0.8671875,
+      "anchorX": 0.5441096655888576,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "sadness-launcher-0",
+      "file": "art/v2/sadness-launcher-0.webp",
+      "source": "exec-bbedc1f1-4cf7-4bdf-8dd2-03c209b88dc4.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0546875,
+        "y": 0.21875,
+        "w": 0.9375,
+        "h": 0.681640625
+      },
+      "feet": 0.900390625,
+      "anchorX": 0.5693949616852809,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "sadness-launcher-1",
+      "file": "art/v2/sadness-launcher-1.webp",
+      "source": "exec-08daebb8-c16c-4317-88c4-faa299d33d79.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.212890625,
+        "y": 0.01953125,
+        "w": 0.775390625,
+        "h": 0.93359375
+      },
+      "feet": 0.953125,
+      "anchorX": 0.4495654819409046,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "sadness-launcher-2",
+      "file": "art/v2/sadness-launcher-2.webp",
+      "source": "exec-81d3b8c9-68e9-41a3-b70f-0297c9645f7e.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.17578125,
+        "y": 0.033203125,
+        "w": 0.80078125,
+        "h": 0.900390625
+      },
+      "feet": 0.93359375,
+      "anchorX": 0.4376001605058923,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "sadness-sweep-0",
+      "file": "art/v2/sadness-sweep-0.webp",
+      "source": "exec-b145fb39-64b5-4dde-bac9-f84b641f7157.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.041015625,
+        "y": 0.130859375,
+        "w": 0.908203125,
+        "h": 0.759765625
+      },
+      "feet": 0.890625,
+      "anchorX": 0.4994024424157946,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "sadness-sweep-1",
+      "file": "art/v2/sadness-sweep-1.webp",
+      "source": "exec-a71149f5-ffe9-4862-a65a-e23149b0471f.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.015625,
+        "y": 0.224609375,
+        "w": 0.984375,
+        "h": 0.626953125
+      },
+      "feet": 0.8515625,
+      "anchorX": 0.5163886545203035,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "sadness-sweep-2",
+      "file": "art/v2/sadness-sweep-2.webp",
+      "source": "exec-3b0cf584-7cd8-4a5d-b950-ed2fb1cd2812.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0234375,
+        "y": 0.212890625,
+        "w": 0.97265625,
+        "h": 0.640625
+      },
+      "feet": 0.853515625,
+      "anchorX": 0.5063344256548772,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "sadness-air-0",
+      "file": "art/v2/sadness-air-0.webp",
+      "source": "exec-1b7462bd-7ba4-48df-b617-d6af1db2e6bb.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.048828125,
+        "y": 0.02734375,
+        "w": 0.75390625,
+        "h": 0.873046875
+      },
+      "feet": 0.900390625,
+      "anchorX": 0.5688801843736492,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "sadness-air-1",
+      "file": "art/v2/sadness-air-1.webp",
+      "source": "exec-c3cfcf8e-7008-45e7-9b4b-30538b011e3c.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.033203125,
+        "y": 0.126953125,
+        "w": 0.958984375,
+        "h": 0.810546875
+      },
+      "feet": 0.9375,
+      "anchorX": 0.7392542706177427,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "sadness-air-2",
+      "file": "art/v2/sadness-air-2.webp",
+      "source": "exec-29236fb7-20d4-405d-b8f7-3b74ab8155f1.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.115234375,
+        "y": 0.052734375,
+        "w": 0.87890625,
+        "h": 0.853515625
+      },
+      "feet": 0.90625,
+      "anchorX": 0.16295536119695306,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "sadness-finisher-0",
+      "file": "art/v2/sadness-finisher-0.webp",
+      "source": "exec-6642a9c1-646c-4762-92d1-d36d823dcd1c.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.015625,
+        "y": 0.05078125,
+        "w": 0.947265625,
+        "h": 0.873046875
+      },
+      "feet": 0.923828125,
+      "anchorX": 0.4069099638365384,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "sadness-finisher-1",
+      "file": "art/v2/sadness-finisher-1.webp",
+      "source": "exec-0e50146f-0861-4550-aaa8-253996e5383c.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.017578125,
+        "y": 0.166015625,
+        "w": 0.982421875,
+        "h": 0.69140625
+      },
+      "feet": 0.857421875,
+      "anchorX": 0.36302941141314615,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "sadness-finisher-2",
+      "file": "art/v2/sadness-finisher-2.webp",
+      "source": "exec-0867cb4d-04bd-401a-8163-a6b2391bf912.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.015625,
+        "y": 0.1640625,
+        "w": 0.962890625,
+        "h": 0.71875
+      },
+      "feet": 0.8828125,
+      "anchorX": 0.5119953068641581,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "trust-launcher-0",
+      "file": "art/v2/trust-launcher-0.webp",
+      "source": "exec-1c94a8ea-2547-4313-bda2-71640fad3b78.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.033203125,
+        "y": 0.232421875,
+        "w": 0.94921875,
+        "h": 0.6328125
+      },
+      "feet": 0.865234375,
+      "anchorX": 0.45316759740005347,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "trust-launcher-1",
+      "file": "art/v2/trust-launcher-1.webp",
+      "source": "exec-9ce1b8c3-b586-44df-98c0-aeb10299b1fb.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.037109375,
+        "y": 0.03125,
+        "w": 0.935546875,
+        "h": 0.91796875
+      },
+      "feet": 0.94921875,
+      "anchorX": 0.5373300331115972,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "trust-launcher-2",
+      "file": "art/v2/trust-launcher-2.webp",
+      "source": "exec-410ae5f6-0f08-4789-85fd-e8b5edbea60b.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0390625,
+        "y": 0.05078125,
+        "w": 0.9375,
+        "h": 0.89453125
+      },
+      "feet": 0.9453125,
+      "anchorX": 0.4579882557564575,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "trust-sweep-0",
+      "file": "art/v2/trust-sweep-0.webp",
+      "source": "exec-0857346f-a66f-4f60-8df2-360662b04b54.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.001953125,
+        "y": 0.2578125,
+        "w": 0.982421875,
+        "h": 0.572265625
+      },
+      "feet": 0.830078125,
+      "anchorX": 0.47821596152032086,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "trust-sweep-1",
+      "file": "art/v2/trust-sweep-1.webp",
+      "source": "exec-aa2249a4-1abf-45a6-a520-f7e970f064b8.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.01171875,
+        "y": 0.26953125,
+        "w": 0.982421875,
+        "h": 0.529296875
+      },
+      "feet": 0.798828125,
+      "anchorX": 0.4315853084302145,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "trust-sweep-2",
+      "file": "art/v2/trust-sweep-2.webp",
+      "source": "exec-fa3739a9-edab-4635-9188-fd8b039ad1bd.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.03125,
+        "y": 0.2421875,
+        "w": 0.966796875,
+        "h": 0.5859375
+      },
+      "feet": 0.828125,
+      "anchorX": 0.46868334126901745,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "trust-air-0",
+      "file": "art/v2/trust-air-0.webp",
+      "source": "exec-ebea8a18-eb1a-4497-814e-21e886f34cc6.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.134765625,
+        "y": 0.017578125,
+        "w": 0.712890625,
+        "h": 0.8828125
+      },
+      "feet": 0.900390625,
+      "anchorX": 0.48806590127615673,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "trust-air-1",
+      "file": "art/v2/trust-air-1.webp",
+      "source": "exec-f52a4843-ecca-4a73-8c2f-fe381458024a.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.03125,
+        "y": 0.103515625,
+        "w": 0.94140625,
+        "h": 0.767578125
+      },
+      "feet": 0.87109375,
+      "anchorX": 0.736846729507198,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "trust-air-2",
+      "file": "art/v2/trust-air-2.webp",
+      "source": "exec-0b6a5d43-939e-420b-a7dd-81e441d660cd.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.015625,
+        "y": 0.181640625,
+        "w": 0.9765625,
+        "h": 0.64453125
+      },
+      "feet": 0.826171875,
+      "anchorX": 0.15116136859109056,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "trust-finisher-0",
+      "file": "art/v2/trust-finisher-0.webp",
+      "source": "exec-a275d5fe-26cd-4a51-b52e-25670a25704e.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0625,
+        "y": 0.09375,
+        "w": 0.89453125,
+        "h": 0.798828125
+      },
+      "feet": 0.892578125,
+      "anchorX": 0.4304145675008394,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "trust-finisher-1",
+      "file": "art/v2/trust-finisher-1.webp",
+      "source": "exec-5a6ac162-3803-4701-9701-dbab685d08e5.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.017578125,
+        "y": 0.236328125,
+        "w": 0.978515625,
+        "h": 0.546875
+      },
+      "feet": 0.783203125,
+      "anchorX": 0.39015416120750174,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "trust-finisher-2",
+      "file": "art/v2/trust-finisher-2.webp",
+      "source": "exec-a5084101-17b0-42e5-865b-8b958d71719a.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.015625,
+        "y": 0.19140625,
+        "w": 0.970703125,
+        "h": 0.673828125
+      },
+      "feet": 0.865234375,
+      "anchorX": 0.43803207601365773,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "memory-launcher-0",
+      "file": "art/v2/memory-launcher-0.webp",
+      "source": "exec-167091d3-c6fd-41dd-9223-cc53d6178708.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.037109375,
+        "y": 0.189453125,
+        "w": 0.916015625,
+        "h": 0.671875
+      },
+      "feet": 0.861328125,
+      "anchorX": 0.44842869903793436,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "memory-launcher-1",
+      "file": "art/v2/memory-launcher-1.webp",
+      "source": "exec-d4e138b7-5106-4b4f-bd37-50ef098f9a60.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.11328125,
+        "y": 0.033203125,
+        "w": 0.86328125,
+        "h": 0.921875
+      },
+      "feet": 0.955078125,
+      "anchorX": 0.5423002741151354,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "memory-launcher-2",
+      "file": "art/v2/memory-launcher-2.webp",
+      "source": "exec-ef13c81f-c190-481a-bc09-95ebc516ae7d.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.095703125,
+        "y": 0.109375,
+        "w": 0.87890625,
+        "h": 0.80859375
+      },
+      "feet": 0.91796875,
+      "anchorX": 0.5053592435325593,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "memory-sweep-0",
+      "file": "art/v2/memory-sweep-0.webp",
+      "source": "exec-cfc8d632-c535-48a9-9ee1-537c814e4480.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.025390625,
+        "y": 0.24609375,
+        "w": 0.9453125,
+        "h": 0.587890625
+      },
+      "feet": 0.833984375,
+      "anchorX": 0.3987870345128202,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "memory-sweep-1",
+      "file": "art/v2/memory-sweep-1.webp",
+      "source": "exec-e000b179-8190-4bb1-a64f-3888866fd381.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.03515625,
+        "y": 0.208984375,
+        "w": 0.953125,
+        "h": 0.630859375
+      },
+      "feet": 0.83984375,
+      "anchorX": 0.4555948742285244,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "memory-sweep-2",
+      "file": "art/v2/memory-sweep-2.webp",
+      "source": "exec-19b32f48-4d37-4d8b-915a-4233d744a0d7.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.009765625,
+        "y": 0.171875,
+        "w": 0.982421875,
+        "h": 0.658203125
+      },
+      "feet": 0.830078125,
+      "anchorX": 0.527743833140269,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "memory-air-0",
+      "file": "art/v2/memory-air-0.webp",
+      "source": "exec-8135a2fe-ecd9-43c9-a72e-877f1babe859.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.123046875,
+        "y": 0.07421875,
+        "w": 0.720703125,
+        "h": 0.8203125
+      },
+      "feet": 0.89453125,
+      "anchorX": 0.37200431022030844,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "memory-air-1",
+      "file": "art/v2/memory-air-1.webp",
+      "source": "exec-382da935-0cc3-453f-bbe5-80b1c6264300.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.046875,
+        "y": 0.099609375,
+        "w": 0.9296875,
+        "h": 0.75
+      },
+      "feet": 0.849609375,
+      "anchorX": 0.6849035725714813,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "memory-air-2",
+      "file": "art/v2/memory-air-2.webp",
+      "source": "exec-5cdb22f3-3212-4365-bbc5-d8ffb1d37a39.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.01171875,
+        "y": 0.119140625,
+        "w": 0.978515625,
+        "h": 0.78515625
+      },
+      "feet": 0.904296875,
+      "anchorX": 0.6439496949847788,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "memory-finisher-0",
+      "file": "art/v2/memory-finisher-0.webp",
+      "source": "exec-546773aa-61f4-4ce6-8ad7-3340f07577fa.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.037109375,
+        "y": 0.1171875,
+        "w": 0.912109375,
+        "h": 0.771484375
+      },
+      "feet": 0.888671875,
+      "anchorX": 0.40839169162076316,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "memory-finisher-1",
+      "file": "art/v2/memory-finisher-1.webp",
+      "source": "exec-cb38706c-5c3c-4256-9c66-f4972880e076.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0078125,
+        "y": 0.169921875,
+        "w": 0.986328125,
+        "h": 0.638671875
+      },
+      "feet": 0.80859375,
+      "anchorX": 0.47258572638194596,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "memory-finisher-2",
+      "file": "art/v2/memory-finisher-2.webp",
+      "source": "exec-00442867-00ee-4e21-a36d-e1ba82b4f6cc.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0390625,
+        "y": 0.12890625,
+        "w": 0.947265625,
+        "h": 0.7578125
+      },
+      "feet": 0.88671875,
+      "anchorX": 0.5019590095967348,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "growth-launcher-0",
+      "file": "art/v2/growth-launcher-0.webp",
+      "source": "exec-daffd68f-dbad-4ec1-9cbd-d66c940cffd1.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0625,
+        "y": 0.16015625,
+        "w": 0.91796875,
+        "h": 0.732421875
+      },
+      "feet": 0.892578125,
+      "anchorX": 0.4550955146625076,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "growth-launcher-1",
+      "file": "art/v2/growth-launcher-1.webp",
+      "source": "exec-16812467-dffe-461b-8a0a-e7eb0344ac7d.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.10546875,
+        "y": 0.025390625,
+        "w": 0.876953125,
+        "h": 0.908203125
+      },
+      "feet": 0.93359375,
+      "anchorX": 0.5570573474883838,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "growth-launcher-2",
+      "file": "art/v2/growth-launcher-2.webp",
+      "source": "exec-39657417-a977-4079-8ca1-375c38287e3d.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE transparent independently drawn recovery animation frame of original CxQ fighter 森芽, exactly preserving identity, green leafy cloak, hood, clothes and wooden hooked staff of the reference. Strict side view facing RIGHT, full body complete weapon. AFTER an upward launcher, show the clearly distinct recovery: torso upright, elbows bent, wooden staff lowered to chest height held horizontally, forward RIGHT foot bearing weight and rear leg straight. Do NOT raise the staff overhead; this frame must visibly differ from the active uppercut. Polished dimensional storybook character art, no ground or background, no text, no sheet, only one pose.",
+      "bounds": {
+        "x": 0.029296875,
+        "y": 0.03515625,
+        "w": 0.947265625,
+        "h": 0.89453125
+      },
+      "feet": 0.9296875,
+      "anchorX": 0.4914822180541771,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "growth-sweep-0",
+      "file": "art/v2/growth-sweep-0.webp",
+      "source": "exec-4123be51-67bd-4ccf-87ff-68f75cd262cb.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.015625,
+        "y": 0.1796875,
+        "w": 0.96484375,
+        "h": 0.70703125
+      },
+      "feet": 0.88671875,
+      "anchorX": 0.4557852381782741,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "growth-sweep-1",
+      "file": "art/v2/growth-sweep-1.webp",
+      "source": "exec-74f08aaa-2824-402b-a64f-0ab2bf852863.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.046875,
+        "y": 0.158203125,
+        "w": 0.94140625,
+        "h": 0.703125
+      },
+      "feet": 0.861328125,
+      "anchorX": 0.4749504556554286,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "growth-sweep-2",
+      "file": "art/v2/growth-sweep-2.webp",
+      "source": "exec-0b30215b-fa13-42cb-8d58-c7d07112fbcb.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE transparent independently drawn recovery animation frame of original CxQ fighter 森芽, exactly preserving identity, green leafy cloak, hood, clothes and wooden hooked staff of reference. Strict side view facing RIGHT, full body complete weapon. AFTER a low sweep, show a clearly distinct recovery: rising from crouch, both knees half bent, rear hand pulling hooked staff back beside the LEFT hip, staff angled upward diagonally across chest, head facing RIGHT. Do NOT stretch the staff forward at knee height. Polished dimensional storybook art, no background, ground, text or sheet; only one new pose.",
+      "bounds": {
+        "x": 0.0234375,
+        "y": 0.0390625,
+        "w": 0.9609375,
+        "h": 0.912109375
+      },
+      "feet": 0.951171875,
+      "anchorX": 0.47893166862703335,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "growth-air-0",
+      "file": "art/v2/growth-air-0.webp",
+      "source": "exec-d1410b02-10ab-43e3-85e7-25e0926f4c30.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.11328125,
+        "y": 0.06640625,
+        "w": 0.701171875,
+        "h": 0.796875
+      },
+      "feet": 0.86328125,
+      "anchorX": 0.5360876048601649,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "growth-air-1",
+      "file": "art/v2/growth-air-1.webp",
+      "source": "exec-35954dcf-18e7-4a00-b031-b6de51c600e3.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0625,
+        "y": 0.048828125,
+        "w": 0.767578125,
+        "h": 0.88671875
+      },
+      "feet": 0.935546875,
+      "anchorX": 0.7274903215631419,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "growth-air-2",
+      "file": "art/v2/growth-air-2.webp",
+      "source": "exec-4ca0de3e-59bc-40c2-aae7-79aa7a67673e.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.029296875,
+        "y": 0.076171875,
+        "w": 0.962890625,
+        "h": 0.818359375
+      },
+      "feet": 0.89453125,
+      "anchorX": 0.1662133887360868,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "growth-finisher-0",
+      "file": "art/v2/growth-finisher-0.webp",
+      "source": "exec-15aceaab-2725-458f-baf8-c928af56d74d.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.033203125,
+        "y": 0.0859375,
+        "w": 0.94140625,
+        "h": 0.82421875
+      },
+      "feet": 0.91015625,
+      "anchorX": 0.35771723274549516,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "growth-finisher-1",
+      "file": "art/v2/growth-finisher-1.webp",
+      "source": "exec-4db941db-559f-4e8c-88c0-2b43d6eae6fc.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.009765625,
+        "y": 0.16015625,
+        "w": 0.982421875,
+        "h": 0.69140625
+      },
+      "feet": 0.8515625,
+      "anchorX": 0.46076831850486266,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "growth-finisher-2",
+      "file": "art/v2/growth-finisher-2.webp",
+      "source": "exec-5d8dada5-98d3-4923-b094-cbbd97df8eba.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.056640625,
+        "y": 0.091796875,
+        "w": 0.912109375,
+        "h": 0.806640625
+      },
+      "feet": 0.8984375,
+      "anchorX": 0.446591450768041,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "healing-launcher-0",
+      "file": "art/v2/healing-launcher-0.webp",
+      "source": "exec-1172f771-328f-4443-9491-0ea8419f5639.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.048828125,
+        "y": 0.19642857142857142,
+        "w": 0.91796875,
+        "h": 0.6339285714285714
+      },
+      "feet": 0.8303571428571429,
+      "anchorX": 0.4897979019257014,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "healing-launcher-1",
+      "file": "art/v2/healing-launcher-1.webp",
+      "source": "exec-44f688b1-7772-4c5d-b573-38ed11fdb05b.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.052734375,
+        "y": 0.02734375,
+        "w": 0.939453125,
+        "h": 0.904296875
+      },
+      "feet": 0.931640625,
+      "anchorX": 0.4816758931144893,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "healing-launcher-2",
+      "file": "art/v2/healing-launcher-2.webp",
+      "source": "exec-ed57fcb2-ec9a-46ff-9f19-cd6b284580a5.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0546875,
+        "y": 0.16071428571428573,
+        "w": 0.916015625,
+        "h": 0.7035714285714286
+      },
+      "feet": 0.8642857142857143,
+      "anchorX": 0.5051538565642639,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "healing-sweep-0",
+      "file": "art/v2/healing-sweep-0.webp",
+      "source": "exec-2e513347-3532-41c9-8787-781676b19ab4.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0546875,
+        "y": 0.2287390029325513,
+        "w": 0.87890625,
+        "h": 0.6041055718475073
+      },
+      "feet": 0.8328445747800587,
+      "anchorX": 0.5701017020603054,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "healing-sweep-1",
+      "file": "art/v2/healing-sweep-1.webp",
+      "source": "exec-af2c4115-f161-44fc-84d5-1448f0aec990.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.060546875,
+        "y": 0.21374045801526717,
+        "w": 0.8828125,
+        "h": 0.6590330788804071
+      },
+      "feet": 0.8727735368956743,
+      "anchorX": 0.44864511394575063,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "healing-sweep-2",
+      "file": "art/v2/healing-sweep-2.webp",
+      "source": "exec-48c2e17f-7a67-4fd4-b9e5-640a51a5447f.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0546875,
+        "y": 0.20892857142857144,
+        "w": 0.931640625,
+        "h": 0.6071428571428571
+      },
+      "feet": 0.8160714285714286,
+      "anchorX": 0.3739617738691758,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "healing-air-0",
+      "file": "art/v2/healing-air-0.webp",
+      "source": "exec-f7d8ad51-b777-4668-9202-080e5eaf9822.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.029296875,
+        "y": 0.11071428571428571,
+        "w": 0.9375,
+        "h": 0.7178571428571429
+      },
+      "feet": 0.8285714285714286,
+      "anchorX": 0.6970620656630898,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "healing-air-1",
+      "file": "art/v2/healing-air-1.webp",
+      "source": "exec-1c506832-c4bf-478a-bbb3-f0cf2d5bc945.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.04296875,
+        "y": 0.15892857142857142,
+        "w": 0.951171875,
+        "h": 0.675
+      },
+      "feet": 0.8339285714285715,
+      "anchorX": 0.74100764334684,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "healing-air-2",
+      "file": "art/v2/healing-air-2.webp",
+      "source": "exec-f3afffbf-3767-4b0e-b542-7af548a7084c.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.044921875,
+        "y": 0.12321428571428572,
+        "w": 0.92578125,
+        "h": 0.7357142857142858
+      },
+      "feet": 0.8589285714285714,
+      "anchorX": 0.34740977311357185,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "healing-finisher-0",
+      "file": "art/v2/healing-finisher-0.webp",
+      "source": "exec-584f888b-0f4c-4ce8-bdb3-63df52b1da13.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.02734375,
+        "y": 0.1375,
+        "w": 0.95703125,
+        "h": 0.7267857142857143
+      },
+      "feet": 0.8642857142857143,
+      "anchorX": 0.4817510107906136,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "healing-finisher-1",
+      "file": "art/v2/healing-finisher-1.webp",
+      "source": "exec-eab8d214-c228-43a6-877e-23cd202f695d.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.037109375,
+        "y": 0.1348973607038123,
+        "w": 0.943359375,
+        "h": 0.7155425219941349
+      },
+      "feet": 0.8504398826979472,
+      "anchorX": 0.4164618954305797,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "healing-finisher-2",
+      "file": "art/v2/healing-finisher-2.webp",
+      "source": "exec-6c877e6d-4d0e-4c89-97f6-808a09f1212c.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.04296875,
+        "y": 0.14107142857142857,
+        "w": 0.89453125,
+        "h": 0.6964285714285714
+      },
+      "feet": 0.8375,
+      "anchorX": 0.48107788793221457,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "luck-launcher-0",
+      "file": "art/v2/luck-launcher-0.webp",
+      "source": "exec-1b58786a-d2fb-4b84-9f88-0df03e5c2e0a.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.037109375,
+        "y": 0.2109375,
+        "w": 0.947265625,
+        "h": 0.724609375
+      },
+      "feet": 0.935546875,
+      "anchorX": 0.5757165249084293,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "luck-launcher-1",
+      "file": "art/v2/luck-launcher-1.webp",
+      "source": "exec-9693eab8-c34a-4222-9e6f-c4553fb367c3.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.095703125,
+        "y": 0.044921875,
+        "w": 0.8828125,
+        "h": 0.888671875
+      },
+      "feet": 0.93359375,
+      "anchorX": 0.5003890812347978,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "luck-launcher-2",
+      "file": "art/v2/luck-launcher-2.webp",
+      "source": "exec-be281170-ea6c-405f-b6f3-d64915d5c91f.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.087890625,
+        "y": 0.033203125,
+        "w": 0.904296875,
+        "h": 0.927734375
+      },
+      "feet": 0.9609375,
+      "anchorX": 0.32030376059451543,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "luck-sweep-0",
+      "file": "art/v2/luck-sweep-0.webp",
+      "source": "exec-bf87fa84-6006-4687-b573-c37df8ad54b2.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.015625,
+        "y": 0.177734375,
+        "w": 0.927734375,
+        "h": 0.65625
+      },
+      "feet": 0.833984375,
+      "anchorX": 0.5316297710505451,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "luck-sweep-1",
+      "file": "art/v2/luck-sweep-1.webp",
+      "source": "exec-a27ead7d-d41d-4cc3-97ff-44a5ec74aa42.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.033203125,
+        "y": 0.1796875,
+        "w": 0.9609375,
+        "h": 0.701171875
+      },
+      "feet": 0.880859375,
+      "anchorX": 0.5860521605062303,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "luck-sweep-2",
+      "file": "art/v2/luck-sweep-2.webp",
+      "source": "exec-2964ac40-9b18-4c5d-9905-5c2a7b4474f1.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.04296875,
+        "y": 0.15625,
+        "w": 0.943359375,
+        "h": 0.69921875
+      },
+      "feet": 0.85546875,
+      "anchorX": 0.4762581030488112,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "luck-air-0",
+      "file": "art/v2/luck-air-0.webp",
+      "source": "exec-f70f5196-cbe7-41d2-a446-61f98ef54600.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.02734375,
+        "y": 0.052734375,
+        "w": 0.83984375,
+        "h": 0.828125
+      },
+      "feet": 0.880859375,
+      "anchorX": 0.5419773341845323,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "luck-air-1",
+      "file": "art/v2/luck-air-1.webp",
+      "source": "exec-633ab668-11b4-4eb8-b623-97810a6d7120.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.0390625,
+        "y": 0.103515625,
+        "w": 0.94921875,
+        "h": 0.81640625
+      },
+      "feet": 0.919921875,
+      "anchorX": 0.7692471467111295,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "luck-air-2",
+      "file": "art/v2/luck-air-2.webp",
+      "source": "exec-058eb9ec-29da-461f-b087-a48447072596.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.025390625,
+        "y": 0.076171875,
+        "w": 0.96875,
+        "h": 0.8359375
+      },
+      "feet": 0.912109375,
+      "anchorX": 0.2105851008589106,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "luck-finisher-0",
+      "file": "art/v2/luck-finisher-0.webp",
+      "source": "exec-7391b864-12fd-483a-a233-46f84cf9e999.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.025390625,
+        "y": 0.046875,
+        "w": 0.9296875,
+        "h": 0.89453125
+      },
+      "feet": 0.94140625,
+      "anchorX": 0.4005406205239593,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "luck-finisher-1",
+      "file": "art/v2/luck-finisher-1.webp",
+      "source": "exec-f51180b5-5bba-49c8-842d-1a51a206aed2.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.017578125,
+        "y": 0.17578125,
+        "w": 0.970703125,
+        "h": 0.662109375
+      },
+      "feet": 0.837890625,
+      "anchorX": 0.40654640269696957,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "luck-finisher-2",
+      "file": "art/v2/luck-finisher-2.webp",
+      "source": "exec-8cf92a94-1fe1-4e92-a29b-14e20240f5fd.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.037109375,
+        "y": 0.109375,
+        "w": 0.939453125,
+        "h": 0.787109375
+      },
+      "feet": 0.896484375,
+      "anchorX": 0.5018369611688162,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "hope-launcher-0",
+      "file": "art/v2/hope-launcher-0.webp",
+      "source": "exec-35c90759-fb0b-4fd8-9f98-7fd2b7692858.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.029296875,
+        "y": 0.2125,
+        "w": 0.962890625,
+        "h": 0.6303571428571428
+      },
+      "feet": 0.8428571428571429,
+      "anchorX": 0.4235763741518673,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "hope-launcher-1",
+      "file": "art/v2/hope-launcher-1.webp",
+      "source": "exec-e80cfdc7-b00c-432c-8bfd-38a36ec7caf2.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.068359375,
+        "y": 0.05357142857142857,
+        "w": 0.8984375,
+        "h": 0.8642857142857143
+      },
+      "feet": 0.9178571428571428,
+      "anchorX": 0.46831095647713655,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "hope-launcher-2",
+      "file": "art/v2/hope-launcher-2.webp",
+      "source": "exec-927f95ce-ffbe-4bc0-ae3f-b4010739d10c.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.03515625,
+        "y": 0.048214285714285716,
+        "w": 0.94921875,
+        "h": 0.8535714285714285
+      },
+      "feet": 0.9017857142857143,
+      "anchorX": 0.5333066830699892,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "hope-sweep-0",
+      "file": "art/v2/hope-sweep-0.webp",
+      "source": "exec-22e02466-53c0-48b7-a87b-072593cc986b.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.02734375,
+        "y": 0.21964285714285714,
+        "w": 0.923828125,
+        "h": 0.6053571428571428
+      },
+      "feet": 0.825,
+      "anchorX": 0.4711976698797726,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "hope-sweep-1",
+      "file": "art/v2/hope-sweep-1.webp",
+      "source": "exec-01a4f446-9462-48b8-8227-c0e8fc568a4f.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.091796875,
+        "y": 0.17008797653958943,
+        "w": 0.888671875,
+        "h": 0.7096774193548387
+      },
+      "feet": 0.8797653958944281,
+      "anchorX": 0.6271959458842821,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "hope-sweep-2",
+      "file": "art/v2/hope-sweep-2.webp",
+      "source": "exec-4b74c13f-5723-4f6b-8f8a-f93c4f15becf.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.01953125,
+        "y": 0.19464285714285715,
+        "w": 0.97265625,
+        "h": 0.6446428571428572
+      },
+      "feet": 0.8392857142857143,
+      "anchorX": 0.42546778070119523,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "hope-air-0",
+      "file": "art/v2/hope-air-0.webp",
+      "source": "exec-f557652f-9e82-4b41-8047-773165fdaf61.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.06640625,
+        "y": 0.0875,
+        "w": 0.783203125,
+        "h": 0.7839285714285714
+      },
+      "feet": 0.8714285714285714,
+      "anchorX": 0.3794059085149969,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "hope-air-1",
+      "file": "art/v2/hope-air-1.webp",
+      "source": "exec-51a24198-fa77-4eb3-a331-fa8c096d0502.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.078125,
+        "y": 0.09107142857142857,
+        "w": 0.900390625,
+        "h": 0.8178571428571428
+      },
+      "feet": 0.9089285714285714,
+      "anchorX": 0.7229674018434683,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "hope-air-2",
+      "file": "art/v2/hope-air-2.webp",
+      "source": "exec-4b25537e-30cb-41dc-92ba-c7c8187f6462.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.029296875,
+        "y": 0.14642857142857144,
+        "w": 0.953125,
+        "h": 0.7
+      },
+      "feet": 0.8464285714285714,
+      "anchorX": 0.2357624607343536,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "hope-finisher-0",
+      "file": "art/v2/hope-finisher-0.webp",
+      "source": "exec-5fc71607-7ee4-4111-b03d-17ff10af4386.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.04296875,
+        "y": 0.16964285714285715,
+        "w": 0.84765625,
+        "h": 0.6875
+      },
+      "feet": 0.8571428571428571,
+      "anchorX": 0.5216876141749401,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "hope-finisher-1",
+      "file": "art/v2/hope-finisher-1.webp",
+      "source": "exec-1fe25fbe-0b48-4187-a032-669f7e8213f6.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.044921875,
+        "y": 0.12609970674486803,
+        "w": 0.9296875,
+        "h": 0.7419354838709677
+      },
+      "feet": 0.8680351906158358,
+      "anchorX": 0.34987087460535565,
+      "newDrawnFrame": true
+    },
+    {
+      "id": "hope-finisher-2",
+      "file": "art/v2/hope-finisher-2.webp",
+      "source": "exec-6b8bc8a0-5756-49e4-987d-c40873643f08.png",
+      "kind": "motion-v2",
+      "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+      "bounds": {
+        "x": 0.041015625,
+        "y": 0.17142857142857143,
+        "w": 0.935546875,
+        "h": 0.6821428571428572
+      },
+      "feet": 0.8535714285714285,
+      "anchorX": 0.552216648001515,
+      "newDrawnFrame": true
     }
   ]
 }

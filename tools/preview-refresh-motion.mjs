@@ -1,0 +1,6 @@
+import {toolDependency} from './refresh-deps.mjs';
+import fs from 'node:fs';import {createRequire} from 'node:module';
+const sharp=toolDependency('sharp');
+const jobs=JSON.parse(fs.readFileSync('games/refresh-20261008/asset-jobs.json'));fs.mkdirSync('outputs/refresh-20261008',{recursive:true});
+for(const character of ['joy','dream','night','sadness','trust','memory','growth','healing','luck','hope']){const frames=jobs.filter(j=>j.character===character);if(frames.some(j=>!fs.existsSync(j.target)))continue;const composite=[];for(let i=0;i<frames.length;i++){const img=await sharp(frames[i].target).resize(250,220,{fit:'inside'}).png().toBuffer(),meta=await sharp(img).metadata(),x=i%3*270,y=Math.floor(i/3)*250;composite.push({input:img,left:x+Math.floor((270-meta.width)/2),top:y});const label=Buffer.from(`<svg width="270" height="24"><text x="10" y="18" fill="white" font-size="14">${frames[i].id}</text></svg>`);composite.push({input:label,left:x,top:y+224});}await sharp({create:{width:810,height:1000,channels:4,background:'#25434b'}}).composite(composite).png().toFile(`outputs/refresh-20261008/motion-${character}.png`);}
+console.log('Independent-frame review sheets written; production frames are untouched');

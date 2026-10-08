@@ -1,0 +1,1642 @@
+[
+  {
+    "id": "return-heartlight-duel",
+    "source": "exec-0c15d2c8-99b2-444f-bfe0-f8a3de891040.png",
+    "target": "games/heartlight-duel/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 心光對決. Specific game design: arcade fighting arena, blue crystal and bronze wings. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 2103,
+    "height": 748,
+    "alpha": true,
+    "bytes": 51350
+  },
+  {
+    "id": "return-lucky-town",
+    "source": "exec-5435b9ee-daa3-48f3-a76f-4bc470228b37.png",
+    "target": "games/lucky-town/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 幸運小鎮. Specific game design: jade clover village, warm gold town gate. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 2172,
+    "height": 724,
+    "alpha": true,
+    "bytes": 33052
+  },
+  {
+    "id": "return-richman",
+    "source": "exec-aeba8bf1-ecf2-437c-8f09-1838d4de1ce8.png",
+    "target": "games/cxq-fairytale-richman/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 童話大富翁. Specific game design: 童話大富翁. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 1983,
+    "height": 793,
+    "alpha": true,
+    "bytes": 48320
+  },
+  {
+    "id": "return-magic-bubble",
+    "source": "exec-5171505c-3e38-434e-8166-94eecc929cb7.png",
+    "target": "games/magic-bubble/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 魔法泡泡龍. Specific game design: magical jewel bubbles and wizard wand. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 2172,
+    "height": 724,
+    "alpha": true,
+    "bytes": 50932
+  },
+  {
+    "id": "return-dream-match",
+    "source": "exec-a94b917f-c679-44f3-84f1-26874f29aeba.png",
+    "target": "games/dream-match/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 夢境消除. Specific game design: moonlit matching jewels and star wand. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 1983,
+    "height": 793,
+    "alpha": true,
+    "bytes": 54156
+  },
+  {
+    "id": "return-fortune",
+    "source": "exec-b6d9652d-55da-4fa7-8795-4d3429e15262.png",
+    "target": "games/fortune/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 每日占卜. Specific game design: golden fortune wheel. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 1774,
+    "height": 887,
+    "alpha": true,
+    "bytes": 53932
+  },
+  {
+    "id": "return-link",
+    "source": "exec-285ea006-1e72-4adc-8021-9a9936d079d1.png",
+    "target": "games/link/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 夢境織光・角色連連看. Specific game design: paired magical rune tiles. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 1983,
+    "height": 793,
+    "alpha": true,
+    "bytes": 51170
+  },
+  {
+    "id": "return-brick",
+    "source": "exec-a7a1b0ac-7755-4037-9946-06ca8abeb2a2.png",
+    "target": "games/brick-breaker/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 心光旅團：記憶核心. Specific game design: 心光旅團：記憶核心. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 2053,
+    "height": 766,
+    "alpha": true,
+    "bytes": 50442
+  },
+  {
+    "id": "return-clickcore",
+    "source": "exec-5c206408-b7c9-43b4-b5e9-4b7a33ecc8d2.png",
+    "target": "games/click-core/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 星願旅團：點亮夢境. Specific game design: 星願旅團：點亮夢境. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 2172,
+    "height": 724,
+    "alpha": true,
+    "bytes": 38838
+  },
+  {
+    "id": "return-twenty48",
+    "source": "exec-01456caf-534f-43d8-ba51-50b049d3be63.png",
+    "target": "games/2048/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 星願 2048. Specific game design: 星願 2048. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 1944,
+    "height": 809,
+    "alpha": true,
+    "bytes": 45502
+  },
+  {
+    "id": "return-memory",
+    "source": "exec-9e723b44-237f-43e7-bed3-12b12d1317b0.png",
+    "target": "games/memory/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 暮光回憶收藏室. Specific game design: storybook matching-card album. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 2172,
+    "height": 724,
+    "alpha": true,
+    "bytes": 41968
+  },
+  {
+    "id": "return-tetris",
+    "source": "exec-ca5e78fe-8c5b-4669-b4f4-8e1dbb22e119.png",
+    "target": "games/tetris/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 心境織境・方塊物語. Specific game design: colorful crystal block tower. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 2048,
+    "height": 768,
+    "alpha": true,
+    "bytes": 43692
+  },
+  {
+    "id": "return-whack",
+    "source": "exec-c487f335-cd5a-4863-b936-e483045ff84f.png",
+    "target": "games/whack/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 森林敲敲樂. Specific game design: friendly burrow and toy hammer. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 1774,
+    "height": 887,
+    "alpha": true,
+    "bytes": 47984
+  },
+  {
+    "id": "return-merge",
+    "source": "exec-9600e0b7-b240-4d69-9920-3ac7010dafbe.png",
+    "target": "games/merge/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 心光合成屋. Specific game design: soft woodland fruit basket. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 1774,
+    "height": 887,
+    "alpha": true,
+    "bytes": 46818
+  },
+  {
+    "id": "return-flappy",
+    "source": "exec-b7e73fe5-9f11-4eaf-a123-52f74f7533d8.png",
+    "target": "games/flappy/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 星願飛行郵差. Specific game design: winged courier and cloud feather portal. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 1916,
+    "height": 821,
+    "alpha": true,
+    "bytes": 51324
+  },
+  {
+    "id": "return-dino",
+    "source": "exec-4fc622da-f94a-441d-b83a-859a91b8604a.png",
+    "target": "games/dino/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 森林急件快遞. Specific game design: woodland running trail and leafy wooden sign. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 2172,
+    "height": 724,
+    "alpha": true,
+    "bytes": 51568
+  },
+  {
+    "id": "return-poker",
+    "source": "exec-355f26b1-9571-4907-91bd-9325ab3a80fb.png",
+    "target": "games/poker/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 撲克館. Specific game design: elegant emerald poker table and playing cards. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 2172,
+    "height": 724,
+    "alpha": true,
+    "bytes": 40784
+  },
+  {
+    "id": "return-mines",
+    "source": "exec-3ddcd396-9472-4137-8b8d-a67b757e27c7.png",
+    "target": "games/mines/art/return-center-v2.webp",
+    "prompt": "One independent production game UI return button for CxQ 四葉草探險地圖. Specific game design: enchanted forest mine lantern. Fully rendered storybook 3D game illustration, carved ornament, distinctive silhouette and material appropriate to this particular game. Wide horizontal single button, transparent background, exact readable Traditional Chinese text 「返回遊戲中心」 in central empty reading area, left arrow integrated at left. No surrounding scene, no atlas, no multiple versions, no collage. Entire button fits within canvas with margin.",
+    "width": 1774,
+    "height": 887,
+    "alpha": true,
+    "bytes": 56942
+  },
+  {
+    "id": "ticket-trio20",
+    "source": "exec-2f78dfdd-f6c2-460a-b21d-7d75844a3d9d.png",
+    "target": "games/lucky-town/art/ticket-trio20-v2.webp",
+    "prompt": "One independent complete illustrated scratch lottery ticket face for fictional CxQ 幸運小鎮 using game coins. 午茶三連, denomination 20 金幣. Theme tea. Premium colorful storybook printed card with distinct original illustration specific to this ticket, no CSS-looking shapes. Landscape 16:9 front-facing flat ticket. Exact Traditional Chinese title 「午茶三連」 and price 「20 金幣」 only in top 18 percent. Lower central area from x=6% to94%, y=30% to89% is softly illustrated pale readable play area arranged 3 columns and 2 rows with hand-painted thematic cell ornaments, no numbers or prizes inside cells: program overlays true saved results. Side and bottom edges decorated with thematic characters/objects. Illustrations do not obscure cells. No collage, no sprite sheet, no watermark.",
+    "width": 1672,
+    "height": 941,
+    "alpha": false,
+    "bytes": 175560
+  },
+  {
+    "id": "ticket-coins20",
+    "source": "exec-00aa1e6b-334a-4c06-aa4b-bde1a9f6f36e.png",
+    "target": "games/lucky-town/art/ticket-coins20-v2.webp",
+    "prompt": "One independent complete illustrated scratch lottery ticket face for fictional CxQ 幸運小鎮 using game coins. 口袋零錢, denomination 20 金幣. Theme pocket. Premium colorful storybook printed card with distinct original illustration specific to this ticket, no CSS-looking shapes. Landscape 16:9 front-facing flat ticket. Exact Traditional Chinese title 「口袋零錢」 and price 「20 金幣」 only in top 18 percent. Lower central area from x=6% to94%, y=30% to89% is softly illustrated pale readable play area arranged 3 columns and 2 rows with hand-painted thematic cell ornaments, no numbers or prizes inside cells: program overlays true saved results. Side and bottom edges decorated with thematic characters/objects. Illustrations do not obscure cells. No collage, no sprite sheet, no watermark.",
+    "width": 1672,
+    "height": 941,
+    "alpha": false,
+    "bytes": 172928
+  },
+  {
+    "id": "ticket-numbers50",
+    "source": "exec-50344b32-4cc8-4b10-b7ec-58ad9ead1cea.png",
+    "target": "games/lucky-town/art/ticket-numbers50-v2.webp",
+    "prompt": "One independent complete illustrated scratch lottery ticket face for fictional CxQ 幸運小鎮 using game coins. 星願號碼, denomination 50 金幣. Theme sky. Premium colorful storybook printed card with distinct original illustration specific to this ticket, no CSS-looking shapes. Landscape 16:9 front-facing flat ticket. Exact Traditional Chinese title 「星願號碼」 and price 「50 金幣」 only in top 18 percent. Lower central area from x=6% to94%, y=30% to89% is softly illustrated pale readable play area arranged 4 columns and 2 rows with hand-painted thematic cell ornaments, no numbers or prizes inside cells: program overlays true saved results. Side and bottom edges decorated with thematic characters/objects. Illustrations do not obscure cells. No collage, no sprite sheet, no watermark.",
+    "width": 1672,
+    "height": 941,
+    "alpha": false,
+    "bytes": 174942
+  },
+  {
+    "id": "ticket-keys50",
+    "source": "exec-6ca49449-8050-47dd-9c6f-7ad9821f411c.png",
+    "target": "games/lucky-town/art/ticket-keys50-v2.webp",
+    "prompt": "One independent complete illustrated scratch lottery ticket face for fictional CxQ 幸運小鎮 using game coins. 雙島尋寶, denomination 50 金幣. Theme island. Premium colorful storybook printed card with distinct original illustration specific to this ticket, no CSS-looking shapes. Landscape 16:9 front-facing flat ticket. Exact Traditional Chinese title 「雙島尋寶」 and price 「50 金幣」 only in top 18 percent. Lower central area from x=6% to94%, y=30% to89% is softly illustrated pale readable play area arranged 4 columns and 2 rows with hand-painted thematic cell ornaments, no numbers or prizes inside cells: program overlays true saved results. Side and bottom edges decorated with thematic characters/objects. Illustrations do not obscure cells. No collage, no sprite sheet, no watermark.",
+    "width": 1672,
+    "height": 941,
+    "alpha": false,
+    "bytes": 207812
+  },
+  {
+    "id": "ticket-garden100",
+    "source": "exec-94f00e2e-1317-474f-9d34-79f5c0c4ad5e.png",
+    "target": "games/lucky-town/art/ticket-garden100-v2.webp",
+    "prompt": "One independent complete illustrated scratch lottery ticket face for fictional CxQ 幸運小鎮 using game coins. 四季花園, denomination 100 金幣. Theme garden. Premium colorful storybook printed card with distinct original illustration specific to this ticket, no CSS-looking shapes. Landscape 16:9 front-facing flat ticket. Exact Traditional Chinese title 「四季花園」 and price 「100 金幣」 only in top 18 percent. Lower central area from x=6% to94%, y=30% to89% is softly illustrated pale readable play area arranged 4 columns and 3 rows with hand-painted thematic cell ornaments, no numbers or prizes inside cells: program overlays true saved results. Side and bottom edges decorated with thematic characters/objects. Illustrations do not obscure cells. No collage, no sprite sheet, no watermark.",
+    "width": 1672,
+    "height": 941,
+    "alpha": false,
+    "bytes": 216250
+  },
+  {
+    "id": "ticket-bags100",
+    "source": "exec-014973fb-c175-492a-ad0a-577a7461a559.png",
+    "target": "games/lucky-town/art/ticket-bags100-v2.webp",
+    "prompt": "One independent complete illustrated scratch lottery ticket face for fictional CxQ 幸運小鎮 using game coins. 加倍郵局, denomination 100 金幣. Theme post. Premium colorful storybook printed card with distinct original illustration specific to this ticket, no CSS-looking shapes. Landscape 16:9 front-facing flat ticket. Exact Traditional Chinese title 「加倍郵局」 and price 「100 金幣」 only in top 18 percent. Lower central area from x=6% to94%, y=30% to89% is softly illustrated pale readable play area arranged 3 columns and 2 rows with hand-painted thematic cell ornaments, no numbers or prizes inside cells: program overlays true saved results. Side and bottom edges decorated with thematic characters/objects. Illustrations do not obscure cells. No collage, no sprite sheet, no watermark.",
+    "width": 1672,
+    "height": 941,
+    "alpha": false,
+    "bytes": 158922
+  },
+  {
+    "id": "ticket-bingo200",
+    "source": "exec-c4d4c1e2-7a7c-4f3a-8084-27a2c98ab7f0.png",
+    "target": "games/lucky-town/art/ticket-bingo200-v2.webp",
+    "prompt": "One independent complete illustrated scratch lottery ticket face for fictional CxQ 幸運小鎮 using game coins. 小鎮賓果夜, denomination 200 金幣. Theme bingo. Premium colorful storybook printed card with distinct original illustration specific to this ticket, no CSS-looking shapes. Landscape 16:9 front-facing flat ticket. Exact Traditional Chinese title 「小鎮賓果夜」 and price 「200 金幣」 only in top 18 percent. Lower central area from x=6% to94%, y=30% to89% is softly illustrated pale readable play area arranged 4 columns and 4 rows with hand-painted thematic cell ornaments, no numbers or prizes inside cells: program overlays true saved results. Side and bottom edges decorated with thematic characters/objects. Illustrations do not obscure cells. No collage, no sprite sheet, no watermark.",
+    "width": 1672,
+    "height": 941,
+    "alpha": false,
+    "bytes": 186888
+  },
+  {
+    "id": "ticket-trail200",
+    "source": "exec-cabf8e6e-2264-4575-b2cd-714dcd272486.png",
+    "target": "games/lucky-town/art/ticket-trail200-v2.webp",
+    "prompt": "One independent complete illustrated scratch lottery ticket face for fictional CxQ 幸運小鎮 using game coins. 森林小徑, denomination 200 金幣. Theme trail. Premium colorful storybook printed card with distinct original illustration specific to this ticket, no CSS-looking shapes. Landscape 16:9 front-facing flat ticket. Exact Traditional Chinese title 「森林小徑」 and price 「200 金幣」 only in top 18 percent. Lower central area from x=6% to94%, y=30% to89% is softly illustrated pale readable play area arranged 5 columns and 2 rows with hand-painted thematic cell ornaments, no numbers or prizes inside cells: program overlays true saved results. Side and bottom edges decorated with thematic characters/objects. Illustrations do not obscure cells. No collage, no sprite sheet, no watermark.",
+    "width": 1672,
+    "height": 941,
+    "alpha": false,
+    "bytes": 201680
+  },
+  {
+    "id": "ticket-vault500",
+    "source": "exec-9b523aa9-dc69-4073-a243-ffcc65e3834b.png",
+    "target": "games/lucky-town/art/ticket-vault500-v2.webp",
+    "prompt": "One independent complete illustrated scratch lottery ticket face for fictional CxQ 幸運小鎮 using game coins. 黃金保險庫, denomination 500 金幣. Theme vault. Premium colorful storybook printed card with distinct original illustration specific to this ticket, no CSS-looking shapes. Landscape 16:9 front-facing flat ticket. Exact Traditional Chinese title 「黃金保險庫」 and price 「500 金幣」 only in top 18 percent. Lower central area from x=6% to94%, y=30% to89% is softly illustrated pale readable play area arranged 3 columns and 3 rows with hand-painted thematic cell ornaments, no numbers or prizes inside cells: program overlays true saved results. Side and bottom edges decorated with thematic characters/objects. Illustrations do not obscure cells. No collage, no sprite sheet, no watermark.",
+    "width": 1672,
+    "height": 941,
+    "alpha": false,
+    "bytes": 189126
+  },
+  {
+    "id": "ticket-stars500",
+    "source": "exec-98e5c33e-1cd6-423c-8bca-8a0198eb8b78.png",
+    "target": "games/lucky-town/art/ticket-stars500-v2.webp",
+    "prompt": "One independent complete illustrated scratch lottery ticket face for fictional CxQ 幸運小鎮 using game coins. 星際五連, denomination 500 金幣. Theme space. Premium colorful storybook printed card with distinct original illustration specific to this ticket, no CSS-looking shapes. Landscape 16:9 front-facing flat ticket. Exact Traditional Chinese title 「星際五連」 and price 「500 金幣」 only in top 18 percent. Lower central area from x=6% to94%, y=30% to89% is softly illustrated pale readable play area arranged 5 columns and 3 rows with hand-painted thematic cell ornaments, no numbers or prizes inside cells: program overlays true saved results. Side and bottom edges decorated with thematic characters/objects. Illustrations do not obscure cells. No collage, no sprite sheet, no watermark.",
+    "width": 1672,
+    "height": 941,
+    "alpha": false,
+    "bytes": 172010
+  },
+  {
+    "id": "ticket-foil",
+    "source": "exec-f0b06def-11d1-42c0-aaa1-e54037940c29.png",
+    "target": "games/lucky-town/art/ticket-foil-v2.webp",
+    "prompt": "One independent seamless silver scratch-off foil material image for an illustrated storybook lottery card. Landscape 16:9, richly tactile pearlescent silver engraved with very subtle clover and star micro-patterns, realistic brushed metal grain, restrained teal highlights. Flat front-facing evenly lit surface across full image. No card, no lettering, no typography, no borders, no collage.",
+    "width": 1672,
+    "height": 941,
+    "alpha": false,
+    "bytes": 178108
+  },
+  {
+    "id": "motion-joy-launcher-0",
+    "source": "exec-d7441305-b2a0-45eb-a59d-445ee4445be6.png",
+    "target": "games/heartlight-duel/arcade/art/v2/joy-launcher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 61048
+  },
+  {
+    "id": "motion-joy-launcher-1",
+    "source": "exec-f5a87702-92db-4ead-b8f5-f28f448e27e0.png",
+    "target": "games/heartlight-duel/arcade/art/v2/joy-launcher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 60684
+  },
+  {
+    "id": "motion-joy-launcher-2",
+    "source": "exec-beb31d85-5aa5-4027-bda6-64f25c0a40fd.png",
+    "target": "games/heartlight-duel/arcade/art/v2/joy-launcher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 66030
+  },
+  {
+    "id": "motion-joy-sweep-0",
+    "source": "exec-5b78ea06-5760-40c2-9725-96cadc950c73.png",
+    "target": "games/heartlight-duel/arcade/art/v2/joy-sweep-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 57420
+  },
+  {
+    "id": "motion-joy-sweep-1",
+    "source": "exec-4f7da8c6-ba92-4440-a74e-e56413d865e2.png",
+    "target": "games/heartlight-duel/arcade/art/v2/joy-sweep-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 55988
+  },
+  {
+    "id": "motion-joy-sweep-2",
+    "source": "exec-40ea6b4c-6406-4003-b668-57d76b174bfc.png",
+    "target": "games/heartlight-duel/arcade/art/v2/joy-sweep-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 60756
+  },
+  {
+    "id": "motion-joy-air-0",
+    "source": "exec-0901c13b-234d-4ab7-b37f-c5319bb9105b.png",
+    "target": "games/heartlight-duel/arcade/art/v2/joy-air-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 51854
+  },
+  {
+    "id": "motion-joy-air-1",
+    "source": "exec-cc825ea8-d209-406c-bb31-1a57e3378d22.png",
+    "target": "games/heartlight-duel/arcade/art/v2/joy-air-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 57332
+  },
+  {
+    "id": "motion-joy-air-2",
+    "source": "exec-02f38ce0-39e2-4152-9e36-ba4e25158beb.png",
+    "target": "games/heartlight-duel/arcade/art/v2/joy-air-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 60300
+  },
+  {
+    "id": "motion-joy-finisher-0",
+    "source": "exec-d0c906e2-a6f3-4208-bb0b-bb6cc1aa7644.png",
+    "target": "games/heartlight-duel/arcade/art/v2/joy-finisher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 58612
+  },
+  {
+    "id": "motion-joy-finisher-1",
+    "source": "exec-077f07d0-12fc-43b4-9b67-9b6c66a79905.png",
+    "target": "games/heartlight-duel/arcade/art/v2/joy-finisher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 63478
+  },
+  {
+    "id": "motion-joy-finisher-2",
+    "source": "exec-29e65f3b-5480-422c-ac12-03c2f4401c18.png",
+    "target": "games/heartlight-duel/arcade/art/v2/joy-finisher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 朵莉 (派對小彩星), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 58700
+  },
+  {
+    "id": "motion-dream-launcher-0",
+    "source": "exec-d35cb5e6-ebfb-49b2-af2e-0f8b41e50ad5.png",
+    "target": "games/heartlight-duel/arcade/art/v2/dream-launcher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 51506
+  },
+  {
+    "id": "motion-dream-launcher-1",
+    "source": "exec-571b6ff0-6305-4499-b8c1-6255a5ab8e49.png",
+    "target": "games/heartlight-duel/arcade/art/v2/dream-launcher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 54262
+  },
+  {
+    "id": "motion-dream-launcher-2",
+    "source": "exec-9b748271-5de1-4708-858f-a6a3a11848c4.png",
+    "target": "games/heartlight-duel/arcade/art/v2/dream-launcher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 52880
+  },
+  {
+    "id": "motion-dream-sweep-0",
+    "source": "exec-4d7b2b19-4b85-49a8-8991-73bc3dfa2aa2.png",
+    "target": "games/heartlight-duel/arcade/art/v2/dream-sweep-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 48474
+  },
+  {
+    "id": "motion-dream-sweep-1",
+    "source": "exec-047985bf-cd78-4aba-beb2-9bfdd89734c3.png",
+    "target": "games/heartlight-duel/arcade/art/v2/dream-sweep-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 51670
+  },
+  {
+    "id": "motion-dream-sweep-2",
+    "source": "exec-0db77bf2-7cb3-420d-bfba-19d8b67201c2.png",
+    "target": "games/heartlight-duel/arcade/art/v2/dream-sweep-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 54338
+  },
+  {
+    "id": "motion-dream-air-0",
+    "source": "exec-d825b5bc-677e-4433-9626-6134c39bcce6.png",
+    "target": "games/heartlight-duel/arcade/art/v2/dream-air-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 44886
+  },
+  {
+    "id": "motion-dream-air-1",
+    "source": "exec-d63dce79-2c2f-403e-969b-d68cd4ceb911.png",
+    "target": "games/heartlight-duel/arcade/art/v2/dream-air-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 54112
+  },
+  {
+    "id": "motion-dream-air-2",
+    "source": "exec-a63620ec-898d-458b-82e5-e3b58dbd6370.png",
+    "target": "games/heartlight-duel/arcade/art/v2/dream-air-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 55386
+  },
+  {
+    "id": "motion-dream-finisher-0",
+    "source": "exec-7bfb838b-7ea2-4651-afd7-2a252a731eb2.png",
+    "target": "games/heartlight-duel/arcade/art/v2/dream-finisher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 57588
+  },
+  {
+    "id": "motion-dream-finisher-1",
+    "source": "exec-0ea9f8a6-3830-4e8c-a4b6-716df798791a.png",
+    "target": "games/heartlight-duel/arcade/art/v2/dream-finisher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 54422
+  },
+  {
+    "id": "motion-dream-finisher-2",
+    "source": "exec-62cab2cf-d0dc-40f9-8a9c-b7b08989d3f4.png",
+    "target": "games/heartlight-duel/arcade/art/v2/dream-finisher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 露緹 (星願魔法師), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 53934
+  },
+  {
+    "id": "motion-night-launcher-0",
+    "source": "exec-b83d30f9-951e-428d-9d1b-76e17f579f36.png",
+    "target": "games/heartlight-duel/arcade/art/v2/night-launcher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 40104
+  },
+  {
+    "id": "motion-night-launcher-1",
+    "source": "exec-2ed90c7a-9c6c-4417-ac20-08412a32613a.png",
+    "target": "games/heartlight-duel/arcade/art/v2/night-launcher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 40974
+  },
+  {
+    "id": "motion-night-launcher-2",
+    "source": "exec-31424b14-19c5-4639-b9ca-92b135c41e2b.png",
+    "target": "games/heartlight-duel/arcade/art/v2/night-launcher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 41696
+  },
+  {
+    "id": "motion-night-sweep-0",
+    "source": "exec-bece0be9-f83b-460d-b0c3-4a54b7ef43e2.png",
+    "target": "games/heartlight-duel/arcade/art/v2/night-sweep-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 38350
+  },
+  {
+    "id": "motion-night-sweep-1",
+    "source": "exec-b96a4dab-90b7-4f50-80c0-0df10995d8dc.png",
+    "target": "games/heartlight-duel/arcade/art/v2/night-sweep-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 38930
+  },
+  {
+    "id": "motion-night-sweep-2",
+    "source": "exec-6811fe46-4c60-4329-99f1-36c6579da56e.png",
+    "target": "games/heartlight-duel/arcade/art/v2/night-sweep-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 40830
+  },
+  {
+    "id": "motion-night-air-0",
+    "source": "exec-59576d50-7f3f-4d2d-8fb4-dcf5f35628a3.png",
+    "target": "games/heartlight-duel/arcade/art/v2/night-air-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 41864
+  },
+  {
+    "id": "motion-night-air-1",
+    "source": "exec-ecc3e56a-1c91-4801-aa19-940b64935356.png",
+    "target": "games/heartlight-duel/arcade/art/v2/night-air-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor. IMPORTANT: Create a substantially different active attack drawing: the crescent lantern arm reaches diagonally DOWN AND RIGHT, both feet trail behind in an airborne plunge, torso leaning forward 45 degrees. Do not repeat a tucked-knee anticipation pose.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 42108
+  },
+  {
+    "id": "motion-night-air-2",
+    "source": "exec-d8fa9214-ed10-4ba8-81ae-f509a5c4bbda.png",
+    "target": "games/heartlight-duel/arcade/art/v2/night-air-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 41654
+  },
+  {
+    "id": "motion-night-finisher-0",
+    "source": "exec-ead65788-2d3f-4b98-b6ac-6e28ef57e29b.png",
+    "target": "games/heartlight-duel/arcade/art/v2/night-finisher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 48642
+  },
+  {
+    "id": "motion-night-finisher-1",
+    "source": "exec-ebbc1f69-9779-425c-9b01-b9ca06609d1f.png",
+    "target": "games/heartlight-duel/arcade/art/v2/night-finisher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 41044
+  },
+  {
+    "id": "motion-night-finisher-2",
+    "source": "exec-79e050e0-2d69-4b3f-a245-64e301afbbf1.png",
+    "target": "games/heartlight-duel/arcade/art/v2/night-finisher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 米洛 (月夜守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 38486
+  },
+  {
+    "id": "motion-sadness-launcher-0",
+    "source": "exec-bbedc1f1-4cf7-4bdf-8dd2-03c209b88dc4.png",
+    "target": "games/heartlight-duel/arcade/art/v2/sadness-launcher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 51796
+  },
+  {
+    "id": "motion-sadness-launcher-1",
+    "source": "exec-08daebb8-c16c-4317-88c4-faa299d33d79.png",
+    "target": "games/heartlight-duel/arcade/art/v2/sadness-launcher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 65180
+  },
+  {
+    "id": "motion-sadness-launcher-2",
+    "source": "exec-81d3b8c9-68e9-41a3-b70f-0297c9645f7e.png",
+    "target": "games/heartlight-duel/arcade/art/v2/sadness-launcher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 63920
+  },
+  {
+    "id": "motion-sadness-sweep-0",
+    "source": "exec-b145fb39-64b5-4dde-bac9-f84b641f7157.png",
+    "target": "games/heartlight-duel/arcade/art/v2/sadness-sweep-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 62048
+  },
+  {
+    "id": "motion-sadness-sweep-1",
+    "source": "exec-a71149f5-ffe9-4862-a65a-e23149b0471f.png",
+    "target": "games/heartlight-duel/arcade/art/v2/sadness-sweep-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 56826
+  },
+  {
+    "id": "motion-sadness-sweep-2",
+    "source": "exec-3b0cf584-7cd8-4a5d-b950-ed2fb1cd2812.png",
+    "target": "games/heartlight-duel/arcade/art/v2/sadness-sweep-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 60820
+  },
+  {
+    "id": "motion-sadness-air-0",
+    "source": "exec-1b7462bd-7ba4-48df-b617-d6af1db2e6bb.png",
+    "target": "games/heartlight-duel/arcade/art/v2/sadness-air-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 52830
+  },
+  {
+    "id": "motion-sadness-air-1",
+    "source": "exec-c3cfcf8e-7008-45e7-9b4b-30538b011e3c.png",
+    "target": "games/heartlight-duel/arcade/art/v2/sadness-air-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 68986
+  },
+  {
+    "id": "motion-sadness-air-2",
+    "source": "exec-29236fb7-20d4-405d-b8f7-3b74ab8155f1.png",
+    "target": "games/heartlight-duel/arcade/art/v2/sadness-air-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 68902
+  },
+  {
+    "id": "motion-sadness-finisher-0",
+    "source": "exec-6642a9c1-646c-4762-92d1-d36d823dcd1c.png",
+    "target": "games/heartlight-duel/arcade/art/v2/sadness-finisher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 68540
+  },
+  {
+    "id": "motion-sadness-finisher-1",
+    "source": "exec-0e50146f-0861-4550-aaa8-253996e5383c.png",
+    "target": "games/heartlight-duel/arcade/art/v2/sadness-finisher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 70196
+  },
+  {
+    "id": "motion-sadness-finisher-2",
+    "source": "exec-0867cb4d-04bd-401a-8163-a6b2391bf912.png",
+    "target": "games/heartlight-duel/arcade/art/v2/sadness-finisher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 汐寧 (雨天陪伴者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 67818
+  },
+  {
+    "id": "motion-trust-launcher-0",
+    "source": "exec-1c94a8ea-2547-4313-bda2-71640fad3b78.png",
+    "target": "games/heartlight-duel/arcade/art/v2/trust-launcher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 47706
+  },
+  {
+    "id": "motion-trust-launcher-1",
+    "source": "exec-9ce1b8c3-b586-44df-98c0-aeb10299b1fb.png",
+    "target": "games/heartlight-duel/arcade/art/v2/trust-launcher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 49002
+  },
+  {
+    "id": "motion-trust-launcher-2",
+    "source": "exec-410ae5f6-0f08-4789-85fd-e8b5edbea60b.png",
+    "target": "games/heartlight-duel/arcade/art/v2/trust-launcher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 46614
+  },
+  {
+    "id": "motion-trust-sweep-0",
+    "source": "exec-0857346f-a66f-4f60-8df2-360662b04b54.png",
+    "target": "games/heartlight-duel/arcade/art/v2/trust-sweep-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 43654
+  },
+  {
+    "id": "motion-trust-sweep-1",
+    "source": "exec-aa2249a4-1abf-45a6-a520-f7e970f064b8.png",
+    "target": "games/heartlight-duel/arcade/art/v2/trust-sweep-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 39976
+  },
+  {
+    "id": "motion-trust-sweep-2",
+    "source": "exec-fa3739a9-edab-4635-9188-fd8b039ad1bd.png",
+    "target": "games/heartlight-duel/arcade/art/v2/trust-sweep-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 43790
+  },
+  {
+    "id": "motion-trust-air-0",
+    "source": "exec-ebea8a18-eb1a-4497-814e-21e886f34cc6.png",
+    "target": "games/heartlight-duel/arcade/art/v2/trust-air-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 44032
+  },
+  {
+    "id": "motion-trust-air-1",
+    "source": "exec-f52a4843-ecca-4a73-8c2f-fe381458024a.png",
+    "target": "games/heartlight-duel/arcade/art/v2/trust-air-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 51522
+  },
+  {
+    "id": "motion-trust-air-2",
+    "source": "exec-0b6a5d43-939e-420b-a7dd-81e441d660cd.png",
+    "target": "games/heartlight-duel/arcade/art/v2/trust-air-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 43182
+  },
+  {
+    "id": "motion-trust-finisher-0",
+    "source": "exec-a275d5fe-26cd-4a51-b52e-25670a25704e.png",
+    "target": "games/heartlight-duel/arcade/art/v2/trust-finisher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 50726
+  },
+  {
+    "id": "motion-trust-finisher-1",
+    "source": "exec-5a6ac162-3803-4701-9701-dbab685d08e5.png",
+    "target": "games/heartlight-duel/arcade/art/v2/trust-finisher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 40066
+  },
+  {
+    "id": "motion-trust-finisher-2",
+    "source": "exec-a5084101-17b0-42e5-865b-8b958d71719a.png",
+    "target": "games/heartlight-duel/arcade/art/v2/trust-finisher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 伯恩 (鑰匙守護者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 48768
+  },
+  {
+    "id": "motion-memory-launcher-0",
+    "source": "exec-167091d3-c6fd-41dd-9223-cc53d6178708.png",
+    "target": "games/heartlight-duel/arcade/art/v2/memory-launcher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 34064
+  },
+  {
+    "id": "motion-memory-launcher-1",
+    "source": "exec-d4e138b7-5106-4b4f-bd37-50ef098f9a60.png",
+    "target": "games/heartlight-duel/arcade/art/v2/memory-launcher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 39694
+  },
+  {
+    "id": "motion-memory-launcher-2",
+    "source": "exec-ef13c81f-c190-481a-bc09-95ebc516ae7d.png",
+    "target": "games/heartlight-duel/arcade/art/v2/memory-launcher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 38756
+  },
+  {
+    "id": "motion-memory-sweep-0",
+    "source": "exec-cfc8d632-c535-48a9-9ee1-537c814e4480.png",
+    "target": "games/heartlight-duel/arcade/art/v2/memory-sweep-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 34376
+  },
+  {
+    "id": "motion-memory-sweep-1",
+    "source": "exec-e000b179-8190-4bb1-a64f-3888866fd381.png",
+    "target": "games/heartlight-duel/arcade/art/v2/memory-sweep-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 34244
+  },
+  {
+    "id": "motion-memory-sweep-2",
+    "source": "exec-19b32f48-4d37-4d8b-915a-4233d744a0d7.png",
+    "target": "games/heartlight-duel/arcade/art/v2/memory-sweep-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 38204
+  },
+  {
+    "id": "motion-memory-air-0",
+    "source": "exec-8135a2fe-ecd9-43c9-a72e-877f1babe859.png",
+    "target": "games/heartlight-duel/arcade/art/v2/memory-air-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 35118
+  },
+  {
+    "id": "motion-memory-air-1",
+    "source": "exec-382da935-0cc3-453f-bbe5-80b1c6264300.png",
+    "target": "games/heartlight-duel/arcade/art/v2/memory-air-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 39222
+  },
+  {
+    "id": "motion-memory-air-2",
+    "source": "exec-5cdb22f3-3212-4365-bbc5-d8ffb1d37a39.png",
+    "target": "games/heartlight-duel/arcade/art/v2/memory-air-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 36266
+  },
+  {
+    "id": "motion-memory-finisher-0",
+    "source": "exec-546773aa-61f4-4ce6-8ad7-3340f07577fa.png",
+    "target": "games/heartlight-duel/arcade/art/v2/memory-finisher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 37122
+  },
+  {
+    "id": "motion-memory-finisher-1",
+    "source": "exec-cb38706c-5c3c-4256-9c66-f4972880e076.png",
+    "target": "games/heartlight-duel/arcade/art/v2/memory-finisher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 41328
+  },
+  {
+    "id": "motion-memory-finisher-2",
+    "source": "exec-00442867-00ee-4e21-a36d-e1ba82b4f6cc.png",
+    "target": "games/heartlight-duel/arcade/art/v2/memory-finisher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 緹雅 (回憶收藏家), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 38956
+  },
+  {
+    "id": "motion-growth-launcher-0",
+    "source": "exec-daffd68f-dbad-4ec1-9cbd-d66c940cffd1.png",
+    "target": "games/heartlight-duel/arcade/art/v2/growth-launcher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 39362
+  },
+  {
+    "id": "motion-growth-launcher-1",
+    "source": "exec-16812467-dffe-461b-8a0a-e7eb0344ac7d.png",
+    "target": "games/heartlight-duel/arcade/art/v2/growth-launcher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 39828
+  },
+  {
+    "id": "motion-growth-launcher-2",
+    "source": "exec-39657417-a977-4079-8ca1-375c38287e3d.png",
+    "target": "games/heartlight-duel/arcade/art/v2/growth-launcher-2.webp",
+    "prompt": "Produce ONE transparent independently drawn recovery animation frame of original CxQ fighter 森芽, exactly preserving identity, green leafy cloak, hood, clothes and wooden hooked staff of the reference. Strict side view facing RIGHT, full body complete weapon. AFTER an upward launcher, show the clearly distinct recovery: torso upright, elbows bent, wooden staff lowered to chest height held horizontally, forward RIGHT foot bearing weight and rear leg straight. Do NOT raise the staff overhead; this frame must visibly differ from the active uppercut. Polished dimensional storybook character art, no ground or background, no text, no sheet, only one pose.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 46154
+  },
+  {
+    "id": "motion-growth-sweep-0",
+    "source": "exec-4123be51-67bd-4ccf-87ff-68f75cd262cb.png",
+    "target": "games/heartlight-duel/arcade/art/v2/growth-sweep-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 39148
+  },
+  {
+    "id": "motion-growth-sweep-1",
+    "source": "exec-74f08aaa-2824-402b-a64f-0ab2bf852863.png",
+    "target": "games/heartlight-duel/arcade/art/v2/growth-sweep-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 36058
+  },
+  {
+    "id": "motion-growth-sweep-2",
+    "source": "exec-0b30215b-fa13-42cb-8d58-c7d07112fbcb.png",
+    "target": "games/heartlight-duel/arcade/art/v2/growth-sweep-2.webp",
+    "prompt": "Produce ONE transparent independently drawn recovery animation frame of original CxQ fighter 森芽, exactly preserving identity, green leafy cloak, hood, clothes and wooden hooked staff of reference. Strict side view facing RIGHT, full body complete weapon. AFTER a low sweep, show a clearly distinct recovery: rising from crouch, both knees half bent, rear hand pulling hooked staff back beside the LEFT hip, staff angled upward diagonally across chest, head facing RIGHT. Do NOT stretch the staff forward at knee height. Polished dimensional storybook art, no background, ground, text or sheet; only one new pose.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 47498
+  },
+  {
+    "id": "motion-growth-air-0",
+    "source": "exec-d1410b02-10ab-43e3-85e7-25e0926f4c30.png",
+    "target": "games/heartlight-duel/arcade/art/v2/growth-air-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 35124
+  },
+  {
+    "id": "motion-growth-air-1",
+    "source": "exec-35954dcf-18e7-4a00-b031-b6de51c600e3.png",
+    "target": "games/heartlight-duel/arcade/art/v2/growth-air-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 37780
+  },
+  {
+    "id": "motion-growth-air-2",
+    "source": "exec-4ca0de3e-59bc-40c2-aae7-79aa7a67673e.png",
+    "target": "games/heartlight-duel/arcade/art/v2/growth-air-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 35482
+  },
+  {
+    "id": "motion-growth-finisher-0",
+    "source": "exec-15aceaab-2725-458f-baf8-c928af56d74d.png",
+    "target": "games/heartlight-duel/arcade/art/v2/growth-finisher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 43658
+  },
+  {
+    "id": "motion-growth-finisher-1",
+    "source": "exec-4db941db-559f-4e8c-88c0-2b43d6eae6fc.png",
+    "target": "games/heartlight-duel/arcade/art/v2/growth-finisher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 38656
+  },
+  {
+    "id": "motion-growth-finisher-2",
+    "source": "exec-5d8dada5-98d3-4923-b094-cbbd97df8eba.png",
+    "target": "games/heartlight-duel/arcade/art/v2/growth-finisher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 森芽 (森林旅伴), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 41354
+  },
+  {
+    "id": "motion-healing-launcher-0",
+    "source": "exec-1172f771-328f-4443-9491-0ea8419f5639.png",
+    "target": "games/heartlight-duel/arcade/art/v2/healing-launcher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 31138
+  },
+  {
+    "id": "motion-healing-launcher-1",
+    "source": "exec-44f688b1-7772-4c5d-b573-38ed11fdb05b.png",
+    "target": "games/heartlight-duel/arcade/art/v2/healing-launcher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 33808
+  },
+  {
+    "id": "motion-healing-launcher-2",
+    "source": "exec-ed57fcb2-ec9a-46ff-9f19-cd6b284580a5.png",
+    "target": "games/heartlight-duel/arcade/art/v2/healing-launcher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 32692
+  },
+  {
+    "id": "motion-healing-sweep-0",
+    "source": "exec-2e513347-3532-41c9-8787-781676b19ab4.png",
+    "target": "games/heartlight-duel/arcade/art/v2/healing-sweep-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1536,
+    "height": 1024,
+    "alpha": true,
+    "bytes": 21092
+  },
+  {
+    "id": "motion-healing-sweep-1",
+    "source": "exec-af2c4115-f161-44fc-84d5-1448f0aec990.png",
+    "target": "games/heartlight-duel/arcade/art/v2/healing-sweep-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1432,
+    "height": 1098,
+    "alpha": true,
+    "bytes": 24322
+  },
+  {
+    "id": "motion-healing-sweep-2",
+    "source": "exec-48c2e17f-7a67-4fd4-b9e5-640a51a5447f.png",
+    "target": "games/heartlight-duel/arcade/art/v2/healing-sweep-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 31464
+  },
+  {
+    "id": "motion-healing-air-0",
+    "source": "exec-f7d8ad51-b777-4668-9202-080e5eaf9822.png",
+    "target": "games/heartlight-duel/arcade/art/v2/healing-air-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 29668
+  },
+  {
+    "id": "motion-healing-air-1",
+    "source": "exec-1c506832-c4bf-478a-bbb3-f0cf2d5bc945.png",
+    "target": "games/heartlight-duel/arcade/art/v2/healing-air-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 33438
+  },
+  {
+    "id": "motion-healing-air-2",
+    "source": "exec-f3afffbf-3767-4b0e-b542-7af548a7084c.png",
+    "target": "games/heartlight-duel/arcade/art/v2/healing-air-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 33718
+  },
+  {
+    "id": "motion-healing-finisher-0",
+    "source": "exec-584f888b-0f4c-4ce8-bdb3-63df52b1da13.png",
+    "target": "games/heartlight-duel/arcade/art/v2/healing-finisher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 33120
+  },
+  {
+    "id": "motion-healing-finisher-1",
+    "source": "exec-eab8d214-c228-43a6-877e-23cd202f695d.png",
+    "target": "games/heartlight-duel/arcade/art/v2/healing-finisher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1536,
+    "height": 1024,
+    "alpha": true,
+    "bytes": 26360
+  },
+  {
+    "id": "motion-healing-finisher-2",
+    "source": "exec-6c877e6d-4d0e-4c89-97f6-808a09f1212c.png",
+    "target": "games/heartlight-duel/arcade/art/v2/healing-finisher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 糯糯 (暖心絨絨), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 33168
+  },
+  {
+    "id": "motion-luck-launcher-0",
+    "source": "exec-1b58786a-d2fb-4b84-9f88-0df03e5c2e0a.png",
+    "target": "games/heartlight-duel/arcade/art/v2/luck-launcher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 54100
+  },
+  {
+    "id": "motion-luck-launcher-1",
+    "source": "exec-9693eab8-c34a-4222-9e6f-c4553fb367c3.png",
+    "target": "games/heartlight-duel/arcade/art/v2/luck-launcher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 58766
+  },
+  {
+    "id": "motion-luck-launcher-2",
+    "source": "exec-be281170-ea6c-405f-b6f3-d64915d5c91f.png",
+    "target": "games/heartlight-duel/arcade/art/v2/luck-launcher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 62174
+  },
+  {
+    "id": "motion-luck-sweep-0",
+    "source": "exec-bf87fa84-6006-4687-b573-c37df8ad54b2.png",
+    "target": "games/heartlight-duel/arcade/art/v2/luck-sweep-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 53940
+  },
+  {
+    "id": "motion-luck-sweep-1",
+    "source": "exec-a27ead7d-d41d-4cc3-97ff-44a5ec74aa42.png",
+    "target": "games/heartlight-duel/arcade/art/v2/luck-sweep-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 52982
+  },
+  {
+    "id": "motion-luck-sweep-2",
+    "source": "exec-2964ac40-9b18-4c5d-9905-5c2a7b4474f1.png",
+    "target": "games/heartlight-duel/arcade/art/v2/luck-sweep-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 54126
+  },
+  {
+    "id": "motion-luck-air-0",
+    "source": "exec-f70f5196-cbe7-41d2-a446-61f98ef54600.png",
+    "target": "games/heartlight-duel/arcade/art/v2/luck-air-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 54812
+  },
+  {
+    "id": "motion-luck-air-1",
+    "source": "exec-633ab668-11b4-4eb8-b623-97810a6d7120.png",
+    "target": "games/heartlight-duel/arcade/art/v2/luck-air-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 55106
+  },
+  {
+    "id": "motion-luck-air-2",
+    "source": "exec-058eb9ec-29da-461f-b087-a48447072596.png",
+    "target": "games/heartlight-duel/arcade/art/v2/luck-air-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 69650
+  },
+  {
+    "id": "motion-luck-finisher-0",
+    "source": "exec-7391b864-12fd-483a-a233-46f84cf9e999.png",
+    "target": "games/heartlight-duel/arcade/art/v2/luck-finisher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 68046
+  },
+  {
+    "id": "motion-luck-finisher-1",
+    "source": "exec-f51180b5-5bba-49c8-842d-1a51a206aed2.png",
+    "target": "games/heartlight-duel/arcade/art/v2/luck-finisher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 61174
+  },
+  {
+    "id": "motion-luck-finisher-2",
+    "source": "exec-8cf92a94-1fe1-4e92-a29b-14e20240f5fd.png",
+    "target": "games/heartlight-duel/arcade/art/v2/luck-finisher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 鈴可 (四葉鈴狐), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 63142
+  },
+  {
+    "id": "motion-hope-launcher-0",
+    "source": "exec-35c90759-fb0b-4fd8-9f98-7fd2b7692858.png",
+    "target": "games/heartlight-duel/arcade/art/v2/hope-launcher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 1/3: crouched anticipation with weapon lowered preparing an upward strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 41426
+  },
+  {
+    "id": "motion-hope-launcher-1",
+    "source": "exec-e80cfdc7-b00c-432c-8bfd-38a36ec7caf2.png",
+    "target": "games/heartlight-duel/arcade/art/v2/hope-launcher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 2/3: full upward weapon strike, body extending, both feet grounded. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 49918
+  },
+  {
+    "id": "motion-hope-launcher-2",
+    "source": "exec-927f95ce-ffbe-4bc0-ae3f-b4010739d10c.png",
+    "target": "games/heartlight-duel/arcade/art/v2/hope-launcher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action launcher, phase 3/3: uppercut follow-through, arm and weapon lifted, weight forward. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 51186
+  },
+  {
+    "id": "motion-hope-sweep-0",
+    "source": "exec-22e02466-53c0-48b7-a87b-072593cc986b.png",
+    "target": "games/heartlight-duel/arcade/art/v2/hope-sweep-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 1/3: deep crouch with weapon pulled behind ready to sweep. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 41050
+  },
+  {
+    "id": "motion-hope-sweep-1",
+    "source": "exec-01a4f446-9462-48b8-8227-c0e8fc568a4f.png",
+    "target": "games/heartlight-duel/arcade/art/v2/hope-sweep-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 2/3: low sweeping strike aimed toward right ankle height. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1536,
+    "height": 1024,
+    "alpha": true,
+    "bytes": 30912
+  },
+  {
+    "id": "motion-hope-sweep-2",
+    "source": "exec-4b74c13f-5723-4f6b-8f8a-f93c4f15becf.png",
+    "target": "games/heartlight-duel/arcade/art/v2/hope-sweep-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action sweep, phase 3/3: low sweep follow-through turning shoulders with weapon out front. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 40630
+  },
+  {
+    "id": "motion-hope-air-0",
+    "source": "exec-f557652f-9e82-4b41-8047-773165fdaf61.png",
+    "target": "games/heartlight-duel/arcade/art/v2/hope-air-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 1/3: airborne knees bent weapon drawn back ready for descending strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 41614
+  },
+  {
+    "id": "motion-hope-air-1",
+    "source": "exec-51a24198-fa77-4eb3-a331-fa8c096d0502.png",
+    "target": "games/heartlight-duel/arcade/art/v2/hope-air-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 2/3: airborne diagonal downward strike aimed right, legs extended. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 52486
+  },
+  {
+    "id": "motion-hope-air-2",
+    "source": "exec-4b25537e-30cb-41dc-92ba-c7c8187f6462.png",
+    "target": "games/heartlight-duel/arcade/art/v2/hope-air-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action air, phase 3/3: airborne strike follow-through ready to land. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 46446
+  },
+  {
+    "id": "motion-hope-finisher-0",
+    "source": "exec-5fc71607-7ee4-4111-b03d-17ff10af4386.png",
+    "target": "games/heartlight-duel/arcade/art/v2/hope-finisher-0.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 1/3: wide planted stance, weapon winding behind shoulder for powerful finishing strike. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 40440
+  },
+  {
+    "id": "motion-hope-finisher-1",
+    "source": "exec-1fe25fbe-0b48-4187-a032-669f7e8213f6.png",
+    "target": "games/heartlight-duel/arcade/art/v2/hope-finisher-1.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 2/3: full powerful forward finishing strike toward right with weapon at maximum extension. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1536,
+    "height": 1024,
+    "alpha": true,
+    "bytes": 41382
+  },
+  {
+    "id": "motion-hope-finisher-2",
+    "source": "exec-6b8bc8a0-5756-49e4-987d-c40873643f08.png",
+    "target": "games/heartlight-duel/arcade/art/v2/hope-finisher-2.webp",
+    "prompt": "Produce ONE new independent transparent animation frame for original CxQ fighter 曦羽 (光線編織者), using reference ONLY for exact identity, costume, fixed weapon, proportions and style. Action finisher, phase 3/3: finishing strike recovery, weapon past target, returning weight to planted feet. Fighter faces RIGHT in strict side-view fighting game camera, full body and complete weapon within image with generous margins, centered grounded baseline at 88% image height except airborne. Preserve same character and weapon, materially new limb and body pose. Polished dimensional storybook character rendering, clear silhouette. No background, no floor, no text, no additional characters, no animation sheet, no multiple poses, no montage. This is a distinct actual drawn motion frame, not a recolor.",
+    "width": 1199,
+    "height": 1312,
+    "alpha": true,
+    "bytes": 45422
+  },
+  {
+    "id": "scratch-key",
+    "source": "exec-9b90d500-e23b-455b-9516-37dfcc77c6b9.png",
+    "target": "games/lucky-town/art/scratch-key-v2.webp",
+    "prompt": "One independent transparent game icon: a single ornate golden key. For CxQ 幸運小鎮 illustrated scratch-card results. Cozy polished storybook dimensional illustration, warm friendly lighting, large simple readable silhouette even at 48 pixels, centered whole object, ample margin. No background, no text, no sheets or multiple variants.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 13684
+  },
+  {
+    "id": "scratch-stone",
+    "source": "exec-c8e924d7-346f-424c-801e-13b45e8b0b0a.png",
+    "target": "games/lucky-town/art/scratch-stone-v2.webp",
+    "prompt": "One independent transparent game icon: a single smooth grey mossy stone. For CxQ 幸運小鎮 illustrated scratch-card results. Cozy polished storybook dimensional illustration, warm friendly lighting, large simple readable silhouette even at 48 pixels, centered whole object, ample margin. No background, no text, no sheets or multiple variants.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 13730
+  },
+  {
+    "id": "scratch-trail",
+    "source": "exec-b9a13456-95ad-46e5-a2ee-fa46181738d0.png",
+    "target": "games/lucky-town/art/scratch-trail-v2.webp",
+    "prompt": "One independent transparent game icon: one pair of tiny glowing woodland footprints, a single icon. For CxQ 幸運小鎮 illustrated scratch-card results. Cozy polished storybook dimensional illustration, warm friendly lighting, large simple readable silhouette even at 48 pixels, centered whole object, ample margin. No background, no text, no sheets or multiple variants.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 10826
+  },
+  {
+    "id": "scratch-sprout",
+    "source": "exec-49a18f5a-5af7-4955-946d-3eaeb4498202.png",
+    "target": "games/lucky-town/art/scratch-sprout-v2.webp",
+    "prompt": "One independent transparent game icon: a single fresh green seedling emerging from soil. For CxQ 幸運小鎮 illustrated scratch-card results. Cozy polished storybook dimensional illustration, warm friendly lighting, large simple readable silhouette even at 48 pixels, centered whole object, ample margin. No background, no text, no sheets or multiple variants.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 13248
+  },
+  {
+    "id": "scratch-pocket",
+    "source": "exec-43b1e64c-1798-4cb4-b26e-b7a2960fd983.png",
+    "target": "games/lucky-town/art/scratch-pocket-v2.webp",
+    "prompt": "One independent transparent game icon: a single visibly empty teal cloth coin purse. For CxQ 幸運小鎮 illustrated scratch-card results. Cozy polished storybook dimensional illustration, warm friendly lighting, large simple readable silhouette even at 48 pixels, centered whole object, ample margin. No background, no text, no sheets or multiple variants.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 12646
+  },
+  {
+    "id": "scratch-chest",
+    "source": "exec-c786d5a7-5259-42c8-9f39-39bcff8ea080.png",
+    "target": "games/lucky-town/art/scratch-chest-v2.webp",
+    "prompt": "One independent transparent game icon: a single small opened golden treasure chest. For CxQ 幸運小鎮 illustrated scratch-card results. Cozy polished storybook dimensional illustration, warm friendly lighting, large simple readable silhouette even at 48 pixels, centered whole object, ample margin. No background, no text, no sheets or multiple variants.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 15234
+  },
+  {
+    "id": "scratch-letter",
+    "source": "exec-27e02e21-b176-4977-8acd-b0ea9efd563d.png",
+    "target": "games/lucky-town/art/scratch-letter-v2.webp",
+    "prompt": "One independent transparent game icon: a single cream reward envelope sealed with red wax. For CxQ 幸運小鎮 illustrated scratch-card results. Cozy polished storybook dimensional illustration, warm friendly lighting, large simple readable silhouette even at 48 pixels, centered whole object, ample margin. No background, no text, no sheets or multiple variants.",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 8478
+  },
+  {
+    "id": "return-fairytale-defense",
+    "source": "exec-cf1a4bc5-d31f-4931-ba01-7fa98afaf839.png",
+    "target": "games/fairytale-defense/art/return-center-v2.webp",
+    "prompt": "One independent transparent wide horizontal return button for CxQ 童話塔防. Original design specific to fairytale tower-defense: ivory stone castle battlements, bronze shield, blue royal banner and tiny guardian tower. Exact readable Traditional Chinese text 「返回遊戲中心」 centered on royal banner, left arrow carved in shield at left. Distinctive ornate storybook game illustration, entire button in frame, no clovers, no cards, no other buttons, no collage.",
+    "width": 2172,
+    "height": 724,
+    "alpha": true,
+    "bytes": 43096
+  },
+  {
+    "id": "title-dino",
+    "source": "exec-71498f7d-b980-4362-8e6e-06f40daead71.png",
+    "target": "games/dino/art/title-v2.webp",
+    "prompt": "ONE transparent illustrated game title logo for original CxQ 森林急件快遞. Exact readable Traditional Chinese lettering 「CxQ 森林急件快遞」. Game-specific design inspired by a woodland courier, leaf cloak and parcel. Dimensional charming storybook handcrafted lettering with integrated tiny ornaments, wide horizontal logo with transparent backdrop, full logo in canvas, clear at 320px width. No additional text, no other title variants, no multiple panels or sheet.",
+    "width": 1983,
+    "height": 793,
+    "alpha": true,
+    "bytes": 117874
+  },
+  {
+    "id": "title-flappy",
+    "source": "exec-fa72d215-ebdd-4416-9892-8e11ba0fbfeb.png",
+    "target": "games/flappy/art/title-v2.webp",
+    "prompt": "ONE transparent illustrated game title logo for original CxQ 星願飛行郵差. Exact readable Traditional Chinese lettering 「CxQ 星願飛行郵差」. Game-specific design inspired by a winged star mail courier and cloud feathers. Dimensional charming storybook handcrafted lettering with integrated tiny ornaments, wide horizontal logo with transparent backdrop, full logo in canvas, clear at 320px width. No additional text, no other title variants, no multiple panels or sheet.",
+    "width": 2043,
+    "height": 770,
+    "alpha": true,
+    "bytes": 98174
+  },
+  {
+    "id": "title-magic-bubble",
+    "source": "exec-68c1b331-ef35-48ef-954c-893f4d12a2c5.png",
+    "target": "games/magic-bubble/art/title-v2.webp",
+    "prompt": "ONE transparent illustrated game title logo for original CxQ 魔法泡泡龍. Exact readable Traditional Chinese lettering 「CxQ 魔法泡泡龍」. Game-specific design inspired by a purple wizard wand and magical gem bubbles. Dimensional charming storybook handcrafted lettering with integrated tiny ornaments, wide horizontal logo with transparent backdrop, full logo in canvas, clear at 320px width. No additional text, no other title variants, no multiple panels or sheet.",
+    "width": 1774,
+    "height": 887,
+    "alpha": true,
+    "bytes": 127026
+  },
+  {
+    "id": "title-dream-match",
+    "source": "exec-7fd14f80-6aa0-4732-85f1-408ded33bbe2.png",
+    "target": "games/dream-match/art/title-v2.webp",
+    "prompt": "ONE transparent illustrated game title logo for original CxQ 夢境消除. Exact readable Traditional Chinese lettering 「CxQ 夢境消除」. Game-specific design inspired by moonlit magical matching jewels. Dimensional charming storybook handcrafted lettering with integrated tiny ornaments, wide horizontal logo with transparent backdrop, full logo in canvas, clear at 320px width. No additional text, no other title variants, no multiple panels or sheet.",
+    "width": 1983,
+    "height": 793,
+    "alpha": true,
+    "bytes": 106998
+  },
+  {
+    "id": "title-merge",
+    "source": "exec-04109e39-ff4c-4bfc-a9c2-6a388077fc1a.png",
+    "target": "games/merge/art/title-v2.webp",
+    "prompt": "ONE transparent illustrated game title logo for original CxQ 心光合成屋. Exact readable Traditional Chinese lettering 「CxQ 心光合成屋」. Game-specific design inspired by warm woodland fruit basket and friendly plush charm. Dimensional charming storybook handcrafted lettering with integrated tiny ornaments, wide horizontal logo with transparent backdrop, full logo in canvas, clear at 320px width. No additional text, no other title variants, no multiple panels or sheet.",
+    "width": 1983,
+    "height": 793,
+    "alpha": true,
+    "bytes": 89836
+  },
+  {
+    "id": "title-mines",
+    "source": "exec-04e22bdf-11f8-486f-896f-10f8f9a94a85.png",
+    "target": "games/mines/art/title-v2.webp",
+    "prompt": "ONE transparent illustrated game title logo for original CxQ 四葉草探險地圖. Exact readable Traditional Chinese lettering 「CxQ 四葉草探險地圖」. Game-specific design inspired by clover explorer, parchment map and forest lantern. Dimensional charming storybook handcrafted lettering with integrated tiny ornaments, wide horizontal logo with transparent backdrop, full logo in canvas, clear at 320px width. No additional text, no other title variants, no multiple panels or sheet.",
+    "width": 1983,
+    "height": 793,
+    "alpha": true,
+    "bytes": 112328
+  },
+  {
+    "id": "title-whack",
+    "source": "exec-3a008131-30f1-4a2b-95b3-ab0146d0eeda.png",
+    "target": "games/whack/art/title-v2.webp",
+    "prompt": "ONE transparent illustrated game title logo for original CxQ 森林敲敲樂. Exact readable Traditional Chinese lettering 「CxQ 森林敲敲樂」. Game-specific design inspired by woodland burrow and friendly toy hammer. Dimensional charming storybook handcrafted lettering with integrated tiny ornaments, wide horizontal logo with transparent backdrop, full logo in canvas, clear at 320px width. No additional text, no other title variants, no multiple panels or sheet.",
+    "width": 1983,
+    "height": 793,
+    "alpha": true,
+    "bytes": 93034
+  }
+]

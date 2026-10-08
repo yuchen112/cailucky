@@ -1,6 +1,6 @@
 # CxQ 幸運小鎮 · 票券與固定控制版
 
-版本：20261007-town9。固定橫式、純金幣，十位夥伴各自有小屋、專屬套裝與寵物陪伴設定。網站首頁額外插入的遊戲入口已移除，保留原有遊戲大廳；遊戲沒有返回網站按鈕。
+版本：20261008-complete1。固定橫式、純金幣，十位夥伴各自有小屋、專屬套裝與寵物陪伴設定。遊戲首頁提供為幸運小鎮獨立繪製的返回遊戲中心按鈕。
 
 ## 操作與拉霸
 
@@ -12,7 +12,7 @@
 
 ## 五種面額，十款獨立票券
 
-每個面額對應兩款独立產品，不再將同一票種放大。每款有固定面額、獨立 SVG 票面、刮區配置、規則及可達最高獎金。整張銀膜可連續跨格刮除，刮除進度及待領獎項會保存。
+每個面額對應兩款獨立產品。每款有固定面額、獨立生成的點陣美術票面、刮區配置、規則及可達最高獎金。銀膜與新符號也使用獨立美術素材，依票面實際空白區定位；銀膜解碼前不能開始刮除。整張銀膜可連續跨格刮除，刮除進度及待領獎項會保存。舊 SVG 僅保留給已購入的舊版票券相容使用。
 
 | 面額 | 票種與判定 |
 | --- | --- |
@@ -46,7 +46,7 @@
 
 準備素材：Python 執行 tools/merge-lucky-v5-art.py、tools/prepare-lucky-v5-art.py。檢視圖板位於 preview/lucky-town/v5/。沿用十七個音樂音效檔，授權與出處見 audio/。
 
-驗證指令：
+原有版本的回歸驗證工具（其中 24 款舊票、857 張原始圖及 17 個原音訊的範圍不包含本次新美術）：
 
 - node tools/test-lucky-v5.mjs：12 萬次拉霸、4.8 萬張刮卡、明細總額、舊存檔與布置資料驗證。
 - node tools/check-lucky-v5.cjs：五種橫式尺寸、24 款刮卡、連續触控、重新載入、下注、按鈕、布置、寵物模式及備份下載。
@@ -57,4 +57,8 @@
 
 測試使用獨立瀏覽器資料，不改動玩家紀錄。LUCKY_TOWN_URL 可指定公開版本；若測試主機 Edge 的 HTTP/2 圖片連線持續等待，LUCKY_TOWN_HTTP1=1 可使用 HTTP/1.1，不改動遊戲。實際 Android／iOS 裝置尚未驗證。
 
-新票檢查：node tools/test-ticket-products.mjs。票面產生：node tools/build-ticket-products.mjs。
+新票檢查：node tools/test-ticket-products.mjs，涵蓋十款新產品、手算案例、最高獎項可達性、1 萬組票券與保存／重載／領獎一次限制。獨立票面與生成提示詞見 ../refresh-20261008/manifest.json。build-ticket-products.mjs 為舊 SVG 票面工具，新版正式票面不由它繪製。
+
+載入改為 game-v2.bundle.mjs／game-v2.bundle.css，畫面使用 delivery/ 的縮小 WebP，原始 art/ 保留。876 張圖的總傳輸素材由約 87 MB 降至 39 MB；這是整個圖片收藏的大小，不代表首頁會下載全部圖片。新版本優先讀取正式 v5 主存檔，僅在缺失或損壞時嘗試舊格式，保留鏡像復原與防重複結算。
+
+重新建置：npm --prefix tools/refresh-tooling install，然後 node tools/build-complete-refresh.mjs。不得以未完成素材的開發分包作正式發布。

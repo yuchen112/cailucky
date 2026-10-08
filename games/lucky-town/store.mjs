@@ -1,6 +1,6 @@
-import {migrate,validateEvolution} from './evolution.mjs?v=20261007-names1';
-import {ROLES,ROLE_MAP,BY_ID,THEMES,MACHINES} from './data.mjs?v=20261007-names1';
-import {supports} from './room.mjs?v=20261007-names1';
+import {migrate,validateEvolution} from './evolution.mjs?v=20261008-complete1';
+import {ROLES,ROLE_MAP,BY_ID,THEMES,MACHINES} from './data.mjs?v=20261008-complete1';
+import {supports} from './room.mjs?v=20261008-complete1';
 export const KEY='cxq-lucky-town-v1',BACKUPS=KEY+'-backups';
 export const CANONICAL=KEY+'-tickets-v5',CANONICAL_BACKUPS=KEY+'-tickets-v5-backups';
 export const copy=x=>JSON.parse(JSON.stringify(x));
@@ -31,7 +31,10 @@ let state,db=null,listeners=new Set(),memoryBackups=[],damaged=[],queue=Promise.
 const read=k=>{try{return localStorage.getItem(k)}catch{return null}};
 const validRaw=raw=>{try{return unpack(raw)}catch{return null}};
 const isModernRaw=raw=>{try{return JSON.parse(JSON.parse(raw).payload).dataRevision===4}catch{return false}};
-async function latest(){const protectedStates=[validRaw(read(CANONICAL)),validRaw(await dbRead('current-v5'))].filter(Boolean);const previous=[validRaw(read(KEY+'-collection-v4')),validRaw(await dbRead('current-v4'))].filter(Boolean);const older=[validRaw(read(KEY+'-collection-v3')),validRaw(await dbRead('current-v3'))].filter(Boolean);const states=protectedStates.length?protectedStates:previous.length?previous:older.length?older:[validRaw(read(KEY)),validRaw(await dbRead('current'))].filter(Boolean);return states.sort((a,b)=>b.revision-a.revision)[0]}
+async function latest(){
+ const tiers=[[CANONICAL,'current-v5'],[KEY+'-collection-v4','current-v4'],[KEY+'-collection-v3','current-v3'],[KEY,'current']];
+ for(const [localKey,dbKey] of tiers){const candidates=[validRaw(read(localKey)),validRaw(await dbRead(dbKey))].filter(Boolean);if(candidates.length)return candidates.sort((a,b)=>b.revision-a.revision)[0];}
+}
 function dbOpen(){return new Promise(resolve=>{try{const req=indexedDB.open(KEY,1);req.onupgradeneeded=()=>req.result.createObjectStore('saves');req.onsuccess=()=>resolve(req.result);req.onerror=()=>resolve(null);req.onblocked=()=>resolve(null)}catch{resolve(null)}})}
 function dbRead(k){return new Promise(resolve=>{if(!db)return resolve(null);try{const req=db.transaction('saves').objectStore('saves').get(k);req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>resolve(null)}catch{resolve(null)}})}
 function dbWrite(raw,backs){return new Promise(resolve=>{if(!db)return resolve(false);try{const tx=db.transaction('saves','readwrite');tx.objectStore('saves').put(raw,'current-v5');tx.objectStore('saves').put(raw,'current');tx.objectStore('saves').put(backs,'backups-v5');tx.objectStore('saves').put(backs,'backups');tx.objectStore('saves').put(damaged,'damaged-v5');tx.objectStore('saves').put(damaged,'damaged');tx.oncomplete=()=>resolve(true);tx.onerror=()=>resolve(false);tx.onabort=()=>resolve(false)}catch{resolve(false)}})}

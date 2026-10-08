@@ -204,6 +204,7 @@ function load(k,u,priority="auto"){
   if(!assetPumpScheduled){assetPumpScheduled=true;queueMicrotask(pumpAssets);}
   return image;
 }
+load("homeReturn", "art/return-center-v2.webp", "high");
 load("homeBg", A + "backgrounds/home_scene_v7.webp", "high");
 load("homeMenuNew", A + "ui/home_menu_new_v4.speed24.webp", "high");
 load("homeMenuContinue", A + "ui/home_menu_continue_v4.speed24.webp", "high");
@@ -702,6 +703,7 @@ function homeTile(id, label, image, x, y, size, index, enabled = true) {
   S.buttons.push({ id, x, y, w: size, h: size, en: enabled && !HOME.locked });
 }
 function home() {
+
   const now = performance.now(),
     sceneA = homeIntro(0, 620),
     canContinue = hasAnySave(),
@@ -757,6 +759,7 @@ function home() {
   homeTile("gallery", "遊戲圖鑑", IM.homeMenuGallery, 462, 226, tileSize, 2);
   homeTile("help", "遊戲說明", IM.homeMenuHelp, 144, 447, tileSize, 3);
   homeTile("settings", "系統設定", IM.homeMenuSettings, 356, 447, tileSize, 4);
+  if(IM.homeReturn?.complete&&IM.homeReturn.naturalWidth){stretch(IM.homeReturn,1180,Math.min(795,(VIEW.visibleY||0)+(VIEW.visibleH||H)-100),360,85);S.buttons.push({id:"game-center",x:1180,y:Math.min(795,(VIEW.visibleY||0)+(VIEW.visibleH||H)-100),w:360,h:85,en:true});}
   const infoA = homeIntro(740, 380);
   X.save();
   X.globalAlpha = infoA;

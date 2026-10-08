@@ -1,8 +1,9 @@
-CxQ Fairy-tale Richman — production build 20260913-0640
+CxQ 童話大富翁 — production build 20261008-complete1
 
 Release status
-- This build belongs only to preview/cxq-fairytale-richman-testing.
-- The main branch remains unchanged until the user approves this testing build.
+- Independently illustrated return-to-game-center button on the home canvas.
+- Entry scripts and service-worker shell updated together; game rules and saves preserved.
+- The user authorized direct production publication as part of the complete game refresh.
 - Runtime remains one integrated path: index.html -> core.js + viewport.js + game.js.
 
 Streamlined game design

@@ -1,6 +1,6 @@
-import {scratchScreen} from './scratch-ui.mjs?v=20261007-names1';
-import {ROLES,ROLE_MAP,MACHINES,CLOTHES,BY_ID,PETS,PET_MAP,BETS,SYMBOLS} from './data.mjs?v=20261007-names1';
-import {SCRATCH_TYPES,ticketLayout,ticketName} from './scratch.mjs?v=20261007-names1';
+import {scratchScreen} from './scratch-ui.mjs?v=20261008-complete1';
+import {ROLES,ROLE_MAP,MACHINES,CLOTHES,BY_ID,PETS,PET_MAP,BETS,SYMBOLS} from './data.mjs?v=20261008-complete1';
+import {SCRATCH_TYPES,ticketLayout,ticketName} from './scratch.mjs?v=20261008-complete1';
 const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>v.toLocaleString('zh-TW');
 const img=(src,alt,cls='')=>`<img src="${src}" alt="${esc(alt)}" class="${cls}" draggable="false">`;

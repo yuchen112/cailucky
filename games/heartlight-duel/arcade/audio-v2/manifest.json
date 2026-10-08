@@ -1,0 +1,194 @@
+{
+  "originalComposition": true,
+  "sampleRate": 22050,
+  "method": "Original note scores, additive/plucked instruments, deterministic percussion and rendered layered combat cues; no reused shared-game tracks.",
+  "music": [
+    {
+      "file": "music-menu.mp3",
+      "seconds": 31.475419501133786,
+      "bytes": 378716,
+      "bpm": 122,
+      "key": 60,
+      "measures": 16
+    },
+    {
+      "file": "music-festival.mp3",
+      "seconds": 27.826122448979593,
+      "bytes": 335143,
+      "bpm": 138,
+      "key": 62,
+      "measures": 16
+    },
+    {
+      "file": "music-moon.mp3",
+      "seconds": 30.967755102040815,
+      "bytes": 372760,
+      "bpm": 124,
+      "key": 57,
+      "measures": 16
+    },
+    {
+      "file": "music-rain.mp3",
+      "seconds": 30,
+      "bytes": 361161,
+      "bpm": 128,
+      "key": 59,
+      "measures": 16
+    },
+    {
+      "file": "music-workshop.mp3",
+      "seconds": 26.666666666666668,
+      "bytes": 321037,
+      "bpm": 144,
+      "key": 64,
+      "measures": 16
+    }
+  ],
+  "effects": [
+    {
+      "file": "sfx-tap.mp3",
+      "seconds": 0.1400453514739229,
+      "bytes": 2396
+    },
+    {
+      "file": "sfx-swing.mp3",
+      "seconds": 0.3,
+      "bytes": 3963
+    },
+    {
+      "file": "sfx-light.mp3",
+      "seconds": 0.32,
+      "bytes": 4225
+    },
+    {
+      "file": "sfx-heavy.mp3",
+      "seconds": 0.5500226757369614,
+      "bytes": 6576
+    },
+    {
+      "file": "sfx-block.mp3",
+      "seconds": 0.2800453514739229,
+      "bytes": 3702
+    },
+    {
+      "file": "sfx-counter.mp3",
+      "seconds": 0.5500226757369614,
+      "bytes": 6576
+    },
+    {
+      "file": "sfx-skill.mp3",
+      "seconds": 0.6500226757369615,
+      "bytes": 7359
+    },
+    {
+      "file": "sfx-super.mp3",
+      "seconds": 1.7,
+      "bytes": 18070
+    },
+    {
+      "file": "sfx-jump.mp3",
+      "seconds": 0.4,
+      "bytes": 5008
+    },
+    {
+      "file": "sfx-dash.mp3",
+      "seconds": 0.4,
+      "bytes": 5008
+    },
+    {
+      "file": "sfx-throw.mp3",
+      "seconds": 0.7,
+      "bytes": 7882
+    },
+    {
+      "file": "sfx-shield.mp3",
+      "seconds": 0.6,
+      "bytes": 6837
+    },
+    {
+      "file": "sfx-break.mp3",
+      "seconds": 0.7500226757369615,
+      "bytes": 8404
+    },
+    {
+      "file": "sfx-ready.mp3",
+      "seconds": 1.2,
+      "bytes": 12845
+    },
+    {
+      "file": "sfx-fight.mp3",
+      "seconds": 1.1000453514739228,
+      "bytes": 12061
+    },
+    {
+      "file": "sfx-win.mp3",
+      "seconds": 1.6500226757369614,
+      "bytes": 17547
+    },
+    {
+      "file": "sfx-lose.mp3",
+      "seconds": 1.6500226757369614,
+      "bytes": 17547
+    },
+    {
+      "file": "sfx-joy.mp3",
+      "seconds": 0.6500226757369615,
+      "bytes": 7359,
+      "character": "joy"
+    },
+    {
+      "file": "sfx-dream.mp3",
+      "seconds": 0.6500226757369615,
+      "bytes": 7359,
+      "character": "dream"
+    },
+    {
+      "file": "sfx-night.mp3",
+      "seconds": 0.6500226757369615,
+      "bytes": 7359,
+      "character": "night"
+    },
+    {
+      "file": "sfx-sadness.mp3",
+      "seconds": 0.6500226757369615,
+      "bytes": 7359,
+      "character": "sadness"
+    },
+    {
+      "file": "sfx-trust.mp3",
+      "seconds": 0.6500226757369615,
+      "bytes": 7359,
+      "character": "trust"
+    },
+    {
+      "file": "sfx-memory.mp3",
+      "seconds": 0.6500226757369615,
+      "bytes": 7359,
+      "character": "memory"
+    },
+    {
+      "file": "sfx-growth.mp3",
+      "seconds": 0.6500226757369615,
+      "bytes": 7359,
+      "character": "growth"
+    },
+    {
+      "file": "sfx-healing.mp3",
+      "seconds": 0.6500226757369615,
+      "bytes": 7359,
+      "character": "healing"
+    },
+    {
+      "file": "sfx-luck.mp3",
+      "seconds": 0.6500226757369615,
+      "bytes": 7359,
+      "character": "luck"
+    },
+    {
+      "file": "sfx-hope.mp3",
+      "seconds": 0.6500226757369615,
+      "bytes": 7359,
+      "character": "hope"
+    }
+  ]
+}

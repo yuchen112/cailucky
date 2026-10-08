@@ -31,3 +31,4 @@ dialog{max-height:calc(var(--game-height,100dvh) - 20px);width:min(800px,92vw);p
 .award-plaque{padding-top:clamp(45px,10dvh,90px);padding-bottom:30px}
 
 dialog{width:min(800px,calc(var(--game-width,100vw) - 20px))}
+#rotate-gate .rotation-return{display:block;width:240px;height:56px;margin-top:12px;touch-action:manipulation}#rotate-gate .rotation-return img{width:100%;height:100%;object-fit:contain;animation:none;margin:0}

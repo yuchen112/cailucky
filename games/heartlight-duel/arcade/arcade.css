@@ -9,3 +9,11 @@
 #modal{padding:78px 55px 24px}#modal>.notice{margin:6px 0 16px}#modal .actions{margin-top:14px}.training-actions{gap:8px}.hero-name,.health,.guard,.round-wins,.clock,.energy .value,.intro-line{paint-order:stroke fill;-webkit-text-stroke:1px #102b30;text-shadow:0 1px 2px #102b30}
 html,body,#cabinet,#screen{overflow:clip;overscroll-behavior:none}
 .backup-text{display:block;width:100%;height:235px;resize:none;user-select:text;touch-action:auto;font:15px/1.5 monospace;padding:12px;color:#fff7da;background:#0b242be8;border:1px solid #b79553}
+
+/* Larger raster-art controls in the home composition only. */
+#cabinet[data-screen="home"] .menu-stack{width:460px;gap:8px}#cabinet[data-screen="home"] .menu-stack .art-button{width:460px;height:82px;font-size:28px}#cabinet[data-screen="home"] .menu-stack small{font-size:17px}#cabinet img{-webkit-user-drag:none}html{-webkit-text-size-adjust:100%}#cabinet, #modal{-webkit-user-select:none;touch-action:none}
+
+.return-caption{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+
+#cabinet[data-screen="home"] [data-action="exit"]{width:300px;height:86px}
+#rotate .rotation-return{display:inline-block;width:240px;height:56px;margin-top:12px;touch-action:manipulation}#rotate .rotation-return img{width:100%;height:100%;object-fit:contain}

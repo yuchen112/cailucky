@@ -1,0 +1,3 @@
+import {createRequire} from 'node:module';import path from 'node:path';import os from 'node:os';
+const local=createRequire(new URL('./refresh-tooling/package.json',import.meta.url)),workspace=createRequire(import.meta.url);
+export function toolDependency(name){for(const resolve of [()=>local(name),()=>workspace(name),()=>workspace('../outputs/refresh-build-deps/node_modules/'+name),()=>workspace(path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules',name))]){try{return resolve();}catch(error){if(error.code!=='MODULE_NOT_FOUND')throw error;}}throw Error('Missing '+name+'. Run npm --prefix tools/refresh-tooling install');}

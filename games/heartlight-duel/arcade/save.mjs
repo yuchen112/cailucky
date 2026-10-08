@@ -1,9 +1,9 @@
-import {BY_ID,CONTROLS,STAGES} from './cast.mjs?v=arcade3';
-import {restore,snapshot} from './core.mjs?v=arcade3';
+import {BY_ID,CONTROLS,STAGES} from './cast.mjs?v=20261008-complete1';
+import {restore,snapshot} from './core.mjs?v=20261008-complete1';
 export const KEY='cxq-heartlight-duel-arcade-v2';
-const fresh=()=>({version:1,settings:{quality:'auto',reducedMotion:false,sound:true,music:true,volume:.25,buttonSize:1,opacity:.85,offsetX:0,offsetY:0,showFps:true,hitboxes:false,keys:structuredClone(CONTROLS)},story:{},records:[],unlocks:[],active:null,run:null,revision:0,savedAt:0});
+const fresh=()=>({version:1,settings:{quality:'auto',reducedMotion:false,sound:true,music:true,volume:.25,musicVolume:.25,soundVolume:.65,buttonSize:1,opacity:.85,offsetX:0,offsetY:0,showFps:true,hitboxes:false,keys:structuredClone(CONTROLS)},story:{},records:[],unlocks:[],active:null,run:null,revision:0,savedAt:0});
 function check(s){if(!s||s.version!==1||!s.settings||!['auto','high','low'].includes(s.settings.quality)||!Number.isFinite(s.settings.volume)||s.settings.volume<0||s.settings.volume>1||!s.story||typeof s.story!=='object'||Array.isArray(s.story)||!Array.isArray(s.records)||s.records.length>50||!Array.isArray(s.unlocks)||s.unlocks.some(k=>!BY_ID[k])||!Number.isInteger(s.revision)||s.revision<0)throw Error('存檔格式不正確');
- const p=s.settings;for(const[k,min,max]of [['buttonSize',.8,1.15],['opacity',.45,1],['offsetX',0,36],['offsetY',0,24]])if(!Number.isFinite(p[k])||p[k]<min||p[k]>max)throw Error('操作設定不正確');for(const k of ['reducedMotion','sound','music','showFps','hitboxes'])if(typeof p[k]!=='boolean')throw Error('設定不正確');
+ const p=s.settings;p.musicVolume??=p.volume;p.soundVolume??=p.volume;for(const key of ['musicVolume','soundVolume'])if(!Number.isFinite(p[key])||p[key]<0||p[key]>1)throw Error('音量設定不正確');for(const[k,min,max]of [['buttonSize',.8,1.15],['opacity',.45,1],['offsetX',0,36],['offsetY',0,24]])if(!Number.isFinite(p[k])||p[k]<min||p[k]>max)throw Error('操作設定不正確');for(const k of ['reducedMotion','sound','music','showFps','hitboxes'])if(typeof p[k]!=='boolean')throw Error('設定不正確');
  for(const group of ['p1','p2']){const keys=p.keys?.[group];if(!keys||Object.keys(CONTROLS[group]).some(k=>typeof keys[k]!=='string'||!/^[A-Za-z0-9]{1,24}$/.test(keys[k])))throw Error('按鍵設定不正確');}
  for(const[id,v]of Object.entries(s.story))if(!BY_ID[id]||!Number.isInteger(v?.cleared)||v.cleared<0||v.cleared>5||typeof v.completed!=='boolean')throw Error('故事紀錄不正確');
  for(const r of s.records)if(!BY_ID[r.hero]||!BY_ID[r.opponent]||typeof r.win!=='boolean'||!Number.isFinite(r.at)||!Number.isFinite(r.combo)||r.combo<0||!Array.isArray(r.wins)||r.wins.length!==2||r.wins.some(n=>!Number.isInteger(n)||n<0||n>2))throw Error('對戰紀錄不正確');

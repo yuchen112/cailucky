@@ -10,7 +10,7 @@ export const TICKET_CATALOG=[
  {id:'trail200',cost:200,name:'森林小徑',mode:'trail',theme:'trail',cols:5,rows:2,colors:['#287169','#e2f2d0'],desc:'兩條小徑由左往右走，連續足跡越多獎金越高。',rules:'每排從最左格開始數連續足跡，遇到石頭停止；2／3／4／5 個足跡分別領 100／200／500／1,000 金幣，0～1 個不給獎。停止後的足跡不計，兩排獎金相加。',max:2000},
  {id:'vault500',cost:500,name:'黃金保險庫',mode:'vault',theme:'vault',cols:3,rows:3,colors:['#7c6024','#fff1b1'],desc:'三座保險庫各自比大小，勝過守衛才能領獎。',rules:'每排依序刮出你的點數、守衛點數、金庫獎金。你的點數大於守衛才領取該排金額；相等或較小皆不給獎。三排成功金額相加。',max:15000},
  {id:'stars500',cost:500,name:'星際五連',mode:'stars',theme:'space',cols:5,rows:3,colors:['#26376e','#e5edff'],desc:'三條星軌各自找相同圖案，三星起獎、五星最高。',rules:'每排同一圖案出現 3／4／5 次，分別領 500／1,500／5,000 金幣，位置不用相鄰。每排只取一個獎項，三排獎金相加；不同圖案不能混算。',max:15000}
-].map(t=>({...t,art:'art/ticket-'+t.id+'.svg'}));
+].map(t=>({...t,art:'art/ticket-'+t.id+'-v2.webp'}));
 export const TICKET_COSTS=[20,50,100,200,500];
 export const ticketProduct=id=>TICKET_CATALOG.find(t=>t.id===id);
 const pick=(rng,n)=>Math.min(n-1,Math.floor(rng()*n));
@@ -43,18 +43,10 @@ export function makeProductTicket(kind,cost,rng){const p=ticketProduct(kind);if(
  if(p.mode==='vault'){for(let row=0;row<3;row++){t.values[row*3]=1+pick(rng,9);t.values[row*3+1]=1+pick(rng,9);t.values[row*3+2]=0;t.prizes[row*3+2]=choice(rng,[100,200,500,1000,5000]);}}
  t.win=productReward(t);validateProductTicket(t);return t;
 }
-export function productLayout(t){const p=ticketProduct(t.kind),grid=(x,y,w,h)=>Array.from({length:p.cols*p.rows},(_,i)=>({x:x+(i%p.cols)*w/p.cols,y:y+Math.floor(i/p.cols)*h/p.rows,w:w/p.cols-.012,h:h/p.rows-.016}));
- if(p.mode==='garden'){return Array.from({length:12},(_,i)=>({x:.08+(i%4)*.22+(Math.floor(i/4)%2?.025:0),y:.30+Math.floor(i/4)*.185,w:.16,h:.145}));}
- if(p.mode==='bags')return Array.from({length:6},(_,i)=>i===5?{x:.78,y:.36,w:.14,h:.39}:{x:.09+(i%3)*.22,y:.31+Math.floor(i/3)*.26,w:.18,h:.21});
- if(p.mode==='bingo')return grid(.24,.31,.52,.54);
- if(p.mode==='keys')return grid(.08,.34,.84,.46);
- if(p.mode==='trio')return grid(.08,.33,.84,.46);
- if(p.mode==='numbers')return grid(.08,.34,.84,.46);
- if(p.mode==='coins')return grid(.10,.30,.80,.52);
- if(p.mode==='trail')return grid(.08,.34,.84,.46);
- if(p.mode==='vault')return grid(.13,.30,.74,.54);
- return grid(.08,.31,.84,.52);
-}
+// Individually measured play rectangles for independently illustrated ticket faces.
+const PRINTED_RECTS={"trio20":[0.127,0.34,0.737,0.516],"coins20":[0.133,0.28,0.732,0.56],"numbers50":[0.116,0.32,0.77,0.495],"keys50":[0.154,0.384,0.73,0.473],"garden100":[0.139,0.258,0.725,0.638],"bags100":[0.139,0.291,0.736,0.553],"bingo200":[0.126,0.256,0.754,0.628],"trail200":[0.133,0.324,0.735,0.51],"vault500":[0.15,0.282,0.7,0.575],"stars500":[0.085,0.315,0.824,0.544]};
+export function productLayout(t){const p=ticketProduct(t.kind),[x,y,w,h]=PRINTED_RECTS[p.id];return Array.from({length:p.cols*p.rows},(_,i)=>({x:x+(i%p.cols)*w/p.cols+.005,y:y+Math.floor(i/p.cols)*h/p.rows+.006,w:w/p.cols-.016,h:h/p.rows-.02}));}
+
 export function validateProductTicket(t){const p=ticketProduct(t.kind),int=(v,a,b)=>Number.isSafeInteger(v)&&v>=a&&v<=b,count=p?.cols*p?.rows;
  if(!p||t.cost!==p.cost||t.layoutVersion!==5||typeof t.id!=='string'||!t.id||!Array.isArray(t.values)||t.values.length!==count||t.values.some(v=>!int(v,0,99))||!Array.isArray(t.prizes)||t.prizes.length!==count||t.prizes.some(v=>!int(v,0,p.max))||!Array.isArray(t.lucky)||t.lucky.some(v=>!int(v,1,40))||new Set(t.lucky).size!==t.lucky.length||!int(t.win,0,p.max)||!Array.isArray(t.revealed)||t.revealed.length!==count||t.revealed.some(v=>typeof v!=='boolean')||!Array.isArray(t.marks)||t.marks.length!==count||t.marks.some(a=>!Array.isArray(a)||a.length>384||new Set(a).size!==a.length||a.some(v=>!int(v,0,383)))||t.surfaceMarks!==undefined&&(!Array.isArray(t.surfaceMarks)||t.surfaceMarks.length>5184||new Set(t.surfaceMarks).size!==t.surfaceMarks.length||t.surfaceMarks.some(v=>!int(v,0,5183))))throw Error('票券資料不正確');
  const range=(a,lo,hi)=>a.every(v=>int(v,lo,hi));

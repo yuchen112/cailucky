@@ -1,4 +1,4 @@
-import {EXTRA_FURNITURE,makeExtraClothes,EXTRA_THEMES,WINDOW_SCENES,SERIES} from './collection-data.mjs?v=20261007-names1';
+import {EXTRA_FURNITURE,makeExtraClothes,EXTRA_THEMES,WINDOW_SCENES,SERIES} from './collection-data.mjs?v=20261008-complete1';
 export {WINDOW_SCENES,SERIES};
 export const RELEASE='20261007-town9';
 const CHARACTER_WORDS={"joy":"快樂","dream":"夢想","night":"夜晚陪伴","sadness":"悲傷","trust":"信任","memory":"回憶","growth":"成長","healing":"療癒","luck":"幸運","hope":"希望"};

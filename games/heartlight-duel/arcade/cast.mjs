@@ -1,10 +1,13 @@
-import {CAST as ORIGINAL,STAGES as ARENAS,ENDINGS,CONTROLS,ACTION_NAMES} from '../cast.mjs?v=arcade3';
-import {POSE_METRICS} from './pose-metrics.mjs?v=arcade3';
+import {CAST as ORIGINAL,STAGES as ARENAS,ENDINGS,CONTROLS,ACTION_NAMES} from '../cast.mjs?v=20261008-complete1';
+import {POSE_METRICS} from './pose-metrics.mjs?v=20261008-complete1';
 export {ENDINGS,CONTROLS,ACTION_NAMES};
-export const VERSION='20261007-arcade3';
+export const VERSION='20261008-complete1';
 export const ACTIONS=['walk-a','walk-b','jump','crouch','guard','hurt','down','light','heavy','super'];
 const speeds={joy:400,dream:355,night:365,sadness:350,trust:325,memory:375,growth:385,healing:345,luck:425,hope:365};
 export const CAST=ORIGINAL.map(c=>({...c,speed:speeds[c.id],portrait:`../../../assets/characters/cxq-role-${c.id}.webp`,height:c.id==='joy'||c.id==='sadness'?305:280,poses:{idle:`../../fairytale-defense/rebuild/art/${c.id}-ready.webp`,skill:`../../fairytale-defense/rebuild/art/${c.id}-cast.webp`,victory:`../../fairytale-defense/rebuild/art/${c.id}-victory.webp`,...Object.fromEntries(ACTIONS.map(a=>[a,`art/${c.id}-${a}.webp`]))}}));
+export const NEW_MOVES=['launcher','sweep','air','finisher'];
+const ROUTES={joy:['light','launcher','air','finisher'],dream:['light','heavy','skill'],night:['light','sweep','finisher'],sadness:['light','launcher','skill'],trust:['light','heavy','finisher'],memory:['light','launcher','air','finisher'],growth:['light','launcher','air'],healing:['light','sweep','finisher'],luck:['light','sweep','launcher','air'],hope:['light','launcher','skill']};
+for(const c of CAST){c.comboRoute=ROUTES[c.id];for(const move of NEW_MOVES)for(let i=0;i<3;i++)c.poses[move+'-'+i]='art/v2/'+c.id+'-'+move+'-'+i+'.webp';}
 export const BY_ID=Object.fromEntries(CAST.map(c=>[c.id,c]));
 for(const c of CAST)c.poseMetrics=POSE_METRICS[c.id]||{};
 export const STAGES=ARENAS.map(s=>({...s,art:'../'+s.art}));
@@ -13,4 +16,4 @@ export const LINES={joy:['今天也一起打出漂亮的節奏！','把這份笑
 export function makeJourney(mode,hero,difficulty='normal',stage='festival'){const ids=CAST.filter(c=>c.id!==hero).map(c=>c.id),offset=CAST.findIndex(c=>c.id===hero);return{mode,hero,difficulty,stage,index:0,wins:0,health:null,opponents:Array.from({length:5},(_,i)=>ids[(offset+i*2)%ids.length])};}
 export function journeyOptions(run){return{mode:run.mode,p1:run.hero,p2:run.mode==='story'?run.opponents[run.index]:CAST.filter(c=>c.id!==run.hero)[run.index%9].id,stage:STAGES[(Math.max(0,STAGES.findIndex(s=>s.id===run.stage))+run.index)%4].id,difficulty:run.mode==='survival'&&run.index>=5?'hard':run.difficulty};}
 export function advanceJourney(run,win,hp){if(!win)return{continue:false,ending:false,cleared:run.index};run.wins++;if(run.mode==='story'){const cleared=run.index+1,ending=cleared===5;if(!ending)run.index++;return{continue:!ending,ending,cleared};}run.health=Math.min(BY_ID[run.hero].hp,Math.max(1,hp)+120);run.index++;return{continue:true,ending:false,cleared:run.wins};}
-export const ART={menu:'art/menu-backdrop.webp',select:'art/select-backdrop.webp',logo:'art/title-logo.webp',card:'art/portrait-frame.webp',button:'art/menu-button.webp',life:'art/life-frame.webp',lifeFill:'art/life-fill.webp',energy:'art/energy-frame.webp',energyFill:'art/energy-fill.webp',stick:'art/control-stick.webp',knob:'art/control-knob.webp',hit:'art/fx-hit.webp',block:'art/fx-block.webp',projectile:'art/fx-projectile.webp',ready:'art/text-ready.webp',fight:'art/text-fight.webp',ko:'art/text-ko.webp',win:'art/text-win.webp',lose:'art/text-lose.webp',panel:'art/panel-frame.webp',...Object.fromEntries(['light','heavy','skill','jump','guard','super'].map(k=>['control-'+k,`art/control-${k}.webp`]))};
+export const ART={return:'../art/return-center-v2.webp',menu:'art/menu-backdrop.webp',select:'art/select-backdrop.webp',logo:'art/title-logo.webp',card:'art/portrait-frame.webp',button:'art/menu-button.webp',life:'art/life-frame.webp',lifeFill:'art/life-fill.webp',energy:'art/energy-frame.webp',energyFill:'art/energy-fill.webp',stick:'art/control-stick.webp',knob:'art/control-knob.webp',hit:'art/fx-hit.webp',block:'art/fx-block.webp',projectile:'art/fx-projectile.webp',ready:'art/text-ready.webp',fight:'art/text-fight.webp',ko:'art/text-ko.webp',win:'art/text-win.webp',lose:'art/text-lose.webp',panel:'art/panel-frame.webp',...Object.fromEntries(['light','heavy','skill','jump','guard','super'].map(k=>['control-'+k,`art/control-${k}.webp`]))};

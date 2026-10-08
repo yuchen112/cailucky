@@ -1,0 +1,10 @@
+import {toolDependency} from './refresh-deps.mjs';
+import fs from 'node:fs';import path from 'node:path';import {createRequire} from 'node:module';
+const sharp=toolDependency('sharp');
+const [id,encoded]=process.argv.slice(2),source=/^[A-Za-z]:\\/.test(encoded)?encoded:Buffer.from(encoded,'base64').toString('utf8');
+const jobs=JSON.parse(fs.readFileSync('games/refresh-20261008/asset-jobs.json')),job=jobs.find(j=>j.id===id);if(!job)throw Error('Unknown asset');
+fs.mkdirSync(path.dirname(job.target),{recursive:true});
+const meta=await sharp(source).metadata();if(['motion','button','icon','logo'].includes(job.type)&&!meta.hasAlpha)throw Error('Transparent asset required');
+const picture=sharp(source);if(job.type==='button')picture.trim({threshold:10});
+await picture.resize({width:job.type==='motion'?512:job.type==='button'?720:job.type==='icon'?256:job.type==='logo'?960:1200,withoutEnlargement:true}).webp({quality:82,alphaQuality:95,effort:6}).toFile(job.target);
+const registry='games/refresh-20261008/records';fs.mkdirSync(registry,{recursive:true});fs.writeFileSync(registry+'/'+id+'.json',JSON.stringify({id,source,target:job.target,prompt:job.prompt,width:meta.width,height:meta.height,alpha:!!meta.hasAlpha,bytes:fs.statSync(job.target).size},null,2));console.log(id+' saved '+fs.statSync(job.target).size+' bytes');
