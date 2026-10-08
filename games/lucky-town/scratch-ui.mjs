@@ -1,7 +1,7 @@
-import {productLobby,productScreen} from './ticket-ui.mjs?v=20261008-complete1';
-import {SCRATCH_TYPES,ticketLayout,ticketName} from './scratch.mjs?v=20261008-complete1';
-import {SYMBOLS,ROLE_MAP,BY_ID,PET_MAP} from './data.mjs?v=20261008-complete1';
-import {bingoLines} from './scratch-mechanics.mjs?v=20261008-complete1';
+import {productLobby,productScreen} from './ticket-ui.mjs?v=20261008-complete2';
+import {SCRATCH_TYPES,ticketLayout,ticketName} from './scratch.mjs?v=20261008-complete2';
+import {SYMBOLS,ROLE_MAP,BY_ID,PET_MAP} from './data.mjs?v=20261008-complete2';
+import {bingoLines} from './scratch-mechanics.mjs?v=20261008-complete2';
 const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>v.toLocaleString('zh-TW'),img=(src,alt,cls='')=>'<img src="'+src+'" alt="'+esc(alt)+'" class="'+cls+'" draggable="false">',btn=(s,a,b='',cls='')=>'<button class="wood-button '+cls+'" data-action="'+a+'" '+b+'>'+s+'</button>';
 export function rule(t){if(!t.layoutVersion&&t.kind==='number')return'幸運號碼：'+t.lucky.join('／')+'；命中號碼可得到本張保存的幸運獎';if(t.kind==='number')return'幸運號碼：'+t.lucky.join('／')+'；命中的號碼領取該格獎金';if(!t.layoutVersion&&t.kind==='match')return'整張票找 3 個相同圖案，領取本張保存的幸運獎';if(t.kind==='match')return'同一橫排 3 個相同圖案領取本張幸運獎';if(t.kind==='home'&&!t.layoutVersion)return'探索小屋，最後領取本張保存的幸運獎';if(t.kind==='home')return'刮開房間各處，累加找到的金幣';if(t.kind==='treasure')return'3 把鑰匙 ＋ 1 寶箱，領取寶箱獎金';if(t.kind==='coinlines')return'每排連續 3 枚金幣可領獎：'+t.mechanics.rowAwards.map((v,i)=>(i+1)+' 排 '+n(v)).join('／');if(t.kind==='flowers')return'花朵 3／4／5／6／7／8 → 面額 × 0.5／1／2／5／10／20';if(t.kind==='multiplier')return'所有金幣袋加總 × 最右側倍率';return'開獎：'+t.lucky.join('・')+'；每條線 × 2，最高 × 10，全卡 × 20';}

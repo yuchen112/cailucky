@@ -7,5 +7,5 @@ for(const job of jobs){assert(fs.existsSync(job.target),`Missing ${job.id}`);con
  const file=`games/refresh-20261008/records/${job.id}.json`;assert(fs.existsSync(file),`Missing provenance ${job.id}`);const record=JSON.parse(fs.readFileSync(file));records.push({...record,sha256:hash,deliveredWidth:info.width,deliveredHeight:info.height,source:record.source?.split(/[\\/]/).pop()});
 }
 assert.equal(jobs.filter(j=>j.type==='motion').length,120);assert.equal(jobs.filter(j=>j.type==='button').length,19);
-fs.writeFileSync('games/refresh-20261008/manifest.json',JSON.stringify({version:'20261008-complete1',independentlyGenerated:true,montageExtraction:false,assets:records},null,2));
+fs.writeFileSync('games/refresh-20261008/manifest.json',JSON.stringify({version:'20261008-complete2',independentlyGenerated:true,montageExtraction:false,assets:records},null,2));
 console.log(`PASS ${jobs.length} distinct production artworks decode, transparency checked, all 120 animation frames and 19 individual return buttons present with provenance`);

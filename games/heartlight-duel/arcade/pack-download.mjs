@@ -1,0 +1,7 @@
+import {PACK_LAYOUT} from './packs/layout.mjs?v=20261008-complete2';
+let active=0;const waiting=[];
+async function limited(task){if(active>=6)await new Promise(resolve=>waiting.push(resolve));else active++;try{return await task();}finally{const next=waiting.shift();if(next)next();else active--;}}
+export async function downloadPack(name,signal,onBytes){const files=PACK_LAYOUT[name]?.parts||[name+'.bin'];let received=0;
+ const parts=await Promise.all(files.map(file=>limited(async()=>{const response=await fetch('./packs/'+file+'?v=20261008-complete2',{signal});if(!response.ok)throw Error('HTTP '+response.status);const chunks=[];let length=0;const reader=response.body?.getReader();if(reader){while(true){const {done,value}=await reader.read();if(done)break;chunks.push(value);length+=value.length;received+=value.length;onBytes(received);}}else{const data=new Uint8Array(await response.arrayBuffer());chunks.push(data);length=data.length;received+=data.length;onBytes(received);}const data=new Uint8Array(length);let at=0;for(const chunk of chunks){data.set(chunk,at);at+=chunk.length;}return data;})));
+ const bytes=new Uint8Array(parts.reduce((n,b)=>n+b.length,0));let at=0;for(const part of parts){bytes.set(part,at);at+=part.length;}return bytes;
+}

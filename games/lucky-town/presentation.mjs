@@ -1,6 +1,6 @@
-import {winningIndices} from './paytable.mjs?v=20261008-complete1';
-import {SYMBOLS} from './data.mjs?v=20261008-complete1';
-import {play} from './audio.mjs?v=20261008-complete1';
+import {winningIndices} from './paytable.mjs?v=20261008-complete2';
+import {SYMBOLS} from './data.mjs?v=20261008-complete2';
+import {play} from './audio.mjs?v=20261008-complete2';
 let animations=[],skipped=false;
 export function beginPresentation(){skipped=false;}
 export function skipPresentation(){skipped=true;for(const a of animations)try{a.finish()}catch{}}

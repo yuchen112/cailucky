@@ -4,73 +4,73 @@
   "groups": {
     "menu": {
       "images": 9,
-      "bytes": 419933
+      "bytes": 337036
     },
     "selection": {
       "images": 20,
-      "bytes": 424767
+      "bytes": 426005
     },
     "common": {
       "images": 20,
-      "bytes": 447677
+      "bytes": 450417
     },
     "joy": {
       "images": 24,
-      "bytes": 799572
+      "bytes": 802945
     },
     "dream": {
       "images": 24,
-      "bytes": 693689
+      "bytes": 697125
     },
     "night": {
       "images": 24,
-      "bytes": 582825
+      "bytes": 586265
     },
     "sadness": {
       "images": 24,
-      "bytes": 682605
+      "bytes": 686057
     },
     "trust": {
       "images": 24,
-      "bytes": 618078
+      "bytes": 621531
     },
     "memory": {
       "images": 24,
-      "bytes": 487654
+      "bytes": 491137
     },
     "growth": {
       "images": 22,
-      "bytes": 501877
+      "bytes": 505106
     },
     "healing": {
       "images": 24,
-      "bytes": 422364
+      "bytes": 426336
     },
     "luck": {
       "images": 24,
-      "bytes": 711183
+      "bytes": 714588
     },
     "hope": {
       "images": 24,
-      "bytes": 561198
+      "bytes": 565056
     },
     "stage-festival": {
       "images": 1,
-      "bytes": 99821
+      "bytes": 99831
     },
     "stage-moon": {
       "images": 1,
-      "bytes": 102248
+      "bytes": 102258
     },
     "stage-rain": {
       "images": 1,
-      "bytes": 134712
+      "bytes": 134722
     },
     "stage-workshop": {
       "images": 1,
-      "bytes": 87035
+      "bytes": 87045
     }
   },
   "totalOriginalBytes": 22236550,
-  "totalPackedBytes": 7777238
+  "totalPackedBytes": 7733460
 }

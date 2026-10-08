@@ -1,6 +1,6 @@
-import {migrate,validateEvolution} from './evolution.mjs?v=20261008-complete1';
-import {ROLES,ROLE_MAP,BY_ID,THEMES,MACHINES} from './data.mjs?v=20261008-complete1';
-import {supports} from './room.mjs?v=20261008-complete1';
+import {migrate,validateEvolution} from './evolution.mjs?v=20261008-complete2';
+import {ROLES,ROLE_MAP,BY_ID,THEMES,MACHINES} from './data.mjs?v=20261008-complete2';
+import {supports} from './room.mjs?v=20261008-complete2';
 export const KEY='cxq-lucky-town-v1',BACKUPS=KEY+'-backups';
 export const CANONICAL=KEY+'-tickets-v5',CANONICAL_BACKUPS=KEY+'-tickets-v5-backups';
 export const copy=x=>JSON.parse(JSON.stringify(x));

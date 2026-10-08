@@ -1890,7 +1890,7 @@ function cycleVal(v, arr) {
   return arr[(i + 1) % arr.length];
 }
 function action(id) {
-  if(id==="game-center"&&S.scene==="home"){location.href="../../?view=game-hub&v=20261008-complete1";return;}
+  if(id==="game-center"&&S.scene==="home"){location.href="../../?view=game-hub&v=20261008-complete2";return;}
   if (!id) return;
   if (S.scene === "home" && !HOME.locked && id === "gallery") {
     S.scene = "gallery";

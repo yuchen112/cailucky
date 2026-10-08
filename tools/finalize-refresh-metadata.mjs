@@ -4,9 +4,10 @@ const extra=' IMPORTANT: Create a substantially different active attack drawing:
 const night=jobs.find(j=>j.id==='motion-night-air-1');if(!night.prompt.includes('IMPORTANT: Create a substantially different'))night.prompt+=extra;
 fs.writeFileSync(dir+'/asset-jobs.json',JSON.stringify(jobs,null,2));
 const file=dir+'/records/motion-night-air-1.json',record=JSON.parse(fs.readFileSync(file));record.prompt=night.prompt;fs.writeFileSync(file,JSON.stringify(record,null,2));
-const inventory=JSON.parse(fs.readFileSync(dir+'/inventory.json'));inventory.artJobs=jobs.length;inventory.games.find(g=>g.id==='fairytale-defense').url='games/fairytale-defense/index.html?v=20261008-complete1';fs.writeFileSync(dir+'/inventory.json',JSON.stringify(inventory,null,2));
+const inventory=JSON.parse(fs.readFileSync(dir+'/inventory.json'));inventory.artJobs=jobs.length;inventory.games.find(g=>g.id==='fairytale-defense').url='games/fairytale-defense/index.html?v=20261008-complete2';fs.writeFileSync(dir+'/inventory.json',JSON.stringify(inventory,null,2));
 const records=jobs.map(j=>JSON.parse(fs.readFileSync(dir+'/records/'+j.id+'.json')));fs.writeFileSync(dir+'/generated.json',JSON.stringify(records.map(r=>({...r,source:r.source.split(/[\\/]/).pop()})),null,2));
-const arcade='games/heartlight-duel/arcade',pack=fs.readFileSync(arcade+'/packs/menu.bin'),header=JSON.parse(pack.subarray(4,4+pack.readUInt32LE(0))),manifest=JSON.parse(fs.readFileSync(arcade+'/art/manifest.json'));
+const arcade='games/heartlight-duel/arcade',header={meta:{}},manifest=JSON.parse(fs.readFileSync(arcade+'/art/manifest.json'));
+for(const file of fs.readdirSync(arcade+'/packs').filter(f=>f.endsWith('.bin')&&!f.includes('.part-'))){const pack=fs.readFileSync(arcade+'/packs/'+file);Object.assign(header.meta,JSON.parse(pack.subarray(4,4+pack.readUInt32LE(0))).meta);}
 manifest.assets=manifest.assets.filter(a=>!a.newDrawnFrame);
 for(const j of jobs.filter(j=>j.type==='motion')){const r=records.find(r=>r.id===j.id),id=j.id.replace('motion-',''),m=header.meta[id];if(!m?.newDrawnFrame)throw Error('Missing final pack metadata '+id);manifest.assets.push({id,file:j.target.replace(arcade+'/',''),source:r.source.split(/[\\/]/).pop(),kind:'motion-v2',prompt:r.prompt,...m});}
 manifest.individualAssets=true;manifest.montageExtraction=false;fs.writeFileSync(arcade+'/art/manifest.json',JSON.stringify(manifest,null,2));

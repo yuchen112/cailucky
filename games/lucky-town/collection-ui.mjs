@@ -1,4 +1,4 @@
-import {CATALOG,FURNITURE,CLOTHES,THEMES,WINDOW_SCENES,ROLES,ROLE_MAP,SERIES} from './data.mjs?v=20261008-complete1';
+import {CATALOG,FURNITURE,CLOTHES,THEMES,WINDOW_SCENES,ROLES,ROLE_MAP,SERIES} from './data.mjs?v=20261008-complete2';
 const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number=v=>v.toLocaleString('zh-TW'),btn=(v,a,attrs='',cls='')=>`<button class="wood-button ${cls}" data-action="${a}" ${attrs}>${v}</button>`,img=(s,n)=>`<img src="${s}" alt="${esc(n)}" draggable="false" loading="lazy">`;
 export const styleItem=(kind,id)=>(kind==='theme'?THEMES:WINDOW_SCENES).find(x=>x.id===id);

@@ -1,7 +1,7 @@
 import {toolDependency} from './refresh-deps.mjs';
 import fs from 'node:fs';import path from 'node:path';import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url),sharp=toolDependency('sharp'),esbuild=toolDependency('esbuild');
-const root=process.cwd(),report={version:'20261008-complete1',town:{images:0,originalBytes:0,deliveryBytes:0}};
+const root=process.cwd(),report={version:'20261008-complete2',town:{images:0,originalBytes:0,deliveryBytes:0}};
 const town='games/lucky-town';fs.mkdirSync(town+'/delivery',{recursive:true});
 for(const file of fs.readdirSync(town+'/art').filter(f=>f.endsWith('.webp'))){const src=town+'/art/'+file,dest=town+'/delivery/'+file,original=fs.statSync(src);report.town.images++;report.town.originalBytes+=original.size;if(fs.existsSync(dest)&&fs.statSync(dest).mtimeMs>=original.mtimeMs){report.town.deliveryBytes+=fs.statSync(dest).size;continue;}const bg=/backdrop|background|scene|plaza|room-|ticket-/.test(file),ui=/button|panel|machine/.test(file),width=bg?1200:ui?700:420;const data=await sharp(src).resize({width,withoutEnlargement:true}).webp({quality:78,alphaQuality:92,effort:5}).toBuffer();fs.writeFileSync(dest,data);report.town.deliveryBytes+=data.length;}
 const clean={name:'local-module-delivery',setup(build){build.onResolve({filter:/\.mjs\?v=/},args=>({path:path.resolve(args.resolveDir,args.path.split('?')[0])}));build.onLoad({filter:/games[\\/]lucky-town[\\/].*\.mjs$/},args=>({contents:fs.readFileSync(args.path,'utf8').replace(/(["'`])art\//g,'$1delivery/'),loader:'js'}));}};

@@ -1,5 +1,5 @@
-import {TICKET_CATALOG,TICKET_COSTS,ticketProduct,productLayout} from './ticket-catalog.mjs?v=20261008-complete1';
-import {SYMBOLS,ROLE_MAP,BY_ID} from './data.mjs?v=20261008-complete1';
+import {TICKET_CATALOG,TICKET_COSTS,ticketProduct,productLayout} from './ticket-catalog.mjs?v=20261008-complete2';
+import {SYMBOLS,ROLE_MAP,BY_ID} from './data.mjs?v=20261008-complete2';
 const n=v=>v.toLocaleString('zh-TW'),esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const btn=(label,action,attrs='',cls='')=>`<button type="button" class="wood-button ${cls}" data-action="${action}" ${attrs}>${label}</button>`;
 export function productRulesHTML(p){return `<div class="product-rule"><img src="${p.art}" alt="${p.name} ${p.cost} 金幣票面示意"><p><b>面額 ${n(p.cost)} 金幣 · 最高 ${n(p.max)} 金幣</b></p><p>${p.rules}</p>${p.mode==='trio'?`<div class="symbol-guide">${SYMBOLS.map((s,i)=>`<div><img src="${s.art}" alt="${s.name}"><small>${s.name}三同<br>${[200,100,60,40,30,20][i]} 金幣</small></div>`).join('')}</div>`:''}<p>票面符號、號碼與獎金先保存；結算依上述規則逐項計算。刮除方式與揭曉順序不影響結果。</p></div>`;}

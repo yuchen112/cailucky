@@ -24,7 +24,7 @@ Authorized scope: complete integrated production release, with no partial deploy
 
 Integrated implementation and local release validation complete. All 164 independent artworks are present and decoded, including 120 new character motion drawings and 19 game-specific return artworks; source prompts are retained in asset-jobs.json and manifest.json. New ticket illustrations, foil and symbols replace the former new-ticket CSS/SVG presentation while legacy purchased tickets retain compatibility.
 
-The full arcade package contains 291 independently encoded images (7,777,238 bytes versus 22,236,550 original bytes), with a 419,933-byte menu package. Lucky Town uses 876 delivery images totaling 38,612,016 bytes versus 87,092,476 originals; these totals cover the full collection, not a single startup download. Entry code is bundled, and only current arcade participants and stage load before battle.
+The full arcade package contains 291 independently encoded images (7,733,460 bytes versus 22,236,550 original bytes), with a 337,036-byte menu package. Lucky Town uses 876 delivery images totaling 38,612,016 bytes versus 87,092,476 originals; these totals cover the full collection, not a single startup download. Entry code is bundled, and only current arcade participants and stage load before battle.
 
 Current checks passed: 22 existing arcade integration checks; 60 new combat/restore/route checks; 291-image pack decode/alpha/aspect/index/retry checks; five music and 27 unique cue decodes without full-scale clipping; 164-art transparency/provenance checks; ten new ticket products with 10,000 rule/save/claim cases; existing 120,000 slot and 48,000 legacy-ticket simulations.
 
@@ -35,3 +35,5 @@ Fresh local arcade entry with 曦羽 versus 糯糯 in 星願工坊 reported 178m
 Publication must still be confirmed against the matching GitHub Pages run and the live complete1 URLs. Live measurements and screenshots are retained separately under outputs/refresh-20261008 after deployment; local success alone does not establish production success.
 
 To rebuild on another machine: npm --prefix tools/refresh-tooling install; node tools/build-arcade-packs.mjs; node tools/build-complete-refresh.mjs. Never publish a pack built with --allow-incomplete-dev. The generated record files under records/ are local generation evidence; generated.json and manifest.json retain the portable source filenames and complete prompts.
+
+Release complete2 distributes character metadata to its own pack, downloads 96 KiB parts with a six-request limit, and warms match assets during selection.

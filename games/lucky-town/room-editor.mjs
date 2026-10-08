@@ -1,7 +1,7 @@
-import {BY_ID} from './data.mjs?v=20261008-complete1';
-import {canPlace,move,supports,size} from './room.mjs?v=20261008-complete1';
-import {openCells,furnitureRect} from './room-life.mjs?v=20261008-complete1';
-import {canvasPoint,floorCell} from './room-space.mjs?v=20261008-complete1';
+import {BY_ID} from './data.mjs?v=20261008-complete2';
+import {canPlace,move,supports,size} from './room.mjs?v=20261008-complete2';
+import {openCells,furnitureRect} from './room-life.mjs?v=20261008-complete2';
+import {canvasPoint,floorCell} from './room-space.mjs?v=20261008-complete2';
 export function placement(room,p){const b=size(p);if(p.x<0||p.y<0||p.x+b.w>room.size||p.y+b.h>room.size)return{valid:false,reason:'超出房間邊界'};if(!canPlace(room,p))return{valid:false,reason:p.onTop?'這個桌面／座位已有擺飾':'這裡已有家具，請選空位'};const next=structuredClone(room),old=next.items.find(q=>q.uid===p.uid);if(old)move(next,old,p);else next.items.push(p);if(!openCells(next).length)return{valid:false,reason:'至少保留一格讓夥伴走動'};return{valid:true,reason:p.onTop?'可放在家具上':'可以放置'};}
 export function bindEditor(canvas,api){let down=null,dragging=false;const room=()=>api.room(),hit=q=>[...room().items].sort((a,b)=>b.y-a.y||Number(!!b.onTop)-Number(!!a.onTop)).find(p=>{const b=furnitureRect(p,room());return q.x>b.x-b.w/2&&q.x<b.x+b.w/2&&q.y>b.y-b.h&&q.y<b.y;});
  function candidate(q,p){const target=hit(q),next={...p,...floorCell(q,room())};delete next.onTop;if(target&&target.uid!==p.uid&&!target.onTop&&supports(target.item,p.item)){next.x=target.x;next.y=target.y;next.onTop=target.uid;}return next;}
