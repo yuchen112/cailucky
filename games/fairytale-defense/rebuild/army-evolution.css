@@ -1,6 +1,6 @@
 /* Responsive composition only; all decorative artwork is independently generated. */
-body[data-region=moon]{background-image:url('art/meadow-moon.webp')}
-body[data-region=dawn]{background-image:url('art/meadow-dawn.webp')}
+body[data-region=moon]{background-image:url("../../shared/optimized-art-v2/70a6f7ef06f80b7b.webp")}
+body[data-region=dawn]{background-image:url("../../shared/optimized-art-v2/15c381d3d85c5d8c.webp")}
 #troops[open]{height:fit-content;max-height:88svh;min-height:0}
 #troops .scroll-body{flex:0 1 auto;max-height:calc(88svh - 155px)}
 #troop-content .upgrade-preview{display:block;width:100px;height:100px;object-fit:contain;margin:12px auto 0}

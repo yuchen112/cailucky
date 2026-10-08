@@ -1,0 +1,408 @@
+{
+  "tool": "built-in imagegen",
+  "independentFrames": true,
+  "newFrames": 34,
+  "assets": [
+    {
+      "id": "memory",
+      "state": "blink",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-ff718b6a-b46e-40ef-8699-615dcce4da5a.png",
+      "prompt": "Use case: identity-preserve. One independently redrawn animation sprite for CxQ website mascot memory. Reference image locks exact identity, full costume, props, colors, material, front three-quarter camera and proportions. Draw CLOSED-EYE BLINK and subtle relaxed breathing pose: both eyelids closed softly (if reference already closed, draw eyes half-open instead); preserve same feet baseline and silhouette scale. Complete full body with all accessories inside generous transparent margins. Single character only, true transparent background, no ground, no shadow rectangle, no text, no grid, no montage. Not a transformed copy. Retain exact identity.",
+      "target": "assets/mascot-motion-v2/memory-blink.webp",
+      "bytes": 25574,
+      "sha256": "f00aaac261050afd831c18a6ec344338400dc22731b0bd5db58d32028ff00f14"
+    },
+    {
+      "id": "memory",
+      "state": "wave",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-3debc82e-a4b5-46a2-979a-656bcd2bbe78.png",
+      "prompt": "Use case: identity-preserve. One newly and independently drawn wave animation frame of CxQ website mascot memory. Reference locks identity, face, outfit, all signature props, colors, materials, chibi proportions and camera. Action: raise the free hand/paw beside the face with palm outward, a warm greeting smile, bend the elbow naturally; keep held signature prop securely in the other hand. Full body, fixed upright body center, feet baseline near bottom, same scale as reference, generous empty margin. True transparent background, no green background even if reference has green, no text, no ground, no grid, no sprite sheet or montage. Single character only. No eyebrows or mouth for box. Draw new limbs/face, not a transformed reference.",
+      "target": "assets/mascot-motion-v2/memory-wave.webp",
+      "bytes": 25514,
+      "sha256": "966cd7e2f2b46f0abb9358be45c6236ceb98a5ad3be9448b4a13897d22c62b18"
+    },
+    {
+      "id": "memory",
+      "state": "react",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-4f66526d-ce19-42e8-807b-0e0377b0fb2f.png",
+      "prompt": "Use case: identity-preserve. One independent NEW react animation sprite for CxQ website mascot memory. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: slight friendly head bow and happy closed-eye smile; free hand near heart thanking the visitor, held prop secure, gentle cloth movement. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/memory-react.webp",
+      "bytes": 23284,
+      "sha256": "b56feeea939ef24f70af2b1a3e224fd80e1ff8db6fe8ca38406f00e53734a1c8"
+    },
+    {
+      "id": "dream",
+      "state": "blink",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-5670e4c4-74a7-4a4c-a566-986a01b210df.png",
+      "prompt": "Use case: identity-preserve. One independently redrawn animation sprite for CxQ website mascot dream. Reference image locks exact identity, full costume, props, colors, material, front three-quarter camera and proportions. Draw CLOSED-EYE BLINK and subtle relaxed breathing pose: both eyelids closed softly (if reference already closed, draw eyes half-open instead); preserve same feet baseline and silhouette scale. Complete full body with all accessories inside generous transparent margins. Single character only, true transparent background, no ground, no shadow rectangle, no text, no grid, no montage. Not a transformed copy. Retain exact identity.",
+      "target": "assets/mascot-motion-v2/dream-blink.webp",
+      "bytes": 31322,
+      "sha256": "9ee0c67048283559881e6dbca4f3ded20c33a307b7d1a95861c1e26105b22727"
+    },
+    {
+      "id": "dream",
+      "state": "wave",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-1c235890-4949-4639-83b8-481e93fca3c2.png",
+      "prompt": "Use case: identity-preserve. One newly and independently drawn wave animation frame of CxQ website mascot dream. Reference locks identity, face, outfit, all signature props, colors, materials, chibi proportions and camera. Action: raise the free hand/paw beside the face with palm outward, a warm greeting smile, bend the elbow naturally; keep held signature prop securely in the other hand. Full body, fixed upright body center, feet baseline near bottom, same scale as reference, generous empty margin. True transparent background, no green background even if reference has green, no text, no ground, no grid, no sprite sheet or montage. Single character only. No eyebrows or mouth for box. Draw new limbs/face, not a transformed reference.",
+      "target": "assets/mascot-motion-v2/dream-wave.webp",
+      "bytes": 30036,
+      "sha256": "14a34ca9faed39b43194e8543afb93734e55e1381c885eb6ee7da52d4b3f4c7d"
+    },
+    {
+      "id": "dream",
+      "state": "react",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-468065dc-e7a6-4f5c-9f86-803756581dce.png",
+      "prompt": "Use case: identity-preserve. One independent NEW react animation sprite for CxQ website mascot dream. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: slight friendly head bow and happy closed-eye smile; free hand near heart thanking the visitor, held prop secure, gentle cloth movement. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/dream-react.webp",
+      "bytes": 27310,
+      "sha256": "0e3e7d204171adfb6dd19da602595450af3cc64cc7fb2eaf170be5ef88bfd60f"
+    },
+    {
+      "id": "growth",
+      "state": "blink",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-35b238db-9a56-49e4-a335-0e362d31665d.png",
+      "prompt": "Use case: identity-preserve. One independently redrawn animation sprite for CxQ website mascot growth. Reference image locks exact identity, full costume, props, colors, material, front three-quarter camera and proportions. Draw CLOSED-EYE BLINK and subtle relaxed breathing pose: both eyelids closed softly (if reference already closed, draw eyes half-open instead); preserve same feet baseline and silhouette scale. Complete full body with all accessories inside generous transparent margins. Single character only, true transparent background, no ground, no shadow rectangle, no text, no grid, no montage. Not a transformed copy. Retain exact identity.",
+      "target": "assets/mascot-motion-v2/growth-blink.webp",
+      "bytes": 31636,
+      "sha256": "5f53b33b8583bc17d68c6f839c9f4a88eb7324b4d421ed513c1759e40430e7a4"
+    },
+    {
+      "id": "growth",
+      "state": "wave",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-77ebc8c1-406b-4542-80cc-5868ad698da4.png",
+      "prompt": "Use case: identity-preserve. One newly and independently drawn wave animation frame of CxQ website mascot growth. Reference locks identity, face, outfit, all signature props, colors, materials, chibi proportions and camera. Action: raise the free hand/paw beside the face with palm outward, a warm greeting smile, bend the elbow naturally; keep held signature prop securely in the other hand. Full body, fixed upright body center, feet baseline near bottom, same scale as reference, generous empty margin. True transparent background, no green background even if reference has green, no text, no ground, no grid, no sprite sheet or montage. Single character only. No eyebrows or mouth for box. Draw new limbs/face, not a transformed reference.",
+      "target": "assets/mascot-motion-v2/growth-wave.webp",
+      "bytes": 31262,
+      "sha256": "04aa87fa492b974eb88f32de41ce9bb54dc9a8cbc6f610a6760c6032e263396a"
+    },
+    {
+      "id": "growth",
+      "state": "react",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-1ab3d879-0d5d-45d8-b635-e5927036e026.png",
+      "prompt": "Use case: identity-preserve. One independent NEW react animation sprite for CxQ website mascot growth. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: slight friendly head bow and happy closed-eye smile; free hand near heart thanking the visitor, held prop secure, gentle cloth movement. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/growth-react.webp",
+      "bytes": 29166,
+      "sha256": "376bc6018226c6e10a2dd41b473748a18546f10114546adbf7edfbc5dbbc9002"
+    },
+    {
+      "id": "night",
+      "state": "blink",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-7b49a994-ef8d-4a69-8275-a4bc1f398a07.png",
+      "prompt": "Use case: identity-preserve. One independently redrawn animation sprite for CxQ website mascot night. Reference image locks exact identity, full costume, props, colors, material, front three-quarter camera and proportions. Draw CLOSED-EYE BLINK and subtle relaxed breathing pose: both eyelids closed softly (if reference already closed, draw eyes half-open instead); preserve same feet baseline and silhouette scale. Complete full body with all accessories inside generous transparent margins. Single character only, true transparent background, no ground, no shadow rectangle, no text, no grid, no montage. Not a transformed copy. Retain exact identity.",
+      "target": "assets/mascot-motion-v2/night-blink.webp",
+      "bytes": 34102,
+      "sha256": "b2c12c261bc4f09ab8f590f44fc959e38e248717f46c33532e652db08721b489"
+    },
+    {
+      "id": "night",
+      "state": "wave",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-de151352-241a-4641-8aa1-cb9a5b9e2698.png",
+      "prompt": "Use case: identity-preserve. One newly and independently drawn wave animation frame of CxQ website mascot night. Reference locks identity, face, outfit, all signature props, colors, materials, chibi proportions and camera. Action: raise the free hand/paw beside the face with palm outward, a warm greeting smile, bend the elbow naturally; keep held signature prop securely in the other hand. Full body, fixed upright body center, feet baseline near bottom, same scale as reference, generous empty margin. True transparent background, no green background even if reference has green, no text, no ground, no grid, no sprite sheet or montage. Single character only. No eyebrows or mouth for box. Draw new limbs/face, not a transformed reference.",
+      "target": "assets/mascot-motion-v2/night-wave.webp",
+      "bytes": 35726,
+      "sha256": "712f384713f9ea5b157a51b82cd5e969c00c65c0553f6f919981c8371eeb2784"
+    },
+    {
+      "id": "night",
+      "state": "react",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-654e771a-77af-4229-99f4-deef980a36f1.png",
+      "prompt": "Use case: identity-preserve. One independent NEW react animation sprite for CxQ website mascot night. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: slight friendly head bow and happy closed-eye smile; free hand near heart thanking the visitor, held prop secure, gentle cloth movement. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/night-react.webp",
+      "bytes": 32638,
+      "sha256": "1083b5506c83c6a559acb898f3431131be99f4e57efb53609994b0f9c6fbc22c"
+    },
+    {
+      "id": "healing",
+      "state": "blink",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-498ec39f-3e49-4c93-8883-520fed741ee8.png",
+      "prompt": "Use case: identity-preserve. One independently redrawn animation sprite for CxQ website mascot healing. Reference image locks exact identity, full costume, props, colors, material, front three-quarter camera and proportions. Draw CLOSED-EYE BLINK and subtle relaxed breathing pose: both eyelids closed softly (if reference already closed, draw eyes half-open instead); preserve same feet baseline and silhouette scale. Complete full body with all accessories inside generous transparent margins. Single character only, true transparent background, no ground, no shadow rectangle, no text, no grid, no montage. Not a transformed copy. Retain exact identity.",
+      "target": "assets/mascot-motion-v2/healing-blink.webp",
+      "bytes": 22990,
+      "sha256": "5ad869cbb037876152c82e743816903eae86af915ea6a234c1bc15752fae2964"
+    },
+    {
+      "id": "healing",
+      "state": "wave",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-93ac04bf-b19e-4329-9b0d-5044feda2da3.png",
+      "prompt": "Use case: identity-preserve. One newly and independently drawn wave animation frame of CxQ website mascot healing. Reference locks identity, face, outfit, all signature props, colors, materials, chibi proportions and camera. Action: raise the free hand/paw beside the face with palm outward, a warm greeting smile, bend the elbow naturally; keep held signature prop securely in the other hand. Full body, fixed upright body center, feet baseline near bottom, same scale as reference, generous empty margin. True transparent background, no green background even if reference has green, no text, no ground, no grid, no sprite sheet or montage. Single character only. No eyebrows or mouth for box. Draw new limbs/face, not a transformed reference.",
+      "target": "assets/mascot-motion-v2/healing-wave.webp",
+      "bytes": 22570,
+      "sha256": "802b4c60f212445079ed7e78eca509a97b435d04593857da98e0475e4c3da697"
+    },
+    {
+      "id": "healing",
+      "state": "react",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-a4701b22-c73c-4939-89d6-a2ac7eb8df5c.png",
+      "prompt": "Use case: identity-preserve. One independent NEW react animation sprite for CxQ website mascot healing. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: slight friendly head bow and happy closed-eye smile; free hand near heart thanking the visitor, held prop secure, gentle cloth movement. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/healing-react.webp",
+      "bytes": 23062,
+      "sha256": "6ae3a7f43bdc675aa19d3932f8d4fb0c4bff954b22c0e00baadefc93c034683b"
+    },
+    {
+      "id": "joy",
+      "state": "blink",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-c2a6a7d1-4674-45b5-a9a0-86f46b913c68.png",
+      "prompt": "Use case: identity-preserve. One independently redrawn animation sprite for CxQ website mascot joy. Reference image locks exact identity, full costume, props, colors, material, front three-quarter camera and proportions. Draw CLOSED-EYE BLINK and subtle relaxed breathing pose: both eyelids closed softly (if reference already closed, draw eyes half-open instead); preserve same feet baseline and silhouette scale. Complete full body with all accessories inside generous transparent margins. Single character only, true transparent background, no ground, no shadow rectangle, no text, no grid, no montage. Not a transformed copy. Retain exact identity.",
+      "target": "assets/mascot-motion-v2/joy-blink.webp",
+      "bytes": 37452,
+      "sha256": "6030b84d7f0d232e202fe82de23d372599cfe42fe3a85f6f55a81fd5ea6bd184"
+    },
+    {
+      "id": "joy",
+      "state": "wave",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-91071226-1aa9-41af-a140-47f925ed9e40.png",
+      "prompt": "Use case: identity-preserve. One newly and independently drawn wave animation frame of CxQ website mascot joy. Reference locks identity, face, outfit, all signature props, colors, materials, chibi proportions and camera. Action: raise the free hand/paw beside the face with palm outward, a warm greeting smile, bend the elbow naturally; keep held signature prop securely in the other hand. Full body, fixed upright body center, feet baseline near bottom, same scale as reference, generous empty margin. True transparent background, no green background even if reference has green, no text, no ground, no grid, no sprite sheet or montage. Single character only. No eyebrows or mouth for box. Draw new limbs/face, not a transformed reference.",
+      "target": "assets/mascot-motion-v2/joy-wave.webp",
+      "bytes": 36456,
+      "sha256": "ae44b12372e47ee2535d1babbfd60a6475c228d744aeb708ddb050c3b942afa6"
+    },
+    {
+      "id": "joy",
+      "state": "react",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-ec0f0095-ac3d-465d-99a6-888c06e68192.png",
+      "prompt": "Use case: identity-preserve. One independent NEW react animation sprite for CxQ website mascot joy. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: slight friendly head bow and happy closed-eye smile; free hand near heart thanking the visitor, held prop secure, gentle cloth movement. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/joy-react.webp",
+      "bytes": 37098,
+      "sha256": "fedad50a5a0097ec0696d027e173a805fbd709c616d0440cf8a67b93041eec24"
+    },
+    {
+      "id": "sadness",
+      "state": "blink",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-3f944f54-49c2-4311-839e-54e908dda0c5.png",
+      "prompt": "Use case: identity-preserve. One newly and independently drawn blink animation frame of CxQ website mascot sadness. Reference locks identity, face, outfit, all signature props, colors, materials, chibi proportions and camera. Action: both eyelids softly closed in a relaxed blink; if already closed in reference, open them halfway. Full body, fixed upright body center, feet baseline near bottom, same scale as reference, generous empty margin. True transparent background, no green background even if reference has green, no text, no ground, no grid, no sprite sheet or montage. Single character only. No eyebrows or mouth for box. Draw new limbs/face, not a transformed reference.",
+      "target": "assets/mascot-motion-v2/sadness-blink.webp",
+      "bytes": 28186,
+      "sha256": "dd5e8bddd8b440414fc2bbd51fa9c946360232c6deb91da28f186fdd3535f29d"
+    },
+    {
+      "id": "sadness",
+      "state": "wave",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-300f4ccd-2166-402a-9ee5-2099d858f39a.png",
+      "prompt": "Use case: identity-preserve. One independent NEW wave animation sprite for CxQ website mascot sadness. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: free hand/paw raised beside face, palm outward, elbow bent, warm smile; preserve held prop in other hand. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/sadness-wave.webp",
+      "bytes": 29622,
+      "sha256": "3920790b8a1551bc17b5a6053012e32b26d007cc3a5d3c7dcc72aa53684ea22f"
+    },
+    {
+      "id": "sadness",
+      "state": "react",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-6b171671-378d-4668-a247-d0114ca15ca8.png",
+      "prompt": "Use case: identity-preserve. One independent NEW react animation sprite for CxQ website mascot sadness. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: slight friendly head bow and happy closed-eye smile; free hand near heart thanking the visitor, held prop secure, gentle cloth movement. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/sadness-react.webp",
+      "bytes": 29490,
+      "sha256": "e7b7167da85f8036ebb093dceffd52bedbef7bbf9b1a60a6481154c581e29abf"
+    },
+    {
+      "id": "hope",
+      "state": "blink",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-bd2a5697-e53b-4d55-9a7c-83d74a6ebf5d.png",
+      "prompt": "Use case: identity-preserve. One newly and independently drawn blink animation frame of CxQ website mascot hope. Reference locks identity, face, outfit, all signature props, colors, materials, chibi proportions and camera. Action: both eyelids softly closed in a relaxed blink; if already closed in reference, open them halfway. Full body, fixed upright body center, feet baseline near bottom, same scale as reference, generous empty margin. True transparent background, no green background even if reference has green, no text, no ground, no grid, no sprite sheet or montage. Single character only. No eyebrows or mouth for box. Draw new limbs/face, not a transformed reference.",
+      "target": "assets/mascot-motion-v2/hope-blink.webp",
+      "bytes": 22276,
+      "sha256": "f1705acf2790eac50f929ebd1731e5564a9edacc1ad61f8e90aaf434bccb714f"
+    },
+    {
+      "id": "hope",
+      "state": "wave",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-2fd95652-2eef-4921-b641-3fdd97497c5d.png",
+      "prompt": "Use case: identity-preserve. One independent NEW wave animation sprite for CxQ website mascot hope. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: free hand/paw raised beside face, palm outward, elbow bent, warm smile; preserve held prop in other hand. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/hope-wave.webp",
+      "bytes": 23962,
+      "sha256": "9bd8cefefd46ca0a819cf11ea22548fa60048280bc4e59d203897af084b497b6"
+    },
+    {
+      "id": "hope",
+      "state": "react",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-03c35a9f-f1bd-4d6f-b16c-c56872c32462.png",
+      "prompt": "Use case: identity-preserve. One independent NEW react animation sprite for CxQ website mascot hope. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: slight friendly head bow and happy closed-eye smile; free hand near heart thanking the visitor, held prop secure, gentle cloth movement. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/hope-react.webp",
+      "bytes": 25216,
+      "sha256": "70585c3b2731024e3001511f6475b75f2c25574f99a99580b77cd0cb5684386f"
+    },
+    {
+      "id": "trust",
+      "state": "blink",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-5f213eb3-9b37-4459-956e-72e9bcbf46b7.png",
+      "prompt": "Use case: identity-preserve. One newly and independently drawn blink animation frame of CxQ website mascot trust. Reference locks identity, face, outfit, all signature props, colors, materials, chibi proportions and camera. Action: both eyelids softly closed in a relaxed blink; if already closed in reference, open them halfway. Full body, fixed upright body center, feet baseline near bottom, same scale as reference, generous empty margin. True transparent background, no green background even if reference has green, no text, no ground, no grid, no sprite sheet or montage. Single character only. No eyebrows or mouth for box. Draw new limbs/face, not a transformed reference.",
+      "target": "assets/mascot-motion-v2/trust-blink.webp",
+      "bytes": 43026,
+      "sha256": "94d2b6c9610efc48287977880f96768550682e64329a44645b140cf7c9c19fe0"
+    },
+    {
+      "id": "trust",
+      "state": "wave",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-22d26819-55eb-4d59-ab44-6acdc0659de9.png",
+      "prompt": "Use case: identity-preserve. One independent NEW wave animation sprite for CxQ website mascot trust. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: free hand/paw raised beside face, palm outward, elbow bent, warm smile; preserve held prop in other hand. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/trust-wave.webp",
+      "bytes": 41276,
+      "sha256": "c6985e6e80dea598b3b722d677d0706f7c2307b121d0cc7968e912cd3442faaa"
+    },
+    {
+      "id": "trust",
+      "state": "react",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-f5da575c-7447-4508-a9b0-a44a656e966f.png",
+      "prompt": "Use case: identity-preserve. One independent NEW react animation sprite for CxQ website mascot trust. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: slight friendly head bow and happy closed-eye smile; free hand near heart thanking the visitor, held prop secure, gentle cloth movement. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/trust-react.webp",
+      "bytes": 43894,
+      "sha256": "21fe6cf85278f553797469d4024842b8d21cdbca5620e12fcab2251ca3f71379"
+    },
+    {
+      "id": "luck",
+      "state": "blink",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-4a4a9571-766a-45d4-874c-dffeb58431f3.png",
+      "prompt": "Use case: identity-preserve. One newly and independently drawn blink animation frame of CxQ website mascot luck. Reference locks identity, face, outfit, all signature props, colors, materials, chibi proportions and camera. Action: both eyelids softly closed in a relaxed blink; if already closed in reference, open them halfway. Full body, fixed upright body center, feet baseline near bottom, same scale as reference, generous empty margin. True transparent background, no green background even if reference has green, no text, no ground, no grid, no sprite sheet or montage. Single character only. No eyebrows or mouth for box. Draw new limbs/face, not a transformed reference.",
+      "target": "assets/mascot-motion-v2/luck-blink.webp",
+      "bytes": 35504,
+      "sha256": "fe60e83dda9cdb3f116b2908a8e7b36bb7f0522f49227cf69939920848b9f858"
+    },
+    {
+      "id": "luck",
+      "state": "wave",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-adf41d9e-1db1-4b67-9fe7-709261f2e504.png",
+      "prompt": "Use case: identity-preserve. One independent NEW wave animation sprite for CxQ website mascot luck. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: free hand/paw raised beside face, palm outward, elbow bent, warm smile; preserve held prop in other hand. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/luck-wave.webp",
+      "bytes": 38910,
+      "sha256": "5c46be7aafb48cf20625be377bef63d6eb33d4594e58ae4cc3ed0c30cbe7c315"
+    },
+    {
+      "id": "luck",
+      "state": "react",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-fade33f1-1e84-4dd5-ae2e-b704263ef446.png",
+      "prompt": "Use case: identity-preserve. One independent NEW react animation sprite for CxQ website mascot luck. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: slight friendly head bow and happy closed-eye smile; free hand near heart thanking the visitor, held prop secure, gentle cloth movement. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/luck-react.webp",
+      "bytes": 34984,
+      "sha256": "cec66754df4af1d963c3cbc6067931792839583832509f85c0fd2a05c0998f48"
+    },
+    {
+      "id": "box",
+      "state": "blink",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-06231a32-6812-46ad-9ecc-6d9608a5a4a8.png",
+      "prompt": "Use case: identity-preserve. One newly and independently drawn blink animation frame of CxQ website mascot box. Reference locks identity, face, outfit, all signature props, colors, materials, chibi proportions and camera. Action: both black oval eyes gently closed as arcs; lid stays shut, arms relaxed. Full body, fixed upright body center, feet baseline near bottom, same scale as reference, generous empty margin. True transparent background, no green background even if reference has green, no text, no ground, no grid, no sprite sheet or montage. Single character only. No eyebrows or mouth for box. Draw new limbs/face, not a transformed reference.",
+      "target": "assets/mascot-motion-v2/box-blink.webp",
+      "bytes": 23302,
+      "sha256": "c3b8f781bd428180fb8788ffdcef1ea74c85747533d8fa2dc3a99b399fde671f"
+    },
+    {
+      "id": "box",
+      "state": "wave",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-9f674527-94a3-4c05-b792-ca40ae0cb550.png",
+      "prompt": "Use case: identity-preserve. One independent NEW wave animation sprite for CxQ website mascot box. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: raise its right cream mitten hand in friendly greeting, eyes open, lid stays closed. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/box-wave.webp",
+      "bytes": 22498,
+      "sha256": "bd668277b9a4c9270216d75f283b9cf3b10e1516b4d2c002acabdb26d18669cd"
+    },
+    {
+      "id": "box",
+      "state": "react",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-9098ae71-19d5-4ee1-8c40-e082d706b09b.png",
+      "prompt": "Use case: identity-preserve. One independent NEW react animation sprite for CxQ website mascot box. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: hinged top lid opens at a 40 degree angle, both arms lift welcomingly, eyes happy black ovals; simple empty warm interior, no extra character. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/box-react.webp",
+      "bytes": 23476,
+      "sha256": "7c07f0ea0510633dac8a57cd761186922e84e0aa55593ca01d2dd27543c7c6a6"
+    },
+    {
+      "id": "box",
+      "state": "idle",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-914ff95b-bad2-4a69-8741-f35e5016171a.png",
+      "prompt": "Use case: identity-preserve. One independent NEW idle animation sprite for CxQ website mascot box. Reference defines exact face, costume, palette, material, signature accessories and chibi body proportions. Action: neutral calm upright standing pose, eyes open black ovals, arms relaxed, lid closed. Same front three-quarter camera, upright body center, full body and accessories fully visible, feet at fixed baseline, generous clear margins. Transparent background, no green screen, no ground, no text, no sprite sheet, no grid, no montage. Box has NO eyebrows and NO mouth. Draw the changed limb/face/lid pose; do not transform old pixels.",
+      "target": "assets/mascot-motion-v2/box-idle.webp",
+      "bytes": 22106,
+      "sha256": "1cca43876ec5b3e829a960480d71b6ffae23524bece1645d22cb70f7a02ab2fb"
+    },
+    {
+      "id": "memory",
+      "state": "idle",
+      "source": "assets/characters/cxq-role-memory.webp",
+      "prompt": "Original identity reference, display optimization only",
+      "target": "assets/mascot-motion-v2/memory-idle.webp",
+      "bytes": 27742,
+      "sha256": "77cdf450efc34c4d796e73ab2827add96b9b04602f4dcc37e6bc527355861010"
+    },
+    {
+      "id": "dream",
+      "state": "idle",
+      "source": "assets/characters/cxq-role-dream.webp",
+      "prompt": "Original identity reference, display optimization only",
+      "target": "assets/mascot-motion-v2/dream-idle.webp",
+      "bytes": 34308,
+      "sha256": "c3dc14e1ee53b49e93273227f57371f8d33027fc3cf1049beb092d236b9ab59f"
+    },
+    {
+      "id": "growth",
+      "state": "idle",
+      "source": "assets/characters/cxq-role-growth.webp",
+      "prompt": "Original identity reference, display optimization only",
+      "target": "assets/mascot-motion-v2/growth-idle.webp",
+      "bytes": 30800,
+      "sha256": "910709de73b59842f643eef3cf7e16326e41735943383fc1fbd5fbe96789edfd"
+    },
+    {
+      "id": "night",
+      "state": "idle",
+      "source": "assets/characters/cxq-role-night.webp",
+      "prompt": "Original identity reference, display optimization only",
+      "target": "assets/mascot-motion-v2/night-idle.webp",
+      "bytes": 35802,
+      "sha256": "85f45dac276ddd047196ec701018d7e42ab8dabac91f3c3fab98e9bd91345223"
+    },
+    {
+      "id": "healing",
+      "state": "idle",
+      "source": "assets/characters/cxq-role-healing.webp",
+      "prompt": "Original identity reference, display optimization only",
+      "target": "assets/mascot-motion-v2/healing-idle.webp",
+      "bytes": 25386,
+      "sha256": "82a10eed3d6a9a117550ed787407651c58b0b716cea9f83ead8c5aeaf595b146"
+    },
+    {
+      "id": "joy",
+      "state": "idle",
+      "source": "assets/characters/cxq-role-joy.webp",
+      "prompt": "Original identity reference, display optimization only",
+      "target": "assets/mascot-motion-v2/joy-idle.webp",
+      "bytes": 36838,
+      "sha256": "1a591769a3cab5ada5dc07e0ec854d1cff18997b3651b26e3951fb8e02cae523"
+    },
+    {
+      "id": "sadness",
+      "state": "idle",
+      "source": "assets/characters/cxq-role-sadness.webp",
+      "prompt": "Original identity reference, display optimization only",
+      "target": "assets/mascot-motion-v2/sadness-idle.webp",
+      "bytes": 28992,
+      "sha256": "ab063cced960ce68a24490b842057f66b7ef8ca6610d515be94cbcc80ad4042a"
+    },
+    {
+      "id": "hope",
+      "state": "idle",
+      "source": "assets/characters/cxq-role-hope.webp",
+      "prompt": "Original identity reference, display optimization only",
+      "target": "assets/mascot-motion-v2/hope-idle.webp",
+      "bytes": 25044,
+      "sha256": "f31205a3afba866652285efcbe7c67a918f10a25adbba1bbd1241832690139a0"
+    },
+    {
+      "id": "trust",
+      "state": "idle",
+      "source": "assets/characters/cxq-role-trust.webp",
+      "prompt": "Original identity reference, display optimization only",
+      "target": "assets/mascot-motion-v2/trust-idle.webp",
+      "bytes": 43338,
+      "sha256": "c335ad7e1477975e45fde48d3c0b88d0fef57429dfb9b63b8d7ef9d0d956e3c7"
+    },
+    {
+      "id": "luck",
+      "state": "idle",
+      "source": "assets/characters/cxq-role-luck.webp",
+      "prompt": "Original identity reference, display optimization only",
+      "target": "assets/mascot-motion-v2/luck-idle.webp",
+      "bytes": 37832,
+      "sha256": "b77e3db954dbaa03bf93aa1d98b73105e7c975a7b1c1f184d7972ccf5c8336fe"
+    }
+  ],
+  "returnArt": {
+    "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-23f3afa0-f354-4f68-acaf-999851e01409.png",
+    "prompt": "Use case: text-localization. Edit this CxQ divination return button. Replace ONLY the central Chinese wording with exactly 「返回網站首頁」 (six Traditional Chinese characters). Preserve its ornate gold border, parchment, navy moon-and-star motifs, left arrow and overall wide horizontal proportions. True transparent background. Single complete button, no backdrop, no extra text. Typography large, dark brown, clear and centered. This is the divination-specific website-home navigation artwork.",
+    "target": "games/fortune/art/return-website-v3.webp"
+  }
+}

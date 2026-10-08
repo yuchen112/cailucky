@@ -1,5 +1,5 @@
-const CACHE='cxq-richman-20261008-upgrade1';
-const SHELL=['./index.html','./core.js?v=20261008-upgrade1','./viewport.js?v=20261008-upgrade1','./game.js?v=20261008-upgrade1'];
+const CACHE='cxq-richman-20261008-polish2';
+const SHELL=['./index.html','./core.js?v=20261008-polish2','./viewport.js?v=20261008-polish2','./game.js?v=20261008-polish2'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>Promise.allSettled(SHELL.map(url=>cache.add(url)))).then(()=>self.skipWaiting()));
 });

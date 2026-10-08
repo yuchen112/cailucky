@@ -1,0 +1,58 @@
+[
+  {
+    "id": "dino",
+    "cssFiles": 13,
+    "jsFiles": 8,
+    "cssBytes": 117231,
+    "jsBytes": 65588
+  },
+  {
+    "id": "flappy",
+    "cssFiles": 11,
+    "jsFiles": 7,
+    "cssBytes": 106716,
+    "jsBytes": 58542
+  },
+  {
+    "id": "merge",
+    "cssFiles": 12,
+    "jsFiles": 11,
+    "cssBytes": 108400,
+    "jsBytes": 153579
+  },
+  {
+    "id": "mines",
+    "cssFiles": 14,
+    "jsFiles": 9,
+    "cssBytes": 118384,
+    "jsBytes": 69815
+  },
+  {
+    "id": "whack",
+    "cssFiles": 11,
+    "jsFiles": 7,
+    "cssBytes": 101038,
+    "jsBytes": 41519
+  },
+  {
+    "id": "dream-match",
+    "cssFiles": 12,
+    "jsFiles": 11,
+    "cssBytes": 101317,
+    "jsBytes": 50574
+  },
+  {
+    "id": "magic-bubble",
+    "cssFiles": 9,
+    "jsFiles": 12,
+    "cssBytes": 89740,
+    "jsBytes": 47790
+  },
+  {
+    "id": "fortune",
+    "cssFiles": 3,
+    "jsFiles": 2,
+    "cssBytes": 20946,
+    "jsBytes": 31498
+  }
+]

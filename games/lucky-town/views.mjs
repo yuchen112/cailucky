@@ -3,7 +3,7 @@ import {ROLES,ROLE_MAP,MACHINES,CLOTHES,BY_ID,PETS,PET_MAP,BETS,SYMBOLS} from '.
 import {SCRATCH_TYPES,ticketLayout,ticketName} from './scratch.mjs?v=20261008-complete2';
 const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>v.toLocaleString('zh-TW');
-const img=(src,alt,cls='')=>`<img src="${src}" alt="${esc(alt)}" class="${cls}" draggable="false">`;
+const img=(src,alt,cls='')=>`<img src="${src}" alt="${esc(alt)}" class="${cls}" decoding="async" loading="${/hero-cover|scene-backdrop|body-art/.test(cls)?'eager':'lazy'}" draggable="false">`;
 const btn=(text,action,attrs='',cls='')=>`<button class="wood-button ${cls}" data-action="${action}" ${attrs}>${text}</button>`;
 export const COLORS={joy:'#d98c97',dream:'#a28ed8',night:'#687fa9',sadness:'#93bac9',trust:'#bda56a',memory:'#ba9579',growth:'#87ab78',healing:'#e4b5a2',luck:'#83b797',hope:'#b4cae1'};
 export function avatar(role,s,cls=''){const r=ROLE_MAP[role],o=s.outfits[role];return `<div class="avatar breathing ${cls}" data-role="${role}" data-suit="${o.suit}">${img(o.suit==='original'?r.original:BY_ID[o.suit].art,r.name,'body-art')}</div>`;}

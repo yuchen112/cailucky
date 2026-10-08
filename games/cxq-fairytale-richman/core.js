@@ -9,7 +9,7 @@ const W = 1600,
   MW = 3200,
   MH = 1800,
   A = "assets/";
-const IM = {};
+const IM = new Proxy({}, {get(target,key){const image=Reflect.get(target,key);if(image&&!image.src){const task=ASSET_BY_KEY.get(key);if(task&&!task.queued){task.queued=true;ASSET_QUEUE.push(task);queueMicrotask(pumpAssets);}}return image;}});
 const CHAR_KEYS = [
   "joy",
   "dream",
@@ -182,7 +182,7 @@ try {
 } catch (e) {}
 
 const ASSET_REV = "20260924-speed2";
-const ASSET_REQUESTS = new Map(), ASSET_QUEUE = [];
+const ASSET_BY_KEY=new Map();const ASSET_REQUESTS = new Map(), ASSET_QUEUE = [];
 let assetActive = 0, assetPumpScheduled = false;
 function pumpAssets() {
   assetPumpScheduled = false;
@@ -198,9 +198,9 @@ function pumpAssets() {
 }
 function load(k,u,priority="auto"){
   const url=u+"?v="+ASSET_REV,existing=ASSET_REQUESTS.get(url);
-  if(existing){existing.keys.push(k);IM[k]=existing.image;return existing.image;}
+  if(existing){existing.keys.push(k);ASSET_BY_KEY.set(k,existing);IM[k]=existing.image;return existing.image;}
   const image=new Image();image.decoding="async";image.fetchPriority=priority;
-  const task={url,image,priority,keys:[k]};ASSET_REQUESTS.set(url,task);IM[k]=image;ASSET_QUEUE.push(task);
+  const task={url,image,priority,keys:[k],queued:priority==='high'};ASSET_REQUESTS.set(url,task);ASSET_BY_KEY.set(k,task);IM[k]=image;if(task.queued)ASSET_QUEUE.push(task);
   if(!assetPumpScheduled){assetPumpScheduled=true;queueMicrotask(pumpAssets);}
   return image;
 }
@@ -213,7 +213,7 @@ load("homeMenuSettings", A + "ui/home_menu_settings_v4.speed24.webp", "high");
 load("homeMenuGallery", A + "ui/home_menu_gallery_v1.speed24.webp", "high");
 load("btnBlue", A + "ui/btn_blue_v5.speed24.webp", "high");
 load("btnRed", A + "ui/btn_red_v5.speed24.webp", "high");
-load("setupBg", A + "backgrounds/setup_scene_v4.webp", "high");
+load("setupBg", A + "backgrounds/setup_scene_v4.webp");
 load("playerSeat", A + "ui/player_plate_v5.speed24.webp");
 load("roleInfo", A + "ui/tooltip_plate_v5.speed24.webp");
 load("characterStage", A + "ui/modal_frame_v6.speed24.webp");
@@ -2595,7 +2595,8 @@ let AUDIO_CTX = null,
   MUSIC_AUDIO = null,
   MUSIC_TIMER = 0,
   MUSIC_STEP = 0;
-function audioGesture() {
+let richmanAudio;function ensureRichmanAudio(){if(!richmanAudio&&globalThis.CxQAudioEngine)richmanAudio=CxQAudioEngine.create({id:'richman',settings:()=>({music:(S.settings.master/100)*(S.settings.bgm/100)*.34,sfx:(S.settings.master/100)*(S.settings.sfx/100)*.6}),tracks:[new URL(A+'audio/once_upon_a_time_loop_cc0.mp3',location.href).href,new URL('../shared/audio-v2/richman.mp3',location.href).href],effects:Object.fromEntries(Object.entries({click:'tap',dice:'drop',step:'tap',gain:'collect',loss:'miss',win:'win'}).map(([n,k])=>[n,[0,1,2].map(i=>new URL('../shared/audio-v2/'+k+'-'+i+'.mp3',location.href).href)]))});return richmanAudio;}
+function audioGesture() {if(ensureRichmanAudio()){richmanAudio.sync();return;}
   try {
     if (!AUDIO_CTX)
       AUDIO_CTX = new (window.AudioContext || window.webkitAudioContext)();
@@ -2623,14 +2624,14 @@ function audioTone(freq, dur, level, type = "sine") {
   o.start(now);
   o.stop(now + dur + 0.03);
 }
-function musicTick() {
+function musicTick() {if(ensureRichmanAudio()){richmanAudio.sync();return;}
   if (!MUSIC_AUDIO || !S.settings) return;
   const enabled = !document.hidden && S.settings.master > 0 && S.settings.bgm > 0;
   MUSIC_AUDIO.volume = Math.min(1, 0.34 * (S.settings.master / 100) * (S.settings.bgm / 100));
   if (enabled) MUSIC_AUDIO.play().catch(() => {});
   else MUSIC_AUDIO.pause();
 }
-function sfx(kind) {
+function sfx(kind) {if(ensureRichmanAudio()){richmanAudio.sound(kind);return;}
   if (!S.settings || S.settings.master <= 0 || S.settings.sfx <= 0) return;
   const gain = 0.055 * (S.settings.master / 100) * (S.settings.sfx / 100),
     spec = {

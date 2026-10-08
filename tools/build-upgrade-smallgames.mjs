@@ -1,8 +1,8 @@
 import fs from 'node:fs';import path from 'node:path';import vm from 'node:vm';import {toolDependency} from './refresh-deps.mjs';
-const esbuild=toolDependency('esbuild'),version='20261008-upgrade1',reports=[];
+const esbuild=toolDependency('esbuild'),version='20261008-polish2',reports=[];
 for(const id of ['dino','flappy','merge','mines','whack','dream-match','magic-bubble','fortune']){
  const dir=path.resolve('games',id),htmlFile=path.join(dir,'index.html'),planFile=path.join(dir,'upgrade-build.json');let html=fs.readFileSync(htmlFile,'utf8');
- const styleTags=[...html.matchAll(/<link\b[^>]*rel=["']stylesheet["'][^>]*>/gi)],scriptTags=[...html.matchAll(/<script\b([^>]*)\bsrc=["']([^"']+)["']([^>]*)><\/script>/gi)].filter(m=>!m[0].includes('game-entry-v2.js')&&!/type=["']module/.test(m[0]));
+ const styleTags=[...html.matchAll(/<link\b[^>]*rel=["']stylesheet["'][^>]*>/gi)],scriptTags=[...html.matchAll(/<script\b([^>]*)\bsrc=["']([^"']+)["']([^>]*)><\/script>/gi)].filter(m=>!m[0].includes('game-entry-v2.js')&&!m[0].includes('audio-engine-v2.js')&&!/type=["']module/.test(m[0]));
  let plan;if(fs.existsSync(planFile))plan=JSON.parse(fs.readFileSync(planFile));else{plan={styles:styleTags.map(m=>m[0].match(/href=["']([^"']+)/)[1].split('?')[0]),scripts:scriptTags.map(m=>m[2].split('?')[0])};fs.writeFileSync(planFile,JSON.stringify(plan,null,2)+'\n');}
  const outputCss=path.join(dir,'ui-upgrade.bundle.css'),styleInput=plan.styles.map(p=>'@import '+JSON.stringify('./'+p)+';').join('\n');
  await esbuild.build({stdin:{contents:styleInput,loader:'css',resolveDir:dir},bundle:true,minify:true,outfile:outputCss,plugins:[{name:'existing-art-urls',setup(build){build.onResolve({filter:/.*/},args=>{if(args.kind!=='url-token')return;if(/^(data:|https?:|#)/.test(args.path))return {path:args.path,external:true};const absolute=path.resolve(path.dirname(args.importer),args.path),relative=path.relative(dir,absolute).split(path.sep).join('/');return {path:relative.startsWith('.')?relative:'./'+relative,external:true};});}}]});
@@ -11,4 +11,4 @@ for(const id of ['dino','flappy','merge','mines','whack','dream-match','magic-bu
  for(const m of scriptTags)html=html.replace(m[0],'');const tag=`<script src="game-upgrade.bundle.js?v=${version}"></script>`;const entry=html.indexOf('<script src="../shared/game-entry-v2.js');if(entry>=0)html=html.slice(0,entry)+tag+html.slice(entry);else html=html.replace('</body>',tag+'</body>');fs.writeFileSync(htmlFile,html);
  reports.push({id,cssFiles:plan.styles.length,jsFiles:plan.scripts.length,cssBytes:fs.statSync(outputCss).size,jsBytes:Buffer.byteLength(transformed.code)});
 }
-fs.writeFileSync('games/upgrade-20261008/smallgame-build.json',JSON.stringify(reports,null,2)+'\n');console.log(JSON.stringify(reports));
+fs.mkdirSync('games/polish-20261008',{recursive:true});fs.writeFileSync('games/polish-20261008/smallgame-build.json',JSON.stringify(reports,null,2)+'\n');console.log(JSON.stringify(reports));

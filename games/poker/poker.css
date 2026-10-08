@@ -64,7 +64,7 @@ button img {
   width: 100vw;
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left);
-  background: url("art/room-big2.webp") center/cover no-repeat;
+  background: url("../shared/optimized-art-v2/20aa20eafdbbeb79.webp") center/cover no-repeat;
   overflow: hidden;
 }
 h1,
@@ -128,7 +128,7 @@ small {
   align-items: end;
   padding: 3%;
   gap: 16px;
-  background: url("art/home.webp") center/cover;
+  background: url("../shared/optimized-art-v2/4ae2fef814bb6b58.webp") center/cover;
 }
 .home-menu {
   grid-column: 2;
@@ -691,10 +691,10 @@ input[type="checkbox"] {
   min-height: 40px;
   flex: 0 0 40px;
   margin: 0;
-  background: url("art/ui-check-off.webp") center/contain no-repeat;
+  background: url("../shared/optimized-art-v2/6e4da31595498265.webp") center/contain no-repeat;
 }
 input[type="checkbox"]:checked {
-  background-image: url("art/ui-check-on.webp");
+  background-image: url("../shared/optimized-art-v2/0bce27763a93be5a.webp");
 }
 input[type="range"] {
   appearance: none;
@@ -739,7 +739,7 @@ input[type="range"]::-moz-range-thumb {
   width: 52px;
   height: 52px;
   min-width: 52px;
-  background: url("art/ui-gear.webp") center/contain no-repeat;
+  background: url("../shared/optimized-art-v2/a1d2a8b28657e617.webp") center/contain no-repeat;
 }
 .bar nav,
 .bar > div {
@@ -1110,7 +1110,7 @@ body {
 }
 @media (orientation: landscape) and (max-aspect-ratio: 17/10) {
   .home {
-    background-image: url("art/home-tablet.webp");
+    background-image: url("../shared/optimized-art-v2/c6a9416af6511e7d.webp");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;

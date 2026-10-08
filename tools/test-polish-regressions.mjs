@@ -1,0 +1,5 @@
+import fs from 'node:fs';import {spawnSync} from 'node:child_process';
+const tests=['test-upgrade-features.mjs','test-upgrade-controllers.mjs','test-upgrade-oracle.cjs','test-upgrade-art.mjs','test-upgrade-modes.cjs','test-merge-physics.cjs','test-gameplay-repair.cjs','test-dream-core.cjs','test-dream-motion.cjs','test-bubble-modes.cjs','test-bubble-motion.cjs','test-bubble-endless.cjs','test-heartlight-arcade.mjs','test-heartlight-duel.mjs','test-lucky-v5.mjs','test-lucky-v5-legacy.mjs','test-defense-army.mjs','test-defense-army3.mjs','test-defense-rebuild.mjs','test-defense-campaign-save.mjs','test-defense-practice.mjs','test-defense-batch-clock.mjs','test-defense-inventory.mjs','test-defense-dungeons.mjs'];
+const results=[];for(const name of tests){const r=spawnSync(process.execPath,['tools/'+name],{encoding:'utf8',timeout:180000});results.push({name,code:r.status,output:(r.stdout+r.stderr).slice(-4000)});console.log(name,r.status===0?'PASS':'FAIL');}fs.writeFileSync('games/polish-20261008/regression-results.json',JSON.stringify(results,null,2));
+
+process.exitCode=results.some(r=>r.code!==0)?1:0;

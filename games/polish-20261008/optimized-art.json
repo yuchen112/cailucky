@@ -1,0 +1,596 @@
+[
+  {
+    "source": "games/2048/assets/ui/game-background.speed24.webp",
+    "target": "games/shared/optimized-art-v2/720ef986107ad4bd.webp",
+    "bytesBefore": 256578,
+    "bytesAfter": 84894
+  },
+  {
+    "source": "games/2048/assets/ui/header-panel.speed24.webp",
+    "target": "games/shared/optimized-art-v2/49af4567a681b9a4.webp",
+    "bytesBefore": 90890,
+    "bytesAfter": 56522
+  },
+  {
+    "source": "games/2048/assets/ui/board-frame.speed24.webp",
+    "target": "games/shared/optimized-art-v2/328b9ba7fdf5678f.webp",
+    "bytesBefore": 76484,
+    "bytesAfter": 38698
+  },
+  {
+    "source": "games/click-core/assets/backgrounds/village-main.speed24.webp",
+    "target": "games/shared/optimized-art-v2/16b561e64457a900.webp",
+    "bytesBefore": 190912,
+    "bytesAfter": 82296
+  },
+  {
+    "source": "games/click-core/assets/map/expedition-1.jpg",
+    "target": "games/shared/optimized-art-v2/1d2fa7fc841d2e6b.webp",
+    "bytesBefore": 167753,
+    "bytesAfter": 72090
+  },
+  {
+    "source": "games/storybook/assets/dino.webp",
+    "target": "games/shared/optimized-art-v2/7ef203eb35135338.webp",
+    "bytesBefore": 219784,
+    "bytesAfter": 116398
+  },
+  {
+    "source": "games/dino/art-v2/scene.webp",
+    "target": "games/shared/optimized-art-v2/82f8899ae3135d82.webp",
+    "bytesBefore": 226380,
+    "bytesAfter": 154074
+  },
+  {
+    "source": "games/whack/assets/panel-v3.webp",
+    "target": "games/shared/optimized-art-v2/f3783836d10fbd3d.webp",
+    "bytesBefore": 156690,
+    "bytesAfter": 125712
+  },
+  {
+    "source": "games/merge/art-mobile/icons.webp",
+    "target": "games/shared/optimized-art-v2/968181026058d355.webp",
+    "bytesBefore": 300868,
+    "bytesAfter": 271972
+  },
+  {
+    "source": "games/flappy/art-mobile/icons.webp",
+    "target": "games/shared/optimized-art-v2/bc13018433d58ab9.webp",
+    "bytesBefore": 377114,
+    "bytesAfter": 332692
+  },
+  {
+    "source": "games/dino/art-mobile/icons.webp",
+    "target": "games/shared/optimized-art-v2/dd4cf0ca8eeb64c0.webp",
+    "bytesBefore": 209730,
+    "bytesAfter": 191896
+  },
+  {
+    "source": "games/mines/art-mobile/icons.webp",
+    "target": "games/shared/optimized-art-v2/763390081e041968.webp",
+    "bytesBefore": 285742,
+    "bytesAfter": 256064
+  },
+  {
+    "source": "games/merge/art-mobile/lobby.webp",
+    "target": "games/shared/optimized-art-v2/263d2e957422de35.webp",
+    "bytesBefore": 255482,
+    "bytesAfter": 142922
+  },
+  {
+    "source": "games/flappy/art-mobile/lobby.webp",
+    "target": "games/shared/optimized-art-v2/e37af7a485972c54.webp",
+    "bytesBefore": 385948,
+    "bytesAfter": 182384
+  },
+  {
+    "source": "games/dino/art-mobile/lobby.webp",
+    "target": "games/shared/optimized-art-v2/b3f0950238087b17.webp",
+    "bytesBefore": 282302,
+    "bytesAfter": 157078
+  },
+  {
+    "source": "games/mines/art-mobile/lobby.webp",
+    "target": "games/shared/optimized-art-v2/7440361b00222094.webp",
+    "bytesBefore": 553924,
+    "bytesAfter": 272766
+  },
+  {
+    "source": "games/merge/art-v2/panel.webp",
+    "target": "games/shared/optimized-art-v2/913b8ec0f5155f70.webp",
+    "bytesBefore": 72744,
+    "bytesAfter": 46664
+  },
+  {
+    "source": "games/flappy/art-v2/panel.webp",
+    "target": "games/shared/optimized-art-v2/6bcb7d83359cd778.webp",
+    "bytesBefore": 129048,
+    "bytesAfter": 49814
+  },
+  {
+    "source": "games/mines/art-v2/panel.webp",
+    "target": "games/shared/optimized-art-v2/d68a05e6350829ed.webp",
+    "bytesBefore": 202822,
+    "bytesAfter": 72776
+  },
+  {
+    "source": "games/flappy/art-v2/kit.webp",
+    "target": "games/shared/optimized-art-v2/d633fee4a011c6ab.webp",
+    "bytesBefore": 450076,
+    "bytesAfter": 368634
+  },
+  {
+    "source": "games/dino/art-v2/rain.webp",
+    "target": "games/shared/optimized-art-v2/734228a76f6d6b76.webp",
+    "bytesBefore": 217394,
+    "bytesAfter": 147292
+  },
+  {
+    "source": "games/dino/art-v2/moon.webp",
+    "target": "games/shared/optimized-art-v2/a71408f45665c986.webp",
+    "bytesBefore": 207458,
+    "bytesAfter": 136970
+  },
+  {
+    "source": "games/storybook/mobile-audio.webp",
+    "target": "games/shared/optimized-art-v2/0a3f4be4bee018a5.webp",
+    "bytesBefore": 238974,
+    "bytesAfter": 187316
+  },
+  {
+    "source": "games/storybook/art-20260914/game-panel.webp",
+    "target": "games/shared/optimized-art-v2/2faac9fa0fe5ded9.webp",
+    "bytesBefore": 119596,
+    "bytesAfter": 97934
+  },
+  {
+    "source": "games/storybook/art-20260920/bubble-panel.webp",
+    "target": "games/shared/optimized-art-v2/c5f66e50b09a9c80.webp",
+    "bytesBefore": 65410,
+    "bytesAfter": 50274
+  },
+  {
+    "source": "games/storybook/art-20260914/bubble-scene.webp",
+    "target": "games/shared/optimized-art-v2/3bbfb7442b42d657.webp",
+    "bytesBefore": 82694,
+    "bytesAfter": 48204
+  },
+  {
+    "source": "games/storybook/art-20260920/defense-panel.webp",
+    "target": "games/shared/optimized-art-v2/b049df0ca0986489.webp",
+    "bytesBefore": 102736,
+    "bytesAfter": 93700
+  },
+  {
+    "source": "games/storybook/art-20260920/dream-board.webp",
+    "target": "games/shared/optimized-art-v2/8da3c1354460b5bf.webp",
+    "bytesBefore": 131372,
+    "bytesAfter": 121066
+  },
+  {
+    "source": "games/storybook/art-20260914/dream-scene.webp",
+    "target": "games/shared/optimized-art-v2/b00fc03b9a6902e0.webp",
+    "bytesBefore": 87640,
+    "bytesAfter": 76158
+  },
+  {
+    "source": "games/storybook/art-20260914/tower-ground.webp",
+    "target": "games/shared/optimized-art-v2/379924dec3630f54.webp",
+    "bytesBefore": 302350,
+    "bytesAfter": 203192
+  },
+  {
+    "source": "games/storybook/art-20260920-batch/mines-scene.webp",
+    "target": "games/shared/optimized-art-v2/dab99274766caafa.webp",
+    "bytesBefore": 308644,
+    "bytesAfter": 127956
+  },
+  {
+    "source": "games/storybook/art-20260920-batch/flappy-scene.webp",
+    "target": "games/shared/optimized-art-v2/56ec2e569cc53285.webp",
+    "bytesBefore": 129726,
+    "bytesAfter": 85656
+  },
+  {
+    "source": "games/storybook/art-20260920-batch/dino-scene.webp",
+    "target": "games/shared/optimized-art-v2/e6d0760ae6945e1d.webp",
+    "bytesBefore": 294186,
+    "bytesAfter": 118420
+  },
+  {
+    "source": "games/storybook/art-20260920-batch/dream-cell.webp",
+    "target": "games/shared/optimized-art-v2/5645bb4b27e190c2.webp",
+    "bytesBefore": 75482,
+    "bytesAfter": 58726
+  },
+  {
+    "source": "games/storybook/art-director/merge-home.webp",
+    "target": "games/shared/optimized-art-v2/cbb4107435ce5e13.webp",
+    "bytesBefore": 190360,
+    "bytesAfter": 112250
+  },
+  {
+    "source": "games/storybook/art-director/flappy-home.webp",
+    "target": "games/shared/optimized-art-v2/5aefccebde11f323.webp",
+    "bytesBefore": 181788,
+    "bytesAfter": 117774
+  },
+  {
+    "source": "games/storybook/art-director/dino-home.webp",
+    "target": "games/shared/optimized-art-v2/c34bf5b7b00c9a50.webp",
+    "bytesBefore": 172276,
+    "bytesAfter": 108580
+  },
+  {
+    "source": "games/storybook/art-director/mines-home.webp",
+    "target": "games/shared/optimized-art-v2/925666ee63d198a1.webp",
+    "bytesBefore": 400890,
+    "bytesAfter": 221710
+  },
+  {
+    "source": "games/storybook/art-director/bubble-home.webp",
+    "target": "games/shared/optimized-art-v2/37fb1bedc49c86b7.webp",
+    "bytesBefore": 209870,
+    "bytesAfter": 126162
+  },
+  {
+    "source": "games/storybook/art-director/dream-home.webp",
+    "target": "games/shared/optimized-art-v2/7f011d176ef09aad.webp",
+    "bytesBefore": 162042,
+    "bytesAfter": 101124
+  },
+  {
+    "source": "games/storybook/art-director/tower-home.webp",
+    "target": "games/shared/optimized-art-v2/522af8c7af208911.webp",
+    "bytesBefore": 414344,
+    "bytesAfter": 240380
+  },
+  {
+    "source": "games/storybook/art-director/whack-home.webp",
+    "target": "games/shared/optimized-art-v2/6d5e5187f736f37e.webp",
+    "bytesBefore": 287398,
+    "bytesAfter": 182314
+  },
+  {
+    "source": "games/storybook/art-studio/merge-panel.webp",
+    "target": "games/shared/optimized-art-v2/dbc9adc5b757ae8c.webp",
+    "bytesBefore": 198156,
+    "bytesAfter": 163804
+  },
+  {
+    "source": "games/storybook/art-studio/bubble-panel.webp",
+    "target": "games/shared/optimized-art-v2/b0ba3d85dfab81e9.webp",
+    "bytesBefore": 122430,
+    "bytesAfter": 111152
+  },
+  {
+    "source": "games/storybook/art-studio/dream-panel.webp",
+    "target": "games/shared/optimized-art-v2/5302a90230d6798d.webp",
+    "bytesBefore": 83958,
+    "bytesAfter": 75820
+  },
+  {
+    "source": "games/storybook/art-studio/tower-panel.webp",
+    "target": "games/shared/optimized-art-v2/fde806f4e8a86ae5.webp",
+    "bytesBefore": 95068,
+    "bytesAfter": 84552
+  },
+  {
+    "source": "games/storybook/art-studio/whack-panel.webp",
+    "target": "games/shared/optimized-art-v2/cd33adbc103bb0be.webp",
+    "bytesBefore": 380942,
+    "bytesAfter": 310968
+  },
+  {
+    "source": "games/storybook/art-studio/flappy-panel.webp",
+    "target": "games/shared/optimized-art-v2/6d9c4b6ee7229275.webp",
+    "bytesBefore": 69492,
+    "bytesAfter": 49248
+  },
+  {
+    "source": "games/storybook/art-studio/dino-panel-opaque.webp",
+    "target": "games/shared/optimized-art-v2/20c6cf2dbbd5b667.webp",
+    "bytesBefore": 78286,
+    "bytesAfter": 56626
+  },
+  {
+    "source": "games/storybook/art-studio/mines-panel.webp",
+    "target": "games/shared/optimized-art-v2/7a249d2dac786f8a.webp",
+    "bytesBefore": 172224,
+    "bytesAfter": 154476
+  },
+  {
+    "source": "games/storybook/art-studio/bubble-field.webp",
+    "target": "games/shared/optimized-art-v2/0645391218576729.webp",
+    "bytesBefore": 97450,
+    "bytesAfter": 58380
+  },
+  {
+    "source": "games/storybook/art-studio/dream-cell.webp",
+    "target": "games/shared/optimized-art-v2/883956a3e8606a79.webp",
+    "bytesBefore": 67386,
+    "bytesAfter": 58194
+  },
+  {
+    "source": "games/storybook/art-polish/control-thumb.webp",
+    "target": "games/shared/optimized-art-v2/4fe49bb47aae02aa.webp",
+    "bytesBefore": 232458,
+    "bytesAfter": 207146
+  },
+  {
+    "source": "games/storybook/art-polish/check-off.webp",
+    "target": "games/shared/optimized-art-v2/a63e63fb07fb348c.webp",
+    "bytesBefore": 171862,
+    "bytesAfter": 155978
+  },
+  {
+    "source": "games/storybook/art-polish/check-on.webp",
+    "target": "games/shared/optimized-art-v2/c63bcb7b7af60e91.webp",
+    "bytesBefore": 208742,
+    "bytesAfter": 187638
+  },
+  {
+    "source": "games/storybook/art-polish/dream-burst.webp",
+    "target": "games/shared/optimized-art-v2/7fbabb059a99c5de.webp",
+    "bytesBefore": 370192,
+    "bytesAfter": 282466
+  },
+  {
+    "source": "games/storybook/art-mobile24/whack-home.webp",
+    "target": "games/shared/optimized-art-v2/39d2869333197c5f.webp",
+    "bytesBefore": 242574,
+    "bytesAfter": 191478
+  },
+  {
+    "source": "games/cxq-fairytale-richman/assets/backgrounds/setup_scene_v4.webp",
+    "target": "games/shared/optimized-art-v2/924703c60f7f6f4c.webp",
+    "bytesBefore": 98928,
+    "bytesAfter": 59030
+  },
+  {
+    "source": "games/dream-match/assets/board.webp",
+    "target": "games/shared/optimized-art-v2/30b19411b09ca8f0.webp",
+    "bytesBefore": 68142,
+    "bytesAfter": 67804
+  },
+  {
+    "source": "games/dream-match/assets/scene-v2.speed24.webp",
+    "target": "games/shared/optimized-art-v2/1eac5be954dc41af.webp",
+    "bytesBefore": 396332,
+    "bytesAfter": 168470
+  },
+  {
+    "source": "games/storybook/art-20260914/explosion.webp",
+    "target": "games/shared/optimized-art-v2/da96b95663ac3961.webp",
+    "bytesBefore": 82464,
+    "bytesAfter": 67428
+  },
+  {
+    "source": "games/fairytale-defense/rebuild/art/cover-complete.webp",
+    "target": "games/shared/optimized-art-v2/d864cb827499364b.webp",
+    "bytesBefore": 223660,
+    "bytesAfter": 177628
+  },
+  {
+    "source": "games/fairytale-defense/rebuild/art/meadow-moon.webp",
+    "target": "games/shared/optimized-art-v2/70a6f7ef06f80b7b.webp",
+    "bytesBefore": 311284,
+    "bytesAfter": 226278
+  },
+  {
+    "source": "games/fairytale-defense/rebuild/art/meadow-dawn.webp",
+    "target": "games/shared/optimized-art-v2/15c381d3d85c5d8c.webp",
+    "bytesBefore": 345588,
+    "bytesAfter": 260142
+  },
+  {
+    "source": "games/fairytale-defense/rebuild/art/camp-scene.webp",
+    "target": "games/shared/optimized-art-v2/da047108ecd4da65.webp",
+    "bytesBefore": 260400,
+    "bytesAfter": 191666
+  },
+  {
+    "source": "games/fairytale-defense/rebuild/art/unit-gallery-stage.webp",
+    "target": "games/shared/optimized-art-v2/19a0297e1cf38514.webp",
+    "bytesBefore": 171976,
+    "bytesAfter": 119884
+  },
+  {
+    "source": "games/fairytale-defense/rebuild/art/commander-hall.webp",
+    "target": "games/shared/optimized-art-v2/995be1bffa8e5e67.webp",
+    "bytesBefore": 198014,
+    "bytesAfter": 85820
+  },
+  {
+    "source": "games/fairytale-defense/rebuild/art/summon-sanctuary.webp",
+    "target": "games/shared/optimized-art-v2/c1aea02b48f57890.webp",
+    "bytesBefore": 267808,
+    "bytesAfter": 123892
+  },
+  {
+    "source": "games/fairytale-defense/rebuild/art/supply-room.webp",
+    "target": "games/shared/optimized-art-v2/653337fe5046c739.webp",
+    "bytesBefore": 146312,
+    "bytesAfter": 91724
+  },
+  {
+    "source": "games/fairytale-defense/rebuild/art/camp-living.webp",
+    "target": "games/shared/optimized-art-v2/7e671301a4a2be3a.webp",
+    "bytesBefore": 337558,
+    "bytesAfter": 264792
+  },
+  {
+    "source": "games/fairytale-defense/rebuild/art/meadow-ruins-ui.webp",
+    "target": "games/shared/optimized-art-v2/a31f3a3a38554156.webp",
+    "bytesBefore": 534390,
+    "bytesAfter": 423412
+  },
+  {
+    "source": "games/fairytale-defense/rebuild/art/army-card.webp",
+    "target": "games/shared/optimized-art-v2/4651c57662a5af40.webp",
+    "bytesBefore": 84224,
+    "bytesAfter": 60610
+  },
+  {
+    "source": "games/fairytale-defense/rebuild/art/bag-interior-v2.webp",
+    "target": "games/shared/optimized-art-v2/da15ddff3813df70.webp",
+    "bytesBefore": 154676,
+    "bytesAfter": 66776
+  },
+  {
+    "source": "games/fairytale-defense/rebuild/art/meadow.webp",
+    "target": "games/shared/optimized-art-v2/36075643182b041b.webp",
+    "bytesBefore": 332518,
+    "bytesAfter": 243208
+  },
+  {
+    "source": "games/storybook/assets/flappy.webp",
+    "target": "games/shared/optimized-art-v2/e7f7e3151bf39999.webp",
+    "bytesBefore": 93010,
+    "bytesAfter": 65416
+  },
+  {
+    "source": "games/flappy/art-v2/scene.webp",
+    "target": "games/shared/optimized-art-v2/7cb925b681a8ebae.webp",
+    "bytesBefore": 267948,
+    "bytesAfter": 126014
+  },
+  {
+    "source": "games/flappy/art-v2/button.webp",
+    "target": "games/shared/optimized-art-v2/f4f865a21103a66a.webp",
+    "bytesBefore": 281116,
+    "bytesAfter": 88598
+  },
+  {
+    "source": "games/cxq-fairytale-richman/assets/backgrounds/home_scene_v7.webp",
+    "target": "games/shared/optimized-art-v2/258a23e0fad5e720.webp",
+    "bytesBefore": 161144,
+    "bytesAfter": 96908
+  },
+  {
+    "source": "games/magic-bubble/assets/scene-v2.speed24.webp",
+    "target": "games/shared/optimized-art-v2/40f47a07e9d5e114.webp",
+    "bytesBefore": 386694,
+    "bytesAfter": 178344
+  },
+  {
+    "source": "games/storybook/assets/merge.webp",
+    "target": "games/shared/optimized-art-v2/4b4b745e9b0063e9.webp",
+    "bytesBefore": 200054,
+    "bytesAfter": 119288
+  },
+  {
+    "source": "games/storybook/assets/balls.webp",
+    "target": "games/shared/optimized-art-v2/d2209b4ed9bdfe31.webp",
+    "bytesBefore": 551814,
+    "bytesAfter": 487272
+  },
+  {
+    "source": "games/storybook/assets/moon.webp",
+    "target": "games/shared/optimized-art-v2/26148385965e105a.webp",
+    "bytesBefore": 114734,
+    "bytesAfter": 73158
+  },
+  {
+    "source": "games/storybook/art-20260914/merge-scene.webp",
+    "target": "games/shared/optimized-art-v2/e67ccaf9f54f048a.webp",
+    "bytesBefore": 181186,
+    "bytesAfter": 106854
+  },
+  {
+    "source": "games/merge/art-v2/scene.webp",
+    "target": "games/shared/optimized-art-v2/c78d30e06657a235.webp",
+    "bytesBefore": 274778,
+    "bytesAfter": 175222
+  },
+  {
+    "source": "games/merge/art-v2/button.webp",
+    "target": "games/shared/optimized-art-v2/8b76b09d29b1f759.webp",
+    "bytesBefore": 177988,
+    "bytesAfter": 69174
+  },
+  {
+    "source": "games/merge/art-v2/balls.webp",
+    "target": "games/shared/optimized-art-v2/cc0efe09094717fa.webp",
+    "bytesBefore": 708638,
+    "bytesAfter": 589432
+  },
+  {
+    "source": "games/merge/art-v2/night.webp",
+    "target": "games/shared/optimized-art-v2/0dd68f671257c21f.webp",
+    "bytesBefore": 320672,
+    "bytesAfter": 212206
+  },
+  {
+    "source": "games/storybook/assets/mines.webp",
+    "target": "games/shared/optimized-art-v2/32abee0649b3ac53.webp",
+    "bytesBefore": 269604,
+    "bytesAfter": 101406
+  },
+  {
+    "source": "games/storybook/assets/mines-kit.webp",
+    "target": "games/shared/optimized-art-v2/4d7de8c9194b7ed8.webp",
+    "bytesBefore": 266464,
+    "bytesAfter": 214224
+  },
+  {
+    "source": "games/mines/art-v2/scene.webp",
+    "target": "games/shared/optimized-art-v2/30a379ca44980023.webp",
+    "bytesBefore": 494810,
+    "bytesAfter": 271512
+  },
+  {
+    "source": "games/mines/art-v2/button.webp",
+    "target": "games/shared/optimized-art-v2/9f289c0219635077.webp",
+    "bytesBefore": 333842,
+    "bytesAfter": 110336
+  },
+  {
+    "source": "games/mines/art-v2/tiles.webp",
+    "target": "games/shared/optimized-art-v2/10bb956db72c5d24.webp",
+    "bytesBefore": 532040,
+    "bytesAfter": 524770
+  },
+  {
+    "source": "games/poker/art/room-big2.webp",
+    "target": "games/shared/optimized-art-v2/20aa20eafdbbeb79.webp",
+    "bytesBefore": 257104,
+    "bytesAfter": 103528
+  },
+  {
+    "source": "games/poker/art/home.webp",
+    "target": "games/shared/optimized-art-v2/4ae2fef814bb6b58.webp",
+    "bytesBefore": 240638,
+    "bytesAfter": 133038
+  },
+  {
+    "source": "games/poker/art/ui-check-off.webp",
+    "target": "games/shared/optimized-art-v2/6e4da31595498265.webp",
+    "bytesBefore": 74734,
+    "bytesAfter": 54692
+  },
+  {
+    "source": "games/poker/art/ui-check-on.webp",
+    "target": "games/shared/optimized-art-v2/0bce27763a93be5a.webp",
+    "bytesBefore": 77126,
+    "bytesAfter": 55790
+  },
+  {
+    "source": "games/poker/art/ui-gear.webp",
+    "target": "games/shared/optimized-art-v2/a1d2a8b28657e617.webp",
+    "bytesBefore": 101366,
+    "bytesAfter": 75622
+  },
+  {
+    "source": "games/poker/art/home-tablet.webp",
+    "target": "games/shared/optimized-art-v2/c6a9416af6511e7d.webp",
+    "bytesBefore": 355818,
+    "bytesAfter": 210712
+  },
+  {
+    "source": "games/whack/assets/garden-v3.webp",
+    "target": "games/shared/optimized-art-v2/faa7addfa50a882c.webp",
+    "bytesBefore": 389056,
+    "bytesAfter": 189358
+  }
+]

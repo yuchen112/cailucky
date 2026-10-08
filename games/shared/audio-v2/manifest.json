@@ -1,0 +1,411 @@
+{
+  "originalComposition": true,
+  "sampleRate": 22050,
+  "method": "Original 32-bar scores with four changing sections, melody, harmony, bass, percussion and delayed accents; offline rendered MP3. Individual themes per game.",
+  "music": [
+    {
+      "file": "dino.mp3",
+      "seconds": 66.20693877551021,
+      "bytes": 530434,
+      "id": "dino",
+      "bpm": 116,
+      "key": 62,
+      "measures": 32
+    },
+    {
+      "file": "flappy.mp3",
+      "seconds": 73.84616780045351,
+      "bytes": 591456,
+      "id": "flappy",
+      "bpm": 104,
+      "key": 67,
+      "measures": 32
+    },
+    {
+      "file": "merge.mp3",
+      "seconds": 83.47827664399092,
+      "bytes": 668569,
+      "id": "merge",
+      "bpm": 92,
+      "key": 60,
+      "measures": 32
+    },
+    {
+      "file": "mines.mp3",
+      "seconds": 89.30235827664399,
+      "bytes": 715172,
+      "id": "mines",
+      "bpm": 86,
+      "key": 57,
+      "measures": 32
+    },
+    {
+      "file": "whack.mp3",
+      "seconds": 60,
+      "bytes": 480697,
+      "id": "whack",
+      "bpm": 128,
+      "key": 65,
+      "measures": 32
+    },
+    {
+      "file": "dream-match.mp3",
+      "seconds": 80,
+      "bytes": 640775,
+      "id": "dream-match",
+      "bpm": 96,
+      "key": 64,
+      "measures": 32
+    },
+    {
+      "file": "magic-bubble.mp3",
+      "seconds": 68.57142857142857,
+      "bytes": 549242,
+      "id": "magic-bubble",
+      "bpm": 112,
+      "key": 69,
+      "measures": 32
+    },
+    {
+      "file": "2048.mp3",
+      "seconds": 81.70213151927437,
+      "bytes": 654359,
+      "id": "2048",
+      "bpm": 94,
+      "key": 62,
+      "measures": 32
+    },
+    {
+      "file": "brick-breaker.mp3",
+      "seconds": 61.93551020408163,
+      "bytes": 496161,
+      "id": "brick-breaker",
+      "bpm": 124,
+      "key": 60,
+      "measures": 32
+    },
+    {
+      "file": "click-core.mp3",
+      "seconds": 71.11111111111111,
+      "bytes": 569722,
+      "id": "click-core",
+      "bpm": 108,
+      "key": 65,
+      "measures": 32
+    },
+    {
+      "file": "link.mp3",
+      "seconds": 76.8,
+      "bytes": 615070,
+      "id": "link",
+      "bpm": 100,
+      "key": 67,
+      "measures": 32
+    },
+    {
+      "file": "memory.mp3",
+      "seconds": 91.42857142857143,
+      "bytes": 732099,
+      "id": "memory",
+      "bpm": 84,
+      "key": 59,
+      "measures": 32
+    },
+    {
+      "file": "tetris.mp3",
+      "seconds": 58.18185941043084,
+      "bytes": 466277,
+      "id": "tetris",
+      "bpm": 132,
+      "key": 62,
+      "measures": 32
+    },
+    {
+      "file": "fortune.mp3",
+      "seconds": 101.05265306122449,
+      "bytes": 809213,
+      "id": "fortune",
+      "bpm": 76,
+      "key": 60,
+      "measures": 32
+    },
+    {
+      "file": "poker.mp3",
+      "seconds": 80,
+      "bytes": 640775,
+      "id": "poker",
+      "bpm": 96,
+      "key": 57,
+      "measures": 32
+    },
+    {
+      "file": "richman.mp3",
+      "seconds": 69.81818594104308,
+      "bytes": 559273,
+      "id": "richman",
+      "bpm": 110,
+      "key": 65,
+      "measures": 32
+    },
+    {
+      "file": "lucky-town.mp3",
+      "seconds": 72.45283446712018,
+      "bytes": 580380,
+      "id": "lucky-town",
+      "bpm": 106,
+      "key": 62,
+      "measures": 32
+    },
+    {
+      "file": "heartlight-duel.mp3",
+      "seconds": 55.652199546485264,
+      "bytes": 446006,
+      "id": "heartlight-duel",
+      "bpm": 138,
+      "key": 64,
+      "measures": 32
+    },
+    {
+      "file": "fairytale-defense.mp3",
+      "seconds": 64,
+      "bytes": 512670,
+      "id": "fairytale-defense",
+      "bpm": 120,
+      "key": 57,
+      "measures": 32
+    }
+  ],
+  "effects": [
+    {
+      "file": "tap-0.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "tap",
+      "variant": 0
+    },
+    {
+      "file": "tap-1.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "tap",
+      "variant": 1
+    },
+    {
+      "file": "tap-2.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "tap",
+      "variant": 2
+    },
+    {
+      "file": "match-0.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "match",
+      "variant": 0
+    },
+    {
+      "file": "match-1.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "match",
+      "variant": 1
+    },
+    {
+      "file": "match-2.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "match",
+      "variant": 2
+    },
+    {
+      "file": "collect-0.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "collect",
+      "variant": 0
+    },
+    {
+      "file": "collect-1.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "collect",
+      "variant": 1
+    },
+    {
+      "file": "collect-2.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "collect",
+      "variant": 2
+    },
+    {
+      "file": "drop-0.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "drop",
+      "variant": 0
+    },
+    {
+      "file": "drop-1.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "drop",
+      "variant": 1
+    },
+    {
+      "file": "drop-2.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "drop",
+      "variant": 2
+    },
+    {
+      "file": "miss-0.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "miss",
+      "variant": 0
+    },
+    {
+      "file": "miss-1.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "miss",
+      "variant": 1
+    },
+    {
+      "file": "miss-2.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "miss",
+      "variant": 2
+    },
+    {
+      "file": "jump-0.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "jump",
+      "variant": 0
+    },
+    {
+      "file": "jump-1.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "jump",
+      "variant": 1
+    },
+    {
+      "file": "jump-2.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "jump",
+      "variant": 2
+    },
+    {
+      "file": "flip-0.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "flip",
+      "variant": 0
+    },
+    {
+      "file": "flip-1.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "flip",
+      "variant": 1
+    },
+    {
+      "file": "flip-2.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "flip",
+      "variant": 2
+    },
+    {
+      "file": "win-0.mp3",
+      "seconds": 1.2,
+      "bytes": 10284,
+      "kind": "win",
+      "variant": 0
+    },
+    {
+      "file": "win-1.mp3",
+      "seconds": 1.2,
+      "bytes": 10284,
+      "kind": "win",
+      "variant": 1
+    },
+    {
+      "file": "win-2.mp3",
+      "seconds": 1.2,
+      "bytes": 10284,
+      "kind": "win",
+      "variant": 2
+    },
+    {
+      "file": "lose-0.mp3",
+      "seconds": 1.2,
+      "bytes": 10284,
+      "kind": "lose",
+      "variant": 0
+    },
+    {
+      "file": "lose-1.mp3",
+      "seconds": 1.2,
+      "bytes": 10284,
+      "kind": "lose",
+      "variant": 1
+    },
+    {
+      "file": "lose-2.mp3",
+      "seconds": 1.2,
+      "bytes": 10284,
+      "kind": "lose",
+      "variant": 2
+    },
+    {
+      "file": "upgrade-0.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "upgrade",
+      "variant": 0
+    },
+    {
+      "file": "upgrade-1.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "upgrade",
+      "variant": 1
+    },
+    {
+      "file": "upgrade-2.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "upgrade",
+      "variant": 2
+    },
+    {
+      "file": "hit-0.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "hit",
+      "variant": 0
+    },
+    {
+      "file": "hit-1.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "hit",
+      "variant": 1
+    },
+    {
+      "file": "hit-2.mp3",
+      "seconds": 0.32,
+      "bytes": 3387,
+      "kind": "hit",
+      "variant": 2
+    }
+  ]
+}

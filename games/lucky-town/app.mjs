@@ -23,7 +23,7 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const number=n=>n.toLocaleString('zh-TW');
 let recovery=false,page='welcome',selectedRole='joy',machine='classic',busy=false,operation=false,draft=null,ghost=null,inventoryOpen=false,draftRole=null,draftBaseline=null,selected=null,undo=[],redo=[],shopFilter='furniture',shopTheme='all',previewItem=null,lastResult=null,lastGrid=null,activity='',pose='stand',photoMode=false,aidTimer=null,aidClicks=0,aidStart=0;
 let life=null,lifeSequence=0,scratchBinding=null;let shopCategory='all',shopOwnership='all',wardrobeFilter='all',wardrobePage=0;let shopPage=0;let scratchCost=20,scratchPage=0,petPage=0;const imgCache=new Map();
-function picture(src,alt,cls=''){return `<img src="${src}" alt="${esc(alt)}" class="${cls}" draggable="false">`}
+function picture(src,alt,cls=''){return `<img src="${src}" alt="${esc(alt)}" class="${cls}" decoding="async" loading="${/hero-cover|scene-backdrop|body-art/.test(cls)?'eager':'lazy'}" draggable="false">`}
 function button(label,action,extra='',cls=''){return `<button type="button" class="wood-button ${cls}" data-action="${action}" ${extra}>${label}</button>`}
 function avatar(role,s=store.get(),cls=''){return views.avatar(role,s,cls)}
 function toast(message){$('#toast').textContent=message;$('#toast').classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#toast').classList.remove('show'),4200)}

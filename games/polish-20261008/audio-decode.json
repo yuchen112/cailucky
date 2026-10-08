@@ -1,0 +1,1178 @@
+[
+  {
+    "file": "games/shared/audio/arcade.mp3",
+    "seconds": 80,
+    "peak": 0.654693603515625,
+    "rms": 0.12073774084583365,
+    "bytes": 1505928
+  },
+  {
+    "file": "games/shared/audio/arcade.ogg",
+    "seconds": 80,
+    "peak": 0.661163330078125,
+    "rms": 0.12076904394692431,
+    "bytes": 1819852
+  },
+  {
+    "file": "games/shared/audio/click1.mp3",
+    "seconds": 0.0909375,
+    "peak": 0.661102294921875,
+    "rms": 0.05867258211792042,
+    "bytes": 3044
+  },
+  {
+    "file": "games/shared/audio/click1.ogg",
+    "seconds": 0.0909375,
+    "peak": 0.668182373046875,
+    "rms": 0.05900209077103909,
+    "bytes": 4983
+  },
+  {
+    "file": "games/shared/audio/click3.mp3",
+    "seconds": 0.08325,
+    "peak": 0.78546142578125,
+    "rms": 0.039587276662101885,
+    "bytes": 2966
+  },
+  {
+    "file": "games/shared/audio/click3.ogg",
+    "seconds": 0.08325,
+    "peak": 0.78509521484375,
+    "rms": 0.039726406826860385,
+    "bytes": 4880
+  },
+  {
+    "file": "games/shared/audio/heavenly.mp3",
+    "seconds": 33.6525,
+    "peak": 0.189727783203125,
+    "rms": 0.03776154375889969,
+    "bytes": 472269
+  },
+  {
+    "file": "games/shared/audio/heavenly.ogg",
+    "seconds": 33.6525,
+    "peak": 0.1888427734375,
+    "rms": 0.03775701316475169,
+    "bytes": 1224922
+  },
+  {
+    "file": "games/shared/audio/lose.mp3",
+    "seconds": 0.8111875,
+    "peak": 0.647705078125,
+    "rms": 0.17525229393256322,
+    "bytes": 8460
+  },
+  {
+    "file": "games/shared/audio/lose.ogg",
+    "seconds": 0.8111875,
+    "peak": 0.6458740234375,
+    "rms": 0.17500074892156117,
+    "bytes": 13905
+  },
+  {
+    "file": "games/shared/audio/rollover2.mp3",
+    "seconds": 0.0544375,
+    "peak": 0.72711181640625,
+    "rms": 0.05852600298773184,
+    "bytes": 3071
+  },
+  {
+    "file": "games/shared/audio/rollover2.ogg",
+    "seconds": 0.0544375,
+    "peak": 0.725067138671875,
+    "rms": 0.05840243707449175,
+    "bytes": 4701
+  },
+  {
+    "file": "games/shared/audio/sherwood.mp3",
+    "seconds": 34.9054375,
+    "peak": 1,
+    "rms": 0.3297925713447203,
+    "bytes": 572621
+  },
+  {
+    "file": "games/shared/audio/sherwood.ogg",
+    "seconds": 34.9054375,
+    "peak": 1,
+    "rms": 0.3297569489408232,
+    "bytes": 706853
+  },
+  {
+    "file": "games/shared/audio/switch15.mp3",
+    "seconds": 0.2531875,
+    "peak": 0.750335693359375,
+    "rms": 0.04552880359165833,
+    "bytes": 5470
+  },
+  {
+    "file": "games/shared/audio/switch15.ogg",
+    "seconds": 0.2531875,
+    "peak": 0.771514892578125,
+    "rms": 0.0459689938398424,
+    "bytes": 6325
+  },
+  {
+    "file": "games/shared/audio/switch4.mp3",
+    "seconds": 0.4166875,
+    "peak": 0.46826171875,
+    "rms": 0.018606725564239514,
+    "bytes": 5520
+  },
+  {
+    "file": "games/shared/audio/switch4.ogg",
+    "seconds": 0.4166875,
+    "peak": 0.467529296875,
+    "rms": 0.01864486000867126,
+    "bytes": 6477
+  },
+  {
+    "file": "games/shared/audio/switch8.mp3",
+    "seconds": 0.3293125,
+    "peak": 0.495635986328125,
+    "rms": 0.02516783096486676,
+    "bytes": 5075
+  },
+  {
+    "file": "games/shared/audio/switch8.ogg",
+    "seconds": 0.3293125,
+    "peak": 0.48321533203125,
+    "rms": 0.025234624059924503,
+    "bytes": 6253
+  },
+  {
+    "file": "games/shared/audio/win.mp3",
+    "seconds": 0.4941875,
+    "peak": 0.498626708984375,
+    "rms": 0.13291919538077282,
+    "bytes": 5386
+  },
+  {
+    "file": "games/shared/audio/win.ogg",
+    "seconds": 0.4941875,
+    "peak": 0.493560791015625,
+    "rms": 0.13322043937860767,
+    "bytes": 10382
+  },
+  {
+    "file": "games/shared/audio-v2/2048.mp3",
+    "seconds": 81.7021875,
+    "peak": 0.262176513671875,
+    "rms": 0.048468477117592446,
+    "bytes": 654359
+  },
+  {
+    "file": "games/shared/audio-v2/brick-breaker.mp3",
+    "seconds": 61.9355625,
+    "peak": 0.279296875,
+    "rms": 0.04933281804277509,
+    "bytes": 496161
+  },
+  {
+    "file": "games/shared/audio-v2/click-core.mp3",
+    "seconds": 71.111125,
+    "peak": 0.32843017578125,
+    "rms": 0.05211218727309195,
+    "bytes": 569722
+  },
+  {
+    "file": "games/shared/audio-v2/collect-0.mp3",
+    "seconds": 0.32,
+    "peak": 0.25128173828125,
+    "rms": 0.049983175456931955,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/collect-1.mp3",
+    "seconds": 0.32,
+    "peak": 0.253143310546875,
+    "rms": 0.05070921170334163,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/collect-2.mp3",
+    "seconds": 0.32,
+    "peak": 0.229156494140625,
+    "rms": 0.049222591156964764,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/dino.mp3",
+    "seconds": 66.207,
+    "peak": 0.32720947265625,
+    "rms": 0.0529142470768317,
+    "bytes": 530434
+  },
+  {
+    "file": "games/shared/audio-v2/dream-match.mp3",
+    "seconds": 80,
+    "peak": 0.26031494140625,
+    "rms": 0.049801162061943335,
+    "bytes": 640775
+  },
+  {
+    "file": "games/shared/audio-v2/drop-0.mp3",
+    "seconds": 0.32,
+    "peak": 0.253448486328125,
+    "rms": 0.07250005448374512,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/drop-1.mp3",
+    "seconds": 0.32,
+    "peak": 0.269439697265625,
+    "rms": 0.07355232195960949,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/drop-2.mp3",
+    "seconds": 0.32,
+    "peak": 0.238677978515625,
+    "rms": 0.07282551568028243,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/fairytale-defense.mp3",
+    "seconds": 64,
+    "peak": 0.34130859375,
+    "rms": 0.05451542528422657,
+    "bytes": 512670
+  },
+  {
+    "file": "games/shared/audio-v2/flappy.mp3",
+    "seconds": 73.8461875,
+    "peak": 0.33599853515625,
+    "rms": 0.05134356323773352,
+    "bytes": 591456
+  },
+  {
+    "file": "games/shared/audio-v2/flip-0.mp3",
+    "seconds": 0.32,
+    "peak": 0.194091796875,
+    "rms": 0.040928699053535834,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/flip-1.mp3",
+    "seconds": 0.32,
+    "peak": 0.233367919921875,
+    "rms": 0.040885494715823485,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/flip-2.mp3",
+    "seconds": 0.32,
+    "peak": 0.215576171875,
+    "rms": 0.04089167806781771,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/fortune.mp3",
+    "seconds": 101.0526875,
+    "peak": 0.26861572265625,
+    "rms": 0.04831180067672535,
+    "bytes": 809213
+  },
+  {
+    "file": "games/shared/audio-v2/heartlight-duel.mp3",
+    "seconds": 55.65225,
+    "peak": 0.28997802734375,
+    "rms": 0.0514969616490065,
+    "bytes": 446006
+  },
+  {
+    "file": "games/shared/audio-v2/hit-0.mp3",
+    "seconds": 0.32,
+    "peak": 0.258270263671875,
+    "rms": 0.07263941214420987,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/hit-1.mp3",
+    "seconds": 0.32,
+    "peak": 0.26251220703125,
+    "rms": 0.07425206704747696,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/hit-2.mp3",
+    "seconds": 0.32,
+    "peak": 0.28546142578125,
+    "rms": 0.07499589662576167,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/jump-0.mp3",
+    "seconds": 0.32,
+    "peak": 0.21038818359375,
+    "rms": 0.05000259248163479,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/jump-1.mp3",
+    "seconds": 0.32,
+    "peak": 0.227630615234375,
+    "rms": 0.050066526586633964,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/jump-2.mp3",
+    "seconds": 0.32,
+    "peak": 0.25030517578125,
+    "rms": 0.050017289249590396,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/link.mp3",
+    "seconds": 76.8,
+    "peak": 0.26739501953125,
+    "rms": 0.04874158805535962,
+    "bytes": 615070
+  },
+  {
+    "file": "games/shared/audio-v2/lose-0.mp3",
+    "seconds": 1.2,
+    "peak": 0.23492431640625,
+    "rms": 0.04951157894634414,
+    "bytes": 10284
+  },
+  {
+    "file": "games/shared/audio-v2/lose-1.mp3",
+    "seconds": 1.2,
+    "peak": 0.2247314453125,
+    "rms": 0.04952319787835658,
+    "bytes": 10284
+  },
+  {
+    "file": "games/shared/audio-v2/lose-2.mp3",
+    "seconds": 1.2,
+    "peak": 0.253326416015625,
+    "rms": 0.049274594628447986,
+    "bytes": 10284
+  },
+  {
+    "file": "games/shared/audio-v2/lucky-town.mp3",
+    "seconds": 72.452875,
+    "peak": 0.3211669921875,
+    "rms": 0.051827927364811836,
+    "bytes": 580380
+  },
+  {
+    "file": "games/shared/audio-v2/magic-bubble.mp3",
+    "seconds": 68.5714375,
+    "peak": 0.328033447265625,
+    "rms": 0.05274154028842312,
+    "bytes": 549242
+  },
+  {
+    "file": "games/shared/audio-v2/match-0.mp3",
+    "seconds": 0.32,
+    "peak": 0.24224853515625,
+    "rms": 0.04934027333915802,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/match-1.mp3",
+    "seconds": 0.32,
+    "peak": 0.229827880859375,
+    "rms": 0.05020211617146762,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/match-2.mp3",
+    "seconds": 0.32,
+    "peak": 0.240325927734375,
+    "rms": 0.050531343905637925,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/memory.mp3",
+    "seconds": 91.428625,
+    "peak": 0.2542724609375,
+    "rms": 0.04860827972615169,
+    "bytes": 732099
+  },
+  {
+    "file": "games/shared/audio-v2/merge.mp3",
+    "seconds": 83.4783125,
+    "peak": 0.273040771484375,
+    "rms": 0.04908330574095071,
+    "bytes": 668569
+  },
+  {
+    "file": "games/shared/audio-v2/mines.mp3",
+    "seconds": 89.302375,
+    "peak": 0.2611083984375,
+    "rms": 0.04867968392570062,
+    "bytes": 715172
+  },
+  {
+    "file": "games/shared/audio-v2/miss-0.mp3",
+    "seconds": 0.32,
+    "peak": 0.17474365234375,
+    "rms": 0.04128312561780379,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/miss-1.mp3",
+    "seconds": 0.32,
+    "peak": 0.19976806640625,
+    "rms": 0.04068525901026444,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/miss-2.mp3",
+    "seconds": 0.32,
+    "peak": 0.192535400390625,
+    "rms": 0.040995315150385035,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/poker.mp3",
+    "seconds": 80,
+    "peak": 0.252471923828125,
+    "rms": 0.04917359752116606,
+    "bytes": 640775
+  },
+  {
+    "file": "games/shared/audio-v2/richman.mp3",
+    "seconds": 69.8181875,
+    "peak": 0.324005126953125,
+    "rms": 0.05217105189630414,
+    "bytes": 559273
+  },
+  {
+    "file": "games/shared/audio-v2/tap-0.mp3",
+    "seconds": 0.32,
+    "peak": 0.234283447265625,
+    "rms": 0.04085239361660565,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/tap-1.mp3",
+    "seconds": 0.32,
+    "peak": 0.236175537109375,
+    "rms": 0.04086237606893133,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/tap-2.mp3",
+    "seconds": 0.32,
+    "peak": 0.222564697265625,
+    "rms": 0.040853067777624735,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/tetris.mp3",
+    "seconds": 58.181875,
+    "peak": 0.299102783203125,
+    "rms": 0.05045707531237799,
+    "bytes": 466277
+  },
+  {
+    "file": "games/shared/audio-v2/upgrade-0.mp3",
+    "seconds": 0.32,
+    "peak": 0.2540283203125,
+    "rms": 0.05049540780166091,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/upgrade-1.mp3",
+    "seconds": 0.32,
+    "peak": 0.23382568359375,
+    "rms": 0.04999183311979184,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/upgrade-2.mp3",
+    "seconds": 0.32,
+    "peak": 0.223052978515625,
+    "rms": 0.04903718966347097,
+    "bytes": 3387
+  },
+  {
+    "file": "games/shared/audio-v2/whack.mp3",
+    "seconds": 60,
+    "peak": 0.331512451171875,
+    "rms": 0.05375992292238386,
+    "bytes": 480697
+  },
+  {
+    "file": "games/shared/audio-v2/win-0.mp3",
+    "seconds": 1.2,
+    "peak": 0.286041259765625,
+    "rms": 0.05717334829366211,
+    "bytes": 10284
+  },
+  {
+    "file": "games/shared/audio-v2/win-1.mp3",
+    "seconds": 1.2,
+    "peak": 0.2467041015625,
+    "rms": 0.05680032380292066,
+    "bytes": 10284
+  },
+  {
+    "file": "games/shared/audio-v2/win-2.mp3",
+    "seconds": 1.2,
+    "peak": 0.268768310546875,
+    "rms": 0.05679260037790698,
+    "bytes": 10284
+  },
+  {
+    "file": "games/storybook/audio/collect.mp3",
+    "seconds": 0.3293125,
+    "peak": 0.469512939453125,
+    "rms": 0.02553003709219413,
+    "bytes": 4083
+  },
+  {
+    "file": "games/storybook/audio/drop.mp3",
+    "seconds": 0.2626875,
+    "peak": 0.880950927734375,
+    "rms": 0.07708664342898297,
+    "bytes": 2206
+  },
+  {
+    "file": "games/storybook/audio/flight.mp3",
+    "seconds": 46.8114375,
+    "peak": 0.88507080078125,
+    "rms": 0.15734270335230752,
+    "bytes": 636925
+  },
+  {
+    "file": "games/storybook/audio/jump.mp3",
+    "seconds": 0.066375,
+    "peak": 0.55535888671875,
+    "rms": 0.10557048606339416,
+    "bytes": 2706
+  },
+  {
+    "file": "games/storybook/audio/land.mp3",
+    "seconds": 0.6895625,
+    "peak": 0.872589111328125,
+    "rms": 0.03352280621255826,
+    "bytes": 4547
+  },
+  {
+    "file": "games/storybook/audio/merge.mp3",
+    "seconds": 1.002375,
+    "peak": 0.5574951171875,
+    "rms": 0.17531974611786977,
+    "bytes": 9393
+  },
+  {
+    "file": "games/storybook/audio/runner.mp3",
+    "seconds": 105.9310625,
+    "peak": 0.526702880859375,
+    "rms": 0.07802202524605374,
+    "bytes": 1442146
+  },
+  {
+    "file": "games/storybook/audio/skill.mp3",
+    "seconds": 1.146875,
+    "peak": 0.61334228515625,
+    "rms": 0.19494062257060563,
+    "bytes": 9310
+  },
+  {
+    "file": "games/storybook/audio/step.mp3",
+    "seconds": 0.7746875,
+    "peak": 0.881866455078125,
+    "rms": 0.03213140233330658,
+    "bytes": 4860
+  },
+  {
+    "file": "games/lucky-town/audio/carefree.mp3",
+    "seconds": 205.139625,
+    "peak": 0.489013671875,
+    "rms": 0.061220369350761826,
+    "bytes": 6566713
+  },
+  {
+    "file": "games/lucky-town/audio/daily-beetle.mp3",
+    "seconds": 316.8653125,
+    "peak": 0.946075439453125,
+    "rms": 0.11447040015566297,
+    "bytes": 10141967
+  },
+  {
+    "file": "games/lucky-town/audio/music-arcade.mp3",
+    "seconds": 48,
+    "peak": 0.625885009765625,
+    "rms": 0.07858877441119853,
+    "bytes": 577308
+  },
+  {
+    "file": "games/lucky-town/audio/music-home.mp3",
+    "seconds": 48,
+    "peak": 0.35284423828125,
+    "rms": 0.08887073498933093,
+    "bytes": 577248
+  },
+  {
+    "file": "games/lucky-town/audio/music-intro.mp3",
+    "seconds": 48,
+    "peak": 0.382659912109375,
+    "rms": 0.05813935673687866,
+    "bytes": 577310
+  },
+  {
+    "file": "games/lucky-town/audio/music-town.mp3",
+    "seconds": 48,
+    "peak": 0.57672119140625,
+    "rms": 0.0717284360739809,
+    "bytes": 577342
+  },
+  {
+    "file": "games/lucky-town/audio/pixelland.mp3",
+    "seconds": 233.7959375,
+    "peak": 0.9761962890625,
+    "rms": 0.11155048474009642,
+    "bytes": 7483713
+  },
+  {
+    "file": "games/lucky-town/audio/sfx-bigwin.mp3",
+    "seconds": 0.255875,
+    "peak": 0.91168212890625,
+    "rms": 0.024774947416812167,
+    "bytes": 3805
+  },
+  {
+    "file": "games/lucky-town/audio/sfx-click.mp3",
+    "seconds": 0.0909375,
+    "peak": 0.82745361328125,
+    "rms": 0.07287479707465543,
+    "bytes": 1924
+  },
+  {
+    "file": "games/lucky-town/audio/sfx-coin.mp3",
+    "seconds": 0.3708125,
+    "peak": 0.72430419921875,
+    "rms": 0.03409815332197436,
+    "bytes": 5373
+  },
+  {
+    "file": "games/lucky-town/audio/sfx-dress.mp3",
+    "seconds": 0.6610625,
+    "peak": 0.83038330078125,
+    "rms": 0.0739998437777635,
+    "bytes": 8821
+  },
+  {
+    "file": "games/lucky-town/audio/sfx-pet.mp3",
+    "seconds": 0.066375,
+    "peak": 0.666046142578125,
+    "rms": 0.12529232820070405,
+    "bytes": 1611
+  },
+  {
+    "file": "games/lucky-town/audio/sfx-place.mp3",
+    "seconds": 0.27675,
+    "peak": 0.999969482421875,
+    "rms": 0.11522512001638877,
+    "bytes": 4119
+  },
+  {
+    "file": "games/lucky-town/audio/sfx-reveal.mp3",
+    "seconds": 0.937375,
+    "peak": 0.9993896484375,
+    "rms": 0.03636186245223391,
+    "bytes": 11955
+  },
+  {
+    "file": "games/lucky-town/audio/sfx-roll.mp3",
+    "seconds": 1.4805625,
+    "peak": 0.9837646484375,
+    "rms": 0.026853045617894415,
+    "bytes": 18538
+  },
+  {
+    "file": "games/lucky-town/audio/sfx-scratch.mp3",
+    "seconds": 0.766875,
+    "peak": 0.965789794921875,
+    "rms": 0.02647449574106755,
+    "bytes": 10075
+  },
+  {
+    "file": "games/lucky-town/audio/sfx-select.mp3",
+    "seconds": 0.3178125,
+    "peak": 0.563568115234375,
+    "rms": 0.03989647280337247,
+    "bytes": 4746
+  },
+  {
+    "file": "games/lucky-town/audio/sfx-step.mp3",
+    "seconds": 0.248875,
+    "peak": 0.95745849609375,
+    "rms": 0.09192089917453214,
+    "bytes": 3805
+  },
+  {
+    "file": "games/lucky-town/audio/sfx-stop.mp3",
+    "seconds": 0.169625,
+    "peak": 0.688812255859375,
+    "rms": 0.05595332434049701,
+    "bytes": 2865
+  },
+  {
+    "file": "games/lucky-town/audio/sfx-win.mp3",
+    "seconds": 0.61625,
+    "peak": 0.6597900390625,
+    "rms": 0.024883991833509252,
+    "bytes": 8194
+  },
+  {
+    "file": "games/lucky-town/audio/wallpaper.mp3",
+    "seconds": 220.0555,
+    "peak": 0.991241455078125,
+    "rms": 0.2509572144904803,
+    "bytes": 8804339
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/music-festival.mp3",
+    "seconds": 27.826125,
+    "peak": 0.46246337890625,
+    "rms": 0.08171461931208243,
+    "bytes": 335143
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/music-menu.mp3",
+    "seconds": 31.475375,
+    "peak": 0.43353271484375,
+    "rms": 0.07866195896168605,
+    "bytes": 378716
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/music-moon.mp3",
+    "seconds": 30.9678125,
+    "peak": 0.45086669921875,
+    "rms": 0.08143079282166431,
+    "bytes": 372760
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/music-rain.mp3",
+    "seconds": 30,
+    "peak": 0.44293212890625,
+    "rms": 0.07968339019757804,
+    "bytes": 361161
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/music-workshop.mp3",
+    "seconds": 26.6666875,
+    "peak": 0.447235107421875,
+    "rms": 0.07949110740476276,
+    "bytes": 321037
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-block.mp3",
+    "seconds": 0.28,
+    "peak": 0.346038818359375,
+    "rms": 0.06422102280517795,
+    "bytes": 3702
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-break.mp3",
+    "seconds": 0.7500625,
+    "peak": 0.363250732421875,
+    "rms": 0.0688367771225029,
+    "bytes": 8404
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-counter.mp3",
+    "seconds": 0.55075,
+    "peak": 0.483489990234375,
+    "rms": 0.10629890289886834,
+    "bytes": 6576
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-dash.mp3",
+    "seconds": 0.4,
+    "peak": 0.327362060546875,
+    "rms": 0.06889211021307448,
+    "bytes": 5008
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-dream.mp3",
+    "seconds": 0.6500625,
+    "peak": 0.321685791015625,
+    "rms": 0.0613797175577447,
+    "bytes": 7359
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-fight.mp3",
+    "seconds": 1.1,
+    "peak": 0.492919921875,
+    "rms": 0.08240746014319351,
+    "bytes": 12061
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-growth.mp3",
+    "seconds": 0.6500625,
+    "peak": 0.20037841796875,
+    "rms": 0.04495188539918023,
+    "bytes": 7359
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-healing.mp3",
+    "seconds": 0.6500625,
+    "peak": 0.314239501953125,
+    "rms": 0.061267439962681886,
+    "bytes": 7359
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-heavy.mp3",
+    "seconds": 0.55075,
+    "peak": 0.560638427734375,
+    "rms": 0.11804791758792914,
+    "bytes": 6576
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-hope.mp3",
+    "seconds": 0.6500625,
+    "peak": 0.212982177734375,
+    "rms": 0.04462588310152315,
+    "bytes": 7359
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-joy.mp3",
+    "seconds": 0.6500625,
+    "peak": 0.20123291015625,
+    "rms": 0.04487979813823084,
+    "bytes": 7359
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-jump.mp3",
+    "seconds": 0.4,
+    "peak": 0.2210693359375,
+    "rms": 0.04170972245783764,
+    "bytes": 5008
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-light.mp3",
+    "seconds": 0.32,
+    "peak": 0.468536376953125,
+    "rms": 0.08210253582051466,
+    "bytes": 4225
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-lose.mp3",
+    "seconds": 1.6500625,
+    "peak": 0.292938232421875,
+    "rms": 0.07195821344328227,
+    "bytes": 17547
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-luck.mp3",
+    "seconds": 0.6500625,
+    "peak": 0.284027099609375,
+    "rms": 0.06145102257216428,
+    "bytes": 7359
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-memory.mp3",
+    "seconds": 0.6500625,
+    "peak": 0.318267822265625,
+    "rms": 0.061419869472010696,
+    "bytes": 7359
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-night.mp3",
+    "seconds": 0.6500625,
+    "peak": 0.2574462890625,
+    "rms": 0.06132890896661004,
+    "bytes": 7359
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-ready.mp3",
+    "seconds": 1.2,
+    "peak": 0.279693603515625,
+    "rms": 0.06308337790606455,
+    "bytes": 12845
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-sadness.mp3",
+    "seconds": 0.6500625,
+    "peak": 0.208465576171875,
+    "rms": 0.04453769732781453,
+    "bytes": 7359
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-shield.mp3",
+    "seconds": 0.6,
+    "peak": 0.385772705078125,
+    "rms": 0.08576405514968641,
+    "bytes": 6837
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-skill.mp3",
+    "seconds": 0.6500625,
+    "peak": 0.489501953125,
+    "rms": 0.09865717856349943,
+    "bytes": 7359
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-super.mp3",
+    "seconds": 1.700125,
+    "peak": 0.63836669921875,
+    "rms": 0.09795146949543437,
+    "bytes": 18070
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-swing.mp3",
+    "seconds": 0.3,
+    "peak": 0.3580322265625,
+    "rms": 0.0807165645637548,
+    "bytes": 3963
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-tap.mp3",
+    "seconds": 0.14,
+    "peak": 0.149322509765625,
+    "rms": 0.036669762588412265,
+    "bytes": 2396
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-throw.mp3",
+    "seconds": 0.7,
+    "peak": 0.495941162109375,
+    "rms": 0.1068930692062252,
+    "bytes": 7882
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-trust.mp3",
+    "seconds": 0.6500625,
+    "peak": 0.273712158203125,
+    "rms": 0.06139901006508488,
+    "bytes": 7359
+  },
+  {
+    "file": "games/heartlight-duel/arcade/audio-v2/sfx-win.mp3",
+    "seconds": 1.6500625,
+    "peak": 0.269805908203125,
+    "rms": 0.06719606460708541,
+    "bytes": 17547
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/block.ogg",
+    "seconds": 0.93775,
+    "peak": 1,
+    "rms": 0.19735669447922005,
+    "bytes": 22471
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/boss-warning.ogg",
+    "seconds": 0.9189375,
+    "peak": 1,
+    "rms": 0.08679864404548242,
+    "bytes": 22848
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/cast.ogg",
+    "seconds": 0.0995625,
+    "peak": 0.608123779296875,
+    "rms": 0.08302429513871688,
+    "bytes": 6317
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/click.ogg",
+    "seconds": 0.097125,
+    "peak": 0.808929443359375,
+    "rms": 0.047195588331856574,
+    "bytes": 4876
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/coin.ogg",
+    "seconds": 0.8455,
+    "peak": 0.654266357421875,
+    "rms": 0.023775965625170155,
+    "bytes": 25394
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/core.ogg",
+    "seconds": 0.310125,
+    "peak": 0.89691162109375,
+    "rms": 0.10471297456673671,
+    "bytes": 6233
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/dawn.mp3",
+    "seconds": 144.00675,
+    "peak": 0.86962890625,
+    "rms": 0.1350727755676054,
+    "bytes": 3049408
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/defeat.ogg",
+    "seconds": 0.5335,
+    "peak": 0.76470947265625,
+    "rms": 0.09551756392974292,
+    "bytes": 12256
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/forest.mp3",
+    "seconds": 167.93225,
+    "peak": 0.86517333984375,
+    "rms": 0.11169659478491241,
+    "bytes": 4113223
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/frost.ogg",
+    "seconds": 0.23075,
+    "peak": 0.83428955078125,
+    "rms": 0.08150250673128764,
+    "bytes": 6526
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/hit.ogg",
+    "seconds": 0.2626875,
+    "peak": 0.878204345703125,
+    "rms": 0.07706269872856533,
+    "bytes": 6343
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/moon.mp3",
+    "seconds": 160.0855625,
+    "peak": 0.81939697265625,
+    "rms": 0.11942696332328248,
+    "bytes": 3800642
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/sell.ogg",
+    "seconds": 0.3381875,
+    "peak": 0.184326171875,
+    "rms": 0.012285314678731223,
+    "bytes": 10492
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/shield.ogg",
+    "seconds": 1.4604375,
+    "peak": 1,
+    "rms": 0.15487503842039446,
+    "bytes": 31619
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/shot.ogg",
+    "seconds": 0.3996875,
+    "peak": 0.03125,
+    "rms": 0.004715582048854904,
+    "bytes": 11134
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/synthesis.ogg",
+    "seconds": 0.230625,
+    "peak": 0.999969482421875,
+    "rms": 0.10604918073043122,
+    "bytes": 9292
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/training.ogg",
+    "seconds": 0.1510625,
+    "peak": 0.12884521484375,
+    "rms": 0.018999040089811355,
+    "bytes": 8273
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/upgrade.ogg",
+    "seconds": 0.289875,
+    "peak": 0.897613525390625,
+    "rms": 0.2718593944078628,
+    "bytes": 8968
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/victory.ogg",
+    "seconds": 0.539,
+    "peak": 0.8961181640625,
+    "rms": 0.18023106809137976,
+    "bytes": 14169
+  },
+  {
+    "file": "games/fairytale-defense/rebuild/audio/wave.ogg",
+    "seconds": 0.2613125,
+    "peak": 1,
+    "rms": 0.07026710526149271,
+    "bytes": 10208
+  },
+  {
+    "file": "games/poker/audio/moon-small.mp3",
+    "seconds": 410.0701875,
+    "peak": 0.25079345703125,
+    "rms": 0.03750247332704521,
+    "bytes": 4922008
+  },
+  {
+    "file": "games/poker/audio/tea-small.mp3",
+    "seconds": 116.064,
+    "peak": 0.864654541015625,
+    "rms": 0.08916545055937539,
+    "bytes": 1393840
+  },
+  {
+    "file": "games/poker/audio/wood-small.mp3",
+    "seconds": 223.3991875,
+    "peak": 0.466094970703125,
+    "rms": 0.07796414832911265,
+    "bytes": 3192692
+  },
+  {
+    "file": "games/cxq-fairytale-richman/assets/audio/once_upon_a_time_loop_cc0.mp3",
+    "seconds": 57.65225,
+    "peak": 0.820068359375,
+    "rms": 0.09040531903428994,
+    "bytes": 1848968
+  },
+  {
+    "file": "games/dino/art-v2/collect.mp3",
+    "seconds": 0.38,
+    "peak": 0.520477294921875,
+    "rms": 0.20461799277915516,
+    "bytes": 4944
+  },
+  {
+    "file": "games/dino/art-v2/jump.mp3",
+    "seconds": 0.2,
+    "peak": 0.463592529296875,
+    "rms": 0.1553602841128504,
+    "bytes": 4008
+  },
+  {
+    "file": "games/merge/art-v2/drop.mp3",
+    "seconds": 0.23075,
+    "peak": 0.841278076171875,
+    "rms": 0.08157742112725629,
+    "bytes": 2076
+  },
+  {
+    "file": "games/merge/art-v2/merge.mp3",
+    "seconds": 0.65,
+    "peak": 0.731903076171875,
+    "rms": 0.09463014741762173,
+    "bytes": 4628
+  },
+  {
+    "file": "games/merge/art-v2/music.mp3",
+    "seconds": 130.1695,
+    "peak": 0.853363037109375,
+    "rms": 0.16681879765419938,
+    "bytes": 2233178
+  },
+  {
+    "file": "games/mines/art-v2/flag.mp3",
+    "seconds": 0.2626875,
+    "peak": 0.876129150390625,
+    "rms": 0.07912872150148074,
+    "bytes": 2206
+  },
+  {
+    "file": "games/mines/art-v2/flip.mp3",
+    "seconds": 0.115125,
+    "peak": 0.895751953125,
+    "rms": 0.19431859825730366,
+    "bytes": 1660
+  },
+  {
+    "file": "games/mines/art-v2/music.mp3",
+    "seconds": 24.8946875,
+    "peak": 0.23992919921875,
+    "rms": 0.04366679716481256,
+    "bytes": 259219
+  }
+]

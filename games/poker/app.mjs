@@ -405,12 +405,12 @@ function showSaves() {
       btn("返回", "close"),
   );
 }
-const audio = new Audio();
+let audioEngine;function ensureAudio(){if(!audioEngine&&globalThis.CxQAudioEngine)audioEngine=CxQAudioEngine.create({id:'poker',settings:()=>({music:profile?.settings.music==='off'?0:profile?.settings.musicVolume,sfx:profile?.settings.soundVolume}),effects:Object.fromEntries(['tap','card','deal','win','pass'].map(n=>[n,[0,1,2].map(i=>new URL('../shared/audio-v2/'+({card:'flip',deal:'flip',pass:'miss'}[n]||n)+'-'+i+'.mp3',location.href).href)]))});return audioEngine;}const audio = new Audio();
 audio.loop = true;
 audio.preload = "none";
 let activeMusic = "",
   audioReady = false;
-function music() {
+function music() {if(ensureAudio()){const key=profile?.settings.music||'moon';audioEngine.tracks([new URL('audio/'+(key==='off'?'moon':key)+'-small.mp3',location.href).href,new URL('../shared/audio-v2/poker.mp3',location.href).href]);audioEngine.hold(innerHeight>innerWidth);return;}
   if (!audioReady || !profile) return;
   if (
     document.hidden ||
@@ -430,10 +430,10 @@ function music() {
   audio.play().catch(() => {});
 }
 let ac;
-function sound(kind="tap") {
+function sound(kind="tap") {if(ensureAudio()){audioEngine.sound(kind);return;}
   if (!profile.settings.soundVolume) return;
   try {
-    ac ??= new AudioContext();
+    ac ??= new (window.AudioContext||window.webkitAudioContext)();ac.resume();
     if(kind==='card'||kind==='deal'){
       const buffer=ac.createBuffer(1,Math.ceil(ac.sampleRate*.075),ac.sampleRate),d=buffer.getChannelData(0);
       for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3);
