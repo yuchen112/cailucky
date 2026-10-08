@@ -1,0 +1,6 @@
+import assert from 'node:assert/strict';import {validateBackup} from '../games/fortune/seven-v3/storage.mjs';
+const entry={id:'qa-1',kind:'tarot',mode:'塔羅占卜',title:'愚者',summary:'測試',meta:'測試',created:'2026-10-09T00:00:00Z',note:'筆記',question:'問題',sections:[{title:'當下',text:'內容',action:'行動'}],visuals:[{kind:'tarot',name:'愚者',id:0,reversed:false}]};
+const backup={format:'cxq-oracle-seven-v3',version:1,entries:[entry]};assert.deepEqual(validateBackup(backup),[entry]);
+for(const mutate of [b=>b.format='other',b=>b.entries[0].created='NaN',b=>b.entries[0].visuals[0].id=78,b=>b.entries[0].visuals=[{kind:'image',name:'x',src:'https://example.com/track'}],b=>b.entries[0].visuals=[{kind:'rune',name:'x',glyph:'<img onerror=x>'}],b=>b.entries[0].visuals=[{kind:'hex',name:'乾',bits:'111111',moving:[7]}],b=>b.entries[0].note='x'.repeat(1001),b=>b.entries[0].sections=null,b=>b.entries=Array(101).fill(entry)]){const b=structuredClone(backup);mutate(b);assert.throws(()=>validateBackup(b));}
+for(const visual of [{kind:'rune',name:'Fehu',glyph:'ᚠ'},{kind:'hex',name:'乾',bits:'111111',moving:[1,6]},{kind:'number',name:'靈數',value:33},{kind:'image',name:'小箱子',src:'../../assets/mascot-motion-v2/box-idle.webp'}]){const b=structuredClone(backup);b.entries[0].visuals=[visual];assert.equal(validateBackup(b).length,1);}
+console.log('Storage: 14 valid/invalid backup cases passed');

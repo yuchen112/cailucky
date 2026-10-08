@@ -1,0 +1,10 @@
+import fs from 'node:fs';import path from 'node:path';import {toolDependency} from './refresh-deps.mjs';
+const esbuild=toolDependency('esbuild'),dir='games/fortune',version='20261009-oracle1',plan=JSON.parse(fs.readFileSync(dir+'/upgrade-build.json'));
+const combined="'use strict';\n"+plan.scripts.map(p=>fs.readFileSync(path.join(dir,p),'utf8')+'\n;').join('\n');
+fs.writeFileSync(dir+'/game-upgrade.bundle.js',(await esbuild.transform(combined,{target:'es2020',minifyWhitespace:true,minifySyntax:true,minifyIdentifiers:false,legalComments:'none'})).code);
+await esbuild.build({entryPoints:[dir+'/seven-v3/app.mjs'],outfile:dir+'/seven-v3/app.bundle.mjs',bundle:true,minify:true,format:'esm',target:'es2020'});
+let html=fs.readFileSync(dir+'/index.html','utf8');html=html.replace(/game-upgrade\.bundle\.js\?v=[^"']+/g,'game-upgrade.bundle.js?v='+version).replace(/<title>.*?<\/title>/,'<title>CxQ 占卜館</title>');
+if(!html.includes('seven-v3/style.css'))html=html.replace('</head>',`<link data-upgrade-independent rel="stylesheet" href="seven-v3/style.css?v=${version}"></head>`);
+if(!html.includes('seven-v3/app.bundle.mjs'))html=html.replace('</body>',`<script type="module" src="seven-v3/app.bundle.mjs?v=${version}"></script></body>`);
+html=html.replace('games/fortune/art/return-website-v3.webp','games/fortune/seven-v3/art/return.webp').replace('"slot":".hero-copy"','"slot":".date-line"').replace('.hero-copy .game-center-return{width:270px;height:60px;margin-top:18px}', '.date-line{flex-wrap:wrap}.date-line .game-center-return{width:220px;height:82px;margin-left:auto}');fs.writeFileSync(dir+'/index.html',html);
+console.log('Fortune seven-system build complete');

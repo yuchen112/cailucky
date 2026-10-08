@@ -1,0 +1,585 @@
+{
+  "generator": "built-in image_gen",
+  "assets": [
+    {
+      "id": "tarot",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-bc9bd719-3cf0-49b5-9c32-8f2c71495e40.png",
+      "subject": "a fan of illustrated tarot cards, crescent and botanical engraving",
+      "target": "art/tarot.webp",
+      "prompt": "Independent CxQ illustration: a fan of illustrated tarot cards, crescent and botanical engraving. Quiet watercolor and fine ink, warm ivory paper, muted lavender and dusty rose; independent image, no montage."
+    },
+    {
+      "id": "zodiac",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-d78e3d08-7b8a-4806-8b18-18485cb41f2c.png",
+      "subject": "a delicate celestial zodiac wheel with twelve constellations, astronomical brass instrument",
+      "target": "art/zodiac.webp",
+      "prompt": "Independent CxQ illustration: a delicate celestial zodiac wheel with twelve constellations, astronomical brass instrument. Quiet watercolor and fine ink, warm ivory paper, muted lavender and dusty rose; independent image, no montage."
+    },
+    {
+      "id": "numbers",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-facd1594-71a0-4ca8-9f23-eb42d84c5e08.png",
+      "subject": "an ivory numerology notebook with luminous numbers 1 through 9, pressed flowers",
+      "target": "art/numbers.webp",
+      "prompt": "Independent CxQ illustration: an ivory numerology notebook with luminous numbers 1 through 9, pressed flowers. Quiet watercolor and fine ink, warm ivory paper, muted lavender and dusty rose; independent image, no montage."
+    },
+    {
+      "id": "iching",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-919a7098-a795-4243-b6c7-30af5a72ec51.png",
+      "subject": "three antique Chinese coins next to a bamboo scroll, ink mountains",
+      "target": "art/iching.webp",
+      "prompt": "Independent CxQ illustration: three antique Chinese coins next to a bamboo scroll, ink mountains. Quiet watercolor and fine ink, warm ivory paper, muted lavender and dusty rose; independent image, no montage."
+    },
+    {
+      "id": "lots",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-4d635ec3-fa47-49e6-91cf-61931e6659d0.png",
+      "subject": "a wooden Chinese fortune stick cylinder and a cream poetry slip, plum blossoms",
+      "target": "art/lots.webp",
+      "prompt": "Independent CxQ illustration: a wooden Chinese fortune stick cylinder and a cream poetry slip, plum blossoms. Quiet watercolor and fine ink, warm ivory paper, muted lavender and dusty rose; independent image, no montage."
+    },
+    {
+      "id": "runes",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-dfacfb41-43e0-4281-b491-1f8a914d90b9.png",
+      "subject": "a linen pouch with engraved Elder Futhark rune stones, moss and fern",
+      "target": "art/runes.webp",
+      "prompt": "Independent CxQ illustration: a linen pouch with engraved Elder Futhark rune stones, moss and fern. Quiet watercolor and fine ink, warm ivory paper, muted lavender and dusty rose; independent image, no montage."
+    },
+    {
+      "id": "characters",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-5f6b3e04-81ce-4abf-a48b-2c01389778fd.png",
+      "subject": "a magical cream envelope with eleven glowing small stars, gentle storybook keepsake box",
+      "target": "art/characters.webp",
+      "prompt": "Independent CxQ illustration: a magical cream envelope with eleven glowing small stars, gentle storybook keepsake box. Quiet watercolor and fine ink, warm ivory paper, muted lavender and dusty rose; independent image, no montage."
+    },
+    {
+      "id": "return",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-0ebb7419-85a4-4f37-8fd3-89cb47fa4122.png",
+      "subject": "a slim horizontal ivory paper navigation plaque with a small left arrow and crescent moon, exact Traditional Chinese text 返回網站首頁, subdued lavender lettering, wide 4:1 proportion",
+      "target": "art/return.webp",
+      "prompt": "Independent CxQ illustration: a slim horizontal ivory paper navigation plaque with a small left arrow and crescent moon, exact Traditional Chinese text 返回網站首頁, subdued lavender lettering, wide 4:1 proportion. Quiet watercolor and fine ink, warm ivory paper, muted lavender and dusty rose; independent image, no montage."
+    },
+    {
+      "id": "major-0",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-639a8004-ca1e-4e59-a0ef-d50079ffeb80.png",
+      "prompt": "Use case: illustration-story. Single portrait tarot card face illustration for 愚者, depicts a traveler with a small bag and white dog at a cliff edge. Quiet refined watercolor, fine antique ink, ivory and muted lavender, restrained dusty rose. Traditional recognizable Rider Waite symbolic composition reimagined as original artwork. Thin botanical border. No text or numerals, no collage, one full uncropped card.",
+      "target": "art/major-0.webp"
+    },
+    {
+      "id": "major-1",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-84e4d4a1-de57-4a0b-a0b4-95f8aacbbc4c.png",
+      "prompt": "Use case: illustration-story. Single portrait tarot card face illustration for 魔術師, depicts an adept at a table bearing wand cup sword and pentacle, infinity above. Quiet refined watercolor, fine antique ink, ivory and muted lavender, restrained dusty rose. Traditional recognizable Rider Waite symbolic composition reimagined as original artwork. Thin botanical border. No text or numerals, no collage, one full uncropped card.",
+      "target": "art/major-1.webp"
+    },
+    {
+      "id": "major-2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-f845350b-fe69-48f5-8dfa-4819dd06847b.png",
+      "prompt": "Use case: illustration-story. Single portrait tarot card face illustration for 女祭司, depicts a priestess between dark and light pillars holding a scroll. Quiet refined watercolor, fine antique ink, ivory and muted lavender, restrained dusty rose. Traditional recognizable Rider Waite symbolic composition reimagined as original artwork. Thin botanical border. No text or numerals, no collage, one full uncropped card.",
+      "target": "art/major-2.webp"
+    },
+    {
+      "id": "major-3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-aae67c32-484f-4f3b-be7e-162772834163.png",
+      "prompt": "Use case: illustration-story. Single portrait tarot card face illustration for 皇后, depicts a nurturing crowned empress in a fertile garden. Quiet refined watercolor, fine antique ink, ivory and muted lavender, restrained dusty rose. Traditional recognizable Rider Waite symbolic composition reimagined as original artwork. Thin botanical border. No text or numerals, no collage, one full uncropped card.",
+      "target": "art/major-3.webp"
+    },
+    {
+      "id": "major-4",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-1daa42c9-0799-43fa-b7ab-db2aa8e01680.png",
+      "prompt": "Use case: illustration-story. Single portrait tarot card face illustration for 皇帝, depicts an emperor on a stone ram throne in mountains. Quiet refined watercolor, fine antique ink, ivory and muted lavender, restrained dusty rose. Traditional recognizable Rider Waite symbolic composition reimagined as original artwork. Thin botanical border. No text or numerals, no collage, one full uncropped card.",
+      "target": "art/major-4.webp"
+    },
+    {
+      "id": "major-5",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-2402f9a3-68c5-4e8e-8b2f-7e024c11f404.png",
+      "prompt": "Use case: illustration-story. Single portrait tarot card face illustration for 教皇, depicts a hierophant between pillars with two learners. Quiet refined watercolor, fine antique ink, ivory and muted lavender, restrained dusty rose. Traditional recognizable Rider Waite symbolic composition reimagined as original artwork. Thin botanical border. No text or numerals, no collage, one full uncropped card.",
+      "target": "art/major-5.webp"
+    },
+    {
+      "id": "major-6",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-11eed9f5-40ee-45c2-8218-7b93b08ef1a5.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 戀人: two fully clothed adults standing apart in a flowering garden beneath a robed angel, symbolic choices. All human figures wear complete modest clothing. Refined watercolor and fine antique ink, ivory, muted lavender and dusty rose, subtle botanical border. Recognizable traditional tarot symbolism. No text, no numerals, no collage, no nudity.",
+      "target": "art/major-6.webp"
+    },
+    {
+      "id": "major-7",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-35e1f81a-4cc6-4d95-9963-b2cb28d15a43.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 戰車: a clothed charioteer with black and white sphinxes. All human figures wear complete modest clothing. Refined watercolor and fine antique ink, ivory, muted lavender and dusty rose, subtle botanical border. Recognizable traditional tarot symbolism. No text, no numerals, no collage, no nudity.",
+      "target": "art/major-7.webp"
+    },
+    {
+      "id": "major-8",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-d0aa8199-95aa-49d3-8391-ead393cc8c30.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 力量: a fully clothed woman gently calming a lion, infinity above. All human figures wear complete modest clothing. Refined watercolor and fine antique ink, ivory, muted lavender and dusty rose, subtle botanical border. Recognizable traditional tarot symbolism. No text, no numerals, no collage, no nudity.",
+      "target": "art/major-8.webp"
+    },
+    {
+      "id": "major-9",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-975ca423-ee84-4a52-a62e-57e06d8a6556.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 隱者: a cloaked hermit on a mountain holding lantern and staff. All human figures wear complete modest clothing. Refined watercolor and fine antique ink, ivory, muted lavender and dusty rose, subtle botanical border. Recognizable traditional tarot symbolism. No text, no numerals, no collage, no nudity.",
+      "target": "art/major-9.webp"
+    },
+    {
+      "id": "major-10",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-44f5b31a-abef-41a2-9ba0-a9a21f269555.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 命運之輪: a great turning wheel among clouds. All human figures wear complete modest clothing. Refined watercolor and fine antique ink, ivory, muted lavender and dusty rose, subtle botanical border. Recognizable traditional tarot symbolism. No text, no numerals, no collage, no nudity.",
+      "target": "art/major-10.webp"
+    },
+    {
+      "id": "major-11",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-f8c69c22-2635-4a34-addd-32a5ef4fc665.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 正義: a robed seated woman with upright sword and balance scales. All human figures wear complete modest clothing. Refined watercolor and fine antique ink, ivory, muted lavender and dusty rose, subtle botanical border. Recognizable traditional tarot symbolism. No text, no numerals, no collage, no nudity.",
+      "target": "art/major-11.webp"
+    },
+    {
+      "id": "major-12",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-7fff167e-9c71-4013-a528-c96dbdb3fd3a.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 倒吊人: a suspended antique hourglass between two living tree branches, an inverted reflection in calm water, symbolic pause and changed perspective, no people. Peaceful symbolic still life or fully clothed fantasy scene. Refined watercolor, fine antique ink, ivory, muted lavender and dusty rose, thin botanical border. No text, no numerals, no collage.",
+      "target": "art/major-12.webp"
+    },
+    {
+      "id": "major-13",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-9d45cfce-6c5c-432c-b6ad-44c368a72d5e.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 死神: white rose banner beside an autumn path transforming into spring, sunrise through an open gate, symbolic ending and renewal, no people. Peaceful symbolic still life or fully clothed fantasy scene. Refined watercolor, fine antique ink, ivory, muted lavender and dusty rose, thin botanical border. No text, no numerals, no collage.",
+      "target": "art/major-13.webp"
+    },
+    {
+      "id": "major-14",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-0522f241-b62b-4bdc-947a-a8c723a93c90.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 節制: a fully robed angel pouring water between two cups, a quiet stream. Peaceful symbolic still life or fully clothed fantasy scene. Refined watercolor, fine antique ink, ivory, muted lavender and dusty rose, thin botanical border. No text, no numerals, no collage.",
+      "target": "art/major-14.webp"
+    },
+    {
+      "id": "major-15",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-a1c58f3d-8253-4fd2-a249-598703cc1a75.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 惡魔: an ornate locked chest with loose chains and an open key, a shadow of temptation, symbolic attachment, no people. Peaceful symbolic still life or fully clothed fantasy scene. Refined watercolor, fine antique ink, ivory, muted lavender and dusty rose, thin botanical border. No text, no numerals, no collage.",
+      "target": "art/major-15.webp"
+    },
+    {
+      "id": "major-16",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-ee218439-5810-463c-87cf-b3800df034fd.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 高塔: a lightning-lit stone tower with a detached golden crown amid abstract clouds, symbolic sudden revelation, no people. Peaceful symbolic still life or fully clothed fantasy scene. Refined watercolor, fine antique ink, ivory, muted lavender and dusty rose, thin botanical border. No text, no numerals, no collage.",
+      "target": "art/major-16.webp"
+    },
+    {
+      "id": "major-17",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-dfb1241c-c6b1-46e4-9f04-34aa894d7a75.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 星星: a fully clothed woman in a modest long dress pouring two jars by a stream beneath eight stars. Peaceful symbolic still life or fully clothed fantasy scene. Refined watercolor, fine antique ink, ivory, muted lavender and dusty rose, thin botanical border. No text, no numerals, no collage.",
+      "target": "art/major-17.webp"
+    },
+    {
+      "id": "major-18",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-f88db577-9397-4cfd-ae5d-2f15806fcb9e.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 月亮: two dogs and a crayfish beside a moonlit path between two towers. Peaceful symbolic still life or fully clothed fantasy scene. Refined watercolor, fine antique ink, ivory, muted lavender and dusty rose, thin botanical border. No text, no numerals, no collage.",
+      "target": "art/major-18.webp"
+    },
+    {
+      "id": "major-19",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-0fa5c581-a77a-49a6-b07c-8d424c121038.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 太陽: a radiant sun over a white horse and sunflower garden, no people. Peaceful symbolic still life or fully clothed fantasy scene. Refined watercolor, fine antique ink, ivory, muted lavender and dusty rose, thin botanical border. No text, no numerals, no collage.",
+      "target": "art/major-19.webp"
+    },
+    {
+      "id": "major-20",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-938d9826-771a-4774-a04a-693f31467c1b.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 審判: a robed angel with a trumpet over a sunrise meadow, symbolic awakening, fully clothed. Peaceful symbolic still life or fully clothed fantasy scene. Refined watercolor, fine antique ink, ivory, muted lavender and dusty rose, thin botanical border. No text, no numerals, no collage.",
+      "target": "art/major-20.webp"
+    },
+    {
+      "id": "major-21",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-e1cc8621-dfd4-4d45-a545-b70bc5bda4df.png",
+      "prompt": "Use case: illustration-story. One original portrait tarot card face for 世界: a fully clothed dancer in flowing modest dress within a laurel wreath, four symbolic creatures at corners. Peaceful symbolic still life or fully clothed fantasy scene. Refined watercolor, fine antique ink, ivory, muted lavender and dusty rose, thin botanical border. No text, no numerals, no collage.",
+      "target": "art/major-21.webp"
+    },
+    {
+      "id": "minor-0",
+      "name": "權杖王牌",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-502b9325-9a62-404b-92a1-76e1f6858e7b.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 權杖王牌. Scene: one budding wand held by a hand emerging from a soft cloud. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-0.webp"
+    },
+    {
+      "id": "minor-1",
+      "name": "權杖二",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-4c54e4da-7b0f-4f97-9861-41e6c853aeea.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 權杖二. Scene: a cloaked traveler on a balcony holding a globe with two standing wands. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-1.webp"
+    },
+    {
+      "id": "minor-2",
+      "name": "權杖三",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-0683d856-3130-42f8-ac3a-5e794e426934.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 權杖三. Scene: a traveler looking over a harbor with three upright wands. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-2.webp"
+    },
+    {
+      "id": "minor-3",
+      "name": "權杖四",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-ad7eb365-2fa4-43e6-8f0f-65617a6c272f.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 權杖四. Scene: four flower-wreathed wands forming a welcoming arch beside a distant castle. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-3.webp"
+    },
+    {
+      "id": "minor-4",
+      "name": "權杖五",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-d6f3470b-20fe-4bc1-8faa-650e524739bb.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 權杖五. Scene: five colorful wands crossing in a lively abstract star, symbolic friendly competition, no people. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-4.webp"
+    },
+    {
+      "id": "minor-5",
+      "name": "權杖六",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-9c243463-fc90-4609-921d-0e871d84148e.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 權杖六. Scene: a fully clothed rider with a laurel wreath carrying a wand, five wands held by distant fully clothed companions. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-5.webp"
+    },
+    {
+      "id": "minor-6",
+      "name": "權杖七",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-0932e4eb-b76a-4502-9dd9-46d6c7224e12.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 權杖七. Scene: seven upright wands around a grassy hill, a clear path protected by a small wooden gate. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-6.webp"
+    },
+    {
+      "id": "minor-7",
+      "name": "權杖八",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-e06f2b64-7d0a-4acc-85a9-f712199413d7.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 權杖八. Scene: eight wands flying diagonally above a calm landscape. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-7.webp"
+    },
+    {
+      "id": "minor-8",
+      "name": "權杖九",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-d6e8fb66-d015-4709-98fa-de6c3af1377d.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 權杖九. Scene: nine wands forming a protective garden fence around a lantern. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-8.webp"
+    },
+    {
+      "id": "minor-9",
+      "name": "權杖十",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-941f2bf0-cbe1-4379-888d-6c0049beb137.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 權杖十. Scene: ten bundled wands carried along a path on a wooden handcart. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-9.webp"
+    },
+    {
+      "id": "minor-10",
+      "name": "權杖侍者",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-d66a49a3-fd94-4ae9-bb4f-329f7e5c917a.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 權杖侍者. Scene: a fully clothed young adult traveler examining a budding wand in the desert. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-10.webp"
+    },
+    {
+      "id": "minor-11",
+      "name": "權杖騎士",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-16c5a2f7-e78c-4c8b-a3a1-7aee6f22b65a.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 權杖騎士. Scene: a fully clothed armored adult rider with a wand on a brown horse in a desert. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-11.webp"
+    },
+    {
+      "id": "minor-12",
+      "name": "權杖皇后",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-784aba2a-1967-4daf-b5ca-27c35b0b4b12.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 權杖皇后. Scene: a fully clothed queen with a sunflower and wand, small black cat at her feet. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-12.webp"
+    },
+    {
+      "id": "minor-13",
+      "name": "權杖國王",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-76c409bc-7d70-42ee-a70c-e0074535853d.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 權杖國王. Scene: a fully clothed king holding a budding wand on a lion-decorated throne. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-13.webp"
+    },
+    {
+      "id": "minor-14",
+      "name": "聖杯王牌",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-a5f6b04a-14e2-4259-8a15-8807dc76353b.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 聖杯王牌. Scene: one overflowing silver cup with a dove above a lotus pond. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-14.webp"
+    },
+    {
+      "id": "minor-15",
+      "name": "聖杯二",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-b5121e29-e5b2-4054-bf4d-d350d0be47d2.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 聖杯二. Scene: two fully clothed adults exchanging cups, floral caduceus symbol above. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-15.webp"
+    },
+    {
+      "id": "minor-16",
+      "name": "聖杯三",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-7d5dcdf6-0b95-49c0-8fa8-ed3ec629dd82.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 聖杯三. Scene: three fully clothed adult friends raising cups in a harvest garden. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-16.webp"
+    },
+    {
+      "id": "minor-17",
+      "name": "聖杯四",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-a1d1a34c-ed3e-41a4-abb5-a1afb43510f4.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 聖杯四. Scene: four cups beside a seated fully clothed adult under a tree, one cup offered by a cloud. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-17.webp"
+    },
+    {
+      "id": "minor-18",
+      "name": "聖杯五",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-55d491e3-fdaf-4982-9cf4-3aa581acb178.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 聖杯五. Scene: three overturned cups and two standing cups beside a bridge and river, no people. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-18.webp"
+    },
+    {
+      "id": "minor-19",
+      "name": "聖杯六",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-331327c7-9cc3-4398-be51-ce7d93f88140.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 聖杯六. Scene: six flower-filled cups in an old courtyard with two fully clothed adults exchanging a flower. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-19.webp"
+    },
+    {
+      "id": "minor-20",
+      "name": "聖杯七",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-ffb1abf2-d85d-4a6d-81ff-5ea98e22f10a.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 聖杯七. Scene: seven cups floating in clouds, each bearing a different harmless symbol: crown flower star castle ribbon gem laurel. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-20.webp"
+    },
+    {
+      "id": "minor-21",
+      "name": "聖杯八",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-55676592-1e44-43b5-b0bd-6cd50954985f.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 聖杯八. Scene: eight cups stacked beside a moonlit mountain path, a fully clothed traveler walking away. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-21.webp"
+    },
+    {
+      "id": "minor-22",
+      "name": "聖杯九",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-0a68fd5e-b210-499f-ab18-d5184ce7fb03.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 聖杯九. Scene: nine cups arranged behind a fully clothed content adult seated on a bench. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-22.webp"
+    },
+    {
+      "id": "minor-23",
+      "name": "聖杯十",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-a2b9ad37-3a8f-467b-8dc4-00696517e695.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 聖杯十. Scene: ten cups arcing in a rainbow above a peaceful cottage garden. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-23.webp"
+    },
+    {
+      "id": "minor-24",
+      "name": "聖杯侍者",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-88664987-e841-486d-9181-152e5687a90b.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 聖杯侍者. Scene: a fully clothed young adult holding a cup with a tiny fish peeking out. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-24.webp"
+    },
+    {
+      "id": "minor-25",
+      "name": "聖杯騎士",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-6f0504e6-73d8-466d-8990-67d6d7b3ef97.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 聖杯騎士. Scene: a fully clothed armored adult rider holding a cup on a white horse beside a stream. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-25.webp"
+    },
+    {
+      "id": "minor-26",
+      "name": "聖杯皇后",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-0d48105d-9998-4ee6-bbab-23ab0a60f240.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 聖杯皇后. Scene: a fully clothed queen holding an ornate covered cup on a seaside throne. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-26.webp"
+    },
+    {
+      "id": "minor-27",
+      "name": "聖杯國王",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-77acf1fe-093d-4e8a-ba9d-34d17d40ea01.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 聖杯國王. Scene: a fully clothed king holding a cup on a throne above calm waves. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-27.webp"
+    },
+    {
+      "id": "minor-28",
+      "name": "寶劍王牌",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-69fd1a79-3a85-471d-a70d-086e32346cd4.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 寶劍王牌. Scene: one upright sword held by a hand from a cloud, crown and olive branches. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-28.webp"
+    },
+    {
+      "id": "minor-29",
+      "name": "寶劍二",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-4e902e7f-c0ef-4317-bf54-82a98c58cfaf.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 寶劍二. Scene: two crossed swords before a moonlit sea, an ivory cloth resting on a bench, no people. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-29.webp"
+    },
+    {
+      "id": "minor-30",
+      "name": "寶劍三",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-27a3ccfe-da35-4f43-a136-e7531e99e1ef.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 寶劍三. Scene: three silver swords arranged around a cracked rose quartz heart on a rainy windowsill, no pierced objects or people. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-30.webp"
+    },
+    {
+      "id": "minor-31",
+      "name": "寶劍四",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-2f88c490-abc3-42b0-ab45-8a0bececb7d2.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 寶劍四. Scene: four swords in a quiet stone meditation room with stained glass, no people. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-31.webp"
+    },
+    {
+      "id": "minor-32",
+      "name": "寶劍五",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-64566cd7-ffcb-43ef-8ef1-36594d5d2aa7.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 寶劍五. Scene: five swords laid on a windswept shore, distant abstract clouds, no people. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-32.webp"
+    },
+    {
+      "id": "minor-33",
+      "name": "寶劍六",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-8b663225-95cf-4660-8898-7235e7222e2d.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 寶劍六. Scene: six swords standing safely in an empty boat crossing a tranquil river. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-33.webp"
+    },
+    {
+      "id": "minor-34",
+      "name": "寶劍七",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-3a4351e0-0b14-408d-a889-3cbaef9646b8.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 寶劍七. Scene: seven swords displayed on a patterned cloth beside an open tent, a fox walking past. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-34.webp"
+    },
+    {
+      "id": "minor-35",
+      "name": "寶劍八",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-fb0d3141-95d9-4bf3-b621-c2bc4a35533a.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 寶劍八. Scene: eight swords standing around an open garden gate, a loose ribbon on the path, no people. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-35.webp"
+    },
+    {
+      "id": "minor-36",
+      "name": "寶劍九",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-ae676654-3308-49d3-8ea2-ca01a54190f5.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 寶劍九. Scene: nine swords as decorative motifs on a dark blue wall above an unoccupied bed and lantern. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-36.webp"
+    },
+    {
+      "id": "minor-37",
+      "name": "寶劍十",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-887851f9-bad6-4801-9ceb-9f6b1503dd37.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 寶劍十. Scene: ten swords arranged on the ground beneath a bright dawn, an old torn banner folded nearby, no people. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-37.webp"
+    },
+    {
+      "id": "minor-38",
+      "name": "寶劍侍者",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-f5d6feb2-78b9-4e53-9846-35c6e90b3a33.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 寶劍侍者. Scene: a fully clothed young adult scholar holding an upright sword in a breezy field. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-38.webp"
+    },
+    {
+      "id": "minor-39",
+      "name": "寶劍騎士",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-27b1876c-1094-42d5-8730-c32eb9cc8601.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 寶劍騎士. Scene: a fully clothed armored adult rider with upright sword moving through wind, no combat. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-39.webp"
+    },
+    {
+      "id": "minor-40",
+      "name": "寶劍皇后",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-af20e89b-4dac-45a2-b570-2e81007d28bf.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 寶劍皇后. Scene: a fully clothed queen seated with upright sword and open hand against clear sky. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-40.webp"
+    },
+    {
+      "id": "minor-41",
+      "name": "寶劍國王",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-2de8b504-18e5-43c5-85da-f6210544f104.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 寶劍國王. Scene: a fully clothed king seated with upright sword on a butterfly-decorated throne. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-41.webp"
+    },
+    {
+      "id": "minor-42",
+      "name": "錢幣王牌",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-505c59b6-cbc9-4491-82d4-4e9c6e681ea1.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 錢幣王牌. Scene: one gold pentacle held by a hand emerging from clouds above a garden arch. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-42.webp"
+    },
+    {
+      "id": "minor-43",
+      "name": "錢幣二",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-6f8ca07b-af04-464e-8b12-9469505f5f10.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 錢幣二. Scene: two gold pentacles joined by an infinity ribbon above two ships at sea. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-43.webp"
+    },
+    {
+      "id": "minor-44",
+      "name": "錢幣三",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-22f89420-9ade-4c97-82e7-da77e4edfe4c.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 錢幣三. Scene: three gold pentacles carved in a stone workshop arch above three fully clothed adult artisans. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-44.webp"
+    },
+    {
+      "id": "minor-45",
+      "name": "錢幣四",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-42889372-3831-4392-875d-f40e3740a9c8.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 錢幣四. Scene: four gold pentacles carefully stored in a small open cedar chest beside a town window. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-45.webp"
+    },
+    {
+      "id": "minor-46",
+      "name": "錢幣五",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-8c61d302-f5c2-44ee-a743-1ae97a98fbce.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 錢幣五. Scene: five gold pentacles in a warm stained glass window above a snowy path, no people. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-46.webp"
+    },
+    {
+      "id": "minor-47",
+      "name": "錢幣六",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-df9c7b72-7780-4126-a0f9-6bd02eaf5b87.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 錢幣六. Scene: six gold pentacles beside balanced scales and two open hands, symbolic fair sharing. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-47.webp"
+    },
+    {
+      "id": "minor-48",
+      "name": "錢幣七",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-a9ade60a-afac-4ca7-a040-12e6e23436eb.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 錢幣七. Scene: seven gold pentacles growing among vines, a gardening tool resting nearby. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-48.webp"
+    },
+    {
+      "id": "minor-49",
+      "name": "錢幣八",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-fa8cd6ba-e17b-4b3f-ad89-4821126a0b6b.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 錢幣八. Scene: eight gold pentacles in a craftsperson workshop, one on the workbench. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-49.webp"
+    },
+    {
+      "id": "minor-50",
+      "name": "錢幣九",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-6c46a36c-75c5-4418-8ff2-9d220407eece.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 錢幣九. Scene: nine gold pentacles among grapevines with a fully clothed adult gardener and a falcon. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-50.webp"
+    },
+    {
+      "id": "minor-51",
+      "name": "錢幣十",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-00412f7b-a194-44f5-98e5-b393ba97977c.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 錢幣十. Scene: ten gold pentacles framing a multigeneration home courtyard, two small dogs, no people. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-51.webp"
+    },
+    {
+      "id": "minor-52",
+      "name": "錢幣侍者",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-fb6b1b98-d8d2-4e05-95c5-5a07e3eccbb2.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 錢幣侍者. Scene: a fully clothed young adult student carefully holding one gold pentacle in a green field. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-52.webp"
+    },
+    {
+      "id": "minor-53",
+      "name": "錢幣騎士",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-442832a7-b034-41f0-a855-e892fb86f7b5.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 錢幣騎士. Scene: a fully clothed armored adult rider on a dark horse holding a gold pentacle beside a plowed field. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-53.webp"
+    },
+    {
+      "id": "minor-54",
+      "name": "錢幣皇后",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-9b645759-7bfa-4758-9ad7-886d9eed4f69.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 錢幣皇后. Scene: a fully clothed queen cradling a gold pentacle in a rose garden with a rabbit. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-54.webp"
+    },
+    {
+      "id": "minor-55",
+      "name": "錢幣國王",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-4688eb32-dc8b-480a-858e-7e8e917ab4be.png",
+      "prompt": "Use case: illustration-story. One independent portrait tarot card face for 錢幣國王. Scene: a fully clothed king holding a gold pentacle on a vine-covered throne beside a castle. Original refined watercolor and fine antique ink, ivory paper, muted lavender, dusty rose, thin botanical border. Distinct traditional symbolism, peaceful still life. Every human wears full modest clothing. No text, no numerals, no collage, no nudity, no injury.",
+      "target": "art/minor-55.webp"
+    }
+  ]
+}
