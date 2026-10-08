@@ -1,6 +1,6 @@
 /* Each game supplies its own artwork, home host and placement. */
 (()=>{
- const script=document.currentScript,cfg=JSON.parse(script.dataset.game),root=new URL('../../',script.src),art=new URL(cfg.art,root).href,label=cfg.target==='website'?'返回網站首頁':'返回遊戲中心',destination=cfg.target==='website'?root.href:new URL('?view=game-hub&v=20261008-polish2',root).href;
+ const script=document.currentScript,cfg=JSON.parse(script.dataset.game),root=new URL('../../',script.src),art=new URL(cfg.art,root).href,label=cfg.target==='website'?'返回網站首頁':'返回遊戲中心',destination=cfg.target==='website'?root.href:new URL('?view=game-hub&v=20261008-polish3',root).href;
  document.title='CxQ '+cfg.name;
  const style=document.createElement('style');style.textContent='.game-center-return{display:inline-flex!important;align-items:center;justify-content:center;padding:0!important;border:0!important;background:none!important;box-shadow:none!important;min-height:44px;touch-action:manipulation;cursor:pointer;text-decoration:none!important;max-width:100%;flex-shrink:0}.game-center-return img{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;pointer-events:none}.game-center-return:active{filter:brightness(1.2)}.game-center-return:focus-visible{outline:3px solid #fff0ac;outline-offset:3px}'+cfg.css;document.head.append(style);
  style.textContent+='#link-home h1{text-wrap:balance;font-size:clamp(22px,4vw,28px);line-height:1.2}#link-home>div{max-height:100dvh;overflow-y:auto;box-sizing:border-box}';

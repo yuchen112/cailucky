@@ -1,6 +1,6 @@
 /* CxQ local game services. No account, telemetry or remote state. */
 (() => {
-  const base=new URL('.',document.currentScript.src),key='cxq-audio-v1';
+  const base=new URL('../shared/',location.href),key='cxq-audio-v1';
   const read=(k,f)=>{try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}};
   const write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch{return false}};
   const raw=read(key,{})||{},settings={music:Number.isFinite(raw.music)?Math.max(0,Math.min(1,raw.music)):.25,sfx:Number.isFinite(raw.sfx)?Math.max(0,Math.min(1,raw.sfx)):.65};

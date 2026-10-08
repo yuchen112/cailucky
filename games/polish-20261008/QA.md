@@ -1,4 +1,4 @@
-# CxQ integrated polish — 20261008-polish2
+# CxQ integrated polish — 20261008-polish3
 
 - Divination removed from the 18-game catalogue and added to the box menu. Dedicated generated return art leads to website homepage.
 - Ten characters plus box: 34 independently generated new blink/greeting/reaction frames; 44 transparent aligned WebP display frames total. Only the selected character's four frames preload. Reduced-motion and visibility cleanup supported.
@@ -17,3 +17,5 @@ Validation:
 Limits: desktop browser viewport QA is not Android/iPhone hardware acceptance. Complete campaign progression and every poker rules variant were covered by existing logic tests where present, not played exhaustively in this release. Physical audio listening remains user/device acceptance.
 
 Final defense browser check: battle loaded without console errors; deployment confirmed, coins 360 -> 290 and next-wave button enabled.
+
+Production catch: bundled runtime audio base corrected to games/shared rather than current script directory. Ten game URL configurations pass a dedicated regression test. Cache version advanced to polish3.

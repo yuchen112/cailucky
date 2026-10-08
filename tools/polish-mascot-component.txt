@@ -2,7 +2,7 @@ function jo({equipment:l={},facing:i="right",size:u="normal",className:f=""}){
  const p=D.useMemo(()=>Vt(l),[l]),d=D.useMemo(()=>xo(p),[p]),id=d?.id||"box",animated=u==="normal"||u==="showcase";
  const base=rg(d?.image||d?.thumb||tg),[frame,setFrame]=D.useState("idle"),[ready,setReady]=D.useState(false),host=D.useRef(null);
  D.useEffect(()=>{setFrame("idle");setReady(false);if(!animated)return;let disposed=false,timers=[],loaded=new Set(),imgs=[];
-  const url=state=>"assets/mascot-motion-v2/"+id+"-"+state+".webp?v=20261008-polish2";
+  const url=state=>"assets/mascot-motion-v2/"+id+"-"+state+".webp?v=20261008-polish3";
   const states=["idle","blink","wave","react"];
   // Only the selected mascot is fetched. Every animation frame is independently drawn.
   for(const state of states){const img=new Image();imgs.push(img);img.decoding="async";img.onload=()=>{if(disposed)return;loaded.add(state);if(state==="idle")setReady(true)};img.src=url(state);}
@@ -16,6 +16,6 @@ function jo({equipment:l={},facing:i="right",size:u="normal",className:f=""}){
   document.addEventListener('visibilitychange',visibility);queue(idle,2500);
   return()=>{disposed=true;timers.forEach(clearTimeout);imgs.forEach(im=>im.onload=null);button?.removeEventListener('click',interact);document.removeEventListener('visibilitychange',visibility)};
  },[id,animated]);
- const src=animated&&ready?"assets/mascot-motion-v2/"+id+"-"+frame+".webp?v=20261008-polish2":base;
+ const src=animated&&ready?"assets/mascot-motion-v2/"+id+"-"+frame+".webp?v=20261008-polish3":base;
  return r.jsx("span",{ref:host,className:["pet-avatar","pet-avatar-"+u,"pet-face-"+i,"pet-character-"+id,f].filter(Boolean).join(" "),"data-character":id,"data-frame":frame,"data-facing":i,"aria-hidden":"true",children:r.jsx("span",{className:"pet-avatar-stage",children:r.jsx("img",{className:"pet-avatar-layer pet-layer-body",src,alt:"",draggable:"false",loading:animated?"eager":"lazy",decoding:"async"})})});
 }

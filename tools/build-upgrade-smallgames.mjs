@@ -1,5 +1,5 @@
 import fs from 'node:fs';import path from 'node:path';import vm from 'node:vm';import {toolDependency} from './refresh-deps.mjs';
-const esbuild=toolDependency('esbuild'),version='20261008-polish2',reports=[];
+const esbuild=toolDependency('esbuild'),version='20261008-polish3',reports=[];
 for(const id of ['dino','flappy','merge','mines','whack','dream-match','magic-bubble','fortune']){
  const dir=path.resolve('games',id),htmlFile=path.join(dir,'index.html'),planFile=path.join(dir,'upgrade-build.json');let html=fs.readFileSync(htmlFile,'utf8');
  const styleTags=[...html.matchAll(/<link\b[^>]*rel=["']stylesheet["'][^>]*>/gi)],scriptTags=[...html.matchAll(/<script\b([^>]*)\bsrc=["']([^"']+)["']([^>]*)><\/script>/gi)].filter(m=>!m[0].includes('game-entry-v2.js')&&!m[0].includes('audio-engine-v2.js')&&!/type=["']module/.test(m[0]));
