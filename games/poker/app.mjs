@@ -565,7 +565,7 @@ document.addEventListener("click", async (e) => {
       return;
     }
     if (a === "fullscreen") {
-      await enterFullscreen();
+      await (window.CxQFullscreen?.enter?.()||enterFullscreen());
       return;
     }
     if (a === "settings") return showSettings();

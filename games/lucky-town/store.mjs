@@ -1,3 +1,4 @@
+import {validateAuto} from './auto-spin.mjs';
 import {migrate,validateEvolution} from './evolution.mjs?v=20261008-complete2';
 import {ROLES,ROLE_MAP,BY_ID,THEMES,MACHINES} from './data.mjs?v=20261008-complete2';
 import {supports} from './room.mjs?v=20261008-complete2';
@@ -9,6 +10,7 @@ export function pack(data){const payload=JSON.stringify(data);return JSON.string
 export function unpack(raw){const e=JSON.parse(raw);if(e.format!=='CxQ-LuckyTown'||e.version!==1||typeof e.payload!=='string'||hash(e.payload)!==e.checksum)throw Error('備份格式或完整性檢查不符');const s=JSON.parse(e.payload);validate(s);migrate(s);validateEvolution(s);return s}
 const integer=(v,min,max)=>Number.isSafeInteger(v)&&v>=min&&v<=max;
 export function validate(s){
+ validateAuto(s?.auto);
  if(!s||s.version!==1||!integer(s.revision,0,1e9)||!integer(s.coins,0,1e9)||!integer(s.savedAt,0,9e15)||!Object.hasOwn(ROLE_MAP,s.role)||typeof s.started!=='boolean')throw Error('存檔基本資料不完整');
  if(!s.owned||typeof s.owned!=='object'||Array.isArray(s.owned)||Object.keys(s.owned).length>200||Object.entries(s.owned).some(([id,n])=>!Object.hasOwn(BY_ID,id)||!integer(n,1,50)))throw Error('收藏資料不正確');
  if(!Array.isArray(s.themes)||s.themes.some(x=>!THEMES.some(t=>t.id===x))||!s.themes.includes('cream'))throw Error('房間主題不正確');
