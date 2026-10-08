@@ -19,3 +19,5 @@ Limits: desktop browser viewport QA is not Android/iPhone hardware acceptance. C
 Final defense browser check: battle loaded without console errors; deployment confirmed, coins 360 -> 290 and next-wave button enabled.
 
 Production catch: bundled runtime audio base corrected to games/shared rather than current script directory. Ten game URL configurations pass a dedicated regression test. Cache version advanced to polish3.
+
+First four game covers now load eagerly with high priority; subsequent covers remain lazy. Local mobile browser confirms all four first covers decoded and displayed. Homepage script cache advanced to polish4.
