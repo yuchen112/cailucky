@@ -1,3 +1,4 @@
+import {explainHint} from './hint-explanation.mjs';
 import {fitHands,capture,animateTable,cancelMotion,playPosePath,warmPlayPose} from "./presentation.mjs?v=20261007-names1";
 import * as R from "./rules.mjs?v=20261007-names1";
 import { reduce, autoAction } from "./engine.mjs?v=20261007-names1";
@@ -201,7 +202,7 @@ function renderTable() {
     if (t.phase === "playing")
       actions =
         btn("要牌", "hit", human ? "" : "disabled") +
-        btn("停牌", "stand", human ? "" : "disabled") +
+        btn("停牌", "stand", human ? "" : "disabled") + btn("思路提示", "hint", human ? "" : "disabled") + btn("思路提示", "hint", human ? "" : "disabled") +
         btn(
           "加倍",
           "double",
@@ -847,8 +848,8 @@ document.addEventListener("click", async (e) => {
         selected = x.cards;
         target = x.target;
         render();
-        note("已選取建議牌");
-      } else note("目前可跳過");
+        show("出牌思路", `<p>${escape(explainHint(t,x))}</p><p>建議牌已選取，返回牌桌後可修改或確認出牌。</p>`);
+      } else show("這一步的選擇", `<p>${escape(explainHint(t,x))}</p>`);
       return;
     }
     let action;

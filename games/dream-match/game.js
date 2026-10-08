@@ -92,7 +92,7 @@
       ended=true;$('#resultTitle').textContent=win?(mode==='relaxed'?'美夢完成！':chapters[chapter]+'修復完成！'):'再試一次，夢境等著你';
       $('#resultText').textContent='獲得 '+score.toLocaleString()+' 分 · 剩餘 '+moves+' 步';
       const best=Math.max(score,CxQ.read('cxq-match-best',0));CxQ.write('cxq-match-best',best);
-      if(win&&mode==='classic')CxQ.write(campaignKey,Math.max(chapter+1,cleared()));
+      if(win&&mode==='classic'){CxQ.write(campaignKey,Math.max(chapter+1,cleared()));const raw=CxQ.read('cxq-dream-stars-v1',{}),stars=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};const earned=1+(moves>=Math.ceil(level.moves*.15)?1:0)+(moves>=Math.ceil(level.moves*.3)?1:0);stars[chapter]=Math.max(Number(stars[chapter])||0,earned);CxQ.write('cxq-dream-stars-v1',stars);$('#resultText').textContent+=' · '+earned+' / 3 顆夢星（保留步數越多，夢星越多）';}
       const next=win&&mode==='classic'&&chapter<levels.length-1;
       $('#again').textContent=next?'前往第 '+(chapter+2)+' 關':mode==='relaxed'?'再玩一局':win?'重玩這一關':'重試這一關';
       $('#again').onclick=()=>{if(next)chapter++;fresh();};$('#result').hidden=false;CxQ.sound(win?'win':'lose');return;

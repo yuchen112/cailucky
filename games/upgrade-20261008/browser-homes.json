@@ -1,0 +1,82 @@
+[
+  {
+    "game": "2048",
+    "snapshot": "- main:\n  - button \"返回首頁\":\n    - img \"光線編織者\"\n    - heading \"星願 2048\" [level=1]\n    - paragraph: 滑動星光，讓相同的夥伴相遇吧！\n    - generic: ✦ 光線編織者陪你挑戰\n  - generic: 目前分數\n  - generic: \"0\"\n  - generic: 最佳紀錄\n  - generic: \"0\"\n  - button \"表情圖鑑\": ♡\n  - generic \"2048 棋盤\":\n    - img \"2\"\n    - generic: \"2\"\n    - img \"2\"\n    - generic: \"2\"\n  - button \"開始新局\"\n  - button \"復原\" [disabled]\n  - button \"設定\"\n  - paragraph: 手機滑動或使用方向鍵 · 合成相同數字直到 2048\n- img \"光線編織者\"\n- heading \"CxQ 星願 2048\" [level=1]\n- paragraph: 滑動合成，完成星願 2048。\n- button \"開始新遊戲\"\n- button \"繼續遊戲\"\n- button \"玩法\"\n- button \"圖鑑\"\n- button \"排行榜\"\n- link \"返回遊戲中心\":\n  - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n  - img \"返回遊戲中心\"",
+    "errors": []
+  },
+  {
+    "game": "brick-breaker",
+    "snapshot": "- text: HEARTLIGHT JOURNEY\n- heading \"CxQ 心光旅團：記憶核心\" [level=1]\n- paragraph: 沿著心光之路，找回散落在雲海中的記憶。\n- button \"開始新旅程\"\n- button \"繼續上次關卡\" [disabled]\n- button \"世界地圖\"\n- link \"返回遊戲中心\":\n  - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n  - img \"返回遊戲中心\"\n- text: 曦羽・光線編織者 汐寧・雨天陪伴者 朵莉・派對小彩星 糯糯・暖心絨絨 鈴可・四葉鈴狐 森芽・森林旅伴 米洛・月夜守護者 緹雅・收藏家 伯恩・鑰匙守護者 露緹・星願魔法師 世界地圖\n- generic: 雨天記憶庭院\n- generic: ✦ 0\n- generic: 任務 0 / 12\n- generic: READY\n- button \"音樂與音效設定\": ♫",
+    "errors": []
+  },
+  {
+    "game": "click-core",
+    "snapshot": "- main:\n  - main:\n    - text: STARWISH CLICKER\n    - heading \"星願旅團\" [level=1]\n    - text: 鈴可｜幸運採集者\n    - generic: 目前星願\n    - generic: \"0\"\n    - generic: 每秒 0\n    - generic: 點擊主角，獲得第一顆星願。\n    - button \"點擊鈴可\":\n      - generic: 鈴可\n    - generic: 連擊 ×1.0\n    - text: 每日旅團委託 · 本機日期更新\n    - heading \"今天一起完成\" [level=2]\n    - button \"送出一百份星願 0/100 領取星願 250\" [disabled]:\n      - generic: 送出一百份星願\n      - generic: 0/100\n      - strong:\n        - text: 領取星願\n        - generic: \"250\"\n    - button \"照顧旅團與村莊 0/5 領取星願 1K\" [disabled]:\n      - generic: 照顧旅團與村莊\n      - generic: 0/5\n      - strong:\n        - text: 領取星願\n        - generic: 1K\n    - button \"完成一次遠征 0/1 領取星願 1.5K\" [disabled]:\n      - generic: 完成一次遠征\n      - generic: 0/1\n      - strong:\n        - text: 領取星願\n        - generic: 1.5K\n    - generic: 每次點擊\n    - generic: \"+1\"\n    - generic: 暴擊率 13%\n    - button \"星願手套 Lv.0 點擊 +1 → +2 升級 25\" [disabled]:\n      - generic: 星願手套 Lv.0\n      - generic: 點擊 +1 → +2\n      - strong:\n        - text: 升級\n        - generic: \"25\"\n    - button \"幸運鈴鐺 Lv.0 暴擊率 +1% 升級 120\" [disabled]:\n      - generic: 幸運鈴鐺 Lv.0\n      - generic: 暴擊率 +1%\n      - strong:\n        - text: 升級\n        - generic: \"120\"\n    - button \"慶典節拍 Lv.0 連擊收益 +5% 升級 400\" [disabled]:\n      - generic: 慶典節拍 Lv.0\n      - generic: 連擊收益 +5%\n      - strong:\n        - text: 升級\n        - generic: \"400\"\n    - navigation:\n      - button \"點擊\"\n      - button \"夥伴\"\n      - button \"村莊\"\n      - button \"遠征\"\n      - button \"故事\"\n- heading \"CxQ 星願旅團：點亮夢境\" [level=1]\n- paragraph: 點亮夢境，與夥伴一起照顧星願村莊。\n- img \"鈴可\"\n- button \"進入村莊\"\n- paragraph: 進度自動保存在這台裝置；清除網站資料會失去紀錄。\n- link \"返回遊戲中心\":\n  - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n  - img \"返回遊戲中心\"\n- button \"音樂與音效設定\": ♫",
+    "errors": []
+  },
+  {
+    "game": "dino",
+    "snapshot": "- main:\n  - generic: CxQ 森林急件快遞\n  - heading \"CxQ 森林急件快遞\" [level=1]:\n    - img \"CxQ 森林急件快遞\"\n  - button \"上一位角色\":\n  - button \"選擇角色\":\n  - button \"下一位角色\":\n  - strong: 森芽\n  - generic: 森林輕躍 · 葉披風讓下落更輕緩\n  - button \"選擇難度\":\n    - generic: 無盡配送\n  - button \"出發！\"\n  - navigation \"遊戲選單\":\n    - button \"夥伴\":\n      - generic: 夥伴\n    - button \"手帳\":\n      - generic: 手帳\n    - button \"紀錄\":\n      - generic: 紀錄\n    - button \"設定\":\n      - generic: 設定\n  - link \"返回遊戲中心\":\n    - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n    - img \"返回遊戲中心\"\n- button \"遊戲設定與返回首頁\":\n- dialog:\n  - heading \"請橫向遊玩\" [level=2]\n  - paragraph: 旋轉裝置或調整視窗方向，即可開始遊戲。\n  - link \"返回遊戲中心\":\n    - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n    - img \"返回遊戲中心\"",
+    "errors": []
+  },
+  {
+    "game": "dream-match",
+    "snapshot": "- main:\n  - heading \"夢境消除\" [level=1]\n  - button \"玩法\"\n  - complementary:\n    - img \"米洛\"\n    - generic: 分數\n    - generic: \"0\"\n    - generic: 步數\n    - generic: \"28\"\n    - img \"愛心\"\n    - generic: 0/8\n    - img \"水滴\"\n    - generic: 0/8\n    - img \"星光\"\n    - generic: 0/8\n    - status: 第 1 / 12 關 · 收集三種寶石\n  - button \"月光 第1列第1格\"\n  - button \"葉芽 第1列第2格\"\n  - button \"水滴 第1列第3格\"\n  - button \"水滴 第1列第4格\"\n  - button \"葉芽 第1列第5格\"\n  - button \"暖陽 第1列第6格\"\n  - button \"暖陽 第1列第7格\"\n  - button \"愛心 第2列第1格\"\n  - button \"水滴 第2列第2格\"\n  - button \"葉芽 第2列第3格\"\n  - button \"月光 第2列第4格\"\n  - button \"星光 第2列第5格\"\n  - button \"愛心 第2列第6格\"\n  - button \"星光 第2列第7格\"\n  - button \"水滴 第3列第1格\"\n  - button \"暖陽 第3列第2格\"\n  - button \"水滴 第3列第3格\"\n  - button \"愛心 第3列第4格\"\n  - button \"葉芽 第3列第5格\"\n  - button \"月光 第3列第6格\"\n  - button \"星光 第3列第7格\"\n  - button \"星光 第4列第1格\"\n  - button \"愛心 第4列第2格\"\n  - button \"月光 第4列第3格\"\n  - button \"水滴 第4列第4格\"\n  - button \"暖陽 第4列第5格\"\n  - button \"星光 第4列第6格\"\n  - button \"水滴 第4列第7格\"\n  - button \"愛心 第5列第1格\"\n  - button \"月光 第5列第2格\"\n  - button \"水滴 第5列第3格\"\n  - button \"星光 第5列第4格\"\n  - button \"水滴 第5列第5格\"\n  - button \"星光 第5列第6格\"\n  - button \"葉芽 第5列第7格\"\n  - button \"暖陽 第6列第1格\"\n  - button \"暖陽 第6列第2格\"\n  - button \"愛心 第6列第3格\"\n  - button \"水滴 第6列第4格\"\n  - button \"月光 第6列第5格\"\n  - button \"葉芽 第6列第6格\"\n  - button \"水滴 第6列第7格\"\n  - button \"暖陽 第7列第1格\"\n  - button \"暖陽 第7列第2格\"\n  - button \"星光 第7列第3格\"\n  - button \"暖陽 第7列第4格\"\n  - button \"水滴 第7列第5格\"\n  - button \"水滴 第7列第6格\"\n  - button \"星光 第7列第7格\"\n  - complementary:\n    - button \"月光淨化 能量 0%\" [disabled]:\n      - generic: 月光淨化\n      - generic: 能量 0%\n    - button \"重整夢境 剩餘 2 次\":\n      - generic: 重整夢境\n      - generic: 剩餘 2 次\n- region \"夢境消除遊戲準備\":\n  - article:\n    - generic: CxQ · 月光夢劇場\n    - heading \"CxQ 夢境消除\" [level=1]:\n      - img \"CxQ 夢境消除\"\n    - img \"米洛夥伴\"\n    - paragraph: 交換寶石，連起三個同色圖案。 完成收集目標即可過關。\n    - generic: 遊玩方式\n    - group \"遊玩方式\":\n      - button \"經典闖關\" [pressed]\n      - button \"輕鬆單局\"\n    - text: 挑戰關卡\n    - combobox \"挑戰關卡\":\n      - option \"1 · 星光初醒\" [selected]\n      - option \"2 · 葉間微光\" [disabled]\n      - option \"3 · 月影來信\" [disabled]\n      - option \"4 · 水晶庭院\" [disabled]\n      - option \"5 · 暖陽花徑\" [disabled]\n      - option \"6 · 流星書頁\" [disabled]\n      - option \"7 · 雲端鐘聲\" [disabled]\n      - option \"8 · 月光迴廊\" [disabled]\n      - option \"9 · 晨露花海\" [disabled]\n      - option \"10 · 極光奏鳴\" [disabled]\n      - option \"11 · 星河心願\" [disabled]\n      - option \"12 · 美夢重啟\" [disabled]\n    - button \"進入夢境\"\n    - button \"玩法說明\"\n  - link \"返回遊戲中心\":\n    - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n    - img \"返回遊戲中心\"\n- button \"遊戲設定與返回首頁\"",
+    "errors": []
+  },
+  {
+    "game": "flappy",
+    "snapshot": "- main:\n  - generic: CxQ 星願飛行郵差\n  - heading \"CxQ 星願飛行郵差\" [level=1]:\n    - img \"CxQ 星願飛行郵差\"\n  - button \"上一位角色\":\n  - button \"選擇角色\":\n    - img \"曦羽\"\n  - button \"下一位角色\":\n  - strong: 曦羽\n  - generic: 左右切換 · 點角色更換\n  - button \"選擇載具與航線\":\n    - generic: 無盡航程\n    - generic: 晨光雲海\n  - button \"起飛囉！\"\n  - navigation \"遊戲選單\":\n    - button \"夥伴\":\n      - generic: 夥伴\n    - button \"信件\":\n      - generic: 信件\n    - button \"紀錄\":\n      - generic: 紀錄\n    - button \"設定\":\n      - generic: 設定\n  - link \"返回遊戲中心\":\n    - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n    - img \"返回遊戲中心\"\n- button \"遊戲設定與返回首頁\":",
+    "errors": []
+  },
+  {
+    "game": "fortune",
+    "snapshot": "- main:\n  - button \"命 今日占卜\":\n    - generic: 命\n    - generic: 今日占卜\n  - button \"占卜手帳 1\":\n    - text: 占卜手帳\n    - generic: \"1\"\n  - generic: 10月8日星期四\n  - paragraph: 今天的心，需要哪一種提醒？\n  - heading \"CxQ 每日占卜\" [level=1]\n  - paragraph: 不用急著相信命運。只要花一分鐘，聽聽此刻的自己。\n  - button \"開始今日占卜 約 30 秒\":\n    - generic: 開始今日占卜\n    - generic: 約 30 秒\n  - link \"返回遊戲中心\":\n    - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n    - img \"返回遊戲中心\"\n  - img \"今日陪伴者：緹雅\"\n  - generic: 今日陪伴者\n  - generic: 緹雅\n  - paragraph: 其他占卜\n  - heading \"你現在想問什麼？\" [level=2]\n  - button \"01 感情占卜 關係裡沒有標準答案 開始\":\n    - text: \"01\"\n    - generic: 感情占卜\n    - generic: 關係裡沒有標準答案\n    - generic: 開始\n  - button \"02 工作財運 把混亂變成可行的一步 開始\":\n    - text: \"02\"\n    - generic: 工作財運\n    - generic: 把混亂變成可行的一步\n    - generic: 開始\n  - button \"03 是非・二選一 不是替你選，而是看清差異 開始\":\n    - text: \"03\"\n    - generic: 是非・二選一\n    - generic: 不是替你選，而是看清差異\n    - generic: 開始\n  - button \"04 心情測驗 你現在真正需要的是什麼？ 開始\":\n    - text: \"04\"\n    - generic: 心情測驗\n    - generic: 你現在真正需要的是什麼？\n    - generic: 開始\n  - text: 占卜是整理想法的方式，不替你做重要決定。\n  - button \"查看過去的訊息\"\n- button \"音樂與音效設定\": ♫",
+    "errors": []
+  },
+  {
+    "game": "link",
+    "snapshot": "- main:\n  - heading \"夢境織光\" [level=1]\n  - paragraph: 角色收藏連連看\n  - button \"玩法說明\": \"?\"\n  - button \"暫停\": Ⅱ\n  - generic: \"0\"\n  - text: 待配對\n  - generic: 00:00\n  - text: 旅程時間\n  - generic: \"3\"\n  - text: 靈光提示\n  - generic: \"3\"\n  - text: 命運洗牌\n  - generic: 棋盤可左右滑動\n  - region \"連連看棋盤；左右滑動查看完整棋盤\":\n  - navigation:\n    - button \"✦ 新旅程\"\n    - button \"燈 靈光\"\n    - button \"↝ 洗牌\"\n    - button \"⚙ 設定\"\n- heading \"CxQ 夢境織光・角色連連看\" [level=1]\n- paragraph: 找到相同夥伴，用光線連起每一次相遇。\n- img \"鈴可\"\n- button \"開始織光\"\n- button \"繼續上次的織光\"\n- button \"玩法說明\"\n- button \"音樂設定\"\n- link \"返回遊戲中心\":\n  - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n  - img \"返回遊戲中心\"",
+    "errors": []
+  },
+  {
+    "game": "magic-bubble",
+    "snapshot": "- main:\n  - heading \"魔法泡泡龍\" [level=1]\n  - button \"玩法\"\n  - complementary:\n    - generic: 分數\n    - generic: \"0\"\n    - generic: 剩餘發射\n    - generic: \"32\"\n    - button \"星願魔法 0%\" [disabled]\n  - generic \"闖關泡泡棋盤，第 1 關\"\n  - status: 第 1 關 · 清空所有泡泡\n  - complementary:\n    - heading \"下一顆\" [level=2]\n    - button \"交換目前與下一顆泡泡\"\n    - button \"重新開始\"\n- region \"魔法泡泡龍遊戲準備\":\n  - article:\n    - generic: CxQ · 魔法花園\n    - heading \"CxQ 魔法泡泡龍\" [level=1]:\n      - img \"CxQ 魔法泡泡龍\"\n    - img \"露緹夥伴\"\n    - paragraph: 按住瞄準，放開發射。 三顆同色相連，即可消除。\n    - generic: 遊玩方式\n    - group \"遊玩方式\":\n      - button \"闖關模式\" [pressed]\n      - button \"無盡模式\"\n    - button \"開始施展魔法\"\n    - button \"玩法說明\"\n  - link \"返回遊戲中心\":\n    - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n    - img \"返回遊戲中心\"\n- button \"遊戲設定與返回首頁\"",
+    "errors": []
+  },
+  {
+    "game": "memory",
+    "snapshot": "- main:\n  - heading \"CxQ 暮光回憶收藏室\" [level=1]\n  - paragraph: 和旅伴一起翻開魔法收藏，找回星光裡的回憶\n  - link \"返回遊戲中心\":\n    - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n    - img \"返回遊戲中心\"\n  - button \"開啟回憶冊\"\n  - button \"繼續上次的回憶\"\n  - button \"選擇旅程\"\n  - button \"收藏紀錄\"\n  - generic: 經典\n  - generic: ·\n  - generic: 4×4\n  - generic: ·\n  - generic: 最佳 --\n- button \"音樂與音效設定\": ♫",
+    "errors": []
+  },
+  {
+    "game": "merge",
+    "snapshot": "- main:\n  - generic: CxQ 心光合成屋\n  - heading \"CxQ 心光合成屋\" [level=1]:\n    - img \"CxQ 心光合成屋\"\n  - button \"上一位角色\":\n  - button \"選擇角色\":\n  - button \"下一位角色\":\n  - strong: 糯糯\n  - generic: 清除最小球 · 每局一次\n  - button \"選擇難度與棋盤\":\n    - generic: 經典合成\n    - generic: 選擇玩法與收藏目標\n  - button \"準備美術 7/14\" [disabled]\n  - navigation \"遊戲選單\":\n    - button \"夥伴\":\n      - generic: 夥伴\n    - button \"收藏\":\n      - generic: 收藏\n    - button \"紀錄\":\n      - generic: 紀錄\n    - button \"設定\":\n      - generic: 設定\n  - link \"返回遊戲中心\":\n    - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n    - img \"返回遊戲中心\"\n- button \"遊戲設定與返回首頁\":",
+    "errors": []
+  },
+  {
+    "game": "mines",
+    "snapshot": "- main:\n  - generic: CxQ 四葉草探險地圖\n  - heading \"CxQ 四葉草探險地圖\" [level=1]:\n    - img \"CxQ 四葉草探險地圖\"\n  - button \"上一位角色\":\n  - button \"選擇角色\":\n  - button \"下一位角色\":\n  - strong: 緹雅\n  - generic: 左右切換 · 點角色更換\n  - button \"選擇難度與棋盤\":\n    - generic: 標準挑戰\n    - generic: 初級 · 9 × 9 · 10 陷阱\n  - button \"開始探險\"\n  - navigation \"遊戲選單\":\n    - button \"夥伴\":\n      - generic: 夥伴\n    - button \"玩法\":\n      - generic: 玩法\n    - button \"紀錄\":\n      - generic: 紀錄\n    - button \"設定\":\n      - generic: 設定\n  - link \"返回遊戲中心\":\n    - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n    - img \"返回遊戲中心\"\n- button \"遊戲設定與返回首頁\":\n- dialog:\n  - heading \"請橫向遊玩\" [level=2]\n  - paragraph: 旋轉裝置或調整視窗方向，即可開始遊戲。\n  - link \"返回遊戲中心\":\n    - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n    - img \"返回遊戲中心\"",
+    "errors": []
+  },
+  {
+    "game": "poker",
+    "snapshot": "- status\n- region \"請旋轉手機\":\n  - img \"CxQ 撲克館\"\n  - heading \"請將手機轉為橫式\" [level=1]\n  - paragraph: 牌局已暫停，轉回橫式後即可繼續。",
+    "errors": []
+  },
+  {
+    "game": "tetris",
+    "snapshot": "- main:\n  - generic: 心光\n  - strong: \"0\"\n  - generic: 旅程\n  - strong: \"1\"\n  - generic: 織線\n  - strong: \"0\"\n  - generic: 紀錄\n  - strong: \"0\"\n  - img \"目前旅伴\"\n  - generic: 鈴可\n  - generic: 幸運葉：移除一枚困難方塊\n  - generic \"10乘20方塊遊戲盤面\"\n  - generic: 完美織線！\n  - complementary:\n    - generic: 下一個\n    - generic: 保留\n    - button \"角色祝福 0/4\":\n      - generic: 角色祝福\n      - text: 0/4\n  - navigation \"掌上遊戲機操作台\":\n    - button \"向左\":\n      - text: ←\n      - generic: 左移\n    - button \"向右\":\n      - text: →\n      - generic: 右移\n    - button \"加速下降\":\n      - text: ↓\n      - generic: 下降\n    - button \"保留方塊\": 保留\n    - button \"暫停遊戲\": 暫停\n    - button \"旋轉方塊\":\n      - text: A\n      - generic: 旋轉\n    - button \"直接落下\":\n      - text: B\n      - generic: 落下\n  - img \"興奮迎接玩家的鈴可\"\n  - generic: COZY HANDHELD PUZZLE\n  - heading \"CxQ 心境織境・方塊物語\" [level=1]\n  - paragraph: 排列方塊，織出完整心境。\n  - button \"開始遊戲\"\n  - button \"玩法說明\"\n  - button \"經典模式\"\n  - link \"返回遊戲中心\":\n    - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n    - img \"返回遊戲中心\"\n- button \"音樂與音效設定\": ♫",
+    "errors": []
+  },
+  {
+    "game": "whack",
+    "snapshot": "- main:\n  - heading \"CxQ 森林敲敲樂\" [level=1]:\n    - img \"CxQ 森林敲敲樂\"\n  - button \"慶典挑戰\" [pressed]:\n    - text: 慶典挑戰\n  - button \"反應測驗\"\n  - button \"森林守護\"\n  - button \"星願快遞\"\n  - button \"悠閒同樂\"\n  - text: 節奏\n  - button \"節奏：小跑 · 標準，點擊選擇\": 小跑 · 標準\n  - paragraph: 60 秒收集心光，連擊提高分數。看清夥伴，避開炸彈。\n  - button \"進入森林\"\n  - button \"查看我的紀錄\"\n  - link \"返回遊戲中心\":\n    - /url: http://127.0.0.1:8051/?view=game-hub&v=20261008-upgrade1\n    - img \"返回遊戲中心\"\n- button \"遊戲設定與返回首頁\"",
+    "errors": []
+  },
+  {
+    "game": "lucky-town",
+    "snapshot": "- region \"請橫向遊玩\":\n  - heading \"把手機橫過來\" [level=1]\n  - paragraph: 幸運小鎮以橫式呈現，讓操作與場景完整留在畫面內。\n  - link \"返回遊戲中心\":\n    - /url: ../../?view=game-hub&v=20261008-complete2\n    - img \"返回遊戲中心\"\n- status",
+    "errors": []
+  }
+]

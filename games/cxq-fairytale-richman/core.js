@@ -1912,6 +1912,7 @@ function hud() {
   });
   const canRoll = !S.rolling && !b.popup && !b.winner && b.phase === "pre-roll" && p.type === "human";
   if (canRoll) {
+    btn("forecast", "路線預覽", right - 350, bottom - 128, 170, 70, true);
     diceIconButton("roll", right - 166, bottom - 174, 150, true);
     artLabel("點擊骰子投擲", right - 201, bottom - 51, 220, 48, 20, "#fff4b0");
   }

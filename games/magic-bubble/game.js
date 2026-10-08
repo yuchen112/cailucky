@@ -112,7 +112,7 @@
   const back=document.createElement('button');back.textContent='返回魔法花園';back.onclick=()=>{$('#result').hidden=true;document.querySelector('.game-entry').hidden=false;document.querySelector('main').inert=true;};$('#result>div').append(back);
   window.CxQGame={restart:reset,busy:()=>locked(),home:()=>{advanceAt=null;descending=null;flight=null;aim=null;pending=null;settleUntil=0;docking=null;effects=[];over=true;$('#result').hidden=true;document.querySelector('.game-entry').hidden=false;document.querySelector('main').inert=true;}};
   CxQ.configure({music:'heavenly'});
-  addEventListener('cxq-start',e=>{mode=e.detail.mode;difficulty=e.detail.difficulty||e.detail.mode;chapter=0;reset();});
+  addEventListener('cxq-start',e=>{mode=e.detail.mode;difficulty=e.detail.difficulty||e.detail.mode;chapter=Math.max(0,Math.min(5,Math.floor(Number(e.detail.chapter??CxQ.read('cxq-bubble-chapter',0)))||0));reset();});
   function frame(t){const dt=last?Math.min(40,t-last):0;last=t;if(!window.CxQSession?.blocked()&&!document.querySelector('.game-entry:not([hidden])')){
     clock+=dt;if(settleUntil>0&&clock>=settleUntil){settleUntil=0;docking=null;sync();}if(flight){for(let k=0;k<4&&flight;k++){const hit=step(flight,dt*.65/4);if(hit||flight.y<=46)place(destination(flight.x,flight.y,hit));}}
     if(advanceAt!==null&&clock>=advanceAt){advanceAt=null;const shifted=BubbleEndless.advance(grid,turns);grid=shifted.grid;offset=1-offset;descending={start:clock,duration:reduced()?1:420,overflow:shifted.overflow};sync();}

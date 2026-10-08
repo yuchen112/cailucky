@@ -1,0 +1,27 @@
+{
+  "styles": [
+    "../shared/runtime.css",
+    "game.css",
+    "../storybook/game-ui.css",
+    "refresh.css",
+    "../storybook/play-surface.css",
+    "../storybook/batch-theme.css",
+    "../storybook/director.css",
+    "../storybook/studio.css",
+    "../storybook/polish.css"
+  ],
+  "scripts": [
+    "../shared/runtime.js",
+    "endless-core.js",
+    "motion-core.js",
+    "../shared/orb-art.js",
+    "art-orbs-v2/geometry.js",
+    "game.js",
+    "../storybook/game-entry.js",
+    "modes.js",
+    "../storybook/play-session.js",
+    "../storybook/game-settings.js",
+    "../storybook/studio.js",
+    "../storybook/polish.js"
+  ]
+}

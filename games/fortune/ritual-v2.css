@@ -1,0 +1,12 @@
+/* Layout only: each interactive ritual object is independently illustrated. */
+.ritual-art{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.oracle-cards button{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;overflow:visible}
+.oracle-cards button::before,.oracle-cards button::after{display:none!important}
+.oracle-cards .ritual-art{height:230px;filter:drop-shadow(0 8px 10px #54433125)}
+.stone-choices button{background:none!important;border:0!important;box-shadow:none!important;padding:0!important}
+.stone-choices .ritual-art{height:160px}
+.door-choices button{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;display:grid;justify-items:center}
+.door-choices .ritual-art{height:240px}
+.door-choices button span{display:block;margin-top:8px}
+.oracle-cards button.selected .ritual-art{filter:drop-shadow(0 0 12px #bd9567);transform:translateY(-12px)}
+@media(max-width:600px){.oracle-cards .ritual-art{height:165px}.door-choices .ritual-art{height:180px}.stone-choices .ritual-art{height:115px}}

@@ -1,0 +1,29 @@
+{
+  "styles": [
+    "../shared/runtime.css",
+    "game.css",
+    "../storybook/game-ui.css",
+    "refresh.css",
+    "../storybook/play-surface.css",
+    "../storybook/batch-theme.css",
+    "../storybook/director.css",
+    "../storybook/studio.css",
+    "../storybook/polish.css",
+    "motion.css",
+    "../storybook/gameplay-repair.css",
+    "../storybook/mobile24.css"
+  ],
+  "scripts": [
+    "../shared/runtime.js",
+    "campaign.js",
+    "match-core.js",
+    "motion.js",
+    "game.js",
+    "../storybook/game-entry.js",
+    "../storybook/play-session.js",
+    "../storybook/game-settings.js",
+    "../storybook/studio.js",
+    "../storybook/polish.js",
+    "../storybook/gameplay-repair.js"
+  ]
+}

@@ -16,8 +16,8 @@
     append(controls,'.mode-ticket');append(controls,'.lobby-start');append(controls,'.lobby-dock');home.append(stage,controls);
     q('.home-title p').hidden=true;
     q('.home-title small').textContent='CxQ · '+({merge:'收藏工坊',flappy:'飛行郵局',dino:'森林快遞',mines:'探險手札'})[id];
-    if(id==='merge')q('.studio-controls').classList.add('simple-start');
-    if(id==='dino')q('.mode-ticket small').textContent='一般模式 · 選擇難度';
+    if(id==='merge')q('.studio-controls').classList.remove('simple-start');
+    if(id==='dino')q('.mode-ticket small').textContent='玩法、難度與配送路線';
   }
   const entry=q('.game-entry article');
   if(entry){

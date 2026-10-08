@@ -1,0 +1,24 @@
+{
+  "styles": [
+    "../storybook/common.css",
+    "game.css",
+    "theme-v2.css",
+    "../storybook/mobile-menu.css",
+    "../storybook/game-ui.css",
+    "../storybook/mobile-refresh.css",
+    "../storybook/play-surface.css",
+    "../storybook/batch-theme.css",
+    "../storybook/director.css",
+    "../storybook/studio.css",
+    "../storybook/polish.css"
+  ],
+  "scripts": [
+    "../storybook/common.js",
+    "game.js",
+    "../storybook/mobile-menu.js",
+    "../storybook/play-session.js",
+    "../storybook/game-settings.js",
+    "../storybook/studio.js",
+    "../storybook/polish.js"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "styles": [
+    "style.css",
+    "../shared/runtime.css",
+    "ritual-v2.css"
+  ],
+  "scripts": [
+    "../shared/runtime.js",
+    "app.js"
+  ]
+}

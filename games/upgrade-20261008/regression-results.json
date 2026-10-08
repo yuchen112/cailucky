@@ -1,0 +1,122 @@
+[
+  {
+    "name": "test-upgrade-features.mjs",
+    "code": 0,
+    "output": "Upgrade features passed: demo isolation, player-only exercises, duplicate events, soft blackjack, red-point rules, deployment coverage, wave limits, exact dice probabilities\nRichman preview renders current purchase cost and suppresses default popup\n"
+  },
+  {
+    "name": "test-upgrade-controllers.mjs",
+    "code": 0,
+    "output": "Tetris: grounded lock at 500 ms, 15 reset cap, no gravity score, hidden time exclusion passed\nLink: valid restore, elapsed limits, resource bounds, border and asset identity validation passed\nClick quests: one-time claim, next-day reset and malformed counters passed\n"
+  },
+  {
+    "name": "test-upgrade-oracle.cjs",
+    "code": 0,
+    "output": "Oracle: same-day consistency, journal deduplication and reflection preservation passed\n"
+  },
+  {
+    "name": "test-upgrade-art.mjs",
+    "code": 0,
+    "output": "All 25 independent art assets hash/decode/dimensions/alpha passed\n"
+  },
+  {
+    "name": "test-upgrade-modes.cjs",
+    "code": 0,
+    "output": "PASS flight mission, route, vehicle, trail unlock and practice rules\nPASS courier mission, route ground and HUD\nPASS logic mode and same-board retry practice isolation\nPASS mode regression suite\n"
+  },
+  {
+    "name": "test-merge-physics.cjs",
+    "code": 0,
+    "output": "Merge physics passed: old suspended-ball reproduced; corrected drop 28.94px; duplicate pairs, boundaries, support removal and settling verified.\n"
+  },
+  {
+    "name": "test-gameplay-repair.cjs",
+    "code": 0,
+    "output": "PASS projectile launch does not apply immediate damage\nPASS damage occurs once at visible arrival\nPASS slow starts at impact, not at launch\nPASS escaped target is not damaged or rewarded\nPASS splash kills grant reward only once\nPASS wave eight resolves after projectile kill\nPASS tower resize preserves fixed world geometry\nPASS whack appearance cannot be hit before rise completes\nPASS whack fully emerged target scores once\nPASS retreating target rejects late hits\nPASS miss waits until retreat animation finishes\nPASS runner collision excludes decorative silhouette edges\nPASS runner slide clears low branch without shrinking standing hitbox\nPASS map 1 empty defense reaches loss\nPASS map 1 upgraded defense completes eight waves\nPASS map 2 empty defense reaches loss\nPASS map 2 upgraded defense completes eight waves\nPASS map 3 empty defense reaches loss\nPASS map 3 upgraded defense completes eight waves\n19 gameplay regression checks passed.\n"
+  },
+  {
+    "name": "test-dream-core.cjs",
+    "code": 0,
+    "output": "Dream rules: 106 assertions passed\n"
+  },
+  {
+    "name": "test-dream-motion.cjs",
+    "code": 0,
+    "output": "Dream motion: swap, marker alignment, gravity distance, special sweep, cleanup, shuffle and reduced-motion checks passed\n"
+  },
+  {
+    "name": "test-bubble-modes.cjs",
+    "code": 0,
+    "output": "Bubble modes: 32/42 shots, clear-board continuation, timed descent, free swap/magic, danger loss, separate records and replay passed\n"
+  },
+  {
+    "name": "test-bubble-motion.cjs",
+    "code": 0,
+    "output": "Bubble motion: projection, docking, staged clear/drop, score, input lock, pause, endless order, reset/home and reduced motion passed\n"
+  },
+  {
+    "name": "test-bubble-endless.cjs",
+    "code": 0,
+    "output": "Bubble endless: progression, row shift, immutability, empty board, overflow and stagger parity passed\n"
+  },
+  {
+    "name": "test-heartlight-arcade.mjs",
+    "code": 0,
+    "output": "PASS Ten characters and all five modes preserve identities\nPASS Five distinct story opponents and rotating arenas for every hero\nPASS All ten stories reach their fifth ending and survival carries bounded health\nPASS All characters hit a natural near opponent, miss at distance, and face left correctly\nPASS Hitbox exists only during effective frames and crouch reduces body height\nPASS Stand guard, low guard, overhead, throw and airborne guard follow clear rules\nPASS Repeated guard retains defense instead of turning block stun into an unguardable hit\nPASS Input buffer and confirmed light-heavy-skill combo work without command codes\nPASS Counter, armor, shield healing limits and distinct projectiles/zones\nPASS Super consumes full energy and blocked super cannot chip KO\nPASS Double attack throws and double direction dashes are supported by core\nPASS Unavailable abilities never cancel normal recovery or consume energy\nPASS Downed fighters cannot be hit again and rising provides a protected return\nPASS Pushboxes keep opponents apart at the arena edge\nPASS Best-of-three rules, survival one-round, time and next-round reset\nPASS Training demos deliver hits, combo, never time out and reset counters\nPASS AI has visible attack gaps and training stand dummy never fights back\nPASS Mid-air attacks, projectiles and delayed zones survive save/reload\nPASS Malformed save and impossible attacks are rejected\nPASS Old progress migrates without overwriting old save; checksummed backup rejects edits\nPASS Counter demonstration provokes a real attack, shields explain their effect, block stun cannot jump\nPASS Startup needs only nine menu images, selection and every matchup remain complete\n22 integrated checks passed\n"
+  },
+  {
+    "name": "test-heartlight-duel.mjs",
+    "code": 0,
+    "output": "PASS Ten official names and all original asset references\nPASS Guard prevents damage, rewards meter; throw bypasses guard\nPASS Every character skill has its promised unique behavior\nPASS Super requires and consumes full meter for all ten fighters\nPASS Low attack standing guard loses; crouching guard blocks\nPASS Healing caps at two recoveries per round\nPASS Best of three, time-out, draw and next-round state\nPASS Deterministic simulation stays bounded for all ten AI opponents\nPASS Mid-action save restore retains life, positions, projectiles and round\nPASS Guard breaks after repeated heavy pressure\nPASS Five-hit limit records full combo and grants escape protection\nPASS Checksummed backup, healthy fallback, tamper rejection\n12 meaningful rule/save/asset checks passed.\n"
+  },
+  {
+    "name": "test-lucky-v5.mjs",
+    "code": 0,
+    "output": "{\n  \"passed\": true,\n  \"slotSamples\": 120000,\n  \"ticketSamples\": 48000,\n  \"results\": [\n    {\n      \"machine\": \"classic\",\n      \"winRate\": 0.71765,\n      \"mean\": 15.5581,\n      \"bigRate\": 0.0053\n    },\n    {\n      \"machine\": \"sweet\",\n      \"winRate\": 0.71065,\n      \"mean\": 31.8618,\n      \"bigRate\": 0.00035\n    },\n    {\n      \"machine\": \"moon\",\n      \"winRate\": 0.9487,\n      \"mean\": 26.20675,\n      \"bigRate\": 0.00425\n    },\n    {\n      \"machine\": \"garden\",\n      \"winRate\": 0.72465,\n      \"mean\": 18.3036,\n      \"bigRate\": 0\n    },\n    {\n      \"machine\": \"toy\",\n      \"winRate\": 0.71675,\n      \"mean\": 17.436,\n      \"bigRate\": 0.00475\n    },\n    {\n      \"machine\": \"photo\",\n      \"winRate\": 0.7195,\n      \"mean\": 21.4901,\n      \"bigRate\": 0.0086\n    }\n  ]\n}\n"
+  },
+  {
+    "name": "test-lucky-v5-legacy.mjs",
+    "code": 0,
+    "output": "All three legacy nine-zone ticket rules and stored awards render correctly.\n"
+  },
+  {
+    "name": "test-defense-army.mjs",
+    "code": 0,
+    "output": "PASS: ten open heroes, one hero slot, repeated troops, loadout limits, sixteen unit branches, boundary roundtrip, skill cooldown/pause, mastery anti-duplicate, atomic save envelope, fixed stage strength, chain falloff and armor shred.\n"
+  },
+  {
+    "name": "test-defense-army3.mjs",
+    "code": 0,
+    "output": "PASS 17 troops, all new branches, old-save zero-fill, actual cone hit, nonstacking/expiring ground zones, finite blockers, boss/air immunity and capped once-per-wave income.\n"
+  },
+  {
+    "name": "test-defense-rebuild.mjs",
+    "code": 0,
+    "output": "Defense rebuild: geometry, 10 identities, economy, deterministic timing, pause, attack release, cancel, leak, victory, endless and save validation passed.\n"
+  },
+  {
+    "name": "test-defense-campaign-save.mjs",
+    "code": 0,
+    "output": "PASS: sequential 15-stage unlock, replay idempotency, practice exclusion, save roundtrip and malformed campaign rejection. This tests persistence, not encounter balance.\n"
+  },
+  {
+    "name": "test-defense-practice.mjs",
+    "code": 0,
+    "output": "PASS all 17 troops, two branches and five evolution tiers in isolated practice; real attacks, supply, four targets, pause and validated configuration.\n"
+  },
+  {
+    "name": "test-defense-batch-clock.mjs",
+    "code": 0,
+    "output": "PASS atomic batch, pity sequence, insufficient balance, failed batch immutability, 1x/2x/3x deterministic battle and hidden-tab gap.\n"
+  },
+  {
+    "name": "test-defense-inventory.mjs",
+    "code": 0,
+    "output": "PASS zero-count book slots, held-only weapons, mastery details and atomic integer synthesis.\n"
+  },
+  {
+    "name": "test-defense-dungeons.mjs",
+    "code": 0,
+    "output": "PASS nine dungeon configurations, checkpoint restoration, separate campaign progression and idempotent rewards\n"
+  }
+]

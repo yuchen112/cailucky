@@ -1096,8 +1096,11 @@ function gameLater(fn,ms){gameJobs.push({fn,left:ms/1000,epoch:gameEpoch})}
       ball.trail.push({x:ball.x,y:ball.y});
       if(ball.trail.length>12) ball.trail.shift();
 
-      ball.x += ball.vx*d;
-      ball.y += ball.vy*d;
+      // Resolve small spatial steps so fast balls cannot cross a brick or paddle between frames.
+      const substeps=Math.max(1,Math.min(24,Math.ceil(Math.hypot(ball.vx,ball.vy)*d/Math.max(3,ball.r*.65))));
+      for(let step=0;step<substeps;step++){
+      ball.x += ball.vx*d/substeps;
+      ball.y += ball.vy*d/substeps;
 
       if(ball.x < ball.r+8){ball.x=ball.r+8; ball.vx=Math.abs(ball.vx); beep('hit')}
       if(ball.x > W-ball.r-8){ball.x=W-ball.r-8; ball.vx=-Math.abs(ball.vx); beep('hit')}
@@ -1126,6 +1129,7 @@ function gameLater(fn,ms){gameJobs.push({fn,left:ms/1000,epoch:gameEpoch})}
       }
     }
 
+    } // spatial substeps
     balls = balls.filter(b=>b.y < H + 60);
     if(balls.length === 0){
       const protectedFall=hlShield>0;if(protectedFall){hlShield=0}else state.lives--;
@@ -1762,5 +1766,5 @@ const hlPresentationEnd=endGame;endGame=function(win){hlPresentationEnd(win);con
   requestAnimationFrame(loop);
 })();
 </script>
-<script>document.querySelectorAll(".char-card").forEach(c=>c.onclick=()=>{document.querySelectorAll(".char-card").forEach(x=>x.classList.remove("active"));c.classList.add("active");heroArt.src="./assets/characters/"+c.dataset.img;document.querySelector(".chapter-badge b").textContent=c.dataset.name;window.heartlightCharacter=c.dataset.char;localStorage.setItem("heartlight_character_id",c.dataset.char)})</script><script src="../shared/game-entry-v2.js?v=20261008-complete2" data-game='{"host":"#homeOverlay","slot":".home-actions","css":"#homeOverlay .game-center-return{width:260px;height:60px;margin:8px auto 0}","name":"心光旅團：記憶核心","desc":"反彈心光，擊破記憶磚塊。","art":"games/brick-breaker/art/return-center-v2.webp"}'></script></body>
+<script>document.querySelectorAll(".char-card").forEach(c=>c.onclick=()=>{document.querySelectorAll(".char-card").forEach(x=>x.classList.remove("active"));c.classList.add("active");heroArt.src="./assets/characters/"+c.dataset.img;document.querySelector(".chapter-badge b").textContent=c.dataset.name;window.heartlightCharacter=c.dataset.char;localStorage.setItem("heartlight_character_id",c.dataset.char)})</script><script src="../shared/game-entry-v2.js?v=20261008-upgrade1" data-game='{"host":"#homeOverlay","slot":".home-actions","css":"#homeOverlay .game-center-return{width:260px;height:60px;margin:8px auto 0}","name":"心光旅團：記憶核心","desc":"反彈心光，擊破記憶磚塊。","art":"games/brick-breaker/art/return-center-v2.webp"}'></script></body>
 </html>

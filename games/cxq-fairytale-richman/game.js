@@ -37,7 +37,17 @@ const EVENTS = [
   ["土地維護", "支付名下土地維護費", (p) => (p.cash -= 1200 + ownedLands(p).length * 500), "landMaintenance", "negative"],
 ];
 const baseScenePopup = scenePopup;
+function diceForecast(count=1,forced=0){if(forced)return [[forced,1]];let sums=new Map([[0,1]]);for(let i=0;i<count;i++){const next=new Map();for(const [sum,n]of sums)for(let face=1;face<=6;face++)next.set(sum+face,(next.get(sum+face)||0)+n);sums=next;}return [...sums].map(([sum,n])=>[sum,n/6**count]);}
 scenePopup = function (q, b, p) {
+  if(q.kind==='routeForecast'){
+    stretch(IM.abilityPanel,270,50,1060,820,.99);fitTxt('擲骰前 · 路線預覽',800,112,850,36,'center','#fff0a5',1000,true,22);
+    paragraph('依目前行走方向與骰子顆數列出可能落點。羅盤重投、路上神明與抵達事件未計入；擲骰後以實際結果為準。',800,164,880,17,25,2,'center','#fff',800,true);
+    const count=S.forcedDice?1:Math.max(1,Math.min(3,p.diceCount||1)),rows=diceForecast(count,S.forcedDice||0);
+    rows.forEach(([steps,prob],i)=>{const pos=(p.pos+(p.direction||1)*steps+b.tiles.length*3)%b.tiles.length,t=b.tiles[pos],x=550+(i%2)*260,y=335+Math.floor(i/2)*48;
+      let detail=t.type==='land'?(t.owner<0?'購地約 $'+buyCost(p,t).toLocaleString():t.owner===p.id?'自己的土地':'租金約 $'+rentEstimate(t,p).toLocaleString()):typeName(t.type);
+      fitTxt(steps+' 步 · '+(prob*100).toFixed(1)+'% · 第 '+(pos+1)+' 格',x+120,y,240,22,'center','#fff0ad',900,true,20);fitTxt(detail,x+120,y+22,240,20,'center','#fff',800,true,17);
+    });btn('forecast-close','返回，準備擲骰',610,775,380,62,true);return true;
+  }
   if (q.kind === "facilityVisit") {
     const police = q.facility === "jail",
       title = police ? "童話警察局" : "童話醫院",
@@ -1890,7 +1900,7 @@ function cycleVal(v, arr) {
   return arr[(i + 1) % arr.length];
 }
 function action(id) {
-  if(id==="game-center"&&S.scene==="home"){location.href="../../?view=game-hub&v=20261008-complete2";return;}
+  if(id==="game-center"&&S.scene==="home"){location.href="../../?view=game-hub&v=20261008-upgrade1";return;}
   if (!id) return;
   if (S.scene === "home" && !HOME.locked && id === "gallery") {
     S.scene = "gallery";
@@ -2403,6 +2413,7 @@ function action(id) {
       resetHome();
       return;
     }
+    if(id === "forecast"){if(p.type==="human"&&b.phase==="pre-roll"&&!S.rolling&&!b.popup)openPopup("routeForecast");return;}if(id==="forecast-close"){b.popup=null;return;}
     if (id === "roll") {
       if (p.type === "human" && b.phase === "pre-roll") rollDice();
       return;

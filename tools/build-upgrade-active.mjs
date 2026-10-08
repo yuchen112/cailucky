@@ -1,0 +1,6 @@
+import fs from 'node:fs';import vm from 'node:vm';import path from 'node:path';import {toolDependency} from './refresh-deps.mjs';
+let p,s;
+for(const dir of fs.readdirSync('games',{withFileTypes:true}).filter(x=>x.isDirectory())){p='games/'+dir.name+'/index.html';if(!fs.existsSync(p))continue;s=fs.readFileSync(p,'utf8');for(const m of s.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)){if(/src=|type=["']module|application\/ld/.test(m[1])||!m[2].trim())continue;new vm.Script(m[2],{filename:p});}}
+const esbuild=toolDependency('esbuild'),clean={name:'queries',setup(b){b.onResolve({filter:/\.mjs\?v=/},a=>({path:path.resolve(a.resolveDir,a.path.split('?')[0])}));b.onLoad({filter:/games[\\/]lucky-town[\\/].*\.mjs$/},a=>({contents:fs.readFileSync(a.path,'utf8').replace(/(["'`])art\//g,'$1delivery/'),loader:'js'}));}};
+for(const [dir,entry,out] of [['games/lucky-town','app.mjs','game-v2.bundle.mjs'],['games/heartlight-duel/arcade','app.mjs','game-v2.bundle.mjs'],['games/fairytale-defense/rebuild','army-ui.mjs','army-bundle.mjs']])await esbuild.build({entryPoints:[dir+'/'+entry],bundle:true,minify:true,format:'esm',target:['es2022'],outfile:dir+'/'+out,plugins:[clean]});
+console.log('Inline syntax and three active bundles passed');

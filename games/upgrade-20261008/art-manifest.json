@@ -1,0 +1,278 @@
+{
+  "version": "20261008-upgrade1",
+  "tool": "built-in imagegen",
+  "independentlyGenerated": true,
+  "montageExtraction": false,
+  "assets": [
+    {
+      "id": "luck-run-2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-2088ef20-77bb-4321-9154-e63448c84ca7.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 鈴可. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW passing/up phase: LEFT knee raised high forward at the hip and bent, right supporting foot directly below body, right arm forward, torso slightly upright. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/luck-run-2.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-20260920-batch/luck-run-0.webp",
+      "width": 556,
+      "height": 584,
+      "bytes": 64116,
+      "sha256": "12c210159d11233f8a24b874e93a59b303c53563dedd613b30dff89663a00501"
+    },
+    {
+      "id": "luck-run-3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-b4f4905b-aadf-46b9-a4cd-9cca36d6f2b4.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 鈴可. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW opposite passing/down phase: RIGHT knee bent under body moving forward, LEFT supporting foot beneath pelvis, left arm forward, right arm back, torso slightly dipped. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/luck-run-3.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-20260920-batch/luck-run-0.webp",
+      "width": 610,
+      "height": 584,
+      "bytes": 64102,
+      "sha256": "05a167a23461131a035256eddd4b08e1e43beb2f6f52304ac0d7fba65861eeec"
+    },
+    {
+      "id": "healing-run-2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-005e5217-ce53-4a7f-9432-84c180938a66.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 糯糯. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW passing/up phase: LEFT knee raised high forward at the hip and bent, right supporting foot directly below body, right arm forward, torso slightly upright. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/healing-run-2.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-20260920-batch/healing-run-0.webp",
+      "width": 561,
+      "height": 601,
+      "bytes": 44318,
+      "sha256": "5a37b63a595113637d1337acfb7ccb54d93d7b89d677cf1177d9d0896c7d7435"
+    },
+    {
+      "id": "healing-run-3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-5e532859-9dac-4b7f-a1ad-ef7134a0534f.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 糯糯. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW opposite passing/down phase: RIGHT knee bent under body moving forward, LEFT supporting foot beneath pelvis, left arm forward, right arm back, torso slightly dipped. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/healing-run-3.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-20260920-batch/healing-run-0.webp",
+      "width": 577,
+      "height": 601,
+      "bytes": 45008,
+      "sha256": "6049bfc92ca58351f2ce090d35ab33a41a081b632d661091c50354afbf339804"
+    },
+    {
+      "id": "growth-run-2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-f5161b29-7b14-4896-b5c1-7e3be4fa6bde.png",
+      "prompt": "Production independent animation sprite for CxQ Forest Courier. Use the reference only for character identity, materials, proportions, colors and right-facing side angle. Draw a NEW distinct passing-phase RUN pose: right-facing forest child courier 森芽, weight on the right supporting leg beneath pelvis, left knee driving forward at hip height with lower leg bent, right arm forward and left arm back, leaf cloak trailing left, head at the same angle, smiling focused. Full body including hat, boots and satchel, soft sculpted storybook 3D look. Transparent background, one character only centered with margin, no scenery, ground, shadow plate, text, atlas or montage. This is a newly illustrated frame, do not just translate or rotate the reference.",
+      "target": "games/dino/art-animation-v3/growth-run-2.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-20260920-batch/growth-run-0.webp",
+      "width": 544,
+      "height": 612,
+      "bytes": 58728,
+      "sha256": "7f34c232db2d1a97496ddd98cca5079d6c5a3fefb5d9996863fa2a6b66e620d0"
+    },
+    {
+      "id": "growth-run-3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-b03ee240-b87f-4d42-9287-dd975d54b9d6.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 森芽. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW opposite passing/down phase: RIGHT knee bent under body moving forward, LEFT supporting foot beneath pelvis, left arm forward, right arm back, torso slightly dipped. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/growth-run-3.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-20260920-batch/growth-run-0.webp",
+      "width": 527,
+      "height": 612,
+      "bytes": 57138,
+      "sha256": "f967663896594c0b5c7cd79fefd565321e54a96dbe259621024d33c943949d91"
+    },
+    {
+      "id": "memory-run-2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-bb2913d3-6164-4593-9909-fed806d5d139.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 緹雅. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW passing/up phase: LEFT knee raised high forward at the hip and bent, right supporting foot directly below body, right arm forward, torso slightly upright. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/memory-run-2.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-mobile24/memory-run-0.webp",
+      "width": 382,
+      "height": 443,
+      "bytes": 36178,
+      "sha256": "2b09cd481cbf264113919219781e38cc5d9a598f86dc308d1bd4727fe41592f3"
+    },
+    {
+      "id": "memory-run-3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-e6fab9fe-f813-4495-bba4-6172a1e4725f.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 緹雅. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW opposite passing/down phase: RIGHT knee bent under body moving forward, LEFT supporting foot beneath pelvis, left arm forward, right arm back, torso slightly dipped. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/memory-run-3.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-mobile24/memory-run-0.webp",
+      "width": 424,
+      "height": 443,
+      "bytes": 36310,
+      "sha256": "2b2730b9dab59d1a5fd89363f2f1694aff404022262e666239fc51ffb71dd36f"
+    },
+    {
+      "id": "joy-run-2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-e569c9d9-c7ca-46a0-9c5d-71c1def91a0a.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 朵莉. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW passing/up phase: LEFT knee raised high forward at the hip and bent, right supporting foot directly below body, right arm forward, torso slightly upright. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/joy-run-2.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-mobile24/joy-run-0.webp",
+      "width": 413,
+      "height": 498,
+      "bytes": 52602,
+      "sha256": "67832f8dfe5864e72a1bbbcbc079b9177680e5ccded2c8698e86ed709b356997"
+    },
+    {
+      "id": "joy-run-3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-f36447a5-f32f-4600-84b0-6ce1bb2da962.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 朵莉. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW opposite passing/down phase: RIGHT knee bent under body moving forward, LEFT supporting foot beneath pelvis, left arm forward, right arm back, torso slightly dipped. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/joy-run-3.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-mobile24/joy-run-0.webp",
+      "width": 458,
+      "height": 498,
+      "bytes": 58926,
+      "sha256": "77e40797a1dfcc1e9a9855a332372d430d30619fb138cdbbddb929900fc5cb04"
+    },
+    {
+      "id": "night-run-2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-86bddbc8-23f1-4213-a4c4-107b8f9a78cc.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 米洛. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW passing/up phase: LEFT knee raised high forward at the hip and bent, right supporting foot directly below body, right arm forward, torso slightly upright. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/night-run-2.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-20260920-batch/night-run-0.webp",
+      "width": 531,
+      "height": 564,
+      "bytes": 57328,
+      "sha256": "1faf17632fe7516de10fbf8bdf8b8835808204cf9f50d129dc2647626ef55349"
+    },
+    {
+      "id": "night-run-3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-6faf41b2-7b22-4d3c-9fa9-59ca6afe96ec.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 米洛. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW opposite passing/down phase: RIGHT knee bent under body moving forward, LEFT supporting foot beneath pelvis, left arm forward, right arm back, torso slightly dipped. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/night-run-3.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-20260920-batch/night-run-0.webp",
+      "width": 552,
+      "height": 564,
+      "bytes": 57948,
+      "sha256": "5553c75cf21c88bf8b44dca6c51a0ddd7a558269fd0e3953e5b2f09ae8263df3"
+    },
+    {
+      "id": "trust-run-2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-7d03addc-7ec8-47c6-bdc4-1f08e75716bd.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 伯恩. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW passing/up phase: LEFT knee raised high forward at the hip and bent, right supporting foot directly below body, right arm forward, torso slightly upright. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/trust-run-2.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-mobile24/trust-run-0.webp",
+      "width": 498,
+      "height": 446,
+      "bytes": 59026,
+      "sha256": "17c157685c59c3eecea3d3386473a7dafab5502096747433d913fd50051ffbb3"
+    },
+    {
+      "id": "trust-run-3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-2e2427cb-554d-4f8e-a55f-60df52c42501.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 伯恩. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW opposite passing/down phase: RIGHT knee bent under body moving forward, LEFT supporting foot beneath pelvis, left arm forward, right arm back, torso slightly dipped. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/trust-run-3.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-mobile24/trust-run-0.webp",
+      "width": 579,
+      "height": 446,
+      "bytes": 67238,
+      "sha256": "9ea7e6f68c1bd39a690c25f912593661ea45ad348a59a8f8799319cdb7958cc3"
+    },
+    {
+      "id": "dream-run-2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-282daefd-7f4d-41ad-ac8d-9fda08530806.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 露緹. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW passing/up phase: LEFT knee raised high forward at the hip and bent, right supporting foot directly below body, right arm forward, torso slightly upright. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/dream-run-2.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-mobile24/dream-run-0.webp",
+      "width": 391,
+      "height": 464,
+      "bytes": 43188,
+      "sha256": "df99846aea8f8c99aed0526396f9c30222c69d4a943d4c10e8d24c1b524671d3"
+    },
+    {
+      "id": "dream-run-3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-25c69a09-cdb3-456c-ba6a-bacd79fad773.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 露緹. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW opposite passing/down phase: RIGHT knee bent under body moving forward, LEFT supporting foot beneath pelvis, left arm forward, right arm back, torso slightly dipped. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/dream-run-3.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-mobile24/dream-run-0.webp",
+      "width": 423,
+      "height": 464,
+      "bytes": 44636,
+      "sha256": "7b847a424d87f95cb4e024bd092c185c7576b3f53d5e093283210b814b74b9f5"
+    },
+    {
+      "id": "sadness-run-2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-1c578dcb-7106-43b6-9c7e-71e39853fb62.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 汐寧. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW passing/up phase: LEFT knee raised high forward at the hip and bent, right supporting foot directly below body, right arm forward, torso slightly upright. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/sadness-run-2.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-mobile24/sadness-run-0.webp",
+      "width": 335,
+      "height": 505,
+      "bytes": 46944,
+      "sha256": "14a2fb299a7ca2a497bf845945e23655523373d0d8f58839c4af22b6f114dc2b"
+    },
+    {
+      "id": "sadness-run-3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-89ee1e84-9ba0-460b-b231-6ebbad12dd98.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 汐寧. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW opposite passing/down phase: RIGHT knee bent under body moving forward, LEFT supporting foot beneath pelvis, left arm forward, right arm back, torso slightly dipped. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/sadness-run-3.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-mobile24/sadness-run-0.webp",
+      "width": 358,
+      "height": 505,
+      "bytes": 44234,
+      "sha256": "999b87eb6712cd222b875aa36df44d8414cec12c3b63ca72ba88564877eca42b"
+    },
+    {
+      "id": "hope-run-2",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-22d06dc1-95ba-4a8d-94e2-f4308e300ce9.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 曦羽. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW passing/up phase: LEFT knee raised high forward at the hip and bent, right supporting foot directly below body, right arm forward, torso slightly upright. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/hope-run-2.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-mobile24/hope-run-0.webp",
+      "width": 376,
+      "height": 417,
+      "bytes": 29108,
+      "sha256": "a62db93a7a24e5055cc12bf88d82afddea48536e8fb79e6a18807dbd4c2f9f08"
+    },
+    {
+      "id": "hope-run-3",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-b76bea63-3daf-4829-a94a-934d5ca153ba.png",
+      "prompt": "One independently drawn production RUN animation frame for CxQ Forest Courier character 曦羽. Reference image specifies exact identity, costume, props, proportions, storybook sculpted 3D material and right-facing side camera. Draw a distinctly NEW opposite passing/down phase: RIGHT knee bent under body moving forward, LEFT supporting foot beneath pelvis, left arm forward, right arm back, torso slightly dipped. Preserve all signature costume details and handheld props in physically plausible position; cloak/tail/balloons follow body momentum. Full character including hat and feet inside canvas with generous clear margin. Transparent background. Single sprite only, no floor, scenery, text, frame labels, grid, atlas, montage or copies. Must redraw the limbs and cloth as a new motion frame, not merely transform the reference.",
+      "target": "games/dino/art-animation-v3/hope-run-3.webp",
+      "reference": "C:/Users/User/.codex/.chatgpt-projects/g-p-6a6b8ce239488191a294998fddfbfc19/cailucky-work/games/storybook/art-mobile24/hope-run-0.webp",
+      "width": 444,
+      "height": 417,
+      "bytes": 33110,
+      "sha256": "be660dfaf3eb1be790d7844702d97c881c477e9938dcfe74bdd80baf90a0788c"
+    },
+    {
+      "id": "oracle-back",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-de435344-4971-42b4-93bb-4bb60e43b6d6.png",
+      "prompt": "One independent premium oracle card BACK for CxQ 每日占卜. Tall rectangular full card, gently rounded corners, warm ivory parchment, antique brass border, central sculpted silver crescent embracing a tiny crystal star, delicate botanical filigree and lavender silk accent. Elegant cozy storybook painted 3D illustration, beautifully readable at mobile scale. Full card object centered with transparent margin. No text, letters, characters, background scenery, atlas, multiple cards or collage.",
+      "target": "games/fortune/assets/ritual-v2/oracle-back.webp",
+      "width": 399,
+      "height": 664,
+      "bytes": 82932,
+      "sha256": "f7ec4de59f38fae01befce225df9666f3e0f4c554cb417a48e8b89ab784f8019"
+    },
+    {
+      "id": "oracle-stone",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-70769fa2-8601-4d3c-b039-e08710896822.png",
+      "prompt": "One independent interactive divination stone game sprite for CxQ 每日占卜. Polished warm rose quartz oval palm stone in a tiny antique brass cradle, subtle luminous moon engraving and restrained golden flecks, soft storybook 3D illustrated object. Entire single stone centered, transparent background, generous clear margin. No hand, scene, floor, text, UI frame, duplicate objects or montage.",
+      "target": "games/fortune/assets/ritual-v2/oracle-stone.webp",
+      "width": 520,
+      "height": 664,
+      "bytes": 89730,
+      "sha256": "72f89f5fb460c68d8f63f4963411f146ce2a9bdea41ed508545cf7a4e818e2d2"
+    },
+    {
+      "id": "oracle-door-mist",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-868972c8-9245-4d1a-a8de-c287f1632d17.png",
+      "prompt": "One independent small illustrated choice card for CxQ 每日占卜: a complete elegant arched wooden doorway opening into a peaceful morning mist garden, silver-blue light, dew flowers, soft linen curtains, subtle bronze frame. Cozy sculpted storybook 3D game art, distinct strong silhouette, portrait shape, entire doorway with margin on transparent background. No text, people, extra separate objects, grid or montage.",
+      "target": "games/fortune/assets/ritual-v2/oracle-door-mist.webp",
+      "width": 447,
+      "height": 664,
+      "bytes": 101464,
+      "sha256": "026dc80fa4d00414afc4f5e323aaa6a67c974510d3c1e3379d3ede4e48b7d821"
+    },
+    {
+      "id": "oracle-door-light",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-f6bc0e5f-3e2e-4c9a-887c-2089a42893e1.png",
+      "prompt": "One independent small illustrated choice card for CxQ 每日占卜: a complete elegant arched cream wooden doorway opening into a warm amber starlight room, tiny crystal lights and floating gold motes, peach ribbons and bronze frame. Cozy sculpted storybook 3D game art, distinct strong silhouette, portrait shape, entire doorway with margin on transparent background. No text, people, extra separate objects, grid or montage.",
+      "target": "games/fortune/assets/ritual-v2/oracle-door-light.webp",
+      "width": 435,
+      "height": 664,
+      "bytes": 75788,
+      "sha256": "3e88bb128e6b90ddfd338c638f5e981c612c0fc4687683251081d77354e04f3b"
+    },
+    {
+      "id": "oracle-door-forest",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a1140e-de85-7810-a580-aa3a1c3cb115\\exec-d33b00e9-1f7d-4e02-b3e2-9252cbcd97f0.png",
+      "prompt": "One independent small illustrated choice card for CxQ 每日占卜: a complete elegant arched moss-green wooden doorway opening into an emerald twilight forest path, softly glowing fireflies, carved leaves, antique brass hinges and ivy frame. Cozy sculpted storybook 3D game art, distinct strong silhouette, portrait shape, entire doorway with margin on transparent background. No text, people, extra separate objects, grid or montage.",
+      "target": "games/fortune/assets/ritual-v2/oracle-door-forest.webp",
+      "width": 439,
+      "height": 664,
+      "bytes": 121236,
+      "sha256": "67dfe2be9745cd6f75f821840bf27e310d40e468029436d6d5fde856193f52ea"
+    }
+  ]
+}
