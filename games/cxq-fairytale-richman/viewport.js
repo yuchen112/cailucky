@@ -55,7 +55,7 @@
     C.style.width = v.w + "px";
     C.style.height = v.h + "px";
 
-    const dpr = Math.max(1, Math.min(devicePixelRatio || 1, 2.5));
+    const dpr = Math.max(1, Math.min(devicePixelRatio || 1, S.settings.graphics==='high'?2:1.5));
     const bw = Math.max(1, Math.round(v.w * dpr)),
       bh = Math.max(1, Math.round(v.h * dpr));
     if (C.width !== bw) C.width = bw;

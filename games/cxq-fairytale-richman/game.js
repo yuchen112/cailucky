@@ -213,7 +213,7 @@ scenePopup = function (q, b, p) {
   }
   if (q.kind === "specialBuild") {
     const t = q.tile,
-      cost = upgradeCost(t);
+      cost = upgradeCost(t, p);
     contain(IM.abilityPanel, 360, 90, 880, 720, 0.99);
     txt("選擇大型建築", 800, 170, 38, "center", "#fff0a5", 1000, true);
     paragraph(
@@ -891,6 +891,7 @@ function adjustedTypes(mapRules) {
   return types;
 }
 function makeBoard() {
+  S.rolling=false;S.diceAnim=null;S.rollResolution=null;S.forcedDice=0;S.msg='';S.toastText='';
   const mapRules = MAPS[S.mapIndex] || MAPS[0],
     typePattern = adjustedTypes(mapRules),
     tiles = ROUTE.map((p, i) => ({
@@ -1217,11 +1218,13 @@ function finishAction() {
   S.board.mini = null;
   saveGame();
   if (propertyMoment) {
+    const board=S.board;
     S.rolling = true;
     setTimeout(() => {
+      if(S.board!==board)return;
       S.rolling = false;
       nextTurn();
-    }, 700);
+    }, S.settings.reduced?110:Math.round(700/(S.settings.animationSpeed||1)));
   } else nextTurn();
 }
 function finishGame(w) {
@@ -1293,7 +1296,7 @@ function moveToTile(next) {
   const b = S.board, p = cp(), move = b.pendingMove;
   if (!move) return;
   const old = p.pos, from = b.tiles[old], to = b.tiles[next],
-    dur = hasEquipment(p, "boots") ? ANIMATION_MIN_MS : ANIMATION_MIN_MS + 70;
+    dur = S.settings.reduced?110:Math.max(110,Math.round((hasEquipment(p,"boots")?ANIMATION_MIN_MS:ANIMATION_MIN_MS+70)/(S.settings.animationSpeed||1)));
   p.pos = next;
   p.moveAnim = { from: { x: from.x, y: from.y }, to: { x: to.x, y: to.y }, start: performance.now(), dur };
   move.remaining--;
@@ -1305,6 +1308,7 @@ function moveToTile(next) {
   }
   focus();
   setTimeout(() => {
+    if(S.board!==b||b.pendingMove!==move)return;
     p.moveAnim = null;
     p.landAnimAt = performance.now();
     advanceMovement();
@@ -1324,7 +1328,7 @@ function advanceMovement() {
     setTurnPhase("branch-choice");
     if (p.type === "ai") {
       const destination = p.diff === "easy" ? choices[Math.floor(Math.random() * choices.length)] : choices[1];
-      setTimeout(() => chooseBranch(destination), 300);
+      setTimeout(() => {if(S.board===b&&b.pendingMove===move)chooseBranch(destination);}, 300);
     } else openPopup("branch", { choices });
     return;
   }
@@ -1367,50 +1371,25 @@ function rollDice() {
   S.board.turnBanner = null;
   setTurnPhase("rolling");
   S.rolling = true;
-  const previewCount = S.forcedDice
+  const count = S.forcedDice
     ? 1
     : Math.max(1, Math.min(3, p.diceCount || 1));
-  S.diceResults = [];
-  S.diceAnim = { start: performance.now(), duration: 920, count: previewCount };
-  let spins = 0;
-  const timer = setInterval(() => {
-    S.dice = 1 + Math.floor(Math.random() * 6);
-    spins++;
-    if (spins >= 9) {
-      clearInterval(timer);
-      const count = S.forcedDice
-        ? 1
-        : Math.max(1, Math.min(3, p.diceCount || 1));
-      const results = S.forcedDice
-        ? [S.forcedDice]
-        : Array.from(
-            { length: count },
-            () => 1 + Math.floor(Math.random() * 6),
-          );
-      const resolution = resolveDiceRoll(results, p);
-      S.forcedDice = 0;
-      S.rollResolution = resolution;
-      S.diceResults = resolution.faces;
-      S.diceAnim.results = resolution.faces;
-      S.diceAnim.resolution = resolution;
-      S.diceAnim.settleAt = performance.now();
-      S.dice = resolution.faces[0];
-      sfx("dice");
-      if (S.settings.vibrate && navigator.vibrate)
-        navigator.vibrate([24, 35, 32]);
-      addLog(
-        `${p.id + 1}P 擲出 ${resolution.faces.join("＋")}，` +
-          (resolution.finalSteps === resolution.rolledTotal
-            ? `前進 ${resolution.finalSteps} 步`
-            : `原始 ${resolution.rolledTotal} 點，修正為 ${resolution.finalSteps} 步`),
-      );
-      setTimeout(() => {
-        S.diceAnim = null;
-        S.rolling = false;
-        moveSteps(resolution.finalSteps);
-      }, 320);
-    }
-  }, 70);
+  // Determine the result once; animation speed never samples or changes the outcome.
+  const faces=S.forcedDice?[S.forcedDice]:Array.from({length:count},()=>1+Math.floor(Math.random()*6)),
+    resolution=resolveDiceRoll(faces,p),board=S.board,
+    speed=S.settings.animationSpeed||1,
+    tumble=S.settings.reduced?120:Math.round(630/speed),
+    hold=S.settings.reduced?120:Math.round(320/speed);
+  S.forcedDice=0;S.rollResolution=resolution;S.diceResults=[];
+  S.diceAnim={start:performance.now(),duration:tumble+hold,count};
+  globalThis.RichmanV8?.react(p,'toss',tumble+hold);
+  setTimeout(()=>{
+    if(S.board!==board||!S.diceAnim)return;
+    S.diceResults=resolution.faces;S.diceAnim.results=resolution.faces;S.diceAnim.resolution=resolution;S.diceAnim.settleAt=performance.now();S.dice=resolution.faces[0];
+    sfx('dice');if(S.settings.vibrate&&navigator.vibrate)navigator.vibrate([24,35,32]);
+    addLog(`${p.id+1}P 擲出 ${resolution.faces.join('＋')}，前進 ${resolution.finalSteps} 步`);
+    setTimeout(()=>{if(S.board!==board)return;S.diceAnim=null;S.rolling=false;moveSteps(resolution.finalSteps);},hold);
+  },tumble);
 }
 function aiResolve() {
   const b = S.board,
@@ -1900,7 +1879,7 @@ function cycleVal(v, arr) {
   return arr[(i + 1) % arr.length];
 }
 function action(id) {
-  if(id==="game-center"&&S.scene==="home"){location.href="../../?view=game-hub&v=20261008-upgrade1";return;}
+  if(id==="game-center"&&S.scene==="home"){location.href="../../?view=game-hub&v=20261010-richman8";return;}
   if (!id) return;
   if (S.scene === "home" && !HOME.locked && id === "gallery") {
     S.scene = "gallery";
@@ -2275,7 +2254,7 @@ function action(id) {
       id
     ];
     if (q?.kind === "specialBuild" && t && kind) {
-      const cost = q.fromCard ? 0 : upgradeCost(t),
+      const cost = q.fromCard ? 0 : upgradeCost(t, p),
         freeCardValid = !q.fromCard || p.cards[q.freeCardIndex] === "upgrade";
       if (freeCardValid && p.cash >= cost) {
         if (q.fromCard) p.cards.splice(q.freeCardIndex, 1);
@@ -2695,6 +2674,7 @@ C.addEventListener("pointercancel", () => {
 });
 function frame() {
   begin();
+  if(globalThis.RichmanV8&&!RichmanV8.ready()){RichmanV8.loading();requestAnimationFrame(frame);return;}
   if (S.scene === "game" && S.board) game();
   else {
     beginUiLayer();

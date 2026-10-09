@@ -181,7 +181,7 @@ try {
   Object.assign(S.settings, JSON.parse(localStorage.getItem(PREF) || "{}"));
 } catch (e) {}
 
-const ASSET_REV = "20260924-speed2";
+const ASSET_REV = "20261010-richman8";
 const ASSET_BY_KEY=new Map();const ASSET_REQUESTS = new Map(), ASSET_QUEUE = [];
 let assetActive = 0, assetPumpScheduled = false;
 function pumpAssets() {
@@ -189,10 +189,12 @@ function pumpAssets() {
   ASSET_QUEUE.sort((a,b)=>(b.priority==="high")-(a.priority==="high"));
   while(assetActive<6&&ASSET_QUEUE.length){
     const task=ASSET_QUEUE.shift();assetActive++;
-    let attempts=0;
-    const done=()=>{assetActive--;pumpAssets();};
-    task.image.onload=done;
-    task.image.onerror=()=>{if(attempts++===0){task.image.src=task.url+"&retry=1";return;}task.keys.forEach(key=>IM[key]=null);done();};
+    let settled=false;
+    task.status='loading';
+    const done=(ok)=>{if(settled)return;settled=true;clearTimeout(timeout);task.image.onload=task.image.onerror=null;task.status=ok?'ready':'failed';assetActive--;pumpAssets();};
+    const timeout=setTimeout(()=>done(false),10000);
+    task.image.onload=()=>done(task.image.naturalWidth>0);
+    task.image.onerror=()=>done(false);
     task.image.src=task.url;
   }
 }
@@ -200,7 +202,7 @@ function load(k,u,priority="auto"){
   const url=u+"?v="+ASSET_REV,existing=ASSET_REQUESTS.get(url);
   if(existing){existing.keys.push(k);ASSET_BY_KEY.set(k,existing);IM[k]=existing.image;return existing.image;}
   const image=new Image();image.decoding="async";image.fetchPriority=priority;
-  const task={url,image,priority,keys:[k],queued:priority==='high'};ASSET_REQUESTS.set(url,task);ASSET_BY_KEY.set(k,task);IM[k]=image;if(task.queued)ASSET_QUEUE.push(task);
+  const task={url,image,priority,keys:[k],queued:priority==='high',status:'idle'};ASSET_REQUESTS.set(url,task);ASSET_BY_KEY.set(k,task);IM[k]=image;if(task.queued)ASSET_QUEUE.push(task);
   if(!assetPumpScheduled){assetPumpScheduled=true;queueMicrotask(pumpAssets);}
   return image;
 }
@@ -1203,7 +1205,7 @@ function loadout() {
   active.forEach((seatIndex, i) => {
     const s = S.seats[seatIndex], x = 245 + i * 285;
     const editable = s.type === "human";
-    stretch(IM["playerSeatP" + seatIndex], x, 112, 265, 78, seatIndex === S.activeSeat ? 1 : .62);
+    panelPlate(x, 112, 265, 78, seatIndex === S.activeSeat ? 1 : .62);
     portrait(IM["portrait" + s.char], x + 8, 116, 70, 70, 1);
     btn(
       "loadoutSeat" + seatIndex,
@@ -1220,10 +1222,10 @@ function loadout() {
   EQUIPMENT_DEFS.forEach((item, i) => {
     const x = 105 + (i % 2) * 700, y = 205 + Math.floor(i / 2) * 137,
       selected = (seat.equipment || []).includes(item.id), full = (seat.equipment || []).length >= 2;
-    stretch(IM["playerSeatP" + S.activeSeat], x, y, 660, 125, selected ? 1 : .82);
+    panelPlate(x, y, 660, 125, selected ? 1 : .82);
     contain(IM["equip_" + item.id], x + 18, y + 14, 96, 96, selected ? 1 : .74);
-    fitTxt(item.name, x + 130, y + 35, 250, 21, "left", selected ? "#ffe37a" : "#fff2c5", 1000, true, 14);
-    paragraph(item.desc, x + 130, y + 76, 330, 15, 21, 2, "left", "#dceaff", 900, true);
+    fitTxt(item.name, x + 130, y + 32, 330, 27, "left", selected ? "#ffe37a" : "#fff2c5", 1000, true, 20);
+    paragraph(item.desc, x + 130, y + 83, 330, 21, 27, 2, "left", "#dceaff", 900, true);
     btn("equip" + item.id, selected ? "已裝備｜卸下" : full ? "裝備欄已滿" : "裝備", x + 480, y + 35, 160, 55, selected, .96, selected || !full);
   });
   fitTxt(`${S.activeSeat + 1}P 已裝備 ${(seat.equipment || []).length}/2`, 800, 767, 450, 20, "center", "#ffe17b", 1000, true, 14);
@@ -1344,7 +1346,7 @@ function rulesSetup() {
     true,
   );
   btn("rulesBack", "返回地圖", 22, 20, 190, 62, false);
-  stretch(IM.abilityPanel, 180, 145, 560, 560, 0.98);
+  panelPlate(180, 145, 560, 560, 0.98);
   txt("基本規則", 460, 205, 30, "center", "#fff2bd", 1000, true);
   btn(
     "ruleMoney",
@@ -1367,7 +1369,7 @@ function rulesSetup() {
   );
   fitTxt("每位角色最多攜帶兩件常駐裝備", 460, 525, 400, 18, "center", "#d9efff", 900, true, 14);
   fitTxt("點擊上方欄位即可循環切換設定", 460, 566, 400, 15, "center", "#fff1b8", 850, true, 12);
-  stretch(IM.abilityPanel, 860, 145, 560, 560, 0.98);
+  panelPlate(860, 145, 560, 560, 0.98);
   txt("事件規則", 1140, 205, 30, "center", "#fff2bd", 1000, true);
   btn(
     "ruleEvents",
@@ -1603,17 +1605,17 @@ function drawPlayers() {
       y = q.from.y + (q.to.y - q.from.y) * e + slotY;
     }
     const key = CHAR_KEYS[p.char],
-      contact = IM[key + "WalkRightContact"],
-      passing = IM[key + "WalkRightPassing"],
+      contact = globalThis.RichmanV8?null:IM[key + "WalkRightContact"],
+      passing = globalThis.RichmanV8?null:IM[key + "WalkRightPassing"],
       motionAge = p.moveAnim ? now - p.moveAnim.start : 0,
       stepPhase = motionAge / 105,
-      walkingBob = p.moveAnim
+      walkingBob = S.settings.reduced ? 0 : p.moveAnim
         ? -Math.abs(Math.sin(stepPhase * Math.PI)) * 10
         : Math.sin(now / 520 + p.id * 1.7) * 3,
       landingAge = p.landAnimAt ? now - p.landAnimAt : 9999,
-      landing = landingAge < 440 ? Math.sin((landingAge / 440) * Math.PI) * Math.exp(-landingAge / 520) : 0,
-      idleBreath = p.moveAnim ? 1 : 1 + Math.sin(now / 620 + p.id) * 0.018,
-      lean = p.moveAnim ? Math.sin(stepPhase * Math.PI) * 0.035 : Math.sin(now / 900 + p.id) * 0.008;
+      landing = !S.settings.reduced&&landingAge < 440 ? Math.sin((landingAge / 440) * Math.PI) * Math.exp(-landingAge / 520) : 0,
+      idleBreath = 1,
+      lean = !S.settings.reduced&&p.moveAnim ? Math.sin(stepPhase * Math.PI) * 0.025 : 0;
     X.save();
     X.globalAlpha = p.moveAnim ? 0.42 : 0.3;
     X.fillStyle = "#08101c";
@@ -1628,14 +1630,18 @@ function drawPlayers() {
     X.rotate(lean);
     X.scale(1 + landing * 0.14 - (idleBreath - 1) * 0.45, idleBreath - landing * 0.1);
     const role=CHAR_KEYS[p.char],motion=motionResources.get(role);
-    if(p.moveAnim&&!motion&&!motionPending.has(role)&&globalThis.CxQCharacterMotion){motionPending.add(role);CxQCharacterMotion.prepare(role).then(r=>motionResources.set(role,r)).catch(()=>{}).finally(()=>motionPending.delete(role));}
+    if(p.moveAnim&&!motion&&!motionPending.has(role)&&globalThis.CxQCharacterMotion){motionPending.add(role);CxQCharacterMotion.prepare(role).then(r=>motionResources.set(role,r)).catch(()=>{});}
     if(p.moveAnim&&motion&&!S.settings.reduced){X.save();if(p.moveAnim.to.x<p.moveAnim.from.x)X.scale(-1,1);CxQCharacterMotion.draw(X,motion,'walk',now/1000,-60,-135,120,140);X.restore();}else if (p.moveAnim && contact?.complete && passing?.complete) {
       const q = p.moveAnim,
         frame = Math.floor((now - q.start) / 105) % 2 ? passing : contact;
       containFacing(frame, -60, -128 + walkingBob, 120, 140, q.to.x >= q.from.x);
-    } else contain(IM["c" + p.char], -56, -118 + walkingBob, 112, 132);
+    } else {
+      const reaction=globalThis.RichmanV8?.state.reactions.get(p.id),active=reaction&&now-reaction.at<reaction.duration;
+      if(typeof richDrawPose==='function')richDrawPose(role,active?reaction.pose:richIdlePose(p.char),-60,-134,120,140);
+      else contain(IM["c"+p.char],-60,-134,120,140);
+    }
     X.restore();
-    if (p.moveAnim) {
+    if (p.moveAnim&&!S.settings.reduced) {
       const dust = Math.abs(Math.sin(stepPhase * Math.PI));
       X.save();
       X.globalAlpha = 0.34 * dust;
@@ -1762,7 +1768,9 @@ function diceThrowOverlay() {
   const acting = cp();
   if (acting) {
     const poseAlpha = Math.min(1, u * 3) * (u < 0.82 ? 1 : Math.max(0, (1 - u) / 0.18));
-    contain(IM[CHAR_KEYS[acting.char] + "Dice"], 90, 300, 360, 430, poseAlpha);
+    const role=CHAR_KEYS[acting.char],pose=q.settleAt&&q.resolution?.adjustments.length?'skill':u<.30?'windup':'toss';
+    if(typeof richDrawPose==='function')richDrawPose(role,pose,90,300,360,430,poseAlpha);
+    else contain(IM[role+'Dice'],90,300,360,430,poseAlpha);
   }
   results.forEach((value, index) => {
     const offset = (index - (results.length - 1) / 2) * 245,

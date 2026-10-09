@@ -1,5 +1,5 @@
-const CACHE='cxq-richman-20261009-refresh1';
-const SHELL=['./index.html','./core.js?v=20261009-refresh1','./viewport.js?v=20261009-refresh1','./game.js?v=20261009-refresh1'];
+const CACHE='cxq-richman-20261010-richman8';
+const SHELL=['./index.html','./core.js?v=20261010-richman8','./viewport.js?v=20261010-richman8','./game.js?v=20261010-richman8','./presentation-v8.js?v=20261010-richman8'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>Promise.allSettled(SHELL.map(url=>cache.add(url)))).then(()=>self.skipWaiting()));
 });

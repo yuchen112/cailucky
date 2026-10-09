@@ -1,30 +1,22 @@
-CxQ 童話大富翁 — production build 20261008-complete2
+CxQ 童話大富翁 — production build 20261010-richman8
 
-Release status
-- Independently illustrated return-to-game-center button on the home canvas.
-- Entry scripts and service-worker shell updated together; game rules and saves preserved.
-- The user authorized direct production publication as part of the complete game refresh.
-- Runtime remains one integrated path: index.html -> core.js + viewport.js + game.js.
+Presentation
+- 92 independent illustrations: 70 character poses, 3 board worlds, 12 buildings, 5 interface artworks and 2 props.
+- Ten characters each have idle, blink, dice preparation, throw, receiving, paying and skill poses in a seven-pose atlas; editable Aseprite sources are retained under tools/art-sources/richman-v8.
+- Existing shared six-frame walking animation remains available for the selected cast.
+- Redesigned home, traveler selection, map choice, fixed player HUD, deed and event result presentations; equipment and rule panels share the authored journal artwork.
+- Map-specific Lv1–4 buildings and the existing character-specific Lv5 landmarks retain separate roadside plots.
+- Dice launch/settle, construction reveal and coin-transfer presentations; 1x/2x speed and simplified presentation settings.
 
-Streamlined game design
-- The in-match card book, tool box, shop, minigames, coupons, bank, hospital and police systems are removed from the playable route.
-- Character setup now leads to a dedicated two-slot persistent-equipment phase. Equipment is selected before the map and remains automatic for the whole match.
-- Eight independently generated equipment assets cover property, construction, fortune, defense, income and movement effects.
-- Random events now affect cash, land, buildings, movement or protection only. AI outcomes always pause for the player to acknowledge.
-- Roaming gods move on the road, attach only when a player finishes movement on the same node, replace an existing companion cleanly, and never spawn the Death God normally.
+Runtime and compatibility
+- Dice are determined once before presentation. Presentation speed does not change outcomes, costs, routes or save format v4.
+- Required scene art loads before interaction; failed required downloads release their loading slot and offer explicit retry.
+- Main character poses are packed per character, and only the selected cast is loaded for play.
+- Standard canvas density is capped at 1.5; high graphics keeps up to 2.0.
+- Entry scripts and service-worker shell use the same release identifier.
+- Existing gameplay, equipment, character names, AI decisions, four save slots and latest-save compatibility are retained.
 
-Property and presentation
-- Every land node has a road coordinate for pawns and a separate authored roadside plot coordinate for buildings.
-- Ownership is shown by player-color rings, portrait plaques and P-number, while pawns remain on the road node.
-- Buildings progress through five levels. Lv5 uses the landowner character's dedicated landmark artwork.
-- The HUD shows cash, net worth, land, building count, equipment and god status without card/tool/bank clutter.
-- Player details use Overview, Property, Equipment and Status tabs with all content contained inside the artwork frame.
-- Dice use six physical face assets, a minimum thirty-frame throw/settle sequence and an explicit rolled-total-to-final-step message.
-- Character movement uses two walking poses and at least thirty frames per tile.
-
-Compatibility and verification
-- The 1600x900 safe playfield stays proportional; extra-wide landscape space is filled with the current scene backdrop.
-- Dynamic mobile browser bars, safe-area insets, Safari/PWA caching and mouse/touch coordinate mapping share the same viewport adapter.
-- Saves migrate to the equipment model while removing obsolete inventories and facilities.
-- Automated checks cover asset/PWA parity, equipment rules, event art, gods, dice adjustments, land/building economics, saves, layout bounds and full-match simulations on all three maps.
-- Browser QA covers home, character selection, equipment, map, rules, live board, purchase, AI acknowledgement, player data, mobile landscape and ultrawide landscape.
+Validation
+- tools/test-richman-v8.mjs covers complete AI games on three maps, dice invariance, deed and all upgrade costs, duplicate clicks, stale callbacks, loading retry, UI bounds, saves and image/atlas/native-source decoding.
+- Browser screenshots and release verification are retained locally under outputs/richman-art-20261010.
+- Desktop browser and landscape viewport checks do not establish Android hardware frame-rate or audio acceptance.
