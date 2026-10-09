@@ -20,9 +20,9 @@ const G=(()=>{
  function sound(name='tap',rate=1){if(audioEngine){audioEngine.sound(name,{rate});return;}if(!unlocked||document.hidden||!data.sfx||held)return;const now=performance.now();if(now-(lastSfx[name]||0)<(name==='step'?180:65))return;lastSfx[name]=now;let a=pool.get(name);if(!a){if(cfg.sounds?.[name]){a=new Audio(cfg.sounds[name]);pool.set(name,a)}const local=['merge','drop','jump','step','land','collect','skill'].includes(name);if(!a)a=new Audio((local?'../storybook/audio/':'../shared/audio/')+soundFiles[name]+'.mp3');pool.set(name,a)}a.volume=data.sfx*(name==='step'?.35:.7);a.playbackRate=clamp(rate,.65,1.6);a.preservesPitch=false;a.currentTime=0;a.play().catch(()=>{})}
  function dialog(title,body,actions){let d=$('#game-dialog');if(!d){d=document.createElement('dialog');d.id='game-dialog';d.className='paper';document.body.append(d)}d.innerHTML=sprite(data.role,'dialog-role')+'<h2>'+title+'</h2>'+body+'<div class="dialog-actions"></div>';for(const [label,fn]of actions){const b=document.createElement('button');b.textContent=label;b.onclick=()=>{d.close();fn?.()};d.querySelector('.dialog-actions').append(b)}d.oncancel=e=>{e.preventDefault()};if(!d.open)d.showModal();return d}
  function rolePicker(sel,allowed=roles.map((_,i)=>i),onChange=()=>{}){if(!allowed.includes(data.role))data.role=allowed[0];const n=$(sel);n.innerHTML=allowed.map(i=>'<button class="role-choice" data-role="'+i+'" aria-pressed="'+(i===data.role)+'">'+sprite(i)+'<span>'+roles[i]+'</span></button>').join('');n.querySelectorAll('button').forEach(b=>b.onclick=()=>{data.role=+b.dataset.role;save();n.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));sound('tap');onChange(data.role)});onChange(data.role)}
- let pendingLoads=0,loadFailed=false,readyLabel='';const failedImages=new Set(),startActions=new WeakMap();
+ let pendingLoads=0,loadFailed=false,readyLabel='';const failedImages=new Set(),startActions=new WeakMap(),imageMeters=new Set();
  let imageJobs=0;const imageQueue=[];function pumpImages(){while(imageJobs<4&&imageQueue.length){imageJobs++;imageQueue.shift()().finally(()=>{imageJobs--;pumpImages()});}}function limitedImage(fn){return new Promise((resolve,reject)=>{imageQueue.push(()=>fn().then(resolve,reject));pumpImages()});}const loadingImages=new Map();let completedImages=0,totalImages=0;
- function progress(){const start=$('#start');if(start&&pendingLoads){start.disabled=true;start.textContent='準備美術 '+completedImages+'/'+totalImages;}}
+ function progress(){const start=$('#start');if(start&&pendingLoads){start.disabled=true;start.textContent='正在準備檔案…';}}
  function imageReady(src){
   if(images[src])return Promise.resolve(images[src]);
   if(loadingImages.has(src))return loadingImages.get(src);
@@ -30,7 +30,7 @@ const G=(()=>{
   const request=attempt=>new Promise((resolve,reject)=>{
    const image=new Image();let done=false;
    const finish=error=>{if(done)return;done=true;clearTimeout(timer);image.onload=image.onerror=null;if(error)reject(error);else resolve(image);};
-   const timer=setTimeout(()=>finish(new Error('Image load timed out: '+src)),8000);
+   const timer=setTimeout(()=>finish(new Error('File load timed out: '+src)),45000);
    image.onload=()=>image.naturalWidth?finish():finish(new Error('Empty image: '+src));
    image.onerror=()=>finish(new Error('Image load failed: '+src));
    const url=new URL(src,location.href);if(attempt)url.searchParams.set('asset_retry',String(attempt));image.src=url.href;
@@ -40,8 +40,9 @@ const G=(()=>{
  }
  async function load(names){
   const start=$('#start');if(!pendingLoads){readyLabel=start?.dataset.label||(startActions.has(start)?readyLabel:start?.textContent)||'開始遊戲';loadFailed=false;completedImages=totalImages=0;}
-  pendingLoads++;progress();
-  try{const results=await Promise.allSettled([...new Set(names)].map(imageReady));const failed=results.find(r=>r.status==='rejected');if(failed)throw failed.reason;return images;}
+  if(!pendingLoads){for(const previous of imageMeters)previous.close();imageMeters.clear();}pendingLoads++;progress();
+  const files=[...new Set(names)],meter=globalThis.CxQLoading?.create(files,{label:'準備本階段檔案',priority:10,retry:()=>{for(const previous of imageMeters)previous.close();imageMeters.clear();start?.click();}});if(meter)imageMeters.add(meter);
+  try{const results=await Promise.allSettled(files.map(async file=>{try{const image=await imageReady(file);meter?.ready(file);return image;}catch(error){meter?.fail(file);throw error;}}));const failed=results.find(r=>r.status==='rejected');if(failed)throw failed.reason;meter?.close();return images;}
   catch(error){loadFailed=true;console.error('[CxQ assets]',error.message);throw error;}
   finally{pendingLoads--;if(!pendingLoads&&start){start.disabled=false;start.textContent=failedImages.size?'圖片載入失敗，點此重試':start.dataset.label||readyLabel;if(failedImages.size){if(!startActions.has(start))startActions.set(start,start.onclick);const original=startActions.get(start);start.onclick=async()=>{try{await load([...failedImages]);start.onclick=original;startActions.delete(start);original?.call(start);}catch{toast('圖片尚未準備好，請再按一次重試。')}};}}}
  }

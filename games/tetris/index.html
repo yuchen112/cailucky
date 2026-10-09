@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#17201d">
-<title>CxQ 心境織境・方塊物語</title>
+<title>CxQ 心境織境・方塊物語</title><script src="../shared/load-progress-v1.js?v=20261010-loading1" charset="utf-8" data-loading='{"id":"tetris","label":"準備 CxQ 心境織境・方塊物語","files":["../shared/runtime.css?v=20260929-mobile1","../shared/audio-engine-v2.js?v=20261010-loading1","../shared/runtime.js?v=20261010-loading1","../shared/character-motion-v1.js?v=20261010-loading1","../shared/game-entry-v2.js?v=20261010-loading1","assets/characters/F158E7B0-D03B-4208-91BE-6C1454836CA9.speed24.webp","assets/stickers/03-thinking.speed24.webp","assets/stickers/05-excited.speed24.webp"],"images":["assets/characters/F158E7B0-D03B-4208-91BE-6C1454836CA9.speed24.webp","assets/stickers/03-thinking.speed24.webp","assets/stickers/05-excited.speed24.webp"],"illustration":"assets/characters/F158E7B0-D03B-4208-91BE-6C1454836CA9.speed24.webp","colors":{"paper":"#f1f1fa","ink":"#4c4a6e","accent":"#9b9ccc"}}'></script>
 <style>
 :root{--cream:#fff6df;--ink:#302a2a;--sage:#98ae79;--rose:#d9898e;--navy:#263044;--gold:#d8ad59;--cell:28px}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:"Microsoft JhengHei",system-ui,sans-serif;color:var(--cream);background:#111722}button{font:inherit;color:inherit}
@@ -58,7 +58,7 @@
  .mobile-character-bar span{display:none}
 }
 </style>
-<link rel="stylesheet" href="../shared/runtime.css?v=20260929-mobile1"><script src="../shared/audio-engine-v2.js?v=20261009-refresh1"></script><script src="../shared/runtime.js?v=20261009-refresh1"></script><style>#cxq-audio{bottom:calc(116px + env(safe-area-inset-bottom))}.deck-btn,.dpad button{min-width:44px;min-height:44px}.hud small{font-size:12px!important}.hud b{font-size:22px!important}#pause .panel{background:#fff5e6f5!important;color:#3e4a3b!important;border:1px solid #c7ad76;border-radius:24px}</style><style>
+<link rel="stylesheet" href="../shared/runtime.css?v=20260929-mobile1"><script src="../shared/audio-engine-v2.js?v=20261010-loading1"></script><script src="../shared/runtime.js?v=20261010-loading1"></script><style>#cxq-audio{bottom:calc(116px + env(safe-area-inset-bottom))}.deck-btn,.dpad button{min-width:44px;min-height:44px}.hud small{font-size:12px!important}.hud b{font-size:22px!important}#pause .panel{background:#fff5e6f5!important;color:#3e4a3b!important;border:1px solid #c7ad76;border-radius:24px}</style><style>
 #homeScreen{padding:0!important;background:#142c27 url('assets/ui/title-workshop-v2.webp') center/cover no-repeat!important;backdrop-filter:none!important}
 #homeScreen .home-panel{height:100%;max-height:100%;width:100%;max-width:none;border:0;border-radius:0;box-shadow:none;background:none;display:flex;flex-direction:column;justify-content:center;padding:30px max(24px,10vw)!important;gap:12px}
 #homeScreen .home-panel:before{display:none}#homeScreen .home-visual{height:32dvh;max-height:270px;width:100%;object-fit:contain}
@@ -143,6 +143,6 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)releaseCont
 $('#enterSetup').onclick=()=>{$('#homeScreen').classList.remove('show');$('#menu').classList.add('show')};$('#backHome').onclick=()=>{$('#menu').classList.remove('show');$('#homeScreen').classList.add('show')};$('#showHowto').onclick=()=>$('#howto').classList.toggle('show');$('#quickClassic').onclick=()=>{$('#blessingMode').checked=false;$('#journeyRule').value='marathon';reset()};$('#start').onclick=reset;$('#pauseBtn').onclick=pause;$('#deckPause').onclick=pause;$('#resume').onclick=resume;$('#restart').onclick=reset;$('#home').onclick=()=>{running=false;setFace('wave');$('#pause').classList.remove('show');$('#homeScreen').classList.add('show')};$('#skill').onclick=activate;$('#blessingMode').onchange=update;window.onresize=resize;window.visualViewport?.addEventListener('resize',resize);document.onkeydown=e=>{if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Space'].includes(e.code))e.preventDefault();if(e.key==='Escape')paused?resume():pause();if(e.key==='ArrowLeft')act('left');if(e.key==='ArrowRight')act('right');if(e.key==='ArrowUp')act('rotate');if(e.key==='ArrowDown')act('soft');if(e.code==='Space'){e.preventDefault();act('drop')}if(e.key.toLowerCase()==='c')act('hold')};CxQ.configure({music:'arcade',pause});blockImg.onload=draw;update();requestAnimationFrame(loop);
 })();
 </script>
-<script src="../shared/character-motion-v1.js?v=20261009-refresh1"></script>
-<script src="../shared/game-entry-v2.js?v=20261009-refresh1" data-game='{"host":"#homeScreen","slot":".home-copy","sub":".lead","css":"#homeScreen .game-center-return{width:270px;height:60px;margin:8px auto}","name":"心境織境・方塊物語","desc":"排列方塊，織出完整心境。","art":"games/tetris/art/return-center-v2.webp"}'></script></body>
+<script src="../shared/character-motion-v1.js?v=20261010-loading1"></script>
+<script src="../shared/game-entry-v2.js?v=20261010-loading1" data-game='{"host":"#homeScreen","slot":".home-copy","sub":".lead","css":"#homeScreen .game-center-return{width:270px;height:60px;margin:8px auto}","name":"心境織境・方塊物語","desc":"排列方塊，織出完整心境。","art":"games/tetris/art/return-center-v2.webp"}'></script></body>
 </html>

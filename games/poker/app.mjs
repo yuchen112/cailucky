@@ -1216,7 +1216,7 @@ if (!(await acquireTab())) {
       '<section class="panel recovery"><h1>存檔需要檢查</h1><p>未覆蓋原有資料。可以先下載原始資料，再匯入已保存的備份。</p><button class="btn" data-recovery="raw">下載原始資料</button><button class="btn" data-recovery="import">匯入備份恢復</button></section>';
     note(error.message);
   }
-const loadedImages = new Map();
+const loadedImages = new Map(), preparedImages = new Set();
 function warmPlayPoses(){
   for(const role of profile?.seats||[]){
     const path=playPosePath(`art/seat-${role}.webp`);
@@ -1228,8 +1228,8 @@ function warmImage(src) {
   if (loadedImages.has(src)) return loadedImages.get(src);
   const p = new Promise((resolve, reject) => {
     const i = new Image();
-    const timer=setTimeout(()=>{loadedImages.delete(src);reject(Error('牌桌素材載入逾時，請重試'));},8000);
-    i.onload = () => {clearTimeout(timer);resolve(src)};
+    const timer=setTimeout(()=>{loadedImages.delete(src);reject(Error('牌桌素材載入逾時，請重試'));},45000);
+    i.onload = () => {clearTimeout(timer);preparedImages.add(src);resolve(src)};
     i.onerror = () => {
       clearTimeout(timer);
       loadedImages.delete(src);
@@ -1249,14 +1249,16 @@ async function prepareGame(type) {
     ...profile.seats.flatMap(k=>["art/seat-"+k+".webp","art/seat-"+k+"-win.webp"]),
     "art/room-" + type + ".webp",
   ];
-  if (queue.every((s) => loadedImages.has(s))) return;
+  if (queue.every((s) => preparedImages.has(s))) return;
   note("正在準備牌桌與牌面…");
+  const files=[...new Set(queue)],meter=globalThis.CxQLoading?.create(files,{label:'準備牌桌檔案',priority:10,retry:()=>{meter.close();void prepareGame(type).catch(e=>note(e.message));}});
   let at = 0;
-  await Promise.all(
+  try{await Promise.all(
     Array.from({ length: 4 }, async () => {
-      while (at < queue.length) await warmImage(queue[at++]);
+      while (at < files.length){const file=files[at++];try{await warmImage(file);meter?.ready(file);}catch(error){meter?.fail(file);throw error;}}
     }),
   );
+  meter?.close();}catch(error){throw error;}
   toastEl.classList.remove("show");toastEl.textContent="";
 }
 // Sliding over an overlapping hand previews one public card, selecting only on release.

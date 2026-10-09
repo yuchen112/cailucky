@@ -1,5 +1,5 @@
-const CACHE='cxq-richman-20261010-richman8';
-const SHELL=['./index.html','./core.js?v=20261010-richman8','./viewport.js?v=20261010-richman8','./game.js?v=20261010-richman8','./presentation-v8.js?v=20261010-richman8'];
+const CACHE='cxq-richman-20261010-loading1';
+const SHELL=['./asset-versions-v1.js?v=20261010-loading1','./index.html','./core.js?v=20261010-loading1','./viewport.js?v=20261010-loading1','./game.js?v=20261010-loading1','./presentation-v8.js?v=20261010-loading1'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>Promise.allSettled(SHELL.map(url=>cache.add(url)))).then(()=>self.skipWaiting()));
 });
@@ -15,7 +15,7 @@ self.addEventListener('fetch',event=>{
  }
  const image=/\.(?:webp|png|jpe?g|avif)$/i.test(url.pathname);
  if(image){
-  event.respondWith((async()=>{const cache=await caches.open(CACHE),hit=await cache.match(req);if(hit)return hit;const res=await fetch(req);if(res.ok)await cache.put(req,res.clone());return res;})());
+  event.respondWith((async()=>{const cache=await caches.open('cxq-art-richman-v1'),hit=await cache.match(req);if(hit)return hit;const res=await fetch(req);if(res.ok)await cache.put(req,res.clone());return res;})());
  }else{
   event.respondWith(fetch(req).then(async res=>{if(res.ok){const c=await caches.open(CACHE);await c.put(req,res.clone());}return res;}).catch(()=>caches.match(req)));
  }

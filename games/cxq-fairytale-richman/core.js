@@ -199,7 +199,7 @@ function pumpAssets() {
   }
 }
 function load(k,u,priority="auto"){
-  const url=u+"?v="+ASSET_REV,existing=ASSET_REQUESTS.get(url);
+  const url=u+"?r="+(globalThis.CxQRichmanAssetVersions?.[u]||ASSET_REV),existing=ASSET_REQUESTS.get(url);
   if(existing){existing.keys.push(k);ASSET_BY_KEY.set(k,existing);IM[k]=existing.image;return existing.image;}
   const image=new Image();image.decoding="async";image.fetchPriority=priority;
   const task={url,image,priority,keys:[k],queued:priority==='high',status:'idle'};ASSET_REQUESTS.set(url,task);ASSET_BY_KEY.set(k,task);IM[k]=image;if(task.queued)ASSET_QUEUE.push(task);
@@ -208,13 +208,13 @@ function load(k,u,priority="auto"){
 }
 load("homeReturn", "art/return-center-v2.webp", "high");
 load("homeBg", A + "backgrounds/home_scene_v7.webp", "high");
-load("homeMenuNew", A + "ui/home_menu_new_v4.speed24.webp", "high");
-load("homeMenuContinue", A + "ui/home_menu_continue_v4.speed24.webp", "high");
+load("homeMenuNew", A + "ui/home_menu_new_v4.speed24.webp");
+load("homeMenuContinue", A + "ui/home_menu_continue_v4.speed24.webp");
 load("homeMenuHelp", A + "ui/home_menu_help_v4.speed24.webp", "high");
 load("homeMenuSettings", A + "ui/home_menu_settings_v4.speed24.webp", "high");
 load("homeMenuGallery", A + "ui/home_menu_gallery_v1.speed24.webp", "high");
-load("btnBlue", A + "ui/btn_blue_v5.speed24.webp", "high");
-load("btnRed", A + "ui/btn_red_v5.speed24.webp", "high");
+load("btnBlue", A + "ui/btn_blue_v5.speed24.webp");
+load("btnRed", A + "ui/btn_red_v5.speed24.webp");
 load("setupBg", A + "backgrounds/setup_scene_v4.webp");
 load("playerSeat", A + "ui/player_plate_v5.speed24.webp");
 load("roleInfo", A + "ui/tooltip_plate_v5.speed24.webp");
@@ -222,7 +222,7 @@ load("characterStage", A + "ui/modal_frame_v6.speed24.webp");
 load("abilityPanel", A + "ui/modal_frame_v6.speed24.webp");
 load("actionConsole", A + "ui/info_panel_v5.speed24.webp");
 load("settingsFrame", A + "ui/settings_frame_v5.speed24.webp");
-load("settingsIcon", A + "ui/settings_icon_v6.speed24.webp", "high");
+load("settingsIcon", A + "ui/settings_icon_v6.speed24.webp");
 load("diceFrame", A + "ui/dice_frame_v5.speed24.webp");
 load("mapCardFrame", A + "ui/info_panel_v5.speed24.webp");
 for (let i = 0; i < 4; i++)

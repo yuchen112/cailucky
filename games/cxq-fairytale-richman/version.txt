@@ -1,4 +1,4 @@
-CxQ 童話大富翁 — production build 20261010-richman8
+CxQ 童話大富翁 — production build 20261010-loading1
 
 Presentation
 - 92 independent illustrations: 70 character poses, 3 board worlds, 12 buildings, 5 interface artworks and 2 props.
@@ -20,3 +20,6 @@ Validation
 - tools/test-richman-v8.mjs covers complete AI games on three maps, dice invariance, deed and all upgrade costs, duplicate clicks, stale callbacks, loading retry, UI bounds, saves and image/atlas/native-source decoding.
 - Browser screenshots and release verification are retained locally under outputs/richman-art-20261010.
 - Desktop browser and landscape viewport checks do not establish Android hardware frame-rate or audio acceptance.
+
+Loading optimization
+- File-based progress per scene, small map previews and stable content-addressed art caching.

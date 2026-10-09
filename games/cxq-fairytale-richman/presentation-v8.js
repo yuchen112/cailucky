@@ -3,7 +3,7 @@
 const RICH_ART='art/v8/', RICH_INK='#493425', RICH_MUTED='#735c46';
 for(const id of ['traveler-hall','deed-panel','action-ribbon','player-ledger','journal-panel','construction','coin-token'])load('v8-'+id,RICH_ART+id+'.webp',id==='action-ribbon'||id==='player-ledger'?'high':'auto');
 IM.setupBg=IM['v8-traveler-hall'];ASSET_BY_KEY.set('setupBg',ASSET_BY_KEY.get('v8-traveler-hall'));
-MAPS.forEach((m,i)=>{load('mapWorld'+i,RICH_ART+'map-'+m.key+'.webp');load('mapPreview'+i,RICH_ART+'map-'+m.key+'.webp');for(let level=1;level<=4;level++)load('building'+i+'_'+level,RICH_ART+m.key+'-building-'+level+'.webp');});
+MAPS.forEach((m,i)=>{load('mapWorld'+i,RICH_ART+'map-'+m.key+'.webp');load('mapPreview'+i,RICH_ART+'previews/map-'+m.key+'.webp');for(let level=1;level<=4;level++)load('building'+i+'_'+level,RICH_ART+m.key+'-building-'+level+'.webp');});
 CHAR_KEYS.forEach((id,i)=>{load('c'+i,RICH_ART+id+'-idle.webp');load('portrait'+i,RICH_ART+id+'-idle.webp');load('v8-atlas-'+id,RICH_ART+'atlases/'+id+'.webp');load(id+'Dice',RICH_ART+id+'-toss.webp');load(id+'Victory',RICH_ART+id+'-receive.webp');load(id+'Surprise',RICH_ART+id+'-pay.webp');});
 const RICH_POSES=['idle','blink','windup','toss','receive','pay','skill'];
 // Source-pixel road measurements. Fit the painted oval to the saved 24-space route.
@@ -28,8 +28,8 @@ function richImageReady(key){const image=IM[key];return !!(image?.complete&&imag
 function richWarm(keys){for(const key of keys){void IM[key];const task=ASSET_BY_KEY.get(key);if(task){task.priority='high';if(task.status==='idle'&&!task.queued){task.queued=true;ASSET_QUEUE.push(task);}}}pumpAssets();}
 function richRetry(keys){for(const key of keys){const task=ASSET_BY_KEY.get(key);if(!task||task.status!=='failed')continue;task.status='idle';task.queued=true;task.image.src='';ASSET_QUEUE.push(task);}richWarm(keys);}
 function richBaseAssets(){
- const ui=['v8-action-ribbon','v8-deed-panel','v8-player-ledger','v8-journal-panel','btnBlue','btnRed'];
- if(S.scene==='home')return ['homeBg','homeReturn','v8-action-ribbon','v8-player-ledger','homeMenuNew','homeMenuContinue','homeMenuGallery','homeMenuHelp','homeMenuSettings'];
+ const ui=['v8-action-ribbon','v8-deed-panel','v8-player-ledger','v8-journal-panel'];
+ if(S.scene==='home')return ['homeBg','homeReturn','v8-action-ribbon','homeMenuGallery','homeMenuHelp','homeMenuSettings'];
  if(S.scene==='setup')return [...ui,'setupBg',...CHAR_KEYS.map((_,i)=>'c'+i)];
  if(S.scene==='game'&&S.board){const mi=S.board.mapIndex||0;return [...ui,'mapWorld'+mi,'mapPreview'+mi,'roadNode','tile_start','tile_event','tile_land','facilityMagic','diceAction','diceFrame','settingsIcon','roleInfo',...((S.board.npcs||[]).length?['npcWealth','npcFortune','npcPoverty','npcMisfortune','npcLand','npcAngel','npcDemon','npcDeath']:[]),...Array.from({length:6},(_,i)=>'diceThrow'+(i+1)),...S.board.players.flatMap(p=>['c'+p.char,'v8-atlas-'+CHAR_KEYS[p.char]]),...S.board.players.map(p=>'playerFlag'+p.id),...Array.from({length:4},(_,i)=>'building'+mi+'_'+(i+1))];}
  if(S.scene==='mapSelect')return [...ui,'setupBg',...MAPS.map((_,i)=>'mapPreview'+i)];
@@ -38,6 +38,8 @@ function richBaseAssets(){
 }
 function richSceneAssets(){
  const keys=richBaseAssets(),q=S.board?.popup;
+ if(S.scene==='game'&&S.board){for(let i=keys.length-1;i>=0;i--)if(/^building\d_\d$/.test(keys[i]))keys.splice(i,1);for(const tile of S.board.tiles)if(tile.type==='land'&&tile.owner>=0)keys.push('building'+S.board.mapIndex+'_'+Math.min(4,tile.level||1));}
+ if(S.scene==='game'&&q?.kind==='tile'&&q.tile.type==='land')keys.push('building'+S.board.mapIndex+'_'+Math.min(4,q.tile.level||1));
  if(S.scene==='game'&&q?.kind==='event')keys.push(q.art&&ASSET_BY_KEY.has('event_'+q.art)?'event_'+q.art:'eventScene'+(S.board.mapIndex||0));
  if(S.scene==='game'&&q?.kind==='tile'&&q.tile.level>=5){const owner=S.board.players.find(p=>p.id===q.tile.owner);if(owner)keys.push('landmark_'+CHAR_KEYS[owner.char]);}
  if(S.scene==='result'&&S.board?.winner)keys.push(CHAR_KEYS[S.board.winner.char]+'Victory');
@@ -52,11 +54,13 @@ function richSceneReady(){
 }
 function richLoading(){
  beginUiLayer();X.fillStyle='rgba(5,17,28,.82)';X.fillRect(0,0,W,H);
- const keys=richSceneAssets(),ready=keys.filter(richImageReady).length;
+ const keys=richSceneAssets(),tasks=[...new Set(keys.map(key=>ASSET_BY_KEY.get(key)).filter(Boolean))],ready=tasks.filter(task=>task.image.complete&&task.image.naturalWidth).length,total=tasks.length,percent=total?Math.floor(ready/total*100):0;
  txt('CxQ 童話大富翁',800,345,42,'center','#ffedbd',900,true);
  txt(richV8.failed.length?'素材下載未完成':'正在準備完整冒險畫面',800,412,28);
- txt(ready+' / '+keys.length,800,463,22);
- if(richV8.failed.length){btn('v8-retry','重新載入',570,525,460,80,true);btn('v8-back','返回首頁',650,630,300,68);}
+ txt(percent+'%',800,463,34,'center','#ffedbd',900);
+ X.fillStyle='#07131f';X.fillRect(500,504,600,24);X.fillStyle='#d6ba72';X.fillRect(500,504,600*percent/100,24);X.strokeStyle='#edda98';X.lineWidth=2;X.strokeRect(500,504,600,24);
+ txt('已完成 '+ready+'／'+total+' 個檔案',800,565,22);
+ if(richV8.failed.length){btn('v8-retry','重試未完成檔案',570,615,460,80,true);btn('v8-back','返回首頁',650,716,300,68);}
  endUiLayer();
 }
 function richPanel(x,y,w,h){stretch(IM['v8-deed-panel'],x,y,w,h);}
@@ -201,6 +205,8 @@ action=function(id){
  if(id==='v8-reduced'){S.settings.reduced=!S.settings.reduced;savePrefs();return;}
  if(id==='v8-animation'){S.settings.animationSpeed=S.settings.animationSpeed===2?1:2;savePrefs();return;}
  richOriginalAction(id);
+ if(S.scene==='mapSelect')richWarm(['mapWorld'+S.mapIndex]);
+ if(S.scene==='setup'||S.scene==='loadout'){richWarm(['setupBg','v8-deed-panel','v8-journal-panel',...EQUIPMENT_DEFS.map(e=>'equip_'+e.id)]);for(const seat of S.seats)if(seat.type!=='off')richWarm(['v8-atlas-'+CHAR_KEYS[seat.char]]);}
 };
 const richOriginalSettings=settings;
 settings=function(){richOriginalSettings();btn('v8-animation',`演出速度 ×${S.settings.animationSpeed}`,130,575,340,68);btn('v8-reduced','簡化演出 '+(S.settings.reduced?'開':'關'),1130,575,340,68);};
@@ -213,7 +219,7 @@ drawTile=function(t){
  const road=roadAnchor(t),plot=plotAnchor(t),selected=S.board?.selectedTile===t;
  contain(t.type==='land'?IM.roadNode:tileImage(t.type),road.x-48,road.y-48,96,96);
  if(t.type==='land'){
-  let building=buildingImage(t);if(!building?.complete||!building.naturalWidth)building=IM['building'+(S.board.mapIndex||0)+'_4'];const build=S.board?.buildAnim,age=build?.tile===t?performance.now()-build.at:99999;
+  let building=t.owner>=0?buildingImage(t):null;if(t.owner>=0&&(!building?.complete||!building.naturalWidth))building=IM['building'+(S.board.mapIndex||0)+'_1'];const build=S.board?.buildAnim,age=build?.tile===t?performance.now()-build.at:99999;
   if(t.owner>=0){
    const size=[0,104,126,148,168,184][Math.min(5,t.level)]||104;
    X.fillStyle='rgba(20,25,18,.25)';X.beginPath();X.ellipse(plot.x,plot.y+12,55,23,0,0,Math.PI*2);X.fill();
