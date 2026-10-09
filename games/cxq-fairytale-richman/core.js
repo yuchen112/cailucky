@@ -189,10 +189,10 @@ function pumpAssets() {
   ASSET_QUEUE.sort((a,b)=>(b.priority==="high")-(a.priority==="high"));
   while(assetActive<6&&ASSET_QUEUE.length){
     const task=ASSET_QUEUE.shift();assetActive++;
-    let settled=false;
+    let settled=false;const attempt=task.attempt=(task.attempt||0)+1;
     task.status='loading';
-    const done=(ok)=>{if(settled)return;settled=true;clearTimeout(timeout);task.image.onload=task.image.onerror=null;task.status=ok?'ready':'failed';assetActive--;pumpAssets();};
-    const timeout=setTimeout(()=>done(false),10000);
+    const done=(ok)=>{if(task.attempt!==attempt)return;if(settled){if(ok){task.status='ready';task.image.onload=task.image.onerror=null;}return;}settled=true;clearTimeout(timeout);task.image.onload=task.image.onerror=null;task.status=ok?'ready':'failed';assetActive--;pumpAssets();};
+    const timeout=setTimeout(()=>{if(settled||task.attempt!==attempt)return;settled=true;task.status='failed';assetActive--;pumpAssets();},10000);
     task.image.onload=()=>done(task.image.naturalWidth>0);
     task.image.onerror=()=>done(false);
     task.image.src=task.url;
