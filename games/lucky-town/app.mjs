@@ -54,7 +54,7 @@ function product(id){const s=store.get(),i=BY_ID[id];previewItem=i;const owned=s
 function roomItemSize(p){const i=BY_ID[p.item];return {w:i.w,h:i.h}}
 function emptySpot(room,item){for(let y=0;y<room.size;y++)for(let x=0;x<room.size;x++){const p={uid:crypto.randomUUID(),item,x,y,flip:false};if(canPlace(room,p))return p}return null}
 function remember(){undo.push(structuredClone(draft));if(undo.length>30)undo.shift();redo=[]}
-function imageLoaded(src){if(!imgCache.has(src)){const i=new Image();const p=new Promise((resolve,reject)=>{i.onload=()=>resolve(i);i.onerror=()=>{imgCache.delete(src);reject(Error('素材載入失敗：'+src))}});i.src=src;imgCache.set(src,p)}return imgCache.get(src)}
+function imageLoaded(src){if(globalThis.CxQLoading)return CxQLoading.image(src);if(!imgCache.has(src)){const i=new Image();const p=new Promise((resolve,reject)=>{i.onload=()=>resolve(i);i.onerror=()=>{imgCache.delete(src);reject(Error('素材載入失敗：'+src))}});i.src=src;imgCache.set(src,p)}return imgCache.get(src)}
 
 function roomRect(p,room){if(p.onTop){const parent=room.items.find(x=>x.uid===p.onTop),b=roomRect(parent,room);return {x:b.x,y:b.y-b.h*.52,w:65,h:65}}const size=roomItemSize(p),small=['tea','flower','cushion','pillow','clock','basket','toy-bear','plant'].includes(p.item)||['small','cushion'].includes(BY_ID[p.item]?.category),scale=small?.7:1;return {x:floor.x+(p.x+.5*size.w)/room.size*floor.w,y:floor.y+(p.y+.8*size.h)/room.size*floor.h,w:Math.max(100,size.w/room.size*floor.w*.9)*scale,h:Math.max(95,size.h/room.size*floor.h*3.15)*scale}}
 let drawToken=0;

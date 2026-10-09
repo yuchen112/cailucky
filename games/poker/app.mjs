@@ -1225,6 +1225,7 @@ function warmPlayPoses(){
   }
 }
 function warmImage(src) {
+  if(globalThis.CxQLoading)return CxQLoading.image(src).then(()=>{preparedImages.add(src);return src;});
   if (loadedImages.has(src)) return loadedImages.get(src);
   const p = new Promise((resolve, reject) => {
     const i = new Image();

@@ -8,7 +8,7 @@
   tracks=normalize(tracks);
   let held=false,index=0,music=null,source='',generation=0,failed=0,state='點擊畫面啟用聲音';
   const pool=new Map(),last=new Map(),variation=new Map(),voices=new Set();
-  const absolute=p=>new URL(p,root).href;
+  const absolute=p=>{const url=new URL(p,root).href;return globalThis.CxQLoading?.mediaURL(url)||url;};
   function report(){for(const el of document.querySelectorAll('[data-audio-status]'))el.textContent=state;}
   function levels(){const s=settings()||{};return{music:clamp(s.music),sfx:clamp(s.sfx)};}
   function sync(){const v=levels();if(!music&&tracks.length){music=new Audio();music.preload='none';music.loop=false;music.addEventListener('ended',()=>{index=(index+1)%tracks.length;source='';sync()});music.addEventListener('error',()=>{state='音樂暫時無法載入，點擊可重試';report();source='';failed++;if(failed<tracks.length){index=(index+1)%tracks.length;sync()}});}

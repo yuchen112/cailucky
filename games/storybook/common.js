@@ -24,6 +24,8 @@ const G=(()=>{
  let imageJobs=0;const imageQueue=[];function pumpImages(){while(imageJobs<4&&imageQueue.length){imageJobs++;imageQueue.shift()().finally(()=>{imageJobs--;pumpImages()});}}function limitedImage(fn){return new Promise((resolve,reject)=>{imageQueue.push(()=>fn().then(resolve,reject));pumpImages()});}const loadingImages=new Map();let completedImages=0,totalImages=0;
  function progress(){const start=$('#start');if(start&&pendingLoads){start.disabled=true;start.textContent='正在準備檔案…';}}
  function imageReady(src){
+  if(globalThis.CxQLoading?.hasPacked(src))return CxQLoading.image(src).then(image=>{images[src]=image;return image;});
+  const cached=globalThis.CxQLoading?.images?.get(new URL(src,location.href).href);if(cached){images[src]=cached;return Promise.resolve(cached);}
   if(images[src])return Promise.resolve(images[src]);
   if(loadingImages.has(src))return loadingImages.get(src);
   totalImages++;progress();
