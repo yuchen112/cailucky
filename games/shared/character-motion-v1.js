@@ -1,0 +1,19 @@
+/* Authored frame playback. Atlas packing never invents or deforms a character pose. */
+(()=>{'use strict';
+ const base=new URL('./character-motion/',document.currentScript.src),cast=['luck','healing','growth','memory','joy','night','trust','dream','sadness','hope'];
+ const cache=new Map();let manifestJob=null;const actors=new Map();let raf=0,last=0;
+ const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches||document.body.classList.contains('reduced')||document.body.classList.contains('reduced-motion')||document.body.dataset.motion==='reduced';
+ function manifest(){return manifestJob??=fetch(new URL('manifest.json?v=20261009-refresh1',base)).then(r=>{if(!r.ok)throw Error('Animation manifest unavailable');return r.json()}).catch(e=>{manifestJob=null;throw e})}
+ function prepare(id){if(!cache.has(id))cache.set(id,manifest().then(async m=>{const spec=m.characters[id];if(!spec)throw Error('Unknown character');const image=new Image();image.decoding='async';image.src=new URL(spec.atlas+'?v=20261009-refresh1',base);await image.decode();return {image,spec}}).catch(e=>{cache.delete(id);throw e}));return cache.get(id)}
+ function draw(ctx,resource,clip,time,x,y,w,h){const frames=resource.spec.clips[clip]||resource.spec.clips.walk;const key=frames[Math.floor(time*(resource.spec.fps||10))%frames.length],f=resource.spec.frames[key];ctx.drawImage(resource.image,f.x,f.y,f.w,f.h,x,y,w,h)}
+ function stop(){cancelAnimationFrame(raf);raf=0;last=0;for(const actor of actors.values()){actor.image.style.visibility=actor.original;actor.canvas.hidden=true;}}
+ function tick(time){raf=requestAnimationFrame(tick);if(document.hidden||reduced()){for(const a of actors.values()){a.image.style.visibility=a.original;a.canvas.hidden=true;}return;}if(time-last<100)return;last=time;
+  for(const [image,a] of actors){if(!image.isConnected){a.canvas.remove();actors.delete(image);continue;}if(a.until&&time>a.until){a.canvas.remove();image.style.visibility=a.original;actors.delete(image);continue;}const rect=image.getBoundingClientRect();if(rect.width<1||rect.height<1||rect.bottom<0||rect.top>innerHeight){a.canvas.hidden=true;image.style.visibility=a.original;continue;}const role=a.role();if(role!==a.id){a.id=role;a.resource=null;prepare(role).then(r=>{if(a.id===role)a.resource=r}).catch(()=>{});}if(!a.resource){image.style.visibility=a.original;a.canvas.hidden=true;continue;}
+   a.canvas.hidden=false;a.canvas.style.left=image.offsetLeft+'px';a.canvas.style.top=image.offsetTop+'px';a.canvas.style.width=rect.width+'px';a.canvas.style.height=rect.height+'px';image.style.visibility='hidden';const ctx=a.canvas.getContext('2d');ctx.clearRect(0,0,a.canvas.width,a.canvas.height);draw(ctx,a.resource,a.clip||'walk',(time-(a.started||0))/1000,0,0,a.canvas.width,a.canvas.height);
+  }if(!actors.size)stop();
+ }
+ function attach(image,role){if(!image||image.tagName!=='IMG'||actors.has(image))return;const parent=image.parentElement;if(!parent)return;const canvas=document.createElement('canvas');canvas.width=320;canvas.height=360;canvas.setAttribute('aria-hidden','true');canvas.style.cssText='position:absolute;pointer-events:none;object-fit:contain;z-index:1';if(getComputedStyle(parent).position==='static')parent.style.position='relative';parent.append(canvas);const actor={image,canvas,role,id:null,resource:null,original:image.style.visibility};actors.set(image,actor);if(!raf)raf=requestAnimationFrame(tick);}
+ function play(image,id,clip='finisher',duration=600){attach(image,()=>id);const a=actors.get(image);if(!a)return;a.started=performance.now();a.until=a.started+duration;a.clip=clip;}
+ const api={prepare,draw,attach,play,dispose:stop};window.CxQCharacterMotion=api;
+ document.addEventListener('visibilitychange',()=>{last=0});
+})();

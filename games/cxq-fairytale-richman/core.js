@@ -614,12 +614,12 @@ function diceIconButton(id, x, y, size, en = true) {
   S.buttons.push({ id, x, y, w: size, h: size, en });
 }
 function hit(x, y) {
-  return S.buttons
-    .slice()
-    .reverse()
-    .find(
-      (b) => b.en && x >= b.x && x <= b.x + b.w && y >= b.y && y <= b.y + b.h,
-    );
+ const buttons=S.buttons.slice().reverse(),exact=buttons.find(b=>b.en&&x>=b.x&&x<=b.x+b.w&&y>=b.y&&y<=b.y+b.h);
+ const touch=matchMedia('(pointer:coarse)').matches||(typeof navigator!=='undefined'&&navigator.maxTouchPoints>0);
+ if(!touch||(exact&&!/^seat\d+$/.test(exact.id)))return exact;
+ const scale=Math.max(.1,VIEW.uiScale*C.getBoundingClientRect().width/C.width),minimum=44/scale;
+ const near=buttons.filter(b=>{if(!b.en||(b.w>=minimum&&b.h>=minimum))return false;const px=Math.max(0,(minimum-b.w)/2),py=Math.max(0,(minimum-b.h)/2);return x>=b.x-px&&x<=b.x+b.w+px&&y>=b.y-py&&y<=b.y+b.h+py;});
+ near.sort((a,b)=>Math.hypot(x-a.x-a.w/2,y-a.y-a.h/2)-Math.hypot(x-b.x-b.w/2,y-b.y-b.h/2));return near[0]||exact;
 }
 function activeSeatIds() {
   return S.seats
@@ -1574,6 +1574,7 @@ function drawTile(t) {
   }
   X.restore();
 }
+const motionResources=new Map(),motionPending=new Set();
 function drawPlayers() {
   const b = S.board,
     now = performance.now(),
@@ -1626,7 +1627,9 @@ function drawPlayers() {
     X.translate(x, y);
     X.rotate(lean);
     X.scale(1 + landing * 0.14 - (idleBreath - 1) * 0.45, idleBreath - landing * 0.1);
-    if (p.moveAnim && contact?.complete && passing?.complete) {
+    const role=CHAR_KEYS[p.char],motion=motionResources.get(role);
+    if(p.moveAnim&&!motion&&!motionPending.has(role)&&globalThis.CxQCharacterMotion){motionPending.add(role);CxQCharacterMotion.prepare(role).then(r=>motionResources.set(role,r)).catch(()=>{}).finally(()=>motionPending.delete(role));}
+    if(p.moveAnim&&motion&&!S.settings.reduced){X.save();if(p.moveAnim.to.x<p.moveAnim.from.x)X.scale(-1,1);CxQCharacterMotion.draw(X,motion,'walk',now/1000,-60,-135,120,140);X.restore();}else if (p.moveAnim && contact?.complete && passing?.complete) {
       const q = p.moveAnim,
         frame = Math.floor((now - q.start) / 105) % 2 ? passing : contact;
       containFacing(frame, -60, -128 + walkingBob, 120, 140, q.to.x >= q.from.x);

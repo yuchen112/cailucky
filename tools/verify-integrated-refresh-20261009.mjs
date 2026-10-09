@@ -1,0 +1,4 @@
+import fs from 'node:fs';import {spawnSync} from 'node:child_process';
+const tests=[...new Set([...JSON.parse(fs.readFileSync('tools/integrated-refresh-tests.json')),'test-integrated-resilience-20261009.mjs','test-shared-loading-20261009.mjs'])],results=[];
+for(const name of tests){const args=name==='poker-all'?['--test',...fs.readdirSync('games/poker/tests').filter(x=>x.endsWith('.mjs')).map(x=>'games/poker/tests/'+x)]:['tools/'+name];if(name==='poker-all'&&!args.length)throw Error('Missing poker tests');const result=spawnSync(process.execPath,args,{encoding:'utf8',timeout:180000,maxBuffer:2**20});results.push({test:name,code:result.status,output:(result.stdout+result.stderr).slice(-6000)});console.log((result.status===0?'PASS ':'FAIL ')+name);}
+fs.mkdirSync('outputs/integrated-refresh-20261009',{recursive:true});fs.writeFileSync('outputs/integrated-refresh-20261009/tests.json',JSON.stringify(results,null,2));if(results.some(r=>r.code!==0))process.exitCode=1;

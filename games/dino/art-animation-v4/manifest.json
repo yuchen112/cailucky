@@ -1,0 +1,23 @@
+{
+  "generator": "built-in image_gen",
+  "independentDrawings": true,
+  "montageExtraction": false,
+  "assets": [
+    {
+      "id": "growth-run-4",
+      "file": "growth-run-4.webp",
+      "source": "growth-run-4.source.png",
+      "pose": "new running contact pose",
+      "reference": "../art-animation-v3/growth-run-2.webp",
+      "prompt": "Preserve forest courier identity, full body facing right; new running contact pose; independently illustrated, transparent background, no sheet, no text."
+    },
+    {
+      "id": "growth-run-5",
+      "file": "growth-run-5.webp",
+      "source": "growth-run-5.source.png",
+      "pose": "new running passing pose",
+      "reference": "../art-animation-v3/growth-run-2.webp",
+      "prompt": "Preserve forest courier identity, full body facing right; new running passing pose; independently illustrated, transparent background, no sheet, no text."
+    }
+  ]
+}

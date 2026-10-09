@@ -1,0 +1,306 @@
+{
+  "independentDrawings": true,
+  "montageExtraction": false,
+  "assets": [
+    {
+      "id": "growth-think",
+      "character": "growth",
+      "pose": "think",
+      "reference": "games/poker/art/seat-growth.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Look thoughtfully at the fan of cards in the left hand, tilt head down slightly, right index finger at cheek. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-9b2e6b05-16f5-4ce7-bbf5-0453fbf3b428.png",
+      "file": "growth-think.webp",
+      "bytes": 40202
+    },
+    {
+      "id": "growth-draw",
+      "character": "growth",
+      "pose": "draw",
+      "reference": "games/poker/art/seat-growth.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Lean forward and reach the right hand out to draw ONE card, keep the left-hand fan close to chest, curious focused eyes. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-b0c5b2fc-267d-4839-a5bb-f1a753881e5a.png",
+      "file": "growth-draw.webp",
+      "bytes": 39718
+    },
+    {
+      "id": "growth-pass",
+      "character": "growth",
+      "pose": "pass",
+      "reference": "games/poker/art/seat-growth.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Hold the fan of cards close to chest in left hand, right hand raised with open palm to politely pass, relaxed smile. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-366b71e3-53dc-44f1-9ec8-7ba9b2948718.png",
+      "file": "growth-pass.webp",
+      "bytes": 38484
+    },
+    {
+      "id": "luck-think",
+      "character": "luck",
+      "pose": "think",
+      "reference": "games/poker/art/seat-luck.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Look thoughtfully at the fan of cards in the left hand, tilt head down slightly, right index finger at cheek. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-154f5343-9632-4198-a9c3-9d906d141ee7.png",
+      "file": "luck-think.webp",
+      "bytes": 43812
+    },
+    {
+      "id": "luck-draw",
+      "character": "luck",
+      "pose": "draw",
+      "reference": "games/poker/art/seat-luck.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Lean forward and reach the right hand out to draw ONE card, keep the left-hand fan close to chest, curious focused eyes. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-8ef1a513-c8ec-4700-8c64-cb7cd9e5caba.png",
+      "file": "luck-draw.webp",
+      "bytes": 47152
+    },
+    {
+      "id": "luck-pass",
+      "character": "luck",
+      "pose": "pass",
+      "reference": "games/poker/art/seat-luck.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Hold the fan of cards close to chest in left hand, right hand raised with open palm to politely pass, relaxed smile. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-2a9f58f5-2e2a-4ee2-a805-3918681593c3.png",
+      "file": "luck-pass.webp",
+      "bytes": 43358
+    },
+    {
+      "id": "healing-think",
+      "character": "healing",
+      "pose": "think",
+      "reference": "games/poker/art/seat-healing.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Look thoughtfully at the fan of cards in the left hand, tilt head down slightly, right index finger at cheek. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-ac1c5ec6-57d5-4a6f-b19a-96bcdec9c083.png",
+      "file": "healing-think.webp",
+      "bytes": 36098
+    },
+    {
+      "id": "healing-draw",
+      "character": "healing",
+      "pose": "draw",
+      "reference": "games/poker/art/seat-healing.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Lean forward and reach the right hand out to draw ONE card, keep the left-hand fan close to chest, curious focused eyes. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-1e89f436-a253-43e9-8136-332590fba2ae.png",
+      "file": "healing-draw.webp",
+      "bytes": 37480
+    },
+    {
+      "id": "healing-pass",
+      "character": "healing",
+      "pose": "pass",
+      "reference": "games/poker/art/seat-healing.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Hold the fan of cards close to chest in left hand, right hand raised with open palm to politely pass, relaxed smile. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-58fd2a63-83b9-4782-bbf5-9f413e6605ae.png",
+      "file": "healing-pass.webp",
+      "bytes": 33882
+    },
+    {
+      "id": "memory-think",
+      "character": "memory",
+      "pose": "think",
+      "reference": "games/poker/art/seat-memory.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Look thoughtfully at the fan of cards in the left hand, tilt head down slightly, right index finger at cheek. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-91d54f6e-04c5-41b1-8349-5dc5ade02370.png",
+      "file": "memory-think.webp",
+      "bytes": 32794
+    },
+    {
+      "id": "memory-draw",
+      "character": "memory",
+      "pose": "draw",
+      "reference": "games/poker/art/seat-memory.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Lean forward and reach the right hand out to draw ONE card, keep the left-hand fan close to chest, curious focused eyes. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-c74fd093-3f00-4d8a-95ae-234474491bb3.png",
+      "file": "memory-draw.webp",
+      "bytes": 35558
+    },
+    {
+      "id": "memory-pass",
+      "character": "memory",
+      "pose": "pass",
+      "reference": "games/poker/art/seat-memory.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Hold the fan of cards close to chest in left hand, right hand raised with open palm to politely pass, relaxed smile. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-d9a88a56-5a0a-4c6b-8e7e-325d3be93977.png",
+      "file": "memory-pass.webp",
+      "bytes": 34478
+    },
+    {
+      "id": "joy-think",
+      "character": "joy",
+      "pose": "think",
+      "reference": "games/poker/art/seat-joy.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Look thoughtfully at the fan of cards in the left hand, tilt head down slightly, right index finger at cheek. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-68ad6cbd-1336-49f0-b4e9-97a0ac9fbc5f.png",
+      "file": "joy-think.webp",
+      "bytes": 34810
+    },
+    {
+      "id": "joy-draw",
+      "character": "joy",
+      "pose": "draw",
+      "reference": "games/poker/art/seat-joy.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Lean forward and reach the right hand out to draw ONE card, keep the left-hand fan close to chest, curious focused eyes. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-fbc4f787-299b-4e60-b34d-32def6f00e08.png",
+      "file": "joy-draw.webp",
+      "bytes": 36748
+    },
+    {
+      "id": "joy-pass",
+      "character": "joy",
+      "pose": "pass",
+      "reference": "games/poker/art/seat-joy.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Hold the fan of cards close to chest in left hand, right hand raised with open palm to politely pass, relaxed smile. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-2519235a-f343-4e5d-ba5c-174540470dbd.png",
+      "file": "joy-pass.webp",
+      "bytes": 35814
+    },
+    {
+      "id": "night-think",
+      "character": "night",
+      "pose": "think",
+      "reference": "games/poker/art/seat-night.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Look thoughtfully at the fan of cards in the left hand, tilt head down slightly, right index finger at cheek. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-1b628d79-9e6b-448c-b0d4-f03d2b2443d4.png",
+      "file": "night-think.webp",
+      "bytes": 41856
+    },
+    {
+      "id": "night-draw",
+      "character": "night",
+      "pose": "draw",
+      "reference": "games/poker/art/seat-night.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Lean forward and reach the right hand out to draw ONE card, keep the left-hand fan close to chest, curious focused eyes. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-afe10003-1f1c-45e6-a810-1a48470d476a.png",
+      "file": "night-draw.webp",
+      "bytes": 44872
+    },
+    {
+      "id": "night-pass",
+      "character": "night",
+      "pose": "pass",
+      "reference": "games/poker/art/seat-night.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Hold the fan of cards close to chest in left hand, right hand raised with open palm to politely pass, relaxed smile. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-f537dace-c060-479d-af73-8777107ca300.png",
+      "file": "night-pass.webp",
+      "bytes": 43774
+    },
+    {
+      "id": "trust-think",
+      "character": "trust",
+      "pose": "think",
+      "reference": "games/poker/art/seat-trust.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Look thoughtfully at the fan of cards in the left hand, tilt head down slightly, right index finger at cheek. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-1517c1b2-219a-4902-a537-4a52560cb55a.png",
+      "file": "trust-think.webp",
+      "bytes": 41420
+    },
+    {
+      "id": "trust-draw",
+      "character": "trust",
+      "pose": "draw",
+      "reference": "games/poker/art/seat-trust.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Lean forward and reach the right hand out to draw ONE card, keep the left-hand fan close to chest, curious focused eyes. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-4910f693-7e32-4dff-b011-ffe8e9308b86.png",
+      "file": "trust-draw.webp",
+      "bytes": 43332
+    },
+    {
+      "id": "trust-pass",
+      "character": "trust",
+      "pose": "pass",
+      "reference": "games/poker/art/seat-trust.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Hold the fan of cards close to chest in left hand, right hand raised with open palm to politely pass, relaxed smile. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-700920e1-4136-424a-826d-9a202a1a96b8.png",
+      "file": "trust-pass.webp",
+      "bytes": 43720
+    },
+    {
+      "id": "dream-think",
+      "character": "dream",
+      "pose": "think",
+      "reference": "games/poker/art/seat-dream.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Look thoughtfully at the fan of cards in the left hand, tilt head down slightly, right index finger at cheek. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-52a744dc-8b4d-4e1d-9a27-603a8de169e5.png",
+      "file": "dream-think.webp",
+      "bytes": 39912
+    },
+    {
+      "id": "dream-draw",
+      "character": "dream",
+      "pose": "draw",
+      "reference": "games/poker/art/seat-dream.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Lean forward and reach the right hand out to draw ONE card, keep the left-hand fan close to chest, curious focused eyes. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-df49bf2a-b17e-4cd1-b4a4-bdf0371ed734.png",
+      "file": "dream-draw.webp",
+      "bytes": 43720
+    },
+    {
+      "id": "dream-pass",
+      "character": "dream",
+      "pose": "pass",
+      "reference": "games/poker/art/seat-dream.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Hold the fan of cards close to chest in left hand, right hand raised with open palm to politely pass, relaxed smile. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-ab61ce28-c2d7-41c1-8187-448701ff6afb.png",
+      "file": "dream-pass.webp",
+      "bytes": 42744
+    },
+    {
+      "id": "sadness-think",
+      "character": "sadness",
+      "pose": "think",
+      "reference": "games/poker/art/seat-sadness.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Look thoughtfully at the fan of cards in the left hand, tilt head down slightly, right index finger at cheek. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-1fa5a79c-b719-4076-96d6-8360ad1caf0f.png",
+      "file": "sadness-think.webp",
+      "bytes": 40602
+    },
+    {
+      "id": "sadness-draw",
+      "character": "sadness",
+      "pose": "draw",
+      "reference": "games/poker/art/seat-sadness.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Lean forward and reach the right hand out to draw ONE card, keep the left-hand fan close to chest, curious focused eyes. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-0c3b052d-340b-4c4d-83bb-8d6821487f4b.png",
+      "file": "sadness-draw.webp",
+      "bytes": 42176
+    },
+    {
+      "id": "sadness-pass",
+      "character": "sadness",
+      "pose": "pass",
+      "reference": "games/poker/art/seat-sadness.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Hold the fan of cards close to chest in left hand, right hand raised with open palm to politely pass, relaxed smile. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-0ee88b57-61e1-41f1-a11c-177cfee265d4.png",
+      "file": "sadness-pass.webp",
+      "bytes": 41612
+    },
+    {
+      "id": "hope-think",
+      "character": "hope",
+      "pose": "think",
+      "reference": "games/poker/art/seat-hope.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Look thoughtfully at the fan of cards in the left hand, tilt head down slightly, right index finger at cheek. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-83877c4a-db98-4edb-b495-81f52367e148.png",
+      "file": "hope-think.webp",
+      "bytes": 31030
+    },
+    {
+      "id": "hope-draw",
+      "character": "hope",
+      "pose": "draw",
+      "reference": "games/poker/art/seat-hope.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Lean forward and reach the right hand out to draw ONE card, keep the left-hand fan close to chest, curious focused eyes. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-af6a594e-0bcf-44af-b524-aeced3d4c09a.png",
+      "file": "hope-draw.webp",
+      "bytes": 32174
+    },
+    {
+      "id": "hope-pass",
+      "character": "hope",
+      "pose": "pass",
+      "reference": "games/poker/art/seat-hope.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn single seated character animation frame for CxQ poker. Preserve exact character identity, face, species, hairstyle, wardrobe, props, chair and polished 3D storybook illustration from reference. Same camera, full character AND chair with margins. NEW ACTION: Hold the fan of cards close to chest in left hand, right hand raised with open palm to politely pass, relaxed smile. No text, no table, no scene, no sheet or collage. Genuinely transparent background. Keep character seated. Actual new arm/head/body pose, no warping original, correct hands and feet.",
+      "path": "exec-d13e3159-5cd9-44d7-b641-db8356c142df.png",
+      "file": "hope-pass.webp",
+      "bytes": 31836
+    }
+  ]
+}

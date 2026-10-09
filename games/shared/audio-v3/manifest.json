@@ -1,0 +1,388 @@
+{
+  "originalComposition": true,
+  "externalSamples": false,
+  "sampleRate": 32000,
+  "channels": 2,
+  "tracks": [
+    {
+      "id": "dino",
+      "file": "dino.mp3",
+      "bpm": 118,
+      "instrument": "pluck",
+      "motif": [
+        0,
+        6,
+        0,
+        2,
+        3,
+        1,
+        0,
+        4
+      ],
+      "seconds": 67.08474576271186,
+      "rms": 0.07065830379724503,
+      "peak": 0.39549827575683594,
+      "bytes": 940509
+    },
+    {
+      "id": "flappy",
+      "file": "flappy.mp3",
+      "bpm": 102,
+      "instrument": "flute",
+      "motif": [
+        0,
+        3,
+        5,
+        6,
+        3,
+        5,
+        1,
+        4
+      ],
+      "seconds": 77.29411764705883,
+      "rms": 0.08791043609380722,
+      "peak": 0.4064699113368988,
+      "bytes": 1083645
+    },
+    {
+      "id": "merge",
+      "file": "merge.mp3",
+      "bpm": 88,
+      "instrument": "marimba",
+      "motif": [
+        0,
+        5,
+        5,
+        4,
+        5,
+        1,
+        5,
+        4
+      ],
+      "seconds": 89.27272727272727,
+      "rms": 0.05700303986668587,
+      "peak": 0.3325333893299103,
+      "bytes": 1250973
+    },
+    {
+      "id": "mines",
+      "file": "mines.mp3",
+      "bpm": 82,
+      "instrument": "piano",
+      "motif": [
+        0,
+        5,
+        1,
+        1,
+        1,
+        3,
+        6,
+        4
+      ],
+      "seconds": 95.65853658536585,
+      "rms": 0.07361417263746262,
+      "peak": 0.3329484462738037,
+      "bytes": 1340685
+    },
+    {
+      "id": "whack",
+      "file": "whack.mp3",
+      "bpm": 130,
+      "instrument": "pluck",
+      "motif": [
+        0,
+        7,
+        2,
+        7,
+        1,
+        2,
+        6,
+        4
+      ],
+      "seconds": 61.07692307692308,
+      "rms": 0.0707213282585144,
+      "peak": 0.41646596789360046,
+      "bytes": 856341
+    },
+    {
+      "id": "dream-match",
+      "file": "dream-match.mp3",
+      "bpm": 96,
+      "instrument": "celesta",
+      "motif": [
+        0,
+        7,
+        4,
+        5,
+        7,
+        6,
+        0,
+        4
+      ],
+      "seconds": 82.0,
+      "rms": 0.07049297541379929,
+      "peak": 0.4053644835948944,
+      "bytes": 1149165
+    },
+    {
+      "id": "magic-bubble",
+      "file": "magic-bubble.mp3",
+      "bpm": 114,
+      "instrument": "flute",
+      "motif": [
+        0,
+        1,
+        3,
+        7,
+        3,
+        5,
+        4,
+        4
+      ],
+      "seconds": 69.36842105263158,
+      "rms": 0.08648166805505753,
+      "peak": 0.4083687961101532,
+      "bytes": 972261
+    },
+    {
+      "id": "2048",
+      "file": "2048.mp3",
+      "bpm": 92,
+      "instrument": "piano",
+      "motif": [
+        0,
+        1,
+        2,
+        2,
+        0,
+        0,
+        7,
+        4
+      ],
+      "seconds": 85.47826086956522,
+      "rms": 0.07421749085187912,
+      "peak": 0.3758840262889862,
+      "bytes": 1198053
+    },
+    {
+      "id": "brick-breaker",
+      "file": "brick-breaker.mp3",
+      "bpm": 126,
+      "instrument": "synth",
+      "motif": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        7,
+        4
+      ],
+      "seconds": 62.95238095238095,
+      "rms": 0.07398885488510132,
+      "peak": 0.4164411127567291,
+      "bytes": 882549
+    },
+    {
+      "id": "click-core",
+      "file": "click-core.mp3",
+      "bpm": 108,
+      "instrument": "marimba",
+      "motif": [
+        0,
+        7,
+        1,
+        3,
+        1,
+        1,
+        4,
+        4
+      ],
+      "seconds": 73.11111111111111,
+      "rms": 0.0656336098909378,
+      "peak": 0.4175412654876709,
+      "bytes": 1024677
+    },
+    {
+      "id": "link",
+      "file": "link.mp3",
+      "bpm": 98,
+      "instrument": "celesta",
+      "motif": [
+        0,
+        6,
+        7,
+        7,
+        5,
+        6,
+        0,
+        4
+      ],
+      "seconds": 80.36734693877551,
+      "rms": 0.07221901416778564,
+      "peak": 0.4401082694530487,
+      "bytes": 1126485
+    },
+    {
+      "id": "memory",
+      "file": "memory.mp3",
+      "bpm": 78,
+      "instrument": "piano",
+      "motif": [
+        0,
+        3,
+        7,
+        6,
+        4,
+        0,
+        7,
+        4
+      ],
+      "seconds": 100.46153846153847,
+      "rms": 0.07319487631320953,
+      "peak": 0.3519044816493988,
+      "bytes": 1407717
+    },
+    {
+      "id": "tetris",
+      "file": "tetris.mp3",
+      "bpm": 136,
+      "instrument": "synth",
+      "motif": [
+        0,
+        5,
+        0,
+        3,
+        7,
+        2,
+        3,
+        4
+      ],
+      "seconds": 58.470588235294116,
+      "rms": 0.07588408887386322,
+      "peak": 0.41116970777511597,
+      "bytes": 820053
+    },
+    {
+      "id": "fortune",
+      "file": "fortune.mp3",
+      "bpm": 72,
+      "instrument": "flute",
+      "motif": [
+        0,
+        6,
+        0,
+        6,
+        7,
+        1,
+        3,
+        4
+      ],
+      "seconds": 108.66666666666667,
+      "rms": 0.10486699640750885,
+      "peak": 0.4267640709877014,
+      "bytes": 1522629
+    },
+    {
+      "id": "poker",
+      "file": "poker.mp3",
+      "bpm": 94,
+      "instrument": "piano",
+      "motif": [
+        0,
+        3,
+        4,
+        5,
+        4,
+        6,
+        4,
+        4
+      ],
+      "seconds": 83.70212765957447,
+      "rms": 0.0710759237408638,
+      "peak": 0.3388344943523407,
+      "bytes": 1173357
+    },
+    {
+      "id": "richman",
+      "file": "richman.mp3",
+      "bpm": 110,
+      "instrument": "marimba",
+      "motif": [
+        0,
+        7,
+        0,
+        5,
+        7,
+        5,
+        2,
+        4
+      ],
+      "seconds": 71.81818181818181,
+      "rms": 0.06536423414945602,
+      "peak": 0.4135875701904297,
+      "bytes": 1006533
+    },
+    {
+      "id": "lucky-town",
+      "file": "lucky-town.mp3",
+      "bpm": 104,
+      "instrument": "celesta",
+      "motif": [
+        0,
+        6,
+        7,
+        5,
+        5,
+        7,
+        6,
+        4
+      ],
+      "seconds": 75.84615384615384,
+      "rms": 0.0711536779999733,
+      "peak": 0.41835176944732666,
+      "bytes": 1062981
+    },
+    {
+      "id": "heartlight-duel",
+      "file": "heartlight-duel.mp3",
+      "bpm": 140,
+      "instrument": "synth",
+      "motif": [
+        0,
+        5,
+        3,
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "seconds": 56.857142857142854,
+      "rms": 0.07700848579406738,
+      "peak": 0.4132196605205536,
+      "bytes": 797373
+    },
+    {
+      "id": "fairytale-defense",
+      "file": "fairytale-defense.mp3",
+      "bpm": 116,
+      "instrument": "pluck",
+      "motif": [
+        0,
+        5,
+        1,
+        3,
+        6,
+        1,
+        2,
+        4
+      ],
+      "seconds": 68.20689655172414,
+      "rms": 0.07084544003009796,
+      "peak": 0.38477039337158203,
+      "bytes": 956133
+    }
+  ]
+}

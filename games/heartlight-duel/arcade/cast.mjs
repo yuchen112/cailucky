@@ -8,6 +8,7 @@ export const CAST=ORIGINAL.map(c=>({...c,speed:speeds[c.id],portrait:`../../../a
 export const NEW_MOVES=['launcher','sweep','air','finisher'];
 const ROUTES={joy:['light','launcher','air','finisher'],dream:['light','heavy','skill'],night:['light','sweep','finisher'],sadness:['light','launcher','skill'],trust:['light','heavy','finisher'],memory:['light','launcher','air','finisher'],growth:['light','launcher','air'],healing:['light','sweep','finisher'],luck:['light','sweep','launcher','air'],hope:['light','launcher','skill']};
 for(const c of CAST){c.comboRoute=ROUTES[c.id];for(const move of NEW_MOVES)for(let i=0;i<3;i++)c.poses[move+'-'+i]='art/v2/'+c.id+'-'+move+'-'+i+'.webp';}
+for(const c of CAST)for(const pose of ['walk-c','walk-d','walk-e','walk-f','finisher-prep','finisher-impact','finisher-recover'])c.poses[pose]='art/v3/'+c.id+'-'+pose+'.webp';
 export const BY_ID=Object.fromEntries(CAST.map(c=>[c.id,c]));
 for(const c of CAST)c.poseMetrics=POSE_METRICS[c.id]||{};
 export const STAGES=ARENAS.map(s=>({...s,art:'../'+s.art}));

@@ -15,44 +15,44 @@
       "bytes": 450417
     },
     "joy": {
-      "images": 24,
-      "bytes": 802945
+      "images": 31,
+      "bytes": 987288
     },
     "dream": {
-      "images": 24,
-      "bytes": 697125
+      "images": 31,
+      "bytes": 867265
     },
     "night": {
-      "images": 24,
-      "bytes": 586265
+      "images": 31,
+      "bytes": 747595
     },
     "sadness": {
-      "images": 24,
-      "bytes": 686057
+      "images": 31,
+      "bytes": 827875
     },
     "trust": {
-      "images": 24,
-      "bytes": 621531
+      "images": 31,
+      "bytes": 791069
     },
     "memory": {
-      "images": 24,
-      "bytes": 491137
+      "images": 31,
+      "bytes": 605606
     },
     "growth": {
-      "images": 22,
-      "bytes": 505106
+      "images": 29,
+      "bytes": 651561
     },
     "healing": {
-      "images": 24,
-      "bytes": 426336
+      "images": 31,
+      "bytes": 538565
     },
     "luck": {
-      "images": 24,
-      "bytes": 714588
+      "images": 31,
+      "bytes": 865473
     },
     "hope": {
-      "images": 24,
-      "bytes": 565056
+      "images": 31,
+      "bytes": 700769
     },
     "stage-festival": {
       "images": 1,
@@ -71,6 +71,6 @@
       "bytes": 87045
     }
   },
-  "totalOriginalBytes": 22236550,
-  "totalPackedBytes": 7733460
+  "totalOriginalBytes": 25292398,
+  "totalPackedBytes": 9220380
 }

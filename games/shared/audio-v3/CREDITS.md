@@ -1,0 +1,1 @@
+CxQ original stereo scores, 2026-10-09. Procedural synthesis from original melodies; no external samples. Source: tools/compose-refresh-music.py. Existing credited music remains available in the playlist.

@@ -1,0 +1,8 @@
+import fs from 'node:fs';import path from 'node:path';import vm from 'node:vm';import {toolDependency} from './refresh-deps.mjs';
+const esbuild=toolDependency('esbuild');
+for(const id of ['dino','flappy','merge','mines','whack','dream-match','magic-bubble']){
+ const dir=path.resolve('games',id),plan=JSON.parse(fs.readFileSync(dir+'/upgrade-build.json'));
+ const source="'use strict';\n"+plan.scripts.map(p=>fs.readFileSync(path.resolve(dir,p),'utf8')+'\n;').join('\n');new vm.Script(source);
+ const result=await esbuild.transform(source,{target:'es2020',minifyWhitespace:true,minifySyntax:true,minifyIdentifiers:false,legalComments:'none'});fs.writeFileSync(dir+'/game-upgrade.bundle.js',result.code);
+}
+console.log('Seven small-game script bundles rebuilt without changing styles or unrelated entries');

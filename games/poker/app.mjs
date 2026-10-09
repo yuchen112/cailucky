@@ -1,5 +1,5 @@
 import {explainHint} from './hint-explanation.mjs';
-import {fitHands,capture,animateTable,cancelMotion,playPosePath,warmPlayPose} from "./presentation.mjs?v=20261007-names1";
+import {fitHands,capture,animateTable,cancelMotion,playPosePath,warmPlayPose,thinkingPose} from "./presentation.mjs?v=20261009-refresh1";
 import * as R from "./rules.mjs?v=20261007-names1";
 import { reduce, autoAction } from "./engine.mjs?v=20261007-names1";
 import * as Store from "./storage.mjs?v=20261007-names1";
@@ -202,7 +202,7 @@ function renderTable() {
     if (t.phase === "playing")
       actions =
         btn("要牌", "hit", human ? "" : "disabled") +
-        btn("停牌", "stand", human ? "" : "disabled") + btn("思路提示", "hint", human ? "" : "disabled") + btn("思路提示", "hint", human ? "" : "disabled") +
+        btn("停牌", "stand", human ? "" : "disabled") + btn("思路提示", "hint", human ? "" : "disabled") +
         btn(
           "加倍",
           "double",
@@ -256,7 +256,7 @@ function renderTable() {
       btn("結回錢包並離桌", "leave") +
       btn("牌局明細", "details");
   }
-  app.innerHTML = `<main class="table-screen ${ended(t) ? "is-ended" : ""}" data-game="${t.type}" data-last-seat="${t.lastSeat??0}"><header class="bar"><strong>${R.GAMES[t.type]}・第 ${t.round} ${t.type==="dragon"?"輪":"局"}</strong><span>${t.mode === "quick" ? (t.type==="dragon"?"快速桌 5 輪":"快速桌 5 局") : "持續桌"}</span><div>${btn("說明", "help")}${btn("暫停", "pause")}</div></header><section class="arena">${stacksHTML(t)}${[1, 2, 3].map((i) => `<div class="seat s${i} ${i === t.turn && !ended(t) ? "active" : ""}"><img class="table-character" src="art/seat-${t.players[i].role}.webp" alt="${name(t.players[i].role)}坐在牌桌旁">${opponentCards(t.players[i].hand.length)}<div><strong>${name(t.players[i].role)}</strong><br>${t.players[i].chips} 籌碼<br>${t.type === "blackjack" && t.players[i].hand.length ? R.bj(t.players[i].hand).total + " 點" : t.players[i].hand.length + " 張"}</div></div>`).join("")}<div class="play-area"><p class="message">${ended(t) ? (t.type==="dragon"?"本輪已完成":"本局已完成") : busy ? "正在理牌…" : paused ? "已暫停" : t.phase === "arrange" ? "請完成三墩排牌" : drawFrom ? `向 ${drawFrom} 抽牌` : `輪到 ${name(t.players[t.turn].role)}`} · ${t.type==="big2"&&t.last?`${name(t.players[t.lastSeat].role)} 出牌 · `:""}${escape(t.message)}</p>${center}</div></section>${hand.length ? `<section class="hand-wrap"><div class="player-info"><img class="table-character" src="art/seat-${t.players[0].role}.webp" alt="${name(t.players[0].role)}"><div>${name(t.players[0].role)}<br>${t.players[0].chips} 籌碼${t.type === "blackjack" ? "<br>" + R.bj(t.players[0].hand).total + " 點" : ""}</div></div><div class="hand">${hand.map((c) => cardHTML(c, t.type === "thirteen" ? "place" : ["oldmaid", "blackjack"].includes(t.type) ? "" : "select")).join("")}</div></section>` : `<section class="empty-hand"><div class="player-info"><img class="table-character" src="art/seat-${t.players[0].role}.webp" alt="${name(t.players[0].role)}"><div>${name(t.players[0].role)}<br>${t.players[0].chips} 籌碼</div></div></section>`}<footer class="actions">${actions}</footer></main>`;
+  app.innerHTML = `<main class="table-screen ${ended(t) ? "is-ended" : ""}" data-game="${t.type}" data-last-seat="${t.lastSeat??0}"><header class="bar"><strong>${R.GAMES[t.type]}・第 ${t.round} ${t.type==="dragon"?"輪":"局"}</strong><span>${t.mode === "quick" ? (t.type==="dragon"?"快速桌 5 輪":"快速桌 5 局") : "持續桌"}</span><div>${btn("說明", "help")}${btn("暫停", "pause")}</div></header><section class="arena">${stacksHTML(t)}${[1, 2, 3].map((i) => `<div class="seat s${i} ${i === t.turn && !ended(t) ? "active" : ""}"><img class="table-character" src="${i===t.turn&&!ended(t)?thinkingPose(t.players[i].role):`art/seat-${t.players[i].role}.webp`}" alt="${name(t.players[i].role)}坐在牌桌旁">${opponentCards(t.players[i].hand.length)}<div><strong>${name(t.players[i].role)}</strong><br>${t.players[i].chips} 籌碼<br>${t.type === "blackjack" && t.players[i].hand.length ? R.bj(t.players[i].hand).total + " 點" : t.players[i].hand.length + " 張"}</div></div>`).join("")}<div class="play-area"><p class="message">${ended(t) ? (t.type==="dragon"?"本輪已完成":"本局已完成") : busy ? "正在理牌…" : paused ? "已暫停" : t.phase === "arrange" ? "請完成三墩排牌" : drawFrom ? `向 ${drawFrom} 抽牌` : `輪到 ${name(t.players[t.turn].role)}`} · ${t.type==="big2"&&t.last?`${name(t.players[t.lastSeat].role)} 出牌 · `:""}${escape(t.message)}</p>${center}</div></section>${hand.length ? `<section class="hand-wrap"><div class="player-info"><img class="table-character" src="${t.turn===0&&!ended(t)?thinkingPose(t.players[0].role):`art/seat-${t.players[0].role}.webp`}" alt="${name(t.players[0].role)}"><div>${name(t.players[0].role)}<br>${t.players[0].chips} 籌碼${t.type === "blackjack" ? "<br>" + R.bj(t.players[0].hand).total + " 點" : ""}</div></div><div class="hand">${hand.map((c) => cardHTML(c, t.type === "thirteen" ? "place" : ["oldmaid", "blackjack"].includes(t.type) ? "" : "select")).join("")}</div></section>` : `<section class="empty-hand"><div class="player-info"><img class="table-character" src="${t.turn===0&&!ended(t)?thinkingPose(t.players[0].role):`art/seat-${t.players[0].role}.webp`}" alt="${name(t.players[0].role)}"><div>${name(t.players[0].role)}<br>${t.players[0].chips} 籌碼</div></div></section>`}<footer class="actions">${actions}</footer></main>`;
   const el = app.querySelector(".hand");
   fitHands(app);
   const feedback = selectionFeedback(profile, selected, target);
@@ -1221,14 +1221,17 @@ function warmPlayPoses(){
   for(const role of profile?.seats||[]){
     const path=playPosePath(`art/seat-${role}.webp`);
     if(path)void warmPlayPose(path);
+    for(const pose of ['think','draw','pass'])void warmPlayPose('art/animation-v2/'+role+'-'+pose+'.webp');
   }
 }
 function warmImage(src) {
   if (loadedImages.has(src)) return loadedImages.get(src);
   const p = new Promise((resolve, reject) => {
     const i = new Image();
-    i.onload = () => resolve(src);
+    const timer=setTimeout(()=>{loadedImages.delete(src);reject(Error('牌桌素材載入逾時，請重試'));},8000);
+    i.onload = () => {clearTimeout(timer);resolve(src)};
     i.onerror = () => {
+      clearTimeout(timer);
       loadedImages.delete(src);
       reject(Error("圖片載入中斷，請確認連線後再試一次"));
     };
@@ -1254,7 +1257,7 @@ async function prepareGame(type) {
       while (at < queue.length) await warmImage(queue[at++]);
     }),
   );
-  toastEl.classList.remove("show");
+  toastEl.classList.remove("show");toastEl.textContent="";
 }
 // Sliding over an overlapping hand previews one public card, selecting only on release.
 if(profile?.table)warmPlayPoses();

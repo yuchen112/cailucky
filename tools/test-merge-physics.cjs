@@ -4,7 +4,7 @@ function game(source){
  const nodes=new Map(),data={highTier:0,role:0,collection:[]};
  const node=()=>({style:{},options:[{},{}],value:'5',checked:false,hidden:false,textContent:'',classList:{toggle(){}},getContext:()=>new Proxy({},{get:()=>()=>{}}),focus(){}});
  const $=s=>{if(!nodes.has(s))nodes.set(s,node());return nodes.get(s)};
- const G={$,init:()=>data,clamp:(v,a,b)=>Math.max(a,Math.min(b,v)),rolePicker(){},sprite:()=>'',roles:['幸運'],images:{},load:()=>Promise.resolve(),save(){},sound(){},playing(){},frame(){},settings(){},records(){},dialog(){},toast(){}};
+ const G={$,text:(selector,value)=>{$(selector).textContent=String(value);},init:()=>data,clamp:(v,a,b)=>Math.max(a,Math.min(b,v)),rolePicker(){},sprite:()=>'',roles:['幸運'],images:{},load:()=>Promise.resolve(),save(){},sound(){},playing(){},frame(){},settings(){},records(){},dialog(){},toast(){}};
  const context={Matter,G,console,Math,Set,window:{},document:{body:node(),querySelector:()=>null},addEventListener(){}};
  context.CxQOrbArt=require('../games/shared/orb-art.js');
  vm.runInNewContext(fs.readFileSync('games/merge/art-orbs-v2/geometry.js','utf8'),context);

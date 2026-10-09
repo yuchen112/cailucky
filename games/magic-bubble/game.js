@@ -5,6 +5,7 @@
   const load=src=>{const q=new Image;q.src=src;return q;};
   const art=palette.map(n=>load('art-orbs-v2/'+n+'.webp'));
   const launcher=load('../../assets/characters/cxq-role-dream.webp'),burst=load('../storybook/art-polish/bubble-burst.webp'),rescueArt=load('../../assets/characters/cxq-role-hope.webp');
+  let castingMotion=null;const warmCasting=()=>{if(globalThis.CxQCharacterMotion)CxQCharacterMotion.prepare('dream').then(r=>castingMotion=r).catch(()=>{});};addEventListener('pointerdown',warmCasting,{once:true});
   let firedAt=-1000,turns=0,offset=0,advanceAt=null,descending=null,difficulty='classic',settleUntil=0,docking=null;
   const endless=()=>mode==='endless',locked=()=>!!flight||advanceAt!==null||!!descending||clock<settleUntil;
   const reduced=()=>document.body.classList.contains('reduced-motion')||matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -93,7 +94,7 @@
       let target=null;for(let k=0;k<450;k++){const hit=step(p,4);x.lineTo(p.x,p.y);if(hit||p.y<=46){target=destination(p.x,p.y,hit);break;}}
       x.stroke();x.setLineDash([]);if(target){const q=pos(...target);x.globalAlpha=.45;bubble(q.x,q.y,ball);x.globalAlpha=1;}
     }
-    if(launcher.naturalWidth){const kick=reduced()?0:Math.max(0,1-(clock-firedAt)/260);x.save();x.translate(OX,OY+105);x.rotate(-.08*Math.sin(kick*Math.PI));x.drawImage(launcher,-105,-240+Math.sin(kick*Math.PI)*8,210,255);x.restore();}
+    if(castingMotion&&!reduced()&&clock-firedAt>=0&&clock-firedAt<600){CxQCharacterMotion.draw(x,castingMotion,'finisher',(clock-firedAt)/1000,OX-105,OY-135,210,255);}else if(launcher.naturalWidth){const kick=reduced()?0:Math.max(0,1-(clock-firedAt)/260);x.save();x.translate(OX,OY+105);x.rotate(-.08*Math.sin(kick*Math.PI));x.drawImage(launcher,-105,-240+Math.sin(kick*Math.PI)*8,210,255);x.restore();}
     if(!flight)bubble(OX,OY,ball);else{if(!reduced()){for(let i=3;i>0;i--){x.save();x.globalAlpha=.18/i;bubble(flight.x-flight.vx*i*19,flight.y-flight.vy*i*19,ball,R*(1-i*.18));x.restore();}}bubble(flight.x,flight.y,ball);}
     effects=effects.filter(e=>!BubbleMotion.sample(e,clock,reduced()).done);
     for(const e of effects){const p=BubbleMotion.sample(e,clock,reduced());x.save();x.translate(p.x,p.y);x.rotate(p.angle);x.globalAlpha=p.alpha;bubble(0,0,e.v,R*p.scale);if(p.burst>0&&burst.naturalWidth){x.globalAlpha=p.burst;const s=90*p.burstScale;x.drawImage(burst,-s/2,-s/2,s,s);}x.restore();}

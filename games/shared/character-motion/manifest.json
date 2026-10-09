@@ -1,0 +1,1529 @@
+{
+  "version": 1,
+  "fps": 10,
+  "montageExtraction": false,
+  "characters": {
+    "growth": {
+      "atlas": "growth.webp",
+      "fps": 10,
+      "frames": {
+        "0": {
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "1": {
+          "x": 320,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "2": {
+          "x": 640,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "3": {
+          "x": 960,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "4": {
+          "x": 0,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "5": {
+          "x": 320,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "6": {
+          "x": 640,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "7": {
+          "x": 960,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "8": {
+          "x": 0,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "9": {
+          "x": 320,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "10": {
+          "x": 640,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "11": {
+          "x": 960,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        }
+      },
+      "clips": {
+        "walk": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "finisher": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      }
+    },
+    "luck": {
+      "atlas": "luck.webp",
+      "fps": 10,
+      "frames": {
+        "0": {
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "1": {
+          "x": 320,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "2": {
+          "x": 640,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "3": {
+          "x": 960,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "4": {
+          "x": 0,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "5": {
+          "x": 320,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "6": {
+          "x": 640,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "7": {
+          "x": 960,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "8": {
+          "x": 0,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "9": {
+          "x": 320,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "10": {
+          "x": 640,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "11": {
+          "x": 960,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        }
+      },
+      "clips": {
+        "walk": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "finisher": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      }
+    },
+    "healing": {
+      "atlas": "healing.webp",
+      "fps": 10,
+      "frames": {
+        "0": {
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "1": {
+          "x": 320,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "2": {
+          "x": 640,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "3": {
+          "x": 960,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "4": {
+          "x": 0,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "5": {
+          "x": 320,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "6": {
+          "x": 640,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "7": {
+          "x": 960,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "8": {
+          "x": 0,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "9": {
+          "x": 320,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "10": {
+          "x": 640,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "11": {
+          "x": 960,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        }
+      },
+      "clips": {
+        "walk": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "finisher": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      }
+    },
+    "memory": {
+      "atlas": "memory.webp",
+      "fps": 10,
+      "frames": {
+        "0": {
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "1": {
+          "x": 320,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "2": {
+          "x": 640,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "3": {
+          "x": 960,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "4": {
+          "x": 0,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "5": {
+          "x": 320,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "6": {
+          "x": 640,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "7": {
+          "x": 960,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "8": {
+          "x": 0,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "9": {
+          "x": 320,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "10": {
+          "x": 640,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "11": {
+          "x": 960,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        }
+      },
+      "clips": {
+        "walk": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "finisher": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      }
+    },
+    "joy": {
+      "atlas": "joy.webp",
+      "fps": 10,
+      "frames": {
+        "0": {
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "1": {
+          "x": 320,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "2": {
+          "x": 640,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "3": {
+          "x": 960,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "4": {
+          "x": 0,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "5": {
+          "x": 320,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "6": {
+          "x": 640,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "7": {
+          "x": 960,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "8": {
+          "x": 0,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "9": {
+          "x": 320,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "10": {
+          "x": 640,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "11": {
+          "x": 960,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        }
+      },
+      "clips": {
+        "walk": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "finisher": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      }
+    },
+    "night": {
+      "atlas": "night.webp",
+      "fps": 10,
+      "frames": {
+        "0": {
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "1": {
+          "x": 320,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "2": {
+          "x": 640,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "3": {
+          "x": 960,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "4": {
+          "x": 0,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "5": {
+          "x": 320,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "6": {
+          "x": 640,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "7": {
+          "x": 960,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "8": {
+          "x": 0,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "9": {
+          "x": 320,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "10": {
+          "x": 640,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "11": {
+          "x": 960,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        }
+      },
+      "clips": {
+        "walk": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "finisher": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      }
+    },
+    "trust": {
+      "atlas": "trust.webp",
+      "fps": 10,
+      "frames": {
+        "0": {
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "1": {
+          "x": 320,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "2": {
+          "x": 640,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "3": {
+          "x": 960,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "4": {
+          "x": 0,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "5": {
+          "x": 320,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "6": {
+          "x": 640,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "7": {
+          "x": 960,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "8": {
+          "x": 0,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "9": {
+          "x": 320,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "10": {
+          "x": 640,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "11": {
+          "x": 960,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        }
+      },
+      "clips": {
+        "walk": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "finisher": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      }
+    },
+    "dream": {
+      "atlas": "dream.webp",
+      "fps": 10,
+      "frames": {
+        "0": {
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "1": {
+          "x": 320,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "2": {
+          "x": 640,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "3": {
+          "x": 960,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "4": {
+          "x": 0,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "5": {
+          "x": 320,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "6": {
+          "x": 640,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "7": {
+          "x": 960,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "8": {
+          "x": 0,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "9": {
+          "x": 320,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "10": {
+          "x": 640,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "11": {
+          "x": 960,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        }
+      },
+      "clips": {
+        "walk": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "finisher": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      }
+    },
+    "sadness": {
+      "atlas": "sadness.webp",
+      "fps": 10,
+      "frames": {
+        "0": {
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "1": {
+          "x": 320,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "2": {
+          "x": 640,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "3": {
+          "x": 960,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "4": {
+          "x": 0,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "5": {
+          "x": 320,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "6": {
+          "x": 640,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "7": {
+          "x": 960,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "8": {
+          "x": 0,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "9": {
+          "x": 320,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "10": {
+          "x": 640,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "11": {
+          "x": 960,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        }
+      },
+      "clips": {
+        "walk": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "finisher": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      }
+    },
+    "hope": {
+      "atlas": "hope.webp",
+      "fps": 10,
+      "frames": {
+        "0": {
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "1": {
+          "x": 320,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "2": {
+          "x": 640,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "3": {
+          "x": 960,
+          "y": 0,
+          "w": 320,
+          "h": 360
+        },
+        "4": {
+          "x": 0,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "5": {
+          "x": 320,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "6": {
+          "x": 640,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "7": {
+          "x": 960,
+          "y": 360,
+          "w": 320,
+          "h": 360
+        },
+        "8": {
+          "x": 0,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "9": {
+          "x": 320,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "10": {
+          "x": 640,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        },
+        "11": {
+          "x": 960,
+          "y": 720,
+          "w": 320,
+          "h": 360
+        }
+      },
+      "clips": {
+        "walk": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "finisher": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      }
+    }
+  },
+  "provenance": [
+    {
+      "id": "growth-walk-c",
+      "character": "growth",
+      "pose": "walk-c",
+      "reference": "games/heartlight-duel/arcade/art/growth-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: CONTACT: forward leg extended with heel touching ground, opposite leg trails, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-2ce149e4-12d4-43c7-b89e-6488f13b2f07.png"
+    },
+    {
+      "id": "growth-walk-d",
+      "character": "growth",
+      "pose": "walk-d",
+      "reference": "games/heartlight-duel/arcade/art/growth-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: DOWN: forward supporting knee compressed, back heel lifting, body 5% lower, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-0d2c084c-b475-4d00-b1f8-12c99396ac44.png"
+    },
+    {
+      "id": "growth-walk-e",
+      "character": "growth",
+      "pose": "walk-e",
+      "reference": "games/heartlight-duel/arcade/art/growth-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: PASSING: supporting leg straight under hips, other knee passing forward bent, torso tall. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-ab35658c-99c0-4ed3-b639-ffd5c311608a.png"
+    },
+    {
+      "id": "growth-walk-f",
+      "character": "growth",
+      "pose": "walk-f",
+      "reference": "games/heartlight-duel/arcade/art/growth-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: UP: back leg pushes from toes, forward knee raised and boot below knee, body at top of stride. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-cc474be0-bdde-4f1b-8220-2f4d89ba2901.png"
+    },
+    {
+      "id": "growth-finisher-prep",
+      "character": "growth",
+      "pose": "finisher-prep",
+      "reference": "games/heartlight-duel/arcade/art/growth-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack anticipation: low wide stance, both hands draw signature prop back across chest, determined gaze right; cape coils behind. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-8ad58b49-bdb5-492f-9eb2-60dc628037dc.png"
+    },
+    {
+      "id": "growth-finisher-impact",
+      "character": "growth",
+      "pose": "finisher-impact",
+      "reference": "games/heartlight-duel/arcade/art/growth-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack follow-through: strong full body lunge right, signature prop or both hands fully thrust forward at shoulder height, left leg braces behind, clear readable silhouette. Small matching magic attached to hands, no detached giant FX. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-55f7e7af-1715-4e80-9229-22cb9dbf702c.png"
+    },
+    {
+      "id": "growth-finisher-recover",
+      "character": "growth",
+      "pose": "finisher-recover",
+      "reference": "games/heartlight-duel/arcade/art/growth-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack recovery: arms and signature prop sweep down past front hip, front knee soft, rear leg steps in, determined expression relaxes; cape settles. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-81751e37-e592-4517-878a-659a623ddce2.png"
+    },
+    {
+      "id": "luck-walk-c",
+      "character": "luck",
+      "pose": "walk-c",
+      "reference": "games/heartlight-duel/arcade/art/luck-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: CONTACT: forward leg extended with heel touching ground, opposite leg trails, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-1abe7a31-42b4-4758-b89f-d007064cd6d7.png"
+    },
+    {
+      "id": "luck-walk-d",
+      "character": "luck",
+      "pose": "walk-d",
+      "reference": "games/heartlight-duel/arcade/art/luck-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: DOWN: forward supporting knee compressed, back heel lifting, body 5% lower, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-84132392-5a5d-496b-82a4-049ba63a4e80.png"
+    },
+    {
+      "id": "luck-walk-e",
+      "character": "luck",
+      "pose": "walk-e",
+      "reference": "games/heartlight-duel/arcade/art/luck-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: PASSING: supporting leg straight under hips, other knee passing forward bent, torso tall. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-f5a13355-da73-4349-9083-082bcd20e69a.png"
+    },
+    {
+      "id": "luck-walk-f",
+      "character": "luck",
+      "pose": "walk-f",
+      "reference": "games/heartlight-duel/arcade/art/luck-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: UP: back leg pushes from toes, forward knee raised and boot below knee, body at top of stride. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-c373ac8a-533c-4514-b6c3-7f7b51a4b981.png"
+    },
+    {
+      "id": "luck-finisher-prep",
+      "character": "luck",
+      "pose": "finisher-prep",
+      "reference": "games/heartlight-duel/arcade/art/luck-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack anticipation: low wide stance, both hands draw signature prop back across chest, determined gaze right; cape coils behind. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-fa620318-3b99-4c2c-87ac-bf48131db023.png"
+    },
+    {
+      "id": "luck-finisher-impact",
+      "character": "luck",
+      "pose": "finisher-impact",
+      "reference": "games/heartlight-duel/arcade/art/luck-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack follow-through: strong full body lunge right, signature prop or both hands fully thrust forward at shoulder height, left leg braces behind, clear readable silhouette. Small matching magic attached to hands, no detached giant FX. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-828fbb19-edff-4c63-8784-2d8d119dcdd2.png"
+    },
+    {
+      "id": "luck-finisher-recover",
+      "character": "luck",
+      "pose": "finisher-recover",
+      "reference": "games/heartlight-duel/arcade/art/luck-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack recovery: arms and signature prop sweep down past front hip, front knee soft, rear leg steps in, determined expression relaxes; cape settles. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-b9272d0c-47e2-422e-bcd5-04562d1a4570.png"
+    },
+    {
+      "id": "healing-walk-c",
+      "character": "healing",
+      "pose": "walk-c",
+      "reference": "games/heartlight-duel/arcade/art/healing-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: CONTACT: forward leg extended with heel touching ground, opposite leg trails, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-d745a62f-6618-4399-8bd7-f769b0615423.png"
+    },
+    {
+      "id": "healing-walk-d",
+      "character": "healing",
+      "pose": "walk-d",
+      "reference": "games/heartlight-duel/arcade/art/healing-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: DOWN: forward supporting knee compressed, back heel lifting, body 5% lower, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-27af0ed6-2db3-4c42-acca-23a84d81519e.png"
+    },
+    {
+      "id": "healing-walk-e",
+      "character": "healing",
+      "pose": "walk-e",
+      "reference": "games/heartlight-duel/arcade/art/healing-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: PASSING: supporting leg straight under hips, other knee passing forward bent, torso tall. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-0b41f0f9-7ca2-49cb-b6e2-0d3affd3f53a.png"
+    },
+    {
+      "id": "healing-walk-f",
+      "character": "healing",
+      "pose": "walk-f",
+      "reference": "games/heartlight-duel/arcade/art/healing-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: UP: back leg pushes from toes, forward knee raised and boot below knee, body at top of stride. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-12f44fec-5ab2-4760-972d-638e735353de.png"
+    },
+    {
+      "id": "healing-finisher-prep",
+      "character": "healing",
+      "pose": "finisher-prep",
+      "reference": "games/heartlight-duel/arcade/art/healing-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack anticipation: low wide stance, both hands draw signature prop back across chest, determined gaze right; cape coils behind. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-570cc7f9-5725-459a-a3d0-239d55af9cc1.png"
+    },
+    {
+      "id": "healing-finisher-impact",
+      "character": "healing",
+      "pose": "finisher-impact",
+      "reference": "games/heartlight-duel/arcade/art/healing-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack follow-through: strong full body lunge right, signature prop or both hands fully thrust forward at shoulder height, left leg braces behind, clear readable silhouette. Small matching magic attached to hands, no detached giant FX. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-6cf41a79-ecd1-4a27-82ef-dd89a6e4abbf.png"
+    },
+    {
+      "id": "healing-finisher-recover",
+      "character": "healing",
+      "pose": "finisher-recover",
+      "reference": "games/heartlight-duel/arcade/art/healing-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack recovery: arms and signature prop sweep down past front hip, front knee soft, rear leg steps in, determined expression relaxes; cape settles. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-3ab96a02-d7fb-4774-b69b-07128cc0739a.png"
+    },
+    {
+      "id": "memory-walk-c",
+      "character": "memory",
+      "pose": "walk-c",
+      "reference": "games/heartlight-duel/arcade/art/memory-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: CONTACT: forward leg extended with heel touching ground, opposite leg trails, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-c3f62f49-62e5-47fc-af21-2ee69dedd045.png"
+    },
+    {
+      "id": "memory-walk-d",
+      "character": "memory",
+      "pose": "walk-d",
+      "reference": "games/heartlight-duel/arcade/art/memory-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: DOWN: forward supporting knee compressed, back heel lifting, body 5% lower, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-abae15bc-2062-4a8b-a867-d602eedd994c.png"
+    },
+    {
+      "id": "memory-walk-e",
+      "character": "memory",
+      "pose": "walk-e",
+      "reference": "games/heartlight-duel/arcade/art/memory-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: PASSING: supporting leg straight under hips, other knee passing forward bent, torso tall. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-a63ac69b-c5d3-46bd-bdac-352fd6131bb6.png"
+    },
+    {
+      "id": "memory-walk-f",
+      "character": "memory",
+      "pose": "walk-f",
+      "reference": "games/heartlight-duel/arcade/art/memory-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: UP: back leg pushes from toes, forward knee raised and boot below knee, body at top of stride. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-1870f4b7-b470-4985-b5d3-15981ef44f08.png"
+    },
+    {
+      "id": "memory-finisher-prep",
+      "character": "memory",
+      "pose": "finisher-prep",
+      "reference": "games/heartlight-duel/arcade/art/memory-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack anticipation: low wide stance, both hands draw signature prop back across chest, determined gaze right; cape coils behind. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-97c74f6b-d6ce-474f-a83f-18f46f728b81.png"
+    },
+    {
+      "id": "memory-finisher-impact",
+      "character": "memory",
+      "pose": "finisher-impact",
+      "reference": "games/heartlight-duel/arcade/art/memory-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack follow-through: strong full body lunge right, signature prop or both hands fully thrust forward at shoulder height, left leg braces behind, clear readable silhouette. Small matching magic attached to hands, no detached giant FX. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-45363461-4d6d-4ae7-be10-dd65637a94f3.png"
+    },
+    {
+      "id": "memory-finisher-recover",
+      "character": "memory",
+      "pose": "finisher-recover",
+      "reference": "games/heartlight-duel/arcade/art/memory-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack recovery: arms and signature prop sweep down past front hip, front knee soft, rear leg steps in, determined expression relaxes; cape settles. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-cec638f7-71d4-4d58-ad83-21e9f7e097ba.png"
+    },
+    {
+      "id": "joy-walk-c",
+      "character": "joy",
+      "pose": "walk-c",
+      "reference": "games/heartlight-duel/arcade/art/joy-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: CONTACT: forward leg extended with heel touching ground, opposite leg trails, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-9fbbd673-1db1-4bd8-b268-43734b927eb7.png"
+    },
+    {
+      "id": "joy-walk-d",
+      "character": "joy",
+      "pose": "walk-d",
+      "reference": "games/heartlight-duel/arcade/art/joy-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: DOWN: forward supporting knee compressed, back heel lifting, body 5% lower, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-26d8aaf2-7a3e-4e3c-b2da-978aeee8d99d.png"
+    },
+    {
+      "id": "joy-walk-e",
+      "character": "joy",
+      "pose": "walk-e",
+      "reference": "games/heartlight-duel/arcade/art/joy-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: PASSING: supporting leg straight under hips, other knee passing forward bent, torso tall. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-caf9c82f-67ce-4611-91aa-5394ebba4925.png"
+    },
+    {
+      "id": "joy-walk-f",
+      "character": "joy",
+      "pose": "walk-f",
+      "reference": "games/heartlight-duel/arcade/art/joy-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: UP: back leg pushes from toes, forward knee raised and boot below knee, body at top of stride. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-0f87e24a-831f-4f13-a79f-7904d0d164b5.png"
+    },
+    {
+      "id": "joy-finisher-prep",
+      "character": "joy",
+      "pose": "finisher-prep",
+      "reference": "games/heartlight-duel/arcade/art/joy-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack anticipation: low wide stance, both hands draw signature prop back across chest, determined gaze right; cape coils behind. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-4dbdbfc8-1076-4d04-af41-982e5a3de912.png"
+    },
+    {
+      "id": "joy-finisher-impact",
+      "character": "joy",
+      "pose": "finisher-impact",
+      "reference": "games/heartlight-duel/arcade/art/joy-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack follow-through: strong full body lunge right, signature prop or both hands fully thrust forward at shoulder height, left leg braces behind, clear readable silhouette. Small matching magic attached to hands, no detached giant FX. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-21c7fa66-5974-48ab-9165-c0ecc8ae9fe9.png"
+    },
+    {
+      "id": "joy-finisher-recover",
+      "character": "joy",
+      "pose": "finisher-recover",
+      "reference": "games/heartlight-duel/arcade/art/joy-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack recovery: arms and signature prop sweep down past front hip, front knee soft, rear leg steps in, determined expression relaxes; cape settles. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-7a23a139-b291-4d3d-b02e-62b5bf1c2dda.png"
+    },
+    {
+      "id": "night-walk-c",
+      "character": "night",
+      "pose": "walk-c",
+      "reference": "games/heartlight-duel/arcade/art/night-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: CONTACT: forward leg extended with heel touching ground, opposite leg trails, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-e2f0afc0-45bd-4d70-b5fd-8ff8dbc30512.png"
+    },
+    {
+      "id": "night-walk-d",
+      "character": "night",
+      "pose": "walk-d",
+      "reference": "games/heartlight-duel/arcade/art/night-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: DOWN: forward supporting knee compressed, back heel lifting, body 5% lower, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-71adbe09-a77e-4525-a777-2a93a61e0517.png"
+    },
+    {
+      "id": "night-walk-e",
+      "character": "night",
+      "pose": "walk-e",
+      "reference": "games/heartlight-duel/arcade/art/night-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: PASSING: supporting leg straight under hips, other knee passing forward bent, torso tall. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-ea899537-f40a-44bc-8a8e-d686a6b6722a.png"
+    },
+    {
+      "id": "night-walk-f",
+      "character": "night",
+      "pose": "walk-f",
+      "reference": "games/heartlight-duel/arcade/art/night-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: UP: back leg pushes from toes, forward knee raised and boot below knee, body at top of stride. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-175ba30b-fdb2-47be-914d-72124dcf7ec6.png"
+    },
+    {
+      "id": "night-finisher-prep",
+      "character": "night",
+      "pose": "finisher-prep",
+      "reference": "games/heartlight-duel/arcade/art/night-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack anticipation: low wide stance, both hands draw signature prop back across chest, determined gaze right; cape coils behind. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-43292d92-9ba8-4fe9-b41c-19cf676ef3c0.png"
+    },
+    {
+      "id": "night-finisher-impact",
+      "character": "night",
+      "pose": "finisher-impact",
+      "reference": "games/heartlight-duel/arcade/art/night-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack follow-through: strong full body lunge right, signature prop or both hands fully thrust forward at shoulder height, left leg braces behind, clear readable silhouette. Small matching magic attached to hands, no detached giant FX. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-878f082f-2022-4edd-8749-7600b2fa5d71.png"
+    },
+    {
+      "id": "night-finisher-recover",
+      "character": "night",
+      "pose": "finisher-recover",
+      "reference": "games/heartlight-duel/arcade/art/night-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack recovery: arms and signature prop sweep down past front hip, front knee soft, rear leg steps in, determined expression relaxes; cape settles. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-70955ed4-0804-4c86-b674-721e6f941364.png"
+    },
+    {
+      "id": "trust-walk-c",
+      "character": "trust",
+      "pose": "walk-c",
+      "reference": "games/heartlight-duel/arcade/art/trust-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: CONTACT: forward leg extended with heel touching ground, opposite leg trails, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-0ecb08e5-816b-4861-ad43-36da45f3734d.png"
+    },
+    {
+      "id": "trust-walk-d",
+      "character": "trust",
+      "pose": "walk-d",
+      "reference": "games/heartlight-duel/arcade/art/trust-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: DOWN: forward supporting knee compressed, back heel lifting, body 5% lower, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-a5f56b95-27d7-4c97-b3cf-6a2b0db345a7.png"
+    },
+    {
+      "id": "trust-walk-e",
+      "character": "trust",
+      "pose": "walk-e",
+      "reference": "games/heartlight-duel/arcade/art/trust-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: PASSING: supporting leg straight under hips, other knee passing forward bent, torso tall. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-c5cb2125-513c-442c-a5de-256f11290fe4.png"
+    },
+    {
+      "id": "trust-walk-f",
+      "character": "trust",
+      "pose": "walk-f",
+      "reference": "games/heartlight-duel/arcade/art/trust-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: UP: back leg pushes from toes, forward knee raised and boot below knee, body at top of stride. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-4ee00b42-e670-42ff-b84d-23bde74714f2.png"
+    },
+    {
+      "id": "trust-finisher-prep",
+      "character": "trust",
+      "pose": "finisher-prep",
+      "reference": "games/heartlight-duel/arcade/art/trust-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack anticipation: low wide stance, both hands draw signature prop back across chest, determined gaze right; cape coils behind. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-02659b23-a12e-4b79-a53f-b20c74ec0aa8.png"
+    },
+    {
+      "id": "trust-finisher-impact",
+      "character": "trust",
+      "pose": "finisher-impact",
+      "reference": "games/heartlight-duel/arcade/art/trust-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack follow-through: strong full body lunge right, signature prop or both hands fully thrust forward at shoulder height, left leg braces behind, clear readable silhouette. Small matching magic attached to hands, no detached giant FX. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-7b080bc6-29f2-43e2-b445-e5a89ba21af2.png"
+    },
+    {
+      "id": "trust-finisher-recover",
+      "character": "trust",
+      "pose": "finisher-recover",
+      "reference": "games/heartlight-duel/arcade/art/trust-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack recovery: arms and signature prop sweep down past front hip, front knee soft, rear leg steps in, determined expression relaxes; cape settles. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-c464ead0-7383-4ad2-8c16-b575176d7670.png"
+    },
+    {
+      "id": "dream-walk-c",
+      "character": "dream",
+      "pose": "walk-c",
+      "reference": "games/heartlight-duel/arcade/art/dream-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: CONTACT: forward leg extended with heel touching ground, opposite leg trails, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-7dff2ad5-643f-47c8-b328-32d7cf2f7a65.png"
+    },
+    {
+      "id": "dream-walk-d",
+      "character": "dream",
+      "pose": "walk-d",
+      "reference": "games/heartlight-duel/arcade/art/dream-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: DOWN: forward supporting knee compressed, back heel lifting, body 5% lower, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-0ba27e13-3680-4172-8994-2409a43073d4.png"
+    },
+    {
+      "id": "dream-walk-e",
+      "character": "dream",
+      "pose": "walk-e",
+      "reference": "games/heartlight-duel/arcade/art/dream-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: PASSING: supporting leg straight under hips, other knee passing forward bent, torso tall. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-690adb97-359c-4e49-8804-eaadb350ef8a.png"
+    },
+    {
+      "id": "dream-walk-f",
+      "character": "dream",
+      "pose": "walk-f",
+      "reference": "games/heartlight-duel/arcade/art/dream-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: UP: back leg pushes from toes, forward knee raised and boot below knee, body at top of stride. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-c83de0ff-0889-488e-ba3d-6e047bc82f89.png"
+    },
+    {
+      "id": "dream-finisher-prep",
+      "character": "dream",
+      "pose": "finisher-prep",
+      "reference": "games/heartlight-duel/arcade/art/dream-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack anticipation: low wide stance, both hands draw signature prop back across chest, determined gaze right; cape coils behind. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-4ff5b41d-8c6d-47c3-a82d-155d3bcb64f0.png"
+    },
+    {
+      "id": "dream-finisher-impact",
+      "character": "dream",
+      "pose": "finisher-impact",
+      "reference": "games/heartlight-duel/arcade/art/dream-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack follow-through: strong full body lunge right, signature prop or both hands fully thrust forward at shoulder height, left leg braces behind, clear readable silhouette. Small matching magic attached to hands, no detached giant FX. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-06e48ee6-0ec5-460d-83c9-a72258e6ed3d.png"
+    },
+    {
+      "id": "dream-finisher-recover",
+      "character": "dream",
+      "pose": "finisher-recover",
+      "reference": "games/heartlight-duel/arcade/art/dream-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack recovery: arms and signature prop sweep down past front hip, front knee soft, rear leg steps in, determined expression relaxes; cape settles. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-1b9d3132-b09b-4bd9-b7a4-0e60c57e6803.png"
+    },
+    {
+      "id": "sadness-walk-c",
+      "character": "sadness",
+      "pose": "walk-c",
+      "reference": "games/heartlight-duel/arcade/art/sadness-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: CONTACT: forward leg extended with heel touching ground, opposite leg trails, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-be09476f-e7a3-4e66-8277-bf0edbd8b119.png"
+    },
+    {
+      "id": "sadness-walk-d",
+      "character": "sadness",
+      "pose": "walk-d",
+      "reference": "games/heartlight-duel/arcade/art/sadness-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: DOWN: forward supporting knee compressed, back heel lifting, body 5% lower, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-ac8f10ed-79a2-4d99-9d33-8ee223226d0f.png"
+    },
+    {
+      "id": "sadness-walk-e",
+      "character": "sadness",
+      "pose": "walk-e",
+      "reference": "games/heartlight-duel/arcade/art/sadness-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: PASSING: supporting leg straight under hips, other knee passing forward bent, torso tall. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-a644ab1f-d651-4a7c-a206-0c06444723f7.png"
+    },
+    {
+      "id": "sadness-walk-f",
+      "character": "sadness",
+      "pose": "walk-f",
+      "reference": "games/heartlight-duel/arcade/art/sadness-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: UP: back leg pushes from toes, forward knee raised and boot below knee, body at top of stride. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-9bdfd9bf-6375-43f1-83df-ce0eea3139cc.png"
+    },
+    {
+      "id": "sadness-finisher-prep",
+      "character": "sadness",
+      "pose": "finisher-prep",
+      "reference": "games/heartlight-duel/arcade/art/sadness-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack anticipation: low wide stance, both hands draw signature prop back across chest, determined gaze right; cape coils behind. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-f502a692-ba63-4522-895d-7f66d25527b8.png"
+    },
+    {
+      "id": "sadness-finisher-impact",
+      "character": "sadness",
+      "pose": "finisher-impact",
+      "reference": "games/heartlight-duel/arcade/art/sadness-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack follow-through: strong full body lunge right, signature prop or both hands fully thrust forward at shoulder height, left leg braces behind, clear readable silhouette. Small matching magic attached to hands, no detached giant FX. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-01b1c222-c343-4335-b403-476ab56942be.png"
+    },
+    {
+      "id": "sadness-finisher-recover",
+      "character": "sadness",
+      "pose": "finisher-recover",
+      "reference": "games/heartlight-duel/arcade/art/sadness-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack recovery: arms and signature prop sweep down past front hip, front knee soft, rear leg steps in, determined expression relaxes; cape settles. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-88ab6e47-3cfb-48f9-80f0-fa2c246f7b91.png"
+    },
+    {
+      "id": "hope-walk-c",
+      "character": "hope",
+      "pose": "walk-c",
+      "reference": "games/heartlight-duel/arcade/art/hope-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: CONTACT: forward leg extended with heel touching ground, opposite leg trails, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-36bc5d30-ff33-42e7-aa7e-875e04330c69.png"
+    },
+    {
+      "id": "hope-walk-d",
+      "character": "hope",
+      "pose": "walk-d",
+      "reference": "games/heartlight-duel/arcade/art/hope-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: DOWN: forward supporting knee compressed, back heel lifting, body 5% lower, arms counter-swing. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-c6f47b29-0735-4ebf-8a5d-6654048faff6.png"
+    },
+    {
+      "id": "hope-walk-e",
+      "character": "hope",
+      "pose": "walk-e",
+      "reference": "games/heartlight-duel/arcade/art/hope-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: PASSING: supporting leg straight under hips, other knee passing forward bent, torso tall. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-93f63235-50c0-42a1-b817-182568979080.png"
+    },
+    {
+      "id": "hope-walk-f",
+      "character": "hope",
+      "pose": "walk-f",
+      "reference": "games/heartlight-duel/arcade/art/hope-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: UP: back leg pushes from toes, forward knee raised and boot below knee, body at top of stride. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-a0b687f8-526c-46bc-8a79-c47ab0b100ce.png"
+    },
+    {
+      "id": "hope-finisher-prep",
+      "character": "hope",
+      "pose": "finisher-prep",
+      "reference": "games/heartlight-duel/arcade/art/hope-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack anticipation: low wide stance, both hands draw signature prop back across chest, determined gaze right; cape coils behind. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-58141635-5f38-41a7-875e-47c02a0b31b8.png"
+    },
+    {
+      "id": "hope-finisher-impact",
+      "character": "hope",
+      "pose": "finisher-impact",
+      "reference": "games/heartlight-duel/arcade/art/hope-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack follow-through: strong full body lunge right, signature prop or both hands fully thrust forward at shoulder height, left leg braces behind, clear readable silhouette. Small matching magic attached to hands, no detached giant FX. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-f2a1256b-b517-4fe6-99f4-9f8377c402ed.png"
+    },
+    {
+      "id": "hope-finisher-recover",
+      "character": "hope",
+      "pose": "finisher-recover",
+      "reference": "games/heartlight-duel/arcade/art/hope-walk-a.webp",
+      "prompt": "Use case: stylized-concept. Asset: independently drawn single full-body animation pose for CxQ arcade. Reference is character identity and style only. Preserve EXACT face identity, species, clothing, hat, accessories, signature prop and proportions of reference. Polished storybook 3D illustration. Facing right in the same three-quarter view and same camera scale. NEW POSE: Ultimate attack recovery: arms and signature prop sweep down past front hip, front knee soft, rear leg steps in, determined expression relaxes; cape settles. Draw an actual different pose, never just rotate or warp reference. One character centered, entirely inside frame with margins, boots visible. Genuinely transparent background, no ground or cast shadow, no text, no sheet, no collage. Preserve all signature accessories, do not invent extra limbs or weapons.",
+      "path": "exec-fd76a245-afc5-43ab-960e-5d7caa3fac9e.png"
+    }
+  ]
+}

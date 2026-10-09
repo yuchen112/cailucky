@@ -3,14 +3,17 @@ export function playPosePath(source='') {
   const role=source.match(/(?:^|\/)seat-(luck|dream|growth|joy|night|sadness|trust|memory|healing|hope)\.webp(?:\?.*)?$/)?.[1];
   return role ? `art/seat-${role}-play-v1.webp` : null;
 }
+export function actionPosePath(source,type){const role=source.match(/(?:seat-|animation-v2[\/])(luck|dream|growth|joy|night|sadness|trust|memory|healing|hope)(?:-(?:think|draw|pass))?\.webp/)?.[1];return role?type==='play'?playPosePath('art/seat-'+role+'.webp'):'art/animation-v2/'+role+'-'+(['hit','draw','double'].includes(type)?'draw':'pass')+'.webp':null;}
+export function thinkingPose(role){const path='art/animation-v2/'+role+'-think.webp';return poseCache.get(path)?.ready?path:'art/seat-'+role+'.webp';}
 const poseCache=new Map();
 export function warmPlayPose(path){
   if(!path)return Promise.resolve(false);
   if(poseCache.has(path))return poseCache.get(path).promise;
   const entry={image:new Image(),ready:false};
   entry.promise=new Promise(resolve=>{
-    entry.image.onload=()=>{entry.ready=true;resolve(true);};
-    entry.image.onerror=()=>{poseCache.delete(path);resolve(false);};
+    const timer=setTimeout(()=>{poseCache.delete(path);resolve(false)},8000);
+    entry.image.onload=()=>{clearTimeout(timer);entry.ready=true;resolve(true);};
+    entry.image.onerror=()=>{clearTimeout(timer);poseCache.delete(path);resolve(false);};
   });
   poseCache.set(path,entry);entry.image.src=path;
   return entry.promise;
@@ -125,8 +128,8 @@ export async function animateTable(root, before, action, settings, cue=()=>{}){
   }
   const actor=action.seat===0?root.querySelector('.player-info .table-character'):root.querySelector('.s'+action.seat+' .table-character');
   let posed=false;
-  if(actor && action.type==='play'){
-    const path=playPosePath(actor.getAttribute('src'));
+  if(actor && ['play','hit','draw','double','pass','stand'].includes(action.type)){
+    const path=actionPosePath(actor.getAttribute('src'),action.type);
     if(path){
       const cached=poseCache.get(path),pose=cached?.image;
       if(!cached)void warmPlayPose(path);
