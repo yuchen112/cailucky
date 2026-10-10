@@ -4,7 +4,7 @@ import vm from 'node:vm';
 import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import {toolDependency} from './refresh-deps.mjs';
-const sharp=toolDependency('sharp'),root=process.cwd(),version='20261010-loadingart2',out='games/shared/loading-art-v2';
+const sharp=toolDependency('sharp'),root=process.cwd(),version='20261010-loadingart3',out='games/shared/loading-art-v2';
 const tracked=new Set(execFileSync('git',['ls-files'],{encoding:'utf8',maxBuffer:20e6}).split('\n'));
 fs.mkdirSync(out,{recursive:true});fs.mkdirSync('outputs/loading-art-20261010',{recursive:true});
 const inputs=JSON.parse(fs.readFileSync('tools/loading-art-inputs-20261010.json','utf8'));

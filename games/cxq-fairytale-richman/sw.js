@@ -1,5 +1,5 @@
-const CACHE='cxq-richman-20261010-loadingart2';
-const SHELL=['./asset-versions-v1.js?v=20261010-loadingart2','./index.html','./core.js?v=20261010-loadingart2','./viewport.js?v=20261010-loadingart2','./game.js?v=20261010-loadingart2','./presentation-v8.js?v=20261010-loadingart2'];
+const CACHE='cxq-richman-20261010-loadingart3';
+const SHELL=['./asset-versions-v1.js?v=20261010-loadingart3','./index.html','./core.js?v=20261010-loadingart3','./viewport.js?v=20261010-loadingart3','./game.js?v=20261010-loadingart3','./presentation-v8.js?v=20261010-loadingart3'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>Promise.allSettled(SHELL.map(url=>cache.add(url)))).then(()=>self.skipWaiting()));
 });
