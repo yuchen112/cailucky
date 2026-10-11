@@ -1,0 +1,267 @@
+{
+  "generator": "built-in image_gen",
+  "independentAssets": 29,
+  "assets": [
+    {
+      "id": "brick",
+      "file": "brick.webp",
+      "prompt": "Use case: stylized-concept. Independently illustrated CxQ Classic Game Hall entry. One full handcrafted magical arcade cabinet, front facing, slight 3D perspective, polished storybook toy art with brass details. Screen shows a ball and paddle below five rows of colorful crystal bricks, navy and brass. Top small blank marquee, game screen upper-middle. Bottom 25% broad ornate ivory plaque with blank dark teal inset for real title and game type. No text except digits on number puzzle screens. Entire cabinet silhouette and base within frame. Portrait 3:4. Transparent background, no floor, no collage, no external UI. Cohesive style matching reference clover fox, but no fox beside cabinet. Reference is character/style guidance only.",
+      "source": "exec-97656992-1431-4d90-bed7-d5ad17a2c890.png",
+      "width": 480,
+      "height": 640,
+      "bytes": 60974
+    },
+    {
+      "id": "cover",
+      "file": "cover.webp",
+      "prompt": "Use case: stylized-concept. Independent square cover for CxQ Classic Game Hall. Magical cozy illustrated arcade entrance arch, several inviting handcrafted brass and teal arcade cabinets with colorful puzzle gems, memory cards and falling blocks on screens. Reference clover fox mascot welcomes players at front, charming full original composition, warm golden illumination and plum accents, lush high quality game key art. Top ornate sign reads exactly 'CxQ' and below '經典遊戲館'. Clear beautiful Traditional Chinese lettering. Not a screenshot or contact sheet. No CSS style flat icons.",
+      "source": "exec-a2a3293c-c972-4c16-9d80-da07de2640c4.png",
+      "width": 768,
+      "height": 768,
+      "bytes": 144554
+    },
+    {
+      "id": "dino",
+      "file": "dino.webp",
+      "prompt": "Use case: stylized-concept. Independently illustrated CxQ Classic Game Hall entry. One full handcrafted magical arcade cabinet, front facing, slight 3D perspective, polished storybook toy art with brass details. Screen shows a forest courier jumping over a log, leafy branches and parcel bags, woodland green. Top small blank marquee, game screen upper-middle. Bottom 25% broad ornate ivory plaque with blank dark teal inset for real title and game type. No text except digits on number puzzle screens. Entire cabinet silhouette and base within frame. Portrait 3:4. Transparent background, no floor, no collage, no external UI. Cohesive style matching reference clover fox, but no fox beside cabinet. Reference is character/style guidance only.",
+      "source": "exec-75bfb755-36cc-4a12-90db-0d12ff96d606.png",
+      "width": 480,
+      "height": 640,
+      "bytes": 73100
+    },
+    {
+      "id": "dream-match",
+      "file": "dream-match.webp",
+      "prompt": "Use case: stylized-concept. One independently illustrated CxQ Classic Game Hall arcade cabinet. Screen shows a 6 by 6 colored gem grid, three heart gems in a row glowing, pink and purple quartz. Full handcrafted magical toy-like arcade cabinet, front view with slight 3D volume, polished storybook painterly details. Upper blank small marquee, game screen in upper-middle. Bottom 25 percent large ornate blank dark teal plaque for real title text. No lettering. Entire base and silhouette within canvas. Portrait 3:4, transparent background. No floor, no surrounding scene, no collage. Matching reference clover fox style, do not add fox beside cabinet.",
+      "source": "exec-c2b07001-79b4-45c0-953e-e32254b0ca14.png",
+      "width": 480,
+      "height": 640,
+      "bytes": 66444
+    },
+    {
+      "id": "flappy",
+      "file": "flappy.webp",
+      "prompt": "Use case: stylized-concept. One independently illustrated CxQ Classic Game Hall arcade cabinet. Screen shows a tiny mail glider passing between two vertical cloud and vine obstacles, sky blue silver details. Full handcrafted magical toy-like arcade cabinet, front view with slight 3D volume, polished storybook painterly details. Upper blank small marquee, game screen in upper-middle. Bottom 25 percent large ornate blank dark teal plaque for real title text. No lettering. Entire base and silhouette within canvas. Portrait 3:4, transparent background. No floor, no surrounding scene, no collage. Matching reference clover fox style, do not add fox beside cabinet.",
+      "source": "exec-d1102370-1a34-4efd-85b9-c71797eeee09.png",
+      "width": 480,
+      "height": 640,
+      "bytes": 70360
+    },
+    {
+      "id": "hall",
+      "file": "hall.webp",
+      "prompt": "Use case: stylized-concept. Production backdrop for CxQ Classic Game Hall. Beautiful original illustrated magical arcade hall, warm ivory wood and antique brass, teal and plum illuminated arches, clover star details, elegant toy-like craftsmanship matching reference fox mascot. Wide landscape 16:9. Perspective gallery interior with luminous ceiling and empty central floor foreground, recesses at sidewalls, airy legible space. Small referenced clover fox concierge at far right edge, not dominating. NO machines in central area because separate machine cutouts will be overlaid. Top central empty ornate painted sign reserved for real HTML heading. No text, no letters, no UI, no fake progress bar. Fully illustrated environment, polished storybook game art.",
+      "source": "exec-61d6f51f-47b1-4909-b0f6-ca2e24745719.png",
+      "width": 1600,
+      "height": 900,
+      "bytes": 178658
+    },
+    {
+      "id": "link",
+      "file": "link.webp",
+      "prompt": "Use case: stylized-concept. Independently illustrated CxQ Classic Game Hall entry. One full handcrafted magical arcade cabinet, front facing, slight 3D perspective, polished storybook toy art with brass details. Matching clover fox and flower tokens, an angular glowing line connects two same tokens, emerald and pearl. Top small blank marquee, game screen upper-middle. Bottom 25% broad ornate ivory plaque with blank dark teal inset for real title and game type. No text except digits on number puzzle screens. Entire cabinet silhouette and base within frame. Portrait 3:4. Transparent background, no floor, no collage, no external UI. Cohesive style matching reference clover fox, but no fox beside cabinet. Reference is character/style guidance only.",
+      "source": "exec-f92061a5-2ea5-46a3-80b2-41baf252f5c4.png",
+      "width": 480,
+      "height": 640,
+      "bytes": 71756
+    },
+    {
+      "id": "magic-bubble",
+      "file": "magic-bubble.webp",
+      "prompt": "Use case: stylized-concept. Independently illustrated CxQ Classic Game Hall entry. One full handcrafted magical arcade cabinet, front facing, slight 3D perspective, polished storybook toy art with brass details. Screen shows a cluster of red blue gold purple bubbles at top, aiming arrow and launch bubble below, purple wand accents. Top small blank marquee, game screen upper-middle. Bottom 25% broad ornate ivory plaque with blank dark teal inset for real title and game type. No text except digits on number puzzle screens. Entire cabinet silhouette and base within frame. Portrait 3:4. Transparent background, no floor, no collage, no external UI. Cohesive style matching reference clover fox, but no fox beside cabinet. Reference is character/style guidance only.",
+      "source": "exec-fe4b080c-e9a1-4320-b13b-be39bbe0f671.png",
+      "width": 480,
+      "height": 640,
+      "bytes": 59946
+    },
+    {
+      "id": "memory",
+      "file": "memory.webp",
+      "prompt": "Use case: stylized-concept. Independently illustrated CxQ Classic Game Hall entry. One full handcrafted magical arcade cabinet, front facing, slight 3D perspective, polished storybook toy art with brass details. Matching moon and clover memory card pairs, some face-down star backs, lavender and ivory. Top small blank marquee, game screen upper-middle. Bottom 25% broad ornate ivory plaque with blank dark teal inset for real title and game type. No text except digits on number puzzle screens. Entire cabinet silhouette and base within frame. Portrait 3:4. Transparent background, no floor, no collage, no external UI. Cohesive style matching reference clover fox, but no fox beside cabinet. Reference is character/style guidance only.",
+      "source": "exec-cb52de88-057e-4001-9b0e-69b3505f6785.png",
+      "width": 480,
+      "height": 640,
+      "bytes": 72326
+    },
+    {
+      "id": "merge",
+      "file": "merge.webp",
+      "prompt": "Use case: stylized-concept. One independently illustrated CxQ Classic Game Hall arcade cabinet. Screen shows small round woodland character balls merging into a larger ball inside a glass bin, peach and honeywood. Full handcrafted magical toy-like arcade cabinet, front view with slight 3D volume, polished storybook painterly details. Upper blank small marquee, game screen in upper-middle. Bottom 25 percent large ornate blank dark teal plaque for real title text. No lettering. Entire base and silhouette within canvas. Portrait 3:4, transparent background. No floor, no surrounding scene, no collage. Matching reference clover fox style, do not add fox beside cabinet.",
+      "source": "exec-a6c8ec12-d9ba-4df0-841d-f34584c8285c.png",
+      "width": 480,
+      "height": 640,
+      "bytes": 68212
+    },
+    {
+      "id": "mines",
+      "file": "mines.webp",
+      "prompt": "Use case: stylized-concept. Independently illustrated CxQ Classic Game Hall entry. One full handcrafted magical arcade cabinet, front facing, slight 3D perspective, polished storybook toy art with brass details. Explorer grid with numerical clues 1 2 3, clover flags and concealed treasure traps, fern-green. Top small blank marquee, game screen upper-middle. Bottom 25% broad ornate ivory plaque with blank dark teal inset for real title and game type. No text except digits on number puzzle screens. Entire cabinet silhouette and base within frame. Portrait 3:4. Transparent background, no floor, no collage, no external UI. Cohesive style matching reference clover fox, but no fox beside cabinet. Reference is character/style guidance only.",
+      "source": "exec-5b9a2078-8509-4067-84a6-a8d4a20311bf.png",
+      "width": 480,
+      "height": 640,
+      "bytes": 75220
+    },
+    {
+      "id": "panel",
+      "file": "panel.webp",
+      "prompt": "One isolated fully illustrated CxQ arcade information panel. Antique carved wood and brass ornament frame, ivory parchment inset taking 80 percent of panel area, tiny clover bell at top, neat small jewel accents at corners. Broad calm completely blank ivory center for real accessible description text. No characters, no lettering. Landscape 4:3. Transparent background outside frame, polished storybook painted art, no fake interface text.",
+      "source": "exec-6285f6a7-3e93-4cd5-b819-4248a9445d9a.png",
+      "width": 480,
+      "height": 360,
+      "bytes": 25390
+    },
+    {
+      "id": "play",
+      "file": "play.webp",
+      "prompt": "One isolated wide horizontal illustrated enter-game button for CxQ classic arcade. Handcrafted antique brass and teal enamel arcade ticket plaque, little ivory triangular play emblem physically painted on left, broad dark teal blank center for real lettering, subtle clover and crystal ornaments. Entire object within canvas, 4:1 wide composition, polished storybook volume. No text. Transparent background.",
+      "source": "exec-a106ca2a-2e7e-487b-8c50-3b5a86da4b87.png",
+      "width": 640,
+      "height": 213,
+      "bytes": 22478
+    },
+    {
+      "id": "return-brick",
+      "file": "return-brick.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn return sign button specifically for CxQ brick game. Theme: midnight blue brass, crystal bricks and glowing ball. A wide handpainted 3D storybook wooden/enamel plaque with unique themed border decorations, clear physically painted left-pointing arrow, broad calm blank dark inscription plate for real HTML return label. No letters. Antique brass detail, elegant, whole object inside canvas. 4:1 wide composition. Transparent background, no floor, no external shadows, no collage. Keep central blank area about 65 percent width, high contrast for ivory text.",
+      "source": "exec-faa9a8ef-9d55-413a-88e5-d283dc802893.png",
+      "width": 640,
+      "height": 256,
+      "bytes": 30986
+    },
+    {
+      "id": "return-dino",
+      "file": "return-dino.webp",
+      "prompt": "Use case: stylized-concept. One independently drawn return button for CxQ dino game, themed with leaf green courier satchel and oak branches. Wide illustrated storybook wooden and enamel plaque, antique brass accents, physically painted left arrow, broad blank dark inscription panel at center occupying 65 percent width for real ivory text. No letters, entire object within canvas, 4:1 wide composition. Transparent background, no floor, no collage. Different themed ornaments unique to this game.",
+      "source": "exec-6b2da88c-a092-4079-b1ac-1cba491a30f9.png",
+      "width": 640,
+      "height": 256,
+      "bytes": 39452
+    },
+    {
+      "id": "return-dream-match",
+      "file": "return-dream-match.webp",
+      "prompt": "Use case: stylized-concept. One independently drawn return button for CxQ dream-match game, themed with rose quartz heart gems and lavender stars. Wide illustrated storybook wooden and enamel plaque, antique brass accents, physically painted left arrow, broad blank dark inscription panel at center occupying 65 percent width for real ivory text. No letters, entire object within canvas, 4:1 wide composition. Transparent background, no floor, no collage. Different themed ornaments unique to this game.",
+      "source": "exec-7a332e5c-def6-456b-9d68-7336269f7775.png",
+      "width": 640,
+      "height": 228,
+      "bytes": 41432
+    },
+    {
+      "id": "return-flappy",
+      "file": "return-flappy.webp",
+      "prompt": "Use case: stylized-concept. One independently drawn return button for CxQ flappy game, themed with sky blue mail wing and silver clouds. Wide illustrated storybook wooden and enamel plaque, antique brass accents, physically painted left arrow, broad blank dark inscription panel at center occupying 65 percent width for real ivory text. No letters, entire object within canvas, 4:1 wide composition. Transparent background, no floor, no collage. Different themed ornaments unique to this game.",
+      "source": "exec-40a8671a-d187-4057-adec-bef23d563904.png",
+      "width": 640,
+      "height": 256,
+      "bytes": 40788
+    },
+    {
+      "id": "return-link",
+      "file": "return-link.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn return sign button specifically for CxQ link game. Theme: emerald silk threads connecting clover portrait tokens. A wide handpainted 3D storybook wooden/enamel plaque with unique themed border decorations, clear physically painted left-pointing arrow, broad calm blank dark inscription plate for real HTML return label. No letters. Antique brass detail, elegant, whole object inside canvas. 4:1 wide composition. Transparent background, no floor, no external shadows, no collage. Keep central blank area about 65 percent width, high contrast for ivory text.",
+      "source": "exec-ca512f49-4079-473d-aa14-1976feda9fc0.png",
+      "width": 640,
+      "height": 256,
+      "bytes": 29408
+    },
+    {
+      "id": "return-magic-bubble",
+      "file": "return-magic-bubble.webp",
+      "prompt": "Use case: stylized-concept. One independently drawn return button for CxQ magic-bubble game, themed with purple crystal wand and colored bubbles. Wide illustrated storybook wooden and enamel plaque, antique brass accents, physically painted left arrow, broad blank dark inscription panel at center occupying 65 percent width for real ivory text. No letters, entire object within canvas, 4:1 wide composition. Transparent background, no floor, no collage. Different themed ornaments unique to this game.",
+      "source": "exec-c76b308f-e059-4b71-89dd-de588af737da.png",
+      "width": 640,
+      "height": 213,
+      "bytes": 42660
+    },
+    {
+      "id": "return-memory",
+      "file": "return-memory.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn return sign button specifically for CxQ memory game. Theme: lavender parchment, paired moon memory cards. A wide handpainted 3D storybook wooden/enamel plaque with unique themed border decorations, clear physically painted left-pointing arrow, broad calm blank dark inscription plate for real HTML return label. No letters. Antique brass detail, elegant, whole object inside canvas. 4:1 wide composition. Transparent background, no floor, no external shadows, no collage. Keep central blank area about 65 percent width, high contrast for ivory text.",
+      "source": "exec-503addd4-1d24-4db1-91f3-c258a041e9f7.png",
+      "width": 640,
+      "height": 256,
+      "bytes": 39084
+    },
+    {
+      "id": "return-merge",
+      "file": "return-merge.webp",
+      "prompt": "Use case: stylized-concept. One independently drawn return button for CxQ merge game, themed with peach honeywood and round character balls. Wide illustrated storybook wooden and enamel plaque, antique brass accents, physically painted left arrow, broad blank dark inscription panel at center occupying 65 percent width for real ivory text. No letters, entire object within canvas, 4:1 wide composition. Transparent background, no floor, no collage. Different themed ornaments unique to this game.",
+      "source": "exec-49e2c900-c8f6-433a-8eb1-b4d209dd7797.png",
+      "width": 640,
+      "height": 228,
+      "bytes": 41200
+    },
+    {
+      "id": "return-mines",
+      "file": "return-mines.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn return sign button specifically for CxQ mines game. Theme: forest fern wood, clover flags and explorer compass. A wide handpainted 3D storybook wooden/enamel plaque with unique themed border decorations, clear physically painted left-pointing arrow, broad calm blank dark inscription plate for real HTML return label. No letters. Antique brass detail, elegant, whole object inside canvas. 4:1 wide composition. Transparent background, no floor, no external shadows, no collage. Keep central blank area about 65 percent width, high contrast for ivory text.",
+      "source": "exec-80252733-8979-4506-81fa-b5b7afc829c1.png",
+      "width": 640,
+      "height": 256,
+      "bytes": 45326
+    },
+    {
+      "id": "return-tetris",
+      "file": "return-tetris.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn return sign button specifically for CxQ tetris game. Theme: navy and cyan crystal tetromino blocks. A wide handpainted 3D storybook wooden/enamel plaque with unique themed border decorations, clear physically painted left-pointing arrow, broad calm blank dark inscription plate for real HTML return label. No letters. Antique brass detail, elegant, whole object inside canvas. 4:1 wide composition. Transparent background, no floor, no external shadows, no collage. Keep central blank area about 65 percent width, high contrast for ivory text.",
+      "source": "exec-918f6cb4-adc0-4341-90a7-140f4c8530a6.png",
+      "width": 640,
+      "height": 256,
+      "bytes": 31090
+    },
+    {
+      "id": "return-twenty48",
+      "file": "return-twenty48.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn return sign button specifically for CxQ twenty48 game. Theme: ivory and honey-gold numbered tile accents. A wide handpainted 3D storybook wooden/enamel plaque with unique themed border decorations, clear physically painted left-pointing arrow, broad calm blank dark inscription plate for real HTML return label. No letters. Antique brass detail, elegant, whole object inside canvas. 4:1 wide composition. Transparent background, no floor, no external shadows, no collage. Keep central blank area about 65 percent width, high contrast for ivory text.",
+      "source": "exec-de129199-989d-481a-b655-d91fa3958e91.png",
+      "width": 640,
+      "height": 256,
+      "bytes": 24154
+    },
+    {
+      "id": "return-whack",
+      "file": "return-whack.webp",
+      "prompt": "Use case: stylized-concept. Independently drawn return sign button specifically for CxQ whack game. Theme: mossy oak and a small padded toy hammer. A wide handpainted 3D storybook wooden/enamel plaque with unique themed border decorations, clear physically painted left-pointing arrow, broad calm blank dark inscription plate for real HTML return label. No letters. Antique brass detail, elegant, whole object inside canvas. 4:1 wide composition. Transparent background, no floor, no external shadows, no collage. Keep central blank area about 65 percent width, high contrast for ivory text.",
+      "source": "exec-744a10fd-c9a9-4b3f-9ea0-db21dfa063ee.png",
+      "width": 640,
+      "height": 256,
+      "bytes": 36718
+    },
+    {
+      "id": "return",
+      "file": "return.webp",
+      "prompt": "Use case: stylized-concept. One isolated illustrated wide horizontal return button for CxQ magical classic arcade. Ornate ivory enamel and brass wooden sign with a clear carved left-pointing arrow at left and dark teal empty inscription plate at center. Small clover bell and colorful arcade gem ornament. Fully painted 3D storybook art, high contrast blank text area for real HTML label, no letters. 4:1 wide composition, whole object within canvas, transparent background. No shadow outside object.",
+      "source": "exec-005ce33a-a790-46b6-b607-6a6e337aa96f.png",
+      "width": 640,
+      "height": 260,
+      "bytes": 39000
+    },
+    {
+      "id": "tetris",
+      "file": "tetris.webp",
+      "prompt": "Use case: stylized-concept. Independently illustrated CxQ Classic Game Hall entry. One full handcrafted magical arcade cabinet, front facing, slight 3D perspective, polished storybook toy art with brass details. Falling interlocking jewel tetromino blocks on a navy grid, cyan and magenta crystals. Top small blank marquee, game screen upper-middle. Bottom 25% broad ornate ivory plaque with blank dark teal inset for real title and game type. No text except digits on number puzzle screens. Entire cabinet silhouette and base within frame. Portrait 3:4. Transparent background, no floor, no collage, no external UI. Cohesive style matching reference clover fox, but no fox beside cabinet. Reference is character/style guidance only.",
+      "source": "exec-41debef6-3c9f-4e38-aa11-90e857f716e0.png",
+      "width": 480,
+      "height": 640,
+      "bytes": 67904
+    },
+    {
+      "id": "twenty48",
+      "file": "twenty48.webp",
+      "prompt": "Use case: stylized-concept. Independently illustrated CxQ Classic Game Hall entry. One full handcrafted magical arcade cabinet, front facing, slight 3D perspective, polished storybook toy art with brass details. A tidy 4 by 4 sliding tile board with legible numbers 2, 4, 8, 16 and 2048, ivory and gold. Top small blank marquee, game screen upper-middle. Bottom 25% broad ornate ivory plaque with blank dark teal inset for real title and game type. No text except digits on number puzzle screens. Entire cabinet silhouette and base within frame. Portrait 3:4. Transparent background, no floor, no collage, no external UI. Cohesive style matching reference clover fox, but no fox beside cabinet. Reference is character/style guidance only.",
+      "source": "exec-01d4c32d-11ca-4707-8b62-8c264a346be2.png",
+      "width": 480,
+      "height": 640,
+      "bytes": 64322
+    },
+    {
+      "id": "whack",
+      "file": "whack.webp",
+      "prompt": "Use case: stylized-concept. One independently illustrated CxQ Classic Game Hall arcade cabinet. A tabletop arcade with circular burrows and cute woodland creatures peeking out, toy padded hammer, oak and moss wood. Full handcrafted magical toy-like arcade cabinet, front view with slight 3D volume, polished storybook painterly details. Upper blank small marquee, game screen in upper-middle. Bottom 25 percent large ornate blank dark teal plaque for real title text. No lettering. Entire base and silhouette within canvas. Portrait 3:4, transparent background. No floor, no surrounding scene, no collage. Matching reference clover fox style, do not add fox beside cabinet.",
+      "source": "exec-b1c664be-05ab-4b33-97a0-7ba38ad8fc69.png",
+      "width": 480,
+      "height": 640,
+      "bytes": 75988
+    }
+  ]
+}
