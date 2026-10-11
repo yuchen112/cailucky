@@ -1,0 +1,303 @@
+{
+  "generator": "built-in image_gen",
+  "typography": "fixed labels painted into each independent image",
+  "assets": [
+    {
+      "id": "brick",
+      "file": "brick.webp",
+      "source": "exec-df3228c4-328d-4fe4-a384-ef7f80db1cc4.png",
+      "prompt": "Use case: text-localization. Edit target: supplied individual CxQ fairy-tale arcade cabinet. Keep cabinet silhouette, screen gameplay illustration, colors, carving and genuine transparent background. Redesign its two empty plaques into generous readable hand-lettered signs. TOP plaque exact title \"心光旅團\" with small \"CxQ\" incorporated above it. LOWER plaque exact large familiar game type \"打磚塊\". Traditional Chinese characters must be exact, beautifully painted/engraved gold or dark forest-green according to plaque contrast, bold book-style lettering, subtle dimensional engraved shading, matched material/perspective/light, integrated into artwork NOT generic white web text pasted over. Title may occupy two balanced lines on long names. Simplify any decorative carving obstructing letters and enlarge plaques slightly if necessary. No other words. Screen and controls unchanged. Full cabinet uncropped with transparent margin. Make the familiar game type very large and legible at 180px displayed cabinet width.",
+      "width": 720,
+      "height": 1145,
+      "bytes": 189748
+    },
+    {
+      "id": "close",
+      "file": "close.webp",
+      "source": "exec-28853695-f4d2-4fda-aed9-6a3552b8d7c4.png",
+      "prompt": "One independently illustrated small circular ivory enamel button edged with restrained warm gold carving, tiny clover accent, dark forest-green clearly engraved X symbol in center. Same CxQ fairy-tale arcade material, genuinely transparent background, whole icon uncropped, no words. Quiet functional icon readable at 44px. No heavy jewels or overlapping ornaments.",
+      "width": 160,
+      "height": 158,
+      "bytes": 9500
+    },
+    {
+      "id": "cover",
+      "file": "cover.webp",
+      "source": "exec-a6a23dc1-43cc-4a33-8e32-f8b9ddaad967.png",
+      "prompt": "Repaint this CxQ classic arcade hall cover in a more focused readable composition. Preserve friendly clover fox concierge identity and ivory/gold/green fairy-tale cabinet world. Square artwork. Main top sign exact text \"CxQ\" and \"經典遊戲館\", large professional carved dark-green Traditional Chinese letters on ivory. Friendly fox lower left, two arcade cabinets lower right. Simplify ornate background; remove ALL English banners, books with letters, secondary Chinese slogans and extra lettering. Only text anywhere is \"CxQ\" and \"經典遊戲館\". Strong clear hierarchy, balanced warm atmosphere, no extra labels.",
+      "width": 768,
+      "height": 768,
+      "bytes": 186970
+    },
+    {
+      "id": "dino",
+      "file": "dino.webp",
+      "source": "exec-50bf0cc0-6b42-4a65-9a93-a42c87c90ad7.png",
+      "prompt": "Use case: text-localization. Edit target: supplied individual CxQ fairy-tale arcade cabinet. Keep cabinet silhouette, screen gameplay illustration, colors, carving and genuine transparent background. Redesign its two empty plaques into generous readable hand-lettered signs. TOP plaque exact title \"森林急件快遞\" with small \"CxQ\" incorporated above it. LOWER plaque exact large familiar game type \"跑酷\". Traditional Chinese characters must be exact, beautifully painted/engraved gold or dark forest-green according to plaque contrast, bold book-style lettering, subtle dimensional engraved shading, matched material/perspective/light, integrated into artwork NOT generic white web text pasted over. Title may occupy two balanced lines on long names. Simplify any decorative carving obstructing letters and enlarge plaques slightly if necessary. No other words. Screen and controls unchanged. Full cabinet uncropped with transparent margin. Make the familiar game type very large and legible at 180px displayed cabinet width.",
+      "width": 720,
+      "height": 1071,
+      "bytes": 200220
+    },
+    {
+      "id": "dream-match",
+      "file": "dream-match.webp",
+      "source": "exec-810ef819-ec00-4599-a3a7-12cbef2b4ea3.png",
+      "prompt": "Use case: text-localization. Edit target: supplied individual CxQ fairy-tale arcade cabinet. Keep cabinet silhouette, screen gameplay illustration, colors, carving and genuine transparent background. Redesign its two empty plaques into generous readable hand-lettered signs. TOP plaque exact title \"夢境消除\" with small \"CxQ\" incorporated above it. LOWER plaque exact large familiar game type \"三消\". Traditional Chinese characters must be exact, beautifully painted/engraved gold or dark forest-green according to plaque contrast, bold book-style lettering, subtle dimensional engraved shading, matched material/perspective/light, integrated into artwork NOT generic white web text pasted over. Title may occupy two balanced lines on long names. Simplify any decorative carving obstructing letters and enlarge plaques slightly if necessary. No other words. Screen and controls unchanged. Full cabinet uncropped with transparent margin. Make the familiar game type very large and legible at 180px displayed cabinet width.",
+      "width": 720,
+      "height": 1149,
+      "bytes": 206548
+    },
+    {
+      "id": "flappy",
+      "file": "flappy.webp",
+      "source": "exec-a75def98-9b98-4570-8baf-7b790424a7b2.png",
+      "prompt": "Use case: text-localization. Edit target: supplied individual CxQ fairy-tale arcade cabinet. Keep cabinet silhouette, screen gameplay illustration, colors, carving and genuine transparent background. Redesign its two empty plaques into generous readable hand-lettered signs. TOP plaque exact title \"星願飛行郵差\" with small \"CxQ\" incorporated above it. LOWER plaque exact large familiar game type \"點按飛行\". Traditional Chinese characters must be exact, beautifully painted/engraved gold or dark forest-green according to plaque contrast, bold book-style lettering, subtle dimensional engraved shading, matched material/perspective/light, integrated into artwork NOT generic white web text pasted over. Title may occupy two balanced lines on long names. Simplify any decorative carving obstructing letters and enlarge plaques slightly if necessary. No other words. Screen and controls unchanged. Full cabinet uncropped with transparent margin. Make the familiar game type very large and legible at 180px displayed cabinet width.",
+      "width": 720,
+      "height": 1000,
+      "bytes": 195492
+    },
+    {
+      "id": "hall",
+      "file": "hall.webp",
+      "source": "exec-2bcc868a-59c6-48ca-9ec0-54075b38e1e9.png",
+      "prompt": "Repaint this CxQ fairy-tale arcade hall background to support readable foreground arcade cabinets rather than compete with them. Keep elegant warm ivory architecture, teal accents and gold, clover motifs and fairy-tale light. Remove the giant hanging blank sign completely. Remove the foreground mascot (the mascot stays on cover instead). Simplify all foreground flowers, ornate objects, reflections and busy light streaks. Dimmer subdued wood-floor reading-gallery atmosphere, softly detailed arches around outer edges, quiet low-contrast central wall and floor. Wide 16:9 illustration background, no machines, no words or letters, no decorative plaques, no UI. Cohesive polished game art, not CSS geometry.",
+      "width": 1600,
+      "height": 900,
+      "bytes": 197122
+    },
+    {
+      "id": "link",
+      "file": "link.webp",
+      "source": "exec-510164a6-fa97-4907-ad93-e2fbf36f1637.png",
+      "prompt": "Use case: text-localization. Edit target: supplied individual CxQ fairy-tale arcade cabinet. Keep cabinet silhouette, screen gameplay illustration, colors, carving and genuine transparent background. Redesign its two empty plaques into generous readable hand-lettered signs. TOP plaque exact title \"夢境織光\" with small \"CxQ\" incorporated above it. LOWER plaque exact large familiar game type \"連連看\". Traditional Chinese characters must be exact, beautifully painted/engraved gold or dark forest-green according to plaque contrast, bold book-style lettering, subtle dimensional engraved shading, matched material/perspective/light, integrated into artwork NOT generic white web text pasted over. Title may occupy two balanced lines on long names. Simplify any decorative carving obstructing letters and enlarge plaques slightly if necessary. No other words. Screen and controls unchanged. Full cabinet uncropped with transparent margin. Make the familiar game type very large and legible at 180px displayed cabinet width.",
+      "width": 720,
+      "height": 972,
+      "bytes": 181308
+    },
+    {
+      "id": "magic-bubble",
+      "file": "magic-bubble.webp",
+      "source": "exec-7e43589c-849c-40d6-8110-4cdeebf7bcf6.png",
+      "prompt": "Use case: text-localization. Edit target: supplied individual CxQ fairy-tale arcade cabinet. Keep cabinet silhouette, screen gameplay illustration, colors, carving and genuine transparent background. Redesign its two empty plaques into generous readable hand-lettered signs. TOP plaque exact title \"魔法泡泡龍\" with small \"CxQ\" incorporated above it. LOWER plaque exact large familiar game type \"泡泡龍\". Traditional Chinese characters must be exact, beautifully painted/engraved gold or dark forest-green according to plaque contrast, bold book-style lettering, subtle dimensional engraved shading, matched material/perspective/light, integrated into artwork NOT generic white web text pasted over. Title may occupy two balanced lines on long names. Simplify any decorative carving obstructing letters and enlarge plaques slightly if necessary. No other words. Screen and controls unchanged. Full cabinet uncropped with transparent margin. Make the familiar game type very large and legible at 180px displayed cabinet width.",
+      "width": 720,
+      "height": 1167,
+      "bytes": 203902
+    },
+    {
+      "id": "memory",
+      "file": "memory.webp",
+      "source": "exec-d637ab4f-fdec-4d47-af8b-b23e094d6475.png",
+      "prompt": "Use case: text-localization. Edit target: supplied individual CxQ fairy-tale arcade cabinet. Keep cabinet silhouette, screen gameplay illustration, colors, carving and genuine transparent background. Redesign its two empty plaques into generous readable hand-lettered signs. TOP plaque exact title \"暮光回憶收藏室\" with small \"CxQ\" incorporated above it. LOWER plaque exact large familiar game type \"翻牌配對\". Traditional Chinese characters must be exact, beautifully painted/engraved gold or dark forest-green according to plaque contrast, bold book-style lettering, subtle dimensional engraved shading, matched material/perspective/light, integrated into artwork NOT generic white web text pasted over. Title may occupy two balanced lines on long names. Simplify any decorative carving obstructing letters and enlarge plaques slightly if necessary. No other words. Screen and controls unchanged. Full cabinet uncropped with transparent margin. Make the familiar game type very large and legible at 180px displayed cabinet width.",
+      "width": 720,
+      "height": 1046,
+      "bytes": 177798
+    },
+    {
+      "id": "merge",
+      "file": "merge.webp",
+      "source": "exec-398b01a7-4bc6-4a3b-a3ba-b318966e62c9.png",
+      "prompt": "Use case: text-localization. Edit target: supplied individual CxQ fairy-tale arcade cabinet. Keep cabinet silhouette, screen gameplay illustration, colors, carving and genuine transparent background. Redesign its two empty plaques into generous readable hand-lettered signs. TOP plaque exact title \"心光合成屋\" with small \"CxQ\" incorporated above it. LOWER plaque exact large familiar game type \"合成球\". Traditional Chinese characters must be exact, beautifully painted/engraved gold or dark forest-green according to plaque contrast, bold book-style lettering, subtle dimensional engraved shading, matched material/perspective/light, integrated into artwork NOT generic white web text pasted over. Title may occupy two balanced lines on long names. Simplify any decorative carving obstructing letters and enlarge plaques slightly if necessary. No other words. Screen and controls unchanged. Full cabinet uncropped with transparent margin. Make the familiar game type very large and legible at 180px displayed cabinet width.",
+      "width": 720,
+      "height": 1083,
+      "bytes": 193014
+    },
+    {
+      "id": "mines",
+      "file": "mines.webp",
+      "source": "exec-b36a9c70-c45b-4711-97b4-3ce36c1ffd15.png",
+      "prompt": "Use case: text-localization. Edit target: supplied individual CxQ fairy-tale arcade cabinet. Keep cabinet silhouette, screen gameplay illustration, colors, carving and genuine transparent background. Redesign its two empty plaques into generous readable hand-lettered signs. TOP plaque exact title \"四葉草探險地圖\" with small \"CxQ\" incorporated above it. LOWER plaque exact large familiar game type \"踩地雷\". Traditional Chinese characters must be exact, beautifully painted/engraved gold or dark forest-green according to plaque contrast, bold book-style lettering, subtle dimensional engraved shading, matched material/perspective/light, integrated into artwork NOT generic white web text pasted over. Title may occupy two balanced lines on long names. Simplify any decorative carving obstructing letters and enlarge plaques slightly if necessary. No other words. Screen and controls unchanged. Full cabinet uncropped with transparent margin. Make the familiar game type very large and legible at 180px displayed cabinet width.",
+      "width": 720,
+      "height": 1057,
+      "bytes": 205950
+    },
+    {
+      "id": "panel",
+      "file": "panel.webp",
+      "source": "exec-dc478b75-a619-4713-bc98-b536a7c7c9e9.png",
+      "prompt": "Redesign this individual CxQ fairy-tale reading frame for a game rules dialog. Vertical 4:5 ivory parchment interior with a VERY broad empty reading opening (central 85% width and 85% height). Thin gold/wood carved border only around outermost edge, restrained small clover corners. Remove intrusive dangling bell and large top crest. No words, no mascot, no built-in buttons. Real transparent background beyond full uncropped frame, ivory opaque inside. Clear simple composition, consistent with green/gold arcade cabinets. Do not put any decoration inside reading area.",
+      "width": 720,
+      "height": 889,
+      "bytes": 77164
+    },
+    {
+      "id": "play",
+      "file": "play.webp",
+      "source": "exec-07e816a8-34c7-482c-83ab-5018ef088566.png",
+      "prompt": "Edit this painted green/gold button. Preserve transparent background, left play icon, rectangular plaque and carving. Add exact Traditional Chinese text \"開始遊戲\" in large engraved gold-ivory lettering centered in green plaque, beautifully integrated dimensional text. Four exact characters, no additional lettering. Clean balanced margins. Fully visible standalone transparent asset.",
+      "width": 800,
+      "height": 180,
+      "bytes": 54614
+    },
+    {
+      "id": "return-brick",
+      "file": "return-brick.webp",
+      "source": "exec-c356b596-b3f1-4b9b-948e-9ba586db7eef.png",
+      "prompt": "Use case: text-localization. Edit target is this individual game-specific painted return button. Preserve its unique themed ornaments, arrow, material, full silhouette and transparent background. Add exact Traditional Chinese text \"返回經典遊戲館\" inside the central blank plaque. Large beautifully engraved warm ivory/gold book-style lettering, subtle material shadows matching lighting and perspective. Seven characters exact: 返 回 經 典 遊 戲 館. Wide clear spacing; text must fit comfortably and be clearly readable at 240px total button width. Reduce intruding ornament if needed. No other text, no extra background. This final button must contain the actual lettering baked into the artwork.",
+      "width": 800,
+      "height": 247,
+      "bytes": 61396
+    },
+    {
+      "id": "return-dino",
+      "file": "return-dino.webp",
+      "source": "exec-13e29e83-a3f5-4b1f-93e3-82dbc3ed343e.png",
+      "prompt": "Use case: text-localization. Edit target is this individual game-specific painted return button. Preserve its unique themed ornaments, arrow, material, full silhouette and transparent background. Add exact Traditional Chinese text \"返回經典遊戲館\" inside the central blank plaque. Large beautifully engraved warm ivory/gold book-style lettering, subtle material shadows matching lighting and perspective. Seven characters exact: 返 回 經 典 遊 戲 館. Wide clear spacing; text must fit comfortably and be clearly readable at 240px total button width. Reduce intruding ornament if needed. No other text, no extra background. This final button must contain the actual lettering baked into the artwork.",
+      "width": 800,
+      "height": 260,
+      "bytes": 70864
+    },
+    {
+      "id": "return-dream-match",
+      "file": "return-dream-match.webp",
+      "source": "exec-4473cd5b-df8b-4c83-961f-aaef8e5740f5.png",
+      "prompt": "Use case: text-localization. Edit target is this individual game-specific painted return button. Preserve its unique themed ornaments, arrow, material, full silhouette and transparent background. Add exact Traditional Chinese text \"返回經典遊戲館\" inside the central blank plaque. Large beautifully engraved warm ivory/gold book-style lettering, subtle material shadows matching lighting and perspective. Seven characters exact: 返 回 經 典 遊 戲 館. Wide clear spacing; text must fit comfortably and be clearly readable at 240px total button width. Reduce intruding ornament if needed. No other text, no extra background. This final button must contain the actual lettering baked into the artwork.",
+      "width": 800,
+      "height": 252,
+      "bytes": 74492
+    },
+    {
+      "id": "return-flappy",
+      "file": "return-flappy.webp",
+      "source": "exec-3ad75aa4-f024-46b0-a346-508652d58946.png",
+      "prompt": "Use case: text-localization. Edit target is this individual game-specific painted return button. Preserve its unique themed ornaments, arrow, material, full silhouette and transparent background. Add exact Traditional Chinese text \"返回經典遊戲館\" inside the central blank plaque. Large beautifully engraved warm ivory/gold book-style lettering, subtle material shadows matching lighting and perspective. Seven characters exact: 返 回 經 典 遊 戲 館. Wide clear spacing; text must fit comfortably and be clearly readable at 240px total button width. Reduce intruding ornament if needed. No other text, no extra background. This final button must contain the actual lettering baked into the artwork.",
+      "width": 800,
+      "height": 256,
+      "bytes": 72372
+    },
+    {
+      "id": "return-link",
+      "file": "return-link.webp",
+      "source": "exec-2e5cc87d-d5ab-4fec-a5bb-28851337e23c.png",
+      "prompt": "Use case: text-localization. Edit target is this individual game-specific painted return button. Preserve its unique themed ornaments, arrow, material, full silhouette and transparent background. Add exact Traditional Chinese text \"返回經典遊戲館\" inside the central blank plaque. Large beautifully engraved warm ivory/gold book-style lettering, subtle material shadows matching lighting and perspective. Seven characters exact: 返 回 經 典 遊 戲 館. Wide clear spacing; text must fit comfortably and be clearly readable at 240px total button width. Reduce intruding ornament if needed. No other text, no extra background. This final button must contain the actual lettering baked into the artwork.",
+      "width": 800,
+      "height": 241,
+      "bytes": 57372
+    },
+    {
+      "id": "return-magic-bubble",
+      "file": "return-magic-bubble.webp",
+      "source": "exec-c09283bf-6cc2-433d-9a65-441dbbe8f672.png",
+      "prompt": "Use case: text-localization. Edit target is this individual game-specific painted return button. Preserve its unique themed ornaments, arrow, material, full silhouette and transparent background. Add exact Traditional Chinese text \"返回經典遊戲館\" inside the central blank plaque. Large beautifully engraved warm ivory/gold book-style lettering, subtle material shadows matching lighting and perspective. Seven characters exact: 返 回 經 典 遊 戲 館. Wide clear spacing; text must fit comfortably and be clearly readable at 240px total button width. Reduce intruding ornament if needed. No other text, no extra background. This final button must contain the actual lettering baked into the artwork.",
+      "width": 800,
+      "height": 252,
+      "bytes": 74150
+    },
+    {
+      "id": "return-memory",
+      "file": "return-memory.webp",
+      "source": "exec-5f4f7ab2-48cd-41c7-9b94-507b0fce2b89.png",
+      "prompt": "Use case: text-localization. Edit target is this individual game-specific painted return button. Preserve its unique themed ornaments, arrow, material, full silhouette and transparent background. Add exact Traditional Chinese text \"返回經典遊戲館\" inside the central blank plaque. Large beautifully engraved warm ivory/gold book-style lettering, subtle material shadows matching lighting and perspective. Seven characters exact: 返 回 經 典 遊 戲 館. Wide clear spacing; text must fit comfortably and be clearly readable at 240px total button width. Reduce intruding ornament if needed. No other text, no extra background. This final button must contain the actual lettering baked into the artwork.",
+      "width": 800,
+      "height": 263,
+      "bytes": 73854
+    },
+    {
+      "id": "return-merge",
+      "file": "return-merge.webp",
+      "source": "exec-f3c2d2af-7e99-4a2b-b387-449d4825e322.png",
+      "prompt": "Use case: text-localization. Edit target is this individual game-specific painted return button. Preserve its unique themed ornaments, arrow, material, full silhouette and transparent background. Add exact Traditional Chinese text \"返回經典遊戲館\" inside the central blank plaque. Large beautifully engraved warm ivory/gold book-style lettering, subtle material shadows matching lighting and perspective. Seven characters exact: 返 回 經 典 遊 戲 館. Wide clear spacing; text must fit comfortably and be clearly readable at 240px total button width. Reduce intruding ornament if needed. No other text, no extra background. This final button must contain the actual lettering baked into the artwork.",
+      "width": 800,
+      "height": 276,
+      "bytes": 72246
+    },
+    {
+      "id": "return-mines",
+      "file": "return-mines.webp",
+      "source": "exec-8f5de9c7-5f8e-4c67-81d3-690b38ad0904.png",
+      "prompt": "Use case: text-localization. Edit target is this individual game-specific painted return button. Preserve its unique themed ornaments, arrow, material, full silhouette and transparent background. Add exact Traditional Chinese text \"返回經典遊戲館\" inside the central blank plaque. Large beautifully engraved warm ivory/gold book-style lettering, subtle material shadows matching lighting and perspective. Seven characters exact: 返 回 經 典 遊 戲 館. Wide clear spacing; text must fit comfortably and be clearly readable at 240px total button width. Reduce intruding ornament if needed. No other text, no extra background. This final button must contain the actual lettering baked into the artwork.",
+      "width": 800,
+      "height": 270,
+      "bytes": 77336
+    },
+    {
+      "id": "return-tetris",
+      "file": "return-tetris.webp",
+      "source": "exec-db4134c8-01b0-49ef-b627-fcd5a36234b9.png",
+      "prompt": "Use case: text-localization. Edit target is this individual game-specific painted return button. Preserve its unique themed ornaments, arrow, material, full silhouette and transparent background. Add exact Traditional Chinese text \"返回經典遊戲館\" inside the central blank plaque. Large beautifully engraved warm ivory/gold book-style lettering, subtle material shadows matching lighting and perspective. Seven characters exact: 返 回 經 典 遊 戲 館. Wide clear spacing; text must fit comfortably and be clearly readable at 240px total button width. Reduce intruding ornament if needed. No other text, no extra background. This final button must contain the actual lettering baked into the artwork.",
+      "width": 800,
+      "height": 228,
+      "bytes": 56340
+    },
+    {
+      "id": "return-twenty48",
+      "file": "return-twenty48.webp",
+      "source": "exec-b753dfbb-94de-428e-9f8b-ca1c512b35a0.png",
+      "prompt": "Use case: text-localization. Edit target is this individual game-specific painted return button. Preserve its unique themed ornaments, arrow, material, full silhouette and transparent background. Add exact Traditional Chinese text \"返回經典遊戲館\" inside the central blank plaque. Large beautifully engraved warm ivory/gold book-style lettering, subtle material shadows matching lighting and perspective. Seven characters exact: 返 回 經 典 遊 戲 館. Wide clear spacing; text must fit comfortably and be clearly readable at 240px total button width. Reduce intruding ornament if needed. No other text, no extra background. This final button must contain the actual lettering baked into the artwork.",
+      "width": 800,
+      "height": 233,
+      "bytes": 48632
+    },
+    {
+      "id": "return-whack",
+      "file": "return-whack.webp",
+      "source": "exec-2e373695-2579-4ec0-95b8-6355d73452ae.png",
+      "prompt": "Use case: text-localization. Edit target is this individual game-specific painted return button. Preserve its unique themed ornaments, arrow, material, full silhouette and transparent background. Add exact Traditional Chinese text \"返回經典遊戲館\" inside the central blank plaque. Large beautifully engraved warm ivory/gold book-style lettering, subtle material shadows matching lighting and perspective. Seven characters exact: 返 回 經 典 遊 戲 館. Wide clear spacing; text must fit comfortably and be clearly readable at 240px total button width. Reduce intruding ornament if needed. No other text, no extra background. This final button must contain the actual lettering baked into the artwork.",
+      "width": 800,
+      "height": 260,
+      "bytes": 69570
+    },
+    {
+      "id": "return",
+      "file": "return.webp",
+      "source": "exec-4e0791c8-da1c-43aa-9982-29e58ec7df99.png",
+      "prompt": "Edit this painted return control, preserving transparent background and gold/teal clover identity. Simplify dangling ornaments and make the sign a compact readable horizontal button. Insert exact Traditional Chinese \"返回遊戲中心\" as large engraved warm ivory/gold lettering inside central green plaque. Arrow remains left. Real typography part of art, exact six characters, no other text, no clipping. Fully visible standalone image with transparent margin.",
+      "width": 800,
+      "height": 255,
+      "bytes": 58792
+    },
+    {
+      "id": "sound-off",
+      "file": "sound-off.webp",
+      "source": "exec-afa1b963-48db-4fcb-876a-61c6db0094e7.png",
+      "prompt": "Edit this painted green/gold button to be a music toggle. Preserve transparent background, silhouette and material, replace left play triangle with small musical-note symbol with a delicate diagonal slash. Add exact Traditional Chinese \"音樂關閉\" as beautifully carved large ivory/gold letters inside plaque. Four exact characters, no additional text. Whole asset, generous readable clear plaque.",
+      "width": 800,
+      "height": 181,
+      "bytes": 48134
+    },
+    {
+      "id": "sound-on",
+      "file": "sound-on.webp",
+      "source": "exec-1c6455e1-496f-4556-a79e-9278979cf6b1.png",
+      "prompt": "Edit this painted green/gold button to be a music toggle. Preserve transparent background, silhouette and material, replace left play triangle with small musical-note symbol. Add exact Traditional Chinese \"音樂開啟\" as beautifully carved large ivory/gold letters inside plaque. Four exact characters, no additional text. Whole asset, generous readable clear plaque.",
+      "width": 800,
+      "height": 180,
+      "bytes": 48954
+    },
+    {
+      "id": "tetris",
+      "file": "tetris.webp",
+      "source": "exec-5c33da66-9334-4c86-835d-3079a899b18e.png",
+      "prompt": "Use case: text-localization. Edit target: supplied individual CxQ fairy-tale arcade cabinet. Keep cabinet silhouette, screen gameplay illustration, colors, carving and genuine transparent background. Redesign its two empty plaques into generous readable hand-lettered signs. TOP plaque exact title \"心境織境\" with small \"CxQ\" incorporated above it. LOWER plaque exact large familiar game type \"俄羅斯方塊\". Traditional Chinese characters must be exact, beautifully painted/engraved gold or dark forest-green according to plaque contrast, bold book-style lettering, subtle dimensional engraved shading, matched material/perspective/light, integrated into artwork NOT generic white web text pasted over. Title may occupy two balanced lines on long names. Simplify any decorative carving obstructing letters and enlarge plaques slightly if necessary. No other words. Screen and controls unchanged. Full cabinet uncropped with transparent margin. Make the familiar game type very large and legible at 180px displayed cabinet width.",
+      "width": 720,
+      "height": 1111,
+      "bytes": 204220
+    },
+    {
+      "id": "title",
+      "file": "title.webp",
+      "source": "exec-e30eae3c-ff41-4e08-b1ae-0291b5c319be.png",
+      "prompt": "Generate one independently illustrated horizontal marquee logo sign for CxQ fairy-tale classic arcade hall. Large exact Traditional Chinese title \"經典遊戲館\", small exact \"CxQ\" above. Ivory enamel broad flat plaque, forest-green book-style carved Chinese lettering with subtle embossed metallic edge, restrained carved warm gold frame, tiny clover ornament centered above; no hanging bell or flower overlapping text. Beautiful balanced typographic composition, strong contrast, genuinely transparent background, entire sign uncropped, approximately 3:1 wide aspect. The typography must be part of the sign illustration, polished and exact. NO additional text.",
+      "width": 1200,
+      "height": 370,
+      "bytes": 98332
+    },
+    {
+      "id": "twenty48",
+      "file": "twenty48.webp",
+      "source": "exec-fb3254a2-156d-4883-b346-537e3628b60b.png",
+      "prompt": "Use case: text-localization. Edit target: supplied individual CxQ fairy-tale arcade cabinet. Keep cabinet silhouette, screen gameplay illustration, colors, carving and genuine transparent background. Redesign its two empty plaques into generous readable hand-lettered signs. TOP plaque exact title \"星願 2048\" with small \"CxQ\" incorporated above it. LOWER plaque exact large familiar game type \"2048\". Traditional Chinese characters must be exact, beautifully painted/engraved gold or dark forest-green according to plaque contrast, bold book-style lettering, subtle dimensional engraved shading, matched material/perspective/light, integrated into artwork NOT generic white web text pasted over. Title may occupy two balanced lines on long names. Simplify any decorative carving obstructing letters and enlarge plaques slightly if necessary. No other words. Screen and controls unchanged. Full cabinet uncropped with transparent margin. Make the familiar game type very large and legible at 180px displayed cabinet width.",
+      "width": 720,
+      "height": 1066,
+      "bytes": 188140
+    },
+    {
+      "id": "whack",
+      "file": "whack.webp",
+      "source": "exec-85239fc7-9b11-4b65-8897-2ca0da8b743b.png",
+      "prompt": "Use case: text-localization. Edit target: supplied individual CxQ fairy-tale arcade cabinet. Keep cabinet silhouette, screen gameplay illustration, colors, carving and genuine transparent background. Redesign its two empty plaques into generous readable hand-lettered signs. TOP plaque exact title \"森林敲敲樂\" with small \"CxQ\" incorporated above it. LOWER plaque exact large familiar game type \"打地鼠\". Traditional Chinese characters must be exact, beautifully painted/engraved gold or dark forest-green according to plaque contrast, bold book-style lettering, subtle dimensional engraved shading, matched material/perspective/light, integrated into artwork NOT generic white web text pasted over. Title may occupy two balanced lines on long names. Simplify any decorative carving obstructing letters and enlarge plaques slightly if necessary. No other words. Screen and controls unchanged. Full cabinet uncropped with transparent margin. Make the familiar game type very large and legible at 180px displayed cabinet width.",
+      "width": 720,
+      "height": 970,
+      "bytes": 194184
+    }
+  ]
+}
