@@ -1,0 +1,179 @@
+{
+  "version": "20261012-mobile1",
+  "generator": "built-in image_gen",
+  "individualAssets": true,
+  "montageExtraction": false,
+  "assets": [
+    {
+      "id": "twenty48",
+      "file": "portrait-twenty48.webp",
+      "source": "portrait-twenty48.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 135898,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "brick",
+      "file": "portrait-brick.webp",
+      "source": "portrait-brick.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 352118,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "richman",
+      "file": "portrait-richman.webp",
+      "source": "portrait-richman.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 269906,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "dino",
+      "file": "portrait-dino.webp",
+      "source": "portrait-dino.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 307740,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "dream-match",
+      "file": "portrait-dream-match.webp",
+      "source": "portrait-dream-match.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 206790,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "fairytale-defense",
+      "file": "portrait-fairytale-defense.webp",
+      "source": "portrait-fairytale-defense.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 323964,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "flappy",
+      "file": "portrait-flappy.webp",
+      "source": "portrait-flappy.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 174714,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "fortune",
+      "file": "portrait-fortune.webp",
+      "source": "portrait-fortune.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 343854,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "heartlight-duel",
+      "file": "portrait-heartlight-duel.webp",
+      "source": "portrait-heartlight-duel.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 297902,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "link",
+      "file": "portrait-link.webp",
+      "source": "portrait-link.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 302302,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "lucky-town",
+      "file": "portrait-lucky-town.webp",
+      "source": "portrait-lucky-town.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 308788,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "magic-bubble",
+      "file": "portrait-magic-bubble.webp",
+      "source": "portrait-magic-bubble.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 316618,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "memory",
+      "file": "portrait-memory.webp",
+      "source": "portrait-memory.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 276904,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "merge",
+      "file": "portrait-merge.webp",
+      "source": "portrait-merge.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 229416,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "mines",
+      "file": "portrait-mines.webp",
+      "source": "portrait-mines.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 300888,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "poker",
+      "file": "portrait-poker.webp",
+      "source": "portrait-poker.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 147488,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "tetris",
+      "file": "portrait-tetris.webp",
+      "source": "portrait-tetris.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 328328,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "whack",
+      "file": "portrait-whack.webp",
+      "source": "portrait-whack.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 247924,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    },
+    {
+      "id": "classic-hall",
+      "file": "portrait-classic-hall.webp",
+      "source": "portrait-classic-hall.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 292306,
+      "brief": "Independent portrait mobile loading illustration with a clear lower information plaque; built-in image_gen source, never cropped from a shared montage."
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 (()=>{'use strict';
  const base=new URL('./character-motion/',document.currentScript.src),cast=['luck','healing','growth','memory','joy','night','trust','dream','sadness','hope'];
  const cache=new Map();let manifestJob=null;const actors=new Map();let raf=0,last=0;
- const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches||document.body.classList.contains('reduced')||document.body.classList.contains('reduced-motion')||document.body.dataset.motion==='reduced';
+ const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches||document.body.classList.contains('reduced')||document.body.classList.contains('reduced-motion')||document.body.dataset.motion==='reduced'||document.documentElement.dataset.cxqQuality==='economy';
  function manifest(){return manifestJob??=fetch(new URL('manifest.json?v=20261009-refresh1',base)).then(r=>{if(!r.ok)throw Error('Animation manifest unavailable');return r.json()}).catch(e=>{manifestJob=null;throw e})}
  function prepare(id){if(!cache.has(id))cache.set(id,manifest().then(async m=>{const spec=m.characters[id];if(!spec)throw Error('Unknown character');const url=new URL(spec.atlas+'?v=20261009-refresh1',base).href;let image;if(globalThis.CxQLoading)image=await CxQLoading.image(url);else{image=new Image();image.decoding='async';image.src=url;await image.decode();}return {image,spec}}).catch(e=>{cache.delete(id);throw e}));return cache.get(id)}
  function draw(ctx,resource,clip,time,x,y,w,h){const frames=resource.spec.clips[clip]||resource.spec.clips.walk;const key=frames[Math.floor(time*(resource.spec.fps||10))%frames.length],f=resource.spec.frames[key];ctx.drawImage(resource.image,f.x,f.y,f.w,f.h,x,y,w,h)}
