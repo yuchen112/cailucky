@@ -3,10 +3,10 @@ const sharp=toolDependency('sharp'),release='20261012-mobile1',out='outputs/mobi
 const entries=JSON.parse(fs.readFileSync(out+'/baseline.json'));
 const report=[];
 for(const e of entries){if(e.id==='clickcore')continue;let html=fs.readFileSync(e.file,'utf8');const m=html.match(/data-loading='([^']+)'/);const source=execFileSync('git',['show','HEAD:'+e.file],{encoding:'utf8'});const sourceMatch=source.match(/data-loading='([^']+)'/),cfg=JSON.parse(sourceMatch[1].replaceAll('&#39;',"'"));const sourceFiles=[...(cfg.files||[])];
- cfg.deferredResources=[...new Set([...(cfg.resources||[]),...(cfg.background||[])])];delete cfg.pack;cfg.resources=[];cfg.background=[];cfg.release=release;
+ cfg.deferredResources=[...new Set([...(cfg.deferredResources||[]),...(cfg.resources||[]),...(cfg.background||[])])];delete cfg.pack;cfg.resources=[];cfg.background=[];cfg.release=release;
  cfg.images=[...new Set(cfg.images||[])];cfg.files=[...new Set(cfg.files||[])];
  if(e.id==='classic-hall'){cfg.scene='art-v2/panel.webp';cfg.layout={left:15,top:30,width:70,height:30};cfg.files=sourceFiles.filter(f=>/(hall\.css|hall\.js|audio-engine-v2\.js)/.test(f));cfg.deferredResources=[...new Set([...cfg.deferredResources,...sourceFiles.filter(f=>!cfg.files.includes(f))])];}else cfg.layout={left:25,top:65,width:50,height:23};
- const portrait='../../shared/loading-art-v2/portrait-'+e.id+'.webp';
+ const portrait=path.relative(path.dirname(e.file),'games/shared/loading-art-v2/portrait-'+e.id+'.webp').replaceAll('\\','/');
  if(fs.existsSync(path.resolve(path.dirname(e.file),portrait))){cfg.landscapeScene=cfg.scene;cfg.portraitScene=portrait;cfg.portraitLayout={left:15,top:64,width:70,height:24};}
  const imagePath=path.resolve(path.dirname(e.file),cfg.scene),meta=await sharp(imagePath).metadata();cfg.aspect=meta.width/meta.height;
  cfg.sizes={};for(const f of [...cfg.files,cfg.scene]){const p=path.resolve(path.dirname(e.file),f.split('?')[0]);if(fs.existsSync(p))cfg.sizes[f]=fs.statSync(p).size;}if(cfg.portraitScene){const p=path.resolve(path.dirname(e.file),cfg.portraitScene);cfg.sizes[cfg.portraitScene]=fs.statSync(p).size;}
