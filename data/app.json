@@ -4853,6 +4853,1275 @@
             "assets/thumbs/secondhand-clothes/35-1.webp"
           ],
           "homeFeatured": false
+        },
+        {
+          "id": "earring-02",
+          "code": "E002",
+          "name": "灰藍花朵扇形垂墜耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "灰藍花朵扇形垂墜耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "民族宮廷風",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/02.webp",
+          "images": [
+            "assets/products/earrings/02.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/02.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/02.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-03",
+          "code": "E003",
+          "name": "黑金半圓羽毛流蘇耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "黑金半圓羽毛流蘇耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "民族宮廷風",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/03.webp",
+          "images": [
+            "assets/products/earrings/03.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/03.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/03.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-04",
+          "code": "E004",
+          "name": "藍綠葉片橢圓垂墜耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "藍綠葉片橢圓垂墜耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "民族宮廷風",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/04.webp",
+          "images": [
+            "assets/products/earrings/04.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/04.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/04.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-05",
+          "code": "E005",
+          "name": "米白藍綠花環垂墜耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "米白藍綠花環垂墜耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "民族宮廷風",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/05.webp",
+          "images": [
+            "assets/products/earrings/05.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/05.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/05.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-06",
+          "code": "E006",
+          "name": "湖藍串珠水滴長耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "湖藍串珠水滴長耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "民族宮廷風",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/06.webp",
+          "images": [
+            "assets/products/earrings/06.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/06.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/06.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-07",
+          "code": "E007",
+          "name": "米黃藍葉宮廷水滴耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "米黃藍葉宮廷水滴耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "民族宮廷風",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/07.webp",
+          "images": [
+            "assets/products/earrings/07.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/07.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/07.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-08",
+          "code": "E008",
+          "name": "彩色花朵圓環垂墜耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "彩色花朵圓環垂墜耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "民族宮廷風",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/08.webp",
+          "images": [
+            "assets/products/earrings/08.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/08.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/08.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-09",
+          "code": "E009",
+          "name": "紅藍民族風串珠流蘇耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "紅藍民族風串珠流蘇耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "民族宮廷風",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/09.webp",
+          "images": [
+            "assets/products/earrings/09.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/09.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/09.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-11",
+          "code": "E011",
+          "name": "星芒閃鑽筷子耳環｜單隻販售",
+          "price": "55",
+          "stock": "",
+          "desc": "星芒閃鑽筷子耳環。\n售價：NT$55／單隻。\n此款為單隻販售，並非一對價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "筷子耳環",
+            "單隻販售"
+          ],
+          "image": "assets/products/earrings/11.webp",
+          "images": [
+            "assets/products/earrings/11.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/11.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/11.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-12",
+          "code": "E012",
+          "name": "蝴蝶結閃鑽筷子耳環｜單隻販售",
+          "price": "55",
+          "stock": "",
+          "desc": "蝴蝶結閃鑽筷子耳環。\n售價：NT$55／單隻。\n此款為單隻販售，並非一對價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "筷子耳環",
+            "單隻販售"
+          ],
+          "image": "assets/products/earrings/12.webp",
+          "images": [
+            "assets/products/earrings/12.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/12.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/12.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-13",
+          "code": "E013",
+          "name": "交錯雙弧閃鑽筷子耳環｜單隻販售",
+          "price": "55",
+          "stock": "",
+          "desc": "交錯雙弧閃鑽筷子耳環。\n售價：NT$55／單隻。\n此款為單隻販售，並非一對價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "筷子耳環",
+            "單隻販售"
+          ],
+          "image": "assets/products/earrings/13.webp",
+          "images": [
+            "assets/products/earrings/13.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/13.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/13.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-14",
+          "code": "E014",
+          "name": "四顆長方閃鑽筷子耳環｜單隻販售",
+          "price": "55",
+          "stock": "",
+          "desc": "四顆長方閃鑽筷子耳環。\n售價：NT$55／單隻。\n此款為單隻販售，並非一對價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "筷子耳環",
+            "單隻販售"
+          ],
+          "image": "assets/products/earrings/14.webp",
+          "images": [
+            "assets/products/earrings/14.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/14.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/14.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-15",
+          "code": "E015",
+          "name": "三組垂墜閃鑽筷子耳環｜單隻販售",
+          "price": "55",
+          "stock": "",
+          "desc": "三組垂墜閃鑽筷子耳環。\n售價：NT$55／單隻。\n此款為單隻販售，並非一對價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "筷子耳環",
+            "單隻販售"
+          ],
+          "image": "assets/products/earrings/15.webp",
+          "images": [
+            "assets/products/earrings/15.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/15.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/15.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-16",
+          "code": "E016",
+          "name": "五瓣花閃鑽筷子耳環｜單隻販售",
+          "price": "55",
+          "stock": "",
+          "desc": "五瓣花閃鑽筷子耳環。\n售價：NT$55／單隻。\n此款為單隻販售，並非一對價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "筷子耳環",
+            "單隻販售"
+          ],
+          "image": "assets/products/earrings/16.webp",
+          "images": [
+            "assets/products/earrings/16.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/16.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/16.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-17",
+          "code": "E017",
+          "name": "單顆圓形閃鑽筷子耳環｜單隻販售",
+          "price": "55",
+          "stock": "",
+          "desc": "單顆圓形閃鑽筷子耳環。\n售價：NT$55／單隻。\n此款為單隻販售，並非一對價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "筷子耳環",
+            "單隻販售"
+          ],
+          "image": "assets/products/earrings/17.webp",
+          "images": [
+            "assets/products/earrings/17.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/17.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/17.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-18",
+          "code": "E018",
+          "name": "大小雙圓環筷子耳環｜單隻販售",
+          "price": "55",
+          "stock": "",
+          "desc": "大小雙圓環筷子耳環。\n售價：NT$55／單隻。\n此款為單隻販售，並非一對價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "筷子耳環",
+            "單隻販售"
+          ],
+          "image": "assets/products/earrings/18.webp",
+          "images": [
+            "assets/products/earrings/18.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/18.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/18.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-19",
+          "code": "E019",
+          "name": "金色網紋雙蝴蝶筷子耳環｜單隻販售",
+          "price": "55",
+          "stock": "",
+          "desc": "金色網紋雙蝴蝶筷子耳環。\n售價：NT$55／單隻。\n此款為單隻販售，並非一對價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "筷子耳環",
+            "單隻販售"
+          ],
+          "image": "assets/products/earrings/19.webp",
+          "images": [
+            "assets/products/earrings/19.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/19.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/19.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-20",
+          "code": "E020",
+          "name": "金色閃鑽雙蝴蝶筷子耳環｜單隻販售",
+          "price": "55",
+          "stock": "",
+          "desc": "金色閃鑽雙蝴蝶筷子耳環。\n售價：NT$55／單隻。\n此款為單隻販售，並非一對價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "筷子耳環",
+            "單隻販售"
+          ],
+          "image": "assets/products/earrings/20.webp",
+          "images": [
+            "assets/products/earrings/20.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/20.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/20.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-21",
+          "code": "E021",
+          "name": "六瓣星花閃鑽筷子耳環｜單隻販售",
+          "price": "55",
+          "stock": "",
+          "desc": "六瓣星花閃鑽筷子耳環。\n售價：NT$55／單隻。\n此款為單隻販售，並非一對價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "筷子耳環",
+            "單隻販售"
+          ],
+          "image": "assets/products/earrings/21.webp",
+          "images": [
+            "assets/products/earrings/21.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/21.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/21.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-22",
+          "code": "E022",
+          "name": "白色蝴蝶筷子耳環｜單隻販售",
+          "price": "55",
+          "stock": "",
+          "desc": "白色蝴蝶筷子耳環。\n售價：NT$55／單隻。\n此款為單隻販售，並非一對價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "筷子耳環",
+            "單隻販售"
+          ],
+          "image": "assets/products/earrings/22.webp",
+          "images": [
+            "assets/products/earrings/22.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/22.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/22.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-26",
+          "code": "E026",
+          "name": "金色波浪大圈耳環",
+          "price": "39",
+          "stock": "",
+          "desc": "金色波浪大圈耳環。\n售價：NT$39／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A2圈式耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/26.webp",
+          "images": [
+            "assets/products/earrings/26.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/26.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/26.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-27",
+          "code": "E027",
+          "name": "銀色透明串珠大圈耳環",
+          "price": "39",
+          "stock": "",
+          "desc": "銀色透明串珠大圈耳環。\n售價：NT$39／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A2圈式耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/27.webp",
+          "images": [
+            "assets/products/earrings/27.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/27.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/27.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-28",
+          "code": "E028",
+          "name": "金色細紋大圈耳環",
+          "price": "39",
+          "stock": "",
+          "desc": "金色細紋大圈耳環。\n售價：NT$39／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A2圈式耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/28.webp",
+          "images": [
+            "assets/products/earrings/28.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/28.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/28.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-29",
+          "code": "E029",
+          "name": "金色扭紋大圈耳環",
+          "price": "39",
+          "stock": "",
+          "desc": "金色扭紋大圈耳環。\n售價：NT$39／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A2圈式耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/29.webp",
+          "images": [
+            "assets/products/earrings/29.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/29.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/29.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-31",
+          "code": "E031",
+          "name": "粉色透明串珠大圈耳環",
+          "price": "45",
+          "stock": "",
+          "desc": "粉色透明串珠大圈耳環。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/31.webp",
+          "images": [
+            "assets/products/earrings/31.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/31.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/31.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-32",
+          "code": "E032",
+          "name": "透明串珠星形耳環",
+          "price": "45",
+          "stock": "",
+          "desc": "透明串珠星形耳環。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/32.webp",
+          "images": [
+            "assets/products/earrings/32.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/32.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/32.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-33",
+          "code": "E033",
+          "name": "粉色串珠星形耳環",
+          "price": "45",
+          "stock": "",
+          "desc": "粉色串珠星形耳環。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/33.webp",
+          "images": [
+            "assets/products/earrings/33.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/33.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/33.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-34",
+          "code": "E034",
+          "name": "白色珠飾三角耳環",
+          "price": "45",
+          "stock": "",
+          "desc": "白色珠飾三角耳環。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/34.webp",
+          "images": [
+            "assets/products/earrings/34.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/34.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/34.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-35",
+          "code": "E035",
+          "name": "透明珠飾三角耳環",
+          "price": "45",
+          "stock": "",
+          "desc": "透明珠飾三角耳環。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/35.webp",
+          "images": [
+            "assets/products/earrings/35.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/35.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/35.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-36",
+          "code": "E036",
+          "name": "銀色閃鑽愛心圈耳環",
+          "price": "45",
+          "stock": "",
+          "desc": "銀色閃鑽愛心圈耳環。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/36.webp",
+          "images": [
+            "assets/products/earrings/36.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/36.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/36.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-37",
+          "code": "E037",
+          "name": "金色閃鑽星形圈耳環",
+          "price": "45",
+          "stock": "",
+          "desc": "金色閃鑽星形圈耳環。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/37.webp",
+          "images": [
+            "assets/products/earrings/37.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/37.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/37.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-38",
+          "code": "E038",
+          "name": "焦糖棕紋C形耳環",
+          "price": "45",
+          "stock": "",
+          "desc": "焦糖棕紋C形耳環。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/38.webp",
+          "images": [
+            "assets/products/earrings/38.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/38.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/38.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-39",
+          "code": "E039",
+          "name": "奶油黃紋C形耳環",
+          "price": "45",
+          "stock": "",
+          "desc": "奶油黃紋C形耳環。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/39.webp",
+          "images": [
+            "assets/products/earrings/39.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/39.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/39.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-40",
+          "code": "E040",
+          "name": "綠色幾何白橢圓垂墜耳環",
+          "price": "45",
+          "stock": "",
+          "desc": "綠色幾何白橢圓垂墜耳環。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/40.webp",
+          "images": [
+            "assets/products/earrings/40.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/40.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/40.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-41",
+          "code": "E041",
+          "name": "金色雙方框耳環",
+          "price": "45",
+          "stock": "",
+          "desc": "金色雙方框耳環。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/41.webp",
+          "images": [
+            "assets/products/earrings/41.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/41.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/41.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-42",
+          "code": "E042",
+          "name": "白色櫻花透明圓珠耳環",
+          "price": "45",
+          "stock": "",
+          "desc": "白色櫻花透明圓珠耳環。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/42.webp",
+          "images": [
+            "assets/products/earrings/42.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/42.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/42.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-43",
+          "code": "E043",
+          "name": "桃紅毛球星星圓環耳環",
+          "price": "45",
+          "stock": "",
+          "desc": "桃紅毛球星星圓環耳環。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/43.webp",
+          "images": [
+            "assets/products/earrings/43.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/43.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/43.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-44",
+          "code": "E044",
+          "name": "粉色蛇紋愛心垂墜耳環",
+          "price": "45",
+          "stock": "",
+          "desc": "粉色蛇紋愛心垂墜耳環。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/44.webp",
+          "images": [
+            "assets/products/earrings/44.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/44.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/44.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-45",
+          "code": "E045",
+          "name": "寶藍金邊圓形耳釘",
+          "price": "45",
+          "stock": "",
+          "desc": "寶藍金邊圓形耳釘。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/45.webp",
+          "images": [
+            "assets/products/earrings/45.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/45.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/45.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-46",
+          "code": "E046",
+          "name": "白色玫瑰金邊圓形耳釘",
+          "price": "45",
+          "stock": "",
+          "desc": "白色玫瑰金邊圓形耳釘。\n售價：NT$45／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A1耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/46.webp",
+          "images": [
+            "assets/products/earrings/46.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/46.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/46.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-48",
+          "code": "E048",
+          "name": "深藍橢圓滿鑽垂墜耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "深藍橢圓滿鑽垂墜耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A3橢圓滿鑽耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/48.webp",
+          "images": [
+            "assets/products/earrings/48.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/48.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/48.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-49",
+          "code": "E049",
+          "name": "翠綠橢圓滿鑽垂墜耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "翠綠橢圓滿鑽垂墜耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A3橢圓滿鑽耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/49.webp",
+          "images": [
+            "assets/products/earrings/49.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/49.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/49.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-50",
+          "code": "E050",
+          "name": "正紅橢圓滿鑽垂墜耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "正紅橢圓滿鑽垂墜耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A3橢圓滿鑽耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/50.webp",
+          "images": [
+            "assets/products/earrings/50.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/50.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/50.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-51",
+          "code": "E051",
+          "name": "淡粉橢圓滿鑽垂墜耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "淡粉橢圓滿鑽垂墜耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A3橢圓滿鑽耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/51.webp",
+          "images": [
+            "assets/products/earrings/51.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/51.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/51.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-52",
+          "code": "E052",
+          "name": "香檳橙橢圓滿鑽垂墜耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "香檳橙橢圓滿鑽垂墜耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A3橢圓滿鑽耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/52.webp",
+          "images": [
+            "assets/products/earrings/52.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/52.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/52.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-53",
+          "code": "E053",
+          "name": "煙灰橢圓滿鑽垂墜耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "煙灰橢圓滿鑽垂墜耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A3橢圓滿鑽耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/53.webp",
+          "images": [
+            "assets/products/earrings/53.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/53.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/53.webp"
+          ],
+          "homeFeatured": false
+        },
+        {
+          "id": "earring-54",
+          "code": "E054",
+          "name": "金黃橢圓滿鑽垂墜耳環",
+          "price": "59",
+          "stock": "",
+          "desc": "金黃橢圓滿鑽垂墜耳環。\n售價：NT$59／一副。\n此標價為一副耳環的價格。\n現貨，數量與款式請於下單前確認。\n價格依提供的群組截圖整理。",
+          "visible": true,
+          "enabled": true,
+          "availability": "現貨",
+          "storeSection": "耳環",
+          "category": "耳環",
+          "tags": [
+            "耳環",
+            "A3橢圓滿鑽耳環",
+            "每副價格"
+          ],
+          "image": "assets/products/earrings/54.webp",
+          "images": [
+            "assets/products/earrings/54.webp"
+          ],
+          "thumb": "assets/thumbs/earrings/54.webp",
+          "thumbs": [
+            "assets/thumbs/earrings/54.webp"
+          ],
+          "homeFeatured": false
         }
       ],
       "tagGroups": [
@@ -4936,6 +6205,20 @@
             "99成新",
             "七成新・有污漬",
             "兩件套"
+          ]
+        },
+        {
+          "id": "earring-styles",
+          "name": "耳環款式",
+          "tags": [
+            "耳環",
+            "民族宮廷風",
+            "筷子耳環",
+            "A2圈式耳環",
+            "A1耳環",
+            "A3橢圓滿鑽耳環",
+            "單隻販售",
+            "每副價格"
           ]
         }
       ]
