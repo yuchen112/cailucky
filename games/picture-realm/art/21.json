@@ -1,0 +1,9 @@
+{
+  "id": 21,
+  "name": "櫻花野餐",
+  "theme": "四季旅遊",
+  "role": "hope",
+  "method": "built-in image_gen",
+  "prompt": "Use case stylized-concept. Create ONE complete square 1024x1024 collectible illustration for a puzzle game. Reference image is CxQ Hope: preserve her recognizable fluffy white bob, violet-blue large eyes, pale face, little pink heart hair ornament, same soft 3D clay/plush chibi proportions and premium tactile finish. Redesign outfit and pose: spring pastel pink picnic dress with blue ribbons, sitting on a checked blanket under blooming cherry blossom trees, holding a strawberry sandwich, small basket, teacups, fruit and a tiny stream with stone bridge behind. Warm sun, falling petals, pink canopy upper left, bridge upper right, basket lower left, patterned blanket lower right; varied detailed edge-to-edge scene suitable jigsaw, full character visible. New artwork not pasted cutout. No text, no border, no watermark, no puzzle seams, no collage.",
+  "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-27b1b0aa-af3c-455b-9b82-cedfa6ebaa96.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+}

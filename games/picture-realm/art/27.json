@@ -1,0 +1,9 @@
+{
+  "id": 27,
+  "name": "花漾禮舞",
+  "theme": "華麗舞台",
+  "role": "healing",
+  "method": "built-in image_gen",
+  "prompt": "Use case stylized-concept. ONE complete square 1024x1024 collectible puzzle illustration. Reference character identity CxQ Healing is a cream plush puppy with long drooping floppy ears whose tips are peach brown, peach oval forehead mark, little brown nose, sleepy smiling closed eyes, pink cheeks. Preserve this NONHUMAN puppy identity exactly, plush body and soft 3D clay tactile finish; do not turn it human. NEW elegant wardrobe: peach and ivory floral ballroom dress with lace and tiny pearl necklace, flower crown, gently twirling with paws holding dress hem at a glamorous flower ballroom. Crystal chandelier and peach drapes upper left, tall arched windows and rose trellis upper right, bouquet and golden tea table lower left, polished floral mosaic floor and petal trail lower right. Warm champagne lights, rich full background with detail all quadrants, full body visible. No text, watermark, borders, collage or puzzle seams.",
+  "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-b90459d8-4aad-425c-be99-6e907b201be0.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+}

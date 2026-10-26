@@ -1,0 +1,9 @@
+{
+  "id": 25,
+  "name": "山巔觀星",
+  "theme": "四季旅遊",
+  "role": "night",
+  "method": "built-in image_gen",
+  "prompt": "Use case stylized-concept. Create ONE complete square 1024x1024 collectible puzzle illustration. Image 1 is identity reference CxQ Night; preserve dark navy fluffy hair, big dark eyes, round pale face and recognizable navy cat-ear hood silhouette, same premium soft 3D clay/plush chibi finish. New outfit: navy fleece explorer jacket with embroidered constellations, short cape, hiking boots; new pose looking into brass telescope at a mountain observatory, owl sitting on telescope case. Deep indigo starry sky with distinct Milky Way swirls upper left, crescent moon and distant snowy peaks upper right, open illustrated star charts and compass lower left, brass telescope legs and glowing lantern lower right. Rich crisp tactile detail in all quadrants, moonlit blue with amber accents, full character integrated in scene. No text, border, watermark, puzzle seams, collage.",
+  "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-34d85809-4635-411f-acd0-af3e9152dad0.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+}

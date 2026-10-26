@@ -1,0 +1,546 @@
+{
+  "generator": "built-in image_gen",
+  "independentImages": true,
+  "images": [
+    {
+      "id": "01",
+      "file": "01.png",
+      "sha256": "db461639613f7222b76722d85ae1ee7464d05204c3249174c33a132e32edf238",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "01",
+        "name": "花傘春庭",
+        "theme": "古風雅境",
+        "role": "hope",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-7e7b-7760-a916-f4de5d9ed253\\exec-8785b77a-9f3e-488f-98c0-798ffe6767f8.png",
+        "prompt": "Use case: stylized-concept. Create ONE complete square 1024x1024 collectible puzzle illustration, edge-to-edge detailed setting, no text, border, watermark, puzzle grid or collage. Reference image is the identity and soft 3D clay/plush chibi style reference ONLY: preserve white bob hair with heart clip, lavender blue eyes, round sweet face, childlike chibi proportions of CxQ Hope, but create a NEW pose and costume. Scene: Hope wears delicate pale blue and ivory embroidered hanfu with peach sash and holds a pink floral paper parasol while stepping across a koi pond bridge in a lush Chinese garden. Pink peonies foreground, red pavilion left, willow branches top, koi and lily pads lower right, intricate railings and distant mountains. Full character clearly visible, lively gentle smile, polished collectible figurine-quality textured fabric, warm morning light. Strong varied visual details in every quadrant suitable for a challenging jigsaw. Must be recognizable as the reference character.",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "02",
+      "file": "02.png",
+      "sha256": "3f7ad42a939acbb3e07e476d75a41cd6be6aa78a2e64e5331362c2c0f65d26ec",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "02",
+        "name": "星燈夜遊",
+        "theme": "古風雅境",
+        "role": "dream",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-7e7b-7760-a916-f4de5d9ed253\\exec-da85332e-af66-4546-b7ba-467eaa088892.png",
+        "prompt": "Use case: stylized-concept. ONE square 1024x1024 complete premium soft 3D clay/plush chibi collectible puzzle illustration. Reference identifies CxQ Dream: preserve lavender wavy hair, round black eyes, small face, chibi proportions and fabric texture, but NEW pose costume and scene. Dream wears lavender and cream ancient scholar hanfu with gold star hairpin, no wizard hat, reaching upward to release a glowing floating lantern during a bustling Chinese lantern festival. Red wooden bridge and ornate canal buildings, multicolored lanterns upper left, reflections lower right, small festival snack stall lower left and warm apricot sky. Full character clear with flowing sleeves and delighted expression, varied intricate scenery all quadrants for jigsaw. NO text, watermark, border, collage or puzzle lines. Character identity must match reference.",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "03",
+      "file": "03.png",
+      "sha256": "e40410ce8c129691d9d2c22b79918828ff410e67d4e460a7cc1e2f46328c52a7",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "03",
+        "name": "竹溪行俠",
+        "theme": "古風雅境",
+        "role": "growth",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-7e7b-7760-a916-f4de5d9ed253\\exec-4284556f-94d0-4fd3-86b7-8ecc9b138072.png",
+        "prompt": "Use case: stylized-concept. ONE complete square 1024x1024 premium soft 3D clay/plush chibi collectible puzzle illustration. Reference is CxQ Growth identity and rendering reference: retain chestnut wavy bob, pointed elf ears, round dark eyes, gentle round face and chibi body, green leaf motif, but NEW costume and energetic pose. Growth dressed as a young wuxia swordsman in layered moss green and cream ancient robes, jade belt, holding a sheathed bamboo sword, balancing on a fallen log across a stream in a bamboo forest. Leaf hair ornament instead of hood, green scarf flowing, friendly confident smile. Stone shrine upper right, woven basket and orange mushrooms lower left, stepping stones and water ripples lower right, layered bamboo canopy and sunbeams top. Polished soft fabric/clay texture, full figure visible, varied sharp details all quadrants for jigsaw. No text, watermark, border, collage or puzzle lines.",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "04",
+      "file": "04.png",
+      "sha256": "655777cf585c9b2b5122f77187f5933fad142c935e7f0c1e2eba8999ed324887",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "04",
+        "name": "月瓦清音",
+        "theme": "古風雅境",
+        "role": "night",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-7e7b-7760-a916-f4de5d9ed253\\exec-dfe86af0-5a65-4420-87cc-03c966411d53.png",
+        "prompt": "Use case: stylized-concept. ONE complete square 1024x1024 premium 3D clay/plush chibi collectible puzzle illustration, identity faithful to reference CxQ Night: dark indigo wavy hair, round dark eyes, tiny sweet face, chibi proportions, cat-ear motif and golden star. NEW outfit pose setting: Night wears midnight blue ancient Chinese embroidered robes with gold moon patterns, cat-ear hair accessories rather than hood, sitting cross-legged on an ornate teal tiled rooftop, playing a small wooden flute. Tiny sleepy owl companion on roof beside character. Behind is a huge warm full moon, plum branches upper left, layered palace roofs right, hanging moon lantern lower left, roof ornaments and potted chrysanthemums lower right. Soft richly textured fabric/clay, tranquil blue-gold night light, full character visible, details across all quadrants for puzzle. No text, watermark, border, collage or puzzle grid.",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "05",
+      "file": "05.png",
+      "sha256": "50dc7a898a7a511360c504cf626f1afbf665d8fc424a33de0d196de231e051a1",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "05",
+        "name": "御園花語",
+        "theme": "古風雅境",
+        "role": "healing",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-7e7b-7760-a916-f4de5d9ed253\\exec-467ba483-68b7-4349-9dc4-bca2e48aeeea.png",
+        "prompt": "Use case: stylized-concept. ONE square 1024x1024 complete collectible puzzle illustration. Reference identity CxQ Healing must remain a cute cream-colored floppy-eared puppy with peach ear tips, peach oval forehead marking, tiny dark nose, closed happy eyes and peach cheeks, plush clay texture. DO NOT turn it into a human. NEW costume and action: puppy dressed in peach and ivory royal Chinese brocade robes, little jade pendant and floral crown, standing on a low carved stone stool tending peonies with a small golden watering can in an imperial flower courtyard. Detailed pink peonies and blue porcelain pots foreground, red circular moon gate left, flowering magnolia tree upper right, fountain and ornate pavilion in background. Warm morning light, velvet plush and embroidered fabric, full puppy visible, abundant differentiated details all quadrants. Edge-to-edge scene, no text, watermark, borders, collage or puzzle lines.",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "06",
+      "file": "06.png",
+      "sha256": "2d69260c4568fcd329f23dbcc403d97298fa57477ef2dd3ce0f5d30373fe9939",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "06",
+        "name": "騎士與幼龍",
+        "theme": "奇幻冒險",
+        "role": "joy",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-7e7b-7760-a916-f4de5d9ed253\\exec-c45a29a3-ea08-4c50-bd85-cabebc602aac.png",
+        "prompt": "Use case: stylized-concept. ONE complete square 1024x1024 premium soft 3D clay/plush chibi collectible puzzle illustration. Preserve CxQ Joy character reference identity: brown curled hair in twin buns with curls, large sparkling brown eyes, cheerful wink, rosy round face, yellow star hair clip and pink bow accent, childlike chibi proportions. NEW costume and pose: Joy as a brave friendly knight in pearly ivory and rose-gold armor with peach cape, holding a flower-shaped shield, kneeling to shake the paw of a tiny mint dragon on a mossy stone bridge. Castle towers upper left, dragon's nest with colorful eggs upper right, wildflowers and running stream below, small pennants and glowing forest mushrooms. Full character and dragon visible, playful smile, detailed fabric clay tactile materials, soft afternoon sunlight, edge-to-edge distinct scenery for puzzle. No text, logo, watermark, border, collage, puzzle lines.",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "07",
+      "file": "07.png",
+      "sha256": "ded18a04268f2b22d268dfb59d1e577ff7d2dddeec50234b7fe2da2193dbf4dd",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "07",
+        "name": "幸運魔藥屋",
+        "theme": "奇幻冒險",
+        "role": "luck",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-7e7b-7760-a916-f4de5d9ed253\\exec-4b11d72e-e12d-4fbe-b6f8-7efd12857ae9.png",
+        "prompt": "Use case: stylized-concept. ONE complete square 1024x1024 premium soft 3D clay/plush chibi collectible puzzle illustration. Reference is identity for CxQ Luck, a cream-and-brown fox-like creature with enormous pointed ears, mint green swept tuft, green eyes, clover motifs and fluffy mint tipped tail. MUST remain that animal creature, not human. NEW outfit pose scene: wearing emerald wizard vest, cream shirt, tiny clover brooch and a crooked moss-green wizard hat that leaves ears visible, standing on a stool and stirring a bubbling turquoise potion cauldron in a cozy magical apothecary. Amber bottles shelves upper left, moon window upper right, herb bundles, copper scales and open illustrated book on desk lower right, baskets of crystals and mushrooms lower left. Beautiful glowing potion light, tactile clay fur and stitched fabrics, full creature visible, distinct detailed objects across all quadrants, no blank background. No text, logos, watermarks, borders, collage, puzzle grid.",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "08",
+      "file": "08.png",
+      "sha256": "7555c65ea72f46cf94255574713bbfed844b45ed1dc1d60de69b95d987ce36ef",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "08",
+        "name": "精靈藏書閣",
+        "theme": "奇幻冒險",
+        "role": "memory",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-7e7b-7760-a916-f4de5d9ed253\\exec-b9fe8935-9267-45c5-820b-f0d8ae11a78f.png",
+        "prompt": "Use case: stylized-concept. ONE complete square 1024x1024 soft 3D clay/plush chibi collectible puzzle illustration. Preserve reference identity CxQ Memory: chestnut side-swept wavy bob, large thoughtful dark brown eyes, slightly wistful small mouth, round cheeks, chibi childlike proportions and warm sepia palette. NEW costume and pose: Memory as a small elf librarian wearing cream and caramel embroidered tunic, moss cape, delicate pointed ear cuffs and round spectacles perched on hair, climbing a short ornate wooden ladder to retrieve a glowing book in a magnificent enchanted library. Full figure visible, turning toward viewer while holding book carefully. Tall curved bookshelves upper left, stained glass arched window upper right, mechanical globe and stack of rolled maps lower left, open storybook and tiny paper birds lower right. Warm amber magical light, tactile detailed materials, all quadrants contain varied recognizable puzzle details. No text, writing, watermark, border, collage, puzzle lines.",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "09",
+      "file": "09.png",
+      "sha256": "27bfdf2adac6550a74b7863e2837bdc349dba433e6db85d821d74d5e46fd8087",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "09",
+        "name": "雪境魔法課",
+        "theme": "奇幻冒險",
+        "role": "sadness",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-7e7b-7760-a916-f4de5d9ed253\\exec-32d1e9fe-598f-4e99-a747-0eb1459d65a9.png",
+        "prompt": "Use case: stylized-concept. ONE complete square 1024x1024 premium soft 3D clay/plush chibi collectible puzzle illustration. Preserve reference CxQ Sadness identity: ash brown wavy shoulder-length hair, blue-gray big watery eyes, tiny wistful mouth, small flower hair clip, rosy round face, chibi childlike proportions. NEW action and outfit: Sadness wears ice blue and ivory magic-academy uniform with silver snowflake embroidery, capelet and knitted scarf, no rain hood or umbrella. She stands in a snow-covered academy courtyard gently conjuring a small luminous ice swan above an open palm, looking at it with a tentative smile. Gothic school towers upper left, frozen fountain right, snow-covered flowerpots and patterned cobblestones lower left, leather school satchel and crystal snowflakes lower right, pine branches and warm lit windows. Rich tactile fabric/clay, cool daylight with warm window contrast, full figure clear, varied detailed scenery across all quadrants. No text, logos, watermark, border, collage or puzzle lines.",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "10",
+      "file": "10.png",
+      "sha256": "7fec6ef0f3d586962d66c2f485c1f00b461253f4ddb2d8add11489bb3bd17fd0",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "10",
+        "name": "雲海領航員",
+        "theme": "奇幻冒險",
+        "role": "trust",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-7e7b-7760-a916-f4de5d9ed253\\exec-bf40b168-787a-4a12-9424-c7a4c027f404.png",
+        "prompt": "Use case: stylized-concept. ONE complete square 1024x1024 premium soft 3D clay/plush chibi collectible puzzle illustration. Reference is identity of CxQ Trust: golden tan small dog-like adventurer with furry brows, round black eyes, cream muzzle, black rounded nose and sweet confident face, plush clay fur, stocky chibi body. MUST remain animal, not human. NEW outfit and pose: wearing navy and brown aviator jacket, cream scarf, brass goggles on forehead, leather gloves and boots, piloting an ornate wooden fantasy airship while standing at the large ship wheel. Key-shaped brass compass hanging at chest recalls identity. Billowing striped airship balloon and ropes upper left, floating island waterfalls and distant airships upper right, brass engine gears and map desk lower right, coiled ropes and telescope lower left. Exciting golden sunrise, full animal figure visible, richly detailed tactile wood metal fabric, distinct details all quadrants. No text, lettering, logos, watermark, border, collage or puzzle grid.",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "11",
+      "file": "11.png",
+      "sha256": "a56583100f1a6ddf9648df909fd1c936e4c3882fa5fd3a664038b74ef7ca7f38",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "11",
+        "name": "晨光咖啡師",
+        "theme": "現代日常",
+        "role": "hope",
+        "prompt": "Use case: stylized-concept. Create ONE standalone finished square 1024x1024 collectible puzzle illustration. Input image is CHARACTER IDENTITY AND 3D MATERIAL STYLE REFERENCE, not an outfit constraint. Preserve Hope's white fluffy bob hair, violet-blue big eyes, round peach face and blue butterfly accents recognizably. Give her an entirely NEW modern pastel cafe barista outfit, pale blue apron and small beret, happily pouring latte art behind a cozy rose-and-teal cafe counter. Premium soft 3D clay/plush chibi render matching reference quality. Rich edge-to-edge full scene: pastries and strawberry cake lower left, ceramic cups and coffee grinder lower right, hanging plants upper left, ornate sunny windows and shelves upper right. Character full body or three-quarter body visible, coherent hands and anatomy. Varied detailed composition suitable for jigsaw, no flat empty quadrants. Warm daylight, cream rose blue palette. No text, letters, labels, watermark, border, collage, panel split, puzzle lines. ONE complete illustration.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-a6f7-7550-8ae1-28a46d226162\\exec-cb6225c2-46d7-4bba-b8f9-7ff051125b3e.png",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "12",
+      "file": "12.png",
+      "sha256": "cce8783f255d2a5ecc7de507239e009f3cd2f71d53d96007f76cb7bec6d95b81",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "12",
+        "name": "街角小提琴",
+        "theme": "現代日常",
+        "role": "dream",
+        "prompt": "Use case: stylized-concept. ONE full square 1024x1024 collectible illustration for a jigsaw game. Input is character identity/style reference. Preserve Dream's lavender wavy hair, dark round eyes, peach round chibi face, recognizable identity, but give NEW modern street musician outfit: lilac wool beret, cream blouse, purple vest and pleated skirt, holding and playing a violin with believable hands. Soft premium 3D clay/plush storybook style exactly consistent reference. Charming European pedestrian street at blue-hour with warm street lanterns; flower baskets upper left, colorful cafe facades upper right, open violin case and cobblestones lower left, flower pots and small fountain lower right. Character centered full body. Rich varied details edge-to-edge, pastel lilac peach teal palette, cinematic glow. No text letters labels watermark borders collage panel splits or puzzle lines.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-a6f7-7550-8ae1-28a46d226162\\exec-03adf9c9-ee74-4aa1-a65f-8b510631bfb6.png",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "13",
+      "file": "13.png",
+      "sha256": "27bfe15908f59e98f19271fad9c170922d1aac47b32cad95916afdd8600cc36c",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "13",
+        "name": "花市單車",
+        "theme": "現代日常",
+        "role": "growth",
+        "prompt": "Use case: stylized-concept. ONE complete square 1024x1024 collectible jigsaw illustration. Input reference preserves Growth character identity: chestnut wavy bob hair, round peach face, dark big eyes, chibi proportions, signature sage-green leaf accents. NEW modern florist costume with rolled-sleeve cream shirt, olive apron, little leaf hairclip and sneakers. Character rides a vintage sage bicycle with large wicker basket overflowing colorful flowers along a picturesque sunny town canal. Premium soft 3D clay/plush detailed render matching input material. Full-body character and entire bicycle comfortably visible. Flower shop awning and hanging vines upper left, canal bridge and pastel townhouses upper right, cobbled road and pots lower left, flowers and canal reflections lower right. Rich varied objects edge-to-edge for puzzle challenge, warm spring morning. No text letters logo watermark frame border collage or puzzle lines.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-a6f7-7550-8ae1-28a46d226162\\exec-e1a0a798-95e4-46d4-a9bf-56597f693fcb.png",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "14",
+      "file": "14.png",
+      "sha256": "931715d005b1e5b0bf9bc7762e57a5894a384f6c6a9ebb813b4853199dc691f1",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "14",
+        "name": "雨夜書店",
+        "theme": "現代日常",
+        "role": "night",
+        "prompt": "Use case: stylized-concept. ONE complete square 1024x1024 collectible jigsaw artwork. Input reference is Night character identity and soft 3D clay/plush materials: preserve short wavy dark navy hair, round peach face, large dark eyes, chibi proportions, subtle golden star accent, recognizable face. NEW modern rainy-city outfit, navy duffle coat, plaid scarf, round beret with tiny star, brown boots. Character seated on a little stool reading a book under the awning of a cozy urban bookstore at night, small owl resting beside him. Rich edge-to-edge composition: warm book shelves and arched shop windows left, wet reflective street and umbrella stand right, piles of illustrated unlettered books and potted fern bottom, raindrops and warm lantern above. Navy amber teal palette, cinematic rainy glow, varied visual detail in every quadrant. No readable text, letters, logos, watermark, border, collage or puzzle lines.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-a6f7-7550-8ae1-28a46d226162\\exec-2cd113e2-74f9-4985-93aa-4ca46bdfaa39.png",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "15",
+      "file": "15.png",
+      "sha256": "3bced098e24fdfa3d1d775714c263b889c8fa5214f0089738d6a85d0f69252c9",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "15",
+        "name": "霓虹遊樂場",
+        "theme": "現代日常",
+        "role": "joy",
+        "prompt": "Use case: stylized-concept. Create ONE full square 1024x1024 collectible puzzle illustration, not collage. Reference character Joy must remain recognizable: round peach chibi face, fluffy curled brown hair in little side bunches, huge warm dark eyes, bright playful expression and pastel pink yellow mint signature palette. Entirely NEW modern arcade streetwear: pink varsity jacket, mint pleated skirt, yellow sneakers, little star hairclip, headphones around neck. Joy excitedly playing a retro arcade cabinet in a cozy pastel neon game arcade. Premium soft 3D clay/plush miniatures, high detail consistent reference. Full body with hands clearly on controls. Surrounding edge-to-edge environment: pinball machine and neon shapes left, plush prize crane right, tiled floor and scattered game tokens below, pendant lamps and retro pixel-shaped decorative lights above. Neon lilac peach aqua glow but clear readable forms in every quadrant. Absolutely no text numbers letters logos watermark borders puzzle lines or split panels.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-a6f7-7550-8ae1-28a46d226162\\exec-90843d1c-0412-4e9c-aaef-233e3090622d.png",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "16",
+      "file": "16.png",
+      "sha256": "38b3bc6041fb4d092063430f18fe4d1b37cb48ef67ee6741c4b116233ef5ab14",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "16",
+        "name": "森林午茶",
+        "theme": "童話夢境",
+        "role": "healing",
+        "prompt": "Use case: stylized-concept. ONE complete square 1024x1024 collectible jigsaw artwork. Input character Healing is a cream fluffy puppy mascot with long floppy ears fading peach at tips, small brown nose, closed smiling eyes, pink oval forehead mark and round plush chibi body. Preserve these exact recognizable mascot identity traits; do NOT turn into human. Entirely NEW fairytale tea-party outfit: peach lace waistcoat, mint bow tie, tiny floral crown, seated on ornate little garden chair pouring tea with paws. Premium soft detailed 3D clay/plush illustration matching reference. Elaborate woodland fairytale tea party: rose arch upper left, giant mushrooms and ivy upper right, tiered cakes and strawberries lower left, floral teacups and pastel macarons lower right. Rich edge-to-edge garden with distinct object clusters in each quadrant, afternoon sunbeams. No readable text letters logos watermark border collage puzzle lines or panels.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-a6f7-7550-8ae1-28a46d226162\\exec-4e676ee3-7b3f-4690-9e76-611123b37916.png",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "17",
+      "file": "17.png",
+      "sha256": "69bcdbfdce2a2fb9326ebb1e4fe549b668e3f91b87da635c360aef411ae5b2e8",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "17",
+        "name": "蘑菇小屋",
+        "theme": "童話夢境",
+        "role": "memory",
+        "prompt": "Use case: stylized-concept. ONE complete square 1024x1024 collectible puzzle artwork. Input Memory reference character identity: short fluffy brown hair, dark large eyes, round peach chibi face and gentle wistful expression, cream caramel palette. Preserve face/hair identity but NEW fairytale forest outfit: cream knitted dress, caramel pinafore, tiny acorn beret, moss-green boots, carrying a basket of berries, kneeling to greet a tiny snail at doorstep. Premium soft 3D clay/plush render matching reference. Charming tiny mushroom-roof cottage in deep woodland, full scene edge-to-edge: carved round door and windows upper left, giant ferns and red mushrooms upper right, moss stepping stones and berry basket lower left, tiny stream and glowing flowers lower right. Dappled warm forest light, rich varied details in all quadrants, full body visible. No readable text letters logos watermark border collage panels or puzzle outlines.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-a6f7-7550-8ae1-28a46d226162\\exec-ad67add8-4ff1-4c32-91e4-560b00a817a5.png",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "18",
+      "file": "18.png",
+      "sha256": "e688c713c66bea7fabbe02bc2cc313b4d79d8f7cfacdd66e716749bdca8706a4",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "18",
+        "name": "糖果王子",
+        "theme": "童話夢境",
+        "role": "luck",
+        "prompt": "Use case: stylized-concept. ONE complete square 1024x1024 collectible jigsaw artwork. Input is Luck mascot identity and 3D style reference: cute cream and brown fox-cat creature, enormous pointed brown ears, mint green swept-up tuft, olive green big eyes, fluffy mint tipped tail, clover accent. Preserve exact nonhuman species face and colors, not human. Entirely NEW candy kingdom prince costume: little pastel gold crown, mint brocade royal jacket, pink velvet cape, paw holding a candy cane scepter. Joyful standing pose on candy castle bridge. Premium soft 3D clay/plush rendering matching reference. Rich edge-to-edge fairytale scene: iced gingerbread turrets upper left, gumdrop towers upper right, chocolate bridge and peppermint flowers lower left, crystal sugar fountain and lollipop garden lower right. Bright mint pink cream gold palette with detailed materials and varied objects in every quadrant. No readable text letters logo watermark border collage panels or puzzle outlines.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-a6f7-7550-8ae1-28a46d226162\\exec-6902290b-0500-4eb1-8d39-34648ed3dd52.png",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "19",
+      "file": "19.png",
+      "sha256": "1d1090c8cef677f6504b3f2e3ffd147ff5c4b140aec041edd7ad06f1fddecead",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "19",
+        "name": "月光雲花園",
+        "theme": "童話夢境",
+        "role": "sadness",
+        "prompt": "Use case: stylized-concept. ONE complete square 1024x1024 collectible jigsaw illustration. Input character Sadness identity: gray-brown short wavy hair, very large blue-gray reflective eyes, peach round chibi face, tiny wistful mouth and white flower hairclip. Preserve this recognizable identity but NEW dream cloud-garden outfit: silvery blue layered gown, translucent pale-blue butterfly sleeves, pearl anklets and little moon hair accessory, gently watering glowing flowers with small silver watering can. Premium soft detailed 3D clay/plush style matching reference. Magical cloud garden suspended under a large crescent moon: crystal arched greenhouse upper left, moon and star garlands upper right, blue hydrangeas and pearl stepping stones lower left, cloud pond with glowing lilies lower right. Rich varied details edge-to-edge, luminous blue silver lavender palette with warm soft highlights, peaceful rather than dark. Full-body character visible. No text letters watermark logo border collage split panels or puzzle lines.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-a6f7-7550-8ae1-28a46d226162\\exec-332a2d3c-1067-4012-a8f9-7503f99c67ee.png",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "20",
+      "file": "20.png",
+      "sha256": "f84527ad43261b1430a580fe69a777e25f854a502355a37cd74316328774dbec",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": "20",
+        "name": "皇家假面舞會",
+        "theme": "童話夢境",
+        "role": "trust",
+        "prompt": "Use case: stylized-concept. ONE complete square 1024x1024 collectible jigsaw artwork. Input Trust is a golden cream puppy mascot with floppy brown ears, dark round eyes, little black nose, furry round chibi face and warm loyal expression. Preserve exact nonhuman character identity, species and fur colors. Entirely NEW royal masquerade costume: navy and gold embroidered tailcoat, cream ruffled shirt, blue velvet short cape, tiny gold crown and holding a beautiful gold masquerade mask beside the face so eyes remain visible. Full-body puppy joyfully dancing in lavish fairytale palace ballroom. Premium detailed soft 3D clay/plush style matching reference. Edge-to-edge ornate environment: gold chandelier and draped curtains upper left, balcony and moonlit windows upper right, checkerboard marble floor with roses lower left, gilded chair and decorative masks lower right. Rich navy ivory gold rose palette, cinematic warm light, distinct varied details all quadrants. No text letters logos watermark border collage split panels or puzzle lines.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-a6f7-7550-8ae1-28a46d226162\\exec-22906029-7f48-43d8-aa37-0d7e7cfa7d2f.png",
+        "generator": "built-in image_gen"
+      }
+    },
+    {
+      "id": "21",
+      "file": "21.png",
+      "sha256": "b36f94e7c2d0c8f22b5abb09041485cd1ab297266ba86a92986ac187935d9165",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": 21,
+        "name": "櫻花野餐",
+        "theme": "四季旅遊",
+        "role": "hope",
+        "method": "built-in image_gen",
+        "prompt": "Use case stylized-concept. Create ONE complete square 1024x1024 collectible illustration for a puzzle game. Reference image is CxQ Hope: preserve her recognizable fluffy white bob, violet-blue large eyes, pale face, little pink heart hair ornament, same soft 3D clay/plush chibi proportions and premium tactile finish. Redesign outfit and pose: spring pastel pink picnic dress with blue ribbons, sitting on a checked blanket under blooming cherry blossom trees, holding a strawberry sandwich, small basket, teacups, fruit and a tiny stream with stone bridge behind. Warm sun, falling petals, pink canopy upper left, bridge upper right, basket lower left, patterned blanket lower right; varied detailed edge-to-edge scene suitable jigsaw, full character visible. New artwork not pasted cutout. No text, no border, no watermark, no puzzle seams, no collage.",
+        "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-27b1b0aa-af3c-455b-9b82-cedfa6ebaa96.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    },
+    {
+      "id": "22",
+      "file": "22.png",
+      "sha256": "f277b9c02cb81635b7d191ab489a76d3f3b4fa9e22189e164cc1af7e3c96b320",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": 22,
+        "name": "夏日航海",
+        "theme": "四季旅遊",
+        "role": "joy",
+        "method": "built-in image_gen",
+        "prompt": "Use case stylized-concept. ONE complete square 1024x1024 premium soft 3D clay/plush chibi collectible illustration. Image 1 is identity reference CxQ Joy: preserve curly warm brown hair, tiny round face, expressive big brown eyes, cheerful smile and star hairpin, same childlike chibi proportions. New outfit pose and scene: coral and ivory sailor dress, striped scarf, little sailor cap, standing on a charming wooden sailboat holding ship wheel, laughing. Turquoise summer ocean, multicolored sail upper left, lighthouse and seaside houses upper right, ropes and shell bucket lower left, sunlit deck and life ring lower right. Detailed full edge-to-edge scene, distinct objects in every quadrant for a jigsaw. Full character with new integrated pose, not pasted original. No text, border, watermark, collage or puzzle seams.",
+        "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-80e07e48-22ea-47ab-b763-f451675b570f.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    },
+    {
+      "id": "23",
+      "file": "23.png",
+      "sha256": "1a38f41cc9812323eea6f357c69e9943dc7843e8af1aa29bb69a7348d28b3d35",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": 23,
+        "name": "楓林露營",
+        "theme": "四季旅遊",
+        "role": "growth",
+        "method": "built-in image_gen",
+        "prompt": "Use case stylized-concept. ONE square complete collectible puzzle illustration, premium soft 3D clay/plush chibi. Reference CxQ Growth identity: same round face, chestnut short fluffy hair, large dark brown eyes, small leaf hair ornament, same compact chibi proportions. New outfit and action: olive hiking jacket and cream cable knit scarf with little backpack, kneeling beside a campfire stirring a small pot, in a vivid autumn woodland campsite. Orange red maple trees fill upper left, teal tent and distant waterfall upper right, mushrooms pinecones and acorns lower left, kettle boots patterned blanket lower right. Golden dusk lighting, rich tactile fabrics, detailed edge-to-edge environment suitable jigsaw, character full body integrated new pose. No text, no borders, no watermark, no collage, no puzzle seams. 1024x1024 square.",
+        "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-19b6b429-fe4e-4c9b-b2f5-242cb7491a54.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    },
+    {
+      "id": "24",
+      "file": "24.png",
+      "sha256": "78d8627bbf959ca79dcc6d923cbe7b009908b07d2e6ff2b67dadf65aec97afcf",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": 24,
+        "name": "雪村暖光",
+        "theme": "四季旅遊",
+        "role": "sadness",
+        "method": "built-in image_gen",
+        "prompt": "Use case stylized-concept. ONE complete square 1024x1024 collectible jigsaw illustration. Reference image is identity reference CxQ Sadness: preserve wavy ash-brown bob, big blue-gray eyes, round pale face, shy gentle expression and small flower hairclip. Premium soft 3D clay/plush chibi proportions and tactile finish same as reference. NEW wardrobe and pose: powder blue quilted winter coat, earmuffs, ivory scarf and snow boots, carrying a red thermos while building a tiny snow rabbit outside a cozy snowy village bakery. Snow-clad fir branches and hanging lantern upper left, warmly lit timber houses upper right, sled and mittens lower left, little snow rabbit and colorful parcels lower right. Warm windows contrast cool snow, falling snowflakes, intricate full scene with distinguishable detail everywhere. Full body integrated new pose; no original outfit, no text, border, collage, puzzle seams or watermark.",
+        "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-d942ac1b-1466-4657-88f2-06100edf3eb2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    },
+    {
+      "id": "25",
+      "file": "25.png",
+      "sha256": "f11ea80b5b1315a2977ef7d9cad7ab0774d4ac838c255294bc2cc8ae64dfdfa4",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": 25,
+        "name": "山巔觀星",
+        "theme": "四季旅遊",
+        "role": "night",
+        "method": "built-in image_gen",
+        "prompt": "Use case stylized-concept. Create ONE complete square 1024x1024 collectible puzzle illustration. Image 1 is identity reference CxQ Night; preserve dark navy fluffy hair, big dark eyes, round pale face and recognizable navy cat-ear hood silhouette, same premium soft 3D clay/plush chibi finish. New outfit: navy fleece explorer jacket with embroidered constellations, short cape, hiking boots; new pose looking into brass telescope at a mountain observatory, owl sitting on telescope case. Deep indigo starry sky with distinct Milky Way swirls upper left, crescent moon and distant snowy peaks upper right, open illustrated star charts and compass lower left, brass telescope legs and glowing lantern lower right. Rich crisp tactile detail in all quadrants, moonlit blue with amber accents, full character integrated in scene. No text, border, watermark, puzzle seams, collage.",
+        "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-34d85809-4635-411f-acd0-af3e9152dad0.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    },
+    {
+      "id": "26",
+      "file": "26.png",
+      "sha256": "0c764ba21918ef9ec61b133c186e97502eb5d48e98b55b4bcba9b3e4488ac5e3",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": 26,
+        "name": "星光偶像",
+        "theme": "華麗舞台",
+        "role": "dream",
+        "method": "built-in image_gen",
+        "prompt": "Use case stylized-concept. ONE complete square 1024x1024 premium collectible puzzle illustration. Input reference identity CxQ Dream: preserve lavender wavy long hair with little side braids, large dark brown eyes, round face and gold star motifs, same premium soft 3D clay/plush chibi proportions and tactile finish. New outfit and pose: elaborate lavender and ivory idol stage dress with gold stars, short jacket, ribbons and tiny star hair crown, singing into a handheld microphone mid-dance on an ornate fantasy concert stage. Velvet curtains with crystal star mobiles upper left, magical music staff made only of decorative notes and spotlights upper right, flowers and heart-shaped glowing lightsticks lower left, stage speakers and ribbon streamers lower right. Violet peach gold concert lighting, rich objects all quadrants, full body visible, no text, lettering, border, watermark, collage or puzzle seams.",
+        "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-f15b135a-7a5b-4eac-8af6-d24d38b74fe6.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    },
+    {
+      "id": "27",
+      "file": "27.png",
+      "sha256": "efe1971d841be929bf2452a5a7d9852034899594da9bd662eb7eb957f1c2ff74",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": 27,
+        "name": "花漾禮舞",
+        "theme": "華麗舞台",
+        "role": "healing",
+        "method": "built-in image_gen",
+        "prompt": "Use case stylized-concept. ONE complete square 1024x1024 collectible puzzle illustration. Reference character identity CxQ Healing is a cream plush puppy with long drooping floppy ears whose tips are peach brown, peach oval forehead mark, little brown nose, sleepy smiling closed eyes, pink cheeks. Preserve this NONHUMAN puppy identity exactly, plush body and soft 3D clay tactile finish; do not turn it human. NEW elegant wardrobe: peach and ivory floral ballroom dress with lace and tiny pearl necklace, flower crown, gently twirling with paws holding dress hem at a glamorous flower ballroom. Crystal chandelier and peach drapes upper left, tall arched windows and rose trellis upper right, bouquet and golden tea table lower left, polished floral mosaic floor and petal trail lower right. Warm champagne lights, rich full background with detail all quadrants, full body visible. No text, watermark, borders, collage or puzzle seams.",
+        "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-b90459d8-4aad-425c-be99-6e907b201be0.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    },
+    {
+      "id": "28",
+      "file": "28.png",
+      "sha256": "84dace34b83404221c77e9e6ebe54d48cde9ed82ecdd394ecd044ae9b36c4e29",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": 28,
+        "name": "古宅人偶",
+        "theme": "華麗舞台",
+        "role": "memory",
+        "method": "built-in image_gen",
+        "prompt": "Use case stylized-concept. ONE complete square 1024x1024 collectible puzzle illustration. Image 1 identity reference CxQ Memory: preserve soft short chestnut hair, round pale face, large brown eyes and quiet wistful expression, same soft 3D clay/plush chibi proportions. NEW costume and pose: elegant dark cocoa and dusty rose gothic doll dress with ivory lace collar, velvet ribbon bonnet, little ankle boots, sitting on a carved armchair holding an antique photo locket. Whimsical clockwork mansion setting: ornate grandfather clock and burgundy wallpaper upper left, arched stained glass window with moon upper right, antique photo frames and music box lower left, tiny mechanical bird and patterned carpet lower right. Cozy gothic mood rather than horror, amber lamps, detailed all quadrants, full character visible, no text no watermark no border no collage no puzzle seams.",
+        "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-cbf733d8-97b5-476a-9190-869d964f4b7c.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    },
+    {
+      "id": "29",
+      "file": "29.png",
+      "sha256": "ff558ec9ffab1981eb3b8615b9ecaff8c934c5ac78e1225a2cfd0602e4a6814f",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": 29,
+        "name": "蒸汽工坊",
+        "theme": "華麗舞台",
+        "role": "luck",
+        "method": "built-in image_gen",
+        "prompt": "Use case stylized-concept. ONE complete square 1024x1024 collectible puzzle illustration. Identity reference CxQ Luck is a small cream and cocoa forest fox creature with very large pointed ears, mint-green forehead tuft, green gold eyes, leaf shaped face marks, bushy mint tipped tail and clover charm. Preserve this NONHUMAN fox identity and cute proportions; do not turn human. Same premium tactile soft 3D clay/plush finish. NEW outfit/action: bronze steampunk goggles on head, cream shirt, green leather apron with tool pockets, brass gear necklace; standing at inventor workbench tightening a tiny mechanical airship with paw-held screwdriver. Brass pipes and hanging gears upper left, glowing round window with small balloons upper right, gears tools and blueprint diagram without words lower left, copper boiler and finished toy airship lower right. Green bronze amber palette, rich edge-to-edge environment all quadrants, no text, watermark, borders, collage, puzzle seams.",
+        "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-cb805108-19e8-49de-9396-c29a40ffb2a5.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    },
+    {
+      "id": "30",
+      "file": "30.png",
+      "sha256": "88e382271f9718a1d5ae245dc1812b5d210573def721d2792c64a22eaaf5b0aa",
+      "size": [
+        1254,
+        1254
+      ],
+      "metadata": {
+        "id": 30,
+        "name": "星際旅人",
+        "theme": "華麗舞台",
+        "role": "trust",
+        "method": "built-in image_gen",
+        "prompt": "Use case stylized-concept. ONE complete square 1024x1024 collectible puzzle illustration. Input character identity CxQ Trust is a small golden beige puppy, fluffy curled forehead hair, floppy ears, large glossy dark eyes, black nose and gentle determined expression. Preserve NONHUMAN puppy identity, soft chibi proportions and premium 3D clay/plush tactile finish. NEW outfit and pose: ivory and navy futuristic astronaut suit with gold accents, transparent open helmet revealing ears and face, little paw gloves and moon boots; floating gently inside space station while catching a small glowing star specimen. Large curved window revealing ringed planet and stars upper left, hydroponic plants and orbital moon upper right, colorful station equipment and floating camera lower left, padded navy seat and robotic arm lower right. Distinct detailed objects all quadrants, cool cyan and warm amber lighting, entire character visible with attached safety tether. No lettering, text, logos, watermark, border, collage or puzzle seams.",
+        "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-53e0db7f-a28d-418e-9b1d-717ce0b829d8.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      }
+    }
+  ]
+}
