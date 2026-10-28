@@ -1,0 +1,9 @@
+{
+  "id": 23,
+  "name": "楓林露營",
+  "theme": "四季旅遊",
+  "role": "growth",
+  "method": "built-in image_gen",
+  "prompt": "Use case stylized-concept. ONE square complete collectible puzzle illustration, premium soft 3D clay/plush chibi. Reference CxQ Growth identity: same round face, chestnut short fluffy hair, large dark brown eyes, small leaf hair ornament, same compact chibi proportions. New outfit and action: olive hiking jacket and cream cable knit scarf with little backpack, kneeling beside a campfire stirring a small pot, in a vivid autumn woodland campsite. Orange red maple trees fill upper left, teal tent and distant waterfall upper right, mushrooms pinecones and acorns lower left, kettle boots patterned blanket lower right. Golden dusk lighting, rich tactile fabrics, detailed edge-to-edge environment suitable jigsaw, character full body integrated new pose. No text, no borders, no watermark, no collage, no puzzle seams. 1024x1024 square.",
+  "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-19b6b429-fe4e-4c9b-b2f5-242cb7491a54.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+}

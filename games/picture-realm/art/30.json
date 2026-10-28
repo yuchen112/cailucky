@@ -1,0 +1,9 @@
+{
+  "id": 30,
+  "name": "星際旅人",
+  "theme": "華麗舞台",
+  "role": "trust",
+  "method": "built-in image_gen",
+  "prompt": "Use case stylized-concept. ONE complete square 1024x1024 collectible puzzle illustration. Input character identity CxQ Trust is a small golden beige puppy, fluffy curled forehead hair, floppy ears, large glossy dark eyes, black nose and gentle determined expression. Preserve NONHUMAN puppy identity, soft chibi proportions and premium 3D clay/plush tactile finish. NEW outfit and pose: ivory and navy futuristic astronaut suit with gold accents, transparent open helmet revealing ears and face, little paw gloves and moon boots; floating gently inside space station while catching a small glowing star specimen. Large curved window revealing ringed planet and stars upper left, hydroponic plants and orbital moon upper right, colorful station equipment and floating camera lower left, padded navy seat and robotic arm lower right. Distinct detailed objects all quadrants, cool cyan and warm amber lighting, entire character visible with attached safety tether. No lettering, text, logos, watermark, border, collage or puzzle seams.",
+  "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-53e0db7f-a28d-418e-9b1d-717ce0b829d8.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+}

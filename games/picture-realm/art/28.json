@@ -1,0 +1,9 @@
+{
+  "id": 28,
+  "name": "古宅人偶",
+  "theme": "華麗舞台",
+  "role": "memory",
+  "method": "built-in image_gen",
+  "prompt": "Use case stylized-concept. ONE complete square 1024x1024 collectible puzzle illustration. Image 1 identity reference CxQ Memory: preserve soft short chestnut hair, round pale face, large brown eyes and quiet wistful expression, same soft 3D clay/plush chibi proportions. NEW costume and pose: elegant dark cocoa and dusty rose gothic doll dress with ivory lace collar, velvet ribbon bonnet, little ankle boots, sitting on a carved armchair holding an antique photo locket. Whimsical clockwork mansion setting: ornate grandfather clock and burgundy wallpaper upper left, arched stained glass window with moon upper right, antique photo frames and music box lower left, tiny mechanical bird and patterned carpet lower right. Cozy gothic mood rather than horror, amber lamps, detailed all quadrants, full character visible, no text no watermark no border no collage no puzzle seams.",
+  "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-cbf733d8-97b5-476a-9190-869d964f4b7c.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+}

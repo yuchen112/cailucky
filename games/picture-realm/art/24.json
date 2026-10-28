@@ -1,0 +1,9 @@
+{
+  "id": 24,
+  "name": "雪村暖光",
+  "theme": "四季旅遊",
+  "role": "sadness",
+  "method": "built-in image_gen",
+  "prompt": "Use case stylized-concept. ONE complete square 1024x1024 collectible jigsaw illustration. Reference image is identity reference CxQ Sadness: preserve wavy ash-brown bob, big blue-gray eyes, round pale face, shy gentle expression and small flower hairclip. Premium soft 3D clay/plush chibi proportions and tactile finish same as reference. NEW wardrobe and pose: powder blue quilted winter coat, earmuffs, ivory scarf and snow boots, carrying a red thermos while building a tiny snow rabbit outside a cozy snowy village bakery. Snow-clad fir branches and hanging lantern upper left, warmly lit timber houses upper right, sled and mittens lower left, little snow rabbit and colorful parcels lower right. Warm windows contrast cool snow, falling snowflakes, intricate full scene with distinguishable detail everywhere. Full body integrated new pose; no original outfit, no text, border, collage, puzzle seams or watermark.",
+  "source": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d as C:\\Users\\User\\.codex\\generated_images\\01a17963-c78d-7831-9b87-a750b69cbb5d\\exec-d942ac1b-1466-4657-88f2-06100edf3eb2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+}

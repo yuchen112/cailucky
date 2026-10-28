@@ -1,0 +1,4 @@
+const canvas=document.querySelector('canvas'),ctx=canvas.getContext('2d');
+const cover=new Image();cover.src='art/cover.webp';let loaded=false;cover.onload=()=>{loaded=true;draw();};
+function draw(){canvas.width=innerWidth;canvas.height=innerHeight;const w=canvas.width,h=canvas.height,s=Math.min(w*.82,h*.56,480);ctx.fillStyle='#101c34';ctx.fillRect(0,0,w,h);if(loaded)ctx.drawImage(cover,(w-s)/2,Math.max(24,h*.1),s,s);ctx.textAlign='center';ctx.fillStyle='#f7e9ca';ctx.font='bold 26px sans-serif';ctx.fillText('CxQ 幻裝圖境',w/2,Math.max(24,h*.1)+s+45);ctx.font='20px sans-serif';ctx.fillText('暫停開放',w/2,Math.max(24,h*.1)+s+85);ctx.font='14px sans-serif';ctx.fillText('製作與試玩調整中，確認完成後開放。',w/2,Math.max(24,h*.1)+s+118);ctx.fillText('點此返回 CxQ',w/2,Math.max(24,h*.1)+s+158);}
+canvas.onclick=()=>location.href='../../index.html#game-hub';addEventListener('resize',draw);draw();
