@@ -1,0 +1,166 @@
+{
+  "version": "20261101-atelier-v2",
+  "assets": [
+    {
+      "id": "album-icon",
+      "original": "album-icon.png",
+      "runtime": "album-icon.webp",
+      "size": [
+        1024,
+        862
+      ],
+      "sha256": "773c029fb8bfa41a12f722c7a014e6ce8efe4b0240c6bd7a699c4bb17da697ca",
+      "metadata": {
+        "asset": "album-icon",
+        "generator": "built-in image_gen",
+        "prompt": "Use case: stylized-concept. Asset: one standalone collector album icon for a casual puzzle game, square 1024x1024 transparent PNG. Create a chunky open ivory #fff3dd picture collector album with soft lavender #8871ad padded fabric cover, two visible cream pages holding four miniature pastel picture cards in rounded pockets. Cards have simple flowers, mountain scenery, moon and clouds, no text or human faces. A tiny coral star bookmark peeks from top edge. Premium cozy soft 3D clay/plush toy material, broad simple rounded silhouette, subtle stitched edge and gentle ambient occlusion, front three-quarter view showing both open pages, studio soft light. Center object takes 75 percent of image, generous transparent margin, whole album visible. Polished modern cozy puzzle UI style matching lavender toy sliding board and jigsaw pieces. No lettering, numbers, gold, filigree, ornate decorations, scene, collage, sheet, labels, watermark. Actual transparent background, no white backing or ground plane.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-7e7b-7760-a916-f4de5d9ed253\\exec-e07196e7-6061-4346-93a9-fb075db4afbf.png",
+        "transparent": true
+      }
+    },
+    {
+      "id": "board-background",
+      "original": "board-background.png",
+      "runtime": "board-background.webp",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "9d86eb366d9afa938b26596223f1ad87f67c7ff9362f50a90069ee12eee9068e",
+      "metadata": {
+        "generator": "built-in image_gen",
+        "direction": "Coherent cozy CxQ clay atelier, lavender and ivory, no gold filigree",
+        "purpose": "board-background"
+      }
+    },
+    {
+      "id": "button-primary",
+      "original": "button-primary.png",
+      "runtime": "button-primary.webp",
+      "size": [
+        1024,
+        222
+      ],
+      "sha256": "de8504abb399da8deb913d8f70ce90ae7e5b62eb908ab2001c4671dd75416b31",
+      "metadata": {
+        "name": "button-primary",
+        "prompt": "Use case: stylized-concept. Asset type: production game UI button texture, one independent asset for nine-slice scaling. Create a SINGLE horizontal 3:1 rounded rectangular capsule button, centered, occupying 94% of width, minimal 3% transparent padding. Premium cozy soft 3D clay/plush casual puzzle game art. Thick tactile lavender clay button, main broad uniform flat muted lavender purple face #8871ad intended for white text overlay. Very subtle lighter upper rim and darker lower lip for physical bevel, delicate small soft contact shadow only. Corners rounded radius approximately 20% of button height, simple straight horizontal edges and uniform center suitable for nine-slice stretching. Front-on orthographic view, no perspective distortion. Entire background genuinely TRANSPARENT with alpha. No text, icons, gems, filigree, ornaments, highlights across center, textures, gradients across face, additional objects, sheet, collage, frame or watermark. One empty clean button only.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-a6f7-7550-8ae1-28a46d226162\\exec-bd0f5350-8d0a-4698-84fd-e0303bcb7ac7.png",
+        "generator": "built-in image_gen",
+        "transparent": true
+      }
+    },
+    {
+      "id": "button-secondary",
+      "original": "button-secondary.png",
+      "runtime": "button-secondary.webp",
+      "size": [
+        1024,
+        271
+      ],
+      "sha256": "cdf538e816316448abcafdfefa029442e7db1d1ba4cea98b6459e9231df5a0a8",
+      "metadata": {
+        "name": "button-secondary",
+        "prompt": "Use case: stylized-concept. Asset type: production game UI button texture, independent asset for nine-slice scaling. Create SINGLE horizontal rounded rectangular capsule button with actual shape width exactly 3 times height, front-on orthographic, centered occupying nearly entire canvas with only 3% transparent padding. Premium cozy soft 3D clay/plush casual puzzle game art. Thick tactile ivory cream clay button, main broad empty uniform flat warm ivory face #fff3dd for dark text overlay, very thin muted lavender #8871ad rim, subtle darker lower lip and small soft physical bottom shadow. Corners simple rounded radius about 20% height; straight long edges and completely uniform interior for nine-slice stretching. Preserve genuinely TRANSPARENT alpha background. No text icons symbols ornate filigree gems patterns decorative elements gradients across central face, additional objects, collage sheet frame watermark. One single clean empty cream button only, matching lavender clay casual game UI.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-a6f7-7550-8ae1-28a46d226162\\exec-1478ed2d-9d38-493f-aff4-1f7672355e8f.png",
+        "generator": "built-in image_gen",
+        "transparent": true
+      }
+    },
+    {
+      "id": "home-tall",
+      "original": "home-tall.png",
+      "runtime": "home-tall.webp",
+      "size": [
+        1024,
+        1536
+      ],
+      "sha256": "1fae8a632be401ae81d22e9d5ad7fef06c73a570f239494165974c16aee026ba",
+      "metadata": {
+        "generator": "built-in image_gen",
+        "direction": "Coherent cozy CxQ clay atelier, lavender and ivory, no gold filigree",
+        "purpose": "home-tall"
+      }
+    },
+    {
+      "id": "home-wide",
+      "original": "home-wide.png",
+      "runtime": "home-wide.webp",
+      "size": [
+        1672,
+        941
+      ],
+      "sha256": "2c0c7a73dfa065042f4824a2b25692001f6f68e91bde60ae9a6bbc068b2468c8",
+      "metadata": {
+        "generator": "built-in image_gen",
+        "direction": "Coherent cozy CxQ clay atelier, lavender and ivory, no gold filigree",
+        "purpose": "home-wide"
+      }
+    },
+    {
+      "id": "jigsaw-icon",
+      "original": "jigsaw-icon.png",
+      "runtime": "jigsaw-icon.webp",
+      "size": [
+        1024,
+        930
+      ],
+      "sha256": "65a390a594673c0d9beba4768bb2e51e12bda685e31f245b23458e9cd2ac49f8",
+      "metadata": {
+        "asset": "jigsaw-icon",
+        "generator": "built-in image_gen",
+        "prompt": "Use case: stylized-concept. Asset: one standalone casual jigsaw game mode icon, square 1024x1024 transparent PNG. Create exactly three chunky thick rounded interlocking jigsaw puzzle pieces, assembled in an attractive compact slightly diagonal cluster: one lavender purple #8871ad, one coral peach, one soft mint. Small unified ivory #fff3dd floral image stretches across their top faces, only a few simple petals and leaves. Obvious jigsaw tabs and sockets, premium cozy soft 3D clay/plush toy material with broad simple rounded silhouette, subtle padded edge bevels and gentle ambient occlusion, front three-quarter view with top surface clearly visible, studio soft light. Center object takes 75 percent of image, generous transparent margin, entire cluster visible. Polished modern cozy puzzle UI style matching lavender toy sliding board. No text, numbers, characters, gold, filigree, ornate decoration, scene, collage, sheet, labels, watermark. Actual transparent background, no white backing or ground plane.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-7e7b-7760-a916-f4de5d9ed253\\exec-93c0339f-22a4-4b18-86cf-621c47273014.png",
+        "transparent": true
+      }
+    },
+    {
+      "id": "slide-icon",
+      "original": "slide-icon.png",
+      "runtime": "slide-icon.webp",
+      "size": [
+        1005,
+        1024
+      ],
+      "sha256": "dc27c4855a8d418099d73a08dd8782cd3fb94f691f4d2d3e502202c131ab77e9",
+      "metadata": {
+        "asset": "slide-icon",
+        "generator": "built-in image_gen",
+        "prompt": "Use case: stylized-concept. Asset: single standalone casual puzzle game mode icon, square 1024x1024 transparent PNG. Create one chunky rounded 3x3 sliding tile board, lavender purple wooden frame #8871ad, seven/eight padded ivory #fff3dd tiles with simple tiny pastel landscape image fragments, exactly one obvious empty square at bottom right. Premium cozy soft 3D clay/plush toy material, broad simple rounded silhouette, subtle coral peach and mint accents, gentle ambient occlusion, front three-quarter view tilted only slightly so grid is clear, studio soft light. Center object takes 78 percent of image, generous transparent margin, all board corners visible. Unified polished modern cozy puzzle UI style. No text, numbers, characters, gold, filigree, ornate decorations, scene, collage, sheet, labels, watermark. Actual transparent background, no white backing or ground plane.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-7e7b-7760-a916-f4de5d9ed253\\exec-260db6a0-033f-442d-a672-6b5a36345729.png",
+        "transparent": true
+      }
+    },
+    {
+      "id": "surface",
+      "original": "surface.png",
+      "runtime": "surface.webp",
+      "size": [
+        1024,
+        1018
+      ],
+      "sha256": "7a19b5662cc2a1ea16eb37d0654d2b512da43676ca2c74c0e931490590915516",
+      "metadata": {
+        "name": "surface",
+        "prompt": "Use case: stylized-concept. Asset type: production casual puzzle game board surface for nine-slice scaling. Create ONE SINGLE SQUARE cream clay parchment board, front-on orthographic view, nearly fills square canvas with minimal 3% transparent padding. Premium cozy soft 3D clay/plush game UI, warm ivory interior #fff3dd, very thin muted lavender #8871ad rim, simple rounded corners radius precisely about 8% square width. Broad completely clean flat uniform ivory empty interior for dark text and puzzle artwork overlays. Subtle physical bevel at perimeter and small soft bottom contact shadow only. Simple straight edges and plain uniform center for nine-slice stretching. Genuinely TRANSPARENT alpha background outside board. No ornate filigree, gems, fabric stitches, patterns, grain, decorative shapes, text, icons, gradient across center, extra objects, collage, sprite sheet, watermark. Exactly one plain square empty surface asset only.",
+        "source": "C:\\Users\\User\\.codex\\generated_images\\01a17963-a6f7-7550-8ae1-28a46d226162\\exec-8180e13b-2ffb-42b8-8ada-8513fe89d4ce.png",
+        "generator": "built-in image_gen",
+        "transparent": true
+      }
+    },
+    {
+      "id": "title",
+      "original": "title.png",
+      "runtime": "title.webp",
+      "size": [
+        1024,
+        288
+      ],
+      "sha256": "72353cc5ede708ac477823872f3a095c5eb15300bb34fc79e43d0f2c024bf732",
+      "metadata": {
+        "generator": "built-in image_gen",
+        "prompt": "Create ONE transparent videogame title wordmark containing ONLY the exact four Traditional Chinese characters 幻裝圖境 in one horizontal line. Bold friendly rounded Chinese lettering, sculpted soft 3D clay/plush. Warm cream ivory faces, thick muted lavender outline and darker lavender lower extrusion, subtle peach reflected light. No gold, filigree, stars, crowns, frames, icons or other words. Transparent, minimal padding."
+      }
+    }
+  ]
+}
