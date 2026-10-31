@@ -1,5 +1,6 @@
 import {ART,THEMES,LEVELS,SLIDE_SIZES,JIG_GRIDS,chooseArt,createSlide,slide,solved,createJigsaw,piecePath,target,snapJigsaw,emptySave,validateSave,complete} from './core.mjs';
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d');
+const IS_TRIAL=location.pathname.endsWith('/play.html');
 const KEY='cxq_picture_realm_v1',BACKUP=KEY+'_previous';
 let save=emptySave(),storageOK=true;
 try{const raw=localStorage.getItem(KEY);if(raw)save=validateSave(JSON.parse(raw));}catch{try{save=validateSave(JSON.parse(localStorage.getItem(BACKUP)));}catch{} }
@@ -61,7 +62,7 @@ function mainMenu(){
   fit(assets.titleArt,25,65,366,114);text('把每一種模樣，拼成珍藏。',30,205,18,'#85708f');
   modeCard('slide',30,475,420,140);modeCard('jigsaw',30,630,420,140);
   if(save.active){button('繼續遊戲',28,797,192,60,resumeGame,{primary:true,size:20});button('圖鑑',234,797,101,60,()=>{screen='gallery';page=0;},{size:20});button('設定',349,797,103,60,()=>screen='settings',{size:20});}else{button('收藏圖鑑',30,797,200,60,()=>{screen='gallery';page=0;});button('遊戲設定',250,797,200,60,()=>screen='settings');}
-  text('試玩版 · 公開入口暫停開放',W/2,883,12,'#94839f','center');
+  text(IS_TRIAL?'試玩版':'隨機挑戰 · 收藏你的角色圖景',W/2,883,12,'#94839f','center');
  }else{
   text('CxQ  PICTURE ATELIER',64,54,16,'#85708f','left','700');
   fit(assets.titleArt,60,113,451,143);text('把每一種模樣，',67,295,23,'#85708f');text('拼成你的獨家珍藏。',67,332,23,'#85708f');
@@ -70,7 +71,7 @@ function mainMenu(){
   button('收藏圖鑑  '+collected+'/30',64,712,239,56,()=>{screen='gallery';page=0;});
   if(save.active)button('繼續上次遊戲',325,712,230,56,resumeGame);
   button('設定',1110,712,112,56,()=>screen='settings');
-  text('製作中試玩版 · 公開入口暫停開放',1215,40,13,'#85708f','right');
+  text(IS_TRIAL?'製作中試玩版':'30 張角色圖景 · 隨機挑戰',1215,40,13,'#85708f','right');
  }
 }
 function chooseMode(m){mode=m;screen='choose';focus=-1;}
