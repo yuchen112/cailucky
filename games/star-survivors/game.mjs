@@ -1,5 +1,5 @@
 import{createGame,step,choose,dash,restore,serialize,summary,WEAPONS,PASSIVES}from'./core.mjs?v=2';
-import{Renderer}from'./renderer.mjs?v=2.1';
+import{Renderer}from'./renderer.mjs?v=2.2';
 import{Sound}from'./sound.mjs?v=2';
 const $=id=>document.getElementById(id),KEY='cxq-star-survivors-v1',RUN=KEY+'-run';
 let profile={coins:0,wins:0,best:0,plays:0,meta:{},muted:false},storage=true,saved=null;
