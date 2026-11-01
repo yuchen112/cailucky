@@ -1,0 +1,212 @@
+{
+  "version": "20261101-audio1",
+  "copyright": "Original CxQ Picture Realm procedural composition and synthesized foley. No third-party recordings or samples.",
+  "sampleRate": 24000,
+  "channels": 2,
+  "tracks": [
+    {
+      "id": "music-home",
+      "file": "music-home.mp3",
+      "kind": "music",
+      "seconds": 48.0,
+      "peak": 0.2256,
+      "rms": 0.0521,
+      "sha256": "cb86dd40fcbaeed2cd24b6c37ce877d90469b515c73ebeaaf78514a8d4cf0501",
+      "description": "星光畫室：暖鋼琴與音樂盒",
+      "master": "music-home.wav"
+    },
+    {
+      "id": "music-slide",
+      "file": "music-slide.mp3",
+      "kind": "music",
+      "seconds": 43.636,
+      "peak": 0.2651,
+      "rms": 0.0614,
+      "sha256": "2167759a6dea2789bd865b105188e736847e24c77b63c6bd51abfbdf2b0df314",
+      "description": "方塊漫步：輕快木琴與柔和鋼琴",
+      "master": "music-slide.wav"
+    },
+    {
+      "id": "music-jigsaw",
+      "file": "music-jigsaw.mp3",
+      "kind": "music",
+      "seconds": 50.526,
+      "peak": 0.2302,
+      "rms": 0.0512,
+      "sha256": "209d880e0a8e6c3a393205ce33fe0c0ae897e68154c808df0a32519de699a501",
+      "description": "拼片午後：舒緩低音鋼琴",
+      "master": "music-jigsaw.wav"
+    },
+    {
+      "id": "music-gallery",
+      "file": "music-gallery.mp3",
+      "kind": "music",
+      "seconds": 53.333,
+      "peak": 0.2013,
+      "rms": 0.0408,
+      "sha256": "d7a375b3fd951d87125d40c85375b6409e96b95547535c1e92389145117a3398",
+      "description": "珍藏相簿：慢速星光音樂盒",
+      "master": "music-gallery.wav"
+    },
+    {
+      "id": "tap",
+      "file": "tap.wav",
+      "kind": "sfx",
+      "seconds": 0.35,
+      "peak": 0.1839,
+      "rms": 0.0279,
+      "sha256": "8af9105617e2731e083c7c5a897f49c6427ae9dc2f6ba02449fe81889b0b9483",
+      "description": "柔和介面按鈕"
+    },
+    {
+      "id": "hint",
+      "file": "hint.wav",
+      "kind": "sfx",
+      "seconds": 1.2,
+      "peak": 0.1731,
+      "rms": 0.0435,
+      "sha256": "cb9fa31f476392d9a9679e729bbb070b11f97b35c14b5d1c7793250378e505f1",
+      "description": "提示與短暫看圖"
+    },
+    {
+      "id": "undo",
+      "file": "undo.wav",
+      "kind": "sfx",
+      "seconds": 0.55,
+      "peak": 0.2186,
+      "rms": 0.0572,
+      "sha256": "6aa63dc5973ac6e7c1a584f1c0778fb36440ecd1610b7b34437f2cfc73d0e5da",
+      "description": "復原一步"
+    },
+    {
+      "id": "start",
+      "file": "start.wav",
+      "kind": "sfx",
+      "seconds": 1.1,
+      "peak": 0.2562,
+      "rms": 0.0634,
+      "sha256": "4771dad4f1d5af29a2e4c3a772896b639c1abbbe7042c2a72a6ac93cefcdddcc",
+      "description": "開啟隨機挑戰"
+    },
+    {
+      "id": "pause",
+      "file": "pause.wav",
+      "kind": "sfx",
+      "seconds": 0.7,
+      "peak": 0.2102,
+      "rms": 0.0564,
+      "sha256": "8be11635f6bca3c527265ad0a4f85448b8ace0e992109842d56e54f433a32e6d",
+      "description": "暫停與返回"
+    },
+    {
+      "id": "resume",
+      "file": "resume.wav",
+      "kind": "sfx",
+      "seconds": 0.65,
+      "peak": 0.2216,
+      "rms": 0.0575,
+      "sha256": "8eb662ff36b3eba4266a911103c75ea320e3ca1b4fe71f2e1b7c1d19b36e514a",
+      "description": "繼續挑戰"
+    },
+    {
+      "id": "download",
+      "file": "download.wav",
+      "kind": "sfx",
+      "seconds": 0.95,
+      "peak": 0.266,
+      "rms": 0.0604,
+      "sha256": "c5f3be27569d2d696bebe89436c9478ed0d0f88a23791df6f94d554dc6a65334",
+      "description": "下載與備份完成"
+    },
+    {
+      "id": "error",
+      "file": "error.wav",
+      "kind": "sfx",
+      "seconds": 0.5,
+      "peak": 0.1033,
+      "rms": 0.0388,
+      "sha256": "3d8955e7599ab45bf9db80d37cfb106a04b4f77a622bfdd51a53789fa91cef94",
+      "description": "無效操作與錯誤提示"
+    },
+    {
+      "id": "win",
+      "file": "win.wav",
+      "kind": "sfx",
+      "seconds": 2.8,
+      "peak": 0.3227,
+      "rms": 0.0537,
+      "sha256": "90d10161a05744c509f126eeacb707cb52b6a628fbff8c6af1032f8b74a6af70",
+      "description": "通關暖金色和弦"
+    },
+    {
+      "id": "unlock",
+      "file": "unlock.wav",
+      "kind": "sfx",
+      "seconds": 2.2,
+      "peak": 0.2297,
+      "rms": 0.049,
+      "sha256": "417c41569024e0abbc1cf41082e5739a05fe363a87ae0304bf40634a7bf565a0",
+      "description": "首次解鎖新圖鑑"
+    },
+    {
+      "id": "slide",
+      "file": "slide.wav",
+      "kind": "sfx",
+      "seconds": 0.4,
+      "peak": 0.1973,
+      "rms": 0.0283,
+      "sha256": "29a38328cfc4913b68c2512147dfcd81f3be55eedd08441eb908a8997e15c148",
+      "description": "瓷片在絨布盤滑動並輕扣歸位"
+    },
+    {
+      "id": "page",
+      "file": "page.wav",
+      "kind": "sfx",
+      "seconds": 0.34,
+      "peak": 0.0851,
+      "rms": 0.0182,
+      "sha256": "5819f3e0e4ea867544e4be66e2b7d9bb090a6515c1b027ef7342e2f35b8c6c3e",
+      "description": "柔軟紙頁翻動與細小星砂"
+    },
+    {
+      "id": "pickup",
+      "file": "pickup.wav",
+      "kind": "sfx",
+      "seconds": 0.32,
+      "peak": 0.0879,
+      "rms": 0.027,
+      "sha256": "71321eee17c3cb66f117c22cd3a22ffeda90aa4059ddf6b8a72ff8b55a272f4d",
+      "description": "從絨布墊輕拿拼片"
+    },
+    {
+      "id": "snap",
+      "file": "snap.wav",
+      "kind": "sfx",
+      "seconds": 0.85,
+      "peak": 0.136,
+      "rms": 0.0369,
+      "sha256": "f065ca17b54291959186f6cf4ac213b4bf141350ae3429abe627127c4eb51fb5",
+      "description": "兩片瓷質拼圖接縫扣合與星砂泛音"
+    },
+    {
+      "id": "place",
+      "file": "place.wav",
+      "kind": "sfx",
+      "seconds": 0.3,
+      "peak": 0.1692,
+      "rms": 0.0219,
+      "sha256": "9d9efad19e4c4840a0177a2c7811b07d45771595337144a95e1e2324f923b434",
+      "description": "拼片輕落畫板"
+    },
+    {
+      "id": "rotate",
+      "file": "rotate.wav",
+      "kind": "sfx",
+      "seconds": 0.4,
+      "peak": 0.1311,
+      "rms": 0.0225,
+      "sha256": "ff9531fac1217683cf4ba407a42c5376e5e1143da264c0d64b01eb8835a2d8de",
+      "description": "拼片轉向的摩擦與瓷角輕扣"
+    }
+  ]
+}
