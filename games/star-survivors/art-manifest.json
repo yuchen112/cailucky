@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "game": "CxQ 星願割草冒險",
   "character": "露緹",
   "runSheet": {
@@ -64,6 +64,102 @@
       "sha256": "2DFA889572E8CEE3A27D3C4E1A817755761E6D684A39BA5114E8A424212B6349",
       "source": "Existing original CxQ Luti character",
       "frames": 1
+    },
+    {
+      "file": "art/v2/boss.png",
+      "bytes": 637203,
+      "sha256": "848C71E17BC256D0977242787C012EAD16988589FA749AA959AEFEC8EB842034",
+      "source": "Built-in imagegen; purpose-made game UI/animation atlas, 2026-11-01",
+      "frames": 4
+    },
+    {
+      "file": "art/v2/button.png",
+      "bytes": 811642,
+      "sha256": "C1433D0983256B97A9319288EF9321E3EB9FD860B00CF4606043A7CA4D0C4AA5",
+      "source": "Built-in imagegen; purpose-made game UI/animation atlas, 2026-11-01",
+      "frames": 2
+    },
+    {
+      "file": "art/v2/controls.png",
+      "bytes": 360066,
+      "sha256": "D6208F3BA3BECC3D6640A86467FF5636FDEA7AC1F7F8E1AE529739672E5FCEC3",
+      "source": "Built-in imagegen; purpose-made game UI/animation atlas, 2026-11-01",
+      "frames": 2
+    },
+    {
+      "file": "art/v2/fx.png",
+      "bytes": 946333,
+      "sha256": "3837FE91DEFA9C03BA669C910A59AE7D39B0C7B27DCB806222D74ADB6ABFD068",
+      "source": "Built-in imagegen; purpose-made game UI/animation atlas, 2026-11-01",
+      "frames": 8
+    },
+    {
+      "file": "art/v2/icons.png",
+      "bytes": 698422,
+      "sha256": "4BACDE29EFF638A17B3DD5EF7CACDF585972D6EF4912FC519C444B8D474D27BB",
+      "source": "Built-in imagegen; purpose-made game UI/animation atlas, 2026-11-01",
+      "frames": 8
+    },
+    {
+      "file": "art/v2/logo.png",
+      "bytes": 1058252,
+      "sha256": "0803528F156FEF078C7857DAF3B0A43A9503EB33F896E37AD57D361221F6E70D",
+      "source": "Built-in imagegen; purpose-made game UI/animation atlas, 2026-11-01",
+      "frames": 1
+    },
+    {
+      "file": "art/v2/menu.jpg",
+      "bytes": 361198,
+      "sha256": "CAE685A233981BE728C0D8530C2A98F5D5BE6BBB8A84A8C9D606A164A68AE9A5",
+      "source": "Built-in imagegen; purpose-made game UI/animation atlas, 2026-11-01",
+      "frames": 1
+    },
+    {
+      "file": "art/v2/panel.png",
+      "bytes": 913482,
+      "sha256": "649AF3EEF4991372033AAA7D1EF9F7526B2541BAB6C7FEB9C0AA4C2CB680D8D6",
+      "source": "Built-in imagegen; purpose-made game UI/animation atlas, 2026-11-01",
+      "frames": 1
+    },
+    {
+      "file": "art/v2/props.png",
+      "bytes": 1725961,
+      "sha256": "2169176926BADA87600D1D5B5C3B898630B7F480E613337D12DB051A7FC465D3",
+      "source": "Built-in imagegen; purpose-made game UI/animation atlas, 2026-11-01",
+      "frames": 4
+    },
+    {
+      "file": "art/v2/walk.png",
+      "bytes": 1250830,
+      "sha256": "BFF6994737F7AD054367F798DF5FB6B2E52AECE415DE17D8FF951000168ADEEB",
+      "source": "Built-in imagegen; purpose-made game UI/animation atlas, 2026-11-01",
+      "frames": 12
     }
-  ]
+  ],
+  "presentation": {
+    "revision": 2,
+    "itemSheet": {
+      "columns": 4,
+      "rows": 2
+    },
+    "enemyWalkSheet": {
+      "fps": 6,
+      "rows": 3,
+      "columns": 4
+    },
+    "saveSchema": 1,
+    "buttonSheet": {
+      "columns": 1,
+      "rows": 2
+    },
+    "impactSheet": {
+      "columns": 4,
+      "rows": 2
+    },
+    "bossAttackSheet": {
+      "columns": 4,
+      "rows": 1
+    }
+  },
+  "release": "2026-11-02-v2"
 }
