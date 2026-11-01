@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "game": "CxQ 星願割草冒險",
+  "character": "露緹",
+  "runSheet": {
+    "fps": 10,
+    "rows": 1,
+    "columns": 4
+  },
+  "castSheet": {
+    "fps": 12.5,
+    "rows": 1,
+    "columns": 4
+  },
+  "enemyAtlas": {
+    "rows": 2,
+    "columns": 2,
+    "order": [
+      "slime",
+      "mushroom",
+      "bat",
+      "boss"
+    ]
+  },
+  "assets": [
+    {
+      "file": "art/cover.png",
+      "bytes": 1052128,
+      "sha256": "CF718D7654E898C58DBA5211E6E3C5C15CD99271048430DB69E0A8CD21DDA9F5",
+      "source": "Generated original game cover from Luti reference, 2026-11-01",
+      "frames": 1
+    },
+    {
+      "file": "art/enemies.png",
+      "bytes": 832824,
+      "sha256": "58993C6CD3528042577FFBBB64AB9FFFBD58C5D33482AAAED08EA771D020F842",
+      "source": "Built-in imagegen, 2026-11-01",
+      "frames": 4
+    },
+    {
+      "file": "art/ground.jpg",
+      "bytes": 172652,
+      "sha256": "55DE2B9E0EA7F0B0A5ACDCA5EE7603EAF3A448B1B1C66EFC0909736DCB1C11A0",
+      "source": "Built-in imagegen, 2026-11-01",
+      "frames": 1
+    },
+    {
+      "file": "art/luti-cast.png",
+      "bytes": 612436,
+      "sha256": "EBF7226A11055847B07FAB0162CC770B92BB7A87CAF94CFC6657F9601F8F58CE",
+      "source": "Built-in imagegen, 2026-11-01",
+      "frames": 4
+    },
+    {
+      "file": "art/luti-run.png",
+      "bytes": 630263,
+      "sha256": "9A907EA405B2574FEEB7D9A5FB9D3DFC49C35682502F4C6679B464F3919F5DD0",
+      "source": "Built-in imagegen, 2026-11-01",
+      "frames": 4
+    },
+    {
+      "file": "art/portrait.png",
+      "bytes": 322500,
+      "sha256": "2DFA889572E8CEE3A27D3C4E1A817755761E6D684A39BA5114E8A424212B6349",
+      "source": "Existing original CxQ Luti character",
+      "frames": 1
+    }
+  ]
+}
