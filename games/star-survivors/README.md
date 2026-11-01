@@ -16,6 +16,6 @@ Canvas 2D game rendering; HTML/CSS for the surrounding menus and meters. New Lut
 
 ## Validation
 
-Run `node tests/core.test.mjs`: eight focused checks and three deterministic full-run moving-player simulations with victory assertions. Browser QA checked desktop and a 390×844 viewport, upgrade selection, keyboard movement and dash, virtual joystick input, save/reload/resume, victory and defeat results, and permanent-upgrade spending taking effect on the next run. Late-game browser checks use local-only simulation snapshots, never a production cheat route.
+Run `node tests/core.test.mjs`: nine focused checks and three deterministic full-run moving-player simulations with victory assertions. Browser QA checked desktop and a 390×844 viewport, upgrade selection, keyboard movement and dash, virtual joystick input, save/reload/resume, victory and defeat results, and permanent-upgrade spending taking effect on the next run. Late-game browser checks use local-only simulation snapshots, never a production cheat route.
 
 Physical Android/iPhone playback and sustained performance have not been tested. The four-frame run cycle is an economical animation; enemies use animated transforms rather than independent walk-frame sequences. Human balance feedback is still needed; simulation victories do not prove subjective difficulty or animation acceptance.

@@ -28,7 +28,7 @@ export function step(g,dt,input={},random=Math.random){if(g.status!=='playing')r
  for(const e of g.enemies){if(e.hp<=0){g.kills++;g.coins+=e.type===3?100:e.type===4?15:1;g.gems.push({x:e.x,y:e.y,value:e.type===4?25:e.type===2?2:3,kind:e.type===4?'chest':random()<.035?'heart':'xp'});g.events.push({type:'kill',x:e.x,y:e.y});if(e.type===3){g.bossKilled=true;g.status='won'}}else if(dist(e,p)>1500){const a=random()*Math.PI*2;e.x=p.x+Math.cos(a)*750;e.y=p.y+Math.sin(a)*750}}
  g.enemies=g.enemies.filter(e=>e.hp>0);
  // Merge old experience into nearby drops instead of losing rewards or growing arrays forever.
- if(g.gems.length>350){const a=g.gems.shift(),b=g.gems.find(z=>z.kind==='xp');if(b)b.value+=a.value;else g.gems.push(a)}
+ if(g.gems.length>350){const i=g.gems.findIndex(z=>z.kind==='xp');if(i>=0){const a=g.gems.splice(i,1)[0],b=g.gems.find(z=>z.kind==='xp');if(b)b.value+=a.value;else g.gems.push(a)}}
  for(const gem of g.gems){const d=dist(gem,p),radius=80+g.passives.magnet*35+(g.meta.magnet||0)*10;if(d<radius||gem.pull){gem.pull=true;gem.x+=(p.x-gem.x)/(d||1)*Math.min(d,420*dt);gem.y+=(p.y-gem.y)/(d||1)*Math.min(d,420*dt)}if(d<19){gem.taken=true;if(gem.kind==='heart'){p.hp=Math.min(p.maxHp,p.hp+15);g.events.push({type:'heal',x:p.x,y:p.y})}else{p.xp+=gem.value;if(gem.kind==='chest'){p.hp=Math.min(p.maxHp,p.hp+20);g.coins+=10;g.events.push({type:'chest',x:p.x,y:p.y})}}}}g.gems=g.gems.filter(a=>!a.taken);
  if(p.hp<=0){p.hp=0;g.status='lost'}else if(g.status==='playing'&&p.xp>=p.next){p.xp-=p.next;p.level++;p.next=Math.floor(12+p.level*5+p.level*p.level*.45);offer(g,random)}
  if(g.events.length>130)g.events.splice(0,g.events.length-130);
