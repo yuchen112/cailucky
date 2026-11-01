@@ -134,6 +134,13 @@
       "sha256": "BFF6994737F7AD054367F798DF5FB6B2E52AECE415DE17D8FF951000168ADEEB",
       "source": "Built-in imagegen; purpose-made game UI/animation atlas, 2026-11-01",
       "frames": 12
+    },
+    {
+      "file": "art/v2/luti-cast-hd.png",
+      "bytes": 1820847,
+      "sha256": "85C08450325836A8668318EF65422C1F9539522DC40A82F35CF84D7CBED10407",
+      "source": "Original full-resolution Luti cast sheet reused for the large menu presentation",
+      "frames": 4
     }
   ],
   "presentation": {
@@ -161,5 +168,5 @@
       "rows": 1
     }
   },
-  "release": "2026-11-02-v2"
+  "release": "2026-11-02-v2.1"
 }
