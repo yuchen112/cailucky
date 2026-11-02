@@ -1,0 +1,9 @@
+{
+  "tool": "built-in imagegen",
+  "references": [
+    "character-01.speed24.webp",
+    "character-08.speed24.webp",
+    "character-10.speed24.webp"
+  ],
+  "prompt": "Identity-preserving composite square cover. The three input images are exact existing CxQ character designs; retain faces, eyes, hair silhouettes, ears, skin/fur markings, outfits and VERY short chibi clay collectible doll proportions exactly. Input1 mint tuft cream brown clover fox center, input2 lavender bob and floppy purple star hat girl left, input3 white short bob pink heart clip and purple eyes girl right. No realistic humans, no anime or elongated proportions, no new hair or wings. Place these same three recognizable dolls beside a glowing teal star tree in an enchanted midnight miniature garden. At bottom use a readable emerald-gold title plaque with exact Traditional Chinese text “CxQ 星願旅團” and “點亮夢境”."
+}

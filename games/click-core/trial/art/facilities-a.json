@@ -1,0 +1,82 @@
+{
+  "tool": "built-in image_gen",
+  "independentGenerated": true,
+  "sourceComposition": "One complete facility per generated image. No source sheet, no atlas extraction, no creative crop.",
+  "assets": [
+    {
+      "id": "01",
+      "name": "鈴可星鈴工坊",
+      "source": "C:/Users/User/.codex/generated_images/01a19dc9-b19d-7cf0-ba7b-7ff3356ab766/exec-ebc46870-4d3a-4d61-a572-d643bf428dcc.png",
+      "png": "facilities/01.png",
+      "webp": "facilities/01.webp",
+      "prompt": "Use case: stylized-concept. Independent transparent 3D clay-toy game asset for CxQ Starwish Caravan, a midnight starlight production workshop. Reference image defines exact character identity: tiny cream/brown fox creature with mint-green hair tuft, huge green eyes, clover hair clip, green scarf, gold bell. Create ONE full miniature bell workshop diorama: this fox on a small midnight navy and brass work platform happily ringing a hanging golden star-shaped bell beside a curved brass bell rack and tiny star collection bowl. Premium soft clay / plush collectible materials, antique brass, warm glowing starlight, midnight navy accents. Slight isometric front view, centered complete object with 12 percent transparent safe padding around entire asset. Cute clear silhouette readable as a 96px game icon, restrained details, gentle frontal warm light, no scene backdrop. Truly transparent background, no floor outside compact base, no text, no sheet, no collage, no multiple variants. One single complete facility independently drawn, do not crop or copy other assets.",
+      "independentGenerated": true,
+      "transparent": true,
+      "cropped": false,
+      "wholeImageResize": [
+        384,
+        384
+      ]
+    },
+    {
+      "id": "02",
+      "name": "糯糯夢枕小屋",
+      "source": "C:/Users/User/.codex/generated_images/01a19dc9-b19d-7cf0-ba7b-7ff3356ab766/exec-466635f2-5497-42d4-88b7-d97e68114a44.png",
+      "png": "facilities/02.png",
+      "webp": "facilities/02.webp",
+      "prompt": "Independent transparent 3D clay-toy game asset for CxQ Starwish Caravan midnight workshop. First reference defines exact character: cream floppy-ear puppy with tiny pink forehead spot, pink nose, peach ear tips, wearing pale pink blanket cape, green heart purse. Second reference defines facility style and scale only. ONE full miniature dream-pillow cottage production diorama, compact rounded navy velvet and antique brass platform, small crescent canopy bed with cloud pillows and star embroidery, puppy sleeping peacefully curled beneath blush blanket beside softly glowing dream jar. Premium clay/plush collectible materials, navy, dusty rose, warm brass starlight, gentle front lighting, slight isometric front view, fully centered complete object with transparent safe padding. One character and one coherent facility, no background, truly transparent alpha, no text, no collage, no sheet, no multiple variants. Standalone new independent illustration, not cut from a larger picture.",
+      "independentGenerated": true,
+      "transparent": true,
+      "cropped": false,
+      "wholeImageResize": [
+        384,
+        384
+      ]
+    },
+    {
+      "id": "03",
+      "name": "森芽星光苗圃",
+      "source": "C:/Users/User/.codex/generated_images/01a19dc9-b19d-7cf0-ba7b-7ff3356ab766/exec-4ea13dad-6e56-41c8-a92e-3ce75082e970.png",
+      "png": "facilities/03.png",
+      "webp": "facilities/03.webp",
+      "prompt": "Independent transparent 3D clay-toy game asset for CxQ Starwish Caravan. First reference defines exact character identity: cute brown bob-haired elf girl with pointed ears, dark brown eyes, green leaf hood and clover accessory. Second reference defines facility art style only. Create ONE miniature star-seed nursery production facility on a compact navy velvet antique brass circular platform. Small elf gardener in a fresh green apron watering three chunky glowing star-shaped seedlings in ceramic pots, curved brass greenhouse frame with tiny navy awning, watering can, seed drawers. Premium rounded clay toy/plush collectible rendering, mint green and navy with warm golden starlight. Slight front isometric, fully visible centered complete object, safe transparent padding, readable silhouette. No scene background or floor outside compact base. Truly transparent alpha. No text, no lettering, no collage, no sprite sheet, no multiple variants. One independently drawn complete facility.",
+      "independentGenerated": true,
+      "transparent": true,
+      "cropped": false,
+      "wholeImageResize": [
+        384,
+        384
+      ]
+    },
+    {
+      "id": "04",
+      "name": "緹雅回憶相館",
+      "source": "C:/Users/User/.codex/generated_images/01a19dc9-b19d-7cf0-ba7b-7ff3356ab766/exec-41a7c139-a556-48a6-8c19-daa076f60818.png",
+      "png": "facilities/04.png",
+      "webp": "facilities/04.webp",
+      "prompt": "Independent transparent 3D clay-toy game production facility for CxQ Starwish Caravan. First reference defines exact character: cute brown bob hair girl with dark brown eyes, beige-brown hood with rounded ears, brown cloak, little photo bag. Second reference defines miniature facility style only. ONE full miniature memory photo studio on navy quilted velvet and antique brass compact round platform. Girl in brown photographer apron operating an adorable brass vintage camera on little tripod, next to small wooden darkroom booth with navy curtain and a few hanging blank cream instant-photo frames showing tiny glowing star silhouettes (NO lettering), glowing memory jar. Premium plush/clay collectible, warm golden lighting with midnight navy and warm brown accents. Slight front isometric, centered complete facility full silhouette and transparent padding. Truly transparent background no environment floor outside compact base. No text, no logo, no collage, no sprite sheet, no variants. One independently generated complete diorama.",
+      "independentGenerated": true,
+      "transparent": true,
+      "cropped": false,
+      "wholeImageResize": [
+        384,
+        384
+      ]
+    },
+    {
+      "id": "05",
+      "name": "朵莉慶典舞台",
+      "source": "C:/Users/User/.codex/generated_images/01a19dc9-b19d-7cf0-ba7b-7ff3356ab766/exec-a58ae028-6bb3-4e49-b742-853976fcf019.png",
+      "png": "facilities/05.png",
+      "webp": "facilities/05.webp",
+      "prompt": "Independent transparent 3D clay-toy game production facility for CxQ Starwish Caravan. First reference defines exact character: cute brown curly-haired girl, dark brown eyes, pink bow, tiny party hat, pink ruffled celebration dress and star ornaments. Second reference defines consistent miniature facility rendering and scale only. ONE compact celebration stage on navy quilted velvet and antique brass round plinth: happy girl in new navy-and-blush stage outfit joyfully holding a star-tipped conductor baton beside tiny brass music box and two pastel star balloons, curved navy curtain proscenium with golden star lanterns. Warm starlight, premium soft clay/plush collectible materials, gentle warm front lighting, slight front isometric view. Entire single facility centered with transparent safe padding, clear silhouette. Truly transparent background, no environment backdrop, no floor outside base. No text, no lettering, no collage, no sheet, no multiple variants. One newly generated independent asset.",
+      "independentGenerated": true,
+      "transparent": true,
+      "cropped": false,
+      "wholeImageResize": [
+        384,
+        384
+      ]
+    }
+  ]
+}

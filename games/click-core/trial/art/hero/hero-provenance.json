@@ -1,0 +1,69 @@
+{
+  "method": "built-in image_gen",
+  "independentGenerated": true,
+  "noSheetCropping": true,
+  "character": "鈴可",
+  "sourceReference": "character-01.speed24.webp",
+  "animation": "starbell ring keyframes",
+  "frames": [
+    {
+      "id": "01",
+      "pose": "relaxed idle",
+      "source": "C:/Users/User/.codex/generated_images/01a19dca-0716-7b01-8483-90a5e7fcc5c8/exec-02d299f8-2338-488e-aa9b-aa7484e0d1e8.png",
+      "png": "01.png",
+      "webp": "01.webp",
+      "prompt": "Use case: identity-preserve, independent 3D game animation keyframe. Reference is CxQ 鈴可 mint tuft clover fox; preserve exact cream/brown fur, green eyes, mint leaf hair, clover clip, cute chubby proportions. Create ONE full-body character on genuine transparent background. New game costume: midnight teal short waistcoat embroidered tiny gold stars, soft teal scarf, antique brass tiny bells; carry one small antique brass star-shaped handbell in right paw. Camera static three-quarter view facing screen-right, gentle perspective, character centered occupying 78% canvas height, feet baseline at 88%, entire ears tail bell feet safely inside frame. Premium handmade clay/plush toy render, warm studio starlight upper left, no ground/background scenery, no text no particles. Frame01 relaxed idle: knees straight, small smile, bell held low beside right hip; left paw relaxed. This is one independent frame, not a contact sheet or collage.",
+      "transparent": true
+    },
+    {
+      "id": "02",
+      "pose": "anticipation crouch",
+      "source": "C:/Users/User/.codex/generated_images/01a19dca-0716-7b01-8483-90a5e7fcc5c8/exec-b8c56da4-d2ef-4922-b67b-697d0db22965.png",
+      "png": "02.png",
+      "webp": "02.webp",
+      "prompt": "Create ONE independent animation keyframe of the exact CxQ mint clover fox in reference 1 (new costume reference), using reference 2 only for original identity. Preserve exact outfit, anatomy, face, cream/brown fur, mint tuft and clover clip, midnight teal gold-star waistcoat scarf and antique brass handbell. Same static camera, full-body character centered, same scale and baseline as reference1, transparent background. FRAME02 ANTICIPATION: character bends both knees in a small crouch, torso leaning slightly back, right paw drawing the starbell back toward the lower left behind the body in preparation for a forward ringing swing, left paw forward for balance, ears alert, mouth focused playful smile. Tail curves behind right. Whole character visible with safe padding ears tail feet bell. Actual distinct limb pose, no image transformations. Premium 3D clay toy, warm starlight upper left, no scenery no particles no text. One image one pose, never contact sheet.",
+      "transparent": true
+    },
+    {
+      "id": "03",
+      "pose": "forward bell swing",
+      "source": "C:/Users/User/.codex/generated_images/01a19dca-0716-7b01-8483-90a5e7fcc5c8/exec-158c3485-1754-4517-8609-c1b737734731.png",
+      "png": "03.png",
+      "webp": "03.webp",
+      "prompt": "Create ONE standalone animation keyframe of EXACT CxQ mint clover fox shown in reference1. Reference2 original identity only. Same midnight teal star-embroidered waistcoat/scarf, exact same mint tuft cream/brown fur eyes clover clip and brass starbell in right paw. Static camera same 3/4 orientation and same full-body size. Transparent background. FRAME03 ACTIVE SWING: from crouch lift torso toward upright, right arm swings starbell across front of belly toward screen-right, bell tilted outward at chest height, left paw spread outward for balance, knees still slightly flexed, cheerful concentrated open smile. Tail follows curved behind. Clear changed arm pose and body posture. Full body whole ears tail feet bell all comfortably inside canvas, character should occupy only 78% canvas height with at least 8% empty margin around each extremity. Premium clay toy 3D warm upper-left lighting. No scenery no shadow plane no text no particles, single frame not collage.",
+      "transparent": true
+    },
+    {
+      "id": "04",
+      "pose": "ringing apex",
+      "source": "C:/Users/User/.codex/generated_images/01a19dca-0716-7b01-8483-90a5e7fcc5c8/exec-8cbcd31a-9dd5-49e3-bd33-baf49b95ce6e.png",
+      "png": "04.png",
+      "webp": "04.webp",
+      "prompt": "ONE transparent full-body animation keyframe for the exact same CxQ fox in image1. Image1 is previous swing pose; image2 is neutral identity/costume. Preserve matching face, ears, mint tuft, clover clip, teal gold-star waistcoat/scarf, cream and brown fur and same brass starbell held by same paw on screen-right. FRAME04 RINGING APEX: knees straighten, torso upright, bell arm extends diagonally upward toward screen-right at roughly 45 degrees, bell near but below top of ears, bell mouth outward, wrist tilted ringing it; free paw out to screen-left for balance. Mouth delighted wide smile and eyes bright. Tail behind screenright. Same static camera and size: feet near bottom at 90% height, top tuft near10%, ample padding all around, no cropped extremities. Premium 3D clay plush toy warm upperleft studio illumination, same materials as refs. No text no scenery no ground no particles. Single independently drawn frame, no sheet.",
+      "transparent": true
+    },
+    {
+      "id": "05",
+      "pose": "follow-through blink",
+      "source": "C:/Users/User/.codex/generated_images/01a19dca-0716-7b01-8483-90a5e7fcc5c8/exec-8592e659-f91d-46c0-b4f1-0aa864a8663b.png",
+      "png": "05.png",
+      "webp": "05.webp",
+      "prompt": "Create ONE independent full-body transparent animation keyframe of exact CxQ mint clover fox in reference1. Reference2 neutral is costume/identity. Same cream brown fur green eyes mint tuft clover clip, midnight teal star waistcoat scarf and antique brass star handbell in same paw at screen-right as ref1. FRAME05 FOLLOW-THROUGH: lower the extended bell arm from raised position to a relaxed diagonally downward angle on screen-right, bell now at hip height; shoulders and knees soften as ring motion resolves, free paw relaxed in front belly, eyes gently closed contented smile, tail softly swaying behind right. Preserve same scale static camera, full body centered entire ears feet tail bell within frame generous margins. Premium handmade clay/plush 3D toy warm upper-left studio lighting, no background/ground plane, no particles text or sheet. Actual changed pose not transformed image.",
+      "transparent": true
+    },
+    {
+      "id": "06",
+      "pose": "celebration",
+      "source": "C:/Users/User/.codex/generated_images/01a19dca-0716-7b01-8483-90a5e7fcc5c8/exec-c3f63255-e271-4282-8fbb-11a18afb0d58.png",
+      "png": "06.png",
+      "webp": "06.webp",
+      "prompt": "ONE independent transparent full-body animation keyframe of EXACT CxQ clover fox in image1 (image2 neutral identity/costume). Same cream/brown fur mint tuft green eyes clover hairclip midnight teal gold star embroidered waistcoat and scarf, exact brass starbell in same paw screen-right. FRAME06 CELEBRATION: both paws raised beside head in joyous victory, bell paw high on screen-right with bell clearly visible, free paw open waving on screenleft, knees slightly bent buoyant stance, delighted open smiling mouth and happy eyes, tail curled behind right. Stable centered camera same scale and baseline as other keyframes; whole ears tuft tail feet paws bell within canvas with safe padding. Isolated clean transparent alpha, absolutely no scattered colored pixels, no particles, no glow outside silhouette, no confetti, no background or shadow plane. Premium 3D handmade clay/plush toy, warm upper-left light, same anatomy and materials. Actual distinct pose; one image one frame never sheet.",
+      "transparent": true
+    }
+  ],
+  "notes": [
+    "Six actual changed poses generated individually. Original full PNGs preserved. WebP optimization resizes entire image without cropping.",
+    "Identity and outfit consistent; 01-02 hold bell screen-left while 03-06 swing to screen-right. Use brief crossfade for transition.",
+    "Files share exact 1187x1326 canvas. Fine colored fringe pixels can be visible against black at native size; inspect final game scale against intended background."
+  ]
+}

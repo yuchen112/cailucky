@@ -1,0 +1,39 @@
+{
+  "assets": [
+    {
+      "id": "06",
+      "source": "C:/Users/User/.codex/generated_images/01a19dc9-d791-74a1-b104-c1d5c0ad504d/exec-d8e8eec6-3673-4859-887e-6c4fe3d246ed.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE independent transparent 3D miniature game facility, full object centered, safe clear padding all sides, no text or lettering. Image reference is character identity only. Create CxQ 米洛月光觀測台: a charming toy-scale midnight-navy and antique-brass crescent observatory on a small round wooden platform, large brass telescope aimed upward, delicate star-chart desk, warm gold glowing moon lantern. Integrate ONE tiny working girl identical to reference: short dark-blue hair, brown eyes, navy cat-ear hood, cream trim, with her little owl. She is looking through telescope, new work pose. Premium tactile clay-toy/felt materials, exquisite but readable silhouette at 160px, front three-quarter view with slight isometric angle, warm starlight and subtle cool rim. Facility and character are one coherent isolated miniature. No environment background, no large floor, no collage, no multiple views, not a sprite sheet. Genuine transparent background.",
+      "independentGenerated": true,
+      "method": "built-in image_gen; one separate call per facility; whole-image resize only; no crop"
+    },
+    {
+      "id": "07",
+      "source": "C:/Users/User/.codex/generated_images/01a19dc9-d791-74a1-b104-c1d5c0ad504d/exec-82ccb9a0-dda5-47d4-a235-7df1274df4c9.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE independent transparent 3D miniature game facility, full object centered, safe clear padding all sides, no text or lettering. Character reference identity must be recognizable. Create CxQ 伯恩星鑰寶庫: a charming miniature midnight-navy and antique-brass clockwork treasury vault on a small round dark-wood platform, arched brass vault door with star keyhole and visible mechanical gears, several glowing gold star crystals carefully stored in tiny drawers. Integrate ONE tiny golden-brown fluffy lion cub identical to reference, navy quilted hood with cream fur trim, brown leather belt and key bag. New work pose: turning large ornate key in vault lock with determined friendly face. Premium tactile clay-toy and felt materials, polished warm gold starlight with subtle blue rim; front three-quarter camera slightly isometric; compact facility silhouette readable at 160px. Single coherent isolated miniature, genuine transparent background, no environment, no lettering, no collage or multiple views, no sprite sheet.",
+      "independentGenerated": true,
+      "method": "built-in image_gen; one separate call per facility; whole-image resize only; no crop"
+    },
+    {
+      "id": "08",
+      "source": "C:/Users/User/.codex/generated_images/01a19dc9-d791-74a1-b104-c1d5c0ad504d/exec-0eef01bb-c9bb-40bd-ab97-690970d8da78.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE independent transparent 3D miniature game facility, full object centered with safe padding all sides, no text or lettering. Character reference identity only. Create CxQ 露緹星願郵局: a charming tiny midnight-navy and antique-brass fantasy post tower on a round dark-wood platform. Small purple-roof moon mailbox tower, brass letter sorting desk and three magical envelopes with star seals gently floating near it. Integrate ONE tiny girl identical to reference: lavender wavy hair, large brown eyes, purple pointed wizard hat with cream trim and star charms, purple cape. New working pose: stamping a star seal on a letter at desk while smiling. Premium tactile clay-toy, felt cloth and brass, readable compact silhouette at 160px, front three-quarter slightly isometric camera, warm gold starlight with subtle cool rim. Single coherent isolated miniature, no background environment, genuine transparent background, no collage, no multiple views, no sprite sheet.",
+      "independentGenerated": true,
+      "method": "built-in image_gen; one separate call per facility; whole-image resize only; no crop"
+    },
+    {
+      "id": "09",
+      "source": "C:/Users/User/.codex/generated_images/01a19dc9-d791-74a1-b104-c1d5c0ad504d/exec-2f9546a2-9412-46ce-aa43-8aaf7883d7a9.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE independent transparent 3D miniature game facility, full object centered with safe padding on all sides, no text or lettering. Character reference identity only. Create CxQ 汐寧雨露溫室: a charming tiny glass greenhouse with midnight-navy base and antique-brass framing on a small round wooden platform. Clear faceted curved glass dome, softly glowing blue dew drops and pale lavender hydrangeas, small star-shaped plants in pots and brass watering can. Integrate ONE tiny girl identical to reference: gray-brown wavy hair, gray-blue eyes, pale blue hooded raincoat with flower buttons and matching boots. New work pose: carefully watering a glowing dew plant, gentle happy expression. Premium tactile clay-toy and felt character, realistic little glass and brass, warm gold starlight with cool blue highlights. Compact silhouette readable at 160px, front three-quarter slightly isometric camera. Single coherent isolated miniature, genuine transparent background, no environment, no collage, no multiple views, no sprite sheet.",
+      "independentGenerated": true,
+      "method": "built-in image_gen; one separate call per facility; whole-image resize only; no crop"
+    },
+    {
+      "id": "10",
+      "source": "C:/Users/User/.codex/generated_images/01a19dc9-d791-74a1-b104-c1d5c0ad504d/exec-6641a5ee-37ae-468d-b7e9-ac03fb5eeceb.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE independent transparent 3D miniature game facility, entire object centered with safe transparent padding all sides, no text or lettering. Reference is character identity only. Create CxQ 曦羽織夢工坊: charming small antique-brass weaving loom on a round midnight-navy and dark wood platform, pearl-blue spool rack, shimmering translucent ribbon woven into tiny warm-gold stars. Integrate ONE tiny girl identical to reference: white bob hair, violet eyes, pink heart hairclip, pale blue bow and cream/pale-blue dress. New work pose: seated at loom guiding luminous dream thread with both hands, delighted focused expression. Premium tactile clay-toy character with soft felt dress, brass machinery and delicate iridescent ribbon, warm gold starlight and cool pearl-blue rim. Front three-quarter slightly isometric camera, compact silhouette readable at 160px. One coherent isolated production facility, genuine transparent background, no environment backdrop, no collage or multiple views, no sprite sheet.",
+      "independentGenerated": true,
+      "method": "built-in image_gen; one separate call per facility; whole-image resize only; no crop"
+    }
+  ]
+}

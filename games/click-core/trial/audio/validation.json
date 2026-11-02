@@ -1,0 +1,111 @@
+{
+  "pass": true,
+  "tracks": [
+    {
+      "id": "music-home",
+      "peak": 0.28558349609375,
+      "rms": 0.06298592141053594,
+      "hashMatches": true,
+      "seam": 0.002685546875,
+      "derivative99": 0.022003173828125
+    },
+    {
+      "id": "music-collection",
+      "peak": 0.297882080078125,
+      "rms": 0.06298613955626484,
+      "hashMatches": true,
+      "seam": 0.000396728515625,
+      "derivative99": 0.013946533203125
+    },
+    {
+      "id": "tap",
+      "peak": 0.157623291015625,
+      "rms": 0.042988745876482284,
+      "hashMatches": true
+    },
+    {
+      "id": "back",
+      "peak": 0.168243408203125,
+      "rms": 0.04298892934050834,
+      "hashMatches": true
+    },
+    {
+      "id": "collect",
+      "peak": 0.120025634765625,
+      "rms": 0.04298838229986908,
+      "hashMatches": true
+    },
+    {
+      "id": "critical",
+      "peak": 0.1754150390625,
+      "rms": 0.04298929663533377,
+      "hashMatches": true
+    },
+    {
+      "id": "buy",
+      "peak": 0.2327880859375,
+      "rms": 0.04298958112956695,
+      "hashMatches": true
+    },
+    {
+      "id": "upgrade",
+      "peak": 0.221282958984375,
+      "rms": 0.04298932229265213,
+      "hashMatches": true
+    },
+    {
+      "id": "achievement",
+      "peak": 0.273773193359375,
+      "rms": 0.04298988418736157,
+      "hashMatches": true
+    },
+    {
+      "id": "denied",
+      "peak": 0.137451171875,
+      "rms": 0.04298792129859526,
+      "hashMatches": true
+    },
+    {
+      "id": "cometAppear",
+      "peak": 0.210479736328125,
+      "rms": 0.042988655955458255,
+      "hashMatches": true
+    },
+    {
+      "id": "cometGift",
+      "peak": 0.220550537109375,
+      "rms": 0.042989334516183066,
+      "hashMatches": true
+    },
+    {
+      "id": "cometBoost",
+      "peak": 0.2174072265625,
+      "rms": 0.04299029812051685,
+      "hashMatches": true
+    },
+    {
+      "id": "skin",
+      "peak": 0.2276611328125,
+      "rms": 0.04298973052878191,
+      "hashMatches": true
+    },
+    {
+      "id": "save",
+      "peak": 0.197784423828125,
+      "rms": 0.04298831939398689,
+      "hashMatches": true
+    },
+    {
+      "id": "offline",
+      "peak": 0.195648193359375,
+      "rms": 0.042989644209672065,
+      "hashMatches": true
+    },
+    {
+      "id": "burst",
+      "peak": 0.2410888671875,
+      "rms": 0.0429898536429849,
+      "hashMatches": true
+    }
+  ]
+}

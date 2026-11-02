@@ -1,0 +1,87 @@
+[
+  {
+    "id": 1,
+    "size": [
+      1254,
+      1254
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "pngBytes": 2069598,
+    "webpBytes": 59866,
+    "sha256": "76a9dc731ea8ee3063d2bbfa624a0a4cd9845bf0684520edce8788c3f5d8e929",
+    "independentGenerated": true,
+    "wholeImageResized": true,
+    "cropped": false
+  },
+  {
+    "id": 2,
+    "size": [
+      1254,
+      1254
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "pngBytes": 2309167,
+    "webpBytes": 56740,
+    "sha256": "a03b9a323939f9385918fd96056d2d19d724c48cc66a9b1c85f25ded460556a2",
+    "independentGenerated": true,
+    "wholeImageResized": true,
+    "cropped": false
+  },
+  {
+    "id": 3,
+    "size": [
+      1254,
+      1254
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "pngBytes": 2389005,
+    "webpBytes": 67384,
+    "sha256": "2268f9e884a8d02fe9c9bed13f1089e6e296584251a5b955653bab1cbd0cf9d4",
+    "independentGenerated": true,
+    "wholeImageResized": true,
+    "cropped": false
+  },
+  {
+    "id": 4,
+    "size": [
+      1254,
+      1254
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "pngBytes": 2306537,
+    "webpBytes": 59350,
+    "sha256": "e64ef5fe0a9ad45afee1511c76c7f3c3d7924770216a5973de5f97f382082ff6",
+    "independentGenerated": true,
+    "wholeImageResized": true,
+    "cropped": false
+  },
+  {
+    "id": 5,
+    "size": [
+      1254,
+      1254
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "pngBytes": 2428157,
+    "webpBytes": 66968,
+    "sha256": "549522cd935cd2ddbf90839bcdf1daf13de94994f6a2665f2666cb5f6053b10d",
+    "independentGenerated": true,
+    "wholeImageResized": true,
+    "cropped": false
+  }
+]

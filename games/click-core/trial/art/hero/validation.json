@@ -1,0 +1,80 @@
+[
+  {
+    "file": "01.webp",
+    "size": [
+      458,
+      512
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "bytes": 75484,
+    "sha256": "25a732ad8fd1dcc8872f94ab717125d89f0df86bb43c41746bad5fb5bce8f3bb"
+  },
+  {
+    "file": "02.webp",
+    "size": [
+      458,
+      512
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "bytes": 75238,
+    "sha256": "455775326ed5120b2694f81a67e1d41708b76148a5ea9adc168679928fb8352a"
+  },
+  {
+    "file": "03.webp",
+    "size": [
+      458,
+      512
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "bytes": 66802,
+    "sha256": "e33f9621a4b75b4dde935739fc47e8eaf4603052267b0bdfd0b9548f8a03943d"
+  },
+  {
+    "file": "04.webp",
+    "size": [
+      458,
+      512
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "bytes": 73466,
+    "sha256": "3c6ea6b764badfcf56eff2ba0e10e8ecf23f1ed747f5bc8dae97ab57085c59f9"
+  },
+  {
+    "file": "05.webp",
+    "size": [
+      458,
+      512
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "bytes": 63578,
+    "sha256": "94c6ea69a5e7c8598aa8e23ea827a9c5bd32f1a470d1e12dfed984fde03a146a"
+  },
+  {
+    "file": "06.webp",
+    "size": [
+      458,
+      512
+    ],
+    "alpha": [
+      0,
+      255
+    ],
+    "bytes": 72450,
+    "sha256": "ea261f08f2289f81bcc31d91ec47b3ff104e0cccad6b3fc76bb2b2e34f6cba15"
+  }
+]
