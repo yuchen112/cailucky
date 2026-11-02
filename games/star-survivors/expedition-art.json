@@ -1,0 +1,238 @@
+{
+  "version": 4,
+  "release": "20261103-expedition1",
+  "roleStates": [
+    "run x4",
+    "attack x4",
+    "skill x2 / hurt / defeat"
+  ],
+  "encoding": "WebP quality90 alpha100; JPG terrain quality90",
+  "assets": [
+    {
+      "file": "art/v4/role-joy.webp",
+      "bytes": 377246,
+      "sha256": "D9158BE7B776969A7425D3A873C48CE2ED2E5EA97646C51051E47C0C10475CF3",
+      "columns": 4,
+      "rows": 3,
+      "tool": "built-in imagegen",
+      "prompt": "Production game animation spritesheet for original CxQ fantasy survival game. Reference is identity reference, preserve exact face, hair, species, recognizable clothing motifs and cute sculpted storybook 3D illustrated style. Reimagine original in polished coherent combat outfit. Original curly brown-haired cheerful girl, pink-gold festival combat dress, small star ribbons, wielding gilded rhythm bells. Transparent background, no letters no labels no UI. EXACT grid 4 columns by 3 rows, TWELVE separate full-body frames, same character and weapon, equal size cells, 12% clear padding, no frame crossing. Facing three-quarter right. Row1 FOUR distinct running frames with changing legs/arms and swinging cape. Row2 FOUR distinct attacking frames: prepare, windup, weapon release, recovery. Row3 FOUR special state frames: skill channel, triumphant skill release with subtle personal glow, recoil hurt, kneeling exhausted/death. Keep character feet aligned inside every cell, camera scale consistent, whole weapon contained. Rich painted materials, creamy soft light, crisp silhouettes, no background/shadow plane, no floating text. This is a usable animated game atlas, not a collage.",
+      "reference": "assets/characters/cxq-role-joy.webp"
+    },
+    {
+      "file": "art/v4/role-dream.webp",
+      "bytes": 359782,
+      "sha256": "6CDA0A3405FFF7F3CB6524A48FB95DC06601365259771840B1920446DAAB2B2C",
+      "columns": 4,
+      "rows": 3,
+      "tool": "built-in imagegen",
+      "prompt": "Production game animation spritesheet for original CxQ fantasy survival game. Reference is identity reference, preserve exact face, hair, species, recognizable clothing motifs and cute sculpted storybook 3D illustrated style. Reimagine original in polished coherent combat outfit. Original lavender long-haired star witch, purple pointed star hat, ivory and lavender battle robes, wielding ornate golden star dream staff. Transparent background, no letters no labels no UI. EXACT grid 4 columns by 3 rows, TWELVE separate full-body frames, same character and weapon, equal size cells, 12% clear padding, no frame crossing. Facing three-quarter right. Row1 FOUR distinct running frames with changing legs/arms and swinging cape. Row2 FOUR distinct attacking frames: prepare, windup, weapon release, recovery. Row3 FOUR special state frames: skill channel, triumphant skill release with subtle personal glow, recoil hurt, kneeling exhausted/death. Keep character feet aligned inside every cell, camera scale consistent, whole weapon contained. Rich painted materials, creamy soft light, crisp silhouettes, no background/shadow plane, no floating text. This is a usable animated game atlas, not a collage.",
+      "reference": "assets/characters/cxq-role-dream.webp"
+    },
+    {
+      "file": "art/v4/role-night.webp",
+      "bytes": 379586,
+      "sha256": "2D06BB3A055B2216ED76E37FDB84D0B9E82CF63C070F3858F408C846C83A88CB",
+      "columns": 4,
+      "rows": 3,
+      "tool": "built-in imagegen",
+      "prompt": "Production game animation spritesheet for original CxQ fantasy survival game. Reference is identity reference, preserve exact face, hair, species, recognizable clothing motifs and cute sculpted storybook 3D illustrated style. Reimagine original in polished coherent combat outfit. Original dark-blue haired boy with cat-eared navy moon hood and owl companion, moon ranger leather coat, wielding crescent longbow. Transparent background, no letters no labels no UI. EXACT grid 4 columns by 3 rows, TWELVE separate full-body frames, same character and weapon, equal size cells, 12% clear padding, no frame crossing. Facing three-quarter right. Row1 FOUR distinct running frames with changing legs/arms and swinging cape. Row2 FOUR distinct attacking frames: prepare, windup, weapon release, recovery. Row3 FOUR special state frames: skill channel, triumphant skill release with subtle personal glow, recoil hurt, kneeling exhausted/death. Keep character feet aligned inside every cell, camera scale consistent, whole weapon contained. Rich painted materials, creamy soft light, crisp silhouettes, no background/shadow plane, no floating text. This is a usable animated game atlas, not a collage.",
+      "reference": "assets/characters/cxq-role-night.webp"
+    },
+    {
+      "file": "art/v4/role-sadness.webp",
+      "bytes": 401100,
+      "sha256": "2A36038AB01E18742911E0BD7C4421B27834BBF4A67C591E8795C31BCE57626A",
+      "columns": 4,
+      "rows": 3,
+      "tool": "built-in imagegen",
+      "prompt": "Production game animation spritesheet for original CxQ fantasy survival game. Reference is identity reference, preserve exact face, hair, species, recognizable clothing motifs and cute sculpted storybook 3D illustrated style. Reimagine original in polished coherent combat outfit. Original gray-brown bob-haired girl, blue-gray hooded rain cape and hydrangea flowers, wielding crystal rain staff shaped like elegant umbrella. Transparent background, no letters no labels no UI. EXACT grid 4 columns by 3 rows, TWELVE separate full-body frames, same character and weapon, equal size cells, 12% clear padding, no frame crossing. Facing three-quarter right. Row1 FOUR distinct running frames with changing legs/arms and swinging cape. Row2 FOUR distinct attacking frames: prepare, windup, weapon release, recovery. Row3 FOUR special state frames: skill channel, triumphant skill release with subtle personal glow, recoil hurt, kneeling exhausted/death. Keep character feet aligned inside every cell, camera scale consistent, whole weapon contained. Rich painted materials, creamy soft light, crisp silhouettes, no background/shadow plane, no floating text. This is a usable animated game atlas, not a collage.",
+      "reference": "assets/characters/cxq-role-sadness.webp"
+    },
+    {
+      "file": "art/v4/role-trust.webp",
+      "bytes": 349774,
+      "sha256": "43FF3B5B1E9AFA56946087D25CE24D4A93564E7B2C100C9EE1A1ADF833489813",
+      "columns": 4,
+      "rows": 3,
+      "tool": "built-in imagegen",
+      "prompt": "Production game animation spritesheet for original CxQ fantasy survival game. Reference is identity reference, preserve exact face, hair, species, recognizable clothing motifs and cute sculpted storybook 3D illustrated style. Reimagine original in polished coherent combat outfit. Original furry golden-brown bear with navy hood and brass key motifs, leather guardian armor, wielding a large ornate keyhole shield and short key baton. Transparent background, no letters no labels no UI. EXACT grid 4 columns by 3 rows, TWELVE separate full-body frames, same character and weapon, equal size cells, 12% clear padding, no frame crossing. Facing three-quarter right. Row1 FOUR distinct running frames with changing legs/arms and swinging cape. Row2 FOUR distinct attacking frames: prepare, windup, weapon release, recovery. Row3 FOUR special state frames: skill channel, triumphant skill release with subtle personal glow, recoil hurt, kneeling exhausted/death. Keep character feet aligned inside every cell, camera scale consistent, whole weapon contained. Rich painted materials, creamy soft light, crisp silhouettes, no background/shadow plane, no floating text. This is a usable animated game atlas, not a collage.",
+      "reference": "assets/characters/cxq-role-trust.webp"
+    },
+    {
+      "file": "art/v4/role-memory.webp",
+      "bytes": 336094,
+      "sha256": "D36B362D72F4D4E9BC4E8540682FE54E4BA535927622A7D50DE3972CD8FDC9B7",
+      "columns": 4,
+      "rows": 3,
+      "tool": "built-in imagegen",
+      "prompt": "Production game animation spritesheet for original CxQ fantasy survival game. Reference is identity reference, preserve exact face, hair, species, recognizable clothing motifs and cute sculpted storybook 3D illustrated style. Reimagine original in polished coherent combat outfit. Original warm brown bob-haired child in beige hooded cape and satchel, archivist robes, wielding a glowing open memory book and floating photographs. Transparent background, no letters no labels no UI. EXACT grid 4 columns by 3 rows, TWELVE separate full-body frames, same character and weapon, equal size cells, 12% clear padding, no frame crossing. Facing three-quarter right. Row1 FOUR distinct running frames with changing legs/arms and swinging cape. Row2 FOUR distinct attacking frames: prepare, windup, weapon release, recovery. Row3 FOUR special state frames: skill channel, triumphant skill release with subtle personal glow, recoil hurt, kneeling exhausted/death. Keep character feet aligned inside every cell, camera scale consistent, whole weapon contained. Rich painted materials, creamy soft light, crisp silhouettes, no background/shadow plane, no floating text. This is a usable animated game atlas, not a collage.",
+      "reference": "assets/characters/cxq-role-memory.webp"
+    },
+    {
+      "file": "art/v4/role-growth.webp",
+      "bytes": 387188,
+      "sha256": "0980FDF61D5458DD769518314B7328FC451FC23850E9D4F1A6E0FA0CA9E2FB00",
+      "columns": 4,
+      "rows": 3,
+      "tool": "built-in imagegen",
+      "prompt": "Production game animation spritesheet for original CxQ fantasy survival game. Reference is identity reference, preserve exact face, hair, species, recognizable clothing motifs and cute sculpted storybook 3D illustrated style. Reimagine original in polished coherent combat outfit. Original brown-haired child in green leafy hood and cream forest clothes, woodland commander outfit, wielding leafy wooden command staff and tiny seed sprite. Transparent background, no letters no labels no UI. EXACT grid 4 columns by 3 rows, TWELVE separate full-body frames, same character and weapon, equal size cells, 12% clear padding, no frame crossing. Facing three-quarter right. Row1 FOUR distinct running frames with changing legs/arms and swinging cape. Row2 FOUR distinct attacking frames: prepare, windup, weapon release, recovery. Row3 FOUR special state frames: skill channel, triumphant skill release with subtle personal glow, recoil hurt, kneeling exhausted/death. Keep character feet aligned inside every cell, camera scale consistent, whole weapon contained. Rich painted materials, creamy soft light, crisp silhouettes, no background/shadow plane, no floating text. This is a usable animated game atlas, not a collage.",
+      "reference": "assets/characters/cxq-role-growth.webp"
+    },
+    {
+      "file": "art/v4/role-healing.webp",
+      "bytes": 292088,
+      "sha256": "BC6CE9F13B5784C0694241F52A0EAE61B3EEE4849AE4FFF97A9B8307E8F40414",
+      "columns": 4,
+      "rows": 3,
+      "tool": "built-in imagegen",
+      "prompt": "Production game animation spritesheet for original CxQ fantasy survival game. Reference is identity reference, preserve exact face, hair, species, recognizable clothing motifs and cute sculpted storybook 3D illustrated style. Reimagine original in polished coherent combat outfit. Original cream plush floppy-eared puppy with peach spots, peach scarf and cape with heart pocket, healer adventurer outfit, wielding small flower healing staff. Keep animal puppy body and floppy ears. Transparent background, no letters no labels no UI. EXACT grid 4 columns by 3 rows, TWELVE separate full-body frames, same character and weapon, equal size cells, 12% clear padding, no frame crossing. Facing three-quarter right. Row1 FOUR distinct running frames with changing legs/arms and swinging cape. Row2 FOUR distinct attacking frames: prepare, windup, weapon release, recovery. Row3 FOUR special state frames: skill channel, triumphant skill release with subtle personal glow, recoil hurt, kneeling exhausted/death. Keep character feet aligned inside every cell, camera scale consistent, whole weapon contained. Rich painted materials, creamy soft light, crisp silhouettes, no background/shadow plane, no floating text. This is a usable animated game atlas, not a collage.",
+      "reference": "assets/characters/cxq-role-healing.webp"
+    },
+    {
+      "file": "art/v4/role-luck.webp",
+      "bytes": 363410,
+      "sha256": "0D9B54FE66FA08A81450B78BC0D8530B695E170D42824EF40096005DF415F528",
+      "columns": 4,
+      "rows": 3,
+      "tool": "built-in imagegen",
+      "prompt": "Production game animation spritesheet for original CxQ fantasy survival game. Reference is identity reference, preserve exact face, hair, species, recognizable clothing motifs and cute sculpted storybook 3D illustrated style. Reimagine original in polished coherent combat outfit. Original cream and mint green fox with huge ears and fluffy tail, clover clips and golden bells, lucky rogue outfit, wielding a four-leaf crystal wand. Keep fox muzzle paws tail. Transparent background, no letters no labels no UI. EXACT grid 4 columns by 3 rows, TWELVE separate full-body frames, same character and weapon, equal size cells, 12% clear padding, no frame crossing. Facing three-quarter right. Row1 FOUR distinct running frames with changing legs/arms and swinging cape. Row2 FOUR distinct attacking frames: prepare, windup, weapon release, recovery. Row3 FOUR special state frames: skill channel, triumphant skill release with subtle personal glow, recoil hurt, kneeling exhausted/death. Keep character feet aligned inside every cell, camera scale consistent, whole weapon contained. Rich painted materials, creamy soft light, crisp silhouettes, no background/shadow plane, no floating text. This is a usable animated game atlas, not a collage.",
+      "reference": "assets/characters/cxq-role-luck.webp"
+    },
+    {
+      "file": "art/v4/role-hope.webp",
+      "bytes": 333064,
+      "sha256": "B0BCFE91FCE661F9E5167B4FAA2C297278AB09A258A74921D1E0BC914296C735",
+      "columns": 4,
+      "rows": 3,
+      "tool": "built-in imagegen",
+      "prompt": "Production game animation spritesheet for original CxQ fantasy survival game. Reference is identity reference, preserve exact face, hair, species, recognizable clothing motifs and cute sculpted storybook 3D illustrated style. Reimagine original in polished coherent combat outfit. Original white bob-haired fairy child with violet-blue eyes, pale blue and ivory light weaver dress and translucent wings, wielding a white-gold dawn spear. Transparent background, no letters no labels no UI. EXACT grid 4 columns by 3 rows, TWELVE separate full-body frames, same character and weapon, equal size cells, 12% clear padding, no frame crossing. Facing three-quarter right. Row1 FOUR distinct running frames with changing legs/arms and swinging cape. Row2 FOUR distinct attacking frames: prepare, windup, weapon release, recovery. Row3 FOUR special state frames: skill channel, triumphant skill release with subtle personal glow, recoil hurt, kneeling exhausted/death. Keep character feet aligned inside every cell, camera scale consistent, whole weapon contained. Rich painted materials, creamy soft light, crisp silhouettes, no background/shadow plane, no floating text. This is a usable animated game atlas, not a collage.",
+      "reference": "assets/characters/cxq-role-hope.webp"
+    },
+    {
+      "file": "art/v4/map-cave.jpg",
+      "bytes": 505088,
+      "sha256": "D7D00DC9D97F4DB57B78F70DBA89051A4E208F91EBAFC2B044146746635DC16E",
+      "columns": 1,
+      "rows": 1,
+      "tool": "built-in imagegen",
+      "prompt": "Create a premium illustrated action RPG game battlefield environment asset, landscape 3:2 composition. Star crystal cavern, lavender amethyst and teal crystal clusters, carved stone floor, glowing underground streams, forgotten arches, cool teal and violet atmosphere. Orthographic elevated 3/4 overhead viewpoint, nearly top-down ground plane to match chibi characters, no horizon or sky filling scene. Large readable walkable combat floor occupies central 75%, subtly textured, with modest environmental objects concentrated near outer edges. Rich sculpted handpainted storybook 3D illustration, coherent with cute CxQ original characters. Beautiful material details, layered ambient light, depth in peripheral props, restrained central contrast for readable enemies. NO characters, monsters, text, UI, logos or frames. Full bleed actual usable environment art, not a game screenshot mockup. Keep floor visually continuous near sides, suitable for repeating large terrain chunks."
+    },
+    {
+      "file": "art/v4/map-forest.jpg",
+      "bytes": 591584,
+      "sha256": "B78373B951B5E1F4FD9561A540078713D3BC186890CF85962E705D7FC6CAC36C",
+      "columns": 1,
+      "rows": 1,
+      "tool": "built-in imagegen",
+      "prompt": "Create a premium illustrated action RPG game battlefield environment asset, landscape 3:2 composition. Enchanted ancient forest, rich moss and grass ground, huge intertwined roots, bioluminescent flowers, winding leaf paths, honey sunlight and mint green firefly glows. Orthographic elevated 3/4 overhead viewpoint, nearly top-down ground plane to match chibi characters, no horizon or sky filling scene. Large readable walkable combat floor occupies central 75%, subtly textured, with modest environmental objects concentrated near outer edges. Rich sculpted handpainted storybook 3D illustration, coherent with cute CxQ original characters. Beautiful material details, layered ambient light, depth in peripheral props, restrained central contrast for readable enemies. NO characters, monsters, text, UI, logos or frames. Full bleed actual usable environment art, not a game screenshot mockup. Keep floor visually continuous near sides, suitable for repeating large terrain chunks."
+    },
+    {
+      "file": "art/v4/map-coast.jpg",
+      "bytes": 540202,
+      "sha256": "01EE74385F2B3EA0205994B96384FDAE567E8EBA6E57BEB00E9E2C7FA50B99CC",
+      "columns": 1,
+      "rows": 1,
+      "tool": "built-in imagegen",
+      "prompt": "Create a premium illustrated action RPG game battlefield environment asset, landscape 3:2 composition. Moon tide coast ruins, pale wet sand, pearly aqua shallow water at edges, shell-encrusted ancient stone paving, coral and glowing moon pools, turquoise and silver lavender palette. Orthographic elevated 3/4 overhead viewpoint, nearly top-down ground plane to match chibi characters, no horizon or sky filling scene. Large readable walkable combat floor occupies central 75%, subtly textured, with modest environmental objects concentrated near outer edges. Rich sculpted handpainted storybook 3D illustration, coherent with cute CxQ original characters. Beautiful material details, layered ambient light, depth in peripheral props, restrained central contrast for readable enemies. NO characters, monsters, text, UI, logos or frames. Full bleed actual usable environment art, not a game screenshot mockup. Keep floor visually continuous near sides, suitable for repeating large terrain chunks."
+    },
+    {
+      "file": "art/v4/map-clock.jpg",
+      "bytes": 627139,
+      "sha256": "AD049E43DCC21C19816A64600578D32A8AC531D548F985C62908E5FF8A44B38A",
+      "columns": 1,
+      "rows": 1,
+      "tool": "built-in imagegen",
+      "prompt": "Create a premium illustrated action RPG game battlefield environment asset, landscape 3:2 composition. Echo clock courtyard, ancient brass clockwork library outdoors, huge inset stone clock patterns, worn warm sandstone and bronze gear inlays, ornate mechanical lamps and floating dust, sepia copper and deep teal palette. Orthographic elevated 3/4 overhead viewpoint, nearly top-down ground plane to match chibi characters, no horizon or sky filling scene. Large readable walkable combat floor occupies central 75%, subtly textured, with modest environmental objects concentrated near outer edges. Rich sculpted handpainted storybook 3D illustration, coherent with cute CxQ original characters. Beautiful material details, layered ambient light, depth in peripheral props, restrained central contrast for readable enemies. NO characters, monsters, text, UI, logos or frames. Full bleed actual usable environment art, not a game screenshot mockup. Keep floor visually continuous near sides, suitable for repeating large terrain chunks."
+    },
+    {
+      "file": "art/v4/map-sky.jpg",
+      "bytes": 474214,
+      "sha256": "1BCE783EAC4A1C9B8B01FA15279E2BE9812B593CCD1FFCD93812F40F578A2B8B",
+      "columns": 1,
+      "rows": 1,
+      "tool": "built-in imagegen",
+      "prompt": "Create a premium illustrated action RPG game battlefield environment asset, landscape 3:2 composition. Dawn sky sanctuary, broad floating white marble terrace, golden filigree paving, blue and peach cloud edges, broken white-gold pillars and small gardens, luminous blue and warm ivory palette. Orthographic elevated 3/4 overhead viewpoint, nearly top-down ground plane to match chibi characters, no horizon or sky filling scene. Large readable walkable combat floor occupies central 75%, subtly textured, with modest environmental objects concentrated near outer edges. Rich sculpted handpainted storybook 3D illustration, coherent with cute CxQ original characters. Beautiful material details, layered ambient light, depth in peripheral props, restrained central contrast for readable enemies. NO characters, monsters, text, UI, logos or frames. Full bleed actual usable environment art, not a game screenshot mockup. Keep floor visually continuous near sides, suitable for repeating large terrain chunks."
+    },
+    {
+      "file": "art/v4/enemies-cave.webp",
+      "bytes": 667842,
+      "sha256": "BF24BC7F2F77AE17FB65FB904CB8BEBF7008F46BE30C70024F0C1BDA651A6CA6",
+      "columns": 4,
+      "rows": 6,
+      "tool": "built-in imagegen",
+      "prompt": "Production animation sprite atlas for a premium cute illustrated fantasy action game. TRANSPARENT background. EXACTLY FOUR COLUMNS and SIX ROWS, 24 separate complete monster frames, equally spaced equal-size rectangular cells. Each row depicts ONE distinct monster in FOUR clearly different animation poses: idle preparation, movement windup, attack release, recovery. Row order top to bottom MUST be: ROW 1: small teal crystal slime hopping; ROW 2: violet crystal-winged bat flapping; ROW 3: small hooded dark purple crystal mage raising staff; ROW 4: stocky rock knight with amethyst armored shell stomping; ROW 5: jagged small crystal beast with split twin crystal ears lunging; ROW 6: BOSS massive amethyst crystal golem with cyan core slamming arms. Keep all 4frames of each monster identical species/palette/body proportions; entire body and weapon inside cell, 12% padding, no overlap across cells. Feet aligned same baseline within each cell. Make BOSS row6 impressive but fit same cell box; game will enlarge it. Cohesive sculpted storybook 3D painted style, jewel-like eyes, handpainted textures and crisp silhouettes, rich saturated yet soft colors, match cute CxQ chibi RPG. No text numbers labels borders scenery or cast shadow backgrounds. Six highly distinct species, not recolors. Facing three-quarter toward right, readable at small game sizes. Tall portrait atlas layout four columns six rows."
+    },
+    {
+      "file": "art/v4/enemies-forest.webp",
+      "bytes": 787850,
+      "sha256": "D15581323F95445DAAA9A14A0417233179D2411F9B0DEC20DD186CB1AA113134",
+      "columns": 4,
+      "rows": 6,
+      "tool": "built-in imagegen",
+      "prompt": "Production animation sprite atlas for a premium cute illustrated fantasy action game. TRANSPARENT background. EXACTLY FOUR COLUMNS and SIX ROWS, 24 separate complete monster frames, equally spaced equal-size rectangular cells. Each row depicts ONE distinct monster in FOUR clearly different animation poses: idle preparation, movement windup, attack release, recovery. Row order top to bottom MUST be: ROW 1: round mossball forest sprite hopping; ROW 2: slender thorn-antlered woodland deer bounding; ROW 3: purple-capped mushroom wizard firing spores; ROW 4: pink flower-bud priest raising leaf wand; ROW 5: root-and-vine nest mother with seed pods pulsing; ROW 6: BOSS ancient tree king with moss beard and wooden crown slamming roots. Keep all 4frames of each monster identical species/palette/body proportions; entire body and weapon inside cell, 12% padding, no overlap across cells. Feet aligned same baseline within each cell. Make BOSS row6 impressive but fit same cell box; game will enlarge it. Cohesive sculpted storybook 3D painted style, jewel-like eyes, handpainted textures and crisp silhouettes, rich saturated yet soft colors, match cute CxQ chibi RPG. No text numbers labels borders scenery or cast shadow backgrounds. Six highly distinct species, not recolors. Facing three-quarter toward right, readable at small game sizes. Tall portrait atlas layout four columns six rows."
+    },
+    {
+      "file": "art/v4/enemies-coast.webp",
+      "bytes": 694060,
+      "sha256": "FA7342D503152DECD9FA489AECF84992E1FB21B5402F5D672C032DA0EEE01A05",
+      "columns": 4,
+      "rows": 6,
+      "tool": "built-in imagegen",
+      "prompt": "Production animation sprite atlas for a premium cute illustrated fantasy action game. TRANSPARENT background. EXACTLY FOUR COLUMNS and SIX ROWS, 24 separate complete monster frames, equally spaced equal-size rectangular cells. Each row depicts ONE distinct monster in FOUR clearly different animation poses: idle preparation, movement windup, attack release, recovery. Row order top to bottom MUST be: ROW 1: tiny translucent blue foam water spirit bobbing; ROW 2: silver shell moon-sand crab scuttling; ROW 3: sleek turquoise blade-finned flying fish lunging; ROW 4: pearl-crowned lavender jellyfish pulsing tentacles; ROW 5: long golden sand eel coiling emerging; ROW 6: BOSS royal deep-tide sea dragon with coral crown and azure fins roaring. Keep all 4frames of each monster identical species/palette/body proportions; entire body and weapon inside cell, 12% padding, no overlap across cells. Feet aligned same baseline within each cell. Make BOSS row6 impressive but fit same cell box; game will enlarge it. Cohesive sculpted storybook 3D painted style, jewel-like eyes, handpainted textures and crisp silhouettes, rich saturated yet soft colors, match cute CxQ chibi RPG. No text numbers labels borders scenery or cast shadow backgrounds. Six highly distinct species, not recolors. Facing three-quarter toward right, readable at small game sizes. Tall portrait atlas layout four columns six rows."
+    },
+    {
+      "file": "art/v4/enemies-clock.webp",
+      "bytes": 755982,
+      "sha256": "95A878253CF26573FD33694EFDB516B543C36111097E63660F92B58F185042B3",
+      "columns": 4,
+      "rows": 6,
+      "tool": "built-in imagegen",
+      "prompt": "Production animation sprite atlas for a premium cute illustrated fantasy action game. TRANSPARENT background. EXACTLY FOUR COLUMNS and SIX ROWS, 24 separate complete monster frames, equally spaced equal-size rectangular cells. Each row depicts ONE distinct monster in FOUR clearly different animation poses: idle preparation, movement windup, attack release, recovery. Row order top to bottom MUST be: ROW 1: copper clockwork mouse with winding key scurrying; ROW 2: round bronze armored gear automaton rolling; ROW 3: pale sepia photograph ghost with floating frame drifting; ROW 4: ornate hourglass witch puppet tilting sand staff; ROW 5: brass cuckoo clock bird with gear wings flapping; ROW 6: BOSS massive brass clockwarden with clockface shield and pendulum halberd swinging. Keep all 4frames of each monster identical species/palette/body proportions; entire body and weapon inside cell, 12% padding, no overlap across cells. Feet aligned same baseline within each cell. Make BOSS row6 impressive but fit same cell box; game will enlarge it. Cohesive sculpted storybook 3D painted style, jewel-like eyes, handpainted textures and crisp silhouettes, rich saturated yet soft colors, match cute CxQ chibi RPG. No text numbers labels borders scenery or cast shadow backgrounds. Six highly distinct species, not recolors. Facing three-quarter toward right, readable at small game sizes. Tall portrait atlas layout four columns six rows."
+    },
+    {
+      "file": "art/v4/enemies-sky.webp",
+      "bytes": 807246,
+      "sha256": "7149CC59C51FE942FA3CF11AE0B264C8640C8B95662E436189BDF42D06248E78",
+      "columns": 4,
+      "rows": 6,
+      "tool": "built-in imagegen",
+      "prompt": "Production animation sprite atlas for a premium cute illustrated fantasy action game. TRANSPARENT background. EXACTLY FOUR COLUMNS and SIX ROWS, 24 separate complete monster frames, equally spaced equal-size rectangular cells. Each row depicts ONE distinct monster in FOUR clearly different animation poses: idle preparation, movement windup, attack release, recovery. Row order top to bottom MUST be: ROW 1: small fluffy white cloud spirit hopping; ROW 2: sky-blue feathered wing serpent curling; ROW 3: dark-blue hooded lightning crystal apostle charging staff; ROW 4: white-gold sun-pattern armored guard raising shield; ROW 5: floating windchime mage with turquoise ribbons ringing bells; ROW 6: BOSS white marble golden-winged celestial statue with halo and spear spreading wings. Keep all 4frames of each monster identical species/palette/body proportions; entire body and weapon inside cell, 12% padding, no overlap across cells. Feet aligned same baseline within each cell. Make BOSS row6 impressive but fit same cell box; game will enlarge it. Cohesive sculpted storybook 3D painted style, jewel-like eyes, handpainted textures and crisp silhouettes, rich saturated yet soft colors, match cute CxQ chibi RPG. No text numbers labels borders scenery or cast shadow backgrounds. Six highly distinct species, not recolors. Facing three-quarter toward right, readable at small game sizes. Tall portrait atlas layout four columns six rows."
+    },
+    {
+      "file": "art/v4/equipment.webp",
+      "bytes": 751682,
+      "sha256": "586A19FF99D7FF33047C3B993EF2D6EDC3E96DEA467E7BBB8CCE6D9C47A0EDBF",
+      "columns": 5,
+      "rows": 4,
+      "tool": "built-in imagegen",
+      "prompt": "TRANSPARENT item icon atlas for premium chibi fantasy RPG. EXACT grid FIVE columns FOUR rows =20 separate large detailed equipment icons, equal cells with15%padding, no borders no text, gold-trimmed painted sculpted 3Dstorybook style. Row1 left to right: amethyst meteor crystal core with golden fire; purple starbeam prism with wand mount; pink pastel rainbow throwing ring; ornate festival fireworks gift box; navy moon archer quiver with silver arrows. Row2: curved silver violet orbiting crescent blade; crystal rain chime with blue droplets; aqua tide pearl orb; brass guardian key chain with shield clasp; engraved navy gold guardian crest shield. Row3: sepia glowing photo memory mirror; brass blue hourglass; sprouting green forest spirit seed; thorn and flower crown; peach plush heart protective charm. Row4: glass flower incense sachet; golden clover lucky dice; mint four-leaf throwing wheel; white golden dawn wings; cyan lightning crystal with small golden frame. All clearly distinct, no background tiles, item fully inside its equal cell, high legibility."
+    },
+    {
+      "file": "art/v4/main-weapons.webp",
+      "bytes": 231988,
+      "sha256": "D66888D541DB16F46A3B6E0B8D8050FA895C490230C5BC02F1B067CBBFA99841",
+      "columns": 5,
+      "rows": 2,
+      "tool": "built-in imagegen",
+      "prompt": "TRANSPARENT dedicated weapon icon spritesheet for original CxQ fantasy RPG. EXACTLY FIVE columns TWO rows =10 icons, equal-size cells with generouspadding, no captions no frames. Rich sculpted painted soft fantasy3D storybook style with gold ivory trim. Row1: pair of pastel pink golden star rhythm handbells; lavender crystal star dream magic staff; navy silver crescent moon longbow with taut glowing string; blue gray hydrangea crystal umbrella rain staff; large navy bronze keyhole guardian shield. Row2: open sepia memory spellbook with glowing floating photograph; leafy wooden emerald command staff; peach cream flower healing staff with warm heart; mint green fourleaf golden wand; long elegant white gold dawn spear. Entire weapon inside cell, consistent diagonal showcase orientation, crisp detailed material, original cute fantasy weapons, no character or hands."
+    },
+    {
+      "file": "art/v4/materials.webp",
+      "bytes": 82670,
+      "sha256": "B159059F178B6BD284BA30AE30583CA6E95460EA3B75A82075DBF8BE142905FE",
+      "columns": 5,
+      "rows": 1,
+      "tool": "built-in imagegen",
+      "prompt": "TRANSPARENT five collectible material icons for premium chibi fantasy RPG, EXACT FIVE columns ONE row, equally spaced equal cells, gold lavender mint coordinated painted3Dstory style. left to right: luminous purple star crystal shard; bright living emerald forest seed core with two leaves; iridescent moon pearl in small shell; ornate brass echo clock gear with blue gem; glowing white golden dawn feather crystal. No text no boxes no backdrop, clear silhouettes,15%padding."
+    },
+    {
+      "file": "art/v4/companions.webp",
+      "bytes": 334782,
+      "sha256": "5E51E6963A679B238DC8128A1698AD978A91EEC6EDF9D4981DE12F40DE2D37A5",
+      "columns": 4,
+      "rows": 3,
+      "tool": "built-in imagegen",
+      "prompt": "TRANSPARENT original friendly summon animation spritesheet. EXACT FOUR columns THREE rows. Four frames per row equally spaced consistentcells12%padding. Row1 cute green leafy forest seedling fairy with leafy hair and tiny vine feet, four distinct hopping running poses. Row2 large friendly bark-and-leaf forest guardian with emerald heart and moss shoulder, four distinct prepare/windup/punch/recover frames. Row3 cream peach fluffy floppy-eared flower spirit with heart and tiny petals, four flutter/hop/heal/recover poses. Cute sculpted painterly3Dstorybook fantasy style matching CxQ original characters, golden warm eyes, crisp materials. No text no labels no background no overlapping cells, original creatures, full body inside everycell."
+    }
+  ]
+}

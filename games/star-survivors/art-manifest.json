@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "game": "CxQ 星願割草冒險",
   "character": "露緹",
   "runSheet": {
@@ -165,6 +165,198 @@
       "source": "Original hostile crystal caster animation frames; generated 2026-11-02, purple/gold/cyan game palette",
       "rows": 1,
       "columns": 4
+    },
+    {
+      "file": "art/v4/role-joy.webp",
+      "bytes": 377246,
+      "sha256": "D9158BE7B776969A7425D3A873C48CE2ED2E5EA97646C51051E47C0C10475CF3",
+      "columns": 4,
+      "rows": 3,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/role-dream.webp",
+      "bytes": 359782,
+      "sha256": "6CDA0A3405FFF7F3CB6524A48FB95DC06601365259771840B1920446DAAB2B2C",
+      "columns": 4,
+      "rows": 3,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/role-night.webp",
+      "bytes": 379586,
+      "sha256": "2D06BB3A055B2216ED76E37FDB84D0B9E82CF63C070F3858F408C846C83A88CB",
+      "columns": 4,
+      "rows": 3,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/role-sadness.webp",
+      "bytes": 401100,
+      "sha256": "2A36038AB01E18742911E0BD7C4421B27834BBF4A67C591E8795C31BCE57626A",
+      "columns": 4,
+      "rows": 3,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/role-trust.webp",
+      "bytes": 349774,
+      "sha256": "43FF3B5B1E9AFA56946087D25CE24D4A93564E7B2C100C9EE1A1ADF833489813",
+      "columns": 4,
+      "rows": 3,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/role-memory.webp",
+      "bytes": 336094,
+      "sha256": "D36B362D72F4D4E9BC4E8540682FE54E4BA535927622A7D50DE3972CD8FDC9B7",
+      "columns": 4,
+      "rows": 3,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/role-growth.webp",
+      "bytes": 387188,
+      "sha256": "0980FDF61D5458DD769518314B7328FC451FC23850E9D4F1A6E0FA0CA9E2FB00",
+      "columns": 4,
+      "rows": 3,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/role-healing.webp",
+      "bytes": 292088,
+      "sha256": "BC6CE9F13B5784C0694241F52A0EAE61B3EEE4849AE4FFF97A9B8307E8F40414",
+      "columns": 4,
+      "rows": 3,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/role-luck.webp",
+      "bytes": 363410,
+      "sha256": "0D9B54FE66FA08A81450B78BC0D8530B695E170D42824EF40096005DF415F528",
+      "columns": 4,
+      "rows": 3,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/role-hope.webp",
+      "bytes": 333064,
+      "sha256": "B0BCFE91FCE661F9E5167B4FAA2C297278AB09A258A74921D1E0BC914296C735",
+      "columns": 4,
+      "rows": 3,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/map-cave.jpg",
+      "bytes": 505088,
+      "sha256": "D7D00DC9D97F4DB57B78F70DBA89051A4E208F91EBAFC2B044146746635DC16E",
+      "columns": 1,
+      "rows": 1,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/map-forest.jpg",
+      "bytes": 591584,
+      "sha256": "B78373B951B5E1F4FD9561A540078713D3BC186890CF85962E705D7FC6CAC36C",
+      "columns": 1,
+      "rows": 1,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/map-coast.jpg",
+      "bytes": 540202,
+      "sha256": "01EE74385F2B3EA0205994B96384FDAE567E8EBA6E57BEB00E9E2C7FA50B99CC",
+      "columns": 1,
+      "rows": 1,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/map-clock.jpg",
+      "bytes": 627139,
+      "sha256": "AD049E43DCC21C19816A64600578D32A8AC531D548F985C62908E5FF8A44B38A",
+      "columns": 1,
+      "rows": 1,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/map-sky.jpg",
+      "bytes": 474214,
+      "sha256": "1BCE783EAC4A1C9B8B01FA15279E2BE9812B593CCD1FFCD93812F40F578A2B8B",
+      "columns": 1,
+      "rows": 1,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/enemies-cave.webp",
+      "bytes": 667842,
+      "sha256": "BF24BC7F2F77AE17FB65FB904CB8BEBF7008F46BE30C70024F0C1BDA651A6CA6",
+      "columns": 4,
+      "rows": 6,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/enemies-forest.webp",
+      "bytes": 787850,
+      "sha256": "D15581323F95445DAAA9A14A0417233179D2411F9B0DEC20DD186CB1AA113134",
+      "columns": 4,
+      "rows": 6,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/enemies-coast.webp",
+      "bytes": 694060,
+      "sha256": "FA7342D503152DECD9FA489AECF84992E1FB21B5402F5D672C032DA0EEE01A05",
+      "columns": 4,
+      "rows": 6,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/enemies-clock.webp",
+      "bytes": 755982,
+      "sha256": "95A878253CF26573FD33694EFDB516B543C36111097E63660F92B58F185042B3",
+      "columns": 4,
+      "rows": 6,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/enemies-sky.webp",
+      "bytes": 807246,
+      "sha256": "7149CC59C51FE942FA3CF11AE0B264C8640C8B95662E436189BDF42D06248E78",
+      "columns": 4,
+      "rows": 6,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/equipment.webp",
+      "bytes": 751682,
+      "sha256": "586A19FF99D7FF33047C3B993EF2D6EDC3E96DEA467E7BBB8CCE6D9C47A0EDBF",
+      "columns": 5,
+      "rows": 4,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/main-weapons.webp",
+      "bytes": 231988,
+      "sha256": "D66888D541DB16F46A3B6E0B8D8050FA895C490230C5BC02F1B067CBBFA99841",
+      "columns": 5,
+      "rows": 2,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/materials.webp",
+      "bytes": 82670,
+      "sha256": "B159059F178B6BD284BA30AE30583CA6E95460EA3B75A82075DBF8BE142905FE",
+      "columns": 5,
+      "rows": 1,
+      "source": "built-in imagegen original expedition art"
+    },
+    {
+      "file": "art/v4/companions.webp",
+      "bytes": 334782,
+      "sha256": "5E51E6963A679B238DC8128A1698AD978A91EEC6EDF9D4981DE12F40DE2D37A5",
+      "columns": 4,
+      "rows": 3,
+      "source": "built-in imagegen original expedition art"
     }
   ],
   "presentation": {
@@ -192,5 +384,5 @@
       "rows": 1
     }
   },
-  "release": "2026-11-02-build3"
+  "release": "20261103-expedition1"
 }

@@ -1,0 +1,17 @@
+import assert from'node:assert/strict';
+import{touchVector,bindBattleTouch}from'../battle-touch.mjs';
+const view={w:390,h:844,scale:.8,camera:{x:100,y:20}},player={x:100,y:20};
+assert.deepEqual(touchVector(null,player,view),{x:0,y:0});
+assert.deepEqual(touchVector({x:195,y:844*.52},player,view),{x:0,y:0});
+const right=touchVector({x:350,y:844*.52},player,view);assert.equal(right.x,1);assert.equal(right.y,0);
+const diag=touchVector({x:350,y:700},player,view);assert.ok(Math.abs(Math.hypot(diag.x,diag.y)-1)<1e-6);
+const handlers={},captures=new Set(),canvas={getBoundingClientRect:()=>({left:0,top:0}),addEventListener:(k,fn)=>handlers[k]=fn,setPointerCapture:id=>captures.add(id),hasPointerCapture:id=>captures.has(id),releasePointerCapture:id=>captures.delete(id)};
+let playing=true;const marker={hidden:true,style:{}},control=bindBattleTouch(canvas,{isPlaying:()=>playing,marker});
+const event=(id,x=350,y=400)=>({pointerId:id,button:0,clientX:x,clientY:y,preventDefault(){}});
+handlers.pointerdown(event(1));assert.ok(control.active);assert.equal(marker.hidden,false);assert.ok(control.vector(player,view).x>0);
+handlers.pointerdown(event(2,0));handlers.pointerup(event(2));assert.ok(control.active,'a second skill finger must not stop the movement finger');
+handlers.pointerup(event(1));assert.equal(control.active,false);assert.deepEqual(control.vector(player,view),{x:0,y:0});assert.equal(marker.hidden,true);
+handlers.pointerdown(event(3));handlers.pointercancel(event(3));assert.equal(control.active,false);
+handlers.pointerdown(event(4));playing=false;handlers.pointermove(event(4));assert.equal(control.active,false);
+handlers.pointerdown(event(5));assert.equal(control.active,false,'overlays cannot start movement');
+console.log('PASS direct touch direction, normalized speed, second finger isolation, release/cancel/pause and overlay guards');
