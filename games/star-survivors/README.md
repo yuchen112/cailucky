@@ -1,6 +1,6 @@
 # CxQ 星願割草冒險 · 露緹 / 星晶洞窟 · v2
 
-Single-character, complete-run browser release with a complete visual/interface revision, 2026-11-02. The game-hub card remains locked. Trial entry is `play.html`; `index.html` is a branded locked holding page. Existing v1 runs and permanent upgrades are preserved; the storage schema and combat values are unchanged.
+Single-character, complete-run browser release with a complete visual/interface revision, 2026-11-02. The game-hub card is open and labelled 基礎試玩版. Entry is `play.html`; `index.html` redirects to the playable basic trial. Existing v1 runs and permanent upgrades are preserved; the storage schema and combat values are unchanged.
 
 ## Play
 
