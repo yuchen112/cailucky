@@ -1,5 +1,5 @@
 import{createGame,step,choose,dash,restore,serialize,summary,WEAPONS,PASSIVES,STARTERS,DIFFICULTY,reroll,skip,ban,weaponCount,passiveCount,weaponLimit,branchOf,weaponName,upgradeInfo}from'./core.mjs?v=3';
-import{Renderer}from'./renderer.mjs?v=3';
+import{Renderer}from'./renderer.mjs?v=3.1';
 import{Sound}from'./sound.mjs?v=3';
 import{preview}from'./combat-visuals.mjs?v=3';
 const $=id=>document.getElementById(id),KEY='cxq-star-survivors-v1',RUN=KEY+'-run';
