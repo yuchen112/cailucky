@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "game": "CxQ 星願割草冒險",
   "character": "露緹",
   "runSheet": {
@@ -141,10 +141,34 @@
       "sha256": "85C08450325836A8668318EF65422C1F9539522DC40A82F35CF84D7CBED10407",
       "source": "Original full-resolution Luti cast sheet reused for the large menu presentation",
       "frames": 4
+    },
+    {
+      "file": "art/v3/icons.png",
+      "bytes": 753366,
+      "sha256": "2D0BE18CED814E28A728977FA9A7EBD71E4B5C638101191F34D880BEB551D978",
+      "source": "Eight original weapon and passive icons; generated 2026-11-02, purple/gold/cyan game palette",
+      "rows": 2,
+      "columns": 4
+    },
+    {
+      "file": "art/v3/allies.png",
+      "bytes": 926995,
+      "sha256": "2E33BDFA76BDB2CE2E25E429DE84AF3E08DA8C306929D2FAB25ABB6E3021CF83",
+      "source": "Original crystal fairy and guardian animation frames; generated 2026-11-02, purple/gold/cyan game palette",
+      "rows": 2,
+      "columns": 4
+    },
+    {
+      "file": "art/v3/caster.png",
+      "bytes": 392738,
+      "sha256": "F9820E9F83C45A2B114141C165742918EFBB723BB712F735DF8DF8CE3CFA6F70",
+      "source": "Original hostile crystal caster animation frames; generated 2026-11-02, purple/gold/cyan game palette",
+      "rows": 1,
+      "columns": 4
     }
   ],
   "presentation": {
-    "revision": 2,
+    "revision": 3,
     "itemSheet": {
       "columns": 4,
       "rows": 2
@@ -154,7 +178,7 @@
       "rows": 3,
       "columns": 4
     },
-    "saveSchema": 1,
+    "saveSchema": 2,
     "buttonSheet": {
       "columns": 1,
       "rows": 2
@@ -168,5 +192,5 @@
       "rows": 1
     }
   },
-  "release": "2026-11-02-v2.1"
+  "release": "2026-11-02-build3"
 }
