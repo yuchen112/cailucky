@@ -203,8 +203,11 @@ function render(t){const dt=Math.min(.1,Math.max(0,(t-last)/1000));last=t;frame=
    if(section==='workshop'){
     automaticGain+=produced;automaticTime+=dt;
     if(automaticTime>=1){
-     productionFloat=automaticGain>0?{gain:automaticGain,age:0}:null;
-     automaticGain=0;automaticTime=0;
+     const carryTime=automaticTime-1;
+     const carryGain=dt>0?produced*carryTime/dt:0;
+     const secondGain=automaticGain-carryGain;
+     productionFloat=secondGain>0?{gain:secondGain,age:0}:null;
+     automaticGain=carryGain;automaticTime=carryTime;
     }
    }else{awayGain+=produced;awayTime+=dt;}
    if(appeared&&section==='workshop')actionSound('cometAppear');if(holdPoint&&s.settings.hold&&s.clicks>=500&&now()-holdAt>.25){holdAt=now();starTap(holdPoint);}if(t-lastCheck>800){checkRewards();lastCheck=t;}if(t-lastSave>5000){persist();lastSave=t;}}
