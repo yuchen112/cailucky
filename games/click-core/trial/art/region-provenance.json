@@ -1,0 +1,128 @@
+{
+  "region-map": {
+    "source": "exec-0a9b465e-5342-454a-bf06-d85130117e49.png",
+    "prompt": "Overhead storybook garden map with star tree plaza and workshop clearings.",
+    "output": "region-map.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/01-work": {
+    "source": "exec-59892104-1ad0-43f8-acfb-26e313c98def.png",
+    "prompt": "Create an alternate animation frame of this exact scene. Lock camera, framing, background, room furnishings, character scale and identity. The ONLY changes: 鈴可 lowers the bell in their raised paw a few centimeters and brings the polishing cloth against its lower edge with the other paw, eyes glance at the bell, gentle working action. All other pixels should be as close as possible to original, no camera change, no text.",
+    "output": "regions/01-work.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/01": {
+    "source": "exec-435aa9e5-da1b-46a5-bb68-fdf2744414e8.png",
+    "prompt": "Create one full environment scene, 4:3 landscape. Expand the referenced CxQ diorama into a real cozy full-size storybook workshop interior or connected garden, remove circular display pedestal. Preserve the exact attached clay character face, proportions and outfit. Show them polishing a small brass star bell at a cedar bench. Character and visible hands centered in middle half so phone cropping still reads. Warm dusk window light, tactile wood and clay, beautiful depth, no UI, no labels or lettering, no other characters. Match the reference palette.",
+    "output": "regions/01.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/02": {
+    "source": "exec-b5cfd539-aec1-4215-9789-38e9045c7821.png",
+    "prompt": "Create one full environment scene, 4:3 landscape. Expand the referenced CxQ diorama into a real cozy full-size storybook workshop interior or connected garden, remove circular display pedestal. Preserve the exact attached clay character face, proportions and outfit. Show them fluffing a pillow at a low linen-covered work table. Character and visible hands centered in middle half so phone cropping still reads. Warm dusk window light, tactile wood and clay, beautiful depth, no UI, no labels or lettering, no other characters. Match the reference palette.",
+    "output": "regions/02.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/03": {
+    "source": "exec-ef54f7fd-c8b1-40ab-b637-154f7f09b9ff.png",
+    "prompt": "Create one full environment scene, 4:3 landscape. Expand the referenced CxQ diorama into a real cozy full-size storybook workshop interior or connected garden, remove circular display pedestal. Preserve the exact attached clay character face, proportions and outfit. Show them watering glowing seedlings in the nursery. Character and visible hands centered in middle half so phone cropping still reads. Warm dusk window light, tactile wood and clay, beautiful depth, no UI, no labels or lettering, no other characters. Match the reference palette.",
+    "output": "regions/03.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/04": {
+    "source": "exec-4388151b-c4d5-446b-9a2e-08743c25075a.png",
+    "prompt": "Create one full environment scene, 4:3 landscape. Expand the referenced CxQ diorama into a real cozy full-size storybook workshop interior or connected garden, remove circular display pedestal. Preserve the exact attached clay character face, proportions and outfit. Show them sorting developed prints in the timber photo studio. Character and visible hands centered in middle half so phone cropping still reads. Warm dusk window light, tactile wood and clay, beautiful depth, no UI, no labels or lettering, no other characters. Match the reference palette.",
+    "output": "regions/04.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/05": {
+    "source": "exec-3e58bf46-8a02-4c09-8b40-f9a94bd43b42.png",
+    "prompt": "Create one full environment scene, 4:3 landscape. Expand the referenced CxQ diorama into a real cozy full-size storybook workshop interior or connected garden, remove circular display pedestal. Preserve the exact attached clay character face, proportions and outfit. Show them tying bunting in the little festival workshop. Character and visible hands centered in middle half so phone cropping still reads. Warm dusk window light, tactile wood and clay, beautiful depth, no UI, no labels or lettering, no other characters. Match the reference palette.",
+    "output": "regions/05.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/06": {
+    "source": "exec-dbde6317-dae3-43e3-af86-a3f8539e2ed3.png",
+    "prompt": "Create one full environment scene, 4:3 landscape. Expand the referenced CxQ diorama into a real cozy full-size storybook workshop interior or connected garden, remove circular display pedestal. Preserve the exact attached clay character face, proportions and outfit. Show them adjusting the brass telescope in the observatory. Character and visible hands centered in middle half so phone cropping still reads. Warm dusk window light, tactile wood and clay, beautiful depth, no UI, no labels or lettering, no other characters. Match the reference palette.",
+    "output": "regions/06.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/07": {
+    "source": "exec-55d429fd-354d-4f7a-a63c-8b079d9f4bf0.png",
+    "prompt": "Create one full environment scene, 4:3 landscape. Expand the referenced CxQ diorama into a real cozy full-size storybook workshop interior or connected garden, remove circular display pedestal. Preserve the exact attached clay character face, proportions and outfit. Show them turning a key at the little cedar treasure workshop. Character and visible hands centered in middle half so phone cropping still reads. Warm dusk window light, tactile wood and clay, beautiful depth, no UI, no labels or lettering, no other characters. Match the reference palette.",
+    "output": "regions/07.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/08": {
+    "source": "exec-99112126-d17d-40c4-b60f-919a5c7042ce.png",
+    "prompt": "Create one full environment scene, 4:3 landscape. Expand the referenced CxQ diorama into a real cozy full-size storybook workshop interior or connected garden, remove circular display pedestal. Preserve the exact attached clay character face, proportions and outfit. Show them sorting letters in the timber post office. Character and visible hands centered in middle half so phone cropping still reads. Warm dusk window light, tactile wood and clay, beautiful depth, no UI, no labels or lettering, no other characters. Match the reference palette.",
+    "output": "regions/08.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/09": {
+    "source": "exec-03e0ed86-c17c-4bc9-86d1-b620809b5029.png",
+    "prompt": "Create one full environment scene, 4:3 landscape. Expand the referenced CxQ diorama into a real cozy full-size storybook workshop interior or connected garden, remove circular display pedestal. Preserve the exact attached clay character face, proportions and outfit. Show them watering flowers in a pastel glass greenhouse. Character and visible hands centered in middle half so phone cropping still reads. Warm dusk window light, tactile wood and clay, beautiful depth, no UI, no labels or lettering, no other characters. Match the reference palette.",
+    "output": "regions/09.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/10": {
+    "source": "exec-8189a3cf-10a2-4d3c-96d6-b1810ffbdae7.png",
+    "prompt": "Create one full environment scene, 4:3 landscape. Expand the referenced CxQ diorama into a real cozy full-size storybook workshop interior or connected garden, remove circular display pedestal. Preserve the exact attached clay character face, proportions and outfit. Show them weaving starlight linen on a wooden loom. Character and visible hands centered in middle half so phone cropping still reads. Warm dusk window light, tactile wood and clay, beautiful depth, no UI, no labels or lettering, no other characters. Match the reference palette.",
+    "output": "regions/10.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/02-work": {
+    "source": "exec-0e0d2673-2e61-41a4-98c6-3e8ddc90ef9c.png",
+    "prompt": "Produce an alternate animation keyframe of this exact image. Preserve the exact camera, composition, lighting, character face and size, furniture, and every background detail. Change only the character's hand action: gently press the pillow slightly flatter with both paws. Subtle change, same full-scene framing, no new props or text.",
+    "output": "regions/02-work.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/03-work": {
+    "source": "exec-e84c5b1f-46ae-4d00-9dbc-be8e8cd733dd.png",
+    "prompt": "Produce an alternate animation keyframe of this exact image. Preserve the exact camera, composition, lighting, character face and size, furniture, and every background detail. Change only the character's hand action: tilt watering can a little farther, water droplets fall. Subtle change, same full-scene framing, no new props or text.",
+    "output": "regions/03-work.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/04-work": {
+    "source": "exec-9e501b3f-fa87-48bb-9b2e-270517d782a8.png",
+    "prompt": "Produce an alternate animation keyframe of this exact image. Preserve the exact camera, composition, lighting, character face and size, furniture, and every background detail. Change only the character's hand action: lower the photo slightly toward the sorting box. Subtle change, same full-scene framing, no new props or text.",
+    "output": "regions/04-work.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/05-work": {
+    "source": "exec-78f27dd8-bf55-4460-9969-53d794da271c.png",
+    "prompt": "Produce an alternate animation keyframe of this exact image. Preserve the exact camera, composition, lighting, character face and size, furniture, and every background detail. Change only the character's hand action: bring fingertips a little closer together while tightening ribbon. Subtle change, same full-scene framing, no new props or text.",
+    "output": "regions/05-work.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/06-work": {
+    "source": "exec-769ec31a-95e4-47cc-a7be-2274748d0a19.png",
+    "prompt": "Produce an alternate animation keyframe of this exact image. Preserve the exact camera, composition, lighting, character face and size, furniture, and every background detail. Change only the character's hand action: turn the telescope focus knob slightly and open the closed eye. Subtle change, same full-scene framing, no new props or text.",
+    "output": "regions/06-work.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/07-work": {
+    "source": "exec-f4001e6c-162e-417f-b09b-ff86fd8c5a1d.png",
+    "prompt": "Produce an alternate animation keyframe of this exact image. Preserve the exact camera, composition, lighting, character face and size, furniture, and every background detail. Change only the character's hand action: rotate the small key at the lock a quarter turn. Subtle change, same full-scene framing, no new props or text.",
+    "output": "regions/07-work.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/08-work": {
+    "source": "exec-3b60d833-16c8-4880-bc55-089aad867044.png",
+    "prompt": "Produce an alternate animation keyframe of this exact image. Preserve the exact camera, composition, lighting, character face and size, furniture, and every background detail. Change only the character's hand action: lower the raised letter toward the tray. Subtle change, same full-scene framing, no new props or text.",
+    "output": "regions/08-work.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/09-work": {
+    "source": "exec-bcfd2429-d678-4cb7-85bc-c7cdacb2db5b.png",
+    "prompt": "Produce an alternate animation keyframe of this exact image. Preserve the exact camera, composition, lighting, character face and size, furniture, and every background detail. Change only the character's hand action: tilt watering can slightly more and continue pouring. Subtle change, same full-scene framing, no new props or text.",
+    "output": "regions/09-work.webp",
+    "tool": "built-in imagegen"
+  },
+  "regions/10-work": {
+    "source": "exec-794658d1-b1df-4f72-b64a-8cbc01e02964.png",
+    "prompt": "Produce an alternate animation keyframe of this exact image. Preserve the exact camera, composition, lighting, character face and size, furniture, and every background detail. Change only the character's hand action: draw the glowing thread a little farther toward the loom. Subtle change, same full-scene framing, no new props or text.",
+    "output": "regions/10-work.webp",
+    "tool": "built-in imagegen"
+  }
+}
