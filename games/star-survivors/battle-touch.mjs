@@ -1,19 +1,20 @@
-// Screen-space steering stays under the finger while the camera follows the hero.
-export function touchVector(point,player,view){
- if(!point||!player)return{x:0,y:0};
- const x=view.w/2+(player.x-view.camera.x)*view.scale;
- const y=view.h*.52+(player.y-view.camera.y)*view.scale;
- const dx=point.x-x,dy=point.y-y,d=Math.hypot(dx,dy);
- if(d<=14)return{x:0,y:0};
- const speed=Math.min(1,(d-14)/65);
- return{x:dx/d*speed,y:dy/d*speed};
+// A floating joystick measures displacement from the first finger's fixed origin.
+// Camera/player motion never changes that origin or the resulting movement vector.
+export function touchVector(point,origin,{radius=44,deadzone=5}={}){
+ if(!point||!origin)return{x:0,y:0};
+ const dx=point.x-origin.x,dy=point.y-origin.y,d=Math.hypot(dx,dy);
+ if(d<=deadzone)return{x:0,y:0};
+ const magnitude=Math.min(1,(d-deadzone)/Math.max(1,radius-deadzone));
+ return{x:dx/d*magnitude,y:dy/d*magnitude};
 }
-export function bindBattleTouch(canvas,{isPlaying,marker,onFirstMove=()=>{}}){
- let pointer=null,point=null;
- function place(e){const r=canvas.getBoundingClientRect();point={x:e.clientX-r.left,y:e.clientY-r.top};if(marker){marker.hidden=false;marker.style.left=e.clientX+'px';marker.style.top=e.clientY+'px'}}
- function reset(){const old=pointer;pointer=null;point=null;if(marker)marker.hidden=true;if(old!==null&&canvas.hasPointerCapture?.(old))canvas.releasePointerCapture(old)}
- canvas.addEventListener('pointerdown',e=>{if(!isPlaying()||pointer!==null||e.button>0)return;e.preventDefault();pointer=e.pointerId;place(e);canvas.setPointerCapture(e.pointerId);onFirstMove()});
- canvas.addEventListener('pointermove',e=>{if(e.pointerId!==pointer)return;if(!isPlaying()){reset();return}e.preventDefault();place(e)});
+export function bindBattleTouch(canvas,{isPlaying,base,thumb=base?.lastElementChild,radius=44,deadzone=5,onFirstMove=()=>{}}){
+ let pointer=null,point=null,origin=null;
+ function paint(){if(!base||!origin)return;base.hidden=false;base.style.left=origin.x+'px';base.style.top=origin.y+'px';const dx=point.x-origin.x,dy=point.y-origin.y,d=Math.hypot(dx,dy)||1,clamp=Math.min(1,radius/d);if(thumb)thumb.style.transform=`translate(${dx*clamp}px,${dy*clamp}px)`}
+ function reset(){const old=pointer;pointer=null;point=null;origin=null;if(base)base.hidden=true;if(thumb)thumb.style.transform='translate(0,0)';if(old!==null&&canvas.hasPointerCapture?.(old))canvas.releasePointerCapture(old)}
+ canvas.addEventListener('pointerdown',e=>{if(!isPlaying()||pointer!==null||e.button>0)return;e.preventDefault();pointer=e.pointerId;origin={x:e.clientX,y:e.clientY};point={...origin};canvas.setPointerCapture?.(e.pointerId);paint();onFirstMove()});
+ canvas.addEventListener('pointermove',e=>{if(e.pointerId!==pointer)return;if(!isPlaying()){reset();return}e.preventDefault();point={x:e.clientX,y:e.clientY};paint()});
  for(const type of['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(type,e=>{if(e.pointerId===pointer)reset()});
- return{reset,vector:(player,view)=>touchVector(point,player,view),get active(){return pointer!==null}};
+ if(typeof window!=='undefined')window.addEventListener('blur',reset);
+ if(typeof document!=='undefined')document.addEventListener('visibilitychange',()=>{if(document.hidden)reset()});
+ return{reset,vector:()=>isPlaying()?touchVector(point,origin,{radius,deadzone}):{x:0,y:0},get active(){return pointer!==null},get origin(){return origin?{...origin}:null}};
 }

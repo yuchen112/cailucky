@@ -1,0 +1,722 @@
+{
+  "version": 5,
+  "title": "CxQ 星界遠征：願途之聲",
+  "created": "2026-11-03",
+  "sampleRate": 24000,
+  "channels": 2,
+  "originalComposition": true,
+  "source": "compose.mjs",
+  "method": "New composed note-event scores, additive/FM acoustic-like instrument synthesis, deterministic noise foley, stereo room reflections; no borrowed audio or samples.",
+  "music": [
+    {
+      "id": "music-camp",
+      "file": "music-camp.mp3",
+      "name": "願途營火",
+      "seconds": 93.913,
+      "peak": 0.49534,
+      "rms": 0.11824,
+      "bpm": 92,
+      "meter": 3,
+      "bars": 48,
+      "instruments": [
+        "flute",
+        "harp",
+        "strings",
+        "bass",
+        "synthesized brushed/orchestral percussion"
+      ],
+      "description": "D Lydian chamber waltz; breathy flute, plucked harp, warm bowed harmonies and brushes.",
+      "loopStart": 0,
+      "loopEnd": 93.913,
+      "bytes": 1315883,
+      "sha256": "6c2986a4e5d8ad9bab7a46a9ec60511804feb3ebc546fef4fc83cd12d321b8ea"
+    },
+    {
+      "id": "music-cave",
+      "file": "music-cave.mp3",
+      "name": "晶脈遠行",
+      "seconds": 113.208,
+      "peak": 0.58498,
+      "rms": 0.11687,
+      "bpm": 106,
+      "meter": 5,
+      "bars": 40,
+      "instruments": [
+        "celesta",
+        "piano",
+        "strings",
+        "bass",
+        "synthesized brushed/orchestral percussion"
+      ],
+      "description": "B Dorian five-beat crystal expedition; resonant celesta, felt piano, low strings and distant frame drums.",
+      "loopStart": 0,
+      "loopEnd": 113.208,
+      "bytes": 1585780,
+      "sha256": "546e10d48a8a011b7fb95b9fba53820b55eb7c54eb69b7fcfa75869aa2a954ed"
+    },
+    {
+      "id": "music-forest",
+      "file": "music-forest.mp3",
+      "name": "森語同行",
+      "seconds": 102.857,
+      "peak": 0.5742,
+      "rms": 0.11786,
+      "bpm": 112,
+      "meter": 3,
+      "bars": 64,
+      "instruments": [
+        "marimba",
+        "harp",
+        "strings",
+        "bass",
+        "synthesized brushed/orchestral percussion"
+      ],
+      "description": "G Mixolydian woodland dance; wooden marimba, brushed seed shakers, harp answers and fluttering flute.",
+      "loopStart": 0,
+      "loopEnd": 102.857,
+      "bytes": 1440957,
+      "sha256": "24275e388052d729c05e6285ffd0063bfd65fd0e6da3c4dcabc564bd6059bae9"
+    },
+    {
+      "id": "music-coast",
+      "file": "music-coast.mp3",
+      "name": "月潮歸航",
+      "seconds": 100,
+      "peak": 0.50338,
+      "rms": 0.11829,
+      "bpm": 96,
+      "meter": 4,
+      "bars": 40,
+      "instruments": [
+        "flute",
+        "piano",
+        "strings",
+        "bass",
+        "synthesized brushed/orchestral percussion"
+      ],
+      "description": "F major tidal travel melody; legato flute, spacious piano voicings, rounded bass and ocean-like brushed noise.",
+      "loopStart": 0,
+      "loopEnd": 100,
+      "bytes": 1401094,
+      "sha256": "9145d385ec2546ee9128966c514281047b6d3eecf1988c9ca5d512853afe4d98"
+    },
+    {
+      "id": "music-clock",
+      "file": "music-clock.mp3",
+      "name": "回聲機巧庭",
+      "seconds": 100,
+      "peak": 0.58498,
+      "rms": 0.10055,
+      "bpm": 120,
+      "meter": 5,
+      "bars": 40,
+      "instruments": [
+        "piano",
+        "marimba",
+        "strings",
+        "bass",
+        "synthesized brushed/orchestral percussion"
+      ],
+      "description": "C-sharp double-harmonic clockwork; felt piano counterpoint, offset wooden ticks and pizzicato-like plucks.",
+      "loopStart": 0,
+      "loopEnd": 100,
+      "bytes": 1401094,
+      "sha256": "8664b22be2034d6c4076c47c99bc29f6c27f755163a90eb711d0e7918918d795"
+    },
+    {
+      "id": "music-sky",
+      "file": "music-sky.mp3",
+      "name": "曙光之上",
+      "seconds": 97.627,
+      "peak": 0.58498,
+      "rms": 0.11589,
+      "bpm": 118,
+      "meter": 4,
+      "bars": 48,
+      "instruments": [
+        "horn",
+        "harp",
+        "strings",
+        "bass",
+        "synthesized brushed/orchestral percussion"
+      ],
+      "description": "A-flat Lydian skyward march; warm horn, airy high strings, harp and broad tom percussion.",
+      "loopStart": 0,
+      "loopEnd": 97.627,
+      "bytes": 1367814,
+      "sha256": "c70b7dcf60f7bcede7a0f5028a18a62a2c553aa24c66915434ab60c582cb3a81"
+    },
+    {
+      "id": "music-boss",
+      "file": "music-boss.mp3",
+      "name": "守界者的誓約",
+      "seconds": 83.478,
+      "peak": 0.57671,
+      "rms": 0.11777,
+      "bpm": 138,
+      "meter": 4,
+      "bars": 48,
+      "instruments": [
+        "horn",
+        "strings",
+        "strings",
+        "bass",
+        "synthesized brushed/orchestral percussion"
+      ],
+      "description": "A harmonic-minor guardian battle; horn calls, sustained strings, low piano and advancing orchestral drums.",
+      "loopStart": 0,
+      "loopEnd": 83.478,
+      "bytes": 1169597,
+      "sha256": "a0396d9c1eaeaa71e766de2432afd459e28990f609b38c2e14fc6954a58e20b6"
+    },
+    {
+      "id": "music-boss-sky",
+      "file": "music-boss-sky.mp3",
+      "name": "蒼穹裁決",
+      "seconds": 77.838,
+      "peak": 0.57543,
+      "rms": 0.1181,
+      "bpm": 148,
+      "meter": 4,
+      "bars": 48,
+      "instruments": [
+        "horn",
+        "celesta",
+        "strings",
+        "bass",
+        "synthesized brushed/orchestral percussion"
+      ],
+      "description": "E-flat Dorian-sharp-four celestial duel; layered horns, celesta counterlines, storm toms and suspended strings.",
+      "loopStart": 0,
+      "loopEnd": 77.838,
+      "bytes": 1090603,
+      "sha256": "13a7b9d4dc2070a27218ff6840c2829e2317fcce060baf805621b2520d33d6da"
+    }
+  ],
+  "effects": [
+    {
+      "id": "attack-joy",
+      "file": "attack-joy.wav",
+      "description": "joy dedicated main-weapon cue",
+      "seconds": 0.38,
+      "peak": 0.64375,
+      "rms": 0.16124,
+      "bytes": 36524,
+      "sha256": "73cb29ae3c6fe84865575a63cdf0b99f6162044de89205e7e5615693e88cbfef"
+    },
+    {
+      "id": "skill-joy",
+      "file": "skill-joy.wav",
+      "description": "joy dedicated active-skill arrival and release",
+      "seconds": 1.2,
+      "peak": 0.62503,
+      "rms": 0.16412,
+      "bytes": 115244,
+      "sha256": "64ccddda37bc40c858153987b8d4850b3f8c4e09e2dbef2d423ae3be01af17d7"
+    },
+    {
+      "id": "attack-dream",
+      "file": "attack-dream.wav",
+      "description": "dream dedicated main-weapon cue",
+      "seconds": 0.38,
+      "peak": 0.59757,
+      "rms": 0.16285,
+      "bytes": 36524,
+      "sha256": "4b048520bbaa157ec475799311888c201228192b5134b3d70caf382a5dafe507"
+    },
+    {
+      "id": "skill-dream",
+      "file": "skill-dream.wav",
+      "description": "dream dedicated active-skill arrival and release",
+      "seconds": 1.2,
+      "peak": 0.63845,
+      "rms": 0.16422,
+      "bytes": 115244,
+      "sha256": "454d5ca84f1061afa837bb590ac928ad6c2db615ec2223f62a2095ad3ae5fa18"
+    },
+    {
+      "id": "attack-night",
+      "file": "attack-night.wav",
+      "description": "night dedicated main-weapon cue",
+      "seconds": 0.38,
+      "peak": 0.64693,
+      "rms": 0.15471,
+      "bytes": 36524,
+      "sha256": "343180b511a0a34a78cbf0591b3e3d456f350dea526e40aade160ba14b1357bb"
+    },
+    {
+      "id": "skill-night",
+      "file": "skill-night.wav",
+      "description": "night dedicated active-skill arrival and release",
+      "seconds": 1.2,
+      "peak": 0.64693,
+      "rms": 0.14379,
+      "bytes": 115244,
+      "sha256": "fb68d9c60e522c48c352e31cb42a1f592e83b3ec046ff244f9895f80f5ec6ea6"
+    },
+    {
+      "id": "attack-sadness",
+      "file": "attack-sadness.wav",
+      "description": "sadness dedicated main-weapon cue",
+      "seconds": 0.38,
+      "peak": 0.57332,
+      "rms": 0.16281,
+      "bytes": 36524,
+      "sha256": "f04b730e06e1e7555019aa884d1834968fd8866a250c1140b51767782b3524b2"
+    },
+    {
+      "id": "skill-sadness",
+      "file": "skill-sadness.wav",
+      "description": "sadness dedicated active-skill arrival and release",
+      "seconds": 1.2,
+      "peak": 0.64693,
+      "rms": 0.15246,
+      "bytes": 115244,
+      "sha256": "8686013ce9012b3ca39dac1b90d4ca410b4dc25959a685fecaf097b4e7aaaa7c"
+    },
+    {
+      "id": "attack-trust",
+      "file": "attack-trust.wav",
+      "description": "trust dedicated main-weapon cue",
+      "seconds": 0.38,
+      "peak": 0.50441,
+      "rms": 0.16077,
+      "bytes": 36524,
+      "sha256": "36211a15edda2a754069c995578458e0eca5c3dfc54f308bae551b609df7d845"
+    },
+    {
+      "id": "skill-trust",
+      "file": "skill-trust.wav",
+      "description": "trust dedicated active-skill arrival and release",
+      "seconds": 1.2,
+      "peak": 0.60006,
+      "rms": 0.16355,
+      "bytes": 115244,
+      "sha256": "9781070829492be51f1c05004c2f71b1981cbb399407a21e164d3881d16249d3"
+    },
+    {
+      "id": "attack-memory",
+      "file": "attack-memory.wav",
+      "description": "memory dedicated main-weapon cue",
+      "seconds": 0.38,
+      "peak": 0.62894,
+      "rms": 0.16327,
+      "bytes": 36524,
+      "sha256": "a8e9b62991cb916cd871eb2cfff58f2d2c2e39001b7ac40eea3980bfc78861a3"
+    },
+    {
+      "id": "skill-memory",
+      "file": "skill-memory.wav",
+      "description": "memory dedicated active-skill arrival and release",
+      "seconds": 1.2,
+      "peak": 0.64693,
+      "rms": 0.15412,
+      "bytes": 115244,
+      "sha256": "bf6fb420b6a9d9ac48c55baf5c38bb50231785d334d4dafea5d3b1b8b85a5bf0"
+    },
+    {
+      "id": "attack-growth",
+      "file": "attack-growth.wav",
+      "description": "growth dedicated main-weapon cue",
+      "seconds": 0.38,
+      "peak": 0.60981,
+      "rms": 0.16033,
+      "bytes": 36524,
+      "sha256": "105cbf37d39783ed65e24a30f56ac40fb9b3347ffa80e8489b5079ea4cc9c667"
+    },
+    {
+      "id": "skill-growth",
+      "file": "skill-growth.wav",
+      "description": "growth dedicated active-skill arrival and release",
+      "seconds": 1.2,
+      "peak": 0.64693,
+      "rms": 0.15349,
+      "bytes": 115244,
+      "sha256": "a7f4f2216f29ea753f82f0bfd5ef71bb7075efc72689fce33fc7c32e7be92abb"
+    },
+    {
+      "id": "attack-healing",
+      "file": "attack-healing.wav",
+      "description": "healing dedicated main-weapon cue",
+      "seconds": 0.38,
+      "peak": 0.47895,
+      "rms": 0.16405,
+      "bytes": 36524,
+      "sha256": "d1c1162b85de0e911ab72e217204e78c2acc6c4fee2e85e62cf58b4fadc89296"
+    },
+    {
+      "id": "skill-healing",
+      "file": "skill-healing.wav",
+      "description": "healing dedicated active-skill arrival and release",
+      "seconds": 1.2,
+      "peak": 0.52759,
+      "rms": 0.16455,
+      "bytes": 115244,
+      "sha256": "1d1476f8faeeb9872ec2dc2f72d2420833f30243621ff68e3b7627f9dbb59929"
+    },
+    {
+      "id": "attack-luck",
+      "file": "attack-luck.wav",
+      "description": "luck dedicated main-weapon cue",
+      "seconds": 0.38,
+      "peak": 0.57474,
+      "rms": 0.16305,
+      "bytes": 36524,
+      "sha256": "2dcdec7e7d0e7872b60efcd73119868e16b07b90c075b9c310d5f1f4c28af397"
+    },
+    {
+      "id": "skill-luck",
+      "file": "skill-luck.wav",
+      "description": "luck dedicated active-skill arrival and release",
+      "seconds": 1.2,
+      "peak": 0.64693,
+      "rms": 0.15537,
+      "bytes": 115244,
+      "sha256": "5b7ecbfe82b16fcb7ec9061591841e703859fcba5fdfcdfa209f7f0247c0c804"
+    },
+    {
+      "id": "attack-hope",
+      "file": "attack-hope.wav",
+      "description": "hope dedicated main-weapon cue",
+      "seconds": 0.38,
+      "peak": 0.64693,
+      "rms": 0.1549,
+      "bytes": 36524,
+      "sha256": "1d1c20a1572ec864def73b137abcdcc0b0200b815b3de3877bd27d6083108b8e"
+    },
+    {
+      "id": "skill-hope",
+      "file": "skill-hope.wav",
+      "description": "hope dedicated active-skill arrival and release",
+      "seconds": 1.2,
+      "peak": 0.63421,
+      "rms": 0.1635,
+      "bytes": 115244,
+      "sha256": "c8e3f883fd0a7a3ebba7077f46850c820e655fceea356aee757effb0d185529e"
+    },
+    {
+      "id": "click",
+      "file": "click.wav",
+      "description": "Warm tactile button click",
+      "seconds": 0.18,
+      "peak": 0.52735,
+      "rms": 0.15625,
+      "bytes": 17324,
+      "sha256": "4dbae0ec5792329bd4789a2225642c810ba16c9a474975081dabfaa5ef6e6481"
+    },
+    {
+      "id": "hover",
+      "file": "hover.wav",
+      "description": "Quiet brushed focus cue",
+      "seconds": 0.12,
+      "peak": 0.36322,
+      "rms": 0.15896,
+      "bytes": 11564,
+      "sha256": "360c2ab3697c974bbeb431a2f86807ec6c21dc38ea62fceb3b52e24d00124f9d"
+    },
+    {
+      "id": "select",
+      "file": "select.wav",
+      "description": "Character or destination selection",
+      "seconds": 0.3,
+      "peak": 0.53347,
+      "rms": 0.1628,
+      "bytes": 28844,
+      "sha256": "99243e2ff0c2e377e552debf732ec3273910dc9a07e215a89f016a08e87afcb9"
+    },
+    {
+      "id": "dash",
+      "file": "dash.wav",
+      "description": "Air rush and soft footfall",
+      "seconds": 0.42,
+      "peak": 0.51419,
+      "rms": 0.16466,
+      "bytes": 40364,
+      "sha256": "9d1207e5cd613c198ab88ab4dcb977708054709d6464798878d52c76802e5503"
+    },
+    {
+      "id": "hit",
+      "file": "hit.wav",
+      "description": "Layered muted impact",
+      "seconds": 0.19,
+      "peak": 0.46131,
+      "rms": 0.13975,
+      "bytes": 18284,
+      "sha256": "d68116be02ffdff743e81a6ac828b450620412fda9ec2955c9588f09b449e482"
+    },
+    {
+      "id": "hurt",
+      "file": "hurt.wav",
+      "description": "Player damage cloth impact",
+      "seconds": 0.45,
+      "peak": 0.64693,
+      "rms": 0.15463,
+      "bytes": 43244,
+      "sha256": "fd326742d23ba9574043b2a29e47a8a3d76e68f942e0eefabf014266e94e5f34"
+    },
+    {
+      "id": "block",
+      "file": "block.wav",
+      "description": "Resonant guardian metal and cloth",
+      "seconds": 0.45,
+      "peak": 0.62939,
+      "rms": 0.16261,
+      "bytes": 43244,
+      "sha256": "c92dad5ce7fc8c225240969fdf5020de9bdce8878343ada935cf04b9363f70a0"
+    },
+    {
+      "id": "pickup",
+      "file": "pickup.wav",
+      "description": "Soft crystal collection",
+      "seconds": 0.22,
+      "peak": 0.47071,
+      "rms": 0.16198,
+      "bytes": 21164,
+      "sha256": "afa863cd32c6c25fb72a151f5f54bc3588037a73ca5bfc40ff20ccf423d63d43"
+    },
+    {
+      "id": "material",
+      "file": "material.wav",
+      "description": "Map material acquired",
+      "seconds": 0.48,
+      "peak": 0.62806,
+      "rms": 0.16297,
+      "bytes": 46124,
+      "sha256": "20c970b03f245991871cb91d3fa728d237cca81a320b22704612784988dc3072"
+    },
+    {
+      "id": "objective",
+      "file": "objective.wav",
+      "description": "Map landmark completed",
+      "seconds": 0.9,
+      "peak": 0.52857,
+      "rms": 0.16364,
+      "bytes": 86444,
+      "sha256": "6b53434c6c0e4cb8c40f7d706e64eebec15a3850411fa37fca1cb7bef2b3bcd6"
+    },
+    {
+      "id": "warning",
+      "file": "warning.wav",
+      "description": "Danger preattack signal",
+      "seconds": 0.7,
+      "peak": 0.64693,
+      "rms": 0.10399,
+      "bytes": 67244,
+      "sha256": "e642401e5968bbeb9e02d88411b45725186809bc982e0ea1feef88a271d5c3d2"
+    },
+    {
+      "id": "boss",
+      "file": "boss.wav",
+      "description": "Guardian arrival drum swell",
+      "seconds": 1.65,
+      "peak": 0.64693,
+      "rms": 0.14942,
+      "bytes": 158444,
+      "sha256": "53e74c4dc6b4f2c9fc397c2bc683e5b42995ce0ca7a714759b05b8018194885a"
+    },
+    {
+      "id": "rain",
+      "file": "rain.wav",
+      "description": "Frost rain grains and shimmer",
+      "seconds": 0.65,
+      "peak": 0.64693,
+      "rms": 0.16112,
+      "bytes": 62444,
+      "sha256": "546a3557c88de5d3668a227e6fdee502fdbabf02ddaf76fa269b37886a08bdd0"
+    },
+    {
+      "id": "pulse",
+      "file": "pulse.wav",
+      "description": "Broad low resonance",
+      "seconds": 0.6,
+      "peak": 0.48902,
+      "rms": 0.16151,
+      "bytes": 57644,
+      "sha256": "8acddae717bf0fda4b84fc07fb3711e30afe615a2a172b4a0b92367fa88a62f0"
+    },
+    {
+      "id": "meteor",
+      "file": "meteor.wav",
+      "description": "Falling stone rumble and impact",
+      "seconds": 0.85,
+      "peak": 0.64693,
+      "rms": 0.12197,
+      "bytes": 81644,
+      "sha256": "bbc5c3cfddc4ea48cd2ff13848caf2e60ee3c9e6b647a5ccc8d8a17b3f8f948d"
+    },
+    {
+      "id": "chain",
+      "file": "chain.wav",
+      "description": "Electrical snap with crystal resonance",
+      "seconds": 0.5,
+      "peak": 0.64416,
+      "rms": 0.16278,
+      "bytes": 48044,
+      "sha256": "d2133668f70865306d1f080675689ccaf5f6de8f7e3e75759885bf6af3b9eff2"
+    },
+    {
+      "id": "beam",
+      "file": "beam.wav",
+      "description": "Focused luminous energy release",
+      "seconds": 0.65,
+      "peak": 0.59765,
+      "rms": 0.16362,
+      "bytes": 62444,
+      "sha256": "9196a36ac45cc2c895bcdc6090d202f42e6470f879b7ea26eb97c0df1cccf516"
+    },
+    {
+      "id": "summon",
+      "file": "summon.wav",
+      "description": "Companion arrival wooden bloom",
+      "seconds": 0.65,
+      "peak": 0.60947,
+      "rms": 0.16294,
+      "bytes": 62444,
+      "sha256": "9b8a9678b4ccc24e48d9df043cca2f7f06eba9fb53fe3118de14bbacb4121598"
+    },
+    {
+      "id": "shatter",
+      "file": "shatter.wav",
+      "description": "Scattered ice crystal fragments",
+      "seconds": 0.65,
+      "peak": 0.64693,
+      "rms": 0.14731,
+      "bytes": 62444,
+      "sha256": "4237995350f4f86eaed4c6c076c8f950f75123e9e6b8cbe91cee1cade12d7ff6"
+    },
+    {
+      "id": "reroll",
+      "file": "reroll.wav",
+      "description": "Cards brushed and shuffled",
+      "seconds": 0.55,
+      "peak": 0.64693,
+      "rms": 0.14281,
+      "bytes": 52848,
+      "sha256": "57725c167ebc50327f0388c483a6f1560983aa754ea4216d712bef3202a1ac01"
+    },
+    {
+      "id": "skip",
+      "file": "skip.wav",
+      "description": "Gentle descending skip confirmation",
+      "seconds": 0.35,
+      "peak": 0.50823,
+      "rms": 0.16223,
+      "bytes": 33644,
+      "sha256": "183ce0c937e2953b0645487d7805803b3dd8121d7ae9cc3255c4d73299ba56d7"
+    },
+    {
+      "id": "ban",
+      "file": "ban.wav",
+      "description": "Exclusion stamp and faded crystal",
+      "seconds": 0.45,
+      "peak": 0.57168,
+      "rms": 0.16142,
+      "bytes": 43244,
+      "sha256": "45d7c9d4e08c1440b26fd2ac1492adcc5779e977f186620134dc0d6b5a051055"
+    },
+    {
+      "id": "upgrade",
+      "file": "upgrade.wav",
+      "description": "Weapon advancement flourish",
+      "seconds": 1.15,
+      "peak": 0.64693,
+      "rms": 0.14397,
+      "bytes": 110444,
+      "sha256": "eed0d08d3d9666b74a5a243bcad60a12b65bf3fad8d00fcc1930cc5037e1e1a0"
+    },
+    {
+      "id": "evolve",
+      "file": "evolve.wav",
+      "description": "Branch evolution chamber fanfare",
+      "seconds": 1.65,
+      "peak": 0.64693,
+      "rms": 0.1423,
+      "bytes": 158444,
+      "sha256": "7bfa9231eac2bf1dd221a18e58faa8844a29e61be19036ee6369af00e3f6a5e0"
+    },
+    {
+      "id": "craft",
+      "file": "craft.wav",
+      "description": "Workshop hammer, metal harmonics and magic",
+      "seconds": 1.1,
+      "peak": 0.59509,
+      "rms": 0.16441,
+      "bytes": 105648,
+      "sha256": "b37b3d8fcfe93d05f9b243d8b396b36c6f657a68f88ff184b430802c5f60591e"
+    },
+    {
+      "id": "chest",
+      "file": "chest.wav",
+      "description": "Treasure lid and warm discovery",
+      "seconds": 1.2,
+      "peak": 0.64693,
+      "rms": 0.14205,
+      "bytes": 115244,
+      "sha256": "11cef0b8eb025e32643d431d1d574df4650e1dc15c0660897a51cc7e6a4699e6"
+    },
+    {
+      "id": "win",
+      "file": "win.wav",
+      "description": "Complete original expedition victory cadence",
+      "seconds": 3.1,
+      "peak": 0.64693,
+      "rms": 0.15843,
+      "bytes": 297644,
+      "sha256": "81f9280fc1f037c0112885cb52bc80e140a63151f7a0fc4ed77457da12b060ed"
+    },
+    {
+      "id": "lose",
+      "file": "lose.wav",
+      "description": "Gentle resolve after an unfinished expedition",
+      "seconds": 2.9,
+      "peak": 0.64693,
+      "rms": 0.15243,
+      "bytes": 278444,
+      "sha256": "c53a28fcfe482164edb2b3a1796c3ebbf6644ed237917a369474f2e4d475bcb9"
+    },
+    {
+      "id": "map",
+      "file": "map.wav",
+      "description": "Travel page and departure chime",
+      "seconds": 0.8,
+      "peak": 0.64693,
+      "rms": 0.1565,
+      "bytes": 76844,
+      "sha256": "122c169e3774cc753af2222192c7d40285f23bfdfd5bdfd1bdf1c4b2cc0edd07"
+    },
+    {
+      "id": "enemyCast",
+      "file": "enemyCast.wav",
+      "description": "Enemy ranged attack warning release",
+      "seconds": 0.42,
+      "peak": 0.54391,
+      "rms": 0.16422,
+      "bytes": 40364,
+      "sha256": "ae6d02c9233e36746e0fe3367c713c2148e2e119b0d29e7063e21925eea856cf"
+    },
+    {
+      "id": "heal",
+      "file": "heal.wav",
+      "description": "Restorative flowers opening",
+      "seconds": 0.8,
+      "peak": 0.53454,
+      "rms": 0.1645,
+      "bytes": 76844,
+      "sha256": "09e665abf6051eb8a46789c40efd81587ec096aea43392d3d9f1de9e65168bd7"
+    },
+    {
+      "id": "error",
+      "file": "error.wav",
+      "description": "Unavailable action dry wooden knock",
+      "seconds": 0.35,
+      "peak": 0.54578,
+      "rms": 0.16024,
+      "bytes": 33644,
+      "sha256": "748c97fe8d13c2cb73b7927043c646783b15395ee8b22bcd5f64f6fb97df2e49"
+    }
+  ],
+  "provenance": {
+    "game": "CxQ 星界遠征",
+    "scope": "Exclusive new masters for this game; file uniqueness verified against connected repository audio. Musical originality audit is a scoped engineering comparison, not a legal determination."
+  }
+}

@@ -1,6 +1,6 @@
 export const ARENA_BOUNDS=Object.freeze({x:1000,y:600,spawnX:1120,spawnY:720});
 // Shared expedition rules. IDs are permanent save keys; presentation never defines hitboxes.
-export const VERSION=4,MAX_WEAPONS=3,MAX_PASSIVES=4,UPGRADE_CAP=5;
+export const VERSION=5,MAX_WEAPONS=3,MAX_PASSIVES=4,UPGRADE_CAP=5;
 const route=(name,desc,evolved)=>({name,desc,evolved});
 const mains=[
  ['joy','朵莉','派對小彩星','歡樂節拍鈴','pulse','#ffb7d6','音波連拍','持續命中累積節拍，最多提高 24% 攻擊速度。','歡樂巡演','六秒加速，沿途發出節拍衝擊。',18,['colorRing','fireworks','clover','wings'],['連拍音浪','快速小範圍音波，連擊更穩定。','歡樂交響'],['重拍綻放','慢速大範圍重拍，擅長清出空間。','盛典重奏']],
@@ -40,7 +40,15 @@ const monsterRows=[
  ['雲絨靈','orbit',30,83,18],['疾風羽蛇','charge',45,102,20],['雷晶使徒','range',48,45,19],['光紋護衛','healer',75,40,23],['風鈴召使','summoner',65,36,20],['蒼穹聖像','bossSky',6800,45,56]
 ];
 export const MONSTERS=monsterRows.map(([name,behavior,hp,speed,r],id)=>({id,name,behavior,hp,speed,r,mapId:MAPS[Math.floor(id/6)].id,boss:id%6===5,atlas:Math.floor(id/6),cell:id%6,desc:({chase:'持續追擊',orbit:'從側翼繞行',range:'保持距離並預告射擊',shield:'正面護甲，重擊與光束可破甲',split:'倒下後分裂小型個體',charge:'鎖定方向後衝鋒',zone:'預告地面危險區',healer:'定期治療附近敵人',summoner:'召喚小型追擊者',burrow:'潛入地面後在舊位置現身',zigzag:'左右交錯逼近',echo:'在舊位置留下延遲爆破'})[behavior]||'兩階段首領，使用地圖專屬攻擊'}));
-export const DIFFICULTY={normal:{name:'標準冒險',hp:1,speed:1,damage:1,shotSpeed:1,bossCount:10,desc:'完整怪物強度與首領攻擊。'},gentle:{name:'輕鬆探索',hp:.78,speed:.86,damage:.65,shotSpeed:.8,bossCount:6,desc:'敵方生命 -22%、移速 -14%、所有傷害 -35%，彈幕較少較慢。'}};
+export const DIFFICULTY_ORDER=['easy','normal','hard','hell','inferno'];
+export const DIFFICULTY={
+ easy:{name:'簡單',hp:.78,speed:.86,damage:.65,shotSpeed:.8,bossCount:6,fanCount:0,rangeCount:1,waveRate:.85,waveExtra:0,patternTier:0,rewardMultiplier:.8,rareRewards:{},desc:'敵方生命 78%、移速 86%、傷害 65%，較少較慢的彈幕；地圖素材 ×0.8。'},
+ normal:{name:'普通',hp:1,speed:1,damage:1,shotSpeed:1,bossCount:10,fanCount:3,rangeCount:2,waveRate:1,waveExtra:0,patternTier:1,rewardMultiplier:1,rareRewards:{},desc:'完整怪物強度與首領攻擊；地圖素材 ×1。'},
+ hard:{name:'困難',hp:1.3,speed:1.08,damage:1.2,shotSpeed:1.1,bossCount:12,fanCount:4,rangeCount:2,waveRate:1.18,waveExtra:0,patternTier:2,rewardMultiplier:1.5,rareRewards:{challengeShard:2},desc:'更密集怪群與追加彈幕；地圖素材 ×1.5，通關獲得挑戰星砂 ×2。'},
+ hell:{name:'地獄',hp:1.65,speed:1.15,damage:1.45,shotSpeed:1.2,bossCount:16,fanCount:5,rangeCount:3,waveRate:1.35,waveExtra:1,patternTier:3,rewardMultiplier:2,rareRewards:{challengeShard:3,hellEmber:2},desc:'額外怪群、擴張首領陣式；地圖素材 ×2，通關獲得挑戰星砂 ×3、幽焰晶核 ×2。'},
+ inferno:{name:'煉獄',hp:2.1,speed:1.22,damage:1.75,shotSpeed:1.3,bossCount:20,fanCount:7,rangeCount:3,waveRate:1.55,waveExtra:1,patternTier:4,rewardMultiplier:2.8,rareRewards:{challengeShard:4,hellEmber:3,infernoCore:1},desc:'最高怪群密度與多重追蹤落點；地圖素材 ×2.8，通關獲得挑戰星砂 ×4、幽焰晶核 ×3、煉獄星核 ×1。'}
+};
+export const MATERIALS=Object.fromEntries([...MAPS.map(m=>[m.material.id,{...m.material,mapId:m.id,rare:false}]),['challengeShard',{id:'challengeShard',name:'挑戰星砂',rare:true,source:'困難以上通關',exchange:10}],['hellEmber',{id:'hellEmber',name:'幽焰晶核',rare:true,source:'地獄以上通關',exchange:20}],['infernoCore',{id:'infernoCore',name:'煉獄星核',rare:true,source:'煉獄通關',exchange:35}]]);
 export const getRole=id=>ROLES.find(r=>r.id===id)||ROLES[1];
 export const getMap=id=>MAPS.find(m=>m.id===id)||MAPS[0];
 export const body=p=>({x:p.x,y:p.y-24});
@@ -51,6 +59,6 @@ export const passiveCount=g=>Object.values(g.passives).filter(n=>n>0).length;
 export const weaponLimit=()=>MAX_WEAPONS;
 export const branchOf=(g,id)=>g.branches?.[id]||'a';
 export function weaponName(g,id){const w=EQUIPMENT[id];return w?(g.weapons[id]>=5?w.branches[branchOf(g,id)].evolved:w.name):id}
-export function upgradeInfo(g,id){const w=EQUIPMENT[id];if(!w)return'';const n=(g.weapons[id]||0)+1;return n===3?'選擇兩種攻擊路線':n===5?w.branches[branchOf(g,id)].evolved+' · 路線進化':`${w.family==='beam'?'整條光束持續命中 · ':''}Lv.${n} · 傷害與主要效果提升`}
+export function upgradeInfo(g,id){const w=EQUIPMENT[id];if(!w)return'';const n=(g.weapons[id]||0)+1;return n===5?'升至 Lv.5 時選擇裝備特性，決定本局最終攻擊路線':`${w.family==='beam'?'整條光束持續命中 · ':''}Lv.${n} · 基礎傷害與主要效果提升`}
 export function segmentDistance(p,a,b){const dx=b.x-a.x,dy=b.y-a.y,t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy||1)));return Math.hypot(p.x-a.x-dx*t,p.y-a.y-dy*t)}
-export function orbitSpec(g,id='moonblade'){const n=g.weapons[id]||1,far=n>=3?branchOf(g,id)==='b':id==='moonblade';return{r:far?170+n*10:103+n*7,count:far?2+Math.floor(n/2):2+n,speed:far?1.8:3.7,hitRadius:n===5?23:19,damage:(12+n*5)*(far?1.3:1)}}
+export function orbitSpec(g,id='moonblade'){const n=g.weapons[id]||1,far=n>=5?branchOf(g,id)==='b':id==='moonblade';return{r:far?170+n*10:103+n*7,count:far?2+Math.floor(n/2):2+n,speed:far?1.8:3.7,hitRadius:n===5?23:19,damage:(12+n*5)*(far?1.3:1)}}
