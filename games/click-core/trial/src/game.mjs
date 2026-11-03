@@ -1,10 +1,10 @@
-import {VERSION,SAVE_KEY,FACILITIES,UPGRADES,ACHIEVEMENTS,SKINS,fresh,restore,cps,clickPower,facilityRate,tap,cost,affordable,buyFacility,buyUpgrade,upgradeReady,achievementProgress,checkAchievements,tick,catchComet,offline,format,hintFor} from './core.mjs?v=20261103-trial1';
-import {StarAudio} from './sound.mjs?v=20261103-trial1';
+import {VERSION,SAVE_KEY,FACILITIES,UPGRADES,ACHIEVEMENTS,SKINS,fresh,restore,cps,clickPower,facilityRate,tap,cost,affordable,buyFacility,buyUpgrade,upgradeReady,achievementProgress,checkAchievements,tick,catchComet,offline,format,hintFor} from './core.mjs?v=20261103-cozy1';
+import {StarAudio} from './sound.mjs?v=20261103-cozy1';
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d'),BACKUP=SAVE_KEY+'_backup';
 let s=fresh(),offlineReport=null,storageOK=true;
 try{const raw=localStorage.getItem(SAVE_KEY);if(raw)s=restore(JSON.parse(raw));}catch{try{s=restore(JSON.parse(localStorage.getItem(BACKUP)));}catch{}}
 offlineReport=offline(s);checkAchievements(s);
-let screen='loading',section='workshop',storeTab='facilities',modal=null,buyPage=0,collectionPage=0,shopScroll=0,upgradeScroll=0,workPage=0,hover=null,pressed=null,focus=-1,tip='',tipEnds=0,loadCount=0,loadError='',frame=0,last=performance.now(),lastSave=0,lastCheck=0,clickAt=-10,heroMotion=0,screenTime=0,dragScroll=null,holdAt=0,holdPoint=null,tabBlocked=false,winPulse=0;
+let screen='loading',section='workshop',storeTab='facilities',modal=null,buyPage=0,collectionPage=0,shopScroll=0,upgradeScroll=0,workPage=0,hover=null,pressed=null,focus=-1,tip='',tipEnds=0,loadCount=0,loadError='',frame=0,last=performance.now(),lastSave=0,lastCheck=0,clickAt=-10,heroMotion=-10,leafPulse=-10,lastBell=-10,screenTime=0,dragScroll=null,holdAt=0,holdPoint=null,tabBlocked=false,winPulse=0;
 let W=1440,H=900,scale=1,ox=0,oy=0,mobile=false,shopRect=null;
 const A={},buttons=[],particles=[],floaters=[],history=[];
 const audio=new StarAudio(()=>s.settings,()=>notify('聲音暫時無法載入，可在設定重新開啟。'));
@@ -16,32 +16,44 @@ function img(name,x,y,w,h,alpha=1){const im=typeof name==='string'?A[name]:name;
 function fit(name,x,y,w,h,alpha=1){const im=typeof name==='string'?A[name]:name;if(!im)return;const r=Math.min(w/im.width,h/im.height);img(im,x+(w-im.width*r)/2,y+(h-im.height*r)/2,im.width*r,im.height*r,alpha);}
 function text(t,x,y,size=18,color='#e9edf7',align='left',weight=400){ctx.save();ctx.font=`${weight} ${size}px "Microsoft JhengHei","Noto Sans TC",sans-serif`;ctx.textAlign=align;ctx.textBaseline='middle';ctx.fillStyle=color;ctx.fillText(String(t),x,y);ctx.restore();}
 function wrap(t,x,y,width,size=17,color='#a7b7cb',line=27){let row='',yy=y;for(const c of t){ctx.font=`${size}px "Microsoft JhengHei",sans-serif`;if(ctx.measureText(row+c).width>width){text(row,x,yy,size,color);yy+=line;row=c;}else row+=c;}if(row)text(row,x,yy,size,color);return yy;}
-function panel(x,y,w,h,alpha=1){img('panel',x-w*.029,y-h*.158,w/.946,h/.75,alpha);}
+function surface(x,y,w,h,color,r=18){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=color;ctx.fill();}
+function panel(x,y,w,h,alpha=1){surface(x,y,w,h,`rgba(61,45,39,${.94*alpha})`);}
 function inside(p,b){return p&&p.x>=b.x&&p.y>=b.y&&p.x<=b.x+b.w&&p.y<=b.y+b.h;}
-function button(label,x,y,w,h,fn,opt={}){const b={label,x,y,w,h,fn,clip:opt.clip,enabled:opt.enabled!==false};buttons.push(b);const hot=b.enabled&&(inside(hover,b)||focus===buttons.length-1),down=b.enabled&&pressed?.label===label&&inside(pressed,b);ctx.save();ctx.globalAlpha=b.enabled?1:.42;img(opt.primary||opt.selected?'buttonGold':'button',x,y+(down?3:hot?-2:0),w,h);text(label,x+w/2,y+h/2+(down?3:hot?-2:0),opt.size||17,opt.primary||opt.selected?'#263145':'#e7edf6','center',opt.primary||opt.selected?700:500);ctx.restore();return b;}
+function button(label,x,y,w,h,fn,opt={}){const b={label,x,y,w,h,fn,clip:opt.clip,enabled:opt.enabled!==false};buttons.push(b);const hot=b.enabled&&(inside(hover,b)||focus===buttons.length-1),down=b.enabled&&pressed?.label===label&&inside(pressed,b);ctx.save();ctx.globalAlpha=b.enabled?1:.42;surface(x,y+(down?2:hot?-1:0),w,h,opt.primary||opt.selected?'#f0ce9c':'#6b5144',Math.min(14,h/3));text(label,x+w/2,y+h/2+(down?3:hot?-2:0),opt.size||17,opt.primary||opt.selected?'#263145':'#e7edf6','center',opt.primary||opt.selected?700:500);ctx.restore();return b;}
 function actionSound(type='tap'){audio.play(type);}
-function activate(b){if(!b?.enabled)return;actionSound(b.label.includes('返回')||b.label==='關閉'?'back':'tap');b.fn();focus=-1;}
+function activate(b){if(!b?.enabled)return;if(!b.tree&&!b.label.startsWith('收集星願'))actionSound(b.label.includes('返回')||b.label==='關閉'?'back':'tap');b.fn();focus=-1;}
 function resize(){const dpr=Math.min(2,devicePixelRatio||1);canvas.width=Math.max(1,Math.floor(innerWidth*dpr));canvas.height=Math.max(1,Math.floor((innerHeight-4)*dpr));canvas.setAttribute('width',canvas.width);canvas.setAttribute('height',canvas.height);canvas.width=Math.floor(innerWidth-2);canvas.height=Math.floor(innerHeight-5);mobile=innerWidth<800;W=mobile?480:1440;H=mobile?1000:900;scale=Math.min(canvas.width/W,canvas.height/H);ox=(canvas.width-W*scale)/2;oy=(canvas.height-H*scale)/2;}
 function coords(e){const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left-ox)/scale,y:(e.clientY-r.top-oy)/scale};}
 function checkRewards(){const got=checkAchievements(s);if(got.length){actionSound('achievement');notify('成就達成：'+got[0].name+(got.length>1?' 等 '+got.length+' 項':''));winPulse=now();history.unshift(...got.map(a=>a.name));persist();}}
-function purchase(i){const result=buyFacility(s,i);if(!result){actionSound('denied');notify('星願還不夠，換個購買數量試試。');return;}actionSound('buy');notify(FACILITIES[i].role+'加入生產！ '+FACILITIES[i].short+' +'+result.n);checkRewards();persist();}
+function purchase(i){const first=s.owned.every(n=>n===0);const result=buyFacility(s,i);if(!result){actionSound('denied');notify('星願還不夠，換個購買數量試試。');return;}if(first)heroMotion=now();actionSound('buy');notify(FACILITIES[i].role+'加入生產！ '+FACILITIES[i].short+' +'+result.n);checkRewards();persist();}
 function upgrade(id){const u=UPGRADES.find(u=>u.id===id);if(!buyUpgrade(s,id)){actionSound('denied');return;}actionSound('upgrade');notify(u.name+'｜'+u.desc);checkRewards();persist();}
-function starTap(p){if(tabBlocked||modal||screen!=='game')return;const t=now();if(t-clickAt<.045)return;clickAt=t;if(t-heroMotion>=.6)heroMotion=t;const r=tap(s);actionSound(r.crit?'critical':'collect');floaters.push({x:p.x+(Math.random()-.5)*36,y:p.y,t:0,text:'+'+safe(r.gain)+(r.crit?' 暴擊':''),crit:r.crit});burst(p.x,p.y,r.crit?18:5);if(floaters.length>25)floaters.shift();}
+function starTap(){
+ if(tabBlocked||modal||screen!=='game')return;
+ const t=now();if(t-clickAt<.045)return;clickAt=t;
+ const result=tap(s);
+ if(t-leafPulse>=.24)leafPulse=t;
+ if(t-lastBell>=.28){lastBell=t;actionSound('collect');}
+ const recent=floaters[0];
+ if(recent&&t-recent.last<.32){recent.gain+=result.gain;recent.last=t;recent.t=0;}
+ else floaters.splice(0,floaters.length,{x:mobile?240:278,y:mobile?269:299,t:0,last:t,gain:result.gain});
+}
 function burst(x,y,n=12){for(let i=0;i<n;i++)particles.push({x,y,vx:(Math.random()-.5)*140,vy:-60-Math.random()*160,life:0,max:.65+Math.random()*.7,size:8+Math.random()*15});if(particles.length>220)particles.splice(0,particles.length-220);}
-function catchStar(){const result=catchComet(s);if(!result)return;actionSound(result.type==='gift'?'cometGift':'cometBoost');notify(result.title+'｜'+(result.gain?'獲得 '+safe(result.gain)+' 星願':result.desc));burst(mobile?240:330,mobile?370:370,35);checkRewards();persist();}
-function scene(){img('background',0,0,W,H);if(s.skin!=='midnight'){ctx.save();ctx.globalCompositeOperation='screen';ctx.globalAlpha=.08;ctx.fillStyle={aurora:'#00bb9b',rose:'#d55486',cosmos:'#7655d3'}[s.skin];ctx.fillRect(0,0,W,H);ctx.restore();}
- if(s.settings.motion)for(let i=0;i<21;i++){const x=(i*139.3+frame*7*(i%2?1:-1))%W,y=135+(i*83.7)%Math.max(1,H-210),a=.2+.18*Math.sin(frame+i);fit('spark',x,y,7+i%3*3,7+i%3*3,a);}}
+function catchStar(){const result=catchComet(s);if(!result)return;heroMotion=now();actionSound(result.type==='gift'?'cometGift':'cometBoost');notify(result.title+'｜'+(result.gain?'獲得 '+safe(result.gain)+' 星願':result.desc));burst(mobile?240:330,mobile?370:370,35);checkRewards();persist();}
+function garden(){const im=A.background;if(!im)return;const k=Math.max(W/im.width,H/im.height);img(im,(W-im.width*k)/2,(H-im.height*k)/2,im.width*k,im.height*k);}
+function scene(){garden();if(s.skin!=='midnight'){ctx.save();ctx.globalCompositeOperation='screen';ctx.globalAlpha=.08;ctx.fillStyle={aurora:'#00bb9b',rose:'#d55486',cosmos:'#7655d3'}[s.skin];ctx.fillRect(0,0,W,H);ctx.restore();}
+ if(s.settings.motion)for(let i=0;i<5;i++){const x=(i*139.3+frame*2*(i%2?1:-1))%W,y=135+(i*83.7)%Math.max(1,H-210),a=.2+.18*Math.sin(frame+i);fit('spark',x,y,7+i%3*3,7+i%3*3,a);}}
 function header(){panel(mobile?12:20,12,mobile?456:1400,mobile?142:112);text('CxQ 星願旅團',mobile?29:43,mobile?35:38,mobile?19:25,'#f0d49a','left',700);text('點亮夢境  /  試玩版',mobile?29:44,mobile?62:73,mobile?13:15,'#93b2c7');
  const x=mobile?450:648;text(safe(s.stars),x,mobile?40:45,mobile?29:38,'#fff3cf','right',700);text('星願',x+(mobile?0:12),mobile?72:83,mobile?13:15,'#a8bacb',mobile?'right':'left');
- text('每秒 '+safe(cps(s)),mobile?31:864,mobile?113:43,mobile?17:21,'#a9d9dc');text('每次點擊 '+safe(clickPower(s)),mobile?449:864,mobile?113:77,mobile?15:16,'#b3c3d5',mobile?'right':'left');
+ text('每秒 '+safe(cps(s)),mobile?31:864,mobile?113:43,mobile?17:21,'#a9d9dc');if(!mobile)text('每次點擊 '+safe(clickPower(s)),mobile?449:864,mobile?113:77,mobile?15:16,'#b3c3d5',mobile?'right':'left');
  if(!mobile){button('收藏',1085,35,92,56,()=>{section='collection';collectionPage=0;});button('設定',1187,35,92,56,()=>{section='settings';});button('說明',1289,35,106,56,()=>showHelp());}}
-function treeArea(){const area=mobile?{x:16,y:163,w:448,h:411}:{x:20,y:139,w:515,h:657};panel(area.x,area.y,area.w,area.h,.55);
- text('把小小星願，點成整片星河。',area.x+area.w/2,area.y+31,mobile?15:19,'#c7d7e3','center');
- const tx=area.x+(mobile?66:30),ty=area.y+(mobile?44:70),tw=mobile?322:450,th=mobile?295:430,age=1+Math.min(.08,Math.log10(1+s.total)*.007),bounce=s.settings.motion?Math.max(0,1-(now()-clickAt)/.32)*.025*Math.sin((now()-clickAt)*27):0;
- ctx.save();ctx.translate(tx+tw/2,ty+th);ctx.scale(age+bounce,age-bounce*.6);fit('tree',-tw/2,-th,tw,th);ctx.restore();
- const heroW=mobile?120:173,hx=area.x+8,hy=area.y+(mobile?235:402),dt=now()-heroMotion;let pose=0;if(s.settings.motion&&dt<.65)pose=[1,2,3,4,0][Math.min(4,Math.floor(dt/.13))];else if(s.settings.motion&&winPulse&&now()-winPulse<2)pose=5;
- const sway=s.settings.motion?Math.sin(frame*1.8)*2:0;fit('hero'+(pose+1),hx,hy+sway,heroW,heroW*1.15);
- if(!mobile){text('鈴可正在收集星願',area.x+area.w-28,area.y+523,17,'#d9e7ec','right');text('點擊星願樹，也能點擊鈴可',area.x+area.w/2,area.y+586,16,'#a2b9cb','center');}
+function treeArea(){const area=mobile?{x:16,y:163,w:448,h:411}:{x:20,y:139,w:515,h:657};const tx=area.x+(mobile?56:25),ty=area.y+(mobile?32:50),tw=mobile?336:465,th=mobile?305:447;
+ fit('tree',tx,ty,tw,th);
+ const glow=now()-leafPulse;
+ if(s.settings.motion&&glow<.34)fit('spark',tx+tw*.59,ty+th*.22,23,23,.62*Math.sin(Math.PI*glow/.34));
+ const heroW=mobile?112:158,hx=area.x+13,hy=area.y+(mobile?236:421),dt=now()-heroMotion;
+ const pose=s.settings.motion&&dt<.65?[1,2,3,4,0][Math.min(4,Math.floor(dt/.13))]:0;
+ fit('hero'+(pose+1),hx,hy,heroW,heroW*1.15);
+ if(s.owned.some(n=>n>0))fit('star',area.x+area.w-65,area.y+(mobile?273:448),27,27,.75);
  button('收集星願  +'+safe(clickPower(s)),area.x+(mobile?145:192),area.y+(mobile?331:527),mobile?274:286,mobile?60:61,()=>starTap({x:tx+tw/2,y:ty+th/2}),{primary:true,size:mobile?18:20});
  const clickZone={label:'點擊星願樹',x:tx,y:ty,w:tw,h:th,enabled:true,fn:()=>starTap({x:tx+tw/2,y:ty+th/2}),tree:true};buttons.unshift(clickZone);
  const heroZone={label:'點擊鈴可',x:hx,y:hy,w:heroW,h:heroW*1.1,enabled:true,fn:()=>starTap({x:hx+heroW/2,y:hy+40}),tree:true};buttons.unshift(heroZone);
@@ -93,18 +105,18 @@ function duration(seconds){const m=Math.floor(seconds/60);return m>=60?Math.floo
 function exportSave(){persist();const blob=new Blob([JSON.stringify(s,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='CxQ-星願旅團試玩-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);actionSound('achievement');notify('新版備份已匯出');}
 function importSave(){const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=async()=>{const f=input.files?.[0];if(!f)return;if(f.size>2e6){notify('備份檔案過大');return;}try{modal={type:'confirmImport',save:restore(JSON.parse(await f.text()))};}catch{notify('不是有效的新版存檔，原進度未變更。');actionSound('denied');}};input.click();}
 async function load(name,url){const im=new Image();await new Promise((resolve,reject)=>{im.onload=resolve;im.onerror=()=>reject(Error('載入失敗：'+url));im.src=url;});A[name]=im;loadCount++;}
-async function boot(){resize();screen='loading';loadCount=0;loadError='';try{const list=[['background','art/background.webp'],['tree','art/tree.webp'],['panel','art/panel.webp'],['button','art/button.webp'],['buttonGold','art/button-gold.webp'],['star','art/star.webp'],['spark','art/star.webp'],['comet','art/comet.webp'],...FACILITIES.map((_,i)=>['facility'+i,'art/facilities/'+String(i+1).padStart(2,'0')+'.webp']),...Array.from({length:6},(_,i)=>['hero'+(i+1),'art/hero/'+String(i+1).padStart(2,'0')+'.webp'])];await Promise.all(list.map(([name,url])=>load(name,url)));await Promise.all([0,1].map(i=>load('work'+i,'art/facilities/0'+(i+1)+'-work.webp')));screen='game';last=performance.now();screenTime=now();if(offlineReport.gain>=1&&offlineReport.seconds>=60)modal={type:'offline',...offlineReport};else if(!s.total)modal={type:'help'};audio.scene('home');persist();}catch(e){loadError=e.message;}}
-function render(t){const dt=Math.min(.1,Math.max(0,(t-last)/1000));last=t;frame=t/1000;ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#101c30';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.setTransform(scale,0,0,scale,ox,oy);buttons.length=0;shopRect=null;
+async function boot(){resize();screen='loading';loadCount=0;loadError='';try{const list=[['background','art/garden-dusk.webp'],['tree','art/tree.webp'],['panel','art/panel.webp'],['button','art/button.webp'],['buttonGold','art/button-gold.webp'],['star','art/star.webp'],['spark','art/star.webp'],['comet','art/comet.webp'],...FACILITIES.map((_,i)=>['facility'+i,'art/facilities/'+String(i+1).padStart(2,'0')+'.webp']),...Array.from({length:6},(_,i)=>['hero'+(i+1),'art/hero/'+String(i+1).padStart(2,'0')+'.webp'])];await Promise.all(list.map(([name,url])=>load(name,url)));await Promise.all([0,1].map(i=>load('work'+i,'art/facilities/0'+(i+1)+'-work.webp')));screen='game';last=performance.now();screenTime=now();if(offlineReport.gain>=1&&offlineReport.seconds>=60)modal={type:'offline',...offlineReport};else if(!s.total)modal={type:'help'};audio.scene('home');persist();}catch(e){loadError=e.message;}}
+function render(t){const dt=Math.min(.1,Math.max(0,(t-last)/1000));last=t;frame=t/1000;ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#43322b';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.setTransform(scale,0,0,scale,ox,oy);buttons.length=0;shopRect=null;
  if(screen==='game'){
   if(!document.hidden&&!modal&&!tabBlocked){const appeared=tick(s,dt);if(appeared)actionSound('cometAppear');if(holdPoint&&s.settings.hold&&s.clicks>=500&&now()-holdAt>.25){holdAt=now();starTap(holdPoint);}if(t-lastCheck>800){checkRewards();lastCheck=t;}if(t-lastSave>5000){persist();lastSave=t;}}
   scene();header();if(section==='collection')collection();else if(section==='settings')settingScreen();else{treeArea();if(!mobile||section==='workshop')workshop();if(!mobile||section==='shop')shop();comet();}bottom();
   audio.scene(section==='collection'?'collection':'home');audio.duck(!!modal);
   for(const p of particles){p.life+=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=100*dt;fit('spark',p.x,p.y,p.size,p.size,Math.max(0,1-p.life/p.max));}for(let i=particles.length-1;i>=0;i--)if(particles[i].life>=particles[i].max)particles.splice(i,1);
-  floaters.forEach(f=>{f.t+=dt;text(f.text,f.x,f.y-f.t*78,f.crit?27:22,f.crit?'#fff1a8':'#e8fffc','center',700);});for(let i=floaters.length-1;i>=0;i--)if(floaters[i].t>1)floaters.splice(i,1);
+  floaters.forEach(f=>{f.t+=dt;ctx.save();ctx.globalAlpha=Math.min(1,(1-f.t)*3);surface(f.x-62,f.y-f.t*20-16,124,32,'#563d31de',13);text('+'+safe(f.gain),f.x,f.y-f.t*20,20,'#fff1d6','center',700);ctx.restore();});for(let i=floaters.length-1;i>=0;i--)if(floaters[i].t>1)floaters.splice(i,1);
   drawModal();if(now()<tipEnds){const tw=mobile?448:740,tx=(W-tw)/2,ty=mobile?860:729;panel(tx,ty,tw,53);text(tip,W/2,ty+26,mobile?12:17,'#f7e4b7','center',600);}
- }else{if(A.background)img('background',0,0,W,H);text('CxQ 星願旅團',W/2,H/2-75,34,'#f6d89f','center',700);text('點亮夢境 · 試玩版',W/2,H/2-22,23,'#c7dbe7','center');text(loadError||'正在準備獨立素材… '+loadCount+' / 26',W/2,H/2+34,mobile?13:17,'#92bdcc','center');if(loadError)button('重新載入',W/2-130,H/2+90,260,58,boot,{primary:true});}
+ }else{if(A.background)garden();text('CxQ 星願旅團',W/2,H/2-75,34,'#f6d89f','center',700);text('點亮夢境 · 試玩版',W/2,H/2-22,23,'#c7dbe7','center');text(loadError||'正在準備獨立素材… '+loadCount+' / 26',W/2,H/2+34,mobile?13:17,'#92bdcc','center');if(loadError)button('重新載入',W/2-130,H/2+90,260,58,boot,{primary:true});}
  const labels=buttons.filter(b=>b.enabled).map(b=>b.label).join('、'),aria='CxQ 星願旅團 試玩版 '+screen+'。'+labels;if(canvas.getAttribute('aria-label')!==aria)canvas.setAttribute('aria-label',aria);
- const data={screen,section,stars:s.stars.toFixed(2),total:s.total.toFixed(2),cps:cps(s).toFixed(2),clicks:s.clicks,owned:s.owned.reduce((a,b)=>a+b,0),upgrades:s.upgrades.length,achievements:s.achievements.length,event:s.event?'active':'none',modal:modal?.type||'',audio:audio.status(),storage:storageOK?'ok':'error',version:'20261103-trial1'};for(const [k,v]of Object.entries(data))if(canvas.dataset[k]!==String(v))canvas.dataset[k]=String(v);requestAnimationFrame(render);
+ const data={screen,section,stars:s.stars.toFixed(2),total:s.total.toFixed(2),cps:cps(s).toFixed(2),clicks:s.clicks,owned:s.owned.reduce((a,b)=>a+b,0),upgrades:s.upgrades.length,achievements:s.achievements.length,event:s.event?'active':'none',modal:modal?.type||'',audio:audio.status(),storage:storageOK?'ok':'error',version:'20261103-cozy1'};for(const [k,v]of Object.entries(data))if(canvas.dataset[k]!==String(v))canvas.dataset[k]=String(v);requestAnimationFrame(render);
 }
 function hit(p){for(let i=buttons.length-1;i>=0;i--)if(buttons[i].enabled&&inside(p,buttons[i])&&(!buttons[i].clip||inside(p,buttons[i].clip)))return buttons[i];return null;}
 canvas.addEventListener('pointerdown',e=>{e.preventDefault();audio.unlock();canvas.setPointerCapture(e.pointerId);const p=coords(e),b=hit(p);pressed=b?{...p,label:b.label}:null;if(b?.tree){starTap(p);holdPoint=p;holdAt=now();pressed=null;}else if(shopRect&&inside(p,shopRect)){dragScroll={point:p,last:p,moved:false,start:storeTab==='facilities'?shopScroll:upgradeScroll};}});
