@@ -1,0 +1,82 @@
+{
+  "story-tree": {
+    "source": "exec-390b5742-fcf4-4a17-95d8-0c10bfe58a64.png",
+    "prompt": "isolated transparent single enchanting starwish oak tree with tiny honey starlight blossoms, natural mossy stones and exposed roots, no metal base, premium cozy tactile clay storybook miniature, full silhouette"
+  },
+  "story-paper": {
+    "source": "exec-648cca1a-e476-49c6-a287-646e66def4ef.png",
+    "prompt": "single isolated blank ivory textured open ledger book game interface surface, subtle warm sewn binding, no letters no marks, frontal orthographic, generous usable blank center"
+  },
+  "story-page": {
+    "source": "exec-c914535f-1825-4df8-98b7-47f72f86251e.png",
+    "prompt": "One single blank ivory linen-paper game UI panel, portrait 4:5, straight front view, soft pale cream subtle grain, fine stitched thin pale brown border, corner tiny pressed leaf embossing, fills entire image, simple quiet cozy storybook collectible. No book spine, no words, no lettering, no illustrations, no other objects."
+  },
+  "story-button": {
+    "source": "exec-12e43688-19a3-445b-be4a-219b334c8f94.png",
+    "prompt": "One standalone horizontal game button for cozy premium clay storybook game, warm honey wood with soft cream inset, front orthographic, blank center, very soft edge, aspect 4:1, isolated with true alpha, no text, single asset"
+  },
+  "story-mobile": {
+    "source": "exec-fcfedf52-5f9f-44a4-8902-6d6e546c170a.png",
+    "prompt": "portrait 9:16 warm golden dusk garden background for clay storybook game, low wooden fence, warm lantern, moss and flowers on edges, empty foreground courtyard and empty center for separately layered tree, no characters or text"
+  },
+  "story-cover": {
+    "source": "exec-7a47a7ac-e24e-4c5f-88f5-dae948e79682.png",
+    "prompt": "Square premium CxQ clay collectible storybook game cover in warm golden dusk, moss, softly glowing lanterns and simple timber garden fence. Keep the exact faces and chibi clay toy proportions of the three attached characters, mint clover fox 鈴可 front and center, lavender witch 露緹 and white bob heart clip 曦羽 behind. Gather beside the attached warm moss-root starwish tree with tiny flower-shaped lights. Quiet, welcoming, beautifully crafted natural materials, no ornate metallic baroque UI. At bottom a cream wood storybook plaque with legible exact title “CxQ 星願旅團” and “點亮夢境”. No other lettering.",
+    "references": [
+      "character-01.speed24.webp",
+      "character-08.speed24.webp",
+      "character-10.speed24.webp",
+      "story-tree.png"
+    ]
+  },
+  "story-facilities/01": {
+    "source": "exec-457202e4-d556-4990-bbbd-cb0fe7192d76.png",
+    "prompt": "Independent isolated transparent full miniature game facility. Preserve exact referenced CxQ toy character identity, face, eyes, hair, ears, accessories and proportions. Character rings a little star bell at a cedar workshop counter. Cozy warm dusk garden storybook, tactile soft clay, natural warm cedar, moss, cream linen, gentle amber glow, one little coherent diorama on natural stone ground. No gold pedestal, no ornate frames, no text, no other characters, full silhouette.",
+    "reference": "character-01.speed24.webp"
+  },
+  "story-facilities/02": {
+    "source": "exec-c615e43f-c7fc-4b15-ab83-959f13ec9aa8.png",
+    "prompt": "Independent isolated transparent full miniature game facility. Preserve exact referenced CxQ toy character identity, face, eyes, hair, ears, accessories and proportions. Character folds a soft cream pillow in a small wooden nook. Cozy warm dusk garden storybook, tactile soft clay, natural warm cedar, moss, cream linen, gentle amber glow, one little coherent diorama on natural stone ground. No gold pedestal, no ornate frames, no text, no other characters, full silhouette.",
+    "reference": "character-02.speed24.webp"
+  },
+  "story-facilities/03": {
+    "source": "exec-9db391f2-7004-4b52-acc5-e8ed9dc50d8e.png",
+    "prompt": "Independent isolated transparent full miniature game facility. Preserve exact referenced CxQ toy character identity, face, eyes, hair, ears, accessories and proportions. Character waters a small moss and star seed nursery. Cozy warm dusk garden storybook, tactile soft clay, natural warm cedar, moss, cream linen, gentle amber glow, one little coherent diorama on natural stone ground. No gold pedestal, no ornate frames, no text, no other characters, full silhouette.",
+    "reference": "character-03.speed24.webp"
+  },
+  "story-facilities/04": {
+    "source": "exec-db84b995-6e17-49fb-baf2-ef713680d67d.png",
+    "prompt": "Independent isolated transparent full miniature game facility. Preserve exact referenced CxQ toy character identity, face, eyes, hair, ears, accessories and proportions. Character holds a photo at a tiny wood and linen photo studio. Cozy warm dusk garden storybook, tactile soft clay, natural warm cedar, moss, cream linen, gentle amber glow, one little coherent diorama on natural stone ground. No gold pedestal, no ornate frames, no text, no other characters, full silhouette.",
+    "reference": "character-04.speed24.webp"
+  },
+  "story-facilities/05": {
+    "source": "exec-11378969-21bd-46a9-b0cc-8919623f0c7f.png",
+    "prompt": "Independent isolated transparent full miniature game facility. Preserve exact referenced CxQ toy character identity, face, eyes, hair, ears, accessories and proportions. Character decorates a tiny wooden festival stage with cloth bunting. Cozy warm dusk garden storybook, tactile soft clay, natural warm cedar, moss, cream linen, gentle amber glow, one little coherent diorama on natural stone ground. No gold pedestal, no ornate frames, no text, no other characters, full silhouette.",
+    "reference": "character-05.speed24.webp"
+  },
+  "story-facilities/06": {
+    "source": "exec-06cb1179-e297-4d57-a646-167ca3e2458a.png",
+    "prompt": "Independent isolated transparent full miniature game facility. Preserve exact referenced CxQ toy character identity, face, eyes, hair, ears, accessories and proportions. Character looks through a telescope at a little wooden observatory. Cozy warm dusk garden storybook, tactile soft clay, natural warm cedar, moss, cream linen, gentle amber glow, one little coherent diorama on natural stone ground. No gold pedestal, no ornate frames, no text, no other characters, full silhouette.",
+    "reference": "character-06.speed24.webp"
+  },
+  "story-facilities/07": {
+    "source": "exec-a5caf228-390f-4282-adf2-bb8fce156a72.png",
+    "prompt": "Independent isolated transparent full miniature game facility. Preserve exact referenced CxQ toy character identity, face, eyes, hair, ears, accessories and proportions. Character turns a key at a tiny cedar treasure workshop. Cozy warm dusk garden storybook, tactile soft clay, natural warm cedar, moss, cream linen, gentle amber glow, one little coherent diorama on natural stone ground. No gold pedestal, no ornate frames, no text, no other characters, full silhouette.",
+    "reference": "character-07.speed24.webp"
+  },
+  "story-facilities/08": {
+    "source": "exec-38bfeea6-adb3-4bf2-a318-230ecf96669b.png",
+    "prompt": "Independent isolated transparent full miniature game facility. Preserve exact referenced CxQ toy character identity, face, eyes, hair, ears, accessories and proportions. Character posts a letter at a warm timber post office with mailbox. Cozy warm dusk garden storybook, tactile soft clay, natural warm cedar, moss, cream linen, gentle amber glow, one little coherent diorama on natural stone ground. No gold pedestal, no ornate frames, no text, no other characters, full silhouette.",
+    "reference": "character-08.speed24.webp"
+  },
+  "story-facilities/09": {
+    "source": "exec-67a02d2a-0377-4f1e-9019-bf942384f467.png",
+    "prompt": "Independent isolated transparent full miniature game facility. Preserve exact referenced CxQ toy character identity, face, eyes, hair, ears, accessories and proportions. Character waters plants at a small pastel glass greenhouse. Cozy warm dusk garden storybook, tactile soft clay, natural warm cedar, moss, cream linen, gentle amber glow, one little coherent diorama on natural stone ground. No gold pedestal, no ornate frames, no text, no other characters, full silhouette.",
+    "reference": "character-09.speed24.webp"
+  },
+  "story-facilities/10": {
+    "source": "exec-2a9b76cc-e920-48b2-9600-af2d5f5ec8e2.png",
+    "prompt": "Independent isolated transparent full miniature game facility. Preserve exact referenced CxQ toy character identity, face, eyes, hair, ears, accessories and proportions. Character weaves starlight fabric on a little wooden loom. Cozy warm dusk garden storybook, tactile soft clay, natural warm cedar, moss, cream linen, gentle amber glow, one little coherent diorama on natural stone ground. No gold pedestal, no ornate frames, no text, no other characters, full silhouette.",
+    "reference": "character-10.speed24.webp"
+  }
+}
