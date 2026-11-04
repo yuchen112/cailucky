@@ -144,7 +144,6 @@ body[data-workshop="memory"] {--art-scene:url('atelier/memory.webp')}
   [data-workshop] .tilein,[data-workshop] .card .inner {animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
 
-/* Icons have accessible labels in the existing controls; images supply the visible symbol. */
 [data-workshop] :is(button,select,.game-center-return):not(.card,.cell,.tile) {
   background-color:transparent!important;
 }
@@ -157,26 +156,6 @@ body[data-workshop="memory"] {--art-scene:url('atelier/memory.webp')}
   display:grid;place-items:center;width:100%!important;height:100%!important;
   font-size:clamp(13px,3.4vw,24px);font-weight:900;line-height:1;
 }
-[data-workshop="tetris"] [data-act="left"] {--control-icon:url('atelier/icon-left.webp')}
-[data-workshop="tetris"] [data-act="right"] {--control-icon:url('atelier/icon-right.webp')}
-[data-workshop="tetris"] [data-act="soft"] {--control-icon:url('atelier/icon-down.webp')}
-[data-workshop="tetris"] [data-act="rotate"] {--control-icon:url('atelier/icon-rotate.webp')}
-[data-workshop="tetris"] [data-act="drop"] {--control-icon:url('atelier/icon-drop.webp')}
-[data-workshop="tetris"] [data-act="hold"] {--control-icon:url('atelier/icon-hold.webp')}
-[data-workshop="tetris"] #deckPause {--control-icon:url('atelier/icon-pause.webp')}
-[data-workshop="memory"] #gameSettings {--control-icon:url('atelier/icon-settings.webp')}
-[data-workshop="memory"] #restart {--control-icon:url('atelier/icon-undo.webp')}
-[data-workshop="mines"] #pause {--control-icon:url('atelier/icon-settings.webp')}
-[data-workshop] #cxq-audio {--control-icon:url('atelier/icon-sound.webp')}
-[data-workshop] :is(.ctl,#gameSettings,#deckPause,#game #restart,#play #pause,#cxq-audio) {
-  background-image:var(--control-icon),url('atelier/button.webp')!important;
-  background-size:auto 55%,100% 100%!important;
-  background-position:center!important;
-  background-repeat:no-repeat!important;
-  color:transparent!important;
-}
-[data-workshop] :is(.ctl,#gameSettings,#deckPause,#game #restart,#play #pause,#cxq-audio) img {opacity:0!important}
-
 [data-workshop="tetris"] #app {background:var(--art-scene) center / cover no-repeat!important}
 [data-workshop="tetris"] #homeScreen::before,[data-workshop="tetris"] #homeScreen::after {background-image:none!important}
 [data-workshop="2048"] #toast,[data-workshop="mines"] .cast-caption,[data-workshop="memory"] #game .top {
@@ -186,7 +165,7 @@ body[data-workshop="memory"] {--art-scene:url('atelier/memory.webp')}
 [data-workshop="mines"] #home #start {
   background-image:url('atelier/button-primary.webp')!important;
 }
-[data-workshop="mines"] .menu-icon {content:url('atelier/icon-settings.webp')}
+
 [data-workshop="memory"] .atelier-host-portrait {
   position:absolute;width:clamp(125px,30vw,235px);height:auto;
   left:50%;top:47%;transform:translate(-50%,-50%);object-fit:contain;
@@ -198,3 +177,140 @@ body[data-workshop="memory"] {--art-scene:url('atelier/memory.webp')}
 [data-workshop="2048"] .sticker {
   background:#152a35 url('atelier/panel.webp') center / 100% 100% no-repeat!important;
 }
+
+/* Surface art supports the information hierarchy. Visible control labels never depend on image loading. */
+body[data-workshop] {
+  --surface:url('atelier/surface-teal.webp');
+  --inset:url('atelier/surface-slate.webp');
+  --paper-art:url('atelier/surface-paper.webp');
+}
+[data-workshop] :is(.modal,.home-card,.paper,.homeRecord,.hud-card,.hudBox,.stat,.side-card,.character-detail,.companion-card,.strip,#game .top) {
+  background:#172b34 var(--surface) center / cover no-repeat!important;
+  border-radius:12px!important;
+}
+[data-workshop] :is(button,select,.game-center-return):not(.card,.cell,.tile) {
+  background:#203846 var(--inset) center / cover no-repeat!important;
+  color:#fff4d7!important;
+  border-radius:8px!important;
+}
+[data-workshop] :is(.primary,#start,#homeStart,#enterSetup):not(.game-center-return) {
+  background:#f3dfad var(--paper-art) center / cover no-repeat!important;
+  color:#18282c!important;
+  font-weight:850;
+}
+[data-workshop] :is(.ctl,#gameSettings,#deckPause,#game #restart,#play #pause,#cxq-audio) {
+  background:#203846 var(--inset) center / cover no-repeat!important;
+  color:#fff4d7!important;
+  opacity:1!important;
+}
+[data-workshop] :is(.ctl,#gameSettings,#deckPause,#game #restart,#play #pause,#cxq-audio) img {opacity:1!important}
+[data-workshop] #cxq-audio {font-size:1.25rem!important}
+[data-workshop] :is(button,select):not(.card,.cell):hover:not(:disabled) {filter:brightness(1.16)}
+[data-workshop] button:disabled {opacity:.58}
+[data-workshop="tetris"] #pause .modal {
+  display:grid;justify-items:center;gap:12px;
+  width:min(100% - 24px,420px);padding:clamp(14px,4vw,26px)!important;
+}
+[data-workshop="tetris"] #pause .modal img {
+  width:auto!important;height:clamp(104px,23dvh,190px)!important;
+  max-width:90%;object-fit:contain!important;
+}
+[data-workshop="tetris"] #pause .modal :is(h2,p) {margin:0}
+[data-workshop="tetris"] #pause .actions {display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+[data-workshop="tetris"] #board {background:#152630 var(--inset) center / cover no-repeat!important}
+[data-workshop="tetris"] .ctl {font-size:clamp(16px,4vw,24px)!important}
+[data-workshop="tetris"] .ctl .control-label {color:#fff4d7!important}
+[data-workshop="2048"] :is(.app .board,.board-shell) {
+  background:#142a35 var(--inset) center / cover no-repeat!important;
+  border-radius:10px!important;
+}
+[data-workshop="2048"] .app .board {padding:0!important}
+[data-workshop="2048"] .board-shell {padding:12px!important}
+[data-workshop="2048"] .cell {
+  background:#33434f url('atelier/surface-socket.webp') center / 100% 100% no-repeat!important;
+  border-radius:6px!important;
+}
+[data-workshop="2048"] .tilein {
+  background:#f3e4b9 var(--gem) center / 100% 100% no-repeat!important;
+  border-radius:6px!important;
+}
+[data-workshop="2048"] .app .tile .tilein .num {
+  inset:0!important;position:absolute!important;display:flex!important;
+  align-items:center!important;justify-content:center!important;
+  color:#15242b!important;font-weight:900!important;
+  font-size:clamp(19px,5vw,34px)!important;line-height:1!important;
+}
+[data-workshop="mines"] #map-scroll {
+  background:#102932 var(--surface) center / cover no-repeat!important;
+  align-content:safe center;scrollbar-gutter:stable;
+}
+[data-workshop="mines"] #play .hud {background:#172b34 var(--surface) center / cover no-repeat!important}
+[data-workshop="mines"] #play #board {margin-inline:auto}
+[data-workshop="mines"] #play .cell.open {background-image:url('atelier/surface-paper.webp')!important}
+[data-workshop="memory"] #game .boardWrap {
+  background:none!important;
+}
+[data-workshop="memory"] #board {
+  background:#172b34 var(--surface) center / cover no-repeat!important;
+  outline:5px solid #172b34;
+}
+[data-workshop="memory"] #board .card .face.back {
+  background:transparent var(--back-art) center / 100% 100% no-repeat!important;
+}
+[data-workshop="memory"] #board .card .face.front {
+  display:grid!important;place-items:center;
+  background:#f2dbaf var(--paper-art) center / cover no-repeat!important;
+}
+[data-workshop="memory"] #board .card .card-art {
+  display:block;width:100%;aspect-ratio:1;max-height:100%;
+  background-image:var(--deck-art);
+  background-size:400% 400%;
+  background-position:var(--art-x) var(--art-y);
+  background-repeat:no-repeat;
+}
+[data-workshop="memory"] :is(#restart,#gameSettings) {min-width:48px;font-size:14px!important}
+
+[data-workshop="2048"] #board {
+  --tile-gap:clamp(4px,1.4vw,8px);
+  background:#142a35 var(--inset) center / cover no-repeat!important;
+  gap:var(--tile-gap)!important;
+}
+[data-workshop="2048"] #tiles {inset:0!important}
+[data-workshop="2048"] #tiles .tile {
+  width:calc((100% - 3 * var(--tile-gap)) / 4)!important;
+  height:calc((100% - 3 * var(--tile-gap)) / 4)!important;
+  transform:translate(calc(var(--c) * (100% + var(--tile-gap))),calc(var(--r) * (100% + var(--tile-gap))))!important;
+}
+[data-workshop="2048"] #board::before,[data-workshop="2048"] #board::after {background-image:none!important}
+[data-workshop="mines"] #map-scroll {
+  background-size:250px auto!important;background-repeat:repeat!important;
+}
+[data-workshop="mines"] #board .cell:not(.open) {
+  background-image:url('atelier/surface-socket.webp')!important;
+}
+
+[data-workshop="2048"] .home-card .home-character {
+  max-height:clamp(115px,22dvh,168px)!important;width:auto!important;
+  max-width:80%;margin:0 auto!important;
+}
+[data-workshop="mines"] .menu-icon[src*="icon-gear"] {content:url('atelier/icon-settings.webp')}
+[data-workshop="mines"] .menu-icon[src*="icon-arrow"] {content:url('atelier/icon-right.webp')}
+[data-workshop="mines"] .menu-icon[src*="icon-trophy"] {content:url('atelier/medallion.webp')}
+[data-workshop="mines"] .menu-icon[src*="merge-ball-7"] {content:url('atelier/icon-blessing.webp')}
+[data-workshop="mines"] .menu-icon[src*="merge-ball-0"] {content:url('atelier/icon-collection.webp')}
+[data-workshop="mines"] .menu-icon[src*="/mail."] {content:url('atelier/flag.webp')}
+[data-workshop="mines"] :is(.menu-sheet,.menu-sheet .sheet-body) {
+  background:#152e35 var(--surface) center / 260px repeat!important;
+}
+[data-workshop="mines"] .menu-sheet::before,[data-workshop="mines"] .menu-sheet::after {background-image:none!important}
+[data-workshop="memory"] #layer #modal {
+  height:auto!important;max-height:min(740px,94dvh)!important;
+  grid-template-rows:auto minmax(0,1fr) auto!important;
+}
+[data-workshop="memory"] #layer #modalTitle {
+  background:none!important;height:auto!important;padding:16px 42px!important;
+}
+[data-workshop="memory"] #layer #modal .modalBtns {
+  height:auto!important;background:#182d35 var(--surface) center / cover!important;
+}
+[data-workshop="memory"]:has(#layer.show) #toast {visibility:hidden!important}
