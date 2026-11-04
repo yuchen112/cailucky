@@ -62,3 +62,8 @@ export function weaponName(g,id){const w=EQUIPMENT[id];return w?(g.weapons[id]>=
 export function upgradeInfo(g,id){const w=EQUIPMENT[id];if(!w)return'';const n=(g.weapons[id]||0)+1;return n===5?'升至 Lv.5 時選擇裝備特性，決定本局最終攻擊路線':`${w.family==='beam'?'整條光束持續命中 · ':''}Lv.${n} · 基礎傷害與主要效果提升`}
 export function segmentDistance(p,a,b){const dx=b.x-a.x,dy=b.y-a.y,t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy||1)));return Math.hypot(p.x-a.x-dx*t,p.y-a.y-dy*t)}
 export function orbitSpec(g,id='moonblade'){const n=g.weapons[id]||1,far=n>=5?branchOf(g,id)==='b':id==='moonblade';return{r:far?170+n*10:103+n*7,count:far?2+Math.floor(n/2):2+n,speed:far?1.8:3.7,hitRadius:n===5?23:19,damage:(12+n*5)*(far?1.3:1)}}
+
+export const beamEnd = beam => ({
+  x: beam.x + Math.cos(beam.angle) * beam.length,
+  y: beam.y + Math.sin(beam.angle) * beam.length
+});

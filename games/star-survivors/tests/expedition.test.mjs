@@ -73,3 +73,19 @@ check('magnet pickup and boss victory collect remote loot without collecting rem
     assert.equal(run.events.filter(event=>event.type==='magnet').length,1);
   }
 });
+
+check('beam immediately hits new targets within its visible width and reach',()=>{
+  const run=isolated();
+  run.weapons['main-dream']=0;
+  const makeTarget=(x,y)=>target(run,x,y);
+  const near=makeTarget(100,-12),far=makeTarget(490,-12),outside=makeTarget(560,-12),side=makeTarget(250,100);
+  run.beams.push({x:0,y:-24,angle:0,length:500,width:20,ttl:1,damage:20,kind:'lance',source:'main-dream'});
+  step(run,1/60,{},()=>.5);
+  assert.ok(near.hp<near.maxHp&&far.hp<far.maxHp);
+  assert.equal(outside.hp,outside.maxHp);
+  assert.equal(side.hp,side.maxHp);
+  const health=near.hp,late=makeTarget(300,-12);
+  step(run,1/60,{},()=>.5);
+  assert.ok(late.hp<late.maxHp);
+  assert.equal(near.hp,health);
+});
