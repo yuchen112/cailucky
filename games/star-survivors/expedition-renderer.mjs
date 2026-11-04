@@ -58,16 +58,20 @@ export class Renderer{
   if(this.sceneryKey!==key){
     this.sceneryKey=key;
     const seed=[...key].reduce((n,ch)=>Math.imul(n,31)+ch.charCodeAt(0)|0,0);
-    this.sceneryItems=Array.from({length:15},(_,i)=>{
-      const angle=(i+hash(i,seed))*TAU/15;
-      const radius=170+hash(i+50,seed)*670;
-      return {x:Math.cos(angle)*radius,y:Math.sin(angle)*Math.min(radius,470),variation:.94+hash(i+80,seed)*.12,type:i%5};
-    });
+    const bounds=DATA.ARENA_BOUNDS;
+    const columns=8,rows=5;
+    const spacingX=(bounds.x*2-140)/columns;
+    const spacingY=(bounds.y*2-140)/rows;
+    this.sceneryItems=Array.from({length:columns*rows},(_,i)=>{
+      const x=(i%columns+.5-columns/2+(hash(i,seed)-.5)*.38)*spacingX;
+      const y=(Math.floor(i/columns)+.5-rows/2+(hash(i+50,seed)-.5)*.38)*spacingY;
+      return {x,y,variation:1.28+hash(i+80,seed)*.12,type:i%5};
+    }).filter(({x,y})=>Math.hypot(x,y)>135);
   }
   for(const {x,y,variation,type} of this.sceneryItems){
     const [maxWidth,maxHeight]=sizes[type];
-    if((y>=g.player.y)!==foreground||!this.visible(x,y,Math.max(maxWidth,maxHeight)*1.06))continue;
-    if(g.gems.some(gem=>gem.kind==='objective'&&Math.hypot(gem.x-x,gem.y-y)<82))continue;
+    if((y>=g.player.y)!==foreground||!this.visible(x,y,Math.max(maxWidth,maxHeight)*variation))continue;
+    if(g.gems.some(gem=>gem.kind==='objective'&&Math.hypot(gem.x-x,gem.y-y)<Math.max(82,maxWidth*variation*.6)))continue;
     const image=this.images['scenery-'+g.mapId+'-'+type];
     if(!image)continue;
     const scale=Math.min(maxWidth/image.width,maxHeight/image.height)*variation;
