@@ -27,10 +27,10 @@ export const ACHIEVEMENTS=[
  ...FACILITIES.flatMap((f,i)=>[1,10,50,100,400].map((n,k)=>({id:`owned-${i}-${k}`,name:f.role+'的'+['初次相遇','小小隊伍','熟練旅團','星光工坊','夢境匠心'][k],kind:'owned',i,need:n}))),
  ...[10,25,50,100].map((n,i)=>({id:'research-'+i,name:'靈感收藏家 '+(i+1),kind:'upgrades',need:n}))
 ];
-export const SKINS=[{id:'midnight',name:'月光工坊',need:0,desc:'暖金星光與寧靜夜色'}, {id:'aurora',name:'極光心願',need:12,desc:'青綠極光與琉璃星光'}, {id:'rose',name:'玫瑰星河',need:28,desc:'玫瑰色的夢與溫暖星雨'}, {id:'cosmos',name:'銀河珍藏',need:50,desc:'深紫宇宙與銀白星光'}];
+export const SKINS=[{id:'midnight',name:'琥珀暮庭',need:0,desc:'暖金星光與寧靜夜色'}, {id:'aurora',name:'極光雪庭',need:12,desc:'青綠極光與琉璃星光'}, {id:'rose',name:'花雨夜庭',need:28,desc:'玫瑰色的夢與溫暖星雨'}, {id:'cosmos',name:'月下靜庭',need:50,desc:'深紫宇宙與銀白星光'}];
 const finite=(n,d=0,max=MAX)=>typeof n==='number'&&Number.isFinite(n)&&n>=0?Math.min(n,max):d;
 const cap=n=>Math.min(MAX,Math.max(0,n));
-export function fresh(now=Date.now()){return {version:VERSION,stars:0,total:0,clicks:0,caught:0,owned:Array(10).fill(0),upgrades:[],achievements:[],playTime:0,created:now,lastSeen:now,nextComet:25,event:null,buffs:{production:0,click:0},skin:'midnight',settings:{music:true,sound:true,musicVolume:.4,soundVolume:.65,motion:true,hold:false},buy:1};}
+export function fresh(now=Date.now()){return {version:VERSION,stars:0,total:0,roundTotal:0,permanent:permanent(),clicks:0,caught:0,owned:Array(10).fill(0),upgrades:[],achievements:[],playTime:0,created:now,lastSeen:now,nextComet:25,event:null,buffs:{production:0,click:0},skin:'midnight',settings:{music:true,sound:true,musicVolume:.4,soundVolume:.65,motion:true,hold:false},buy:1};}
 export function restore(raw,now=Date.now()){
  if(!raw||raw.version!==VERSION)throw Error('這不是新版星願旅團的存檔。');const s=fresh(now);
  for(const k of ['stars','total','clicks','caught','playTime'])s[k]=finite(raw[k]);s.total=Math.max(s.stars,s.total);s.clicks=Math.floor(s.clicks);s.caught=Math.floor(s.caught);
@@ -44,18 +44,19 @@ export function restore(raw,now=Date.now()){
  s.nextComet=Math.max(s.playTime+5,finite(raw.nextComet,s.playTime+30));
  // Events and temporary boosts pause across page reloads; never produce boosted offline income.
  for(const k of ['production','click'])s.buffs[k]=Math.max(s.playTime,Math.min(s.playTime+90,finite(raw.buffs?.[k],s.playTime)));
+ s.roundTotal=finite(raw.roundTotal,s.total,s.total);s.permanent=permanent(raw.permanent??{});
  checkAchievements(s);return s;
 }
 export function globalMultiplier(s){return (1+s.achievements.length*.01)*1.2**s.upgrades.filter(id=>id.startsWith('global-')).length;}
-export function facilityRate(s,i){let r=FACILITIES[i].rate*s.owned[i]*2**s.upgrades.filter(id=>id.startsWith(`f${i}-`)).length;for(let k=0;k<8;k++)if(k+2===i&&s.upgrades.includes(`link-${k}`))r*=1+s.owned[k]*.01;return cap(r*globalMultiplier(s));}
+export function facilityRate(s,i){let r=FACILITIES[i].rate*s.owned[i]*2**s.upgrades.filter(id=>id.startsWith(`f${i}-`)).length;for(let k=0;k<8;k++)if(k+2===i&&s.upgrades.includes(`link-${k}`))r*=1+s.owned[k]*.01;const item=petItem(s);return cap(r*globalMultiplier(s)*(1+(s.permanent?.levels[1]??0)*.04)*(item?.group===1?1+item.bonus:1));}
 export function cps(s,boosted=true){const base=FACILITIES.reduce((r,_,i)=>r+facilityRate(s,i),0);return cap(base*(boosted&&s.buffs.production>s.playTime?5:1));}
-export function clickPower(s){const base=2**s.upgrades.filter(id=>id.startsWith('tap-')).length*globalMultiplier(s),echo=s.upgrades.filter(id=>id.startsWith('echo-')).length;return cap((base+cps(s)*.01*echo)*(s.buffs.click>s.playTime?12:1));}
-export function earn(s,n){if(!Number.isFinite(n)||n<0)return 0;n=Math.min(n,MAX-s.total,MAX-s.stars);s.stars=cap(s.stars+n);s.total=cap(s.total+n);return n;}
+export function clickPower(s){const base=2**s.upgrades.filter(id=>id.startsWith('tap-')).length*globalMultiplier(s),echo=s.upgrades.filter(id=>id.startsWith('echo-')).length;const item=petItem(s);return cap((base+cps(s)*.01*echo)*(s.buffs.click>s.playTime?12:1)*(1+(s.permanent?.levels[0]??0)*.04)*(item?.group===0?1+item.bonus:1));}
+export function earn(s,n){if(!Number.isFinite(n)||n<0)return 0;n=Math.min(n,MAX-s.total,MAX-s.stars);s.stars=cap(s.stars+n);s.total=cap(s.total+n);s.roundTotal=cap((s.roundTotal??0)+n);return n;}
 export function tap(s,random=Math.random){const crit=random()<.04,gain=earn(s,clickPower(s)*(crit?5:1));s.clicks++;return {gain,crit};}
 export function cost(s,i,count=1){if(!FACILITIES[i]||!Number.isInteger(count)||count<1)return Infinity;const start=FACILITIES[i].base*1.15**s.owned[i],v=start*(1.15**count-1)/.15;return Number.isFinite(v)&&v<=MAX?Math.ceil(v-1e-9):Infinity;}
 export function affordable(s,i){if(!FACILITIES[i])return 0;let lo=0,hi=Math.min(100000-s.owned[i],4000);while(lo<hi){const mid=Math.ceil((lo+hi)/2);if(cost(s,i,mid)<=s.stars)lo=mid;else hi=mid-1;}return lo;}
 export function buyFacility(s,i,quantity=s.buy){let n=quantity==='max'?affordable(s,i):quantity;if(!Number.isInteger(n)||n<1||s.owned[i]+n>100000)return null;const price=cost(s,i,n);if(price>s.stars||!Number.isFinite(price))return null;s.stars=Math.max(0,s.stars-price);s.owned[i]+=n;return {n,price};}
-export function upgradeReady(s,u){if(s.upgrades.includes(u.id))return false;if(u.type==='facility')return s.owned[u.i]>=u.need;if(u.type==='tap')return s.clicks>=u.need;if(u.type==='link')return s.owned[u.i]>=25&&s.owned[u.i+2]>=10;return s.total>=u.need;}
+export function upgradeReady(s,u){if(s.upgrades.includes(u.id))return false;if(u.type==='facility')return s.owned[u.i]>=u.need;if(u.type==='tap')return s.clicks>=u.need;if(u.type==='link')return s.owned[u.i]>=25&&s.owned[u.i+2]>=10;return (s.roundTotal??s.total)>=u.need;}
 export function buyUpgrade(s,id){const u=UPGRADES.find(u=>u.id===id);if(!u||!upgradeReady(s,u)||u.cost>s.stars)return false;s.stars-=u.cost;s.upgrades.push(id);return true;}
 export function achievementProgress(s,a){return a.kind==='owned'?s.owned[a.i]:a.kind==='upgrades'?s.upgrades.length:s[a.kind];}
 export function checkAchievements(s){const gained=[];for(const a of ACHIEVEMENTS)if(!s.achievements.includes(a.id)&&achievementProgress(s,a)>=a.need){s.achievements.push(a.id);gained.push(a);}return gained;}
@@ -70,6 +71,81 @@ export function catchComet(s,random=Math.random){if(!s.event||s.event.ends<=s.pl
  if(r<.75){s.buffs.production=Math.max(s.buffs.production,s.playTime)+60;return {type:'production',title:'星河豐收',desc:'60 秒內自動產量 ×5'};}
  s.buffs.click=Math.max(s.buffs.click,s.playTime)+30;return {type:'click',title:'指尖星雨',desc:'30 秒內點擊收益 ×12'};
 }
-export function offline(s,now=Date.now()){const seconds=Math.min(OFFLINE_CAP,Math.max(0,(now-s.lastSeen)/1000)),gain=earn(s,cps(s,false)*seconds);s.lastSeen=now;return {seconds,gain};}
+export function offline(s,now=Date.now()){const item=petItem(s),offlineItem=item?.group===2?item:null;
+ const seconds=Math.min(OFFLINE_CAP+(offlineItem?.hours??0)*3600,Math.max(0,(now-s.lastSeen)/1000));
+ const gain=earn(s,cps(s,false)*(seconds+(offlineItem&&!offlineItem.hours?Math.min(seconds,14400)*offlineItem.bonus:0)));s.lastSeen=now;return {seconds,gain};}
 export function format(n){if(n===Infinity)return '極遠星空';if(n<1000)return n<10?n.toFixed(1).replace(/\.0$/,''):Math.floor(n).toLocaleString('en-US');const units=['K','M','B','T','Qa','Qi','Sx','Sp','Oc','No'];const p=Math.floor(Math.log10(n)/3);if(p<=units.length){const v=n/1000**p;return (v>=100?v.toFixed(0):v.toFixed(2).replace(/\.?0+$/,''))+' '+units[p-1];}return n.toExponential(2).replace('+','');}
 export function hintFor(s,u){if(u.type==='facility')return `持有 ${u.need} 個${FACILITIES[u.i].short}`;if(u.type==='tap')return `累積點擊 ${format(u.need)} 次`;if(u.type==='link')return `${FACILITIES[u.i].short} 25 個、${FACILITIES[u.i+2].short} 10 個`;return `累積星願 ${format(u.need)}`;}
+
+export const PETS=[
+ '苔苔龜','栗尾狐','雲絨兔','燈芯鼠','花帽刺蝟','露珠鴨',
+ '金葉鹿','琉璃貓','月紗蛾','鈴羽雀','繡球羊',
+ '星角小龍','銀河鯨','夢火鳳雛','月冠獅',
+].map((name,id)=>({id,name,tier:id<6?'普通':id<11?'華麗':'神話',price:id<6?3:id<11?8:16}));
+const itemNames=[
+ ['拾星鈴','晨星手環','橡果指套','金葉護符','曙光手套','連星水晶','星冠指輪'],
+ ['工坊徽章','木輪吊飾','星光油壺','群星齒輪','金匠圍巾','極光齒輪','旅團號角'],
+ ['晨露提燈','月光小毯','晚安枕頭','銀月沙漏','夢鄉羅盤','長夜燈籠','星河睡袋'],
+];
+export const PET_ITEMS=itemNames.flatMap((names,group)=>names.map((name,index)=>({
+ id:group*7+index,name,group,price:[3,5,7,9,12,16,21][index],
+ bonus:(index+2)*.025,shops:index<3?0:index-1,
+ hours:group===2&&index%2===1?index*2:0,
+})));
+export const REBIRTH_TARGET=100000;
+function permanent(raw={}){
+ const ids=(list,catalog)=>[...new Set((Array.isArray(list)?list:[]).filter(id=>catalog[id]?.id===id))];
+ const pets=ids(raw.pets,PETS),items=ids(raw.items,PET_ITEMS);
+ const equipped=Object.fromEntries(pets.flatMap(id=>items.includes(raw.equipped?.[id])?[[id,raw.equipped[id]]]:[]));
+ return {
+  points:Math.floor(finite(raw.points,0,1000000000)), rebirths:Math.floor(finite(raw.rebirths,0,1000000)),
+  pets,items,equipped,active:pets.includes(raw.active)?raw.active:null,
+  levels:Array.from({length:3},(_,i)=>Math.floor(finite(raw.levels?.[i],0,50))),
+ };
+}
+export function petItem(s){
+ const p=s.permanent,item=PET_ITEMS[p?.equipped?.[p.active]];
+ return item&&p.pets.includes(p.active)&&p.items.includes(item.id)&&s.owned.filter(Boolean).length>=item.shops?item:null;
+}
+export function adoptPet(s,id){
+ const p=s.permanent,pet=PETS[id];
+ if(!pet||p.pets.includes(id))return false;
+ const price=p.pets.length===0&&id<3?0:pet.price;
+ if(p.points<price)return false;
+ p.points-=price;p.pets.push(id);p.active=id;return true;
+}
+export function buyPetItem(s,id){
+ const p=s.permanent,item=PET_ITEMS[id];
+ if(!item||p.items.includes(id)||p.points<item.price)return false;
+ p.points-=item.price;p.items.push(id);return true;
+}
+export function equipPetItem(s,id){
+ const p=s.permanent;
+ if(!p.pets.includes(p.active)||id!==null&&!p.items.includes(id))return false;
+ if(id===null)delete p.equipped[p.active];else p.equipped[p.active]=id;
+ return true;
+}
+export function permanentCost(s,i){
+ const level=s.permanent.levels[i];
+ return Number.isInteger(level)&&level<50?3+level*2:Infinity;
+}
+export function upgradePermanent(s,i){
+ const p=s.permanent,price=permanentCost(s,i);
+ if(p.points<price)return false;
+ p.points-=price;p.levels[i]++;return true;
+}
+export function rebirthQuote(s){
+ const base=REBIRTH_TARGET*(1+s.permanent.rebirths*.4);
+ const steps=Math.min(230,Math.max(0,Math.floor(Math.log10(Math.max(1,s.roundTotal/base)))+1));
+ const points=s.roundTotal<base?0:steps+2;
+ return {points,next:base*10**(points?steps:0)};
+}
+export function rebirth(s){
+ const {points}=rebirthQuote(s);
+ if(!points)return 0;
+ const p=s.permanent;
+ p.points+=points;p.rebirths++;
+ s.stars=p.levels[2]*25;s.roundTotal=0;s.owned.fill(0);s.upgrades=[];
+ s.buffs={production:0,click:0};s.event=null;s.nextComet=s.playTime+25;s.buy=1;
+ return points;
+}
