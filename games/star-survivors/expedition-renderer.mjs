@@ -44,30 +44,6 @@ export class Renderer{
   if(e.type==='block'){this.burst(x,y,'gold',140,.32);this.flash=.06}if(e.type==='lucky')this.burst(x,y,'gold',100,.38);if(e.type==='objective'){this.burst(x,y,'gold',210,.6);this.flash=.07}if(e.type==='enemyHeal')this.fx.push({x,y,kind:'heal',size:(e.r||160)*2,ttl:.5,max:.5,rotation:0});
   if(['heal','material'].includes(e.type))this.burst(x,y,'gold',e.type==='heal'?110:55,.4)
  }
- scenery(c,g,foreground){
-  const key=g.mapId+g.runId;
-  if(this.sceneryKey!==key){
-    this.sceneryKey=key;
-    const seed=[...key].reduce((n,ch)=>Math.imul(n,31)+ch.charCodeAt(0)|0,0);
-    this.sceneryItems=Array.from({length:16},(_,i)=>{
-      const angle=(i+hash(i,seed))*TAU/16;
-      const radius=220+hash(i+50,seed)*660;
-      return {x:Math.cos(angle)*radius,y:Math.sin(angle)*Math.min(radius,470),size:54+hash(i+80,seed)*49,type:i%5};
-    });
-  }
-  for(const item of this.sceneryItems){
-    const {x,y,size,type}=item;
-    if((y>=g.player.y)!==foreground||!this.visible(x,y,size))continue;
-    if(g.gems.some(gem=>gem.kind==='objective'&&Math.hypot(gem.x-x,gem.y-y)<90))continue;
-    const image=this.images['scenery-'+g.mapId+'-'+type];
-    if(!image)continue;
-    const distance=Math.hypot(g.player.x-x,g.player.y-(y-23));
-    c.save();
-    c.globalAlpha=.18+.70*clamp((distance-25)/85);
-    c.drawImage(image,x-size/2,y-size*.76,size,size*.8125);
-    c.restore();
-  }
- }
  aimHint(c,g,input){
   if(Math.hypot(input.aimX||0,input.aimY||0)<.05)return;
   const point=DATA.body(g.player);
@@ -119,12 +95,12 @@ export class Renderer{
   if(active)this.glow(c,p.x,p.y-38,110,role(g.roleId).color,.16*this.activeAnim/.72)
  }
  render(g,mode='playing',input={},dt=0,now=0){const c=this.ctx;c.setTransform(this.dpr,0,0,this.dpr,0,0);c.fillStyle='#10172a';c.fillRect(0,0,this.w,this.h);if(!g||['home','lobby','loading'].includes(mode)){this.renderFeedback(dt,now);return}this.roleId=g.roleId;this.mapId=g.mapId;const live=['playing','cinematic','result'].includes(mode),ed=live?dt:0,p=g.player;this.cast=Math.max(0,this.cast-ed);this.activeAnim=Math.max(0,this.activeAnim-ed);this.hurtAnim=Math.max(0,this.hurtAnim-ed);this.bossCast=Math.max(0,this.bossCast-ed);this.flash=Math.max(0,this.flash-dt);this.shake=Math.max(0,this.shake-ed*20);if(g.status==='lost')this.death+=dt;const smooth=Math.min(1,dt*11);this.camera.x+=(p.x-this.camera.x)*smooth;this.camera.y+=(p.y-this.camera.y)*smooth;const shake=this.reduced?0:this.shake,ox=this.w/2-this.camera.x*this.scale+(Math.random()-.5)*shake,oy=this.h*.52-this.camera.y*this.scale+(Math.random()-.5)*shake;c.save();c.translate(ox,oy);c.scale(this.scale,this.scale);this.terrain(c,g);
-  this.scenery(c,g,false);
+
   this.hazards(c,g,now);this.fields(c,g,now);this.drops(c,g,now);this.groundAttacks(c,g,now);
   for(const f of this.fx){if(f.size<160&&f.kind!=='nova')continue;this.drawBurst(c,f,ed,.30)}
   const actors=(g.enemies||[]).filter(e=>this.visible(e.x,e.y,160)).map(e=>({enemy:e,y:e.y}));actors.push({player:true,y:p.y});actors.sort((a,b)=>a.y-b.y);for(const a of actors)if(a.player)this.player(c,g,input,ed,now);else this.drawEnemy(c,a.enemy,g,now);
   this.shots(c,g,now);this.orbits(c,g);this.summons(c,g,now);
-  this.scenery(c,g,true);this.aimHint(c,g,input);
+  this.aimHint(c,g,input);
   for(const ghost of this.ghosts){ghost.ttl-=ed;const t=1-ghost.ttl/ghost.max;this.drawEnemy(c,{...ghost,id:0,r:ghost.boss?48:19,type:ghost.boss?3:0,hp:1,maxHp:1},g,now,clamp(ghost.ttl/ghost.max),t)}this.ghosts=this.ghosts.filter(d=>d.ttl>0);
   for(const f of this.fx){if(f.size>=160||f.kind==='nova')continue;this.drawBurst(c,f,ed,.78)}this.fx=this.fx.filter(f=>f.ttl>0);
   for(const n of this.numbers){n.ttl-=ed;n.y-=ed*25;c.save();c.globalAlpha=clamp(n.ttl*4);c.font=`800 ${n.hurt?20:n.strong?18:12}px system-ui`;c.textAlign='center';c.strokeStyle='#181027';c.lineWidth=3.5;c.strokeText(n.value,n.x,n.y);c.fillStyle=n.hurt?'#ffadbe':n.strong?'#ffe7b1':n.color||'#f0e3ff';c.fillText(n.value,n.x,n.y);c.restore()}this.numbers=this.numbers.filter(n=>n.ttl>0);c.restore();
