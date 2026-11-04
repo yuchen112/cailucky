@@ -2,7 +2,7 @@ import {loadAnimationManifest,ensureRoleAnimation,ensureMapAnimations,ensureMons
 import{bindBattleTouch}from'./battle-touch.mjs?v=6.1';
 import{ROLES,MAPS,MONSTERS,EQUIPMENT,PASSIVES,DIFFICULTY_ORDER,DIFFICULTY,getRole,getMap,weaponName,branchOf,upgradeInfo}from'./expedition-data.mjs?v=6';
 import{createExpedition,step,choose,reroll,skip,ban,dash,active,restore,serialize,summary,defaultProfile,validateProfile,upgradeCost,upgradeEquipment,upgradeTrait,settle,canEnterDifficulty,ensureChoices}from'./expedition-core.mjs?v=6';
-import{Renderer,renderHero,preview}from'./expedition-renderer.mjs?v=6.2';
+import{Renderer,renderHero,preview}from'./expedition-renderer.mjs?v=6.3';
 import{Sound}from'./audio-v5.mjs?v=5';
 const $=id=>document.getElementById(id),KEY='cxq-star-survivors-v4',RUN=KEY+'-run',OLD='cxq-star-survivors-v1';
 const escapeHTML=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -48,7 +48,7 @@ function renderTraits(){const r=getRole(roleId),level=profile.traits?.[roleId]||
 const behaviorLabel={bossCrystal:'共鳴首領',bossRoots:'森林首領',bossTide:'潮汐首領',bossClock:'時序首領',bossSky:'蒼穹首領',summoner:'召喚援軍',zigzag:'交錯追擊',echo:'延遲回響',chase:'追擊',ranged:'遠距施法',range:'遠距攻擊',charge:'蓄力衝鋒',shield:'正面防禦',summon:'召喚援軍',zone:'地面控制',split:'分裂',burrow:'潛行突襲',healer:'治療同伴',orbit:'環繞追擊',boss:'首領',heavy:'重裝',fast:'快速追擊',explode:'爆炸預告',sniper:'瞄準射擊',dash:'突進',turret:'定點射擊'};
 function renderCodex(){$('codex-panel').innerHTML=`<div class="panel-heading"><div><span class="eyebrow">EXPEDITION ARCHIVE</span><h2>冒險圖鑑</h2></div></div><div class="codex-tabs"><button data-codex="monsters" aria-pressed="${codexTab==='monsters'}">怪物圖鑑</button><button data-codex="equipment" aria-pressed="${codexTab==='equipment'}">裝備圖鑑</button></div>${codexTab==='monsters'?MAPS.map(m=>`<h3 class="codex-map-group">${m.name} · ${m.material.name}</h3><div class="codex-grid">${MONSTERS.filter(e=>e.mapId===m.id).map(e=>`<article class="codex-card"><canvas width="180" height="150" data-species="${e.id}" aria-label="${e.name}動作預覽"></canvas><b>${e.name}${e.boss?' · 首領':''}</b><p>${e.desc||behaviorLabel[e.behavior]||e.behavior}</p><span class="tag">${behaviorLabel[e.behavior]||e.behavior}</span></article>`).join('')}</div>`).join(''):`<p class="section-copy">每位角色固定攜帶專屬主武器，從適用副裝備中選擇兩件。以下顯示目前角色可使用的裝備。</p><div class="equipment-grid">${[getRole(roleId).main,...(getRole(roleId).allowedSupports||getRole(roleId).allowed||[])].map(id=>{const e=EQUIPMENT[id],users=ROLES.filter(r=>r.main===id||(r.allowedSupports||r.allowed||[]).includes(id));return`<article class="equipment-card">${icon(id)}<h3>${e.name}</h3><small>${e.kind==='main'?'專屬主武器':'副裝備'}</small><p>${e.desc}</p><p class="equip-compatible">適用：${users.map(r=>r.name).join('、')}</p>${Object.values(e.branches||{}).map(b=>`<p><b>${b.name}</b>：${b.desc}<br>第五級 → ${b.evolved}</p>`).join('')}</article>`}).join('')}</div>`}`;$('codex-panel').querySelectorAll('[data-codex]').forEach(b=>b.onclick=()=>{codexTab=b.dataset.codex;renderCodex()})}
 function renderLobby(){$('lobby').dataset.tab=tab;renderRoster();renderRole();renderMaps();renderMapDetail();refreshWallet();for(const name of['journey','workshop','traits','codex'])$(name+'-panel').hidden=name!==tab;document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.tab===tab)));if(tab==='workshop')renderWorkshop();if(tab==='traits')renderTraits();if(tab==='codex')renderCodex()}
-function resetJoy(){mouseAim=null;battleTouch.reset();aimTouch.reset();joy.x=joy.y=0}
+function resetJoy(){battleTouch.reset();aimTouch.reset();joy.x=joy.y=0}
 function lock(value){value=value||orientationBlocked;$('lobby').inert=value;$('hud').inert=value;$('touch').inert=value}
 function hideModal(){$('modal').hidden=true;lock(false)}
 function modal(title,copy,tag='EXPEDITION',kind=''){clearTimeout(toastTimer);$('toast').classList.remove('visible');$('modal-title').textContent=title;$('modal-copy').textContent=copy;$('modal-eyebrow').textContent=tag;$('modal-body').replaceChildren();$('modal-actions').replaceChildren();$('modal').querySelector('.dialog').className='dialog art-frame '+kind;$('modal').hidden=false;keys.clear();resetJoy();lock(true)}
@@ -102,7 +102,7 @@ function soundSettings(fromPause=false){
   action('返回',()=>{hideModal();if(fromPause){mode='playing';pause()}},true);
   focusDialog();
 }
-function guide(fromPause=false){modal('旅團的冒險筆記','選擇適合自己的角色，再為想培育的裝備前往對應地圖。','FIELD GUIDE');$('modal-body').innerHTML=`<div class="help-grid"><div class="help-block"><b>移動與兩種主動操作</b>WASD／方向鍵移動，空白鍵星閃衝刺，E／Q 使用角色主動技能，Esc 暫停。手機在戰場空白處按下後會出現浮動搖桿；由初次按下的位置拖曳控制方向與速度，放開停止。右下拖曳瞄準。電腦在戰場按住滑鼠左鍵朝游標瞄準。鬆手回到自動索敵。右上短按角色技能施放、長按查看說明，星閃用來閃避。一般攻擊自動施放。</div><div class="help-block"><b>角色與局內裝備</b>每位角色攜帶一把專屬主武器，最多再選兩件適用副裝備與四項祝福。第一至第四級提升基礎能力，第五級才選擇進化路線。每局重抽三次、略過兩次、排除一次。</div><div class="help-block"><b>地圖與遠征目標</b>不同地圖有各自的敵群、環境機制與素材。收集三個地圖信標，並生存到地圖預定時間後，首領現身；擊敗首領才算通關。注意戰場邊緣的信標指引。簡單與普通可直接挑戰；更高難度需在同一地圖依序通關，並提供更高獎勵。</div><div class="help-block"><b>素材與永久培育</b>在遠征中收集素材，結算帶回營地。裝備工坊提升傷害，角色特性培育天賦。查看工坊需求，便能知道下一次要去哪座地圖。</div><div class="help-block"><b>排除與保存</b>排除會讓該能力不再出現在本局後續選項中，已取得的效果保留。進度每五秒、升級與暫停時儲存。舊版進度保留在「繼續舊版冒險」入口。</div><div class="help-block"><b>暫停與聲音</b>切到其他分頁會自動暫停。首次操作後才會播放聲音。存檔只在目前瀏覽器，清除網站資料會移除進度。</div></div>`;action(fromPause?'返回暫停選單':'返回營地',()=>{if(fromPause){mode='playing';pause()}else hideModal()},true);focusDialog()}
+function guide(fromPause=false){modal('旅團的冒險筆記','選擇適合自己的角色，再為想培育的裝備前往對應地圖。','FIELD GUIDE');$('modal-body').innerHTML=`<div class="help-grid"><div class="help-block"><b>移動與兩種主動操作</b>WASD／方向鍵移動，空白鍵星閃衝刺，E／Q 使用角色主動技能，Esc 暫停。手機在戰場空白處按下後會出現浮動搖桿；由初次按下的位置拖曳控制方向與速度，放開停止。右下拖曳瞄準。電腦預設朝滑鼠游標攻擊，按右上瞄準模式切換自動索敵。右上短按角色技能施放、長按查看說明，星閃用來閃避。一般攻擊自動施放。</div><div class="help-block"><b>角色與局內裝備</b>每位角色攜帶一把專屬主武器，最多再選兩件適用副裝備與四項祝福。第一至第四級提升基礎能力，第五級才選擇進化路線。每局重抽三次、略過兩次、排除一次。</div><div class="help-block"><b>地圖與遠征目標</b>不同地圖有各自的敵群、環境機制與素材。收集三個地圖信標，並生存到地圖預定時間後，首領現身；擊敗首領才算通關。注意戰場邊緣的信標指引。簡單與普通可直接挑戰；更高難度需在同一地圖依序通關，並提供更高獎勵。</div><div class="help-block"><b>素材與永久培育</b>在遠征中收集素材，結算帶回營地。裝備工坊提升傷害，角色特性培育天賦。查看工坊需求，便能知道下一次要去哪座地圖。</div><div class="help-block"><b>排除與保存</b>排除會讓該能力不再出現在本局後續選項中，已取得的效果保留。進度每五秒、升級與暫停時儲存。舊版進度保留在「繼續舊版冒險」入口。</div><div class="help-block"><b>暫停與聲音</b>切到其他分頁會自動暫停。首次操作後才會播放聲音。存檔只在目前瀏覽器，清除網站資料會移除進度。</div></div>`;action(fromPause?'返回暫停選單':'返回營地',()=>{if(fromPause){mode='playing';pause()}else hideModal()},true);focusDialog()}
 function finish(){if(settled)return;settled=true;mode='result';cinemaQueue=[];endCinema();const r=summary(game);settle(profile,game);const savedProfile=saveProfile();saved=null;if(savedProfile)try{localStorage.removeItem(RUN)}catch{}$('touch').hidden=true;const role=getRole(game.roleId),map=getMap(game.mapId);modal(r.win?'遠征凱旋':'星光仍會再次出發',r.win?`${role.name}完成了${map.name}的遠征。帶著收集到的素材，準備下一場冒險。`:'收集到的戰利品已結算。培育裝備、調整流派，再次出發。',r.win?'EXPEDITION COMPLETE':'EXPEDITION RESULTS','results');const medal=document.createElement('div');medal.className='result-medal';medal.innerHTML=`${icon(r.win?'chest':'gem')}<div><b>${map.name}</b><p>${role.name} · ${r.win?'首領討伐成功':'本次遠征結束'}</p></div>`;$('modal-body').append(medal);for(const[value,label]of[[format(r.seconds),'遠征時間'],[r.kills,'擊敗怪物'],[r.level,'角色等級'],[r.coins,'獲得星光'],[r.damage,'造成傷害'],[r.mastery||0,'角色熟練']]){const d=document.createElement('div');d.className='stat';d.innerHTML=`<b${typeof value==='number'?` data-target="${value}"`:''}>${typeof value==='number'?0:value}</b><span>${label}</span>`;$('modal-body').append(d)}const loot=document.createElement('div');loot.className='result-loot';loot.innerHTML=Object.entries(r.materials||{}).filter(([,n])=>n>0).map(([id,n])=>`<span>${materialIcon(id)}${materialName(id)}<b>+${n}</b></span>`).join('')||'<span>本次未取得素材</span>';$('modal-body').append(loot);const build=document.createElement('div');build.className='result-build';build.innerHTML=Object.entries(game.weapons).filter(([,n])=>n).map(([id,n])=>`<span title="${weaponName(game,id)}">${icon(id)}<small>${n===5?'★':n}</small></span>`).join('');$('modal-body').append(build);resultAt=performance.now();action('再次遠征',()=>begin(),true);action('回營地強化',()=>{tab='workshop';home()});sound.play(r.win?'win':'lose');if(r.win)renderer.cinematic?.('win');focusDialog()}
 function doDash(){if(mode!=='playing'||!game)return;const v=input(),p=game.player;dash(game,Math.hypot(v.x,v.y)>.1?v.x:p.dirX,Math.hypot(v.x,v.y)>.1?v.y:p.dirY)}
 function doActive(){if(mode!=='playing'||!game)return;if(active(game)){toast(getRole(game.roleId).active.name)}}
@@ -129,26 +129,33 @@ document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.
 document.addEventListener('pointerdown',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;sound.unlock();sound.play('click');const r=b.getBoundingClientRect();renderer.uiBurst?.(e.clientX||r.x+r.width/2,e.clientY||r.y+r.height/2)},true);
 addEventListener('keydown',e=>{const k=e.key.toLowerCase();if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k)&&mode==='playing')e.preventDefault();if(k==='escape'){if(['playing','cinematic'].includes(mode))pause();else if(mode==='paused'){hideModal();mode='playing'}else if(mode==='home')hideModal()}if(k==='tab'&&!$('modal').hidden){const buttons=[...$('modal').querySelectorAll('button:not(:disabled)')],first=buttons[0],last=buttons.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus()}}if(mode==='playing'){keys.add(k);if(k===' '&&!e.repeat)doDash();if(['e','q'].includes(k)&&!e.repeat)doActive()}if(mode==='upgrade'&&!orientationBlocked&&!e.repeat&&['1','2','3'].includes(k))$('modal-body').children[Number(k)-1]?.click()});addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
 const battlefield=$('game');
-let mouseAim=null;
+const desktopPointer=matchMedia('(hover:hover) and (pointer:fine)');
+const autoAimButton=$('auto-aim');
+let mouseAim=null,autoAim=false;
+try{autoAim=localStorage.getItem(KEY+'-auto-aim')==='true'}catch{}
+function syncAutoAim(){
+  autoAimButton.setAttribute('aria-pressed',String(autoAim));
+  autoAimButton.textContent=autoAim?'自動索敵':'滑鼠瞄準';
+}
+autoAimButton.onclick=()=>{
+  autoAim=!autoAim;
+  syncAutoAim();
+  try{localStorage.setItem(KEY+'-auto-aim',String(autoAim))}catch{}
+};
+syncAutoAim();
 function mouseDirection(){
-  if(!mouseAim||!game||mode!=='playing'||orientationBlocked)return null;
+  if(!desktopPointer.matches||autoAim||!game||mode!=='playing'||orientationBlocked)return null;
+  const fallback={x:game.player.dirX,y:game.player.dirY};
+  if(!mouseAim)return fallback;
   const bounds=battlefield.getBoundingClientRect();
   const x=mouseAim.x-bounds.left-renderer.w/2-(game.player.x-renderer.camera.x)*renderer.scale;
   const y=mouseAim.y-bounds.top-renderer.h*.52-(game.player.y-24-renderer.camera.y)*renderer.scale;
   const distance=Math.hypot(x,y);
-  return distance>5?{x:x/distance,y:y/distance}:{x:0,y:0};
+  return distance>5?{x:x/distance,y:y/distance}:fallback;
 }
-function updateMouseAim(event){
-  if(event.pointerType!=='mouse')return;
-  if(mode!=='playing'||orientationBlocked||!(event.buttons&1)||event.target!==battlefield){
-    mouseAim=null;
-    return;
-  }
-  mouseAim={x:event.clientX,y:event.clientY};
-}
-battlefield.addEventListener('pointerdown',updateMouseAim);
-window.addEventListener('pointermove',updateMouseAim);
-for(const type of ['pointerup','pointercancel','blur'])window.addEventListener(type,()=>{mouseAim=null});
+battlefield.addEventListener('pointermove',event=>{
+  if(event.pointerType==='mouse')mouseAim={x:event.clientX,y:event.clientY};
+});
 const battleTouch=bindBattleTouch(battlefield,{isPlaying:()=>mode==='playing'&&!!game&&!orientationBlocked,base:$('stick'),radius:40,deadzone:5,onFirstMove:()=>$('move-hint').hidden=true});
 $('dash').onpointerdown=e=>{e.preventDefault();doDash()};const aimTouch=bindBattleTouch($('aim-zone'),{isPlaying:()=>mode==='playing'&&!!game&&!orientationBlocked,base:$('aim-stick'),radius:36,deadzone:5});
 let skillPress=null;
