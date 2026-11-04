@@ -42,7 +42,7 @@ function starTap(point={x:W/2,y:mobile?540:480},repeating=false){
 function burst(x,y,n=12){for(let i=0;i<n;i++)particles.push({x,y,vx:(Math.random()-.5)*140,vy:-60-Math.random()*160,life:0,max:.65+Math.random()*.7,size:8+Math.random()*15});if(particles.length>220)particles.splice(0,particles.length-220);}
 function catchStar(){const result=catchComet(s);if(!result)return;actionSound(result.type==='gift'?'cometGift':'cometBoost');notify(result.title+'｜'+(result.gain?'獲得 '+safe(result.gain)+' 星願':result.desc));burst(mobile?240:330,mobile?370:370,35);checkRewards();persist();}
 function garden(){const im=mobile?(A.mobileGarden||A.background):A.background;if(!im)return;const k=Math.max(W/im.width,H/im.height);img(im,(W-im.width*k)/2,(H-im.height*k)/2,im.width*k,im.height*k);}
-function scene(){garden();if(s.skin!=='midnight'){ctx.save();ctx.globalCompositeOperation='screen';ctx.globalAlpha=.08;ctx.fillStyle={aurora:'#00bb9b',rose:'#d55486',cosmos:'#7655d3'}[s.skin];ctx.fillRect(0,0,W,H);ctx.restore();}
+function scene(){garden();const skin=modal?.type==='skins'?modal.preview:s.skin;if(skin!=='midnight'){ctx.save();ctx.globalCompositeOperation='screen';ctx.globalAlpha=.23;ctx.fillStyle={aurora:'#008f75',rose:'#ac3159',cosmos:'#513bbb'}[skin];ctx.fillRect(0,0,W,H);ctx.restore();}
  if(s.settings.motion)for(let i=0;i<5;i++){const x=(i*139.3+frame*2*(i%2?1:-1))%W,y=135+(i*83.7)%Math.max(1,H-210),a=.2+.18*Math.sin(frame+i);fit('spark',x,y,7+i%3*3,7+i%3*3,a);}}
 function header(){panel(mobile?12:20,12,mobile?456:1400,mobile?142:112);text('CxQ 星願旅團',mobile?29:43,mobile?35:38,mobile?19:25,'#f0d49a','left',700);text('點亮夢境',mobile?29:44,mobile?62:73,mobile?13:15,'#93b2c7');
  const x=mobile?450:648;text(safe(s.stars),x,mobile?40:45,mobile?29:38,'#fff3cf','right',700);text('星願',x+(mobile?0:12),mobile?72:83,mobile?13:15,'#a8bacb',mobile?'right':'left');
@@ -114,25 +114,19 @@ const regionPositions=[
  [.84,.49],[.21,.66],[.79,.66],[.15,.83],[.85,.83]
 ];
 function regionMap(){
- const w=mobile?448:920,h=w*.75,x=(W-w)/2,y=mobile?246:128;
+ const x=mobile?8:132,y=mobile?167:127,w=W-x*2,h=mobile?741:675;
  img('regionMap',x,y,w,h);
- const titleY=mobile?168:136;
- panel(W/2-179,titleY,358,52,.96);
- text('工坊區域地圖',W/2,titleY+26,23,'#50382c','center',700);
  FACILITIES.forEach((f,i)=>{
-  const [px,py]=regionPositions[i],open=s.owned[i]>0,bw=mobile?110:163,bh=mobile?31:40;
-  const bx=Math.max(x+4,Math.min(x+w-bw-4,x+w*px-bw/2)),by=y+h*py-bh/2;
-  if(open)fit('star',bx+bw/2-(mobile?10:15),by-(mobile?19:28),mobile?20:30,mobile?20:30,.95);
-  button(f.role+' · '+f.short,bx,by,bw,bh,()=>{
-   if(open)openRoom(i);
-   else modal={type:'lockedRegion',i};
-  },{selected:open,size:mobile?12:16});
+  const [px,py]=regionPositions[i],open=s.owned[i]>0;
+  const size=mobile?75:118,bx=x+w*px-size/2,by=y+h*py-size/2;
+  ctx.save();
+  if(!open)ctx.filter='brightness(.52) saturate(.55)';
+  fit('facility'+i,bx,by,size,size);
+  ctx.restore();
+  if(open)fit('star',bx+size*.72,by,size*.22,size*.22,.85);
+  buttons.push({label:f.role+'的'+f.short+'工坊',x:bx,y:by,w:size,h:size,enabled:true,
+   fn:()=>open?openRoom(i):modal={type:'lockedRegion',i}});
  });
- if(mobile){
-  panel(x,y+h+21,w,82,.94);
-  text('已開張 '+s.owned.filter(n=>n>0).length+' / '+FACILITIES.length+' 間',W/2,y+h+46,18,'#225c47','center',700);
-  text('星星標示已開張工坊，點選即可前往。',W/2,y+h+76,15,'#50382c','center');
- }
 }
 function room(){
  const i=roomIndex,f=FACILITIES[i],x=mobile?16:232,y=mobile?171:136,w=mobile?448:976,h=mobile?566:525;
@@ -184,16 +178,26 @@ function bottom(){if(mobile){const links=section==='room'?[['星願樹','worksho
 function comet(){if(!s.event)return;const t=frame,remaining=s.event.ends-s.playTime,x=mobile?350+Math.sin(t)*25:405+Math.sin(t*.8)*65,y=mobile?230+Math.cos(t*.9)*15:240+Math.cos(t*.9)*25;fit('comet',x-60,y-60,120,120);text('流星願 · 點我！',x,y+66,14,'#ffe3a0','center',700);text(Math.ceil(remaining)+' 秒',x,y+85,12,'#b8dce1','center');buttons.push({label:'捕捉流星願',x:x-67,y:y-67,w:134,h:134,enabled:true,fn:catchStar,comet:true});}
 function collection(){const x=mobile?16:210,y=mobile?172:142,w=mobile?448:1020,h=mobile?726:654;panel(x,y,w,h);text('星光收藏',x+25,y+34,26,'#f1d8a4','left',700);if(!mobile)button('返回工坊',x+w-180,y+15,156,46,()=>goTo('workshop'));text(s.achievements.length+' / '+ACHIEVEMENTS.length+' 項成就 · 永久收益 +'+s.achievements.length+'%',x+25,y+77,mobile?14:18,'#aacad5');
  const per=mobile?6:12,cols=mobile?2:4,rowH=mobile?139:125;const pages=Math.ceil(ACHIEVEMENTS.length/per);collectionPage=Math.max(0,Math.min(pages-1,collectionPage));ACHIEVEMENTS.slice(collectionPage*per,(collectionPage+1)*per).forEach((a,k)=>{const cw=(w-40-(cols-1)*12)/cols,cx=x+20+(k%cols)*(cw+12),cy=y+112+Math.floor(k/cols)*rowH,done=s.achievements.includes(a.id);panel(cx,cy,cw,rowH-9,done?.9:.62);fit(done?'star':'spark',cx+cw/2-22,cy+8,44,44,done?1:.3);text(a.name,cx+cw/2,cy+65,mobile?13:14,done?'#ffe3ab':'#b2bbca','center',600);const p=achievementProgress(s,a);text(done?'已收藏 · 收益 +1%':safe(Math.min(p,a.need))+' / '+safe(a.need),cx+cw/2,cy+94,mobile?11:12,done?'#99d1cb':'#8da0b5','center');});
- const by=y+h-101;button('上一頁',x+22,by,108,40,()=>collectionPage--,{enabled:collectionPage>0,size:14});text((collectionPage+1)+' / '+pages,x+w/2,by+20,15,'#a9bdce','center');button('下一頁',x+w-130,by,108,40,()=>collectionPage++,{enabled:collectionPage<pages-1,size:14});button('星空外觀',x+22,y+h-48,w-44,35,()=>modal={type:'skins'},{size:14});}
+ const by=y+h-101;button('上一頁',x+22,by,108,40,()=>collectionPage--,{enabled:collectionPage>0,size:14});text((collectionPage+1)+' / '+pages,x+w/2,by+20,15,'#a9bdce','center');button('下一頁',x+w-130,by,108,40,()=>collectionPage++,{enabled:collectionPage<pages-1,size:14});button('庭院夜景',x+22,y+h-48,w-44,35,()=>{goTo('workshop');modal={type:'skins',preview:s.skin};},{size:14});}
 function settingScreen(){const x=mobile?16:305,y=mobile?172:142,w=mobile?448:830,h=mobile?726:654;panel(x,y,w,h);text('遊戲設定',x+26,y+35,26,'#f1d8a4','left',700);button('返回遊戲館',x+24,y+h-56,w-48,42,returnToHub,{size:16});if(!mobile)button('返回工坊',x+w-180,y+15,155,46,()=>goTo('workshop'));
  const row=(label,key,volumeKey,ry)=>{text(label,x+24,ry+20,20,'#dbe5ec','left',600);button(s.settings[key]?'開啟':'關閉',x+w-124,ry,100,43,()=>{s.settings[key]=!s.settings[key];audio.update();persist();if(s.settings[key])actionSound('tap');},{selected:s.settings[key],size:16});const v=Math.round(s.settings[volumeKey]*100);text('音量 '+v+'%',x+24,ry+68,15,'#9eb7c9');const adjust=d=>{s.settings[volumeKey]=Math.round(Math.max(0,Math.min(1,s.settings[volumeKey]+d))*100)/100;audio.update();persist();};button('−',x+w-190,ry+47,68,39,()=>adjust(-.1),{size:22,enabled:v>0});button('＋',x+w-104,ry+47,80,39,()=>adjust(.1),{size:21,enabled:v<100});};
  row('背景音樂','music','musicVolume',y+91);row('操作音效','sound','soundVolume',y+197);
  [['動態演出','motion','減少動態時保留清楚的操作回饋。'],['按住收集','hold',s.clicks>=500?'按住星願樹，每秒收集 4 次。':'累積點擊 500 次後開放。']].forEach(([name,key,desc],i)=>{const ry=y+306+i*75;text(name,x+24,ry+19,19,'#dbe5ec');text(desc,x+24,ry+49,mobile?11:14,'#91adc3');button(s.settings[key]?'開啟':'關閉',x+w-124,ry,100,42,()=>{s.settings[key]=!s.settings[key];persist();},{selected:s.settings[key],enabled:key!=='hold'||s.clicks>=500,size:16});});
  const by=y+477;button('匯出備份',x+24,by,(w-60)/2,49,exportSave,{size:16});button('匯入備份',x+36+(w-60)/2,by,(w-60)/2,49,importSave,{size:16});text(storageOK?'新版進度已獨立保存；不影響舊版存檔。':'儲存失敗，請立即匯出備份。',x+w/2,y+550,mobile?12:16,storageOK?'#9cb7c7':'#ffb6ad','center');text('目前為瀏覽器存檔，換裝置前請匯出備份。',x+w/2,y+578,mobile?11:14,'#94a6bd','center');button('玩法說明',x+24,y+604,w-48,33,showHelp,{size:14});}
 function showHelp(){modal={type:'help'};}
-function drawModal(){if(!modal)return;buttons.length=0;ctx.fillStyle='#071322d9';ctx.fillRect(0,0,W,H);const x=mobile?23:390,w=mobile?434:660,y=mobile?216:222,h=mobile?530:470;panel(x,y,w,h);const close=()=>modal=null;
+function nightPicker(){
+ const x=mobile?12:370,y=mobile?754:684,w=W-x*2,h=mobile?147:119;
+ panel(x,y,w,h,.97);
+ const current=SKINS.find(k=>k.id===modal.preview),can=s.achievements.length>=current.need;
+ text(can?current.name:'收藏 '+current.need+' 項成就後解鎖',W/2,y+19,16,'#50382c','center',700);
+ const bw=(w-30)/SKINS.length;
+ SKINS.forEach((k,i)=>button(k.name,x+15+i*bw,y+32,bw-4,33,()=>{modal.preview=k.id;},{size:mobile?12:14,selected:k.id===modal.preview}));
+ button('取消',x+15,y+74,(w-40)/2,34,()=>{modal=null;},{size:15});
+ button('套用',x+w/2+5,y+74,(w-40)/2,34,()=>{s.skin=modal.preview;modal=null;persist();actionSound('skin');},{enabled:can,primary:true,size:15});
+}
+function drawModal(){if(!modal)return;buttons.length=0;if(modal.type==='skins'){nightPicker();return;}ctx.fillStyle='#071322d9';ctx.fillRect(0,0,W,H);const x=mobile?23:390,w=mobile?434:660,y=mobile?216:222,h=mobile?530:470;panel(x,y,w,h);const close=()=>modal=null;
  if(modal.type==='offline'){text('歡迎回到星願樹',W/2,y+51,27,'#f1d8a4','center',700);fit('star',W/2-53,y+86,106,106);text('離線 '+duration(modal.seconds),W/2,y+218,18,'#adcad6','center');text('帶回 '+safe(modal.gain)+' 星願',W/2,y+270,mobile?26:33,'#fff0bc','center',700);text('按平常產量計算，最多累積 24 小時。',W/2,y+317,mobile?13:16,'#9db4c7','center');button('收下星光',x+30,y+h-88,w-60,59,close,{primary:true,size:20});}
- else if(modal.type==='help'){text('簡單點，慢慢變強',W/2,y+44,25,'#f1d8a4','center',700);const lines=['① 點擊星願樹，取得星願。','② 首次購買設施，即可從地圖進入工坊。','③ 買到 10、25、50 個等里程碑，開放升級。','④ 點中流星願，有機會取得收益或暫時加倍。','⑤ 成就永久增加收益，也解鎖星空外觀。','沒有破關終點，也不需要重置。'];lines.forEach((t,i)=>text(t,x+25,y+105+i*(mobile?49:43),mobile?14:17,i===5?'#edcf91':'#b8cad6'));button('一起收集星願',x+30,y+h-74,w-60,48,close,{primary:true,size:18});}
+ else if(modal.type==='help'){text('簡單點，慢慢變強',W/2,y+44,25,'#f1d8a4','center',700);const lines=['① 點擊星願樹，取得星願。','② 首次購買設施，即可從地圖進入工坊。','③ 買到 10、25、50 個等里程碑，開放升級。','④ 點中流星願，有機會取得收益或暫時加倍。','⑤ 成就永久增加收益，也解鎖庭院夜景。','沒有破關終點，也不需要重置。'];lines.forEach((t,i)=>text(t,x+25,y+105+i*(mobile?49:43),mobile?14:17,i===5?'#edcf91':'#b8cad6'));button('一起收集星願',x+30,y+h-74,w-60,48,close,{primary:true,size:18});}
  else if(modal.type==='lockedRegion'){
   const i=modal.i,f=FACILITIES[i],price=cost(s,i,1);
   text(f.role+'的'+f.short+'工坊',W/2,y+42,25,'#50382c','center',700);
@@ -209,7 +213,6 @@ function drawModal(){if(!modal)return;buttons.length=0;ctx.fillStyle='#071322d9'
   button('留在地圖',x+28,y+h-81,(w-70)/2,52,close,{size:16});
   button('前往工坊',W/2+8,y+h-81,(w-70)/2,52,()=>{close();openRoom(i);},{primary:true,size:16});
  }
- else if(modal.type==='skins'){text('星空外觀',W/2,y+40,27,'#f1d8a4','center',700);SKINS.forEach((k,i)=>{const ry=y+82+i*73,can=s.achievements.length>=k.need;text(k.name,x+25,ry+17,19,can?'#e3eaf0':'#7c90a4','left',600);text(can?k.desc:'收藏 '+k.need+' 項成就後解鎖',x+25,ry+43,12,'#9ab1c4');button(s.skin===k.id?'使用中':'套用',x+w-119,ry,94,46,()=>{s.skin=k.id;actionSound('skin');persist();},{enabled:can,selected:s.skin===k.id,size:15});});button('關閉',x+25,y+h-58,w-50,38,close,{size:16});}
  else if(modal.type==='confirmImport'){text('匯入這份新版備份？',W/2,y+57,25,'#f1d8a4','center',700);text('累積星願 '+safe(modal.save.total),W/2,y+139,21,'#c3d9df','center');text('目前進度會先保留一份備份。',W/2,y+192,16,'#a9becd','center');button('取消',x+25,y+h-88,(w-65)/2,54,close);button('確認匯入',x+40+(w-65)/2,y+h-88,(w-65)/2,54,()=>{const value=modal.save;s=value;offline(s);modal=null;persist();audio.update();actionSound('upgrade');notify('備份匯入完成');},{primary:true});}
  else if(modal.type==='blocked'){text('已在另一個分頁遊玩',W/2,y+64,25,'#f1d8a4','center',700);wrap('為避免進度互相覆蓋，這個分頁已暫停。請關閉其他分頁後，再按下重新載入。',x+30,y+145,w-60,18);button('重新載入',x+30,y+h-90,w-60,58,()=>location.reload(),{primary:true});}
 }
