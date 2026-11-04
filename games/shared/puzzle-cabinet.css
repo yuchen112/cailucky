@@ -1,0 +1,209 @@
+[hidden] {
+  display: none !important;
+}
+.puzzle-game {
+  max-width: 650px;
+  margin: auto;
+  display: grid;
+  gap: 0.55rem;
+}
+.puzzle-round {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+}
+.puzzle-round .stats {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.puzzle-actions {
+  display: flex;
+  align-items: stretch;
+  gap: 0.45rem;
+}
+.puzzle-actions > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.puzzle-actions > div button {
+  width: 100%;
+}
+.puzzle-actions small {
+  display: block;
+}
+.meter,
+.charge {
+  height: 5px;
+  background: #405069;
+}
+.meter i,
+.charge i {
+  display: block;
+  height: 100%;
+  background: #ffe0a0;
+}
+.bubble-field {
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+.bubble-field canvas {
+  display: block;
+  width: min(100%, calc((100dvh - 180px) * 720 / 820));
+  height: auto;
+  touch-action: none;
+}
+#aimHint,
+#journey-status {
+  font-size: 0.78rem;
+  color: var(--dim);
+}
+.next {
+  background-repeat: no-repeat !important;
+  background-size: 30px !important;
+  background-position: 8px center !important;
+  padding-left: 38px !important;
+}
+.goals-row {
+  display: grid;
+  gap: 0.35rem;
+}
+#goals {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.goal {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+.gemMini {
+  width: 23px;
+  height: 23px;
+}
+.boardWrap {
+  position: relative;
+  min-width: 0;
+}
+.boardWrap .board {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+.boardWrap .cell {
+  min-height: 0;
+  padding: 2px;
+  aspect-ratio: 1;
+  border-radius: 5px;
+  background: #24394c var(--slate) center/cover;
+}
+.boardWrap .cell.selected {
+  outline: 2px solid #ffe4a0;
+  outline-offset: -2px;
+}
+.boardWrap .gem {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+.game-entry {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  overflow: auto;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: #101b30;
+}
+.game-entry article {
+  display: grid;
+  gap: 0.6rem;
+  width: min(100%, 600px);
+  margin: auto;
+}
+.game-entry article > img {
+  width: 100%;
+  max-height: 36dvh;
+  object-fit: contain;
+}
+.game-entry article > button {
+  background: #f4e0ac var(--paper) center/cover;
+  color: #152432;
+  font-weight: 800;
+}
+.game-entry article label {
+  display: grid;
+  gap: 0.3rem;
+}
+.puzzle-back {
+  color: var(--text);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+dialog,
+#result:not([hidden]) > div,
+#result:not([hidden]) > section {
+  width: min(540px, calc(100% - 18px));
+  max-height: 90dvh;
+  overflow: auto;
+  padding: 1rem;
+  background: #16303a var(--teal) center/cover;
+  color: var(--text);
+  border: 0;
+  border-radius: 10px;
+}
+dialog p {
+  margin: 0.5rem 0;
+}
+dialog::backdrop {
+  background: #0b1426db;
+}
+#result:not([hidden]) {
+  display: grid;
+  place-items: center;
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  background: #0b1426db;
+}
+#result button {
+  margin: 0.4rem;
+}
+.gem-fly {
+  position: fixed;
+  z-index: 11;
+  pointer-events: none;
+}
+
+body[data-puzzle="magic-bubble"] .bubble-field {
+  width: 100%;
+  height: clamp(300px, calc(100dvh - 240px), 720px);
+  overflow: hidden;
+  background: #142a3e var(--slate) center / 235px repeat;
+}
+body[data-puzzle="magic-bubble"] .bubble-field canvas {
+  max-width: 100%;
+  max-height: 100%;
+}
+body[data-puzzle] .masthead > p {
+  font-size: 0.78rem;
+  max-width: 31%;
+  margin-right: 34px;
+}
+body[data-puzzle] #cxq-audio {
+  font-size: 0 !important;
+}
+body[data-puzzle] #cxq-audio img {
+  display: none !important;
+}
+body[data-puzzle] #cxq-audio::after {
+  content: "聲音";
+  font-size: 12px;
+  color: #fff1d7;
+}
+body[data-puzzle] #cxq-audio::after {
+  white-space: nowrap;
+}

@@ -1,0 +1,119 @@
+body[data-cabinet="brick-breaker"] #homeOverlay .brick-landing {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) !important;
+  width: min(100%, 1050px) !important;
+  max-width: 100%;
+  height: auto !important;
+  max-height: 100dvh;
+  align-items: center;
+  gap: clamp(8px, 4vw, 45px);
+  padding: clamp(10px, 3vw, 40px) !important;
+  overflow: auto;
+  background: #101b30 !important;
+}
+body[data-cabinet="brick-breaker"] .brick-cover {
+  width: 100%;
+  height: min(75dvh, 620px);
+  object-fit: cover;
+  border-radius: 8px;
+}
+body[data-cabinet="brick-breaker"] .brick-entry {
+  display: grid;
+  gap: 0.65rem;
+}
+body[data-cabinet="brick-breaker"] .brick-entry a {
+  color: #fff1d7;
+  text-align: left;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+body[data-cabinet="brick-breaker"] .brick-entry .home-logo {
+  position: static !important;
+  width: auto !important;
+  transform: none !important;
+  text-align: left;
+  margin: 0 !important;
+}
+body[data-cabinet="brick-breaker"] .brick-entry .home-actions {
+  position: static !important;
+  width: auto !important;
+  transform: none !important;
+  display: grid !important;
+  gap: 0.45rem;
+  margin: 0 !important;
+}
+body[data-cabinet="brick-breaker"] #menuOverlay .menu-card {
+  display: grid;
+  gap: 0.65rem;
+  align-content: start;
+  width: min(100%, 650px);
+}
+body[data-cabinet="brick-breaker"] #menuOverlay .option-row {
+  order: -1;
+}
+body[data-cabinet="brick-breaker"] #menuOverlay .character-stage {
+  min-height: 0 !important;
+  height: min(27dvh, 180px) !important;
+}
+body[data-cabinet="brick-breaker"] #menuOverlay .hero-art {
+  max-height: 100% !important;
+  object-fit: contain;
+}
+@media (max-width: 620px) {
+  body[data-cabinet="brick-breaker"] #homeOverlay .brick-landing {
+    grid-template-columns: 1fr !important;
+  }
+  body[data-cabinet="brick-breaker"] .brick-cover {
+    height: 31dvh;
+    object-position: center 43%;
+  }
+}
+
+body[data-cabinet="brick-breaker"] {
+  --brick-ink: #fff2d8;
+  --brick-surface: url("../shared/atelier/surface-teal.webp");
+  --brick-button: url("../shared/atelier/surface-slate.webp");
+  --brick-primary: url("../shared/atelier/surface-paper.webp");
+  color: var(--brick-ink);
+  background: #101b30;
+}
+body[data-cabinet="brick-breaker"] .game-center-return {
+  display: none !important;
+}
+body[data-cabinet="brick-breaker"]
+  :is(.menu-card, .rules-book, .map-screen, .hud-card) {
+  color: var(--brick-ink) !important;
+  background: #17303a var(--brick-surface) center / cover !important;
+}
+body[data-cabinet="brick-breaker"] :is(button, select):not(.char-card) {
+  min-height: 44px;
+  touch-action: manipulation;
+  border-radius: 8px !important;
+  color: var(--brick-ink) !important;
+  background: #26394c var(--brick-button) center / cover !important;
+  text-shadow: none !important;
+}
+body[data-cabinet="brick-breaker"] button.big-btn {
+  color: #182432 !important;
+  background: #efddb2 var(--brick-primary) center / cover !important;
+}
+body[data-cabinet="brick-breaker"] #menuOverlay .menu-card {
+  max-height: 94dvh;
+  overflow: auto;
+  touch-action: pan-y;
+}
+body[data-cabinet="brick-breaker"] #characterRail {
+  overflow-x: auto;
+  touch-action: pan-x;
+}
+
+body[data-cabinet="brick-breaker"] .hud :is(.hud-label, .hud-value) {
+  color: #fff1d7 !important;
+  text-shadow: none !important;
+}
+body[data-cabinet="brick-breaker"] #pauseBtn {
+  color: #fff1d7 !important;
+  background: #26394c var(--brick-button) center / cover !important;
+  font-size: 1.15rem !important;
+}
