@@ -1,0 +1,149 @@
+/* Classic Hall: Starlight Workshop, shared by the first four cabinets. */
+body[data-workshop] {
+  --night:#111827; --panel:#202b40; --ivory:#fff3d6; --gold:#e9bd79;
+  --soft:#c6cbd9; --accent:#78e0c6; --rim:#e9bd796b;
+  color:var(--ivory)!important;
+  background:radial-gradient(ellipse at 50% -20%,var(--glow),transparent 69%),var(--night) url('workshop-sky.svg') center top / 750px auto repeat!important;
+  font-family:system-ui,"Microsoft JhengHei",sans-serif;
+  color-scheme:dark;
+}
+body[data-workshop="tetris"] {--glow:#244c62;--accent:#81e6de}
+body[data-workshop="2048"] {--glow:#433963;--accent:#d3b4ff}
+body[data-workshop="mines"] {--glow:#264e43;--accent:#a6e8a0}
+body[data-workshop="memory"] {--glow:#56394c;--accent:#ffc1b7}
+[data-workshop] h1,[data-workshop] h2 {
+  font-family:"Noto Serif TC","PMingLiU",serif;
+  color:var(--ivory)!important;
+  text-shadow:none!important;
+  letter-spacing:.055em;
+}
+[data-workshop] :is(.eyebrow,.brand,.badge,.control-label,.sectionLabel) {
+  color:var(--gold)!important; letter-spacing:.15em;
+}
+[data-workshop] :is(.modal,.home-card,.paper,.homeRecord,.hud-card,.hudBox,.stat,.side-card,.character-detail,.companion-card,.strip,.homeHero) {
+  background:linear-gradient(155deg,#293750,#171f31)!important;
+  color:var(--ivory)!important;
+  border:1px solid var(--rim)!important;
+  border-radius:18px!important;
+  box-shadow:0 14px 42px #070b1466,inset 0 1px #ffffff13!important;
+}
+[data-workshop] :is(.lead,.home-sub,.tagline,.tip,.instructions,.modal p,.home-copy p,.form-row,.hudBox small,.stat small) {color:var(--soft)!important;text-shadow:none!important}
+[data-workshop] :is(button,select):not(.card,.cell,.tile,.game-center-return) {
+  color:var(--ivory)!important;
+  background:#25344b!important;
+  border:1px solid var(--rim)!important;
+  box-shadow:inset 0 1px #ffffff14!important;
+  text-shadow:none!important;
+  border-radius:11px!important;
+}
+[data-workshop] :is(.primary,#start,#homeStart,#enterSetup):not(.game-center-return) {
+  color:#182338!important;
+  background:linear-gradient(145deg,#fff1cb,var(--gold))!important;
+  font-weight:850;
+}
+[data-workshop] :is(button,a,select):focus-visible {outline:3px solid var(--accent)!important;outline-offset:3px}
+[data-workshop] button:disabled {opacity:.55}
+[data-workshop] :is(button,select):not(.card,.cell):hover:not(:disabled) {border-color:var(--accent)!important}
+[data-workshop] :is(.overlay,.layer,.home-screen) {background:radial-gradient(ellipse at top,var(--glow),#111827ed 72%)!important}
+[data-workshop] .workshop-kicker {display:block;color:var(--gold);font:750 .72rem/1.4 system-ui;letter-spacing:.22em;margin:.45rem 0}
+[data-workshop] .workshop-back {
+  display:inline-grid;place-items:center;min-height:44px;padding:0 14px;
+  border:1px solid var(--rim);border-radius:10px;color:var(--ivory);text-decoration:none;background:#1d293e;font-size:.86rem;
+}
+[data-workshop] :is(.board-shell,.boardWrap,.map-scroll,#map-scroll) {
+  background:#131e30!important;border:1px solid var(--rim)!important;border-radius:16px!important;
+}
+[data-workshop="tetris"] #board {background:#0d1929!important}
+[data-workshop="tetris"] :is(#next,#hold) {background:#121c2c!important;border-radius:10px}
+[data-workshop="tetris"] .controls {border-top:1px solid var(--rim)}
+[data-workshop="tetris"] .control-group button {color:var(--accent)!important}
+[data-workshop="2048"] .app {max-width:520px}
+[data-workshop="2048"] .stats {gap:10px}
+[data-workshop="2048"] .cell {background:#28354b!important;border:1px solid #c1b7ff26!important}
+[data-workshop="2048"] .tilein {
+  background:linear-gradient(140deg,var(--a),var(--b))!important;
+  border:1px solid #fff4cda0!important;
+  box-shadow:inset 0 0 0 3px #fff8e536,inset 0 -4px #10162742!important;
+}
+[data-workshop="2048"] .tile .num {
+  inset:0!important;display:grid!important;place-items:center!important;
+  padding:0!important;background:none!important;color:#161a33!important;
+  box-shadow:none!important;font-variant-numeric:tabular-nums;
+  font-size:clamp(18px,5.5vw,35px)!important;font-weight:900;
+}
+[data-workshop="2048"] .tile.big .num {color:#161a33!important;background:none!important;box-shadow:none!important}
+[data-workshop="2048"] .tilein::before {
+  content:"";position:absolute;inset:7%;opacity:.75;
+  background:url('workshop-sigil.svg') left top / 19% no-repeat;
+}
+[data-workshop="2048"] .tilein img {display:none}
+[data-workshop="mines"] #board .cell {
+  background:linear-gradient(145deg,#45705b,#234239)!important;
+  border:1px solid #a5d6a252!important;border-radius:6px!important;box-shadow:inset 0 1px #ffffff24!important;
+}
+[data-workshop="mines"] #board .cell.open {background:#f0e9cc!important;color:#273b38!important;border-color:#b3a47b!important}
+[data-workshop="mines"] #board .cell.mine {background:#9a493e!important}
+[data-workshop="mines"] #board .cell.wrong {outline:2px solid #ff8674;outline-offset:-2px}
+[data-workshop="mines"] #board .cell img {object-fit:contain}
+[data-workshop="mines"] #board .cell img[src*="mines-flag"] {content:url('workshop-flag.svg')}
+[data-workshop="mines"] #board .cell img[src*="whack-bomb"] {content:url('workshop-trap.svg')}
+[data-workshop="memory"] .card .back {
+  background:var(--card-back,#583b56) url('workshop-sigil.svg') center / 50% no-repeat!important;
+  border:1px solid #edc991b5!important;border-radius:10px!important;
+  box-shadow:inset 0 0 0 3px #15192880!important;
+}
+[data-workshop="memory"] .card .front {
+  background:#f6e7ca!important;border:1px solid #e6b989!important;border-radius:10px!important;
+}
+[data-workshop="memory"] .card.matched .front {outline:2px solid #81e6bc;outline-offset:-2px}
+[data-workshop="memory"] .card.wrong .front {outline:2px solid #f87b78;outline-offset:-2px}
+[data-workshop="memory"] .card .front img {object-fit:contain!important}
+@media (prefers-reduced-motion:reduce) {
+  [data-workshop] .tilein,[data-workshop] .card .inner {animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
+/* The cabinet-specific covers double as compact illustrations on the home screens. */
+[data-workshop="tetris"] #homeScreen .home-panel {
+  background:radial-gradient(ellipse at 28% 40%,#2e5169,#141c2b 72%)!important;
+}
+[data-workshop="tetris"] .home-visual {
+  background:url('workshop-tetris.svg') center / contain no-repeat!important;
+  min-height:170px;
+}
+[data-workshop="tetris"] .home-visual img {filter:drop-shadow(0 10px 14px #0c1320cc)}
+[data-workshop="2048"] .home-card {
+  padding:clamp(16px,4vw,32px)!important;
+  background:linear-gradient(#182236ed,#22243dec),url('workshop-2048.svg') center / cover!important;
+}
+[data-workshop="2048"] .home-character {max-height:200px;object-fit:contain}
+[data-workshop="mines"] :is(#home,#play) {
+  background:linear-gradient(#111b28eb,#152e2aea),url('workshop-mines.svg') center / cover!important;
+}
+[data-workshop="mines"] #home h1:has(img) img {display:none!important}
+[data-workshop="mines"] #home h1:has(img)::after {content:"四葉草探險地圖"}
+[data-workshop="memory"] .homeHero {
+  background:radial-gradient(ellipse at center,#523e5d88,transparent 67%),url('workshop-memory.svg') center / min(90%,430px) auto no-repeat!important;
+  border:0!important;box-shadow:none!important;
+}
+[data-workshop="memory"] .homeHero :is(h1,.titleRow) {background:none!important}
+[data-workshop="memory"] #game .boardWrap {padding:clamp(5px,1.6vw,14px)!important}
+[data-workshop] .game-center-return {
+  width:max-content!important;height:auto!important;padding:0 14px!important;
+  background:#25344b!important;border:1px solid var(--rim)!important;border-radius:11px!important;
+}
+[data-workshop] .game-center-return img,[data-workshop] .game-return-caption {display:none!important}
+[data-workshop] .game-center-return::after {content:"‹　返回經典遊戲館";color:var(--ivory);font:750 .83rem/1.25 system-ui;white-space:nowrap}
+@media (min-width:850px) {
+  [data-workshop="tetris"] #homeScreen .home-panel {
+    display:grid!important;grid-template-columns:minmax(260px,1fr) minmax(320px,480px)!important;
+    gap:clamp(20px,5vw,88px);padding:clamp(28px,6vw,85px)!important;
+    align-items:center;
+  }
+  [data-workshop="tetris"] #homeScreen .home-visual {min-height:360px}
+  [data-workshop="tetris"] #homeScreen .home-copy {text-align:left}
+}
+@media (max-width:520px) {
+  [data-workshop="memory"] .homeHero {background-size:100% auto!important}
+  [data-workshop="mines"] #home h1 {font-size:clamp(22px,7vw,34px)!important}
+  [data-workshop="tetris"] .home-visual {min-height:135px}
+}
