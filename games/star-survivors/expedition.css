@@ -52,3 +52,11 @@ html,body{overscroll-behavior:none;touch-action:pan-y;-webkit-text-size-adjust:1
     color:#ffe5b0;background:#17172b}
   #auto-aim[aria-pressed="true"]{background:#294650;border-color:#9cdbd9;color:#d5ffff}
 }
+
+.result-breakdown{grid-column:1/-1;white-space:pre-line;line-height:1.7}
+.chest-reveal-card{grid-column:1/-1;text-align:center;padding:20px;color:#ffe8ae}
+.chest-reveal-card .item-icon{display:block;width:88px;height:88px;margin:auto;animation:chest-reveal .65s ease-out both}
+.chest-reveal-card p{animation:chest-prize .55s .28s both}
+@keyframes chest-reveal{0%{transform:scale(.7) rotate(-10deg);filter:brightness(.7)}55%{transform:scale(1.22) rotate(4deg);filter:brightness(2.2) drop-shadow(0 0 16px #ffcc70)}100%{transform:scale(1);filter:drop-shadow(0 0 10px #ffcc70)}}
+@keyframes chest-prize{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.chest-reveal-card .item-icon,.chest-reveal-card p{animation:none}}

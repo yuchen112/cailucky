@@ -89,3 +89,21 @@ check('beam immediately hits new targets within its visible width and reach',()=
   assert.ok(late.hp<late.maxHp);
   assert.equal(near.hp,health);
 });
+
+check('terminal chest rewards survive reload and settle once',()=>{
+  const run=isolated();
+  run.gems.push({x:run.player.x,y:run.player.y,kind:'chest',value:3});
+  step(run,1/60,{},()=>.5);
+  assert.equal(run.chests,1);
+  assert.equal(run.player.xp,3);
+  run.status='lost';
+  const recovered=restore(serialize(run));
+  assert.ok(recovered);
+  assert.equal(summary(recovered).chestCoins,4);
+  assert.equal(summary(recovered).materials.crystal,2);
+  const profile=defaultProfile();
+  assert.ok(settle(profile,recovered));
+  assert.equal(settle(profile,recovered),false);
+  assert.equal(profile.coins,4);
+  assert.equal(profile.materials.crystal,2);
+});
