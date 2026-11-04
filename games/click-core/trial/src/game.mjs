@@ -1,5 +1,5 @@
 import {PETS,PET_ITEMS,adoptPet,buyPetItem,equipPetItem,permanentCost,upgradePermanent,rebirthQuote,rebirth,VERSION,SAVE_KEY,FACILITIES,UPGRADES,ACHIEVEMENTS,SKINS,fresh,restore,cps,clickPower,facilityRate,tap,cost,affordable,buyFacility,buyUpgrade,upgradeReady,achievementProgress,checkAchievements,tick,catchComet,offline,format,hintFor} from './core.mjs?v=20261104-companions2';
-import {StarAudio} from './sound.mjs?v=original1';
+import {StarAudio} from './sound.mjs?v=audio-audit1';
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d'),BACKUP=SAVE_KEY+'_backup';
 canvas.style.touchAction='none';
 let s=fresh(),offlineReport=null,storageOK=true;

@@ -1,4 +1,4 @@
-const CACHE='cxq-richman-20261010-loadingart3';
+const CACHE='cxq-richman-20261104-audio-audit1';
 const SHELL=['./asset-versions-v1.js?v=20261010-loadingart3','./index.html','./core.js?v=20261010-loadingart3','./viewport.js?v=20261010-loadingart3','./game.js?v=20261010-loadingart3','./presentation-v8.js?v=20261010-loadingart3'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>Promise.allSettled(SHELL.map(url=>cache.add(url)))).then(()=>self.skipWaiting()));
@@ -9,6 +9,8 @@ self.addEventListener('activate',event=>{
 self.addEventListener('fetch',event=>{
  const req=event.request,url=new URL(req.url);
  if(req.method!=='GET'||url.origin!==self.location.origin)return;
+ // Media requests may return 206, which Cache.put rejects. Let the browser stream them.
+ if(req.headers.has('range')||/\.(?:mp3|wav|ogg|m4a)$/i.test(url.pathname))return;
  if(req.mode==='navigate'){
   event.respondWith(fetch(req,{cache:'no-store'}).then(async res=>{if(res.ok){const c=await caches.open(CACHE);await c.put('./index.html',res.clone());}return res;}).catch(()=>caches.match('./index.html')));
   return;

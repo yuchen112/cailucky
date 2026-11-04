@@ -40,6 +40,11 @@
     "bankruptcy": "bankruptcy",
     "tap": "dice",
     "roll": "dice",
+    "gain": "buy",
+    "reward": "buy",
+    "loss": "rent",
+    "click": "dice",
+    "win": "buy",
     "pay": "rent",
     "lose": "bankruptcy"
   },
@@ -57,6 +62,7 @@
   },
   "dream-match": {
     "swap": "swap",
+    "flip": "swap",
     "invalid": "invalid",
     "match": "match",
     "combo": "combo",
@@ -125,6 +131,9 @@
   },
   "magic-bubble": {
     "shoot": "shoot",
+    "flip": "shoot",
+    "miss": "drop",
+    "lose": "drop",
     "bounce": "bounce",
     "pop": "pop",
     "chain": "chain",
@@ -218,6 +227,7 @@
     "gold": "gold",
     "bomb": "bomb",
     "heal": "heal",
+    "win": "time-up",
     "time-up": "time-up",
     "tap": "hit",
     "collect": "gold",
