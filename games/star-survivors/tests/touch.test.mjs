@@ -20,3 +20,18 @@ handlers.pointerdown(event(4));playing=false;handlers.pointermove(event(4));asse
 handlers.pointerdown(event(5));assert.equal(control.active,false,'overlays cannot start movement');
 handlers.pointerdown(event(6));assert.equal(control.active,false);playing=true;handlers.pointerdown(event(7,220,500));assert.deepEqual(control.origin,{x:220,y:500},'a new gesture creates a new fixed base');control.reset();assert.equal(control.active,false);assert.equal(captures.size,0);
 console.log('PASS floating joystick fixed origin, zero-touch start, analog deadzone/clamp, second finger isolation, release/cancel/pause and overlay guards');
+
+const aimHandlers={};
+const aimPad={...canvas,getBoundingClientRect:()=>({left:260,top:540,width:100,height:100}),addEventListener:(name,fn)=>aimHandlers[name]=fn};
+const aimBase={hidden:true,style:{},lastElementChild:{style:{}}};
+const aim=bindBattleTouch(aimPad,{isPlaying:()=>true,base:aimBase,fixedOrigin:true,radius:36});
+handlers.pointerdown(event(8,80,600));
+aimHandlers.pointerdown(event(9,350,590));
+assert.deepEqual(aim.origin,{x:310,y:590});
+assert.deepEqual(aim.vector(),{x:1,y:0});
+aimHandlers.pointermove(event(9,310,554));
+assert.deepEqual(aim.vector(),{x:0,y:-1});
+aimHandlers.pointerup(event(9));
+assert.deepEqual(aim.vector(),{x:0,y:0});
+assert.ok(control.active,'releasing aim must preserve movement');
+control.reset();

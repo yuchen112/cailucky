@@ -62,3 +62,53 @@ html,body{overscroll-behavior:none;touch-action:pan-y;-webkit-text-size-adjust:1
 @media(prefers-reduced-motion:reduce){.chest-reveal-card .item-icon,.chest-reveal-card p{animation:none}}
 
 .hero-presentation #role-preview{object-fit:contain}.roster button,.roster button:hover,.roster button[aria-pressed=true]{filter:none}.roster img{inset:0 0 auto;height:calc(100% - 12px);object-fit:contain}.roster b{background:#11142b;padding:1px 0 2px;line-height:12px}
+
+/* Battle controls share the HUD's gold edging and violet enamel. */
+.dash-glyph{display:none}
+#aim-zone svg{width:32px;height:32px;fill:none;stroke:#ffdeb0;stroke-width:1.5;pointer-events:none}
+#aim-zone,#stick:not([hidden]){
+  border:1px solid #dfb675;
+  border-radius:50%;
+  background:
+    radial-gradient(circle,#584582 0%,#25203f 48%,#151029 56%,transparent 58%),
+    repeating-conic-gradient(from -2deg,#f8d79a 0deg 4deg,transparent 4deg 45deg),
+    radial-gradient(circle,#564880cc,#14142be8 69%,#674c72 72%);
+  box-shadow:inset 0 0 0 4px #19142d,inset 0 0 0 5px #bb935b88,0 3px 10px #08071399;
+}
+#aim-zone small{position:absolute;bottom:8px;font-size:10px;letter-spacing:1px;text-shadow:0 1px 4px #050413}
+#aim-zone:has(#aim-stick:not([hidden])){box-shadow:inset 0 0 0 4px #19142d,0 0 16px #edbc7180}
+#aim-zone:has(#aim-stick:not([hidden])) svg{opacity:.25}
+#aim-stick:not([hidden]){border:0}
+#aim-stick i,#stick>span{
+  border:1px solid #ffe1a8;
+  background:radial-gradient(circle at 40% 29%,#e9c4ff,#7863b6 37%,#2d2151 69%);
+  box-shadow:inset 0 0 0 3px #be9bdc66,0 3px 7px #08051cbb;
+}
+#aim-stick i{width:32px;height:32px;left:22px;top:22px}
+#stick>span{border-radius:50%}
+#stick .stick-ring{display:none}
+@media not all and (hover:hover) and (pointer:fine){
+  #touch{--battle-right:max(12px,env(safe-area-inset-right));--battle-bottom:max(16px,env(safe-area-inset-bottom));--aim-size:clamp(84px,24vw,108px)}
+  #aim-zone{right:var(--battle-right);bottom:var(--battle-bottom);width:var(--aim-size);height:var(--aim-size)}
+  #touch #skill,#touch #dash{
+    --edge:#e9bb72;
+    position:fixed;top:auto;bottom:calc(var(--battle-bottom) + var(--aim-size) + 12px);
+    width:76px;height:72px;border:1px solid var(--edge);border-radius:18px;
+    background:linear-gradient(155deg,#4b346c,#17132e 72%);overflow:hidden;
+    box-shadow:inset 0 0 0 3px #d5ad7730,0 3px 10px #080713aa;
+    display:grid;grid-template-rows:34px 14px 12px;place-items:center;align-content:center;
+    letter-spacing:0;filter:none;animation:none;
+  }
+  #touch #skill{right:var(--battle-right)}
+  #touch #dash{right:calc(var(--battle-right) + 84px);--edge:#9dd0e4;background:linear-gradient(155deg,#344e75,#111c37 72%)}
+  #touch .battle-key .item-icon,#touch .battle-key b,#touch .battle-key small{position:relative;inset:auto;z-index:1}
+  #touch .battle-key .item-icon{width:34px;height:34px}
+  #touch .battle-key b{font-size:10px;white-space:nowrap}
+  #touch .battle-key small{font-size:9px;letter-spacing:0}
+  #touch #dash .item-icon{display:none}
+  .dash-glyph{display:block;width:31px;height:31px;z-index:1;fill:#beeaff;stroke:#ddf4ff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  #touch .battle-key.cooling::after{content:'';position:absolute;inset:auto 5px 3px;height:2px;background:var(--edge);transform:scaleX(var(--cooldown));transform-origin:left;z-index:2}
+  #touch .battle-key.cooling .dash-glyph{opacity:.45}
+  #touch .battle-key .key-shade{inset:0}
+  #skill-inspect{top:auto;bottom:calc(var(--battle-bottom) + var(--aim-size) + 94px);right:var(--battle-right)}
+}
