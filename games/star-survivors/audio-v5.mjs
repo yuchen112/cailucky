@@ -53,14 +53,14 @@ export class Sound {
     this.suspended = suspended;
     if (this.trackName !== name) {
       this.trackName = name;
-      this.track.src = new URL('music-' + name + '.mp3', root).href;
+      if (!this.track.getAttribute('src')) this.track.src = new URL('./audio-original/music-loop.mp3', import.meta.url).href;
     }
     this.sync();
   }
 
   play(name) {
     if (!this.unlocked || document.hidden || !this.level('sfx')) return;
-    name = name === 'shoot' ? 'attack-joy' : name;
+    const cue = {"shoot":"shoot","impact":"impact","hurt":"hurt","pickup":"pickup","level-up":"level-up","evolve":"evolve","boss":"boss","victory":"victory","defeat":"defeat","hit":"impact","upgrade":"level-up","chest":"pickup","material":"pickup","win":"victory","lose":"defeat"}[name];
     let pool = this.effects.get(name);
     if (!pool) this.effects.set(name, pool = []);
     const now = performance.now();
@@ -69,7 +69,7 @@ export class Sound {
     let voice = pool.find(item => item.paused || item.ended);
     if (!voice) {
       if (pool.length >= 3) return;
-      voice = new Audio(new URL(name + '.wav', root).href);
+      voice = new Audio(cue ? new URL('./audio-original/' + cue + '.wav', import.meta.url).href : new URL(name + '.wav', root).href);
       pool.push(voice);
     }
     voice.volume = this.level('sfx');
