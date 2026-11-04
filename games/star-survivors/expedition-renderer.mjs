@@ -17,6 +17,13 @@ function artCell(c,im,x,y,w,h,cell=0,cols=1,rows=1,{alpha=1,rotation=0,mirror=fa
 function setLine(c,color,width,points){c.strokeStyle=color;c.lineWidth=width;c.beginPath();points.forEach((p,i)=>i?c.lineTo(p.x,p.y):c.moveTo(p.x,p.y));c.stroke()}
 function shield(c,x,y,r,color,alpha=.6){c.save();c.globalAlpha*=alpha;c.strokeStyle=color;c.lineWidth=2;c.beginPath();for(let i=0;i<=6;i++){const a=-Math.PI/2+i*TAU/6;(i?c.lineTo.bind(c):c.moveTo.bind(c))(x+Math.cos(a)*r,y+Math.sin(a)*r)}c.closePath();c.stroke();c.fillStyle=color+'12';c.fill();c.restore()}
 
+const SCENERY_SIZES={
+  cave:[[82,88],[124,62],[126,92],[31,48],[46,28]],
+  forest:[[148,77],[58,52],[82,69],[62,47],[46,30]],
+  coast:[[57,44],[76,71],[132,59],[49,66],[60,42]],
+  clock:[[88,66],[39,63],[82,106],[31,48],[119,84]],
+  sky:[[73,126],[55,32],[85,139],[52,51],[63,77]]
+};
 export class Renderer{
  constructor(images={},options={}){this.images=images;this.canvas=options.canvas||document.getElementById('game');this.ctx=this.canvas.getContext('2d',{alpha:false});this.feedback=options.feedback||document.getElementById('feedback');this.fctx=this.feedback?.getContext('2d');this.fx=[];this.numbers=[];this.ghosts=[];this.screenFX=[];this.glows=new Map();this.camera={x:0,y:0};this.roleId='dream';this.mapId='cave';this.cast=0;this.activeAnim=0;this.hurtAnim=0;this.bossCast=0;this.shake=0;this.flash=0;this.walk=0;this.facing=1;this.pickupClock=0;this.death=0;this.reduced=matchMedia?.('(prefers-reduced-motion: reduce)').matches||false;this.resizeHandler=()=>this.resize();addEventListener('resize',this.resizeHandler);this.resize()}
  resize(){const rect=this.canvas.getBoundingClientRect();this.w=rect.width||innerWidth;this.h=rect.height||innerHeight;this.dpr=Math.min(devicePixelRatio||1,this.w<700?1.5:1.75);this.scale=Math.min(1.12,Math.max(.69,Math.min(this.w,this.h)/650));this.canvas.width=Math.round(this.w*this.dpr);this.canvas.height=Math.round(this.h*this.dpr);this.ctx.setTransform(this.dpr,0,0,this.dpr,0,0);if(this.feedback){this.feedback.width=this.canvas.width;this.feedback.height=this.canvas.height;this.fctx.setTransform(this.dpr,0,0,this.dpr,0,0)}}
@@ -45,6 +52,8 @@ export class Renderer{
   if(['heal','material'].includes(e.type))this.burst(x,y,'gold',e.type==='heal'?110:55,.4)
  }
  scenery(c,g,foreground){
+  // World-space width and height limits, in the same order as each map's prop assets.
+  const sizes=SCENERY_SIZES[g.mapId];
   const key=g.mapId+g.runId;
   if(this.sceneryKey!==key){
     this.sceneryKey=key;
@@ -52,19 +61,23 @@ export class Renderer{
     this.sceneryItems=Array.from({length:15},(_,i)=>{
       const angle=(i+hash(i,seed))*TAU/15;
       const radius=170+hash(i+50,seed)*670;
-      return {x:Math.cos(angle)*radius,y:Math.sin(angle)*Math.min(radius,470),size:58+hash(i+80,seed)*45,type:i%5};
+      return {x:Math.cos(angle)*radius,y:Math.sin(angle)*Math.min(radius,470),variation:.94+hash(i+80,seed)*.12,type:i%5};
     });
   }
-  for(const {x,y,size,type} of this.sceneryItems){
-    if((y>=g.player.y)!==foreground||!this.visible(x,y,size))continue;
+  for(const {x,y,variation,type} of this.sceneryItems){
+    const [maxWidth,maxHeight]=sizes[type];
+    if((y>=g.player.y)!==foreground||!this.visible(x,y,Math.max(maxWidth,maxHeight)*1.06))continue;
     if(g.gems.some(gem=>gem.kind==='objective'&&Math.hypot(gem.x-x,gem.y-y)<82))continue;
     const image=this.images['scenery-'+g.mapId+'-'+type];
     if(!image)continue;
-    const height=size*image.height/image.width;
+    const scale=Math.min(maxWidth/image.width,maxHeight/image.height)*variation;
+    const width=image.width*scale,height=image.height*scale;
     const distance=Math.hypot(g.player.x-x,g.player.y-(y-height*.38));
     c.save();
     c.globalAlpha=.16+.84*clamp((distance-28)/78);
-    c.drawImage(image,x-size/2,y-height,size,height);
+    c.fillStyle='#10162955';
+    c.beginPath();c.ellipse(x,y-2,width*.35,Math.min(9,width*.09),0,0,TAU);c.fill();
+    c.drawImage(image,x-width/2,y-height,width,height);
     c.restore();
   }
  }
