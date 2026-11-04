@@ -1,5 +1,5 @@
-import {PETS,PET_ITEMS,adoptPet,buyPetItem,equipPetItem,permanentCost,upgradePermanent,rebirthQuote,rebirth,VERSION,SAVE_KEY,FACILITIES,UPGRADES,ACHIEVEMENTS,SKINS,fresh,restore,cps,clickPower,facilityRate,tap,cost,affordable,buyFacility,buyUpgrade,upgradeReady,achievementProgress,checkAchievements,tick,catchComet,offline,format,hintFor} from './core.mjs?v=20261104-layout2';
-import {StarAudio} from './sound.mjs?v=20261104-layout2';
+import {PETS,PET_ITEMS,adoptPet,buyPetItem,equipPetItem,permanentCost,upgradePermanent,rebirthQuote,rebirth,VERSION,SAVE_KEY,FACILITIES,UPGRADES,ACHIEVEMENTS,SKINS,fresh,restore,cps,clickPower,facilityRate,tap,cost,affordable,buyFacility,buyUpgrade,upgradeReady,achievementProgress,checkAchievements,tick,catchComet,offline,format,hintFor} from './core.mjs?v=20261104-petart1';
+import {StarAudio} from './sound.mjs?v=20261104-petart1';
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d'),BACKUP=SAVE_KEY+'_backup';
 canvas.style.touchAction='none';
 let s=fresh(),offlineReport=null,storageOK=true;
@@ -83,34 +83,32 @@ function openRoom(i){
  ]).catch(()=>roomErrors.add(i)).finally(()=>roomLoads.delete(i));
 }
 let treeDelta=0;
-let petReaction=-10,shownPet=null,petArrival=0;
+let petReaction=-10,previewReaction=-10;
 const petGaits=[
  [.17,1,1],[.33,2,4],[.31,9,3],[.47,3,7],[.20,2,3],
  [.25,3,4],[.29,5,3],[.30,3,3],[.23,11,2],[.34,10,4],
  [.19,4,2],[.31,9,2],[.16,12,1],[.34,12,3],[.22,4,3],
 ];
+function petPose(id,t,reaction=0){
+ const motion=s.settings.motion,cycle=(t%8+8)%8;
+ const pose=reaction>0?2:cycle>=6?1:Math.floor(t*5)%2===0?0:-1;
+ return A['petAnim'+id+'-'+(motion?pose:-1)]||A['pet'+id];
+}
 function drawCourtyardPet(){
  const id=s.permanent.active;
- if(id===null){shownPet=null;return;}
- if(shownPet!==id){shownPet=id;petArrival=now();}
- const [pace,lift,step]=petGaits[id],size=mobile?105:140,motion=s.settings.motion;
- const t=motion?frame*pace+id*.7:0;
- const stride=Math.cos(t),react=Math.max(0,1-(now()-petReaction)/.8);
- const x=W/2+Math.sin(t)*(mobile?150:305),y=(mobile?819:747)+Math.cos(t)*9;
- const pause=Math.abs(stride)<.22;
- const rise=motion?(pause?Math.sin(frame*2)*1.2:Math.abs(Math.sin(frame*step))*lift)+react*6:0;
+ if(id===null)return;
+ const [pace,lift,step]=petGaits[id],size=mobile?161:198,motion=s.settings.motion;
+ const t=motion?now()+id*.39:0,cycle=t%8,walk=Math.min(cycle/6,1);
+ const position=(Math.floor(t/8)*6+walk*6)*pace;
+ const stride=Math.cos(position),react=Math.max(0,1-(now()-petReaction)/1.15);
+ const x=W/2+Math.sin(position)*(mobile?131:286);
+ const y=mobile?823:753;
+ const rise=motion&&cycle<6?Math.abs(Math.sin(t*step))*lift:0;
  ctx.save();ctx.translate(x,y-rise);ctx.scale(stride<0?-1:1,1);
- if(motion)ctx.rotate(pause?Math.sin(frame*2)*.04:Math.sin(frame*step)*.025);
- fit('pet'+id,-size/2,-size,size,size);
+ fit(petPose(id,t,react),-size/2,-size,size,size);
  ctx.restore();
- const arrival=now()-petArrival;
- if(react>0)fit('star',x-10,y-size-16-react*9,20,20,react);
- if(motion&&id>=11&&arrival<1.1){
-  for(let j=0;j<5;j++){const angle=j*2*Math.PI/5,rad=12+arrival*35;
-   fit('spark',x+Math.cos(angle)*rad-5,y-size/2+Math.sin(angle)*rad-5,10,10,1-arrival/1.1);
-  }
- }
- if(A['pet'+id])buttons.push({label:PETS[id].name,x:x-size/2,y:y-size,w:size,h:size,enabled:true,fn:()=>{petReaction=now();}});
+ if(react>0)fit('star',x-10,y-size-6-react*7,20,20,react);
+ buttons.push({label:PETS[id].name,x:x-size*.35,y:y-size*.65,w:size*.7,h:size*.65,enabled:true,fn:()=>{petReaction=now();}});
 }
 function treeArea(){
  const w=mobile?404:615,h=mobile?476:526,x=(W-w)/2,y=mobile?320:234;
@@ -316,8 +314,8 @@ function nightPicker(){
  button('取消',x+15,y+74,(w-40)/2,34,()=>{modal=null;},{size:15});
  button('套用',x+w/2+5,y+74,(w-40)/2,34,()=>{s.skin=modal.preview;modal=null;persist();actionSound('skin');},{enabled:can,primary:true,size:15});
 }
-let petTier=0,petChoice=0,itemGroup=0,itemChoice=null;
-const petTiers=['普通','華麗','神話'],itemGroups=['點擊','工坊','離線'];
+let petFilter=0,petPageIndex=0,petChoice=0,itemGroup=0,itemChoice=null;
+const petFilters=['全部','已領養','陪伴中'],itemGroups=['點擊','工坊','離線'];
 function featurePage(title){
  const x=mobile?16:260,y=mobile?167:135,w=W-x*2,h=mobile?737:662;
  panel(x,y,w,h,.98);
@@ -329,19 +327,31 @@ function petPage(){
  const {x,y,w,h}=featurePage('寵物庭院'),p=s.permanent,pet=PETS[petChoice];
  const owned=p.pets.includes(pet.id),price=!p.pets.length&&pet.id<3?0:pet.price;
  const sz=mobile?229:267,py=y+57;
- fit('pet'+pet.id,W/2-sz/2,py+(s.settings.motion?Math.sin(now()*2)*4:0),sz,sz);
- text(pet.name+' · '+pet.tier,W/2,py+sz+20,22,'#fff2d1','center',700);
+ fit(petPose(pet.id,now(),now()-previewReaction<1.15?1:0),W/2-sz/2,py,sz,sz);
+ buttons.push({label:'和'+pet.name+'互動',x:W/2-sz/2,y:py,w:sz,h:sz,enabled:true,fn:()=>{previewReaction=now();}});
+ text(pet.name,W/2,py+sz+20,22,'#fff2d1','center',700);
  button(owned?(p.active===pet.id?'陪伴中':'帶出陪伴'):(price?'領養 · '+price+' 點':'免費領養'),W/2-106,py+sz+42,212,42,()=>{
   if(owned)p.active=pet.id;else adoptPet(s,pet.id);persist();
  },{enabled:owned?p.active!==pet.id:p.points>=price,primary:true,size:16});
  const fy=py+sz+105,tw=(w-42)/3;
- petTiers.forEach((tier,i)=>button(tier,x+16+i*tw,fy,tw-5,35,()=>{petTier=i;petChoice=PETS.find(pet=>pet.tier===tier).id;},{selected:petTier===i,size:15}));
- const list=PETS.filter(pet=>pet.tier===petTiers[petTier]),cw=(w-32)/list.length;
- list.forEach((entry,i)=>{
-  const bx=x+16+i*cw,by=fy+48;
-  button(entry.name,bx,by+39,cw-5,38,()=>{petChoice=entry.id;},{selected:entry.id===petChoice,size:11});
-  fit('pet'+entry.id,bx+4,by,cw-13,37);
+ const visible=(filter)=>PETS.filter(p=>filter===0||filter===1&&s.permanent.pets.includes(p.id)||filter===2&&s.permanent.active===p.id);
+ petFilters.forEach((label,i)=>button(label,x+16+i*tw,fy,tw-5,35,()=>{
+  petFilter=i;petPageIndex=0;const first=visible(i)[0];if(first)petChoice=first.id;
+ },{selected:petFilter===i,size:15}));
+ const list=visible(petFilter),pageSize=5,pages=Math.max(1,Math.ceil(list.length/pageSize)),cw=(w-32)/pageSize;
+ const by=fy+45;
+ list.slice(petPageIndex*pageSize,petPageIndex*pageSize+pageSize).forEach((entry,i)=>{
+  const bx=x+16+i*cw;
+  const b=button(entry.name,bx,by+39,cw-5,36,()=>{petChoice=entry.id;},{selected:entry.id===petChoice,size:11});
+  fit('pet'+entry.id,bx+3,by,cw-11,38);
+  b.y=by;b.h+=39;
  });
+ if(!list.length)text('還沒有符合的寵物',W/2,by+28,16,'#654938','center');
+ if(pages>1){
+  button('上一頁',x+16,by+83,88,32,()=>petPageIndex--,{enabled:petPageIndex>0,size:13});
+  text((petPageIndex+1)+' / '+pages,W/2,by+99,13,'#654938','center');
+  button('下一頁',x+w-104,by+83,88,32,()=>petPageIndex++,{enabled:petPageIndex+1<pages,size:13});
+ }
  button('回星願樹',x+16,y+h-59,(w-42)/2,42,()=>goTo('workshop'),{size:16});
  button('前往道具工坊',W/2+5,y+h-59,(w-42)/2,42,()=>{itemChoice=null;goTo('items');},{size:16});
 }
@@ -352,19 +362,26 @@ function itemPage(){
  itemGroups.forEach((g,i)=>button(g,x+16+i*tw,y+83,tw-5,36,()=>{itemGroup=i;itemChoice=null;},{selected:itemGroup===i,size:15}));
  if(itemChoice===null){
   PET_ITEMS.filter(i=>i.group===itemGroup).forEach((i,k)=>{
-   const by=y+137+k*51;
-   button(i.name+'  ·  '+(p.items.includes(i.id)?'已收藏':i.price+' 點'),x+18,by,w-36,40,()=>{itemChoice=i.id;},{size:16});
+   const by=y+137+k*56;
+   const row=button(i.name+'  ·  '+(p.items.includes(i.id)?'已收藏':i.price+' 點'),x+18,by,w-36,49,()=>{itemChoice=i.id;},{size:16});
+   fit('item'+i.id,row.x+16,by+4,44,41);
   });
  }else{
   const entry=PET_ITEMS[itemChoice],owned=p.items.includes(entry.id),equipped=p.equipped[p.active]===entry.id;
-  const desc=entry.hours?'離線累積上限增加 '+entry.hours+' 小時':itemGroups[entry.group]+'收益增加 '+Math.round(entry.bonus*100)+'%';
-  text(entry.name,W/2,y+174,28,'#fff2d1','center',700);
-  text(desc,W/2,y+225,mobile?17:20,'#c9e0dc','center');
-  if(entry.shops)text('開張工坊 '+s.owned.filter(Boolean).length+' / '+entry.shops,W/2,y+265,16,'#e5cba0','center');
-  button(owned?(equipped?'卸下道具':'裝備給 '+(active?.name||'夥伴')):'購買 · '+entry.price+' 點',W/2-133,y+324,266,49,()=>{
+  const desc=entry.hours?'離線累積上限增加 '+entry.hours+' 小時':(entry.group===2?'離線前四小時':itemGroups[entry.group])+'收益增加 '+(entry.bonus*100).toFixed(1).replace(/\.0$/,'')+'%';
+  fit('item'+entry.id,W/2-86,y+132,172,172);
+  text(entry.name,W/2,y+324,28,'#fff2d1','center',700);
+  text(desc,W/2,y+367,mobile?17:20,'#c9e0dc','center');
+  if(active&&entry.group<2){
+   const measure=entry.group===0?clickPower:cps;
+   const preview={...s,permanent:{...p,items:owned?p.items:[...p.items,entry.id],equipped:{...p.equipped,[active.id]:entry.id}}};
+   text(safe(measure(s))+' → '+safe(measure(preview)),W/2,y+390,14,'#e8d9b7','center');
+  }
+
+  button(owned?(equipped?'卸下道具':'裝備給 '+(active?.name||'夥伴')):'購買 · '+entry.price+' 點',W/2-133,y+410,266,49,()=>{
    if(owned)equipPetItem(s,equipped?null:entry.id);else buyPetItem(s,entry.id);persist();
   },{enabled:owned?!!active:p.points>=entry.price,primary:true,size:16});
-  button('返回道具清單',W/2-133,y+389,266,44,()=>{itemChoice=null;},{size:16});
+  button('返回道具清單',W/2-133,y+474,266,44,()=>{itemChoice=null;},{size:16});
  }
  button('回寵物庭院',x+18,y+h-59,w-36,42,()=>goTo('pets'),{size:16});
 }
@@ -434,7 +451,7 @@ function duration(seconds){const m=Math.floor(seconds/60);return m>=60?Math.floo
 function exportSave(){persist();const blob=new Blob([JSON.stringify(s,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='CxQ-星願旅團-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);actionSound('achievement');notify('新版備份已匯出');}
 function importSave(){const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=async()=>{const f=input.files?.[0];if(!f)return;if(f.size>2e6){notify('備份檔案過大');return;}try{modal={type:'confirmImport',save:restore(JSON.parse(await f.text()))};}catch{notify('不是有效的新版存檔，原進度未變更。');actionSound('denied');}};input.click();}
 async function load(name,url){const im=new Image();await new Promise((resolve,reject)=>{im.onload=resolve;im.onerror=()=>reject(Error('載入失敗：'+url));im.src=url;});A[name]=im;loadCount++;}
-async function boot(){resize();screen='loading';loadCount=0;loadError='';try{const list=[['background','art/garden-dusk.webp'],['tree','art/story-tree.webp'],['paper','art/story-paper.webp'],['page','art/story-page.webp'],['wood','art/story-button.webp'],['mobileGarden','art/story-mobile.webp'],['star','art/star.webp'],['spark','art/star.webp'],['comet','art/comet.webp'],...FACILITIES.map((_,i)=>['facility'+i,'art/story-facilities/'+String(i+1).padStart(2,'0')+'.webp']),['regionMap','art/region-map.webp'],['titlePlaque','art/new-ui/plaque.webp'],['titleAction','art/new-ui/action.webp'],['sprout','art/new-ui/sprout.webp'],...SKINS.map(k=>['night-'+k.id,'art/nights/'+k.id+'.webp']),...PETS.map(p=>['pet'+p.id,'art/pets/'+p.id+'.webp'])];await Promise.all(list.map(([name,url])=>load(name,url)));screen='title';last=performance.now();screenTime=now();audio.scene('home');persist();}catch(e){loadError=e.message;}}
+async function boot(){resize();screen='loading';loadCount=0;loadError='';try{const list=[['background','art/garden-dusk.webp'],['tree','art/story-tree.webp'],['paper','art/story-paper.webp'],['page','art/story-page.webp'],['wood','art/story-button.webp'],['mobileGarden','art/story-mobile.webp'],['star','art/star.webp'],['spark','art/star.webp'],['comet','art/comet.webp'],...FACILITIES.map((_,i)=>['facility'+i,'art/story-facilities/'+String(i+1).padStart(2,'0')+'.webp']),['regionMap','art/region-map.webp'],['titlePlaque','art/new-ui/plaque.webp'],['titleAction','art/new-ui/action.webp'],['sprout','art/new-ui/sprout.webp'],...SKINS.map(k=>['night-'+k.id,'art/nights/'+k.id+'.webp']),...PETS.map(p=>['pet'+p.id,'art/pets/'+p.id+'.webp']),...PET_ITEMS.map(i=>['item'+i.id,'art/pet-items/'+i.id+'.webp']),['coverLogo','art/new-ui/cover-logo.webp']];await Promise.all(list.map(([name,url])=>load(name,url)));screen='title';for(const p of PETS)for(let j=0;j<3;j++)load('petAnim'+p.id+'-'+j,'art/pet-motion/'+p.id+'/'+j+'.webp').catch(()=>{});last=performance.now();screenTime=now();audio.scene('home');persist();}catch(e){loadError=e.message;}}
 function returnToHub(){
  persist();
  location.href='../../../index.html?view=game-hub';
@@ -443,10 +460,13 @@ function titleScreen(){
  scene();
  const size=mobile?410:530;
  fit('tree',(W-size)/2,mobile?170:90,size,size);
- img('titlePlaque',W/2-(mobile?222:315),mobile?35:9,mobile?444:630,mobile?142:126);
- ctx.save();ctx.fillStyle='#241911ed';ctx.fillRect(W/2-(mobile?171:223),mobile?62:31,mobile?342:446,mobile?83:79);ctx.restore();
- text('CxQ 星願旅團',W/2,mobile?88:59,mobile?32:40,'#fff2c9','center',700);
- text('點亮夢境',W/2,mobile?123:95,23,'#f8daa1','center',700);
+ const lw=mobile?450:670,lh=mobile?166:177;
+ if(A.coverLogo)fit('coverLogo',W/2-lw/2,mobile?14:0,lw,lh);
+ else{
+  img('titlePlaque',W/2-lw/2,22,lw,lh);
+  text('CxQ 星願旅團',W/2,80,mobile?34:46,'#fff5db','center',800);
+  text('點亮夢境',W/2,115,23,'#fff3cf','center',700);
+ }
  const y=mobile?630:626;
  const begin={label:s.total?'繼續遊戲':'開始遊戲',x:W/2-169,y,w:338,h:64,enabled:true,fn:()=>startGame()};
  if(A.titleAction){const inset=pressed?.label===begin.label?3:0;img('titleAction',begin.x+inset,y+inset,begin.w-inset*2,begin.h-inset*2);text(begin.label,W/2,y+32+inset,24,'#50382c','center',700);buttons.push(begin);}
@@ -510,10 +530,10 @@ function render(t){const dt=Math.min(.1,Math.max(0,(t-last)/1000));last=t;frame=
    text('離開期間工坊產出 +'+safe(summaryGain),W/2,y,16,'#225c47','center',700);
   }
   floaters.forEach(f=>{f.t+=dt;ctx.save();ctx.globalAlpha=Math.min(1,(1-f.t)*3);img('wood',f.x-62,f.y-(s.settings.motion?f.t*62:0)-16,124,32,.92);text('+'+safe(f.gain),f.x,f.y-(s.settings.motion?f.t*62:0),20,'#50382c','center',700);ctx.restore();});for(let i=floaters.length-1;i>=0;i--)if(floaters[i].t>1)floaters.splice(i,1);
-  drawModal();if(now()<tipEnds&&!modal){const tw=mobile?448:740,tx=(W-tw)/2,ty=section==='room'?(mobile?674:598):(mobile?860:729);panel(tx,ty,tw,53);text(tip,W/2,ty+26,mobile?12:17,'#f7e4b7','center',600);}
+  drawModal();if(now()<tipEnds&&!modal&&!['pets','items','rebirth'].includes(section)){const tw=mobile?448:740,tx=(W-tw)/2,ty=section==='room'?(mobile?674:598):(mobile?860:729);panel(tx,ty,tw,53);text(tip,W/2,ty+26,mobile?12:17,'#f7e4b7','center',600);}
  }else{if(A.background)garden();panel(W/2-185,H/2-110,370,205);text('CxQ 星願旅團',W/2,H/2-75,34,'#f6d89f','center',700);text('點亮夢境',W/2,H/2-22,23,'#c7dbe7','center');text(loadError||'正在點亮庭院…',W/2,H/2+34,mobile?13:17,'#92bdcc','center');if(loadError)button('重新載入',W/2-130,H/2+90,260,58,boot,{primary:true});}
  const labels=buttons.filter(b=>b.enabled).map(b=>b.label).join('、'),aria='CxQ 星願旅團 '+screen+'。'+labels;if(canvas.getAttribute('aria-label')!==aria)canvas.setAttribute('aria-label',aria);
- const data={screen,section,region:section==='room'?roomIndex+1:0,unlocked:s.owned.filter(n=>n>0).length,productionFloat:productionFloat?.gain.toFixed(2)||'',stars:s.stars.toFixed(2),total:s.total.toFixed(2),cps:cps(s).toFixed(2),clicks:s.clicks,owned:s.owned.reduce((a,b)=>a+b,0),upgrades:s.upgrades.length,achievements:s.achievements.length,event:s.event?'active':'none',modal:modal?.type||'',audio:audio.status(),storage:storageOK?'ok':'error',version:'20261104-layout2'};for(const [k,v]of Object.entries(data))if(canvas.dataset[k]!==String(v))canvas.dataset[k]=String(v);requestAnimationFrame(render);
+ const data={screen,section,region:section==='room'?roomIndex+1:0,unlocked:s.owned.filter(n=>n>0).length,productionFloat:productionFloat?.gain.toFixed(2)||'',stars:s.stars.toFixed(2),total:s.total.toFixed(2),cps:cps(s).toFixed(2),clicks:s.clicks,owned:s.owned.reduce((a,b)=>a+b,0),upgrades:s.upgrades.length,achievements:s.achievements.length,event:s.event?'active':'none',modal:modal?.type||'',audio:audio.status(),storage:storageOK?'ok':'error',version:'20261104-petart1'};for(const [k,v]of Object.entries(data))if(canvas.dataset[k]!==String(v))canvas.dataset[k]=String(v);requestAnimationFrame(render);
 }
 function hit(p){for(let i=buttons.length-1;i>=0;i--)if(buttons[i].enabled&&inside(p,buttons[i])&&(!buttons[i].clip||inside(p,buttons[i].clip)))return buttons[i];return null;}
 canvas.addEventListener('pointerdown',e=>{e.preventDefault();audio.unlock();canvas.setPointerCapture(e.pointerId);const p=coords(e),b=hit(p);if(screen==='game'&&section==='map'&&!modal&&p.y>(mobile?167:127)){mapPointers.set(e.pointerId,p);if(mapPointers.size===1)mapDrag={start:p,offset:{...mapOffset}};if(mapPointers.size===2){const [a,b]=[...mapPointers.values()];mapDrag={distance:Math.hypot(a.x-b.x,a.y-b.y),zoom:mapZoom};}}pressed=b?{...p,label:b.label,key:b.key??b.label}:null;if(b?.tree){starTap(p);holdPoint=p;holdPointer=e.pointerId;holdStart=holdAt=now();pressed=null;}else if(shopRect&&inside(p,shopRect)){dragScroll={point:p,last:p,moved:false,start:storeTab==='facilities'?shopScroll:upgradeScroll};}});

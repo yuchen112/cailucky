@@ -89,7 +89,7 @@ const itemNames=[
 ];
 export const PET_ITEMS=itemNames.flatMap((names,group)=>names.map((name,index)=>({
  id:group*7+index,name,group,price:[3,5,7,9,12,16,21][index],
- bonus:(index+2)*.025,shops:index<3?0:index-1,
+ bonus:(index+2)*.025,
  hours:group===2&&index%2===1?index*2:0,
 })));
 export const REBIRTH_TARGET=100000;
@@ -105,7 +105,7 @@ function permanent(raw={}){
 }
 export function petItem(s){
  const p=s.permanent,item=PET_ITEMS[p?.equipped?.[p.active]];
- return item&&p.pets.includes(p.active)&&p.items.includes(item.id)&&s.owned.filter(Boolean).length>=item.shops?item:null;
+ return item&&p.pets.includes(p.active)&&p.items.includes(item.id)?item:null;
 }
 export function adoptPet(s,id){
  const p=s.permanent,pet=PETS[id];
