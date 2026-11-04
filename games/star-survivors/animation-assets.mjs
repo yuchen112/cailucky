@@ -25,7 +25,7 @@ async function ensureActor(images, kind, id) {
       const frame = new Image();
       frame.onload = () => resolve(frame);
       frame.onerror = () => reject(new Error(`無法載入動作 ${file}`));
-      frame.src = file;
+      frame.src = file + '?v=5.5';
     })));
     return [state, frames];
   })).then(states => animations[kind][id] = { ...spec, states: Object.fromEntries(states) })

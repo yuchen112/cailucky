@@ -1,4 +1,4 @@
-import {actorFrame} from './animation-assets.mjs?v=5';
+import {actorFrame} from './animation-assets.mjs?v=5.5';
 import * as DATA from './expedition-data.mjs?v=4';
 
 const TAU=Math.PI*2;
