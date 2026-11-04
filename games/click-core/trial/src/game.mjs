@@ -1,5 +1,5 @@
-import {PETS,PET_ITEMS,adoptPet,buyPetItem,equipPetItem,permanentCost,upgradePermanent,rebirthQuote,rebirth,VERSION,SAVE_KEY,FACILITIES,UPGRADES,ACHIEVEMENTS,SKINS,fresh,restore,cps,clickPower,facilityRate,tap,cost,affordable,buyFacility,buyUpgrade,upgradeReady,achievementProgress,checkAchievements,tick,catchComet,offline,format,hintFor} from './core.mjs?v=20261104-rebirth1';
-import {StarAudio} from './sound.mjs?v=20261104-rebirth1';
+import {PETS,PET_ITEMS,adoptPet,buyPetItem,equipPetItem,permanentCost,upgradePermanent,rebirthQuote,rebirth,VERSION,SAVE_KEY,FACILITIES,UPGRADES,ACHIEVEMENTS,SKINS,fresh,restore,cps,clickPower,facilityRate,tap,cost,affordable,buyFacility,buyUpgrade,upgradeReady,achievementProgress,checkAchievements,tick,catchComet,offline,format,hintFor} from './core.mjs?v=20261104-layout2';
+import {StarAudio} from './sound.mjs?v=20261104-layout2';
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d'),BACKUP=SAVE_KEY+'_backup';
 canvas.style.touchAction='none';
 let s=fresh(),offlineReport=null,storageOK=true;
@@ -21,7 +21,7 @@ function text(t,x,y,size=18,color='#e9edf7',align='left',weight=400){ctx.save();
 function wrap(t,x,y,width,size=17,color='#a7b7cb',line=27){let row='',yy=y;for(const c of t){ctx.font=`${size}px "Microsoft JhengHei",sans-serif`;if(ctx.measureText(row+c).width>width){text(row,x,yy,size,color);yy+=line;row=c;}else row+=c;}if(row)text(row,x,yy,size,color);return yy;}
 function panel(x,y,w,h,alpha=1){img('page',x,y,w,h,alpha);}
 function inside(p,b){return p&&p.x>=b.x&&p.y>=b.y&&p.x<=b.x+b.w&&p.y<=b.y+b.h;}
-function button(label,x,y,w,h,fn,opt={}){const b={label,x,y,w,h,fn,clip:opt.clip,enabled:opt.enabled!==false};buttons.push(b);const hot=b.enabled&&(inside(hover,b)||focus===buttons.length-1),down=b.enabled&&pressed?.label===label&&inside(pressed,b);ctx.save();ctx.globalAlpha=b.enabled?1:.42;if(opt.selected)ctx.filter='saturate(0.7) hue-rotate(21deg)';img('wood',x,y+(down?2:hot?-1:0),w,h,1);ctx.filter='none';text(label,x+w/2,y+h/2+(down?3:hot?-2:0),opt.size||17,opt.selected?'#34523b':'#4a3022','center',opt.primary||opt.selected?700:500);ctx.restore();return b;}
+function button(label,x,y,w,h,fn,opt={}){const b={label,x,y,w,h,fn,key:opt.key,clip:opt.clip,enabled:opt.enabled!==false};buttons.push(b);const hot=b.enabled&&(inside(hover,b)||focus===buttons.length-1),down=b.enabled&&pressed?.key===(b.key??label)&&inside(pressed,b);ctx.save();ctx.globalAlpha=b.enabled?1:.42;if(opt.selected)ctx.filter='saturate(0.7) hue-rotate(21deg)';img('wood',x,y+(down?2:hot?-1:0),w,h,1);ctx.filter='none';text(label,x+w/2,y+h/2+(down?3:hot?-2:0),opt.size||17,opt.selected?'#34523b':'#4a3022','center',opt.primary||opt.selected?700:500);ctx.restore();return b;}
 function actionSound(type='tap'){audio.play(type);}
 function activate(b){if(!b?.enabled)return;if(!b.tree&&!b.label.startsWith('收集星願'))actionSound(b.label.includes('返回')||b.label==='關閉'?'back':'tap');b.fn();focus=-1;}
 function resize(){const dpr=Math.min(2,devicePixelRatio||1);canvas.width=Math.max(1,Math.floor(innerWidth*dpr));canvas.height=Math.max(1,Math.floor((innerHeight-4)*dpr));canvas.setAttribute('width',canvas.width);canvas.setAttribute('height',canvas.height);canvas.width=Math.floor(innerWidth-2);canvas.height=Math.floor(innerHeight-5);mobile=innerWidth<800;W=mobile?480:1440;H=mobile?1000:900;scale=Math.min(canvas.width/W,canvas.height/H);ox=(canvas.width-W*scale)/2;oy=(canvas.height-H*scale)/2;}
@@ -93,10 +93,10 @@ function drawCourtyardPet(){
  const id=s.permanent.active;
  if(id===null){shownPet=null;return;}
  if(shownPet!==id){shownPet=id;petArrival=now();}
- const [pace,lift,step]=petGaits[id],size=mobile?65:92,motion=s.settings.motion;
+ const [pace,lift,step]=petGaits[id],size=mobile?105:140,motion=s.settings.motion;
  const t=motion?frame*pace+id*.7:0;
  const stride=Math.cos(t),react=Math.max(0,1-(now()-petReaction)/.8);
- const x=W/2+Math.sin(t)*(mobile?141:270),y=(mobile?774:707)+Math.cos(t)*9;
+ const x=W/2+Math.sin(t)*(mobile?150:305),y=(mobile?819:747)+Math.cos(t)*9;
  const pause=Math.abs(stride)<.22;
  const rise=motion?(pause?Math.sin(frame*2)*1.2:Math.abs(Math.sin(frame*step))*lift)+react*6:0;
  ctx.save();ctx.translate(x,y-rise);ctx.scale(stride<0?-1:1,1);
@@ -158,9 +158,10 @@ const regionPositions=[
  [.27,.19],[.74,.19],[.20,.34],[.79,.34],[.16,.49],
  [.84,.49],[.21,.66],[.79,.66],[.15,.83],[.85,.83]
 ];
-let mapZoom=1,mapOffset={x:0,y:0},mapDrag=null;
+let mapZoom=null,mapOffset={x:0,y:0},mapDrag=null;
 const mapPointers=new Map();
 function regionMap(){
+ if(mapZoom===null)mapZoom=mobile?1.65:1;
  const art=A.regionMap,viewportW=mobile?464:1176,viewportH=mobile?741:675;
  const scale=Math.min(viewportW/art.width,viewportH/art.height)*mapZoom;
  const clip={x:(W-viewportW)/2,y:mobile?167:127,w:viewportW,h:viewportH};
@@ -169,7 +170,7 @@ function regionMap(){
  img('regionMap',x,y,w,h);
  FACILITIES.forEach((f,i)=>{
   const [px,py]=regionPositions[i],open=s.owned[i]>0;
-  const size=mobile?75:118,bx=x+w*px-size/2,by=y+h*py-size/2;
+  const size=(mobile?75:118)*Math.sqrt(mapZoom),bx=x+w*px-size/2,by=y+h*py-size/2;
   ctx.save();
   if(!open)ctx.filter='brightness(.52) saturate(.55)';
   fit('facility'+i,bx,by,size,size);
@@ -179,41 +180,32 @@ function regionMap(){
    fn:()=>open?openRoom(i):modal={type:'lockedRegion',i}});
  });
  ctx.restore();
- button('看全圖',W/2-60,clip.y+clip.h-46,120,38,()=>{mapZoom=1;mapOffset={x:0,y:0};},{size:14});
+ button(mapZoom>1?'看全圖':'放大地圖',W/2-65,clip.y+clip.h-46,130,38,()=>{mapZoom=mapZoom>1?1:1.65;mapOffset={x:0,y:0};},{size:14});
 }
-const workAnchors=[[.5,.81],[.5,.82],[.55,.86],[.5,.84],[.5,.87],[.61,.85],[.62,.83],[.5,.83],[.57,.86],[.44,.83]];
-const workGestures=[
- [2,18,.34], [15,9,-.11], [-7,12,-.45], [1,11,.08], [-10,7,-.22],
- [1,2,-.21], [9,14,.37], [26,10,-.18], [-5,8,-.24], [33,4,.13],
-];
-function drawWorkProp(i,x,y,w,h,phase){
- const prop=A['workProp'+i];
- if(!prop)return;
- const move=s.settings.motion?Math.sin(Math.PI*phase)**2:0;
- const [dx,dy,angle]=workGestures[i];
- const size=mobile?59:76,px=x+w*.84+dx*move,py=y+h*.79-dy*move;
- ctx.save();
- ctx.translate(px,py);
- ctx.rotate(angle*move);
- fit(prop,-size/2,-size/2,size,size);
+const workForegrounds={
+ 0:[[.13,.744],[.28,.706],[.62,.715],[.83,.771],[.83,1],[.13,1]],
+ 1:[[.21,.688],[.36,.67],[.72,.68],[.85,.731],[.85,1],[.21,1]],
+ 3:[[.14,.752],[.30,.714],[.70,.71],[.90,.756],[.90,1],[.14,1]],
+ 7:[[.15,.709],[.33,.685],[.69,.688],[.89,.729],[.89,1],[.15,1]],
+ 9:[[.55,.76],[.64,.64],[.74,.49],[.87,.51],[.94,.83],[.94,1],[.55,1]],
+};
+const workAnchors=[[.53,.83,.57],[.55,.82,.55],[.59,.84,.63],[.52,.87,.63],[.49,.87,.64],[.61,.83,.60],[.61,.83,.55],[.53,.83,.58],[.56,.85,.62],[.44,.82,.59]];
+function drawWorkOutput(i,x,y,w,h,phase){
+ if(!s.settings.motion||phase<.56||phase>.92||roomCycleResult<=0)return;
+ const t=(phase-.56)/.36,px=x+w*.82,py=y+h*.74;
+ fit('spark',px-8,py-t*35,16,16,1-t);
+ ctx.save();ctx.globalAlpha=Math.sin(t*Math.PI);
+ text('+'+safe(roomCycleResult),px,py-16-t*39,mobile?16:20,'#fff3bf','center',700);
  ctx.restore();
- if(s.settings.motion&&phase>.52&&phase<.86){
-  const t=(phase-.52)/.34;
-  fit('spark',px-8,py-size*.5-t*29,16,16,1-t);
-  ctx.save();ctx.globalAlpha=Math.sin(t*Math.PI);
-  if(roomCycleResult>0)text('+'+safe(roomCycleResult),px,py-size*.62-t*33,mobile?16:20,'#fff3bf','center',700);
-  ctx.restore();
- }
 }
 function room(){
  const i=roomIndex,f=FACILITIES[i],x=mobile?16:232,y=mobile?171:136,w=mobile?448:976,h=mobile?566:525;
  const artwork=A['room'+i];
- const drawRoom=(im,alpha=1)=>{
-  const k=Math.max(w/im.width,h/im.height);
-  img(im,x+(w-im.width*k)/2,y+(h-im.height*k)/2,im.width*k,im.height*k,alpha);
- };
+ const k=artwork?Math.max(w/artwork.width,h/artwork.height):1;
+ const stageW=artwork?artwork.width*k:w,stageH=artwork?artwork.height*k:h;
+ const stageX=x+(w-stageW)/2,stageY=y+(h-stageH)/2;
  ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();
- if(artwork)drawRoom(artwork);
+ if(artwork)img(artwork,stageX,stageY,stageW,stageH);
  else{
   panel(x,y,w,h,.94);
   fit('facility'+i,x+30,y+76,w-60,h-180);
@@ -225,38 +217,83 @@ function room(){
  const thresholds=[.24,.39,.57,.75,1];
  const j=s.settings.motion?thresholds.findIndex(t=>phase<t):0;
  const actor=A['workFrame'+i+'-'+j]||A['workFrame'+i+'-0'];
- if(actor){
-  const scale=mobile?.67:.79,size=h*scale,anchor=workAnchors[i];
-  fit(actor,x+w*anchor[0]-size/2,y+h*anchor[1]-size,size,size);
+ if(actor&&artwork){
+  const [ax,ay,scale]=workAnchors[i],size=stageH*scale;
+  const px=stageX+stageW*ax,py=stageY+stageH*ay;
+  ctx.save();
+  ctx.translate(px,py-1);ctx.scale(1,.24);
+  const shadow=ctx.createRadialGradient(0,0,0,0,0,size*.31);
+  shadow.addColorStop(0,'#3420159a');shadow.addColorStop(1,'#34201500');
+  ctx.fillStyle=shadow;ctx.fillRect(-size*.31,-size*.31,size*.62,size*.62);
+  ctx.restore();
+  fit(actor,px-size/2,py-size,size,size);
+  const edge=workForegrounds[i];
+  if(edge){
+   ctx.save();ctx.beginPath();
+   edge.forEach(([u,v],j)=>{if(j)ctx.lineTo(stageX+u*stageW,stageY+v*stageH);else ctx.moveTo(stageX+u*stageW,stageY+v*stageH);});
+   ctx.closePath();ctx.clip();img(artwork,stageX,stageY,stageW,stageH);ctx.restore();
+  }
  }
  ctx.restore();
  panel(x+12,y+12,w-24,49,.93);
  text(f.role+'的'+f.short+'工坊',W/2,y+36,mobile?22:27,'#50382c','center',700);
  if(phase<roomPhase){roomCycleResult=roomCycleGain;roomCycleGain=0;}
  roomPhase=phase;
- drawWorkProp(i,x,y,w,h,phase);
+ drawWorkOutput(i,x,y,w,h,phase);
  const milestones=[10,25,50,100].filter(n=>s.owned[i]>=n);
  milestones.forEach((_,j)=>fit('star',x+22+j*24,y+h-36,21,21,.95));
  const rate=facilityRate(s,i)*(s.buffs.production>s.playTime?5:1);
  panel(x,y+h+9,w,mobile?140:132,.95);
+ fit('workProp'+i,x+15,y+h+49,mobile?52:66,55);
  text('持有 '+safe(s.owned[i])+' 個   ·   每秒產出 '+safe(rate)+' 星願',W/2,y+h+36,mobile?18:23,'#225c47','center',700);
  button('增購 1 個 · '+safe(cost(s,i)),W/2-109,y+h+64,218,49,()=>purchase(i,1),{enabled:s.stars>=cost(s,i),size:17});
 }
-function shop(){const x=mobile?16:830,y=mobile?176:139,w=mobile?448:590,h=mobile?718:657;img('paper',x,y,w,h);button('生產設施',x+14,y+13,(w-38)/2,43,()=>{storeTab='facilities';},{selected:storeTab==='facilities',size:17});button('研究升級',x+24+(w-38)/2,y+13,(w-38)/2,43,()=>{storeTab='upgrades';},{selected:storeTab==='upgrades',size:17});
- if(storeTab==='facilities'){
+function shop(){
+ const w=mobile?448:812,h=mobile?718:657,x=(W-w)/2,y=mobile?176:139;
+ img('paper',x,y,w,h);
+ const facilities=storeTab==='facilities';
+ button('生產設施',x+14,y+13,(w-38)/2,43,()=>{storeTab='facilities';},{selected:facilities,size:17});
+ button('研究升級',x+24+(w-38)/2,y+13,(w-38)/2,43,()=>{storeTab='upgrades';},{selected:!facilities,size:17});
+ if(facilities){
   [1,10,100,'max'].forEach((n,i)=>button(n==='max'?'最大':'×'+n,x+14+i*(w-22)/4,y+66,(w-40)/4,33,()=>{s.buy=n;persist();},{selected:s.buy===n,size:14}));
-  const top=y+110,bottom=y+h-15,row=83;shopRect={x:x+10,y:top,w:w-20,h:bottom-top};shopScroll=Math.max(0,Math.min(shopScroll,Math.max(0,FACILITIES.length*row-shopRect.h)));ctx.save();ctx.beginPath();ctx.rect(shopRect.x,top,shopRect.w,shopRect.h);ctx.clip();
-  FACILITIES.forEach((f,i)=>{const ry=top+i*row-shopScroll;if(ry+row<top||ry>bottom)return;fit('facility'+i,x+15,ry+3,75,69,s.total>=f.base*.12||s.owned[i]?1:.4);text(f.name,x+96,ry+19,mobile?15:16,'#e7e4d7','left',600);text('持有 '+s.owned[i]+'  ·  每個 '+safe(f.rate*2**s.upgrades.filter(id=>id.startsWith(`f${i}-`)).length)+'/秒',x+96,ry+43,11,'#91b5c7');const n=s.buy==='max'?affordable(s,i):s.buy,price=n?cost(s,i,n):cost(s,i,1),enabled=n>0&&s.stars>=price;button((s.buy==='max'?'買 '+n+' 個':'購買')+'  '+safe(price),x+w-151,ry+40,132,38,()=>purchase(i),{primary:enabled,enabled,size:14,clip:shopRect});});ctx.restore();
- }else{
-  const ready=UPGRADES.filter(u=>upgradeReady(s,u)),future=UPGRADES.filter(u=>!s.upgrades.includes(u.id)&&!upgradeReady(s,u)).sort((a,b)=>a.cost-b.cost),list=[...ready.sort((a,b)=>a.cost-b.cost),...future.slice(0,5)];
-  text('已研究 '+s.upgrades.length+' / '+UPGRADES.length,x+22,y+81,14,'#98b3c9');const top=y+105,row=mobile?110:103,bottom=y+h-12;shopRect={x:x+10,y:top,w:w-20,h:bottom-top};upgradeScroll=Math.max(0,Math.min(upgradeScroll,Math.max(0,list.length*row-shopRect.h)));ctx.save();ctx.beginPath();ctx.rect(shopRect.x,top,shopRect.w,shopRect.h);ctx.clip();
-  list.forEach((u,i)=>{const ry=top+i*row-upgradeScroll;if(ry+row<top||ry>bottom)return;const unlocked=upgradeReady(s,u),can=unlocked&&s.stars>=u.cost;fit(u.type==='facility'?'facility'+u.i:'star',x+18,ry+13,57,57,unlocked?1:.4);text(u.name,x+86,ry+19,14,'#e6e7de','left',600);text(u.desc,x+86,ry+43,12,'#a9c9cc');if(!unlocked)text(hintFor(s,u),x+86,ry+72,11,'#8198ae');button(unlocked?'研究 '+safe(u.cost):'尚未解鎖',x+w-153,ry+61,134,39,()=>upgrade(u.id),{primary:can,enabled:can,size:13,clip:shopRect});});ctx.restore();
-  if(!list.length)text('目前研究已全部完成。',x+w/2,y+170,18,'#c4d3df','center');
- }
- if(shopRect.h>150){const scroll=storeTab==='facilities'?shopScroll:upgradeScroll;if(scroll>0)text('▲',x+w-16,shopRect.y+8,10,'#dbbc80','right');text(mobile?'上下滑動查看更多':'滾輪捲動查看更多',x+w/2,y+h-7,12,'#8ca4bb','center');}
+ }else text('已研究 '+s.upgrades.length+' / '+UPGRADES.length,x+22,y+81,14,'#d6e4eb');
+ const rows=facilities?FACILITIES.map((f,i)=>{
+  const quantity=s.buy==='max'?affordable(s,i):s.buy,price=cost(s,i,quantity||1);
+  return {key:'facility-'+i,icon:'facility'+i,name:f.name,desc:'持有 '+safe(s.owned[i])+' 個',
+   price,action:quantity?'購買 ×'+quantity:'購買',enabled:quantity>0&&s.stars>=price,run:()=>purchase(i)};
+ }):UPGRADES.map(u=>{
+  const done=s.upgrades.includes(u.id),ready=upgradeReady(s,u);
+  return {key:'upgrade-'+u.id,icon:u.type==='facility'?'facility'+u.i:'star',name:u.name,
+   desc:ready||done?u.desc:hintFor(s,u),price:done?null:u.cost,
+   action:done?'已完成':ready?'研究':'未解鎖',enabled:ready&&s.stars>=u.cost,run:()=>upgrade(u.id),sort:ready?0:done?2:1};
+ }).sort((a,b)=>a.sort-b.sort||((a.price??0)-(b.price??0)));
+ const top=y+111,row=mobile?93:87;
+ shopRect={x:x+12,y:top,w:w-24,h:y+h-top-26};
+ const max=Math.max(0,rows.length*row-shopRect.h);
+ const scroll=Math.max(0,Math.min(max,facilities?shopScroll:upgradeScroll));
+ if(facilities)shopScroll=scroll;else upgradeScroll=scroll;
+ ctx.save();ctx.beginPath();ctx.rect(shopRect.x,shopRect.y,shopRect.w,shopRect.h);ctx.clip();
+ rows.forEach((entry,i)=>{
+  const ry=top+i*row-scroll;
+  if(ry+row<=top||ry>=top+shopRect.h)return;
+  const bx=x+w-142,tx=x+81;
+  panel(x+13,ry+3,w-26,row-6,.92);
+  fit(entry.icon,x+20,ry+13,53,row-26);
+  ctx.save();ctx.beginPath();ctx.rect(tx,ry+7,bx-tx-12,row-14);ctx.clip();
+  text(entry.name,tx,ry+27,mobile?15:18,'#fff2d1','left',700);
+  text(entry.desc,tx,ry+53,mobile?12:15,'#d3e5e1');
+  ctx.restore();
+  if(entry.price!==null)text(safe(entry.price)+' 星願',bx+57,ry+21,mobile?13:14,'#f6da9f','center',700);
+  button(entry.action,bx,ry+36,114,39,entry.run,{key:entry.key,primary:entry.enabled,enabled:entry.enabled,size:14,clip:shopRect});
+ });
+ ctx.restore();
+ text(mobile?'上下滑動查看更多':'滾輪捲動查看更多',W/2,y+h-12,12,'#d3e5e1','center');
 }
 function bottom(){
- if(section==='workshop')button('寵物與新生',mobile?295:1145,mobile?90:101,mobile?156:226,40,()=>{modal={type:'pets',tab:0,page:0};},{size:16});if(mobile){const links=section==='room'?[['星願樹','workshop'],['回地圖','map'],['商店','shop'],['設定','settings']]:[['星願樹','workshop'],['地圖','map'],['商店','shop'],['收藏','collection'],['設定','settings']];const w=448/links.length;links.forEach(([name,id],i)=>button(name,16+i*w,924,w-6,54,()=>goTo(id),{selected:section===id,size:16}));}
+ if(section==='workshop'){
+  button('寵物庭院',mobile?197:1112,mobile?90:101,mobile?119:135,40,()=>goTo('pets'),{size:15});
+  button('星願樹新生',mobile?324:1255,mobile?90:101,mobile?128:145,40,()=>goTo('rebirth'),{size:15});
+ }if(mobile){const links=section==='room'?[['星願樹','workshop'],['回地圖','map'],['商店','shop'],['設定','settings']]:[['星願樹','workshop'],['地圖','map'],['商店','shop'],['收藏','collection'],['設定','settings']];const w=448/links.length;links.forEach(([name,id],i)=>button(name,16+i*w,924,w-6,54,()=>goTo(id),{selected:section===id,size:16}));}
  else{panel(20,812,1400,66);text('星願樹 LV.'+(1+Math.floor(Math.log10(1+s.total))),46,844,18,'#f0d49a','left',700);button('星願樹',275,823,150,43,()=>goTo('workshop'),{selected:section==='workshop'});button('區域地圖',446,823,150,43,()=>goTo('map'),{selected:section==='map'||section==='room'});button('工坊商店',617,823,150,43,()=>goTo('shop'),{selected:section==='shop'});text('流星願 '+s.caught+' 顆',860,844,16,'#a2b8cc');button('設定',1230,823,170,43,()=>goTo('settings'),{size:16});}}
 function comet(){if(!s.event)return;const t=frame,remaining=s.event.ends-s.playTime,x=mobile?350+Math.sin(t)*25:405+Math.sin(t*.8)*65,y=mobile?230+Math.cos(t*.9)*15:240+Math.cos(t*.9)*25;fit('comet',x-60,y-60,120,120);text('流星願 · 點我！',x,y+66,14,'#ffe3a0','center',700);text(Math.ceil(remaining)+' 秒',x,y+85,12,'#b8dce1','center');buttons.push({label:'捕捉流星願',x:x-67,y:y-67,w:134,h:134,enabled:true,fn:catchStar,comet:true});}
 function collection(){const x=mobile?16:210,y=mobile?172:142,w=mobile?448:1020,h=mobile?726:654;panel(x,y,w,h);text('星光收藏',x+25,y+34,26,'#f1d8a4','left',700);if(!mobile)button('返回工坊',x+w-180,y+15,156,46,()=>goTo('workshop'));text(s.achievements.length+' / '+ACHIEVEMENTS.length+' 項成就 · 永久收益 +'+s.achievements.length+'%',x+25,y+77,mobile?14:18,'#aacad5');
@@ -279,57 +316,79 @@ function nightPicker(){
  button('取消',x+15,y+74,(w-40)/2,34,()=>{modal=null;},{size:15});
  button('套用',x+w/2+5,y+74,(w-40)/2,34,()=>{s.skin=modal.preview;modal=null;persist();actionSound('skin');},{enabled:can,primary:true,size:15});
 }
-function drawPets(x,y,w,h,close){
- const p=s.permanent,tab=modal.tab,items=tab===0?PETS:PET_ITEMS;
- text('新生點數 '+safe(p.points),W/2,y+26,23,'#50382c','center',700);
- const tabs=['寵物','道具','新生'];
- tabs.forEach((label,i)=>button(label,x+13+i*(w-26)/3,y+49,(w-26)/3-3,34,()=>{modal.tab=i;modal.page=0;},{selected:tab===i,size:15}));
- if(tab===2){
-  const quote=rebirthQuote(s);
-  text('本輪星願 '+safe(s.roundTotal)+' / 下一點 '+safe(quote.next),W/2,y+110,mobile?14:17,'#50382c','center');
-  text('新生可獲得 '+quote.points+' 點',W/2,y+145,20,'#225c47','center',700);
-  ['永久點擊','永久產量','開局星願'].forEach((name,i)=>{
-   const price=permanentCost(s,i),ry=y+173+45*i;
-   text(name+' Lv.'+p.levels[i],x+18,ry+17,15,'#50382c');
-   button('升級 '+safe(price),x+w-122,ry,103,33,()=>{if(upgradePermanent(s,i))persist();},{enabled:p.points>=price,size:13});
+let petTier=0,petChoice=0,itemGroup=0,itemChoice=null;
+const petTiers=['普通','華麗','神話'],itemGroups=['點擊','工坊','離線'];
+function featurePage(title){
+ const x=mobile?16:260,y=mobile?167:135,w=W-x*2,h=mobile?737:662;
+ panel(x,y,w,h,.98);
+ text(title,x+22,y+32,mobile?22:27,'#f6db9f','left',700);
+ text(safe(s.permanent.points)+' 新生點數',x+w-20,y+33,mobile?14:17,'#ead29f','right');
+ return {x,y,w,h};
+}
+function petPage(){
+ const {x,y,w,h}=featurePage('寵物庭院'),p=s.permanent,pet=PETS[petChoice];
+ const owned=p.pets.includes(pet.id),price=!p.pets.length&&pet.id<3?0:pet.price;
+ const sz=mobile?229:267,py=y+57;
+ fit('pet'+pet.id,W/2-sz/2,py+(s.settings.motion?Math.sin(now()*2)*4:0),sz,sz);
+ text(pet.name+' · '+pet.tier,W/2,py+sz+20,22,'#fff2d1','center',700);
+ button(owned?(p.active===pet.id?'陪伴中':'帶出陪伴'):(price?'領養 · '+price+' 點':'免費領養'),W/2-106,py+sz+42,212,42,()=>{
+  if(owned)p.active=pet.id;else adoptPet(s,pet.id);persist();
+ },{enabled:owned?p.active!==pet.id:p.points>=price,primary:true,size:16});
+ const fy=py+sz+105,tw=(w-42)/3;
+ petTiers.forEach((tier,i)=>button(tier,x+16+i*tw,fy,tw-5,35,()=>{petTier=i;petChoice=PETS.find(pet=>pet.tier===tier).id;},{selected:petTier===i,size:15}));
+ const list=PETS.filter(pet=>pet.tier===petTiers[petTier]),cw=(w-32)/list.length;
+ list.forEach((entry,i)=>{
+  const bx=x+16+i*cw,by=fy+48;
+  button(entry.name,bx,by+39,cw-5,38,()=>{petChoice=entry.id;},{selected:entry.id===petChoice,size:11});
+  fit('pet'+entry.id,bx+4,by,cw-13,37);
+ });
+ button('回星願樹',x+16,y+h-59,(w-42)/2,42,()=>goTo('workshop'),{size:16});
+ button('前往道具工坊',W/2+5,y+h-59,(w-42)/2,42,()=>{itemChoice=null;goTo('items');},{size:16});
+}
+function itemPage(){
+ const {x,y,w,h}=featurePage('道具工坊'),p=s.permanent,tw=(w-42)/3;
+ const active=PETS[p.active];
+ text(active?'陪伴中 · '+active.name:'先到寵物庭院領養夥伴',x+20,y+63,15,'#c9e0dc');
+ itemGroups.forEach((g,i)=>button(g,x+16+i*tw,y+83,tw-5,36,()=>{itemGroup=i;itemChoice=null;},{selected:itemGroup===i,size:15}));
+ if(itemChoice===null){
+  PET_ITEMS.filter(i=>i.group===itemGroup).forEach((i,k)=>{
+   const by=y+137+k*51;
+   button(i.name+'  ·  '+(p.items.includes(i.id)?'已收藏':i.price+' 點'),x+18,by,w-36,40,()=>{itemChoice=i.id;},{size:16});
   });
-  button('星願樹新生',x+18,y+320,w-36,42,()=>{modal={type:'rebirthConfirm'};},{enabled:quote.points>0,primary:true,size:17});
  }else{
-  const count=5,pages=Math.ceil(items.length/count);
-  items.slice(modal.page*count,modal.page*count+count).forEach((entry,j)=>{
-   const ry=y+94+j*49,id=entry.id;
-   if(tab===0){
-    const owned=p.pets.includes(id),price=!p.pets.length&&id<3?0:entry.price;
-    fit('pet'+id,x+12,ry,41,41);
-    text(entry.name+' · '+entry.tier,x+57,ry+18,15,'#50382c');
-    button(owned?(p.active===id?'陪伴中':'帶出'):(price?'領養 '+price:'免費領養'),x+w-121,ry,102,36,()=>{
-     if(owned)p.active=id;else adoptPet(s,id);persist();
-    },{enabled:owned?p.active!==id:p.points>=price,size:13});
-   }else{
-    const owned=p.items.includes(id),equipped=p.equipped[p.active]===id;
-    const desc=entry.hours?'離線上限 +'+entry.hours+' 小時':['點擊','工坊','離線前四小時'][entry.group]+' +'+Math.round(entry.bonus*100)+'%';
-    text(entry.name,x+16,ry+12,15,'#50382c','left',700);
-    text(desc+(entry.shops?' · 工坊 '+s.owned.filter(Boolean).length+'/'+entry.shops:''),x+16,ry+32,12,'#50382c');
-    button(owned?(equipped?'卸下':'裝備'):'購買 '+entry.price,x+w-121,ry,102,36,()=>{
-     if(owned)equipPetItem(s,equipped?null:id);else buyPetItem(s,id);persist();
-    },{enabled:owned?p.active!==null:p.points>=entry.price,size:13});
-   }
-  });
-  button('上一頁',x+15,y+347,95,32,()=>modal.page--,{enabled:modal.page>0,size:13});
-  text((modal.page+1)+' / '+pages,W/2,y+363,15,'#50382c','center');
-  button('下一頁',x+w-110,y+347,95,32,()=>modal.page++,{enabled:modal.page+1<pages,size:13});
+  const entry=PET_ITEMS[itemChoice],owned=p.items.includes(entry.id),equipped=p.equipped[p.active]===entry.id;
+  const desc=entry.hours?'離線累積上限增加 '+entry.hours+' 小時':itemGroups[entry.group]+'收益增加 '+Math.round(entry.bonus*100)+'%';
+  text(entry.name,W/2,y+174,28,'#fff2d1','center',700);
+  text(desc,W/2,y+225,mobile?17:20,'#c9e0dc','center');
+  if(entry.shops)text('開張工坊 '+s.owned.filter(Boolean).length+' / '+entry.shops,W/2,y+265,16,'#e5cba0','center');
+  button(owned?(equipped?'卸下道具':'裝備給 '+(active?.name||'夥伴')):'購買 · '+entry.price+' 點',W/2-133,y+324,266,49,()=>{
+   if(owned)equipPetItem(s,equipped?null:entry.id);else buyPetItem(s,entry.id);persist();
+  },{enabled:owned?!!active:p.points>=entry.price,primary:true,size:16});
+  button('返回道具清單',W/2-133,y+389,266,44,()=>{itemChoice=null;},{size:16});
  }
- button('關閉',x+18,y+h-53,w-36,34,close,{size:15});
+ button('回寵物庭院',x+18,y+h-59,w-36,42,()=>goTo('pets'),{size:16});
+}
+function rebirthPage(){
+ const {x,y,w,h}=featurePage('星願樹新生'),p=s.permanent,quote=rebirthQuote(s);
+ fit('sprout',W/2-68,y+63,136,136);
+ text('本輪星願 '+safe(s.roundTotal),W/2,y+223,21,'#fff2d1','center',700);
+ text('可獲得 '+quote.points+' 點 · 下一點 '+safe(quote.next),W/2,y+263,mobile?15:18,'#c9e0dc','center');
+ ['永久點擊','永久產量','開局星願'].forEach((name,i)=>{
+  const price=permanentCost(s,i),ry=y+302+i*52;
+  text(name+' Lv.'+p.levels[i],x+25,ry+19,17,'#ead29f');
+  button('升級 '+safe(price),x+w-150,ry,126,40,()=>{if(upgradePermanent(s,i))persist();},{enabled:p.points>=price,size:14});
+ });
+ button('確認新生前先預覽',x+22,y+477,w-44,46,()=>{modal={type:'rebirthConfirm'};},{enabled:quote.points>0,primary:true,size:16});
+ button('回星願樹',x+18,y+h-59,w-36,42,()=>goTo('workshop'),{size:16});
 }
 function drawModal(){if(!modal)return;if(modal.type==='skins'){const tree=buttons.find(b=>b.tree);buttons.length=0;if(tree)buttons.push(tree);nightPicker();return;}buttons.length=0;ctx.fillStyle='#071322d9';ctx.fillRect(0,0,W,H);const x=mobile?23:390,w=mobile?434:660,y=mobile?216:222,h=mobile?530:470;panel(x,y,w,h);const close=()=>modal=null;
- if(modal.type==='pets'){drawPets(x,y,w,h,close);}
- else if(modal.type==='rebirthConfirm'){
+ if(modal.type==='rebirthConfirm'){
   text('確認星願樹新生',W/2,y+50,26,'#50382c','center',700);
   text('將獲得 '+rebirthQuote(s).points+' 點新生點數',W/2,y+116,20,'#225c47','center');
   text('重置本輪星願、工坊與研究。',W/2,y+175,16,'#50382c','center');
   text('寵物、裝備、夜景、成就與永久升級保留。',W/2,y+214,mobile?13:16,'#50382c','center');
   button('取消',x+25,y+h-75,(w-65)/2,46,close);
-  button('確認新生',W/2+8,y+h-75,(w-65)/2,46,()=>{const points=rebirth(s);if(points){persist();modal={type:'rebirthShow',points,start:now()};}else close();},{primary:true});
+  button('確認新生',W/2+8,y+h-75,(w-65)/2,46,()=>{const points=rebirth(s);if(points){persist();goTo('workshop');modal={type:'rebirthShow',points,start:now()};}else close();},{primary:true});
  }
  else if(modal.type==='rebirthShow'){
   const age=now()-modal.start;
@@ -384,9 +443,10 @@ function titleScreen(){
  scene();
  const size=mobile?410:530;
  fit('tree',(W-size)/2,mobile?170:90,size,size);
- fit('titlePlaque',W/2-(mobile?222:280),mobile?35:8,mobile?444:560,mobile?152:140);
- text('CxQ 星願旅團',W/2,mobile?90:61,mobile?34:42,'#fff2c9','center',700);
- text('點亮夢境',W/2,mobile?129:99,24,'#f8daa1','center',700);
+ img('titlePlaque',W/2-(mobile?222:315),mobile?35:9,mobile?444:630,mobile?142:126);
+ ctx.save();ctx.fillStyle='#241911ed';ctx.fillRect(W/2-(mobile?171:223),mobile?62:31,mobile?342:446,mobile?83:79);ctx.restore();
+ text('CxQ 星願旅團',W/2,mobile?88:59,mobile?32:40,'#fff2c9','center',700);
+ text('點亮夢境',W/2,mobile?123:95,23,'#f8daa1','center',700);
  const y=mobile?630:626;
  const begin={label:s.total?'繼續遊戲':'開始遊戲',x:W/2-169,y,w:338,h:64,enabled:true,fn:()=>startGame()};
  if(A.titleAction){const inset=pressed?.label===begin.label?3:0;img('titleAction',begin.x+inset,y+inset,begin.w-inset*2,begin.h-inset*2);text(begin.label,W/2,y+32+inset,24,'#50382c','center',700);buttons.push(begin);}
@@ -425,6 +485,9 @@ function render(t){const dt=Math.min(.1,Math.max(0,(t-last)/1000));last=t;frame=
   else if(section==='shop')shop();
   else if(section==='map')regionMap();
   else if(section==='room')room();
+  else if(section==='pets')petPage();
+  else if(section==='items')itemPage();
+  else if(section==='rebirth')rebirthPage();
   else{treeDelta=dt;treeArea();drawCourtyardPet();comet();}
   bottom();
   audio.scene(section==='collection'?'collection':'home');audio.duck(!!modal);
@@ -450,12 +513,12 @@ function render(t){const dt=Math.min(.1,Math.max(0,(t-last)/1000));last=t;frame=
   drawModal();if(now()<tipEnds&&!modal){const tw=mobile?448:740,tx=(W-tw)/2,ty=section==='room'?(mobile?674:598):(mobile?860:729);panel(tx,ty,tw,53);text(tip,W/2,ty+26,mobile?12:17,'#f7e4b7','center',600);}
  }else{if(A.background)garden();panel(W/2-185,H/2-110,370,205);text('CxQ 星願旅團',W/2,H/2-75,34,'#f6d89f','center',700);text('點亮夢境',W/2,H/2-22,23,'#c7dbe7','center');text(loadError||'正在點亮庭院…',W/2,H/2+34,mobile?13:17,'#92bdcc','center');if(loadError)button('重新載入',W/2-130,H/2+90,260,58,boot,{primary:true});}
  const labels=buttons.filter(b=>b.enabled).map(b=>b.label).join('、'),aria='CxQ 星願旅團 '+screen+'。'+labels;if(canvas.getAttribute('aria-label')!==aria)canvas.setAttribute('aria-label',aria);
- const data={screen,section,region:section==='room'?roomIndex+1:0,unlocked:s.owned.filter(n=>n>0).length,productionFloat:productionFloat?.gain.toFixed(2)||'',stars:s.stars.toFixed(2),total:s.total.toFixed(2),cps:cps(s).toFixed(2),clicks:s.clicks,owned:s.owned.reduce((a,b)=>a+b,0),upgrades:s.upgrades.length,achievements:s.achievements.length,event:s.event?'active':'none',modal:modal?.type||'',audio:audio.status(),storage:storageOK?'ok':'error',version:'20261104-rebirth1'};for(const [k,v]of Object.entries(data))if(canvas.dataset[k]!==String(v))canvas.dataset[k]=String(v);requestAnimationFrame(render);
+ const data={screen,section,region:section==='room'?roomIndex+1:0,unlocked:s.owned.filter(n=>n>0).length,productionFloat:productionFloat?.gain.toFixed(2)||'',stars:s.stars.toFixed(2),total:s.total.toFixed(2),cps:cps(s).toFixed(2),clicks:s.clicks,owned:s.owned.reduce((a,b)=>a+b,0),upgrades:s.upgrades.length,achievements:s.achievements.length,event:s.event?'active':'none',modal:modal?.type||'',audio:audio.status(),storage:storageOK?'ok':'error',version:'20261104-layout2'};for(const [k,v]of Object.entries(data))if(canvas.dataset[k]!==String(v))canvas.dataset[k]=String(v);requestAnimationFrame(render);
 }
 function hit(p){for(let i=buttons.length-1;i>=0;i--)if(buttons[i].enabled&&inside(p,buttons[i])&&(!buttons[i].clip||inside(p,buttons[i].clip)))return buttons[i];return null;}
-canvas.addEventListener('pointerdown',e=>{e.preventDefault();audio.unlock();canvas.setPointerCapture(e.pointerId);const p=coords(e),b=hit(p);if(screen==='game'&&section==='map'&&!modal&&p.y>(mobile?167:127)){mapPointers.set(e.pointerId,p);if(mapPointers.size===1)mapDrag={start:p,offset:{...mapOffset}};if(mapPointers.size===2){const [a,b]=[...mapPointers.values()];mapDrag={distance:Math.hypot(a.x-b.x,a.y-b.y),zoom:mapZoom};}}pressed=b?{...p,label:b.label}:null;if(b?.tree){starTap(p);holdPoint=p;holdPointer=e.pointerId;holdStart=holdAt=now();pressed=null;}else if(shopRect&&inside(p,shopRect)){dragScroll={point:p,last:p,moved:false,start:storeTab==='facilities'?shopScroll:upgradeScroll};}});
+canvas.addEventListener('pointerdown',e=>{e.preventDefault();audio.unlock();canvas.setPointerCapture(e.pointerId);const p=coords(e),b=hit(p);if(screen==='game'&&section==='map'&&!modal&&p.y>(mobile?167:127)){mapPointers.set(e.pointerId,p);if(mapPointers.size===1)mapDrag={start:p,offset:{...mapOffset}};if(mapPointers.size===2){const [a,b]=[...mapPointers.values()];mapDrag={distance:Math.hypot(a.x-b.x,a.y-b.y),zoom:mapZoom};}}pressed=b?{...p,label:b.label,key:b.key??b.label}:null;if(b?.tree){starTap(p);holdPoint=p;holdPointer=e.pointerId;holdStart=holdAt=now();pressed=null;}else if(shopRect&&inside(p,shopRect)){dragScroll={point:p,last:p,moved:false,start:storeTab==='facilities'?shopScroll:upgradeScroll};}});
 canvas.addEventListener('pointermove',e=>{const p=coords(e);hover=p;if(mapDrag&&mapPointers.has(e.pointerId)){mapPointers.set(e.pointerId,p);if(mapPointers.size===2&&mapDrag.distance>0){const [a,b]=[...mapPointers.values()];mapZoom=Math.max(1,Math.min(2.6,mapDrag.zoom*Math.hypot(a.x-b.x,a.y-b.y)/mapDrag.distance));if(mapZoom===1)mapOffset={x:0,y:0};pressed=null;}else if(mapZoom>1&&mapDrag.start&&Math.hypot(p.x-mapDrag.start.x,p.y-mapDrag.start.y)>7){const limitX=W*(mapZoom-1)/2,limitY=H*(mapZoom-1)/2;mapOffset.x=Math.max(-limitX,Math.min(limitX,mapDrag.offset.x+p.x-mapDrag.start.x));mapOffset.y=Math.max(-limitY,Math.min(limitY,mapDrag.offset.y+p.y-mapDrag.start.y));pressed=null;}}if(holdPoint&&holdPointer===e.pointerId&&!hit(p)?.tree)holdPoint=null;if(dragScroll){const dy=p.y-dragScroll.point.y;if(Math.abs(dy)>9){dragScroll.moved=true;pressed=null;if(storeTab==='facilities')shopScroll=Math.max(0,dragScroll.start-dy);else upgradeScroll=Math.max(0,dragScroll.start-dy);}dragScroll.last=p;}});
-canvas.addEventListener('pointerup',e=>{const p=coords(e);mapPointers.delete(e.pointerId);if(!mapPointers.size)mapDrag=null;if(pressed&&!dragScroll?.moved){const b=hit(p);if(b?.label===pressed.label&&Math.hypot(p.x-pressed.x,p.y-pressed.y)<20)activate(b);}pressed=null;dragScroll=null;holdPoint=null;});
+canvas.addEventListener('pointerup',e=>{const p=coords(e);mapPointers.delete(e.pointerId);if(!mapPointers.size)mapDrag=null;if(pressed&&!dragScroll?.moved){const b=hit(p);if(b&&(b.key??b.label)===pressed.key&&Math.hypot(p.x-pressed.x,p.y-pressed.y)<20)activate(b);}pressed=null;dragScroll=null;holdPoint=null;});
 canvas.addEventListener('pointercancel',e=>{mapPointers.delete(e.pointerId);mapDrag=null;pressed=null;dragScroll=null;holdPoint=null;});canvas.addEventListener('lostpointercapture',e=>{if(e.pointerId===holdPointer)holdPoint=null;});canvas.addEventListener('pointerleave',()=>hover=null);
 canvas.addEventListener('wheel',e=>{const p=coords(e);if(shopRect&&inside(p,shopRect)){e.preventDefault();if(storeTab==='facilities')shopScroll+=e.deltaY/scale;else upgradeScroll+=e.deltaY/scale;}},{passive:false});
 canvas.addEventListener('touchstart',e=>e.preventDefault(),{passive:false});canvas.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
