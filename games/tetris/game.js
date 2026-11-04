@@ -37,7 +37,7 @@ function gameOver(){running=false;CxQ.orientation('portrait',false);CxQ.sound('l
 function ghost(){let y=cur.y;while(!collide({...cur,y},0,1))y++;return y}
 const blockSprites=Object.fromEntries([..."IOTSZJL"].map((type,index)=>{
   const image=new Image();
-  image.src='../shared/atelier/block-'+index+'.webp';
+  image.src='../shared/mobile-art/block-'+index+'.webp';
   image.onload=()=>{if(board)draw();};
   return [type,image];
 }));
