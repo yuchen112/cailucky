@@ -11,7 +11,7 @@ export function bindBattleTouch(canvas,{isPlaying,base,thumb=base?.lastElementCh
  let pointer=null,point=null,origin=null;
  function paint(){if(!base||!origin)return;base.hidden=false;base.style.left=origin.x+'px';base.style.top=origin.y+'px';const dx=point.x-origin.x,dy=point.y-origin.y,d=Math.hypot(dx,dy)||1,clamp=Math.min(1,radius/d);if(thumb)thumb.style.transform=`translate(${dx*clamp}px,${dy*clamp}px)`}
  function reset(){const old=pointer;pointer=null;point=null;origin=null;if(base)base.hidden=true;if(thumb)thumb.style.transform='translate(0,0)';if(old!==null&&canvas.hasPointerCapture?.(old))canvas.releasePointerCapture(old)}
- canvas.addEventListener('pointerdown',e=>{if(!isPlaying()||pointer!==null||e.button>0)return;e.preventDefault();pointer=e.pointerId;origin={x:e.clientX,y:e.clientY};point={...origin};canvas.setPointerCapture?.(e.pointerId);paint();onFirstMove()});
+ canvas.addEventListener('pointerdown',e=>{if(!isPlaying()||pointer!==null||e.button>0||e.pointerType==='mouse')return;e.preventDefault();pointer=e.pointerId;origin={x:e.clientX,y:e.clientY};point={...origin};canvas.setPointerCapture?.(e.pointerId);paint();onFirstMove()});
  canvas.addEventListener('pointermove',e=>{if(e.pointerId!==pointer)return;if(!isPlaying()){reset();return}e.preventDefault();point={x:e.clientX,y:e.clientY};paint()});
  for(const type of['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(type,e=>{if(e.pointerId===pointer)reset()});
  if(typeof window!=='undefined')window.addEventListener('blur',reset);

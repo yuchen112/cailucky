@@ -39,3 +39,8 @@ html,body{overscroll-behavior:none;touch-action:pan-y;-webkit-text-size-adjust:1
 #aim-stick i{position:absolute;left:24px;top:24px;width:26px;height:26px;border-radius:50%;background:#ffe1a1}
 #skill-inspect{position:fixed;right:max(12px,env(safe-area-inset-right));top:max(164px,calc(env(safe-area-inset-top) + 152px));width:min(270px,calc(100vw - 24px));padding:14px;border:1px solid #eac583;border-radius:12px;background:#14182bee;color:#fff2d7}
 #skill-inspect p{margin:6px 0;line-height:1.5}
+
+@media (hover:hover) and (pointer:fine){
+  #aim-zone,#move-hint{display:none}
+  #game{cursor:crosshair}
+}
