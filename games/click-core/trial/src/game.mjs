@@ -1,10 +1,10 @@
-import {VERSION,SAVE_KEY,FACILITIES,UPGRADES,ACHIEVEMENTS,SKINS,fresh,restore,cps,clickPower,facilityRate,tap,cost,affordable,buyFacility,buyUpgrade,upgradeReady,achievementProgress,checkAchievements,tick,catchComet,offline,format,hintFor} from './core.mjs?v=20261103-regions1';
-import {StarAudio} from './sound.mjs?v=20261103-regions1';
+import {VERSION,SAVE_KEY,FACILITIES,UPGRADES,ACHIEVEMENTS,SKINS,fresh,restore,cps,clickPower,facilityRate,tap,cost,affordable,buyFacility,buyUpgrade,upgradeReady,achievementProgress,checkAchievements,tick,catchComet,offline,format,hintFor} from './core.mjs?v=20261104-treeglow1';
+import {StarAudio} from './sound.mjs?v=20261104-treeglow1';
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d'),BACKUP=SAVE_KEY+'_backup';
 let s=fresh(),offlineReport=null,storageOK=true;
 try{const raw=localStorage.getItem(SAVE_KEY);if(raw)s=restore(JSON.parse(raw));}catch{try{s=restore(JSON.parse(localStorage.getItem(BACKUP)));}catch{}}
 offlineReport=offline(s);checkAchievements(s);
-let screen='loading',section='workshop',storeTab='facilities',modal=null,buyPage=0,collectionPage=0,shopScroll=0,upgradeScroll=0,workPage=0,hover=null,pressed=null,focus=-1,tip='',tipEnds=0,loadCount=0,loadError='',frame=0,last=performance.now(),lastSave=0,lastCheck=0,clickAt=-10,leafPulse=-10,lastBell=-10,screenTime=0,dragScroll=null,holdAt=0,holdPoint=null,tabBlocked=false,winPulse=0;
+let screen='loading',section='workshop',storeTab='facilities',modal=null,buyPage=0,collectionPage=0,shopScroll=0,upgradeScroll=0,workPage=0,hover=null,pressed=null,focus=-1,tip='',tipEnds=0,loadCount=0,loadError='',frame=0,last=performance.now(),lastSave=0,lastCheck=0,clickAt=-10,leafPulse=-10,lastBell=-10,screenTime=0,dragScroll=null,holdAt=0,holdStart=0,holdPointer=null,holdLight=0,tapLight=null,holdPoint=null,tabBlocked=false,winPulse=0;
 let roomIndex=0, automaticGain=0, automaticTime=0, awayGain=0, awayTime=0, summaryUntil=0, summaryGain=0, productionFloat=null;
 const roomLoads=new Set(), roomErrors=new Set();
 let W=1440,H=900,scale=1,ox=0,oy=0,mobile=false,shopRect=null;
@@ -32,7 +32,7 @@ function starTap(point={x:W/2,y:mobile?540:480}){
  if(tabBlocked||modal||screen!=='game'||section!=='workshop')return;
  const t=now();if(t-clickAt<.045)return;clickAt=t;
  const result=tap(s);
- if(t-leafPulse>=.24)leafPulse=t;
+ leafPulse=t;tapLight=point;
  if(t-lastBell>=.28){lastBell=t;actionSound('collect');}
  const recent=floaters.at(-1);
  if(recent&&t-recent.last<.26){recent.gain+=result.gain;recent.last=t;recent.t=Math.min(recent.t,.4);}
@@ -69,6 +69,7 @@ function openRoom(i){
   .catch(()=>roomErrors.add(i))
   .finally(()=>roomLoads.delete(i));
 }
+let treeDelta=0;
 function treeArea(){
  const w=mobile?404:615,h=mobile?476:526,x=(W-w)/2,y=mobile?320:234;
  panel(W/2-(mobile?192:236),mobile?176:143,mobile?384:472,62,.94);
@@ -82,8 +83,21 @@ function treeArea(){
   text(boosts.join('  /  '),W/2,by+2,15,'#225c47','center',700);
  }
  fit('tree',x,y,w,h);
+ const held=holdPoint&&s.settings.hold&&s.clicks>=500&&now()-holdStart>=.35;
+ holdLight=Math.max(0,Math.min(1,holdLight+(held?1:-1)*treeDelta/.5));
+ if(holdLight>0){
+  ctx.save();
+  ctx.globalCompositeOperation='screen';
+  ctx.filter='brightness(1.75) saturate(1.18) drop-shadow(0 0 8px #eab451)';
+  const breath=s.settings.motion?.04*Math.sin(now()*3):0;
+  fit('tree',x,y,w,h,holdLight*(.62+breath));
+  ctx.restore();
+ }
  const glow=now()-leafPulse;
- if(s.settings.motion&&glow<.34)fit('spark',x+w*.57,y+h*.22,23,23,.62*Math.sin(Math.PI*glow/.34));
+ if(tapLight&&glow<.25){
+  const size=30+glow*95;
+  fit('spark',tapLight.x-size/2,tapLight.y-size/2,size,size,.9*(1-glow/.25));
+ }
  buttons.unshift({label:'點擊星願樹',x,y,w,h,enabled:true,tree:true,fn:()=>starTap()});
  button('收集星願  +'+safe(clickPower(s)),W/2-141,mobile?830:749,282,57,()=>starTap({x:W/2,y:mobile?805:730}),{primary:true,size:20});
 }
@@ -210,14 +224,14 @@ function render(t){const dt=Math.min(.1,Math.max(0,(t-last)/1000));last=t;frame=
      automaticGain=carryGain;automaticTime=carryTime;
     }
    }else{awayGain+=produced;awayTime+=dt;}
-   if(appeared&&section==='workshop')actionSound('cometAppear');if(holdPoint&&s.settings.hold&&s.clicks>=500&&now()-holdAt>.25){holdAt=now();starTap(holdPoint);}if(t-lastCheck>800){checkRewards();lastCheck=t;}if(t-lastSave>5000){persist();lastSave=t;}}
+   if(appeared&&section==='workshop')actionSound('cometAppear');if(holdPoint&&s.settings.hold&&s.clicks>=500&&now()-holdStart>=.35&&now()-holdAt>=.25){holdAt=now();starTap(holdPoint);}if(t-lastCheck>800){checkRewards();lastCheck=t;}if(t-lastSave>5000){persist();lastSave=t;}}
   scene();header();
   if(section==='collection')collection();
   else if(section==='settings')settingScreen();
   else if(section==='shop')shop();
   else if(section==='map')regionMap();
   else if(section==='room')room();
-  else{treeArea();comet();}
+  else{treeDelta=dt;treeArea();comet();}
   bottom();
   audio.scene(section==='collection'?'collection':'home');audio.duck(!!modal);
   for(const p of particles){p.life+=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=100*dt;fit('spark',p.x,p.y,p.size,p.size,Math.max(0,1-p.life/p.max));}for(let i=particles.length-1;i>=0;i--)if(particles[i].life>=particles[i].max)particles.splice(i,1);
@@ -242,13 +256,13 @@ function render(t){const dt=Math.min(.1,Math.max(0,(t-last)/1000));last=t;frame=
   drawModal();if(now()<tipEnds&&!modal){const tw=mobile?448:740,tx=(W-tw)/2,ty=section==='room'?(mobile?674:598):(mobile?860:729);panel(tx,ty,tw,53);text(tip,W/2,ty+26,mobile?12:17,'#f7e4b7','center',600);}
  }else{if(A.background)garden();panel(W/2-185,H/2-110,370,205);text('CxQ 星願旅團',W/2,H/2-75,34,'#f6d89f','center',700);text('點亮夢境',W/2,H/2-22,23,'#c7dbe7','center');text(loadError||'正在點亮庭院…',W/2,H/2+34,mobile?13:17,'#92bdcc','center');if(loadError)button('重新載入',W/2-130,H/2+90,260,58,boot,{primary:true});}
  const labels=buttons.filter(b=>b.enabled).map(b=>b.label).join('、'),aria='CxQ 星願旅團 '+screen+'。'+labels;if(canvas.getAttribute('aria-label')!==aria)canvas.setAttribute('aria-label',aria);
- const data={screen,section,region:section==='room'?roomIndex+1:0,unlocked:s.owned.filter(n=>n>0).length,productionFloat:productionFloat?.gain.toFixed(2)||'',stars:s.stars.toFixed(2),total:s.total.toFixed(2),cps:cps(s).toFixed(2),clicks:s.clicks,owned:s.owned.reduce((a,b)=>a+b,0),upgrades:s.upgrades.length,achievements:s.achievements.length,event:s.event?'active':'none',modal:modal?.type||'',audio:audio.status(),storage:storageOK?'ok':'error',version:'20261103-regions1'};for(const [k,v]of Object.entries(data))if(canvas.dataset[k]!==String(v))canvas.dataset[k]=String(v);requestAnimationFrame(render);
+ const data={screen,section,region:section==='room'?roomIndex+1:0,unlocked:s.owned.filter(n=>n>0).length,productionFloat:productionFloat?.gain.toFixed(2)||'',stars:s.stars.toFixed(2),total:s.total.toFixed(2),cps:cps(s).toFixed(2),clicks:s.clicks,owned:s.owned.reduce((a,b)=>a+b,0),upgrades:s.upgrades.length,achievements:s.achievements.length,event:s.event?'active':'none',modal:modal?.type||'',audio:audio.status(),storage:storageOK?'ok':'error',version:'20261104-treeglow1'};for(const [k,v]of Object.entries(data))if(canvas.dataset[k]!==String(v))canvas.dataset[k]=String(v);requestAnimationFrame(render);
 }
 function hit(p){for(let i=buttons.length-1;i>=0;i--)if(buttons[i].enabled&&inside(p,buttons[i])&&(!buttons[i].clip||inside(p,buttons[i].clip)))return buttons[i];return null;}
-canvas.addEventListener('pointerdown',e=>{e.preventDefault();audio.unlock();canvas.setPointerCapture(e.pointerId);const p=coords(e),b=hit(p);pressed=b?{...p,label:b.label}:null;if(b?.tree){starTap(p);holdPoint=p;holdAt=now();pressed=null;}else if(shopRect&&inside(p,shopRect)){dragScroll={point:p,last:p,moved:false,start:storeTab==='facilities'?shopScroll:upgradeScroll};}});
-canvas.addEventListener('pointermove',e=>{const p=coords(e);hover=p;if(dragScroll){const dy=p.y-dragScroll.point.y;if(Math.abs(dy)>9){dragScroll.moved=true;pressed=null;if(storeTab==='facilities')shopScroll=Math.max(0,dragScroll.start-dy);else upgradeScroll=Math.max(0,dragScroll.start-dy);}dragScroll.last=p;}});
+canvas.addEventListener('pointerdown',e=>{e.preventDefault();audio.unlock();canvas.setPointerCapture(e.pointerId);const p=coords(e),b=hit(p);pressed=b?{...p,label:b.label}:null;if(b?.tree){starTap(p);holdPoint=p;holdPointer=e.pointerId;holdStart=holdAt=now();pressed=null;}else if(shopRect&&inside(p,shopRect)){dragScroll={point:p,last:p,moved:false,start:storeTab==='facilities'?shopScroll:upgradeScroll};}});
+canvas.addEventListener('pointermove',e=>{const p=coords(e);hover=p;if(holdPoint&&holdPointer===e.pointerId&&!hit(p)?.tree)holdPoint=null;if(dragScroll){const dy=p.y-dragScroll.point.y;if(Math.abs(dy)>9){dragScroll.moved=true;pressed=null;if(storeTab==='facilities')shopScroll=Math.max(0,dragScroll.start-dy);else upgradeScroll=Math.max(0,dragScroll.start-dy);}dragScroll.last=p;}});
 canvas.addEventListener('pointerup',e=>{const p=coords(e);if(pressed&&!dragScroll?.moved){const b=hit(p);if(b?.label===pressed.label&&Math.hypot(p.x-pressed.x,p.y-pressed.y)<20)activate(b);}pressed=null;dragScroll=null;holdPoint=null;});
-canvas.addEventListener('pointercancel',()=>{pressed=null;dragScroll=null;holdPoint=null;});canvas.addEventListener('pointerleave',()=>hover=null);
+canvas.addEventListener('pointercancel',()=>{pressed=null;dragScroll=null;holdPoint=null;});canvas.addEventListener('lostpointercapture',e=>{if(e.pointerId===holdPointer)holdPoint=null;});canvas.addEventListener('pointerleave',()=>hover=null);
 canvas.addEventListener('wheel',e=>{const p=coords(e);if(shopRect&&inside(p,shopRect)){e.preventDefault();if(storeTab==='facilities')shopScroll+=e.deltaY/scale;else upgradeScroll+=e.deltaY/scale;}},{passive:false});
 canvas.addEventListener('touchstart',e=>e.preventDefault(),{passive:false});canvas.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
 addEventListener('keydown',e=>{audio.unlock();if(e.key==='Tab'){e.preventDefault();focus=(focus+(e.shiftKey?-1:1)+buttons.length)%buttons.length;return;}if(e.key==='Enter'&&focus>=0){e.preventDefault();activate(buttons[focus]);return;}if(e.key==='Escape'){e.preventDefault();if(modal&&modal.type!=='blocked')modal=null;else goTo(section==='room'?'map':'workshop');return;}if(e.code==='Space'&&section==='workshop'&&!modal){e.preventDefault();if(!e.repeat)starTap({x:mobile?250:300,y:mobile?340:420});}});
