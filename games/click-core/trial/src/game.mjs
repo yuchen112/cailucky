@@ -46,7 +46,7 @@ function scene(){garden();const skin=modal?.type==='skins'?modal.preview:s.skin;
  if(s.settings.motion)for(let i=0;i<5;i++){const x=(i*139.3+frame*2*(i%2?1:-1))%W,y=135+(i*83.7)%Math.max(1,H-210),a=.2+.18*Math.sin(frame+i);fit('spark',x,y,7+i%3*3,7+i%3*3,a);}}
 function header(){panel(mobile?12:20,12,mobile?456:1400,mobile?142:112);text('CxQ 星願旅團',mobile?29:43,mobile?35:38,mobile?19:25,'#f0d49a','left',700);text('點亮夢境',mobile?29:44,mobile?62:73,mobile?13:15,'#93b2c7');
  const x=mobile?450:648;text(safe(s.stars),x,mobile?40:45,mobile?29:38,'#fff3cf','right',700);text('星願',x+(mobile?0:12),mobile?72:83,mobile?13:15,'#a8bacb',mobile?'right':'left');
- text('每秒 '+safe(cps(s)),mobile?31:864,mobile?113:43,mobile?17:21,'#a9d9dc');if(!mobile)text('每次點擊 '+safe(clickPower(s)),mobile?449:864,mobile?113:77,mobile?15:16,'#b3c3d5',mobile?'right':'left');
+ button('每秒 '+safe(cps(s)),mobile?24:760,mobile?89:24,mobile?156:225,mobile?47:40,()=>modal={type:'production'},{size:mobile?16:18});if(!mobile)text('每次點擊 '+safe(clickPower(s)),mobile?449:864,mobile?113:77,mobile?15:16,'#b3c3d5',mobile?'right':'left');
  if(!mobile){button('收藏',1085,35,92,56,()=>{goTo('collection');collectionPage=0;});button('設定',1187,35,92,56,()=>{goTo('settings');});button('區域地圖',1289,35,106,56,()=>goTo('map'));}}
 function goTo(next){
  if(next!=='workshop')summaryUntil=0;
@@ -145,8 +145,9 @@ function room(){
  }
  const actionFrame=A['roomWork'+i];
  if(s.settings.motion&&actionFrame){
-  const phase=(frame+i*.37)%6.8;
-  const mix=Math.max(0,Math.min(1,(phase-3.1)/.42,(4.9-phase)/.42));
+  const duration=2.6+1/(1+Math.log10(Math.max(1,s.owned[i]))*.72);
+  const phase=((frame+i*.37)%duration)/duration;
+  const mix=Math.max(0,Math.min(1,(phase-.29)/.12,(.83-phase)/.16));
   if(mix>0)drawRoom(actionFrame,mix);
  }
  ctx.restore();
@@ -198,6 +199,17 @@ function nightPicker(){
 function drawModal(){if(!modal)return;buttons.length=0;if(modal.type==='skins'){nightPicker();return;}ctx.fillStyle='#071322d9';ctx.fillRect(0,0,W,H);const x=mobile?23:390,w=mobile?434:660,y=mobile?216:222,h=mobile?530:470;panel(x,y,w,h);const close=()=>modal=null;
  if(modal.type==='offline'){text('歡迎回到星願樹',W/2,y+51,27,'#f1d8a4','center',700);fit('star',W/2-53,y+86,106,106);text('離線 '+duration(modal.seconds),W/2,y+218,18,'#adcad6','center');text('帶回 '+safe(modal.gain)+' 星願',W/2,y+270,mobile?26:33,'#fff0bc','center',700);text('按平常產量計算，最多累積 24 小時。',W/2,y+317,mobile?13:16,'#9db4c7','center');button('收下星光',x+30,y+h-88,w-60,59,close,{primary:true,size:20});}
  else if(modal.type==='help'){text('簡單點，慢慢變強',W/2,y+44,25,'#f1d8a4','center',700);const lines=['① 點擊星願樹，取得星願。','② 首次購買設施，即可從地圖進入工坊。','③ 買到 10、25、50 個等里程碑，開放升級。','④ 點中流星願，有機會取得收益或暫時加倍。','⑤ 成就永久增加收益，也解鎖庭院夜景。','沒有破關終點，也不需要重置。'];lines.forEach((t,i)=>text(t,x+25,y+105+i*(mobile?49:43),mobile?14:17,i===5?'#edcf91':'#b8cad6'));button('一起收集星願',x+30,y+h-74,w-60,48,close,{primary:true,size:18});}
+ else if(modal.type==='production'){
+  text('工坊每秒產量',W/2,y+35,24,'#50382c','center',700);
+  const boost=s.buffs.production>s.playTime?5:1;
+  FACILITIES.forEach((f,i)=>{
+   const row=y+73+i*29;
+   text(f.role+' · '+f.short,x+26,row,15,'#50382c');
+   text(s.owned[i]>0?safe(facilityRate(s,i)*boost):'尚未開張',x+w-26,row,15,'#225c47','right');
+  });
+  text('總計 '+safe(cps(s))+' 星願 / 秒',W/2,y+367,18,'#225c47','center',700);
+  button('關閉',x+25,y+h-62,w-50,40,close,{size:16});
+ }
  else if(modal.type==='lockedRegion'){
   const i=modal.i,f=FACILITIES[i],price=cost(s,i,1);
   text(f.role+'的'+f.short+'工坊',W/2,y+42,25,'#50382c','center',700);
