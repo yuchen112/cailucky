@@ -161,15 +161,31 @@ function health(e,p,height){
  image('health-track',p.x-20-track.x*40/track.w,y-track.y*6/track.h,40/track.w,6/track.h);
  ctx.save();ctx.beginPath();ctx.rect(p.x-18,y+1,36*Math.max(0,e.hp/e.maxHp),4);ctx.clip();image('health-fill',p.x-18-fill.x*36/fill.w,y+1-fill.y*4/fill.h,36/fill.w,4/fill.h);ctx.restore();
 }
-let lastLayout='';
+let lastLayout='',lastStatus='';
+const boardLayer=document.createElement('canvas');
+boardLayer.width=$('canvas').width;
+boardLayer.height=$('canvas').height;
+const boardContext=boardLayer.getContext('2d');
+boardContext.setTransform(2,0,0,2,0,0);
+let boardRoad,boardPad,boardRegion;
+function drawBoard(region,pads){
+ const road=images[region==='forest'?'road':'road-'+region],pad=images.pad;
+ if(region!==boardRegion||road!==boardRoad||pad!==boardPad){
+  boardContext.clearRect(0,0,390,585);
+  if(road)boardContext.drawImage(road,0,0,390,585);
+  if(pad)for(const p of pads)boardContext.drawImage(pad,p.x-40,p.y-24,80,50);
+  boardRegion=region;boardRoad=road;boardPad=pad;
+ }
+ ctx.clearRect(0,0,390,585);
+ ctx.drawImage(boardLayer,0,0,390,585);
+}
 const heroMotionResources=new Map(),heroMotionPending=new Set();
 function draw(){
  if(battle&&globalThis.CxQCharacterMotion&&!heroMotionResources.has(battle.hero.role)&&!heroMotionPending.has(battle.hero.role)){const role=battle.hero.role;heroMotionPending.add(role);CxQCharacterMotion.prepare(role).then(r=>heroMotionResources.set(role,r)).catch(()=>{setTimeout(()=>heroMotionPending.delete(role),30000)});}
 
  renderedActors=[];
  const region=regionFor(battle),pads=routePads(battle);audio.region(region);const layout=[region,battle.hero.x,battle.hero.y].join(':');if(layout!==lastLayout){lastLayout=layout;for(const [i,b] of [...$('pads').querySelectorAll('.pad-hit')].entries()){b.style.left=pads[i].x/390*100+'%';b.style.top=pads[i].y/585*100+'%';}commandHit.querySelector('img').src=`art/hero-portrait-${battle.hero.role}.webp`;}if(document.body.dataset.region!==region)document.body.dataset.region=region;
- ctx.setTransform(2,0,0,2,0,0);ctx.clearRect(0,0,390,585);image(region==='forest'?'road':'road-'+region,0,0,390,585);
- for(const p of pads)image('pad',p.x-40,p.y-24,80,50);
+ ctx.setTransform(2,0,0,2,0,0);drawBoard(region,pads);
  for(const o of tactics?.overlays()||[]){rangeArt(o.id,o.p,o.r,tactics.coverage?.45:.9);image('button',Math.max(2,Math.min(278,o.p.x-55)),Math.max(2,o.p.y-o.r),110,24);ctx.font='bold 12px system-ui';ctx.fillStyle='#fff8dc';ctx.textAlign='center';ctx.fillText(o.label,Math.max(57,Math.min(333,o.p.x)),Math.max(2,o.p.y-o.r)+17);}
  if($('troops').open&&selectedPad!==null){const t=battle.towers.find(t=>t.pad===selectedPad),r=unitPreview?.stats|| (t?towerStats(t,battle):null);if(r){if(unitPreview?.oldStats&&unitPreview.oldStats.range!==r.range)rangeArt('range',pads[selectedPad],unitPreview.oldStats.range,.8);if(!r.income)rangeArt(unitPreview?.oldStats?'aura-range':'range',pads[selectedPad],r.range,.5);drawAttackFootprint({s:battle,p:pads[selectedPad],r,image,rangeArt,ctx,selectedPad});if(r.minRange)rangeArt('aura-range',pads[selectedPad],r.minRange,.5);}}
  for(const e of battle.enemies){const p=pointAt(e.distance,battle,e.route);if(e.castUntil>battle.time)rangeArt('aura-range',p,100,.5);else if(e.wardUntil>battle.time)rangeArt('aura-range',p,36,.4);}
@@ -199,8 +215,8 @@ function draw(){
  drawCombatEffects({s:battle,pads,corePoint:{x:corePoint.x,y:550},image,sprite,ctx,roles:ROLES,reduced:reducedMotion.matches,simple:document.body.dataset.effects==='simple'});
 }
 function frame(now){const dt=last?(now-last)/1000:0;last=now;syncPause();if(backgroundWorking||backgroundAllowed){requestAnimationFrame(frame);return;}const before=backgroundTerminal?'battle':battle.phase,settledInBackground=backgroundTerminal;backgroundTerminal=false;battleClock.tick(dt,battle.paused||backgroundWorking||backgroundAllowed,step=>{advance(battle,step);return battle.phase===before;});if(!settledInBackground&&before!==battle.phase&&['intermission','victory','defeat'].includes(battle.phase)){try{saveBoundary();}catch(e){error(e);}}
- audio.consume(battle);const portrait=commandHit.querySelector('img'),src='art/hero-portrait-'+battle.hero.role+'.webp';if(portrait.getAttribute('src')!==src)portrait.src=src;portrait.style.transform='none';commandHit.dataset.phase='portrait';draw();const status=`<span class="hud-name">${practice?'試用 · ':''}${ROLES[battle.hero.role].name} · ${battle.dungeon?DUNGEONS[battle.dungeon.type].name:battle.mode==='endless'?'無盡':`第 ${battle.stage} 關`} · ${battle.wave} 波</span><span>生命 ${battle.hp}</span><span>金幣 ${battle.gold}</span>`;if($('status').innerHTML!==status)$('status').innerHTML=status;
- $('wave').disabled=!ready||battle.paused||!['planning','intermission'].includes(battle.phase)||!battle.towers.some(t=>towerStats(t,battle).damage>0)||!!battle.blessingChoices.length;setText('wave',battle.phase==='battle'?'守護中':'開始下一波');const remaining=Math.max(0,Math.ceil(battle.hero.skillReady-battle.time));$('skill').disabled=!ready||battle.paused||battle.phase!=='battle'||remaining>0;setText('hint',battle.phase!=='battle'&&battle.towers.length&&!battle.towers.some(t=>towerStats(t,battle).damage>0)?'補給兵不攻擊，請再部署一名輸出部隊':chosenUnit&&battle.phase!=='battle'?`已選 ${UNITS[chosenUnit].name}，點空地台部署`:battle.phase==='battle'?'守住道路，把握英雄技能時機':battle.towers.length?(battle.towers.some(t=>towerStats(t,battle).damage>0)?'準備完成後，開始下一波':'補給兵不攻擊，請再部署一名輸出部隊'):'點選石台，部署你的部隊');
+ audio.consume(battle);const portrait=commandHit.querySelector('img'),src='art/hero-portrait-'+battle.hero.role+'.webp';if(portrait.getAttribute('src')!==src)portrait.src=src;if(portrait.style.transform!=='none')portrait.style.transform='none';if(commandHit.dataset.phase!=='portrait')commandHit.dataset.phase='portrait';draw();const status=`<span class="hud-name">${practice?'試用 · ':''}${ROLES[battle.hero.role].name} · ${battle.dungeon?DUNGEONS[battle.dungeon.type].name:battle.mode==='endless'?'無盡':`第 ${battle.stage} 關`} · ${battle.wave} 波</span><span>生命 ${battle.hp}</span><span>金幣 ${battle.gold}</span>`;if(lastStatus!==status){$('status').innerHTML=status;lastStatus=status;}
+ const canPlan=['planning','intermission'].includes(battle.phase);const hasDamage=battle.phase!=='battle'&&battle.towers.some(t=>towerStats(t,battle).damage>0);$('wave').disabled=!ready||battle.paused||!canPlan||!hasDamage||!!battle.blessingChoices.length;setText('wave',battle.phase==='battle'?'守護中':'開始下一波');const remaining=Math.max(0,Math.ceil(battle.hero.skillReady-battle.time));$('skill').disabled=!ready||battle.paused||battle.phase!=='battle'||remaining>0;setText('hint',battle.phase!=='battle'&&battle.towers.length&&!hasDamage?'補給兵不攻擊，請再部署一名輸出部隊':chosenUnit&&battle.phase!=='battle'?`已選 ${UNITS[chosenUnit].name}，點空地台部署`:battle.phase==='battle'?'守住道路，把握英雄技能時機':battle.towers.length?(hasDamage?'準備完成後，開始下一波':'補給兵不攻擊，請再部署一名輸出部隊'):'點選石台，部署你的部隊');
  const autoBlessing=selectAutoBlessing(battle,profile.assists);if(autoBlessing&&!document.querySelector('dialog[open]')){if(chooseBlessing(battle,autoBlessing)){try{saveBoundary();setText('hint','自動選擇：'+BLESSINGS[autoBlessing].name);}catch(e){error(e);}}}
  if(battle.blessingChoices.length&&!document.querySelector('dialog[open]')){$('blessings').replaceChildren();for(const id of battle.blessingChoices){const b=document.createElement('button');b.className='blessing-card';b.innerHTML='<strong>'+BLESSINGS[id].name+'</strong><small>'+BLESSINGS[id].description+'</small><small>'+blessingFit(battle,id)+'</small>';b.onclick=()=>perform(s=>chooseBlessing(s,id));$('blessings').append(b);}show('blessing');}
  if(!failed&&before!==battle.phase&&['victory','defeat'].includes(battle.phase)){
