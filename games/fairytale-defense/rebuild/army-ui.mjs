@@ -48,7 +48,9 @@ let backgroundAt=0,backgroundDebt=0,backgroundWait=0,backgroundWorking=false,bac
 let lastSettlement={coins:0,xp:0};let practice=false,autoNextAt=0;let expedition=null,mode='campaign',map=null,chosenUnit=null;let journey=null,tactics=null,storedRaw=null;const battleClock=createBattleClock();
 function motionPreference(){document.body.dataset.motion=reducedMotion.matches?'reduced':'full';}
 systemMotion.addEventListener('change',motionPreference);motionPreference();
-const performanceProbe=createPerformanceProbe(new URLSearchParams(location.search).has('perf'));
+const performanceQuery=new URLSearchParams(location.search);
+const iosDevice=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const performanceProbe=createPerformanceProbe(performanceQuery.has('perf')?performanceQuery.get('perf')!=='0':iosDevice);
 const $=id=>document.getElementById(id),ctx=$('canvas').getContext('2d'),images={},key='cxq.defense.army.v3';
 let profile=newArmySave(),battle=createBattle({hero:'growth'}),hero='growth',specialization=null,talents={},last=0,ready=false,failed=false,selectedPad=null,stage=1,unitPreview=null;
 let transitioning=false;const loadingStatus=document.createElement('dialog');loadingStatus.id='loading-status';loadingStatus.setAttribute('aria-label','準備冒險');loadingStatus.addEventListener('cancel',e=>e.preventDefault());document.body.append(loadingStatus);
