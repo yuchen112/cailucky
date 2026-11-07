@@ -1,3 +1,4 @@
+import {createEffectAudio} from '../shared/effect-audio.mjs?v=20261108-buffered1';
 const assets = new URL('./audio-legacy/', import.meta.url);
 const cueNames = new Set([
   'hover', 'click', 'pickup', 'shoot', 'hit', 'dash', 'hurt', 'pulse', 'meteor',
@@ -16,6 +17,7 @@ export class Sound {
     this.track.preload = 'none';
     this.track.volume = .32;
     this.effects = new Map();
+    this.bufferedEffects=createEffectAudio();
     this.last = new Map();
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) this.stopEffects();
@@ -33,16 +35,20 @@ export class Sound {
   set muted(value) {
     this._muted = value;
     if (value) this.stopEffects();
+    else if(this.unlocked)this.bufferedEffects?.unlock();
     this.syncMusic();
   }
 
   unlock() {
     if (this.muted) return;
     this.unlocked = true;
+    this.bufferedEffects?.unlock();
+    for(const name of cueNames)void this.bufferedEffects?.prepare(new URL(name+'.wav',assets).href);
     this.syncMusic();
   }
 
   stopEffects() {
+    this.bufferedEffects?.stop();
     for (const pool of this.effects.values()) for (const voice of pool) voice.pause();
   }
 
@@ -74,6 +80,13 @@ export class Sound {
     if (now - (this.last.get(name) ?? -Infinity) < gap) return;
     this.last.set(name, now);
 
+    const allowed=()=>this.unlocked&&!this.muted&&!document.hidden;
+    if(this.bufferedEffects){
+      void this.bufferedEffects.play(new URL(name+'.wav',assets).href,{volume:quietCues.has(name)?.27:.58,allowed}).then(played=>{if(!played&&allowed())this.playMedia(name);});
+    }else this.playMedia(name);
+  }
+
+  playMedia(name){
     let pool = this.effects.get(name);
     if (!pool) this.effects.set(name, pool = []);
     let voice = pool.find(item => item.paused || item.ended);
