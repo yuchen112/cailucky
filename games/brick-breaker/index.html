@@ -7,7 +7,7 @@
 
 
 
-<link rel="stylesheet" href="../shared/runtime.css?v=20260929-mobile1"><script src="../shared/classic-audio.js?v=mobile-fix2"></script><script src="../shared/runtime.js?v=20261010-loadingart3"></script><script defer src="../shared/mobile-performance-v1.js?v=20261012-mobile1"></script><link rel="stylesheet" href="../shared/lantern.css"><link rel="stylesheet" href="rebuilt-brick.css"><link rel="stylesheet" href="../shared/mobile-title.css?v=1"><link rel="stylesheet" href="../shared/mobile-game.css?v=rebuild1"><link rel="stylesheet" href="../shared/mobile-polish.css?v=2"></head>
+<link rel="stylesheet" href="../shared/runtime.css?v=20260929-mobile1"><script src="../shared/classic-audio.js?v=mobile-fix2"></script><script src="../shared/runtime.js?v=20261010-loadingart3"></script><script defer src="../shared/mobile-performance-v1.js?v=20261012-mobile1"></script><link rel="stylesheet" href="../shared/lantern.css"><link rel="stylesheet" href="rebuilt-brick.css"><link rel="stylesheet" href="../shared/mobile-title.css?v=1"><link rel="stylesheet" href="../shared/mobile-game.css?v=rebuild1"><link rel="stylesheet" href="../shared/mobile-polish.css?v=2"><link rel="stylesheet" href="../shared/mobile-pause.css?v=3"></head>
 <body data-mobile-game="brick-breaker" data-cabinet="brick-breaker">
 <div id="app">
   <div class="game-shell" id="shell">
@@ -1132,7 +1132,7 @@ function gameLater(fn,ms){gameJobs.push({fn,left:ms/1000,epoch:gameEpoch})}
   }
 
   function resumeGame(){
-    if(CxQ.orientation('portrait',running&&!gameOver))return;CxQ.countdown(()=>{if(CxQ.orientation('portrait',running&&!gameOver))return;CxQ.resume();paused = false;pauseOverlay.classList.add('hidden');last = performance.now()});
+    if(CxQ.orientation('portrait',running&&!gameOver))return;pauseOverlay.classList.add('hidden');CxQ.countdown(()=>{if(CxQ.orientation('portrait',running&&!gameOver))return;CxQ.resume();paused = false;pauseOverlay.classList.add('hidden');last = performance.now()});
   }
 
   function endGame(win){CxQ.orientation('portrait',false);CxQ.write('cxq-brick-checkpoint',null);CxQ.sound(win?'win':'lose');
@@ -1314,5 +1314,5 @@ const hlPresentationEnd=endGame;endGame=function(win){hlPresentationEnd(win);con
 })();
 </script>
 <script>document.querySelectorAll(".char-card").forEach(c=>c.onclick=()=>{document.querySelectorAll(".char-card").forEach(x=>x.classList.remove("active"));c.classList.add("active");heroArt.src="./assets/characters/"+c.dataset.img;const badge=document.querySelector('.chapter-badge b');if(badge)badge.textContent=c.dataset.name;window.heartlightCharacter=c.dataset.char;localStorage.setItem("heartlight_character_id",c.dataset.char)})</script>
-<script src="../shared/mobile-title.js?v=1"></script><script src="../shared/mobile-game.js?v=rebuild1"></script><script src="../shared/mobile-modes.js?v=2"></script><script src="../shared/mobile-polish.js?v=2"></script></body>
+<script src="../shared/mobile-title.js?v=1"></script><script src="../shared/mobile-game.js?v=rebuild1"></script><script src="../shared/mobile-modes.js?v=2"></script><script src="../shared/mobile-polish.js?v=2"></script><script src="../shared/mobile-pause.js?v=3"></script></body>
 </html>

@@ -1,0 +1,722 @@
+[
+  {
+    "game": "2048",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 262.203125,
+            "width": 366,
+            "height": 319.578125,
+            "top": 262.203125,
+            "right": 378,
+            "bottom": 581.78125,
+            "left": 12
+          },
+          "scroll": 284,
+          "client": 284,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 262.203125,
+            "width": 366,
+            "height": 319.578125,
+            "top": 262.203125,
+            "right": 378,
+            "bottom": 581.78125,
+            "left": 12
+          },
+          "scroll": 284,
+          "client": 284,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 2,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 262.203125,
+            "width": 366,
+            "height": 319.578125,
+            "top": 262.203125,
+            "right": 378,
+            "bottom": 581.78125,
+            "left": 12
+          },
+          "scroll": 284,
+          "client": 284,
+          "position": "fixed"
+        }
+      }
+    ]
+  },
+  {
+    "game": "mines",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 172,
+            "y": 77.296875,
+            "width": 500,
+            "height": 235.390625,
+            "top": 77.296875,
+            "right": 672,
+            "bottom": 312.6875,
+            "left": 172
+          },
+          "scroll": 199,
+          "client": 199,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 172,
+            "y": 77.296875,
+            "width": 500,
+            "height": 235.390625,
+            "top": 77.296875,
+            "right": 672,
+            "bottom": 312.6875,
+            "left": 172
+          },
+          "scroll": 199,
+          "client": 199,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 2,
+        "panel": {
+          "rect": {
+            "x": 172,
+            "y": 77.296875,
+            "width": 500,
+            "height": 235.390625,
+            "top": 77.296875,
+            "right": 672,
+            "bottom": 312.6875,
+            "left": 172
+          },
+          "scroll": 199,
+          "client": 199,
+          "position": "fixed"
+        }
+      }
+    ]
+  },
+  {
+    "game": "link",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 172,
+            "y": 77.296875,
+            "width": 500,
+            "height": 235.390625,
+            "top": 77.296875,
+            "right": 672,
+            "bottom": 312.6875,
+            "left": 172
+          },
+          "scroll": 199,
+          "client": 199,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 172,
+            "y": 77.296875,
+            "width": 500,
+            "height": 235.390625,
+            "top": 77.296875,
+            "right": 672,
+            "bottom": 312.6875,
+            "left": 172
+          },
+          "scroll": 199,
+          "client": 199,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 2,
+        "panel": {
+          "rect": {
+            "x": 172,
+            "y": 77.296875,
+            "width": 500,
+            "height": 235.390625,
+            "top": 77.296875,
+            "right": 672,
+            "bottom": 312.6875,
+            "left": 172
+          },
+          "scroll": 199,
+          "client": 199,
+          "position": "fixed"
+        }
+      }
+    ]
+  },
+  {
+    "game": "tetris",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 251.40625,
+            "width": 366,
+            "height": 341.1875,
+            "top": 251.40625,
+            "right": 378,
+            "bottom": 592.59375,
+            "left": 12
+          },
+          "scroll": 305,
+          "client": 305,
+          "position": "static"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 251.40625,
+            "width": 366,
+            "height": 341.1875,
+            "top": 251.40625,
+            "right": 378,
+            "bottom": 592.59375,
+            "left": 12
+          },
+          "scroll": 305,
+          "client": 305,
+          "position": "static"
+        }
+      },
+      {
+        "round": 2,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 251.40625,
+            "width": 366,
+            "height": 341.1875,
+            "top": 251.40625,
+            "right": 378,
+            "bottom": 592.59375,
+            "left": 12
+          },
+          "scroll": 305,
+          "client": 305,
+          "position": "static"
+        }
+      }
+    ]
+  },
+  {
+    "game": "whack",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 261.203125,
+            "width": 366,
+            "height": 321.578125,
+            "top": 261.203125,
+            "right": 378,
+            "bottom": 582.78125,
+            "left": 12
+          },
+          "scroll": 286,
+          "client": 286,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 261.203125,
+            "width": 366,
+            "height": 321.578125,
+            "top": 261.203125,
+            "right": 378,
+            "bottom": 582.78125,
+            "left": 12
+          },
+          "scroll": 286,
+          "client": 286,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 2,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 261.203125,
+            "width": 366,
+            "height": 321.578125,
+            "top": 261.203125,
+            "right": 378,
+            "bottom": 582.78125,
+            "left": 12
+          },
+          "scroll": 286,
+          "client": 286,
+          "position": "fixed"
+        }
+      }
+    ]
+  },
+  {
+    "game": "memory",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 292.40625,
+            "width": 366,
+            "height": 259.171875,
+            "top": 292.40625,
+            "right": 378,
+            "bottom": 551.578125,
+            "left": 12
+          },
+          "scroll": 223,
+          "client": 223,
+          "position": "static"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 292.40625,
+            "width": 366,
+            "height": 259.171875,
+            "top": 292.40625,
+            "right": 378,
+            "bottom": 551.578125,
+            "left": 12
+          },
+          "scroll": 223,
+          "client": 223,
+          "position": "static"
+        }
+      },
+      {
+        "round": 2,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 292.40625,
+            "width": 366,
+            "height": 259.171875,
+            "top": 292.40625,
+            "right": 378,
+            "bottom": 551.578125,
+            "left": 12
+          },
+          "scroll": 223,
+          "client": 223,
+          "position": "static"
+        }
+      }
+    ]
+  },
+  {
+    "game": "dino",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 172,
+            "y": 77.296875,
+            "width": 500,
+            "height": 235.390625,
+            "top": 77.296875,
+            "right": 672,
+            "bottom": 312.6875,
+            "left": 172
+          },
+          "scroll": 199,
+          "client": 199,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 172,
+            "y": 77.296875,
+            "width": 500,
+            "height": 235.390625,
+            "top": 77.296875,
+            "right": 672,
+            "bottom": 312.6875,
+            "left": 172
+          },
+          "scroll": 199,
+          "client": 199,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 2,
+        "panel": {
+          "rect": {
+            "x": 172,
+            "y": 77.296875,
+            "width": 500,
+            "height": 235.390625,
+            "top": 77.296875,
+            "right": 672,
+            "bottom": 312.6875,
+            "left": 172
+          },
+          "scroll": 199,
+          "client": 199,
+          "position": "fixed"
+        }
+      }
+    ]
+  },
+  {
+    "game": "flappy",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 234.203125,
+            "width": 366,
+            "height": 375.578125,
+            "top": 234.203125,
+            "right": 378,
+            "bottom": 609.78125,
+            "left": 12
+          },
+          "scroll": 340,
+          "client": 340,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 234.203125,
+            "width": 366,
+            "height": 375.578125,
+            "top": 234.203125,
+            "right": 378,
+            "bottom": 609.78125,
+            "left": 12
+          },
+          "scroll": 340,
+          "client": 340,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 2,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 234.203125,
+            "width": 366,
+            "height": 375.578125,
+            "top": 234.203125,
+            "right": 378,
+            "bottom": 609.78125,
+            "left": 12
+          },
+          "scroll": 340,
+          "client": 340,
+          "position": "fixed"
+        }
+      }
+    ]
+  },
+  {
+    "game": "brick-breaker",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 215.515625,
+            "width": 366,
+            "height": 412.96875,
+            "top": 215.515625,
+            "right": 378,
+            "bottom": 628.484375,
+            "left": 12
+          },
+          "scroll": 377,
+          "client": 377,
+          "position": "relative"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 215.515625,
+            "width": 366,
+            "height": 412.96875,
+            "top": 215.515625,
+            "right": 378,
+            "bottom": 628.484375,
+            "left": 12
+          },
+          "scroll": 377,
+          "client": 377,
+          "position": "relative"
+        }
+      },
+      {
+        "round": 2,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 215.515625,
+            "width": 366,
+            "height": 412.96875,
+            "top": 215.515625,
+            "right": 378,
+            "bottom": 628.484375,
+            "left": 12
+          },
+          "scroll": 377,
+          "client": 377,
+          "position": "relative"
+        }
+      }
+    ]
+  },
+  {
+    "game": "magic-bubble",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 262.203125,
+            "width": 366,
+            "height": 319.578125,
+            "top": 262.203125,
+            "right": 378,
+            "bottom": 581.78125,
+            "left": 12
+          },
+          "scroll": 284,
+          "client": 284,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 262.203125,
+            "width": 366,
+            "height": 319.578125,
+            "top": 262.203125,
+            "right": 378,
+            "bottom": 581.78125,
+            "left": 12
+          },
+          "scroll": 284,
+          "client": 284,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 2,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 262.203125,
+            "width": 366,
+            "height": 319.578125,
+            "top": 262.203125,
+            "right": 378,
+            "bottom": 581.78125,
+            "left": 12
+          },
+          "scroll": 284,
+          "client": 284,
+          "position": "fixed"
+        }
+      }
+    ]
+  },
+  {
+    "game": "dream-match",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 262.203125,
+            "width": 366,
+            "height": 319.578125,
+            "top": 262.203125,
+            "right": 378,
+            "bottom": 581.78125,
+            "left": 12
+          },
+          "scroll": 284,
+          "client": 284,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 262.203125,
+            "width": 366,
+            "height": 319.578125,
+            "top": 262.203125,
+            "right": 378,
+            "bottom": 581.78125,
+            "left": 12
+          },
+          "scroll": 284,
+          "client": 284,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 2,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 262.203125,
+            "width": 366,
+            "height": 319.578125,
+            "top": 262.203125,
+            "right": 378,
+            "bottom": 581.78125,
+            "left": 12
+          },
+          "scroll": 284,
+          "client": 284,
+          "position": "fixed"
+        }
+      }
+    ]
+  },
+  {
+    "game": "merge",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 262.203125,
+            "width": 366,
+            "height": 319.578125,
+            "top": 262.203125,
+            "right": 378,
+            "bottom": 581.78125,
+            "left": 12
+          },
+          "scroll": 284,
+          "client": 284,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 262.203125,
+            "width": 366,
+            "height": 319.578125,
+            "top": 262.203125,
+            "right": 378,
+            "bottom": 581.78125,
+            "left": 12
+          },
+          "scroll": 284,
+          "client": 284,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 2,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 262.203125,
+            "width": 366,
+            "height": 319.578125,
+            "top": 262.203125,
+            "right": 378,
+            "bottom": 581.78125,
+            "left": 12
+          },
+          "scroll": 284,
+          "client": 284,
+          "position": "fixed"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,351 @@
+/* The overlay owns no space in the game document. */
+html.cp-lock,
+body.cp-lock {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+}
+.mg-game dialog:not([open]) {
+  display: none !important;
+}
+.mg-game dialog[open]:not(.mobile-title):not(.mg-orientation) {
+  position: fixed !important;
+  inset: 0 !important;
+  margin: auto !important;
+  box-sizing: border-box;
+  max-height: calc(100dvh - 24px) !important;
+  overscroll-behavior: contain;
+}
+.mg-game .cp-card {
+  box-sizing: border-box !important;
+  width: min(420px, calc(100vw - 24px)) !important;
+  max-width: 420px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: calc(100dvh - 24px) !important;
+  overflow: auto !important;
+  padding: 24px !important;
+  margin: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  background: var(--mg-panel) center/100% 100% no-repeat !important;
+  text-align: center;
+}
+.mg-game .cp-card h2 {
+  font-size: 24px !important;
+  line-height: 1.3 !important;
+  margin: 0 !important;
+}
+.mg-game .cp-card p {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+}
+.mg-game .cp-card > img,
+.mg-game .cp-card > img.mg-panel-mark {
+  width: 60px !important;
+  height: 60px !important;
+  max-height: 60px !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+  align-self: center;
+}
+.mg-game .cp-card :is(.menu-actions, .dialog-actions, .cp-actions) {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+}
+.mg-game
+  .cp-card
+  :is(.menu-actions, .dialog-actions, .cp-actions)
+  > button:first-child {
+  grid-column: 1/-1;
+}
+.mg-game .cp-card button {
+  height: auto !important;
+  min-height: 48px !important;
+  margin: 0 !important;
+  font-size: 14px !important;
+  padding: 10px 12px !important;
+  line-height: 1.4 !important;
+}
+.mg-game .cp-card > .mp-sound {
+  min-height: 44px !important;
+  align-self: center;
+}
+.mg-game #pause.pause-overlay.show,
+.mg-game #pauseOverlay:not(.hidden),
+.mg-game #layer.show:not(:has(.form)) {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  margin: 0 !important;
+  padding: 12px !important;
+  box-sizing: border-box !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  z-index: 50 !important;
+  background: #080e1edb !important;
+}
+.mg-game #pauseLayer.show {
+  visibility: hidden !important;
+}
+.mg-game .cp-confirm {
+  width: min(420px, calc(100vw - 24px)) !important;
+  height: fit-content !important;
+  padding: 24px !important;
+}
+.cp-confirm .cp-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.mg-game #cp-pause {
+  min-width: 64px;
+  min-height: 48px;
+  font-size: 13px;
+}
+.mg-game[data-puzzle] .puzzle-round {
+  grid-template-columns: minmax(0, 1fr) auto auto !important;
+  gap: 6px !important;
+}
+.mg-game[data-mobile-game="memory"] .memory-tools {
+  grid-template-columns: auto minmax(0, 1fr) auto auto auto !important;
+  gap: 4px !important;
+}
+.mg-game[data-mobile-game="memory"] .memory-tools button {
+  padding-inline: 8px !important;
+  font-size: 12px !important;
+}
+@media (max-height: 500px) {
+  .mg-game .cp-card {
+    width: min(500px, calc(100vw - 24px)) !important;
+    max-width: 500px !important;
+    padding: 18px !important;
+    gap: 8px !important;
+  }
+  .mg-game .cp-card > img {
+    display: none !important;
+  }
+  .mg-game .cp-card p {
+    font-size: 13px !important;
+  }
+  .mg-game .cp-card h2 {
+    font-size: 22px !important;
+  }
+}
+/* Each special is centered in the same movable cell as its gem. */
+.mg-game[data-mobile-game="dream-match"] #board .cell {
+  position: relative;
+  overflow: hidden !important;
+  isolation: isolate;
+}
+.mg-game[data-mobile-game="dream-match"] .special-mark {
+  position: absolute !important;
+  inset: 0 !important;
+  margin: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  pointer-events: none !important;
+  z-index: 2;
+  transform: none;
+}
+.mg-game[data-mobile-game="dream-match"] .special-mark.column {
+  rotate: 90deg;
+}
+.mg-game[data-mobile-game="whack"] #play:not([hidden]) {
+  gap: 8px !important;
+  grid-template-rows: 56px minmax(0, 1fr) 44px 30px !important;
+}
+.mg-game[data-mobile-game="whack"] .hole-field {
+  padding: 0 !important;
+  overflow: hidden;
+  background-size: cover !important;
+  background-position: center bottom !important;
+}
+.mg-game[data-mobile-game="whack"] #board {
+  width: min(100%, 440px) !important;
+  height: auto !important;
+  aspect-ratio: 0.86 !important;
+  max-height: 100% !important;
+  gap: 3px !important;
+  padding: 0 4px !important;
+  box-sizing: border-box;
+}
+.mg-game[data-mobile-game="whack"] .hole {
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: auto !important;
+  overflow: hidden !important;
+  background: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  isolation: isolate;
+  touch-action: none !important;
+}
+.mg-game[data-mobile-game="whack"] .burrow,
+.mg-game[data-mobile-game="whack"] .burrow-front {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: auto !important;
+  transform: none !important;
+  object-fit: fill !important;
+  pointer-events: none !important;
+}
+.mg-game[data-mobile-game="whack"] .burrow {
+  z-index: 0;
+}
+.mg-game[data-mobile-game="whack"] .burrow-front {
+  display: block !important;
+  z-index: 3;
+  translate: 0 4%;
+}
+.mg-game[data-mobile-game="whack"] .target {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: auto !important;
+  transform: translateY(calc((1 - var(--emerge, 0)) * 80%)) !important;
+  transition: none !important;
+  z-index: 1;
+  opacity: var(--emerge, 0);
+  clip-path: inset(0 2% calc(22% + (1 - var(--emerge, 0)) * 80%) 2%);
+  pointer-events: none !important;
+}
+.mg-game[data-mobile-game="whack"] .target > img {
+  position: absolute !important;
+  top: 0 !important;
+  left: -3% !important;
+  width: 106% !important;
+  height: 106% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+}
+.mg-game[data-mobile-game="whack"] .target > .bonus-token {
+  width: 26% !important;
+  height: 26% !important;
+  left: auto !important;
+  top: 30% !important;
+  right: 4% !important;
+}
+.mg-game[data-mobile-game="whack"] .hole.hit .target {
+  filter: brightness(1.15);
+}
+.mg-game[data-mobile-game="whack"] .hole .hit-art {
+  z-index: 4;
+  inset: 0 !important;
+  object-fit: contain;
+  pointer-events: none;
+}
+.mg-game[data-mobile-game="whack"] .hole .pop {
+  z-index: 5;
+  top: 0 !important;
+  color: #fff1bd !important;
+  font-size: 18px !important;
+  line-height: 24px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: none !important;
+  pointer-events: none;
+}
+.mg-game[data-mobile-game="whack"] .whack-round-status {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 5px !important;
+  flex-wrap: wrap !important;
+  font-size: 12px !important;
+}
+.mg-game[data-mobile-game="whack"] .whack-round-status p {
+  margin: 0 !important;
+  font-size: 12px !important;
+  text-align: center;
+}
+.mg-game[data-mobile-game="whack"] .legend {
+  justify-content: center !important;
+  gap: 7px !important;
+  font-size: 11px !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+}
+@media (max-height: 650px) {
+  .mg-game[data-mobile-game="whack"] #board {
+    width: min(100%, calc((100dvh - 160px) * 0.86)) !important;
+  }
+  .mg-game[data-mobile-game="whack"] #play:not([hidden]) {
+    grid-template-rows: 50px minmax(0, 1fr) 38px 26px !important;
+    gap: 5px !important;
+  }
+  .mg-game[data-mobile-game="whack"] .legend {
+    font-size: 10px !important;
+  }
+}
+.mg-game dialog[open]:not(.mobile-title):not(.mg-orientation) {
+  height: fit-content !important;
+}
+.mg-game .cp-card {
+  height: fit-content !important;
+}
+.mg-game[data-mobile-game="2048"] .number-actions {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 4px !important;
+}
+.mg-game[data-mobile-game="2048"] .number-actions button {
+  font-size: 12px !important;
+  min-width: 0 !important;
+  padding: 8px 4px !important;
+}
+.mg-game[data-mobile-game="2048"] .number-actions > #gallery,
+.mg-game[data-mobile-game="2048"] .number-actions > #numberHome {
+  display: none !important;
+}
+.mg-game[data-mobile-game="whack"] .hole-field {
+  background-image: url("rebuilt/whack-clearing.webp") !important;
+  background-size: 100% 100% !important;
+}
+.mg-game[data-mobile-game="dream-match"]
+  #board
+  .cell[data-special="prism"]
+  .gem {
+  position: absolute !important;
+  inset: -12.5% !important;
+  width: 125% !important;
+  height: 125% !important;
+  max-width: none !important;
+  max-height: none !important;
+}
+.mg-game[data-mobile-game="whack"] .target {
+  opacity: 1 !important;
+}
+.mg-game[data-mobile-game="dream-match"] .prism-color {
+  position: absolute !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 28% !important;
+  height: 28% !important;
+  object-fit: contain !important;
+  pointer-events: none;
+  z-index: 3;
+}
+.mg-polished[data-mobile-game="mines"] > main {
+  box-sizing: border-box;
+  max-height: 100dvh;
+}

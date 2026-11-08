@@ -342,7 +342,8 @@
   function arrangeMemory() {
     if (game !== "memory") return;
     const form = $("#layer.show .form");
-    if (!form || form.dataset.paged) return;
+    if(!form){$('#modal')?.classList.remove('mp-memory-setup');return;}
+    if (form.dataset.paged) return;
     form.dataset.paged = "true";
     const groups = { main: [], deck: [], back: [] };
     const retained = [];

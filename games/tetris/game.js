@@ -527,6 +527,7 @@
   }
   function resume() {
     if (CxQ.orientation("portrait", running)) return;
+    $("#pause").classList.remove("show");
     CxQ.countdown(() => {
       if (CxQ.orientation("portrait", running)) return;
       CxQ.resume();

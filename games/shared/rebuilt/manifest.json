@@ -1,7 +1,7 @@
 {
   "version": "mobile-rebuild-20261109",
-  "artFiles": 309,
-  "totalBytes": 9961816,
+  "artFiles": 314,
+  "totalBytes": 10301164,
   "assets": [
     {
       "file": "animal-0.webp",
@@ -1469,6 +1469,16 @@
       "sha256": "5db2f7ad8494650a2c089d511d4737e11bf047c5f5920a300ac401a7a1b6a4fd"
     },
     {
+      "file": "special-prism.webp",
+      "bytes": 24086,
+      "sha256": "20689ea443542bfeeaa609404fd65f161168021a8af22486d337106743bb054d"
+    },
+    {
+      "file": "special-row.webp",
+      "bytes": 18068,
+      "sha256": "f06a1253b6dc1bbfd706e5eebb4fd8a039d96933eb3b832bbc39b1c4e332b365"
+    },
+    {
       "file": "star.webp",
       "bytes": 22620,
       "sha256": "0621ba2ba5bdd5751769340471a6482c0631f49d58ba7f7e7167a2b7e6c3b560"
@@ -1539,9 +1549,24 @@
       "sha256": "ceb2657bc5f6cb71b3e146709025c51e05d9f048d0246afd5a20448b8588230d"
     },
     {
+      "file": "whack-clearing.webp",
+      "bytes": 258650,
+      "sha256": "8399b4363d5705fa4b6cfa4c99185cee07c295a528445d2674e186f7c83f72f7"
+    },
+    {
       "file": "whack-heart.webp",
       "bytes": 29862,
       "sha256": "7c8447e3c04d2aa41b0b28b1901ca9094f43daa80b992129902c5a01a9f0a542"
+    },
+    {
+      "file": "whack-hole-back.webp",
+      "bytes": 20938,
+      "sha256": "f7901da4990d66f67352f154d8c255f66cf6f6638b03655ff266c41261d21d6a"
+    },
+    {
+      "file": "whack-hole-front.webp",
+      "bytes": 17606,
+      "sha256": "6cc5312df3388994dfa4f6891d41ae96ce3783c01220e17452c79197d0ed3599"
     },
     {
       "file": "whack-star.webp",
