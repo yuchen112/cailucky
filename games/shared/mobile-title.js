@@ -143,10 +143,13 @@
   title.setAttribute("aria-labelledby", "mobile-game-title");
   title.innerHTML =
     '<div class="mobile-title-layout"><img class="mobile-title-art" alt="">' +
-    '<header><a class="mobile-return">‹ 遊戲館</a></header>' +
-    '<div class="mobile-title-name"><p></p><h1 id="mobile-game-title" tabindex="-1"></h1></div>' +
-    '<section class="mobile-title-dock" aria-label="遊戲選單"><p></p><div class="mobile-title-actions"></div></section></div>';
-  title.querySelector("img").src = art;
+    '<header><a class="mobile-return">‹ 返回</a><span>CxQ</span></header>' +
+    '<div class="mobile-title-name"><p></p><img class="mobile-game-logo" alt=""><h1 id="mobile-game-title" tabindex="-1"></h1></div>' +
+    '<section class="mobile-title-dock" aria-label="遊戲選單"><p></p><div class="mobile-title-actions"></div><nav class="mobile-function-bar" aria-label="遊戲功能"></nav></section></div>';
+  title.querySelector(".mobile-title-art").src = art;
+  title.querySelector(".mobile-game-logo").src =
+    "../shared/mobile-brand/" + game + ".webp";
+  title.querySelector(".mobile-game-logo").alt = config.title;
   title.querySelector("header a").href = hall;
   title.querySelector(".mobile-title-name p").textContent =
     "CxQ　·　" + config.label;
@@ -175,14 +178,45 @@
   function showTitle() {
     if (title.open) return;
     actions.replaceChildren();
+    const functions = title.querySelector(".mobile-function-bar");
+    functions.replaceChildren();
     for (const [label, target] of config.actions) {
       if (target?.startsWith("@") && !destination(target)) continue;
       const button = document.createElement("button");
       button.type = "button";
-      button.className = actions.children.length
-        ? "mobile-secondary"
-        : "mobile-primary";
-      button.textContent = label;
+      button.setAttribute("aria-label", label);
+      const primary = !actions.children.length;
+      button.className = primary ? "mobile-primary" : "mobile-function";
+      if (primary) {
+        const strong = document.createElement("strong");
+        strong.textContent = label.includes("繼續") ? "繼續遊戲" : "開始遊戲";
+        const sub = document.createElement("small");
+        sub.textContent = label;
+        button.append(strong, sub);
+      } else {
+        const icon = document.createElement("img");
+        icon.alt = "";
+        icon.src =
+          "../shared/mobile-brand/" +
+          (/紀錄/.test(label)
+            ? "records"
+            : /收藏|圖鑑|地圖/.test(label)
+              ? "collection"
+              : /經典/.test(label)
+                ? "settings"
+                : "guide") +
+          ".webp";
+        const text = document.createElement("span");
+        text.textContent = target?.startsWith("@")
+          ? "繼續進度"
+          : target === "#homeStart"
+            ? "開始新局"
+            : label.replace(
+                /打開|我的|森林|航程|角色|探險|旅程|配送|表情|與收藏/g,
+                "",
+              );
+        button.append(icon, text);
+      }
       button.addEventListener("click", () => {
         title.close();
         const next = destination(target);
@@ -193,7 +227,7 @@
             newButton
           ).focus();
       });
-      actions.append(button);
+      (primary ? actions : functions).append(button);
     }
     title.showModal();
     title.querySelector("h1").focus({ preventScroll: true });

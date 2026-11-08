@@ -86,7 +86,7 @@ body[data-cabinet="brick-breaker"]
   color: var(--brick-ink) !important;
   background: #17303a var(--brick-surface) center / cover !important;
 }
-body[data-cabinet="brick-breaker"] :is(button, select):not(.char-card) {
+body[data-cabinet="brick-breaker"] :is(button, select):not(.char-card):not(.mobile-primary):not(.mobile-function) {
   min-height: 44px;
   touch-action: manipulation;
   border-radius: 8px !important;
