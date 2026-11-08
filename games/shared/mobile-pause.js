@@ -132,6 +132,27 @@
     sync();
     lastFocus?.focus({ preventScroll: true });
   }
+  async function finishMoveThen(action, resume = true) {
+    closeCustom(resume);
+    if (
+      game === "dream-match" &&
+      $("#board")?.getAttribute("aria-busy") === "true"
+    ) {
+      const main = $("main"),
+        wasInert = main.inert;
+      main.inert = true;
+      const cover = document.createElement("div");
+      cover.className = "cp-finishing";
+      cover.setAttribute("role", "status");
+      cover.textContent = "正在完成這次連鎖…";
+      document.body.append(cover);
+      while ($("#board").getAttribute("aria-busy") === "true")
+        await new Promise((r) => setTimeout(r, 40));
+      cover.remove();
+      main.inert = wasInert;
+    }
+    action();
+  }
   function showCustom(fromLink = false) {
     if (custom) return;
     lastFocus = document.activeElement;
@@ -149,22 +170,23 @@
     if (!restart) d.querySelector("[data-cp=restart]").remove();
     d.querySelector("[data-cp=resume]").onclick = () => closeCustom();
     d.querySelector("[data-cp=restart]")?.addEventListener("click", () => {
-      closeCustom();
-      restart.click();
+      void finishMoveThen(() => restart.click());
     });
     d.querySelector("[data-cp=home]").onclick = () => {
-      closeCustom(game !== "link");
-      if (game === "2048") $("#numberHome")?.click();
-      if (["magic-bubble", "dream-match"].includes(game)) {
-        const entry = $(".game-entry");
-        if (entry) entry.hidden = false;
-        $("main").inert = true;
-      }
-      if (game === "link") {
-        $("#link-home").hidden = false;
-        $(".app").inert = true;
-      }
-      window.CxQTitle?.show();
+      void finishMoveThen(() => {
+        if (game === "link") $("#pauseLayer")?.classList.remove("show");
+        if (game === "2048") $("#numberHome")?.click();
+        if (["magic-bubble", "dream-match"].includes(game)) {
+          const entry = $(".game-entry");
+          if (entry) entry.hidden = false;
+          $("main").inert = true;
+        }
+        if (game === "link") {
+          $("#link-home").hidden = false;
+          $(".app").inert = true;
+        }
+        window.CxQTitle?.show();
+      }, game !== "link");
     };
     d.oncancel = (e) => {
       e.preventDefault();
@@ -225,6 +247,11 @@
   document.addEventListener(
     "keydown",
     (e) => {
+      if ($(".cp-finishing")) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+      }
       const roots = pauseRoots(),
         top = roots.at(-1);
       if (!top) return;

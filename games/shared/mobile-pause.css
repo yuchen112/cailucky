@@ -349,3 +349,19 @@ body.cp-lock {
   box-sizing: border-box;
   max-height: 100dvh;
 }
+/* Native dialog focus is represented by its focused control, not a second frame. */
+.mg-game dialog.cp-card:focus,
+.mg-game dialog.cp-card:focus-visible {
+  outline: none !important;
+}
+.cp-finishing {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #080e1eaa;
+  display: grid;
+  place-items: center;
+  color: #fff1d7;
+  font-size: 18px;
+  touch-action: none;
+}
