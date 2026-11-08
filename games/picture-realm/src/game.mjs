@@ -1,4 +1,4 @@
-import {ART,THEMES,LEVELS,SLIDE_SIZES,JIG_GRIDS,chooseArt,createSlide,slide,solved,createJigsaw,piecePath,target,snapJigsaw,emptySave,validateSave,complete} from './core.mjs?v=20261101-audio1';
+import {ART,THEMES,LEVELS,SLIDE_SIZES,JIG_GRIDS,chooseArt,createSlide,slide,solved,createJigsaw,piecePath,target,snapJigsaw,emptySave,validateSave,complete} from './core.mjs?v=20261108-gallery120';
 import {RealmAudio} from './audio.mjs?v=original1';
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d');
 const IS_TRIAL=location.pathname.endsWith('/play.html');
@@ -11,7 +11,10 @@ const pictures=new Map(),assets={},buttons=[];
 let W=1280,H=800,scale=1,ox=0,oy=0,portrait=false,screen='loading',mode='slide',level=0,rotation=false,page=0,theme=-1,game=null,currentImage=null,paused=false,peekUntil=0,flashUntil=0,flashId=null,selected=null,drag=null,panning=null,zoom=1,pan={x:0,y:0},viewerZoom=1,viewerPan={x:0,y:0},backFromView='gallery',message='',messageUntil=0,dialog=null,focus=-1,loaded=0,loadingError='',lastTick=performance.now(),lastPersist=0,winAt=0,firstUnlock=false,slideAnim=null,downButton=null,fullView=null,sessionLoaded=false;
 const time=t=>`${Math.floor(t/60).toString().padStart(2,'0')}:${Math.floor(t%60).toString().padStart(2,'0')}`;
 const artById=id=>ART.find(a=>a.id===id);
-function loadImage(url){if(pictures.has(url))return pictures.get(url);const promise=new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>resolve(image);image.onerror=()=>reject(new Error('圖片載入失敗：'+url));image.src=url;});pictures.set(url,promise);promise.catch(()=>pictures.delete(url));return promise;}
+function loadImage(url){if(pictures.has(url)){const cached=pictures.get(url);pictures.delete(url);pictures.set(url,cached);return cached;}const promise=new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>resolve(image);image.onerror=()=>reject(new Error('圖片載入失敗：'+url));image.src=url;});pictures.set(url,promise);const artKeys=[...pictures.keys()].filter(key=>/^art\/\d/.test(key));for(const key of artKeys.slice(0,-16))pictures.delete(key);promise.catch(()=>{if(pictures.get(url)===promise)pictures.delete(url);});return promise;}
+let galleryVisible=new Set(),galleryPageKey='';
+const thumbLoads=new Map();
+function loadThumb(art){if(thumbLoads.has(art.id))return;const pending=loadImage(art.thumb);thumbLoads.set(art.id,pending);pending.then(im=>{if(galleryVisible.has(art.id))assets['thumb'+art.id]=im;}).catch(()=>{}).finally(()=>{if(thumbLoads.get(art.id)===pending)thumbLoads.delete(art.id);});}
 function persist(){if(game&&screen==='play'&&!solvedGame())save.active=structuredClone(game);save.updated=Date.now();try{const old=localStorage.getItem(KEY);if(old)localStorage.setItem(BACKUP,old);localStorage.setItem(KEY,JSON.stringify(save));storageOK=true;}catch{storageOK=false;} }
 function notify(text){message=text;messageUntil=performance.now()+3500;}
 let hoverPoint=null,lastUiScreen='',uiEntered=0;const uiMotion=new Map();
@@ -61,7 +64,7 @@ function backdrop(alpha=1){const im=screen==='menu'?(portrait?assets.homeTall:as
 function mainMenu(){
  const collected=Object.keys(save.unlocked).length;
  if(portrait){
-  text('CxQ  PICTURE ATELIER',28,35,14,'#85708f','left','700');text(collected+' / 30 收藏',452,35,14,'#85708f','right','600');
+  text('CxQ  PICTURE ATELIER',28,35,14,'#85708f','left','700');text(collected+' / '+ART.length+' 收藏',452,35,14,'#85708f','right','600');
   fit(assets.titleArt,25,65,366,114);text('把每一種模樣，拼成珍藏。',30,205,18,'#85708f');
   modeCard('slide',30,475,420,140);modeCard('jigsaw',30,630,420,140);
   if(save.active){button('繼續遊戲',28,797,192,60,resumeGame,{primary:true,size:20});button('圖鑑',234,797,101,60,()=>{screen='gallery';page=0;},{size:20});button('設定',349,797,103,60,()=>screen='settings',{size:20});}else{button('收藏圖鑑',30,797,200,60,()=>{screen='gallery';page=0;});button('遊戲設定',250,797,200,60,()=>screen='settings');}
@@ -71,10 +74,10 @@ function mainMenu(){
   fit(assets.titleArt,60,113,451,143);text('把每一種模樣，',67,295,23,'#85708f');text('拼成你的獨家珍藏。',67,332,23,'#85708f');
   text('選一種玩法，隨機遇見新的角色圖景',68,381,18,'#766180','left','600');
   modeCard('slide',64,426,338,247);modeCard('jigsaw',424,426,338,247);
-  button('收藏圖鑑  '+collected+'/30',64,712,239,56,()=>{screen='gallery';page=0;});
+  button('收藏圖鑑  '+collected+'/'+ART.length,64,712,239,56,()=>{screen='gallery';page=0;});
   if(save.active)button('繼續上次遊戲',325,712,230,56,resumeGame);
   button('設定',1110,712,112,56,()=>screen='settings');
-  text(IS_TRIAL?'製作中試玩版':'30 張角色圖景 · 隨機挑戰',1215,40,13,'#85708f','right');
+  text(IS_TRIAL?'製作中試玩版':ART.length+' 張角色圖景 · 隨機挑戰',1215,40,13,'#85708f','right');
  }
 }
 function chooseMode(m){mode=m;screen='choose';focus=-1;}
@@ -90,7 +93,7 @@ function chooseScreen(){
   text(mode==='slide'?'利用空格移動方塊，還原完整圖片。':'拖曳拼片接合，組合後可以一起移動。',W/2,704,15,'#887990','center');
   button('隨機抽圖 · 開始',28,756,424,75,requestStart,{primary:true,size:23});text('完成任何難度，即可解鎖完整收藏圖。',W/2,860,13,'#887990','center');
  }else{
-  panel(54,194,1172,494);fit(icon,90,240,240,240);text(mode==='slide'?'滑動，讓圖景歸位。':'一片片，拼回完整故事。',213,525,21,'#66527b','center','700');text('30 張角色圖 · 隨機出現',213,570,16,'#887990','center');
+  panel(54,194,1172,494);fit(icon,90,240,240,240);text(mode==='slide'?'滑動，讓圖景歸位。':'一片片，拼回完整故事。',213,525,21,'#66527b','center','700');text(ART.length+' 張角色圖 · 隨機出現',213,570,16,'#887990','center');
   text('挑戰難度',394,247,21,'#66527b','left','700');
   LEVELS.forEach((label,i)=>{const x=390+(i%2)*395,y=285+Math.floor(i/2)*88;button(label+' · '+(mode==='slide'?SLIDE_SIZES[i]+'×'+SLIDE_SIZES[i]:JIG_GRIDS[i][0]*JIG_GRIDS[i][1]+' 片'),x,y,364,68,()=>level=i,{selected:level===i,size:22});});
   const on=mode==='slide'?save.settings.numbers:rotation;
@@ -126,11 +129,13 @@ function undo(){if(!game.history?.length)return;sound('undo');game.board=game.hi
 function hint(){const p=game.pieces.find(x=>x.id===selected&&!x.locked)||game.pieces.find(x=>!x.locked);if(!p)return;sound('hint');selected=p.id;flashId=p.id;flashUntil=performance.now()+3000;game.assists++;notify(`第 ${p.id+1} 片的位置已標示，請自行拼合`);persist();}
 function rotateSelected(){const p=game?.pieces?.find(x=>x.id===selected);if(!p||p.locked){sound('error');notify('請先點選一張未固定的散片');return;}if(!game.rotation){sound('error');notify('本局未啟用拼片旋轉');return;}if(game.pieces.filter(x=>x.group===p.group).length>1){sound('error');notify('已拼接成組的拼片不再旋轉');return;}sound('rotate');p.rot=(p.rot+1)%4;game.moves++;persist();}
 function pauseScreen(){buttons.length=0;overlay();const x=portrait?26:374,w=portrait?428:532,y=portrait?230:201;panel(x,y,w,portrait?432:402);text('休息一下',W/2,y+57,31,'#514365','center','700');text('進度已保存，計時暫停。',W/2,y+104,17,'#887990','center');button('繼續遊戲',x+36,y+151,w-72,64,()=>{paused=false;lastTick=performance.now();},{primary:true});button('保存並回首頁',x+36,y+232,w-72,58,()=>{persist();goMenu();});button('返回 CxQ',x+36,y+307,w-72,53,()=>{persist();location.href='../../index.html#game-hub';},{size:17});}
-function galleryScreen(){heading('角色圖鑑','每一次完成，都是一張新的珍藏。  '+Object.keys(save.unlocked).length+' / 30');topBack();
+function galleryScreen(){heading('角色圖鑑','每一次完成，都是一張新的珍藏。  '+Object.keys(save.unlocked).length+' / '+ART.length);topBack();
  const filters=['全部',...THEMES];filters.forEach((t,i)=>{const cols=portrait?4:7,bw=portrait?103:162;button(t,portrait?25+(i%cols)*112:51+i*170,portrait?158+Math.floor(i/cols)*53:173,bw,44,()=>{theme=i-1;page=0;},{size:portrait?13:16,selected:theme===i-1});});
  const list=theme<0?ART:ART.filter(a=>a.theme===THEMES[theme]),per=portrait?4:8,cols=portrait?2:4,start=portrait?288:257,cw=portrait?202:270,ch=portrait?238:218,pages=Math.ceil(list.length/per);page=Math.max(0,Math.min(pages-1,page));
- list.slice(page*per,page*per+per).forEach((a,i)=>{const x=portrait?26+(i%cols)*228:56+(i%cols)*297,y=start+Math.floor(i/cols)*ch,s=portrait?154:146;panel(x,y,cw,ch-8);const unlocked=!!save.unlocked[a.id],img=unlocked?assets['thumb'+a.id]:assets.albumIcon;
-  if(unlocked){if(img)image(img,x+(cw-s)/2,y+12,s,s);else loadImage(a.thumb).then(im=>assets['thumb'+a.id]=im).catch(()=>{});}else{fit(img,x+(cw-116)/2,y+24,116,110,.4);text('尚未解鎖',x+cw/2,y+149,15,'#a698b2','center');}
+ const visible=list.slice(page*per,page*per+per),pageKey=visible.map(a=>a.id).join(',');
+ if(pageKey!==galleryPageKey){galleryPageKey=pageKey;galleryVisible=new Set(visible.map(a=>a.id));for(const key of Object.keys(assets))if(key.startsWith('thumb')&&!galleryVisible.has(key.slice(5))){delete assets[key];pictures.delete('art/'+key.slice(5)+'-thumb.webp');}}
+ visible.forEach((a,i)=>{const x=portrait?26+(i%cols)*228:56+(i%cols)*297,y=start+Math.floor(i/cols)*ch,s=portrait?154:146;panel(x,y,cw,ch-8);const unlocked=!!save.unlocked[a.id],img=unlocked?assets['thumb'+a.id]:assets.albumIcon;
+  if(unlocked){if(img)image(img,x+(cw-s)/2,y+12,s,s);else loadThumb(a);}else{fit(img,x+(cw-116)/2,y+24,116,110,.4);text('尚未解鎖',x+cw/2,y+149,15,'#a698b2','center');}
   text(unlocked?a.title:'未知圖景 '+a.id,x+cw/2,y+(portrait?184:175),portrait?17:18,unlocked?'#66527b':'#9d8daa','center','600');
   if(unlocked){const marks=Object.keys(save.records).filter(k=>k.startsWith(a.id+':')).length;text(marks+' / 8 挑戰',x+cw/2,y+(portrait?209:196),12,'#887990','center');}
   buttons.push({label:unlocked?'欣賞 '+a.title:'尚未解鎖 '+a.id,x,y,w:cw,h:ch-8,enabled:true,action:()=>unlocked?openViewer(a.id,'gallery'):notify('完成隨機挑戰後，就能收藏這張圖片。')});});
@@ -160,7 +165,7 @@ function settingsScreen(){
  if(portrait)text('換手機前請先匯出收藏備份。',W/2,766,13,'#887990','center');
 }
 function exportSave(){persist();const blob=new Blob([JSON.stringify(save,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`CxQ-幻裝圖境-${new Date().toISOString().slice(0,10)}.json`;a.click();sound('download');setTimeout(()=>URL.revokeObjectURL(url),1000);}
-function importSave(){const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=async()=>{const f=input.files?.[0];if(!f)return;if(f.size>3e6){notify('備份檔案過大');return;}try{const imported=validateSave(JSON.parse(await f.text()));dialog={title:'匯入這份備份？',lines:[`備份收藏：${Object.keys(imported.unlocked).length} / 30 張`,'目前進度會先保留一份瀏覽器備份。'],yes:()=>{save=imported;soundtrack.update();sound('download');game=null;persist();dialog=null;notify('備份匯入完成');}};}catch{notify('檔案格式不正確，原存檔未變更');}};input.click();}
+function importSave(){const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=async()=>{const f=input.files?.[0];if(!f)return;if(f.size>3e6){notify('備份檔案過大');return;}try{const imported=validateSave(JSON.parse(await f.text()));dialog={title:'匯入這份備份？',lines:[`備份收藏：${Object.keys(imported.unlocked).length} / ${ART.length} 張`,'目前進度會先保留一份瀏覽器備份。'],yes:()=>{save=imported;soundtrack.update();sound('download');game=null;persist();dialog=null;notify('備份匯入完成');}};}catch{notify('檔案格式不正確，原存檔未變更');}};input.click();}
 function drawDialog(){buttons.length=0;overlay();const x=portrait?25:340,w=portrait?430:600,y=portrait?250:230;panel(x,y,w,355);text(dialog.title,W/2,y+61,27,'#514365','center','700');dialog.lines.forEach((s,i)=>text(s,W/2,y+125+i*34,portrait?14:18,'#887990','center'));button('取消',x+29,y+248,(w-76)/2,62,()=>dialog=null);button('確認',x+47+(w-76)/2,y+248,(w-76)/2,62,dialog.yes,{primary:true});}
 function render(now){
  soundtrack.setScene(screen==='play'?(game?.mode==='jigsaw'?'jigsaw':'slide'):['gallery','viewer','win'].includes(screen)?'gallery':'home',paused||!!dialog);
