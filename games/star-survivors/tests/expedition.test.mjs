@@ -143,3 +143,29 @@ check('trait cultivation changes memory echo, crystal freeze and healing empower
  assert.ok(Math.abs(freezes[1]/freezes[0]-1.5)<1e-6);
  assert.ok(petals[1]>petals[0]);
 });
+
+check('effective recovery excludes overheal and saturated shields, stats survive reload',()=>{
+ const g=isolated('healing');g.player.hp=g.player.maxHp-1;g.time=9.99;
+ step(g,.02);assert.equal(g.roleState.healing,1);
+ g.roleState.healAt=g.time;g.player.shield=40;
+ step(g,.02);assert.equal(g.roleState.shieldGranted,0);
+ const back=restore(serialize(g));assert.ok(back);assert.equal(back.roleState.healing,1);
+ const old=JSON.parse(serialize(g));delete old.roleState.statsStart;delete old.roleState.healing;assert.ok(restore(old));
+});
+check('cultivation telemetry clips overkill and captures innate procs across roles',()=>{
+ for(const id of ['dream','night','memory','growth','luck','hope']){
+  const g=isolated(id);const e=target(g,100,-12);e.hp=e.maxHp=10;
+  ticks(g,360);assert.ok((g.roleState.mainDamage||0)<=10.00001,id);
+  assert.ok((g.roleState.traitDamage||0)<=10.00001,id);
+ }
+ const m=isolated('memory');target(m);ticks(m,360);assert.equal(m.roleState.replays,1);
+});
+
+check('defensive telemetry separates innate blocks from consumed shields',()=>{
+ const g=isolated('trust');g.weapons['main-trust']=0;
+ const e=target(g,0,0);e.contact=20;
+ step(g,.02);assert.equal(g.roleState.blocks,1);assert.equal(g.roleState.blockedDamage,20);
+ e.x=0;e.y=0;g.player.inv=0;g.player.shield=5;g.roleState.guardAt=1e6;
+ step(g,.02);assert.equal(g.roleState.blocks,1);assert.equal(g.roleState.shieldAbsorbed,5);
+ assert.equal(g.player.hp,g.player.maxHp-15);
+});

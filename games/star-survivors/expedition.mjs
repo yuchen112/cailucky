@@ -1,9 +1,11 @@
-import {traitEffect} from './expedition-data.mjs?v=6.11';
+import {playOutcomeMotion} from './outcome-motion.mjs?v=6.12';
+import {rolePerformance} from './expedition-stats.mjs?v=6.12';
+import {traitEffect} from './expedition-data.mjs?v=6.12';
 import {loadAnimationManifest,ensureRoleAnimation,ensureMapAnimations,ensureMonsterAnimation,actorFrame} from './animation-assets.mjs?v=5.5';
 import{bindBattleTouch}from'./battle-touch.mjs?v=6.9';
-import{ROLES,MAPS,MONSTERS,EQUIPMENT,PASSIVES,DIFFICULTY_ORDER,DIFFICULTY,getRole,getMap,weaponName,branchOf,upgradeInfo}from'./expedition-data.mjs?v=6.11';
-import{createExpedition,step,choose,reroll,skip,ban,dash,active,restore,serialize,summary,defaultProfile,validateProfile,upgradeCost,upgradeEquipment,upgradeTrait,settle,canEnterDifficulty,ensureChoices}from'./expedition-core.mjs?v=6.11';
-import{Renderer,preview}from'./expedition-renderer.mjs?v=6.11';
+import{ROLES,MAPS,MONSTERS,EQUIPMENT,PASSIVES,DIFFICULTY_ORDER,DIFFICULTY,getRole,getMap,weaponName,branchOf,upgradeInfo}from'./expedition-data.mjs?v=6.12';
+import{createExpedition,step,choose,reroll,skip,ban,dash,active,restore,serialize,summary,defaultProfile,validateProfile,upgradeCost,upgradeEquipment,upgradeTrait,settle,canEnterDifficulty,ensureChoices}from'./expedition-core.mjs?v=6.12';
+import{Renderer,preview}from'./expedition-renderer.mjs?v=6.12';
 import{Sound}from'./audio-v5.mjs?v=20261108-buffered1';
 const $=id=>document.getElementById(id),KEY='cxq-star-survivors-v4',RUN=KEY+'-run',OLD='cxq-star-survivors-v1';
 const escapeHTML=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -129,6 +131,7 @@ function showOutcome(result,recorded){
   const art=document.createElement('img');
   art.src=portrait(role.id);art.alt=role.name;
   scene.append(art);
+  playOutcomeMotion(art,game.roleId,won,images);
   const text=document.createElement('p');
   text.textContent=won?role.name+'完成了這場遠征。':role.name+'在戰鬥中倒下了。';
   const detail=document.createElement('small');
@@ -163,7 +166,21 @@ function revealChests(result,recorded){
   reveal();
 }
 function showResult(r,recorded){
-  const role=getRole(game.roleId),map=getMap(game.mapId);modal(r.win?'遠征凱旋':'星光仍會再次出發',r.win?`${role.name}完成了${map.name}的遠征。帶著收集到的素材，準備下一場冒險。`:'遠征結束。下方列出本局的戰利品。',r.win?'EXPEDITION COMPLETE':'EXPEDITION RESULTS','results');const medal=document.createElement('div');medal.className='result-medal';medal.innerHTML=`${icon(r.win?'chest':'gem')}<div><b>${map.name}</b><p>${role.name} · ${r.win?'首領討伐成功':'本次遠征結束'}</p></div>`;$('modal-body').append(medal);for(const[value,label]of[[format(r.seconds),'遠征時間'],[r.kills,'擊敗怪物'],[r.level,'角色等級'],[r.coins,'獲得星光'],[r.damage,'造成傷害'],[r.mastery||0,'角色熟練']]){const d=document.createElement('div');d.className='stat';d.innerHTML=`<b${typeof value==='number'?` data-target="${value}"`:''}>${typeof value==='number'?0:value}</b><span>${label}</span>`;$('modal-body').append(d)}const loot=document.createElement('div');loot.className='result-loot';loot.innerHTML=Object.entries(r.materials||{}).filter(([,n])=>n>0).map(([id,n])=>`<span>${materialIcon(id)}${materialName(id)}<b>+${n}</b></span>`).join('')||'<span>本次未取得素材</span>';$('modal-body').append(loot);const breakdown=document.createElement('p');breakdown.className='result-breakdown';const list=items=>Object.entries(items).filter(([,n])=>n>0).map(([id,n])=>materialName(id)+' +'+n).join('、')||'無';breakdown.innerText=['戰場拾取 · 星光 +'+(r.coins-r.chestCoins-(r.win?65:0))+' · '+list(r.fieldMaterials)+'（難度素材倍率 ×'+r.rewardMultiplier+'）','寶箱 ×'+r.chests+' · 星光 +'+r.chestCoins+' · '+list({[r.chestMaterial]:r.chestMaterials}),...(r.win?['通關獎勵 · 星光 +65 · '+list(r.clearMaterials)]:[]),...(recorded?[]:['目前無法寫入存檔，獎勵仍保留在本頁。'])].join('\n');$('modal-body').append(breakdown);const trait=document.createElement('p');trait.className='result-breakdown';trait.textContent='本局特性 Lv.'+game.traitLevel+' · '+traitEffect(game.roleId,game.traitLevel)+(Number.isFinite(game.roleState.mainDamage)?'\n專屬武器與主動技能有效傷害 '+Math.round(game.roleState.mainDamage).toLocaleString():'');$('modal-body').append(trait);const build=document.createElement('div');build.className='result-build';build.innerHTML=Object.entries(game.weapons).filter(([,n])=>n).map(([id,n])=>`<span title="${weaponName(game,id)}">${icon(id)}<small>${n===5?'★':n}</small></span>`).join('');$('modal-body').append(build);resultAt=performance.now();action('再次遠征',()=>begin(),true);action('回營地強化',()=>{if(recorded){try{localStorage.removeItem(RUN)}catch{}saved=null}tab='workshop';home()});focusDialog()}
+  const role=getRole(game.roleId),map=getMap(game.mapId);modal(r.win?'遠征凱旋':'星光仍會再次出發',r.win?`${role.name}完成了${map.name}的遠征。帶著收集到的素材，準備下一場冒險。`:'遠征結束。下方列出本局的戰利品。',r.win?'EXPEDITION COMPLETE':'EXPEDITION RESULTS','results');const medal=document.createElement('div');medal.className='result-medal';medal.innerHTML=`${icon(r.win?'chest':'gem')}<div><b>${map.name}</b><p>${role.name} · ${r.win?'首領討伐成功':'本次遠征結束'}</p></div>`;$('modal-body').append(medal);for(const[value,label]of[[format(r.seconds),'遠征時間'],[r.kills,'擊敗怪物'],[r.level,'角色等級'],[r.coins,'獲得星光'],[r.damage,'造成傷害'],[r.mastery||0,'角色熟練']]){const d=document.createElement('div');d.className='stat';d.innerHTML=`<b${typeof value==='number'?` data-target="${value}"`:''}>${typeof value==='number'?0:value}</b><span>${label}</span>`;$('modal-body').append(d)}const loot=document.createElement('div');loot.className='result-loot';loot.innerHTML=Object.entries(r.materials||{}).filter(([,n])=>n>0).map(([id,n])=>`<span>${materialIcon(id)}${materialName(id)}<b>+${n}</b></span>`).join('')||'<span>本次未取得素材</span>';$('modal-body').append(loot);const breakdown=document.createElement('p');breakdown.className='result-breakdown';const list=items=>Object.entries(items).filter(([,n])=>n>0).map(([id,n])=>materialName(id)+' +'+n).join('、')||'無';breakdown.innerText=['戰場拾取 · 星光 +'+(r.coins-r.chestCoins-(r.win?65:0))+' · '+list(r.fieldMaterials)+'（難度素材倍率 ×'+r.rewardMultiplier+'）','寶箱 ×'+r.chests+' · 星光 +'+r.chestCoins+' · '+list({[r.chestMaterial]:r.chestMaterials}),...(r.win?['通關獎勵 · 星光 +65 · '+list(r.clearMaterials)]:[]),...(recorded?[]:['目前無法寫入存檔，獎勵仍保留在本頁。'])].join('\n');$('modal-body').append(breakdown);const trait=document.createElement('p');trait.className='result-breakdown';trait.textContent='本局特性 Lv.'+game.traitLevel+' · '+traitEffect(game.roleId,game.traitLevel)+(Number.isFinite(game.roleState.mainDamage)?'\n專屬武器與主動技能有效傷害 '+Math.round(game.roleState.mainDamage).toLocaleString():'');$('modal-body').append(trait);
+const performancePanel=document.createElement('section');
+performancePanel.className='performance-panel';
+const performanceStats=rolePerformance(game);
+const heading=document.createElement('h3');heading.textContent=getRole(game.roleId).innate.name+' · 本局表現';
+performancePanel.append(heading);
+if(performanceStats.partial){const note=document.createElement('p');note.textContent='此舊進度僅包含更新後記錄的表現。';performancePanel.append(note)}
+for(const entry of performanceStats.rows){
+ const row=document.createElement('div');row.className='performance-row';
+ const label=document.createElement('span');label.textContent=entry.label;
+ const amount=document.createElement('b');amount.textContent=entry.value.toLocaleString('zh-TW',{maximumFractionDigits:1})+entry.unit;
+ row.append(label,amount);performancePanel.append(row);
+}
+$('modal-body').append(performancePanel);
+const build=document.createElement('div');build.className='result-build';build.innerHTML=Object.entries(game.weapons).filter(([,n])=>n).map(([id,n])=>`<span title="${weaponName(game,id)}">${icon(id)}<small>${n===5?'★':n}</small></span>`).join('');$('modal-body').append(build);resultAt=performance.now();action('再次遠征',()=>begin(),true);action('回營地強化',()=>{if(recorded){try{localStorage.removeItem(RUN)}catch{}saved=null}tab='workshop';home()});focusDialog()}
 function doDash(){if(mode!=='playing'||!game)return;const v=input(),p=game.player;dash(game,Math.hypot(v.x,v.y)>.1?v.x:p.dirX,Math.hypot(v.x,v.y)>.1?v.y:p.dirY)}
 function doActive(){if(mode!=='playing'||!game)return;if(active(game)){toast(getRole(game.roleId).active.name)}}
 function processEvents(){for(const e of game.events.splice(0)){renderer.event(e,game);if(e.type==='magnet'){sound.play('material');toast('全場掉落已收取')}if(e.type==='hit')sound.play('hit');if(e.type==='shoot')sound.play('shoot');if(e.type==='dash')sound.play('dash');if(e.type==='hurt'){sound.play('hurt');hitStop=.025}if(['pulse','meteor','chain','beam','shatter','summon'].includes(e.type))sound.play(e.type);if(e.type==='pickup'&&Math.random()<.25)sound.play('pickup');if(e.type==='objective'){sound.play('upgrade');toast('地圖信標 · '+game.objective.completed+' / '+game.objective.target)}if(e.type==='material')toast('取得素材 · '+materialName(e.materialId||e.id));if(e.type==='heal')sound.play('pickup');if(e.type==='chest'){sound.play('chest');toast('寶箱已收好 · 遠征結束後開啟')}if(e.type==='boss'){const boss=game.enemies.find(n=>MONSTERS[n.species]?.boss);enqueueCinema('boss',boss?MONSTERS[boss.species].name:'地圖首領',getMap(game.mapId).objective,'pulse')}}}

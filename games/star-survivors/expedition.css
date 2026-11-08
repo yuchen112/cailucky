@@ -117,3 +117,10 @@ html,body{overscroll-behavior:none;touch-action:pan-y;-webkit-text-size-adjust:1
 @keyframes outcome-rise{from{opacity:0;transform:translateY(30px) scale(.85)}to{opacity:1;transform:none}}
 @keyframes outcome-fall{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(8px) rotate(-5deg)}}
 @media(prefers-reduced-motion:reduce){.outcome-scene img{animation:none}}
+
+.performance-panel{grid-column:1/-1;padding:16px;border:1px solid #bca1de66;border-radius:12px;background:#17132c99;text-align:left}
+.performance-panel h3{margin:0 0 12px;color:#ffe0a1;font-size:16px}
+.performance-panel p{font-size:11px;color:#c8b7d7}.performance-row{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-top:1px solid #c7add91c;font-size:12px}
+.performance-row b{color:#eed69f;font-variant-numeric:tabular-nums}
+
+.outcome-scene img[data-sequence]{animation:none;transform:none}
