@@ -1,8 +1,8 @@
 import {loadAnimationManifest,ensureRoleAnimation,ensureMapAnimations,ensureMonsterAnimation,actorFrame} from './animation-assets.mjs?v=5.5';
 import{bindBattleTouch}from'./battle-touch.mjs?v=6.9';
 import{ROLES,MAPS,MONSTERS,EQUIPMENT,PASSIVES,DIFFICULTY_ORDER,DIFFICULTY,getRole,getMap,weaponName,branchOf,upgradeInfo}from'./expedition-data.mjs?v=6';
-import{createExpedition,step,choose,reroll,skip,ban,dash,active,restore,serialize,summary,defaultProfile,validateProfile,upgradeCost,upgradeEquipment,upgradeTrait,settle,canEnterDifficulty,ensureChoices}from'./expedition-core.mjs?v=6.5';
-import{Renderer,preview}from'./expedition-renderer.mjs?v=6.7';
+import{createExpedition,step,choose,reroll,skip,ban,dash,active,restore,serialize,summary,defaultProfile,validateProfile,upgradeCost,upgradeEquipment,upgradeTrait,settle,canEnterDifficulty,ensureChoices}from'./expedition-core.mjs?v=6.10';
+import{Renderer,preview}from'./expedition-renderer.mjs?v=6.10';
 import{Sound}from'./audio-v5.mjs?v=20261108-buffered1';
 const $=id=>document.getElementById(id),KEY='cxq-star-survivors-v4',RUN=KEY+'-run',OLD='cxq-star-survivors-v1';
 const escapeHTML=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

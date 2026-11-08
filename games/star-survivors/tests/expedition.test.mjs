@@ -107,3 +107,27 @@ check('terminal chest rewards survive reload and settle once',()=>{
   assert.equal(profile.coins,4);
   assert.equal(profile.materials.crystal,2);
 });
+
+check('independent summon equipment retains counts, branches and save identity',()=>{
+ const g=isolated('growth');g.weapons['main-growth']=2;g.weapons.seed=2;
+ step(g,.02);assert.equal(g.summons.length,6);
+ for(const source of ['main-growth','seed'])assert.equal(g.summons.filter(s=>s.source===source).length,3);
+ const saved=restore(serialize(g));step(saved,.02);assert.equal(saved.summons.length,6);
+ g.weapons.seed=5;g.branches.seed='b';step(g,.02);
+ assert.equal(g.summons.filter(s=>s.source==='seed').length,1);
+ assert.equal(g.summons.filter(s=>s.source==='main-growth').length,3);
+});
+check('every role keeps main and compatible support attack sources independent',()=>{
+ for(const role of ROLES)for(const support of role.allowed){
+  const g=isolated(role.id);g.weapons[role.main]=2;g.weapons[support]=2;
+  target(g,120,-12);const sources=new Set();
+  for(let i=0;i<720;i++){
+   step(g,1/60,{},rng(i));
+   for(const event of g.events)if(event.type==='hit')sources.add(event.source);
+   for(const group of ['shots','fields','beams','summons','orbits','echoes','meteors'])for(const effect of g[group])sources.add(effect.source||effect.id);
+   g.events=[];
+  }
+  assert.ok(sources.has(role.main),role.id+' main with '+support);
+  if(!['ward','plush'].includes(support))assert.ok(sources.has(support),role.id+' support '+support);
+ }
+});
