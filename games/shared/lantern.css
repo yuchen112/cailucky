@@ -1,4 +1,4 @@
-:root{color-scheme:dark;--ink:#101b30;--text:#fff3d9;--dim:#c9d5e7;--paper:url('atelier/surface-paper.webp');--slate:url('atelier/surface-slate.webp');--teal:url('atelier/surface-teal.webp')}
+:root{color-scheme:dark;--ink:#101b30;--text:#fff3d9;--dim:#c9d5e7;--paper:url('../shared/rebuilt/primary.webp');--slate:url('../shared/rebuilt/card.webp');--teal:url('../shared/rebuilt/panel.webp')}
 *{box-sizing:border-box}
 body{margin:0;background:var(--ink);color:var(--text);font:1rem/1.5 system-ui,"Microsoft JhengHei",sans-serif}
 h1,h2,p{margin:0}h1{font:700 clamp(2rem,6vw,4.8rem)/1.12 "PMingLiU",serif}h2{font-size:1.15rem}

@@ -1,0 +1,1625 @@
+{
+  "version": "mobile-rebuild-20261109",
+  "scope": "12 classic hall game interiors; hall and production main excluded",
+  "modeEntries": {
+    "total": 204,
+    "passed": 204
+  },
+  "orientation": [
+    {
+      "game": "2048",
+      "status": "passed"
+    },
+    {
+      "game": "whack",
+      "status": "passed"
+    },
+    {
+      "game": "link",
+      "status": "passed"
+    },
+    {
+      "game": "mines",
+      "status": "passed"
+    },
+    {
+      "game": "flappy",
+      "status": "passed"
+    },
+    {
+      "game": "tetris",
+      "status": "passed"
+    },
+    {
+      "game": "memory",
+      "status": "passed"
+    },
+    {
+      "game": "dino",
+      "status": "passed"
+    },
+    {
+      "game": "brick-breaker",
+      "status": "passed"
+    },
+    {
+      "game": "merge",
+      "status": "passed"
+    },
+    {
+      "game": "magic-bubble",
+      "status": "passed"
+    },
+    {
+      "game": "dream-match",
+      "status": "passed"
+    }
+  ],
+  "additionalTouchChecks": {
+    "status": "passed",
+    "checks": [
+      "tetris simultaneous movement/rotation and release",
+      "tetris all 10 character skill buttons",
+      "mines long press flags without revealing",
+      "memory 8x8 readable cards and native panning",
+      "merge two-finger release drops exactly once"
+    ]
+  },
+  "outcomes": [
+    {
+      "game": "whack",
+      "status": "passed"
+    },
+    {
+      "game": "flappy",
+      "status": "passed"
+    },
+    {
+      "game": "dino",
+      "status": "passed"
+    },
+    {
+      "game": "mines",
+      "status": "passed"
+    },
+    {
+      "game": "merge",
+      "status": "passed"
+    },
+    {
+      "game": "magic-bubble",
+      "status": "passed"
+    },
+    {
+      "game": "brick-breaker",
+      "status": "passed"
+    },
+    {
+      "game": "link",
+      "status": "passed"
+    },
+    {
+      "game": "dream-match",
+      "status": "passed"
+    }
+  ],
+  "otherChecks": [
+    "Tetris actual game over and replay",
+    "2048 seeded merge-to-2048 and history write",
+    "Memory actual full 4x4 matching and collection result",
+    "Link actual full 18-pair clear and record write",
+    "320x568 and 667x375 compact viewports across all 12 games",
+    "18 title-screen function buttons",
+    "Link custom restart confirmation cancel/accept",
+    "Brick relative dragging without paddle teleport"
+  ],
+  "limits": [
+    "Chrome touch emulation is not physical phone validation",
+    "Mode matrix checks entry, input and pause; it is not 204 natural full playthroughs",
+    "Some result-screen checks use isolated test fixtures to call original end handlers"
+  ],
+  "matrix": [
+    {
+      "status": "passed",
+      "game": "tetris",
+      "mode": "marathon",
+      "blessing": true,
+      "role": 1
+    },
+    {
+      "status": "passed",
+      "game": "tetris",
+      "mode": "sprint",
+      "blessing": true,
+      "role": 3
+    },
+    {
+      "status": "passed",
+      "game": "tetris",
+      "mode": "marathon",
+      "blessing": false,
+      "role": 0
+    },
+    {
+      "status": "passed",
+      "game": "tetris",
+      "mode": "sprint",
+      "blessing": false,
+      "role": 2
+    },
+    {
+      "status": "passed",
+      "game": "tetris",
+      "mode": "zen",
+      "blessing": true,
+      "role": 5
+    },
+    {
+      "status": "passed",
+      "game": "tetris",
+      "mode": "zen",
+      "blessing": false,
+      "role": 4
+    },
+    {
+      "status": "passed",
+      "game": "mines",
+      "mode": "standard",
+      "preset": "easy"
+    },
+    {
+      "status": "passed",
+      "game": "mines",
+      "mode": "standard",
+      "preset": "medium"
+    },
+    {
+      "status": "passed",
+      "game": "mines",
+      "mode": "standard",
+      "preset": "hard"
+    },
+    {
+      "status": "passed",
+      "game": "mines",
+      "mode": "standard",
+      "preset": "custom"
+    },
+    {
+      "status": "passed",
+      "game": "mines",
+      "mode": "practice",
+      "preset": "easy"
+    },
+    {
+      "status": "passed",
+      "game": "mines",
+      "mode": "practice",
+      "preset": "medium"
+    },
+    {
+      "status": "passed",
+      "game": "mines",
+      "mode": "practice",
+      "preset": "hard"
+    },
+    {
+      "status": "passed",
+      "game": "mines",
+      "mode": "practice",
+      "preset": "custom"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "classic",
+      "size": "4",
+      "deck": "artifact"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "classic",
+      "size": "4",
+      "deck": "scene"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "classic",
+      "size": "4",
+      "deck": "sweets"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "classic",
+      "size": "6",
+      "deck": "artifact"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "classic",
+      "size": "6",
+      "deck": "scene"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "classic",
+      "size": "6",
+      "deck": "sweets"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "classic",
+      "size": "8",
+      "deck": "artifact"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "classic",
+      "size": "8",
+      "deck": "scene"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "classic",
+      "size": "8",
+      "deck": "sweets"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "time",
+      "size": "4",
+      "deck": "artifact"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "time",
+      "size": "4",
+      "deck": "scene"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "time",
+      "size": "4",
+      "deck": "sweets"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "time",
+      "size": "6",
+      "deck": "artifact"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "time",
+      "size": "6",
+      "deck": "scene"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "time",
+      "size": "6",
+      "deck": "sweets"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "time",
+      "size": "8",
+      "deck": "artifact"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "time",
+      "size": "8",
+      "deck": "scene"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "time",
+      "size": "8",
+      "deck": "sweets"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "preview",
+      "size": "4",
+      "deck": "artifact"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "preview",
+      "size": "4",
+      "deck": "scene"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "preview",
+      "size": "4",
+      "deck": "sweets"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "preview",
+      "size": "6",
+      "deck": "artifact"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "preview",
+      "size": "6",
+      "deck": "scene"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "preview",
+      "size": "6",
+      "deck": "sweets"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "preview",
+      "size": "8",
+      "deck": "artifact"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "preview",
+      "size": "8",
+      "deck": "scene"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "preview",
+      "size": "8",
+      "deck": "sweets"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "chaos",
+      "size": "4",
+      "deck": "artifact"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "chaos",
+      "size": "4",
+      "deck": "scene"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "chaos",
+      "size": "4",
+      "deck": "sweets"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "chaos",
+      "size": "6",
+      "deck": "artifact"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "chaos",
+      "size": "6",
+      "deck": "scene"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "chaos",
+      "size": "6",
+      "deck": "sweets"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "chaos",
+      "size": "8",
+      "deck": "artifact"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "chaos",
+      "size": "8",
+      "deck": "scene"
+    },
+    {
+      "status": "passed",
+      "game": "memory",
+      "mode": "chaos",
+      "size": "8",
+      "deck": "sweets"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "easy",
+      "set": "characters",
+      "mode": "0"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "easy",
+      "set": "characters",
+      "mode": "300"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "easy",
+      "set": "characters",
+      "mode": "180"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "easy",
+      "set": "animals",
+      "mode": "0"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "easy",
+      "set": "animals",
+      "mode": "300"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "easy",
+      "set": "animals",
+      "mode": "180"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "easy",
+      "set": "desserts",
+      "mode": "0"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "easy",
+      "set": "desserts",
+      "mode": "300"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "easy",
+      "set": "desserts",
+      "mode": "180"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "easy",
+      "set": "magic",
+      "mode": "0"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "easy",
+      "set": "magic",
+      "mode": "300"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "easy",
+      "set": "magic",
+      "mode": "180"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "normal",
+      "set": "characters",
+      "mode": "0"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "normal",
+      "set": "characters",
+      "mode": "300"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "normal",
+      "set": "characters",
+      "mode": "180"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "normal",
+      "set": "animals",
+      "mode": "0"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "normal",
+      "set": "animals",
+      "mode": "300"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "normal",
+      "set": "animals",
+      "mode": "180"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "normal",
+      "set": "desserts",
+      "mode": "0"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "normal",
+      "set": "desserts",
+      "mode": "300"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "normal",
+      "set": "desserts",
+      "mode": "180"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "normal",
+      "set": "magic",
+      "mode": "0"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "normal",
+      "set": "magic",
+      "mode": "300"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "normal",
+      "set": "magic",
+      "mode": "180"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "hard",
+      "set": "characters",
+      "mode": "0"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "hard",
+      "set": "characters",
+      "mode": "300"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "hard",
+      "set": "characters",
+      "mode": "180"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "hard",
+      "set": "animals",
+      "mode": "0"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "hard",
+      "set": "animals",
+      "mode": "300"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "hard",
+      "set": "animals",
+      "mode": "180"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "hard",
+      "set": "desserts",
+      "mode": "0"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "hard",
+      "set": "desserts",
+      "mode": "300"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "hard",
+      "set": "desserts",
+      "mode": "180"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "hard",
+      "set": "magic",
+      "mode": "0"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "hard",
+      "set": "magic",
+      "mode": "300"
+    },
+    {
+      "status": "passed",
+      "game": "link",
+      "difficulty": "hard",
+      "set": "magic",
+      "mode": "180"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "timed",
+      "difficulty": "easy"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "timed",
+      "difficulty": "normal"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "timed",
+      "difficulty": "hard"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "timed",
+      "difficulty": "expert"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "reaction",
+      "difficulty": "easy"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "reaction",
+      "difficulty": "normal"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "reaction",
+      "difficulty": "hard"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "reaction",
+      "difficulty": "expert"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "survival",
+      "difficulty": "easy"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "survival",
+      "difficulty": "normal"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "survival",
+      "difficulty": "hard"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "survival",
+      "difficulty": "expert"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "golden",
+      "difficulty": "easy"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "golden",
+      "difficulty": "normal"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "golden",
+      "difficulty": "hard"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "golden",
+      "difficulty": "expert"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "relaxed",
+      "difficulty": "easy"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "relaxed",
+      "difficulty": "normal"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "relaxed",
+      "difficulty": "hard"
+    },
+    {
+      "status": "passed",
+      "game": "whack",
+      "mode": "relaxed",
+      "difficulty": "expert"
+    },
+    {
+      "status": "passed",
+      "game": "brick-breaker",
+      "mode": "stage",
+      "difficulty": "easy"
+    },
+    {
+      "status": "passed",
+      "game": "brick-breaker",
+      "mode": "stage",
+      "difficulty": "normal"
+    },
+    {
+      "status": "passed",
+      "game": "brick-breaker",
+      "mode": "stage",
+      "difficulty": "hard"
+    },
+    {
+      "status": "passed",
+      "game": "brick-breaker",
+      "mode": "endless",
+      "difficulty": "easy"
+    },
+    {
+      "status": "passed",
+      "game": "brick-breaker",
+      "mode": "endless",
+      "difficulty": "normal"
+    },
+    {
+      "status": "passed",
+      "game": "brick-breaker",
+      "mode": "endless",
+      "difficulty": "hard"
+    },
+    {
+      "status": "passed",
+      "game": "dino",
+      "role": 0,
+      "mode": "endless",
+      "route": "0",
+      "difficulty": "easy",
+      "hand": "right"
+    },
+    {
+      "status": "passed",
+      "game": "dino",
+      "role": 1,
+      "mode": "mission",
+      "route": "1",
+      "difficulty": "normal",
+      "hand": "left"
+    },
+    {
+      "status": "passed",
+      "game": "dino",
+      "role": 2,
+      "mode": "practice",
+      "route": "2",
+      "difficulty": "hard",
+      "hand": "right"
+    },
+    {
+      "status": "passed",
+      "game": "dino",
+      "role": 3,
+      "mode": "endless",
+      "route": "0",
+      "difficulty": "easy",
+      "hand": "left"
+    },
+    {
+      "status": "passed",
+      "game": "dino",
+      "role": 4,
+      "mode": "mission",
+      "route": "1",
+      "difficulty": "normal",
+      "hand": "right"
+    },
+    {
+      "status": "passed",
+      "game": "dino",
+      "role": 5,
+      "mode": "practice",
+      "route": "2",
+      "difficulty": "hard",
+      "hand": "left"
+    },
+    {
+      "status": "passed",
+      "game": "dino",
+      "role": 8,
+      "mode": "practice",
+      "route": "2",
+      "difficulty": "hard",
+      "hand": "right"
+    },
+    {
+      "status": "passed",
+      "game": "dino",
+      "role": 6,
+      "mode": "endless",
+      "route": "0",
+      "difficulty": "easy",
+      "hand": "right"
+    },
+    {
+      "status": "passed",
+      "game": "dino",
+      "role": 7,
+      "mode": "mission",
+      "route": "1",
+      "difficulty": "normal",
+      "hand": "left"
+    },
+    {
+      "status": "passed",
+      "game": "dino",
+      "role": 9,
+      "mode": "endless",
+      "route": "0",
+      "difficulty": "easy",
+      "hand": "left"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 0,
+      "vehicle": "0",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "1"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 0,
+      "vehicle": "1",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "1"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 0,
+      "vehicle": "2",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "1"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 0,
+      "vehicle": "3",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "1"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 1,
+      "vehicle": "0",
+      "mode": "mission",
+      "route": "forest",
+      "stage": "2"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 1,
+      "vehicle": "1",
+      "mode": "mission",
+      "route": "forest",
+      "stage": "2"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 1,
+      "vehicle": "2",
+      "mode": "mission",
+      "route": "forest",
+      "stage": "2"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 1,
+      "vehicle": "3",
+      "mode": "mission",
+      "route": "forest",
+      "stage": "2"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 2,
+      "vehicle": "0",
+      "mode": "practice",
+      "route": "moon",
+      "stage": "3"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 2,
+      "vehicle": "1",
+      "mode": "practice",
+      "route": "moon",
+      "stage": "3"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 2,
+      "vehicle": "2",
+      "mode": "practice",
+      "route": "moon",
+      "stage": "3"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 2,
+      "vehicle": "3",
+      "mode": "practice",
+      "route": "moon",
+      "stage": "3"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 3,
+      "vehicle": "0",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "4"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 3,
+      "vehicle": "1",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "4"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 3,
+      "vehicle": "2",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "4"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 3,
+      "vehicle": "3",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "4"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 4,
+      "vehicle": "0",
+      "mode": "mission",
+      "route": "forest",
+      "stage": "5"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 4,
+      "vehicle": "2",
+      "mode": "mission",
+      "route": "forest",
+      "stage": "5"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 4,
+      "vehicle": "1",
+      "mode": "mission",
+      "route": "forest",
+      "stage": "5"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 4,
+      "vehicle": "3",
+      "mode": "mission",
+      "route": "forest",
+      "stage": "5"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 5,
+      "vehicle": "1",
+      "mode": "practice",
+      "route": "moon",
+      "stage": "6"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 5,
+      "vehicle": "0",
+      "mode": "practice",
+      "route": "moon",
+      "stage": "6"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 5,
+      "vehicle": "2",
+      "mode": "practice",
+      "route": "moon",
+      "stage": "6"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 5,
+      "vehicle": "3",
+      "mode": "practice",
+      "route": "moon",
+      "stage": "6"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 6,
+      "vehicle": "1",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "1"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 6,
+      "vehicle": "2",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "1"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 6,
+      "vehicle": "0",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "1"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 6,
+      "vehicle": "3",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "1"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 7,
+      "vehicle": "0",
+      "mode": "mission",
+      "route": "forest",
+      "stage": "2"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 7,
+      "vehicle": "1",
+      "mode": "mission",
+      "route": "forest",
+      "stage": "2"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 7,
+      "vehicle": "2",
+      "mode": "mission",
+      "route": "forest",
+      "stage": "2"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 8,
+      "vehicle": "0",
+      "mode": "practice",
+      "route": "moon",
+      "stage": "3"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 8,
+      "vehicle": "1",
+      "mode": "practice",
+      "route": "moon",
+      "stage": "3"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 7,
+      "vehicle": "3",
+      "mode": "mission",
+      "route": "forest",
+      "stage": "2"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 8,
+      "vehicle": "2",
+      "mode": "practice",
+      "route": "moon",
+      "stage": "3"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 9,
+      "vehicle": "0",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "4"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 9,
+      "vehicle": "1",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "4"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 9,
+      "vehicle": "2",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "4"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 8,
+      "vehicle": "3",
+      "mode": "practice",
+      "route": "moon",
+      "stage": "3"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 9,
+      "vehicle": "3",
+      "mode": "endless",
+      "route": "sky",
+      "stage": "4"
+    },
+    {
+      "status": "passed",
+      "game": "2048"
+    },
+    {
+      "status": "passed",
+      "game": "mines",
+      "mode": "logic",
+      "preset": "easy"
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "classic",
+      "target": "5",
+      "theme": "warm",
+      "role": 3
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "classic",
+      "target": "7",
+      "theme": "warm",
+      "role": 5
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "classic",
+      "target": "5",
+      "theme": "night",
+      "role": 4
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "classic",
+      "target": "7",
+      "theme": "night",
+      "role": 6
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "classic",
+      "target": "9",
+      "theme": "warm",
+      "role": 7
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "classic",
+      "target": "9",
+      "theme": "night",
+      "role": 8
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "mission",
+      "target": "5",
+      "theme": "warm",
+      "role": 9
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "mission",
+      "target": "5",
+      "theme": "night",
+      "role": 0
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "mission",
+      "target": "7",
+      "theme": "warm",
+      "role": 1
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "mission",
+      "target": "7",
+      "theme": "night",
+      "role": 2
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "mission",
+      "target": "9",
+      "theme": "warm",
+      "role": 3
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "practice",
+      "target": "5",
+      "theme": "warm",
+      "role": 5
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "practice",
+      "target": "5",
+      "theme": "night",
+      "role": 6
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "mission",
+      "target": "9",
+      "theme": "night",
+      "role": 4
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "practice",
+      "target": "7",
+      "theme": "warm",
+      "role": 7
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "practice",
+      "target": "9",
+      "theme": "night",
+      "role": 0
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "practice",
+      "target": "7",
+      "theme": "night",
+      "role": 8
+    },
+    {
+      "status": "passed",
+      "game": "merge",
+      "mode": "practice",
+      "target": "9",
+      "theme": "warm",
+      "role": 9
+    },
+    {
+      "status": "passed",
+      "game": "magic-bubble",
+      "mode": "campaign",
+      "difficulty": "標準難度"
+    },
+    {
+      "status": "passed",
+      "game": "dream-match",
+      "mode": "classic",
+      "stage": "0"
+    },
+    {
+      "status": "passed",
+      "game": "magic-bubble",
+      "mode": "endless"
+    },
+    {
+      "status": "passed",
+      "game": "magic-bubble",
+      "mode": "campaign",
+      "difficulty": "輕鬆難度"
+    },
+    {
+      "status": "passed",
+      "game": "dream-match",
+      "mode": "classic",
+      "stage": "1"
+    },
+    {
+      "status": "passed",
+      "game": "dream-match",
+      "mode": "classic",
+      "stage": "2"
+    },
+    {
+      "status": "passed",
+      "game": "dream-match",
+      "mode": "classic",
+      "stage": "3"
+    },
+    {
+      "status": "passed",
+      "game": "dream-match",
+      "mode": "classic",
+      "stage": "4"
+    },
+    {
+      "status": "passed",
+      "game": "dream-match",
+      "mode": "classic",
+      "stage": "5"
+    },
+    {
+      "status": "passed",
+      "game": "dream-match",
+      "mode": "classic",
+      "stage": "6"
+    },
+    {
+      "status": "passed",
+      "game": "dream-match",
+      "mode": "classic",
+      "stage": "7"
+    },
+    {
+      "status": "passed",
+      "game": "dream-match",
+      "mode": "classic",
+      "stage": "8"
+    },
+    {
+      "status": "passed",
+      "game": "dream-match",
+      "mode": "classic",
+      "stage": "9"
+    },
+    {
+      "status": "passed",
+      "game": "dream-match",
+      "mode": "classic",
+      "stage": "10"
+    },
+    {
+      "status": "passed",
+      "game": "dream-match",
+      "mode": "relaxed"
+    },
+    {
+      "status": "passed",
+      "game": "dream-match",
+      "mode": "classic",
+      "stage": "11"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 0,
+      "vehicle": "0",
+      "mode": "mission",
+      "route": "forest",
+      "stage": "1"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 1,
+      "vehicle": "1",
+      "mode": "mission",
+      "route": "moon",
+      "stage": "2"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 2,
+      "vehicle": "2",
+      "mode": "mission",
+      "route": "sky",
+      "stage": "3"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 3,
+      "vehicle": "3",
+      "mode": "mission",
+      "route": "forest",
+      "stage": "4"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 4,
+      "vehicle": "0",
+      "mode": "mission",
+      "route": "moon",
+      "stage": "5"
+    },
+    {
+      "status": "passed",
+      "game": "flappy",
+      "role": 5,
+      "vehicle": "1",
+      "mode": "mission",
+      "route": "sky",
+      "stage": "6"
+    }
+  ]
+}

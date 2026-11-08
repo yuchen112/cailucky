@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../shared/lantern.css">
 <script src="../shared/audio-engine-original.js?v=2"></script>
 <script src="../shared/runtime.js?v=20261010-loadingart3"></script>
-<link rel="stylesheet" href="../shared/mobile-title.css?v=1"></head>
+<link rel="stylesheet" href="../shared/mobile-title.css?v=1"><link rel="stylesheet" href="../shared/mobile-game.css?v=rebuild1"></head>
 <body data-mobile-game="tetris">
 <header class="masthead">
   <a href="../classic-hall/index.html?v=20261012-mobile1">‹ 經典遊戲館</a>
@@ -51,7 +51,7 @@
         <div class="roster" id="roster"></div>
       </div>
       <aside class="selection">
-        <img id="detailCharImg" src="../shared/atelier/role-luck.webp" alt="">
+        <img id="detailCharImg" src="../shared/rebuilt/role-luck.webp" alt="">
         <div><h2 id="detailCharName">鈴可・幸運型</h2>
         <p id="detailCharPower">祝福充滿後，可移除盤面上一枚最棘手的方塊。</p>
         <p class="label">消除 4 行充能</p></div>
@@ -76,7 +76,7 @@
         <div><span>下一塊</span><canvas id="next" width="84" height="84" aria-label="下一塊方塊"></canvas></div>
         <div><span>保留</span><canvas id="hold" width="84" height="84" aria-label="保留方塊"></canvas></div>
         <button id="skill" disabled>祝福 <span id="skillText">0/4</span></button>
-        <div id="companion"><img id="companionImg" src="../shared/atelier/role-luck.webp" alt=""><strong id="charName">鈴可</strong><span id="charPower">幸運葉</span></div>
+        <div id="companion"><img id="companionImg" src="../shared/rebuilt/role-luck.webp" alt=""><strong id="charName">鈴可</strong><span id="charPower">幸運葉</span></div>
       </aside>
     </div>
     <nav class="controls" aria-label="方塊操作">
@@ -90,7 +90,7 @@
   </section>
 
   <section id="result" class="screen result" aria-labelledby="resultTitle">
-    <img src="../shared/atelier/fox-01.webp" alt="">
+    <img src="../shared/rebuilt/luck-victory.webp" alt="">
     <div><p class="label">旅程結算</p><h1 id="resultTitle">旅程結束</h1><p id="resultSummary"></p>
       <div class="menu-actions"><button class="primary" id="resultAgain">再挑戰一次</button><button id="resultSetup">更換玩法與旅伴</button></div>
     </div>
@@ -98,12 +98,12 @@
 
   <section id="pause" class="pause-overlay" aria-label="遊戲暫停">
     <div class="pause-card">
-      <img src="../shared/atelier/fox-04.webp" alt="">
+      <img src="../shared/rebuilt/luck-idle.webp" alt="">
       <h2>遊戲暫停</h2>
       <div class="menu-actions"><button class="primary" id="resume">繼續編織</button><button id="restart">重新開始</button><button id="home">返回首頁</button></div>
     </div>
   </section>
 </main>
 <script src="game.js"></script>
-<script src="../shared/mobile-title.js?v=1"></script></body>
+<script src="../shared/mobile-title.js?v=1"></script><script src="../shared/mobile-game.js?v=rebuild1"></script></body>
 </html>

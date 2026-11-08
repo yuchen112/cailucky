@@ -236,5 +236,6 @@
   document.body.append(title);
   newButton.addEventListener("click", showTitle);
   title.addEventListener("cancel", (event) => event.preventDefault());
+  window.CxQTitle = {show:showTitle};
   showTitle();
 })();
