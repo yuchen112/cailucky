@@ -1,7 +1,7 @@
 {
   "version": "mobile-rebuild-20261109",
-  "artFiles": 269,
-  "totalBytes": 8872012,
+  "artFiles": 309,
+  "totalBytes": 9961816,
   "assets": [
     {
       "file": "animal-0.webp",
@@ -1172,6 +1172,206 @@
       "file": "primary.webp",
       "bytes": 26840,
       "sha256": "b71c6c5bb64c1c83e6a39919b898e4ef26c14fd78a4dbcf4023f387745bbf21b"
+    },
+    {
+      "file": "rider-dream-0.webp",
+      "bytes": 29674,
+      "sha256": "66933109c39d553097de089a13c47e9898ec4752a31f9f0af89ff16b79b0e9b1"
+    },
+    {
+      "file": "rider-dream-1.webp",
+      "bytes": 27716,
+      "sha256": "07113037d17bf7cc81528063ea78fc389cf413e81755043d9c12700de8e8d230"
+    },
+    {
+      "file": "rider-dream-2.webp",
+      "bytes": 27692,
+      "sha256": "6bbebf0f64b92baae3485055e4746ce7d3f74c7cfd68d05ce8f4c6e0f10285cc"
+    },
+    {
+      "file": "rider-dream-3.webp",
+      "bytes": 26710,
+      "sha256": "da75c2a6248d05a7fa82a823081c5e66c5aa1c69fb79b2917e4790b6675d7769"
+    },
+    {
+      "file": "rider-growth-0.webp",
+      "bytes": 26656,
+      "sha256": "6ed96e9fbd4e8b3c5aefffe85f7f74d19944eac0130d9bae4b14c8c8266c9dea"
+    },
+    {
+      "file": "rider-growth-1.webp",
+      "bytes": 27238,
+      "sha256": "91885e78924588f6bada76918fc540601beff6a0cedf6ed44528aeceff38faaa"
+    },
+    {
+      "file": "rider-growth-2.webp",
+      "bytes": 27984,
+      "sha256": "1fd26ad8f76696190800bb5725d192e381532b4abfa36399298b049f7eb10cc1"
+    },
+    {
+      "file": "rider-growth-3.webp",
+      "bytes": 25644,
+      "sha256": "4cbfdba66b7424835fa21fda9abfe102809f4da01881c7cd899288f281741da6"
+    },
+    {
+      "file": "rider-healing-0.webp",
+      "bytes": 24500,
+      "sha256": "8c8a4124a9c75297e1bfbbcf2c3e2bb3857501069610b749c96074942460a932"
+    },
+    {
+      "file": "rider-healing-1.webp",
+      "bytes": 23804,
+      "sha256": "2d468bf5216d8129d5c6082917d350bdc14d09b3ea3183b3c50d959d4e6afaf9"
+    },
+    {
+      "file": "rider-healing-2.webp",
+      "bytes": 20200,
+      "sha256": "9e11b7ccee1eb87374c4b19324986e545ff165b3767464f8b847981bb53a6bfc"
+    },
+    {
+      "file": "rider-healing-3.webp",
+      "bytes": 22934,
+      "sha256": "1cdec2654fb3990006338d65189a937fbc77652843b02cfafc25aca0ad0eea7f"
+    },
+    {
+      "file": "rider-hope-0.webp",
+      "bytes": 27620,
+      "sha256": "783da95be30925107946fea900cf5c4d3b43c5a5b329ae7a6d0a0c7c4de540f8"
+    },
+    {
+      "file": "rider-hope-1.webp",
+      "bytes": 26952,
+      "sha256": "ab758b9dde0452eb869e0376427f9175ef3eb57bf8c9ec5075d265c178664a23"
+    },
+    {
+      "file": "rider-hope-2.webp",
+      "bytes": 24826,
+      "sha256": "f7bdc5c2c868f6987d012ed9aa1e2c5c3d6f74ea4b075db48d2bf901866beb24"
+    },
+    {
+      "file": "rider-hope-3.webp",
+      "bytes": 25876,
+      "sha256": "9afba226a55df51d51b417633e83cec09e78c8677d1b3ab1004aacf50e25e06d"
+    },
+    {
+      "file": "rider-joy-0.webp",
+      "bytes": 28466,
+      "sha256": "0c8a7e17ccad2df2a6fe239f9c0cc4ddec207bf49cace1d0ed535f5dfaa85bc0"
+    },
+    {
+      "file": "rider-joy-1.webp",
+      "bytes": 29346,
+      "sha256": "4e77d22b555fde09d8691e1f4d2ee087cc2e40ebe4c001bbfe0845ac677b3a37"
+    },
+    {
+      "file": "rider-joy-2.webp",
+      "bytes": 32842,
+      "sha256": "5e1aacaa15c0c9f848f1e515ca1c2ccd75b91afb940dd0031968501f1e64bb0a"
+    },
+    {
+      "file": "rider-joy-3.webp",
+      "bytes": 31158,
+      "sha256": "1fbf8c3fdb0ae64f2b8380971a247bbef3ab97df37159a7e08f36a23c264280f"
+    },
+    {
+      "file": "rider-luck-0.webp",
+      "bytes": 30562,
+      "sha256": "63953eac569cf963f3f9cdbe84b97deb2643d29c7a38db23e8483533439628f2"
+    },
+    {
+      "file": "rider-luck-1.webp",
+      "bytes": 28296,
+      "sha256": "05b8ed076ad15a9a5bc1665228c3378994286b8bdfb3c23aa40271e4307b597e"
+    },
+    {
+      "file": "rider-luck-2.webp",
+      "bytes": 27104,
+      "sha256": "beb2de548ad1b7931904eeffea37f975fd05b5aace7372cdd5bdb340bce2021d"
+    },
+    {
+      "file": "rider-luck-3.webp",
+      "bytes": 26712,
+      "sha256": "130c6750775bb353fbf7893a5fdab07236c0aef24a4561747b1f5270c2657985"
+    },
+    {
+      "file": "rider-memory-0.webp",
+      "bytes": 27446,
+      "sha256": "f631848aad69b7632552095d7fff59d355ac192f13ac559a2af16625aca5e632"
+    },
+    {
+      "file": "rider-memory-1.webp",
+      "bytes": 28604,
+      "sha256": "be605d26b9776aa8f958aae99c30181b94ff96e63bfb086bf586ce2ab6b21081"
+    },
+    {
+      "file": "rider-memory-2.webp",
+      "bytes": 26248,
+      "sha256": "6689cc88021a3ad2517a1bf726ed4104e02c0b75e6d64bd70346a9413156c46e"
+    },
+    {
+      "file": "rider-memory-3.webp",
+      "bytes": 28048,
+      "sha256": "63a56f78479dbdeda86d978e72a9f2189b8955c6f43294d393db1af66eb6c389"
+    },
+    {
+      "file": "rider-night-0.webp",
+      "bytes": 28286,
+      "sha256": "f1b02484df047dbc5e4058ffb972f0ed5d7f8922d0cb9f6acb8b13e3f48bb7f3"
+    },
+    {
+      "file": "rider-night-1.webp",
+      "bytes": 24888,
+      "sha256": "77ff60a8915e9b6b0b1cba243c390b35d84ac444e23390b664d36522a4f08ddb"
+    },
+    {
+      "file": "rider-night-2.webp",
+      "bytes": 24080,
+      "sha256": "4c85c7ac6c4c88e39d1523dd54097d6eef24dfe15e021518c92fb6e103e5d9dc"
+    },
+    {
+      "file": "rider-night-3.webp",
+      "bytes": 25620,
+      "sha256": "42d64f1a38d298ed6d9ce21deb75ccefc52133ebdde6c91b985a930441a0a673"
+    },
+    {
+      "file": "rider-sadness-0.webp",
+      "bytes": 31014,
+      "sha256": "7d7f3265960eaa02b60aab6f1d7238f37ff562b0d2834d2d31fc23576d86a220"
+    },
+    {
+      "file": "rider-sadness-1.webp",
+      "bytes": 29392,
+      "sha256": "d9bb9447fe919562e61a56249623ecba23d7e7ce875f2d4eb501dc1429ddda8b"
+    },
+    {
+      "file": "rider-sadness-2.webp",
+      "bytes": 28568,
+      "sha256": "3f4c3cbb146994ec97250ea6629b0fa65884b2606ebab60d5216967fe1af2213"
+    },
+    {
+      "file": "rider-sadness-3.webp",
+      "bytes": 28474,
+      "sha256": "c8c4fb02e29cfcc647254f17afdd3f39be1da33cf2746be7b9e49b5bcc7003ea"
+    },
+    {
+      "file": "rider-trust-0.webp",
+      "bytes": 26660,
+      "sha256": "b8ac4903dcf418c4f1e17ad167621c763e06a36dd6f35b69474dfd6f8b4f9cd4"
+    },
+    {
+      "file": "rider-trust-1.webp",
+      "bytes": 26894,
+      "sha256": "f686407b6fcce2f8c6632ad2eccf6d2d1d67bd9b3819ce3aaf0c11a5da61c599"
+    },
+    {
+      "file": "rider-trust-2.webp",
+      "bytes": 27188,
+      "sha256": "beb453781fdc3ce767ee292e7515fe56227b75ea4b43ca7cfc962a9ac56a52b1"
+    },
+    {
+      "file": "rider-trust-3.webp",
+      "bytes": 27882,
+      "sha256": "88d7eab3bffdfa1bb661aa7de1444b88443473d9cc99ff144680de73d1d40336"
     },
     {
       "file": "role-dream.webp",

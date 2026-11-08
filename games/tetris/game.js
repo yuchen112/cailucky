@@ -471,7 +471,7 @@
     const slot = $(".board-slot").getBoundingClientRect();
     cell = Math.max(
       6,
-      Math.floor(Math.min(slot.width / COLS, slot.height / ROWS)),
+      Math.floor(Math.min((slot.width-14) / COLS, (slot.height-14) / ROWS)),
     );
     canvas.width = COLS * cell;
     canvas.height = ROWS * cell;

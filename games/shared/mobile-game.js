@@ -371,7 +371,9 @@
     }
   }
   let scheduled = false;
-  const observer = new MutationObserver(() => {
+  const observer = new MutationObserver((records) => {
+    const relevant=records.some(record=>record.target.matches?.('select,h2,#modalTitle,#resultTitle')||[...record.addedNodes].some(node=>node.nodeType===1&&(node.matches('select,option,dialog,.form,.game-entry,.modalBtns,.stars,h2')||node.querySelector('select,.form,h2'))));
+    if(!relevant)return;
     if (!scheduled) {
       scheduled = true;
       requestAnimationFrame(() => {
