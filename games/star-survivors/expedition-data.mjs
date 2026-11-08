@@ -67,3 +67,21 @@ export const beamEnd = beam => ({
   x: beam.x + Math.cos(beam.angle) * beam.length,
   y: beam.y + Math.sin(beam.angle) * beam.length
 });
+
+export function traitEffect(id,level=0){
+ const t=1+Math.max(0,Math.min(5,level))*.1;
+ const pct=n=>(n*100).toFixed(1).replace(/\.0$/,'')+'%';
+ const effects={
+ joy:'節拍最高縮短攻擊冷卻 '+pct(.24*t),
+ dream:'每第 4 輪星彈傷害 +'+pct(.35*t),
+ night:'同目標連擊最高增傷 '+pct(.3*t),
+ sadness:'水彈冰凍 '+(.9*t).toFixed(2)+' 秒；雨幕冰凍 '+(1.2*t).toFixed(2)+' 秒，凝晶分支 '+(.6*t).toFixed(2)+' 秒',
+ trust:'抵擋間隔 '+(10/t).toFixed(2)+' 秒；反擊基礎傷害 '+(35*t).toFixed(1),
+ memory:'每第 3 次施法的額外回聲威力 ×'+t.toFixed(2),
+ growth:'每 30 秒召喚增傷 +'+pct(.04*t)+'，最高 +'+pct(.24*t),
+ healing:'循環間隔 '+(10/t).toFixed(2)+' 秒；回復／護盾 '+(5*t).toFixed(1)+'；觸發後 2 秒花瓣增傷 +'+pct(.4*t),
+ luck:'每第 5 輪強擊額外增傷 +'+pct(1.4*t),
+ hope:'對重甲與首領增傷 +'+pct(.2*t)+'；三層印記最高增傷 +'+pct(.15*t)
+ };
+ return effects[id]||'';
+}

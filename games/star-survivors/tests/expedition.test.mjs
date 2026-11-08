@@ -131,3 +131,15 @@ check('every role keeps main and compatible support attack sources independent',
   if(!['ward','plush'].includes(support))assert.ok(sources.has(support),role.id+' support '+support);
  }
 });
+
+check('trait cultivation changes memory echo, crystal freeze and healing empowerment',()=>{
+ const echoes=[],freezes=[],petals=[];
+ for(const level of [0,5]){
+  const m=isolated('memory');m.traitLevel=level;m.roleState.casts=2;target(m);step(m,.02);echoes.push(m.echoes.at(-1).damage);
+  const s=isolated('sadness');s.traitLevel=level;s.weapons['main-sadness']=5;s.branches['main-sadness']='b';target(s);step(s,.02);freezes.push(s.fields[0].freeze);
+  const h=isolated('healing');h.traitLevel=level;h.roleState.healBoost=10;target(h);step(h,.02);petals.push(h.shots[0].damage);
+ }
+ assert.equal(echoes[1]/echoes[0],1.5);
+ assert.ok(Math.abs(freezes[1]/freezes[0]-1.5)<1e-6);
+ assert.ok(petals[1]>petals[0]);
+});

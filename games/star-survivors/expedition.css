@@ -112,3 +112,8 @@ html,body{overscroll-behavior:none;touch-action:pan-y;-webkit-text-size-adjust:1
   #touch .battle-key .key-shade{inset:0}
   #skill-inspect{top:auto;bottom:calc(var(--battle-bottom) + var(--aim-size) + 94px);right:var(--battle-right)}
 }
+
+.outcome #modal-body{display:block}.outcome{text-align:center}.outcome-scene{padding:12px 0 24px}.outcome-scene img{width:min(240px,55vw);height:240px;object-fit:contain}.victory .outcome-scene img{animation:outcome-rise 1.4s ease-out both;filter:drop-shadow(0 0 24px #edc97388)}.defeat .outcome-scene img{animation:outcome-fall 1.5s ease-out both;filter:saturate(.4) brightness(.7)}.outcome h2{font-size:clamp(30px,7vw,48px);letter-spacing:6px}.victory h2{color:#ffe2a0}.defeat h2{color:#d8b9de}.outcome-scene small{color:#c9bed7}.outcome #modal-actions button:disabled{opacity:.35}.trait-next{color:#ffe1a7}
+@keyframes outcome-rise{from{opacity:0;transform:translateY(30px) scale(.85)}to{opacity:1;transform:none}}
+@keyframes outcome-fall{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(8px) rotate(-5deg)}}
+@media(prefers-reduced-motion:reduce){.outcome-scene img{animation:none}}
