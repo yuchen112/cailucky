@@ -424,7 +424,7 @@
   function draw() {
     if (!board) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = "#e8d5a217";
+    ctx.strokeStyle = document.documentElement.dataset.visualTheme==="candy"?"#92788c40":"#e8d5a217";
     for (let x = 0; x <= COLS; x++) {
       ctx.beginPath();
       ctx.moveTo(x * cell, 0);
@@ -441,7 +441,7 @@
     const gy = ghost();
     cur.m.forEach((r, y) =>
       r.forEach(
-        (v, x) => v && cellDraw(ctx, cur.x + x, gy + y, cur.type, 0.18),
+        (v, x) => v && cellDraw(ctx, cur.x + x, gy + y, cur.type, window.CxQTheme?.current==="candy"?.35:.18),
       ),
     );
     cur.m.forEach((r, y) =>
@@ -468,15 +468,18 @@
   function resize() {
     CxQ.orientation("portrait", running);
     if (!running) return;
-    const slot = $(".board-slot").getBoundingClientRect();
+    const stage=$(".stage"), rect=stage.getBoundingClientRect(), sidebar=Math.max(72,Math.min(88,Math.round(rect.width*.21)));
+    const slot={width:rect.width-sidebar-8,height:rect.height};
     cell = Math.max(
       6,
       Math.floor(Math.min((slot.width-14) / COLS, (slot.height-14) / ROWS)),
     );
+    stage.style.setProperty("grid-template-columns",(COLS*cell+14)+"px "+sidebar+"px","important");
     canvas.width = COLS * cell;
     canvas.height = ROWS * cell;
     draw();
   }
+  addEventListener("cxq-theme-change",()=>{if(board)draw()});
   function update() {
     $("#score").textContent = score || 0;
     $("#level").textContent = level || 1;

@@ -1,0 +1,110 @@
+[
+  {
+    "game": "2048",
+    "status": "passed",
+    "state": {
+      "saved": "candy",
+      "width": 390,
+      "viewport": 390
+    }
+  },
+  {
+    "game": "mines",
+    "status": "passed",
+    "state": {
+      "saved": "candy",
+      "width": 844,
+      "viewport": 844
+    }
+  },
+  {
+    "game": "tetris",
+    "status": "passed",
+    "state": {
+      "saved": "candy",
+      "width": 390,
+      "viewport": 390
+    }
+  },
+  {
+    "game": "memory",
+    "status": "passed",
+    "state": {
+      "saved": "candy",
+      "width": 390,
+      "viewport": 390
+    }
+  },
+  {
+    "game": "link",
+    "status": "passed",
+    "state": {
+      "saved": "candy",
+      "width": 844,
+      "viewport": 844
+    }
+  },
+  {
+    "game": "whack",
+    "status": "passed",
+    "state": {
+      "saved": "candy",
+      "width": 390,
+      "viewport": 390
+    }
+  },
+  {
+    "game": "brick-breaker",
+    "status": "passed",
+    "state": {
+      "saved": "candy",
+      "width": 390,
+      "viewport": 390
+    }
+  },
+  {
+    "game": "dino",
+    "status": "passed",
+    "state": {
+      "saved": "candy",
+      "width": 844,
+      "viewport": 844
+    }
+  },
+  {
+    "game": "flappy",
+    "status": "passed",
+    "state": {
+      "saved": "candy",
+      "width": 390,
+      "viewport": 390
+    }
+  },
+  {
+    "game": "merge",
+    "status": "passed",
+    "state": {
+      "saved": "candy",
+      "width": 390,
+      "viewport": 390
+    }
+  },
+  {
+    "game": "magic-bubble",
+    "status": "passed",
+    "state": {
+      "saved": "candy",
+      "width": 390,
+      "viewport": 390
+    }
+  },
+  {
+    "game": "dream-match",
+    "status": "passed",
+    "state": {
+      "saved": "candy",
+      "width": 390,
+      "viewport": 390
+    }
+  }
+]

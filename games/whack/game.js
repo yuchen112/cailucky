@@ -434,8 +434,10 @@ function draw() {
       (h?.hit ? " hit" : "");
     const rise=!h?0:h.hit?Math.max(0,1-(state.elapsed-h.hitAt)/260):state.elapsed<h.born?0:state.elapsed<h.ready?1-Math.pow(1-(state.elapsed-h.born)/(h.ready-h.born),3):state.elapsed<h.expires?1:Math.max(0,1-(state.elapsed-h.expires)/180);
     b.style.setProperty('--emerge',String(rise));
+    b.style.setProperty('--visible',rise>0?'visible':'hidden');
     b.dataset.hittable=String(!!h&&!h.hit&&state.elapsed>=h.ready&&state.elapsed<h.expires);
     if (h) {
+      b.dataset.kind=h.kind;
       const target = b.querySelector(".target"),
         key = h.kind + ":" + h.character;
       if (target.dataset.key !== key) {
