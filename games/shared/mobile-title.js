@@ -191,7 +191,7 @@
         const strong = document.createElement("strong");
         strong.textContent = label.includes("繼續") ? "繼續遊戲" : "開始遊戲";
         const sub = document.createElement("small");
-        sub.textContent = label;
+        sub.textContent = game==="tetris"?"選擇模式與旅伴":label;
         button.append(strong, sub);
       } else {
         const icon = document.createElement("img");
@@ -215,6 +215,7 @@
                 /打開|我的|森林|航程|角色|探險|旅程|配送|表情|與收藏/g,
                 "",
               );
+        if(game==="tetris"){if(target==="#quickClassic"){icon.src="../shared/rebuilt/icon-play.webp";text.textContent="經典快玩";}else if(target==="#showHowto"){text.textContent="操作說明";}}
         button.append(icon, text);
       }
       button.addEventListener("click", () => {

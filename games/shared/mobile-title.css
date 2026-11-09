@@ -585,3 +585,12 @@ body[data-mobile-game="mines"] #sound {
     height: 100dvh !important;
   }
 }
+/* Tetris title: three readable, equally sized phone menu entries. */
+.mg-game[data-mobile-game="tetris"] .mobile-title-dock{padding:14px 14px max(16px,env(safe-area-inset-bottom));gap:12px}
+.mg-game[data-mobile-game="tetris"] .mobile-title-actions{padding:0}
+.mg-game[data-mobile-game="tetris"] .mobile-primary small{font-size:12px;letter-spacing:.06em}
+.mg-game[data-mobile-game="tetris"] .mobile-function-bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:8px;min-height:88px;width:100%}
+.mg-game[data-mobile-game="tetris"] .mobile-function-bar .mobile-function{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;min-width:0;max-width:none;width:100%;min-height:88px;padding:10px 4px;background:var(--mg-card) center/100% 100% no-repeat;font-size:14px;line-height:1.35;text-shadow:none;color:#fff1d7}
+.mg-game[data-mobile-game="tetris"] .mobile-function-bar .mobile-function img{width:38px;height:38px;flex:0 0 38px;margin:0}
+.mg-game[data-mobile-game="tetris"] .mobile-function-bar .mobile-function span{font-size:14px;font-weight:700;white-space:nowrap}
+@media(max-height:650px) and (orientation:portrait){.mg-game[data-mobile-game="tetris"] .mobile-title-dock{padding:10px 12px 12px;gap:10px}.mg-game[data-mobile-game="tetris"] .mobile-function-bar,.mg-game[data-mobile-game="tetris"] .mobile-function-bar .mobile-function{min-height:80px}.mg-game[data-mobile-game="tetris"] .mobile-function-bar .mobile-function{padding:8px 3px;gap:6px}.mg-game[data-mobile-game="tetris"] .mobile-function-bar .mobile-function img{width:34px;height:34px;flex-basis:34px}}

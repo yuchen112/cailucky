@@ -507,6 +507,7 @@
       const img = new Image();
       img.src = "../shared/mobile-brand/guide.webp";
       img.alt = "";
+      if(game==="tetris"){img.src="../shared/rebuilt/icon-rotate.webp";b.textContent="模式比較";b.setAttribute("aria-label","模式比較");}
       b.prepend(img);
       b.onclick = showGuide;
       bar.append(b);
