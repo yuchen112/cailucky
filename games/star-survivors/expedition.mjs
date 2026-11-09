@@ -201,6 +201,87 @@ function renderCodexAnimations(now){
     ctx.drawImage(frame,(canvas.width-size)/2,0,size,size);
   }
 }
+
+/* Game title and JSON backup. Accept legacy plain v5 profiles and native envelopes. */
+const titleScreen=$('title-screen');
+const backupNote=$('title-save-note');
+function refreshTitle(){
+  $('title-resume').hidden=!saved;
+  $('title-resume').disabled=!ready||!saved;
+  $('title-enter').disabled=false;
+  backupNote.textContent=storage?'進度儲存在目前瀏覽器。匯入前請先備份。':'瀏覽器無法儲存，請先檢查儲存空間。';
+}
+function openTitle(){
+  if(mode!=='home')return;
+  titleScreen.hidden=false;
+  refreshTitle();
+}
+function closeTitle(){
+  titleScreen.hidden=true;
+  renderLobby();
+}
+function validateImportedProfile(raw){
+  if(!raw||typeof raw!=='object'||Array.isArray(raw)||raw.version!==5)throw Error('不是支援的星界遠征 v5 存檔');
+  const validInt=(n,max)=>Number.isSafeInteger(n)&&n>=0&&n<=max;
+  if(!validInt(raw.coins,1e10))throw Error('星光金幣資料異常');
+  if(!raw.materials||!raw.equipment||!raw.traits||!raw.mastery||!raw.clears||!raw.difficultyClears)throw Error('養成資料不完整');
+  const groups=[
+    [raw.materials,Object.keys(defaultProfile().materials),1e8],
+    [raw.equipment,Object.keys(EQUIPMENT),5],
+    [raw.traits,ROLES.map(r=>r.id),5],
+    [raw.mastery,ROLES.map(r=>r.id),1e8],
+    [raw.clears,MAPS.map(m=>m.id),1e7],
+  ];
+  for(const [values,ids,cap] of groups){
+    if(!values||typeof values!=='object'||Array.isArray(values)||ids.some(id=>!validInt(values[id],cap)))throw Error('收藏或等級資料不正確');
+  }
+  for(const map of MAPS){
+    const record=raw.difficultyClears[map.id];
+    if(!record||DIFFICULTY_ORDER.some(d=>!validInt(record[d],1e7)))throw Error('難度通關紀錄不正確');
+  }
+  if(raw.audio!=null&&(!raw.audio||typeof raw.audio.musicEnabled!=='boolean'||typeof raw.audio.sfxEnabled!=='boolean'||['musicVolume','sfxVolume'].some(k=>typeof raw.audio[k]!=='number'||!Number.isFinite(raw.audio[k])||raw.audio[k]<0||raw.audio[k]>1)))throw Error('音訊設定不正確');
+  return validateProfile(raw);
+}
+function exportTitleBackup(){
+  try{
+    const documentData={format:'CxQ-StarSurvivors-Backup',version:1,profile:JSON.parse(JSON.stringify(profile)),run:saved?JSON.parse(serialize(saved)):null,exportedAt:Date.now()};
+    const blob=new Blob([JSON.stringify(documentData,null,2)],{type:'application/json;charset=utf-8'});
+    const url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url;a.download='CxQ-星界遠征-備份-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1200);
+    backupNote.textContent='備份已匯出。';
+  }catch(error){backupNote.textContent='匯出失敗：'+error.message}
+}
+async function importTitleBackup(file){
+  if(!file)return;
+  if(file.size>2*1024*1024){backupNote.textContent='備份檔過大（上限 2 MB）。';return}
+  try{
+    const raw=JSON.parse(await file.text());
+    const native=raw?.format==='CxQ-StarSurvivors-Backup'&&raw.version===1;
+    const nextProfile=validateImportedProfile(native?raw.profile:raw);
+    const nextRun=native&&raw.run!=null?restore(JSON.stringify(raw.run)):null;
+    if(native&&raw.run!=null&&!nextRun)throw Error('遠征中途存檔無效');
+    if(!confirm('匯入星界遠征備份？\n目前角色、素材、通關紀錄及中途進度將被取代。\n匯入前會在瀏覽器保留舊存檔。'))return;
+    const previousProfile=localStorage.getItem(KEY);
+    const previousRun=localStorage.getItem(RUN);
+    const safeKey=KEY+'-before-import-'+Date.now();
+    localStorage.setItem(safeKey,JSON.stringify({profile:previousProfile,run:previousRun}));
+    localStorage.setItem(KEY,JSON.stringify(nextProfile));
+    if(nextRun)localStorage.setItem(RUN,serialize(nextRun));else localStorage.removeItem(RUN);
+    profile=nextProfile;saved=nextRun;
+    sound.setPreferences(profile.audio);
+    roleId=saved?.roleId||'dream';mapId=saved?.mapId||'cave';difficulty=saved?.difficulty||'normal';
+    renderLobby();refreshTitle();
+    backupNote.textContent='匯入完成！原有存檔已留在此瀏覽器（'+safeKey+'）。';
+  }catch(error){backupNote.textContent='匯入失敗，原進度未更動：'+error.message}
+}
+$('title-enter').onclick=closeTitle;
+$('title-resume').onclick=()=>{if(!saved||!ready)return;closeTitle();begin(true)};
+$('title-export').onclick=exportTitleBackup;
+$('title-import').onclick=()=>$('title-import-file').click();
+$('title-import-file').onchange=async e=>{const file=e.target.files?.[0];await importTitleBackup(file);e.target.value=''};
+$('back-to-title').onclick=openTitle;
+
 $('start').onclick=()=>{if(loadFailed){location.reload();return}if(!ready)return;if(saved){modal('開始新的遠征？','目前仍有未完成的遠征。開始新局會取代這份中途進度，永久成長與素材會保留。','NEW EXPEDITION');action('返回',hideModal);action('開始遠征',()=>begin(),true);focusDialog()}else begin()};$('resume').onclick=()=>begin(true);$('pause').onclick=pause;$('help').onclick=()=>guide();$('sound').onclick=()=>soundSettings();
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;renderLobby()});$('difficulty-options').onclick=e=>{const b=e.target.closest('[data-difficulty]');if(!b||b.disabled)return;difficulty=b.dataset.difficulty;renderMapDetail();refreshWallet()};
 document.addEventListener('pointerdown',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;sound.unlock();sound.play('click');const r=b.getBoundingClientRect();renderer.uiBurst?.(e.clientX||r.x+r.width/2,e.clientY||r.y+r.height/2)},true);
@@ -290,8 +371,8 @@ function frame(now){requestAnimationFrame(frame);const startCPU=performance.now(
 }
 renderCost+=performance.now()-startCPU;renderFrames++;if(now-renderMark>1000){$('game').dataset.renderMs=(renderCost/renderFrames).toFixed(2);renderCost=0;renderFrames=0;renderMark=now}}
 for(const type of['gesturestart','gesturechange','gestureend'])document.addEventListener(type,e=>e.preventDefault(),{passive:false});document.addEventListener('dblclick',e=>e.preventDefault());document.addEventListener('selectstart',e=>e.preventDefault());document.addEventListener('contextmenu',e=>{if(e.target.closest('#game,#touch,button'))e.preventDefault()});
-renderLobby();requestAnimationFrame(frame);
-async function load(){try{await loadAnimationManifest(images);await Promise.all([...ROLES.map(role=>ensureRoleAnimation(images,role.id)),ensureMonsterAnimation(images,0)])}catch(error){loadFailed=true;$('start').disabled=false;$('start').textContent='重新載入冒險素材';return}const files={vfx:'art/v2/fx.png',icons:'art/v2/icons.png',icons3:'art/v3/icons.png',allies:'art/v3/allies.png',props:'art/v2/props.png',equipment:'art/v4/equipment.webp',mainWeapons:'art/v4/main-weapons.webp',materials:'art/v4/materials.webp',companions:'art/v4/companions.webp',ground:'art/ground.jpg',run:'art/luti-run.png',cast:'art/luti-cast.png',boss:'art/v2/boss.png',walk:'art/v2/walk.png'};for(const r of ROLES)files['role-'+r.id]='art/v4/role-'+r.id+'.webp';for(const m of MAPS){files['map-'+m.id]='art/v4/map-'+m.id+'.jpg';for(let i=0;i<5;i++)files['scenery-'+m.id+'-'+i]='art/v7/'+m.id+'/'+i+'.webp'}let count=0;const failures=[];await Promise.all(Object.entries(files).map(([key,file])=>new Promise(resolve=>{const im=new Image();im.onload=()=>{images[key]=im;$('start').textContent=`準備冒險 ${Math.round(++count/Object.keys(files).length*100)}%`;resolve()};im.onerror=()=>{failures.push(file);resolve()};im.src=file})));if(failures.length){loadFailed=true;$('start').disabled=false;$('start').textContent='重新載入冒險素材';storageMessage='部分素材尚未載入，請確認連線並重新載入。';refreshWallet();console.error('Adventure assets failed:',failures.join(', '));return}ready=true;$('start').disabled=false;$('start').textContent='啟程遠征';refreshWallet()}
+renderLobby();refreshTitle();requestAnimationFrame(frame);
+async function load(){try{await loadAnimationManifest(images);await Promise.all([...ROLES.map(role=>ensureRoleAnimation(images,role.id)),ensureMonsterAnimation(images,0)])}catch(error){loadFailed=true;$('start').disabled=false;$('start').textContent='重新載入冒險素材';return}const files={vfx:'art/v2/fx.png',icons:'art/v2/icons.png',icons3:'art/v3/icons.png',allies:'art/v3/allies.png',props:'art/v2/props.png',equipment:'art/v4/equipment.webp',mainWeapons:'art/v4/main-weapons.webp',materials:'art/v4/materials.webp',companions:'art/v4/companions.webp',ground:'art/ground.jpg',run:'art/luti-run.png',cast:'art/luti-cast.png',boss:'art/v2/boss.png',walk:'art/v2/walk.png'};for(const r of ROLES)files['role-'+r.id]='art/v4/role-'+r.id+'.webp';for(const m of MAPS){files['map-'+m.id]='art/v4/map-'+m.id+'.jpg';for(let i=0;i<5;i++)files['scenery-'+m.id+'-'+i]='art/v7/'+m.id+'/'+i+'.webp'}let count=0;const failures=[];await Promise.all(Object.entries(files).map(([key,file])=>new Promise(resolve=>{const im=new Image();im.onload=()=>{images[key]=im;$('start').textContent=`準備冒險 ${Math.round(++count/Object.keys(files).length*100)}%`;resolve()};im.onerror=()=>{failures.push(file);resolve()};im.src=file})));if(failures.length){loadFailed=true;$('start').disabled=false;$('start').textContent='重新載入冒險素材';storageMessage='部分素材尚未載入，請確認連線並重新載入。';refreshWallet();console.error('Adventure assets failed:',failures.join(', '));return}ready=true;$('start').disabled=false;$('start').textContent='啟程遠征';refreshWallet();refreshTitle()}
 load();
 
 updateOrientation();
