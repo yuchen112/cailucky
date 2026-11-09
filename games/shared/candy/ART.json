@@ -1,0 +1,49 @@
+{
+  "tool": "built-in image_gen",
+  "theme": "晴日糖果",
+  "assets": [
+    "panel.webp",
+    "card.webp",
+    "primary.webp",
+    "board.webp",
+    "hud.webp",
+    "active.webp",
+    "garden.webp",
+    "sky.webp",
+    "clearing.webp",
+    "run.webp",
+    "bubble.webp",
+    "vessel.webp",
+    "sky-forest.webp",
+    "sky-moon.webp",
+    "run-rain.webp",
+    "run-moon.webp"
+  ],
+  "prompts": [
+    {
+      "name": "theme-ui",
+      "path": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a1a6ae-49db-7b81-a247-5c811ffc46d5 as C:\\Users\\User\\.codex\\generated_images\\01a1a6ae-49db-7b81-a247-5c811ffc46d5\\exec-aee224c7-8965-488f-a9ff-95a03982395c.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "prompt": "Production UI sprite atlas for premium cute fantasy mobile game, 1536x1024, EXACT 3 columns x2 rows grid each cell512x512, transparent background between isolated assets, no text anywhere. Theme cream white porcelain, peach pink edges, mint details, warm pale gold fine trim, little four-leaf clover accents only corners, cozy soft storybook 3D toy material. NOT dark, no navy, no heavy gold baroque. Each asset fills90% of its cell with generous inner empty area. Top left: large SQUARE cream parchment panel with fine pink-gold rim and subtle scalloped corner decoration, flat uniform light ivory center. Top middle: wide rounded rectangle secondary mint-white button, width90% height32% cell, flat pale mint center. Top right: wide rounded rectangle primary peach-pink button, width90% height32% cell, light peach center. Bottom left: SQUARE light pearl panel for game board, fine mint-gold border, flat uniform ivory center. Bottom middle: wide rounded rectangle HUD display, width90% height44% cell, flat light cream center, thin lavender-pink rim. Bottom right: wide rounded rectangle selected-state button, width90% height32% cell, pale strawberry cream center, gold and rose rim with tiny star corner. All empty centers for live dark plum text. no drawn text, glyphs or icons."
+    },
+    {
+      "name": "theme-garden",
+      "path": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a1a6ae-49db-7b81-a247-5c811ffc46d5 as C:\\Users\\User\\.codex\\generated_images\\01a1a6ae-49db-7b81-a247-5c811ffc46d5\\exec-2b70068f-7b52-470d-9239-c30bb91079a2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "prompt": "Production background illustration for cute premium mobile minigame collection, portrait 2:3. Bright cream and pastel peach, mint, powder blue, lavender. A luminous enchanted garden conservatory, morning sunshine, distant pastel fairytale roofs and round trees, little blossoms, soft clouds, a few hanging golden stars, warm whimsical toy-like storybook 3D painting. Spacious calm uncluttered center and lower area in pale cream/mint to display a game board and live UI. No characters, no lettering, no screens or buttons, no border. No dark areas, no navy. High readability, subtle texture, detailed edges and soft quiet center. NOT a flat vector gradient. Full bleed scene."
+    },
+    {
+      "name": "theme-stages",
+      "path": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a1a6ae-49db-7b81-a247-5c811ffc46d5 as C:\\Users\\User\\.codex\\generated_images\\01a1a6ae-49db-7b81-a247-5c811ffc46d5\\exec-7f91ed51-eb3d-46c8-96f3-f67205e50a31.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "prompt": "Production environment sprite atlas 1536x1024 EXACT 2columns x2rows, four rectangular landscape cells768x512. Bright cute storybook premium mobile minigames, warm daylight, pastel mint peach cream skyblue. No text no characters no UI no borders. Top left: calm bright morning sky with puffy cream clouds and distant pastel floating islands, center clear (for flying game). Top right: sunny gentle forest clearing viewed downwards, 85% green moss/grass ground, distant tree roots only top15%, no holes (for whack game). Bottom left: sideview endless runner scene, low pastel trees and cream sky, flat dirt path ground line EXACT y74% of cell, ground below, no obstacles. Bottom right: magical lavender peach crystal garden sky, calm light lavender center and tiny sparkles at edges (for bubble game). Each scene fills its own cell edge to edge with no gutters; distinct boundaries for asset extraction."
+    },
+    {
+      "name": "theme-vessel",
+      "path": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a1a6ae-49db-7b81-a247-5c811ffc46d5 as C:\\Users\\User\\.codex\\generated_images\\01a1a6ae-49db-7b81-a247-5c811ffc46d5\\exec-a2c27a63-898b-4ccb-bad7-de049ee373ec.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "prompt": "Precisely recolor this mobile game empty vessel panel into bright cute theme. Preserve exact portrait proportions, exact outer and inner frame positions, empty flat center, no added objects or motifs inside. Replace dark navy center with uniform very pale ivory-pink. Replace green/gold frame with pearl cream porcelain, pastel mint and strawberry pink fine edges and restrained warm pale gold trim. Slightly beveled toy-like fairytale material. No text, no characters, no balls. Full bleed rectangular asset, keep same geometry. Do not change inner opening."
+    },
+    {
+      "name": "theme-route-variants",
+      "path": "Generated images are saved to C:\\Users\\User\\.codex\\generated_images\\01a1a6ae-49db-7b81-a247-5c811ffc46d5 as C:\\Users\\User\\.codex\\generated_images\\01a1a6ae-49db-7b81-a247-5c811ffc46d5\\exec-56618644-ded8-4af8-8e95-08a96434d408.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "prompt": "Production mobile game environment atlas, EXACT 2x2 grid 1536x1024, four768x512 landscapes, each full bleed no gutters/no text/no characters/no UI. Bright cute storybook palette mint cream peach lavender, soft premium 3D painted fairytale. Top left: flying through an airy pastel mint forest canopy, large clear pale sky center, leafy treetops bottom and edges, cream clouds above, sunshine. Top right: flying in pastel lavender moon garden sky, a pale crescent moon upper right, ivory clouds, bright lilac center, airy not dark. Bottom left: sideview rainy mint forest running route, pale blue sky and gentle rain streaks, flat horizontal peach path with top boundary exactly74% down the cell, bottom green grass, no obstacles. Bottom right: sideview moonlight running route, luminous pale lilac sky with crescent moon, distant pastel trees, flat horizontal cream path top boundary exactly74% down cell, mint ground below, no obstacles. All gentle readable low-contrast centers but detailed edges, no navy or black areas. Individual distinct scenes for extraction."
+    }
+  ]
+}

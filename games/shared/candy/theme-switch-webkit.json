@@ -1,0 +1,212 @@
+[
+  {
+    "game": "2048",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 232.203125,
+            "width": 366,
+            "height": 379.578125,
+            "top": 232.203125,
+            "right": 378,
+            "bottom": 611.78125,
+            "left": 12
+          },
+          "scroll": 344,
+          "client": 344,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 232.203125,
+            "width": 366,
+            "height": 379.578125,
+            "top": 232.203125,
+            "right": 378,
+            "bottom": 611.78125,
+            "left": 12
+          },
+          "scroll": 344,
+          "client": 344,
+          "position": "fixed"
+        }
+      }
+    ]
+  },
+  {
+    "game": "whack",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 231.203125,
+            "width": 366,
+            "height": 381.578125,
+            "top": 231.203125,
+            "right": 378,
+            "bottom": 612.78125,
+            "left": 12
+          },
+          "scroll": 346,
+          "client": 346,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 231.203125,
+            "width": 366,
+            "height": 381.578125,
+            "top": 231.203125,
+            "right": 378,
+            "bottom": 612.78125,
+            "left": 12
+          },
+          "scroll": 346,
+          "client": 346,
+          "position": "fixed"
+        }
+      }
+    ]
+  },
+  {
+    "game": "tetris",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 221.40625,
+            "width": 366,
+            "height": 401.1875,
+            "top": 221.40625,
+            "right": 378,
+            "bottom": 622.59375,
+            "left": 12
+          },
+          "scroll": 365,
+          "client": 365,
+          "position": "static"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 221.40625,
+            "width": 366,
+            "height": 401.1875,
+            "top": 221.40625,
+            "right": 378,
+            "bottom": 622.59375,
+            "left": 12
+          },
+          "scroll": 365,
+          "client": 365,
+          "position": "static"
+        }
+      }
+    ]
+  },
+  {
+    "game": "merge",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 232.203125,
+            "width": 366,
+            "height": 379.578125,
+            "top": 232.203125,
+            "right": 378,
+            "bottom": 611.78125,
+            "left": 12
+          },
+          "scroll": 344,
+          "client": 344,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 232.203125,
+            "width": 366,
+            "height": 379.578125,
+            "top": 232.203125,
+            "right": 378,
+            "bottom": 611.78125,
+            "left": 12
+          },
+          "scroll": 344,
+          "client": 344,
+          "position": "fixed"
+        }
+      }
+    ]
+  },
+  {
+    "game": "flappy",
+    "status": "passed",
+    "checks": [
+      {
+        "round": 0,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 204.203125,
+            "width": 366,
+            "height": 435.578125,
+            "top": 204.203125,
+            "right": 378,
+            "bottom": 639.78125,
+            "left": 12
+          },
+          "scroll": 400,
+          "client": 400,
+          "position": "fixed"
+        }
+      },
+      {
+        "round": 1,
+        "panel": {
+          "rect": {
+            "x": 12,
+            "y": 204.203125,
+            "width": 366,
+            "height": 435.578125,
+            "top": 204.203125,
+            "right": 378,
+            "bottom": 639.78125,
+            "left": 12
+          },
+          "scroll": 400,
+          "client": 400,
+          "position": "fixed"
+        }
+      }
+    ]
+  }
+]

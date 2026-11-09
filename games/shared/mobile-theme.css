@@ -1,0 +1,378 @@
+.cxq-theme-button {
+  min-height: 44px !important;
+  min-width: 58px !important;
+  padding: 8px 12px !important;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  font-size: 13px !important;
+  background: var(--mg-card, url("rebuilt/card.webp")) center/100% 100%
+    no-repeat !important;
+  color: var(--text, #fff1d7) !important;
+  border: 0;
+}
+.candy-title-role {
+  display: none;
+}
+.cxq-theme-picker {
+  width: min(500px, calc(100vw - 24px));
+  padding: 22px;
+  text-align: center;
+}
+.cxq-theme-picker h2 {
+  margin: 0 0 12px;
+}
+.cxq-theme-picker p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.cxq-theme-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.cxq-theme-options button {
+  display: grid;
+  gap: 8px;
+  place-items: center;
+  padding: 12px !important;
+}
+.cxq-theme-options img {
+  width: 100%;
+  height: 100px;
+  object-fit: fill;
+}
+.cxq-theme-options span {
+  font-size: 12px;
+}
+.cxq-theme-options [aria-pressed="true"] {
+  outline: 3px solid #eaa354 !important;
+  outline-offset: -3px;
+}
+.cxq-theme-status {
+  min-height: 22px;
+}
+.cxq-theme-picker > [data-theme-close] {
+  min-height: 48px;
+  width: 100%;
+}
+.mg-game[data-mobile-game="whack"] .hole-field {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  min-width: 0 !important;
+  width: 100% !important;
+}
+.mg-game[data-mobile-game="whack"] #board {
+  width: 100% !important;
+  max-width: 440px !important;
+  min-width: 0 !important;
+  flex: 0 1 440px;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+.mg-game[data-mobile-game="whack"] #play,
+.mg-game[data-mobile-game="whack"] .hole {
+  min-width: 0 !important;
+}
+.mg-game[data-mobile-game="whack"] .hole[data-kind="bomb"] .target > img,
+.mg-game[data-mobile-game="whack"] .hole[data-kind="heart"] .target > img {
+  left: 15% !important;
+  top: 25% !important;
+  width: 70% !important;
+  height: 60% !important;
+}
+.mg-game[data-mobile-game="tetris"] #play {
+  grid-template-rows: 54px 22px minmax(0, 1fr) 112px !important;
+  gap: 6px !important;
+}
+.mg-game[data-mobile-game="tetris"] .stage {
+  justify-content: center;
+  min-width: 0;
+  gap: 8px !important;
+}
+.mg-game[data-mobile-game="tetris"] #toast {
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  display: block !important;
+  align-self: center;
+  min-height: 20px;
+  line-height: 20px;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: none !important;
+  text-align: center;
+  font-size: 12px;
+  pointer-events: none;
+}
+.mg-game[data-mobile-game="tetris"] .controls {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(2, 52px) !important;
+  gap: 6px !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+}
+.mg-game[data-mobile-game="tetris"] .controls button {
+  width: 100% !important;
+  height: 52px !important;
+  margin: 0 !important;
+  font-size: 13px !important;
+}
+.mg-game[data-mobile-game="tetris"] #skill {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px !important;
+  gap: 3px !important;
+  font-size: 15px !important;
+  min-width: 0;
+  min-height: 60px;
+}
+.mg-game[data-mobile-game="tetris"] #skill::before {
+  display: none !important;
+}
+.mg-game[data-mobile-game="tetris"] #skillText {
+  font-size: 13px;
+}
+html[data-visual-theme="candy"] .mg-game {
+  --mg-panel: url("candy/panel.webp");
+  --mg-card: url("candy/card.webp");
+  --mg-active: url("candy/active.webp");
+  --mg-primary: url("candy/primary.webp");
+  --mg-hud: url("candy/hud.webp");
+  --mg-bar: url("candy/card.webp");
+  --paper: url("candy/primary.webp");
+  --slate: url("candy/card.webp");
+  --teal: url("candy/panel.webp");
+  --text: #513c56;
+  --dim: #6e586e;
+  color: #513c56 !important;
+  background: #fff5e9 url("candy/garden.webp") center/cover fixed !important;
+  color-scheme: light;
+}
+html[data-visual-theme="candy"]
+  .mg-game
+  :is(
+    .mg-preparation,
+    .mg-panel,
+    .cp-card,
+    .queue > div,
+    .stats > div,
+    .hero,
+    .number-actions,
+    .mg-number-play,
+    .play,
+    .puzzle-game,
+    .game-shell,
+    .app
+  ) {
+  color: #513c56 !important;
+}
+html[data-visual-theme="candy"]
+  .mg-game
+  :is(h2, h3, p, label, summary, strong, b, small, span, a, button) {
+  color: #513c56 !important;
+  text-shadow: none !important;
+}
+html[data-visual-theme="candy"]
+  .mg-game
+  :is(
+    .mg-panel,
+    .cp-card,
+    .mg-preparation,
+    .mp-mode-info,
+    .mp-party-preview,
+    .modal,
+    .menu-card
+  ) {
+  background-image: url("candy/panel.webp") !important;
+  background-color: #fff7ed !important;
+}
+html[data-visual-theme="candy"]
+  .mg-game
+  :is(
+    .mg-choice,
+    button:not(.hole):not(.tile):not(.cell):not(.card):not(.mobile-function),
+    .queue > div,
+    .stats > div,
+    .hero
+  ) {
+  background-image: url("candy/card.webp") !important;
+  background-color: transparent !important;
+}
+html[data-visual-theme="candy"]
+  .mg-game
+  :is(
+    button.primary,
+    .mobile-primary,
+    .mg-choice.is-selected,
+    [aria-selected="true"],
+    [aria-pressed="true"]
+  ) {
+  background-image: url("candy/primary.webp") !important;
+}
+html[data-visual-theme="candy"] .mg-game .mg-choice.is-selected {
+  background-image: url("candy/active.webp") !important;
+}
+html[data-visual-theme="candy"] .mobile-title {
+  background: #fff4e8 !important;
+  color: #513c56 !important;
+}
+html[data-visual-theme="candy"] .mobile-title-dock {
+  background-image: url("candy/panel.webp") !important;
+}
+html[data-visual-theme="candy"] .candy-title-role {
+  display: block;
+  grid-row: 3;
+  width: 60%;
+  height: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  justify-self: center;
+  align-self: center;
+  min-height: 0;
+  pointer-events: none;
+}
+html[data-visual-theme="candy"]
+  .mg-game
+  :is(.play, .puzzle-game, .mg-number-play, .game-shell, .app) {
+  background: #fff5ed url("candy/garden.webp") center/cover !important;
+}
+html[data-visual-theme="candy"]
+  .mg-game
+  :is(.mp-tetris-frame, #board.board, #wrap) {
+  background-image: url("candy/board.webp") !important;
+}
+html[data-visual-theme="candy"]
+  .mg-game[data-mobile-game="tetris"]
+  .mp-tetris-frame
+  canvas {
+  background: #fff7ec !important;
+}
+html[data-visual-theme="candy"] .mg-game[data-mobile-game="whack"] .hole-field {
+  background-image: url("candy/clearing.webp") !important;
+}
+html[data-visual-theme="candy"]
+  .mg-game[data-mobile-game="magic-bubble"]
+  .bubble-field {
+  background: #fff0f7 url("candy/bubble.webp") center/cover !important;
+}
+html[data-visual-theme="candy"] .mg-game[data-mobile-game="memory"] .boardWrap,
+html[data-visual-theme="candy"]
+  .mg-game[data-mobile-game="merge"]
+  .canvas-wrap {
+  background: transparent !important;
+}
+html[data-visual-theme="candy"] .mg-game[data-mobile-game="2048"] #board {
+  background: #fbe6e9 url("candy/board.webp") center/100% 100% !important;
+}
+html[data-visual-theme="candy"] .mg-game[data-mobile-game="2048"] .cell {
+  background: #fff9ed !important;
+}
+html[data-visual-theme="candy"]
+  .mg-game[data-mobile-game="dream-match"]
+  #board
+  .cell {
+  background: #e8f5ee url("candy/card.webp") center/100% 100% !important;
+}
+html[data-visual-theme="candy"]
+  .mg-game[data-mobile-game="mines"]
+  #board
+  .cell {
+  background: #def0e4 !important;
+}
+html[data-visual-theme="candy"]
+  .mg-game[data-mobile-game="mines"]
+  #board
+  .cell.open {
+  background: #fff6ea !important;
+}
+@media (orientation: landscape) {
+  .cxq-theme-options img {
+    height: 60px;
+  }
+  .cxq-theme-picker {
+    padding: 16px;
+  }
+  .cxq-theme-picker p {
+    margin: 6px 0;
+  }
+  .candy-title-role {
+    max-height: 140px !important;
+  }
+}
+.mg-game[data-mobile-game="tetris"] .controls > button {
+  grid-area: auto !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  order: 0 !important;
+}
+html[data-visual-theme="candy"]
+  body.mg-game.mg-polished
+  :is(h2, h3, p, label, summary, strong, b, small, span, a, button) {
+  color: #513c56 !important;
+  text-shadow: none !important;
+}
+html[data-visual-theme="candy"] .mobile-title header a {
+  background-image: url("candy/card.webp") !important;
+  background-color: transparent !important;
+}
+html[data-visual-theme="candy"]
+  body.mg-game.mg-polished
+  :is(
+    .modalBtns,
+    .mg-prepare-footer,
+    .memory-tools,
+    .puzzle-actions,
+    .controls
+  ) {
+  background-color: transparent !important;
+}
+.mg-game[data-mobile-game="whack"] .target {
+  visibility: var(--visible, hidden) !important;
+  clip-path: inset(0 2% calc(12% + (1 - var(--emerge, 0)) * 80%) 2%) !important;
+}
+html[data-visual-theme="candy"]
+  body.mg-game.mg-polished[data-mobile-game="mines"]
+  #board
+  .cell[data-n="1"] {
+  color: #2358a2 !important;
+}
+html[data-visual-theme="candy"]
+  body.mg-game.mg-polished[data-mobile-game="mines"]
+  #board
+  .cell[data-n="2"] {
+  color: #287342 !important;
+}
+html[data-visual-theme="candy"]
+  body.mg-game.mg-polished[data-mobile-game="mines"]
+  #board
+  .cell[data-n="3"] {
+  color: #a42e45 !important;
+}
+html[data-visual-theme="candy"]
+  body.mg-game.mg-polished[data-mobile-game="mines"]
+  #board
+  .cell[data-n="4"] {
+  color: #7041a2 !important;
+}
+html[data-visual-theme="candy"]
+  body.mg-game.mg-polished[data-mobile-game="mines"]
+  #board
+  .cell[data-n="5"] {
+  color: #8f4928 !important;
+}
+html[data-visual-theme="candy"]
+  body.mg-game.mg-polished[data-mobile-game="mines"]
+  #board
+  .cell[data-n="6"] {
+  color: #156e76 !important;
+}
+html[data-visual-theme="candy"]
+  body.mg-game.mg-polished[data-mobile-game="mines"]
+  #board
+  .cell
+  .mine-number {
+  color: inherit !important;
+}

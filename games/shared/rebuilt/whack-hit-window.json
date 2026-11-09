@@ -1,0 +1,9 @@
+[
+  "rising character not hittable before ready",
+  "visual fully risen at hit window",
+  "one hit awards once",
+  "hit sinks halfway after130ms",
+  "hit fully hidden after260ms",
+  "retreat is masked and cannot be hit",
+  "foreground lip occludes lower character"
+]

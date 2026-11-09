@@ -1,0 +1,257 @@
+/* Responsive panel flow: constrain the viewport, never shrink content into overlap. */
+.mg-game .cp-card > * {
+  flex-shrink: 0 !important;
+}
+.mg-game .rp-panel {
+  box-sizing: border-box !important;
+  display: block !important;
+  height: fit-content !important;
+  min-height: 0 !important;
+  width: min(540px, calc(100vw - 24px)) !important;
+  max-width: calc(100vw - 24px) !important;
+  max-height: calc(100dvh - 24px) !important;
+  overflow: auto !important;
+  overscroll-behavior: contain;
+  scroll-padding: 14px;
+  scrollbar-width: thin;
+  padding: 22px !important;
+  isolation: isolate;
+}
+.mg-game .rp-panel > * {
+  flex-shrink: 0 !important;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.mg-game .rp-panel > h2,
+.mg-game .rp-panel > h1 {
+  font-size: 22px !important;
+  line-height: 1.4 !important;
+  margin: 8px 0 12px !important;
+  overflow-wrap: anywhere;
+  outline: none;
+}
+.mg-game .rp-panel > img {
+  display: block !important;
+  width: 80px !important;
+  height: 80px !important;
+  max-height: 80px !important;
+  object-fit: contain !important;
+  margin: 0 auto 10px !important;
+}
+.mg-game
+  .rp-panel
+  :is(.dialog-actions, .modalBtns, .actions, .menu-actions, .cp-actions) {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-auto-rows: minmax(48px, auto) !important;
+  align-content: start !important;
+  align-items: stretch !important;
+  height: auto !important;
+  min-height: max-content !important;
+  max-height: none !important;
+  flex: 0 0 auto !important;
+  gap: 10px !important;
+  margin: 14px 0 0 !important;
+  padding: 0 !important;
+  position: static !important;
+  overflow: visible !important;
+}
+.mg-game
+  .rp-panel
+  :is(.dialog-actions, .modalBtns, .actions, .menu-actions, .cp-actions)
+  > button {
+  grid-area: auto !important;
+  position: relative !important;
+  inset: auto !important;
+  transform: none !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 48px !important;
+  padding: 10px !important;
+  line-height: 1.4 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  align-self: stretch;
+  margin: 0 !important;
+}
+.mg-game .rp-panel .dialog-actions > button:only-child,
+.mg-game .rp-panel .cp-actions > button:first-child,
+.mg-game .rp-panel .menu-actions > button:first-child {
+  grid-column: 1/-1 !important;
+}
+.mg-game .rp-panel > .cxq-theme-button,
+.mg-game .rp-panel > .mp-sound {
+  display: block !important;
+  position: static !important;
+  width: 100% !important;
+  margin: 12px 0 0 !important;
+  min-height: 48px !important;
+}
+.mg-game .rp-panel .dialog-stats {
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)) !important;
+}
+.mg-game :is(.modal-mask.show, .overlay.show, #resultOverlay:not(.hidden)) {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  padding: 12px !important;
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .mg-game .rp-panel {
+    width: min(660px, calc(100vw - 24px)) !important;
+    padding: 16px 20px !important;
+  }
+  .mg-game .rp-panel > img {
+    width: 52px !important;
+    height: 52px !important;
+    max-height: 52px !important;
+  }
+  .mg-game .rp-panel > h2 {
+    font-size: 20px !important;
+  }
+  .mg-game .rp-panel p {
+    margin: 8px 0 !important;
+    line-height: 1.5 !important;
+  }
+}
+.mg-game[data-mobile-game="tetris"] #result.show {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  padding: 12px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+.mg-game[data-mobile-game="tetris"] #result.show > img {
+  height: clamp(90px, 20dvh, 150px) !important;
+  width: 150px !important;
+  max-width: 100% !important;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+.mg-game[data-mobile-game="tetris"] #result.show > .rp-panel {
+  max-height: calc(100dvh - 174px) !important;
+  flex: 0 1 auto !important;
+  margin: 0 !important;
+}
+.mg-game
+  .rp-panel
+  :is(
+    .rules-body,
+    .modalBody,
+    .modalScroll,
+    .collection,
+    .record-list,
+    .rank-list
+  ) {
+  max-height: none !important;
+  overflow: visible !important;
+}
+.mg-game #cxq-audio-panel.rp-panel .audio-close-top {
+  position: static !important;
+  display: block !important;
+  margin: 0 0 12px auto !important;
+}
+.mg-game[data-mobile-game="brick-breaker"]
+  :is(#rulesOverlay, #mapOverlay):not(.hidden) {
+  position: fixed !important;
+  inset: 0 !important;
+  height: 100dvh !important;
+  width: 100% !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  padding: 12px !important;
+  box-sizing: border-box !important;
+}
+.mg-game .rp-panel.cp-card > img {
+  width: 60px !important;
+  height: 60px !important;
+  max-height: 60px !important;
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .mg-game .rp-panel.cp-card {
+    padding: 14px 20px !important;
+  }
+  .mg-game .rp-panel.cp-card > img {
+    display: none !important;
+  }
+  .mg-game .rp-panel.cp-card > h2 {
+    margin: 0 0 6px !important;
+  }
+  .mg-game .rp-panel.cp-card > p {
+    margin: 0 0 8px !important;
+  }
+  .mg-game .rp-panel.cp-card :is(.cp-actions, .dialog-actions, .menu-actions) {
+    margin-top: 0 !important;
+  }
+  .mg-game .rp-panel.cp-card > .cxq-theme-button,
+  .mg-game .rp-panel.cp-card > .mp-sound {
+    margin-top: 8px !important;
+  }
+}
+.mg-game .rp-panel form {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px !important;
+  min-width: 0 !important;
+}
+.mg-game .rp-panel form > button {
+  position: relative !important;
+  inset: auto !important;
+  min-height: 48px !important;
+  height: auto !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  white-space: normal !important;
+}
+.mg-game .rp-panel form > label {
+  display: grid !important;
+  gap: 6px !important;
+  font-size: 14px !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+.mg-game .rp-panel input[type="range"] {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 44px !important;
+  touch-action: pan-x;
+}
+.mg-game .rp-panel .menu-actions:has(> button:last-child:nth-child(2)) {
+  grid-template-columns: 1fr !important;
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .mg-game
+    .rp-panel:not(.cp-card)
+    > :is(img.dialog-role, img.mg-panel-mark, img.dialog-mascot) {
+    display: none !important;
+  }
+  .mg-game .rp-panel:not(.cp-card) > h2 {
+    margin: 0 0 8px !important;
+  }
+  .mg-game .rp-panel:not(.cp-card) > p {
+    margin: 6px 0 !important;
+  }
+  .mg-game .rp-panel .dialog-stats {
+    margin: 8px 0 !important;
+  }
+  .mg-game .rp-panel:not(.cp-card) .dialog-actions {
+    margin-top: 10px !important;
+  }
+}

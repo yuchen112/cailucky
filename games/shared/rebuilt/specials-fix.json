@@ -1,0 +1,30 @@
+{
+  "reports": [
+    "four horizontal creates row at destination",
+    "four vertical creates column at destination",
+    "five creates prism at destination",
+    "row clears exact seven cells",
+    "column clears exact seven cells",
+    "swap carries special type to new coordinates",
+    "two line specials trigger at swapped row/column",
+    "prism clears selected color only, no hidden second color",
+    "two prisms clear all49",
+    "invalid special+normal swap restores original cell and does not trigger",
+    "actual swap generates four-match special at tapped destination",
+    "special follows exact cell when gravity drops one row",
+    "special art centered within actual cells",
+    "vertical symbol points along column"
+  ],
+  "geometry": [
+    {
+      "type": "row",
+      "centerError": 0,
+      "rotate": "none"
+    },
+    {
+      "type": "column",
+      "centerError": 0,
+      "rotate": "90deg"
+    }
+  ]
+}

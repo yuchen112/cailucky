@@ -1,32 +1,701 @@
-'use strict';
-const $=s=>document.querySelector(s),MODES={timed:['慶典挑戰','60 秒收集心光，連擊提高分數。看清夥伴，避開炸彈。'],reaction:['反應測驗','依序迎接 20 位夥伴，每次只出現一位；完成後查看平均反應與命中率。'],survival:['森林守護','三點生命挑戰；漏掉夥伴或敲中炸彈會扣生命，守護越久出現越快。'],golden:['星願快遞','30 秒收集星願夥伴，金色標記加倍出現；看清炸彈再出手。'],relaxed:['悠閒同樂','90 秒輕鬆遊玩，沒有炸彈與生命扣除，慢慢跟夥伴打招呼。']};
-const SPEED={easy:[1000,1250],normal:[760,1000],hard:[560,790],expert:[420,620]},KEY='cxq-whack-v1';
-let mode='timed',difficulty='normal',state=null,last=0,rank=CxQ.read(KEY,[]);if(!Array.isArray(rank))rank=[];rank=rank.filter(r=>MODES[r.mode]&&SPEED[r.difficulty]&&Number.isFinite(r.score)).slice(0,240);
-const CAST=['鈴可','糯糯','森芽','緹雅','朵莉','米洛','伯恩','露緹','汐寧','曦羽'];
-function sprite(id,extra=''){const name=['luck','healing','growth','memory','joy','night','trust','dream','sadness','hope'][id];return '<img aria-hidden="true" class="sprite cast '+extra+'" src="../storybook/art-mobile24/portrait-'+name+'.webp" alt="" style="object-fit:contain;background:none">'}
-function prop(id,extra=''){return '<img aria-hidden="true" class="sprite props '+extra+'" src="../storybook/art-20260914/'+['whack-burrow','whack-bomb','gem-0','gem-2','icon-gear','explosion'][id]+'.webp" alt="" style="object-fit:contain;background:none">'}
-$('#cast-list').innerHTML=CAST.map((name,i)=>'<div>'+sprite(i)+'<small>'+name+'</small></div>').join('');
-$('.mascot').innerHTML=sprite(2)+sprite(0)+sprite(9);
-$('.legend').innerHTML='<span>'+sprite(0)+'夥伴 +10</span><span>'+prop(3)+'星願 +30</span><span>'+prop(2)+'補生命</span><span>'+prop(1)+'別敲我</span>';
-const board=$('#board'),modal=$('#modal');for(let i=0;i<9;i++){const b=document.createElement('button');b.className='hole';b.setAttribute('aria-label','第 '+(i+1)+' 個夥伴洞');b.innerHTML='<img class="burrow" src="../storybook/art-director/burrow-back.webp" alt=""><span class="target"></span><img class="burrow-front" src="../storybook/art-director/burrow-front.webp" alt="">'+prop(5,'hit-art')+'<span class="pop"></span>';b.addEventListener('pointerdown',e=>{e.preventDefault();if(!window.CxQSession?.blocked()&&state?.running){hammer(e.clientX,e.clientY);}hit(i)});b.addEventListener('keydown',e=>{if(e.code==='Space'||e.code==='Enter'){e.preventDefault();hit(i)}});board.append(b)}
-$('#modes').innerHTML=Object.entries(MODES).map(([id,m])=>'<button data-mode="'+id+'">'+prop(3,'selected-mark')+m[0]+'</button>').join('');function selectMode(id){mode=id;document.querySelectorAll('[data-mode]').forEach(b=>(b.classList.toggle('active',b.dataset.mode===id),b.setAttribute('aria-pressed',String(b.dataset.mode===id))));$('#rule').textContent=MODES[id][1]}document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>selectMode(b.dataset.mode));selectMode(mode);
-function message(title,body,buttons){modal.innerHTML=sprite(0,'dialog-mascot')+'<h2>'+title+'</h2>'+body+buttons.map(([id,label])=>'<button id="'+id+'">'+label+'</button>').join('');if(!modal.open)modal.showModal()}
-function start(){difficulty=$('#difficulty').value;state={running:true,paused:false,elapsed:0,next:700,holes:Array(9).fill(null),score:0,lives:3,combo:0,bestCombo:0,hits:0,misses:0,reactions:[],resolved:0,countdown:1800};last=0;modal.close();$('#home').hidden=true;$('#play').hidden=false;$('#modeTitle').textContent=MODES[mode][0];$('#lives').parentElement.hidden=['relaxed','reaction'].includes(mode);document.body.classList.toggle('whack-relaxed',mode==='relaxed');$('.legend').innerHTML=mode==='reaction'?'<span>'+sprite(0)+'依序 20 位夥伴</span><span>越快命中，心光越多</span>':'<span>'+sprite(0)+'夥伴 +10</span><span>'+prop(3)+'星願 +30</span><span>'+prop(2)+'補生命</span><span>'+prop(1)+'別敲我</span>';$('#clockLabel').textContent=mode==='reaction'?'已完成 / 20':mode==='survival'?'守護時間':'剩餘時間';CxQ.resume();draw()}
-function pause(){if(!state?.running||state.paused)return;state.paused=true;CxQ.hold();message('森林等你回來','<p>夥伴、生命與時間都已暫停。</p>',[['resume','繼續冒險'],['exitForest','回到森林入口']]);$('#resume').onclick=()=>{modal.close();state.paused=false;state.countdown=1200;last=0;CxQ.resume()};$('#exitForest').onclick=()=>{state.running=false;modal.close();document.querySelector('section#home').hidden=false;$('#play').hidden=true;CxQ.resume()}}
-function spawn(){const empty=state.holes.map((h,i)=>h===null?i:-1).filter(i=>i>=0);if(!empty.length)return;if(mode==='reaction'&&state.holes.some(Boolean))return;const i=empty[Math.random()*empty.length|0],r=Math.random();const kind=mode==='relaxed'?(r<.18?'gold':'normal'):mode==='reaction'?'normal':r<(mode==='bomb'?.34:.12)?'bomb':r<(mode==='bomb'?.39:.18)?'heart':r<(mode==='golden'?.66:.30)?'gold':'normal';const speed=Math.max(.55,1-(mode==='survival'?state.elapsed/240000:state.elapsed/300000));state.holes[i]={kind,character:Math.random()*10|0,born:state.elapsed+180,ready:state.elapsed+360,expires:state.elapsed+360+Math.max(520,SPEED[difficulty][1]*speed*(mode==='relaxed'?1.7:mode==='reaction'?1.4:1)*(kind==='gold'?.82:1)),hit:false,feedback:''}}
-function hit(i){if(window.CxQSession?.blocked()||!state?.running||state.paused||state.countdown>0)return;const h=state.holes[i];if(h&&(state.elapsed<h.ready||state.elapsed>=h.expires))return;if(!h||h.hit){if(!h){state.combo=0;state.misses++;$('#feedback').textContent='放慢一點，等夥伴探頭再敲。';CxQ.sound('miss')}return}h.hit=true;h.expires=state.elapsed+260;if(h.kind==='bomb'){state.lives--;state.combo=0;state.misses++;h.feedback='哎呀！';CxQ.sound('miss')}else if(h.kind==='heart'){state.lives=Math.min(5,state.lives+1);h.feedback='+1';CxQ.sound('upgrade')}else{const reaction=state.elapsed-h.ready;state.hits++;state.combo++;state.bestCombo=Math.max(state.bestCombo,state.combo);const mul=mode==='timed'?1+Math.min(4,Math.floor((state.combo-1)/5)):1;const gain=mode==='reaction'?Math.max(10,Math.round(100-reaction/15)):(h.kind==='gold'?30:10)*mul;state.score+=gain;state.reactions.push(reaction);h.feedback='+'+gain;CxQ.sound('hit')}$('#feedback').textContent=h.kind==='bomb'?'深呼吸，避開黑色炸彈。':h.kind==='heart'?'收到一份暖暖的生命！':state.combo>=5?'漂亮！森林正在為你喝采。':'敲得剛剛好！';if(state.lives<=0)finish();draw()}
-function update(dt){if(window.CxQSession?.blocked()||!state?.running||state.paused)return;if(state.countdown>0){state.countdown=Math.max(0,state.countdown-dt);$('#feedback').textContent=state.countdown?'準備 '+Math.ceil(state.countdown/600):'開始！';return}state.elapsed+=dt;for(let i=0;i<9;i++){const h=state.holes[i];if(h&&state.elapsed>=h.expires+180){if(!h.hit&&['normal','gold'].includes(h.kind)){state.misses++;state.combo=0;$('#feedback').textContent='夥伴鑽回洞裡了，下次再快一點。';if(mode==='survival')state.lives--}if(mode==='reaction')state.resolved++;state.holes[i]=null}}const duration=mode==='golden'?30000:mode==='relaxed'?90000:60000;if(state.lives<=0||(mode==='reaction'?state.resolved>=20:mode!=='survival'&&state.elapsed>=duration)){finish();return}if(state.elapsed>=state.next){spawn();state.next=state.elapsed+SPEED[difficulty][0]*Math.max(.55,1-state.elapsed/(mode==='survival'?240000:300000))}draw()}
-function draw(){if(!state)return;$('#score').textContent=state.score;$('#time').textContent=mode==='reaction'?state.resolved+'/20':mode==='survival'?Math.floor(state.elapsed/1000):Math.max(0,Math.ceil(((mode==='golden'?30000:mode==='relaxed'?90000:60000)-state.elapsed)/1000));if($('#lives').dataset.count!==String(state.lives)){$('#lives').innerHTML=Array.from({length:Math.max(0,state.lives)},()=>prop(2)).join('');$('#lives').dataset.count=state.lives;$('#lives').setAttribute('aria-label','剩餘 '+state.lives+' 點生命');}$('#combo').textContent=state.combo?'連擊 ×'+state.combo:'等待下一次相遇';[...board.children].forEach((b,i)=>{const h=state.holes[i];b.className='hole'+(h?(state.elapsed<h.born?' warning':state.elapsed<h.expires?' up':' retreating'):'')+(h?.hit?' hit':'');if(h){const target=b.querySelector('.target'),key=h.kind+':'+h.character;if(target.dataset.key!==key){target.innerHTML=h.kind==='bomb'?prop(1):h.kind==='heart'?prop(2):sprite(h.character)+(h.kind==='gold'?prop(3,'bonus-token'):'');target.dataset.key=key}b.setAttribute('aria-label',h.kind==='bomb'?'炸彈，請避開':h.kind==='heart'?'療癒愛心':CAST[h.character]+(h.kind==='gold'?'，星願加分':'，點擊收集心光'))}else b.setAttribute('aria-label','空夥伴洞');b.querySelector('.pop').textContent=h?.feedback||''})}
-function finish(){if(!state?.running)return;state.running=false;const old=rank.filter(r=>r.mode===mode&&r.difficulty===difficulty).reduce((m,r)=>Math.max(m,r.score),0),record=state.score>old;rank.push({mode,difficulty,score:state.score,date:Date.now()});rank=rank.filter((r,i,a)=>a.slice(i+1).filter(x=>x.mode===r.mode&&x.difficulty===r.difficulty).length<10);CxQ.write(KEY,rank);CxQ.sound('win');const total=state.hits+state.misses,acc=total?Math.round(state.hits/total*100):0;message(record?'新的森林紀錄！':'這次的相遇，收好了', '<p>'+MODES[mode][0]+' · '+$('#difficulty').selectedOptions[0].textContent+'</p><div class="stats"><span><b>'+state.score+'</b><small>心光</small></span><span><b>'+acc+'%</b><small>命中率</small></span><span><b>'+state.bestCombo+'</b><small>最高連擊</small></span></div>'+(mode==='reaction'&&state.reactions.length?'<p>平均反應 '+Math.round(state.reactions.reduce((a,b)=>a+b,0)/state.reactions.length)+' 毫秒</p>':''),[['again','再玩一次'],['leave','選擇其他旅程']]);$('#again').onclick=start;$('#leave').onclick=()=>{modal.close();$('#home').hidden=false;$('#play').hidden=true}}
-window.CxQGame={restart:start,home:()=>{if(state){state.running=false;state.paused=false;}modal.close();$('#home').hidden=false;$('#play').hidden=true;CxQ.resume();}};
-$('#start').onclick=start;$('#pause').onclick=pause;$('#records').onclick=()=>{const rows=rank.filter(r=>r.mode===mode&&r.difficulty===$('#difficulty').value).sort((a,b)=>b.score-a.score).slice(0,10);message('我的森林足跡','<p>'+MODES[mode][0]+' · '+$('#difficulty').selectedOptions[0].textContent+'</p>'+(rows.length?'<ol>'+rows.map(r=>'<li>'+r.score+' 心光 · '+new Date(r.date).toLocaleDateString()+'</li>').join('')+'</ol>':'<p>還沒有足跡，第一次相遇正在等你。</p>'),[['closeRecords','收好紀錄']]);$('#closeRecords').onclick=()=>modal.close()};modal.addEventListener('cancel',e=>{if(state?.running)e.preventDefault()});addEventListener('keydown',e=>{if(e.code==='Escape')pause();const i='123456789'.indexOf(e.key);if(i>=0&&!modal.open)hit(i)});CxQ.configure({music:'sherwood',pause});function loop(t){const dt=last?Math.min(50,t-last):0;last=t;update(dt);requestAnimationFrame(loop)}requestAnimationFrame(loop);
+"use strict";
+const $ = (s) => document.querySelector(s),
+  MODES = {
+    timed: ["慶典挑戰", "60 秒收集心光，連擊提高分數。看清夥伴，避開炸彈。"],
+    reaction: [
+      "反應測驗",
+      "依序迎接 20 位夥伴，每次只出現一位；完成後查看平均反應與命中率。",
+    ],
+    survival: [
+      "森林守護",
+      "三點生命挑戰；漏掉夥伴或敲中炸彈會扣生命，守護越久出現越快。",
+    ],
+    golden: [
+      "星願快遞",
+      "30 秒收集星願夥伴，金色標記加倍出現；看清炸彈再出手。",
+    ],
+    relaxed: [
+      "悠閒同樂",
+      "90 秒輕鬆遊玩，沒有炸彈與生命扣除，慢慢跟夥伴打招呼。",
+    ],
+  };
+const SPEED = {
+    easy: [1000, 1250],
+    normal: [760, 1000],
+    hard: [560, 790],
+    expert: [420, 620],
+  },
+  KEY = "cxq-whack-v1";
+let mode = "timed",
+  difficulty = "normal",
+  state = null,
+  last = 0,
+  rank = CxQ.read(KEY, []);
+if (!Array.isArray(rank)) rank = [];
+rank = rank
+  .filter(
+    (r) => MODES[r.mode] && SPEED[r.difficulty] && Number.isFinite(r.score),
+  )
+  .slice(0, 240);
+const CAST = [
+  "鈴可",
+  "糯糯",
+  "森芽",
+  "緹雅",
+  "朵莉",
+  "米洛",
+  "伯恩",
+  "露緹",
+  "汐寧",
+  "曦羽",
+];
+function sprite(id, extra = "") {
+  const name = [
+    "luck",
+    "healing",
+    "growth",
+    "memory",
+    "joy",
+    "night",
+    "trust",
+    "dream",
+    "sadness",
+    "hope",
+  ][id];
+  return (
+    '<img aria-hidden="true" class="sprite cast ' +
+    extra +
+    '" src="../shared/rebuilt/role-' +
+    name +
+    '.webp" alt="" style="object-fit:contain;background:none">'
+  );
+}
+function prop(id, extra = "") {
+  const art = ["burrow", "bomb", "heart", "star"][id];
+  if (art)
+    return (
+      '<img aria-hidden="true" class="sprite ' +
+      extra +
+      '" src="../shared/rebuilt/whack-' +
+      art +
+      '.webp" alt="">'
+    );
+  return (
+    '<img aria-hidden="true" class="sprite props ' +
+    extra +
+    '" src="../shared/rebuilt/' +
+    ["whack-burrow", "whack-bomb", "gem-0", "gem-2", "icon-gear", "explosion"][
+      id
+    ] +
+    '.webp" alt="" style="object-fit:contain;background:none">'
+  );
+}
+$("#cast-list").innerHTML = CAST.map(
+  (name, i) => "<div>" + sprite(i) + "<small>" + name + "</small></div>",
+).join("");
+$(".mascot").innerHTML = sprite(2) + sprite(0) + sprite(9);
+$(".legend").innerHTML =
+  "<span>" +
+  sprite(0) +
+  "夥伴 +10</span><span>" +
+  prop(3) +
+  "星願 +30</span><span>" +
+  prop(2) +
+  "補生命</span><span>" +
+  prop(1) +
+  "別敲我</span>";
+const board = $("#board"),
+  modal = $("#modal");
+for (let i = 0; i < 9; i++) {
+  const b = document.createElement("button");
+  b.className = "hole";
+  b.setAttribute("aria-label", "第 " + (i + 1) + " 個夥伴洞");
+  b.innerHTML =
+    '<img class="burrow" src="../shared/rebuilt/whack-hole-back.webp" alt=""><span class="target"></span><img class="burrow-front" src="../shared/rebuilt/whack-hole-front.webp" alt="">' +
+    prop(5, "hit-art") +
+    '<span class="pop"></span>';
+  b.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    if (!window.CxQSession?.blocked() && state?.running) {
+      hammer(e.clientX, e.clientY);
+    }
+    hit(i);
+  });
+  b.addEventListener("keydown", (e) => {
+    if (e.code === "Space" || e.code === "Enter") {
+      e.preventDefault();
+      hit(i);
+    }
+  });
+  board.append(b);
+}
+$("#modes").innerHTML = Object.entries(MODES)
+  .map(
+    ([id, m]) =>
+      '<button data-mode="' +
+      id +
+      '">' +
+      prop(3, "selected-mark") +
+      m[0] +
+      "</button>",
+  )
+  .join("");
+function selectMode(id) {
+  mode = id;
+  document
+    .querySelectorAll("[data-mode]")
+    .forEach(
+      (b) => (
+        b.classList.toggle("active", b.dataset.mode === id),
+        b.setAttribute("aria-pressed", String(b.dataset.mode === id))
+      ),
+    );
+  $("#rule").textContent = MODES[id][1];
+}
+document
+  .querySelectorAll("[data-mode]")
+  .forEach((b) => (b.onclick = () => selectMode(b.dataset.mode)));
+selectMode(mode);
+function message(title, body, buttons) {
+  modal.innerHTML =
+    sprite(0, "dialog-mascot") +
+    "<h2>" +
+    title +
+    "</h2>" +
+    body +
+    buttons
+      .map(([id, label]) => '<button id="' + id + '">' + label + "</button>")
+      .join("");
+  if (!modal.open) modal.showModal();
+}
+function start() {
+  difficulty = $("#difficulty").value;
+  state = {
+    running: true,
+    paused: false,
+    elapsed: 0,
+    next: 700,
+    holes: Array(9).fill(null),
+    score: 0,
+    lives: 3,
+    combo: 0,
+    bestCombo: 0,
+    hits: 0,
+    misses: 0,
+    reactions: [],
+    resolved: 0,
+    countdown: 1800,
+  };
+  last = 0;
+  modal.close();
+  $("#home").hidden = true;
+  $("#play").hidden = false;
+  $("#modeTitle").textContent = MODES[mode][0];
+  $("#lives").parentElement.hidden = ["relaxed", "reaction"].includes(mode);
+  document.body.classList.toggle("whack-relaxed", mode === "relaxed");
+  $(".legend").innerHTML =
+    mode === "reaction"
+      ? "<span>" +
+        sprite(0) +
+        "依序 20 位夥伴</span><span>越快命中，心光越多</span>"
+      : "<span>" +
+        sprite(0) +
+        "夥伴 +10</span><span>" +
+        prop(3) +
+        "星願 +30</span><span>" +
+        prop(2) +
+        "補生命</span><span>" +
+        prop(1) +
+        "別敲我</span>";
+  $("#clockLabel").textContent =
+    mode === "reaction"
+      ? "已完成 / 20"
+      : mode === "survival"
+        ? "守護時間"
+        : "剩餘時間";
+  CxQ.resume();
+  draw();
+}
+function pause() {
+  if (!state?.running || state.paused) return;
+  state.paused = true;
+  CxQ.hold();
+  message("森林等你回來", "<p>夥伴、生命與時間都已暫停。</p>", [
+    ["resume", "繼續冒險"],
+    ["exitForest", "回到森林入口"],
+  ]);
+  $("#resume").onclick = () => {
+    modal.close();
+    state.paused = false;
+    state.countdown = 1200;
+    last = 0;
+    CxQ.resume();
+  };
+  $("#exitForest").onclick = () => {
+    state.running = false;
+    modal.close();
+    document.querySelector("section#home").hidden = false;
+    $("#play").hidden = true;
+    CxQ.resume();
+  };
+}
+function spawn() {
+  const empty = state.holes
+    .map((h, i) => (h === null ? i : -1))
+    .filter((i) => i >= 0);
+  if (!empty.length) return;
+  if (mode === "reaction" && state.holes.some(Boolean)) return;
+  const i = empty[(Math.random() * empty.length) | 0],
+    r = Math.random();
+  const kind =
+    mode === "relaxed"
+      ? r < 0.18
+        ? "gold"
+        : "normal"
+      : mode === "reaction"
+        ? "normal"
+        : r < (mode === "bomb" ? 0.34 : 0.12)
+          ? "bomb"
+          : r < (mode === "bomb" ? 0.39 : 0.18)
+            ? "heart"
+            : r < (mode === "golden" ? 0.66 : 0.3)
+              ? "gold"
+              : "normal";
+  const speed = Math.max(
+    0.55,
+    1 - (mode === "survival" ? state.elapsed / 240000 : state.elapsed / 300000),
+  );
+  state.holes[i] = {
+    kind,
+    character: (Math.random() * 10) | 0,
+    born: state.elapsed + 180,
+    ready: state.elapsed + 360,
+    expires:
+      state.elapsed +
+      360 +
+      Math.max(
+        520,
+        SPEED[difficulty][1] *
+          speed *
+          (mode === "relaxed" ? 1.7 : mode === "reaction" ? 1.4 : 1) *
+          (kind === "gold" ? 0.82 : 1),
+      ),
+    hit: false,
+    feedback: "",
+  };
+}
+function hit(i) {
+  if (
+    window.CxQSession?.blocked() ||
+    !state?.running ||
+    state.paused ||
+    state.countdown > 0
+  )
+    return;
+  const h = state.holes[i];
+  if (h && (state.elapsed < h.ready || state.elapsed >= h.expires)) return;
+  if (!h || h.hit) {
+    if (!h) {
+      state.combo = 0;
+      state.misses++;
+      $("#feedback").textContent = "放慢一點，等夥伴探頭再敲。";
+      CxQ.sound("miss");
+    }
+    return;
+  }
+  h.hit = true;
+  h.hitAt = state.elapsed;
+  h.expires = state.elapsed + 260;
+  if (h.kind === "bomb") {
+    state.lives--;
+    state.combo = 0;
+    state.misses++;
+    h.feedback = "哎呀！";
+    CxQ.sound("miss");
+  } else if (h.kind === "heart") {
+    state.lives = Math.min(5, state.lives + 1);
+    h.feedback = "+1";
+    CxQ.sound("upgrade");
+  } else {
+    const reaction = state.elapsed - h.ready;
+    state.hits++;
+    state.combo++;
+    state.bestCombo = Math.max(state.bestCombo, state.combo);
+    const mul =
+      mode === "timed" ? 1 + Math.min(4, Math.floor((state.combo - 1) / 5)) : 1;
+    const gain =
+      mode === "reaction"
+        ? Math.max(10, Math.round(100 - reaction / 15))
+        : (h.kind === "gold" ? 30 : 10) * mul;
+    state.score += gain;
+    state.reactions.push(reaction);
+    h.feedback = "+" + gain;
+    CxQ.sound("hit");
+  }
+  $("#feedback").textContent =
+    h.kind === "bomb"
+      ? "深呼吸，避開黑色炸彈。"
+      : h.kind === "heart"
+        ? "收到一份暖暖的生命！"
+        : state.combo >= 5
+          ? "漂亮！森林正在為你喝采。"
+          : "敲得剛剛好！";
+  if (state.lives <= 0) finish();
+  draw();
+}
+function update(dt) {
+  if (window.CxQSession?.blocked() || !state?.running || state.paused) return;
+  if (state.countdown > 0) {
+    state.countdown = Math.max(0, state.countdown - dt);
+    $("#feedback").textContent = state.countdown
+      ? "準備 " + Math.ceil(state.countdown / 600)
+      : "開始！";
+    return;
+  }
+  state.elapsed += dt;
+  for (let i = 0; i < 9; i++) {
+    const h = state.holes[i];
+    if (h && state.elapsed >= h.expires + 180) {
+      if (!h.hit && ["normal", "gold"].includes(h.kind)) {
+        state.misses++;
+        state.combo = 0;
+        $("#feedback").textContent = "夥伴鑽回洞裡了，下次再快一點。";
+        if (mode === "survival") state.lives--;
+      }
+      if (mode === "reaction") state.resolved++;
+      state.holes[i] = null;
+    }
+  }
+  const duration =
+    mode === "golden" ? 30000 : mode === "relaxed" ? 90000 : 60000;
+  if (
+    state.lives <= 0 ||
+    (mode === "reaction"
+      ? state.resolved >= 20
+      : mode !== "survival" && state.elapsed >= duration)
+  ) {
+    finish();
+    return;
+  }
+  if (state.elapsed >= state.next) {
+    spawn();
+    state.next =
+      state.elapsed +
+      SPEED[difficulty][0] *
+        Math.max(
+          0.55,
+          1 - state.elapsed / (mode === "survival" ? 240000 : 300000),
+        );
+  }
+  draw();
+}
+function draw() {
+  if (!state) return;
+  $("#score").textContent = state.score;
+  $("#time").textContent =
+    mode === "reaction"
+      ? state.resolved + "/20"
+      : mode === "survival"
+        ? Math.floor(state.elapsed / 1000)
+        : Math.max(
+            0,
+            Math.ceil(
+              ((mode === "golden"
+                ? 30000
+                : mode === "relaxed"
+                  ? 90000
+                  : 60000) -
+                state.elapsed) /
+                1000,
+            ),
+          );
+  if ($("#lives").dataset.count !== String(state.lives)) {
+    $("#lives").innerHTML = Array.from(
+      { length: Math.max(0, state.lives) },
+      () => prop(2),
+    ).join("");
+    $("#lives").dataset.count = state.lives;
+    $("#lives").setAttribute("aria-label", "剩餘 " + state.lives + " 點生命");
+  }
+  $("#combo").textContent = state.combo
+    ? "連擊 ×" + state.combo
+    : "等待下一次相遇";
+  [...board.children].forEach((b, i) => {
+    const h = state.holes[i];
+    b.className =
+      "hole" +
+      (h
+        ? state.elapsed < h.born
+          ? " warning"
+          : state.elapsed < h.expires
+            ? " up"
+            : " retreating"
+        : "") +
+      (h?.hit ? " hit" : "");
+    const rise=!h?0:h.hit?Math.max(0,1-(state.elapsed-h.hitAt)/260):state.elapsed<h.born?0:state.elapsed<h.ready?1-Math.pow(1-(state.elapsed-h.born)/(h.ready-h.born),3):state.elapsed<h.expires?1:Math.max(0,1-(state.elapsed-h.expires)/180);
+    b.style.setProperty('--emerge',String(rise));
+    b.style.setProperty('--visible',rise>0?'visible':'hidden');
+    b.dataset.hittable=String(!!h&&!h.hit&&state.elapsed>=h.ready&&state.elapsed<h.expires);
+    if (h) {
+      b.dataset.kind=h.kind;
+      const target = b.querySelector(".target"),
+        key = h.kind + ":" + h.character;
+      if (target.dataset.key !== key) {
+        target.innerHTML =
+          h.kind === "bomb"
+            ? prop(1)
+            : h.kind === "heart"
+              ? prop(2)
+              : sprite(h.character) +
+                (h.kind === "gold" ? prop(3, "bonus-token") : "");
+        target.dataset.key = key;
+      }
+      b.setAttribute(
+        "aria-label",
+        h.kind === "bomb"
+          ? "炸彈，請避開"
+          : h.kind === "heart"
+            ? "療癒愛心"
+            : CAST[h.character] +
+              (h.kind === "gold" ? "，星願加分" : "，點擊收集心光"),
+      );
+    } else b.setAttribute("aria-label", "空夥伴洞");
+    b.querySelector(".pop").textContent = h?.feedback || "";
+  });
+}
+function finish() {
+  if (!state?.running) return;
+  state.running = false;
+  const old = rank
+      .filter((r) => r.mode === mode && r.difficulty === difficulty)
+      .reduce((m, r) => Math.max(m, r.score), 0),
+    record = state.score > old;
+  rank.push({ mode, difficulty, score: state.score, date: Date.now() });
+  rank = rank.filter(
+    (r, i, a) =>
+      a
+        .slice(i + 1)
+        .filter((x) => x.mode === r.mode && x.difficulty === r.difficulty)
+        .length < 10,
+  );
+  CxQ.write(KEY, rank);
+  CxQ.sound("win");
+  const total = state.hits + state.misses,
+    acc = total ? Math.round((state.hits / total) * 100) : 0;
+  message(
+    record ? "新的森林紀錄！" : "這次的相遇，收好了",
+    "<p>" +
+      MODES[mode][0] +
+      " · " +
+      $("#difficulty").selectedOptions[0].textContent +
+      '</p><div class="stats"><span><b>' +
+      state.score +
+      "</b><small>心光</small></span><span><b>" +
+      acc +
+      "%</b><small>命中率</small></span><span><b>" +
+      state.bestCombo +
+      "</b><small>最高連擊</small></span></div>" +
+      (mode === "reaction" && state.reactions.length
+        ? "<p>平均反應 " +
+          Math.round(
+            state.reactions.reduce((a, b) => a + b, 0) / state.reactions.length,
+          ) +
+          " 毫秒</p>"
+        : ""),
+    [
+      ["again", "再玩一次"],
+      ["leave", "選擇其他旅程"],
+    ],
+  );
+  $("#again").onclick = start;
+  $("#leave").onclick = () => {
+    modal.close();
+    $("#home").hidden = false;
+    $("#play").hidden = true;
+  };
+}
+window.CxQGame = {
+  restart: start,
+  home: () => {
+    if (state) {
+      state.running = false;
+      state.paused = false;
+    }
+    modal.close();
+    $("#home").hidden = false;
+    $("#play").hidden = true;
+    CxQ.resume();
+  },
+};
+$("#start").onclick = start;
+$("#pause").onclick = pause;
+$("#records").onclick = () => {
+  const rows = rank
+    .filter((r) => r.mode === mode && r.difficulty === $("#difficulty").value)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 10);
+  message(
+    "我的森林足跡",
+    "<p>" +
+      MODES[mode][0] +
+      " · " +
+      $("#difficulty").selectedOptions[0].textContent +
+      "</p>" +
+      (rows.length
+        ? "<ol>" +
+          rows
+            .map(
+              (r) =>
+                "<li>" +
+                r.score +
+                " 心光 · " +
+                new Date(r.date).toLocaleDateString() +
+                "</li>",
+            )
+            .join("") +
+          "</ol>"
+        : "<p>還沒有足跡，第一次相遇正在等你。</p>"),
+    [["closeRecords", "收好紀錄"]],
+  );
+  $("#closeRecords").onclick = () => modal.close();
+};
+modal.addEventListener("cancel", (e) => {
+  if (state?.running) e.preventDefault();
+});
+addEventListener("keydown", (e) => {
+  if (e.code === "Escape") pause();
+  const i = "123456789".indexOf(e.key);
+  if (i >= 0 && !modal.open) hit(i);
+});
+CxQ.configure({ music: "sherwood", pause });
+function loop(t) {
+  const dt = last ? Math.min(50, t - last) : 0;
+  last = t;
+  update(dt);
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
 
-addEventListener('DOMContentLoaded',()=>{const sound=$('#cxq-audio');sound.innerHTML=prop(4);});
+addEventListener("DOMContentLoaded", () => {
+  const sound = $("#cxq-audio");
+  sound.innerHTML = prop(4);
+});
 
-const artFiles=[...['luck','healing','growth','memory','joy','night','trust','dream','sadness','hope'].map(n=>'../storybook/art-mobile24/portrait-'+n+'.webp'),'../storybook/art-director/burrow-back.webp','../storybook/art-director/burrow-front.webp','assets/garden-v3.webp',...['whack-burrow','whack-bomb','gem-0','gem-2','icon-gear','explosion'].map(n=>'../storybook/art-20260914/'+n+'.webp')];
-const preparedArt=new Set();let preparingArt=false;
-function prepareImage(name){return new Promise((resolve,reject)=>{const img=new Image();let settled=false;const finish=error=>{if(settled)return;settled=true;clearTimeout(timer);img.onload=img.onerror=null;if(error)reject(error);else{preparedArt.add(name);resolve();}};const timer=setTimeout(()=>finish(Error('檔案載入逾時')),45000);img.onload=()=>finish(img.naturalWidth?null:Error('圖片內容無效'));img.onerror=()=>finish(Error('圖片載入失敗'));img.src=name;});}
-let whackMeter;async function prepareArt(){if(preparingArt)return;whackMeter?.close();whackMeter=globalThis.CxQLoading?.create(artFiles,{label:'準備森林檔案',priority:10,retry:prepareArt});for(const file of preparedArt)if(artFiles.includes(file))whackMeter?.ready(file);preparingArt=true;const button=$('#start');button.disabled=true;button.textContent='夥伴準備中…';const pending=artFiles.filter(name=>!preparedArt.has(name));let index=0,failed=false;await Promise.all(Array.from({length:Math.min(6,pending.length)},async()=>{while(index<pending.length){const name=pending[index++];try{await prepareImage(name);whackMeter?.ready(name);}catch{failed=true;whackMeter?.fail(name);}}}));preparingArt=false;button.disabled=false;if(failed){button.textContent='重試未完成的美術';button.onclick=prepareArt;$('#rule').textContent='部分美術未完成，請點擊重試；已載入的圖片會保留。';}else{whackMeter?.close();button.textContent='進入森林';button.onclick=start;$('#rule').textContent=MODES[mode][1];}}
+const artFiles = [
+  ...[
+    "luck",
+    "healing",
+    "growth",
+    "memory",
+    "joy",
+    "night",
+    "trust",
+    "dream",
+    "sadness",
+    "hope",
+  ].map((n) => "../shared/rebuilt/role-" + n + ".webp"),
+  "../shared/rebuilt/whack-hole-back.webp",
+  "../shared/rebuilt/whack-hole-front.webp",
+  "../shared/mobile-art/stage-run.webp",
+  ...[
+    "whack-burrow",
+    "whack-bomb",
+    "gem-0",
+    "gem-2",
+    "icon-gear",
+    "explosion",
+  ].map((n) => "../shared/rebuilt/" + n + ".webp"),
+];
+const preparedArt = new Set();
+let preparingArt = false;
+function prepareImage(name) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    let settled = false;
+    const finish = (error) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      img.onload = img.onerror = null;
+      if (error) reject(error);
+      else {
+        preparedArt.add(name);
+        resolve();
+      }
+    };
+    const timer = setTimeout(() => finish(Error("檔案載入逾時")), 45000);
+    img.onload = () => finish(img.naturalWidth ? null : Error("圖片內容無效"));
+    img.onerror = () => finish(Error("圖片載入失敗"));
+    img.src = name;
+  });
+}
+let whackMeter;
+async function prepareArt() {
+  if (preparingArt) return;
+  whackMeter?.close();
+  whackMeter = globalThis.CxQLoading?.create(artFiles, {
+    label: "準備森林檔案",
+    priority: 10,
+    retry: prepareArt,
+  });
+  for (const file of preparedArt)
+    if (artFiles.includes(file)) whackMeter?.ready(file);
+  preparingArt = true;
+  const button = $("#start");
+  button.disabled = true;
+  button.textContent = "夥伴準備中…";
+  const pending = artFiles.filter((name) => !preparedArt.has(name));
+  let index = 0,
+    failed = false;
+  await Promise.all(
+    Array.from({ length: Math.min(6, pending.length) }, async () => {
+      while (index < pending.length) {
+        const name = pending[index++];
+        try {
+          await prepareImage(name);
+          whackMeter?.ready(name);
+        } catch {
+          failed = true;
+          whackMeter?.fail(name);
+        }
+      }
+    }),
+  );
+  preparingArt = false;
+  button.disabled = false;
+  if (failed) {
+    button.textContent = "重試未完成的美術";
+    button.onclick = prepareArt;
+    $("#rule").textContent = "部分美術未完成，請點擊重試；已載入的圖片會保留。";
+  } else {
+    whackMeter?.close();
+    button.textContent = "進入森林";
+    button.onclick = start;
+    $("#rule").textContent = MODES[mode][1];
+  }
+}
 prepareArt();
 
-function hammer(x,y){if(document.body.classList.contains('reduced-motion')||matchMedia('(prefers-reduced-motion: reduce)').matches)return;const image=new Image();image.src="../storybook/art-20260920-batch/whack-hammer.webp";image.className="hit-hammer";image.style.left=x+"px";image.style.top=y+"px";document.body.append(image);image.animate([{transform:"translate(-25%,-80%) rotate(-40deg)",opacity:1},{transform:"translate(-25%,-65%) rotate(15deg)",opacity:1},{transform:"translate(-25%,-90%) rotate(-20deg)",opacity:0}],{duration:300}).finished.then(()=>image.remove());}
+function hammer(x, y) {
+  if (
+    document.body.classList.contains("reduced-motion") ||
+    matchMedia("(prefers-reduced-motion: reduce)").matches
+  )
+    return;
+  const image = new Image();
+  image.src = "../shared/rebuilt/hammer.webp";
+  image.className = "hit-hammer";
+  image.style.left = x + "px";
+  image.style.top = y + "px";
+  document.body.append(image);
+  image
+    .animate(
+      [
+        { transform: "translate(-25%,-80%) rotate(-40deg)", opacity: 1 },
+        { transform: "translate(-25%,-65%) rotate(15deg)", opacity: 1 },
+        { transform: "translate(-25%,-90%) rotate(-20deg)", opacity: 0 },
+      ],
+      { duration: 300 },
+    )
+    .finished.then(() => image.remove());
+}

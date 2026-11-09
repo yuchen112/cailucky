@@ -1,0 +1,143 @@
+#modes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+#modes button {
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+#modes button[aria-pressed="true"] {
+  background: #e8d9ad var(--paper) center/cover;
+  color: #182835;
+  font-weight: 800;
+}
+#modes .sprite {
+  width: 20px;
+  height: 20px;
+}
+#cast-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.3rem;
+}
+#cast-list img {
+  width: 100%;
+  aspect-ratio: 1;
+}
+#play .stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.hole-field {
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  background: #17343a var(--teal) center/240px repeat;
+  border-radius: 8px;
+}
+.hole-field #board {
+  width: min(100%, 51dvh, 540px);
+  aspect-ratio: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+.hole {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  background: none;
+  padding: 0;
+}
+.burrow,
+.burrow-front,
+.target,
+.hit-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.target {
+  display: grid;
+  place-items: center;
+  transform: translateY(110%);
+  transition: transform 0.14s;
+}
+.target img {
+  width: 85%;
+  height: 85%;
+  object-fit: contain;
+}
+.target .bonus-token {
+  position: absolute;
+  bottom: 6%;
+  right: 3%;
+  width: 30%;
+  height: 30%;
+}
+.hole.up .target {
+  transform: translateY(0);
+}
+.hole.hit .target {
+  transform: translateY(12%) scale(0.92);
+}
+.hit-art {
+  display: none;
+}
+.hole.hit .hit-art {
+  display: block;
+}
+.pop {
+  position: absolute;
+  top: 10%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #fff1d1;
+  font-weight: 900;
+  pointer-events: none;
+}
+.whack-round-status {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.whack-round-status p {
+  flex-basis: 100%;
+  font-size: 0.84rem;
+}
+.legend {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.76rem;
+}
+.legend span {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+.legend .sprite,
+#lives .sprite {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+#modal .dialog-mascot {
+  height: 95px;
+}
+#modal button {
+  margin: 0.3rem 0.3rem 0 0;
+}
+.burrow-front {
+  display: none;
+}
+.burrow {
+  object-fit: contain;
+  object-position: center bottom;
+}

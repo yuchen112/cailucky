@@ -1,0 +1,50 @@
+[
+  {
+    "game": "tetris",
+    "status": "passed"
+  },
+  {
+    "game": "2048",
+    "status": "passed"
+  },
+  {
+    "game": "mines",
+    "status": "passed"
+  },
+  {
+    "game": "link",
+    "status": "passed"
+  },
+  {
+    "game": "whack",
+    "status": "passed"
+  },
+  {
+    "game": "memory",
+    "status": "passed"
+  },
+  {
+    "game": "flappy",
+    "status": "passed"
+  },
+  {
+    "game": "brick-breaker",
+    "status": "passed"
+  },
+  {
+    "game": "dino",
+    "status": "passed"
+  },
+  {
+    "game": "dream-match",
+    "status": "passed"
+  },
+  {
+    "game": "merge",
+    "status": "passed"
+  },
+  {
+    "game": "magic-bubble",
+    "status": "passed"
+  }
+]

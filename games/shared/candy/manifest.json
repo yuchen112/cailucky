@@ -1,0 +1,86 @@
+{
+  "theme": "candy",
+  "assets": [
+    {
+      "file": "active.webp",
+      "bytes": 19878,
+      "sha256": "7b564e7c8c35758cb995f8e74432a0083325678c4d98a6b107e1aaa39156f6b1"
+    },
+    {
+      "file": "board.webp",
+      "bytes": 28494,
+      "sha256": "c65244d2234ed032eb7a7b4210471567effd703cb95cf26e989abd0f78635ada"
+    },
+    {
+      "file": "bubble.webp",
+      "bytes": 55638,
+      "sha256": "3947361423d8249a5a184c6a3ee2225f5e349e0ad1039959664048aa529c4ac9"
+    },
+    {
+      "file": "card.webp",
+      "bytes": 20094,
+      "sha256": "df3fbb35246cf6a0893c82b54b223d2dff508369fd86a9bfd90d422a34f42305"
+    },
+    {
+      "file": "clearing.webp",
+      "bytes": 99830,
+      "sha256": "ea93711293fbf2b1639b37ea7d1e155dd91b4953539bdefe69b0c1b2e5904040"
+    },
+    {
+      "file": "garden.webp",
+      "bytes": 209064,
+      "sha256": "c320c3a088434a4230dc5a46d5661958d307762fa8ca520b8e54cadfc78b009d"
+    },
+    {
+      "file": "hud.webp",
+      "bytes": 21590,
+      "sha256": "2f60fe8e370dfd64d1c61d6fedc4b908bac2875700a3aaeca851a21541b85cc8"
+    },
+    {
+      "file": "panel.webp",
+      "bytes": 31230,
+      "sha256": "ce9e63cab4adbbcbe17a1c73de493cace6107deb32ffa56d3a70275a01963934"
+    },
+    {
+      "file": "primary.webp",
+      "bytes": 20158,
+      "sha256": "fdbdb2e0021978d4e7e751705ac8dbcbdc4785eb0c8ee091381c0e8f70845e96"
+    },
+    {
+      "file": "run-moon.webp",
+      "bytes": 81790,
+      "sha256": "9f3de0682a6a2f3d4d3a7aecda7e090d03f665da0da49dfb5c2a94622e7db407"
+    },
+    {
+      "file": "run-rain.webp",
+      "bytes": 102386,
+      "sha256": "e932be9136b77515beebec981740d6d5ea8426cb40fbffa68a193a9caec384d4"
+    },
+    {
+      "file": "run.webp",
+      "bytes": 67776,
+      "sha256": "2a2b9320623188f9f3be04d79e3260672397d4d0bbdbef8d0bec0a458429dd97"
+    },
+    {
+      "file": "sky-forest.webp",
+      "bytes": 81246,
+      "sha256": "3b1a4ed87767d6972c17e3edc88fdd297ec8dbae881809d0d7c6d055b2bc2bf6"
+    },
+    {
+      "file": "sky-moon.webp",
+      "bytes": 67716,
+      "sha256": "a2e4addb3a55735b2effc3aa2b31cde3386c391d54294e4dac75bf7d2e3ac0b7"
+    },
+    {
+      "file": "sky.webp",
+      "bytes": 31586,
+      "sha256": "11acf9c1f9607e522d1a3954f853a10d935efb12f889000f4382d8968dcb3b9f"
+    },
+    {
+      "file": "vessel.webp",
+      "bytes": 14598,
+      "sha256": "1fda7fff07e584248138309a7696d9b89cecda53f1ffcddedb2f9b05c9bfb5a3"
+    }
+  ],
+  "totalBytes": 953074
+}

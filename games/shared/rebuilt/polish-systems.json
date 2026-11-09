@@ -1,0 +1,728 @@
+[
+  {
+    "engine": "chrome",
+    "game": "tetris",
+    "audio": {
+      "buffers": [
+        15
+      ],
+      "reused": true,
+      "limitation": null
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "旅伴",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "chrome",
+    "game": "2048",
+    "audio": {
+      "buffers": [
+        16
+      ],
+      "reused": true,
+      "limitation": null
+    },
+    "layout": [],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "chrome",
+    "game": "mines",
+    "audio": {
+      "buffers": [
+        26
+      ],
+      "reused": true,
+      "limitation": null
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "地圖",
+        "overflow": []
+      },
+      {
+        "tab": "旅伴",
+        "overflow": [
+          {
+            "class": "mp-page-fields",
+            "extra": 4
+          }
+        ]
+      },
+      {
+        "tab": "操作",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "chrome",
+    "game": "memory",
+    "audio": {
+      "buffers": [
+        10
+      ],
+      "reused": true,
+      "limitation": null
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "牌桌",
+        "overflow": []
+      },
+      {
+        "tab": "牌背",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "chrome",
+    "game": "link",
+    "audio": {
+      "buffers": [
+        17
+      ],
+      "reused": true,
+      "limitation": null
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "牌桌",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "chrome",
+    "game": "whack",
+    "audio": {
+      "buffers": [
+        12
+      ],
+      "reused": true,
+      "limitation": null
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "夥伴",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "chrome",
+    "game": "brick-breaker",
+    "audio": {
+      "buffers": [
+        14
+      ],
+      "reused": true,
+      "limitation": null
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "旅伴",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "chrome",
+    "game": "dino",
+    "audio": {
+      "buffers": [
+        23
+      ],
+      "reused": true,
+      "limitation": null
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "路線",
+        "overflow": []
+      },
+      {
+        "tab": "旅伴",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "chrome",
+    "game": "flappy",
+    "audio": {
+      "buffers": [
+        22
+      ],
+      "reused": true,
+      "limitation": null
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "旅伴",
+        "overflow": []
+      },
+      {
+        "tab": "載具",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "chrome",
+    "game": "magic-bubble",
+    "audio": {
+      "buffers": [
+        6
+      ],
+      "reused": true,
+      "limitation": null
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "chrome",
+    "game": "dream-match",
+    "audio": {
+      "buffers": [
+        11
+      ],
+      "reused": true,
+      "limitation": null
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "關卡",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "chrome",
+    "game": "merge",
+    "audio": {
+      "buffers": [
+        29
+      ],
+      "reused": true,
+      "limitation": null
+    },
+    "layout": [],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "webkit",
+    "game": "tetris",
+    "audio": {
+      "buffers": [
+        null
+      ],
+      "reused": false,
+      "limitation": "Windows WebKit does not expose AudioContext"
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "旅伴",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "webkit",
+    "game": "2048",
+    "audio": {
+      "buffers": [
+        null
+      ],
+      "reused": false,
+      "limitation": "Windows WebKit does not expose AudioContext"
+    },
+    "layout": [],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "webkit",
+    "game": "mines",
+    "audio": {
+      "buffers": [
+        null
+      ],
+      "reused": false,
+      "limitation": "Windows WebKit does not expose AudioContext"
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "地圖",
+        "overflow": []
+      },
+      {
+        "tab": "旅伴",
+        "overflow": [
+          {
+            "class": "mp-page-fields",
+            "extra": 4
+          }
+        ]
+      },
+      {
+        "tab": "操作",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "webkit",
+    "game": "memory",
+    "audio": {
+      "buffers": [
+        null
+      ],
+      "reused": false,
+      "limitation": "Windows WebKit does not expose AudioContext"
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "牌桌",
+        "overflow": []
+      },
+      {
+        "tab": "牌背",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "webkit",
+    "game": "link",
+    "audio": {
+      "buffers": [
+        null
+      ],
+      "reused": false,
+      "limitation": "Windows WebKit does not expose AudioContext"
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "牌桌",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "webkit",
+    "game": "whack",
+    "audio": {
+      "buffers": [
+        null
+      ],
+      "reused": false,
+      "limitation": "Windows WebKit does not expose AudioContext"
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "夥伴",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "webkit",
+    "game": "brick-breaker",
+    "audio": {
+      "buffers": [
+        null
+      ],
+      "reused": false,
+      "limitation": "Windows WebKit does not expose AudioContext"
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "旅伴",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "webkit",
+    "game": "dino",
+    "audio": {
+      "buffers": [
+        null
+      ],
+      "reused": false,
+      "limitation": "Windows WebKit does not expose AudioContext"
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "路線",
+        "overflow": []
+      },
+      {
+        "tab": "旅伴",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "webkit",
+    "game": "flappy",
+    "audio": {
+      "buffers": [
+        null
+      ],
+      "reused": false,
+      "limitation": "Windows WebKit does not expose AudioContext"
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "旅伴",
+        "overflow": []
+      },
+      {
+        "tab": "載具",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "webkit",
+    "game": "magic-bubble",
+    "audio": {
+      "buffers": [
+        null
+      ],
+      "reused": false,
+      "limitation": "Windows WebKit does not expose AudioContext"
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "webkit",
+    "game": "dream-match",
+    "audio": {
+      "buffers": [
+        null
+      ],
+      "reused": false,
+      "limitation": "Windows WebKit does not expose AudioContext"
+    },
+    "layout": [
+      {
+        "tab": "玩法",
+        "overflow": []
+      },
+      {
+        "tab": "關卡",
+        "overflow": []
+      },
+      {
+        "tab": "設定",
+        "overflow": []
+      }
+    ],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  },
+  {
+    "engine": "webkit",
+    "game": "merge",
+    "audio": {
+      "buffers": [
+        null
+      ],
+      "reused": false,
+      "limitation": "Windows WebKit does not expose AudioContext"
+    },
+    "layout": [],
+    "guards": {
+      "scale": 1,
+      "selection": "",
+      "selectBlocked": true,
+      "contextBlocked": true
+    }
+  }
+]
