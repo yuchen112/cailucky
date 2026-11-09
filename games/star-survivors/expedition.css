@@ -124,3 +124,23 @@ html,body{overscroll-behavior:none;touch-action:pan-y;-webkit-text-size-adjust:1
 .performance-row b{color:#eed69f;font-variant-numeric:tabular-nums}
 
 .outcome-scene img[data-sequence]{animation:none;transform:none}
+
+/* Independent game title and backup management (2026-11-10). */
+.title-screen{position:fixed;inset:0;z-index:30;display:grid;place-items:center;overflow-y:auto;padding:env(safe-area-inset-top) max(18px,env(safe-area-inset-right)) env(safe-area-inset-bottom) max(18px,env(safe-area-inset-left));background:#0c1429 url('art/v2/menu.jpg') center/cover no-repeat;color:#f4e8ce;isolation:isolate}
+.title-screen[hidden]{display:none!important}
+.title-screen-shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,#080d20e8,#15152a90 57%,#05091ced),radial-gradient(ellipse at 50% 45%,#9d82d844,transparent 60%)}
+.title-screen-content{width:min(100%,580px);display:flex;align-items:center;flex-direction:column;gap:15px;text-align:center;padding:30px 20px}
+.title-screen-logo{display:block;width:min(70%,300px);height:130px;object-fit:contain;filter:drop-shadow(0 0 18px #b99bdb44)}
+.title-screen-kicker{font-size:11px;letter-spacing:3px;color:#dbc99a;margin:0}
+.title-screen h1{font-size:clamp(38px,9vw,64px);letter-spacing:.16em;line-height:1.15;color:#ffe1a2;text-shadow:0 4px 24px #0a0820;margin:0}
+.title-screen-description{max-width:440px;font-size:14px;line-height:1.8;color:#e2d6e8;margin:4px 0 12px}
+.title-screen-actions,.title-screen-backups{width:min(100%,440px);display:grid;gap:11px}
+.title-screen-actions button{min-height:58px;font-size:17px}
+.title-screen-actions .primary{letter-spacing:2px}
+.title-screen-backups{grid-template-columns:1fr 1fr;margin-top:8px}
+.title-screen-backups button{min-height:48px;padding:8px 10px;font-size:13px;letter-spacing:0}
+.title-screen-note{font-size:12px;line-height:1.7;color:#c8bed7;margin:0;max-width:440px}
+.title-screen-return{font-size:13px;color:#e5ce9e;padding:10px}
+.title-screen button:focus-visible,.title-screen a:focus-visible{outline:3px solid #ffe3a8;outline-offset:4px}
+@media(max-width:520px){.title-screen-content{padding:20px 8px;gap:11px}.title-screen-logo{height:105px}.title-screen-description{font-size:12px}.title-screen-actions button{min-height:54px}.title-screen-backups button{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.title-screen *{animation:none!important}}
