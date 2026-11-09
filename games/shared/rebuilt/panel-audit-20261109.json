@@ -1,0 +1,4620 @@
+{
+  "date": "2026-11-09",
+  "cases": 576,
+  "failed": 0,
+  "sets": [
+    {
+      "file": "panels-chrome.json",
+      "cases": 96,
+      "checks": [
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "chrome",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "panels-webkit.json",
+      "cases": 96,
+      "checks": [
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": false,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "webkit",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "panels-modes-chrome.json",
+      "cases": 88,
+      "checks": [
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "sprint",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "sprint",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "sprint",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "sprint",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "zen",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "zen",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "zen",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "zen",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "logic",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "logic",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "logic",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "logic",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "time",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "time",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "time",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "time",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "preview",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "preview",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "preview",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "preview",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "chaos",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "chaos",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "chaos",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "chaos",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "180",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "180",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "180",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "180",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "300",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "300",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "300",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "300",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "reaction",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "reaction",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "reaction",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "reaction",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "survival",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "survival",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "survival",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "survival",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "golden",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "golden",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "golden",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "golden",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "endless",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "endless",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "endless",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "endless",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "mission",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "mission",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "mission",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "mission",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "mission",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "mission",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "mission",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "mission",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "endless",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "endless",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "endless",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "endless",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "mission",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "mission",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "mission",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "mission",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "chrome",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "panels-modes-webkit.json",
+      "cases": 88,
+      "checks": [
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "sprint",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "sprint",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "sprint",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "zen",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "zen",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "sprint",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "zen",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "zen",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "logic",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "logic",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "logic",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "logic",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "time",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "time",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "time",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "time",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "preview",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "preview",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "preview",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "preview",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "chaos",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "chaos",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "chaos",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "chaos",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "180",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "180",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "180",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "180",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "300",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "300",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "300",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "300",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "reaction",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "reaction",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "reaction",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "reaction",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "survival",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "survival",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "survival",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "survival",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "golden",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "golden",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "golden",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "golden",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "endless",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "endless",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "endless",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "endless",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "mission",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "mission",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "mission",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "mission",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "mission",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "mission",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "mission",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "mission",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "endless",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "endless",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "endless",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "endless",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "relaxed",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "mission",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "mission",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "mission",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "mission",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "loss",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "webkit",
+          "mode": "practice",
+          "small": true,
+          "outcome": "win",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "panels-extras-chrome.json",
+      "cases": 104,
+      "checks": [
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "表情圖鑑",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "模式比較",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "模式比較",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "表情圖鑑",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法圖解",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法圖解",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "探險紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "探險紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "紀錄與收藏",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "紀錄與收藏",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "森林紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "森林紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "旅程地圖",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "旅程地圖",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "配送手帳",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "角色紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "配送手帳",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "角色紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "郵件收藏",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "航程紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "郵件收藏",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "航程紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "打開收藏架",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "我的紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "打開收藏架",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "我的紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "chrome",
+          "screen": "音效設定",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "panels-extras-webkit.json",
+      "cases": 104,
+      "checks": [
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "表情圖鑑",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "模式比較",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "模式比較",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "tetris",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "表情圖鑑",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法圖解",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法圖解",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "探險紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "探險紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "2048",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "mines",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "紀錄與收藏",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "紀錄與收藏",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "memory",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "森林紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "森林紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "link",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "whack",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "旅程地圖",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "旅程地圖",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "配送手帳",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "角色紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "brick-breaker",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "配送手帳",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "郵件收藏",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "角色紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "航程紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "郵件收藏",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "航程紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "dino",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "flappy",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "magic-bubble",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "打開收藏架",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "我的紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "打開收藏架",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "dream-match",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "我的紀錄",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "night",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "玩法比較",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "配色",
+          "status": "passed"
+        },
+        {
+          "game": "merge",
+          "theme": "candy",
+          "engine": "webkit",
+          "screen": "音效設定",
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "fixtureNote": "Outcomes use isolated test fixtures to invoke actual game result handlers; these are UI checks, not natural full-play clears."
+}

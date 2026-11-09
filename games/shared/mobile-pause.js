@@ -54,9 +54,15 @@
           root === custom ||
           root.id === "pause" ||
           root.id === "pauseOverlay" ||
-          (root.id === "game-dialog" &&
-            /繼續|探索|回到/.test(root.textContent)) ||
-          /暫停|等你回來|已妥善收好/.test(heading);
+          [
+            "地圖已妥善收好",
+            "快遞站替你保留路程",
+            "停靠雲端休息站",
+            "魔法箱等你回來",
+            "回憶暫停",
+            "森林等你回來",
+            "遊戲暫停",
+          ].includes(heading);
         const card = root.matches("dialog")
           ? root
           : root.querySelector(".pause-card,.menu-card,#modal") || root;
@@ -64,6 +70,9 @@
           if (card.classList.contains("cp-card")) {
             card.classList.remove("cp-card");
             card.removeAttribute("aria-label");
+            card
+              .querySelectorAll(":scope > .cxq-theme-button")
+              .forEach((b) => b.remove());
           }
           continue;
         }
