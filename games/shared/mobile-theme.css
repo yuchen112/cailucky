@@ -376,3 +376,66 @@ html[data-visual-theme="candy"]
   .mine-number {
   color: inherit !important;
 }
+
+/* Two lightweight game interface skins. Scene art is layered separately. */
+html:is([data-visual-theme="ink"], [data-visual-theme="pop"]) .mg-game {
+  --mg-panel: var(--cxq-panel);
+  --mg-card: var(--cxq-card);
+  --mg-primary: var(--cxq-active);
+  --mg-active: var(--cxq-active);
+  --mg-hud: var(--cxq-panel);
+  --mg-bar: var(--cxq-card);
+  --paper: var(--cxq-active);
+  --slate: var(--cxq-card);
+  --teal: var(--cxq-panel);
+  --text: var(--cxq-ink);
+  --dim: var(--cxq-ink);
+  background: var(--cxq-scene) !important;
+  color: var(--cxq-ink) !important;
+  color-scheme: light;
+}
+html[data-visual-theme="ink"] {
+  --cxq-ink: #253e38;
+  --cxq-line: #526e62;
+  --cxq-panel: linear-gradient(115deg, #fbf5e6, #e9dfc8);
+  --cxq-card: linear-gradient(155deg, #fff9ec, #dedfca);
+  --cxq-active: linear-gradient(145deg, #ecdaa2, #bdcb9e);
+  --cxq-scene: repeating-linear-gradient(0deg, #36584f12 0 1px, transparent 1px 5px), radial-gradient(ellipse at 70% 20%, #f8edce, #c0c8ac);
+}
+html[data-visual-theme="pop"] {
+  --cxq-ink: #32175c;
+  --cxq-line: #6337a0;
+  --cxq-panel: linear-gradient(145deg, #fcf2ff, #e2d2ff);
+  --cxq-card: linear-gradient(160deg, #fff5ac, #ffcced);
+  --cxq-active: linear-gradient(140deg, #bdfdf1, #b6d2ff);
+  --cxq-scene: radial-gradient(circle, #7732b333 1px, transparent 2px) 0 0 / 12px 12px, linear-gradient(125deg, #e4cbff, #ffc6df 55%, #aff4f2);
+}
+html:is([data-visual-theme="ink"], [data-visual-theme="pop"]) .mg-game
+  :is(.mobile-title, .play, .puzzle-game, .mg-number-play, .game-shell, .app) {
+  background: var(--cxq-scene) !important;
+}
+html:is([data-visual-theme="ink"], [data-visual-theme="pop"]) .mg-game
+  :is(.mobile-title-dock, .mg-panel, .cp-card, .mg-preparation, .modal, .menu-card) {
+  background: var(--cxq-panel) !important;
+  border-color: var(--cxq-line) !important;
+}
+html:is([data-visual-theme="ink"], [data-visual-theme="pop"]) .mg-game
+  :is(h1, h2, h3, p, label, summary, strong, b, small, span, a, button) {
+  color: var(--cxq-ink) !important;
+  text-shadow: none !important;
+}
+html:is([data-visual-theme="ink"], [data-visual-theme="pop"]) .mg-game
+  :is(.mg-choice, .controls button, .mobile-title header a, .mobile-title-dock button) {
+  background: var(--cxq-card) !important;
+  border: 1px solid var(--cxq-line) !important;
+}
+html:is([data-visual-theme="ink"], [data-visual-theme="pop"]) .mg-game
+  :is(.mg-choice.is-selected, .mobile-primary, button[aria-pressed="true"]) {
+  background: var(--cxq-active) !important;
+}
+.cxq-theme-picker {
+  max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
