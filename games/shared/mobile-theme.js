@@ -6,6 +6,8 @@
   const themes = {
     night: { name: "星夜經典", description: "深藍、森林綠與金色", preview: "rebuilt/panel.webp" },
     candy: { name: "晴日糖果", description: "奶油白、蜜桃粉與薄荷綠", preview: "candy/panel.webp" },
+    ink: { name: "紙墨手繪", description: "米紙、墨綠與手繪線條" },
+    pop: { name: "繽紛 POP", description: "糖果色、圓點與高對比線條" },
   };
   const knownTheme = (value) => Object.prototype.hasOwnProperty.call(themes, value);
   let current = "night";
@@ -130,9 +132,15 @@
         const choice = document.createElement("button");
         choice.type = "button";
         choice.dataset.visualChoice = id;
-        const preview = new Image();
-        preview.src = new URL(theme.preview, root);
-        preview.alt = "";
+        const preview = theme.preview ? new Image() : document.createElement("span");
+        if (theme.preview) {
+          preview.src = new URL(theme.preview, root);
+          preview.alt = "";
+        } else {
+          preview.className = "cxq-theme-swatch";
+          preview.dataset.visualTheme = id;
+          preview.setAttribute("aria-hidden", "true");
+        }
         const name = document.createElement("strong");
         name.textContent = theme.name;
         const description = document.createElement("span");
