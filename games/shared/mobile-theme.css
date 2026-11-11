@@ -439,3 +439,33 @@ html:is([data-visual-theme="ink"], [data-visual-theme="pop"]) .mg-game
   overflow: auto;
   overscroll-behavior: contain;
 }
+
+/* Board and tile treatments for the two new visual themes. */
+html:is([data-visual-theme="ink"], [data-visual-theme="pop"]) .mg-game
+  :is(.mp-tetris-frame, #board.board, .boardWrap, .hole-field, .bubble-field, .canvas-wrap) {
+  background: var(--cxq-board) !important;
+  border-color: var(--cxq-line) !important;
+}
+html[data-visual-theme="ink"] {
+  --cxq-board: repeating-linear-gradient(135deg, #526e6214 0 1px, transparent 1px 8px), #e1e8d6;
+  --cxq-piece: linear-gradient(145deg, #fff9e8, #d8e1c8);
+  --cxq-revealed: #f9f4e7;
+}
+html[data-visual-theme="pop"] {
+  --cxq-board: radial-gradient(circle, #6337a025 1px, transparent 2px) 0 0 / 9px 9px, #eadcff;
+  --cxq-piece: linear-gradient(145deg, #fff09b, #ffcce9);
+  --cxq-revealed: #fff4fd;
+}
+html:is([data-visual-theme="ink"], [data-visual-theme="pop"]) .mg-game:is(
+  [data-mobile-game="2048"],
+  [data-mobile-game="mines"],
+  [data-mobile-game="dream-match"],
+  [data-mobile-game="link"]
+) #board :is(.cell, .tile) {
+  background-image: var(--cxq-piece) !important;
+  border-color: var(--cxq-line) !important;
+}
+html:is([data-visual-theme="ink"], [data-visual-theme="pop"])
+  .mg-game[data-mobile-game="mines"] #board .cell.open {
+  background: var(--cxq-revealed) !important;
+}
