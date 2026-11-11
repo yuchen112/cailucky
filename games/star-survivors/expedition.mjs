@@ -88,6 +88,79 @@ function upgrade(){mode='upgrade';banMode=false;persist();showChoices();sound.pl
 function showChoices(){const branching=game.status==='branch';modal(branching?'選擇裝備分支':`星光覺醒 · Lv.${game.player.level}`,branching?'裝備升至第五級時，選擇本局的進化路線。':banMode?'點選一張卡，將其從本局後續選項排除；目前持有的能力會保留。':`攻擊裝備 ${weaponCount(game)} / 3 · 祝福 ${passiveCount(game)} / 4。副裝備最多兩件。`,branching?'CHOOSE YOUR PATH':'BUILD YOUR ADVENTURE','upgrades');game.choices.forEach((c,i)=>{const w=EQUIPMENT[c.id],spec=c.kind==='branch'?w?.branches[c.branch]:c.kind==='weapon'?w:c.kind==='passive'?PASSIVES[c.id]:{name:'暖心回復',desc:'立即恢復生命。'},level=c.kind==='weapon'?game.weapons[c.id]:c.kind==='passive'?game.passives[c.id]:0,evo=c.kind==='weapon'&&level===4,b=document.createElement('button');b.className='choice'+(evo?' evolution':'')+(banMode?' ban-choice':'');b.innerHTML=`<span class="choice-number">${i+1}</span>${icon(c.id)}<span class="choice-type">${branching?'裝備分支':evo?'裝備進化':c.kind==='weapon'?level?'裝備強化':w?.kind==='main'?'專屬主武器':'新副裝備':'星光祝福'}</span><b>${evo?'選擇進化路線':spec?.name||c.id}</b>${w?'<canvas class="weapon-preview" width="280" height="90" aria-label="攻擊方式預覽"></canvas>':''}<p>${spec?.desc||''}</p><span class="next-stats">${branching?'第五級 → '+spec.evolved:c.kind==='weapon'?(level===4?'下一步：選擇第五級進化路線':upgradeInfo(game,c.id)):''}</span><small>${branching?'確定後本局無法改線':c.kind==='weapon'?level?`Lv.${level} → ${evo?'進化路線':level+1}`:'佔用一個副裝備欄':c.kind==='passive'?`${level+1} / ${spec?.max||5}`:'立即生效'}</small>`;const canvas=b.querySelector('canvas');if(canvas){canvas.dataset.weapon=c.id;canvas.dataset.branch=c.branch||game.branches[c.id]||''}b.onclick=()=>{if(banMode){if(ban(game,i)){persist();banMode=false;showChoices()}return}if(!choose(game,i))return;persist();if(game.status==='branch'){showChoices();return}hideModal();mode='playing';sound.play('upgrade');if(evo||branching)enqueueCinema('evolve',weaponName(game,c.id),'分支力量覺醒 · 裝備已進化',c.id);else toast((spec?.name||'能力')+' · 已獲得')};$('modal-body').append(b)});if(!branching){const r=action('重抽 '+game.budget.reroll,()=>{if(reroll(game)){persist();showChoices()}});r.disabled=!game.budget.reroll;const sk=action('略過 '+game.budget.skip,()=>{if(skip(game)){persist();hideModal();mode='playing'}});sk.disabled=!game.budget.skip;const ba=action(banMode?'取消排除':'排除 '+game.budget.ban,()=>{banMode=!banMode;showChoices()});ba.disabled=!game.budget.ban||game.choices.every(c=>c.kind==='heal')}focusDialog()}
 function pause(){if(!['playing','cinematic'].includes(mode))return;endCinema();mode='paused';persist();const r=getRole(game.roleId);modal('遠征稍歇',storage?'進度已保存。整理配裝，再繼續前進。':'目前無法儲存，請保持頁面開啟。','PAUSED');const build=document.createElement('div');build.className='pause-build';build.innerHTML=Object.entries(game.weapons).filter(([,n])=>n).map(([id,n])=>`<span>${icon(id)}<b>${weaponName(game,id)} · ${n===5?'★':'Lv.'+n}</b><small>${game.branches[id]?EQUIPMENT[id].branches[game.branches[id]]?.name:'第五級選擇進化路線'}</small></span>`).join('')+Object.entries(game.passives).filter(([,n])=>n).map(([id,n])=>`<span>${icon(id)}<b>${PASSIVES[id].name} · Lv.${n}</b><small>${PASSIVES[id].desc}</small></span>`).join('')+`<span>${icon('star')}<b>${r.active.name}</b><small>${r.active.desc}</small></span>`;$('modal-body').append(build);action('繼續遠征',()=>{hideModal();mode='playing';sound.unlock()},true);action('冒險筆記',()=>guide(true));action('聲音設定',()=>soundSettings(true));action('儲存並回營地',home);action('撤退並結算',()=>{modal('撤退並結算？','本局將結束，並開啟已拾取的寶箱。','EXPEDITION');action('繼續遠征',()=>{hideModal();mode='playing'},true);action('確認撤退',()=>{game.status='lost';finish()});focusDialog()});focusDialog()}
 function home(){persist();mode='home';cinemaQueue=[];endCinema();$('lobby').hidden=false;$('hud').hidden=true;$('touch').hidden=true;$('bossbar').hidden=true;hideModal();keys.clear();resetJoy();renderLobby()}
+function saveManager(){
+  if(mode!=='home')return;
+  modal('存檔管理','備份角色培育、素材、設定與可續玩的遠征。','SAVE DATA');
+  action('匯出存檔',()=>{
+    const backup={format:'cxq-star-survivors',version:1,profile,run:saved?JSON.parse(serialize(saved)):null};
+    const url=URL.createObjectURL(new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}));
+    const link=document.createElement('a');
+    link.href=url;
+    link.download='星界遠征-'+new Date().toISOString().slice(0,10)+'.json';
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),30000);
+  });
+  const input=document.createElement('input');
+  input.type='file';
+  input.accept='.json,application/json';
+  input.hidden=true;
+  $('modal-body').append(input);
+  action('匯入存檔',()=>input.click(),true);
+  action('返回',hideModal);
+  input.onchange=async()=>{
+    const file=input.files?.[0];
+    input.value='';
+    if(!file)return;
+    try{
+      if(file.size>4*1024*1024)throw Error('檔案過大');
+      const backup=JSON.parse(await file.text());
+      if(!input.isConnected||$('modal').hidden||mode!=='home')return;
+      const candidate=backup?.profile;
+      const isRecord=value=>value&&typeof value==='object'&&!Array.isArray(value);
+      if(backup?.format!=='cxq-star-survivors'||backup.version!==1||
+        !isRecord(candidate)||candidate.version!==profile.version||
+        !Number.isFinite(candidate.coins)||candidate.coins<0||
+        !['materials','equipment','traits','mastery','clears','difficultyClears','audio'].every(key=>isRecord(candidate[key]))||
+        !Array.isArray(candidate.settled)||!Object.hasOwn(backup,'run'))throw Error('不支援的存檔格式');
+      const nextProfile=validateProfile(candidate);
+      const nextRun=backup.run===null?null:restore(JSON.stringify(backup.run));
+      if(backup.run!==null&&!nextRun)throw Error('遠征進度無法讀取');
+      modal('確認匯入存檔？','這會取代本機的角色培育、素材、設定及遠征進度。','IMPORT SAVE');
+      const preview=document.createElement('p');
+      preview.style.gridColumn='1 / -1';
+      preview.textContent=nextProfile.coins.toLocaleString()+' 星光 · '+(nextRun?getRole(nextRun.roleId).name+' · '+getMap(nextRun.mapId).name:'沒有可續玩的遠征');
+      $('modal-body').append(preview);
+      action('取消',saveManager);
+      action('覆蓋並匯入',()=>{
+        try{
+          const previousRun=localStorage.getItem(RUN);
+          if(nextRun)localStorage.setItem(RUN,serialize(nextRun));
+          else localStorage.removeItem(RUN);
+          try{localStorage.setItem(KEY,JSON.stringify(nextProfile))}
+          catch(error){
+            if(previousRun===null)localStorage.removeItem(RUN);
+            else localStorage.setItem(RUN,previousRun);
+            throw error;
+          }
+          location.reload();
+        }catch{
+          modal('匯入失敗','瀏覽器無法寫入存檔，請檢查網站儲存空間後重試。','SAVE DATA');
+          action('返回',saveManager);
+          focusDialog();
+        }
+      },true);
+      focusDialog();
+    }catch(error){
+      if(!input.isConnected||$('modal').hidden)return;
+      modal('無法讀取存檔','請選擇由星界遠征匯出的 JSON 存檔。','SAVE DATA');
+      action('返回',saveManager);
+      focusDialog();
+    }
+  };
+  focusDialog();
+}
 function soundSettings(fromPause=false){
   modal('聲音設定','可分別調整音樂和音效。','AUDIO');
   for(const [bus,label] of [['music','背景音樂'],['sfx','遊戲音效']]){
@@ -201,7 +274,7 @@ function renderCodexAnimations(now){
     ctx.drawImage(frame,(canvas.width-size)/2,0,size,size);
   }
 }
-$('start').onclick=()=>{if(loadFailed){location.reload();return}if(!ready)return;if(saved){modal('開始新的遠征？','目前仍有未完成的遠征。開始新局會取代這份中途進度，永久成長與素材會保留。','NEW EXPEDITION');action('返回',hideModal);action('開始遠征',()=>begin(),true);focusDialog()}else begin()};$('resume').onclick=()=>begin(true);$('pause').onclick=pause;$('help').onclick=()=>guide();$('sound').onclick=()=>soundSettings();
+$('start').onclick=()=>{if(loadFailed){location.reload();return}if(!ready)return;if(saved){modal('開始新的遠征？','目前仍有未完成的遠征。開始新局會取代這份中途進度，永久成長與素材會保留。','NEW EXPEDITION');action('返回',hideModal);action('開始遠征',()=>begin(),true);focusDialog()}else begin()};$('resume').onclick=()=>begin(true);$('pause').onclick=pause;$('help').onclick=()=>guide();$('sound').onclick=()=>soundSettings();$('save-manager').onclick=saveManager;
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;renderLobby()});$('difficulty-options').onclick=e=>{const b=e.target.closest('[data-difficulty]');if(!b||b.disabled)return;difficulty=b.dataset.difficulty;renderMapDetail();refreshWallet()};
 document.addEventListener('pointerdown',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;sound.unlock();sound.play('click');const r=b.getBoundingClientRect();renderer.uiBurst?.(e.clientX||r.x+r.width/2,e.clientY||r.y+r.height/2)},true);
 addEventListener('keydown',e=>{const k=e.key.toLowerCase();if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k)&&mode==='playing')e.preventDefault();if(k==='escape'){if(['playing','cinematic'].includes(mode))pause();else if(mode==='paused'){hideModal();mode='playing'}else if(mode==='home')hideModal()}if(k==='tab'&&!$('modal').hidden){const buttons=[...$('modal').querySelectorAll('button:not(:disabled)')],first=buttons[0],last=buttons.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus()}}if(mode==='playing'){keys.add(k);if(k===' '&&!e.repeat)doDash();if(['e','q'].includes(k)&&!e.repeat)doActive()}if(mode==='upgrade'&&!orientationBlocked&&!e.repeat&&['1','2','3'].includes(k))$('modal-body').children[Number(k)-1]?.click()});addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
