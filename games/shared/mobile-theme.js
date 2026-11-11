@@ -3,9 +3,16 @@
   "use strict";
   const root = new URL(".", document.currentScript.src),
     key = "cxq-visual-theme-v1";
+  const themes = {
+    night: { name: "星夜經典", description: "深藍、森林綠與金色", preview: "rebuilt/panel.webp" },
+    candy: { name: "晴日糖果", description: "奶油白、蜜桃粉與薄荷綠", preview: "candy/panel.webp" },
+  };
+  const knownTheme = (value) => Object.prototype.hasOwnProperty.call(themes, value);
   let current = "night";
+  let selection = 0;
   try {
-    if (localStorage.getItem(key) === "candy") current = "candy";
+    const saved = localStorage.getItem(key);
+    if (knownTheme(saved)) current = saved;
   } catch {}
   document.documentElement.dataset.visualTheme = current;
   const files = [
@@ -72,7 +79,9 @@
       descriptor.set.call(this, mapped);
     },
   });
-  async function choose(theme) {
+  async function choose(theme, { persist = true } = {}) {
+    if (!knownTheme(theme)) throw new RangeError("Unknown visual theme");
+    const request = ++selection;
     if (theme === "candy")
       await Promise.all(
         files.map((f) => {
@@ -81,10 +90,11 @@
           return i.decode();
         }),
       );
+    if (request !== selection) return false;
     current = theme;
     document.documentElement.dataset.visualTheme = theme;
     try {
-      localStorage.setItem(key, theme);
+      if (persist) localStorage.setItem(key, theme);
     } catch {}
     for (const [image, source] of bindings)
       descriptor.set.call(image, asset(source));
@@ -97,6 +107,7 @@
         ),
       );
     dispatchEvent(new Event("cxq-theme-change"));
+    return true;
   }
   function button() {
     const b = document.createElement("button");
@@ -113,11 +124,22 @@
       dialog.className = "mg-panel cxq-theme-picker";
       dialog.setAttribute("aria-label", "遊戲配色");
       dialog.innerHTML =
-        '<h2>選擇遊戲配色</h2><p>十二款共用這項選擇，下次開啟也會記住。</p><div class="cxq-theme-options"><button data-visual-choice="night"><img src="' +
-        new URL("rebuilt/panel.webp", root) +
-        '" alt=""><strong>星夜經典</strong><span>深藍、森林綠與金色</span></button><button data-visual-choice="candy"><img src="' +
-        new URL("candy/panel.webp", root) +
-        '" alt=""><strong>晴日糖果</strong><span>奶油白、蜜桃粉與薄荷綠</span></button></div><p class="cxq-theme-status" role="status"></p><button data-theme-close>完成</button>';
+        '<h2>選擇遊戲配色</h2><p>十二款共用這項選擇，下次開啟也會記住。</p><div class="cxq-theme-options"></div><p class="cxq-theme-status" role="status"></p><button data-theme-close>完成</button>';
+      const options = dialog.querySelector(".cxq-theme-options");
+      for (const [id, theme] of Object.entries(themes)) {
+        const choice = document.createElement("button");
+        choice.type = "button";
+        choice.dataset.visualChoice = id;
+        const preview = new Image();
+        preview.src = new URL(theme.preview, root);
+        preview.alt = "";
+        const name = document.createElement("strong");
+        name.textContent = theme.name;
+        const description = document.createElement("span");
+        description.textContent = theme.description;
+        choice.append(preview, name, description);
+        options.append(choice);
+      }
       document.body.append(dialog);
       dialog.querySelectorAll("[data-visual-choice]").forEach(
         (b) =>
@@ -128,8 +150,8 @@
               .querySelectorAll("[data-visual-choice]")
               .forEach((b) => (b.disabled = true));
             try {
-              await choose(b.dataset.visualChoice);
-              status.textContent = "配色已儲存";
+              const applied = await choose(b.dataset.visualChoice);
+              status.textContent = applied ? "配色已儲存" : "";
             } catch {
               status.textContent = "素材載入失敗，請點選重試";
             } finally {
@@ -219,7 +241,9 @@
     });
   });
   addEventListener("storage", (e) => {
-    if (e.key === key) void choose(e.newValue === "candy" ? "candy" : "night");
+    if (e.key !== key) return;
+    const theme = knownTheme(e.newValue) ? e.newValue : "night";
+    void choose(theme, { persist: false }).catch(() => {});
   });
   window.CxQTheme = {
     get current() {
