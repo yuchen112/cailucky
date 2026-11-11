@@ -13,7 +13,7 @@
 }
 .action-cover img {
   width: 100%;
-  height: min(59dvh, 550px);
+  height: min(calc(var(--cxq-vh, 1dvh) * 59), 550px);
   object-fit: cover;
 }
 .action-cover div {
@@ -52,7 +52,7 @@
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto auto;
   gap: 0.4rem;
-  height: calc(100dvh - 76px);
+  height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 76px);
   max-width: 1050px;
   margin: auto;
 }
@@ -99,7 +99,7 @@ body[data-action="dino"].left-hand .action-buttons {
 }
 dialog {
   width: min(540px, calc(100% - 18px));
-  max-height: 90dvh;
+  max-height: calc(var(--cxq-vh, 1dvh) * 90);
   overflow: auto;
   background: #16303a var(--teal) center/cover;
   color: var(--text);
@@ -129,7 +129,7 @@ dialog img {
     grid-template-columns: 1fr;
   }
   .action-cover img {
-    height: 27dvh;
+    height: calc(var(--cxq-vh, 1dvh) * 27);
   }
   .action-cover h1 {
     font-size: 1.9rem;
@@ -137,7 +137,7 @@ dialog img {
 }
 @media (max-height: 490px) and (orientation: landscape) {
   #play:not([hidden]) {
-    height: calc(100dvh - 55px);
+    height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 55px);
   }
   .masthead {
     min-height: 46px;

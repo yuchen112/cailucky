@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   width: 100%;
-  height: 100dvh;
+  height: calc(var(--cxq-vh, 1dvh) * 100);
   max-width: none;
   max-height: none;
   margin: 0;
@@ -23,7 +23,7 @@
   grid-template-columns: minmax(0, 1fr);
   position: relative;
   isolation: isolate;
-  min-height: 100dvh;
+  min-height: calc(var(--cxq-vh, 1dvh) * 100);
   max-width: 620px;
   margin: auto;
 }
@@ -261,7 +261,7 @@ body[data-mobile-game="dream-match"] .game-entry > .mobile-menu-home {
 }
 
 .mobile-title-art {
-  height: 100dvh !important;
+  height: calc(var(--cxq-vh, 1dvh) * 100) !important;
   max-height: none !important;
   object-fit: cover !important;
   display: block;
@@ -272,7 +272,7 @@ body[data-mobile-game="dream-match"] .game-entry > .mobile-menu-home {
 @media (orientation: landscape) and (max-height: 550px) {
   .mobile-title-art {
     width: 56% !important;
-    height: 100dvh !important;
+    height: calc(var(--cxq-vh, 1dvh) * 100) !important;
     object-position: center 48%;
   }
 }
@@ -363,7 +363,7 @@ body[data-mobile-game="memory"] .card .face.front {
     overflow: hidden;
   }
   body[data-mobile-game="mines"] #play:not([hidden]) {
-    height: calc(100dvh - 72px);
+    height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 72px);
     grid-template-columns: minmax(132px, 190px) minmax(0, 1fr);
     gap: 0.55rem;
   }
@@ -388,8 +388,8 @@ body[data-mobile-game="mines"] #sound {
 }
 /* Mobile title composition: raster wordmarks and illustrated controls. */
 .mobile-title-layout {
-  height: 100dvh;
-  min-height: 100dvh;
+  height: calc(var(--cxq-vh, 1dvh) * 100);
+  min-height: calc(var(--cxq-vh, 1dvh) * 100);
   grid-template-rows: 54px auto 1fr auto;
   overflow: hidden;
 }
@@ -582,7 +582,7 @@ body[data-mobile-game="mines"] #sound {
   }
   .mobile-title-art {
     width: 56%;
-    height: 100dvh !important;
+    height: calc(var(--cxq-vh, 1dvh) * 100) !important;
   }
 }
 /* Tetris title: three readable, equally sized phone menu entries. */

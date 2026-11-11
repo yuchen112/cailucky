@@ -9,13 +9,13 @@ body {
 #app {
   display: grid;
   place-items: center;
-  height: 100dvh;
+  height: calc(var(--cxq-vh, 1dvh) * 100);
   padding: 0;
 }
 .game-shell {
   position: relative;
   width: min(100vw, 600px);
-  height: 100dvh;
+  height: calc(var(--cxq-vh, 1dvh) * 100);
   background: #101b2e;
   overflow: hidden;
 }
@@ -41,7 +41,7 @@ body {
 .menu-card {
   width: min(100%, 540px);
   position: relative;
-  max-height: calc(100dvh - 24px);
+  max-height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 24px);
   overflow: auto;
 }
 .hud {
@@ -161,7 +161,7 @@ body {
 .rules-book,
 .map-screen {
   width: min(100%, 540px);
-  max-height: 90dvh;
+  max-height: calc(var(--cxq-vh, 1dvh) * 90);
   overflow: auto;
 }
 .rules-grid {
@@ -190,7 +190,7 @@ body {
   gap: 12px;
 }
 .brick-cover {
-  max-height: 35dvh;
+  max-height: calc(var(--cxq-vh, 1dvh) * 35);
   width: 100%;
   object-fit: cover;
 }

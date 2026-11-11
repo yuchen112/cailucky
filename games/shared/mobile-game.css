@@ -48,7 +48,7 @@
   width: 100%;
   margin: auto;
   padding: 10px 14px 20px !important;
-  min-height: calc(100dvh - 46px);
+  min-height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 46px);
   gap: 12px;
   grid-template-columns: 1fr !important;
   align-items: start;
@@ -351,12 +351,12 @@
   flex: 1 1 40%;
 }
 .mg-panel :is(.collection, .record-list, .rank-list) {
-  max-height: 52dvh;
+  max-height: calc(var(--cxq-vh, 1dvh) * 52);
   overflow: auto;
 }
 .mg-game dialog:not(.mobile-title) {
   max-width: min(560px, calc(100% - 20px));
-  max-height: calc(100dvh - 24px);
+  max-height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 24px);
   overflow: auto;
 }
 .mg-game dialog::backdrop {
@@ -439,7 +439,7 @@
   text-decoration: none;
 }
 .mg-game .mg-link-prepare {
-  max-height: calc(100dvh - 16px);
+  max-height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 16px);
   overflow: auto;
   min-height: 0;
   background: var(--mg-panel) center/100% 100% no-repeat !important;
@@ -478,7 +478,7 @@
   max-width: 600px;
 }
 .mg-game[data-mobile-game="tetris"] .play {
-  height: calc(100dvh - 54px);
+  height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 54px);
   gap: 6px;
 }
 .mg-game[data-mobile-game="tetris"] .stage {
@@ -539,7 +539,7 @@
   touch-action: none;
 }
 .mg-game[data-mobile-game="memory"] #game.active {
-  height: calc(100dvh - 54px);
+  height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 54px);
   display: grid;
   grid-template-rows: auto auto 5px minmax(0, 1fr);
   gap: 8px;
@@ -570,7 +570,7 @@
   overscroll-behavior: contain;
 }
 .mg-game[data-mobile-game="whack"] #play:not([hidden]) {
-  height: calc(100dvh - 54px);
+  height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 54px);
   grid-template-rows: auto minmax(0, 1fr) auto auto;
 }
 .mg-game[data-mobile-game="whack"] .hole-field {
@@ -592,7 +592,7 @@
 }
 .mg-game[data-mobile-game="flappy"] #play:not([hidden]),
 .mg-game[data-mobile-game="merge"] #play:not([hidden]) {
-  height: calc(100dvh - 54px);
+  height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 54px);
   grid-template-rows: auto minmax(0, 1fr) auto auto;
   gap: 5px;
 }
@@ -615,7 +615,7 @@
   flex: 1;
 }
 .mg-game[data-puzzle] .puzzle-game {
-  height: calc(100dvh - 54px);
+  height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 54px);
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto auto;
   gap: 6px;
@@ -640,7 +640,7 @@
   min-height: 0;
 }
 .mg-game[data-mobile-game="dream-match"] #board {
-  width: min(100%, calc((100dvh - 240px) * 1));
+  width: min(100%, calc((calc(var(--cxq-vh, 1dvh) * 100) - 240px) * 1));
   max-width: 460px;
   gap: 3px;
 }
@@ -663,7 +663,7 @@
 @media (orientation: landscape) {
   .mg-game[data-orientation="landscape"] .mg-preparation {
     max-width: 1000px;
-    min-height: calc(100dvh - 46px);
+    min-height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 46px);
   }
   .mg-game[data-orientation="landscape"] .mg-heading img {
     height: 60px;
@@ -691,7 +691,7 @@
     flex: 1;
   }
   .mg-game[data-mobile-game="mines"] #play:not([hidden]) {
-    height: calc(100dvh - 54px);
+    height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 54px);
     display: grid;
     grid-template-columns: 150px minmax(0, 1fr);
     gap: 8px;
@@ -730,7 +730,7 @@
     touch-action: pan-x pan-y;
   }
   .mg-game[data-mobile-game="link"] .app {
-    height: 100dvh;
+    height: calc(var(--cxq-vh, 1dvh) * 100);
     padding: 6px 10px;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 116px;
@@ -776,7 +776,7 @@
     max-width: 1200px;
   }
   .mg-game[data-mobile-game="dino"] #play:not([hidden]) {
-    height: calc(100dvh - 48px);
+    height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 48px);
     display: grid;
     grid-template-columns: 76px minmax(0, 1fr) 76px;
     grid-template-rows: 44px minmax(0, 1fr) 20px;
@@ -874,7 +874,7 @@
     display: none;
   }
   .mg-game[data-mobile-game="dream-match"] #board {
-    width: min(100%, calc(100dvh - 220px));
+    width: min(100%, calc(calc(var(--cxq-vh, 1dvh) * 100) - 220px));
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1059,9 +1059,9 @@
   padding: 7px !important;
 }
 .mg-game .mg-preparation:has(> .mg-prepare-content) {
-  height: calc(100dvh - 46px);
+  height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 46px);
   min-height: 0;
-  max-height: calc(100dvh - 46px);
+  max-height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 46px);
   grid-template-rows: auto minmax(0, 1fr) auto;
   overflow: hidden !important;
   padding-bottom: 8px !important;
@@ -1083,7 +1083,7 @@
   overscroll-behavior: contain;
 }
 .mg-game .mg-memory-prepare #modalBody {
-  max-height: calc(100dvh - 160px);
+  max-height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 160px);
   overflow: auto;
   padding-right: 4px;
 }
@@ -1099,8 +1099,8 @@
   display: none;
 }
 .mg-game[data-mobile-game="brick-breaker"] #menuOverlay .mg-preparation {
-  height: calc(100dvh - 20px) !important;
-  max-height: calc(100dvh - 20px) !important;
+  height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 20px) !important;
+  max-height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 20px) !important;
   overflow: hidden !important;
 }
 .mg-game[data-mobile-game="brick-breaker"]
@@ -1169,7 +1169,7 @@
   display: none;
 }
 .mg-game .game-entry .mg-preparation {
-  max-height: calc(100dvh - 24px);
+  max-height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 24px);
   min-height: 0;
   overflow: auto !important;
 }
@@ -1255,7 +1255,7 @@
 .mg-game .mg-number-play {
   grid-template-columns: 1fr !important;
   grid-template-rows: 50px minmax(0, 1fr) 110px 60px 16px;
-  height: calc(100dvh - 54px);
+  height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 54px);
   max-width: 460px;
   gap: 8px;
   align-content: stretch;
@@ -1265,7 +1265,7 @@
   align-self: stretch;
 }
 .mg-game .mg-number-play #board {
-  width: min(100%, calc(100dvh - 284px));
+  width: min(100%, calc(calc(var(--cxq-vh, 1dvh) * 100) - 284px));
   height: auto;
   max-width: 430px;
   aspect-ratio: 1;

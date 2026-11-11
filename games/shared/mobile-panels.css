@@ -9,7 +9,7 @@
   min-height: 0 !important;
   width: min(540px, calc(100vw - 24px)) !important;
   max-width: calc(100vw - 24px) !important;
-  max-height: calc(100dvh - 24px) !important;
+  max-height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 24px) !important;
   overflow: auto !important;
   overscroll-behavior: contain;
   scroll-padding: 14px;
@@ -95,8 +95,8 @@
   position: fixed !important;
   inset: 0 !important;
   width: 100% !important;
-  height: 100dvh !important;
-  max-height: 100dvh !important;
+  height: calc(var(--cxq-vh, 1dvh) * 100) !important;
+  max-height: calc(var(--cxq-vh, 1dvh) * 100) !important;
   display: grid !important;
   place-items: center !important;
   overflow: hidden !important;
@@ -125,8 +125,8 @@
   position: fixed !important;
   inset: 0 !important;
   width: 100% !important;
-  height: 100dvh !important;
-  max-height: 100dvh !important;
+  height: calc(var(--cxq-vh, 1dvh) * 100) !important;
+  max-height: calc(var(--cxq-vh, 1dvh) * 100) !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
@@ -137,14 +137,14 @@
   overflow: hidden !important;
 }
 .mg-game[data-mobile-game="tetris"] #result.show > img {
-  height: clamp(90px, 20dvh, 150px) !important;
+  height: clamp(90px, calc(var(--cxq-vh, 1dvh) * 20), 150px) !important;
   width: 150px !important;
   max-width: 100% !important;
   object-fit: contain;
   flex: 0 0 auto;
 }
 .mg-game[data-mobile-game="tetris"] #result.show > .rp-panel {
-  max-height: calc(100dvh - 174px) !important;
+  max-height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 174px) !important;
   flex: 0 1 auto !important;
   margin: 0 !important;
 }
@@ -170,7 +170,7 @@
   :is(#rulesOverlay, #mapOverlay):not(.hidden) {
   position: fixed !important;
   inset: 0 !important;
-  height: 100dvh !important;
+  height: calc(var(--cxq-vh, 1dvh) * 100) !important;
   width: 100% !important;
   display: grid !important;
   place-items: center !important;

@@ -1,0 +1,111 @@
+:root {
+  --cxq-screen-height: 100dvh;
+  --cxq-screen-width: 100vw;
+  --cxq-safe-top: env(safe-area-inset-top, 0px);
+  --cxq-safe-right: env(safe-area-inset-right, 0px);
+  --cxq-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --cxq-safe-left: env(safe-area-inset-left, 0px);
+  --cxq-app-height: calc(
+    var(--cxq-screen-height) - var(--cxq-safe-top) - var(--cxq-safe-bottom)
+  );
+  --cxq-app-width: calc(
+    var(--cxq-screen-width) - var(--cxq-safe-left) - var(--cxq-safe-right)
+  );
+  --cxq-vh: calc(var(--cxq-app-height) / 100);
+}
+html {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+  background: #101b2e;
+}
+html[data-visual-theme="candy"] {
+  background: #fff5e9;
+}
+body.mg-game {
+  position: fixed !important;
+  inset: var(--cxq-safe-top) var(--cxq-safe-right) var(--cxq-safe-bottom)
+    var(--cxq-safe-left) !important;
+  width: var(--cxq-app-width) !important;
+  height: var(--cxq-app-height) !important;
+  min-height: 0 !important;
+  max-height: var(--cxq-app-height) !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+}
+.mg-game > main,
+.mg-game > #app {
+  min-width: 0;
+  min-height: 0 !important;
+  max-height: var(--cxq-app-height) !important;
+  box-sizing: border-box;
+}
+.mg-game .mobile-title {
+  inset: var(--cxq-safe-top) var(--cxq-safe-right) var(--cxq-safe-bottom)
+    var(--cxq-safe-left) !important;
+  width: var(--cxq-app-width) !important;
+  height: var(--cxq-app-height) !important;
+  max-height: var(--cxq-app-height) !important;
+  box-sizing: border-box;
+}
+.mg-game .mobile-title-layout {
+  min-height: var(--cxq-app-height) !important;
+  max-height: var(--cxq-app-height) !important;
+  height: var(--cxq-app-height) !important;
+}
+.mg-game dialog[open]:not(.mobile-title) {
+  inset: var(--cxq-safe-top) var(--cxq-safe-right) var(--cxq-safe-bottom)
+    var(--cxq-safe-left) !important;
+  max-width: calc(var(--cxq-app-width) - 24px) !important;
+  max-height: calc(var(--cxq-app-height) - 24px) !important;
+}
+.mg-game
+  :is(
+    #pause.pause-overlay.show,
+    #pauseOverlay:not(.hidden),
+    #layer.show,
+    .modal-mask.show,
+    .overlay.show,
+    #resultOverlay:not(.hidden)
+  ),
+.mg-game[data-mobile-game="tetris"] #result.show,
+.mg-game[data-mobile-game="brick-breaker"]
+  :is(#rulesOverlay, #mapOverlay):not(.hidden) {
+  inset: var(--cxq-safe-top) var(--cxq-safe-right) var(--cxq-safe-bottom)
+    var(--cxq-safe-left) !important;
+  width: var(--cxq-app-width) !important;
+  height: var(--cxq-app-height) !important;
+  max-height: var(--cxq-app-height) !important;
+}
+.mg-game .rp-panel,
+.mg-game .cp-card {
+  max-width: calc(var(--cxq-app-width) - 24px) !important;
+  max-height: calc(var(--cxq-app-height) - 24px) !important;
+}
+.mg-game[data-mobile-game="2048"] #board,
+.mg-game[data-mobile-game="tetris"] #board,
+.mg-game[data-mobile-game="dream-match"] #board,
+.mg-game[data-mobile-game="whack"] #board,
+.mg-game :is(.controls, .action-buttons, .puzzle-actions) {
+  touch-action: none !important;
+}
+.mg-game
+  :is(
+    .mp-page,
+    .modalScroll,
+    .record-list,
+    .rank-list,
+    .collection,
+    #map-scroll,
+    .boardWrap,
+    #wrap
+  ) {
+  overscroll-behavior: contain;
+}

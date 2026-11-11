@@ -12,7 +12,7 @@ body.cp-lock {
   inset: 0 !important;
   margin: auto !important;
   box-sizing: border-box;
-  max-height: calc(100dvh - 24px) !important;
+  max-height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 24px) !important;
   overscroll-behavior: contain;
 }
 .mg-game .cp-card {
@@ -21,7 +21,7 @@ body.cp-lock {
   max-width: 420px !important;
   height: auto !important;
   min-height: 0 !important;
-  max-height: calc(100dvh - 24px) !important;
+  max-height: calc(calc(var(--cxq-vh, 1dvh) * 100) - 24px) !important;
   overflow: auto !important;
   padding: 24px !important;
   margin: auto !important;
@@ -81,8 +81,8 @@ body.cp-lock {
   position: fixed !important;
   inset: 0 !important;
   width: 100vw !important;
-  height: 100dvh !important;
-  max-height: 100dvh !important;
+  height: calc(var(--cxq-vh, 1dvh) * 100) !important;
+  max-height: calc(var(--cxq-vh, 1dvh) * 100) !important;
   margin: 0 !important;
   padding: 12px !important;
   box-sizing: border-box !important;
@@ -287,7 +287,7 @@ body.cp-lock {
 }
 @media (max-height: 650px) {
   .mg-game[data-mobile-game="whack"] #board {
-    width: min(100%, calc((100dvh - 160px) * 0.86)) !important;
+    width: min(100%, calc((calc(var(--cxq-vh, 1dvh) * 100) - 160px) * 0.86)) !important;
   }
   .mg-game[data-mobile-game="whack"] #play:not([hidden]) {
     grid-template-rows: 50px minmax(0, 1fr) 38px 26px !important;
@@ -347,7 +347,7 @@ body.cp-lock {
 }
 .mg-polished[data-mobile-game="mines"] > main {
   box-sizing: border-box;
-  max-height: 100dvh;
+  max-height: calc(var(--cxq-vh, 1dvh) * 100);
 }
 /* Native dialog focus is represented by its focused control, not a second frame. */
 .mg-game dialog.cp-card:focus,

@@ -38,7 +38,7 @@
   border-radius: 8px;
 }
 .hole-field #board {
-  width: min(100%, 51dvh, 540px);
+  width: min(100%, calc(var(--cxq-vh, 1dvh) * 51), 540px);
   aspect-ratio: 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
