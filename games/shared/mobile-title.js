@@ -135,7 +135,6 @@
   const select = (selector) => document.querySelector(selector);
   const home = select(config.home);
   if (!home) return;
-  const art = "../shared/mobile-art/" + game + ".webp";
   const hall = "../classic-hall/index.html?v=20261012-mobile1";
   const title = document.createElement("dialog");
   title.className = "mobile-title";
@@ -146,10 +145,37 @@
     '<header><a class="mobile-return">‹ 返回</a><span>CxQ</span></header>' +
     '<div class="mobile-title-name"><p></p><img class="mobile-game-logo" alt=""><h1 id="mobile-game-title" tabindex="-1"></h1></div>' +
     '<section class="mobile-title-dock" aria-label="遊戲選單"><p></p><div class="mobile-title-actions"></div><nav class="mobile-function-bar" aria-label="遊戲功能"></nav></section></div>';
-  title.querySelector(".mobile-title-art").src = art;
-  title.querySelector(".mobile-game-logo").src =
-    "../shared/mobile-brand/" + game + ".webp";
-  title.querySelector(".mobile-game-logo").alt = config.title;
+  const scene = title.querySelector(".mobile-title-art");
+  const logo = title.querySelector(".mobile-game-logo");
+  const role = new Image();
+  role.className = "mobile-title-role";
+  role.alt = "";
+  logo.alt = config.title;
+  const illustration = document.createElement("div");
+  illustration.className = "mobile-title-illustration";
+  illustration.append(role);
+  title.querySelector(".mobile-title-dock").before(illustration);
+  const propName = { tetris: "block-T.webp", 2048: "tile.webp", flappy: "title-glider.webp", whack: "burrow.webp", "brick-breaker": "paddle.webp" }[game];
+  const prop = propName ? new Image() : null;
+  if (prop) {
+    prop.className = "mobile-title-prop";
+    prop.alt = "";
+    illustration.append(prop);
+  }
+  const sceneNames = {
+    tetris: "home", whack: "clearing", dino: "forest", flappy: "sky",
+  };
+  function syncTitleArt() {
+    const theme = document.documentElement.dataset.visualTheme;
+    const style = { candy: "toy", paper: "paper", pixel: "pixel" }[theme] || "emerald";
+    const folder = "art/" + style + "/";
+    scene.src = folder + (sceneNames[game] || "stage") + ".webp";
+    logo.src = folder + "title.webp";
+    role.src = folder + "title-role.webp";
+    if (prop) prop.src = folder + propName;
+  }
+  syncTitleArt();
+  addEventListener("cxq-theme-change", syncTitleArt);
   title.querySelector("header a").href = hall;
   title.querySelector(".mobile-title-name p").textContent =
     "CxQ　·　" + config.label;
