@@ -13,6 +13,18 @@
   );
   --cxq-vh: calc(var(--cxq-app-height) / 100);
 }
+/* Scroll containers and top-layer dialogs each need their own tap policy. */
+:where(html, body.mg-game, .mg-game *) {
+  touch-action: manipulation;
+}
+:where(body.mg-game, .mg-game *) {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.mg-game img {
+  -webkit-user-drag: none;
+}
 html {
   position: fixed !important;
   inset: 0 !important;

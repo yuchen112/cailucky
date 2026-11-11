@@ -17,6 +17,26 @@
   addEventListener("resize", size);
   window.visualViewport?.addEventListener("resize", size);
   addEventListener("pageshow", size);
+  const editor =
+    'textarea, input:not([type]), input:is([type=text], [type=search], [type=email], [type=url], [type=tel], [type=password], [type=number]), [contenteditable=true], [contenteditable=""]';
+  // Capture native defaults before game handlers, including on newly rendered panels.
+  for (const type of ["selectstart", "contextmenu", "dragstart"]) {
+    document.addEventListener(
+      type,
+      (e) => {
+        if (type === "dragstart" || !e.target.closest?.(editor))
+          e.preventDefault();
+      },
+      true,
+    );
+  }
+  for (const type of ["gesturestart", "gesturechange"]) {
+    document.addEventListener(
+      type,
+      (e) => e.preventDefault(),
+      { capture: true, passive: false },
+    );
+  }
   let gesture = null;
   document.addEventListener(
     "touchstart",
