@@ -394,7 +394,7 @@ html:is([data-visual-theme="ink"], [data-visual-theme="pop"]) .mg-game {
   color: var(--cxq-ink) !important;
   color-scheme: light;
 }
-html[data-visual-theme="ink"] {
+[data-visual-theme="ink"] {
   --cxq-ink: #253e38;
   --cxq-line: #526e62;
   --cxq-panel: linear-gradient(115deg, #fbf5e6, #e9dfc8);
@@ -402,7 +402,7 @@ html[data-visual-theme="ink"] {
   --cxq-active: linear-gradient(145deg, #ecdaa2, #bdcb9e);
   --cxq-scene: repeating-linear-gradient(0deg, #36584f12 0 1px, transparent 1px 5px), radial-gradient(ellipse at 70% 20%, #f8edce, #c0c8ac);
 }
-html[data-visual-theme="pop"] {
+[data-visual-theme="pop"] {
   --cxq-ink: #32175c;
   --cxq-line: #6337a0;
   --cxq-panel: linear-gradient(145deg, #fcf2ff, #e2d2ff);
@@ -446,12 +446,12 @@ html:is([data-visual-theme="ink"], [data-visual-theme="pop"]) .mg-game
   background: var(--cxq-board) !important;
   border-color: var(--cxq-line) !important;
 }
-html[data-visual-theme="ink"] {
+[data-visual-theme="ink"] {
   --cxq-board: repeating-linear-gradient(135deg, #526e6214 0 1px, transparent 1px 8px), #e1e8d6;
   --cxq-piece: linear-gradient(145deg, #fff9e8, #d8e1c8);
   --cxq-revealed: #f9f4e7;
 }
-html[data-visual-theme="pop"] {
+[data-visual-theme="pop"] {
   --cxq-board: radial-gradient(circle, #6337a025 1px, transparent 2px) 0 0 / 9px 9px, #eadcff;
   --cxq-piece: linear-gradient(145deg, #fff09b, #ffcce9);
   --cxq-revealed: #fff4fd;
