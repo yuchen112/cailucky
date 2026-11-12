@@ -12,7 +12,7 @@
   const tetrisPath = new URL("../tetris/", root).pathname;
   const isTetris = tetrisPath === new URL(".", location.href).pathname;
   const isNewTheme = (theme) => Object.hasOwn(additions, theme);
-  const localArt = (theme, name) => new URL("../tetris/art/" + theme + "/" + name + ".webp", root).href;
+  const localArt = (theme, name) => new URL("../tetris/art/" + theme + "/" + name + ".webp?v=20261113-bounds1", root).href;
   const supported = (theme) => theme === "night" || theme === "candy" || (isTetris && isNewTheme(theme));
   const tetrisImages = {
     "mobile-art/tetris.webp": "home",
