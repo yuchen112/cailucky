@@ -390,7 +390,7 @@ body[data-mobile-game="mines"] #sound {
 .mobile-title-layout {
   height: calc(var(--cxq-vh, 1dvh) * 100);
   min-height: calc(var(--cxq-vh, 1dvh) * 100);
-  grid-template-rows: 54px auto minmax(0, 1fr) auto;
+  grid-template-rows: 54px auto 1fr auto;
   overflow: hidden;
 }
 .mobile-title header {
@@ -511,7 +511,7 @@ body[data-mobile-game="mines"] #sound {
 }
 @media (max-height: 650px) and (orientation: portrait) {
   .mobile-title-layout {
-    grid-template-rows: 45px auto minmax(0, 1fr) auto;
+    grid-template-rows: 45px auto 1fr auto;
   }
   .mobile-game-logo {
     max-height: 118px;
@@ -594,72 +594,3 @@ body[data-mobile-game="mines"] #sound {
 .mg-game[data-mobile-game="tetris"] .mobile-function-bar .mobile-function img{width:38px;height:38px;flex:0 0 38px;margin:0}
 .mg-game[data-mobile-game="tetris"] .mobile-function-bar .mobile-function span{font-size:14px;font-weight:700;white-space:nowrap}
 @media(max-height:650px) and (orientation:portrait){.mg-game[data-mobile-game="tetris"] .mobile-title-dock{padding:10px 12px 12px;gap:10px}.mg-game[data-mobile-game="tetris"] .mobile-function-bar,.mg-game[data-mobile-game="tetris"] .mobile-function-bar .mobile-function{min-height:80px}.mg-game[data-mobile-game="tetris"] .mobile-function-bar .mobile-function{padding:8px 3px;gap:6px}.mg-game[data-mobile-game="tetris"] .mobile-function-bar .mobile-function img{width:34px;height:34px;flex-basis:34px}}
-
-.mobile-title-illustration {
-  position: relative;
-  grid-column: 1;
-  grid-row: 3;
-  width: min(78%, 460px);
-  height: 100%;
-  min-height: 0;
-  max-height: 420px;
-  justify-self: center;
-  align-self: center;
-  pointer-events: none;
-}
-.mobile-title-role {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-.mobile-title-prop {
-  position: absolute;
-  width: 20%;
-  height: 26%;
-  object-fit: contain;
-  top: 30%;
-  left: 0;
-}
-[data-theme="2048"] .mobile-title-prop {
-  width: 28%;
-  left: auto;
-  right: 34%;
-  top: 49%;
-}
-@media (orientation: landscape) and (max-height: 550px) {
-  .mobile-title-illustration {
-    grid-row: 2 / 4;
-    width: 90%;
-    max-height: calc(var(--cxq-app-height) - 50px);
-  }
-}
-
-[data-theme="flappy"] .mobile-title-role {
-  position: absolute;
-  top: 38%;
-  left: 5%;
-  height: 76%;
-}
-[data-theme="flappy"] .mobile-title-prop {
-  top: 51%;
-  left: 18%;
-  width: 64%;
-  height: 38%;
-}
-[data-theme="whack"] .mobile-title-role {
-  height: 84%;
-}
-[data-theme="whack"] .mobile-title-prop {
-  top: 70%;
-  left: 34%;
-  width: 38%;
-  height: 23%;
-}
-
-[data-theme="brick-breaker"] .mobile-title-prop {
-  top: 67%;
-  left: 22%;
-  width: 56%;
-  height: 23%;
-}

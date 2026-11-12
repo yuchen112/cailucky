@@ -3,11 +3,9 @@
   "use strict";
   const root = new URL(".", document.currentScript.src),
     key = "cxq-visual-theme-v1";
-  const themes = ["night", "candy", "paper", "pixel"];
   let current = "night";
   try {
-    const saved = localStorage.getItem(key);
-    if (themes.includes(saved)) current = saved;
+    if (localStorage.getItem(key) === "candy") current = "candy";
   } catch {}
   document.documentElement.dataset.visualTheme = current;
   const files = [
@@ -74,10 +72,7 @@
       descriptor.set.call(this, mapped);
     },
   });
-  let selection = 0;
   async function choose(theme) {
-    if (!themes.includes(theme)) throw new Error("Unknown visual style");
-    const request = ++selection;
     if (theme === "candy")
       await Promise.all(
         files.map((f) => {
@@ -86,7 +81,6 @@
           return i.decode();
         }),
       );
-    if (request !== selection) return;
     current = theme;
     document.documentElement.dataset.visualTheme = theme;
     try {
@@ -108,7 +102,7 @@
     const b = document.createElement("button");
     b.type = "button";
     b.className = "cxq-theme-button";
-    b.textContent = "風格";
+    b.textContent = "配色";
     b.onclick = open;
     return b;
   }
@@ -117,25 +111,25 @@
     if (!dialog) {
       dialog = document.createElement("dialog");
       dialog.className = "mg-panel cxq-theme-picker";
-      dialog.setAttribute("aria-label", "遊戲風格");
+      dialog.setAttribute("aria-label", "遊戲配色");
       dialog.innerHTML =
-        '<h2>選擇遊戲風格</h2><p>十二款共用這項選擇，下次開啟也會記住。</p><div class="cxq-theme-options"><button data-visual-choice="night"><img src="' +
+        '<h2>選擇遊戲配色</h2><p>十二款共用這項選擇，下次開啟也會記住。</p><div class="cxq-theme-options"><button data-visual-choice="night"><img src="' +
         new URL("rebuilt/panel.webp", root) +
-        '" alt=""><strong>翡翠街機</strong><span>雕金與琺瑯</span></button><button data-visual-choice="candy"><img src="' +
+        '" alt=""><strong>星夜經典</strong><span>深藍、森林綠與金色</span></button><button data-visual-choice="candy"><img src="' +
         new URL("candy/panel.webp", root) +
-        '" alt=""><strong>奶油玩具屋</strong><span>木製玩具與柔和色彩</span></button><button data-visual-choice="paper"><strong>童話紙劇場</strong><span>剪紙與分層舞台</span></button><button data-visual-choice="pixel"><strong>像素掌機</strong><span>點陣與掌機風格</span></button></div><p class="cxq-theme-status" role="status"></p><button data-theme-close>完成</button>';
+        '" alt=""><strong>晴日糖果</strong><span>奶油白、蜜桃粉與薄荷綠</span></button></div><p class="cxq-theme-status" role="status"></p><button data-theme-close>完成</button>';
       document.body.append(dialog);
       dialog.querySelectorAll("[data-visual-choice]").forEach(
         (b) =>
           (b.onclick = async () => {
             const status = dialog.querySelector(".cxq-theme-status");
-            status.textContent = "準備風格素材…";
+            status.textContent = "準備配色素材…";
             dialog
               .querySelectorAll("[data-visual-choice]")
               .forEach((b) => (b.disabled = true));
             try {
               await choose(b.dataset.visualChoice);
-              status.textContent = "風格已儲存";
+              status.textContent = "配色已儲存";
             } catch {
               status.textContent = "素材載入失敗，請點選重試";
             } finally {
@@ -157,10 +151,34 @@
       );
     dialog.showModal();
   }
+  const defaultRole = {
+    tetris: "luck",
+    2048: "hope",
+    mines: "memory",
+    memory: "night",
+    link: "luck",
+    whack: "joy",
+    "brick-breaker": "hope",
+    dino: "growth",
+    flappy: "hope",
+    "magic-bubble": "dream",
+    "dream-match": "night",
+    merge: "healing",
+  };
   function decorate() {
     const title = document.querySelector(".mobile-title");
     if (title && !title.querySelector(".cxq-theme-button")) {
       title.querySelector("header").append(button());
+      const hero = new Image();
+      hero.className = "candy-title-role";
+      hero.src = new URL(
+        "rebuilt/role-" +
+          defaultRole[document.body.dataset.mobileGame] +
+          ".webp",
+        root,
+      );
+      hero.alt = "";
+      title.querySelector(".mobile-title-dock").before(hero);
     }
     for (const host of document.querySelectorAll(".mp-preferences,.cp-card"))
       if (!host.querySelector(".cxq-theme-button")) host.append(button());
@@ -201,9 +219,7 @@
     });
   });
   addEventListener("storage", (e) => {
-    if (e.key === key) {
-      void choose(themes.includes(e.newValue) ? e.newValue : "night").catch(() => {});
-    }
+    if (e.key === key) void choose(e.newValue === "candy" ? "candy" : "night");
   });
   window.CxQTheme = {
     get current() {
