@@ -183,3 +183,9 @@ html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-t
   -webkit-text-stroke: 2px #182136;
   paint-order: stroke fill;
 }
+
+/* Keep the original dark label readable while WebKit paints the ivory plate. */
+html[data-visual-theme="night"] body[data-mobile-game="tetris"] .cp-card #resume {
+  background-color: #f3e1b9 !important;
+  border-radius: 12px !important;
+}
