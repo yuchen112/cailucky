@@ -131,7 +131,10 @@
     if (theme === "candy")
       await Promise.all(
         [...files.map(f => new URL("candy/" + f + ".webp", root).href),
-          ...(isTetris ? [..."IOTSZJL"].map(type => localArt("candy", "block-" + type)) : [])].map((src) => {
+          ...(isTetris ? [
+            new URL("rebuilt/role-luck.webp", root).href,
+            ...[..."IOTSZJL"].map(type => localArt("candy", "block-" + type)),
+          ] : [])].map((src) => {
           const i = new Image();
           i.src = src;
           return i.decode();
@@ -250,6 +253,7 @@
         root,
       );
       hero.alt = "";
+      if (isTetris) hero.fetchPriority = "high";
       title.querySelector(".mobile-title-dock").before(hero);
     }
     for (const host of document.querySelectorAll(".mp-preferences,.cp-card"))
