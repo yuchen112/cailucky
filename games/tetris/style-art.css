@@ -1,0 +1,162 @@
+html[data-visual-theme="emerald"] body[data-mobile-game="tetris"] {
+  --tetris-stage: url("../tetris/art/emerald/stage.webp");
+  --tetris-icon-play: url("../tetris/art/emerald/icon-play.webp");
+  --tetris-panel: url("../tetris/art/emerald/panel.webp");
+  --tetris-card: url("../tetris/art/emerald/card.webp");
+  --tetris-active: url("../tetris/art/emerald/active.webp");
+  --tetris-primary: url("../tetris/art/emerald/primary.webp");
+  --tetris-hud: url("../tetris/art/emerald/hud.webp");
+  --tetris-board: url("../tetris/art/emerald/board.webp");
+  --tetris-dock: url("../tetris/art/emerald/dock.webp");
+  --tetris-secondary: url("../tetris/art/emerald/secondary.webp");
+  --tetris-home-primary: url("../tetris/art/emerald/home-primary.webp");
+  --tetris-toolbar: url("../tetris/art/emerald/toolbar.webp");
+  --tetris-icon-left: url("../tetris/art/emerald/icon-left.webp");
+  --tetris-icon-right: url("../tetris/art/emerald/icon-right.webp");
+  --tetris-icon-down: url("../tetris/art/emerald/icon-down.webp");
+  --tetris-icon-drop: url("../tetris/art/emerald/icon-drop.webp");
+  --tetris-icon-hold: url("../tetris/art/emerald/icon-hold.webp");
+  --tetris-icon-pause: url("../tetris/art/emerald/icon-pause.webp");
+  --tetris-icon-rotate: url("../tetris/art/emerald/icon-rotate.webp");
+  --tetris-icon-skill: url("../tetris/art/emerald/icon-skill.webp");
+}
+html[data-visual-theme="toy"] body[data-mobile-game="tetris"] {
+  --tetris-stage: url("../tetris/art/toy/stage.webp");
+  --tetris-icon-play: url("../tetris/art/toy/icon-play.webp");
+  --tetris-panel: url("../tetris/art/toy/panel.webp");
+  --tetris-card: url("../tetris/art/toy/card.webp");
+  --tetris-active: url("../tetris/art/toy/active.webp");
+  --tetris-primary: url("../tetris/art/toy/primary.webp");
+  --tetris-hud: url("../tetris/art/toy/hud.webp");
+  --tetris-board: url("../tetris/art/toy/board.webp");
+  --tetris-dock: url("../tetris/art/toy/dock.webp");
+  --tetris-secondary: url("../tetris/art/toy/secondary.webp");
+  --tetris-home-primary: url("../tetris/art/toy/home-primary.webp");
+  --tetris-toolbar: url("../tetris/art/toy/toolbar.webp");
+  --tetris-icon-left: url("../tetris/art/toy/icon-left.webp");
+  --tetris-icon-right: url("../tetris/art/toy/icon-right.webp");
+  --tetris-icon-down: url("../tetris/art/toy/icon-down.webp");
+  --tetris-icon-drop: url("../tetris/art/toy/icon-drop.webp");
+  --tetris-icon-hold: url("../tetris/art/toy/icon-hold.webp");
+  --tetris-icon-pause: url("../tetris/art/toy/icon-pause.webp");
+  --tetris-icon-rotate: url("../tetris/art/toy/icon-rotate.webp");
+  --tetris-icon-skill: url("../tetris/art/toy/icon-skill.webp");
+}
+html[data-visual-theme="paper"] body[data-mobile-game="tetris"] {
+  --tetris-stage: url("../tetris/art/paper/stage.webp");
+  --tetris-icon-play: url("../tetris/art/paper/icon-play.webp");
+  --tetris-panel: url("../tetris/art/paper/panel.webp");
+  --tetris-card: url("../tetris/art/paper/card.webp");
+  --tetris-active: url("../tetris/art/paper/active.webp");
+  --tetris-primary: url("../tetris/art/paper/primary.webp");
+  --tetris-hud: url("../tetris/art/paper/hud.webp");
+  --tetris-board: url("../tetris/art/paper/board.webp");
+  --tetris-dock: url("../tetris/art/paper/dock.webp");
+  --tetris-secondary: url("../tetris/art/paper/secondary.webp");
+  --tetris-home-primary: url("../tetris/art/paper/home-primary.webp");
+  --tetris-toolbar: url("../tetris/art/paper/toolbar.webp");
+  --tetris-icon-left: url("../tetris/art/paper/icon-left.webp");
+  --tetris-icon-right: url("../tetris/art/paper/icon-right.webp");
+  --tetris-icon-down: url("../tetris/art/paper/icon-down.webp");
+  --tetris-icon-drop: url("../tetris/art/paper/icon-drop.webp");
+  --tetris-icon-hold: url("../tetris/art/paper/icon-hold.webp");
+  --tetris-icon-pause: url("../tetris/art/paper/icon-pause.webp");
+  --tetris-icon-rotate: url("../tetris/art/paper/icon-rotate.webp");
+  --tetris-icon-skill: url("../tetris/art/paper/icon-skill.webp");
+}
+html[data-visual-theme="pixel"] body[data-mobile-game="tetris"] {
+  --tetris-stage: url("../tetris/art/pixel/stage.webp");
+  --tetris-icon-play: url("../tetris/art/pixel/icon-play.webp");
+  --tetris-panel: url("../tetris/art/pixel/panel.webp");
+  --tetris-card: url("../tetris/art/pixel/card.webp");
+  --tetris-active: url("../tetris/art/pixel/active.webp");
+  --tetris-primary: url("../tetris/art/pixel/primary.webp");
+  --tetris-hud: url("../tetris/art/pixel/hud.webp");
+  --tetris-board: url("../tetris/art/pixel/board.webp");
+  --tetris-dock: url("../tetris/art/pixel/dock.webp");
+  --tetris-secondary: url("../tetris/art/pixel/secondary.webp");
+  --tetris-home-primary: url("../tetris/art/pixel/home-primary.webp");
+  --tetris-toolbar: url("../tetris/art/pixel/toolbar.webp");
+  --tetris-icon-left: url("../tetris/art/pixel/icon-left.webp");
+  --tetris-icon-right: url("../tetris/art/pixel/icon-right.webp");
+  --tetris-icon-down: url("../tetris/art/pixel/icon-down.webp");
+  --tetris-icon-drop: url("../tetris/art/pixel/icon-drop.webp");
+  --tetris-icon-hold: url("../tetris/art/pixel/icon-hold.webp");
+  --tetris-icon-pause: url("../tetris/art/pixel/icon-pause.webp");
+  --tetris-icon-rotate: url("../tetris/art/pixel/icon-rotate.webp");
+  --tetris-icon-skill: url("../tetris/art/pixel/icon-skill.webp");
+}
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] {
+  --mg-panel: var(--tetris-panel);
+  --mg-card: var(--tetris-card);
+  --mg-active: var(--tetris-active);
+  --mg-primary: var(--tetris-primary);
+  --mg-hud: var(--tetris-hud);
+  --mg-bar: var(--tetris-toolbar);
+  --paper: var(--tetris-primary);
+  --slate: var(--tetris-card);
+  --teal: var(--tetris-panel);
+  background-image: var(--tetris-stage) !important;
+}
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] .mobile-title-dock { background-image: var(--tetris-dock) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] .mobile-primary { background-image: var(--tetris-home-primary) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] .mobile-title header a { background-image: var(--tetris-secondary) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] .mobile-secondary { background-image: var(--tetris-secondary) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] .mp-tetris-frame { background-image: var(--tetris-board) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] [data-act="left"] { --control-art: var(--tetris-icon-left) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] [data-act="right"] { --control-art: var(--tetris-icon-right) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] [data-act="soft"] { --control-art: var(--tetris-icon-down) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] [data-act="drop"] { --control-art: var(--tetris-icon-drop) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] [data-act="hold"] { --control-art: var(--tetris-icon-hold) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] [data-act="rotate"] { --control-art: var(--tetris-icon-rotate) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] #pauseBtn { --control-art: var(--tetris-icon-pause) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] #skill { --control-art: var(--tetris-icon-skill) !important; }
+
+/* Match text contrast to the independently illustrated surfaces. */
+html:is([data-visual-theme="toy"], [data-visual-theme="paper"]) body[data-mobile-game="tetris"]
+  :is(.mg-preparation, .mg-panel, .cp-card, .rp-panel, .queue, .round-head, .controls, .mobile-title-dock)
+  :is(h1, h2, h3, p, span, small, strong, b, label, button) {
+  color: #242234 !important;
+  text-shadow: none !important;
+}
+html[data-visual-theme="pixel"] body[data-mobile-game="tetris"]
+  :is(.controls button, .round-head > div, .round-head > div *, .queue > div, .queue > div *, .mobile-function, .mobile-function span) {
+  color: #182339 !important;
+  text-shadow: none !important;
+}
+html:is([data-visual-theme="emerald"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"]
+  :is(.cp-card, .rp-panel, .mg-preparation, .mg-panel) button.primary {
+  color: #fffaf0 !important;
+}
+
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] #resume {
+  --control-art: var(--tetris-icon-play) !important;
+}
+
+@media (max-height: 700px) {
+  body[data-mobile-game="tetris"] .cxq-theme-picker {
+    padding: 14px !important;
+  }
+  body[data-mobile-game="tetris"] .cxq-theme-options {
+    gap: 8px;
+  }
+  body[data-mobile-game="tetris"] .cxq-theme-options button {
+    gap: 4px;
+    padding: 6px !important;
+  }
+  body[data-mobile-game="tetris"] .cxq-theme-options img {
+    height: 42px;
+  }
+  body[data-mobile-game="tetris"] .cxq-theme-picker h2 {
+    margin-bottom: 5px;
+  }
+  body[data-mobile-game="tetris"] .cxq-theme-picker p {
+    margin: 6px 0;
+  }
+}
+
+html[data-visual-theme="pixel"] body[data-mobile-game="tetris"]
+  :is(.cp-card, .rp-panel, .mg-preparation, .mg-panel) button:not(.primary):not([aria-selected="true"]) {
+  color: #182339 !important;
+  text-shadow: none !important;
+}

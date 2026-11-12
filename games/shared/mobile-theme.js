@@ -3,9 +3,41 @@
   "use strict";
   const root = new URL(".", document.currentScript.src),
     key = "cxq-visual-theme-v1";
+  const additions = {
+    emerald: ["翡翠街機", "翡翠琺瑯與雕金"],
+    toy: ["奶油玩具屋", "奶油色木製玩具"],
+    paper: ["童話紙劇場", "分層剪紙與紙雕"],
+    pixel: ["像素掌機", "復古點陣與掌機邊框"],
+  };
+  const tetrisPath = new URL("../tetris/", root).pathname;
+  const isTetris = tetrisPath === new URL(".", location.href).pathname;
+  const isNewTheme = (theme) => Object.hasOwn(additions, theme);
+  const localArt = (theme, name) => new URL("../tetris/art/" + theme + "/" + name + ".webp", root).href;
+  const supported = (theme) => theme === "night" || theme === "candy" || (isTetris && isNewTheme(theme));
+  const tetrisImages = {
+    "mobile-art/tetris.webp": "home",
+    "mobile-brand/tetris.webp": "title",
+    "mobile-brand/guide.webp": "icon-guide",
+    "rebuilt/icon-play.webp": "icon-play",
+    "rebuilt/icon-rotate.webp": "icon-rotate",
+    "rebuilt/icon-pause.webp": "icon-pause",
+  };
+  for (const [index, type] of [..."IOTSZJL"].entries())
+    tetrisImages["rebuilt/block-" + index + ".webp"] = "block-" + type;
+  const roles = ["luck", "healing", "growth", "memory", "joy", "night", "trust", "dream", "sadness", "hope"];
+  for (const role of roles) {
+    for (const name of ["role-" + role, role + "-idle", role + "-victory"])
+      tetrisImages["rebuilt/" + name + ".webp"] = name;
+  }
+  const tetrisSurfaces = ["panel", "card", "active", "primary", "hud", "board", "dock", "secondary", "home-primary", "toolbar", "stage"];
+  function tetrisArtName(path) {
+    if (path === tetrisPath + "lantern-cover.webp") return "cover";
+    return path.startsWith(root.pathname) ? tetrisImages[path.slice(root.pathname.length)] : undefined;
+  }
   let current = "night";
   try {
-    if (localStorage.getItem(key) === "candy") current = "candy";
+    const saved = localStorage.getItem(key);
+    if (supported(saved)) current = saved;
   } catch {}
   document.documentElement.dataset.visualTheme = current;
   const files = [
@@ -32,12 +64,16 @@
       "src",
     );
   function asset(value, theme = current) {
-    if (theme !== "candy") return value;
+    if (theme !== "candy" && !(isTetris && isNewTheme(theme))) return value;
     let path;
     try {
       path = new URL(value, document.baseURI).pathname;
     } catch {
       return value;
+    }
+    if (isTetris && isNewTheme(theme)) {
+      const name = tetrisArtName(path);
+      return name ? localArt(theme, name) : value;
     }
     let name = null;
     if (/stage-run-rain\.webp$/.test(path)) name = "run-rain";
@@ -68,11 +104,26 @@
     set(value) {
       const original = String(value);
       const mapped = asset(original);
-      if (asset(original, "candy") !== original) bindings.set(this, original);
+      if (asset(original, "candy") !== original || (isTetris && asset(original, "emerald") !== original))
+        bindings.set(this, original);
       descriptor.set.call(this, mapped);
     },
   });
-  async function choose(theme) {
+  let request = 0;
+  async function choose(theme, { remember = true } = {}) {
+    if (!supported(theme)) return;
+    const selection = ++request;
+    if (isNewTheme(theme)) {
+      const visibleNames = [...bindings.values()].map(source => {
+        const path = new URL(source, document.baseURI).pathname;
+        return tetrisArtName(path);
+      }).filter(Boolean);
+      await Promise.all([...new Set([...tetrisSurfaces, ...visibleNames])].map((name) => {
+        const image = new Image();
+        image.src = localArt(theme, name);
+        return image.decode();
+      }));
+    }
     if (theme === "candy")
       await Promise.all(
         files.map((f) => {
@@ -81,11 +132,14 @@
           return i.decode();
         }),
       );
+    if (selection !== request) return;
     current = theme;
     document.documentElement.dataset.visualTheme = theme;
-    try {
-      localStorage.setItem(key, theme);
-    } catch {}
+    if (remember) {
+      try {
+        localStorage.setItem(key, theme);
+      } catch {}
+    }
     for (const [image, source] of bindings)
       descriptor.set.call(image, asset(source));
     document
@@ -118,6 +172,19 @@
         '" alt=""><strong>星夜經典</strong><span>深藍、森林綠與金色</span></button><button data-visual-choice="candy"><img src="' +
         new URL("candy/panel.webp", root) +
         '" alt=""><strong>晴日糖果</strong><span>奶油白、蜜桃粉與薄荷綠</span></button></div><p class="cxq-theme-status" role="status"></p><button data-theme-close>完成</button>';
+      if (isTetris) {
+        const options = dialog.querySelector(".cxq-theme-options");
+        for (const [style, [name, description]] of Object.entries(additions)) {
+          const option = document.createElement("button");
+          option.type = "button";
+          option.dataset.visualChoice = style;
+          option.innerHTML = '<img alt=""><strong></strong><span></span>';
+          option.querySelector("img").src = new URL("styles/" + style + "/panel.webp", root);
+          option.querySelector("strong").textContent = name;
+          option.querySelector("span").textContent = description;
+          options.append(option);
+        }
+      }
       document.body.append(dialog);
       dialog.querySelectorAll("[data-visual-choice]").forEach(
         (b) =>
@@ -185,6 +252,13 @@
   }
   addEventListener("DOMContentLoaded", () => {
     const game = document.body.dataset.mobileGame;
+    if (isTetris) {
+      for (const image of document.images) {
+        const source = image.getAttribute("src");
+        if (source && !bindings.has(image) && asset(source, "emerald") !== source)
+          image.src = source;
+      }
+    }
     if (game === "tetris") {
       const toast = document.querySelector("#toast");
       document.querySelector(".round-head").after(toast);
@@ -219,7 +293,7 @@
     });
   });
   addEventListener("storage", (e) => {
-    if (e.key === key) void choose(e.newValue === "candy" ? "candy" : "night");
+    if (e.key === key) void choose(supported(e.newValue) ? e.newValue : "night", { remember: false }).catch(() => {});
   });
   window.CxQTheme = {
     get current() {
