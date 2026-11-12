@@ -114,7 +114,7 @@ html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-t
 
 /* Match text contrast to the independently illustrated surfaces. */
 html:is([data-visual-theme="toy"], [data-visual-theme="paper"]) body[data-mobile-game="tetris"]
-  :is(.mp-mode-info, .mp-party-preview, .mg-panel, .cp-card, .rp-panel, .queue, .round-head, .controls, .mobile-title-dock)
+  :is(.mp-mode-info, .mg-panel, .cp-card, .rp-panel, .queue, .round-head, .controls, .mobile-title-dock)
   :is(h1, h2, h3, p, span, small, strong, b, label, button) {
   color: #242234 !important;
   text-shadow: none !important;
@@ -188,4 +188,28 @@ html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-t
 html[data-visual-theme="night"] body[data-mobile-game="tetris"] .cp-card #resume {
   background-color: #f3e1b9 !important;
   border-radius: 12px !important;
+}
+
+html[data-visual-theme="candy"] body[data-mobile-game="tetris"]
+  :is(.mg-preparation, .mp-mode-info, .mp-party-preview) {
+  background-position: center !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+}
+html[data-visual-theme="candy"] body[data-mobile-game="tetris"]
+  :is(.mg-preparation, .cp-card, .rp-panel)
+  :is(h1, h2, h3, p, label, summary, strong, b, small, span, a, button, select) {
+  color: #382640 !important;
+  text-shadow: none !important;
+}
+
+html:is([data-visual-theme="toy"], [data-visual-theme="paper"]) body[data-mobile-game="tetris"]
+  .mp-party-preview :is(h2, h3, p, b, span) {
+  color: #fff4dd !important;
+  text-shadow: 0 1px 3px #191426;
+}
+html:is([data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"]
+  .roster button :is(span, small, b) {
+  color: #242234 !important;
+  text-shadow: none !important;
 }
