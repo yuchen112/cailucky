@@ -12,7 +12,7 @@
   const tetrisPath = new URL("../tetris/", root).pathname;
   const isTetris = tetrisPath === new URL(".", location.href).pathname;
   const isNewTheme = (theme) => Object.hasOwn(additions, theme);
-  const localArt = (theme, name) => new URL("../tetris/art/" + theme + "/" + name + ".webp?v=20261113-audit2", root).href;
+  const localArt = (theme, name) => new URL("../tetris/art/" + theme + "/" + name + ".webp?v=" + (name === "home" ? "20261113-parity1" : "20261113-audit2"), root).href;
   const supported = (theme) => theme === "night" || theme === "candy" || (isTetris && isNewTheme(theme));
   const tetrisImages = {
     "mobile-art/tetris.webp": "home",
@@ -21,6 +21,8 @@
     "rebuilt/icon-play.webp": "icon-play",
     "rebuilt/icon-rotate.webp": "icon-rotate",
     "rebuilt/icon-pause.webp": "icon-pause",
+    "rebuilt/icon-drop.webp": "icon-drop",
+    "rebuilt/icon-hold.webp": "icon-hold",
   };
   for (const [index, type] of [..."IOTSZJL"].entries())
     tetrisImages["rebuilt/block-" + index + ".webp"] = "block-" + type;

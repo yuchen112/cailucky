@@ -101,7 +101,7 @@ html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-t
 html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] .mobile-title-dock { background-image: var(--tetris-dock) !important; }
 html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] .mobile-primary { background-image: var(--tetris-home-primary) !important; }
 html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] .mobile-title header a { background-image: var(--tetris-secondary) !important; }
-html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] .mobile-secondary { background-image: var(--tetris-secondary) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] :is(.mobile-secondary, .mobile-menu-home) { background-image: var(--tetris-secondary) !important; }
 html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] .mp-tetris-frame { background-image: var(--tetris-board) !important; }
 html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] [data-act="left"] { --control-art: var(--tetris-icon-left) !important; }
 html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"] [data-act="right"] { --control-art: var(--tetris-icon-right) !important; }
@@ -212,4 +212,10 @@ html:is([data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-the
   .roster button :is(span, small, b) {
   color: #242234 !important;
   text-shadow: none !important;
+}
+
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="tetris"]
+  .mobile-game-logo {
+  aspect-ratio: 760 / 215;
+  object-fit: contain;
 }
