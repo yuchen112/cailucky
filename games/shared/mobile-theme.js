@@ -24,8 +24,7 @@
     "rebuilt/icon-drop.webp": "icon-drop",
     "rebuilt/icon-hold.webp": "icon-hold",
   };
-  for (const [index, type] of [..."IOTSZJL"].entries())
-    tetrisImages["rebuilt/block-" + index + ".webp"] = "block-" + type;
+  const tetrisBlocks = [..."IOTSZJL"].map(type => "block-" + type);
   const roles = ["luck", "healing", "growth", "memory", "joy", "night", "trust", "dream", "sadness", "hope"];
   for (const role of roles) {
     for (const name of ["role-" + role, role + "-idle", role + "-victory"])
@@ -74,7 +73,6 @@
       return value;
     }
     const tetrisName = isTetris ? tetrisArtName(path) : undefined;
-    if (theme === "candy" && tetrisName?.startsWith("block-")) return localArt(theme, tetrisName);
     if (isTetris && isNewTheme(theme)) {
       const name = tetrisName;
       return name ? localArt(theme, name) : value;
@@ -122,7 +120,7 @@
         const path = new URL(source, document.baseURI).pathname;
         return tetrisArtName(path);
       }).filter(Boolean);
-      await Promise.all([...new Set([...tetrisSurfaces, ...visibleNames])].map((name) => {
+      await Promise.all([...new Set([...tetrisSurfaces, ...tetrisBlocks, ...visibleNames])].map((name) => {
         const image = new Image();
         image.src = localArt(theme, name);
         return image.decode();
@@ -133,7 +131,7 @@
         [...files.map(f => new URL("candy/" + f + ".webp", root).href),
           ...(isTetris ? [
             new URL("rebuilt/role-luck.webp", root).href,
-            ...[..."IOTSZJL"].map(type => localArt("candy", "block-" + type)),
+            ...tetrisBlocks.map(name => localArt("candy", name)),
           ] : [])].map((src) => {
           const i = new Image();
           i.src = src;

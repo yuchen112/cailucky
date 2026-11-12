@@ -403,10 +403,18 @@
     while (!collide({ ...cur, y }, 0, 1)) y++;
     return y;
   }
+  const blockTypes = [..."IOTSZJL"];
+  const customBlockStyles = new Set(["candy", "emerald", "toy", "paper", "pixel"]);
+  function blockArt(type, index) {
+    const theme = window.CxQTheme?.current;
+    if (customBlockStyles.has(theme))
+      return "art/" + theme + "/block-" + type + ".webp?v=20261113-audit2";
+    return "../shared/rebuilt/block-" + index + ".webp";
+  }
   const blockSprites = Object.fromEntries(
-    [..."IOTSZJL"].map((type, index) => {
+    blockTypes.map((type, index) => {
       const image = new Image();
-      image.src = "../shared/rebuilt/block-" + index + ".webp";
+      image.src = blockArt(type, index);
       image.onload = () => {
         if (board) draw();
       };
@@ -479,7 +487,14 @@
     canvas.height = ROWS * cell;
     draw();
   }
-  addEventListener("cxq-theme-change",()=>{if(board)draw()});
+  addEventListener("cxq-theme-change", () => {
+    blockTypes.forEach((type, index) => {
+      const image = blockSprites[type];
+      const src = new URL(blockArt(type, index), document.baseURI).href;
+      if (image.src !== src) image.src = src;
+    });
+    if (board) draw();
+  });
   function update() {
     $("#score").textContent = score || 0;
     $("#level").textContent = level || 1;
