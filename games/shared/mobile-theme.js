@@ -12,7 +12,7 @@
   const tetrisPath = new URL("../tetris/", root).pathname;
   const isTetris = tetrisPath === new URL(".", location.href).pathname;
   const isNewTheme = (theme) => Object.hasOwn(additions, theme);
-  const localArt = (theme, name) => new URL("../tetris/art/" + theme + "/" + name + ".webp?v=20261113-bounds1", root).href;
+  const localArt = (theme, name) => new URL("../tetris/art/" + theme + "/" + name + ".webp?v=20261113-audit2", root).href;
   const supported = (theme) => theme === "night" || theme === "candy" || (isTetris && isNewTheme(theme));
   const tetrisImages = {
     "mobile-art/tetris.webp": "home",
@@ -71,8 +71,10 @@
     } catch {
       return value;
     }
+    const tetrisName = isTetris ? tetrisArtName(path) : undefined;
+    if (theme === "candy" && tetrisName?.startsWith("block-")) return localArt(theme, tetrisName);
     if (isTetris && isNewTheme(theme)) {
-      const name = tetrisArtName(path);
+      const name = tetrisName;
       return name ? localArt(theme, name) : value;
     }
     let name = null;
@@ -126,9 +128,10 @@
     }
     if (theme === "candy")
       await Promise.all(
-        files.map((f) => {
+        [...files.map(f => new URL("candy/" + f + ".webp", root).href),
+          ...(isTetris ? [..."IOTSZJL"].map(type => localArt("candy", "block-" + type)) : [])].map((src) => {
           const i = new Image();
-          i.src = new URL("candy/" + f + ".webp", root);
+          i.src = src;
           return i.decode();
         }),
       );
