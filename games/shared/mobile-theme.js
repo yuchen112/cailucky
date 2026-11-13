@@ -10,10 +10,14 @@
     pixel: ["像素掌機", "復古點陣與掌機邊框"],
   };
   const tetrisPath = new URL("../tetris/", root).pathname;
-  const isTetris = tetrisPath === new URL(".", location.href).pathname;
+  const gamePath = new URL(".", location.href).pathname;
+  const numberPath = new URL("../2048/", root).pathname;
+  const isTetris = tetrisPath === gamePath;
+  const isNumberGame = numberPath === gamePath;
+  const hasAdditionalStyles = isTetris || isNumberGame;
   const isNewTheme = (theme) => Object.hasOwn(additions, theme);
   const localArt = (theme, name) => new URL("../tetris/art/" + theme + "/" + name + ".webp?v=" + (name === "home" ? "20261113-parity1" : "20261113-audit2"), root).href;
-  const supported = (theme) => theme === "night" || theme === "candy" || (isTetris && isNewTheme(theme));
+  const supported = (theme) => theme === "night" || theme === "candy" || (hasAdditionalStyles && isNewTheme(theme));
   const tetrisImages = {
     "mobile-art/tetris.webp": "home",
     "mobile-brand/tetris.webp": "title",
@@ -35,6 +39,30 @@
     if (path === tetrisPath + "lantern-cover.webp") return "cover";
     return path.startsWith(root.pathname) ? tetrisImages[path.slice(root.pathname.length)] : undefined;
   }
+  const numberImages = {
+    "mobile-art/2048.webp": "home",
+    "mobile-brand/2048.webp": "title",
+    "mobile-brand/collection.webp": "icon-collection",
+    "mobile-brand/guide.webp": "tetris/icon-guide",
+    "rebuilt/icon-pause.webp": "tetris/icon-pause",
+  };
+  function numberArtName(path) {
+    if (path === numberPath + "lantern-cover.webp") return "cover";
+    if (path === numberPath + "assets/characters/light-weaver.speed24.webp")
+      return "face-01";
+    if (!path.startsWith(root.pathname)) return;
+    const source = path.slice(root.pathname.length);
+    const expression = source.match(/^atelier\/(expression-\d{2})\.webp$/);
+    if (expression) return expression[1].replace("expression-", "face-");
+    const role = source.match(/^rebuilt\/(role-[a-z]+)\.webp$/);
+    return role ? "tetris/" + role[1] : numberImages[source];
+  }
+  function styledArt(theme, name) {
+    if (!isNumberGame) return localArt(theme, name);
+    if (name.startsWith("tetris/")) return localArt(theme, name.slice(7));
+    return new URL("../2048/art/" + theme + "/" + name + ".webp?v=20261113-2048styles1", root).href;
+  }
+  const mappedName = (path) => isNumberGame ? numberArtName(path) : tetrisArtName(path);
   let current = "night";
   try {
     const saved = localStorage.getItem(key);
@@ -65,17 +93,16 @@
       "src",
     );
   function asset(value, theme = current) {
-    if (theme !== "candy" && !(isTetris && isNewTheme(theme))) return value;
+    if (theme !== "candy" && !(hasAdditionalStyles && isNewTheme(theme))) return value;
     let path;
     try {
       path = new URL(value, document.baseURI).pathname;
     } catch {
       return value;
     }
-    const tetrisName = isTetris ? tetrisArtName(path) : undefined;
-    if (isTetris && isNewTheme(theme)) {
-      const name = tetrisName;
-      return name ? localArt(theme, name) : value;
+    if (hasAdditionalStyles && isNewTheme(theme)) {
+      const name = mappedName(path);
+      return name ? styledArt(theme, name) : value;
     }
     let name = null;
     if (/stage-run-rain\.webp$/.test(path)) name = "run-rain";
@@ -106,7 +133,7 @@
     set(value) {
       const original = String(value);
       const mapped = asset(original);
-      if (asset(original, "candy") !== original || (isTetris && asset(original, "emerald") !== original))
+      if (asset(original, "candy") !== original || (hasAdditionalStyles && asset(original, "emerald") !== original))
         bindings.set(this, original);
       descriptor.set.call(this, mapped);
     },
@@ -118,11 +145,12 @@
     if (isNewTheme(theme)) {
       const visibleNames = [...bindings.values()].map(source => {
         const path = new URL(source, document.baseURI).pathname;
-        return tetrisArtName(path);
+        return mappedName(path);
       }).filter(Boolean);
-      await Promise.all([...new Set([...tetrisSurfaces, ...tetrisBlocks, ...visibleNames])].map((name) => {
+      const essential = isNumberGame ? ["board", "cell", "tile", "home", "title", "stage", "icon-undo"] : [...tetrisSurfaces, ...tetrisBlocks];
+      await Promise.all([...new Set([...essential, ...visibleNames])].map((name) => {
         const image = new Image();
-        image.src = localArt(theme, name);
+        image.src = styledArt(theme, name);
         return image.decode();
       }));
     }
@@ -178,7 +206,7 @@
         '" alt=""><strong>星夜經典</strong><span>深藍、森林綠與金色</span></button><button data-visual-choice="candy"><img src="' +
         new URL("candy/panel.webp", root) +
         '" alt=""><strong>晴日糖果</strong><span>奶油白、蜜桃粉與薄荷綠</span></button></div><p class="cxq-theme-status" role="status"></p><button data-theme-close>完成</button>';
-      if (isTetris) {
+      if (hasAdditionalStyles) {
         const options = dialog.querySelector(".cxq-theme-options");
         for (const [style, [name, description]] of Object.entries(additions)) {
           const option = document.createElement("button");
@@ -259,7 +287,7 @@
   }
   addEventListener("DOMContentLoaded", () => {
     const game = document.body.dataset.mobileGame;
-    if (isTetris) {
+    if (hasAdditionalStyles) {
       for (const image of document.images) {
         const source = image.getAttribute("src");
         if (source && !bindings.has(image) && asset(source, "emerald") !== source)

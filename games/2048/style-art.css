@@ -1,0 +1,119 @@
+html[data-visual-theme="emerald"] body[data-mobile-game="2048"] {
+  --number-panel: url("../tetris/art/emerald/panel.webp?v=20261113-audit2");
+  --number-card: url("../tetris/art/emerald/card.webp?v=20261113-audit2");
+  --number-active: url("../tetris/art/emerald/active.webp?v=20261113-audit2");
+  --number-primary: url("../tetris/art/emerald/primary.webp?v=20261113-audit2");
+  --number-hud: url("../tetris/art/emerald/hud.webp?v=20261113-audit2");
+  --number-dock: url("../tetris/art/emerald/dock.webp?v=20261113-audit2");
+  --number-secondary: url("../tetris/art/emerald/secondary.webp?v=20261113-audit2");
+  --number-home-primary: url("../tetris/art/emerald/home-primary.webp?v=20261113-audit2");
+  --number-toolbar: url("../tetris/art/emerald/toolbar.webp?v=20261113-audit2");
+  --number-stage: url("../2048/art/emerald/stage.webp?v=20261113-2048styles1");
+  --number-icon-pause: url("../tetris/art/emerald/icon-pause.webp?v=20261113-audit2");
+  --number-board: url("../2048/art/emerald/board.webp?v=20261113-2048styles1");
+  --number-cell: url("../2048/art/emerald/cell.webp?v=20261113-2048styles1");
+  --number-tile: url("../2048/art/emerald/tile.webp?v=20261113-2048styles1");
+  --number-icon-undo: url("../2048/art/emerald/icon-undo.webp?v=20261113-2048styles1");
+}
+html[data-visual-theme="toy"] body[data-mobile-game="2048"] {
+  --number-panel: url("../tetris/art/toy/panel.webp?v=20261113-audit2");
+  --number-card: url("../tetris/art/toy/card.webp?v=20261113-audit2");
+  --number-active: url("../tetris/art/toy/active.webp?v=20261113-audit2");
+  --number-primary: url("../tetris/art/toy/primary.webp?v=20261113-audit2");
+  --number-hud: url("../tetris/art/toy/hud.webp?v=20261113-audit2");
+  --number-dock: url("../tetris/art/toy/dock.webp?v=20261113-audit2");
+  --number-secondary: url("../tetris/art/toy/secondary.webp?v=20261113-audit2");
+  --number-home-primary: url("../tetris/art/toy/home-primary.webp?v=20261113-audit2");
+  --number-toolbar: url("../tetris/art/toy/toolbar.webp?v=20261113-audit2");
+  --number-stage: url("../2048/art/toy/stage.webp?v=20261113-2048styles1");
+  --number-icon-pause: url("../tetris/art/toy/icon-pause.webp?v=20261113-audit2");
+  --number-board: url("../2048/art/toy/board.webp?v=20261113-2048styles1");
+  --number-cell: url("../2048/art/toy/cell.webp?v=20261113-2048styles1");
+  --number-tile: url("../2048/art/toy/tile.webp?v=20261113-2048styles1");
+  --number-icon-undo: url("../2048/art/toy/icon-undo.webp?v=20261113-2048styles1");
+}
+html[data-visual-theme="paper"] body[data-mobile-game="2048"] {
+  --number-panel: url("../tetris/art/paper/panel.webp?v=20261113-audit2");
+  --number-card: url("../tetris/art/paper/card.webp?v=20261113-audit2");
+  --number-active: url("../tetris/art/paper/active.webp?v=20261113-audit2");
+  --number-primary: url("../tetris/art/paper/primary.webp?v=20261113-audit2");
+  --number-hud: url("../tetris/art/paper/hud.webp?v=20261113-audit2");
+  --number-dock: url("../tetris/art/paper/dock.webp?v=20261113-audit2");
+  --number-secondary: url("../tetris/art/paper/secondary.webp?v=20261113-audit2");
+  --number-home-primary: url("../tetris/art/paper/home-primary.webp?v=20261113-audit2");
+  --number-toolbar: url("../tetris/art/paper/toolbar.webp?v=20261113-audit2");
+  --number-stage: url("../2048/art/paper/stage.webp?v=20261113-2048styles1");
+  --number-icon-pause: url("../tetris/art/paper/icon-pause.webp?v=20261113-audit2");
+  --number-board: url("../2048/art/paper/board.webp?v=20261113-2048styles1");
+  --number-cell: url("../2048/art/paper/cell.webp?v=20261113-2048styles1");
+  --number-tile: url("../2048/art/paper/tile.webp?v=20261113-2048styles1");
+  --number-icon-undo: url("../2048/art/paper/icon-undo.webp?v=20261113-2048styles1");
+}
+html[data-visual-theme="pixel"] body[data-mobile-game="2048"] {
+  --number-panel: url("../tetris/art/pixel/panel.webp?v=20261113-audit2");
+  --number-card: url("../tetris/art/pixel/card.webp?v=20261113-audit2");
+  --number-active: url("../tetris/art/pixel/active.webp?v=20261113-audit2");
+  --number-primary: url("../tetris/art/pixel/primary.webp?v=20261113-audit2");
+  --number-hud: url("../tetris/art/pixel/hud.webp?v=20261113-audit2");
+  --number-dock: url("../tetris/art/pixel/dock.webp?v=20261113-audit2");
+  --number-secondary: url("../tetris/art/pixel/secondary.webp?v=20261113-audit2");
+  --number-home-primary: url("../tetris/art/pixel/home-primary.webp?v=20261113-audit2");
+  --number-toolbar: url("../tetris/art/pixel/toolbar.webp?v=20261113-audit2");
+  --number-stage: url("../2048/art/pixel/stage.webp?v=20261113-2048styles1");
+  --number-icon-pause: url("../tetris/art/pixel/icon-pause.webp?v=20261113-audit2");
+  --number-board: url("../2048/art/pixel/board.webp?v=20261113-2048styles1");
+  --number-cell: url("../2048/art/pixel/cell.webp?v=20261113-2048styles1");
+  --number-tile: url("../2048/art/pixel/tile.webp?v=20261113-2048styles1");
+  --number-icon-undo: url("../2048/art/pixel/icon-undo.webp?v=20261113-2048styles1");
+}
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"] {
+  --mg-panel: var(--number-panel);
+  --mg-card: var(--number-card);
+  --mg-active: var(--number-active);
+  --mg-primary: var(--number-primary);
+  --mg-hud: var(--number-hud);
+  --mg-bar: var(--number-toolbar);
+  --paper: var(--number-primary);
+  --slate: var(--number-card);
+  --teal: var(--number-panel);
+  background-image: var(--number-stage) !important;
+}
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"] .mobile-game-logo {
+  aspect-ratio: 760 / 263;
+  object-fit: contain;
+}
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"] .mobile-title-dock { background-image: var(--number-dock) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"] .mobile-primary { background-image: var(--number-home-primary) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"] .mobile-title header a { background-image: var(--number-secondary) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"] .mg-number-play #board { background-image: var(--number-board) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"] .mg-number-play .cell { background-image: var(--number-cell) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"] .mg-number-play .tilein { background-image: var(--number-tile) !important; }
+
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"] #cp-pause { --control-art: var(--number-icon-pause) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"] #undo { --control-art: var(--number-icon-undo) !important; }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"] .mg-number-play .num { color: #242234 !important; }
+html:is([data-visual-theme="toy"], [data-visual-theme="paper"]) body[data-mobile-game="2048"]
+  :is(.mg-number-play, .cp-card, .rp-panel, .mg-panel, .mobile-title-dock)
+  :is(h1, h2, h3, p, span, small, strong, b, label, button) {
+  color: #242234 !important;
+  text-shadow: none !important;
+}
+html:is([data-visual-theme="emerald"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"]
+  :is(.cp-card, .rp-panel, .mg-panel) button.primary { color: #fffaf0 !important; }
+html[data-visual-theme="pixel"] body[data-mobile-game="2048"]
+  :is(.mg-number-play button, .mg-number-play .stats > div *, .mg-number-play .hero *,
+      .mobile-function, .mobile-function span, .cp-card button:not(.primary), .rp-panel button:not(.primary)) {
+  color: #182339 !important;
+}
+
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"]
+  :is(.mobile-title header > span, .mobile-title-name > p) {
+  color: #fff7e5 !important;
+  -webkit-text-stroke: 2px #182136;
+  paint-order: stroke fill;
+}
+html:is([data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"]
+  :is(.mobile-title header a, .mobile-title header .cxq-theme-button, .mobile-function, .mobile-function span) {
+  color: #242234 !important;
+  text-shadow: none !important;
+}
