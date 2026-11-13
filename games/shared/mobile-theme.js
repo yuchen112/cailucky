@@ -160,7 +160,7 @@
           ...(isTetris ? [
             new URL("rebuilt/role-luck.webp", root).href,
             ...tetrisBlocks.map(name => localArt("candy", name)),
-          ] : [])].map((src) => {
+          ] : isNumberGame ? [new URL("rebuilt/role-hope.webp", root).href] : [])].map((src) => {
           const i = new Image();
           i.src = src;
           return i.decode();
@@ -279,7 +279,7 @@
         root,
       );
       hero.alt = "";
-      if (isTetris) hero.fetchPriority = "high";
+      if (isTetris || isNumberGame) hero.fetchPriority = "high";
       title.querySelector(".mobile-title-dock").before(hero);
     }
     for (const host of document.querySelectorAll(".mp-preferences,.cp-card"))

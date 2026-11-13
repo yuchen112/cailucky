@@ -117,3 +117,19 @@ html:is([data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-the
   color: #242234 !important;
   text-shadow: none !important;
 }
+
+/* Keep the portrait cover's illustration slot independent of image loading. */
+@media (orientation: portrait) {
+  html[data-visual-theme="candy"] body[data-mobile-game="2048"] .mobile-title-layout {
+    grid-template-rows: 54px auto minmax(0, 1fr) auto;
+  }
+  html[data-visual-theme="candy"] body[data-mobile-game="2048"] .candy-title-role {
+    width: 76%;
+    max-height: none !important;
+  }
+}
+@media (orientation: portrait) and (max-height: 650px) {
+  html[data-visual-theme="candy"] body[data-mobile-game="2048"] .mobile-title-layout {
+    grid-template-rows: 45px auto minmax(0, 1fr) auto;
+  }
+}
