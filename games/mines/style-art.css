@@ -109,3 +109,17 @@ body[data-mobile-game="mines"][style*="--mines-open"] #board .cell.open :is(.min
   color: #172638 !important;
   text-shadow: none;
 }
+
+/* Result and pause surfaces have their own shared skin specificity. */
+html[data-visual-theme] body.mg-game[data-mobile-game="mines"][style*="--mines-panel"] dialog#game-dialog:is(.rp-panel, .cp-card) {
+  background-image: var(--mines-panel) !important;
+  background-size: 100% 100% !important;
+  color: #fff7e6 !important;
+}
+html[data-visual-theme] body.mg-game[data-mobile-game="mines"][style*="--mines-panel"] dialog#game-dialog:is(.rp-panel, .cp-card) :is(h2, p, strong, small) {
+  color: #fff7e6 !important;
+  text-shadow: 0 1px 2px #0b1426;
+}
+body[data-mobile-game="mines"] .cxq-theme-options :is(strong, span) {
+  overflow-wrap: anywhere;
+}
