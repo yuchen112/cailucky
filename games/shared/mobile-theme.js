@@ -55,12 +55,12 @@
     const expression = source.match(/^atelier\/(expression-\d{2})\.webp$/);
     if (expression) return expression[1].replace("expression-", "face-");
     const role = source.match(/^rebuilt\/(role-[a-z]+)\.webp$/);
-    return role ? "tetris/" + role[1] : numberImages[source];
+    return role ? role[1] : numberImages[source];
   }
   function styledArt(theme, name) {
     if (!isNumberGame) return localArt(theme, name);
     if (name.startsWith("tetris/")) return localArt(theme, name.slice(7));
-    return new URL("../2048/art/" + theme + "/" + name + ".webp?v=20261113-2048styles1", root).href;
+    return new URL("../2048/art/" + theme + "/" + name + ".webp?v=20261113-2048tiles2", root).href;
   }
   const mappedName = (path) => isNumberGame ? numberArtName(path) : tetrisArtName(path);
   let current = "night";
@@ -147,7 +147,7 @@
         const path = new URL(source, document.baseURI).pathname;
         return mappedName(path);
       }).filter(Boolean);
-      const essential = isNumberGame ? ["board", "cell", "tile", "home", "title", "stage", "icon-undo"] : [...tetrisSurfaces, ...tetrisBlocks];
+      const essential = isNumberGame ? ["board", "cell", "tile", "home", "title", "stage", "icon-undo", ...roles.map(role => "role-" + role)] : [...tetrisSurfaces, ...tetrisBlocks];
       await Promise.all([...new Set([...essential, ...visibleNames])].map((name) => {
         const image = new Image();
         image.src = styledArt(theme, name);
