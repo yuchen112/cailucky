@@ -133,3 +133,32 @@ html:is([data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-the
     grid-template-rows: 45px auto minmax(0, 1fr) auto;
   }
 }
+
+/* Keep the original cover controls readable at compact viewport sizes. */
+body[data-mobile-game="2048"] .mobile-title .mobile-primary small {
+  font-size: 14px;
+  letter-spacing: .06em;
+}
+body[data-mobile-game="2048"] .mobile-title .mobile-function-bar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 8px;
+}
+body[data-mobile-game="2048"] .mobile-title .mobile-function {
+  min-width: 0;
+  max-width: none;
+  min-height: 68px;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1.3;
+}
+body[data-mobile-game="2048"] .mobile-title .mobile-function span {
+  font-size: inherit;
+}
+body[data-mobile-game="2048"] .mobile-title header :is(a, button) {
+  font-size: 14px;
+}
+body[data-mobile-game="2048"] .number-actions button {
+  font-size: 14px !important;
+}
