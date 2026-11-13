@@ -123,3 +123,39 @@ html[data-visual-theme] body.mg-game[data-mobile-game="mines"][style*="--mines-p
 body[data-mobile-game="mines"] .cxq-theme-options :is(strong, span) {
   overflow-wrap: anywhere;
 }
+
+/* Keep expedition options readable over all six scene illustrations. */
+body.lantern-mines.mg-polished #home .mp-tabbed {
+  padding: 10px !important;
+}
+body.lantern-mines.mg-polished #home .mp-tabs {
+  gap: 5px;
+}
+body.lantern-mines.mg-polished #home :is(.mp-tab, .mg-prepare-footer button) {
+  min-height: 44px !important;
+  font-size: 14px !important;
+}
+body.lantern-mines.mg-polished #home .mp-page-main .mg-choice {
+  height: auto !important;
+  min-height: 58px !important;
+  max-height: none !important;
+}
+body.lantern-mines.mg-polished #home :is(.mg-choice strong, .mp-mode-info h3, .mp-compare) {
+  font-size: 15px !important;
+}
+body.lantern-mines.mg-polished #home :is(.mg-choice small, .mp-mode-info p, label) {
+  font-size: 14px !important;
+  line-height: 1.45 !important;
+}
+body.lantern-mines.mg-polished #home .mp-mode-info p {
+  display: block;
+}
+@media (orientation: portrait) {
+  body.lantern-mines.mg-polished #home .mp-page-main .mg-choice-group {
+    grid-template-columns: 1fr !important;
+  }
+}
+body.lantern-mines #game-dialog :is(.dialog-actions button, p, small) {
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+}
