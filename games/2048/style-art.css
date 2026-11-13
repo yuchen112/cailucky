@@ -159,6 +159,34 @@ body[data-mobile-game="2048"] .mobile-title .mobile-function span {
 body[data-mobile-game="2048"] .mobile-title header :is(a, button) {
   font-size: 14px;
 }
-body[data-mobile-game="2048"] .number-actions button {
+body.mg-game[data-mobile-game="2048"] .mg-number-play .number-actions button {
   font-size: 14px !important;
+}
+
+/* Text over illustrated backgrounds needs a visible edge in every palette. */
+body[data-mobile-game="2048"] .mobile-title :is(header > span, .mobile-title-name > p) {
+  font-size: 14px;
+}
+body[data-mobile-game="2048"] .mobile-title-dock > p {
+  font-size: 14px;
+}
+body[data-mobile-game="2048"] .mg-number-play > .hero p {
+  font-size: 14px;
+  line-height: 1.4;
+}
+body[data-mobile-game="2048"] .mg-number-play .tip {
+  color: #fff7e5 !important;
+  text-shadow: 0 1px 2px #0b1426, 0 0 3px #0b1426;
+}
+html[data-visual-theme="emerald"] body[data-mobile-game="2048"] .mobile-title-dock .mobile-primary :is(strong, small) {
+  color: #242234 !important;
+}
+html:is([data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"]
+  :is(.cp-card, .rp-panel, .mg-panel) button.primary {
+  color: #fff !important;
+  text-shadow: 0 1px 2px #061735, 0 0 2px #061735 !important;
+}
+html:is([data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"] .cxq-theme-picker [data-visual-choice] :is(strong, span) {
+  color: #182339 !important;
+  text-shadow: none !important;
 }
