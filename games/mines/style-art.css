@@ -198,3 +198,19 @@ html:not([data-visual-theme="candy"]) body.lantern-mines #home :is(.mp-mode-info
 body.lantern-mines #game-dialog .dialog-actions button {
   font-size: 15px !important;
 }
+
+body.lantern-mines #play .map-tools :is(.label, label, select, button, .stats span),
+body.lantern-mines #play .map-workspace :is(#status, #hint-text) {
+  font-size: 14px !important;
+  line-height: 1.3 !important;
+}
+body.lantern-mines #play .map-tools .stats strong,
+body.lantern-mines #board .mine-number {
+  font-size: 18px !important;
+  line-height: 1.1 !important;
+  font-weight: 800;
+}
+body.lantern-mines #game-dialog :is(h2, h3) {
+  font-size: 18px !important;
+  line-height: 1.25 !important;
+}
