@@ -1,0 +1,46 @@
+body[data-mobile-game="mines"][style*="--mines-stage"] {
+  background-image: var(--mines-stage) !important;
+}
+body[data-mobile-game="mines"][style*="--mines-closed"] #board .cell:not(.open),
+body[data-mobile-game="mines"][style*="--mines-closed"] .tutorial-grid > span:not(.example-open) {
+  background-image: var(--mines-closed) !important;
+}
+body[data-mobile-game="mines"][style*="--mines-open"] :is(#board .cell.open, .tutorial-grid .example-open) {
+  background-image: var(--mines-open) !important;
+}
+body[data-mobile-game="mines"][style*="--mines-flag"] #board .cell:not(.mine) .tile-icon {
+  background-image: var(--mines-flag) !important;
+}
+body[data-mobile-game="mines"][style*="--mines-trap"] #board .mine .tile-icon {
+  background-image: var(--mines-trap) !important;
+}
+body[data-mobile-game="mines"][style*="--mines-dock"] .mobile-title-dock {
+  background-image: var(--mines-dock) !important;
+}
+body[data-mobile-game="mines"][style*="--mines-primary"] :is(.mobile-primary, button.primary) {
+  background-image: var(--mines-primary) !important;
+}
+body[data-mobile-game="mines"][style*="--mines-button"] :is(.mobile-function, .mission-buttons button:not(.primary), .map-tools > button:not(.primary), .dialog-actions button:not(.primary)) {
+  background-image: var(--mines-button) !important;
+}
+body[data-mobile-game="mines"][style*="--mines-return"] .mobile-return {
+  background-image: var(--mines-return) !important;
+}
+body[data-mobile-game="mines"][style*="--mines-panel"] :is(.mission article, .map-tools, #game-dialog) {
+  background-image: var(--mines-panel) !important;
+}
+body[data-mobile-game="mines"][style*="--mines-board"] #board {
+  background-image: var(--mines-board) !important;
+}
+body[data-mobile-game="mines"][style*="--mines-hud"] .map-tools .stats > div {
+  background-image: var(--mines-hud) !important;
+}
+body[data-mobile-game="mines"][style*="--mines-pause"] #game-dialog.cp-card {
+  background-image: var(--mines-pause) !important;
+}
+body[data-mobile-game="mines"][style*="--mines-result"] #game-dialog.rp-panel {
+  background-image: var(--mines-result) !important;
+}
+body[data-mobile-game="mines"][style*="--mines-settings"] #game-dialog:has(input, select) {
+  background-image: var(--mines-settings) !important;
+}

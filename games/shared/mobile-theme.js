@@ -14,7 +14,7 @@
   const numberPath = new URL("../2048/", root).pathname;
   const isTetris = tetrisPath === gamePath;
   const isNumberGame = numberPath === gamePath;
-  const hasAdditionalStyles = isTetris || isNumberGame;
+  const hasAdditionalStyles = isTetris || isNumberGame || /\/(mines|memory|link|whack|brick-breaker|dino|flappy|magic-bubble|dream-match|merge)\/(?:index\.html)?$/.test(location.pathname);
   const isNewTheme = (theme) => Object.hasOwn(additions, theme);
   const localArt = (theme, name) => new URL("../tetris/art/" + theme + "/" + name + ".webp?v=" + (name === "home" ? "20261113-parity1" : "20261113-audit2"), root).href;
   const supported = (theme) => theme === "night" || theme === "candy" || (hasAdditionalStyles && isNewTheme(theme));

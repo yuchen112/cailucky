@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-<head><script src="../shared/mobile-viewport.js?v=20261112-touch1"></script><script src="../shared/mobile-theme.js?v=20261111-viewport1"></script>
+<head><script src="../shared/mobile-viewport.js?v=20261112-touch1"></script><script src="../shared/mobile-theme.js?v=20261114-slots2"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>CxQ 心光旅團：記憶核心</title><link rel="preload" as="image" href="../shared/loading-art-v2/brick.webp" fetchpriority="high">
@@ -8,7 +8,7 @@
 
 
 <link rel="stylesheet" href="../shared/runtime.css?v=20261111-viewport1"><script src="../shared/classic-audio.js?v=20261111-viewport1"></script><script src="../shared/runtime.js?v=20261111-viewport1"></script><script defer src="../shared/mobile-performance-v1.js?v=20261111-viewport1"></script><link rel="stylesheet" href="../shared/lantern.css?v=20261111-viewport1"><link rel="stylesheet" href="rebuilt-brick.css?v=20261111-viewport1"><link rel="stylesheet" href="../shared/mobile-title.css?v=20261111-viewport1"><link rel="stylesheet" href="../shared/mobile-game.css?v=20261111-viewport1"><link rel="stylesheet" href="../shared/mobile-polish.css?v=20261111-viewport1"><link rel="stylesheet" href="../shared/mobile-pause.css?v=20261111-viewport1"><link rel="stylesheet" href="../shared/mobile-theme.css?v=20261111-viewport1"><link rel="stylesheet" href="../shared/mobile-panels.css?v=20261111-viewport1"><link rel="stylesheet" href="../shared/mobile-viewport.css?v=20261112-touch1"></head>
-<body data-mobile-game="brick-breaker" data-cabinet="brick-breaker">
+<body data-mobile-game="brick-breaker" data-cabinet="brick-breaker"><script src="art/styles.js?v=20261114-slots2"></script><script src="../shared/game-art-slots.js?v=20261114-slots2"></script>
 <div id="app">
   <div class="game-shell" id="shell">
     <canvas id="gameCanvas"></canvas>
@@ -1206,14 +1206,14 @@ function gameLater(fn,ms){gameJobs.push({fn,left:ms/1000,epoch:gameEpoch})}
   }
 
   /* HEARTLIGHT V2: AI art renderer, character skills and chapter bosses */
-  const hlChapter=['../shared/mobile-art/stage-brick.webp','../shared/rebuilt/brick-moon.webp','../shared/rebuilt/brick-archive.webp'].map(src=>{const i=new Image();i.src=src;return i});
+  const hlChapter=['../shared/mobile-art/stage-brick.webp','../shared/rebuilt/brick-moon.webp','../shared/rebuilt/brick-archive.webp'].map(src=>{const i=new Image();window.CxQGameArt.sprite(i,src);return i});
   const mobileBrickSprites=Object.fromEntries(["normal","armor","blast","bonus","paddle","ball","heart"].map(name=>{
     const sprite=new Image();
-    sprite.src="../shared/rebuilt/"+(["paddle","ball","heart"].includes(name)?name:"brick-"+name)+".webp";
+    window.CxQGameArt.sprite(sprite,"../shared/rebuilt/"+(["paddle","ball","heart"].includes(name)?name:"brick-"+name)+".webp");
     return [name,sprite];
   }));
-  const rebuiltBosses=Array.from({length:7},(_,i)=>{const image=new Image();image.src='../shared/rebuilt/boss-'+i+'.webp';return image});
-  const rebuiltPowerups=['power-split','power-grow','power-laser','power-slow'].map(name=>{const image=new Image();image.src='../shared/rebuilt/'+name+'.webp';return image});
+  const rebuiltBosses=Array.from({length:7},(_,i)=>{const image=new Image();window.CxQGameArt.sprite(image,'../shared/rebuilt/boss-'+i+'.webp');return image});
+  const rebuiltPowerups=['power-split','power-grow','power-laser','power-slow'].map(name=>{const image=new Image();window.CxQGameArt.sprite(image,'../shared/rebuilt/'+name+'.webp');return image});
   const hlAtlas=new Image();
   const hlBoss=new Image(); const hlBossMore=new Image(); const hlVfx=new Image();
   let hlAtlasClean=null,hlBossClean=null,hlBossMoreClean=null,hlVfxClean=null;
@@ -1262,7 +1262,7 @@ function gameLater(fn,ms){gameJobs.push({fn,left:ms/1000,epoch:gameEpoch})}
 
 const HEARTLIGHT_SKILLS={hope:['曦羽・光線編織者','主動技能・光線編織','心光絲帶延長 35%，開場獲得 18 秒加長效果。'],rain:['汐寧・雨天陪伴者','被動技能・雨傘守護','每次旅程增加 1 顆生命，使用透明雨傘板。'],joy:['朵莉・派對小彩星','主動技能・派對星群','開場立即生成三顆心光球，快速建立連擊。'],heal:['糯糯・暖心絨絨','被動技能・暖心救援','每次旅程增加 2 顆生命，適合安心探索。'],luck:['鈴可・四葉鈴狐','被動技能・四葉祝福','擊破磚塊額外增加 4% 祝福掉落率。'],forest:['森芽・森林旅伴','被動技能・藤蔓共鳴','每累積 12 次命中觸發範圍藤蔓爆破。'],night:['米洛・月夜守護者','主動技能・月光穿透','開場獲得 14 秒穿透，使用月牙雲板。'],memory:['緹雅・回憶收藏家','被動技能・回憶增幅','所有得分提高 35%。'],trust:['伯恩・鑰匙守護者','被動技能・解鎖之鑰','Boss 最大生命降低 8 點。'],dream:['露緹・星願魔法師','被動技能・星願緩流','開場球速降低 18%，讓控球更穩定。']};
 document.querySelectorAll('.char-card').forEach(card=>card.addEventListener('click',()=>{const s=HEARTLIGHT_SKILLS[card.dataset.char];selectedCharName.textContent=s[0];skillName.textContent=s[1];skillDesc.textContent=s[2]}));
-const HL_DROP_IMAGES={};['multi','long','pierce','blast','slow','laser','heartlight-ball'].forEach(n=>{const i=new Image();i.src='../shared/rebuilt/'+({multi:'power-split',long:'power-grow',pierce:'shield',blast:'burst',slow:'power-slow',laser:'power-laser','heartlight-ball':'ball'}[n])+'.webp';HL_DROP_IMAGES[n]=i});
+const HL_DROP_IMAGES={};['multi','long','pierce','blast','slow','laser','heartlight-ball'].forEach(n=>{const i=new Image();window.CxQGameArt.sprite(i,'../shared/rebuilt/'+({multi:'power-split',long:'power-grow',pierce:'shield',blast:'burst',slow:'power-slow',laser:'power-laser','heartlight-ball':'ball'}[n])+'.webp');HL_DROP_IMAGES[n]=i});
 const hlPresentationDraw=draw;draw=function(){hlPresentationDraw();if(!running||paused)return;ctx.save();for(const p of powerups){const i=HL_DROP_IMAGES[p.type];if(i&&i.complete){ctx.shadowBlur=18;ctx.shadowColor='#ffe3a3';ctx.drawImage(i,p.x-15,p.y-15,30,30);ctx.shadowBlur=0;ctx.fillStyle='rgba(44,32,56,.86)';ctx.font='900 10px system-ui';ctx.textAlign='center';ctx.fillText(powerLabel(p.type).replace('祝福',''),p.x,p.y+25)}}ctx.restore()};
 const hlPresentationEnd=endGame;endGame=function(win){hlPresentationEnd(win);const card=document.querySelector('#resultOverlay .menu-card');card.classList.add('result-card');card.style.backgroundImage="url('./assets/generated/"+(win?'frame-victory':'frame-defeat')+".speed24.webp')";document.querySelector('.result-emblem').textContent=win?'★':'☂';document.getElementById('resultTitle').textContent=win?'章節淨化完成':'心光暫時沉睡';document.getElementById('resultSub').textContent=win?'失落的記憶已回到旅團手中。':'別擔心，雨停之後還能再次啟程。'};
 
