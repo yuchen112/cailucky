@@ -33,7 +33,7 @@
   function refresh() {
     const style = root.dataset.visualTheme;
     const available = styles[style] || [];
-    const art = (name) => new URL("art/" + style + "/" + name + ".webp?v=20261114-mines15", location.href).href;
+    const art = (name) => new URL("art/" + style + "/" + name + ".webp?v=20261114-mines17", location.href).href;
 
     for (const name of ["stage", "flag", "trap", "closed", "open", "dock", "primary",
       "button", "panel", "sidebar", "board", "hud", "pause", "result", "settings", "return"]) {
@@ -54,7 +54,7 @@
     for (const img of document.querySelectorAll(".cxq-theme-picker [data-visual-choice] img")) {
       const choice = img.closest("[data-visual-choice]").dataset.visualChoice;
       if (styles[choice]?.includes("preview")) {
-        const url = new URL("art/" + choice + "/preview.webp?v=20261114-mines15", location.href).href;
+        const url = new URL("art/" + choice + "/preview.webp?v=20261114-mines17", location.href).href;
         if (ready(url) && img.src !== url) img.src = url;
       }
     }
