@@ -147,6 +147,14 @@
     '<div class="mobile-title-name"><p></p><img class="mobile-game-logo" alt=""><h1 id="mobile-game-title" tabindex="-1"></h1></div>' +
     '<section class="mobile-title-dock" aria-label="遊戲選單"><p></p><div class="mobile-title-actions"></div><nav class="mobile-function-bar" aria-label="遊戲功能"></nav></section></div>';
   title.querySelector(".mobile-title-art").src = art;
+  if (game === "2048") {
+    const hero = new Image();
+    hero.className = "candy-title-role";
+    hero.alt = "";
+    hero.fetchPriority = "high";
+    hero.src = "../shared/rebuilt/role-hope.webp";
+    title.querySelector(".mobile-title-dock").before(hero);
+  }
   title.querySelector(".mobile-game-logo").src =
     "../shared/mobile-brand/" + game + ".webp";
   title.querySelector(".mobile-game-logo").alt = config.title;

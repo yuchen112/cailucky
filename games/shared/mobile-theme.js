@@ -270,7 +270,7 @@
     const title = document.querySelector(".mobile-title");
     if (title && !title.querySelector(".cxq-theme-button")) {
       title.querySelector("header").append(button());
-      const hero = new Image();
+      const hero = title.querySelector(".candy-title-role") || new Image();
       hero.className = "candy-title-role";
       hero.src = new URL(
         "rebuilt/role-" +
