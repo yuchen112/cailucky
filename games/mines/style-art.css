@@ -44,3 +44,14 @@ body[data-mobile-game="mines"][style*="--mines-result"] #game-dialog.rp-panel {
 body[data-mobile-game="mines"][style*="--mines-settings"] #game-dialog:has(input, select) {
   background-image: var(--mines-settings) !important;
 }
+
+body[data-mobile-game="mines"][style*="--mines-panel"] :is(.mission article, .map-tools, #game-dialog, .cp-card, .rp-panel),
+body[data-mobile-game="mines"][style*="--mines-hud"] .map-tools .stats > div,
+body[data-mobile-game="mines"][style*="--mines-button"] :is(.mobile-function, .mission-buttons button:not(.primary), .map-tools > button:not(.primary), .dialog-actions button:not(.primary)) {
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  color: #fff7e6;
+}
+body[data-mobile-game="mines"][style*="--mines-panel"] :is(.cp-card, .rp-panel) {
+  background-image: var(--mines-panel) !important;
+}
