@@ -159,3 +159,42 @@ body.lantern-mines #game-dialog :is(.dialog-actions button, p, small) {
   font-size: 14px !important;
   line-height: 1.4 !important;
 }
+
+body.lantern-mines .mobile-title header :is(a, button),
+body.lantern-mines .mobile-title .mobile-function span,
+body.lantern-mines .mobile-title .mobile-primary small,
+body.lantern-mines .mobile-title-dock > p {
+  font-size: 14px !important;
+  line-height: 1.35 !important;
+  font-weight: 700;
+}
+body.lantern-mines .mobile-title .mobile-function {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: none;
+  min-height: 64px;
+}
+body.lantern-mines .mobile-title .mobile-function-bar {
+  gap: 6px;
+}
+body.lantern-mines[style*="--mines-button"] .mobile-title .mobile-function span {
+  color: #fff !important;
+  text-shadow: 0 1px 2px #070d16, 0 0 3px #070d16 !important;
+}
+body.lantern-mines.mg-polished #home :is(.mp-tab, .mg-prepare-footer button, .mp-compare) {
+  font-size: 16px !important;
+}
+body.lantern-mines.mg-polished #home .mg-choice :is(strong, .mp-mode-short),
+body.lantern-mines.mg-polished #home .mp-mode-info p {
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+}
+body.lantern-mines.mg-polished #home .mp-page-main .mg-choice {
+  min-height: 64px !important;
+}
+html:not([data-visual-theme="candy"]) body.lantern-mines #home :is(.mp-mode-info, .mg-choice) {
+  color: #fff7e6 !important;
+}
+body.lantern-mines #game-dialog .dialog-actions button {
+  font-size: 15px !important;
+}
