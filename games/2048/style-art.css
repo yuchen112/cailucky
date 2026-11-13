@@ -159,7 +159,7 @@ body[data-mobile-game="2048"] .mobile-title .mobile-function span {
 body[data-mobile-game="2048"] .mobile-title header :is(a, button) {
   font-size: 14px;
 }
-body.mg-game[data-mobile-game="2048"] .mg-number-play .number-actions button {
+body[data-mobile-game="2048"] .number-actions :is(#undo, #new, #sound, #cp-pause) {
   font-size: 14px !important;
 }
 
