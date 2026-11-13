@@ -1,9 +1,9 @@
 (() => {
   const styles = {
-    emerald: ["stage","closed","dock","flag","home","open","preview","primary","title","trap","panel","button","hud","help","records","compare","result","pause"],
-    toy: ["stage","closed","dock","flag","home","open","preview","primary","title","trap","panel","button","hud","help","records","compare","result","pause"],
-    paper: ["stage","closed","dock","flag","home","open","preview","primary","title","trap","panel","button","hud","help","records","compare","result","pause"],
-    pixel: ["stage","closed","dock","flag","home","open","preview","primary","title","trap","panel","button","hud","help","records","compare","result","pause"],
+    emerald: ["stage","closed","dock","flag","home","open","preview","primary","title","trap","panel","button","hud","help","records","compare","result","pause","sidebar"],
+    toy: ["stage","closed","dock","flag","home","open","preview","primary","title","trap","panel","button","hud","help","records","compare","result","pause","sidebar"],
+    paper: ["stage","closed","dock","flag","home","open","preview","primary","title","trap","panel","button","hud","help","records","compare","result","pause","sidebar"],
+    pixel: ["stage","closed","dock","flag","home","open","preview","primary","title","trap","panel","button","hud","help","records","compare","result","pause","sidebar"],
   };
   const root = document.documentElement;
   const body = document.body;
@@ -33,10 +33,10 @@
   function refresh() {
     const style = root.dataset.visualTheme;
     const available = styles[style] || [];
-    const art = (name) => new URL("art/" + style + "/" + name + ".webp?v=20261114-mines14", location.href).href;
+    const art = (name) => new URL("art/" + style + "/" + name + ".webp?v=20261114-mines15", location.href).href;
 
     for (const name of ["stage", "flag", "trap", "closed", "open", "dock", "primary",
-      "button", "panel", "board", "hud", "pause", "result", "settings", "return"]) {
+      "button", "panel", "sidebar", "board", "hud", "pause", "result", "settings", "return"]) {
       if (available.includes(name) && ready(art(name))) body.style.setProperty("--mines-" + name, 'url("' + art(name) + '")');
       else body.style.removeProperty("--mines-" + name);
     }
@@ -54,7 +54,7 @@
     for (const img of document.querySelectorAll(".cxq-theme-picker [data-visual-choice] img")) {
       const choice = img.closest("[data-visual-choice]").dataset.visualChoice;
       if (styles[choice]?.includes("preview")) {
-        const url = new URL("art/" + choice + "/preview.webp?v=20261114-mines14", location.href).href;
+        const url = new URL("art/" + choice + "/preview.webp?v=20261114-mines15", location.href).href;
         if (ready(url) && img.src !== url) img.src = url;
       }
     }

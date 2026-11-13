@@ -238,3 +238,14 @@ html:is([data-visual-theme="toy"], [data-visual-theme="paper"])
 html[data-visual-theme] body.mg-game.lantern-mines[style*="--mines-pause"] dialog#game-dialog.cp-card {
   background: var(--mines-pause) center / 100% 100% no-repeat !important;
 }
+
+html[data-visual-theme] body.mg-game.lantern-mines[style*="--mines-sidebar"] #play .map-tools {
+  background: #102035 var(--mines-sidebar) center / 100% 100% no-repeat !important;
+}
+html[data-visual-theme] body.mg-game.lantern-mines[style*="--mines-sidebar"] #play .map-tools :is(.label, label, .stats span, .stats strong) {
+  color: #fff7e6 !important;
+}
+html[data-visual-theme] body.mg-game.lantern-mines[style*="--mines-sidebar"] #play .map-tools .mission-buttons button[aria-pressed="true"] {
+  color: #172638 !important;
+  text-shadow: none !important;
+}
