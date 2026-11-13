@@ -55,3 +55,38 @@ body[data-mobile-game="mines"][style*="--mines-button"] :is(.mobile-function, .m
 body[data-mobile-game="mines"][style*="--mines-panel"] :is(.cp-card, .rp-panel) {
   background-image: var(--mines-panel) !important;
 }
+/* Preserve the original control boxes and fit each skin to its frame. */
+body[data-mobile-game="mines"] .cxq-theme-options img {
+  object-fit: contain;
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  body[data-mobile-game="mines"] .cxq-theme-options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+  body[data-mobile-game="mines"] .cxq-theme-options button {
+    padding: 5px !important;
+    gap: 3px;
+  }
+  body[data-mobile-game="mines"] .cxq-theme-options img {
+    height: 40px;
+  }
+}
+body[data-mobile-game="mines"][style*="--mines-dock"] .mobile-title-dock :is(p, .mobile-function, .mobile-function span) {
+  color: #fff7e6 !important;
+  text-shadow: 0 1px 2px #101725;
+}
+body[data-mobile-game="mines"][style*="--mines-primary"] .mobile-title-dock .mobile-primary :is(strong, small) {
+  color: #152031 !important;
+  text-shadow: none !important;
+}
+body[data-mobile-game="mines"][style*="--mines-panel"] :is(.mission article, .map-tools, #game-dialog, .cp-card, .rp-panel),
+body[data-mobile-game="mines"][style*="--mines-hud"] .map-tools .stats > div,
+body[data-mobile-game="mines"][style*="--mines-button"] :is(.mobile-function, .mission-buttons button:not(.primary), .map-tools > button:not(.primary), .dialog-actions button:not(.primary)) {
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+}
+html[data-visual-theme="candy"] body[data-mobile-game="mines"] :is(.mission article, .map-tools, #game-dialog, .cp-card, .rp-panel) {
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+}

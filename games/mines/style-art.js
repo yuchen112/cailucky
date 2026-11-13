@@ -19,7 +19,7 @@
   function refresh() {
     const style = root.dataset.visualTheme;
     const available = styles[style] || [];
-    const art = (name) => new URL("art/" + style + "/" + name + ".webp?v=20261114-mines4", location.href).href;
+    const art = (name) => new URL("art/" + style + "/" + name + ".webp?v=20261114-mines5", location.href).href;
 
     for (const name of ["stage", "flag", "trap", "closed", "open", "dock", "primary",
       "button", "panel", "board", "hud", "pause", "result", "settings", "return"]) {
@@ -29,7 +29,8 @@
 
     function swap(img, name) {
       if (!source.has(img)) source.set(img, img.getAttribute("src"));
-      const url = available.includes(name) ? art(name) : source.get(img);
+      const original = source.get(img);
+      const url = available.includes(name) ? art(name) : window.CxQTheme?.asset(original, style) || original;
       if (url && img.getAttribute("src") !== url) img.setAttribute("src", url);
     }
 
@@ -39,7 +40,7 @@
     for (const img of document.querySelectorAll(".cxq-theme-picker [data-visual-choice] img")) {
       const choice = img.closest("[data-visual-choice]").dataset.visualChoice;
       if (styles[choice]?.includes("preview")) {
-        const url = new URL("art/" + choice + "/preview.webp?v=20261114-mines4", location.href).href;
+        const url = new URL("art/" + choice + "/preview.webp?v=20261114-mines5", location.href).href;
         if (img.src !== url) img.src = url;
       }
     }
@@ -58,7 +59,7 @@
 
   let queued = false;
   const observer = new MutationObserver((records) => {
-    if (queued || !records.some(({addedNodes}) => [...addedNodes].some(node =>
+    if (queued || !records.some(({type, addedNodes}) => type === "attributes" || [...addedNodes].some(node =>
       node.nodeType === 1 && (node.matches("img") || node.querySelector("img"))
     ))) return;
     queued = true;
@@ -67,7 +68,7 @@
       refresh();
     });
   });
-  observer.observe(body, {childList: true, subtree: true});
+  observer.observe(body, {childList: true, subtree: true, attributes: true, attributeFilter: ["src"]});
   window.addEventListener("cxq-theme-change", refresh);
   refresh();
 })();
