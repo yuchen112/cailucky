@@ -297,3 +297,17 @@ body.mg-game.lantern-mines #play #map-scroll {
   overflow: auto;
   overscroll-behavior: contain;
 }
+@media (orientation: landscape) and (max-height: 500px) {
+  html[data-visual-theme] body.mg-game.lantern-mines #play .map-tools {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    padding: 5px;
+  }
+  body.mg-game.lantern-mines #play .map-tools .stats {
+    grid-column: span 3;
+  }
+  body.mg-game.lantern-mines #play .map-tools .stats > div {
+    display: grid;
+    justify-content: center;
+    padding: 2px !important;
+  }
+}
