@@ -249,3 +249,51 @@ html[data-visual-theme] body.mg-game.lantern-mines[style*="--mines-sidebar"] #pl
   color: #172638 !important;
   text-shadow: none !important;
 }
+
+/* Stack the dashboard above the board in both orientations. */
+body.mg-game.lantern-mines #play:not([hidden]) {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: calc(var(--cxq-vh, 1dvh) * 100 - 16px) !important;
+  gap: 8px;
+}
+html[data-visual-theme] body.mg-game.lantern-mines #play .map-tools {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  background: var(--mines-panel, var(--mg-panel)) center / 100% 100% no-repeat !important;
+  overflow: visible;
+  padding: 8px;
+  gap: 5px;
+}
+body.mg-game.lantern-mines #play .map-tools :is(#mode-label, .stats) {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+body.mg-game.lantern-mines #play .map-tools .stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+body.mg-game.lantern-mines #play .map-tools .mission-buttons {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+body.mg-game.lantern-mines #play .map-tools button {
+  min-width: 0;
+  min-height: 36px;
+}
+body.mg-game.lantern-mines #play #play-role {
+  display: none;
+}
+body.mg-game.lantern-mines #play .map-workspace {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-height: 0;
+}
+body.mg-game.lantern-mines #play #map-scroll {
+  height: 100%;
+  max-height: none;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
