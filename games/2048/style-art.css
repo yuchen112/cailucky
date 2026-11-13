@@ -102,7 +102,7 @@ html:is([data-visual-theme="emerald"], [data-visual-theme="paper"], [data-visual
   :is(.cp-card, .rp-panel, .mg-panel) button.primary { color: #fffaf0 !important; }
 html[data-visual-theme="pixel"] body[data-mobile-game="2048"]
   :is(.mg-number-play button, .mg-number-play .stats > div *, .mg-number-play .hero *,
-      .mobile-function, .mobile-function span, .cp-card button:not(.primary), .rp-panel button:not(.primary)) {
+      .cp-card button:not(.primary), .rp-panel button:not(.primary)) {
   color: #182339 !important;
 }
 
@@ -113,7 +113,7 @@ html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-t
   paint-order: stroke fill;
 }
 html:is([data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"]
-  :is(.mobile-title header a, .mobile-title header .cxq-theme-button, .mobile-function, .mobile-function span) {
+  :is(.mobile-title header a, .mobile-title header .cxq-theme-button) {
   color: #242234 !important;
   text-shadow: none !important;
 }
@@ -155,6 +155,7 @@ body[data-mobile-game="2048"] .mobile-title .mobile-function {
 }
 body[data-mobile-game="2048"] .mobile-title .mobile-function span {
   font-size: inherit;
+  font-weight: 700;
 }
 body[data-mobile-game="2048"] .mobile-title header :is(a, button) {
   font-size: 14px;
@@ -189,4 +190,9 @@ html:is([data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobi
 html:is([data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body[data-mobile-game="2048"] .cxq-theme-picker [data-visual-choice] :is(strong, span) {
   color: #182339 !important;
   text-shadow: none !important;
+}
+
+html[data-visual-theme="pixel"] body[data-mobile-game="2048"] .mobile-title .mobile-function {
+  color: #fff4d4 !important;
+  text-shadow: 0 1px 2px #10122d;
 }
