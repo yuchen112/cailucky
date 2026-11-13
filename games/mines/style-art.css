@@ -90,3 +90,22 @@ html[data-visual-theme="candy"] body[data-mobile-game="mines"] :is(.mission arti
   background-size: 100% 100% !important;
   background-repeat: no-repeat !important;
 }
+
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"])
+  body[data-mobile-game="mines"] .mobile-title .mobile-title-actions .mobile-primary {
+  background: var(--mines-primary) center / 100% 100% no-repeat !important;
+}
+body[data-mobile-game="mines"][style*="--mines-dock"] .mobile-title .mobile-title-dock {
+  background-position: center !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+}
+body[data-mobile-game="mines"][style*="--mines-button"] .mobile-title .mobile-function {
+  background-position: center !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+}
+body[data-mobile-game="mines"][style*="--mines-open"] #board .cell.open :is(.mine-number) {
+  color: #172638 !important;
+  text-shadow: none;
+}
