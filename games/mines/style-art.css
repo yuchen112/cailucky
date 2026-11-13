@@ -225,3 +225,16 @@ html[data-visual-theme] body.mg-game.lantern-mines[style*="--mines-hud"] .rp-pan
 body.lantern-mines .rp-panel .dialog-stats strong {
   font-size: 20px !important;
 }
+
+html[data-visual-theme] body.mg-game.lantern-mines[style*="--mines-result"] dialog#game-dialog.rp-panel:not(.cp-card) {
+  background: var(--mines-result) center / 100% 100% no-repeat !important;
+}
+html:is([data-visual-theme="toy"], [data-visual-theme="paper"])
+  body.mg-game.lantern-mines[style*="--mines-result"] dialog#game-dialog.rp-panel:not(.cp-card) > :is(h2, p) {
+  color: #202436 !important;
+  text-shadow: none;
+}
+
+html[data-visual-theme] body.mg-game.lantern-mines[style*="--mines-pause"] dialog#game-dialog.cp-card {
+  background: var(--mines-pause) center / 100% 100% no-repeat !important;
+}
