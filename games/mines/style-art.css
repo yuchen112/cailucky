@@ -214,3 +214,14 @@ body.lantern-mines #game-dialog :is(h2, h3) {
   font-size: 18px !important;
   line-height: 1.25 !important;
 }
+
+html[data-visual-theme] body.mg-game.lantern-mines[style*="--mines-panel"] :is(dialog.rp-panel, dialog.cp-card) {
+  background: #102035 var(--mines-panel) center / 100% 100% no-repeat !important;
+}
+html[data-visual-theme] body.mg-game.lantern-mines[style*="--mines-hud"] .rp-panel .dialog-stats > * {
+  background: #102035 var(--mines-hud) center / 100% 100% no-repeat !important;
+  color: #fff7e6 !important;
+}
+body.lantern-mines .rp-panel .dialog-stats strong {
+  font-size: 20px !important;
+}
