@@ -417,3 +417,25 @@ body.mg-game.lantern-mines #game-dialog.rp-panel:not(.cp-card) .dialog-actions b
     display: none;
   }
 }
+
+/* Results use a consistent reading surface across all six themes. */
+html[data-visual-theme] body.mg-game.lantern-mines #game-dialog.rp-panel:not(.cp-card) {
+  background: #102035 !important;
+  color: #fff7e6 !important;
+}
+html[data-visual-theme] body.mg-game.lantern-mines #game-dialog.rp-panel:not(.cp-card) :is(h2, p, strong, small, button) {
+  color: #fff7e6 !important;
+  text-shadow: none !important;
+}
+html[data-visual-theme] body.mg-game.lantern-mines #game-dialog.rp-panel:not(.cp-card) .dialog-stats > * {
+  background: #20364e !important;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 3px;
+  padding: 6px;
+}
+html[data-visual-theme] body.mg-game.lantern-mines #game-dialog.rp-panel:not(.cp-card) .dialog-actions button {
+  background: #233f59 !important;
+  border: 1px solid #8ea8c0;
+}
