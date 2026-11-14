@@ -339,3 +339,41 @@ body.mg-game.lantern-mines #play #map-scroll {
   body.mg-game.lantern-mines #play #map-scroll { grid-row: 2; }
   body.mg-game.lantern-mines #play #hint-text { grid-row: 3; }
 }
+
+/* Keep preparation copy readable over every illustrated background. */
+body.lantern-mines.mg-polished #home .mp-page-fields {
+  box-sizing: border-box;
+  font-size: 16px;
+  line-height: 1.5;
+}
+body.lantern-mines.mg-polished #home .mp-page-fields > :is(label, details) {
+  padding: 10px 12px;
+  background-color: #102035;
+  color: #fff7e6;
+}
+body.lantern-mines.mg-polished #home .mp-page-fields :is(label, summary, select, input, #longpress-label) {
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+}
+body.lantern-mines.mg-polished #home .mp-page-fields details label {
+  padding: 8px 0;
+  color: inherit !important;
+}
+body.lantern-mines.mg-polished #home .mp-page-fields .switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+}
+body.lantern-mines.mg-polished #home .mp-page-fields .switch input {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+body.lantern-mines.mg-polished #home .mp-page-fields input[type="range"] {
+  display: block;
+  width: 100%;
+  min-height: 32px;
+  margin-inline: 0;
+}
