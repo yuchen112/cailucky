@@ -103,3 +103,34 @@ body.mg-game[data-mobile-game="dream-match"] .mobile-title-dock .mobile-function
   height: 26px;
   margin: 0;
 }
+
+/* Keep the new covers and their control deck visually separate. */
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"])
+body.mg-game[data-mobile-game="dream-match"] .mobile-title-dock {
+  padding: 14px 18px max(14px, env(safe-area-inset-bottom));
+  gap: 8px;
+  background-image: var(--dream-title-deck) !important;
+}
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"])
+body.mg-game[data-mobile-game="dream-match"] .mobile-title-dock :is(.mobile-primary, .mobile-function) {
+  background: var(--dream-title-button) center / 100% 100% no-repeat !important;
+  color: #fff7ea !important;
+}
+body.mg-game[data-mobile-game="dream-match"] .mobile-title-dock .mobile-title-actions {
+  padding: 0;
+}
+body.mg-game[data-mobile-game="dream-match"] .mobile-title-dock .mobile-primary {
+  height: 60px;
+  min-height: 60px;
+}
+body.mg-game[data-mobile-game="dream-match"] .mobile-title-dock .mobile-primary small {
+  font-size: 13px;
+}
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"])
+body.mg-game[data-mobile-game="dream-match"] .mobile-title-dock .mobile-function img {
+  display: none;
+}
+html[data-visual-theme="emerald"] { --dream-title-deck: url("art/emerald/pause.webp"); --dream-title-button: url("art/emerald/button.webp"); }
+html[data-visual-theme="toy"] { --dream-title-deck: url("art/toy/pause.webp"); --dream-title-button: url("art/toy/button.webp"); }
+html[data-visual-theme="paper"] { --dream-title-deck: url("art/paper/pause.webp"); --dream-title-button: url("art/paper/button.webp"); }
+html[data-visual-theme="pixel"] { --dream-title-deck: url("art/pixel/pause.webp"); --dream-title-button: url("art/pixel/button.webp"); }
