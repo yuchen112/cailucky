@@ -78,3 +78,28 @@ body.mg-game[data-mobile-game="dream-match"] :is(.mp-mode-info p, .mp-mode-info 
 body.mg-game[data-mobile-game="dream-match"] .mp-mode-info {
   padding: 12px 16px !important;
 }
+
+body.mg-game[data-mobile-game="dream-match"] .mobile-title-dock .mobile-function-bar {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 8px;
+  min-height: 0;
+}
+body.mg-game[data-mobile-game="dream-match"] .mobile-title-dock .mobile-function-bar .mobile-function {
+  display: flex !important;
+  flex-direction: row;
+  gap: 8px;
+  min-width: 0;
+  min-height: 48px !important;
+  height: auto !important;
+  box-sizing: border-box;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+}
+body.mg-game[data-mobile-game="dream-match"] .mobile-title-dock .mobile-function img {
+  width: 26px;
+  height: 26px;
+  margin: 0;
+}
