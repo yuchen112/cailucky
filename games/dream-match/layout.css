@@ -130,7 +130,13 @@ html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-t
 body.mg-game[data-mobile-game="dream-match"] .mobile-title-dock .mobile-function img {
   display: none;
 }
-html[data-visual-theme="emerald"] { --dream-title-deck: url("art/emerald/pause.webp"); --dream-title-button: url("art/emerald/button.webp"); }
-html[data-visual-theme="toy"] { --dream-title-deck: url("art/toy/pause.webp"); --dream-title-button: url("art/toy/button.webp"); }
-html[data-visual-theme="paper"] { --dream-title-deck: url("art/paper/pause.webp"); --dream-title-button: url("art/paper/button.webp"); }
-html[data-visual-theme="pixel"] { --dream-title-deck: url("art/pixel/pause.webp"); --dream-title-button: url("art/pixel/button.webp"); }
+html[data-visual-theme="emerald"] { --dream-title-deck: url("art/emerald/footer-deck.webp"); --dream-title-button: url("art/emerald/footer-secondary.webp"); }
+html[data-visual-theme="toy"] { --dream-title-deck: url("art/toy/footer-deck.webp"); --dream-title-button: url("art/toy/footer-secondary.webp"); }
+html[data-visual-theme="paper"] { --dream-title-deck: url("art/paper/footer-deck.webp"); --dream-title-button: url("art/paper/footer-secondary.webp"); }
+html[data-visual-theme="pixel"] { --dream-title-deck: url("art/pixel/footer-deck.webp"); --dream-title-button: url("art/pixel/footer-secondary.webp"); }
+
+html[data-visual-theme="emerald"] { --dream-title-start: url("art/emerald/footer-start.webp"); }
+html[data-visual-theme="toy"] { --dream-title-start: url("art/toy/footer-start.webp"); }
+html[data-visual-theme="paper"] { --dream-title-start: url("art/paper/footer-start.webp"); }
+html[data-visual-theme="pixel"] { --dream-title-start: url("art/pixel/footer-start.webp"); }
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"]) body.mg-game[data-mobile-game="dream-match"] .mobile-title-dock .mobile-primary { background-image: var(--dream-title-start) !important; }
