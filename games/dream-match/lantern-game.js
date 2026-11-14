@@ -830,7 +830,7 @@
     const additionalStyles = new Set(["emerald", "toy", "paper", "pixel"]);
     function pieceArt(slot, original) {
       const style = document.documentElement.dataset.visualTheme;
-      return additionalStyles.has(style) && (style === "pixel" || !slot.startsWith("special-")) ? "art/" + style + "/" + slot + ".webp" : original;
+      return additionalStyles.has(style) ? "art/" + style + "/" + slot + ".webp" : original;
     }
     function gemArt(color) {
       return pieceArt("gem-" + color, CxQDreamGemArt[color]);
