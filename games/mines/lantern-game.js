@@ -16,7 +16,7 @@
     const gap = parseFloat(getComputedStyle(board).gap) || 2;
     const maxWidth = (map.clientWidth - (columns - 1) * gap) / columns;
     const maxHeight = (map.clientHeight - (rows - 1) * gap) / rows;
-    const size = Math.max(29, Math.min(58, Math.floor(Math.min(maxWidth, maxHeight))));
+    const size = Math.max(matchMedia("(orientation: landscape) and (max-height: 500px)").matches ? 21 : 29, Math.min(58, Math.floor(Math.min(maxWidth, maxHeight))));
     board.style.setProperty('--cell', size + 'px');
   }
   new ResizeObserver(fit).observe(map);

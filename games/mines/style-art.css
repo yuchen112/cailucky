@@ -311,3 +311,31 @@ body.mg-game.lantern-mines #play #map-scroll {
     padding: 2px !important;
   }
 }
+
+@media (orientation: landscape) and (max-height: 500px) {
+  html[data-visual-theme] body.mg-game.lantern-mines #play .map-tools {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr) repeat(4, minmax(0, 1fr));
+    align-items: center;
+  }
+  html[data-visual-theme] body.mg-game.lantern-mines #play .map-tools #mode-label {
+    grid-column: 1 / -1;
+  }
+  html[data-visual-theme] body.mg-game.lantern-mines #play .map-tools :is(.stats, .mission-buttons) {
+    grid-column: span 1;
+    margin: 0;
+  }
+  body.mg-game.lantern-mines #play .map-workspace :is(#status, #hint-text):empty {
+    display: none;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  html[data-visual-theme] body.mg-game.lantern-mines #play .map-tools > :not(#mode-label) {
+    grid-row: 2;
+  }
+  body.mg-game.lantern-mines #play .map-workspace {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+  body.mg-game.lantern-mines #play #map-scroll { grid-row: 2; }
+  body.mg-game.lantern-mines #play #hint-text { grid-row: 3; }
+}
