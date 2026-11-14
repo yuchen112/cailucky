@@ -827,6 +827,18 @@
     const reduced = () =>
       document.body.classList.contains("reduced-motion") ||
       matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const additionalStyles = new Set(["emerald", "toy", "paper", "pixel"]);
+    function pieceArt(slot, original) {
+      const style = document.documentElement.dataset.visualTheme;
+      return additionalStyles.has(style) ? "art/" + style + "/" + slot + ".webp" : original;
+    }
+    function gemArt(color) {
+      return pieceArt("gem-" + color, CxQDreamGemArt[color]);
+    }
+    window.addEventListener("cxq-theme-change", () => {
+      if (a.length) render();
+    });
+
     function render(pop = new Set()) {
       (board.setAttribute("aria-busy", String(busy)),
         board.children.length !== N * N &&
@@ -872,19 +884,19 @@
           const gem = cell.querySelector(".gem"),
             src =
               special[i] === "prism"
-                ? "../shared/rebuilt/special-prism.webp"
-                : CxQDreamGemArt[v];
+                ? pieceArt("special-prism", "../shared/rebuilt/special-prism.webp")
+                : gemArt(v);
           gem.getAttribute("src") !== src && (gem.src = src);
           let baseMark=cell.querySelector('.prism-color');
-          if(special[i]==='prism'){if(!baseMark){baseMark=new Image();baseMark.className='prism-color';baseMark.alt='';cell.append(baseMark)}baseMark.src=CxQDreamGemArt[v];cell.setAttribute('aria-label','彩虹魔晶；交換清除對方顏色；被連鎖觸發時清除'+names[v]+'，第'+(Math.floor(i/N)+1)+'橫排第'+(i%N+1)+'直欄');}else baseMark?.remove();
+          if(special[i]==='prism'){if(!baseMark){baseMark=new Image();baseMark.className='prism-color';baseMark.alt='';cell.append(baseMark)}baseMark.src=gemArt(v);cell.setAttribute('aria-label','彩虹魔晶；交換清除對方顏色；被連鎖觸發時清除'+names[v]+'，第'+(Math.floor(i/N)+1)+'橫排第'+(i%N+1)+'直欄');}else baseMark?.remove();
           let mark = cell.querySelector(".special-mark");
           special[i] && special[i] !== "prism"
             ? (mark ||
                 ((mark = new Image()),
-                (mark.src = "../shared/rebuilt/special-row.webp"),
                 (mark.alt = ""),
                 cell.append(mark)),
-              (mark.className = "special-mark " + special[i]))
+              (mark.className = "special-mark " + special[i]),
+              (mark.src = pieceArt("special-row", "../shared/rebuilt/special-row.webp")))
             : mark?.remove();
         }));
       const level = levels[chapter],
@@ -921,7 +933,7 @@
             .map(
               (g) =>
                 '<div class="goal"><img class="gemMini" src="' +
-                CxQDreamGemArt[g.color] +
+                gemArt(g.color) +
                 '" alt="' +
                 names[g.color] +
                 '"><b></b></div>',
