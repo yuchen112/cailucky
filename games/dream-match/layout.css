@@ -39,3 +39,9 @@ body.mg-game[data-mobile-game="dream-match"] :is(#journey-status, .goal, .puzzle
     margin-inline: auto;
   }
 }
+
+html:is([data-visual-theme="emerald"], [data-visual-theme="toy"], [data-visual-theme="paper"], [data-visual-theme="pixel"])
+body.mg-game[data-mobile-game="dream-match"] :is(.cp-card, #result section) :is(h2, p, button) {
+  color: #fff !important;
+  text-shadow: 0 1px 3px #111 !important;
+}

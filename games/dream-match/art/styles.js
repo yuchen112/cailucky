@@ -4,7 +4,7 @@ window.CxQGameArtFiles = Object.fromEntries(["emerald", "toy", "paper", "pixel"]
 window.CxQGameArtPanels = {
   "tile": "html[data-visual-theme] body.mg-game[data-mobile-game=dream-match] .boardWrap #board .cell",
   "goals": "html[data-visual-theme] body.mg-game[data-mobile-game=dream-match] .puzzle-game .goals-row",
-  "button": "html[data-visual-theme] body.mg-game[data-mobile-game=dream-match] :is(.mobile-function-bar .mobile-function, .puzzle-actions button, .puzzle-round button)",
+  "button": "html[data-visual-theme] body.mg-game[data-mobile-game=dream-match] :is(.mobile-function-bar .mobile-function, .puzzle-actions button, .puzzle-round button, .cp-card button, #result section button)",
   "pause": "html[data-visual-theme] body.mg-game[data-mobile-game=dream-match] .cp-card",
   "result": "html[data-visual-theme] body.mg-game[data-mobile-game=dream-match] #result section",
   "hud": ".stats > div",
