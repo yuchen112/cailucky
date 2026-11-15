@@ -223,3 +223,29 @@ body:has(#battle:not([hidden])) { background-image:url("art/battle-bridge.webp")
   .hand-tray { min-height:60px; padding-block:3px; }
   #battle > header { gap:6px; }
 }
+
+body:has(#title-screen:not([hidden])) { background-image:url("art/rift-title.webp"); }
+body:has(#rune-book:not([hidden])) { background-image:url("art/rune-archive.webp"); }
+#title-screen { min-height:calc(100svh - 24px); display:grid; align-items:center; }
+#title-screen .controls { gap:8px; }
+#rune-book,#campaign,#settings-page { max-width:740px; margin-inline:auto; }
+#rune-book-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-block:14px; }
+.rune-entry { display:grid; justify-items:center; gap:4px; padding:10px; background:url("art/table-deck.webp") center / 100% 100% no-repeat; }
+.rune-entry .rune-image { width:min(29vw,140px); }
+.rune-detail { display:grid; justify-items:center; text-align:center; }
+#detail-content .rune-detail .rune-image { width:104px; }
+.rune-badge { display:inline-flex; align-items:center; gap:5px; }
+.rune-badge .rune-image,#detail-content .rune-badge .rune-image { width:34px; height:34px; object-fit:contain; flex:none; }
+#rune-slots { display:flex; align-items:center; gap:10px; margin-block:6px; }
+#rune-slots button { padding:3px 10px; }
+#rune-slots > span { opacity:.72; }
+#rune-status { padding:3px 5px; font-size:12px; }
+#rune-status .rune-image { width:28px; height:28px; }
+#settings-controls p,#settings-controls > label { display:block; margin:10px 0; padding:10px; background:url("art/table-deck.webp") center / 100% 100% no-repeat; }
+#settings-controls input { margin-left:12px; vertical-align:middle; }
+#stage-detail { padding:8px; background:#181023e8; }
+#campaign-prepare { margin-top:12px; }
+
+#stage-preview { display:flex; gap:10px; margin:8px 0; }
+#stage-preview figure { width:clamp(69px,22vw,112px); margin:0; text-align:center; }
+#stage-preview figcaption { margin-top:4px; font-size:12px; }

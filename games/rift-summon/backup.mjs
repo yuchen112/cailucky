@@ -35,13 +35,15 @@ export async function readBackup(file) {
     integer(state.stage,0,Math.min(owned.length-starter.length,stages.length-1)) &&
     integer(state.round,1,40) && integer(state.charges,0,2) && integer(state.heroShield,0,3) &&
     integer(state.nextUid,24,500) && integer(state.sequence,0,10000) &&
-    heroes.some(h=>h.id===state.hero) && ['wall','heal'].includes(state.rune) &&
+    heroes.some(h=>h.id===state.hero) && ['wall','heal','none'].includes(state.rune) &&
     typeof state.heroUsed === 'boolean' && Array.isArray(state.sides) &&
     state.sides.length === 2 && state.sides.every(sideValid) &&
     (state.phase === 'deploy' && state.result === null || state.phase === 'end' && ['勝利','敗北','平局'].includes(state.result)));
   if (!validClears || !validDeck || !validState || !Array.isArray(save.log) ||
     save.log.length>150 || !save.log.every(line=>typeof line==='string' && line.length<=180) ||
-    !['1','2','3'].includes(save.speed) || !fraction(save.volumes?.bgm) || !fraction(save.volumes?.sfx)) {
+    !['1','2','3'].includes(save.speed) || !fraction(save.volumes?.bgm) || !fraction(save.volumes?.sfx) ||
+    (save.loadout!==undefined && !['wall','heal','none'].includes(save.loadout)) ||
+    (save.lowMotion!==undefined && typeof save.lowMotion!=='boolean')) {
     throw new Error('備份中的牌組、關卡或戰況有無效欄位。');
   }
   return {save,createdAt:Number.isFinite(Date.parse(data.createdAt)) ? new Date(data.createdAt) : null};

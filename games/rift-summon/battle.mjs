@@ -35,7 +35,7 @@ export function createBattle(rune = 'wall', hero = '', stage = 3, deck = starter
   const player = side(deck.map((id, i) => unit(id, i)), 24);
   const enemy = side(level.opponents.map((id, i) => unit(id, i + 8)), level.hp);
   enemy.board.push(...level.opening.map((id,i)=>unit(id,20+i)));
-  const state = {version: 3, phase: 'deploy', stage, round: 1, result: null, sides: [player, enemy], hero, heroUsed: false, heroShield: 0, rune, charges: 2, nextUid: 24, sequence: 0};
+  const state = {version: 3, phase: 'deploy', stage, round: 1, result: null, sides: [player, enemy], hero, heroUsed: false, heroShield: 0, rune, charges: rune === 'none' ? 0 : 2, nextUid: 24, sequence: 0};
   begin(player, false);
   return state;
 }
@@ -176,7 +176,7 @@ function runRune(state, events) {
   state.charges--;
   if (state.rune === 'wall') target.card.shield += 2;
   else target.card.hp += 3;
-  record(state, events, 'skill', `${state.rune === 'wall' ? '鐵壁' : '回春'} → ${target.card.name}（剩 ${state.charges} 次）`, {actor: 0, target: 0, lanes: [target.lane]});
+  record(state, events, 'skill', `${state.rune === 'wall' ? '鐵壁' : '回春'} → ${target.card.name}（剩 ${state.charges} 次）`, {actor: 0, target: 0, lanes: [target.lane], rune:state.rune});
 }
 function attack(state, events, actor) {
   const board = state.sides[actor].board;

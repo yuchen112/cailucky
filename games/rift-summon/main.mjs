@@ -1,7 +1,7 @@
-import {applyAction, cards, createBattle, stages, starter} from './battle.mjs';
+import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=rune-book-1';
 import {heroes} from './heroes.mjs';
 import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=hero-skill-art-1';
-import {makeBackup, readBackup} from './backup.mjs';
+import {makeBackup, readBackup} from './backup.mjs?v=rune-book-1';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -21,10 +21,19 @@ let playing = false;
 let playback = 0;
 let audioScene = null;
 let volumes = saved?.volumes ?? {sfx:.65,bgm:.17};
+const runes={
+  wall:{name:'鐵壁',effect:'開始攻擊時，為正面有敵軍、生命剩一半以下且無盾的友軍加 2 點護盾。'},
+  heal:{name:'回春',effect:'開始攻擊時，為生命剩一半以下且至少缺 3 點生命的友軍回復 3 點生命。'},
+  none:{name:'未裝備',effect:'這場戰鬥不會觸發符文。'},
+};
+let loadout=Object.hasOwn(runes,saved?.loadout)?saved.loadout:state?.rune??'wall';
+let runeReturn='camp';
+let settingsReturn='camp';
+let lowMotion=saved?.lowMotion===true;
 updateVolume(volumes);
 get('speed').value = saved?.speed ?? '1';
 
-function currentSave() { return {state, log, deck, cleared:[...cleared], volumes, speed:get('speed').value}; }
+function currentSave() { return {state, log, deck, cleared:[...cleared], volumes, loadout, lowMotion, speed:get('speed').value}; }
 function save() {
   try { localStorage.setItem(key, JSON.stringify(currentSave())); }
   catch { get('message').textContent = '此瀏覽器目前無法儲存戰況。'; }
@@ -51,6 +60,57 @@ function modal(...children) {
     dialog.showModal();
     dialog.scrollTop=0;
   }
+}
+function view(id) {
+  for(const page of ['title-screen','camp','rune-book','campaign','settings-page','collection','lobby','battle']) get(page).hidden=page!==id;
+}
+function runeImage(id) {
+  return artwork(id==='none'?'empty':id,'rune','rune-image');
+}
+function runeBadge(id, status, icon=id) {
+  const badge=element('span','','rune-badge');
+  badge.append(runeImage(icon),element('span',status));
+  return badge;
+}
+function runeDetails(id, editable=false) {
+  const rune=runes[id];
+  const panel=element('div','','rune-detail');
+  panel.append(runeImage(id),element('h2',rune.name),element('p',rune.effect),
+    element('p',id==='none'?'可從符文冊裝備。':'每場 2 次・第一章初始符文'));
+  if(!editable && id!=='none' && state) panel.append(element('p',`本場剩 ${state.charges} 次`));
+  if(editable) {
+    const apply=element('button',loadout===id?'卸下':'裝備');
+    apply.onclick=()=>{
+      loadout=loadout===id?'none':id;
+      save();
+      get('detail').close();
+      renderRuneBook();
+    };
+    panel.append(apply);
+  }
+  modal(panel);
+}
+function showRunes(from) {
+  runeReturn=from;
+  view('rune-book');
+  renderRuneBook();
+}
+function renderRuneBook() {
+  const entries=['wall','heal'].map(id=>{
+    const button=element('button','','rune-entry');
+    button.append(runeImage(id),element('strong',runes[id].name),element('span',loadout===id?'已裝備・2 次':'可裝備・2 次'));
+    button.onclick=()=>runeDetails(id,true);
+    return button;
+  });
+  get('rune-book-grid').replaceChildren(...entries);
+}
+function renderRuneSlots() {
+  const active=element('button');
+  active.append(runeBadge(loadout,runes[loadout].name));
+  active.onclick=()=>showRunes('lobby');
+  const locked=element('span');
+  locked.append(runeBadge('locked','後續章節'));
+  get('rune-slots').replaceChildren(active,locked);
 }
 function cardFace(card, {lazy=false}={}) {
   const face=element('span','','card-face');
@@ -83,16 +143,12 @@ function showCamp() {
   playback++;
   playing=false;
   get('hero-cut-in').hidden=true;
-  get('battle').hidden=true;
-  get('lobby').hidden=true;
-  get('collection').hidden=true;
-  get('camp').hidden=false;
+  view('camp');
   get('camp-resume').hidden=!state || state.phase==='end';
   get('camp-progress').textContent=`裂界營地・戰役 ${cleared.size}/${stages.length}・收藏 ${owned().length} 張`;
 }
 function showCollection() {
-  get('camp').hidden=true;
-  get('collection').hidden=false;
+  view('collection');
   renderCollection();
 }
 const albumCards=Object.keys(cards).filter(id=>id!=='boss' && id!=='spirit');
@@ -140,7 +196,7 @@ function renderCollection(direction=0) {
   get('album-position').textContent=`第 ${first+1===end?end:`${first+1}–${end}`} / ${pages} 頁`;
   get('album-prev').disabled=first===0;
   get('album-next').disabled=end===pages;
-  if(direction && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if(direction && !lowMotion && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     book.animate([{opacity:.45,transform:`translateX(${direction*12}px)`},{opacity:1,transform:'translateX(0)'}],220);
   }
 }
@@ -160,9 +216,7 @@ function lobby() {
   playback++;
   playing = false;
   get('hero-cut-in').hidden=true;
-  get('battle').hidden = true;
-  get('camp').hidden = true;
-  get('lobby').hidden = false;
+  view('lobby');
   get('resume').hidden = !state || state.phase === 'end';
   const roster=get('heroes');
   const scroll=roster.scrollLeft;
@@ -183,16 +237,30 @@ function lobby() {
   }));
   roster.scrollLeft=scroll;
   showHeroPreview();
+  get('battle-plan').textContent=stages[stageIndex].name;
+  renderRuneSlots();
+}
+function showCampaign() {
+  view('campaign');
   get('stages').replaceChildren(...stages.map((stage,index)=>{
     const open=index===0 || cleared.has(index-1);
     const button=element('button',`${stage.name}${cleared.has(index)?' ✓':open?'':'・未解鎖'}`);
     button.disabled=!open;
     button.setAttribute('aria-pressed',String(stageIndex===index));
-    button.onclick=()=>{stageIndex=index;lobby();};
+    button.onclick=()=>{stageIndex=index;showCampaign();};
     return button;
   }));
   const stage=stages[stageIndex];
   get('stage-detail').textContent=`${stage.goal} 首通取得：${cards[stage.reward][0]}。`;
+  const preview=(label,id)=>{
+    const figure=element('figure');
+    figure.append(cardFace(catalogCard(id)),element('figcaption',label));
+    return figure;
+  };
+  get('stage-preview').replaceChildren(
+    ...stage.opening.map(id=>preview('敵方先鋒',id)),
+    preview(cleared.has(stageIndex)?'首通已領取':'首通獎勵',stage.reward)
+  );
 }
 function showHeroPreview() {
   const hero=heroes.find(h=>h.id===chosen);
@@ -234,7 +302,7 @@ function editDeck(draft=[...deck], active=0) {
   const totals=draft.map(catalogCard).reduce((sum,card)=>[sum[0]+card.attack,sum[1]+card.hp],[0,0]);
   summary.append(artwork(hero.id,'hero'),element('h2',hero.name),
     element('p',`總攻擊 ${totals[0]}・總生命 ${totals[1]}`),
-    element('p',`符文：${get('rune').value==='wall'?'鐵壁':'回春'}`),apply);
+    runeBadge(loadout,runes[loadout].name),apply);
   const body=element('section');
   body.append(element('h2','出戰卡組 8 / 8'),slots,
     element('h3',`替換第 ${active+1} 張`),element('p','點下方牌替換。選到隊中已有的牌會交換牌位。'),grid);
@@ -273,7 +341,8 @@ function renderBoard(frame, event) {
   get('health').textContent = `${player.hp} 生命${frame.heroShield ? ' ◆'+frame.heroShield : ''}`;
   get('enemy-health').textContent = `${enemy.hp} 生命`;
   get('round').textContent = `第 ${frame.round} 回合`;
-  get('rune-status').textContent = `${state.rune==='wall'?'鐵壁':'回春'} ${frame.charges} 次`;
+  const spent=state.rune!=='none' && frame.charges===0;
+  get('rune-status').replaceChildren(runeBadge(state.rune,state.rune==='none'?'未裝備':`${runes[state.rune].name} ${frame.charges} 次`,spent?'spent':state.rune));
   const boss=enemy.board.findIndex(card=>card?.id==='boss');
   get('forecast').textContent=boss>=0?`斷橋守將在第 ${boss+1} 欄。橫掃會波及兩側。`:stages[state.stage].goal;
 }
@@ -309,6 +378,7 @@ function render() {
   get('attack').disabled=playing || state.phase==='end';
 }
 function effect(event) {
+  if(event.rune) return 'rune-pulse';
   if (event.kind==='skill') return event.message.includes('自爆')?'fx-bomb':event.message.includes('靈體')?'fx-spirit':event.message.includes('治療')||event.message.includes('回春')?'fx-heal':'fx-shield';
   if (event.kind==='attack') return event.message.includes('橫掃')?'fx-ax':event.message.includes('斥候')?'fx-arrow':'fx-ax';
   if (event.kind==='deploy') return 'fx-rune';
@@ -354,7 +424,7 @@ async function act(action) {
     get('message').textContent=event.message;
     play(event.kind,state.hero);
     const ms=duration(event.kind);
-    const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reducedMotion=lowMotion || matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(event.kind==='hero') showHeroCast(ms,reducedMotion);
     const origin=get('lanes').querySelector(`[data-slot="${event.actor}:${event.origin}"]`);
     if(origin && !reducedMotion) origin.animate(
@@ -394,22 +464,22 @@ async function act(action) {
     const ending=artwork(current.id,'hero');
     if(state.result!=='平局') ending.src=asset(`${state.result==='勝利'?'win':'loss'}-${current.id}`);
     const message=reward?`首通獲得 ${cards[reward][0]}。可回編隊把它加入牌組。`:'可回編隊，換英雄或符文再挑戰。';
+    const runesUsed=state.rune==='none'?0:2-state.charges;
+    const runeSummary=runeBadge(state.rune,state.rune==='none'?'未裝備':`${runes[state.rune].name}・觸發 ${runesUsed} 次`);
     if(reward) {
       stageIndex=Math.min(state.stage+1,stages.length-1);
-      modal(ending,element('h2',state.result),artwork(reward),element('p',message));
-    } else modal(ending,element('h2',state.result),element('p',message));
+      modal(ending,element('h2',state.result),artwork(reward),element('p',message),runeSummary);
+    } else modal(ending,element('h2',state.result),element('p',message),runeSummary);
   }
 }
 async function enter(restart) {
   if(restart) {
-    state=createBattle(get('rune').value,chosen,stageIndex,deck);
+    state=createBattle(loadout,chosen,stageIndex,deck);
     log=[];
     selected=null;
     save();
   }
-  get('lobby').hidden=true;
-  get('camp').hidden=true;
-  get('battle').hidden=false;
+  view('battle');
   get('hero-cut-in-art').src=asset(`hero-cast-${state.hero}`);
   render();
   await unlock();
@@ -476,7 +546,13 @@ function backupPanel() {
   modal(element('h2','存檔備份'),download,element('p','選擇 JSON 可先查看進度，再確認匯入。'),picker,restore,status);
 }
 get('backup').onclick=backupPanel;
-get('camp-campaign').onclick=async()=>{lobby();await unlock();changeMusic('lobby');};
+get('camp-campaign').onclick=showCampaign;
+get('campaign-prepare').onclick=lobby;
+get('campaign-back').onclick=showCamp;
+get('title-start').onclick=async()=>{showCamp();await unlock();changeMusic('lobby');};
+get('title-resume').onclick=()=>enter(false);
+get('camp-runes').onclick=()=>showRunes('camp');
+get('rune-back').onclick=()=>runeReturn==='lobby'?lobby():showCamp();
 get('camp-deck').onclick=()=>editDeck();
 get('camp-collection').onclick=showCollection;
 get('collection-back').onclick=showCamp;
@@ -501,9 +577,14 @@ get('hero-preview-open').onclick=()=>{
 };
 get('camp-resume').onclick=()=>enter(false);
 get('return-camp').onclick=showCamp;
-get('camp-options').onclick=()=>get('options').click();
+get('camp-options').onclick=()=>showSettings('camp');
 get('camp-backup').onclick=backupPanel;
-get('options').onclick=()=>{
+get('options').onclick=()=>showSettings('lobby');
+get('settings-back').onclick=()=>settingsReturn==='lobby'?lobby():showCamp();
+get('settings-backup').onclick=backupPanel;
+function showSettings(from){
+  settingsReturn=from;
+  view('settings-page');
   const slider=(id,labelText)=>{
     const label=element('label',labelText);
     const input=element('input');
@@ -514,10 +595,16 @@ get('options').onclick=()=>{
     row.append(label);
     return row;
   };
-  modal(element('h2','聲音設定'),slider('bgm','背景音樂'),slider('sfx','音效'));
-};
-get('rune-status').onclick=()=>modal(element('h2',get('rune-status').textContent),element('p',state.rune==='wall'?'開始攻擊時，替正面有敵軍、半血以下且無盾的角色加 2 盾。':'開始攻擊時，替半血以下且至少缺 3 血的角色回復 3 血。'));
+  const motion=element('label','減少動效');
+  const checkbox=element('input');
+  checkbox.type='checkbox';
+  checkbox.checked=lowMotion;
+  checkbox.onchange=()=>{lowMotion=checkbox.checked;save();};
+  motion.append(checkbox);
+  get('settings-controls').replaceChildren(slider('bgm','背景音樂'),slider('sfx','音效'),motion);
+}
+get('rune-status').onclick=()=>runeDetails(state.rune);
 document.addEventListener('visibilitychange',()=>{
   if(!document.hidden && audioScene && audioScene!=='end' && audioScene!=='loss') setMusic(audioScene);
 });
-showCamp();
+get('title-resume').hidden=!state || state.phase==='end';

@@ -4,22 +4,44 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=table-art-2">
+<link rel="stylesheet" href="style.css?v=rune-book-1">
 </head>
 <body>
 <main>
-<section id="camp" aria-label="裂界營地">
+<section id="title-screen" aria-label="遊戲首頁">
+  <div class="camp-content"><h1>CxQ 裂界召喚</h1><div class="controls">
+    <button id="title-start" data-art="campaign">進入營地</button><button id="title-resume" data-art="resume" hidden>繼續戰鬥</button>
+  </div></div>
+</section>
+<section id="camp" hidden aria-label="裂界營地">
   <div class="camp-content">
     <h1>CxQ 裂界召喚</h1>
     <p id="camp-progress"></p>
     <nav class="camp-nav" aria-label="營地入口">
-      <button id="camp-campaign" data-art="campaign">戰役</button>
+      <button id="camp-campaign" data-art="campaign">副本</button>
       <button id="camp-deck" data-art="deck">編隊</button>
       <button id="camp-collection" data-art="collection">卡冊</button>
+      <button id="camp-runes">符文冊</button>
       <button id="camp-resume" data-art="resume" hidden>繼續戰鬥</button>
     </nav>
-    <div class="controls"><button id="camp-options" data-art="settings">聲音設定</button><button id="camp-backup" data-art="backup">存檔備份</button></div>
+    <div class="controls"><button id="camp-options" data-art="settings">設定</button><button id="camp-backup" data-art="backup">存檔備份</button></div>
   </div>
+</section>
+<section id="rune-book" hidden aria-label="符文冊">
+  <header class="collection-header"><div><h1>符文冊</h1><p>第一章・已收錄 2 枚</p></div><button id="rune-back">返回</button></header>
+  <div id="rune-book-grid"></div>
+</section>
+<section id="campaign" hidden aria-label="副本">
+  <header class="collection-header"><div><h1>副本</h1><p>第一章・斷橋哨站</p></div><button id="campaign-back">回營地</button></header>
+  <div id="stages" aria-label="章節關卡"></div>
+  <p id="stage-detail" aria-live="polite"></p>
+  <div id="stage-preview" aria-label="敵方先鋒與首通獎勵"></div>
+  <button id="campaign-prepare" data-art="attack">戰前編隊</button>
+</section>
+<section id="settings-page" hidden aria-label="遊戲設定">
+  <header class="collection-header"><h1>設定</h1><button id="settings-back">返回</button></header>
+  <div id="settings-controls"></div>
+  <button id="settings-backup" data-art="backup">存檔備份</button>
 </section>
 <section id="collection" hidden aria-label="角色卡冊">
   <header class="collection-header"><div><h1>角色卡冊</h1><p id="collection-count"></p></div><button id="collection-back">回營地</button></header>
@@ -40,10 +62,9 @@
     </div>
   </div>
   <div id="heroes" aria-label="選擇英雄"></div>
-  <div id="stages" aria-label="章節關卡"></div>
-  <p id="stage-detail" aria-live="polite"></p>
+  <p id="battle-plan"></p>
+  <div id="rune-slots" aria-label="戰前符文槽"></div>
   <div class="controls">
-    <label>戰前符文 <select id="rune"><option value="wall">鐵壁</option><option value="heal">回春</option></select></label>
     <button id="deck" data-art="deck">編隊與收藏</button><button id="options" data-art="settings">聲音設定</button><button id="backup" data-art="backup">存檔備份</button><button id="start" data-art="attack">開始戰鬥</button><button id="resume" data-art="resume" hidden>繼續戰鬥</button>
   </div>
 </section>
@@ -75,6 +96,6 @@
 </section>
 <dialog id="detail"><div id="detail-content"></div><form method="dialog"><button>關閉</button></form></dialog>
 </main>
-<script type="module" src="main.mjs?v=table-art-2"></script>
+<script type="module" src="main.mjs?v=rune-book-1"></script>
 </body>
 </html>
