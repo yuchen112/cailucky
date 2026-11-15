@@ -164,3 +164,62 @@ dialog:has(.deck-workbench) { width:min(95vw,760px); }
   .slot .card-face { width:min(100%,66px); }
   #hand button:has(.card-face) { width:59px; }
 }
+
+/* Generated table, card sockets and panels. */
+.battle-stage { background:url("art/table-mat.webp") center / 100% 100% no-repeat; display:grid; align-items:center; min-height:clamp(200px,52vh,400px); padding:8px 10px; }
+#field { min-width:0; }
+#lanes { grid-auto-columns:clamp(59px,19vh,107px); }
+.lane > span { background:none; align-self:center; color:#ffe3aa; }
+.slot { min-width:0; background:none; min-height:0; }
+.slot .card-face,.slot .slot-art { width:var(--table-card-width,66px); max-width:100%; margin-inline:auto; }
+.empty-slot { position:relative; align-items:end; justify-items:center; }
+.empty-slot .slot-art { width:var(--table-card-width,66px); display:block; aspect-ratio:3/4; object-fit:fill; }
+.empty-slot b { position:absolute; inset-inline:0; bottom:4px; background:none; color:#ddd0bc; text-shadow:0 1px 3px black; }
+.hand-tray { display:flex; align-items:center; gap:7px; min-width:0; padding:3px 6px; }
+.hand-tray > strong { font-size:12px; white-space:nowrap; color:#ffdfaa; }
+.hand-tray #hand { flex:1; min-width:0; margin:0; }
+#battle > header { background: url("art/table-hud.webp") center / 100% 100% no-repeat; padding:10px; }
+#battle > footer { background: url("art/table-hud.webp") center / 100% 100% no-repeat; padding:7px; }
+dialog:has(.deck-workbench),dialog:has(.card-inspector) { border:0; background:url("art/table-inspect.webp") center / 100% 100% no-repeat; padding:18px; }
+dialog:has(.deck-workbench) { background-image:url("art/table-deck.webp"); }
+dialog:has(.card-inspector) { width:min(94vw,540px); }
+.inspector-copy strong { color:#ffe0a0; }
+.inspector-stats { margin-top:12px; color:#e1cda9; }
+.deck-summary { padding:5px; }
+.deck-summary p { margin-bottom:7px; }
+.deck-workbench .deck-order { gap:6px; }
+@media (orientation:landscape) {
+  #battle .hand-tray { grid-area:hand; }
+  #battle .battle-stage { padding:5px 9px; }
+  #battle > footer { gap:2px; }
+}
+@media (orientation:landscape) and (max-height:440px) {
+  #battle { --table-card-width:clamp(48px,16vh,66px); }
+  .battle-stage { min-height:0; }
+}
+
+.deck-workbench .deck-summary img { max-width:100%; height:auto; }
+@media (orientation:landscape) and (max-height:440px) {
+  .deck-workbench .deck-order .card-face { width:min(100%,57px); margin-inline:auto; }
+  .deck-workbench .deck-order button { padding-block:1px; }
+  #detail-content .deck-summary img { width:74px; }
+  .card-inspector { grid-template-columns:minmax(0,38%) 1fr; }
+  .card-inspector > .card-face { width:min(100%,150px); margin-inline:auto; }
+}
+
+body:has(#battle:not([hidden])) { background-image:url("art/battle-bridge.webp"); }
+.hand-tray { background:url("art/table-deck.webp") center / 100% 100% no-repeat; padding:5px 9px; }
+.hand-tray > strong { flex:0 0 auto; }
+.enemy-hud strong { display:block; margin-block:2px; }
+.enemy-hud small { color:#ffd4b2; }
+#battle #health,#battle #enemy-health { font-variant-numeric:tabular-nums; }
+#battle #forecast,#battle #message { color:#fff5db; }
+@media (orientation:landscape) {
+  #battle > header { gap:12px; }
+  #battle .hero-hud { padding-bottom:5px; }
+  .hand-tray { min-height:74px; }
+}
+@media (orientation:landscape) and (max-height:350px) {
+  .hand-tray { min-height:60px; padding-block:3px; }
+  #battle > header { gap:6px; }
+}

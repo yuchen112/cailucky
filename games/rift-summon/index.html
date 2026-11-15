@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=card-table-1">
+<link rel="stylesheet" href="style.css?v=table-art-2">
 </head>
 <body>
 <main>
@@ -50,12 +50,12 @@
 <section id="battle" hidden>
   <header>
     <div class="hero-hud"><img id="portrait" alt=""><div><strong id="hero-name"></strong><div id="health"></div></div></div>
-    <div><strong id="enemy-health"></strong><div id="round"></div></div>
+    <div class="enemy-hud"><small>敵方英雄</small><strong id="enemy-health"></strong><div id="round"></div></div>
     <button id="back">編隊</button>
   </header>
   <div id="rotate">橫拿手機可看到更多欄位。</div>
   <div id="forecast"></div>
-  <div id="hand" aria-label="手牌"></div>
+  <div class="hand-tray"><strong id="hand-label">手牌</strong><div id="hand" aria-labelledby="hand-label"></div></div>
   <div class="battle-stage">
     <div id="field" tabindex="0" aria-label="敵我同步捲動戰場"><div id="lanes"></div></div>
     <div id="hero-cut-in" hidden aria-hidden="true">
@@ -75,6 +75,6 @@
 </section>
 <dialog id="detail"><div id="detail-content"></div><form method="dialog"><button>關閉</button></form></dialog>
 </main>
-<script type="module" src="main.mjs?v=card-table-1"></script>
+<script type="module" src="main.mjs?v=table-art-2"></script>
 </body>
 </html>

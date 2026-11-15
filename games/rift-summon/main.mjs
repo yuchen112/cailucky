@@ -46,7 +46,11 @@ function artwork(id, type = 'card', className = '') {
 }
 function modal(...children) {
   get('detail-content').replaceChildren(...children);
-  if (!get('detail').open) get('detail').showModal();
+  const dialog=get('detail');
+  if (!dialog.open) {
+    dialog.showModal();
+    dialog.scrollTop=0;
+  }
 }
 function cardFace(card, {lazy=false}={}) {
   const face=element('span','','card-face');
@@ -68,10 +72,10 @@ function catalogCard(id) {
 }
 function cardDetail(card) {
   const layout=element('div','','card-inspector');
-  const info=element('div');
+  const info=element('div','','inspector-copy');
   info.append(element('h2',card.name),element('strong',card.skill||'普攻'),
     element('p', descriptions[card.skill] ?? '普攻正對欄位，空位直擊敵方英雄。'),
-    element('p',`生命 ${card.hp}/${card.max}・護盾 ${card.shield}・倒數 ${card.count}`));
+    element('p',`生命 ${card.hp}/${card.max}・護盾 ${card.shield}・倒數 ${card.count}`,'inspector-stats'));
   layout.append(cardFace(card),info);
   modal(layout);
 }
@@ -225,7 +229,7 @@ function editDeck(draft=[...deck], active=0) {
   const apply=element('button','儲存編隊');
   apply.onclick=()=>{deck=[...draft];save();get('detail').close();};
   const layout=element('div','','deck-workbench');
-  const summary=element('aside');
+  const summary=element('aside','','deck-summary');
   const hero=heroes.find(h=>h.id===chosen);
   const totals=draft.map(catalogCard).reduce((sum,card)=>[sum[0]+card.attack,sum[1]+card.hp],[0,0]);
   summary.append(artwork(hero.id,'hero'),element('h2',hero.name),
@@ -252,7 +256,13 @@ function renderBoard(frame, event) {
       if (card) {
         node.append(cardFace({...card,count:0}));
         node.onclick=()=>cardDetail(card);
-      } else node.append(element('b','空位'));
+      } else {
+        node.classList.add('empty-slot');
+        const socket=element('img','','slot-art');
+        socket.src=asset('table-slot');
+        socket.alt='';
+        node.append(socket,element('b',side===0 && selected!==null && index===next?'部署位置':'空位'));
+      }
       if (!event && selected !== null && index===next) node.classList.add('preview');
       return node;
     };
@@ -261,7 +271,7 @@ function renderBoard(frame, event) {
   }));
   field.scrollLeft = scroll;
   get('health').textContent = `${player.hp} 生命${frame.heroShield ? ' ◆'+frame.heroShield : ''}`;
-  get('enemy-health').textContent = `敵方英雄 ${enemy.hp}`;
+  get('enemy-health').textContent = `${enemy.hp} 生命`;
   get('round').textContent = `第 ${frame.round} 回合`;
   get('rune-status').textContent = `${state.rune==='wall'?'鐵壁':'回春'} ${frame.charges} 次`;
   const boss=enemy.board.findIndex(card=>card?.id==='boss');
@@ -276,6 +286,7 @@ function render() {
   get('hero-name').onclick=()=>modal(artwork(current.id,'hero'),element('h2',current.skill),element('p',current.detail));
   const card=player.hand.find(item=>item.uid===selected);
   const hand=get('hand');
+  get('hand-label').textContent=`手牌 ${player.hand.length}`;
   const handScroll=hand.scrollLeft;
   hand.replaceChildren(...player.hand.map(item=>{
     const button=element('button');
