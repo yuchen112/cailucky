@@ -1,36 +1,81 @@
 export const capsuleCards=['ember','wisp','turtle','raven','stag','lynx','moth','drake','ibis','hare','otter','ram','bat','beetle','crane','yak'];
-export const prices={gems:12};
 export const maxLevel=5;
 export const validRunes=['wall','heal','frost','spark','ward','flame','tide','root','none'];
+export const rarityNames=['N','R','SR','S','SS','SSR','UUR'];
+export const starterHeroes=['trust','healing','joy'];
+export const heroIds=['hope','trust','growth','healing','joy','luck','memory','night','sadness','dream'];
+const rare={
+  guard:0,bomb:1,archer:0,ax:1,ghost:2,healer:1,knight:2,giant:2,bow:1,fang:2,flag:3,moon:3,boss:4,spirit:0,
+  ember:3,wisp:4,turtle:3,raven:5,stag:2,lynx:4,moth:3,drake:6,ibis:5,hare:1,otter:2,ram:4,bat:2,beetle:3,crane:4,yak:5,
+  wall:0,heal:0,ward:1,flame:2,frost:3,tide:3,root:4,spark:5,
+  trust:2,healing:2,joy:2,growth:2,luck:3,memory:3,sadness:3,hope:4,night:4,dream:5,
+};
+export function rarity(id) {return rarityNames[rare[id]??0];}
+const weights=[36,28,20,12,7,3,1];
+export function poolFor(kind,currency) {
+  if(kind==='hero'&&currency!=='gems')return [];
+  const ids=kind==='card'?capsuleCards:kind==='rune'?validRunes.filter(id=>id!=='none'):kind==='hero'?heroIds:[];
+  const cap=kind==='card'?(currency==='gold'?4:6):(currency==='gold'?3:5);
+  return ids.filter(id=>(rare[id]??0)<=cap).map(id=>({id,weight:weights[rare[id]??0]}));
+}
+export function pullPrice(currency,count) {
+  return (currency==='gold'?80:12)*(count===10?9:1);
+}
+export function openBatch(wallet,kind,currency,count,roll=Math.random,alreadyOwned=[]) {
+  const pool=poolFor(kind,currency);
+  const cost=pullPrice(currency,count);
+  if(!['gold','gems'].includes(currency)||![1,10].includes(count)||!pool.length||wallet[currency]<cost)return null;
+  const key=kind==='card'?'copies':kind==='rune'?'runeCopies':'heroCopies';
+  const copies={...wallet[key]};
+  const unlocked=[...wallet.unlocked];
+  const known=new Set(alreadyOwned);
+  const total=pool.reduce((sum,item)=>sum+item.weight,0);
+  const draws=[];
+  for(let i=0;i<count;i++){
+    let point=Math.max(0,Math.min(.999999999,roll()))*total;
+    const id=pool.find(item=>(point-=item.weight)<0).id;
+    const duplicate=known.has(id);
+    copies[id]=(copies[id]??(duplicate?1:0))+1;
+    if(kind==='card'&&!unlocked.includes(id))unlocked.push(id);
+    known.add(id);
+    draws.push({id,kind,duplicate});
+  }
+  return {draws,wallet:{...wallet,[currency]:wallet[currency]-cost,[key]:copies,unlocked}};
+}
+export function improveCollectible(wallet,kind,id,baseOwned) {
+  const copyKey=kind==='hero'?'heroCopies':'runeCopies';
+  const levelKey=kind==='hero'?'heroLevels':'runeLevels';
+  const level=wallet[levelKey]?.[id]??1;
+  const copies=wallet[copyKey]?.[id]??(baseOwned?1:0);
+  if(level>=maxLevel||copies<2)return null;
+  return {...wallet,[copyKey]:{...wallet[copyKey],[id]:copies-1},[levelKey]:{...wallet[levelKey],[id]:level+1}};
+}
 
 export function startingWallet() {
   return {gold:80,gems:12,unlocked:[],levels:{}};
 }
 export function validWallet(wallet) {
+  const record=(obj,ids,max)=>obj===undefined||(obj&&typeof obj==='object'&&!Array.isArray(obj)&&
+    Object.entries(obj).every(([id,n])=>ids.includes(id)&&Number.isSafeInteger(n)&&n>=1&&n<=max));
   return !!wallet && ['gold','gems'].every(key=>Number.isSafeInteger(wallet[key]) && wallet[key]>=0) &&
     Array.isArray(wallet.unlocked) && new Set(wallet.unlocked).size===wallet.unlocked.length &&
     wallet.unlocked.every(id=>capsuleCards.includes(id)) && wallet.levels &&
     typeof wallet.levels==='object' && !Array.isArray(wallet.levels) &&
-    Object.values(wallet.levels).every(level=>Number.isInteger(level) && level>=1 && level<=maxLevel);
+    Object.values(wallet.levels).every(level=>Number.isInteger(level) && level>=1 && level<=maxLevel) &&
+    record(wallet.copies,capsuleCards,Number.MAX_SAFE_INTEGER)&&
+    record(wallet.runeCopies,validRunes.filter(id=>id!=='none'),Number.MAX_SAFE_INTEGER)&&record(wallet.runeLevels,validRunes.filter(id=>id!=='none'),maxLevel)&&
+    record(wallet.heroCopies,heroIds,Number.MAX_SAFE_INTEGER)&&record(wallet.heroLevels,heroIds,maxLevel);
 }
 export function levelCost(level) { return 45+(level-1)*35; }
 export function cardLevel(economy,id) { return economy.levels[id]??1; }
 export function victoryPay(firstClear) { return firstClear?{gold:100,gems:12}:{gold:30,gems:2}; }
 export function unlockedRunes(clears,wallet) {
+  return [...new Set([...fixedRunes(clears,wallet),...validRunes.filter(id=>id!=='none'&&wallet?.runeCopies?.[id]>0)])];
+}
+function fixedRunes(clears,wallet) {
   return ['wall','heal',...(clears.has(0)?['ward']:[]),...(clears.has(1)?['frost']:[]),...(clears.has(2)?['flame']:[]),...(clears.has(3)?['spark']:[]),
     ...(wallet?.unlocked.length>=3?['tide']:[]),
     ...(Object.values(wallet?.levels??{}).some(level=>level>=3)?['root']:[])];
-}
-export function openCapsule(wallet,currency,roll=Math.random()) {
-  if (!Object.hasOwn(prices,currency) || wallet[currency]<prices[currency] || roll<0 || roll>=1) return null;
-  const candidates=capsuleCards.filter(id=>!wallet.unlocked.includes(id));
-  const pool=candidates.length?candidates:capsuleCards;
-  const id=pool[Math.floor(roll*pool.length)];
-  const duplicate=wallet.unlocked.includes(id);
-  const refund=duplicate?40:0;
-  const next={...wallet,[currency]:wallet[currency]-prices[currency],unlocked:duplicate?wallet.unlocked:[...wallet.unlocked,id]};
-  next.gold+=refund;
-  return {id,duplicate,refund,wallet:next};
 }
 export function improveCard(wallet,id) {
   const level=cardLevel(wallet,id);

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=catalog-3">
+<link rel="stylesheet" href="style.css?v=collection-4">
 </head>
 <body>
 <main>
@@ -12,6 +12,9 @@
   <div class="camp-content"><h1>CxQ 裂界召喚</h1><div class="controls">
     <button id="title-start" data-art="campaign">進入營地</button><button id="title-resume" data-art="resume" hidden>繼續戰鬥</button>
   </div></div>
+</section>
+<section id="starter-select" hidden aria-labelledby="starter-heading">
+  <header class="collection-header"><h1 id="starter-heading">選擇第一位英雄</h1></header><div id="starter-options"></div>
 </section>
 <section id="camp" hidden aria-label="裂界營地">
   <div class="camp-content">
@@ -21,9 +24,11 @@
     <nav class="camp-nav" aria-label="營地入口">
       <button id="camp-campaign" data-art="campaign">副本</button>
       <button id="camp-deck" data-art="deck">編隊</button>
-      <button id="camp-collection" data-art="collection">卡冊</button>
-      <button id="camp-runes">符文冊</button>
-      <button id="camp-capsule" data-art="collection">扭蛋召喚</button>
+      <button id="camp-collection"><img src="art/nav-codex.webp" alt="">卡牌圖鑑</button>
+      <button id="camp-bag"><img src="art/nav-card-bag.webp" alt="">我的卡包</button>
+      <button id="camp-runes"><img src="art/nav-rune-book.webp" alt="">符文冊</button>
+      <button id="camp-heroes"><img src="art/nav-heroes.webp" alt="">英雄圖鑑</button>
+      <button id="camp-capsule"><img src="art/nav-machine.webp" alt="">扭蛋召喚</button>
       <button id="camp-resume" data-art="resume" hidden>繼續戰鬥</button>
     </nav>
     <div class="controls"><button id="camp-options" data-art="settings">設定</button><button id="camp-backup" data-art="backup">存檔備份</button></div>
@@ -38,17 +43,22 @@
   <header class="collection-header"><h1 id="capsule-title">扭蛋召喚</h1><button id="capsule-back">回營地</button></header>
   <div class="capsule-console">
     <div id="capsule-wallet" class="wallet" aria-live="polite"></div>
+    <div class="controls"><label>貨幣 <select id="capsule-currency"><option value="gold">金幣</option><option value="gems" selected>鑽石</option></select></label>
+    <label>卡池 <select id="capsule-kind"><option value="card">卡牌</option><option value="rune">符文</option><option value="hero">英雄</option></select></label></div>
     <div id="capsule-reveal" aria-live="polite"></div>
-    <div class="controls"><button id="draw-gems" data-art="attack">鑽石抽卡</button></div>
-    <p id="capsule-rules">優先從未收錄的扭蛋卡中等機率抽取。集齊後重複卡轉為 40 金幣。金幣只用於卡牌強化。</p>
+    <div class="controls"><button id="draw-gems">單抽</button><button id="draw-ten">十連</button></div>
+    <div id="capsule-rules"></div>
   </div>
+</section>
+<section id="hero-book" hidden aria-label="英雄圖鑑">
+  <header class="collection-header"><h1>英雄圖鑑</h1><button id="hero-book-back">返回</button></header><div id="hero-book-grid"></div>
 </section>
 <section id="campaign" hidden aria-label="副本">
   <header class="collection-header"><div><h1>副本</h1><p>第一章・斷橋哨站</p></div><button id="campaign-back">回營地</button></header>
-  <div id="stages" aria-label="章節關卡"></div>
+  <div id="stages" aria-label="章節旗點"></div>
   <p id="stage-detail" aria-live="polite"></p>
   <div id="stage-preview" aria-label="敵方先鋒與首通獎勵"></div>
-  <button id="campaign-prepare" data-art="attack">戰前編隊</button>
+  <div class="controls"><label>出戰編隊 <select id="campaign-team"></select></label><button id="campaign-prepare" data-art="deck">編輯編隊</button><button id="campaign-fight" data-art="attack">開始戰鬥</button></div>
 </section>
 <section id="settings-page" hidden aria-label="遊戲設定">
   <header class="collection-header"><h1>設定</h1><button id="settings-back">返回</button></header>
@@ -56,8 +66,9 @@
   <button id="settings-backup" data-art="backup">存檔備份</button>
 </section>
 <section id="collection" hidden aria-label="角色卡冊">
-  <header class="collection-header"><div><h1>角色卡冊</h1><p id="collection-count"></p></div><div id="album-wallet" class="wallet"></div><button id="collection-back">回營地</button></header>
+  <header class="collection-header"><div><h1 id="collection-title">卡牌圖鑑</h1><p id="collection-count"></p></div><div id="album-wallet" class="wallet"></div><button id="collection-back">回營地</button></header>
   <label class="catalog-filter">卡牌類別 <select id="card-filter"><option value="all">全部</option><option value="attack">攻擊</option><option value="guard">防護</option><option value="heal">治療</option><option value="support">支援</option></select></label>
+  <label class="catalog-filter">稀有度 <select id="card-rarity"><option value="all">全部</option></select></label>
   <div id="album-pages" aria-label="卡冊書頁"></div>
   <nav class="album-controls" aria-label="卡冊翻頁">
     <button id="album-prev">上一頁</button>
@@ -67,6 +78,7 @@
 </section>
 <section id="lobby" hidden>
   <header class="war-room-header"><div><small>第一章</small><h1>斷橋哨站</h1></div><button id="return-camp">回營地</button></header>
+  <label>出戰編隊 <select id="lobby-team"></select></label>
   <div id="hero-preview" class="hero-preview">
     <button id="hero-preview-open" aria-label="查看英雄完整立繪"><img id="hero-preview-art" alt=""></button>
     <div class="hero-preview-copy">
@@ -124,6 +136,6 @@
   <button id="capsule-show-close">收下</button>
 </dialog>
 </main>
-<script type="module" src="main.mjs?v=catalog-3"></script>
+<script type="module" src="main.mjs?v=collection-4"></script>
 </body>
 </html>
