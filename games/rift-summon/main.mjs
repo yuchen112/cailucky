@@ -37,7 +37,7 @@ function element(tag, value, className) {
 }
 function artwork(id, type = 'card', className = '') {
   const img = element('img', '', className);
-  img.src = asset(`${type}-${id}`);
+  img.src = asset(type === 'card' ? `illustration-${id}` : `${type}-${id}`);
   img.alt = '';
   img.draggable = false;
   return img;
@@ -47,7 +47,7 @@ function modal(...children) {
   if (!get('detail').open) get('detail').showModal();
 }
 function cardDetail(card) {
-  modal(artwork(card.id),element('h2',card.name),element('p',`${card.attack} 攻擊 · ${card.hp}/${card.max} 生命 · ${card.shield} 護盾`),
+  modal(artwork(card.id),element('h2',card.name),element('p',`${card.attack} 攻擊 · ${card.hp}/${card.max} 生命 · ${card.shield} 護盾 · 倒數 ${card.count}`),
     element('p', descriptions[card.skill] ?? '普攻正對欄位，空位直擊敵方英雄。'));
 }
 function showCamp() {
@@ -55,21 +55,46 @@ function showCamp() {
   playing=false;
   get('battle').hidden=true;
   get('lobby').hidden=true;
+  get('collection').hidden=true;
   get('camp').hidden=false;
   get('camp-resume').hidden=!state || state.phase==='end';
   get('camp-progress').textContent=`裂界營地・戰役 ${cleared.size}/${stages.length}・收藏 ${owned().length} 張`;
 }
 function showCollection() {
-  const grid=element('div','','deck-grid');
+  get('camp').hidden=true;
+  get('collection').hidden=false;
+  renderCollection();
+}
+function renderCollection() {
+  const grid=get('collection-grid');
+  const query=get('collection-search').value.trim();
+  const filter=get('collection-filter').value;
+  const collection=new Set(owned());
+  const entries=[];
+  const collectableTotal=Object.keys(cards).length-2;
   for(const [id,[name,count,attack,max,skill]] of Object.entries(cards)) {
     if (id==='boss' || id==='spirit') continue;
-    const available=owned().includes(id);
-    const button=element('button');
-    button.append(artwork(id),element('span',available?name:`${name}・未取得`));
+    const available=collection.has(id);
+    if ((filter==='owned' && !available) || (filter==='locked' && available)) continue;
+    if (query && !`${name} ${skill || '普攻'}`.includes(query)) continue;
+    const button=element('button','','collectible');
+    button.dataset.locked=String(!available);
+    const img=artwork(id,'card','collectible-art');
+    img.loading='lazy';
+    const frame=element('img','','collectible-frame');
+    frame.src=asset('collectible-frame');
+    frame.alt='';
+    button.append(img,frame,element('strong',name),element('span',available?`攻${attack}・血${max}・倒數${count}`:'未取得'));
     button.onclick=()=>cardDetail({id,name,attack,hp:max,max,shield:skill==='護盾'?2:0,count,skill});
-    grid.append(button);
+    entries.push(button);
   }
-  modal(element('h2',`角色收藏 ${owned().length}/${Object.keys(cards).length-2}`),grid);
+  get('collection-count').textContent=`已取得 ${collection.size} / ${collectableTotal} 張`;
+  if (!entries.length) {
+    const empty=element('p','沒有符合的卡牌。');
+    empty.id='collection-empty';
+    entries.push(empty);
+  }
+  grid.replaceChildren(...entries);
 }
 const descriptions = {
   護衛:'左右相鄰友軍受到普攻時，傷害減 1。', 自爆:'陣亡時對敵方正對及兩側角色各造成 2 點傷害。',
@@ -109,21 +134,33 @@ function lobby() {
   const stage=stages[stageIndex];
   get('stage-detail').textContent=`${stage.goal} 首通取得：${cards[stage.reward][0]}。`;
 }
-function editDeck(draft=[...deck]) {
+function editDeck(draft=[...deck], active=0) {
   const grid=element('div','','deck-grid');
   for(const id of owned()) {
     const position=draft.indexOf(id);
     const button=element('button');
     button.append(artwork(id),element('span',`${position>=0?(position+1)+'・':''}${cards[id][0]}`));
     button.setAttribute('aria-pressed',String(position>=0));
-    button.disabled=position<0 && draft.length>=8;
-    button.onclick=()=>editDeck(position>=0?draft.filter(card=>card!==id):[...draft,id]);
+    button.onclick=()=>{
+      const next=[...draft];
+      if(position>=0) [next[active],next[position]]=[next[position],next[active]];
+      else next[active]=id;
+      editDeck(next,active);
+    };
     grid.append(button);
   }
+  const slots=element('div','','deck-order');
+  for(const [index,id] of draft.entries()) {
+    const slot=element('button',`${index+1}・${cards[id][0]}`);
+    slot.setAttribute('aria-pressed',String(index===active));
+    slot.onclick=()=>editDeck(draft,index);
+    slots.append(slot);
+  }
   const apply=element('button','儲存編隊');
-  apply.disabled=draft.length!==8;
   apply.onclick=()=>{deck=[...draft];save();get('detail').close();};
-  modal(element('h2',`編隊 ${draft.length}/8`),element('p','點一下移除，再點收藏中的牌加入。前三張是本章的練習起手。'),grid,apply);
+  modal(element('h2',`編隊 ${draft.length}/8`),
+    element('p','先選牌位，再點一張卡替換；選到已在隊中的卡會交換位置。前三張是本章的起手。'),
+    slots,element('h3',`替換第 ${active+1} 張`),grid,apply);
 }
 function renderBoard(frame, event) {
   const [player, enemy] = frame.sides;
@@ -338,6 +375,9 @@ get('backup').onclick=backupPanel;
 get('camp-campaign').onclick=async()=>{lobby();await unlock();changeMusic('lobby');};
 get('camp-deck').onclick=()=>editDeck();
 get('camp-collection').onclick=showCollection;
+get('collection-back').onclick=showCamp;
+get('collection-search').oninput=renderCollection;
+get('collection-filter').onchange=renderCollection;
 get('camp-resume').onclick=()=>enter(false);
 get('return-camp').onclick=showCamp;
 get('camp-options').onclick=()=>get('options').click();
