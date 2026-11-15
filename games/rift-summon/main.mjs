@@ -68,36 +68,65 @@ function showCollection() {
   get('collection').hidden=false;
   renderCollection();
 }
-function renderCollection() {
-  const grid=get('collection-grid');
-  const query=get('collection-search').value.trim();
-  const filter=get('collection-filter').value;
-  const collection=new Set(owned());
-  const entries=[];
-  const collectableTotal=Object.keys(cards).length-2;
-  for(const [id,[name,count,attack,max,skill]] of Object.entries(cards)) {
-    if (id==='boss' || id==='spirit') continue;
+const albumCards=Object.keys(cards).filter(id=>id!=='boss' && id!=='spirit');
+const perLeaf=6;
+const albumWide=matchMedia('(min-width: 700px) and (orientation: landscape) and (pointer: fine)');
+let albumPage=0;
+function makeAlbumLeaf(page,collection) {
+  const leaf=element('article','','album-leaf');
+  const header=element('header');
+  const ids=albumCards.slice(page*perLeaf,(page+1)*perLeaf);
+  header.append(element('h2',`第 ${page+1} 頁`),element('span',`${ids.filter(id=>collection.has(id)).length}/${ids.length}`));
+  const grid=element('div','','album-grid');
+  for(const [offset,id] of ids.entries()) {
+    const [name,count,attack,max,skill]=cards[id];
     const available=collection.has(id);
-    if ((filter==='owned' && !available) || (filter==='locked' && available)) continue;
-    if (query && !`${name} ${skill || '普攻'}`.includes(query)) continue;
+    const slot=element('div','','album-slot');
     const button=element('button','','collectible');
-    button.dataset.locked=String(!available);
-    const img=artwork(id,'card','collectible-art');
-    img.loading='lazy';
-    const frame=element('img','','collectible-frame');
-    frame.src=asset('collectible-frame');
-    frame.alt='';
-    button.append(img,frame,element('strong',name),element('span',available?`攻${attack}・血${max}・倒數${count}`:'未取得'));
-    button.onclick=()=>cardDetail({id,name,attack,hp:max,max,shield:skill==='護盾'?2:0,count,skill});
-    entries.push(button);
+    if(available) {
+      const img=artwork(id,'card','collectible-art');
+      img.loading='lazy';
+      const frame=element('img','','collectible-frame');
+      frame.src=asset('collectible-frame');
+      frame.alt='';
+      button.append(img,frame,element('strong',name),element('span',`攻${attack}・血${max}・倒數${count}`));
+      button.onclick=()=>cardDetail({id,name,attack,hp:max,max,shield:skill==='護盾'?2:0,count,skill});
+    } else {
+      const back=element('img','','collectible-art');
+      back.src=asset('album-card-back');
+      back.alt='';
+      button.append(back,element('span','尚未取得'));
+      const stage=stages.find(level=>level.reward===id);
+      button.onclick=()=>modal(element('h2',name),element('p',stage?`首通「${stage.name}」後取得。`:'尚未取得'));
+    }
+    const number=String(page*perLeaf+offset+1).padStart(3,'0');
+    slot.append(button,element('small',`No. ${number}`));
+    grid.append(slot);
   }
-  get('collection-count').textContent=`已取得 ${collection.size} / ${collectableTotal} 張`;
-  if (!entries.length) {
-    const empty=element('p','沒有符合的卡牌。');
-    empty.id='collection-empty';
-    entries.push(empty);
+  leaf.append(header,grid);
+  return leaf;
+}
+function renderCollection(direction=0) {
+  const collection=new Set(owned());
+  const pages=Math.ceil(albumCards.length/perLeaf);
+  const spread=albumWide.matches?2:1;
+  const first=albumPage-albumPage%spread;
+  const end=Math.min(pages,first+spread);
+  const book=get('album-pages');
+  book.replaceChildren(...Array.from({length:end-first},(_,i)=>makeAlbumLeaf(first+i,collection)));
+  get('collection-count').textContent=`已收錄 ${collection.size} / ${albumCards.length} 張`;
+  get('album-position').textContent=`第 ${first+1===end?end:`${first+1}–${end}`} / ${pages} 頁`;
+  get('album-prev').disabled=first===0;
+  get('album-next').disabled=end===pages;
+  if(direction && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    book.animate([{opacity:.45,transform:`translateX(${direction*12}px)`},{opacity:1,transform:'translateX(0)'}],220);
   }
-  grid.replaceChildren(...entries);
+}
+function turnAlbum(direction) {
+  const button=get(direction>0?'album-next':'album-prev');
+  if(button.disabled) return;
+  albumPage+=direction*(albumWide.matches?2:1);
+  renderCollection(direction);
 }
 const descriptions = {
   護衛:'左右相鄰友軍受到普攻時，傷害減 1。', 自爆:'陣亡時對敵方正對及兩側角色各造成 2 點傷害。',
@@ -409,8 +438,21 @@ get('camp-campaign').onclick=async()=>{lobby();await unlock();changeMusic('lobby
 get('camp-deck').onclick=()=>editDeck();
 get('camp-collection').onclick=showCollection;
 get('collection-back').onclick=showCamp;
-get('collection-search').oninput=renderCollection;
-get('collection-filter').onchange=renderCollection;
+get('album-prev').onclick=()=>turnAlbum(-1);
+get('album-next').onclick=()=>turnAlbum(1);
+albumWide.addEventListener('change',()=>{if(!get('collection').hidden) renderCollection();});
+let swipeStart;
+get('album-pages').addEventListener('touchstart',event=>{
+  if(event.touches.length===1) swipeStart={x:event.touches[0].clientX,y:event.touches[0].clientY};
+},{passive:true});
+get('album-pages').addEventListener('touchend',event=>{
+  if(!swipeStart) return;
+  const dx=event.changedTouches[0].clientX-swipeStart.x;
+  const dy=event.changedTouches[0].clientY-swipeStart.y;
+  swipeStart=null;
+  if(Math.abs(dx)>52 && Math.abs(dx)>Math.abs(dy)*1.4) turnAlbum(dx<0?1:-1);
+},{passive:true});
+get('album-pages').addEventListener('touchcancel',()=>{swipeStart=null;},{passive:true});
 get('hero-preview-open').onclick=()=>{
   const hero=heroes.find(h=>h.id===chosen);
   modal(artwork(hero.id,'hero'),element('h2',hero.name),element('strong',hero.skill),element('p',hero.detail));

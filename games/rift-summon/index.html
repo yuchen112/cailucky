@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=hero-skill-art-1">
+<link rel="stylesheet" href="style.css?v=card-album-1">
 </head>
 <body>
 <main>
@@ -15,21 +15,20 @@
     <nav class="camp-nav" aria-label="營地入口">
       <button id="camp-campaign" data-art="campaign">戰役</button>
       <button id="camp-deck" data-art="deck">編隊</button>
-      <button id="camp-collection" data-art="collection">收藏</button>
+      <button id="camp-collection" data-art="collection">卡冊</button>
       <button id="camp-resume" data-art="resume" hidden>繼續戰鬥</button>
     </nav>
     <div class="controls"><button id="camp-options" data-art="settings">聲音設定</button><button id="camp-backup" data-art="backup">存檔備份</button></div>
   </div>
 </section>
-<section id="collection" hidden aria-label="角色收藏">
-  <header class="collection-header"><div><h1>角色收藏</h1><p id="collection-count"></p></div><button id="collection-back">回營地</button></header>
-  <div class="collection-controls">
-    <label for="collection-search">搜尋</label>
-    <input id="collection-search" type="search" placeholder="卡名或技能">
-    <label for="collection-filter">顯示</label>
-    <select id="collection-filter"><option value="all">全部</option><option value="owned">已取得</option><option value="locked">未取得</option></select>
-  </div>
-  <div id="collection-grid"></div>
+<section id="collection" hidden aria-label="角色卡冊">
+  <header class="collection-header"><div><h1>角色卡冊</h1><p id="collection-count"></p></div><button id="collection-back">回營地</button></header>
+  <div id="album-pages" aria-label="卡冊書頁"></div>
+  <nav class="album-controls" aria-label="卡冊翻頁">
+    <button id="album-prev">上一頁</button>
+    <span id="album-position" aria-live="polite"></span>
+    <button id="album-next">下一頁</button>
+  </nav>
 </section>
 <section id="lobby" hidden>
   <header class="war-room-header"><div><small>第一章</small><h1>斷橋哨站</h1></div><button id="return-camp">回營地</button></header>
@@ -75,6 +74,6 @@
 </section>
 <dialog id="detail"><div id="detail-content"></div><form method="dialog"><button>關閉</button></form></dialog>
 </main>
-<script type="module" src="main.mjs?v=hero-skill-art-1"></script>
+<script type="module" src="main.mjs?v=card-album-1"></script>
 </body>
 </html>
