@@ -1,10 +1,12 @@
 import {applyAction, cards, createBattle, stages, starter} from './battle.mjs';
 import {heroes} from './heroes.mjs';
 import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs';
+import {makeBackup, readBackup} from './backup.mjs';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
 const key = 'cxq-rift-summon-visual-slice';
+const recoveryKey = key + '-recovery';
 let saved;
 try { saved = JSON.parse(localStorage.getItem(key)); } catch {}
 let state = saved?.state?.version === 3 ? saved.state : null;
@@ -22,8 +24,9 @@ let volumes = saved?.volumes ?? {sfx:.65,bgm:.17};
 updateVolume(volumes);
 get('speed').value = saved?.speed ?? '1';
 
+function currentSave() { return {state, log, deck, cleared:[...cleared], volumes, speed:get('speed').value}; }
 function save() {
-  try { localStorage.setItem(key, JSON.stringify({state, log, deck, cleared:[...cleared], volumes, speed: get('speed').value})); }
+  try { localStorage.setItem(key, JSON.stringify(currentSave())); }
   catch { get('message').textContent = '此瀏覽器目前無法儲存戰況。'; }
 }
 function element(tag, value, className) {
@@ -47,6 +50,27 @@ function cardDetail(card) {
   modal(artwork(card.id),element('h2',card.name),element('p',`${card.attack} 攻擊 · ${card.hp}/${card.max} 生命 · ${card.shield} 護盾`),
     element('p', descriptions[card.skill] ?? '普攻正對欄位，空位直擊敵方英雄。'));
 }
+function showCamp() {
+  playback++;
+  playing=false;
+  get('battle').hidden=true;
+  get('lobby').hidden=true;
+  get('camp').hidden=false;
+  get('camp-resume').hidden=!state || state.phase==='end';
+  get('camp-progress').textContent=`裂界營地・戰役 ${cleared.size}/${stages.length}・收藏 ${owned().length} 張`;
+}
+function showCollection() {
+  const grid=element('div','','deck-grid');
+  for(const [id,[name,count,attack,max,skill]] of Object.entries(cards)) {
+    if (id==='boss' || id==='spirit') continue;
+    const available=owned().includes(id);
+    const button=element('button');
+    button.append(artwork(id),element('span',available?name:`${name}・未取得`));
+    button.onclick=()=>cardDetail({id,name,attack,hp:max,max,shield:skill==='護盾'?2:0,count,skill});
+    grid.append(button);
+  }
+  modal(element('h2',`角色收藏 ${owned().length}/${Object.keys(cards).length-2}`),grid);
+}
 const descriptions = {
   護衛:'左右相鄰友軍受到普攻時，傷害減 1。', 自爆:'陣亡時對敵方正對及兩側角色各造成 2 點傷害。',
   追獵:'普攻瞄準生命最低的敵方角色，同血量時選最左。', 橫掃:'普攻命中本欄，並對敵方左右相鄰角色造成一半傷害。',
@@ -57,6 +81,7 @@ function lobby() {
   playback++;
   playing = false;
   get('battle').hidden = true;
+  get('camp').hidden = true;
   get('lobby').hidden = false;
   get('resume').hidden = !state || state.phase === 'end';
   get('heroes').replaceChildren(...heroes.map(hero => {
@@ -243,6 +268,7 @@ async function enter(restart) {
     save();
   }
   get('lobby').hidden=true;
+  get('camp').hidden=true;
   get('battle').hidden=false;
   render();
   await unlock();
@@ -259,6 +285,63 @@ get('speed').onchange=save;
 get('mute').onclick=()=>{get('mute').textContent=toggleMute()?'開聲音':'靜音';};
 get('report').onclick=()=>modal(element('h2','戰報'),...log.slice(-40).reverse().map(line=>element('p',line)));
 get('deck').onclick=()=>editDeck();
+function backupPanel() {
+  const status=element('div');
+  status.setAttribute('aria-live','polite');
+  const download=element('button','匯出 JSON');
+  download.onclick=()=>{
+    const url=URL.createObjectURL(new Blob([makeBackup(currentSave())],{type:'application/json'}));
+    const link=element('a');
+    link.href=url;
+    link.download='CxQ-Rift-Summon-backup.json';
+    link.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  };
+  const picker=element('input');
+  picker.type='file';
+  picker.accept='.json,application/json';
+  picker.setAttribute('aria-label','選擇存檔備份');
+  picker.onchange=async()=>{
+    if (!picker.files[0]) return;
+    try {
+      const backup=await readBackup(picker.files[0]);
+      if (!get('detail').open || !picker.isConnected) return;
+      const imported=backup.save;
+      const summary=`第一章已通過 ${imported.cleared.length}/4 關・收藏 ${8+imported.cleared.length} 張・${imported.state?.phase==='deploy'?'含未完戰鬥':'無未完戰鬥'}`;
+      const confirm=element('button','確認匯入並重新載入');
+      confirm.onclick=()=>{
+        try {
+          localStorage.setItem(recoveryKey,JSON.stringify(currentSave()));
+          localStorage.setItem(key,JSON.stringify(imported));
+          location.reload();
+        } catch {status.textContent='瀏覽器無法儲存匯入結果。';}
+      };
+      status.replaceChildren(element('p',backup.createdAt?.toLocaleString('zh-TW') ?? '日期未知'),element('p',summary),confirm);
+    } catch (error) {status.textContent=error.message;}
+  };
+  const restore=element('button','恢復匯入前的存檔');
+  restore.onclick=()=>{
+    try {
+      const recovery=localStorage.getItem(recoveryKey);
+      if (!recovery) {status.textContent='目前沒有匯入前的存檔。';return;}
+      const confirm=element('button','確認恢復');
+      confirm.onclick=()=>{
+        try {localStorage.setItem(key,recovery);location.reload();}
+        catch {status.textContent='瀏覽器無法儲存復原結果。';}
+      };
+      status.replaceChildren(element('p','恢復後會回到上一次匯入前的進度。'),confirm);
+    } catch {status.textContent='瀏覽器無法讀取匯入前的存檔。';}
+  };
+  modal(element('h2','存檔備份'),download,element('p','選擇 JSON 可先查看進度，再確認匯入。'),picker,restore,status);
+}
+get('backup').onclick=backupPanel;
+get('camp-campaign').onclick=async()=>{lobby();await unlock();changeMusic('lobby');};
+get('camp-deck').onclick=()=>editDeck();
+get('camp-collection').onclick=showCollection;
+get('camp-resume').onclick=()=>enter(false);
+get('return-camp').onclick=showCamp;
+get('camp-options').onclick=()=>get('options').click();
+get('camp-backup').onclick=backupPanel;
 get('options').onclick=()=>{
   const slider=(id,labelText)=>{
     const label=element('label',labelText);
@@ -276,4 +359,4 @@ get('rune-status').onclick=()=>modal(element('h2',get('rune-status').textContent
 document.addEventListener('visibilitychange',()=>{
   if(!document.hidden && audioScene && audioScene!=='end' && audioScene!=='loss') setMusic(audioScene);
 });
-lobby();
+showCamp();

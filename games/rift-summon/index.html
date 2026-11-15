@@ -4,11 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=camp-buttons-1">
 </head>
 <body>
 <main>
-<section id="lobby">
+<section id="camp" aria-label="裂界營地">
+  <div class="camp-content">
+    <h1>CxQ 裂界召喚</h1>
+    <p id="camp-progress"></p>
+    <nav class="camp-nav" aria-label="營地入口">
+      <button id="camp-campaign" data-art="campaign">戰役</button>
+      <button id="camp-deck" data-art="deck">編隊</button>
+      <button id="camp-collection" data-art="collection">收藏</button>
+      <button id="camp-resume" data-art="resume" hidden>繼續戰鬥</button>
+    </nav>
+    <div class="controls"><button id="camp-options" data-art="settings">聲音設定</button><button id="camp-backup" data-art="backup">存檔備份</button></div>
+  </div>
+</section>
+<section id="lobby" hidden>
+  <button id="return-camp">回營地</button>
   <small>CxQ 裂界召喚</small><h1>斷橋哨站</h1>
   <p id="hero-detail" aria-live="polite"></p>
   <div id="heroes" aria-label="選擇英雄"></div>
@@ -16,7 +30,7 @@
   <p id="stage-detail" aria-live="polite"></p>
   <div class="controls">
     <label>戰前符文 <select id="rune"><option value="wall">鐵壁</option><option value="heal">回春</option></select></label>
-    <button id="deck">編隊與收藏</button><button id="options">聲音設定</button><button id="start">開始戰鬥</button><button id="resume" hidden>繼續戰鬥</button>
+    <button id="deck" data-art="deck">編隊與收藏</button><button id="options" data-art="settings">聲音設定</button><button id="backup" data-art="backup">存檔備份</button><button id="start" data-art="attack">開始戰鬥</button><button id="resume" data-art="resume" hidden>繼續戰鬥</button>
   </div>
 </section>
 <section id="battle" hidden>
@@ -34,12 +48,12 @@
     <button id="rune-status" type="button"></button>
     <label>倍速 <select id="speed"><option value="1">1×</option><option value="2">2×</option><option value="3">3×</option></select></label>
     <button id="mute">靜音</button>
-    <button id="deploy" disabled>部署</button><button id="attack">開始攻擊</button>
+    <button id="deploy" data-art="deploy" disabled>部署</button><button id="attack" data-art="attack">開始攻擊</button>
     <button id="report">戰報</button>
   </footer>
 </section>
 <dialog id="detail"><div id="detail-content"></div><form method="dialog"><button>關閉</button></form></dialog>
 </main>
-<script type="module" src="main.mjs"></script>
+<script type="module" src="main.mjs?v=camp-buttons-1"></script>
 </body>
 </html>

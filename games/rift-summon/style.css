@@ -3,6 +3,18 @@
 body { margin: 0; color: #fff6dc; background: #171228 url("art/arena.webp") center / cover fixed; font: 15px system-ui, sans-serif; }
 main { max-width: 1080px; margin: auto; padding: max(8px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); }
 [hidden] { display: none !important; }
+body:has(#camp:not([hidden])) { background-image: url("art/camp-portrait.webp"); }
+@media (orientation: landscape) { body:has(#camp:not([hidden])) { background-image: url("art/camp-wide.webp"); } }
+#camp { min-height: calc(100svh - 24px); display: grid; align-items: end; }
+.camp-content { width: min(100%, 480px); padding-bottom: 12px; }
+.camp-content h1 { font-size: clamp(28px,7vw,52px); text-shadow: 0 2px 4px black; }
+#camp-progress { margin-block: 5px 12px; }
+.camp-nav { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin-bottom: 10px; }
+.camp-nav button { min-height: 58px; font-weight: 700; font-size: 17px; }
+@media (orientation: landscape) {
+  #camp { align-items: center; }
+  .camp-content { width: min(53%,460px); }
+}
 header,footer,.controls,.hero-hud { display: flex; align-items: center; gap: 8px; }
 .controls { flex-wrap: wrap; }
 header,footer { justify-content: space-between; }
@@ -13,7 +25,16 @@ h1,p { margin: 4px 0; }
 h1 { font-size: clamp(24px,5vw,45px); }
 small { color: #f9d58e; }
 button,select { min-height: 44px; border: 0; color: inherit; font: inherit; padding: 4px 12px; }
-button { background: #392443 url("art/button.webp") center / 100% 100%; }
+button { background: transparent url("art/btn-utility.webp") center / 100% 100% no-repeat; }
+button[data-art] { padding-inline: 31px 10px; min-width: 94px; }
+button[data-art="campaign"] { background-image: url("art/btn-campaign.webp"); }
+button[data-art="deck"] { background-image: url("art/btn-deck.webp"); }
+button[data-art="collection"] { background-image: url("art/btn-collection.webp"); }
+button[data-art="resume"] { background-image: url("art/btn-resume.webp"); }
+button[data-art="attack"] { background-image: url("art/btn-attack.webp"); }
+button[data-art="deploy"] { background-image: url("art/btn-deploy.webp"); }
+button[data-art="settings"] { background-image: url("art/btn-settings.webp"); }
+button[data-art="backup"] { background-image: url("art/btn-backup.webp"); }
 button:disabled { opacity: .54; }
 button[aria-pressed=true] { outline: 2px solid #ffe3a1; outline-offset: -2px; }
 select { background: #281b3a; }
@@ -48,6 +69,6 @@ dialog::backdrop { background: #080611b8; }
 @media (orientation: landscape) and (max-height: 440px) {
   main { padding-top: max(2px,env(safe-area-inset-top)); }
   header,footer { gap: 4px; }
-  button,select { padding-inline: 6px; }
+  button:not([data-art]),select { padding-inline: 6px; }
   #forecast,#message { font-size: 12px; }
 }
