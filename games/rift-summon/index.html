@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CxQ 裂界召喚</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<section id="lobby">
+  <small>CxQ 裂界召喚</small><h1>斷橋哨站</h1>
+  <p id="hero-detail" aria-live="polite"></p>
+  <div id="heroes" aria-label="選擇英雄"></div>
+  <div id="stages" aria-label="章節關卡"></div>
+  <p id="stage-detail" aria-live="polite"></p>
+  <div class="controls">
+    <label>戰前符文 <select id="rune"><option value="wall">鐵壁</option><option value="heal">回春</option></select></label>
+    <button id="deck">編隊與收藏</button><button id="options">聲音設定</button><button id="start">開始戰鬥</button><button id="resume" hidden>繼續戰鬥</button>
+  </div>
+</section>
+<section id="battle" hidden>
+  <header>
+    <div class="hero-hud"><img id="portrait" alt=""><div><strong id="hero-name"></strong><div id="health"></div></div></div>
+    <div><strong id="enemy-health"></strong><div id="round"></div></div>
+    <button id="back">編隊</button>
+  </header>
+  <div id="rotate">橫拿手機可看到更多欄位。</div>
+  <div id="forecast"></div>
+  <div id="field" tabindex="0" aria-label="敵我同步捲動戰場"><div id="lanes"></div></div>
+  <p id="message" aria-live="polite"></p>
+  <div id="hand" aria-label="手牌"></div>
+  <footer>
+    <button id="rune-status" type="button"></button>
+    <label>倍速 <select id="speed"><option value="1">1×</option><option value="2">2×</option><option value="3">3×</option></select></label>
+    <button id="mute">靜音</button>
+    <button id="deploy" disabled>部署</button><button id="attack">開始攻擊</button>
+    <button id="report">戰報</button>
+  </footer>
+</section>
+<dialog id="detail"><div id="detail-content"></div><form method="dialog"><button>關閉</button></form></dialog>
+</main>
+<script type="module" src="main.mjs"></script>
+</body>
+</html>
