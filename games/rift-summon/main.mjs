@@ -37,9 +37,11 @@ function element(tag, value, className) {
 }
 function artwork(id, type = 'card', className = '') {
   const img = element('img', '', className);
-  img.src = asset(type === 'card' ? `illustration-${id}` : `${type}-${id}`);
+  const prefix = type === 'card' ? 'illustration' : type === 'hero' ? 'hero-portrait' : type;
+  img.src = asset(`${prefix}-${id}`);
   img.alt = '';
   img.draggable = false;
+  img.decoding = 'async';
   return img;
 }
 function modal(...children) {
@@ -109,20 +111,25 @@ function lobby() {
   get('camp').hidden = true;
   get('lobby').hidden = false;
   get('resume').hidden = !state || state.phase === 'end';
-  get('heroes').replaceChildren(...heroes.map(hero => {
+  const roster=get('heroes');
+  const scroll=roster.scrollLeft;
+  roster.replaceChildren(...heroes.map(hero => {
     const button = element('button');
-    button.append(artwork(hero.id,'hero'),element('span',hero.name));
+    const portrait=artwork(hero.id,'hero');
+    portrait.loading='lazy';
+    button.append(portrait,element('span',hero.name));
     button.setAttribute('aria-pressed',String(chosen === hero.id));
     button.onclick = async () => {
       chosen = hero.id;
-      lobby();
+      for(const child of roster.children) child.setAttribute('aria-pressed',String(child===button));
+      showHeroPreview();
       await unlock();
       play('deploy');
     };
     return button;
   }));
-  const hero=heroes.find(h=>h.id===chosen);
-  get('hero-detail').textContent=`${hero.name}｜${hero.skill}｜${hero.detail}`;
+  roster.scrollLeft=scroll;
+  showHeroPreview();
   get('stages').replaceChildren(...stages.map((stage,index)=>{
     const open=index===0 || cleared.has(index-1);
     const button=element('button',`${stage.name}${cleared.has(index)?' ✓':open?'':'・未解鎖'}`);
@@ -133,6 +140,14 @@ function lobby() {
   }));
   const stage=stages[stageIndex];
   get('stage-detail').textContent=`${stage.goal} 首通取得：${cards[stage.reward][0]}。`;
+}
+function showHeroPreview() {
+  const hero=heroes.find(h=>h.id===chosen);
+  get('hero-preview-art').src=asset(`hero-portrait-${hero.id}`);
+  get('hero-preview-art').alt=`${hero.name}的出戰立繪`;
+  get('hero-preview-name').textContent=hero.name;
+  get('hero-preview-skill').textContent=hero.skill;
+  get('hero-detail').textContent=hero.detail;
 }
 function editDeck(draft=[...deck], active=0) {
   const grid=element('div','','deck-grid');
@@ -196,7 +211,7 @@ function render() {
   const [player,enemy]=state.sides;
   renderBoard(state);
   const current=heroes.find(hero=>hero.id===state.hero);
-  get('portrait').src=asset(`hero-${current.id}`);
+  get('portrait').src=asset(`hero-portrait-${current.id}`);
   get('hero-name').textContent=current.name;
   get('hero-name').onclick=()=>modal(artwork(current.id,'hero'),element('h2',current.skill),element('p',current.detail));
   const card=player.hand.find(item=>item.uid===selected);
@@ -289,7 +304,7 @@ async function act(action) {
     changeMusic(state.result==='勝利'?'end':'loss');
     const current=heroes.find(h=>h.id===state.hero);
     const ending=artwork(current.id,'hero');
-    ending.src=asset(`${state.result==='勝利'?'win':state.result==='敗北'?'loss':'hero'}-${current.id}`);
+    if(state.result!=='平局') ending.src=asset(`${state.result==='勝利'?'win':'loss'}-${current.id}`);
     const message=reward?`首通獲得 ${cards[reward][0]}。可回編隊把它加入牌組。`:'可回編隊，換英雄或符文再挑戰。';
     if(reward) {
       stageIndex=Math.min(state.stage+1,stages.length-1);
@@ -378,6 +393,10 @@ get('camp-collection').onclick=showCollection;
 get('collection-back').onclick=showCamp;
 get('collection-search').oninput=renderCollection;
 get('collection-filter').onchange=renderCollection;
+get('hero-preview-open').onclick=()=>{
+  const hero=heroes.find(h=>h.id===chosen);
+  modal(artwork(hero.id,'hero'),element('h2',hero.name),element('strong',hero.skill),element('p',hero.detail));
+};
 get('camp-resume').onclick=()=>enter(false);
 get('return-camp').onclick=showCamp;
 get('camp-options').onclick=()=>get('options').click();

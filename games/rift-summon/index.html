@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=chapter-card-art-1">
+<link rel="stylesheet" href="style.css?v=chapter-hero-art-1">
 </head>
 <body>
 <main>
@@ -32,9 +32,14 @@
   <div id="collection-grid"></div>
 </section>
 <section id="lobby" hidden>
-  <button id="return-camp">回營地</button>
-  <small>CxQ 裂界召喚</small><h1>斷橋哨站</h1>
-  <p id="hero-detail" aria-live="polite"></p>
+  <header class="war-room-header"><div><small>第一章</small><h1>斷橋哨站</h1></div><button id="return-camp">回營地</button></header>
+  <div id="hero-preview" class="hero-preview">
+    <button id="hero-preview-open" aria-label="查看英雄完整立繪"><img id="hero-preview-art" alt=""></button>
+    <div class="hero-preview-copy">
+      <small>出戰英雄</small><h2 id="hero-preview-name"></h2>
+      <strong id="hero-preview-skill"></strong><p id="hero-detail"></p>
+    </div>
+  </div>
   <div id="heroes" aria-label="選擇英雄"></div>
   <div id="stages" aria-label="章節關卡"></div>
   <p id="stage-detail" aria-live="polite"></p>
@@ -64,6 +69,6 @@
 </section>
 <dialog id="detail"><div id="detail-content"></div><form method="dialog"><button>關閉</button></form></dialog>
 </main>
-<script type="module" src="main.mjs?v=chapter-card-art-1"></script>
+<script type="module" src="main.mjs?v=chapter-hero-art-1"></script>
 </body>
 </html>
