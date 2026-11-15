@@ -1,6 +1,6 @@
 import {applyAction, cards, createBattle, stages, starter} from './battle.mjs';
 import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=hero-skill-art-1';
 import {makeBackup, readBackup} from './backup.mjs';
 
 const get = id => document.getElementById(id);
@@ -55,6 +55,7 @@ function cardDetail(card) {
 function showCamp() {
   playback++;
   playing=false;
+  get('hero-cut-in').hidden=true;
   get('battle').hidden=true;
   get('lobby').hidden=true;
   get('collection').hidden=true;
@@ -107,6 +108,7 @@ const descriptions = {
 function lobby() {
   playback++;
   playing = false;
+  get('hero-cut-in').hidden=true;
   get('battle').hidden = true;
   get('camp').hidden = true;
   get('lobby').hidden = false;
@@ -144,6 +146,7 @@ function lobby() {
 function showHeroPreview() {
   const hero=heroes.find(h=>h.id===chosen);
   get('hero-preview-art').src=asset(`hero-portrait-${hero.id}`);
+  get('hero-cut-in-art').src=asset(`hero-cast-${hero.id}`);
   get('hero-preview-art').alt=`${hero.name}的出戰立繪`;
   get('hero-preview-name').textContent=hero.name;
   get('hero-preview-skill').textContent=hero.skill;
@@ -235,14 +238,29 @@ function render() {
   get('attack').disabled=playing || state.phase==='end';
 }
 function effect(event) {
-  if (event.kind==='hero') return `hero-${state.hero}`;
   if (event.kind==='skill') return event.message.includes('自爆')?'fx-bomb':event.message.includes('靈體')?'fx-spirit':event.message.includes('治療')||event.message.includes('回春')?'fx-heal':'fx-shield';
   if (event.kind==='attack') return event.message.includes('橫掃')?'fx-ax':event.message.includes('斥候')?'fx-arrow':'fx-ax';
   if (event.kind==='deploy') return 'fx-rune';
   if (event.kind==='death') return 'fx-spirit';
   return 'fx-shield';
 }
-const duration = kind => (kind==='hero'?680:kind==='round'?180:380)/Number(get('speed').value);
+function duration(kind) {
+  const speed=Number(get('speed').value);
+  return kind==='hero'?Math.max(560,1150/speed):(kind==='round'?180:380)/speed;
+}
+function showHeroCast(ms, reducedMotion) {
+  const hero=heroes.find(h=>h.id===state.hero);
+  const panel=get('hero-cut-in');
+  get('hero-cut-in-name').textContent=hero.name;
+  get('hero-cut-in-skill').textContent=hero.skill;
+  panel.hidden=false;
+  if (!reducedMotion) panel.animate([
+    {opacity:0,transform:'translateX(-16px)'},
+    {opacity:1,transform:'translateX(0)',offset:.16},
+    {opacity:1,transform:'translateX(0)',offset:.85},
+    {opacity:0,transform:'translateX(8px)'},
+  ],{duration:ms,easing:'ease-out'});
+}
 async function act(action) {
   if (playing) return;
   const update=applyAction(state,action);
@@ -263,22 +281,21 @@ async function act(action) {
     if(document.hidden) break;
     renderBoard(event.frame,event);
     get('message').textContent=event.message;
-    play(event.kind);
+    play(event.kind,state.hero);
     const ms=duration(event.kind);
-    let cutIn;
-    if(event.kind==='hero') {
-      cutIn=artwork(state.hero,'cast','cut-in');
-      get('battle').append(cutIn);
-      cutIn.animate([{opacity:0},{opacity:1,offset:.22},{opacity:1,offset:.8},{opacity:0}],ms);
-    }
+    const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(event.kind==='hero') showHeroCast(ms,reducedMotion);
     const origin=get('lanes').querySelector(`[data-slot="${event.actor}:${event.origin}"]`);
-    if(origin && !matchMedia('(prefers-reduced-motion: reduce)').matches) origin.animate(
+    if(origin && !reducedMotion) origin.animate(
       [{transform:'translateY(0)'},{transform:`translateY(${event.actor===0?-9:9}px)`},{transform:'translateY(0)'}],ms);
     const frameAnimations=[];
     for(const lane of event.lanes??[]) {
       const slot=lane===null?(event.target===0?get('health'):get('enemy-health')):get('lanes').querySelector(`[data-slot="${event.target}:${lane}"]`);
       if(!slot) continue;
-      if(lane===null) {slot.animate([{opacity:.45},{opacity:1}],ms);continue;}
+      if(lane===null || event.kind==='hero') {
+        if(!reducedMotion) slot.animate([{opacity:.45},{opacity:1}],ms);
+        continue;
+      }
       const img=element('img','','effect');
       const art=effect(event);
       const series=['fx-ax','fx-bomb','fx-spirit'].includes(art) ? art.slice(3) : null;
@@ -287,7 +304,7 @@ async function act(action) {
       slot.append(img);
       if(series) frameAnimations.push({img,series});
       if(event.kind==='hit') slot.append(element('i',event.message.split('：').at(-1)));
-      if(!matchMedia('(prefers-reduced-motion: reduce)').matches) img.animate([{opacity:0,transform:'scale(.65)'},{opacity:1},{opacity:0,transform:'scale(1.18)'}],ms);
+      if(!reducedMotion) img.animate([{opacity:0,transform:'scale(.65)'},{opacity:1},{opacity:0,transform:'scale(1.18)'}],ms);
     }
     for(let step=1;step<=4;step++) {
       await new Promise(resolve=>setTimeout(resolve,ms/4));
@@ -295,7 +312,7 @@ async function act(action) {
         for(const {img,series} of frameAnimations) img.src=asset(`frame-${series}${step}`);
       }
     }
-    cutIn?.remove();
+    if(token===playback && event.kind==='hero') get('hero-cut-in').hidden=true;
   }
   if(token!==playback) return;
   playing=false;
@@ -322,9 +339,10 @@ async function enter(restart) {
   get('lobby').hidden=true;
   get('camp').hidden=true;
   get('battle').hidden=false;
+  get('hero-cut-in-art').src=asset(`hero-cast-${state.hero}`);
   render();
   await unlock();
-  prepare();
+  prepare(state.hero);
   changeMusic(state.stage===3?'boss':'battle');
 }
 function changeMusic(scene) { audioScene=scene; setMusic(scene); }

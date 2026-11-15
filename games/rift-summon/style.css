@@ -65,8 +65,11 @@ button.collectible { display: grid; position: relative; align-content: end; aspe
 #collection-empty { grid-column: 1 / -1; }
 #detail-content .deck-grid img { width: 34px; height: 34px; object-fit: cover; }
 .deck-order { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 4px; }
-.cut-in { position: absolute; z-index: 3; width: min(140px,30vw); left: 50%; top: 12px; transform: translateX(-50%); pointer-events: none; }
-#battle { position: relative; }
+.battle-stage { position: relative; }
+#hero-cut-in { position: absolute; inset: 0; z-index: 3; pointer-events: none; display: grid; grid-template-columns: auto minmax(0,1fr); align-items: center; max-width: min(360px,83vw); margin-inline: auto; overflow: hidden; }
+#hero-cut-in-art { height: clamp(104px,35vh,188px); aspect-ratio: 3 / 4; object-fit: cover; }
+#hero-cut-in > div { padding: 8px 11px; background: #181023ed; }
+#hero-cut-in strong { display: block; font-size: clamp(18px,4vw,32px); }
 .hero-hud img { width: 44px; height: 44px; object-fit: cover; }
 #forecast,#message,#rotate,header { background: #171228da; padding: 4px 8px; }
 #field,#hand { overflow-x: auto; }

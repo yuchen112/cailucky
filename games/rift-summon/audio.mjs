@@ -1,4 +1,8 @@
 const sounds = {deploy:[280,500],attack:[340,120],hit:[140,55],death:[200,65],hero:[440,880],skill:[650,330],end:[523,784]};
+const heroSound = {
+  hope:[620,1120], trust:[294,588], growth:[315,720], healing:[640,480], joy:[510,1360],
+  luck:[900,350], memory:[390,850], night:[440,630], sadness:[980,510], dream:[580,1520],
+};
 let context, bus, music, musicBus;
 const buffers = new Map();
 const tracks = new Map();
@@ -19,9 +23,11 @@ export async function unlock() {
     await context.resume();
   } catch {}
 }
-function clip(kind) {
-  if (buffers.has(kind)) return buffers.get(kind);
-  const [from,to] = sounds[kind];
+function clip(kind, hero) {
+  const specific = kind === 'hero' && heroSound[hero];
+  const key = specific ? `hero:${hero}` : kind;
+  if (buffers.has(key)) return buffers.get(key);
+  const [from,to] = specific || sounds[kind];
   const duration = kind === 'hero' || kind === 'end' ? .32 : .18;
   const size = Math.ceil(duration * context.sampleRate);
   const buffer = context.createBuffer(1,size,context.sampleRate);
@@ -31,19 +37,20 @@ function clip(kind) {
     const progress = i / size;
     const freq = from + (to - from) * progress;
     phase += 2 * Math.PI * freq / context.sampleRate;
-    data[i] = (Math.sin(phase) + .28 * Math.sin(phase * 2.01)) * Math.min(1,i/100) * (1-progress)**2 * .22;
+    const overtone = specific ? .25 * Math.sin(phase * 1.5) + .12 * Math.sin(phase * 2.74) : .28 * Math.sin(phase * 2.01);
+    data[i] = (Math.sin(phase) + overtone) * Math.min(1,i/100) * (1-progress)**2 * .22;
   }
-  buffers.set(kind, buffer);
+  buffers.set(key, buffer);
   return buffer;
 }
-export function prepare() {
-  if (context) for (const kind of Object.keys(sounds)) clip(kind);
+export function prepare(hero) {
+  if (context) for (const kind of Object.keys(sounds)) clip(kind,hero);
 }
-export function play(kind) {
+export function play(kind, hero) {
   if (!sounds[kind] || context?.state !== 'running' || document.hidden || muted || active.size >= 6) return;
   if ([...active].filter(entry => entry.kind === kind).length >= 2) return;
   const source=context.createBufferSource();
-  source.buffer=clip(kind);
+  source.buffer=clip(kind,hero);
   source.connect(bus);
   const entry={kind,source};
   active.add(entry);
