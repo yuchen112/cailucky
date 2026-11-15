@@ -19,6 +19,14 @@ export const cards = {
   lynx: ['銀刃夜猞', 1, 3, 4, '追獵'],
   moth: ['微光蛾巫', 2, 2, 6, '治療'],
   drake: ['銅焰幼龍', 3, 5, 6, '橫掃'],
+  ibis: ['赤羽弓衛', 1, 4, 3, '追獵'],
+  hare: ['花籃兔醫', 1, 1, 5, '治療'],
+  otter: ['藍溪盾獺', 2, 3, 6, '護盾'],
+  ram: ['崖角斧羊', 3, 5, 7, '橫掃'],
+  bat: ['紫翼引魂者', 1, 1, 4, '亡靈接替'],
+  beetle: ['琥珀爆甲', 2, 3, 5, '自爆'],
+  crane: ['玉燈白鶴', 3, 3, 8, '治療'],
+  yak: ['岩盾犛牛', 3, 3, 9, '護衛'],
   boss: ['斷橋守將', 0, 2, 6, '橫掃'],
   spirit: ['靈體', 0, 1, 2, ''],
 };
@@ -172,6 +180,24 @@ function result(state) {
 }
 function runRune(state, events) {
   if (!state.charges) return;
+  if(state.rune==='tide'||state.rune==='root') {
+    const tide=state.rune==='tide';
+    const target=tide?1:0;
+    const board=state.sides[target].board;
+    const lanes=board.flatMap((card,lane)=>card&&(tide?card.shield>0:card.hp<card.max)?[lane]:[]);
+    if(tide) {
+      if(!lanes.length) return;
+      lanes.sort((a,b)=>board[b].shield-board[a].shield);
+      lanes.length=1;
+      board[lanes[0]].shield=Math.max(0,board[lanes[0]].shield-3);
+    } else {
+      if(lanes.length<2) return;
+      for(const lane of lanes) board[lane].hp++;
+    }
+    state.charges--;
+    record(state,events,'skill',`${tide?'潮解':'生根'}（剩 ${state.charges} 次）`,{actor:0,target,lanes,rune:state.rune});
+    return;
+  }
   if(state.rune==='ward'||state.rune==='flame') {
     const team=state.sides[0].board;
     const ward=state.rune==='ward';

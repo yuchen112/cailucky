@@ -1,6 +1,6 @@
-import {cards, stages, starter} from './battle.mjs?v=capsule-2';
+import {cards, stages, starter} from './battle.mjs?v=catalog-3';
 import {heroes} from './heroes.mjs';
-import {validWallet,validRunes,unlockedRunes} from './economy.mjs?v=capsule-2';
+import {validWallet,validRunes,unlockedRunes} from './economy.mjs?v=catalog-3';
 
 const format = 'cxq-rift-summon';
 const limit = 256 * 1024;
@@ -31,7 +31,7 @@ export async function readBackup(file) {
     cleared.every(index=>integer(index,0,cleared.length-1));
   const walletOk=save?.wallet===undefined || validWallet(save.wallet);
   const owned=validClears ? [...starter,...cleared.map(index=>stages[index].reward),...(walletOk?save.wallet?.unlocked??[]:[])] : [];
-  const runeOwnership=validClears?unlockedRunes(new Set(cleared)):[];
+  const runeOwnership=validClears?unlockedRunes(new Set(cleared),walletOk?save.wallet:undefined):[];
   const validDeck=Array.isArray(save?.deck) && save.deck.length === 8 &&
     new Set(save.deck).size === 8 && save.deck.every(id=>owned.includes(id));
   const validState=state === null || (state?.version === 3 &&

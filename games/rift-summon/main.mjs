@@ -1,8 +1,8 @@
-import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=capsule-2';
+import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=catalog-3';
 import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=capsule-2';
-import {makeBackup, readBackup} from './backup.mjs?v=capsule-2';
-import {startingWallet,validWallet,prices,cardLevel,maxLevel,levelCost,victoryPay,unlockedRunes,openCapsule,improveCard} from './economy.mjs?v=capsule-2';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=catalog-3';
+import {makeBackup, readBackup} from './backup.mjs?v=catalog-3';
+import {startingWallet,validWallet,prices,cardLevel,maxLevel,levelCost,victoryPay,unlockedRunes,openCapsule,improveCard} from './economy.mjs?v=catalog-3';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -30,10 +30,12 @@ const runes={
   spark:{name:'雷印',effect:'開始攻擊時，對生命與護盾合計不超過 2 點的敵軍造成 2 點傷害。',source:'首通斷橋守將'},
   ward:{name:'共盾',effect:'開始攻擊時，若至少兩張友軍在場，給最前方無盾友軍 1 點護盾。',source:'首通哨站前沿'},
   flame:{name:'熾志',effect:'開始攻擊時，若至少兩張友軍在場，讓最前方半血以下友軍攻擊增加 1，維持到戰鬥結束。',source:'首通斷橋缺口'},
+  tide:{name:'潮解',effect:'開始攻擊時，移除護盾最多的敵軍最多 3 點護盾。',source:'收錄 3 張扭蛋卡'},
+  root:{name:'生根',effect:'開始攻擊時，若有至少兩張受傷友軍，讓所有受傷友軍各回復 1 點生命。',source:'任一卡牌強化至 Lv.3'},
   none:{name:'未裝備',effect:'這場戰鬥不會觸發符文。'},
 };
 const savedRune=saved?.loadout??state?.rune;
-let loadout=savedRune==='none'||unlockedRunes(cleared).includes(savedRune)?savedRune:'wall';
+let loadout=savedRune==='none'||unlockedRunes(cleared,wallet).includes(savedRune)?savedRune:'wall';
 let runeReturn='camp';
 let settingsReturn='camp';
 let albumReturn='camp';
@@ -107,8 +109,8 @@ function showRunes(from) {
   renderRuneBook();
 }
 function renderRuneBook() {
-  const available=unlockedRunes(cleared);
-  const groups={wall:'guard',ward:'guard',heal:'heal',frost:'control',spark:'attack',flame:'attack'};
+  const available=unlockedRunes(cleared,wallet);
+  const groups={wall:'guard',ward:'guard',heal:'heal',root:'heal',frost:'control',tide:'control',spark:'attack',flame:'attack'};
   const filter=get('rune-filter').value;
   const ids=Object.keys(groups).filter(id=>filter==='all'||groups[id]===filter);
   get('rune-count').textContent=`已收錄 ${available.length} / ${Object.keys(groups).length} 枚・目前顯示 ${ids.length} 枚`;
@@ -390,16 +392,27 @@ function showHeroPreview() {
   get('hero-preview-skill').textContent=hero.skill;
   get('hero-detail').textContent=hero.detail;
 }
-function editDeck(draft=[...deck], active=0, preview=draft[active]) {
+function editDeck(draft=[...deck], active=0, preview=draft[active], category='all') {
   const grid=element('div','','deck-grid');
-  for(const id of owned()) {
+  const filter=element('select');
+  filter.id='deck-card-category';
+  for(const [value,name] of [['all','全部'],['attack','攻擊'],['guard','防護'],['heal','治療'],['support','支援']]) {
+    const option=element('option',name);
+    option.value=value;
+    filter.append(option);
+  }
+  filter.value=category;
+  filter.onchange=()=>editDeck(draft,active,preview,filter.value);
+  const label=element('label','牌庫類別','catalog-filter');
+  label.append(filter);
+  for(const id of owned().filter(id=>category==='all'||cardGroup(id)===category)) {
     const position=draft.indexOf(id);
     const button=element('button');
     button.append(cardFace(catalogCard(id)));
     button.setAttribute('aria-pressed',String(preview===id));
     if(position>=0) button.append(element('small',`在隊中・第 ${position+1} 張`));
     button.onclick=()=>{
-      editDeck(draft,active,id);
+      editDeck(draft,active,id,category);
       get('detail').querySelector('.deck-card-preview').scrollIntoView({block:'nearest'});
     };
     grid.append(button);
@@ -409,7 +422,7 @@ function editDeck(draft=[...deck], active=0, preview=draft[active]) {
     const slot=element('button');
     slot.append(cardFace(catalogCard(id)),element('small',index<3?`起手 ${index+1}`:`第 ${index+1} 張`));
     slot.setAttribute('aria-pressed',String(index===active));
-    slot.onclick=()=>editDeck(draft,index);
+    slot.onclick=()=>editDeck(draft,index,draft[index],category);
     slots.append(slot);
   }
   const apply=element('button','儲存編隊');
@@ -433,13 +446,13 @@ function editDeck(draft=[...deck], active=0, preview=draft[active]) {
     const next=[...draft];
     next[active]=preview;
     if(position>=0) next[position]=draft[active];
-    editDeck(next,active);
+    editDeck(next,active,next[active],category);
   };
   copy.append(element('h3',candidate.name),element('p',`攻擊 ${candidate.attack}・生命 ${candidate.max}・初始護盾 ${candidate.shield}・倒數 ${candidate.count}`),
     element('p',`${candidate.skill||'普攻'}｜${descriptions[candidate.skill]??'普攻正對欄位，空位直擊敵方英雄。'}`),
     element('p',`第 ${active+1} 張現用 ${current.name}：攻擊 ${current.attack}・生命 ${current.max}・倒數 ${current.count}`),change);
   info.append(cardFace(candidate),copy);
-  body.append(element('h2','出戰卡組 8 / 8'),slots,info,element('h3','可用卡牌'),grid);
+  body.append(element('h2','出戰卡組 8 / 8'),slots,info,label,grid);
   layout.append(summary,body);
   modal(layout);
 }
