@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=deck-results-1">
+<link rel="stylesheet" href="style.css?v=capsule-1">
 </head>
 <body>
 <main>
@@ -17,19 +17,30 @@
   <div class="camp-content">
     <h1>CxQ 裂界召喚</h1>
     <p id="camp-progress"></p>
+    <div id="camp-wallet" class="wallet"></div>
     <nav class="camp-nav" aria-label="營地入口">
       <button id="camp-campaign" data-art="campaign">副本</button>
       <button id="camp-deck" data-art="deck">編隊</button>
       <button id="camp-collection" data-art="collection">卡冊</button>
       <button id="camp-runes">符文冊</button>
+      <button id="camp-capsule" data-art="collection">扭蛋召喚</button>
       <button id="camp-resume" data-art="resume" hidden>繼續戰鬥</button>
     </nav>
     <div class="controls"><button id="camp-options" data-art="settings">設定</button><button id="camp-backup" data-art="backup">存檔備份</button></div>
   </div>
 </section>
 <section id="rune-book" hidden aria-label="符文冊">
-  <header class="collection-header"><div><h1>符文冊</h1><p>第一章・已收錄 2 枚</p></div><button id="rune-back">返回</button></header>
+  <header class="collection-header"><div><h1>符文冊</h1><p id="rune-count"></p></div><button id="rune-back">返回</button></header>
   <div id="rune-book-grid"></div>
+</section>
+<section id="capsule" hidden aria-labelledby="capsule-title">
+  <header class="collection-header"><h1 id="capsule-title">扭蛋召喚</h1><button id="capsule-back">回營地</button></header>
+  <div class="capsule-console">
+    <div id="capsule-wallet" class="wallet" aria-live="polite"></div>
+    <div id="capsule-reveal" aria-live="polite"></div>
+    <div class="controls"><button id="draw-gold">金幣抽卡</button><button id="draw-gems">鑽石抽卡</button></div>
+    <p id="capsule-rules">金幣抽卡從四張扭蛋卡中等機率抽取；鑽石優先從未收錄卡等機率抽取。重複卡轉為 40 金幣。兩種貨幣均可由副本取得。</p>
+  </div>
 </section>
 <section id="campaign" hidden aria-label="副本">
   <header class="collection-header"><div><h1>副本</h1><p>第一章・斷橋哨站</p></div><button id="campaign-back">回營地</button></header>
@@ -44,7 +55,7 @@
   <button id="settings-backup" data-art="backup">存檔備份</button>
 </section>
 <section id="collection" hidden aria-label="角色卡冊">
-  <header class="collection-header"><div><h1>角色卡冊</h1><p id="collection-count"></p></div><button id="collection-back">回營地</button></header>
+  <header class="collection-header"><div><h1>角色卡冊</h1><p id="collection-count"></p></div><div id="album-wallet" class="wallet"></div><button id="collection-back">回營地</button></header>
   <div id="album-pages" aria-label="卡冊書頁"></div>
   <nav class="album-controls" aria-label="卡冊翻頁">
     <button id="album-prev">上一頁</button>
@@ -106,6 +117,6 @@
 </section>
 <dialog id="detail"><div id="detail-content"></div><form method="dialog"><button>關閉</button></form></dialog>
 </main>
-<script type="module" src="main.mjs?v=direct-results-1"></script>
+<script type="module" src="main.mjs?v=capsule-1"></script>
 </body>
 </html>

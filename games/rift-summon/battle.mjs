@@ -11,6 +11,10 @@ export const cards = {
   fang: ['裂爪獸', 1, 3, 3, '追獵'],
   flag: ['軍旗手', 2, 2, 6, '護衛'],
   moon: ['夜燈醫者', 2, 3, 4, '治療'],
+  ember: ['燼尾劍客', 1, 3, 4, '追獵'],
+  wisp: ['星燈羽術師', 2, 3, 5, '治療'],
+  turtle: ['苔殼盾衛', 2, 2, 8, '護衛'],
+  raven: ['月刃夜鴉', 2, 4, 4, '橫掃'],
   boss: ['斷橋守將', 0, 2, 6, '橫掃'],
   spirit: ['靈體', 0, 1, 2, ''],
 };
@@ -23,16 +27,17 @@ export const stages = [
   {name:'斷橋守將', goal:'頭目橫掃正對欄與兩側。利用護衛、自爆和接替改寫對位。', hp:10, opponents:sentries, opening:['boss'], reward:'moon'},
 ];
 
-function unit(id, uid) {
+function unit(id, uid, level=1) {
   const [name, count, attack, max, skill] = cards[id];
-  return {id, uid, name, count, attack, max, hp: max, shield: skill === '護盾' ? 2 : 0, skill};
+  const bonus=level-1;
+  return {id, uid, name, count, level, attack:attack+bonus, max:max+bonus*2, hp:max+bonus*2, shield: skill === '護盾' ? 2 : 0, skill};
 }
 function side(deck, hp) {
   return {hp, deck: deck.slice(3), hand: deck.slice(0, 3), board: []};
 }
-export function createBattle(rune = 'wall', hero = '', stage = 3, deck = starter) {
+export function createBattle(rune = 'wall', hero = '', stage = 3, deck = starter, levels = {}) {
   const level = stages[stage];
-  const player = side(deck.map((id, i) => unit(id, i)), 24);
+  const player = side(deck.map((id, i) => unit(id, i, levels[id]??1)), 24);
   const enemy = side(level.opponents.map((id, i) => unit(id, i + 8)), level.hp);
   enemy.board.push(...level.opening.map((id,i)=>unit(id,20+i)));
   const state = {version: 3, phase: 'deploy', stage, round: 1, result: null, sides: [player, enemy], hero, heroUsed: false, heroShield: 0, rune, charges: rune === 'none' ? 0 : 2, nextUid: 24, sequence: 0};
@@ -163,6 +168,23 @@ function result(state) {
 }
 function runRune(state, events) {
   if (!state.charges) return;
+  if(state.rune==='frost' || state.rune==='spark') {
+    const frost=state.rune==='frost';
+    const enemies=state.sides[1].board.map((card,lane)=>({card,lane})).filter(({card})=>card && (frost?card.attack>=4:card.hp+card.shield<=2));
+    enemies.sort((a,b)=>frost?b.card.attack-a.card.attack:a.card.hp-b.card.hp);
+    const target=enemies[0];
+    if(!target) return;
+    state.charges--;
+    const name=frost?'霜縛':'雷印';
+    if(frost) target.card.attack-=2;
+    record(state,events,'skill',`${name} → ${target.card.name}（剩 ${state.charges} 次）`,{actor:0,target:1,lanes:[target.lane],rune:state.rune});
+    if(!frost) {
+      const deaths=[];
+      hitBatch(state,events,0,{name},[{target:1,lane:target.lane,amount:2}],deaths);
+      settle(state,events,0,deaths);
+    }
+    return;
+  }
   const board = state.sides[0].board;
   const eligible = board.flatMap((card, lane) => {
     if (!card || card.hp * 2 > card.max) return [];
@@ -221,8 +243,12 @@ export function applyAction(previous, action) {
     if (!deploy(state, events, 0, action.uid)) return null;
   } else if (action.type === 'attack') {
     runRune(state, events);
-    trigger(state, events, 'attack');
-    attack(state, events, 0);
+    state.result=result(state)??null;
+    if(!state.result) {
+      trigger(state, events, 'attack');
+      state.result=result(state)??null;
+    }
+    if(!state.result) attack(state, events, 0);
     if (!state.result) {
       const enemy = state.sides[1];
       begin(enemy);

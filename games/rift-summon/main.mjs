@@ -1,7 +1,8 @@
-import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=rune-book-1';
+import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=capsule-1';
 import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=hero-skill-art-1';
-import {makeBackup, readBackup} from './backup.mjs?v=rune-book-1';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=capsule-1';
+import {makeBackup, readBackup} from './backup.mjs?v=capsule-1';
+import {startingWallet,validWallet,prices,cardLevel,maxLevel,levelCost,victoryPay,unlockedRunes,openCapsule,improveCard} from './economy.mjs';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -12,7 +13,8 @@ try { saved = JSON.parse(localStorage.getItem(key)); } catch {}
 let state = saved?.state?.version === 3 && saved.state.phase==='deploy' ? saved.state : null;
 let log = state ? saved?.log ?? [] : [];
 const cleared = new Set(Array.isArray(saved?.cleared) ? saved.cleared.filter(index => stages[index]) : []);
-const owned = () => [...starter,...stages.filter((_,index)=>cleared.has(index)).map(stage=>stage.reward)];
+let wallet=validWallet(saved?.wallet)?saved.wallet:startingWallet();
+const owned = () => [...starter,...stages.filter((_,index)=>cleared.has(index)).map(stage=>stage.reward),...wallet.unlocked];
 let deck = Array.isArray(saved?.deck) && saved.deck.length === 8 && new Set(saved.deck).size === 8 && saved.deck.every(id=>owned().includes(id)) ? saved.deck : [...starter];
 let stageIndex = state?.phase==='deploy' ? state.stage : Math.min(cleared.size, stages.length-1);
 let chosen = state?.hero || 'trust';
@@ -24,9 +26,12 @@ let volumes = saved?.volumes ?? {sfx:.65,bgm:.17};
 const runes={
   wall:{name:'鐵壁',effect:'開始攻擊時，為正面有敵軍、生命剩一半以下且無盾的友軍加 2 點護盾。'},
   heal:{name:'回春',effect:'開始攻擊時，為生命剩一半以下且至少缺 3 點生命的友軍回復 3 點生命。'},
+  frost:{name:'霜縛',effect:'開始攻擊時，使攻擊至少 4 點的最強敵軍攻擊降低 2 點，維持至本場結束。',source:'首通雙塔迴廊'},
+  spark:{name:'雷印',effect:'開始攻擊時，對生命與護盾合計不超過 2 點的敵軍造成 2 點傷害。',source:'首通斷橋守將'},
   none:{name:'未裝備',effect:'這場戰鬥不會觸發符文。'},
 };
-let loadout=Object.hasOwn(runes,saved?.loadout)?saved.loadout:state?.rune??'wall';
+const savedRune=saved?.loadout??state?.rune;
+let loadout=savedRune==='none'||unlockedRunes(cleared).includes(savedRune)?savedRune:'wall';
 let runeReturn='camp';
 let settingsReturn='camp';
 let albumReturn='camp';
@@ -36,7 +41,7 @@ get('speed').value = saved?.speed ?? '1';
 
 function currentSave() {
   const ongoing=state?.phase==='deploy';
-  return {state:ongoing?state:null, log:ongoing?log:[], deck, cleared:[...cleared], volumes, loadout, lowMotion, speed:get('speed').value};
+  return {state:ongoing?state:null, log:ongoing?log:[], deck, cleared:[...cleared], volumes, loadout, lowMotion, wallet, speed:get('speed').value};
 }
 function save() {
   try { localStorage.setItem(key, JSON.stringify(currentSave())); }
@@ -66,7 +71,7 @@ function modal(...children) {
   }
 }
 function view(id) {
-  for(const page of ['title-screen','camp','rune-book','campaign','settings-page','collection','lobby','battle','results']) get(page).hidden=page!==id;
+  for(const page of ['title-screen','camp','rune-book','capsule','campaign','settings-page','collection','lobby','battle','results']) get(page).hidden=page!==id;
 }
 function runeImage(id) {
   return artwork(id==='none'?'empty':id,'rune','rune-image');
@@ -80,7 +85,7 @@ function runeDetails(id, editable=false) {
   const rune=runes[id];
   const panel=element('div','','rune-detail');
   panel.append(runeImage(id),element('h2',rune.name),element('p',rune.effect),
-    element('p',id==='none'?'可從符文冊裝備。':'每場 2 次・第一章初始符文'));
+    element('p',id==='none'?'可從符文冊裝備。':`每場 2 次・${rune.source??'初始符文'}`));
   if(!editable && id!=='none' && state) panel.append(element('p',`本場剩 ${state.charges} 次`));
   if(editable) {
     const apply=element('button',loadout===id?'卸下':'裝備');
@@ -100,10 +105,13 @@ function showRunes(from) {
   renderRuneBook();
 }
 function renderRuneBook() {
-  const entries=['wall','heal'].map(id=>{
+  const available=unlockedRunes(cleared);
+  get('rune-count').textContent=`已收錄 ${available.length} / 4 枚`;
+  const entries=['wall','heal','frost','spark'].map(id=>{
     const button=element('button','','rune-entry');
-    button.append(runeImage(id),element('strong',runes[id].name),element('span',loadout===id?'已裝備・2 次':'可裝備・2 次'));
-    button.onclick=()=>runeDetails(id,true);
+    const ownedRune=available.includes(id);
+    button.append(runeImage(ownedRune?id:'locked'),element('strong',runes[id].name),element('span',ownedRune?(loadout===id?'已裝備・2 次':'可裝備・2 次'):runes[id].source));
+    button.onclick=()=>runeDetails(id,ownedRune);
     return button;
   });
   get('rune-book-grid').replaceChildren(...entries);
@@ -127,19 +135,50 @@ function cardFace(card, {lazy=false}={}) {
   stats.append(element('span',`攻 ${card.attack}`),element('span',`血 ${card.hp}`));
   face.append(art,frame,element('strong',card.name,'face-name'),
     element('span',card.count?`倒數 ${card.count}`:'就緒','face-count'),stats);
+  face.append(element('span',`Lv.${card.level??1}`,'face-level'));
   if(card.shield) face.append(element('span',`盾 ${card.shield}`,'face-shield'));
   return face;
 }
 function catalogCard(id) {
   const [name,count,attack,max,skill]=cards[id];
-  return {id,name,count,attack,max,hp:max,skill,shield:skill==='護盾'?2:0};
+  const level=cardLevel(wallet,id);
+  const bonus=level-1;
+  return {id,name,count,attack:attack+bonus,max:max+bonus*2,hp:max+bonus*2,level,skill,shield:skill==='護盾'?2:0};
 }
-function cardDetail(card) {
+function money(kind,amount) {
+  const item=element('span','','money');
+  item.append(artwork(kind,'money'),element('span',`${kind==='gold'?'金幣':'鑽石'} ${amount}`));
+  return item;
+}
+function renderWallet(node) {
+  node.replaceChildren(money('gold',wallet.gold),money('gems',wallet.gems));
+}
+function cardDetail(card, canUpgrade=false) {
   const layout=element('div','','card-inspector');
   const info=element('div','','inspector-copy');
   info.append(element('h2',card.name),element('strong',card.skill||'普攻'),
     element('p', descriptions[card.skill] ?? '普攻正對欄位，空位直擊敵方英雄。'),
     element('p',`生命 ${card.hp}/${card.max}・護盾 ${card.shield}・倒數 ${card.count}`,'inspector-stats'));
+  if(canUpgrade && owned().includes(card.id)) {
+    const level=cardLevel(wallet,card.id);
+    info.append(element('p',`等級 ${level} / ${maxLevel}・持有 ${wallet.gold} 金幣`));
+    if(level<maxLevel) {
+      const cost=levelCost(level);
+      info.append(element('p',`升級後：攻擊 ${card.attack} → ${card.attack+1}・生命 ${card.max} → ${card.max+2}`));
+      const button=element('button',`花 ${cost} 金幣強化`);
+      button.disabled=wallet.gold<cost;
+      button.onclick=()=>{
+        const next=improveCard(wallet,card.id);
+        if(!next) return;
+        wallet=next;save();void unlock().then(()=>play('upgrade'));
+        renderCollection();
+        cardDetail(catalogCard(card.id),true);
+        const upgraded=get('detail-content').querySelector('.card-face');
+        if(!lowMotion && !matchMedia('(prefers-reduced-motion: reduce)').matches) upgraded.animate?.([{opacity:.65,transform:'scale(.94)'},{opacity:1,transform:'scale(1)'}],300);
+      };
+      info.append(button);
+    }
+  }
   layout.append(cardFace(card),info);
   modal(layout);
 }
@@ -150,7 +189,51 @@ function showCamp() {
   view('camp');
   get('camp-resume').hidden=state?.phase!=='deploy';
   get('camp-progress').textContent=`裂界營地・戰役 ${cleared.size}/${stages.length}・收藏 ${owned().length} 張`;
+  renderWallet(get('camp-wallet'));
 }
+let drawing=false;
+let lastDraw=null;
+function renderCapsule() {
+  renderWallet(get('capsule-wallet'));
+  for(const kind of Object.keys(prices)) {
+    const button=get('draw-'+kind);
+    button.textContent=`${kind==='gold'?'金幣':'鑽石'}抽卡・${prices[kind]}`;
+    button.disabled=drawing || wallet[kind]<prices[kind];
+  }
+  const reveal=get('capsule-reveal');
+  if(drawing) {
+    const back=element('img','','capsule-back');
+    back.src=asset('capsule-orb');
+    back.alt='召喚中';
+    reveal.replaceChildren(back,element('p','召喚中…'));
+    if(!lowMotion && !matchMedia('(prefers-reduced-motion: reduce)').matches) back.animate?.([{transform:'translateY(14px) scale(.7) rotate(-18deg)'},{transform:'translateY(-10px) scale(1) rotate(22deg)'},{transform:'translateY(0) scale(1.13)',opacity:.3}],780);
+  } else if(lastDraw) {
+    const card=catalogCard(lastDraw.id);
+    const button=element('button','','capsule-card');
+    button.append(cardFace(card));
+    button.onclick=()=>cardDetail(card);
+    reveal.replaceChildren(button,element('p',lastDraw.duplicate?`重複卡・轉為 ${lastDraw.refund} 金幣`:'新卡已入冊'));
+  } else reveal.replaceChildren(element('p','選擇貨幣開始召喚'));
+}
+async function drawCapsule(kind) {
+  if(drawing) return;
+  const result=openCapsule(wallet,kind);
+  if(!result) return;
+  void unlock().then(()=>{if(drawing&&!get('capsule').hidden) play('capsule');});
+  drawing=true;
+  wallet=result.wallet;
+  lastDraw=result;
+  save();
+  renderCapsule();
+  await new Promise(resolve=>setTimeout(resolve,lowMotion||matchMedia('(prefers-reduced-motion: reduce)').matches?120:820));
+  drawing=false;
+  renderCapsule();
+  if(!get('capsule').hidden) play(result.duplicate?'coin':'reveal');
+}
+get('camp-capsule').onclick=()=>{view('capsule');renderCapsule();changeMusic('capsule');};
+get('capsule-back').onclick=()=>{showCamp();changeMusic('lobby');};
+get('draw-gold').onclick=()=>drawCapsule('gold');
+get('draw-gems').onclick=()=>drawCapsule('gems');
 function showCollection(from='camp') {
   albumReturn=from;
   get('collection-back').textContent=from==='results'?'回結算':'回營地';
@@ -168,20 +251,20 @@ function makeAlbumLeaf(page,collection) {
   header.append(element('h2',`第 ${page+1} 頁`),element('span',`${ids.filter(id=>collection.has(id)).length}/${ids.length}`));
   const grid=element('div','','album-grid');
   for(const [offset,id] of ids.entries()) {
-    const [name,count,attack,max,skill]=cards[id];
+    const [name]=cards[id];
     const available=collection.has(id);
     const slot=element('div','','album-slot');
     const button=element('button','','collectible');
     if(available) {
       button.append(cardFace(catalogCard(id),{lazy:true}));
-      button.onclick=()=>cardDetail({id,name,attack,hp:max,max,shield:skill==='護盾'?2:0,count,skill});
+      button.onclick=()=>cardDetail(catalogCard(id),true);
     } else {
       const back=element('img','','collectible-art');
       back.src=asset('album-card-back');
       back.alt='';
       button.append(back,element('span','尚未取得'));
       const stage=stages.find(level=>level.reward===id);
-      button.onclick=()=>modal(element('h2',name),element('p',stage?`首通「${stage.name}」後取得。`:'尚未取得'));
+      button.onclick=()=>modal(element('h2',name),element('p',stage?`首通「${stage.name}」後取得。`:'可從金幣或鑽石扭蛋取得。'));
     }
     const number=String(page*perLeaf+offset+1).padStart(3,'0');
     slot.append(button,element('small',`No. ${number}`));
@@ -191,6 +274,7 @@ function makeAlbumLeaf(page,collection) {
   return leaf;
 }
 function renderCollection(direction=0) {
+  renderWallet(get('album-wallet'));
   const collection=new Set(owned());
   const pages=Math.ceil(albumCards.length/perLeaf);
   const spread=albumWide.matches?2:1;
@@ -432,6 +516,11 @@ async function act(action) {
   const reward=state.result==='勝利' && !cleared.has(state.stage) ? stages[state.stage].reward : null;
   if(reward) cleared.add(state.stage);
   if(state.result) state.resultReward=reward;
+  if(state.result==='勝利') {
+    const pay=victoryPay(Boolean(reward));
+    state.currencyReward=pay;
+    wallet={...wallet,gold:wallet.gold+pay.gold,gems:wallet.gems+pay.gems};
+  }
   log=[...log,...update.events.map(({message})=>message)].slice(-150);
   selected=null;
   save();
@@ -495,6 +584,12 @@ function showResults() {
   const summary=element('section','','result-summary');
   summary.append(artwork(state.hero,'hero'),element('p',`第 ${state.round} 回合・我方剩餘生命 ${state.sides[0].hp}`),
     runeBadge(state.rune,state.rune==='none'?'未裝備':`${runes[state.rune].name}・觸發 ${2-state.charges} 次`));
+  if(state.currencyReward) {
+    const rewards=element('div','','wallet');
+    rewards.append(money('gold',`+${state.currencyReward.gold}`),money('gems',`+${state.currencyReward.gems}`));
+    summary.append(rewards);
+  }
+  if(rewardRune()) summary.append(runeBadge(rewardRune(),`解鎖 ${runes[rewardRune()].name}`));
   const reward=state.resultReward===stages[state.stage].reward?state.resultReward:null;
   if(reward) {
     const card=element('button','','result-reward');
@@ -506,6 +601,9 @@ function showResults() {
   get('result-title').focus();
   changeMusic(state.result==='勝利'?'end':'loss');
 }
+function rewardRune() {
+  return !state.resultReward?null:state.stage===1?'frost':state.stage===3?'spark':null;
+}
 get('result-camp').onclick=()=>{showCamp();changeMusic('lobby');};
 get('result-deck').onclick=()=>{stageIndex=state.stage;lobby();changeMusic('lobby');editDeck();};
 get('result-retry').onclick=()=>{stageIndex=state.stage;enter(true);};
@@ -514,7 +612,7 @@ get('result-album').onclick=()=>showCollection('results');
 async function enter(restart) {
   if(!restart && state?.phase!=='deploy') return;
   if(restart) {
-    state=createBattle(loadout,chosen,stageIndex,deck);
+    state=createBattle(loadout,chosen,stageIndex,deck,wallet.levels);
     log=[];
     selected=null;
     save();
