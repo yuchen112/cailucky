@@ -15,6 +15,10 @@ export const cards = {
   wisp: ['星燈羽術師', 2, 3, 5, '治療'],
   turtle: ['苔殼盾衛', 2, 2, 8, '護衛'],
   raven: ['月刃夜鴉', 2, 4, 4, '橫掃'],
+  stag: ['苔角靈鹿', 2, 2, 7, '護盾'],
+  lynx: ['銀刃夜猞', 1, 3, 4, '追獵'],
+  moth: ['微光蛾巫', 2, 2, 6, '治療'],
+  drake: ['銅焰幼龍', 3, 5, 6, '橫掃'],
   boss: ['斷橋守將', 0, 2, 6, '橫掃'],
   spirit: ['靈體', 0, 1, 2, ''],
 };
@@ -168,6 +172,18 @@ function result(state) {
 }
 function runRune(state, events) {
   if (!state.charges) return;
+  if(state.rune==='ward'||state.rune==='flame') {
+    const team=state.sides[0].board;
+    const ward=state.rune==='ward';
+    const lane=ward?team.findIndex(card=>card&&!card.shield):team.findIndex(card=>card&&card.hp*2<=card.max);
+    if(team.filter(Boolean).length<2||lane<0) return;
+    const card=team[lane];
+    state.charges--;
+    if(ward) card.shield+=1;
+    else card.attack+=1;
+    record(state,events,'skill',`${ward?'共盾':'熾志'} → ${card.name}（剩 ${state.charges} 次）`,{actor:0,target:0,lanes:[lane],rune:state.rune});
+    return;
+  }
   if(state.rune==='frost' || state.rune==='spark') {
     const frost=state.rune==='frost';
     const enemies=state.sides[1].board.map((card,lane)=>({card,lane})).filter(({card})=>card && (frost?card.attack>=4:card.hp+card.shield<=2));

@@ -1,7 +1,7 @@
-export const capsuleCards=['ember','wisp','turtle','raven'];
-export const prices={gold:80,gems:12};
+export const capsuleCards=['ember','wisp','turtle','raven','stag','lynx','moth','drake'];
+export const prices={gems:12};
 export const maxLevel=5;
-export const validRunes=['wall','heal','frost','spark','none'];
+export const validRunes=['wall','heal','frost','spark','ward','flame','none'];
 
 export function startingWallet() {
   return {gold:80,gems:12,unlocked:[],levels:{}};
@@ -17,11 +17,11 @@ export function levelCost(level) { return 45+(level-1)*35; }
 export function cardLevel(economy,id) { return economy.levels[id]??1; }
 export function victoryPay(firstClear) { return firstClear?{gold:100,gems:12}:{gold:30,gems:2}; }
 export function unlockedRunes(clears) {
-  return ['wall','heal',...(clears.has(1)?['frost']:[]),...(clears.has(3)?['spark']:[])];
+  return ['wall','heal',...(clears.has(0)?['ward']:[]),...(clears.has(1)?['frost']:[]),...(clears.has(2)?['flame']:[]),...(clears.has(3)?['spark']:[])];
 }
 export function openCapsule(wallet,currency,roll=Math.random()) {
   if (!Object.hasOwn(prices,currency) || wallet[currency]<prices[currency] || roll<0 || roll>=1) return null;
-  const candidates=currency==='gems'?capsuleCards.filter(id=>!wallet.unlocked.includes(id)):capsuleCards;
+  const candidates=capsuleCards.filter(id=>!wallet.unlocked.includes(id));
   const pool=candidates.length?candidates:capsuleCards;
   const id=pool[Math.floor(roll*pool.length)];
   const duplicate=wallet.unlocked.includes(id);

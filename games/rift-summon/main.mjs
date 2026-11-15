@@ -1,8 +1,8 @@
-import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=capsule-1';
+import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=capsule-2';
 import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=capsule-1';
-import {makeBackup, readBackup} from './backup.mjs?v=capsule-1';
-import {startingWallet,validWallet,prices,cardLevel,maxLevel,levelCost,victoryPay,unlockedRunes,openCapsule,improveCard} from './economy.mjs';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=capsule-2';
+import {makeBackup, readBackup} from './backup.mjs?v=capsule-2';
+import {startingWallet,validWallet,prices,cardLevel,maxLevel,levelCost,victoryPay,unlockedRunes,openCapsule,improveCard} from './economy.mjs?v=capsule-2';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -28,6 +28,8 @@ const runes={
   heal:{name:'回春',effect:'開始攻擊時，為生命剩一半以下且至少缺 3 點生命的友軍回復 3 點生命。'},
   frost:{name:'霜縛',effect:'開始攻擊時，使攻擊至少 4 點的最強敵軍攻擊降低 2 點，維持至本場結束。',source:'首通雙塔迴廊'},
   spark:{name:'雷印',effect:'開始攻擊時，對生命與護盾合計不超過 2 點的敵軍造成 2 點傷害。',source:'首通斷橋守將'},
+  ward:{name:'共盾',effect:'開始攻擊時，若至少兩張友軍在場，給最前方無盾友軍 1 點護盾。',source:'首通哨站前沿'},
+  flame:{name:'熾志',effect:'開始攻擊時，若至少兩張友軍在場，讓最前方半血以下友軍攻擊增加 1，維持到戰鬥結束。',source:'首通斷橋缺口'},
   none:{name:'未裝備',effect:'這場戰鬥不會觸發符文。'},
 };
 const savedRune=saved?.loadout??state?.rune;
@@ -106,8 +108,11 @@ function showRunes(from) {
 }
 function renderRuneBook() {
   const available=unlockedRunes(cleared);
-  get('rune-count').textContent=`已收錄 ${available.length} / 4 枚`;
-  const entries=['wall','heal','frost','spark'].map(id=>{
+  const groups={wall:'guard',ward:'guard',heal:'heal',frost:'control',spark:'attack',flame:'attack'};
+  const filter=get('rune-filter').value;
+  const ids=Object.keys(groups).filter(id=>filter==='all'||groups[id]===filter);
+  get('rune-count').textContent=`已收錄 ${available.length} / ${Object.keys(groups).length} 枚・目前顯示 ${ids.length} 枚`;
+  const entries=ids.map(id=>{
     const button=element('button','','rune-entry');
     const ownedRune=available.includes(id);
     button.append(runeImage(ownedRune?id:'locked'),element('strong',runes[id].name),element('span',ownedRune?(loadout===id?'已裝備・2 次':'可裝備・2 次'):runes[id].source));
@@ -195,19 +200,12 @@ let drawing=false;
 let lastDraw=null;
 function renderCapsule() {
   renderWallet(get('capsule-wallet'));
-  for(const kind of Object.keys(prices)) {
-    const button=get('draw-'+kind);
-    button.textContent=`${kind==='gold'?'金幣':'鑽石'}抽卡・${prices[kind]}`;
-    button.disabled=drawing || wallet[kind]<prices[kind];
-  }
+  const draw=get('draw-gems');
+  draw.textContent=`鑽石抽卡・${prices.gems}`;
+  draw.disabled=drawing || wallet.gems<prices.gems;
   const reveal=get('capsule-reveal');
-  if(drawing) {
-    const back=element('img','','capsule-back');
-    back.src=asset('capsule-orb');
-    back.alt='召喚中';
-    reveal.replaceChildren(back,element('p','召喚中…'));
-    if(!lowMotion && !matchMedia('(prefers-reduced-motion: reduce)').matches) back.animate?.([{transform:'translateY(14px) scale(.7) rotate(-18deg)'},{transform:'translateY(-10px) scale(1) rotate(22deg)'},{transform:'translateY(0) scale(1.13)',opacity:.3}],780);
-  } else if(lastDraw) {
+  if(drawing) reveal.replaceChildren(element('p','召喚中…'));
+  else if(lastDraw) {
     const card=catalogCard(lastDraw.id);
     const button=element('button','','capsule-card');
     button.append(cardFace(card));
@@ -215,9 +213,9 @@ function renderCapsule() {
     reveal.replaceChildren(button,element('p',lastDraw.duplicate?`重複卡・轉為 ${lastDraw.refund} 金幣`:'新卡已入冊'));
   } else reveal.replaceChildren(element('p','選擇貨幣開始召喚'));
 }
-async function drawCapsule(kind) {
+async function drawCapsule() {
   if(drawing) return;
-  const result=openCapsule(wallet,kind);
+  const result=openCapsule(wallet,'gems');
   if(!result) return;
   void unlock().then(()=>{if(drawing&&!get('capsule').hidden) play('capsule');});
   drawing=true;
@@ -225,15 +223,35 @@ async function drawCapsule(kind) {
   lastDraw=result;
   save();
   renderCapsule();
-  await new Promise(resolve=>setTimeout(resolve,lowMotion||matchMedia('(prefers-reduced-motion: reduce)').matches?120:820));
+  const dialog=get('capsule-show'), body=get('capsule-show-body'), close=get('capsule-show-close');
+  const orb=element('img','','capsule-show-orb');
+  orb.src=asset('capsule-orb');
+  orb.alt='召喚中的扭蛋';
+  const reduced=lowMotion||matchMedia('(prefers-reduced-motion: reduce)').matches;
+  body.replaceChildren(orb,element('p','裂界正在回應…'));
+  close.hidden=true;
+  dialog.showModal();
+  if(!reduced) orb.animate?.([
+    {transform:'translateY(45%) scale(.44) rotate(-25deg)',opacity:.5},
+    {transform:'translateY(-8%) scale(1.04) rotate(12deg)',opacity:1,offset:.64},
+    {transform:'scale(1.26) rotate(0deg)',opacity:0},
+  ],{duration:1300,easing:'ease-in-out'});
+  await new Promise(resolve=>setTimeout(resolve,reduced?150:1300));
+  const face=cardFace(catalogCard(result.id));
+  body.replaceChildren(face,element('p',result.duplicate?`重複卡・轉為 ${result.refund} 金幣`:'新卡已入冊'));
+  if(!reduced) face.animate?.([{transform:'scale(.76) rotateY(-70deg)',opacity:.25},{transform:'scale(1) rotateY(0)',opacity:1}],400);
+  close.hidden=false;
+  close.focus();
   drawing=false;
   renderCapsule();
   if(!get('capsule').hidden) play(result.duplicate?'coin':'reveal');
 }
 get('camp-capsule').onclick=()=>{view('capsule');renderCapsule();changeMusic('capsule');};
 get('capsule-back').onclick=()=>{showCamp();changeMusic('lobby');};
-get('draw-gold').onclick=()=>drawCapsule('gold');
-get('draw-gems').onclick=()=>drawCapsule('gems');
+get('draw-gems').onclick=drawCapsule;
+get('capsule-show-close').onclick=()=>get('capsule-show').close();
+get('capsule-show').addEventListener('cancel',event=>{if(drawing)event.preventDefault();});
+get('rune-filter').onchange=renderRuneBook;
 function showCollection(from='camp') {
   albumReturn=from;
   get('collection-back').textContent=from==='results'?'回結算':'回營地';
@@ -241,16 +259,23 @@ function showCollection(from='camp') {
   renderCollection();
 }
 const albumCards=Object.keys(cards).filter(id=>id!=='boss' && id!=='spirit');
+function cardGroup(id) {
+  const skill=cards[id][4];
+  if(skill==='護衛'||skill==='護盾') return 'guard';
+  if(skill==='治療') return 'heal';
+  if(skill==='自爆'||skill==='亡靈接替') return 'support';
+  return 'attack';
+}
 const perLeaf=6;
 const albumWide=matchMedia('(min-width: 700px) and (orientation: landscape) and (pointer: fine)');
 let albumPage=0;
-function makeAlbumLeaf(page,collection) {
+function makeAlbumLeaf(page,collection,filtered) {
   const leaf=element('article','','album-leaf');
   const header=element('header');
-  const ids=albumCards.slice(page*perLeaf,(page+1)*perLeaf);
+  const ids=filtered.slice(page*perLeaf,(page+1)*perLeaf);
   header.append(element('h2',`第 ${page+1} 頁`),element('span',`${ids.filter(id=>collection.has(id)).length}/${ids.length}`));
   const grid=element('div','','album-grid');
-  for(const [offset,id] of ids.entries()) {
+  for(const id of ids) {
     const [name]=cards[id];
     const available=collection.has(id);
     const slot=element('div','','album-slot');
@@ -264,9 +289,9 @@ function makeAlbumLeaf(page,collection) {
       back.alt='';
       button.append(back,element('span','尚未取得'));
       const stage=stages.find(level=>level.reward===id);
-      button.onclick=()=>modal(element('h2',name),element('p',stage?`首通「${stage.name}」後取得。`:'可從金幣或鑽石扭蛋取得。'));
+      button.onclick=()=>modal(element('h2',name),element('p',stage?`首通「${stage.name}」後取得。`:'可從鑽石扭蛋取得。'));
     }
-    const number=String(page*perLeaf+offset+1).padStart(3,'0');
+    const number=String(albumCards.indexOf(id)+1).padStart(3,'0');
     slot.append(button,element('small',`No. ${number}`));
     grid.append(slot);
   }
@@ -276,13 +301,16 @@ function makeAlbumLeaf(page,collection) {
 function renderCollection(direction=0) {
   renderWallet(get('album-wallet'));
   const collection=new Set(owned());
-  const pages=Math.ceil(albumCards.length/perLeaf);
+  const filter=get('card-filter').value;
+  const filtered=albumCards.filter(id=>filter==='all'||cardGroup(id)===filter);
+  const pages=Math.ceil(filtered.length/perLeaf);
+  albumPage=Math.min(albumPage,pages-1);
   const spread=albumWide.matches?2:1;
   const first=albumPage-albumPage%spread;
   const end=Math.min(pages,first+spread);
   const book=get('album-pages');
-  book.replaceChildren(...Array.from({length:end-first},(_,i)=>makeAlbumLeaf(first+i,collection)));
-  get('collection-count').textContent=`已收錄 ${collection.size} / ${albumCards.length} 張`;
+  book.replaceChildren(...Array.from({length:end-first},(_,i)=>makeAlbumLeaf(first+i,collection,filtered)));
+  get('collection-count').textContent=`已收錄 ${collection.size} / ${albumCards.length} 張・目前顯示 ${filtered.length} 張`;
   get('album-position').textContent=`第 ${first+1===end?end:`${first+1}–${end}`} / ${pages} 頁`;
   get('album-prev').disabled=first===0;
   get('album-next').disabled=end===pages;
@@ -290,6 +318,7 @@ function renderCollection(direction=0) {
     book.animate([{opacity:.45,transform:`translateX(${direction*12}px)`},{opacity:1,transform:'translateX(0)'}],220);
   }
 }
+get('card-filter').onchange=()=>{albumPage=0;renderCollection();};
 function turnAlbum(direction) {
   const button=get(direction>0?'album-next':'album-prev');
   if(button.disabled) return;
@@ -601,9 +630,7 @@ function showResults() {
   get('result-title').focus();
   changeMusic(state.result==='勝利'?'end':'loss');
 }
-function rewardRune() {
-  return !state.resultReward?null:state.stage===1?'frost':state.stage===3?'spark':null;
-}
+function rewardRune() { return state.resultReward?['ward','frost','flame','spark'][state.stage]:null; }
 get('result-camp').onclick=()=>{showCamp();changeMusic('lobby');};
 get('result-deck').onclick=()=>{stageIndex=state.stage;lobby();changeMusic('lobby');editDeck();};
 get('result-retry').onclick=()=>{stageIndex=state.stage;enter(true);};

@@ -283,3 +283,13 @@ body:has(#capsule:not([hidden])) { background-image:url("art/capsule-workshop.we
 }
 #camp-wallet { margin:0 0 7px; }
 .capsule-back { aspect-ratio:1; object-fit:contain; }
+
+.catalog-filter { display:flex; align-items:center; gap:8px; margin:6px 0; }
+#capsule-show { width:min(94vw,780px); max-height:94dvh; min-height:min(87dvh,600px); text-align:center; border:0; padding:8px 12px; background:#151228 url("art/capsule-portal.webp") center / cover no-repeat; }
+#capsule-show::backdrop { background:#080519e8; }
+#capsule-show h2 { margin:4px 0; color:#ffdf9a; text-shadow:0 2px 5px #190b2e; }
+#capsule-show-body { min-height:min(65dvh,460px); display:grid; justify-items:center; align-content:center; perspective:640px; }
+#capsule-show-body > p { margin:3px 0; color:#fff4ce; font-weight:700; text-shadow:0 2px 5px #190b2e; }
+.capsule-show-orb { width:min(60vw,54dvh,380px); aspect-ratio:1; object-fit:contain; }
+#capsule-show-body > .card-face { width:min(49vw,42dvh,300px); }
+#capsule-show-close { min-width:110px; }

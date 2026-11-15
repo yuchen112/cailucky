@@ -1,6 +1,6 @@
-import {cards, stages, starter} from './battle.mjs?v=capsule-1';
+import {cards, stages, starter} from './battle.mjs?v=capsule-2';
 import {heroes} from './heroes.mjs';
-import {validWallet,validRunes,unlockedRunes} from './economy.mjs';
+import {validWallet,validRunes,unlockedRunes} from './economy.mjs?v=capsule-2';
 
 const format = 'cxq-rift-summon';
 const limit = 256 * 1024;

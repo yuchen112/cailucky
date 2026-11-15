@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=capsule-1">
+<link rel="stylesheet" href="style.css?v=capsule-2">
 </head>
 <body>
 <main>
@@ -31,6 +31,7 @@
 </section>
 <section id="rune-book" hidden aria-label="符文冊">
   <header class="collection-header"><div><h1>符文冊</h1><p id="rune-count"></p></div><button id="rune-back">返回</button></header>
+  <label class="catalog-filter">符文類別 <select id="rune-filter"><option value="all">全部</option><option value="guard">防護</option><option value="heal">治療</option><option value="attack">攻擊</option><option value="control">控制</option></select></label>
   <div id="rune-book-grid"></div>
 </section>
 <section id="capsule" hidden aria-labelledby="capsule-title">
@@ -38,8 +39,8 @@
   <div class="capsule-console">
     <div id="capsule-wallet" class="wallet" aria-live="polite"></div>
     <div id="capsule-reveal" aria-live="polite"></div>
-    <div class="controls"><button id="draw-gold">金幣抽卡</button><button id="draw-gems">鑽石抽卡</button></div>
-    <p id="capsule-rules">金幣抽卡從四張扭蛋卡中等機率抽取；鑽石優先從未收錄卡等機率抽取。重複卡轉為 40 金幣。兩種貨幣均可由副本取得。</p>
+    <div class="controls"><button id="draw-gems" data-art="attack">鑽石抽卡</button></div>
+    <p id="capsule-rules">優先從未收錄的扭蛋卡中等機率抽取。集齊後重複卡轉為 40 金幣。金幣只用於卡牌強化。</p>
   </div>
 </section>
 <section id="campaign" hidden aria-label="副本">
@@ -56,6 +57,7 @@
 </section>
 <section id="collection" hidden aria-label="角色卡冊">
   <header class="collection-header"><div><h1>角色卡冊</h1><p id="collection-count"></p></div><div id="album-wallet" class="wallet"></div><button id="collection-back">回營地</button></header>
+  <label class="catalog-filter">卡牌類別 <select id="card-filter"><option value="all">全部</option><option value="attack">攻擊</option><option value="guard">防護</option><option value="heal">治療</option><option value="support">支援</option></select></label>
   <div id="album-pages" aria-label="卡冊書頁"></div>
   <nav class="album-controls" aria-label="卡冊翻頁">
     <button id="album-prev">上一頁</button>
@@ -116,7 +118,12 @@
   </nav>
 </section>
 <dialog id="detail"><div id="detail-content"></div><form method="dialog"><button>關閉</button></form></dialog>
+<dialog id="capsule-show" aria-labelledby="capsule-show-title">
+  <h2 id="capsule-show-title">裂界召喚</h2>
+  <div id="capsule-show-body" aria-live="polite"></div>
+  <button id="capsule-show-close">收下</button>
+</dialog>
 </main>
-<script type="module" src="main.mjs?v=capsule-1"></script>
+<script type="module" src="main.mjs?v=capsule-2"></script>
 </body>
 </html>
