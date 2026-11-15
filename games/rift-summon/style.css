@@ -249,3 +249,18 @@ body:has(#rune-book:not([hidden])) { background-image:url("art/rune-archive.webp
 #stage-preview { display:flex; gap:10px; margin:8px 0; }
 #stage-preview figure { width:clamp(69px,22vw,112px); margin:0; text-align:center; }
 #stage-preview figcaption { margin-top:4px; font-size:12px; }
+
+body:has(#results:not([hidden])) { background-image:url("art/battle-results.webp"); }
+#results { max-width:760px; margin-inline:auto; }
+#result-title { margin:0; }
+#result-content { margin-block:8px; }
+.result-summary { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:10px 14px; padding:14px; background:url("art/table-deck.webp") center / 100% 100% no-repeat; }
+.result-summary > img { width:clamp(64px,18vw,110px); aspect-ratio:3/4; object-fit:cover; }
+.result-summary h2 { font-size:16px; color:#ffe0a0; }
+.result-summary .result-reward { width:72px; padding:0; background:none; }
+.result-actions { display:flex; gap:8px; flex-wrap:wrap; }
+.deck-card-preview { display:grid; grid-template-columns:clamp(64px,17vw,92px) minmax(0,1fr); align-items:center; gap:10px; margin-block:10px; padding:8px 10px; background:url("art/table-inspect.webp") center / 100% 100% no-repeat; }
+.deck-card-preview h3 { margin:0; color:#ffe0a0; }
+.deck-card-preview p { margin-block:4px; }
+.deck-card-preview button { margin-top:5px; }
+.deck-grid button > small { display:block; }

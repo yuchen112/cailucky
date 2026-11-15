@@ -62,7 +62,7 @@ function modal(...children) {
   }
 }
 function view(id) {
-  for(const page of ['title-screen','camp','rune-book','campaign','settings-page','collection','lobby','battle']) get(page).hidden=page!==id;
+  for(const page of ['title-screen','camp','rune-book','campaign','settings-page','collection','lobby','battle','results']) get(page).hidden=page!==id;
 }
 function runeImage(id) {
   return artwork(id==='none'?'empty':id,'rune','rune-image');
@@ -144,7 +144,8 @@ function showCamp() {
   playing=false;
   get('hero-cut-in').hidden=true;
   view('camp');
-  get('camp-resume').hidden=!state || state.phase==='end';
+  get('camp-resume').hidden=!state;
+  get('camp-resume').textContent=state?.result?'查看上場結算':'繼續戰鬥';
   get('camp-progress').textContent=`裂界營地・戰役 ${cleared.size}/${stages.length}・收藏 ${owned().length} 張`;
 }
 function showCollection() {
@@ -271,18 +272,17 @@ function showHeroPreview() {
   get('hero-preview-skill').textContent=hero.skill;
   get('hero-detail').textContent=hero.detail;
 }
-function editDeck(draft=[...deck], active=0) {
+function editDeck(draft=[...deck], active=0, preview=draft[active]) {
   const grid=element('div','','deck-grid');
   for(const id of owned()) {
     const position=draft.indexOf(id);
     const button=element('button');
     button.append(cardFace(catalogCard(id)));
-    button.setAttribute('aria-pressed',String(position>=0));
+    button.setAttribute('aria-pressed',String(preview===id));
+    if(position>=0) button.append(element('small',`在隊中・第 ${position+1} 張`));
     button.onclick=()=>{
-      const next=[...draft];
-      if(position>=0) [next[active],next[position]]=[next[position],next[active]];
-      else next[active]=id;
-      editDeck(next,active);
+      editDeck(draft,active,id);
+      get('detail').querySelector('.deck-card-preview').scrollIntoView({block:'nearest'});
     };
     grid.append(button);
   }
@@ -304,8 +304,24 @@ function editDeck(draft=[...deck], active=0) {
     element('p',`總攻擊 ${totals[0]}・總生命 ${totals[1]}`),
     runeBadge(loadout,runes[loadout].name),apply);
   const body=element('section');
-  body.append(element('h2','出戰卡組 8 / 8'),slots,
-    element('h3',`替換第 ${active+1} 張`),element('p','點下方牌替換。選到隊中已有的牌會交換牌位。'),grid);
+  const candidate=catalogCard(preview);
+  const current=catalogCard(draft[active]);
+  const info=element('section','','deck-card-preview');
+  const copy=element('div');
+  const position=draft.indexOf(preview);
+  const change=element('button',position>=0?`交換第 ${active+1}、${position+1} 張`:`換入第 ${active+1} 張`);
+  change.disabled=preview===draft[active];
+  change.onclick=()=>{
+    const next=[...draft];
+    next[active]=preview;
+    if(position>=0) next[position]=draft[active];
+    editDeck(next,active);
+  };
+  copy.append(element('h3',candidate.name),element('p',`攻擊 ${candidate.attack}・生命 ${candidate.max}・初始護盾 ${candidate.shield}・倒數 ${candidate.count}`),
+    element('p',`${candidate.skill||'普攻'}｜${descriptions[candidate.skill]??'普攻正對欄位，空位直擊敵方英雄。'}`),
+    element('p',`第 ${active+1} 張目前是 ${current.name}`),change);
+  info.append(cardFace(candidate),copy);
+  body.append(element('h2','出戰卡組 8 / 8'),slots,info,element('h3','可用卡牌'),grid);
   layout.append(summary,body);
   modal(layout);
 }
@@ -409,6 +425,7 @@ async function act(action) {
   state=update.state;
   const reward=state.result==='勝利' && !cleared.has(state.stage) ? stages[state.stage].reward : null;
   if(reward) cleared.add(state.stage);
+  if(state.result) state.resultReward=reward;
   log=[...log,...update.events.map(({message})=>message)].slice(-150);
   selected=null;
   save();
@@ -417,7 +434,7 @@ async function act(action) {
   for(const button of get('hand').querySelectorAll('button')) button.disabled=true;
   get('attack').disabled=true;
   get('deploy').disabled=true;
-  for(const event of update.events) {
+  try { for(const event of update.events) {
     if(token!==playback) return;
     if(document.hidden) break;
     renderBoard(event.frame,event);
@@ -454,24 +471,39 @@ async function act(action) {
       }
     }
     if(token===playback && event.kind==='hero') get('hero-cut-in').hidden=true;
-  }
+  } } catch(error) { console.warn('Battle playback interrupted',error); }
   if(token!==playback) return;
   playing=false;
-  render();
-  if(state.result) {
-    changeMusic(state.result==='勝利'?'end':'loss');
-    const current=heroes.find(h=>h.id===state.hero);
-    const ending=artwork(current.id,'hero');
-    if(state.result!=='平局') ending.src=asset(`${state.result==='勝利'?'win':'loss'}-${current.id}`);
-    const message=reward?`首通獲得 ${cards[reward][0]}。可回編隊把它加入牌組。`:'可回編隊，換英雄或符文再挑戰。';
-    const runesUsed=state.rune==='none'?0:2-state.charges;
-    const runeSummary=runeBadge(state.rune,state.rune==='none'?'未裝備':`${runes[state.rune].name}・觸發 ${runesUsed} 次`);
-    if(reward) {
-      stageIndex=Math.min(state.stage+1,stages.length-1);
-      modal(ending,element('h2',state.result),artwork(reward),element('p',message),runeSummary);
-    } else modal(ending,element('h2',state.result),element('p',message),runeSummary);
-  }
+  if(state.result) showResults();
+  else render();
 }
+function showResults() {
+  const dialog=get('detail');
+  if(dialog.open) dialog.close();
+  get('hero-cut-in').hidden=true;
+  view('results');
+  get('result-title').textContent=state.result;
+  get('result-stage').textContent=stages[state.stage].name;
+  get('result-next').hidden=state.result!=='勝利' || state.stage+1>=stages.length;
+  const summary=element('section','','result-summary');
+  summary.append(artwork(state.hero,'hero'),element('p',`第 ${state.round} 回合・我方剩餘生命 ${state.sides[0].hp}`),
+    runeBadge(state.rune,state.rune==='none'?'未裝備':`${runes[state.rune].name}・觸發 ${2-state.charges} 次`));
+  const reward=state.resultReward===stages[state.stage].reward?state.resultReward:null;
+  if(reward) {
+    const card=element('button','','result-reward');
+    card.append(cardFace(catalogCard(reward)));
+    card.onclick=()=>cardDetail(catalogCard(reward));
+    summary.append(element('h2','首通獎勵已入冊'),card);
+  }
+  get('result-content').replaceChildren(summary);
+  get('result-title').focus();
+  changeMusic(state.result==='勝利'?'end':'loss');
+}
+get('result-camp').onclick=()=>{showCamp();changeMusic('lobby');};
+get('result-deck').onclick=()=>{stageIndex=state.stage;lobby();changeMusic('lobby');editDeck();};
+get('result-retry').onclick=()=>{stageIndex=state.stage;enter(true);};
+get('result-next').onclick=()=>{stageIndex=state.stage+1;lobby();changeMusic('lobby');};
+get('result-album').onclick=showCollection;
 async function enter(restart) {
   if(restart) {
     state=createBattle(loadout,chosen,stageIndex,deck);
@@ -479,6 +511,7 @@ async function enter(restart) {
     selected=null;
     save();
   }
+  if(state.result) {showResults();return;}
   view('battle');
   get('hero-cut-in-art').src=asset(`hero-cast-${state.hero}`);
   render();
@@ -607,4 +640,5 @@ get('rune-status').onclick=()=>runeDetails(state.rune);
 document.addEventListener('visibilitychange',()=>{
   if(!document.hidden && audioScene && audioScene!=='end' && audioScene!=='loss') setMusic(audioScene);
 });
-get('title-resume').hidden=!state || state.phase==='end';
+get('title-resume').hidden=!state;
+if(state?.result) get('title-resume').textContent='查看上場結算';

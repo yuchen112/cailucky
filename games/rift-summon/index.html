@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=rune-book-1">
+<link rel="stylesheet" href="style.css?v=deck-results-1">
 </head>
 <body>
 <main>
@@ -94,8 +94,18 @@
     <button id="report">戰報</button>
   </footer>
 </section>
+<section id="results" hidden aria-labelledby="result-title">
+  <header class="collection-header"><div><small id="result-stage"></small><h1 id="result-title" tabindex="-1"></h1></div><button id="result-camp">回營地</button></header>
+  <div id="result-content"></div>
+  <nav class="result-actions" aria-label="結算操作">
+    <button id="result-next" data-art="campaign">下一關</button>
+    <button id="result-retry" data-art="attack">再挑戰</button>
+    <button id="result-deck" data-art="deck">調整編隊</button>
+    <button id="result-album" data-art="collection">查看卡冊</button>
+  </nav>
+</section>
 <dialog id="detail"><div id="detail-content"></div><form method="dialog"><button>關閉</button></form></dialog>
 </main>
-<script type="module" src="main.mjs?v=rune-book-1"></script>
+<script type="module" src="main.mjs?v=deck-results-1"></script>
 </body>
 </html>
