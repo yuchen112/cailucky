@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=card-album-1">
+<link rel="stylesheet" href="style.css?v=card-table-1">
 </head>
 <body>
 <main>
@@ -55,6 +55,7 @@
   </header>
   <div id="rotate">橫拿手機可看到更多欄位。</div>
   <div id="forecast"></div>
+  <div id="hand" aria-label="手牌"></div>
   <div class="battle-stage">
     <div id="field" tabindex="0" aria-label="敵我同步捲動戰場"><div id="lanes"></div></div>
     <div id="hero-cut-in" hidden aria-hidden="true">
@@ -63,7 +64,7 @@
     </div>
   </div>
   <p id="message" aria-live="polite"></p>
-  <div id="hand" aria-label="手牌"></div>
+
   <footer>
     <button id="rune-status" type="button"></button>
     <label>倍速 <select id="speed"><option value="1">1×</option><option value="2">2×</option><option value="3">3×</option></select></label>
@@ -74,6 +75,6 @@
 </section>
 <dialog id="detail"><div id="detail-content"></div><form method="dialog"><button>關閉</button></form></dialog>
 </main>
-<script type="module" src="main.mjs?v=card-album-1"></script>
+<script type="module" src="main.mjs?v=card-table-1"></script>
 </body>
 </html>

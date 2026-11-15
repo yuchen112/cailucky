@@ -110,3 +110,57 @@ dialog::backdrop { background: #080611b8; }
   .hero-preview { grid-template-columns: 100px minmax(0,1fr); }
   #hero-preview-art { max-height: 95px; }
 }
+
+.card-face { position: relative; display:block; width:100%; aspect-ratio:3/4; isolation:isolate; overflow:hidden; color:#fff5d8; container-type:inline-size; }
+.card-face .face-art,.card-face .face-frame { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; margin:0; }
+.card-face .face-frame { pointer-events:none; }
+.card-face .face-name,.card-face .face-count,.card-face .face-stats { position:absolute; z-index:1; inset-inline:5%; margin:0; padding:0; text-align:center; background:transparent; text-shadow:0 1px 3px black; }
+.card-face .face-name { top:3%; font-size:clamp(9px,11cqw,19px); line-height:1.15; }
+.card-face .face-count { top:18%; right:auto; padding:1px 3px; background:#171228e8; font-size:clamp(8px,10cqw,14px); }
+.card-face .face-stats { display:flex; justify-content:space-evenly; gap:2px; bottom:4%; font-size:clamp(9px,11cqw,18px); line-height:1.15; font-weight:700; }
+.card-face .face-stats span { margin:0; padding:0; font-size:inherit; background:none; }
+.album-slot .collectible > .card-face { margin:0; padding:0; }
+.card-inspector { display:grid; grid-template-columns:minmax(0,44%) 1fr; gap:12px; align-items:center; }
+.card-inspector h2 { margin-top:0; }
+#detail-content .card-face img { width:100%; height:100%; }
+dialog:has(.deck-workbench) { width:min(95vw,760px); }
+.deck-workbench { display:grid; grid-template-columns:minmax(100px,23%) minmax(0,1fr); gap:10px; }
+.deck-workbench h2 { font-size:17px; margin:4px 0 8px; }
+.deck-workbench .deck-order { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.deck-workbench .deck-grid { grid-template-columns:repeat(auto-fit,minmax(70px,1fr)); }
+.deck-workbench .deck-order button,.deck-workbench .deck-grid button { display:block; padding:2px; background:transparent; }
+.slot:has(.card-face) { background:none; width:100%; min-width:0; }
+.slot .card-face { width:min(100%,64px); margin-inline:auto; }
+.slot .face-count { display:none; }
+#hand button:has(.card-face) { width:61px; padding:1px; background:transparent; }
+#hand .card-face img { width:100%; height:100%; }
+#battle:has(#hand:empty) #hand { min-height:52px; }
+@media (max-width:550px) and (orientation:portrait) {
+  .deck-workbench { grid-template-columns:1fr; }
+  .deck-workbench aside { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  #detail-content .deck-workbench aside img { width:45px; }
+}
+@media (orientation:landscape) and (max-height:440px) {
+  .slot .card-face { width:min(100%,53px); }
+  #hand button:has(.card-face) { width:50px; }
+}
+
+@media (orientation:landscape) {
+  #battle:not([hidden]) { display:grid; grid-template-columns:minmax(72px,112px) minmax(0,1fr) minmax(89px,118px); grid-template-areas:"hero forecast actions" "hero hand actions" "hero field actions" "hero message actions"; gap:5px; align-items:start; }
+  #battle > header { grid-area:hero; align-self:stretch; display:flex; flex-direction:column; align-items:stretch; justify-content:flex-start; }
+  #battle .hero-hud { flex-wrap:wrap; }
+  #battle #forecast { grid-area:forecast; }
+  #battle #hand { grid-area:hand; min-width:0; margin:0; }
+  #battle .battle-stage { grid-area:field; min-width:0; }
+  #battle #message { grid-area:message; }
+  #battle > footer { grid-area:actions; display:flex; flex-direction:column; align-items:stretch; gap:3px; }
+  #battle > footer label { display:flex; align-items:center; justify-content:space-between; }
+  #battle > footer button[data-art] { min-width:0; padding-inline:21px 4px; }
+}
+
+.card-face .face-stats { white-space:nowrap; }
+.card-face .face-shield { position:absolute; z-index:1; top:18%; right:6%; padding:1px 3px; margin:0; background:#171228e8; color:#fff5d8; font-size:clamp(8px,10cqw,14px); }
+@media (orientation:landscape) and (min-height:360px) {
+  .slot .card-face { width:min(100%,66px); }
+  #hand button:has(.card-face) { width:59px; }
+}

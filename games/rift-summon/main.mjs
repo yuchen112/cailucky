@@ -48,9 +48,32 @@ function modal(...children) {
   get('detail-content').replaceChildren(...children);
   if (!get('detail').open) get('detail').showModal();
 }
+function cardFace(card, {lazy=false}={}) {
+  const face=element('span','','card-face');
+  const art=artwork(card.id,'card','face-art');
+  if(lazy) art.loading='lazy';
+  const frame=element('img','','face-frame');
+  frame.src=asset('combat-card-frame');
+  frame.alt='';
+  const stats=element('span','','face-stats');
+  stats.append(element('span',`攻 ${card.attack}`),element('span',`血 ${card.hp}`));
+  face.append(art,frame,element('strong',card.name,'face-name'),
+    element('span',card.count?`倒數 ${card.count}`:'就緒','face-count'),stats);
+  if(card.shield) face.append(element('span',`盾 ${card.shield}`,'face-shield'));
+  return face;
+}
+function catalogCard(id) {
+  const [name,count,attack,max,skill]=cards[id];
+  return {id,name,count,attack,max,hp:max,skill,shield:skill==='護盾'?2:0};
+}
 function cardDetail(card) {
-  modal(artwork(card.id),element('h2',card.name),element('p',`${card.attack} 攻擊 · ${card.hp}/${card.max} 生命 · ${card.shield} 護盾 · 倒數 ${card.count}`),
-    element('p', descriptions[card.skill] ?? '普攻正對欄位，空位直擊敵方英雄。'));
+  const layout=element('div','','card-inspector');
+  const info=element('div');
+  info.append(element('h2',card.name),element('strong',card.skill||'普攻'),
+    element('p', descriptions[card.skill] ?? '普攻正對欄位，空位直擊敵方英雄。'),
+    element('p',`生命 ${card.hp}/${card.max}・護盾 ${card.shield}・倒數 ${card.count}`));
+  layout.append(cardFace(card),info);
+  modal(layout);
 }
 function showCamp() {
   playback++;
@@ -84,12 +107,7 @@ function makeAlbumLeaf(page,collection) {
     const slot=element('div','','album-slot');
     const button=element('button','','collectible');
     if(available) {
-      const img=artwork(id,'card','collectible-art');
-      img.loading='lazy';
-      const frame=element('img','','collectible-frame');
-      frame.src=asset('collectible-frame');
-      frame.alt='';
-      button.append(img,frame,element('strong',name),element('span',`攻${attack}・血${max}・倒數${count}`));
+      button.append(cardFace(catalogCard(id),{lazy:true}));
       button.onclick=()=>cardDetail({id,name,attack,hp:max,max,shield:skill==='護盾'?2:0,count,skill});
     } else {
       const back=element('img','','collectible-art');
@@ -186,7 +204,7 @@ function editDeck(draft=[...deck], active=0) {
   for(const id of owned()) {
     const position=draft.indexOf(id);
     const button=element('button');
-    button.append(artwork(id),element('span',`${position>=0?(position+1)+'・':''}${cards[id][0]}`));
+    button.append(cardFace(catalogCard(id)));
     button.setAttribute('aria-pressed',String(position>=0));
     button.onclick=()=>{
       const next=[...draft];
@@ -198,16 +216,26 @@ function editDeck(draft=[...deck], active=0) {
   }
   const slots=element('div','','deck-order');
   for(const [index,id] of draft.entries()) {
-    const slot=element('button',`${index+1}・${cards[id][0]}`);
+    const slot=element('button');
+    slot.append(cardFace(catalogCard(id)),element('small',index<3?`起手 ${index+1}`:`第 ${index+1} 張`));
     slot.setAttribute('aria-pressed',String(index===active));
     slot.onclick=()=>editDeck(draft,index);
     slots.append(slot);
   }
   const apply=element('button','儲存編隊');
   apply.onclick=()=>{deck=[...draft];save();get('detail').close();};
-  modal(element('h2',`編隊 ${draft.length}/8`),
-    element('p','先選牌位，再點一張卡替換；選到已在隊中的卡會交換位置。前三張是本章的起手。'),
-    slots,element('h3',`替換第 ${active+1} 張`),grid,apply);
+  const layout=element('div','','deck-workbench');
+  const summary=element('aside');
+  const hero=heroes.find(h=>h.id===chosen);
+  const totals=draft.map(catalogCard).reduce((sum,card)=>[sum[0]+card.attack,sum[1]+card.hp],[0,0]);
+  summary.append(artwork(hero.id,'hero'),element('h2',hero.name),
+    element('p',`總攻擊 ${totals[0]}・總生命 ${totals[1]}`),
+    element('p',`符文：${get('rune').value==='wall'?'鐵壁':'回春'}`),apply);
+  const body=element('section');
+  body.append(element('h2','出戰卡組 8 / 8'),slots,
+    element('h3',`替換第 ${active+1} 張`),element('p','點下方牌替換。選到隊中已有的牌會交換牌位。'),grid);
+  layout.append(summary,body);
+  modal(layout);
 }
 function renderBoard(frame, event) {
   const [player, enemy] = frame.sides;
@@ -222,7 +250,7 @@ function renderBoard(frame, event) {
       const node = element(card ? 'button' : 'div','','slot');
       node.dataset.slot=`${side}:${index}`;
       if (card) {
-        node.append(artwork(card.id,'card','card-art'),element('b',`${card.name} ${card.attack}/${card.hp}${card.shield ? ' ◆'+card.shield : ''}`));
+        node.append(cardFace({...card,count:0}));
         node.onclick=()=>cardDetail(card);
       } else node.append(element('b','空位'));
       if (!event && selected !== null && index===next) node.classList.add('preview');
@@ -247,9 +275,11 @@ function render() {
   get('hero-name').textContent=current.name;
   get('hero-name').onclick=()=>modal(artwork(current.id,'hero'),element('h2',current.skill),element('p',current.detail));
   const card=player.hand.find(item=>item.uid===selected);
-  get('hand').replaceChildren(...player.hand.map(item=>{
+  const hand=get('hand');
+  const handScroll=hand.scrollLeft;
+  hand.replaceChildren(...player.hand.map(item=>{
     const button=element('button');
-    button.append(artwork(item.id),element('span',`${item.name}｜${item.count?`倒數 ${item.count}`:'就緒'}`));
+    button.append(cardFace(item));
     button.disabled=playing || state.phase==='end';
     button.setAttribute('aria-pressed',String(item.uid===selected));
     button.onclick=()=>{
@@ -260,6 +290,7 @@ function render() {
     };
     return button;
   }));
+  hand.scrollLeft=handScroll;
   get('message').textContent=state.result ?? (card?
     `${card.name}將部署至第 ${player.board.length+1} 欄・${enemy.board[player.board.length]?.name ?? '空位，可直擊英雄'}`:
     '點就緒手牌預覽部署；再點同一張看技能。');
