@@ -20,15 +20,19 @@ export function migrateInventory(saved,wallet,owned,heroes,runes) {
   }
   return inventory;
 }
+export const limits=[20,40,60,80,99];
+export const effectsMax=10;
+export const levelLimit=item=>item.kind==='card'?limits[item.breakthrough??0]:5;
+export const cardBonus=level=>Math.min(4,level-1)+Math.floor(Math.max(0,level-5)/8);
 export function xpNeeded(level) {return 100+(level-1)*50;}
 export function grantExperience(item,amount) {
-  if(item.level>=5)return false;
+  if(item.level>=levelLimit(item))return false;
   item.experience+=amount;
-  while(item.level<5 && item.experience>=xpNeeded(item.level)) {
+  while(item.level<levelLimit(item) && item.experience>=xpNeeded(item.level)) {
     item.experience-=xpNeeded(item.level);
     item.level++;
   }
-  if(item.level===5)item.experience=0;
+  if(item.level===levelLimit(item))item.experience=0;
   return true;
 }
 export function validInventory(value,types) {
@@ -36,9 +40,11 @@ export function validInventory(value,types) {
   const ids=new Set();
   return value.items.every(item=>{
     if(!item||typeof item.uid!=='string'||!/^i[1-9]\d*$/.test(item.uid)||Number(item.uid.slice(1))>=value.next||ids.has(item.uid)||
-      !Object.hasOwn(types,item.kind)||!types[item.kind].includes(item.id)||!Number.isInteger(item.level)||item.level<1||item.level>5||
-      !Number.isInteger(item.experience)||item.experience<0||
-      (item.level===5?item.experience!==0:item.experience>=xpNeeded(item.level)))return false;
+      !Object.hasOwn(types,item.kind)||!types[item.kind].includes(item.id)||!Number.isInteger(item.level)||item.level<1||item.level>levelLimit(item)||
+      (item.breakthrough!==undefined&&(!Number.isInteger(item.breakthrough)||item.kind!=='card'||item.breakthrough<0||item.breakthrough>4))||
+      (item.effect!==undefined&&(!Number.isInteger(item.effect)||item.effect<1||item.effect>10))||
+      (item.locked!==undefined&&typeof item.locked!=='boolean')||!Number.isInteger(item.experience)||item.experience<0||
+      (item.level===levelLimit(item)?item.experience!==0:item.experience>=xpNeeded(item.level)))return false;
     ids.add(item.uid);
     return true;
   });

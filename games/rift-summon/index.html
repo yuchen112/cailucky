@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=daily-reveal-2">
+<link rel="stylesheet" href="style.css?v=growth-1">
 </head>
 <body>
 <main>
@@ -19,7 +19,7 @@
 <section id="camp" hidden aria-label="裂界營地">
   <div class="world-camp">
     <header class="camp-hud"><button id="camp-profile"><img id="camp-profile-art" alt=""><span id="camp-progress"></span></button><div id="camp-wallet" class="wallet"></div><button id="camp-options" data-art="settings">設定</button></header>
-    <section class="camp-expedition" aria-labelledby="camp-stage">
+    <button id="camp-featured-button" aria-label="與首頁英雄互動"><img id="camp-featured" alt=""></button><section hidden class="camp-expedition" aria-labelledby="camp-stage">
       <div class="expedition-content">
         <small id="camp-chapter"></small><h2 id="camp-stage"></h2>
         <div class="expedition-party"><img id="camp-hero-art" alt=""><div><strong id="camp-team-name"></strong><p id="camp-team-rune"></p></div></div>
@@ -50,7 +50,7 @@
 <section id="inventory-page" hidden aria-labelledby="inventory-heading">
   <header class="collection-header"><div><h1 id="inventory-heading">背包</h1><p id="inventory-count"></p></div><button id="inventory-back">返回</button></header>
   <nav class="library-tabs" aria-label="背包類別">
-    <button data-bag="card">卡片背包</button><button data-bag="hero">英雄背包</button><button data-bag="rune">符文背包</button>
+    <button data-bag="card">卡片背包</button><button data-bag="hero">英雄背包</button><button data-bag="rune">符文背包</button><button data-bag="material">強化素材</button>
   </nav>
   <label>排序 <select id="bag-sort"><option value="uid">最新取得</option><option value="tier">品階</option><option value="level">等級</option><option value="xp">經驗進度</option><option value="name">名稱</option></select></label><button id="bag-direction">降冪</button><label>稀有度 <select id="inventory-tier"><option value="all">全部</option></select></label>
   <label>查個體 <input type="search" id="inventory-search" placeholder="輸入名稱"></label>
@@ -69,7 +69,7 @@
   </div>
 </section>
 <section id="capsule" hidden aria-labelledby="capsule-title">
-  <header class="collection-header"><h1 id="capsule-title">扭蛋召喚</h1><button id="capsule-back">回召喚大廳</button></header>
+  <header class="collection-header"><h1 id="capsule-title">扭蛋召喚</h1><button id="capsule-back">回營地</button></header>
   <nav class="library-tabs" aria-label="召喚種類"><button data-summon-type="card">卡牌</button><button data-summon-type="rune">符文</button><button data-summon-type="hero">英雄</button></nav><div class="summon-scene">
     <div class="summon-machine"><img src="art/summon-machine.webp" alt=""><div id="capsule-reveal" aria-live="polite"></div></div>
     <div class="capsule-console">
@@ -89,9 +89,9 @@
 <section id="hero-book" hidden aria-label="英雄圖鑑">
   <header class="collection-header"><h1>英雄圖鑑</h1><button id="hero-book-back">返回</button></header><label>品階 <select id="hero-rarity"><option value="all">全部</option></select></label> <label>收錄 <select id="hero-owned"><option value="all">全部</option><option value="owned">已收錄</option><option value="locked">未收錄</option></select></label><div id="hero-book-grid"></div>
 </section>
-<section id="campaign" hidden aria-label="副本"><button id="daily-link" data-art="campaign">每日秘境</button>
+<section id="campaign" hidden aria-label="副本">
   <header class="collection-header"><div><h1>副本</h1><p id="campaign-chapter"></p></div><button id="campaign-back">回營地</button></header>
-  <nav id="chapter-picker" class="library-tabs" aria-label="選擇章節"></nav>
+  <nav class="library-tabs adventure-modes"><button aria-pressed="true" type="button">主線副本</button><button id="daily-link" type="button">每日秘境</button></nav><nav id="chapter-picker" class="library-tabs" aria-label="選擇章節"></nav>
   <div class="campaign-scene">
     <div id="stages" aria-label="章節旗點"></div>
     <div class="campaign-dossier">
@@ -143,7 +143,7 @@
   <header>
     <div class="hero-hud"><span class="combat-emblem"><img id="portrait" alt=""></span><div><strong id="hero-name"></strong><div id="health"></div><progress id="hero-hp" aria-label="我方英雄生命"></progress></div></div>
     <div id="round"></div><div class="enemy-hud"><span class="combat-emblem"><img id="enemy-portrait" alt=""></span><strong id="enemy-health"></strong><progress id="enemy-hp" aria-label="敵方英雄生命"></progress></div>
-    <button id="back">編隊</button>
+    <button id="back">返回</button>
   </header>
   <div id="rotate">橫拿手機可看到更多欄位。</div>
   <div id="forecast"></div>
@@ -181,6 +181,6 @@
   <div class="controls"><button id="draw-open-all">一鍵開啟</button><button id="capsule-show-close">跳過</button></div>
 </dialog>
 </main>
-<script type="module" src="main.mjs?v=daily-reveal-1"></script>
+<script type="module" src="main.mjs?v=growth-1"></script>
 </body>
 </html>

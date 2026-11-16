@@ -1,17 +1,18 @@
-import {cards, stages, starter} from './battle.mjs?v=daily-reveal-1';
+import {cards, stages, starter} from './battle.mjs?v=growth-1';
 import {heroes} from './heroes.mjs';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=daily-reveal-1';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=growth-1';
 import {validInventory} from './inventory.mjs';
 
 import {validDaily,dailyStage} from './daily.mjs';
+import {materials} from './materials.mjs';
 const format = 'cxq-rift-summon';
 const limit = 1024 * 1024;
 const integer = (n,min,max) => Number.isInteger(n) && n >= min && n <= max;
 const fraction = n => typeof n === 'number' && n >= 0 && n <= 1;
 const cardValid = card => card && Object.hasOwn(cards, card.id) &&
   integer(card.uid,0,500) && card.name === cards[card.id][0] && card.skill === cards[card.id][4] &&
-  integer(card.max,1,20) && integer(card.hp,1,card.max) && integer(card.attack,0,20) &&
-  integer(card.shield,0,20) && integer(card.count,0,4);
+  integer(card.max,1,64) && integer(card.hp,1,card.max) && integer(card.attack,0,80) &&
+  integer(card.shield,0,80) && integer(card.count,0,4);
 const sideValid = side => side && integer(side.hp,0,28) &&
   ['deck','hand','board'].every(key=>Array.isArray(side[key]) && side[key].length <= 20 && side[key].every(card=>key==='board'&&card===null||cardValid(card)));
 
@@ -39,7 +40,7 @@ export async function readBackup(file) {
   const teamsOk=save?.teams===undefined||(Array.isArray(save.teams)&&save.teams.length===3&&save.teams.every(team=>
     team&&Array.isArray(team.deck)&&team.deck.length===8&&new Set(team.deck).size===8&&team.deck.every(id=>owned.includes(id))&&
     heroIds.includes(team.hero)&&(team.rune==='none'||runeOwnership.includes(team.rune)))&&integer(save.activeTeam,0,2));
-  const inventoryOk=save?.inventory===undefined||validInventory(save.inventory,{card:owned,hero:heroIds,rune:runeOwnership});
+  const inventoryOk=save?.inventory===undefined||validInventory(save.inventory,{card:owned,hero:heroIds,rune:runeOwnership,material:Object.keys(materials)});
   const linksOk=save?.inventory===undefined||inventoryOk&&teamsOk&&Array.isArray(save.teams)&&save.teams.every(team=>{
     const byUid=new Map(save.inventory.items.map(item=>[item.uid,item]));
     const matches=(uid,kind,id)=>byUid.get(uid)?.kind===kind&&byUid.get(uid).id===id;
@@ -49,7 +50,7 @@ export async function readBackup(file) {
   });
   const validState=state === null || (state?.version === 3 &&
     (state.daily?Boolean(dailyStage(state.daily)):integer(state.stage,0,Math.min(cleared?.length??-1,stages.length-1))) &&
-    integer(state.round,1,40) && integer(state.charges,0,2) && integer(state.heroShield,0,8) &&
+    integer(state.round,1,40) && integer(state.charges,0,2) && integer(state.heroShield,0,80) &&
     integer(state.nextUid,24,500) && integer(state.sequence,0,10000) &&
     heroes.some(h=>h.id===state.hero) && validRunes.includes(state.rune) && (state.rune==='none'||runeOwnership.includes(state.rune)) &&
     typeof state.heroUsed === 'boolean' && Array.isArray(state.sides) &&

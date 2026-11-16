@@ -595,3 +595,36 @@ body:has(#title-screen:not([hidden])) { background-image:url("art/release-title.
 #battle .lane { grid-template-rows:calc(var(--table-card-width) * 4 / 3) 5px calc(var(--table-card-width) * 4 / 3); }
 #battle .slot { height:100%; }
 #battle .slot.preview { cursor:pointer; }
+body:has(#camp:not([hidden])) { background-image:url("art/machine-camp.webp"); }
+#camp .world-camp { grid-template-rows:auto minmax(0,1fr) auto; min-height:calc(100dvh - 20px); height:calc(100dvh - 20px); }
+#camp .camp-expedition[hidden] { display:none !important; }
+#camp-featured-button { grid-row:2; justify-self:center; width:min(65vw,480px); min-height:0; background:none; border:0; padding:0; }
+#camp-featured { display:block; width:100%; height:100%; object-fit:contain; animation:camp-breathe 4s ease-in-out infinite; }
+@keyframes camp-breathe { 50% { translate:0 -4px; scale:1.018; } }
+body:has(#capsule:not([hidden])) { background-image:none; }
+#capsule { background:var(--machine-scene) center / cover no-repeat; min-height:calc(100dvh - 20px); }
+#capsule .summon-machine > img { display:none; }
+#capsule .summon-machine { align-content:end; background:none; }
+#capsule-show .draw-item { height:clamp(70px,30dvh,165px); grid-template-rows:minmax(0,1fr) auto auto; }
+#capsule-show .draw-item > :is(img,.card-face):not(.seal-glow,.rank-burst) { max-height:100%; width:auto; max-width:100%; min-height:0; object-fit:contain; }
+#capsule-show .draw-sealed > img:first-child { grid-row:1 / -1; height:100%; }
+#capsule-show .seal-glow { position:absolute; width:100%; height:100%; inset:0; object-fit:contain; opacity:.18; pointer-events:none; animation:seal-pulse 2.6s ease-in-out infinite; }
+#capsule-show .draw-sealed[data-rank="N"] .seal-glow { opacity:.1; animation:none; }
+@keyframes seal-pulse { 50% { opacity:.43; } }
+.codex-filters { display:flex; flex-wrap:nowrap; gap:5px; align-items:center; margin:4px 0; overflow-x:auto; }
+.codex-filters > label.catalog-filter,.codex-filters > label { display:flex; gap:4px; align-items:center; width:auto; margin:0; white-space:nowrap; font-size:clamp(10px,2vw,14px); }
+.codex-filters select,.codex-filters input[type=search] { min-height:38px !important; max-width:108px !important; }
+.adventure-modes { position:relative; z-index:1; }
+.adventure-modes #daily-link { margin-bottom:0; }
+#battle > header .enemy-hud { order:0; }
+#battle > header #round { order:1; }
+#battle > header .hero-hud { order:2; }
+#battle > header #back { order:3; }
+@media (prefers-reduced-motion:reduce) { #camp-featured { animation:none; } }
+
+#capsule-show:has(.summon-intro-art) { background:var(--machine-scene) center / cover no-repeat; }
+#battle .slot .effect { z-index:8; mix-blend-mode:screen; }
+#battle .slot i { z-index:9; }
+
+#battle .hero-hud,#battle .enemy-hud { position:relative; }
+.direct-hit-effect { position:absolute; width:100%; inset:0; pointer-events:none; object-fit:contain; animation:rank-burst .4s both; }

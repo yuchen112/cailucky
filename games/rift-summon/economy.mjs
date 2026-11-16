@@ -1,3 +1,4 @@
+import {materials} from './materials.mjs';
 export const capsuleCards=['ember','wisp','turtle','raven','stag','lynx','moth','drake','ibis','hare','otter','ram','bat','beetle','crane','yak','seal','boar','swan','crab','gecko','wolf','panda','hedgehog','koi','falcon','mole','lion','badger','lynxguard','robin','frog','yakfire','stork','ferret','beaver','rabbit','eagle'];
 export const maxLevel=5;
 export const validRunes=['wall','heal','frost','spark','ward','flame','tide','root','mirror','dawn','anchor','shelter','surge','echo','none'];
@@ -14,13 +15,18 @@ const rare={
   shelter:2,surge:4,echo:5,
   trust:2,healing:2,joy:2,growth:2,luck:3,memory:3,sadness:3,hope:4,night:4,dream:5,
 };
-export function rarity(id) {return rarityNames[rare[id]??0];}
+export function rarity(id) {return materials[id]?.tier??rarityNames[rare[id]??0];}
 const weights=[36,28,20,12,7,3,1];
 export function poolFor(kind,currency) {
   if(!['gold','gems'].includes(currency))return [];
   const ids=kind==='card'?capsuleCards:kind==='rune'?validRunes.filter(id=>id!=='none'):kind==='hero'?heroIds:[];
   const cap=kind==='card'?(currency==='gold'?4:6):(currency==='gold'?3:5);
-  return ids.filter(id=>(rare[id]??0)<=cap).map(id=>({id,weight:weights[rare[id]??0]}));
+  const ordinary=ids.filter(id=>(rare[id]??0)<=cap).map(id=>({id,weight:weights[rare[id]??0]}));
+  if(kind==='card')for(const [id,book] of Object.entries(materials)){
+    const rank=rarityNames.indexOf(book.tier);
+    if(rank<=cap)ordinary.push({id,weight:weights[rank]*(book.kind?0.25:0.5)});
+  }
+  return ordinary;
 }
 export function pullPrice(currency,count) {
   return (currency==='gold'?80:12)*(count===10?9:1);
@@ -38,6 +44,7 @@ export function openBatch(wallet,kind,currency,count,roll=Math.random,alreadyOwn
   for(let i=0;i<count;i++){
     let point=Math.max(0,Math.min(.999999999,roll()))*total;
     const id=pool.find(item=>(point-=item.weight)<0).id;
+    if(materials[id]){draws.push({id,kind:'material',duplicate:known.has(id)});known.add(id);continue;}
     const duplicate=known.has(id);
     copies[id]=(copies[id]??(duplicate?1:0))+1;
     if(kind==='card'&&!unlocked.includes(id))unlocked.push(id);
