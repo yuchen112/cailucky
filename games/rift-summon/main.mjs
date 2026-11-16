@@ -327,7 +327,17 @@ function showCamp() {
   playing=false;
   get('hero-cut-in').hidden=true;
   view('camp');
+  requestAnimationFrame(()=>{if(!get('camp').hidden)window.scrollTo(0,0);});
   get('camp-resume').hidden=state?.phase!=='deploy';
+  const ongoing=state?.phase==='deploy';
+  const mission=ongoing?state.stage:Math.min(cleared.size,stages.length-1);
+  const hero=heroes.find(item=>item.id===(ongoing?state.hero:chosen));
+  get('camp-sortie').hidden=ongoing;
+  get('camp-chapter').textContent=ongoing?'進行中的戰鬥':cleared.size===stages.length?'第一章・已通關':'第一章・下一關';
+  get('camp-stage').textContent=stages[mission].name;
+  get('camp-hero-art').src=asset(`hero-portrait-${hero.id}`);
+  get('camp-team-name').textContent=ongoing?hero.name:`編隊 ${activeTeam+1}・${hero.name}`;
+  get('camp-team-rune').textContent=runes[ongoing?state.rune:loadout].name;
   get('camp-progress').textContent=`第一章 ${cleared.size}/${stages.length}・收藏 ${owned().length} 張`;
   renderWallet(get('camp-wallet'));
 }
@@ -909,6 +919,11 @@ function backupPanel() {
 }
 get('backup').onclick=backupPanel;
 get('camp-campaign').onclick=showCampaign;
+get('camp-sortie').onclick=()=>{
+  if(state?.phase==='deploy')return;
+  stageIndex=Math.min(cleared.size,stages.length-1);
+  enter(true);
+};
 get('campaign-prepare').onclick=lobby;
 get('campaign-fight').onclick=()=>enter(true);
 get('campaign-back').onclick=showCamp;
@@ -944,7 +959,6 @@ get('hero-preview-open').onclick=()=>{
 get('camp-resume').onclick=()=>enter(false);
 get('return-camp').onclick=showCamp;
 get('camp-options').onclick=()=>showSettings('camp');
-get('camp-backup').onclick=backupPanel;
 get('options').onclick=()=>showSettings('lobby');
 get('settings-back').onclick=()=>settingsReturn==='lobby'?lobby():showCamp();
 get('settings-backup').onclick=backupPanel;

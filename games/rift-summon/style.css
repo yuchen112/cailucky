@@ -404,3 +404,50 @@ body:has(#camp:not([hidden])) { background-image:url("art/camp-courtyard.webp");
  .campaign-dossier #stage-preview { margin:3px 0; }
  .campaign-dossier #stage-detail { line-height:1.22; }
 }
+
+/* Expedition first, with collection and training on a compact shelf. */
+body:has(#camp:not([hidden])) { background-image:url("art/camp-expedition-wide.webp"); }
+.world-camp { grid-template-rows:auto minmax(0,1fr) auto auto; gap:5px; }
+.world-camp .camp-hud { grid-row:1; }
+.camp-expedition { grid-row:2; display:grid; align-items:center; min-height:210px; }
+.expedition-content { width:min(100%,420px); padding:12px; text-shadow:0 2px 5px #0d0921; }
+.expedition-content > small { color:#ffe0a3; font-size:clamp(11px,2.5vw,15px); }
+.expedition-content h2 { font-size:clamp(28px,6vw,50px); margin:4px 0 7px; line-height:1.02; }
+.expedition-party { display:flex; align-items:center; gap:8px; }
+.expedition-party img { width:42px; height:49px; object-fit:cover; object-position:center 26%; }
+.expedition-party p { font-size:12px; color:#ffdda6; margin:2px 0 0; }
+.expedition-actions { display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin-top:8px; }
+.expedition-actions button { min-height:44px; }
+.expedition-actions #camp-campaign { display:inline-flex; align-items:center; gap:4px; }
+.expedition-actions #camp-campaign img { width:23px; height:23px; object-fit:contain; }
+.world-camp .camp-nav { grid-row:3; grid-template-columns:repeat(6,minmax(0,1fr)); align-self:end; padding:4px 6px; background:url("art/table-deck.webp") center / 100% 100% no-repeat; }
+.world-camp .camp-nav button { min-height:58px; padding:2px 0; align-content:center; background:none; font-size:clamp(10px,2.4vw,14px); }
+.world-camp .camp-nav img { width:38px; height:38px; }
+.world-camp .camp-nav button:focus-visible { outline:2px solid #ffe0a3; }
+.world-camp .camp-utilities { grid-row:4; }
+@media (orientation:portrait) {
+ body:has(#camp:not([hidden])) { background-image:url("art/camp-expedition-portrait.webp"); }
+ .camp-expedition { align-items:end; min-height:235px; }
+ .world-camp .camp-nav { grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+@media (orientation:landscape) and (max-height:400px) {
+ .camp-expedition { min-height:137px; }
+ .expedition-content { padding:3px 7px; }
+ .expedition-content h2 { font-size:30px; margin:2px 0 5px; }
+ .expedition-party img { width:36px; height:36px; }
+ .expedition-actions { margin-top:4px; }
+ .world-camp .camp-nav { padding:2px 5px; }
+ .world-camp .camp-nav button { min-height:49px; }
+ .world-camp .camp-nav img { width:30px; height:30px; }
+}
+@media (orientation:landscape) and (max-height:400px) {
+ .world-camp .camp-hud { min-height:45px; }
+ #camp { min-height:calc(100svh - 18px); }
+}
+.world-camp { grid-template-rows:auto minmax(0,1fr) auto; }
+.world-camp #camp-options { min-width:60px; padding-inline:22px 4px; font-size:12px; }
+@media (max-width:430px) and (orientation:portrait) {
+ .camp-hud .money { font-size:11px; gap:2px; }
+ .camp-hud .money img { width:18px; height:18px; }
+ .camp-hud .wallet { gap:2px 5px; }
+}

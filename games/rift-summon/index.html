@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=world-hub-1">
+<link rel="stylesheet" href="style.css?v=camp-expedition-1">
 </head>
 <body>
 <main>
@@ -18,10 +18,18 @@
 </section>
 <section id="camp" hidden aria-label="裂界營地">
   <div class="world-camp">
-    <header class="camp-hud"><div><h1>裂界營地</h1><p id="camp-progress"></p></div><div id="camp-wallet" class="wallet"></div></header>
-    <button id="camp-resume" data-art="resume" hidden>繼續戰鬥</button>
+    <header class="camp-hud"><div><h1>裂界營地</h1><p id="camp-progress"></p></div><div id="camp-wallet" class="wallet"></div><button id="camp-options" data-art="settings">設定</button></header>
+    <section class="camp-expedition" aria-labelledby="camp-stage">
+      <div class="expedition-content">
+        <small id="camp-chapter"></small><h2 id="camp-stage"></h2>
+        <div class="expedition-party"><img id="camp-hero-art" alt=""><div><strong id="camp-team-name"></strong><p id="camp-team-rune"></p></div></div>
+        <div class="expedition-actions"><button id="camp-resume" data-art="resume" hidden>繼續戰鬥</button>
+          <button id="camp-sortie" data-art="attack">開始戰鬥</button>
+          <button id="camp-campaign"><img src="art/map-flag.webp" alt="">副本地圖</button>
+        </div>
+      </div>
+    </section>
     <nav class="camp-nav" aria-label="營地入口">
-      <button id="camp-campaign"><img src="art/map-flag.webp" alt=""><span>副本</span></button>
       <button id="camp-deck"><img src="art/nav-deck-chest.webp" alt=""><span>編隊</span></button>
       <button id="camp-capsule"><img src="art/summon-machine.webp" alt=""><span>扭蛋召喚</span></button>
       <button id="camp-heroes"><img src="art/nav-heroes.webp" alt=""><span>英雄圖鑑</span></button>
@@ -29,7 +37,6 @@
       <button id="camp-bag"><img src="art/nav-card-bag.webp" alt=""><span>我的卡包</span></button>
       <button id="camp-runes"><img src="art/nav-rune-book.webp" alt=""><span>符文冊</span></button>
     </nav>
-    <div class="controls"><button id="camp-options" data-art="settings">設定</button><button id="camp-backup" data-art="backup">存檔備份</button></div>
   </div>
 </section>
 <section id="rune-book" hidden aria-label="符文冊">
@@ -146,6 +153,6 @@
   <button id="capsule-show-close">收下</button>
 </dialog>
 </main>
-<script type="module" src="main.mjs?v=world-hub-1"></script>
+<script type="module" src="main.mjs?v=camp-expedition-1"></script>
 </body>
 </html>
