@@ -633,3 +633,66 @@ body:has(#capsule:not([hidden])) { background-image:none; }
 #camp-featured { object-position:center bottom; }
 
 @media (max-width:590px) { .codex-filters { gap:4px; } .codex-filters select,.codex-filters input[type=search] { min-width:0; max-width:78px !important; padding-inline:3px !important; font-size:11px; } }
+
+.battle-runes { display:grid; gap:3px; min-width:0; }
+.battle-runes button { padding:3px 4px; width:100%; min-width:0; }
+#battle .battle-runes .rune-image { width:clamp(17px,6dvh,33px); height:auto; }
+#battle .battle-runes .rune-badge { display:flex; align-items:center; justify-content:center; gap:3px; white-space:nowrap; font-size:clamp(9px,1.7vw,13px); }
+#daily:not([hidden]) { padding:6px; background:none; }
+.daily-destinations { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:5px; margin-block:6px; }
+.daily-destinations button { display:grid; align-content:end; min-height:clamp(53px,15dvh,110px); padding:5px; background:var(--vault-art) center / cover; text-shadow:0 1px 4px #05030a,0 0 6px #05030a; min-width:0; }
+.daily-destinations button[aria-pressed=true] { outline:2px solid #f8cd67; outline-offset:-2px; }
+.daily-destinations strong { color:#fff0d0; font-size:clamp(11px,2.2vw,17px); }
+.daily-destinations small { color:#ffe4a6; font-size:clamp(9px,1.5vw,12px); }
+.daily-scene { display:grid; grid-template-columns:minmax(0,1.65fr) minmax(0,1fr); gap:6px; }
+.daily-track { position:relative; display:grid; min-height:clamp(171px,52dvh,410px); grid-template-columns:repeat(5,minmax(0,1fr)); grid-template-rows:repeat(2,1fr); align-items:center; justify-items:center; padding:10px 6px; background:var(--vault-art) center / cover; border:1px solid #a77e40; border-radius:12px; }
+.daily-track button { grid-column:var(--marker-col); grid-row:var(--marker-row); position:relative; display:grid; place-items:center; width:clamp(31px,7vw,64px); height:clamp(40px,11dvh,70px); min-height:0; padding:0; background:none; border:0; transform:translateY(var(--marker-jitter)); text-align:center; }
+.daily-track button img { grid-row:1; width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 2px 4px #000); }
+.daily-track button strong { position:absolute; bottom:0; min-width:1.45em; padding:1px 3px; border-radius:50%; background:#111025; color:#ffe5a2; }
+.daily-track button[data-status=open] { filter:drop-shadow(0 0 7px #ffca50); }
+.daily-track button[data-status=clear] strong { color:#b9ffba; }
+.daily-track button[data-status=locked] img { filter:grayscale(1) brightness(.8) drop-shadow(0 2px 4px black); opacity:.78; }
+.daily-track button[data-boss=true] img { scale:1.16; }
+.daily-track button[aria-pressed=true] { outline:1px solid #ffd782; border-radius:8px; }
+.daily-details { margin:0; min-width:0; background:url("art/table-deck.webp") center / 100% 100%; padding:8px; }
+.daily-encounter-heading { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; color:#ffe1a1; }
+.daily-encounter-heading h2 { font-size:clamp(14px,3vw,22px); }
+.daily-loot,.daily-enemies { display:flex; gap:4px; margin-block:3px; }
+.daily-loot > div { display:grid; grid-template-columns:auto auto; align-items:center; gap:1px 4px; }
+.daily-loot img { width:26px; height:26px; object-fit:contain; grid-row:span 2; }
+.daily-loot small,.daily-guide,.daily-reset { font-size:11px; color:#ffe1a1; }
+.daily-enemies button { min-width:0; padding:0; flex:1; max-width:52px; }
+.daily-enemies img { display:block; width:100%; height:clamp(33px,11dvh,67px); object-fit:cover; }
+.daily-details .controls { gap:3px; }
+.daily-details .controls button { min-height:34px; font-size:clamp(10px,1.75vw,14px); padding:4px 6px; }
+@media (max-width:560px) and (orientation:portrait) { .daily-scene { grid-template-columns:1fr; } }
+
+#camp-featured-button { position:relative; isolation:isolate; width:min(62vw,440px); }
+#camp-hero-motion { position:absolute; inset:0; display:block; transform-origin:50% 93%; }
+#camp-featured,#camp-blink { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center bottom; animation:none; }
+#camp-blink { opacity:0; }
+#camp-featured-button.blinking #camp-blink { opacity:1; }
+#camp-featured-button.blinking #camp-featured { opacity:0; }
+#camp-featured-button[data-motion=on]:not(.reacting) #camp-hero-motion { animation:home-idle 4.4s ease-in-out infinite; }
+#camp-featured-button.home-enter { animation:home-arrive .6s ease-out both; }
+#camp-aura-wrap { position:absolute; inset:10% 10% 1%; pointer-events:none; display:none; }
+#camp-aura { width:100%; height:100%; object-fit:contain; }
+#camp-featured-button.reacting #camp-aura-wrap { display:block; animation:home-aura .74s ease-out both; }
+@keyframes home-arrive { from { opacity:0; translate:0 13px; } }
+@keyframes home-idle { 27% { transform:translateY(-2px) rotate(.3deg) scale(1.012); } 61% { transform:translateY(-4px) rotate(-.45deg) scale(1.022); } }
+@keyframes home-aura { 0%,100% { opacity:0; scale:.77; } 48% { opacity:.52; scale:1.16; } }
+@media (prefers-reduced-motion:reduce) { #camp-featured-button,#camp-hero-motion { animation:none !important; } }
+
+.daily-details .controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+.daily-details .controls button { min-width:0; }
+.daily-details .controls button:first-child { grid-column:1; grid-row:1; }
+.daily-details .controls button:last-child { grid-column:2; grid-row:1; }
+@media (orientation:landscape) and (max-height:350px) {
+ #daily { padding-block:0 !important; }
+ #daily .collection-header { padding-block:4px; min-height:0; }
+ #daily .collection-header h1 { font-size:22px; }
+ .daily-destinations button { min-height:44px; }
+ .daily-track { min-height:154px; }
+ .daily-details { padding:6px; }
+ .daily-details .controls button { min-height:32px; }
+}

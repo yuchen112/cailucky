@@ -1,10 +1,10 @@
-import {cards, stages, starter} from './battle.mjs?v=growth-3';
+import {cards, stages, starter} from './battle.mjs?v=dual-rune-1';
 import {heroes} from './heroes.mjs';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=growth-3';
-import {validInventory} from './inventory.mjs?v=growth-3';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=dual-rune-1';
+import {validInventory} from './inventory.mjs?v=dual-rune-1';
 
-import {validDaily,dailyStage} from './daily.mjs?v=growth-3';
-import {materials} from './materials.mjs?v=growth-3';
+import {validDaily,dailyStage} from './daily.mjs?v=dual-rune-1';
+import {materials} from './materials.mjs?v=dual-rune-1';
 const format = 'cxq-rift-summon';
 const limit = 1024 * 1024;
 const integer = (n,min,max) => Number.isInteger(n) && n >= min && n <= max;
@@ -46,13 +46,15 @@ export async function readBackup(file) {
     const matches=(uid,kind,id)=>byUid.get(uid)?.kind===kind&&byUid.get(uid).id===id;
     return team?.items&&Array.isArray(team.items.cards)&&team.items.cards.length===8&&
       team.items.cards.every((uid,i)=>matches(uid,'card',team.deck[i]))&&matches(team.items.hero,'hero',team.hero)&&
-      (team.rune==='none'?team.items.rune===null:matches(team.items.rune,'rune',team.rune));
+      (team.rune==='none'?team.items.rune===null:matches(team.items.rune,'rune',team.rune))&&
+      (team.items.rune2==null||team.items.rune2!==team.items.rune&&byUid.get(team.items.rune2)?.kind==='rune');
   });
   const validState=state === null || (state?.version === 3 &&
     (state.daily?Boolean(dailyStage(state.daily)):integer(state.stage,0,Math.min(cleared?.length??-1,stages.length-1))) &&
     integer(state.round,1,40) && integer(state.charges,0,2) && integer(state.heroShield,0,80) &&
     integer(state.nextUid,24,500) && integer(state.sequence,0,10000) &&
     heroes.some(h=>h.id===state.hero) && validRunes.includes(state.rune) && (state.rune==='none'||runeOwnership.includes(state.rune)) &&
+    (state.rune2==null||(runeOwnership.includes(state.rune2.id)&&integer(state.rune2.charges,0,2)&&integer(state.rune2.level,1,5)&&integer(state.rune2.effect,1,10))) &&
     typeof state.heroUsed === 'boolean' && Array.isArray(state.sides) &&
     state.sides.length === 2 && state.sides.every(sideValid) &&
     (state.phase === 'deploy' && state.result === null || state.phase === 'end' && ['勝利','敗北','平局'].includes(state.result)));

@@ -1,12 +1,12 @@
-import {materials,bookFor} from './materials.mjs?v=growth-3';
-import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=growth-3';
-import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=growth-3';
+import {materials,bookFor} from './materials.mjs?v=dual-rune-1';
+import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=dual-rune-1';
+import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=dual-rune-1';
 import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=growth-3';
-import {makeBackup, readBackup} from './backup.mjs?v=growth-3';
-import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=growth-3';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=growth-3';
-import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,effectsMax} from './inventory.mjs?v=growth-3';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=dual-rune-1';
+import {makeBackup, readBackup} from './backup.mjs?v=dual-rune-1';
+import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=dual-rune-1';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=dual-rune-1';
+import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,effectsMax} from './inventory.mjs?v=dual-rune-1';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -91,6 +91,7 @@ function mapTeamItems(team) {
     cards:team.deck.map((id,i)=>bindInstance(team.items?.cards?.[i],'card',id)),
     hero:bindInstance(team.items?.hero,'hero',team.hero),
     rune:bindInstance(team.items?.rune,'rune',team.rune),
+    rune2:instance(team.items?.rune2)?.kind==='rune'&&team.items.rune2!==team.items.rune?team.items.rune2:null,
   };
 }
 for(const team of teams)team.items=mapTeamItems(team);
@@ -151,6 +152,7 @@ function modal(...children) {
   }
 }
 function view(id) {
+  if(id!=='camp')stopHomeMotion();
   for(const page of ['title-screen','starter-select','camp','rune-book','hero-book','inventory-page','team-editor','summon-hall','capsule','campaign','daily','settings-page','collection','lobby','battle','results']) get(page).hidden=page!==id;
 }
 function teamSelect(id,refresh) {
@@ -215,7 +217,7 @@ function runeBadge(id, status, icon=id) {
   badge.append(runeImage(icon),element('span',status));
   return badge;
 }
-function runeDetails(id) {
+function runeDetails(id,second=false) {
   const rune=runes[id];
   const inBattle=!get('battle').hidden;
   const count=inventory.items.filter(item=>item.kind==='rune'&&item.id===id).length;
@@ -223,7 +225,7 @@ function runeDetails(id) {
   panel.append(runeImage(id),element('h2',rune.name),element('p',rune.effect),
     element('p',id==='none'?'可從符文冊裝備。':`每場 2 次・${rune.source??'初始符文'}`));
   if(id!=='none') panel.append(element('p',`${rarity(id)}・持有 ${count} 份・Lv.1–5 效果增益 +0 → +4`));
-  if(inBattle && id!=='none' && state) panel.append(element('p',`Lv.${state.runeLevel??1}・本場剩 ${state.charges} 次`));
+  if(inBattle && id!=='none' && state) panel.append(element('p',`Lv.${second?state.rune2.level:state.runeLevel??1}・本場剩 ${second?state.rune2.charges:state.charges} 次`));
   modal(panel);
 }
 function showRunes(from) {
@@ -251,13 +253,13 @@ function renderRuneBook() {
   get('rune-book-grid').replaceChildren(...(entries.length?entries:[element('p','沒有符合篩選條件的符文。')]));
 }
 function renderRuneSlots() {
-  const active=element('button');
-  active.append(runeBadge(loadout,loadout==='none'?runes.none.name:`${runes[loadout].name}・Lv.${instance(teamItems.rune)?.level??1}`));
-  active.onclick=()=>openTeamEditor('lobby',instance(teamItems.rune),'rune');
-  const locked=element('span');
-  locked.append(runeBadge('locked','後續章節'));
-  get('rune-slots').replaceChildren(active,locked);
+  get('rune-slots').replaceChildren(...[teamItems.rune,teamItems.rune2].map((uid,index)=>{
+    const item=instance(uid);
+    const button=confirmButton('',()=>openTeamEditor('lobby',item,'rune',index));
+    button.append(runeBadge(item?.id??'none',`符文 ${index+1}・${item?runes[item.id].name:'未裝備'}`));return button;
+  }));
 }
+
 function cardFace(card, {lazy=false}={}) {
   const face=element('span','','card-face');
   const art=artwork(card.id,'card','face-art');
@@ -349,12 +351,57 @@ function showCamp() {
   const featured=heroes.find(item=>item.id===displayHero&&ownedHeroes().includes(item.id))??hero;
   get('camp-profile-art').src=asset(`hero-portrait-${featured.id}`);
   get('camp-progress').textContent=featured.name;
-  const display=get('camp-featured');
-  display.src=asset('hero-home-'+featured.id);
-  display.dataset.motion=lowMotion?'off':'on';
-  get('camp-featured-button').onclick=()=>{if(lowMotion||matchMedia('(prefers-reduced-motion: reduce)').matches)return;display.animate([{transform:'scale(1)'},{transform:'translateY(-7px) scale(1.03)'},{transform:'scale(1)'}],420);};
+  startHomeMotion(featured);
   renderWallet(get('camp-wallet'));
 }
+let homeBlinkTimer,homeOpenTimer,homeMotion;
+const homeReduced=()=>lowMotion||matchMedia('(prefers-reduced-motion: reduce)').matches;
+const homeGestures={
+  trust:[-11,-4,1.06,'rune-pulse'], dream:[-15,4,1.05,'fx-spirit'], growth:[-8,-7,1.04,'fx-heal'],
+  healing:[-9,5,1.05,'fx-heal'],hope:[-18,-3,1.04,'fx-shield'], joy:[-24,8,1.05,'rune-pulse'],
+  luck:[-17,-9,1.06,'fx-arrow'],memory:[-9,4,1.04,'fx-spirit'],night:[-14,-5,1.03,'rune-pulse'],sadness:[-6,5,1.035,'fx-shield'],
+};
+function stopHomeMotion(){
+  clearTimeout(homeBlinkTimer);clearTimeout(homeOpenTimer);
+  homeMotion?.cancel();homeMotion=null;
+  get('camp-featured-button').classList.remove('blinking','reacting','home-enter');
+}
+function startHomeMotion(hero){
+  stopHomeMotion();
+  const button=get('camp-featured-button'), open=get('camp-featured'), closed=get('camp-blink'), aura=get('camp-aura');
+  const [rise,tilt,scale,effect]=homeGestures[hero.id];
+  button.dataset.motion=homeReduced()?'off':'on';
+  button.setAttribute('aria-label','與'+hero.name+'互動');
+  open.src=asset('hero-home-'+hero.id);
+  closed.src=asset('hero-blink-'+hero.id);
+  aura.src=asset(effect);
+  function blink(){
+    if(get('camp').hidden||document.hidden||homeReduced())return;
+    if(closed.complete&&closed.naturalWidth){
+      button.classList.add('blinking');
+      homeOpenTimer=setTimeout(()=>button.classList.remove('blinking'),125);
+    }
+    homeBlinkTimer=setTimeout(blink,2700+Math.random()*2100);
+  }
+  if(!homeReduced()){
+    button.classList.add('home-enter');
+    homeBlinkTimer=setTimeout(blink,1950);
+  }
+  button.onclick=()=>{
+    if(homeReduced()||homeMotion?.playState==='running')return;
+    button.classList.add('reacting');
+    homeMotion=get('camp-hero-motion').animate([
+      {transform:'translateY(0) rotate(0) scale(1)'},{transform:'translateY(2px) scale(.975)',offset:.18},
+      {transform:`translateY(${rise}px) rotate(${tilt}deg) scale(${scale})`,offset:.48},
+      {transform:`translateY(-3px) rotate(${-tilt/3}deg)`,offset:.76},{transform:'none'},
+    ],{duration:740,easing:'ease-in-out'});
+    homeMotion.onfinish=()=>button.classList.remove('reacting');
+  };
+}
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden)stopHomeMotion();
+  else if(!get('camp').hidden)showCamp();
+});
 let drawing=false, revealTimer, revealRun=0;
 const summonTypes={card:'卡牌',rune:'符文',hero:'英雄'};
 function capsuleOptions(){
@@ -728,7 +775,7 @@ function itemArt(item) {
   return piece;
 }
 function teamsUsing(uid) {
-  return teams.flatMap((team,index)=>[...team.items.cards,team.items.hero,team.items.rune].includes(uid)?[index+1]:[]);
+  return teams.flatMap((team,index)=>[...team.items.cards,team.items.hero,team.items.rune,team.items.rune2].includes(uid)?[index+1]:[]);
 }
 function effectGrowth(item) {
   const rank=item.effect??1;
@@ -880,13 +927,13 @@ get('bag-sort').onchange=()=>{bagSort[bagKind]={key:get('bag-sort').value,asc:ba
 get('bag-direction').onclick=()=>{bagSort[bagKind]={key:get('bag-sort').value,asc:!bagSort[bagKind]?.asc};save();renderInventory();};
 
 let editorReturn='camp', teamDraft, editorSlot='cards', editorPosition=0, editorPreview=null;
-function openTeamEditor(from,candidate=null,slot=null) {
+function openTeamEditor(from,candidate=null,slot=null,position=0) {
   if(get('detail').open)get('detail').close();
   syncFixedInventory();flushTeam();
   editorReturn=from;
   teamDraft=structuredClone(teamItems);
   editorSlot=slot??(candidate?.kind==='card'?'cards':candidate?.kind??'cards');
-  editorPosition=0;editorPreview=candidate?.uid??teamDraft.cards[0];
+  editorPosition=position;editorPreview=candidate?.uid??teamDraft.cards[0];
   view('team-editor');
   renderTeamEditor();
 }
@@ -933,7 +980,7 @@ function renderTeamEditor() {
   function slot(kind,index,uid,label) {
     const item=instance(uid);
     const button=confirmButton('',()=>{editorSlot=kind;editorPosition=index;editorPreview=uid;renderTeamEditor();});
-    button.setAttribute('aria-pressed',String(editorSlot===kind&&(kind!=='cards'||editorPosition===index)));
+    button.setAttribute('aria-pressed',String(editorSlot===kind&&(kind==='hero'||editorPosition===index)));
     button.append(element('small',label));
     if(item)button.append(itemArt(item),element('strong',itemName(item)),element('small',`${rarity(item.id)}・Lv.${item.level}`));
     else button.append(element('span','未裝備'));
@@ -941,26 +988,31 @@ function renderTeamEditor() {
   }
   slot('hero',0,teamDraft.hero,'英雄');
   teamDraft.cards.forEach((uid,i)=>slot('cards',i,uid,`第 ${i+1} 張`));
-  slot('rune',0,teamDraft.rune,'符文');
+  slot('rune',0,teamDraft.rune,'符文 1');
+  slot('rune',1,teamDraft.rune2,'符文 2');
+  const runeSlot=editorPosition===0?'rune':'rune2';
   const candidate=instance(editorPreview), kind=editorSlot==='cards'?'card':editorSlot;
   const preview=element('section','','team-candidate');
   if(candidate?.kind===kind) {
     preview.append(itemDetail(candidate));
     const occupied=kind==='card'?teamDraft.cards.findIndex((uid,i)=>i!==editorPosition&&instance(uid)?.id===candidate.id):-1;
-    const blocked=occupied>=0&&teamDraft.cards[occupied]!==candidate.uid;
+    const duplicateRune=kind==='rune'&&candidate.uid===teamDraft[editorPosition===0?'rune2':'rune'];
+    const blocked=duplicateRune||occupied>=0&&teamDraft.cards[occupied]!==candidate.uid;
     const assign=confirmButton(occupied>=0&&!blocked?'交換兩個牌位':'確認裝入此欄位',()=>{
       if(kind==='card'){
         const next=assignLineupCard(teamDraft.cards,editorPosition,candidate.uid,instance);
         if(!next)return;
         teamDraft.cards=next;
-      } else teamDraft[kind]=candidate.uid;
+      } else if(kind==='rune')teamDraft[runeSlot]=candidate.uid;
+      else teamDraft[kind]=candidate.uid;
       renderTeamEditor();
     });
-    if(blocked)preview.append(element('p',`同名卡已在第 ${occupied+1} 張。請先點該牌位，再換成這一份。`));
+    if(duplicateRune)preview.append(element('p','此個體已裝備在另一格。'));
+    else if(blocked)preview.append(element('p',`同名卡已在第 ${occupied+1} 張。請先點該牌位，再換成這一份。`));
     assign.disabled=blocked;
     preview.append(assign);
   }
-  if(kind==='rune') preview.append(confirmButton('卸下符文',()=>{teamDraft.rune=null;editorPreview=null;renderTeamEditor();}));
+  if(kind==='rune') preview.append(confirmButton('卸下符文',()=>{teamDraft[runeSlot]=null;editorPreview=null;renderTeamEditor();}));
   const candidates=element('div','','team-candidates');
   const search=element('input');
   search.type='search';search.placeholder='卡牌、英雄或符文名稱';search.setAttribute('aria-label','搜尋可裝備個體');
@@ -1017,8 +1069,11 @@ function renderBoard(frame, event) {
   get('health').textContent = `${player.hp}${frame.heroShield ? ' ◆'+frame.heroShield : ''}`;
   get('enemy-health').textContent = `${enemy.hp}`;
   get('round').textContent = `回合 ${frame.round}`;
-  const spent=state.rune!=='none' && frame.charges===0;
-  get('rune-status').replaceChildren(runeBadge(state.rune,state.rune==='none'?'未裝備':`${runes[state.rune].name} ${frame.charges} 次`,spent?'spent':state.rune));
+  for(const [index,id,charges] of [[1,state.rune,frame.charges],[2,state.rune2?.id??'none',frame.rune2Charges??frame.rune2?.charges??0]]){
+    const button=get(index===1?'rune-status':'rune-status-2');
+    button.replaceChildren(runeBadge(id,id==='none'?'未裝備':runes[id].name+' '+charges+' 次',id!=='none'&&!charges?'spent':id));
+    button.setAttribute('aria-label','符文 '+index+'・'+button.textContent);
+  }
   const boss=enemy.board.findIndex(card=>card?.id==='boss');
   get('forecast').textContent=boss>=0&&!state.daily?`斷橋守將在第 ${boss+1} 欄。橫掃會波及兩側。`:missionFor(state).goal;
 }
@@ -1183,6 +1238,7 @@ function showResults() {
     if(state.currencyReward.material)rewards.append(element('p',materials[state.currencyReward.material].name+' × '+state.currencyReward.count));
     summary.append(rewards);
   }
+  if(state.rune2)summary.append(runeBadge(state.rune2.id,`${runes[state.rune2.id].name}・觸發 ${2-state.rune2.charges} 次`));
   if(rewardRune()) summary.append(runeBadge(rewardRune(),`解鎖 ${runes[rewardRune()].name}`));
   if(state.heroReward) summary.append(element('p',`${collectibleName('hero',state.heroReward.id)}・${state.heroReward.duplicate?'培養材料 +1':'英雄已解鎖'}`));
   const reward=state.resultReward===stages[state.stage].reward?state.resultReward:null;
@@ -1215,8 +1271,9 @@ async function enter(restart, expedition=null) {
     const battleCards=teamItems.cards.map(instance);
     const battleHero=instance(teamItems.hero);
     const battleRune=instance(teamItems.rune);
+    const spareRune=instance(teamItems.rune2);
     const levels=Object.fromEntries(battleCards.map(card=>[card.id,card.level]));
-    state=createBattle(battleRune?.id??'none',battleHero.id,stageIndex,battleCards.map(card=>card.id),levels,battleHero.level,battleRune?.level??1,expedition,Object.fromEntries(battleCards.map(card=>[card.id,card.effect??1])),battleHero.effect??1,battleRune?.effect??1);
+    state=createBattle(battleRune?.id??'none',battleHero.id,stageIndex,battleCards.map(card=>card.id),levels,battleHero.level,battleRune?.level??1,expedition,Object.fromEntries(battleCards.map(card=>[card.id,card.effect??1])),battleHero.effect??1,battleRune?.effect??1,spareRune?{id:spareRune.id,level:spareRune.level,effect:spareRune.effect??1,charges:2}:null);
     log=[];
     selected=null;
     save();
@@ -1319,24 +1376,33 @@ function showDaily(vault='gold',floor) {
   const info=vaults[vault], status=dailyStatus(daily,vault);
   floor??=Math.min(10,status.highest+1);
   dailySelection={vault,floor};
-  const tabs=element('nav','','library-tabs');
+  const tabs=element('nav','','daily-destinations');
+  tabs.setAttribute('aria-label','秘境目的地');
   for(const [id,entry] of Object.entries(vaults)){
-    const button=confirmButton(entry.name,()=>showDaily(id));
-    const progress=dailyStatus(daily,id);button.append(element('small',` ${progress.highest}/10・${entry.limit-progress.used} 次`));
+    const progress=dailyStatus(daily,id);
+    const button=confirmButton('',()=>showDaily(id));
+    button.style.setProperty('--vault-art',`url("${asset('vault-'+id)}")`);
+    button.append(element('strong',entry.name),element('small',`${progress.highest}/10 層・剩 ${entry.limit-progress.used} 次`));
     button.setAttribute('aria-pressed',String(id===vault));tabs.append(button);
   }
   const track=element('div','','daily-track');
+  track.style.setProperty('--vault-art',`url("${asset('vault-'+vault)}")`);
+  track.setAttribute('aria-label',info.name+'樓層地圖');
   for(let n=1;n<=10;n++){
     const label=n<=status.highest?'已通關':n===status.highest+1?'可挑戰':'未解鎖';
     const button=confirmButton('',()=>showDaily(vault,n));
-    const flag=element('img');flag.src=asset('map-flag');flag.alt='';
+    button.style.setProperty('--marker-row',n>5?1:2);
+    button.style.setProperty('--marker-col',n>5?11-n:n);
+    button.style.setProperty('--marker-jitter',[-5,9,-13,4,12,0,-8,14,-11,3][n-1]+'px');
     button.dataset.status=n<=status.highest?'clear':n===status.highest+1?'open':'locked';
-    button.append(flag,element('strong',`第 ${n} 層`),element('small',label));
-    button.setAttribute('aria-pressed',String(n===floor));track.append(button);
+    button.dataset.boss=String(n%5===0);
+    const flag=element('img');flag.src=asset('map-flag');flag.alt='';
+    button.append(flag,element('strong',String(n)));
+    button.setAttribute('aria-label',`第 ${n} 層・${label}`);
+    button.title=label;button.setAttribute('aria-pressed',String(n===floor));track.append(button);
   }
   const details=element('section','','daily-details');
   const stage=dailyStage({vault,floor});
-  const unit=vault==='gold'?'金幣':vault==='gems'?'鑽石':materials[bookFor(vault,floor)].name;
   const base=dailyPay(vault,floor);
   const sweep=n=>{
     const pay=claimReward(vault,n,true);
@@ -1344,8 +1410,23 @@ function showDaily(vault='gold',floor) {
     if(pay[vault])wallet={...wallet,[vault]:wallet[vault]+pay[vault]};save();showDaily(vault,n);
     modal(element('h2','掃蕩完成'),pay.material?element('p',materials[pay.material].name+' × '+pay.count):money(vault,`+${pay[vault]}`));
   };
-  details.append(element('h2',stage.name),element('p',`${stage.goal}　首通額外 ${Math.ceil(base/2)} ${unit}・固定 ${base} ${unit}`),
-    element('p',`敵軍：${[...stage.opening,...stage.opponents].map(id=>cards[id][0]).join('、')}`));
+  const heading=element('div','','daily-encounter-heading');
+  heading.append(element('h2',`第 ${floor} 層${stage.head?'・頭目':''}`),
+    element('small',floor<=status.highest?'已通關':floor===status.highest+1?'可挑戰':'未解鎖'));
+  const rewards=element('div','','daily-loot');
+  const rewardIcon=()=>vault==='gold'||vault==='gems'?artwork(vault,'money'):artwork(vault,'material');
+  for(const [label,amount] of [['通關',base],['首通加成',Math.ceil(base/2)]]){
+    const chip=element('div');chip.append(rewardIcon(),element('strong',`+${amount}`),element('small',label));rewards.append(chip);
+  }
+  const enemies=element('div','','daily-enemies');
+  enemies.setAttribute('aria-label','敵方先鋒');
+  for(const id of [...new Set([...stage.opening,...stage.opponents])].slice(0,4)){
+    const card=confirmButton('',()=>cardDetail(catalogCard(id,1)));
+    card.append(artwork(id));card.setAttribute('aria-label',cards[id][0]);enemies.append(card);
+  }
+  const guide=element('details','','daily-guide');
+  guide.append(element('summary','關卡機制'),element('p',stage.goal));
+  details.append(heading,rewards,enemies,guide);
   const buttons=element('div','','controls');
   const resume=state?.phase==='deploy'&&state.daily?.vault===vault&&state.daily.floor===floor;
   const fight=confirmButton(resume?'繼續戰鬥':'挑戰',()=>enter(!resume,{vault,floor}));
@@ -1354,7 +1435,9 @@ function showDaily(vault='gold',floor) {
   const best=confirmButton('掃蕩最高已通關層',()=>sweep(status.highest));best.disabled=status.used>=info.limit||!status.highest;
   buttons.append(fight,skip,best,confirmButton('編隊',()=>openTeamEditor('daily')));
   details.append(buttons);
-  get('daily-content').replaceChildren(tabs,element('p',`今日剩餘 ${info.limit-status.used}/${info.limit}・台灣時間 00:00 重置`),track,details);
+  const scene=element('div','','daily-scene');scene.append(track,details);
+  const reset=element('small','台灣時間 00:00 重置','daily-reset');
+  get('daily-content').replaceChildren(tabs,scene,reset);
 }
 get('title-start').onclick=async()=>{if(starterHero)showCamp();else showStarter();await unlock();changeMusic(starterHero?'lobby':'title');};
 get('title-resume').onclick=()=>enter(false);
@@ -1418,6 +1501,7 @@ function showSettings(from){
   get('settings-controls').replaceChildren(slider('bgm','背景音樂'),slider('sfx','音效'),motion);
 }
 get('rune-status').onclick=()=>runeDetails(state.rune);
+get('rune-status-2').onclick=()=>runeDetails(state.rune2?.id??'none',Boolean(state.rune2));
 document.addEventListener('visibilitychange',()=>{
   if(!document.hidden && audioScene && audioScene!=='end' && audioScene!=='loss') setMusic(audioScene);
 });

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=growth-3">
+<link rel="stylesheet" href="style.css?v=dual-rune-1">
 </head>
 <body>
 <main>
@@ -19,7 +19,7 @@
 <section id="camp" hidden aria-label="裂界營地">
   <div class="world-camp">
     <header class="camp-hud"><button id="camp-profile"><img id="camp-profile-art" alt=""><span id="camp-progress"></span></button><div id="camp-wallet" class="wallet"></div><button id="camp-options" data-art="settings">設定</button></header>
-    <button id="camp-featured-button" aria-label="與首頁英雄互動"><img id="camp-featured" alt=""></button><section hidden class="camp-expedition" aria-labelledby="camp-stage">
+    <button id="camp-featured-button" aria-label="與首頁英雄互動"><span id="camp-aura-wrap"><img id="camp-aura" alt=""></span><span id="camp-hero-motion"><img id="camp-featured" alt=""><img id="camp-blink" alt=""></span></button><section hidden class="camp-expedition" aria-labelledby="camp-stage">
       <div class="expedition-content">
         <small id="camp-chapter"></small><h2 id="camp-stage"></h2>
         <div class="expedition-party"><img id="camp-hero-art" alt=""><div><strong id="camp-team-name"></strong><p id="camp-team-rune"></p></div></div>
@@ -158,7 +158,7 @@
   <div class="hand-tray"><strong id="hand-label">手牌</strong><div id="hand" aria-labelledby="hand-label"></div></div>
 
   <footer>
-    <button id="rune-status" type="button"></button>
+    <div class="battle-runes"><button id="rune-status" type="button"></button><button id="rune-status-2" type="button"></button></div>
     <details class="battle-tools"><summary aria-label="戰鬥工具">戰鬥工具</summary><label>倍速 <select id="speed"><option value="1">1×</option><option value="2">2×</option><option value="3">3×</option></select></label>
     <button id="mute">靜音</button><button id="report">戰報</button></details>
     <button id="deploy" data-art="deploy" disabled>部署</button><button id="attack" data-art="attack">開始攻擊</button>
@@ -181,6 +181,6 @@
   <div class="controls"><button id="draw-open-all">一鍵開啟</button><button id="capsule-show-close">跳過</button></div>
 </dialog>
 </main>
-<script type="module" src="main.mjs?v=growth-3"></script>
+<script type="module" src="main.mjs?v=dual-rune-1"></script>
 </body>
 </html>

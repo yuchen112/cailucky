@@ -54,8 +54,8 @@ export const cards = {
 };
 export const starter = ['guard', 'bomb', 'archer', 'ax', 'ghost', 'healer', 'knight', 'giant'];
 const sentries = ['guard', 'bomb', 'knight', 'ax', 'ghost', 'giant'];
-import {cardBonus} from './inventory.mjs?v=growth-3';
-import {dailyStage} from './daily.mjs?v=growth-3';
+import {cardBonus} from './inventory.mjs?v=dual-rune-1';
+import {dailyStage} from './daily.mjs?v=dual-rune-1';
 export const stages = [
   {name:'哨站前沿', goal:'倒數歸零就能部署。先用護衛或斥候接住第一波。', hp:8, opponents:['guard','archer','healer','knight'], opening:['archer'], reward:'bow'},
   {name:'雙塔迴廊', goal:'同回合可以連下多張。留意每張牌的部署順序。', hp:10, opponents:['bomb','knight','archer','ghost','ax'], opening:['guard','bomb'], reward:'fang'},
@@ -75,7 +75,7 @@ function unit(id, uid, level=1,effect=1) {
 function side(deck, hp) {
   return {hp, deck: deck.slice(3), hand: deck.slice(0, 3), board: []};
 }
-export function createBattle(rune = 'wall', hero = '', stage = 3, deck = starter, levels = {}, heroLevel=1, runeLevel=1, daily=null,effects={},heroEffect=1,runeEffect=1) {
+export function createBattle(rune = 'wall', hero = '', stage = 3, deck = starter, levels = {}, heroLevel=1, runeLevel=1, daily=null,effects={},heroEffect=1,runeEffect=1,rune2=null) {
   const level = daily?dailyStage(daily):stages[stage];
   const player = side(deck.map((id, i) => unit(id, i, levels[id]??1,effects[id]??1)), 24+heroLevel-1);
   const enemy = side(level.opponents.map((id, i) => unit(id, i + 8)), level.hp);
@@ -87,6 +87,7 @@ export function createBattle(rune = 'wall', hero = '', stage = 3, deck = starter
   }
   state.heroLevel=heroLevel;state.heroEffect=heroEffect;state.runeEffect=runeEffect;
   state.runeLevel=runeLevel;
+  if(rune2)state.rune2={...rune2};
   begin(player, false);
   return state;
 }
@@ -97,7 +98,7 @@ function begin(team, draw = true) {
 function record(state, events, kind, message, details = {}) {
   events.push({sequence: ++state.sequence, kind, message, ...details, frame: {
     sides: state.sides.map(({hp, board}) => ({hp, board: structuredClone(board)})),
-    charges: state.charges, heroShield: state.heroShield, round: state.round,
+    charges: state.charges, rune2Charges:state.rune2?.charges??0, heroShield: state.heroShield, round: state.round,
   }});
 }
 function trigger(state, events, timing, lane) {
@@ -215,12 +216,13 @@ function result(state) {
   if (lost[1]) return '勝利';
   return null;
 }
-function runRune(state, events) {
-  if (!state.charges) return;
-  const bonus=(state.runeLevel??1)+(state.runeEffect??1)-2;
-  if(state.rune==='shelter'||state.rune==='surge'||state.rune==='echo') {
+function runRune(state, events, second=false) {
+  const id=second?state.rune2?.id:state.rune;
+  const slot=second?state.rune2:state;
+  if(!slot?.charges)return;
+  const bonus=second?(slot.level??1)+(slot.effect??1)-2:(state.runeLevel??1)+(state.runeEffect??1)-2;
+  if(id==='shelter'||id==='surge'||id==='echo') {
     const [player,enemy]=state.sides;
-    const id=state.rune;
     const enemies=enemy.board.filter(Boolean).length;
     let target=0,lanes=[null], message;
     if(id==='shelter'){
@@ -238,35 +240,35 @@ function runRune(state, events) {
       card.count=Math.max(0,card.count-1-bonus);
       message=`回響 → ${card.name}・倒數 ${card.count}`;
     }
-    state.charges--;
-    record(state,events,'skill',`${message}（剩 ${state.charges} 次）`,{actor:0,target,lanes,rune:id});
+    slot.charges--;
+    record(state,events,'skill',`${message}（剩 ${slot.charges} 次）`,{actor:0,target,lanes,rune:id});
     if(id==='surge')hitBatch(state,events,0,{name:'逆雷'},[{target,lane:null,amount:1+bonus}],[]);
     return;
   }
-  if(state.rune==='mirror'||state.rune==='dawn') {
+  if(id==='mirror'||id==='dawn') {
     const hero=state.sides[0];
     const maxHealth=23+(state.heroLevel??1);
-    const mirror=state.rune==='mirror';
+    const mirror=id==='mirror';
     if(hero.hp*2>maxHealth || (mirror&&state.heroShield>0))return;
     if(mirror) state.heroShield+=1+bonus;
     else hero.hp=Math.min(maxHealth,hero.hp+2+bonus);
-    state.charges--;
-    record(state,events,'skill',`${mirror?'晶鏡':'曉光'} → 我方英雄（剩 ${state.charges} 次）`,
-      {actor:0,target:0,lanes:[null],rune:state.rune});
+    slot.charges--;
+    record(state,events,'skill',`${mirror?'晶鏡':'曉光'} → 我方英雄（剩 ${slot.charges} 次）`,
+      {actor:0,target:0,lanes:[null],rune:id});
     return;
   }
-  if(state.rune==='anchor') {
+  if(id==='anchor') {
     const eligible=state.sides[1].hand.filter(card=>card.count<=2).sort((a,b)=>a.count-b.count);
     const card=eligible[0];
     if(!card)return;
     card.count=Math.min(4,card.count+2+bonus);
-    state.charges--;
-    record(state,events,'skill',`沉錨 → ${card.name}・倒數 ${card.count}（剩 ${state.charges} 次）`,
-      {actor:0,target:1,lanes:[null],rune:state.rune});
+    slot.charges--;
+    record(state,events,'skill',`沉錨 → ${card.name}・倒數 ${card.count}（剩 ${slot.charges} 次）`,
+      {actor:0,target:1,lanes:[null],rune:id});
     return;
   }
-  if(state.rune==='tide'||state.rune==='root') {
-    const tide=state.rune==='tide';
+  if(id==='tide'||id==='root') {
+    const tide=id==='tide';
     const target=tide?1:0;
     const board=state.sides[target].board;
     const lanes=board.flatMap((card,lane)=>card&&(tide?card.shield>0:card.hp<card.max)?[lane]:[]);
@@ -279,32 +281,32 @@ function runRune(state, events) {
       if(lanes.length<2) return;
       for(const lane of lanes) board[lane].hp=Math.min(board[lane].max,board[lane].hp+1+bonus);
     }
-    state.charges--;
-    record(state,events,'skill',`${tide?'潮解':'生根'}（剩 ${state.charges} 次）`,{actor:0,target,lanes,rune:state.rune});
+    slot.charges--;
+    record(state,events,'skill',`${tide?'潮解':'生根'}（剩 ${slot.charges} 次）`,{actor:0,target,lanes,rune:id});
     return;
   }
-  if(state.rune==='ward'||state.rune==='flame') {
+  if(id==='ward'||id==='flame') {
     const team=state.sides[0].board;
-    const ward=state.rune==='ward';
+    const ward=id==='ward';
     const lane=ward?team.findIndex(card=>card&&!card.shield):team.findIndex(card=>card&&card.hp*2<=card.max);
     if(team.filter(Boolean).length<2||lane<0) return;
     const card=team[lane];
-    state.charges--;
+    slot.charges--;
     if(ward) card.shield+=1+bonus;
     else card.attack+=1+bonus;
-    record(state,events,'skill',`${ward?'共盾':'熾志'} → ${card.name}（剩 ${state.charges} 次）`,{actor:0,target:0,lanes:[lane],rune:state.rune});
+    record(state,events,'skill',`${ward?'共盾':'熾志'} → ${card.name}（剩 ${slot.charges} 次）`,{actor:0,target:0,lanes:[lane],rune:id});
     return;
   }
-  if(state.rune==='frost' || state.rune==='spark') {
-    const frost=state.rune==='frost';
+  if(id==='frost' || id==='spark') {
+    const frost=id==='frost';
     const enemies=state.sides[1].board.map((card,lane)=>({card,lane})).filter(({card})=>card && (frost?card.attack>=4:card.hp+card.shield<=2+bonus));
     enemies.sort((a,b)=>frost?b.card.attack-a.card.attack:a.card.hp-b.card.hp);
     const target=enemies[0];
     if(!target) return;
-    state.charges--;
+    slot.charges--;
     const name=frost?'霜縛':'雷印';
     if(frost) target.card.attack=Math.max(1,target.card.attack-2-bonus);
-    record(state,events,'skill',`${name} → ${target.card.name}（剩 ${state.charges} 次）`,{actor:0,target:1,lanes:[target.lane],rune:state.rune});
+    record(state,events,'skill',`${name} → ${target.card.name}（剩 ${slot.charges} 次）`,{actor:0,target:1,lanes:[target.lane],rune:id});
     if(!frost) {
       const deaths=[];
       hitBatch(state,events,0,{name},[{target:1,lane:target.lane,amount:2+bonus}],deaths);
@@ -315,17 +317,17 @@ function runRune(state, events) {
   const board = state.sides[0].board;
   const eligible = board.flatMap((card, lane) => {
     if (!card || card.hp * 2 > card.max) return [];
-    const wall = state.rune === 'wall';
+    const wall = id === 'wall';
     if (wall && (card.shield || !state.sides[1].board[lane])) return [];
     if (!wall && card.max - card.hp < 3) return [];
     return [{card, lane}];
   }).sort((a, b) => a.card.hp - b.card.hp || a.lane - b.lane);
   const target = eligible[0];
   if (!target) return;
-  state.charges--;
-  if (state.rune === 'wall') target.card.shield += 2+bonus;
+  slot.charges--;
+  if (id === 'wall') target.card.shield += 2+bonus;
   else target.card.hp = Math.min(target.card.max,target.card.hp+3+bonus);
-  record(state, events, 'skill', `${state.rune === 'wall' ? '鐵壁' : '回春'} → ${target.card.name}（剩 ${state.charges} 次）`, {actor: 0, target: 0, lanes: [target.lane], rune:state.rune});
+  record(state, events, 'skill', `${id === 'wall' ? '鐵壁' : '回春'} → ${target.card.name}（剩 ${slot.charges} 次）`, {actor: 0, target: 0, lanes: [target.lane], rune:id});
 }
 function attack(state, events, actor) {
   const board = state.sides[actor].board;
@@ -399,7 +401,8 @@ export function applyAction(previous, action) {
       hitBatch(state,events,1,{name:'星晶爆裂'},[{target:0,lane,amount:1+Number(state.daily.floor>=6)}],deaths);
       settle(state,events,1,deaths);
     }
-    runRune(state, events);
+    if(!result(state))runRune(state, events);
+    if(!result(state))runRune(state, events,true);
     state.result=result(state)??null;
     if(!state.result) {
       trigger(state, events, 'attack');

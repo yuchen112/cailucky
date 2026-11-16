@@ -56,6 +56,7 @@ export function checkLineup(items,find) {
   if(new Set(cards.map(card=>card.id)).size!==8)return '同名卡每組只能放一張。';
   if(find(items.hero)?.kind!=='hero')return '請選擇一位已持有的英雄。';
   if(items.rune!==null&&find(items.rune)?.kind!=='rune')return '裝備的符文已不可用，請重新選擇或卸下。';
+  if(items.rune2!=null&&(items.rune2===items.rune||find(items.rune2)?.kind!=='rune'))return '第二格符文無效或重複裝備。';
   return '';
 }
 export function assignLineupCard(slots,position,uid,find) {
