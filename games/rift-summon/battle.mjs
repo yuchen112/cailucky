@@ -49,6 +49,10 @@ export const stages = [
   {name:'雙塔迴廊', goal:'同回合可以連下多張。留意每張牌的部署順序。', hp:10, opponents:['bomb','knight','archer','ghost','ax'], opening:['guard','bomb'], reward:'fang'},
   {name:'斷橋缺口', goal:'正對空位可直攻英雄。對手擅長護盾與追獵。', hp:9, opponents:['archer','knight','ghost','fang','bow'], opening:['knight'], reward:'flag'},
   {name:'斷橋守將', goal:'頭目橫掃正對欄與兩側。利用護衛、自爆和接替改寫對位。', hp:10, opponents:sentries, opening:['boss'], reward:'moon'},
+  {name:'沉鐘入口', goal:'盾兵會保護正對的位置。用破甲或追獵拆開前線。',hp:11,opponents:['boar','seal','hare','archer','ax'],opening:['boar'],reward:'seal'},
+  {name:'幽潮祭壇', goal:'留意亡靈接替，擊退本體後該欄仍可能被靈體佔據。',hp:12,opponents:['bat','ghost','koi','healer','ram'],opening:['bat'],reward:'koi'},
+  {name:'水門斷層', goal:'爆甲和自爆會傷及相鄰欄位，調整下牌順序再進攻。',hp:13,opponents:['beetle','crab','bow','panda','wolf'],opening:['mole'],reward:'wolf'},
+  {name:'沉鐘獅王', goal:'曜鬃獅統領的戰吼能隔著守軍傷害英雄。先壓力最大的欄位。',hp:14,opponents:['otter','hedgehog','fang','swan','giant'],opening:['lion'],reward:'swan'},
 ];
 
 function unit(id, uid, level=1) {

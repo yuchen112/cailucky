@@ -1,9 +1,10 @@
-import {cards, stages, starter} from './battle.mjs?v=catalog-5';
+import {cards, stages, starter} from './battle.mjs?v=instance-inventory-1';
 import {heroes} from './heroes.mjs';
 import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=catalog-5';
+import {validInventory} from './inventory.mjs';
 
 const format = 'cxq-rift-summon';
-const limit = 256 * 1024;
+const limit = 1024 * 1024;
 const integer = (n,min,max) => Number.isInteger(n) && n >= min && n <= max;
 const fraction = n => typeof n === 'number' && n >= 0 && n <= 1;
 const cardValid = card => card && Object.hasOwn(cards, card.id) &&
@@ -17,7 +18,7 @@ export function makeBackup(save) {
   return JSON.stringify({format,version:1,createdAt:new Date().toISOString(),save},null,2);
 }
 export async function readBackup(file) {
-  if (file.size > limit) throw new Error('備份檔超過 256 KB。');
+  if (file.size > limit) throw new Error('備份檔超過 1 MB。');
   let data;
   try { data=JSON.parse(await file.text()); }
   catch { throw new Error('這個檔案無法讀取為 JSON 備份。'); }
@@ -37,6 +38,14 @@ export async function readBackup(file) {
   const teamsOk=save?.teams===undefined||(Array.isArray(save.teams)&&save.teams.length===3&&save.teams.every(team=>
     team&&Array.isArray(team.deck)&&team.deck.length===8&&new Set(team.deck).size===8&&team.deck.every(id=>owned.includes(id))&&
     heroIds.includes(team.hero)&&(team.rune==='none'||runeOwnership.includes(team.rune)))&&integer(save.activeTeam,0,2));
+  const inventoryOk=save?.inventory===undefined||validInventory(save.inventory,{card:owned,hero:heroIds,rune:runeOwnership});
+  const linksOk=save?.inventory===undefined||inventoryOk&&teamsOk&&Array.isArray(save.teams)&&save.teams.every(team=>{
+    const byUid=new Map(save.inventory.items.map(item=>[item.uid,item]));
+    const matches=(uid,kind,id)=>byUid.get(uid)?.kind===kind&&byUid.get(uid).id===id;
+    return team?.items&&Array.isArray(team.items.cards)&&team.items.cards.length===8&&
+      team.items.cards.every((uid,i)=>matches(uid,'card',team.deck[i]))&&matches(team.items.hero,'hero',team.hero)&&
+      (team.rune==='none'?team.items.rune===null:matches(team.items.rune,'rune',team.rune));
+  });
   const validState=state === null || (state?.version === 3 &&
     integer(state.stage,0,Math.min(cleared?.length??-1,stages.length-1)) &&
     integer(state.round,1,40) && integer(state.charges,0,2) && integer(state.heroShield,0,8) &&
@@ -45,7 +54,7 @@ export async function readBackup(file) {
     typeof state.heroUsed === 'boolean' && Array.isArray(state.sides) &&
     state.sides.length === 2 && state.sides.every(sideValid) &&
     (state.phase === 'deploy' && state.result === null || state.phase === 'end' && ['勝利','敗北','平局'].includes(state.result)));
-  if (!validClears || !validDeck || !validState || !walletOk || !teamsOk ||
+  if (!validClears || !validDeck || !validState || !walletOk || !teamsOk || !inventoryOk || !linksOk ||
     (save.starterHero!==undefined&&!starterHeroes.includes(save.starterHero)) ||
     (save.wallet && Object.keys(save.wallet.levels).some(id=>!owned.includes(id))) || !Array.isArray(save.log) ||
     save.log.length>150 || !save.log.every(line=>typeof line==='string' && line.length<=180) ||

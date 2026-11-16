@@ -451,3 +451,30 @@ body:has(#camp:not([hidden])) { background-image:url("art/camp-expedition-wide.w
  .camp-hud .money img { width:18px; height:18px; }
  .camp-hud .wallet { gap:2px 5px; }
 }
+
+body:has(#inventory-page:not([hidden])),body:has(#team-editor:not([hidden])) { background-image:url("art/instance-vault.webp"); }
+body:has(#summon-hall:not([hidden])) { background-image:url("art/summon-hall.webp"); }
+body:has(#capsule[data-gate="gold"]:not([hidden])) { background-image:url("art/draw-goldcard1.webp"); }
+body:has(#capsule[data-gate="gems"]:not([hidden])) { background-image:url("art/draw-gemcard1.webp"); }
+body:has(#capsule[data-gate="hero"]:not([hidden])) { background-image:url("art/draw-hero1.webp"); }
+#stages[data-chapter="1"] { background-image:url("art/chapter-sunken-map.webp"); }
+.library-tabs,.team-tools { display:flex; flex-wrap:wrap; gap:5px; align-items:center; margin:6px 0; }
+.library-tabs button { min-width:68px; }
+.summon-hall-gates { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; margin-top:20px; }
+.summon-hall-gates button { display:grid; place-items:center; gap:3px; padding:12px 4px; font-size:clamp(12px,3vw,18px); }
+.summon-hall-gates img { width:min(17vw,98px); height:min(17vw,98px); object-fit:contain; }
+#inventory-grid,.team-instance-slots,.team-candidates { display:grid; grid-template-columns:repeat(auto-fill,minmax(91px,1fr)); gap:5px; margin:7px 0; }
+.instance-tile,.team-instance-slots button,.team-candidates button { display:grid; justify-items:center; align-content:start; gap:3px; padding:6px; min-width:0; background:url("art/table-inspect.webp") center / 100% 100% no-repeat; font-size:12px; }
+.instance-tile img,.team-instance-slots img,.team-candidates img { width:100%; height:84px; object-fit:contain; }
+.instance-tile small,.team-instance-slots small,.team-candidates small { color:#ffe3aa; font-size:10px; }
+.instance-inspector { display:grid; grid-template-columns:minmax(74px,36%) minmax(0,1fr); align-items:start; gap:9px; }
+.instance-inspector > img { width:100%; max-height:220px; object-fit:contain; }
+.instance-inspector h2 { margin:0 0 5px; }
+.instance-inspector progress { width:100%; }
+.instance-stats { display:grid; grid-template-columns:auto 1fr; gap:4px 8px; margin:8px 0; }
+.instance-stats dt { color:#ffe2a0; }
+.instance-stats dd { margin:0; }
+.team-tools { justify-content:space-between; }
+.team-candidate { padding:9px; margin-block:9px; background:url("art/table-deck.webp") center / 100% 100% no-repeat; }
+.team-candidate .instance-inspector { grid-template-columns:minmax(52px,15%) 1fr; }
+#team-editor h2 { font-size:17px; }

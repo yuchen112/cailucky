@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=camp-expedition-1">
+<link rel="stylesheet" href="style.css?v=instance-inventory-1">
 </head>
 <body>
 <main>
@@ -45,8 +45,28 @@
   <label class="catalog-filter">稀有度 <select id="rune-rarity"><option value="all">全部</option></select></label>
   <div id="rune-book-grid"></div>
 </section>
+<section id="inventory-page" hidden aria-labelledby="inventory-heading">
+  <header class="collection-header"><div><h1 id="inventory-heading">背包</h1><p id="inventory-count"></p></div><button id="inventory-back">返回</button></header>
+  <nav class="library-tabs" aria-label="背包類別">
+    <button data-bag="card">卡片背包</button><button data-bag="hero">英雄背包</button><button data-bag="rune">符文背包</button>
+  </nav>
+  <label>稀有度 <select id="inventory-tier"><option value="all">全部</option></select></label>
+  <div id="inventory-grid"></div>
+</section>
+<section id="team-editor" hidden aria-label="編隊">
+  <header class="collection-header"><div><h1>出戰編隊</h1><p id="team-status" aria-live="polite"></p></div><button id="team-exit">返回</button></header>
+  <div id="team-editor-content"></div>
+</section>
+<section id="summon-hall" hidden aria-label="召喚大廳">
+  <header class="collection-header"><h1>召喚大廳</h1><button id="summon-hall-back">回營地</button></header>
+  <div class="summon-hall-gates">
+    <button data-gate="gold"><img src="art/money-gold.webp" alt="">金幣召喚</button>
+    <button data-gate="gems"><img src="art/money-gems.webp" alt="">鑽石召喚</button>
+    <button data-gate="hero"><img src="art/nav-heroes.webp" alt="">英雄召喚</button>
+  </div>
+</section>
 <section id="capsule" hidden aria-labelledby="capsule-title">
-  <header class="collection-header"><h1 id="capsule-title">扭蛋召喚</h1><button id="capsule-back">回營地</button></header>
+  <header class="collection-header"><h1 id="capsule-title">扭蛋召喚</h1><button id="capsule-back">回召喚大廳</button></header>
   <div class="summon-scene">
     <div class="summon-machine"><img src="art/summon-machine.webp" alt=""><div id="capsule-reveal" aria-live="polite"></div></div>
     <div class="capsule-console">
@@ -67,7 +87,8 @@
   <header class="collection-header"><h1>英雄圖鑑</h1><button id="hero-book-back">返回</button></header><div id="hero-book-grid"></div>
 </section>
 <section id="campaign" hidden aria-label="副本">
-  <header class="collection-header"><div><h1>副本</h1><p>第一章・斷橋哨站</p></div><button id="campaign-back">回營地</button></header>
+  <header class="collection-header"><div><h1>副本</h1><p id="campaign-chapter"></p></div><button id="campaign-back">回營地</button></header>
+  <nav id="chapter-picker" class="library-tabs" aria-label="選擇章節"></nav>
   <div class="campaign-scene">
     <div id="stages" aria-label="章節旗點"></div>
     <div class="campaign-dossier">
@@ -84,6 +105,9 @@
 </section>
 <section id="collection" hidden aria-label="角色卡冊">
   <header class="collection-header"><div><h1 id="collection-title">卡牌圖鑑</h1><p id="collection-count"></p></div><div id="album-wallet" class="wallet"></div><button id="collection-back">回營地</button></header>
+  <nav class="library-tabs" aria-label="圖鑑類別">
+    <button data-codex="card">卡片</button><button data-codex="hero">英雄</button><button data-codex="rune">符文</button>
+  </nav>
   <label class="catalog-filter">卡牌類別 <select id="card-filter"><option value="all">全部</option><option value="attack">攻擊</option><option value="guard">防護</option><option value="heal">治療</option><option value="support">支援</option></select></label>
   <label class="catalog-filter">稀有度 <select id="card-rarity"><option value="all">全部</option></select></label>
   <div id="album-pages" aria-label="卡冊書頁"></div>
@@ -94,7 +118,7 @@
   </nav>
 </section>
 <section id="lobby" hidden>
-  <header class="war-room-header"><div><small>第一章</small><h1>斷橋哨站</h1></div><button id="return-camp">回營地</button></header>
+  <header class="war-room-header"><div><small id="lobby-chapter"></small><h1 id="lobby-stage"></h1></div><button id="return-camp">回營地</button></header>
   <label>出戰編隊 <select id="lobby-team"></select></label>
   <div id="hero-preview" class="hero-preview">
     <button id="hero-preview-open" aria-label="查看英雄完整立繪"><img id="hero-preview-art" alt=""></button>
@@ -153,6 +177,6 @@
   <button id="capsule-show-close">收下</button>
 </dialog>
 </main>
-<script type="module" src="main.mjs?v=camp-expedition-1"></script>
+<script type="module" src="main.mjs?v=instance-inventory-1"></script>
 </body>
 </html>
