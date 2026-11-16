@@ -591,3 +591,7 @@ body:has(#title-screen:not([hidden])) { background-image:url("art/release-title.
 .summon-spotlight > :is(.card-face,img):not(.rank-burst) { width:min(29vw,20dvh,122px); z-index:1; }
 .summon-spotlight[data-rank=UUR] .rank-burst { inset:-28%; width:156% !important; }
 @keyframes spotlight { 0%,100% { opacity:0; } 20%,80% { opacity:1; } }
+
+#battle .lane { grid-template-rows:calc(var(--table-card-width) * 4 / 3) 5px calc(var(--table-card-width) * 4 / 3); }
+#battle .slot { height:100%; }
+#battle .slot.preview { cursor:pointer; }
