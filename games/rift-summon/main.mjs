@@ -1,12 +1,12 @@
 import {materials,bookFor} from './materials.mjs';
 import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs';
-import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=growth-1';
+import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=growth-2';
 import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=growth-1';
-import {makeBackup, readBackup} from './backup.mjs?v=growth-1';
-import {startingWallet,validWallet,maxLevel,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=growth-1';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=growth-1';
-import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,effectsMax} from './inventory.mjs?v=growth-1';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=growth-2';
+import {makeBackup, readBackup} from './backup.mjs?v=growth-2';
+import {startingWallet,validWallet,maxLevel,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=growth-2';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=growth-2';
+import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,effectsMax} from './inventory.mjs?v=growth-2';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;

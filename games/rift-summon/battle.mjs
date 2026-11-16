@@ -92,7 +92,7 @@ export function createBattle(rune = 'wall', hero = '', stage = 3, deck = starter
 }
 function begin(team, draw = true) {
   for (const card of team.hand) card.count = Math.max(0, card.count - 1);
-  if (draw && team.deck.length) team.hand.push(...team.deck.splice(0,1+boost));
+  if (draw && team.deck.length) team.hand.push(team.deck.shift());
 }
 function record(state, events, kind, message, details = {}) {
   events.push({sequence: ++state.sequence, kind, message, ...details, frame: {
@@ -116,7 +116,7 @@ function trigger(state, events, timing, lane) {
   } else if (hero.effect === 'haste' || hero.effect === 'draw') {
     if (hero.effect === 'draw') {
       if (!team.deck.length) return;
-      team.hand.push(team.deck.shift());
+      team.hand.push(...team.deck.splice(0,1+boost));
     } else {
       const card = team.hand.filter(c => c.count > 0).sort((a,b) => a.count - b.count)[0];
       if (!card) return;

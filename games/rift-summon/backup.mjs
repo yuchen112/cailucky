@@ -1,6 +1,6 @@
-import {cards, stages, starter} from './battle.mjs?v=growth-1';
+import {cards, stages, starter} from './battle.mjs?v=growth-2';
 import {heroes} from './heroes.mjs';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=growth-1';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=growth-2';
 import {validInventory} from './inventory.mjs';
 
 import {validDaily,dailyStage} from './daily.mjs';
