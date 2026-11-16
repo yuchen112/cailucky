@@ -514,3 +514,80 @@ main:has(#battle:not([hidden])) { max-width:none; padding-inline:max(5px,env(saf
  #battle > footer button { font-size:12px; white-space:nowrap; }
  #battle > footer #rune-status .rune-image { width:23px; height:23px; }
 }
+body:has(#title-screen:not([hidden])) { background-image:url("art/release-title.webp"); background-position:center; }
+#title-screen .camp-content { width:min(58%,600px); margin-left:clamp(8px,4vw,60px); }
+#title-screen h1 img { display:block; width:100%; max-height:44svh; object-fit:contain; object-position:left center; }
+#title-screen .controls { margin-left:5%; }
+#title-start { min-height:48px; padding-inline:24px; }
+.world-camp .camp-nav { grid-template-columns:repeat(5,minmax(0,1fr)); }
+.world-camp .camp-nav button[hidden],.summon-pools label[hidden],button[hidden] { display:none !important; }
+#camp-profile,.wallet-button { display:flex; align-items:center; gap:6px; padding:3px 7px; }
+#camp-profile img { height:40px; width:40px; object-fit:cover; border-radius:50%; }
+#camp-profile span { font-size:clamp(10px,2.4vw,15px); }
+#camp-stage { font-size:clamp(18px,4.4vw,36px); }
+#camp-map { min-height:39px; }
+#daily:not([hidden]) { background:url("art/table-deck.webp") center / 100% 100%; padding:12px; }
+.daily-track { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:5px; }
+.daily-track button { min-height:46px; font-size:clamp(10px,2.4vw,15px); }
+.daily-track button[aria-pressed=true] { outline:2px solid #f9cb64; }
+.daily-details { margin-top:12px; }
+.daily-details h2 { margin:4px 0; }
+#daily-link { min-height:44px; margin-bottom:5px; }
+#battle .slot.empty-slot { border:0; background:none; box-shadow:none; }
+#battle .slot.empty-slot:not(.preview) { pointer-events:none; }
+#battle .lane-divider { padding:0; min-height:4px; }
+#battle .hazard-lane .lane-divider { height:8px; background:url("art/rune-pulse.webp") center / 100% auto; }
+#battle .slot.preview .slot-art { object-fit:contain; }
+#battle .hero-hud,#battle .enemy-hud { display:grid; place-items:center; text-align:center; width:100%; }
+#battle .hero-hud > div { width:100%; }
+#battle :is(#portrait,#enemy-portrait) { width:clamp(32px,12dvh,82px); height:clamp(32px,12dvh,82px); border-radius:50%; object-fit:cover; border:2px solid #c59149; }
+#battle :is(#health,#enemy-health) { font-weight:bold; font-size:clamp(15px,5dvh,26px); }
+#battle progress { display:block; accent-color:#d15053; width:100%; height:9px; }
+#battle #round { text-align:center; color:#f8db98; padding:4px 0; }
+#battle .battle-tools { position:relative; text-align:center; }
+#battle .battle-tools summary { cursor:pointer; font-size:12px; padding:6px 0; }
+#battle .battle-tools[open] { background:#21162e; z-index:2; }
+#battle #attack { min-height:48px; }
+#capsule .summon-machine img { height:clamp(94px,38dvh,350px); object-fit:contain; }
+#capsule-show { width:min(90vw,720px); max-height:95dvh; background:#171026 url("art/table-deck.webp") center / 100% 100% no-repeat; }
+#capsule-show-body { min-height:0; }
+#capsule-show-body > :is(.card-face,img) { display:block; width:min(125px,42vw); margin:auto; }
+#capsule-show-body > .summon-intro-art { height:min(50dvh,335px); width:auto; object-fit:contain; }
+#capsule-show[data-kind=card] .summon-intro-art { animation:chest-enter .88s both; }
+#capsule-show[data-kind=hero] .summon-intro-art { animation:portal-enter .91s both; }
+#capsule-show[data-kind=rune] .summon-intro-art { animation:altar-enter .9s both; }
+@keyframes chest-enter { from { transform:perspective(420px) rotateX(35deg) translateY(40px) scale(.55); opacity:0; } 65% { transform:rotate(-5deg) scale(1.05); } to { transform:none; opacity:1; } }
+@keyframes portal-enter { from { transform:scale(.35); opacity:0; } 65% { transform:scale(1.16); } to { transform:scale(1); opacity:1; } }
+@keyframes altar-enter { from { transform:translateY(74px); opacity:0; } to { transform:none; opacity:1; } }
+#capsule-show .draw-item { position:relative; display:grid; justify-items:center; width:100%; min-width:0; padding:3px; font-size:clamp(9px,2vw,14px); }
+#capsule-show .draw-sealed { min-height:45px; }
+#capsule-show .draw-opened { animation:reward-enter .4s both; z-index:1; }
+#capsule-show[data-kind=card] .draw-opened { animation:reward-flip .42s both; }
+#capsule-show[data-kind=hero] .draw-opened { animation:reward-hero .55s both; }
+#capsule-show .draw-opened[data-rank=SSR],#capsule-show .draw-opened[data-rank=UUR] { animation-duration:.76s; }
+@keyframes reward-enter { from { opacity:.2; transform:translateY(15px) rotate(-12deg) scale(.6); } }
+@keyframes reward-flip { from { opacity:.35; transform:perspective(300px) rotateY(82deg); } }
+@keyframes reward-hero { from { opacity:.2; transform:translateY(25px) scale(.7); } 60% { transform:scale(1.14); } }
+.rank-burst { position:absolute; inset:-20%; width:140% !important; height:140% !important; object-fit:contain; pointer-events:none; animation:rank-burst .57s both; }
+@keyframes rank-burst { 0% { opacity:0; transform:scale(.62); } 35% { opacity:1; } 100% { opacity:0; transform:scale(1.09); } }
+@media (prefers-reduced-motion:reduce) { #capsule-show * { animation:none !important; } }
+@media (max-width:460px) and (orientation:portrait) { #title-screen .camp-content{width:89%;align-self:end;margin-bottom:15svh;} .daily-track{grid-template-columns:repeat(2,minmax(0,1fr));} }
+#title-start[data-art] { background:url("art/release-title-button.webp") center / 100% 100% no-repeat; border:0; min-width:min(36vw,230px); }
+#battle .combat-emblem { display:grid; place-items:center; width:clamp(42px,14dvh,98px); aspect-ratio:1; position:relative; }
+#battle .combat-emblem::after { content:""; position:absolute; inset:0; background:url("art/release-friendly.webp") center / 100% 100% no-repeat; pointer-events:none; }
+#battle .enemy-hud .combat-emblem::after { background-image:url("art/release-enemy.webp"); }
+#battle #round { background:url("art/release-round.webp") center / contain no-repeat; min-height:43px; display:grid; place-items:center; line-height:1; font-size:11px; }
+#battle > header { align-content:start; }
+.daily-track button { display:grid; grid-template-columns:auto 1fr; align-items:center; text-align:left; }
+.daily-track button img { width:clamp(18px,3vw,36px); grid-row:span 2; }
+.daily-track button[data-status=locked] img { filter:grayscale(1);opacity:.55; }
+.daily-track button small { color:#f9d68e; }
+#capsule-show-body { position:relative; }
+.summon-wave { display:grid; grid-template-columns:repeat(5,1fr); max-width:350px; margin:auto; }
+.summon-wave > img { width:min(11vw,75px); height:min(9dvh,40px); object-fit:contain; animation:rank-burst .65s both; }
+#capsule-show[data-currency=gold] .summon-wave { transform:translateY(3px); }
+#capsule-show[data-motion=off] * { animation:none !important; }
+.summon-spotlight { position:absolute; inset:0; display:grid; place-items:center; z-index:3; pointer-events:none; animation:spotlight .76s both; }
+.summon-spotlight > :is(.card-face,img):not(.rank-burst) { width:min(29vw,20dvh,122px); z-index:1; }
+.summon-spotlight[data-rank=UUR] .rank-burst { inset:-28%; width:156% !important; }
+@keyframes spotlight { 0%,100% { opacity:0; } 20%,80% { opacity:1; } }

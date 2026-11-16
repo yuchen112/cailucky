@@ -1,4 +1,11 @@
 const sounds = {deploy:[280,500],attack:[340,120],hit:[140,55],death:[200,65],hero:[440,880],skill:[650,330],end:[523,784],capsule:[190,830],reveal:[780,1370],coin:[1280,660],upgrade:[420,1050]};
+Object.assign(sounds,{
+  'summon-gold':[115,61],'summon-gems':[780,1530],
+  'reveal-card':[480,1030],'reveal-rune':[360,660],'reveal-hero':[175,485],
+  'rank-N':[490,510],'rank-R':[650,880],'rank-SR':[750,1180],'rank-S':[660,1320],
+  'rank-SS':[580,1480],'rank-SSR':[395,1490],'rank-UUR':[300,1760],
+  shield:[1040,280],impact:[87,49],rune:[540,1080],
+});
 const heroSound = {
   hope:[620,1120], trust:[294,588], growth:[315,720], healing:[640,480], joy:[510,1360],
   luck:[900,350], memory:[390,850], night:[440,630], sadness:[980,510], dream:[580,1520],
@@ -28,7 +35,7 @@ function clip(kind, hero) {
   const key = specific ? `hero:${hero}` : kind;
   if (buffers.has(key)) return buffers.get(key);
   const [from,to] = specific || sounds[kind];
-  const duration = kind === 'hero' || kind === 'end' ? .32 : .18;
+  const duration = kind.startsWith('rank-') ? .29 : kind.startsWith('summon-')||kind==='hero'||kind==='end' ? .48 : .22;
   const size = Math.ceil(duration * context.sampleRate);
   const buffer = context.createBuffer(1,size,context.sampleRate);
   const data = buffer.getChannelData(0);
@@ -38,7 +45,12 @@ function clip(kind, hero) {
     const freq = from + (to - from) * progress;
     phase += 2 * Math.PI * freq / context.sampleRate;
     const overtone = specific ? .25 * Math.sin(phase * 1.5) + .12 * Math.sin(phase * 2.74) : .28 * Math.sin(phase * 2.01);
-    data[i] = (Math.sin(phase) + overtone) * Math.min(1,i/100) * (1-progress)**2 * .22;
+    const metallic=kind==='shield'||kind==='deploy'||kind==='summon-gold';
+    const impact=['attack','hit','death','impact'].includes(kind);
+    const grit=impact||metallic?(Math.random()*2-1)*Math.exp(-progress*15)*.55:0;
+    const spectrum=metallic?.25*Math.sin(phase*3.48):0;
+    const fifth=kind.startsWith('rank-')?.24*Math.sin(phase*1.5):0;
+    data[i]=(Math.sin(phase)+overtone+grit+spectrum+fifth)*Math.min(1,i/100)*(1-progress)**2*.19;
   }
   buffers.set(key, buffer);
   return buffer;
@@ -70,6 +82,7 @@ export function updateVolume(next) {
 function score(scene) {
   if (tracks.has(scene)) return tracks.get(scene);
   const phrases = {
+    title:[57,64,69,72,71,69,64,60,55,62,67,71,69,67,64,57],
     lobby:[57,64,69,71,69,64,60,64,55,62,67,69,67,62,59,64],
     battle:[45,57,60,64,43,55,59,62,41,53,57,60,43,55,62,64],
     boss:[38,50,53,57,37,49,52,55,36,48,51,55,37,49,55,58],
@@ -93,7 +106,11 @@ function score(scene) {
     const attack = Math.min(1,local*90);
     const release = Math.min(1,(period-local)*18);
     const pad = Math.sin(2*Math.PI*bass*time)*.15 + Math.sin(2*Math.PI*bass*1.5*time)*.065;
-    samples[i] = ((Math.sin(phase)+.25*Math.sin(2*phase)) * Math.exp(-local*4)*.25 + pad) * attack*release;
+    const pulse=scene==='battle'||scene==='boss';
+    const drum=pulse&&note%2===0?Math.sin(2*Math.PI*(51*local+1.8*(1-Math.exp(-local*34))))*Math.exp(-local*18)*.28:0;
+    const harmony=(Math.sin(2*Math.PI*bass*2.51*time)+Math.sin(2*Math.PI*bass*3*time))*.033;
+    const lead=(Math.sin(phase)+.23*Math.sin(2*phase)+.055*Math.sin(3*phase))*Math.exp(-local*(pulse?7:4))*.24;
+    samples[i]=(lead+pad+harmony+drum)*attack*release;
   }
   tracks.set(scene,buffer);
   return buffer;

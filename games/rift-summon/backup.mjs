@@ -1,8 +1,9 @@
-import {cards, stages, starter} from './battle.mjs?v=catalog-6';
+import {cards, stages, starter} from './battle.mjs?v=daily-reveal-1';
 import {heroes} from './heroes.mjs';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=catalog-6';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=daily-reveal-1';
 import {validInventory} from './inventory.mjs';
 
+import {validDaily,dailyStage} from './daily.mjs';
 const format = 'cxq-rift-summon';
 const limit = 1024 * 1024;
 const integer = (n,min,max) => Number.isInteger(n) && n >= min && n <= max;
@@ -12,7 +13,7 @@ const cardValid = card => card && Object.hasOwn(cards, card.id) &&
   integer(card.max,1,20) && integer(card.hp,1,card.max) && integer(card.attack,0,20) &&
   integer(card.shield,0,20) && integer(card.count,0,4);
 const sideValid = side => side && integer(side.hp,0,28) &&
-  ['deck','hand','board'].every(key=>Array.isArray(side[key]) && side[key].length <= 20 && side[key].every(cardValid));
+  ['deck','hand','board'].every(key=>Array.isArray(side[key]) && side[key].length <= 20 && side[key].every(card=>key==='board'&&card===null||cardValid(card)));
 
 export function makeBackup(save) {
   return JSON.stringify({format,version:1,createdAt:new Date().toISOString(),save},null,2);
@@ -47,14 +48,14 @@ export async function readBackup(file) {
       (team.rune==='none'?team.items.rune===null:matches(team.items.rune,'rune',team.rune));
   });
   const validState=state === null || (state?.version === 3 &&
-    integer(state.stage,0,Math.min(cleared?.length??-1,stages.length-1)) &&
+    (state.daily?Boolean(dailyStage(state.daily)):integer(state.stage,0,Math.min(cleared?.length??-1,stages.length-1))) &&
     integer(state.round,1,40) && integer(state.charges,0,2) && integer(state.heroShield,0,8) &&
     integer(state.nextUid,24,500) && integer(state.sequence,0,10000) &&
     heroes.some(h=>h.id===state.hero) && validRunes.includes(state.rune) && (state.rune==='none'||runeOwnership.includes(state.rune)) &&
     typeof state.heroUsed === 'boolean' && Array.isArray(state.sides) &&
     state.sides.length === 2 && state.sides.every(sideValid) &&
     (state.phase === 'deploy' && state.result === null || state.phase === 'end' && ['勝利','敗北','平局'].includes(state.result)));
-  if (!validClears || !validDeck || !validState || !walletOk || !teamsOk || !inventoryOk || !linksOk ||
+  if ((save?.daily!==undefined&&!validDaily(save.daily)) || !validClears || !validDeck || !validState || !walletOk || !teamsOk || !inventoryOk || !linksOk ||
     (save.starterHero!==undefined&&!starterHeroes.includes(save.starterHero)) ||
     (save.wallet && Object.keys(save.wallet.levels).some(id=>!owned.includes(id))) || !Array.isArray(save.log) ||
     save.log.length>150 || !save.log.every(line=>typeof line==='string' && line.length<=180) ||

@@ -17,7 +17,7 @@ const rare={
 export function rarity(id) {return rarityNames[rare[id]??0];}
 const weights=[36,28,20,12,7,3,1];
 export function poolFor(kind,currency) {
-  if(kind==='hero'&&currency!=='gems')return [];
+  if(!['gold','gems'].includes(currency))return [];
   const ids=kind==='card'?capsuleCards:kind==='rune'?validRunes.filter(id=>id!=='none'):kind==='hero'?heroIds:[];
   const cap=kind==='card'?(currency==='gold'?4:6):(currency==='gold'?3:5);
   return ids.filter(id=>(rare[id]??0)<=cap).map(id=>({id,weight:weights[rare[id]??0]}));

@@ -54,6 +54,7 @@ export const cards = {
 };
 export const starter = ['guard', 'bomb', 'archer', 'ax', 'ghost', 'healer', 'knight', 'giant'];
 const sentries = ['guard', 'bomb', 'knight', 'ax', 'ghost', 'giant'];
+import {dailyStage} from './daily.mjs';
 export const stages = [
   {name:'哨站前沿', goal:'倒數歸零就能部署。先用護衛或斥候接住第一波。', hp:8, opponents:['guard','archer','healer','knight'], opening:['archer'], reward:'bow'},
   {name:'雙塔迴廊', goal:'同回合可以連下多張。留意每張牌的部署順序。', hp:10, opponents:['bomb','knight','archer','ghost','ax'], opening:['guard','bomb'], reward:'fang'},
@@ -73,12 +74,16 @@ function unit(id, uid, level=1) {
 function side(deck, hp) {
   return {hp, deck: deck.slice(3), hand: deck.slice(0, 3), board: []};
 }
-export function createBattle(rune = 'wall', hero = '', stage = 3, deck = starter, levels = {}, heroLevel=1, runeLevel=1) {
-  const level = stages[stage];
+export function createBattle(rune = 'wall', hero = '', stage = 3, deck = starter, levels = {}, heroLevel=1, runeLevel=1, daily=null) {
+  const level = daily?dailyStage(daily):stages[stage];
   const player = side(deck.map((id, i) => unit(id, i, levels[id]??1)), 24+heroLevel-1);
   const enemy = side(level.opponents.map((id, i) => unit(id, i + 8)), level.hp);
   enemy.board.push(...level.opening.map((id,i)=>unit(id,20+i)));
   const state = {version: 3, phase: 'deploy', stage, round: 1, result: null, sides: [player, enemy], hero, heroUsed: false, heroShield: 0, rune, charges: rune === 'none' ? 0 : 2, nextUid: 24, sequence: 0};
+  if(daily) {
+    state.daily=daily;
+    if(daily.vault==='gold') for(const card of enemy.board)card.shield=Math.max(card.shield,2);
+  }
   state.heroLevel=heroLevel;
   state.runeLevel=runeLevel;
   begin(player, false);
@@ -166,6 +171,7 @@ function hitBatch(state, events, actor, source, hits, deaths, normal = false) {
     const dealt = damage - absorbed;
     if (card) {
       card.shield -= absorbed;
+      if(state.daily?.vault==='gold'&&target===1&&absorbed&&!card.shield)card.attack=Math.max(0,card.attack-1);
       card.hp = Math.max(0, card.hp - dealt);
       if (!card.hp) {
         side.board[lane] = null;
@@ -383,6 +389,12 @@ export function applyAction(previous, action) {
   if (action.type === 'deploy') {
     if (!deploy(state, events, 0, action.uid)) return null;
   } else if (action.type === 'attack') {
+    if(state.daily?.vault==='gems'){
+      const lane=(state.round-1)%3;
+      const deaths=[];
+      hitBatch(state,events,1,{name:'星晶爆裂'},[{target:0,lane,amount:1+Number(state.daily.floor>=6)}],deaths);
+      settle(state,events,1,deaths);
+    }
     runRune(state, events);
     state.result=result(state)??null;
     if(!state.result) {
