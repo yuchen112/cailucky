@@ -628,3 +628,8 @@ body:has(#capsule:not([hidden])) { background-image:none; }
 
 #battle .hero-hud,#battle .enemy-hud { position:relative; }
 .direct-hit-effect { position:absolute; width:100%; inset:0; pointer-events:none; object-fit:contain; animation:rank-burst .4s both; }
+
+#camp-featured[data-motion=off] { animation:none; }
+#camp-featured { object-position:center bottom; }
+
+@media (max-width:590px) { .codex-filters { gap:4px; } .codex-filters select,.codex-filters input[type=search] { min-width:0; max-width:78px !important; padding-inline:3px !important; font-size:11px; } }

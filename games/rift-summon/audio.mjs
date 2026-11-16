@@ -5,6 +5,7 @@ Object.assign(sounds,{
   'rank-N':[490,510],'rank-R':[650,880],'rank-SR':[750,1180],'rank-S':[660,1320],
   'rank-SS':[580,1480],'rank-SSR':[395,1490],'rank-UUR':[300,1760],
   shield:[1040,280],impact:[87,49],rune:[540,1080],
+  crank:[105,78],'draw-card':[390,730],'draw-hero':[197,392],'draw-rune':[287,745],
 });
 const heroSound = {
   hope:[620,1120], trust:[294,588], growth:[315,720], healing:[640,480], joy:[510,1360],
@@ -45,7 +46,7 @@ function clip(kind, hero) {
     const freq = from + (to - from) * progress;
     phase += 2 * Math.PI * freq / context.sampleRate;
     const overtone = specific ? .25 * Math.sin(phase * 1.5) + .12 * Math.sin(phase * 2.74) : .28 * Math.sin(phase * 2.01);
-    const metallic=kind==='shield'||kind==='deploy'||kind==='summon-gold';
+    const metallic=kind==='shield'||kind==='deploy'||kind==='summon-gold'||kind==='crank'||kind==='draw-card';
     const impact=['attack','hit','death','impact'].includes(kind);
     const grit=impact||metallic?(Math.random()*2-1)*Math.exp(-progress*15)*.55:0;
     const spectrum=metallic?.25*Math.sin(phase*3.48):0;

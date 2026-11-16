@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=growth-2">
+<link rel="stylesheet" href="style.css?v=growth-3">
 </head>
 <body>
 <main>
@@ -87,7 +87,7 @@
   </div>
 </section>
 <section id="hero-book" hidden aria-label="英雄圖鑑">
-  <header class="collection-header"><h1>英雄圖鑑</h1><button id="hero-book-back">返回</button></header><label>品階 <select id="hero-rarity"><option value="all">全部</option></select></label> <label>收錄 <select id="hero-owned"><option value="all">全部</option><option value="owned">已收錄</option><option value="locked">未收錄</option></select></label><div id="hero-book-grid"></div>
+  <header class="collection-header"><h1>英雄圖鑑</h1><button id="hero-book-back">返回</button></header><label>品階 <select id="hero-rarity"><option value="all">全部</option></select></label> <label>收錄 <select id="hero-owned"><option value="all">全部</option><option value="owned">已收錄</option><option value="locked">未收錄</option></select></label><label class="catalog-filter">搜尋 <input type="search" id="hero-search" placeholder="英雄名稱"></label><div id="hero-book-grid"></div>
 </section>
 <section id="campaign" hidden aria-label="副本">
   <header class="collection-header"><div><h1>副本</h1><p id="campaign-chapter"></p></div><button id="campaign-back">回營地</button></header>
@@ -114,7 +114,7 @@
   </nav>
   <label class="catalog-filter">卡牌類別 <select id="card-filter"><option value="all">全部</option><option value="attack">攻擊</option><option value="guard">防護</option><option value="heal">治療</option><option value="support">支援</option></select></label>
   <label class="catalog-filter">稀有度 <select id="card-rarity"><option value="all">全部</option></select></label>
-  <label class="catalog-filter">查卡片 <input type="search" id="card-search" placeholder="名稱或技能"></label>
+  <label class="catalog-filter">收錄 <select id="card-owned"><option value="all">全部</option><option value="owned">已收錄</option><option value="locked">未收錄</option></select></label><label class="catalog-filter">搜尋 <input type="search" id="card-search" placeholder="名稱或技能"></label>
   <div id="album-pages" aria-label="卡冊書頁"></div>
   <nav class="album-controls" aria-label="卡冊翻頁">
     <button id="album-prev">上一頁</button>
@@ -181,6 +181,6 @@
   <div class="controls"><button id="draw-open-all">一鍵開啟</button><button id="capsule-show-close">跳過</button></div>
 </dialog>
 </main>
-<script type="module" src="main.mjs?v=growth-2"></script>
+<script type="module" src="main.mjs?v=growth-3"></script>
 </body>
 </html>

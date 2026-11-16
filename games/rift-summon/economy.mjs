@@ -1,4 +1,4 @@
-import {materials} from './materials.mjs';
+import {materials} from './materials.mjs?v=growth-3';
 export const capsuleCards=['ember','wisp','turtle','raven','stag','lynx','moth','drake','ibis','hare','otter','ram','bat','beetle','crane','yak','seal','boar','swan','crab','gecko','wolf','panda','hedgehog','koi','falcon','mole','lion','badger','lynxguard','robin','frog','yakfire','stork','ferret','beaver','rabbit','eagle'];
 export const maxLevel=5;
 export const validRunes=['wall','heal','frost','spark','ward','flame','tide','root','mirror','dawn','anchor','shelter','surge','echo','none'];

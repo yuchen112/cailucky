@@ -1,12 +1,12 @@
-import {materials,bookFor} from './materials.mjs';
-import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs';
-import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=growth-2';
+import {materials,bookFor} from './materials.mjs?v=growth-3';
+import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=growth-3';
+import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=growth-3';
 import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=growth-2';
-import {makeBackup, readBackup} from './backup.mjs?v=growth-2';
-import {startingWallet,validWallet,maxLevel,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=growth-2';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=growth-2';
-import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,effectsMax} from './inventory.mjs?v=growth-2';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=growth-3';
+import {makeBackup, readBackup} from './backup.mjs?v=growth-3';
+import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=growth-3';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=growth-3';
+import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,effectsMax} from './inventory.mjs?v=growth-3';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -198,8 +198,8 @@ function heroDetails(hero) {
 function showHeroes() {
   view('hero-book');
   codexTabs('hero-book','hero');
-  const tier=get('hero-rarity').value, status=get('hero-owned').value;
-  get('hero-book-grid').replaceChildren(...heroes.filter(hero=>(tier==='all'||rarity(hero.id)===tier)&&
+  const tier=get('hero-rarity').value, status=get('hero-owned').value, query=get('hero-search').value.trim();
+  get('hero-book-grid').replaceChildren(...heroes.filter(hero=>hero.name.includes(query)&&(tier==='all'||rarity(hero.id)===tier)&&
     (status==='all'||ownedHeroes().includes(hero.id)===(status==='owned'))).map(hero=>{
     const button=confirmButton('',()=>heroDetails(hero));
     button.append(artwork(hero.id,'hero'),element('strong',`${hero.name}・${rarity(hero.id)}`),
@@ -350,7 +350,8 @@ function showCamp() {
   get('camp-profile-art').src=asset(`hero-portrait-${featured.id}`);
   get('camp-progress').textContent=featured.name;
   const display=get('camp-featured');
-  display.src=asset('hero-cast-'+featured.id);
+  display.src=asset('hero-home-'+featured.id);
+  display.dataset.motion=lowMotion?'off':'on';
   get('camp-featured-button').onclick=()=>{if(lowMotion||matchMedia('(prefers-reduced-motion: reduce)').matches)return;display.animate([{transform:'scale(1)'},{transform:'translateY(-7px) scale(1.03)'},{transform:'scale(1)'}],420);};
   renderWallet(get('camp-wallet'));
 }
@@ -438,7 +439,11 @@ function showBatch(intro){
    body.append(wave);
  }
  get('draw-open-all').hidden=true;get('capsule-show-close').textContent='跳過';
- void unlock().then(()=>play('summon-'+currency));
+ void unlock().then(()=>{
+   if(!drawing)return;
+   play('crank');play('summon-'+currency);
+   setTimeout(()=>{if(drawing)play('draw-'+kind);},420);
+ });
  revealTimer=setTimeout(()=>draws.length===1?revealOne(0):renderBatch(),reducedReveal()?50:draws.length===10?1300:950);
 }
 function renderBatch(){
@@ -592,7 +597,8 @@ function renderCollection(direction=0) {
   const filter=get('card-filter').value;
   const tier=get('card-rarity').value;
   const query=get('card-search').value.trim();
-  const filtered=albumCards.filter(id=>(filter==='all'||cardGroup(id)===filter)&&(tier==='all'||rarity(id)===tier)&&`${cards[id][0]} ${cards[id][4]}`.includes(query));
+  const status=get('card-owned').value;
+  const filtered=albumCards.filter(id=>(status==='all'||collection.has(id)===(status==='owned'))&&(filter==='all'||cardGroup(id)===filter)&&(tier==='all'||rarity(id)===tier)&&`${cards[id][0]} ${cards[id][4]}`.includes(query));
   const pages=Math.max(1,Math.ceil(filtered.length/perLeaf));
   albumPage=Math.min(albumPage,pages-1);
   const spread=albumWide.matches?2:1;
@@ -610,7 +616,7 @@ function renderCollection(direction=0) {
     book.animate([{opacity:.45,transform:`translateX(${direction*12}px)`},{opacity:1,transform:'translateX(0)'}],220);
   }
 }
-get('card-filter').onchange=()=>{albumPage=0;renderCollection();};
+get('card-owned').onchange=get('card-filter').onchange=()=>{albumPage=0;renderCollection();};
 for(const id of ['card-rarity','rune-rarity'])for(const tier of rarityNames){
   if(id==='rune-rarity'&&tier==='UUR')continue;
   const option=element('option',tier);option.value=tier;get(id).append(option);
@@ -724,6 +730,20 @@ function itemArt(item) {
 function teamsUsing(uid) {
   return teams.flatMap((team,index)=>[...team.items.cards,team.items.hero,team.items.rune].includes(uid)?[index+1]:[]);
 }
+function effectGrowth(item) {
+  const rank=item.effect??1;
+  if(item.kind==='hero'){
+    const role=heroes.find(hero=>hero.id===item.id).effect;
+    const base={shield:3,recover:3,draw:1,haste:1,summon:1,strike:2,heal:3,power:1,armor:2}[role];
+    const label={shield:'英雄護盾',recover:'英雄回復',draw:'額外抽牌',haste:'倒數減少',summon:'召喚靈體強度',strike:'追擊傷害',heal:'治療量',power:'攻擊增益',armor:'護盾'}[role];
+    return label+' '+(base+rank-1)+' → '+(base+rank);
+  }
+  if(item.kind==='rune')return '符文增益 +'+(item.level+rank-2)+' → +'+(item.level+rank-1);
+  const skill=cards[item.id][4];
+  const label={'護盾':'初始護盾','護衛':'減傷','自爆':'爆炸傷害','治療':'治療量','援護':'治療量','追獵':'追獵額外傷害','破甲':'移除護盾','守蔭':'友軍護盾','猛進':'猛進額外傷害','戰吼':'戰吼傷害','橫掃':'橫掃額外傷害','亡靈接替':'靈體額外生命'}[skill]??'普攻額外傷害';
+  const base=['護盾','自爆','治療','援護','破甲'].includes(skill)?2:['追獵','橫掃','亡靈接替',''].includes(skill)?0:1;
+  return label+' '+(base+rank-1)+' → '+(base+rank);
+}
 function itemStats(item) {
   if(item.kind==='card') {
     const card=catalogCard(item.id,item.level);
@@ -736,7 +756,7 @@ function itemStats(item) {
     const hero=heroes.find(h=>h.id===item.id);
     return [['起始生命',23+item.level],[hero.skill,hero.detail]];
   }
-  return [['每場發動',2],['效果增益','+'+(item.level-1)],[runes[item.id].name,runes[item.id].effect]];
+  return [['每場發動',2],['效果增益','+'+(item.level+(item.effect??1)-2)],[runes[item.id].name,runes[item.id].effect]];
 }
 function itemDetail(item,allowUpgrade=false) {
   const layout=element('div','','instance-inspector'), copy=element('div');
@@ -804,7 +824,8 @@ function chooseMaterial(target,mode) {
     const result=structuredClone(target);
     if(mode==='xp'&&item)grantExperience(result,materials[item.id]?.xp??50);
     preview.textContent=selected.size+' / '+required+'・'+(mode==='xp'?'Lv.'+target.level+' → '+result.level+'，剩餘經驗 '+result.experience:mode==='break'?'上限 Lv.'+levelLimit(target)+' → '+limits[(target.breakthrough??0)+1]:'效果 Lv.'+(target.effect??1)+' → '+((target.effect??1)+1));
-    if(mode==='xp'&&result.level===levelLimit(target))preview.textContent+='・超出上限的經驗不會保留';
+    if(mode==='effect')preview.textContent+='・'+effectGrowth(target);
+    if(mode==='xp'&&item&&result.level===levelLimit(target))preview.textContent+='・超出上限的經驗不會保留';
     apply.disabled=selected.size!==required;
   };
   const grid=element('div','','team-candidates');
@@ -986,20 +1007,20 @@ function renderBoard(frame, event) {
       return node;
     };
     lane.append(slot(1),element('span','','lane-divider'),slot(0));
-    if(['gems','tech'].includes(frame.daily?.vault)&&index===((frame.round-1)%3))lane.classList.add('hazard-lane');
+    if(['gems','tech'].includes(state.daily?.vault)&&index===((frame.round-1)%3))lane.classList.add('hazard-lane');
     return lane;
   }));
   field.scrollLeft = scroll;
-  get('hero-hp').value=player.hp;get('hero-hp').max=24+(frame.heroLevel??1)-1;
-  get('enemy-hp').value=enemy.hp;get('enemy-hp').max=missionFor(frame).hp;
-  get('enemy-portrait').src=asset('illustration-'+missionFor(frame).opening[0]);
+  get('hero-hp').value=player.hp;get('hero-hp').max=24+(state.heroLevel??1)-1;
+  get('enemy-hp').value=enemy.hp;get('enemy-hp').max=missionFor(state).hp;
+  get('enemy-portrait').src=asset('illustration-'+missionFor(state).opening[0]);
   get('health').textContent = `${player.hp}${frame.heroShield ? ' ◆'+frame.heroShield : ''}`;
   get('enemy-health').textContent = `${enemy.hp}`;
   get('round').textContent = `回合 ${frame.round}`;
   const spent=state.rune!=='none' && frame.charges===0;
   get('rune-status').replaceChildren(runeBadge(state.rune,state.rune==='none'?'未裝備':`${runes[state.rune].name} ${frame.charges} 次`,spent?'spent':state.rune));
   const boss=enemy.board.findIndex(card=>card?.id==='boss');
-  get('forecast').textContent=boss>=0&&!frame.daily?`斷橋守將在第 ${boss+1} 欄。橫掃會波及兩側。`:missionFor(state).goal;
+  get('forecast').textContent=boss>=0&&!state.daily?`斷橋守將在第 ${boss+1} 欄。橫掃會波及兩側。`:missionFor(state).goal;
 }
 function render() {
   const [player,enemy]=state.sides;
@@ -1346,6 +1367,7 @@ get('camp-heroes').onclick=showHeroes;
 get('hero-book-back').onclick=showCamp;
 for(const tier of rarityNames){const option=element('option',tier);option.value=tier;get('hero-rarity').append(option);}
 get('hero-rarity').onchange=showHeroes;
+get('hero-search').oninput=showHeroes;
 get('hero-owned').onchange=showHeroes;
 get('rune-owned').onchange=renderRuneBook;
 get('collection-back').onclick=()=>albumReturn==='results'?showResults():showCamp();
