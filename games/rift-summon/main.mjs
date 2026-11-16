@@ -328,15 +328,14 @@ function showCamp() {
   get('hero-cut-in').hidden=true;
   view('camp');
   get('camp-resume').hidden=state?.phase!=='deploy';
-  get('camp-progress').textContent=`裂界營地・戰役 ${cleared.size}/${stages.length}・收藏 ${owned().length} 張`;
+  get('camp-progress').textContent=`第一章 ${cleared.size}/${stages.length}・收藏 ${owned().length} 張`;
   renderWallet(get('camp-wallet'));
 }
 let drawing=false;
 let lastDraw=null;
 let finishReveal;
 function capsuleOptions() {
-  const kind=get('capsule-kind').value;
-  const currency=get('capsule-currency').value;
+  const [currency,kind]=document.querySelector('input[name="summon-pool"]:checked').value.split(':');
   return {kind,currency};
 }
 function collectibleName(kind,id) {
@@ -411,8 +410,7 @@ async function drawCapsule(count) {
 }
 get('camp-capsule').onclick=()=>{view('capsule');renderCapsule();changeMusic('capsule');};
 get('capsule-back').onclick=()=>{showCamp();changeMusic('lobby');};
-get('capsule-kind').onchange=renderCapsule;
-get('capsule-currency').onchange=renderCapsule;
+for(const input of document.querySelectorAll('input[name="summon-pool"]')) input.onchange=renderCapsule;
 get('draw-gems').onclick=()=>drawCapsule(1);
 get('draw-ten').onclick=()=>drawCapsule(10);
 get('capsule-show-close').onclick=()=>finishReveal?finishReveal():get('capsule-show').close();
@@ -549,6 +547,7 @@ function showCampaign() {
     return button;
   }));
   const stage=stages[stageIndex];
+  get('stage-name').textContent=stage.name;
   get('stage-detail').textContent=`${stage.goal} 首通取得：${cards[stage.reward][0]}。出戰：${heroes.find(hero=>hero.id===chosen).name}・${runes[loadout].name}`;
   const preview=(label,id)=>{
     const figure=element('figure');

@@ -337,3 +337,70 @@ body:has(#capsule:not([hidden])) { background-image:url("art/capsule-workshop.we
  .camp-nav button { min-height:44px; font-size:14px; }
  .camp-nav button > img { width:28px; height:28px; }
 }
+
+body:has(#camp:not([hidden])) { background-image:url("art/camp-courtyard.webp"); }
+.world-camp { width:min(100%,880px); align-self:stretch; margin:0 auto; display:grid; grid-template-rows:auto auto 1fr auto; gap:8px; }
+.camp-hud { padding:6px 10px; background:url("art/table-deck.webp") center / 100% 100% no-repeat; }
+.camp-hud h1 { font-size:clamp(22px,5vw,34px); }
+.camp-hud p { font-size:12px; color:#ffe4b2; }
+.camp-hud .wallet { margin:0; }
+.world-camp #camp-resume { justify-self:start; min-width:124px; }
+.world-camp .camp-nav { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); align-self:center; gap:8px; margin:0; }
+.world-camp .camp-nav button { display:grid; justify-items:center; align-content:end; gap:0; min-height:105px; padding:4px 2px 8px; background:url("art/world-plinth.webp") center bottom / 100% 68% no-repeat; font-size:clamp(12px,3vw,16px); text-shadow:0 2px 3px #080717; }
+.world-camp .camp-nav button:active img { transform:scale(.94); }
+.world-camp .camp-nav img { width:clamp(49px,14vw,86px); height:clamp(49px,14vw,86px); object-fit:contain; }
+.world-camp .controls { justify-self:end; }
+.summon-scene { display:grid; grid-template-columns:minmax(0,1fr) minmax(270px,390px); gap:10px; align-items:center; }
+.summon-machine { display:grid; justify-items:center; text-align:center; }
+.summon-machine > img { width:min(100%,280px); max-height:57dvh; object-fit:contain; }
+.summon-machine #capsule-reveal { min-height:0; color:#fff1ce; }
+.summon-scene .capsule-console { width:100%; margin:8px 0 0; }
+.summon-pools { border:0; padding:0; margin:7px 0 9px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; }
+.summon-pools legend { padding:0 0 5px; color:#ffe5b0; font-size:12px; }
+.summon-pools label { position:relative; display:grid; place-items:center; min-height:52px; padding:3px; color:#fff2d0; cursor:pointer; background:url("art/btn-utility.webp") center / 100% 100% no-repeat; font-size:11px; }
+.summon-pools input { position:absolute; opacity:0; }
+.summon-pools img { height:24px; width:24px; object-fit:contain; }
+.summon-pools small { font-size:10px; }
+.summon-pools label:has(input:checked), .summon-pools label:has(input:focus-visible) { outline:2px solid #ffe0a3; outline-offset:-2px; }
+.campaign-scene { display:grid; grid-template-columns:minmax(0,3fr) minmax(195px,2fr); gap:8px; align-items:start; }
+.campaign-dossier { padding:10px; background:url("art/table-deck.webp") center / 100% 100% no-repeat; }
+.campaign-dossier h2 { margin:0; font-size:18px; color:#ffe5a9; }
+.campaign-dossier #stage-detail { padding:2px 0; background:none; font-size:12px; }
+.campaign-dossier #stage-preview { gap:5px; margin:5px 0; }
+.campaign-dossier #stage-preview figure { width:min(22%,66px); }
+.campaign-dossier #stage-preview figcaption { font-size:10px; }
+.campaign-dossier .controls { gap:3px; }
+.campaign-dossier label { display:flex; align-items:center; width:100%; gap:5px; font-size:12px; }
+.campaign-dossier button { font-size:12px; }
+.campaign-scene #stages { height:clamp(180px,34vw,320px); }
+@media (orientation:portrait) {
+ .world-camp .camp-nav { grid-template-columns:repeat(3,minmax(0,1fr)); }
+ .world-camp .camp-nav button { min-height:91px; }
+ .summon-scene,.campaign-scene { grid-template-columns:minmax(0,1fr); }
+ .summon-machine > img { max-height:24dvh; }
+}
+@media (orientation:landscape) and (max-height:400px) {
+ .world-camp .camp-nav button { min-height:87px; }
+ .world-camp .camp-nav img { width:55px; height:55px; }
+ .camp-hud h1 { font-size:22px; }
+ .camp-hud { padding:4px 8px; }
+ .world-camp { gap:3px; }
+ .summon-scene .capsule-console { padding:9px 14px; }
+ .summon-pools label { min-height:45px; }
+ .summon-pools img { width:19px; height:19px; }
+}
+.world-camp .camp-hud { grid-row:1; }
+.world-camp #camp-resume { grid-row:2; }
+.world-camp .camp-nav { grid-row:3; }
+.world-camp .controls { grid-row:4; }
+.stage-flag:disabled { opacity:.73; }
+.campaign-dossier #campaign-prepare { margin-top:0; }
+@media (orientation:landscape) and (max-height:400px) {
+ #campaign > .collection-header,#capsule > .collection-header { padding:3px 7px; }
+ #campaign > .collection-header h1,#capsule > .collection-header h1 { font-size:22px; }
+ #campaign > .collection-header p { font-size:11px; margin:1px 0; }
+ .campaign-dossier { padding:7px 8px; }
+ .campaign-dossier #stage-preview figure { width:min(22%,47px); }
+ .campaign-dossier #stage-preview { margin:3px 0; }
+ .campaign-dossier #stage-detail { line-height:1.22; }
+}

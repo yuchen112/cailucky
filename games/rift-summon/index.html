@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=catalog-5">
+<link rel="stylesheet" href="style.css?v=world-hub-1">
 </head>
 <body>
 <main>
@@ -17,19 +17,17 @@
   <header class="collection-header"><h1 id="starter-heading">選擇第一位英雄</h1></header><div id="starter-options"></div>
 </section>
 <section id="camp" hidden aria-label="裂界營地">
-  <div class="camp-content">
-    <h1>CxQ 裂界召喚</h1>
-    <p id="camp-progress"></p>
-    <div id="camp-wallet" class="wallet"></div>
+  <div class="world-camp">
+    <header class="camp-hud"><div><h1>裂界營地</h1><p id="camp-progress"></p></div><div id="camp-wallet" class="wallet"></div></header>
+    <button id="camp-resume" data-art="resume" hidden>繼續戰鬥</button>
     <nav class="camp-nav" aria-label="營地入口">
-      <button id="camp-campaign" data-art="campaign">副本</button>
-      <button id="camp-deck" data-art="deck">編隊</button>
-      <button id="camp-collection"><img src="art/nav-codex.webp" alt="">卡牌圖鑑</button>
-      <button id="camp-bag"><img src="art/nav-card-bag.webp" alt="">我的卡包</button>
-      <button id="camp-runes"><img src="art/nav-rune-book.webp" alt="">符文冊</button>
-      <button id="camp-heroes"><img src="art/nav-heroes.webp" alt="">英雄圖鑑</button>
-      <button id="camp-capsule"><img src="art/nav-machine.webp" alt="">扭蛋召喚</button>
-      <button id="camp-resume" data-art="resume" hidden>繼續戰鬥</button>
+      <button id="camp-campaign"><img src="art/map-flag.webp" alt=""><span>副本</span></button>
+      <button id="camp-deck"><img src="art/nav-deck-chest.webp" alt=""><span>編隊</span></button>
+      <button id="camp-capsule"><img src="art/summon-machine.webp" alt=""><span>扭蛋召喚</span></button>
+      <button id="camp-heroes"><img src="art/nav-heroes.webp" alt=""><span>英雄圖鑑</span></button>
+      <button id="camp-collection"><img src="art/nav-codex.webp" alt=""><span>卡牌圖鑑</span></button>
+      <button id="camp-bag"><img src="art/nav-card-bag.webp" alt=""><span>我的卡包</span></button>
+      <button id="camp-runes"><img src="art/nav-rune-book.webp" alt=""><span>符文冊</span></button>
     </nav>
     <div class="controls"><button id="camp-options" data-art="settings">設定</button><button id="camp-backup" data-art="backup">存檔備份</button></div>
   </div>
@@ -42,13 +40,20 @@
 </section>
 <section id="capsule" hidden aria-labelledby="capsule-title">
   <header class="collection-header"><h1 id="capsule-title">扭蛋召喚</h1><button id="capsule-back">回營地</button></header>
-  <div class="capsule-console">
-    <div id="capsule-wallet" class="wallet" aria-live="polite"></div>
-    <div class="controls"><label>貨幣 <select id="capsule-currency"><option value="gold">金幣</option><option value="gems" selected>鑽石</option></select></label>
-    <label>卡池 <select id="capsule-kind"><option value="card">卡牌</option><option value="rune">符文</option><option value="hero">英雄</option></select></label></div>
-    <div id="capsule-reveal" aria-live="polite"></div>
-    <div class="controls"><button id="draw-gems">單抽</button><button id="draw-ten">十連</button></div>
-    <div id="capsule-rules"></div>
+  <div class="summon-scene">
+    <div class="summon-machine"><img src="art/summon-machine.webp" alt=""><div id="capsule-reveal" aria-live="polite"></div></div>
+    <div class="capsule-console">
+      <div id="capsule-wallet" class="wallet" aria-live="polite"></div>
+      <fieldset class="summon-pools"><legend>選擇召喚池</legend>
+        <label><input type="radio" name="summon-pool" value="gold:card"><img src="art/money-gold.webp" alt=""><span>金幣卡牌</span><small>最高 SS</small></label>
+        <label><input type="radio" name="summon-pool" value="gold:rune"><img src="art/rune-ward.webp" alt=""><span>金幣符文</span><small>最高 S</small></label>
+        <label><input type="radio" name="summon-pool" value="gems:card" checked><img src="art/money-gems.webp" alt=""><span>鑽石卡牌</span><small>最高 UUR</small></label>
+        <label><input type="radio" name="summon-pool" value="gems:rune"><img src="art/rune-spark.webp" alt=""><span>鑽石符文</span><small>最高 SSR</small></label>
+        <label><input type="radio" name="summon-pool" value="gems:hero"><img src="art/nav-heroes.webp" alt=""><span>鑽石英雄</span><small>最高 SSR</small></label>
+      </fieldset>
+      <div class="controls"><button id="draw-gems">單抽</button><button id="draw-ten">十連</button></div>
+      <div id="capsule-rules"></div>
+    </div>
   </div>
 </section>
 <section id="hero-book" hidden aria-label="英雄圖鑑">
@@ -56,10 +61,14 @@
 </section>
 <section id="campaign" hidden aria-label="副本">
   <header class="collection-header"><div><h1>副本</h1><p>第一章・斷橋哨站</p></div><button id="campaign-back">回營地</button></header>
-  <div id="stages" aria-label="章節旗點"></div>
-  <p id="stage-detail" aria-live="polite"></p>
-  <div id="stage-preview" aria-label="敵方先鋒與首通獎勵"></div>
-  <div class="controls"><label>出戰編隊 <select id="campaign-team"></select></label><button id="campaign-prepare" data-art="deck">編輯編隊</button><button id="campaign-fight" data-art="attack">開始戰鬥</button></div>
+  <div class="campaign-scene">
+    <div id="stages" aria-label="章節旗點"></div>
+    <div class="campaign-dossier">
+      <h2 id="stage-name"></h2><p id="stage-detail" aria-live="polite"></p>
+      <div id="stage-preview" aria-label="敵方先鋒與首通獎勵"></div>
+      <div class="controls"><label>出戰編隊 <select id="campaign-team"></select></label><button id="campaign-prepare" data-art="deck">編輯編隊</button><button id="campaign-fight" data-art="attack">開始戰鬥</button></div>
+    </div>
+  </div>
 </section>
 <section id="settings-page" hidden aria-label="遊戲設定">
   <header class="collection-header"><h1>設定</h1><button id="settings-back">返回</button></header>
@@ -137,6 +146,6 @@
   <button id="capsule-show-close">收下</button>
 </dialog>
 </main>
-<script type="module" src="main.mjs?v=catalog-5"></script>
+<script type="module" src="main.mjs?v=world-hub-1"></script>
 </body>
 </html>
