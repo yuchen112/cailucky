@@ -43,3 +43,22 @@ export function validInventory(value,types) {
     return true;
   });
 }
+export function checkLineup(items,find) {
+  if(!items||!Array.isArray(items.cards)||items.cards.length!==8)return '請放入 8 張卡牌。';
+  const cards=items.cards.map(find);
+  if(cards.some(card=>card?.kind!=='card'))return '有牌位缺少可用的卡牌，請重新選擇。';
+  if(new Set(cards.map(card=>card.id)).size!==8)return '同名卡每組只能放一張。';
+  if(find(items.hero)?.kind!=='hero')return '請選擇一位已持有的英雄。';
+  if(items.rune!==null&&find(items.rune)?.kind!=='rune')return '裝備的符文已不可用，請重新選擇或卸下。';
+  return '';
+}
+export function assignLineupCard(slots,position,uid,find) {
+  const candidate=find(uid);
+  if(candidate?.kind!=='card'||!Number.isInteger(position)||position<0||position>=slots.length)return null;
+  const other=slots.findIndex((id,i)=>i!==position&&find(id)?.id===candidate.id);
+  if(other>=0&&slots[other]!==uid)return null;
+  const next=[...slots];
+  if(other>=0)next[other]=slots[position];
+  next[position]=uid;
+  return next;
+}

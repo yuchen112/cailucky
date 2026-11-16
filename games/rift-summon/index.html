@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=catalog-6">
+<link rel="stylesheet" href="style.css?v=arena-polish-1">
 </head>
 <body>
 <main>
@@ -52,7 +52,7 @@
     <button data-bag="card">卡片背包</button><button data-bag="hero">英雄背包</button><button data-bag="rune">符文背包</button>
   </nav>
   <label>稀有度 <select id="inventory-tier"><option value="all">全部</option></select></label>
-  <label>查個體 <input type="search" id="inventory-search" placeholder="名稱或個體編號"></label>
+  <label>查個體 <input type="search" id="inventory-search" placeholder="輸入名稱"></label>
   <div id="inventory-grid"></div>
 </section>
 <section id="team-editor" hidden aria-label="編隊">
@@ -145,7 +145,6 @@
   </header>
   <div id="rotate">橫拿手機可看到更多欄位。</div>
   <div id="forecast"></div>
-  <div class="hand-tray"><strong id="hand-label">手牌</strong><div id="hand" aria-labelledby="hand-label"></div></div>
   <div class="battle-stage">
     <div id="field" tabindex="0" aria-label="敵我同步捲動戰場"><div id="lanes"></div></div>
     <div id="hero-cut-in" hidden aria-hidden="true">
@@ -154,6 +153,7 @@
     </div>
   </div>
   <p id="message" aria-live="polite"></p>
+  <div class="hand-tray"><strong id="hand-label">手牌</strong><div id="hand" aria-labelledby="hand-label"></div></div>
 
   <footer>
     <button id="rune-status" type="button"></button>
@@ -180,6 +180,6 @@
   <button id="capsule-show-close">收下</button>
 </dialog>
 </main>
-<script type="module" src="main.mjs?v=catalog-6"></script>
+<script type="module" src="main.mjs?v=arena-polish-1"></script>
 </body>
 </html>

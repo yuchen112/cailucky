@@ -482,3 +482,35 @@ body:has(#capsule[data-gate="hero"]:not([hidden])) { background-image:url("art/d
 #collection input[type=search],#rune-book input[type=search],#inventory-page input[type=search],#team-editor input[type=search] {
  min-height:44px; max-width:100%; padding-inline:8px; color:#fff1d4; background:#181023ed; border:1px solid #ab8a55; font:inherit;
 }
+
+.inventory-card-art { position:relative; display:block; width:100%; max-width:110px; aspect-ratio:3/4; min-width:0; }
+.inventory-card-art > img,#detail-content .inventory-card-art > img { display:block; width:100%; height:100%; object-fit:cover; }
+.inventory-card-art > .inventory-card-frame,#detail-content .inventory-card-art > .inventory-card-frame { position:absolute; inset:0; pointer-events:none; }
+.instance-inspector > *, .instance-stats > * { min-width:0; }
+#detail-content .instance-inspector > img { width:100%; max-width:100%; object-fit:contain; }
+.instance-inspector > .inventory-card-art { max-width:none; align-self:start; }
+.instance-stats { grid-template-columns:minmax(3em,max-content) minmax(0,1fr); }
+.instance-stats dd { overflow-wrap:anywhere; }
+main:has(#battle:not([hidden])) { max-width:none; padding-inline:max(5px,env(safe-area-inset-left)) max(5px,env(safe-area-inset-right)); }
+#battle { --table-card-width:clamp(62px,18.8dvh,122px); }
+#battle .battle-stage { padding-block:7px; }
+#battle #lanes { grid-auto-columns:calc(var(--table-card-width) + 12px); }
+#battle .slot .card-face,#battle .slot .slot-art { width:var(--table-card-width); }
+#battle #hand button:has(.card-face) { width:clamp(50px,17dvh,91px); }
+#battle .hand-tray { min-height:0; }
+@media (orientation:landscape) {
+ #battle:not([hidden]) { grid-template-columns:clamp(73px,11vw,130px) minmax(0,1fr) clamp(87px,13vw,145px);
+  grid-template-areas:"hero forecast actions" "hero field actions" "hero message actions" "hero hand actions"; }
+}
+@media (orientation:landscape) and (max-height:350px) {
+ #battle { --table-card-width:clamp(49px,17.6dvh,67px); }
+ #battle .battle-stage { padding-block:4px; }
+ #battle .hand-tray { padding-block:3px; }
+ #battle #message { margin:0; min-height:0; }
+}
+@media (orientation:landscape) and (max-height:400px) {
+ #battle > header { font-size:12px; }
+ #battle > header #round { white-space:nowrap; }
+ #battle > footer button { font-size:12px; white-space:nowrap; }
+ #battle > footer #rune-status .rune-image { width:23px; height:23px; }
+}
