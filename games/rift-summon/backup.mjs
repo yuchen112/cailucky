@@ -1,6 +1,6 @@
-import {cards, stages, starter} from './battle.mjs?v=collection-4';
+import {cards, stages, starter} from './battle.mjs?v=catalog-5';
 import {heroes} from './heroes.mjs';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=collection-4';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=catalog-5';
 
 const format = 'cxq-rift-summon';
 const limit = 256 * 1024;
@@ -39,7 +39,7 @@ export async function readBackup(file) {
     heroIds.includes(team.hero)&&(team.rune==='none'||runeOwnership.includes(team.rune)))&&integer(save.activeTeam,0,2));
   const validState=state === null || (state?.version === 3 &&
     integer(state.stage,0,Math.min(cleared?.length??-1,stages.length-1)) &&
-    integer(state.round,1,40) && integer(state.charges,0,2) && integer(state.heroShield,0,3) &&
+    integer(state.round,1,40) && integer(state.charges,0,2) && integer(state.heroShield,0,8) &&
     integer(state.nextUid,24,500) && integer(state.sequence,0,10000) &&
     heroes.some(h=>h.id===state.hero) && validRunes.includes(state.rune) && (state.rune==='none'||runeOwnership.includes(state.rune)) &&
     typeof state.heroUsed === 'boolean' && Array.isArray(state.sides) &&

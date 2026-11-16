@@ -1,9 +1,9 @@
-import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=collection-4';
+import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=catalog-5';
 import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=collection-4';
-import {makeBackup, readBackup} from './backup.mjs?v=collection-4';
-import {startingWallet,validWallet,cardLevel,maxLevel,levelCost,victoryPay,unlockedRunes,improveCard} from './economy.mjs?v=collection-4';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,improveCollectible} from './economy.mjs?v=collection-4';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=catalog-5';
+import {makeBackup, readBackup} from './backup.mjs?v=catalog-5';
+import {startingWallet,validWallet,cardLevel,maxLevel,levelCost,victoryPay,unlockedRunes,improveCard} from './economy.mjs?v=catalog-5';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,improveCollectible} from './economy.mjs?v=catalog-5';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -42,6 +42,9 @@ const runes={
   flame:{name:'熾志',effect:'開始攻擊時，若至少兩張友軍在場，讓最前方半血以下友軍攻擊增加 1，維持到戰鬥結束。',source:'首通斷橋缺口'},
   tide:{name:'潮解',effect:'開始攻擊時，移除護盾最多的敵軍最多 3 點護盾。',source:'收錄 3 張扭蛋卡'},
   root:{name:'生根',effect:'開始攻擊時，若有至少兩張受傷友軍，讓所有受傷友軍各回復 1 點生命。',source:'任一卡牌強化至 Lv.3'},
+  mirror:{name:'晶鏡',effect:'開始攻擊時，若我方英雄半血以下且沒有護盾，獲得 1 點護盾。',source:'金幣或鑽石符文池'},
+  dawn:{name:'曉光',effect:'開始攻擊時，若我方英雄半血以下，回復 2 點生命。',source:'鑽石符文池'},
+  anchor:{name:'沉錨',effect:'開始攻擊時，讓敵方手牌中倒數最短且不高於 2 的卡增加 2 倒數，上限為 4。',source:'鑽石符文池'},
   none:{name:'未裝備',effect:'這場戰鬥不會觸發符文。'},
 };
 const savedRune=saved?.loadout??state?.rune;
@@ -210,9 +213,10 @@ function showRunes(from) {
 }
 function renderRuneBook() {
   const available=unlockedRunes(cleared,wallet);
-  const groups={wall:'guard',ward:'guard',heal:'heal',root:'heal',frost:'control',tide:'control',spark:'attack',flame:'attack'};
+  const groups={wall:'guard',ward:'guard',mirror:'guard',heal:'heal',root:'heal',dawn:'heal',frost:'control',tide:'control',anchor:'control',spark:'attack',flame:'attack'};
   const filter=get('rune-filter').value;
-  const ids=Object.keys(groups).filter(id=>filter==='all'||groups[id]===filter);
+  const tier=get('rune-rarity').value;
+  const ids=Object.keys(groups).filter(id=>(filter==='all'||groups[id]===filter)&&(tier==='all'||rarity(id)===tier));
   get('rune-count').textContent=`已收錄 ${available.length} / ${Object.keys(groups).length} 枚・目前顯示 ${ids.length} 枚`;
   const entries=ids.map(id=>{
     const button=element('button','','rune-entry');
@@ -221,7 +225,7 @@ function renderRuneBook() {
     button.onclick=()=>runeDetails(id,ownedRune);
     return button;
   });
-  get('rune-book-grid').replaceChildren(...entries);
+  get('rune-book-grid').replaceChildren(...(entries.length?entries:[element('p','沒有符合篩選條件的符文。')]));
 }
 function renderRuneSlots() {
   const active=element('button');
@@ -414,6 +418,7 @@ get('draw-ten').onclick=()=>drawCapsule(10);
 get('capsule-show-close').onclick=()=>finishReveal?finishReveal():get('capsule-show').close();
 get('capsule-show').addEventListener('cancel',event=>{if(drawing){event.preventDefault();finishReveal?.();}});
 get('rune-filter').onchange=renderRuneBook;
+get('rune-rarity').onchange=renderRuneBook;
 function showCollection(from='camp',bag=false) {
   albumReturn=from;
   bagOnly=bag;albumPage=0;
@@ -425,7 +430,7 @@ function showCollection(from='camp',bag=false) {
 const albumCards=Object.keys(cards).filter(id=>id!=='boss' && id!=='spirit');
 function cardGroup(id) {
   const skill=cards[id][4];
-  if(skill==='護衛'||skill==='護盾') return 'guard';
+  if(skill==='護衛'||skill==='護盾'||skill==='守蔭') return 'guard';
   if(skill==='治療') return 'heal';
   if(skill==='自爆'||skill==='亡靈接替') return 'support';
   return 'attack';
@@ -485,7 +490,10 @@ function renderCollection(direction=0) {
   }
 }
 get('card-filter').onchange=()=>{albumPage=0;renderCollection();};
-for(const tier of rarityNames){const option=element('option',tier);option.value=tier;get('card-rarity').append(option);}
+for(const id of ['card-rarity','rune-rarity'])for(const tier of rarityNames){
+  if(id==='rune-rarity'&&tier==='UUR')continue;
+  const option=element('option',tier);option.value=tier;get(id).append(option);
+}
 get('card-rarity').onchange=()=>{albumPage=0;renderCollection();};
 function turnAlbum(direction) {
   const button=get(direction>0?'album-next':'album-prev');
@@ -494,6 +502,9 @@ function turnAlbum(direction) {
   renderCollection(direction);
 }
 const descriptions = {
+  破甲:'普攻前移除正對敵軍最多 2 點護盾。',
+  守蔭:'普攻前為一張相鄰且無盾的友軍加 1 點護盾，優先左側。',
+  戰吼:'普攻命中敵軍時，額外對敵方英雄造成 1 點傷害。',
   護衛:'左右相鄰友軍受到普攻時，傷害減 1。', 自爆:'陣亡時對敵方正對及兩側角色各造成 2 點傷害。',
   追獵:'普攻瞄準生命最低的敵方角色，同血量時選最左。', 橫掃:'普攻命中本欄，並對敵方左右相鄰角色造成一半傷害。',
   亡靈接替:'陣亡時原地留下 1 攻 2 血靈體。', 治療:'普攻前為一位受傷友軍回復最多 2 點生命。',

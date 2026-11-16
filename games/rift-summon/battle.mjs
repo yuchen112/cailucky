@@ -27,6 +27,18 @@ export const cards = {
   beetle: ['琥珀爆甲', 2, 3, 5, '自爆'],
   crane: ['玉燈白鶴', 3, 3, 8, '治療'],
   yak: ['岩盾犛牛', 3, 3, 9, '護衛'],
+  seal: ['霜紋海豹', 1, 2, 4, '追獵'],
+  boar: ['鐵鬃守衛', 2, 2, 7, '護盾'],
+  swan: ['銀翼司祭', 2, 3, 6, '治療'],
+  crab: ['熔殼焰蟹', 1, 2, 3, '自爆'],
+  gecko: ['壁行引魂者', 1, 1, 3, '亡靈接替'],
+  wolf: ['月斧狼騎', 3, 5, 6, '破甲'],
+  panda: ['竹葉藥師', 1, 1, 4, '治療'],
+  hedgehog: ['橡果刺衛', 1, 1, 5, '守蔭'],
+  koi: ['碧波鯉術師', 2, 3, 6, '亡靈接替'],
+  falcon: ['白隼追獵者', 1, 4, 3, '追獵'],
+  mole: ['地穴爆破手', 2, 3, 4, '自爆'],
+  lion: ['曜鬃獅統領', 3, 5, 7, '戰吼'],
   boss: ['斷橋守將', 0, 2, 6, '橫掃'],
   spirit: ['靈體', 0, 1, 2, ''],
 };
@@ -183,6 +195,28 @@ function result(state) {
 function runRune(state, events) {
   if (!state.charges) return;
   const bonus=(state.runeLevel??1)-1;
+  if(state.rune==='mirror'||state.rune==='dawn') {
+    const hero=state.sides[0];
+    const maxHealth=23+(state.heroLevel??1);
+    const mirror=state.rune==='mirror';
+    if(hero.hp*2>maxHealth || (mirror&&state.heroShield>0))return;
+    if(mirror) state.heroShield+=1+bonus;
+    else hero.hp=Math.min(maxHealth,hero.hp+2+bonus);
+    state.charges--;
+    record(state,events,'skill',`${mirror?'晶鏡':'曉光'} → 我方英雄（剩 ${state.charges} 次）`,
+      {actor:0,target:0,lanes:[null],rune:state.rune});
+    return;
+  }
+  if(state.rune==='anchor') {
+    const eligible=state.sides[1].hand.filter(card=>card.count<=2).sort((a,b)=>a.count-b.count);
+    const card=eligible[0];
+    if(!card)return;
+    card.count=Math.min(4,card.count+2+bonus);
+    state.charges--;
+    record(state,events,'skill',`沉錨 → ${card.name}・倒數 ${card.count}（剩 ${state.charges} 次）`,
+      {actor:0,target:1,lanes:[null],rune:state.rune});
+    return;
+  }
   if(state.rune==='tide'||state.rune==='root') {
     const tide=state.rune==='tide';
     const target=tide?1:0;
@@ -262,7 +296,20 @@ function attack(state, events, actor) {
     }
     const prey = card.skill === '追獵' ? rival.flatMap((enemy, index) => enemy ? [{enemy, index}] : []).sort((a, b) => a.enemy.hp - b.enemy.hp || a.index - b.index)[0] : null;
     const primary = prey?.index ?? (rival[lane] ? lane : null);
+    if(card.skill==='破甲' && primary!==null && rival[primary].shield>0) {
+      const removed=Math.min(2,rival[primary].shield);
+      rival[primary].shield-=removed;
+      record(state,events,'skill',`${card.name} 破甲・移除 ${removed} 點護盾`,{actor,target:1-actor,lanes:[primary]});
+    }
+    if(card.skill==='守蔭') {
+      const target=[lane-1,lane+1].find(index=>board[index]&&!board[index].shield);
+      if(target!==undefined) {
+        board[target].shield++;
+        record(state,events,'skill',`${card.name} 守蔭・${board[target].name} 獲得 1 點護盾`,{actor,target:actor,lanes:[target]});
+      }
+    }
     const hits = [{target: 1 - actor, lane: primary, amount: card.attack}];
+    if(card.skill==='戰吼' && primary!==null) hits.push({target:1-actor,lane:null,amount:1});
     if (card.skill === '橫掃') {
       for (const index of [lane - 1, lane + 1]) {
         if (rival[index]) hits.push({target: 1 - actor, lane: index, amount: Math.floor(card.attack / 2)});
