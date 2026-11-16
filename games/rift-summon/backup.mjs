@@ -1,6 +1,6 @@
-import {cards, stages, starter} from './battle.mjs?v=instance-inventory-1';
+import {cards, stages, starter} from './battle.mjs?v=catalog-6';
 import {heroes} from './heroes.mjs';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=catalog-5';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=catalog-6';
 import {validInventory} from './inventory.mjs';
 
 const format = 'cxq-rift-summon';

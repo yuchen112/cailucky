@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=instance-inventory-1">
+<link rel="stylesheet" href="style.css?v=catalog-6">
 </head>
 <body>
 <main>
@@ -43,6 +43,7 @@
   <header class="collection-header"><div><h1>符文冊</h1><p id="rune-count"></p></div><button id="rune-back">返回</button></header>
   <label class="catalog-filter">符文類別 <select id="rune-filter"><option value="all">全部</option><option value="guard">防護</option><option value="heal">治療</option><option value="attack">攻擊</option><option value="control">控制</option></select></label>
   <label class="catalog-filter">稀有度 <select id="rune-rarity"><option value="all">全部</option></select></label>
+  <label class="catalog-filter">查符文 <input type="search" id="rune-search" placeholder="名稱或效果"></label>
   <div id="rune-book-grid"></div>
 </section>
 <section id="inventory-page" hidden aria-labelledby="inventory-heading">
@@ -51,6 +52,7 @@
     <button data-bag="card">卡片背包</button><button data-bag="hero">英雄背包</button><button data-bag="rune">符文背包</button>
   </nav>
   <label>稀有度 <select id="inventory-tier"><option value="all">全部</option></select></label>
+  <label>查個體 <input type="search" id="inventory-search" placeholder="名稱或個體編號"></label>
   <div id="inventory-grid"></div>
 </section>
 <section id="team-editor" hidden aria-label="編隊">
@@ -110,6 +112,7 @@
   </nav>
   <label class="catalog-filter">卡牌類別 <select id="card-filter"><option value="all">全部</option><option value="attack">攻擊</option><option value="guard">防護</option><option value="heal">治療</option><option value="support">支援</option></select></label>
   <label class="catalog-filter">稀有度 <select id="card-rarity"><option value="all">全部</option></select></label>
+  <label class="catalog-filter">查卡片 <input type="search" id="card-search" placeholder="名稱或技能"></label>
   <div id="album-pages" aria-label="卡冊書頁"></div>
   <nav class="album-controls" aria-label="卡冊翻頁">
     <button id="album-prev">上一頁</button>
@@ -177,6 +180,6 @@
   <button id="capsule-show-close">收下</button>
 </dialog>
 </main>
-<script type="module" src="main.mjs?v=instance-inventory-1"></script>
+<script type="module" src="main.mjs?v=catalog-6"></script>
 </body>
 </html>

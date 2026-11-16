@@ -478,3 +478,7 @@ body:has(#capsule[data-gate="hero"]:not([hidden])) { background-image:url("art/d
 .team-candidate { padding:9px; margin-block:9px; background:url("art/table-deck.webp") center / 100% 100% no-repeat; }
 .team-candidate .instance-inspector { grid-template-columns:minmax(52px,15%) 1fr; }
 #team-editor h2 { font-size:17px; }
+
+#collection input[type=search],#rune-book input[type=search],#inventory-page input[type=search],#team-editor input[type=search] {
+ min-height:44px; max-width:100%; padding-inline:8px; color:#fff1d4; background:#181023ed; border:1px solid #ab8a55; font:inherit;
+}

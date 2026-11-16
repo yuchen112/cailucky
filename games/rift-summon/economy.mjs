@@ -1,6 +1,6 @@
-export const capsuleCards=['ember','wisp','turtle','raven','stag','lynx','moth','drake','ibis','hare','otter','ram','bat','beetle','crane','yak','seal','boar','swan','crab','gecko','wolf','panda','hedgehog','koi','falcon','mole','lion'];
+export const capsuleCards=['ember','wisp','turtle','raven','stag','lynx','moth','drake','ibis','hare','otter','ram','bat','beetle','crane','yak','seal','boar','swan','crab','gecko','wolf','panda','hedgehog','koi','falcon','mole','lion','badger','lynxguard','robin','frog','yakfire','stork','ferret','beaver','rabbit','eagle'];
 export const maxLevel=5;
-export const validRunes=['wall','heal','frost','spark','ward','flame','tide','root','mirror','dawn','anchor','none'];
+export const validRunes=['wall','heal','frost','spark','ward','flame','tide','root','mirror','dawn','anchor','shelter','surge','echo','none'];
 export const rarityNames=['N','R','SR','S','SS','SSR','UUR'];
 export const starterHeroes=['trust','healing','joy'];
 export const heroIds=['hope','trust','growth','healing','joy','luck','memory','night','sadness','dream'];
@@ -10,6 +10,8 @@ const rare={
   wall:0,heal:0,ward:1,flame:2,frost:3,tide:3,root:4,spark:5,
   seal:0,boar:1,swan:4,crab:2,gecko:0,wolf:4,panda:1,hedgehog:0,koi:3,falcon:3,mole:2,lion:6,
   mirror:2,dawn:4,anchor:5,
+  badger:1,lynxguard:2,robin:1,frog:3,yakfire:4,stork:4,ferret:0,beaver:2,rabbit:5,eagle:6,
+  shelter:2,surge:4,echo:5,
   trust:2,healing:2,joy:2,growth:2,luck:3,memory:3,sadness:3,hope:4,night:4,dream:5,
 };
 export function rarity(id) {return rarityNames[rare[id]??0];}

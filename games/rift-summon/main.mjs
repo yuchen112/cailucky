@@ -1,9 +1,9 @@
-import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=instance-inventory-1';
+import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=catalog-6';
 import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=catalog-5';
-import {makeBackup, readBackup} from './backup.mjs?v=instance-inventory-1';
-import {startingWallet,validWallet,maxLevel,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=catalog-5';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=catalog-5';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=catalog-6';
+import {makeBackup, readBackup} from './backup.mjs?v=catalog-6';
+import {startingWallet,validWallet,maxLevel,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=catalog-6';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=catalog-6';
 import {migrateInventory,addInstance,xpNeeded,grantExperience} from './inventory.mjs';
 
 const get = id => document.getElementById(id);
@@ -48,6 +48,9 @@ const runes={
   mirror:{name:'晶鏡',effect:'開始攻擊時，若我方英雄半血以下且沒有護盾，獲得 1 點護盾。',source:'金幣或鑽石符文池'},
   dawn:{name:'曉光',effect:'開始攻擊時，若我方英雄半血以下，回復 2 點生命。',source:'鑽石符文池'},
   anchor:{name:'沉錨',effect:'開始攻擊時，讓敵方手牌中倒數最短且不高於 2 的卡增加 2 倒數，上限為 4。',source:'鑽石符文池'},
+  shelter:{name:'堡壘',effect:'開始攻擊時，若敵方場上至少有三張牌，為我方最前方無盾卡牌加 1 點護盾。',source:'金幣或鑽石符文池'},
+  surge:{name:'逆雷',effect:'開始攻擊時，若我方英雄半血以下且敵方至少兩張牌在場，對敵方英雄造成 1 點傷害。',source:'鑽石符文池'},
+  echo:{name:'回響',effect:'開始攻擊時，讓我方最左側尚未就緒的手牌倒數減少 1，最低為 0。可在下一次部署時使用。',source:'鑽石符文池'},
   none:{name:'未裝備',effect:'這場戰鬥不會觸發符文。'},
 };
 const savedRune=saved?.loadout??state?.rune;
@@ -220,10 +223,11 @@ function showRunes(from) {
 }
 function renderRuneBook() {
   const available=unlockedRunes(cleared,wallet);
-  const groups={wall:'guard',ward:'guard',mirror:'guard',heal:'heal',root:'heal',dawn:'heal',frost:'control',tide:'control',anchor:'control',spark:'attack',flame:'attack'};
+  const groups={wall:'guard',ward:'guard',mirror:'guard',shelter:'guard',heal:'heal',root:'heal',dawn:'heal',frost:'control',tide:'control',anchor:'control',echo:'control',spark:'attack',flame:'attack',surge:'attack'};
   const filter=get('rune-filter').value;
   const tier=get('rune-rarity').value;
-  const ids=Object.keys(groups).filter(id=>(filter==='all'||groups[id]===filter)&&(tier==='all'||rarity(id)===tier));
+  const query=get('rune-search').value.trim();
+  const ids=Object.keys(groups).filter(id=>(filter==='all'||groups[id]===filter)&&(tier==='all'||rarity(id)===tier)&&`${runes[id].name} ${runes[id].effect}`.includes(query));
   get('rune-count').textContent=`已收錄 ${available.length} / ${Object.keys(groups).length} 枚・目前顯示 ${ids.length} 枚`;
   const entries=ids.map(id=>{
     const button=element('button','','rune-entry');
@@ -426,6 +430,7 @@ get('capsule-show-close').onclick=()=>finishReveal?finishReveal():get('capsule-s
 get('capsule-show').addEventListener('cancel',event=>{if(drawing){event.preventDefault();finishReveal?.();}});
 get('rune-filter').onchange=renderRuneBook;
 get('rune-rarity').onchange=renderRuneBook;
+get('rune-search').oninput=renderRuneBook;
 function showCollection(from='camp') {
   albumReturn=from;
   albumPage=0;
@@ -449,7 +454,7 @@ const albumCards=Object.keys(cards).filter(id=>id!=='boss' && id!=='spirit');
 function cardGroup(id) {
   const skill=cards[id][4];
   if(skill==='護衛'||skill==='護盾'||skill==='守蔭') return 'guard';
-  if(skill==='治療') return 'heal';
+  if(skill==='治療'||skill==='援護') return 'heal';
   if(skill==='自爆'||skill==='亡靈接替') return 'support';
   return 'attack';
 }
@@ -490,7 +495,8 @@ function renderCollection(direction=0) {
   const collection=new Set(owned());
   const filter=get('card-filter').value;
   const tier=get('card-rarity').value;
-  const filtered=albumCards.filter(id=>(filter==='all'||cardGroup(id)===filter)&&(tier==='all'||rarity(id)===tier));
+  const query=get('card-search').value.trim();
+  const filtered=albumCards.filter(id=>(filter==='all'||cardGroup(id)===filter)&&(tier==='all'||rarity(id)===tier)&&`${cards[id][0]} ${cards[id][4]}`.includes(query));
   const pages=Math.max(1,Math.ceil(filtered.length/perLeaf));
   albumPage=Math.min(albumPage,pages-1);
   const spread=albumWide.matches?2:1;
@@ -498,6 +504,7 @@ function renderCollection(direction=0) {
   const end=Math.min(pages,first+spread);
   const book=get('album-pages');
   book.replaceChildren(...Array.from({length:end-first},(_,i)=>makeAlbumLeaf(first+i,collection,filtered)));
+  if(!filtered.length) book.querySelector('.album-leaf').append(element('p','沒有符合搜尋條件的卡片。'));
   book.classList.toggle('single-leaf',end-first===1);
   get('collection-count').textContent=`已收錄 ${collection.size} / ${albumCards.length} 張・目前顯示 ${filtered.length} 張`;
   get('album-position').textContent=`第 ${first+1===end?end:`${first+1}–${end}`} / ${pages} 頁`;
@@ -513,6 +520,7 @@ for(const id of ['card-rarity','rune-rarity'])for(const tier of rarityNames){
   const option=element('option',tier);option.value=tier;get(id).append(option);
 }
 get('card-rarity').onchange=()=>{albumPage=0;renderCollection();};
+get('card-search').oninput=()=>{albumPage=0;renderCollection();};
 function turnAlbum(direction) {
   const button=get(direction>0?'album-next':'album-prev');
   if(button.disabled) return;
@@ -520,6 +528,8 @@ function turnAlbum(direction) {
   renderCollection(direction);
 }
 const descriptions = {
+  援護:'普攻前替一張相鄰且受傷的友軍回復最多 2 點生命，優先選生命較低者。',
+  猛進:'普攻正對的敵軍生命高於自己時，本次傷害增加 1。',
   破甲:'普攻前移除正對敵軍最多 2 點護盾。',
   守蔭:'普攻前為一張相鄰且無盾的友軍加 1 點護盾，優先左側。',
   戰吼:'普攻命中敵軍時，額外對敵方英雄造成 1 點傷害。',
@@ -681,8 +691,9 @@ function chooseMaterial(target) {
 }
 function renderInventory() {
   const tier=get('inventory-tier').value;
+  const query=get('inventory-search').value.trim();
   const list=inventory.items.filter(item=>item.kind===bagKind);
-  const visible=list.filter(item=>tier==='all'||rarity(item.id)===tier);
+  const visible=list.filter(item=>(tier==='all'||rarity(item.id)===tier)&&`${itemName(item)} #${item.uid.slice(1)}`.includes(query));
   get('inventory-heading').textContent=bagNames[bagKind];
   get('inventory-count').textContent=`持有 ${list.length} 份・顯示 ${visible.length} 份`;
   for(const button of document.querySelectorAll('[data-bag]'))button.setAttribute('aria-pressed',String(button.dataset.bag===bagKind));
@@ -700,9 +711,10 @@ function showInventory(kind=bagKind) {
   syncFixedInventory();
   view('inventory-page');renderInventory();
 }
-for(const button of document.querySelectorAll('[data-bag]'))button.onclick=()=>{get('inventory-tier').value='all';showInventory(button.dataset.bag);};
+for(const button of document.querySelectorAll('[data-bag]'))button.onclick=()=>{get('inventory-tier').value='all';get('inventory-search').value='';showInventory(button.dataset.bag);};
 for(const tier of rarityNames){const option=element('option',tier);option.value=tier;get('inventory-tier').append(option);}
 get('inventory-tier').onchange=renderInventory;
+get('inventory-search').oninput=renderInventory;
 get('inventory-back').onclick=showCamp;
 
 let editorReturn='camp', teamDraft, editorSlot='cards', editorPosition=0, editorPreview=null;
@@ -782,12 +794,22 @@ function renderTeamEditor() {
   }
   if(kind==='rune') preview.append(confirmButton('卸下符文',()=>{teamDraft.rune=null;editorPreview=null;renderTeamEditor();}));
   const candidates=element('div','','team-candidates');
-  for(const item of inventory.items.filter(item=>item.kind===kind)){
-    const button=confirmButton('',()=>{editorPreview=item.uid;renderTeamEditor();});
-    button.append(itemArt(item),element('strong',itemName(item)),element('small',`Lv.${item.level}・#${item.uid.slice(1)}`));
-    button.setAttribute('aria-pressed',String(item.uid===editorPreview));candidates.append(button);
-  }
-  host.replaceChildren(header,slots,element('h2',`選擇${kindNames[kind]}`),candidates,preview);
+  const search=element('input');
+  search.type='search';search.placeholder='名稱或個體編號';search.setAttribute('aria-label','搜尋可裝備個體');
+  const fill=()=>{
+    const query=search.value.trim();
+    const items=inventory.items.filter(item=>item.kind===kind&&`${itemName(item)} #${item.uid.slice(1)}`.includes(query));
+    candidates.replaceChildren(...(items.length?items.map(item=>{
+      const button=confirmButton('',()=>{
+        editorPreview=item.uid;renderTeamEditor();
+        get('team-editor-content').querySelector('.team-candidate').scrollIntoView({block:'nearest'});
+      });
+      button.append(itemArt(item),element('strong',itemName(item)),element('small',`Lv.${item.level}・#${item.uid.slice(1)}`));
+      button.setAttribute('aria-pressed',String(item.uid===editorPreview));return button;
+    }):[element('p','沒有符合的個體。')]));
+  };
+  search.oninput=fill;fill();
+  host.replaceChildren(header,slots,preview,element('h2',`選擇${kindNames[kind]}`),search,candidates);
 }
 function renderBoard(frame, event) {
   const [player, enemy] = frame.sides;
@@ -860,7 +882,7 @@ function render() {
 }
 function effect(event) {
   if(event.rune) return 'rune-pulse';
-  if (event.kind==='skill') return event.message.includes('自爆')?'fx-bomb':event.message.includes('靈體')?'fx-spirit':event.message.includes('治療')||event.message.includes('回春')?'fx-heal':'fx-shield';
+  if (event.kind==='skill') return event.message.includes('自爆')?'fx-bomb':event.message.includes('靈體')?'fx-spirit':/治療|回春|援護/.test(event.message)?'fx-heal':'fx-shield';
   if (event.kind==='attack') return event.message.includes('橫掃')?'fx-ax':event.message.includes('斥候')?'fx-arrow':'fx-ax';
   if (event.kind==='deploy') return 'fx-rune';
   if (event.kind==='death') return 'fx-spirit';
