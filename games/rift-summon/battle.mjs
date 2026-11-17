@@ -54,8 +54,8 @@ export const cards = {
 };
 export const starter = ['guard', 'bomb', 'archer', 'ax', 'ghost', 'healer', 'knight', 'giant'];
 const sentries = ['guard', 'bomb', 'knight', 'ax', 'ghost', 'giant'];
-import {cardBonus} from './inventory.mjs?v=dual-rune-1';
-import {dailyStage} from './daily.mjs?v=dual-rune-1';
+import {cardBonus,cardHealthBonus} from './inventory.mjs?v=town-2';
+import {dailyStage} from './daily.mjs?v=town-2';
 export const stages = [
   {name:'哨站前沿', goal:'倒數歸零就能部署。先用護衛或斥候接住第一波。', hp:8, opponents:['guard','archer','healer','knight'], opening:['archer'], reward:'bow'},
   {name:'雙塔迴廊', goal:'同回合可以連下多張。留意每張牌的部署順序。', hp:10, opponents:['bomb','knight','archer','ghost','ax'], opening:['guard','bomb'], reward:'fang'},
@@ -70,7 +70,7 @@ export const stages = [
 function unit(id, uid, level=1,effect=1) {
   const [name, count, attack, max, skill] = cards[id];
   const bonus=cardBonus(level);
-  return {id, uid, name, count, level, effect, attack:attack+bonus, max:max+bonus*2, hp:max+bonus*2, shield: skill === '護盾' ? 1+effect : 0, skill};
+  return {id, uid, name, count, level, effect, attack:attack+bonus, max:max+cardHealthBonus(level), hp:max+cardHealthBonus(level), shield: skill === '護盾' ? 1+effect : 0, skill};
 }
 function side(deck, hp) {
   return {hp, deck: deck.slice(3), hand: deck.slice(0, 3), board: []};

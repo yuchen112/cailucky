@@ -748,3 +748,89 @@ body:has(#camp:not([hidden])) { background-image:url("art/town.webp"); backgroun
 
 #town-team { position:absolute; top:12%; right:13%; background:url("art/release-round.webp") center / contain no-repeat; width:25px; height:25px; display:grid; place-items:center; color:#ffdba0; font-size:12px; pointer-events:none; }
 .town-landmark.town-unread::after { content:""; position:absolute; top:9%; right:13%; width:20px; height:20px; pointer-events:none; background:url("art/rune-pulse.webp") center / contain no-repeat; }
+
+.lineup-filters { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+.lineup-filters input { flex:1 1 120px; }
+.lineup-filters select,.lineup-filters button { min-height:40px; }
+#detail:has(.growth-picker) { width:min(95vw,920px); max-width:none; max-height:94dvh; }
+.growth-picker { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(0,1fr); gap:8px; }
+.growth-listing { min-width:0; }
+.growth-listing input { width:100%; min-height:36px; }
+.growth-materials { max-height:calc(84dvh - 55px); overflow:auto; grid-template-columns:repeat(auto-fill,minmax(73px,1fr)); }
+.growth-summary { position:sticky; top:0; align-self:start; min-width:0; }
+.growth-summary h2 { margin:4px 0; }
+.growth-summary p { margin:4px 0; font-size:12px; }
+.growth-preview { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:5px; margin-block:5px; }
+.growth-preview section { display:grid; justify-items:center; gap:2px; min-width:0; padding:4px; background:url("art/table-hud.webp") center / 100% 100%; }
+.growth-preview section img { max-width:100%; max-height:82px; object-fit:contain; }
+.growth-preview section small { font-size:10px; }
+.growth-materials button[aria-pressed=true] { outline:2px solid #f6c76f; outline-offset:-2px; }
+#capsule-show:has(.summon-intro-scene) { background:var(--machine-scene) center / cover no-repeat; }
+.summon-intro-scene { display:grid; justify-content:end; align-content:center; justify-items:center; min-height:clamp(168px,63dvh,405px); padding-right:7%; }
+.summon-intro-scene strong { margin-top:10px; text-shadow:0 2px 4px black; color:#ffe5ad; opacity:0; animation:delivery-title .45s 1.35s both; }
+.summon-delivery { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:clamp(3px,1vw,12px); width:min(46vw,470px); }
+.summon-intro-scene[data-count="1"] .summon-delivery { grid-template-columns:1fr; }
+.summon-delivery-slot { display:grid; place-items:center; height:clamp(39px,21dvh,130px); transform-origin:center; opacity:0; animation:delivery-card .72s var(--delay) cubic-bezier(.2,.65,.27,1) both; }
+.summon-delivery-slot img { width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 3px 8px #000b); }
+#capsule-show[data-kind=rune] .summon-delivery-slot { animation-name:delivery-rune; }
+#capsule-show[data-kind=hero] .summon-delivery-slot { animation-name:delivery-hero; }
+@keyframes delivery-title { to { opacity:1; } }
+@keyframes delivery-card {
+  0% { opacity:0; transform:translate(var(--route-x),var(--route-y)) scale(.25) rotate(-34deg); }
+  34% { opacity:1; }
+  72% { transform:translateY(-8px) rotate(5deg) scale(1.08); }
+  100% { opacity:1; transform:none; }
+}
+@keyframes delivery-rune {
+  0% { opacity:0; transform:translate(var(--route-x),var(--route-y)) scale(.25) rotate(-170deg); }
+  48% { opacity:1; }
+  78% { transform:translateY(-6px) rotate(10deg) scale(1.08); }
+  100% { opacity:1; transform:none; }
+}
+@keyframes delivery-hero {
+  0% { opacity:0; transform:translate(var(--route-x),calc(var(--route-y) + 40px)) scale(.45); }
+  60% { opacity:1; transform:translateY(-9px) scale(1.12); }
+  100% { opacity:1; transform:none; }
+}
+#capsule-show .draw-item { grid-template-rows:minmax(0,1fr) auto auto; background:none; border:0; padding:4px; overflow:visible; }
+.draw-results { gap:clamp(4px,1vw,10px); }
+.draw-face { position:relative; display:grid; place-items:center; min-height:0; height:100%; aspect-ratio:3/4; max-width:100%; isolation:isolate; }
+.draw-face > :is(img,.card-face) { display:block; width:100%; height:100%; min-height:0; max-height:100%; object-fit:contain; z-index:1; }
+.draw-sealed .draw-face { grid-row:1 / -1; }
+#capsule-show[data-kind=rune] .draw-face { aspect-ratio:1; height:auto; width:min(100%,21dvh); align-self:center; }
+#capsule-show[data-kind=hero] .draw-sealed .draw-face { aspect-ratio:1; height:auto; width:min(100%,21dvh); align-self:center; }
+#capsule-show[data-kind=card] { --seal-rim:url("art/summon-rim-card.webp"); }
+#capsule-show[data-kind=rune] { --seal-rim:url("art/summon-rim-rune.webp"); }
+#capsule-show[data-kind=hero] { --seal-rim:url("art/summon-rim-hero.webp"); }
+#capsule-show [data-rank=N] { --rim:#eee9d0; --glow:.23; }
+#capsule-show [data-rank=R] { --rim:#68bcff; --glow:.50; }
+#capsule-show [data-rank=SR] { --rim:#b781ff; --glow:.62; }
+#capsule-show [data-rank=S] { --rim:#ffd071; --glow:.69; }
+#capsule-show [data-rank=SS] { --rim:#ffac61; --glow:.76; }
+#capsule-show [data-rank=SSR] { --rim:#ff737c; --glow:.83; }
+#capsule-show [data-rank=UUR] { --rim:#a9fff5; --glow:.91; }
+.draw-face::before { content:""; position:absolute; inset:-7%; pointer-events:none; opacity:var(--glow,.45); filter:drop-shadow(0 0 3px var(--rim,#fff)); }
+.draw-face::after { content:""; position:absolute; inset:-7%; pointer-events:none; opacity:var(--glow,.5); mask:var(--seal-rim) center / 100% 100% no-repeat; background:var(--rim,#fff); }
+.draw-face::before { background:var(--seal-rim) center / 100% 100% no-repeat; }
+.draw-sealed .draw-face::after { animation:rim-breathe 2.7s ease-in-out infinite; }
+.draw-opened .draw-face::after,.summon-spotlight .draw-face::after { animation:rim-release .64s ease-out both; }
+.summon-spotlight .draw-face { height:min(30dvh,180px); background:#120d29; }
+@keyframes rim-breathe { 50% { opacity:calc(var(--glow) * .52); } }
+@keyframes rim-release { 0% { opacity:.45; } 25% { opacity:1; scale:1.13; } 100% { opacity:var(--glow); } }
+#capsule-show[data-motion=off] .summon-intro-scene * { opacity:1; }
+
+body:has(#camp:not([hidden])) { background-image:url("art/town-avenue.webp"); }
+#camp .world-camp { background:url("art/town-avenue.webp") center / 100% 100% no-repeat; }
+#camp .town-map { padding:0 0 19%; }
+#camp .town-landmark { display:flex; justify-content:center; align-items:flex-end; padding-bottom:3%; }
+#camp .town-landmark span { transition:filter .15s,transform .15s; box-shadow:0 2px 5px #332009b0; }
+#camp .town-landmark:hover span,#camp .town-landmark:focus-visible span { filter:brightness(1.35); }
+#camp .town-landmark:active span { transform:translateY(2px); }
+#camp .town-landmark::before { content:""; position:absolute; bottom:14%; left:20%; right:20%; height:16%; border-radius:50%; background:url("art/rune-pulse.webp") center / contain no-repeat; opacity:0; pointer-events:none; }
+#camp .town-landmark:active::before { opacity:.6; }
+#camp-hero-motion { inset:14% 3% 22%; }
+@media (orientation:portrait) {
+ #camp .world-camp { background: url("art/town-avenue.webp") 28% bottom / auto 65% no-repeat; }
+ #camp .town-map { padding:0 0 19%; }
+ #camp-hero-motion { inset:0 2% 2%; }
+}

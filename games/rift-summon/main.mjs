@@ -1,12 +1,12 @@
-import {materials,bookFor} from './materials.mjs?v=dual-rune-1';
-import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=dual-rune-1';
-import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=dual-rune-1';
+import {materials,bookFor} from './materials.mjs?v=town-2';
+import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=town-2';
+import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=town-2';
 import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=town-1';
-import {makeBackup, readBackup} from './backup.mjs?v=dual-rune-1';
-import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=dual-rune-1';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=dual-rune-1';
-import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,effectsMax} from './inventory.mjs?v=dual-rune-1';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=town-2';
+import {makeBackup, readBackup} from './backup.mjs?v=town-2';
+import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=town-2';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=town-2';
+import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=town-2';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -21,6 +21,7 @@ let displayHero=saved?.displayHero;
 let lastBatch=saved?.lastBatch??null;
 let townRead=saved?.townRead??null;
 const bagSort=saved?.bagSort??{};
+const lineupSort=saved?.lineupSort??{};
 const missionFor=battle=>battle.daily?dailyStage(battle.daily):stages[battle.stage];
 let log = state ? saved?.log ?? [] : [];
 const cleared = new Set(Array.isArray(saved?.cleared) ? saved.cleared.filter(index => stages[index]) : []);
@@ -123,7 +124,7 @@ function currentSave() {
   syncFixedInventory();
   const ongoing=state?.phase==='deploy';
   flushTeam();
-  return {consumed:[...consumed],displayHero,daily,lastBatch,townRead,bagSort,state:ongoing?state:null, log:ongoing?log:[], deck, cleared:[...cleared], volumes, loadout, lowMotion, wallet, teams, inventory, activeTeam, starterHero, speed:get('speed').value};
+  return {consumed:[...consumed],displayHero,daily,lastBatch,townRead,bagSort,lineupSort,state:ongoing?state:null, log:ongoing?log:[], deck, cleared:[...cleared], volumes, loadout, lowMotion, wallet, teams, inventory, activeTeam, starterHero, speed:get('speed').value};
 }
 function save() {
   try { localStorage.setItem(key, JSON.stringify(currentSave())); return true; }
@@ -280,7 +281,7 @@ function cardFace(card, {lazy=false}={}) {
 function catalogCard(id,level=firstInstance('card',id)?.level??1) {
   const [name,count,attack,max,skill]=cards[id];
   const bonus=cardBonus(level);
-  return {id,name,count,attack:attack+bonus,max:max+bonus*2,hp:max+bonus*2,level,skill,shield:skill==='護盾'?2:0};
+  return {id,name,count,attack:attack+bonus,max:max+cardHealthBonus(level),hp:max+cardHealthBonus(level),level,skill,shield:skill==='護盾'?2:0};
 }
 function money(kind,amount) {
   const item=element('span','','money');
@@ -319,7 +320,7 @@ function encyclopediaCard(id) {
   function preview() {
     const level=Number(slider.value);
     const growth=cardBonus(level);
-    const card={...base,level,attack:base.attack-bonus+growth,max:base.max-bonus*2+growth*2};
+    const card={...base,level,attack:base.attack-bonus+growth,max:base.max-cardHealthBonus(base.level)+cardHealthBonus(level)};
     card.hp=card.max;
     art.replaceChildren(cardFace(card));
   }
@@ -507,6 +508,7 @@ function drawCapsule(count){
  showBatch(true);
 }
 const reducedReveal=()=>lowMotion||matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sealArt=kind=>asset(kind==='card'?'album-card-back':kind==='rune'?'summon-rune-seal':'nav-heroes');
 const rewardArtwork=(kind,id)=>materials[id]?artwork(materials[id].kind?'tech':'xp','material'):kind==='card'?cardFace(catalogCard(id,1)):kind==='hero'?artwork(id,'hero'):runeImage(id);
 function showBatch(intro){
  if(!validBatch(lastBatch))return;
@@ -516,25 +518,27 @@ function showBatch(intro){
  if(!dialog.open)dialog.showModal();
  if(!intro){renderBatch();return;}
  drawing=true;renderCapsule();
- const device=element('img','','summon-intro-art');
- device.src=asset(kind==='card'?'album-card-back':kind==='hero'?'nav-heroes':'nav-rune-book');device.alt='';
  const body=get('capsule-show-body');
- body.replaceChildren(device);
- if(draws.length===10){
-   const wave=element('div','','summon-wave');
-   const effect=kind==='card'?'release-rank-R':kind==='hero'?'release-rank-SSR':'release-rank-S';
-   for(let i=0;i<10;i++){
-     const seal=element('img');seal.src=asset(effect);seal.alt='';seal.style.animationDelay=(i*55)+'ms';wave.append(seal);
-   }
-   body.append(wave);
+ const introScene=element('div','','summon-intro-scene');
+ introScene.dataset.count=String(draws.length);
+ const rail=element('div','','summon-delivery');
+ for(let i=0;i<draws.length;i++){
+   const slot=element('span','','summon-delivery-slot');
+   const seal=element('img');seal.src=sealArt(kind);seal.alt='';
+   slot.style.setProperty('--delay',`${360+i*96}ms`);
+   slot.style.setProperty('--route-x',`${-35-(i%5)*15}px`);
+   slot.style.setProperty('--route-y',i>=5?'-45px':'20px');
+   slot.append(seal);rail.append(slot);
  }
+ introScene.append(rail,element('strong',draws.length===10?'十連召喚':'單次召喚'));
+ body.replaceChildren(introScene);
  get('draw-open-all').hidden=true;get('capsule-show-close').textContent='跳過';
  void unlock().then(()=>{
    if(!drawing)return;
    play('crank');play('summon-'+currency);
    setTimeout(()=>{if(drawing)play('draw-'+kind);},420);
  });
- revealTimer=setTimeout(()=>draws.length===1?revealOne(0):renderBatch(),reducedReveal()?50:draws.length===10?1300:950);
+ revealTimer=setTimeout(()=>draws.length===1?revealOne(0):renderBatch(),reducedReveal()?50:draws.length===10?2170:1150);
 }
 function renderBatch(){
  drawing=false;
@@ -546,10 +550,14 @@ function renderBatch(){
    const tile=confirmButton('',()=>shown?showDrawDetail(draw):revealOne(index));
    tile.className=shown?'draw-item':'draw-item draw-sealed';
    tile.dataset.index=String(index);tile.dataset.rank=tier;tile.dataset.shown=String(shown);
-   if(shown)tile.append(rewardArtwork(kind,draw.id),element('strong',collectibleName(kind,draw.id)),element('small',tier+'・'+(draw.duplicate?'已入包':'首次取得')));
+   const face=element('span','','draw-face');
+   if(shown){
+     face.append(rewardArtwork(kind,draw.id));
+     tile.append(face,element('strong',collectibleName(kind,draw.id)),element('small',tier+'・'+(draw.duplicate?'已入包':'首次取得')));
+   }
    else {
-     const seal=element('img');seal.src=asset(kind==='card'?'album-card-back':kind==='hero'?'nav-heroes':'nav-rune-book');seal.alt='';
-     const glow=element('img','','seal-glow');glow.src=asset('release-rank-'+tier);glow.alt='';tile.append(seal,glow);tile.setAttribute('aria-label','揭曉第 '+(index+1)+' 份獎品');
+     const seal=element('img');seal.src=sealArt(kind);seal.alt='';
+     face.append(seal);tile.append(face);tile.setAttribute('aria-label','揭曉第 '+(index+1)+' 份獎品');
    }
    grid.append(tile);
  });
@@ -575,12 +583,11 @@ function revealOne(index){
  const tile=get('capsule-show-body').querySelector('[data-index="'+index+'"]');
  if(!reducedReveal()){
    tile.classList.add('draw-opened');
-   const light=element('img','','rank-burst');light.src=asset('release-rank-'+tier);light.alt='';tile.append(light);
-   light.addEventListener('animationend',()=>light.remove(),{once:true});
+
    if(rarityNames.indexOf(tier)>=5){
      const focus=element('div','','summon-spotlight');
      focus.dataset.rank=tier;
-     focus.append(light.cloneNode(),rewardArtwork(lastBatch.kind,draw.id));
+     const face=element('span','','draw-face');face.append(rewardArtwork(lastBatch.kind,draw.id));focus.append(face);
      get('capsule-show-body').append(focus);
      focus.addEventListener('animationend',event=>{if(event.target===focus)focus.remove();});
    }
@@ -885,18 +892,21 @@ function finishGrowth(item){
   save();renderInventory();modal(itemDetail(item,true));void unlock().then(()=>play('upgrade'));
 }
 function chooseMaterial(target,mode) {
-  const required=mode==='break'?(target.breakthrough??0)+1:1;
+  const required=mode==='break'?(target.breakthrough??0)+1:null;
   const safe=item=>item.uid!==target.uid&&!item.locked&&!teamsUsing(item.uid).length&&(item.kind==='material'||item.level===1&&!item.experience&&(item.effect??1)===1);
   const matches=item=>mode==='xp'?item.kind===target.kind||target.kind==='card'&&item.kind==='material':
     item.kind===target.kind&&item.id===target.id||mode==='effect'&&materials[item.id]?.kind===target.kind;
   const candidates=inventory.items.filter(item=>safe(item)&&matches(item));
+  const xpOf=item=>materials[item.id]?.xp??50;
+  const available=()=>mode==='xp'?target.level<levelLimit(target):mode==='effect'?(target.effect??1)<effectsMax:target.level===levelLimit(target)&&levelLimit(target)<99;
+  const enough=count=>count>0&&(required===null||count===required);
   const selected=new Set(), preview=element('p'), title={xp:'經驗強化',break:'同名突破',effect:'效果強化'}[mode];
   const apply=confirmButton('確定強化',()=>{
     const chosen=[...selected].map(instance);
-    if(chosen.length!==required||chosen.some(item=>!item||!safe(item)||!matches(item)))return;
-    if(mode==='xp'&&!grantExperience(target,materials[chosen[0].id]?.xp??50))return;
+    if(!available()||!enough(chosen.length)||chosen.some(item=>!item||!safe(item)||!matches(item)))return;
+    if(mode==='xp'&&!grantExperience(target,chosen.reduce((sum,item)=>sum+xpOf(item),0)))return;
     if(mode==='break')target.breakthrough=(target.breakthrough??0)+1;
-    if(mode==='effect')target.effect=(target.effect??1)+1;
+    if(mode==='effect')target.effect=Math.min(effectsMax,(target.effect??1)+chosen.length);
     inventory.items=inventory.items.filter(item=>!selected.has(item.uid));
     for(const item of chosen){
       if(item.kind==='material')continue;
@@ -909,25 +919,63 @@ function chooseMaterial(target,mode) {
     }
     finishGrowth(target);
   });
-  const update=()=>{
-    const item=instance([...selected][0]);
+  const project=()=>{
+    const chosen=[...selected].map(instance).filter(Boolean);
+    const xp=chosen.reduce((sum,item)=>sum+xpOf(item),0);
     const result=structuredClone(target);
-    if(mode==='xp'&&item)grantExperience(result,materials[item.id]?.xp??50);
-    preview.textContent=selected.size+' / '+required+'・'+(mode==='xp'?'Lv.'+target.level+' → '+result.level+'，剩餘經驗 '+result.experience:mode==='break'?'上限 Lv.'+levelLimit(target)+' → '+limits[(target.breakthrough??0)+1]:'效果 Lv.'+(target.effect??1)+' → '+((target.effect??1)+1));
-    if(mode==='effect')preview.textContent+='・'+effectGrowth(target);
-    if(mode==='xp'&&item&&result.level===levelLimit(target))preview.textContent+='・超出上限的經驗不會保留';
-    apply.disabled=selected.size!==required;
+    if(mode==='xp'&&xp)grantExperience(result,xp);
+    if(mode==='effect')result.effect=Math.min(effectsMax,(target.effect??1)+chosen.length);
+    if(mode==='break'&&enough(chosen.length))result.breakthrough=(target.breakthrough??0)+1;
+    return {result,xp};
   };
-  const grid=element('div','','team-candidates');
-  for(const item of candidates){
-    const button=confirmButton(itemName(item),()=>{
-      if(selected.has(item.uid))selected.delete(item.uid);
-      else if(selected.size<required)selected.add(item.uid);
-      button.setAttribute('aria-pressed',String(selected.has(item.uid)));update();
-    });
-    button.prepend(itemArt(item));grid.append(button);
-  }
-  update();modal(element('h2',title),preview,grid,apply,confirmButton('返回',()=>modal(itemDetail(target,true))));
+  const columns=element('div','','growth-preview');
+  const counter=element('strong');
+  const update=()=>{
+    const {result,xp}=project();
+    counter.textContent=`已選 ${selected.size}${required===null?'':' / '+required} 張`;
+    columns.replaceChildren(...[['目前',target],['強化後',result]].map(([label,item])=>{
+      const panel=element('section');panel.append(element('strong',label),itemArt(item),
+        element('small',`Lv.${item.level} / ${levelLimit(item)}・效果 Lv.${item.effect??1}`));
+      for(const [name,value] of itemStats(item).slice(0,2))panel.append(element('small',`${name} ${value}`));
+      return panel;
+    }));
+    preview.textContent=mode==='xp'?`投入 ${xp.toLocaleString('zh-TW')} 經驗・剩餘經驗 ${result.experience}`:
+      mode==='effect'?`效果 Lv.${target.effect??1} → ${result.effect}`:`等級上限 Lv.${levelLimit(target)} → ${levelLimit(result)}`;
+    if(mode==='xp'&&selected.size&&result.level===levelLimit(target))preview.textContent+='・上限外經驗不保留';
+    apply.disabled=!enough(selected.size);
+  };
+  const panel=element('div','','growth-picker');
+  const grid=element('div','','team-candidates growth-materials');
+  const search=element('input');search.type='search';search.placeholder='搜尋素材';search.setAttribute('aria-label','搜尋素材');
+  const fill=()=>{
+    const query=search.value.trim();
+    grid.replaceChildren(...candidates.filter(item=>itemName(item).includes(query)).map(item=>{
+      const button=confirmButton('',()=>{
+        const {result}=project();
+        if(selected.has(item.uid))selected.delete(item.uid);
+        else if(mode==='break'?selected.size<required:mode==='effect'?(result.effect??1)<effectsMax:result.level<levelLimit(target))selected.add(item.uid);
+        button.setAttribute('aria-pressed',String(selected.has(item.uid)));update();
+      });
+      button.append(itemArt(item),element('strong',itemName(item)),element('small',mode==='xp'?'+ '+xpOf(item).toLocaleString('zh-TW')+' 經驗':`Lv.${item.level}・${rarity(item.id)}`));
+      button.setAttribute('aria-pressed',String(selected.has(item.uid)));
+      return button;
+    }));
+    if(!grid.children.length)grid.append(element('p','沒有符合的可用素材。'));
+  };
+  search.oninput=fill;fill();update();
+  const summary=element('aside','','growth-summary');summary.append(element('h2',title),columns,counter,preview,apply,confirmButton('返回',()=>modal(itemDetail(target,true))));
+  const listing=element('div','','growth-listing');listing.append(search,grid);
+  panel.append(listing,summary);modal(panel);get('detail').scrollTop=0;
+}
+
+const comparisons={
+    uid:(a,b)=>Number(a.uid.slice(1))-Number(b.uid.slice(1)), tier:(a,b)=>rarityNames.indexOf(rarity(a.id))-rarityNames.indexOf(rarity(b.id)),
+    level:(a,b)=>a.level-b.level, xp:(a,b)=>a.experience/xpNeeded(a.level)-b.experience/xpNeeded(b.level),
+    name:(a,b)=>itemName(a).localeCompare(itemName(b),'zh-Hant'),
+  };
+function sortCollectibles(items,order){
+  const direction=order.asc?1:-1;
+  return items.sort((a,b)=>direction*(comparisons[order.key]?.(a,b)||0)||comparisons.uid(b,a));
 }
 function renderInventory() {
   const tier=get('inventory-tier').value;
@@ -937,13 +985,8 @@ function renderInventory() {
   get('bag-sort').value=order.key;
   get('bag-direction').textContent=order.asc?'↑':'↓';
   get('bag-direction').setAttribute('aria-label',get('bag-sort').selectedOptions[0].textContent+(order.asc?'由低到高':'由高到低'));
-  const comparisons={
-    uid:(a,b)=>Number(a.uid.slice(1))-Number(b.uid.slice(1)), tier:(a,b)=>rarityNames.indexOf(rarity(a.id))-rarityNames.indexOf(rarity(b.id)),
-    level:(a,b)=>a.level-b.level, xp:(a,b)=>a.experience/xpNeeded(a.level)-b.experience/xpNeeded(b.level),
-    name:(a,b)=>itemName(a).localeCompare(itemName(b),'zh-Hant'),
-  };
-  const visible=list.filter(item=>(tier==='all'||rarity(item.id)===tier)&&itemName(item).includes(query))
-    .sort((a,b)=>(order.asc?1:-1)*(comparisons[order.key]?.(a,b)||0)||Number(b.uid.slice(1))-Number(a.uid.slice(1)));
+  const visible=list.filter(item=>(tier==='all'||rarity(item.id)===tier)&&itemName(item).includes(query));
+  sortCollectibles(visible,order);
   get('inventory-heading').textContent=bagNames[bagKind];
   get('inventory-count').textContent=`持有 ${list.length} 份・顯示 ${visible.length} 份`;
   for(const button of document.querySelectorAll('[data-bag]'))button.setAttribute('aria-pressed',String(button.dataset.bag===bagKind));
@@ -970,6 +1013,7 @@ get('bag-sort').onchange=()=>{bagSort[bagKind]={key:get('bag-sort').value,asc:ba
 get('bag-direction').onclick=()=>{bagSort[bagKind]={key:get('bag-sort').value,asc:!bagSort[bagKind]?.asc};save();renderInventory();};
 
 let editorReturn='camp', teamDraft, editorSlot='cards', editorPosition=0, editorPreview=null;
+const editorQueries={};
 function openTeamEditor(from,candidate=null,slot=null,position=0) {
   if(get('detail').open)get('detail').close();
   syncFixedInventory();flushTeam();
@@ -1059,9 +1103,22 @@ function renderTeamEditor() {
   const candidates=element('div','','team-candidates');
   const search=element('input');
   search.type='search';search.placeholder='卡牌、英雄或符文名稱';search.setAttribute('aria-label','搜尋可裝備個體');
+  search.value=editorQueries[kind]??'';
+  const order=lineupSort[kind]??{key:'tier',asc:false};
+  const sort=element('select');sort.setAttribute('aria-label','編隊排序方式');
+  for(const [key,label] of [['tier','品階'],['level','等級'],['xp','經驗進度'],['name','名稱'],['uid','取得順序']]){
+    const option=element('option',label);option.value=key;sort.append(option);
+  }
+  sort.value=order.key;
+  const direction=confirmButton('',()=>{order.asc=!order.asc;saveOrder();});
+  const tools=element('div','','lineup-filters');tools.append(search,sort,direction);
+  function saveOrder(){lineupSort[kind]=order;save();fill();}
+  sort.onchange=()=>{order.key=sort.value;saveOrder();};
   const fill=()=>{
+    direction.textContent=order.asc?'↑':'↓';
+    direction.setAttribute('aria-label',sort.selectedOptions[0].textContent+(order.asc?'由低到高':'由高到低'));
     const query=search.value.trim();
-    const items=inventory.items.filter(item=>item.kind===kind&&itemName(item).includes(query));
+    const items=sortCollectibles(inventory.items.filter(item=>item.kind===kind&&itemName(item).includes(query)),order);
     candidates.replaceChildren(...(items.length?items.map(item=>{
       const button=confirmButton('',()=>{
         editorPreview=item.uid;renderTeamEditor();
@@ -1071,8 +1128,8 @@ function renderTeamEditor() {
       button.setAttribute('aria-pressed',String(item.uid===editorPreview));return button;
     }):[element('p','沒有符合的個體。')]));
   };
-  search.oninput=fill;fill();
-  host.replaceChildren(header,slots,preview,element('h2',`選擇${kindNames[kind]}`),search,candidates);
+  search.oninput=()=>{editorQueries[kind]=search.value;fill();};fill();
+  host.replaceChildren(header,slots,preview,element('h2',`選擇${kindNames[kind]}`),tools,candidates);
 }
 function renderBoard(frame, event) {
   const [player, enemy] = frame.sides;

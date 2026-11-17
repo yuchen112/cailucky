@@ -1,17 +1,17 @@
-import {cards, stages, starter} from './battle.mjs?v=dual-rune-1';
+import {cards, stages, starter} from './battle.mjs?v=town-2';
 import {heroes} from './heroes.mjs';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=dual-rune-1';
-import {validInventory} from './inventory.mjs?v=dual-rune-1';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=town-2';
+import {validInventory} from './inventory.mjs?v=town-2';
 
-import {validDaily,dailyStage} from './daily.mjs?v=dual-rune-1';
-import {materials} from './materials.mjs?v=dual-rune-1';
+import {validDaily,dailyStage} from './daily.mjs?v=town-2';
+import {materials} from './materials.mjs?v=town-2';
 const format = 'cxq-rift-summon';
 const limit = 1024 * 1024;
 const integer = (n,min,max) => Number.isInteger(n) && n >= min && n <= max;
 const fraction = n => typeof n === 'number' && n >= 0 && n <= 1;
 const cardValid = card => card && Object.hasOwn(cards, card.id) &&
   integer(card.uid,0,500) && card.name === cards[card.id][0] && card.skill === cards[card.id][4] &&
-  integer(card.max,1,64) && integer(card.hp,1,card.max) && integer(card.attack,0,80) &&
+  integer(card.max,1,160) && integer(card.hp,1,card.max) && integer(card.attack,0,80) &&
   integer(card.shield,0,80) && integer(card.count,0,4);
 const sideValid = side => side && integer(side.hp,0,28) &&
   ['deck','hand','board'].every(key=>Array.isArray(side[key]) && side[key].length <= 20 && side[key].every(card=>key==='board'&&card===null||cardValid(card)));

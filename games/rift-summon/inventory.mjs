@@ -23,6 +23,7 @@ export function migrateInventory(saved,wallet,owned,heroes,runes) {
 export const limits=[20,40,60,80,99];
 export const effectsMax=10;
 export const levelLimit=item=>item.kind==='card'?limits[item.breakthrough??0]:5;
+export const cardHealthBonus=level=>2*Math.min(4,Math.max(0,level-1))+Math.max(0,level-5);
 export const cardBonus=level=>Math.min(4,level-1)+Math.floor(Math.max(0,level-5)/8);
 export function xpNeeded(level) {return 100+(level-1)*50;}
 export function grantExperience(item,amount) {
