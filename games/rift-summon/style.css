@@ -670,10 +670,6 @@ body:has(#capsule:not([hidden])) { background-image:none; }
 #camp-featured-button { position:relative; isolation:isolate; width:min(62vw,440px); }
 #camp-hero-motion { position:absolute; inset:0; display:block; transform-origin:50% 93%; }
 #camp-featured { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center bottom; animation:none; }
-#camp-featured-button[data-motion=on]:not(.reacting) #camp-hero-motion { animation:home-idle 4.4s ease-in-out infinite; }
-#camp-featured-button.home-enter { animation:home-arrive .6s ease-out both; }
-@keyframes home-arrive { from { opacity:0; translate:0 13px; } }
-@keyframes home-idle { 27% { transform:translateY(-2px) rotate(.3deg) scale(1.012); } 61% { transform:translateY(-4px) rotate(-.45deg) scale(1.022); } }
 @media (prefers-reduced-motion:reduce) { #camp-featured-button,#camp-hero-motion { animation:none !important; } }
 
 .daily-details .controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -835,6 +831,21 @@ body:has(#camp:not([hidden])) { background-size:cover; background-position:cente
 .featured-badge { display:inline-block; width:fit-content; color:#ffe3a2; border:1px solid #a17c47; border-radius:4px; padding:2px 5px; font-size:11px; }
 
 
-:is(#camp-hero-canvas,#camp-hero-rig) { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center bottom; pointer-events:none; }
-:is(#camp-hero-canvas,#camp-hero-rig)[hidden] { display:none; }
-#camp-hero-motion:has(:is(#camp-hero-canvas,#camp-hero-rig):not([hidden])) #camp-featured { visibility:hidden; }
+
+/* Static home portraits and accessible touch interactions. */
+html { touch-action:manipulation; }
+body { -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
+input,textarea,[contenteditable=true] { -webkit-user-select:text; user-select:text; -webkit-touch-callout:default; touch-action:auto; }
+button,a,select { touch-action:manipulation; }
+img { -webkit-user-drag:none; -webkit-touch-callout:none; }
+#camp-featured-button,#camp-featured,#camp-hero-motion { animation:none !important; transform:none !important; transition:none !important; }
+#home-dialogue { position:absolute; z-index:5; left:3%; bottom:2%; width:min(46%,380px); padding:18px 24px; background:url('art/table-inspect.webp') center / 100% 100% no-repeat; pointer-events:none; }
+#home-dialogue strong { color:#ffdc8f; font-size:clamp(14px,2.2vw,19px); }
+#home-dialogue p { margin:5px 0 0; line-height:1.5; font-size:clamp(13px,2vw,17px); }
+.world-camp { position:relative; }
+#chapter-picker { display:flex; flex-wrap:nowrap; overflow-x:auto; max-width:100%; gap:6px; padding:3px 2px 8px; touch-action:pan-x pan-y pinch-zoom; scrollbar-width:thin; }
+#chapter-picker button { flex:0 0 auto; min-height:44px; font-size:13px; }
+@media (orientation:portrait) { #home-dialogue { width:90%; left:5%; top:46%; bottom:auto; } }
+#chapter-picker select { min-width:0; flex:1; max-width:400px; min-height:44px; font-size:15px; }
+#chapter-picker { justify-content:center; overflow:visible; }
+#chapter-picker button { min-width:44px; }

@@ -1,10 +1,10 @@
-import {cards, stages, starter} from './battle.mjs?v=town-2';
+import {cards, stages, starter} from './battle.mjs?v=home-dialogue-1';
 import {heroes} from './heroes.mjs';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=town-2';
-import {validInventory} from './inventory.mjs?v=town-2';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=home-dialogue-1';
+import {validInventory} from './inventory.mjs?v=home-dialogue-1';
 
-import {validDaily,dailyStage} from './daily.mjs?v=town-2';
-import {materials} from './materials.mjs?v=town-2';
+import {validDaily,dailyStage} from './daily.mjs?v=home-dialogue-1';
+import {materials} from './materials.mjs?v=home-dialogue-1';
 const format = 'cxq-rift-summon';
 const limit = 1024 * 1024;
 const integer = (n,min,max) => Number.isInteger(n) && n >= min && n <= max;

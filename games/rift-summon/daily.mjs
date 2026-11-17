@@ -24,7 +24,8 @@ export function dailyStage({vault,floor}) {
   const head=floor%5===0;
   const shift=(floor-1)%info.roster.length;
   const opponents=[...info.roster.slice(shift),...info.roster.slice(0,shift)].slice(0,4+Math.ceil(floor/3));
-  return {name:`${info.name}・第 ${floor} 層`,hp:8+floor+Number(head)*3,opponents,
+  return {name:`${info.name}・第 ${floor} 層`,hp:Math.min(28,8+floor+Math.floor(floor/5)*3),opponents,
+    enemyLevel:1+(floor-1)*2,enemyEffect:1+Math.floor((floor-1)/3),
     opening:[info.opening[head?4:Math.floor((floor-1)/3)],...(floor>=7?[opponents[1]]:[])],head,
     goal:['gold','xp'].includes(vault)?'打破守軍護盾可使其攻擊降低 1 點。':'發亮的欄位將在下一次進攻時爆裂。'};
 }

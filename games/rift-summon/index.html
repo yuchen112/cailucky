@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=hero-rig-1">
+<link rel="preload" as="image" href="art/table-inspect.webp">
+<link rel="stylesheet" href="style.css?v=home-dialogue-1">
 </head>
 <body>
 <main>
@@ -19,7 +20,7 @@
 <section id="camp" hidden aria-label="裂界營地">
   <div class="world-camp">
     <header class="camp-hud"><button id="camp-profile"><img id="camp-profile-art" alt=""><span id="camp-progress"></span></button><div id="camp-wallet" class="wallet"></div><button id="camp-options" data-art="settings">設定</button></header>
-    <button id="camp-featured-button" aria-label="與首頁英雄互動"><span id="camp-hero-motion"><img id="camp-featured" alt=""><canvas id="camp-hero-canvas" hidden aria-hidden="true"></canvas><canvas id="camp-hero-rig" hidden aria-hidden="true"></canvas></span></button><section hidden class="camp-expedition" aria-labelledby="camp-stage">
+    <button id="camp-featured-button" aria-label="與首頁英雄互動"><span id="camp-hero-motion"><img id="camp-featured" alt=""></span></button><aside id="home-dialogue" role="status" aria-live="polite" hidden><strong id="home-dialogue-name"></strong><p id="home-dialogue-text"></p></aside><section hidden class="camp-expedition" aria-labelledby="camp-stage">
       <div class="expedition-content">
         <small id="camp-chapter"></small><h2 id="camp-stage"></h2>
         <div class="expedition-party"><img id="camp-hero-art" alt=""><div><strong id="camp-team-name"></strong><p id="camp-team-rune"></p></div></div>
@@ -182,6 +183,6 @@
 </dialog>
 <div id="game-notice" class="action-notice" role="status" aria-atomic="true"></div>
 </main>
-<script type="module" src="main.mjs?v=hero-rig-1"></script>
+<script type="module" src="main.mjs?v=home-dialogue-1"></script>
 </body>
 </html>

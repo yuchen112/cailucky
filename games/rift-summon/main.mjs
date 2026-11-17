@@ -1,14 +1,13 @@
-import {articulatedMotion} from './hero-rig.mjs?v=hero-rig-1';
-import {HERO_FPS,HERO_DURATION,HERO_FRAME_COUNT,motionFrame} from './hero-motion.mjs?v=hero-motion-2';
-import {materials,bookFor} from './materials.mjs?v=town-2';
-import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=town-2';
-import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=town-2';
+import {createDialoguePicker} from './home-dialogue.mjs?v=home-dialogue-1';
+import {materials,bookFor} from './materials.mjs?v=home-dialogue-1';
+import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=home-dialogue-1';
+import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=home-dialogue-1';
 import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=town-2';
-import {makeBackup, readBackup} from './backup.mjs?v=town-2';
-import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=town-2';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=town-2';
-import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=town-2';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=home-dialogue-1';
+import {makeBackup, readBackup} from './backup.mjs?v=home-dialogue-1';
+import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=home-dialogue-1';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=home-dialogue-1';
+import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=home-dialogue-1';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -32,7 +31,6 @@ let wallet=validWallet(saved?.wallet)?saved.wallet:startingWallet();
 const owned = () => [...new Set([...starter,...stages.filter((_,index)=>cleared.has(index)).map(stage=>stage.reward),...wallet.unlocked])];
 let deck = Array.isArray(saved?.deck) && saved.deck.length === 8 && new Set(saved.deck).size === 8 && saved.deck.every(id=>owned().includes(id)) ? saved.deck : [...starter];
 let stageIndex = state?.phase==='deploy' ? state.stage : Math.min(cleared.size, stages.length-1);
-const chapterNames=['第一章・斷橋哨站','第二章・沉鐘墓園'];
 const chapterFor=index=>Math.floor(index/4);
 let chosen = state?.hero || 'trust';
 let starterHero=starterHeroes.includes(saved?.starterHero)?saved.starterHero:saved?'trust':null;
@@ -169,7 +167,7 @@ function modal(...children) {
   }
 }
 function view(id) {
-  if(id!=='camp')stopHomeMotion();
+  if(id!=='camp')hideHomeDialogue();
   for(const page of ['title-screen','starter-select','camp','rune-book','hero-book','inventory-page','team-editor','summon-hall','capsule','campaign','daily','settings-page','collection','lobby','battle','results']) get(page).hidden=page!==id;
 }
 function teamSelect(id,refresh) {
@@ -406,7 +404,7 @@ function showCamp() {
   const featured=heroes.find(item=>item.id===featuredHeroId())??hero;
   get('camp-profile-art').src=asset(`hero-portrait-${featured.id}`);
   get('camp-progress').textContent=featured.name;
-  startHomeMotion(featured);
+  showHomeHero(featured);
   get('camp-campaign').classList.toggle('town-available',Object.entries(vaults).some(([id,vault])=>dailyStatus(daily,id).used<vault.limit));
   get('camp-deck').title='出戰編隊 '+(activeTeam+1);
   townRead??={bag:inventory.next,collection:new Set(inventory.items.filter(item=>item.kind!=='material').map(item=>item.id)).size};
@@ -415,78 +413,35 @@ function showCamp() {
   get('camp-collection').classList.toggle('town-unread',new Set(inventory.items.filter(item=>item.kind!=='material').map(item=>item.id)).size>townRead.collection);
   renderWallet(get('camp-wallet'));
 }
-let homeReaction;
-const homeReduced=()=>lowMotion||matchMedia('(prefers-reduced-motion: reduce)').matches;
-function stopHomeMotion(){
-  homeReaction?.abort();homeReaction=null;
-  const button=get('camp-featured-button');
-  button.classList.remove('blinking','reacting','home-enter','home-notice','home-act','home-effect','home-cup');
-  get('camp-hero-motion').style.transform='';
-  get('camp-hero-canvas').hidden=true;
-  get('camp-hero-rig').hidden=true;
+const pickHomeDialogue=createDialoguePicker();
+let dialogueTimer,dialogueCooldown=0;
+function hideHomeDialogue(){
+  clearTimeout(dialogueTimer);
+  get('home-dialogue').hidden=true;
 }
-function startHomeMotion(hero){
-  stopHomeMotion();
-  const button=get('camp-featured-button'), open=get('camp-featured');
-  button.dataset.motion=homeReduced()?'off':'on';button.dataset.hero=hero.id;
-  button.setAttribute('aria-label','與'+hero.name+'互動');
-  const source=asset('hero-home-'+hero.id);
-  if(open.getAttribute('src')!==source){
-    const next=new Image();
-    next.src=source;
-    const assign=()=>{if(button.dataset.hero===hero.id)open.src=source;};
-    if(next.complete&&next.naturalWidth)assign();
-    else void next.decode().then(assign,()=>{});
-  }
-  async function react(){
-    if(homeReaction||get('camp').hidden||homeReduced())return;
-    const controller=new AbortController();
-    homeReaction=controller;
-    const {signal}=controller;
-    const canvas=get(['memory','night'].includes(hero.id)?'camp-hero-rig':'camp-hero-canvas'), actor=get('camp-hero-motion');
-    let motion;
-    try {
-      await open.decode();
-      if(signal.aborted||open.getAttribute('src')!==source)return;
-      motion=articulatedMotion(canvas,open,hero.id,HERO_FRAME_COUNT)??motionFrame(canvas,open,hero.id);
-      button.classList.remove('blinking');
-      button.classList.add('reacting','home-act');
-      motion?.paint(0);
-      canvas.hidden=!motion;
-      const started=performance.now();
-      let last=-1;
-      await new Promise(resolve=>{
-        function draw(now){
-          if(signal.aborted||now-started>=HERO_DURATION){resolve();return;}
-          const frame=Math.max(0,Math.min(HERO_FRAME_COUNT-1,Math.floor((now-started)*HERO_FPS/1000)));
-          if(frame!==last){
-            last=frame;
-            if(motion)motion.paint(frame);
-            else actor.style.transform=`rotate(${Math.sin(frame*Math.PI/(HERO_FRAME_COUNT-1))*1.3}deg)`;
-            button.dataset.animationFrame=String(frame+1);
-          }
-          requestAnimationFrame(draw);
-        }
-        requestAnimationFrame(draw);
-      });
-    } catch(error) { console.warn('Hero animation unavailable',error); }
-    finally {
-      if(homeReaction===controller){
-        canvas.hidden=true;actor.style.transform='';
-        button.classList.remove('reacting','home-act');
-        homeReaction=null;
-      }
-      motion?.dispose();
-    }
-  }
-  button.onpointerdown=()=>button.classList.add('home-pointer');
-  button.onkeydown=()=>button.classList.remove('home-pointer');
-  button.onblur=()=>button.classList.remove('home-pointer');
-  button.onclick=()=>void react();
+function showHomeHero(hero){
+  hideHomeDialogue();
+  const button=get('camp-featured-button'), image=get('camp-featured');
+  button.dataset.hero=hero.id;
+  button.setAttribute('aria-label','與'+hero.name+'對話');
+  image.src=asset('hero-home-'+hero.id);
+  image.alt=hero.name;
+  button.onclick=()=>{
+    if(get('camp').hidden||performance.now()<dialogueCooldown)return;
+    dialogueCooldown=performance.now()+500;
+    get('home-dialogue-name').textContent=hero.name;
+    get('home-dialogue-text').textContent=pickHomeDialogue(hero.id);
+    get('home-dialogue').hidden=false;
+    clearTimeout(dialogueTimer);
+    dialogueTimer=setTimeout(hideHomeDialogue,5500);
+  };
 }
 document.addEventListener('visibilitychange',()=>{
-  if(document.hidden)stopHomeMotion();
+  if(document.hidden)hideHomeDialogue();
 });
+// Prevent image dragging, selection and long-press menus without blocking forms or scrolling.
+document.addEventListener('dragstart',event=>{if(event.target.closest('img'))event.preventDefault();});
+document.addEventListener('contextmenu',event=>{if(!event.target.closest('input,textarea,select'))event.preventDefault();});
 let drawing=false, revealTimer, revealRun=0;
 const summonTypes={card:'卡牌',rune:'符文',hero:'英雄'};
 function capsuleOptions(){
@@ -820,13 +775,20 @@ function showCampaign() {
   teamSelect('campaign-team',showCampaign);
   const chapter=chapterFor(stageIndex);
   get('campaign-chapter').textContent=chapterNames[chapter];
-  get('chapter-picker').replaceChildren(...chapterNames.map((label,index)=>{
+  const chapterSelect=element('select');
+  chapterSelect.setAttribute('aria-label','選擇章節');
+  for(const [index,label] of chapterNames.entries()){
     const open=index===0||cleared.has(index*4-1);
-    const button=confirmButton(label+(open?'':'・未解鎖'),()=>{stageIndex=index*4;showCampaign();});
-    button.disabled=!open;
-    button.setAttribute('aria-pressed',String(chapter===index));
-    return button;
-  }));
+    const option=element('option',label+(open?'':'・未解鎖'));
+    option.value=String(index);option.disabled=!open;chapterSelect.append(option);
+  }
+  chapterSelect.value=String(chapter);
+  chapterSelect.onchange=()=>{stageIndex=Number(chapterSelect.value)*4;showCampaign();};
+  const previous=confirmButton('‹',()=>{stageIndex=(chapter-1)*4;showCampaign();});
+  previous.setAttribute('aria-label','上一章');previous.disabled=chapter===0;
+  const next=confirmButton('›',()=>{stageIndex=(chapter+1)*4;showCampaign();});
+  next.setAttribute('aria-label','下一章');next.disabled=chapter===chapterNames.length-1||!cleared.has((chapter+1)*4-1);
+  get('chapter-picker').replaceChildren(previous,chapterSelect,next);
   get('stages').dataset.chapter=String(chapter);
   get('stages').replaceChildren(...stages.slice(chapter*4,chapter*4+4).map((stage,offset)=>{
     const index=chapter*4+offset;
@@ -842,14 +804,14 @@ function showCampaign() {
   }));
   const stage=stages[stageIndex];
   get('stage-name').textContent=stage.name;
-  get('stage-detail').textContent=`${stage.goal} 首通取得：${cards[stage.reward][0]}。出戰：${heroes.find(hero=>hero.id===chosen).name}・${runes[loadout].name}`;
-  const preview=(label,id)=>{
+  get('stage-detail').textContent=`敵軍 Lv.${stage.enemyLevel??1}・技能 Lv.${stage.enemyEffect??1}。${stage.goal} 首通取得：${cards[stage.reward][0]}。出戰：${heroes.find(hero=>hero.id===chosen).name}・${runes[loadout].name}`;
+  const preview=(label,id,level=1)=>{
     const figure=element('figure');
-    figure.append(cardFace(catalogCard(id)),element('figcaption',label));
+    figure.append(cardFace(catalogCard(id,level)),element('figcaption',label));
     return figure;
   };
   get('stage-preview').replaceChildren(
-    ...stage.opening.map(id=>preview('敵方先鋒',id)),
+    ...stage.opening.map(id=>preview('敵方先鋒',id,stage.enemyLevel??1)),
     preview(cleared.has(stageIndex)?'首通已領取':'首通獎勵',stage.reward)
   );
 }
@@ -1613,7 +1575,7 @@ function showDaily(vault='gold',floor) {
     modal(element('h2','掃蕩完成'),pay.material?element('p',materials[pay.material].name+' × '+pay.count):money(vault,`+${pay[vault]}`));
   };
   const heading=element('div','','daily-encounter-heading');
-  heading.append(element('h2',`第 ${floor} 層${stage.head?'・頭目':''}`),
+  heading.append(element('h2',`第 ${floor} 層${stage.head?'・頭目':''}`),element('small',`敵軍 Lv.${stage.enemyLevel}・技能 Lv.${stage.enemyEffect}`),
     element('small',floor<=status.highest?'已通關':floor===status.highest+1?'可挑戰':'未解鎖'));
   const rewards=element('div','','daily-loot');
   const rewardIcon=()=>vault==='gold'||vault==='gems'?artwork(vault,'money'):artwork(vault,'material');
@@ -1623,7 +1585,7 @@ function showDaily(vault='gold',floor) {
   const enemies=element('div','','daily-enemies');
   enemies.setAttribute('aria-label','敵方先鋒');
   for(const id of [...new Set([...stage.opening,...stage.opponents])].slice(0,4)){
-    const card=confirmButton('',()=>cardDetail(catalogCard(id,1)));
+    const card=confirmButton('',()=>cardDetail({...catalogCard(id,stage.enemyLevel),effect:stage.enemyEffect}));
     card.append(artwork(id));card.setAttribute('aria-label',cards[id][0]);enemies.append(card);
   }
   const guide=element('details','','daily-guide');
