@@ -129,7 +129,7 @@ function currentSave() {
 }
 function save() {
   try { localStorage.setItem(key, JSON.stringify(currentSave())); return true; }
-  catch { get('message').textContent = '此瀏覽器目前無法儲存戰況。'; }
+  catch { notify('儲存失敗，請檢查瀏覽器的儲存空間。',true); return false; }
 }
 function element(tag, value, className) {
   const item = document.createElement(tag);
@@ -146,7 +146,19 @@ function artwork(id, type = 'card', className = '') {
   img.decoding = 'async';
   return img;
 }
+const noticeTimers=new WeakMap();
+function notify(message,error=false){
+  const host=get('detail').open?get('detail-notice'):get('game-notice');
+  clearTimeout(noticeTimers.get(host));
+  host.textContent=message;
+  host.classList.toggle('notice-error',error);
+  if(!error)noticeTimers.set(host,setTimeout(()=>{host.textContent='';},5500));
+}
+function featuredHeroId(){
+  return ownedHeroes().includes(displayHero)?displayHero:state?.phase==='deploy'?state.hero:chosen;
+}
 function modal(...children) {
+  get('detail-notice').textContent='';
   get('detail-content').replaceChildren(...children);
   const dialog=get('detail');
   if (!dialog.open) {
@@ -389,7 +401,7 @@ function showCamp() {
   get('camp-team-name').textContent=ongoing?hero.name:`編隊 ${activeTeam+1}・${hero.name}`;
   get('camp-team-rune').textContent=runes[ongoing?state.rune:loadout].name;
   get('camp-progress').textContent=`編隊 ${activeTeam+1}・${hero.name}`;
-  const featured=heroes.find(item=>item.id===displayHero&&ownedHeroes().includes(item.id))??hero;
+  const featured=heroes.find(item=>item.id===featuredHeroId())??hero;
   get('camp-profile-art').src=asset(`hero-portrait-${featured.id}`);
   get('camp-progress').textContent=featured.name;
   startHomeMotion(featured);
@@ -406,25 +418,24 @@ const homeReduced=()=>lowMotion||matchMedia('(prefers-reduced-motion: reduce)').
 const homeGestures={
   trust:['rune-pulse','hero-staff'],dream:['rune-pulse','hero-star'],growth:['home-heal-glow','hero-leaf'],
   healing:['home-heal-glow','hero-leaf'],hope:['hero-butterfly','hero-wing'],joy:['rune-pulse','hero-star'],
-  luck:['rune-pulse','coin'],memory:['home-heal-glow','hero-star'],night:['rune-pulse','hero-wing'],sadness:['rune-pulse','hero-leaf'],
+  luck:['rune-pulse','coin'],memory:['home-heal-glow','hero-star'],night:['home-moon-glow','hero-wing'],sadness:['rune-pulse','hero-leaf'],
 };
 function stopHomeMotion(){
   clearTimeout(homeBlinkTimer);clearTimeout(homeOpenTimer);clearTimeout(homeTapTimer);homeTapTimer=null;
   homeReaction?.abort();homeReaction=null;
   const button=get('camp-featured-button');
   button.classList.remove('blinking','reacting','home-enter','home-notice','home-act','home-effect','home-cup');
-  get('camp-gesture').getAnimations().forEach(animation=>animation.cancel());
+  get('camp-hero-motion').style.transform='';
+  get('camp-aura-wrap').style.cssText='';
 }
 function startHomeMotion(hero){
   stopHomeMotion();
-  const button=get('camp-featured-button'), open=get('camp-featured'), closed=get('camp-blink'), gesture=get('camp-gesture'), aura=get('camp-aura');
+  const button=get('camp-featured-button'), open=get('camp-featured'), closed=get('camp-blink'), aura=get('camp-aura');
   const [effect,sound]=homeGestures[hero.id];
-  const signature=asset('hero-gesture-'+hero.id);
   button.dataset.motion=homeReduced()?'off':'on';button.dataset.hero=hero.id;
   button.setAttribute('aria-label','與'+hero.name+'互動');
   open.src=asset('hero-home-'+hero.id);
   closed.src=asset('hero-blink-'+hero.id);
-  gesture.src=signature;
   aura.src=asset(effect);
   function blink(){
     if(get('camp').hidden||document.hidden||homeReduced())return;
@@ -443,29 +454,51 @@ function startHomeMotion(hero){
     const controller=new AbortController();
     homeReaction=controller;
     const {signal}=controller;
-    const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+    const actor=get('camp-hero-motion'), glow=get('camp-aura-wrap');
     void unlock();
     try {
-      gesture.src=alternate?asset('hero-gesture-hope-cup'):signature;
-      aura.src=asset(alternate?'rune-pulse':effect);
-      button.classList.toggle('home-cup',alternate);
-      await gesture.decode();
+      aura.src=asset(alternate?'home-heal-glow':effect);
+      await aura.decode();
       if(signal.aborted)return;
-      button.classList.remove('blinking');
       if(homeReduced()){play(sound);return;}
-      button.classList.add('reacting','home-notice');
-      await pause(155);
-      if(signal.aborted)return;
-      button.classList.remove('home-notice');
-      button.classList.add('home-act','home-effect');
-      play(alternate?'hero-cup':sound);
-      await pause(alternate?620:750);
-      if(signal.aborted)return;
-      button.classList.remove('home-act','home-effect');
-      await pause(190);
-    } catch(error) { console.warn('Hero pose unavailable',error); }
+      button.classList.remove('blinking');
+      button.classList.add('reacting','home-act','home-effect');
+      button.classList.toggle('home-cup',alternate);
+      const started=performance.now();
+      const direction=['hope','night','trust'].includes(hero.id)?-1:1;
+      const drift=hero.id==='trust'?10:hero.id==='hope'?43:30;
+      let last=-1;
+      await new Promise(resolve=>{
+        const draw=now=>{
+          if(signal.aborted||now-started>=3000){resolve();return;}
+          const frame=Math.max(0,Math.min(89,Math.floor((now-started)*30/1000)));
+          if(frame!==last){
+            if(last<18&&frame>=18)play(alternate?'hero-cup':sound);
+            last=frame;
+            const t=frame/89;
+            const ease=x=>Math.max(0,Math.min(1,x));
+            const rise=ease((t-.17)/.18), fall=ease((.93-t)/.21);
+            const energy=Math.sin(rise*Math.PI/2)*Math.sin(fall*Math.PI/2);
+            const anticipation=Math.sin(Math.min(1,t/.2)*Math.PI);
+            const orbit=Math.max(0,(t-.23)/.61)*Math.PI*2;
+            const x=direction*drift*Math.sin(orbit)*energy;
+            const y=(hero.id==='trust'?10:-33)*(1-Math.cos(orbit))*.5*energy;
+            actor.style.transform=`translateY(${2*anticipation-3*energy}px) rotate(${direction*(2*energy-1.4*anticipation)}deg)`;
+            glow.style.transform=`translate(${x}px,${y}px) rotate(${direction*12*Math.sin(orbit)}deg) scale(${.64+.42*energy})`;
+            glow.style.opacity=String(energy*.93);
+            button.dataset.animationFrame=String(frame+1);
+          }
+          requestAnimationFrame(draw);
+        };
+        requestAnimationFrame(draw);
+      });
+    } catch(error) { console.warn('Hero effect unavailable',error); }
     finally {
-      if(homeReaction===controller){button.classList.remove('reacting','home-notice','home-act','home-effect','home-cup');homeReaction=null;}
+      if(homeReaction===controller){
+        actor.style.transform='';glow.style.cssText='';
+        button.classList.remove('reacting','home-act','home-effect','home-cup');
+        homeReaction=null;
+      }
     }
   }
   button.onpointerdown=()=>button.classList.add('home-pointer');
@@ -922,13 +955,25 @@ function itemDetail(item,allowUpgrade=false) {
   for(const [label,value] of itemStats(item))stats.append(element('dt',label),element('dd',String(value)));
   copy.append(stats);
   if(!allowUpgrade)return layout;
-  if(item.kind==='hero')copy.append(confirmButton('設為首頁英雄',()=>{displayHero=item.id;save();modal(itemDetail(item,true));}));
+  if(item.kind==='hero'){
+    const featured=featuredHeroId()===item.id;
+    const setHome=confirmButton(featured?'目前的首頁英雄':'設為首頁英雄',()=>{
+      const previous=displayHero;
+      displayHero=item.id;
+      if(!save()){displayHero=previous;return;}
+      renderInventory();modal(itemDetail(item,true));
+      notify(`已設為首頁英雄：${itemName(item)}。返回城鎮即可看到。`);
+    });
+    setHome.disabled=featured;
+    if(featured)copy.append(element('strong','首頁展示中','featured-badge'));
+    copy.append(setHome);
+  }
   if(item.level<cap){
     const cost=levelCost(item.level);
     if(item.kind==='card'){
       const gold=confirmButton('花 '+cost+' 金幣・+100 經驗',()=>{
         if(wallet.gold<cost||item.level>=levelLimit(item))return;
-        wallet={...wallet,gold:wallet.gold-cost};grantExperience(item,100);finishGrowth(item);
+        wallet={...wallet,gold:wallet.gold-cost};grantExperience(item,100);finishGrowth(item,`已強化 ${itemName(item)}，目前 Lv.${item.level}。`);
       });
       gold.disabled=wallet.gold<cost;copy.append(gold);
     }
@@ -936,12 +981,17 @@ function itemDetail(item,allowUpgrade=false) {
   }
   if(item.kind==='card'&&item.level===cap&&cap<99)copy.append(confirmButton('突破至 Lv.'+limits[(item.breakthrough??0)+1],()=>chooseMaterial(item,'break')));
   if(effect<effectsMax)copy.append(confirmButton('效果強化',()=>chooseMaterial(item,'effect')));
-  copy.append(confirmButton(item.locked?'解除素材鎖定':'鎖定個體',()=>{item.locked=!item.locked;finishGrowth(item);}),
+  copy.append(confirmButton(item.locked?'解除素材鎖定':'鎖定個體',()=>{
+    const previous=item.locked;item.locked=!previous;
+    if(!save()){item.locked=previous;return;}
+    renderInventory();modal(itemDetail(item,true));notify(item.locked?'已鎖定，這個個體不能用作素材。':'已解除素材鎖定。');
+  }),
     confirmButton('前往編隊',()=>openTeamEditor('inventory-page',item)));
   return layout;
 }
-function finishGrowth(item){
-  save();renderInventory();modal(itemDetail(item,true));void unlock().then(()=>play('upgrade'));
+function finishGrowth(item,message){
+  if(!save())return;
+  renderInventory();modal(itemDetail(item,true));notify(message);void unlock().then(()=>play('upgrade'));
 }
 function chooseMaterial(target,mode) {
   const required=mode==='break'?(target.breakthrough??0)+1:null;
@@ -969,7 +1019,8 @@ function chooseMaterial(target,mode) {
       wallet={...wallet,[key]:record};
       if(item.kind==='card'&&!count)wallet.unlocked=wallet.unlocked.filter(id=>id!==item.id);
     }
-    finishGrowth(target);
+    const summary=mode==='break'?`突破成功，等級上限 Lv.${levelLimit(target)}。`:mode==='effect'?`效果強化完成，目前效果 Lv.${target.effect}。`:`已強化 ${itemName(target)}，目前 Lv.${target.level}。`;
+    finishGrowth(target,summary);
   });
   const project=()=>{
     const chosen=[...selected].map(instance).filter(Boolean);
@@ -1078,6 +1129,8 @@ function renderInventory() {
     const button=confirmButton('',()=>modal(itemDetail(item,true)));
     button.className='instance-tile';
     button.append(itemArt(item),element('strong',itemName(item)),element('small',`${rarity(item.id)}・Lv.${item.level}`));
+    if(item.kind==='hero'&&item.id===featuredHeroId())button.append(element('small','首頁展示中','featured-badge'));
+    if(item.locked)button.append(element('small','素材已鎖定','featured-badge'));
     if(used.length)button.append(element('small',`編隊 ${used.join('、')}`));
     return button;
   }):[element('p','沒有符合的持有物。')]));
@@ -1138,12 +1191,12 @@ function renderTeamEditor() {
   }
   const saveTeam=confirmButton('儲存編隊',()=>{
     const problem=checkLineup(teamDraft,instance);
-    if(problem){get('team-status').textContent=problem;return;}
+    if(problem){get('team-status').textContent=problem;notify(problem,true);return;}
     teamItems=structuredClone(teamDraft);
     deck=teamItems.cards.map(uid=>instance(uid).id);
     chosen=instance(teamItems.hero).id;
     loadout=instance(teamItems.rune)?.id??'none';
-    save();renderTeamEditor();
+    if(save()){renderTeamEditor();notify(`編隊 ${activeTeam+1} 已儲存。`);}
   });
   header.append(tabs,saveTeam);
   const slots=element('div','','team-instance-slots');
@@ -1175,7 +1228,7 @@ function renderTeamEditor() {
         teamDraft.cards=next;
       } else if(kind==='rune')teamDraft[runeSlot]=candidate.uid;
       else teamDraft[kind]=candidate.uid;
-      renderTeamEditor();
+      renderTeamEditor();notify('已裝入草稿，請儲存編隊。');
     });
     if(duplicateRune)preview.append(element('p','此個體已裝備在另一格。'));
     else if(blocked)preview.append(element('p',`同名卡已在第 ${occupied+1} 張。請先點該牌位，再換成這一份。`));

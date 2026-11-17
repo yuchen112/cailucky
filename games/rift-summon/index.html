@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=sorting-1">
+<link rel="stylesheet" href="style.css?v=feedback-1">
 </head>
 <body>
 <main>
@@ -19,7 +19,7 @@
 <section id="camp" hidden aria-label="裂界營地">
   <div class="world-camp">
     <header class="camp-hud"><button id="camp-profile"><img id="camp-profile-art" alt=""><span id="camp-progress"></span></button><div id="camp-wallet" class="wallet"></div><button id="camp-options" data-art="settings">設定</button></header>
-    <button id="camp-featured-button" aria-label="與首頁英雄互動"><span id="camp-aura-wrap"><img id="camp-aura" alt=""></span><span id="camp-hero-motion"><img id="camp-featured" alt=""><img id="camp-blink" alt=""><img id="camp-gesture" alt=""></span></button><section hidden class="camp-expedition" aria-labelledby="camp-stage">
+    <button id="camp-featured-button" aria-label="與首頁英雄互動"><span id="camp-aura-wrap"><img id="camp-aura" alt=""></span><span id="camp-hero-motion"><img id="camp-featured" alt=""><img id="camp-blink" alt=""></span></button><section hidden class="camp-expedition" aria-labelledby="camp-stage">
       <div class="expedition-content">
         <small id="camp-chapter"></small><h2 id="camp-stage"></h2>
         <div class="expedition-party"><img id="camp-hero-art" alt=""><div><strong id="camp-team-name"></strong><p id="camp-team-rune"></p></div></div>
@@ -174,13 +174,14 @@
     <button id="result-album" data-art="collection">查看卡冊</button>
   </nav>
 </section>
-<dialog id="detail"><div id="detail-content"></div><form method="dialog"><button>關閉</button></form></dialog>
+<dialog id="detail"><div id="detail-notice" class="action-notice" role="status" aria-atomic="true"></div><div id="detail-content"></div><form method="dialog"><button>關閉</button></form></dialog>
 <dialog id="capsule-show" aria-labelledby="capsule-show-title">
   <h2 id="capsule-show-title">裂界召喚</h2>
   <div id="capsule-show-body" aria-live="polite"></div>
   <div class="controls"><button id="draw-open-all">一鍵開啟</button><button id="capsule-show-close">跳過</button></div>
 </dialog>
+<div id="game-notice" class="action-notice" role="status" aria-atomic="true"></div>
 </main>
-<script type="module" src="main.mjs?v=sorting-1"></script>
+<script type="module" src="main.mjs?v=feedback-1"></script>
 </body>
 </html>
