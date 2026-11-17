@@ -1,13 +1,14 @@
-import {createDialoguePicker} from './home-dialogue.mjs?v=landscape-lineup-1';
-import {materials,bookFor} from './materials.mjs?v=landscape-lineup-1';
-import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=landscape-lineup-1';
-import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=landscape-lineup-1';
+import {heroHealth,heroCapacity} from './progression.mjs?v=book-growth-1';
+import {createDialoguePicker} from './home-dialogue.mjs?v=book-growth-1';
+import {materials,bookFor} from './materials.mjs?v=book-growth-1';
+import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=book-growth-1';
+import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=book-growth-1';
 import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=landscape-lineup-1';
-import {makeBackup, readBackup} from './backup.mjs?v=landscape-lineup-1';
-import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=landscape-lineup-1';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=landscape-lineup-1';
-import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=landscape-lineup-1';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=book-growth-1';
+import {makeBackup, readBackup} from './backup.mjs?v=book-growth-1';
+import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=book-growth-1';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,capsuleCards} from './economy.mjs?v=book-growth-1';
+import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=book-growth-1';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -29,7 +30,7 @@ let log = state ? saved?.log ?? [] : [];
 const cleared = new Set(Array.isArray(saved?.cleared) ? saved.cleared.filter(index => stages[index]) : []);
 let wallet=validWallet(saved?.wallet)?saved.wallet:startingWallet();
 const owned = () => [...new Set([...starter,...stages.filter((_,index)=>cleared.has(index)).map(stage=>stage.reward),...wallet.unlocked])];
-let deck = Array.isArray(saved?.deck) && saved.deck.length === 8 && saved.deck.every(id=>owned().includes(id)) ? saved.deck : [...starter];
+let deck = Array.isArray(saved?.deck) && saved.deck.length >= 8 && saved.deck.length <= 12 && saved.deck.every(id=>owned().includes(id)) ? saved.deck : [...starter];
 let stageIndex = state?.phase==='deploy' ? state.stage : Math.min(cleared.size, stages.length-1);
 const chapterFor=index=>Math.floor(index/4);
 let chosen = state?.hero || 'trust';
@@ -83,7 +84,7 @@ let teamItems;
 const teams=Array.from({length:3},(_,i)=>{
   const item=saved?.teams?.[i];
   return {
-    deck:Array.isArray(item?.deck)&&item.deck.length===8&&item.deck.every(id=>owned().includes(id))?[...item.deck]:[...deck],
+    deck:Array.isArray(item?.deck)&&item.deck.length>=8&&item.deck.length<=12&&item.deck.every(id=>owned().includes(id))?[...item.deck]:[...deck],
     hero:ownedHeroes().includes(item?.hero)?item.hero:(ownedHeroes().includes(chosen)?chosen:starterHero),
     rune:item?.rune==='none'||unlockedRunes(cleared,wallet).includes(item?.rune)?item.rune:loadout,
     items:item?.items,
@@ -183,7 +184,7 @@ function reviewLineup(){
   for(const [index,uid] of [...teamItems.cards,teamItems.hero,teamItems.rune,teamItems.rune2].entries()){
     const item=instance(uid);if(!item)continue;
     const button=confirmButton('',()=>modal(itemDetail(item)));
-    button.append(itemArt(item),element('strong',itemName(item)),element('small',`${index<8?'第 '+(index+1)+' 張':item.kind==='hero'?'英雄':'符文'}・Lv.${item.level}・效果 ${item.effect??1}`));grid.append(button);
+    button.append(itemArt(item),element('strong',itemName(item)),element('small',`${index<teamItems.cards.length?'第 '+(index+1)+' 張':item.kind==='hero'?'英雄':'符文'}・Lv.${item.level}・效果 ${item.effect??1}`));grid.append(button);
   }
   modal(title,grid);
 }
@@ -224,7 +225,7 @@ function heroDetails(hero) {
   const available=ownedHeroes().includes(hero.id);
   const ownedItems=inventory.items.filter(item=>item.kind==='hero'&&item.id===hero.id);
   const nodes=[artwork(hero.id,'hero'),element('h2',`${hero.name}・${rarity(hero.id)}`),element('strong',hero.skill),element('p',hero.detail),
-    element('p',`起始生命 24 → 28（Lv.1–5）・持有 ${ownedItems.length} 份`)];
+    element('p',`起始生命 24 → 40・出戰卡數 8 → 12（Lv.1–5）・持有 ${ownedItems.length} 份`)];
   if(!available) {
     const stage=stages[heroMilestones.indexOf(hero.id)];
     nodes.push(element('p',stage?`英雄扭蛋或首通「${stage.name}」解鎖。`:'從英雄扭蛋取得。'));
@@ -272,13 +273,46 @@ function showHeroes() {
   const filtered=heroes.filter(hero=>hero.name.includes(query)&&(tier==='all'||rarity(hero.id)===tier)&&
     (status==='all'||ownedHeroes().includes(hero.id)===(status==='owned')));
   const byId=new Map(filtered.map(hero=>[hero.id,hero]));
-  get('hero-book-grid').replaceChildren(...catalogSort('hero',[...byId.keys()],id=>byId.get(id).effect).map(id=>{
+  const entries=catalogSort('hero',[...byId.keys()],id=>byId.get(id).effect).map(id=>{
     const hero=byId.get(id);
     const button=confirmButton('',()=>heroDetails(hero));
     button.append(artwork(hero.id,'hero'),element('strong',`${hero.name}・${rarity(hero.id)}`),
       element('span',ownedHeroes().includes(hero.id)?'已收錄':'未收錄'));
     return button;
-  }));
+  });
+  paginateCodex('hero-book','hero-book-grid',entries,'hero');
+}
+const codexPosition={};
+function paginateCodex(section,hostId,entries,kind){
+  const host=get(hostId);host.classList.add('codex-spread');
+  const page=get(section),signature=[...page.querySelectorAll('.codex-filters input,.codex-filters select')].map(e=>e.value).join('|');
+  const old=codexPosition[kind];
+  const count=Math.max(1,Math.ceil(entries.length/12));
+  const index=old?.signature===signature?Math.min(old.index,count-1):0;
+  codexPosition[kind]={signature,index};
+  const draw=()=>{
+    const current=codexPosition[kind].index;
+    const leaves=Array.from({length:2},(_,side)=>{
+      const leaf=element('article','','album-leaf');
+      const heading=element('header');heading.append(element('small',kind==='hero'?'英雄圖鑑':'符文圖鑑'),element('small',String(current*2+side+1)));
+      const grid=element('div','','album-grid');
+      const items=entries.slice(current*12+side*6,current*12+side*6+6);
+      for(const item of items){const slot=element('div','','album-slot');slot.append(item);grid.append(slot);}
+      for(let i=items.length;i<6;i++)grid.append(element('div','','album-slot-placeholder'));
+      leaf.append(heading,grid);return leaf;
+    });
+    host.replaceChildren(...leaves);
+    previous.disabled=current===0;next.disabled=current===count-1;
+    position.textContent=`第 ${current+1} / ${count} 組雙頁・${entries.length} 項`;
+  };
+  let controls=page.querySelector('.codex-pagination');
+  if(!controls){controls=element('nav','','codex-pagination');host.after(controls);}
+  const previous=confirmButton('‹ 上一頁',()=>{codexPosition[kind].index--;draw();flipBook(host,-1);});
+  const next=confirmButton('下一頁 ›',()=>{codexPosition[kind].index++;draw();flipBook(host,1);});
+  const position=element('span');position.setAttribute('aria-live','polite');controls.replaceChildren(previous,position,next);draw();
+}
+function flipBook(book,direction){
+  if(!lowMotion&&!matchMedia('(prefers-reduced-motion: reduce)').matches)book.animate([{transform:`perspective(900px) rotateY(${direction*7}deg)`,opacity:.7},{transform:'perspective(900px) rotateY(0deg)',opacity:1}],{duration:200,easing:'ease-out'});
 }
 function runeImage(id) {
   return artwork(id==='none'?'empty':id,'rune','rune-image');
@@ -322,7 +356,7 @@ function renderRuneBook() {
     button.onclick=()=>runeDetails(id);
     return button;
   });
-  get('rune-book-grid').replaceChildren(...(entries.length?entries:[element('p','沒有符合篩選條件的符文。')]));
+  paginateCodex('rune-book','rune-book-grid',entries,'rune');
 }
 function renderRuneSlots() {
   get('rune-slots').replaceChildren(...[teamItems.rune,teamItems.rune2].map((uid,index)=>{
@@ -448,6 +482,8 @@ function showHomeHero(hero){
   button.onclick=()=>{
     if(get('camp').hidden||performance.now()<dialogueCooldown)return;
     dialogueCooldown=performance.now()+500;
+    const actor=get('camp-hero-motion');
+    if(!lowMotion&&!matchMedia('(prefers-reduced-motion: reduce)').matches)actor.animate([{scale:'1'},{scale:'1.035',offset:.4},{scale:'1'}],{duration:420,easing:'ease-out'});
     get('home-dialogue-name').textContent=hero.name;
     get('home-dialogue-text').textContent=pickHomeDialogue(hero.id);
     get('home-dialogue').hidden=false;
@@ -681,7 +717,7 @@ function cardGroup(id) {
   return 'attack';
 }
 const perLeaf=6;
-const albumWide=matchMedia('(min-width: 700px) and (orientation: landscape) and (pointer: fine)');
+const albumWide=matchMedia('(orientation: landscape)');
 let albumPage=0;
 function makeAlbumLeaf(page,collection,filtered) {
   const leaf=element('article','','album-leaf');
@@ -727,15 +763,15 @@ function renderCollection(direction=0) {
   const first=albumPage-albumPage%spread;
   const end=Math.min(pages,first+spread);
   const book=get('album-pages');
-  book.replaceChildren(...Array.from({length:end-first},(_,i)=>makeAlbumLeaf(first+i,collection,filtered)));
+  book.replaceChildren(...Array.from({length:2},(_,i)=>makeAlbumLeaf(first+i,collection,filtered)));
   if(!filtered.length) book.querySelector('.album-leaf').append(element('p','沒有符合搜尋條件的卡片。'));
-  book.classList.toggle('single-leaf',end-first===1);
+  book.classList.remove('single-leaf');
   get('collection-count').textContent=`已收錄 ${collection.size} / ${albumCards.length} 張・目前顯示 ${filtered.length} 張`;
   get('album-position').textContent=`第 ${first+1===end?end:`${first+1}–${end}`} / ${pages} 頁`;
   get('album-prev').disabled=first===0;
   get('album-next').disabled=end===pages;
   if(direction && !lowMotion && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    book.animate([{opacity:.45,transform:`translateX(${direction*12}px)`},{opacity:1,transform:'translateX(0)'}],220);
+    flipBook(book,direction);
   }
 }
 get('card-owned').onchange=get('card-filter').onchange=()=>{albumPage=0;renderCollection();};
@@ -848,6 +884,7 @@ function showHeroPreview() {
   get('hero-detail').textContent=hero.detail;
 }
 let bagKind='card';
+const bagPages={};
 const bagNames={card:'卡片背包',hero:'英雄背包',rune:'符文背包',material:'強化素材'};
 const kindNames={card:'卡片',hero:'英雄',rune:'符文'};
 function itemName(item){return materials[item.id]?.name??collectibleName(item.kind,item.id);}
@@ -887,7 +924,7 @@ function itemStats(item) {
   }
   if(item.kind==='hero') {
     const hero=heroes.find(h=>h.id===item.id);
-    return [['起始生命',23+item.level],[hero.skill,hero.detail]];
+    return [['起始生命',heroHealth(item.level)],['出戰卡牌上限',heroCapacity(item.level)],[hero.skill,hero.detail]];
   }
   return [['每場發動',2],['效果增益','+'+(item.level+(item.effect??1)-2)],[runes[item.id].name,runes[item.id].effect]];
 }
@@ -947,7 +984,7 @@ function finishGrowth(item,message){
 function chooseMaterial(target,mode) {
   const required=mode==='break'?(target.breakthrough??0)+1:null;
   const safe=item=>item.uid!==target.uid&&!item.locked&&!teamsUsing(item.uid).length&&(item.kind==='material'||item.level===1&&!item.experience&&(item.effect??1)===1);
-  const matches=item=>mode==='xp'?item.kind===target.kind||target.kind==='card'&&item.kind==='material':
+  const matches=item=>mode==='xp'?item.kind===target.kind||item.kind==='material'&&!materials[item.id]?.kind:
     item.kind===target.kind&&item.id===target.id||mode==='effect'&&materials[item.id]?.kind===target.kind;
   const candidates=inventory.items.filter(item=>safe(item)&&matches(item));
   const xpOf=materialXP;
@@ -966,7 +1003,7 @@ function chooseMaterial(target,mode) {
       const key=item.kind==='card'?'copies':item.kind==='hero'?'heroCopies':'runeCopies';
       const record={...wallet[key]};
       const count=inventory.items.filter(entry=>entry.kind===item.kind&&entry.id===item.id).length;
-      if(count)record[item.id]=count;else {delete record[item.id];consumed.add(item.kind+':'+item.id);}
+      if(count&&(item.kind!=='card'||capsuleCards.includes(item.id)))record[item.id]=count;else {delete record[item.id];if(!count)consumed.add(item.kind+':'+item.id);}
       wallet={...wallet,[key]:record};
       if(item.kind==='card'&&!count)wallet.unlocked=wallet.unlocked.filter(id=>id!==item.id);
     }
@@ -1028,9 +1065,25 @@ function chooseMaterial(target,mode) {
   }
   const limitGoal=()=>Math.min(levelLimit(target),Math.max(target.level+1,Math.trunc(Number(targetLevel.value))||levelLimit(target)));
   const actions=element('div','','growth-actions');
-  if(mode==='xp')actions.append(confirmButton('一鍵選低階',()=>selectMany([...candidates].filter(item=>
-    item.kind!=='material'&&item.id!==target.id&&rankIndex(item.id)<=1
-  ).sort((a,b)=>xpOf(a)-xpOf(b)),limitGoal())));
+  const gradePicker=element('section','','grade-picker');gradePicker.hidden=true;
+  gradePicker.setAttribute('aria-label','選擇批次素材品階');
+  if(mode==='xp'){
+    gradePicker.append(element('strong','選擇要投入的品階（可複選）'));
+    const options=element('div','','grade-options');
+    for(const tier of rarityNames){
+      const count=candidates.filter(item=>rarity(item.id)===tier).length;
+      const label=element('label');const box=element('input');box.type='checkbox';box.value=tier;box.checked=count>0&&['N','R'].includes(tier);box.disabled=!count;
+      label.append(box,element('span',`${tier} (${count})`));options.append(label);
+    }
+    const pick=confirmButton('選取這些品階',()=>{
+      const tiers=new Set([...options.querySelectorAll('input:checked')].map(input=>input.value));
+      selected.clear();
+      selectMany(candidates.filter(item=>tiers.has(rarity(item.id))).sort((a,b)=>xpOf(a)-xpOf(b)),limitGoal());
+      gradePicker.hidden=true;
+    });
+    gradePicker.append(options,element('small','只選取素材，確認強化後才會消耗。'),pick,confirmButton('取消',()=>{gradePicker.hidden=true;}));
+    actions.append(confirmButton('一鍵選階',()=>{gradePicker.hidden=!gradePicker.hidden;}));
+  }
   actions.append(confirmButton(mode==='break'?'一鍵補足':'選取篩選結果',()=>selectMany(visible(),limitGoal())),
     confirmButton('清除選取',()=>{selected.clear();fill();update();}));
   const fill=()=>{
@@ -1041,15 +1094,17 @@ function chooseMaterial(target,mode) {
         else if(mode==='break'?selected.size<required:mode==='effect'?(result.effect??1)<effectsMax:result.level<levelLimit(target))selected.add(item.uid);
         button.setAttribute('aria-pressed',String(selected.has(item.uid)));update();
       });
-      button.append(itemArt(item),element('strong',itemName(item)),element('small',mode==='xp'?'+ '+xpOf(item).toLocaleString('zh-TW')+' 經驗':`Lv.${item.level}・${rarity(item.id)}`));
+      button.append(itemArt(item),element('strong',itemName(item)),element('small',mode==='xp'?rarity(item.id)+'・+ '+xpOf(item).toLocaleString('zh-TW')+' 經驗':`Lv.${item.level}・${rarity(item.id)}`));
       button.setAttribute('aria-pressed',String(selected.has(item.uid)));
+      button.dataset.tier=rarity(item.id);button.dataset.uid=item.uid;
+      for(const image of button.querySelectorAll('img')){image.loading='lazy';image.decoding='async';}
       return button;
     }));
     if(!grid.children.length)grid.append(element('p','沒有符合的可用素材。'));
   };
   search.oninput=fill;rarityFilter.onchange=fill;fill();update();
   const summary=element('aside','','growth-summary');summary.append(element('h2',title),columns,counter,preview,apply,confirmButton('返回',()=>modal(itemDetail(target,true))));
-  const listing=element('div','','growth-listing');listing.append(search,rarityFilter,listToolbar(sortKey,{tier:'品階',name:'名稱',uid:'取得順序',...(mode==='xp'?{value:'提供經驗'}:{})},fill),targetLabel,actions,grid);
+  const listing=element('div','','growth-listing');listing.append(search,rarityFilter,listToolbar(sortKey,{tier:'品階',name:'名稱',uid:'取得順序',...(mode==='xp'?{value:'提供經驗'}:{})},fill),targetLabel,actions,grid,gradePicker);
   panel.append(listing,summary);modal(panel);get('detail').scrollTop=0;
 }
 
@@ -1075,19 +1130,38 @@ function renderInventory() {
   get('inventory-heading').textContent=bagNames[bagKind];
   get('inventory-count').textContent=`持有 ${list.length} 份・顯示 ${visible.length} 份`;
   for(const button of document.querySelectorAll('[data-bag]'))button.setAttribute('aria-pressed',String(button.dataset.bag===bagKind));
-  get('inventory-grid').replaceChildren(...(visible.length?visible.map(item=>{
+  const signature=[tier,query,order.key,order.asc].join('|');
+  const pageCount=Math.max(1,Math.ceil(visible.length/12));
+  const previous=bagPages[bagKind];
+  const pageIndex=previous?.signature===signature?Math.min(previous.index,pageCount-1):0;
+  bagPages[bagKind]={signature,index:pageIndex};
+  get('inventory-grid').replaceChildren(...(visible.length?visible.slice(pageIndex*12,pageIndex*12+12).map(item=>{
     const used=teamsUsing(item.uid);
     const button=confirmButton('',()=>modal(itemDetail(item,true)));
-    button.className='instance-tile';
+    button.className='instance-tile';button.dataset.uid=item.uid;
     button.append(itemArt(item),element('strong',itemName(item)),element('small',`${rarity(item.id)}・Lv.${item.level}`));
     if(item.kind==='hero'&&item.id===featuredHeroId())button.append(element('small','首頁展示中','featured-badge'));
     if(item.locked)button.append(element('small','素材已鎖定','featured-badge'));
     if(used.length)button.append(element('small',`編隊 ${used.join('、')}`));
     return button;
   }):[element('p','沒有符合的持有物。')]));
+  renderBagPager(pageCount);
+}
+function renderBagPager(pageCount){
+  let pager=get('inventory-page').querySelector('.bag-pagination');
+  if(!pager){pager=element('nav','','bag-pagination');pager.setAttribute('aria-label','背包翻頁');get('inventory-grid').after(pager);}
+  const index=bagPages[bagKind].index;
+  const previous=confirmButton('‹ 上一頁',()=>{bagPages[bagKind].index--;renderInventory();});previous.disabled=index===0;
+  const next=confirmButton('下一頁 ›',()=>{bagPages[bagKind].index++;renderInventory();});next.disabled=index===pageCount-1;
+  const select=element('select');select.setAttribute('aria-label','背包頁碼');
+  for(let i=0;i<pageCount;i++){const option=element('option',`${i+1} / ${pageCount}`);option.value=String(i);select.append(option);}
+  select.value=String(index);select.onchange=()=>{bagPages[bagKind].index=Number(select.value);renderInventory();};
+  pager.replaceChildren(previous,select,next);
 }
 function showInventory(kind=bagKind) {
   bagKind=kind;
+  const page=get('inventory-page');
+  if(!page.querySelector('.bag-filters')){const bar=element('div','','bag-filters');const controls=[...page.querySelectorAll(':scope > label,:scope > #bag-direction')];controls[0].before(bar);bar.append(...controls);}
   syncFixedInventory();
   view('inventory-page');renderInventory();
 }
@@ -1140,7 +1214,8 @@ function renderTeamEditor() {
   const host=get('team-editor-content');
   const oldList=host.querySelector('.team-candidates');
   const listScroll=oldList?.scrollTop??0;
-  get('team-status').textContent=teamChanged()?'尚未儲存':'已儲存';
+  const capacity=heroCapacity(instance(teamDraft.hero)?.level??1);
+  get('team-status').textContent=(teamChanged()?'尚未儲存':'已儲存')+`・${teamDraft.cards.length}/${capacity} 張`;
   const header=element('div','','team-tools');
   const tabs=element('div','','library-tabs');
   for(let i=0;i<3;i++){
@@ -1159,9 +1234,11 @@ function renderTeamEditor() {
   });
   header.append(tabs,saveTeam);
   const slots=element('div','','team-instance-slots');
+  slots.style.setProperty('--team-rows',Math.ceil((Math.max(capacity,teamDraft.cards.length)+3)/4));
   function slot(kind,index,uid,label) {
     const item=instance(uid);
     const button=confirmButton('',()=>{editorSlot=kind;editorPosition=index;editorPreview=uid;renderTeamEditor();});
+    if(kind==='cards'&&index>teamDraft.cards.length)button.disabled=true;
     button.setAttribute('aria-pressed',String(editorSlot===kind&&(kind==='hero'||editorPosition===index)));
     button.append(element('small',label));
     if(item)button.append(itemArt(item),element('strong',itemName(item)),element('small',`${rarity(item.id)}・Lv.${item.level}`));
@@ -1169,7 +1246,7 @@ function renderTeamEditor() {
     slots.append(button);
   }
   slot('hero',0,teamDraft.hero,'英雄');
-  teamDraft.cards.forEach((uid,i)=>slot('cards',i,uid,`第 ${i+1} 張`));
+  for(let i=0;i<Math.max(capacity,teamDraft.cards.length);i++)slot('cards',i,teamDraft.cards[i]??null,`第 ${i+1} 張`);
   slot('rune',0,teamDraft.rune,'符文 1');
   slot('rune',1,teamDraft.rune2,'符文 2');
   const runeSlot=editorPosition===0?'rune':'rune2';
@@ -1185,21 +1262,22 @@ function renderTeamEditor() {
     preview.append(info,confirmButton('詳細屬性',()=>modal(itemDetail(candidate))));
     const occupied=kind==='card'?teamDraft.cards.findIndex((uid,i)=>i!==editorPosition&&uid===candidate.uid):-1;
     const duplicateRune=kind==='rune'&&candidate.uid===teamDraft[editorPosition===0?'rune2':'rune'];
-    const blocked=duplicateRune;
+    const blocked=duplicateRune||kind==='card'&&editorPosition===teamDraft.cards.length&&occupied>=0;
     const assign=confirmButton(occupied>=0&&!blocked?'交換兩個牌位':'確認裝入此欄位',()=>{
       if(kind==='card'){
         const next=assignLineupCard(teamDraft.cards,editorPosition,candidate.uid,instance);
-        if(!next)return;
+        if(!next||next.length>capacity)return;
         teamDraft.cards=next;
       } else if(kind==='rune')teamDraft[runeSlot]=candidate.uid;
       else teamDraft[kind]=candidate.uid;
       renderTeamEditor();notify('已裝入草稿，請儲存編隊。');
     });
     if(duplicateRune)preview.append(element('p','此個體已裝備在另一格。'));
-    else if(occupied>=0)preview.append(element('small',`此張已在第 ${occupied+1} 格，裝入時交換位置。`));
+    else if(occupied>=0)preview.append(element('small',editorPosition===teamDraft.cards.length?'此個體已出戰，請選擇另一份卡牌。':`此張已在第 ${occupied+1} 格，裝入時交換位置。`));
     assign.disabled=blocked;
     preview.append(assign);
   }
+  if(kind==='card'&&editorPosition<teamDraft.cards.length&&teamDraft.cards.length>8)preview.append(confirmButton('移除此卡',()=>{teamDraft.cards.splice(editorPosition,1);editorPosition=Math.min(editorPosition,teamDraft.cards.length-1);editorPreview=teamDraft.cards[editorPosition];renderTeamEditor();}));
   if(kind==='rune') preview.append(confirmButton('卸下符文',()=>{teamDraft[runeSlot]=null;editorPreview=null;renderTeamEditor();}));
   const candidates=element('div','','team-candidates');
   const search=element('input');
@@ -1273,7 +1351,7 @@ function renderBoard(frame, event) {
     return lane;
   }));
   field.scrollLeft = scroll;
-  get('hero-hp').value=player.hp;get('hero-hp').max=24+(state.heroLevel??1)-1;
+  get('hero-hp').value=player.hp;get('hero-hp').max=state.heroMax??heroHealth(state.heroLevel??1);
   get('enemy-hp').value=enemy.hp;get('enemy-hp').max=missionFor(state).hp;
   get('enemy-portrait').src=asset('illustration-'+missionFor(state).opening[0]);
   get('health').textContent = `${player.hp}${frame.heroShield ? ' ◆'+frame.heroShield : ''}`;
@@ -1728,3 +1806,12 @@ get('rotate-fullscreen').onclick=async()=>{
   try{await document.documentElement.requestFullscreen?.();await screen.orientation?.lock?.('landscape');}
   catch{get('rotate-note').textContent='請將手機橫拿；若畫面未旋轉，請關閉手機的直向鎖定。';}
 };
+
+for(const type of ['gesturestart','gesturechange','gestureend'])document.addEventListener(type,event=>event.preventDefault(),{passive:false});
+document.addEventListener('touchmove',event=>{if(event.touches.length>1)event.preventDefault();},{passive:false});
+
+document.addEventListener('dblclick',event=>event.preventDefault(),{passive:false});
+
+for(const id of ['card-filter','rune-filter'])get(id).options[0].textContent='全類別';
+for(const id of ['card-rarity','hero-rarity','rune-rarity'])get(id).options[0].textContent='全品階';
+for(const id of ['card-owned','hero-owned','rune-owned'])get(id).options[0].textContent='全收錄';

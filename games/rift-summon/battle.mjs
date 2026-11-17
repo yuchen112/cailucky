@@ -1,3 +1,4 @@
+import {heroHealth,shuffleDeck} from './progression.mjs?v=book-growth-1';
 export const cards = {
   guard: ['壁壘衛士', 1, 2, 7, '護衛'],
   bomb: ['爆燈兵', 1, 2, 3, '自爆'],
@@ -54,8 +55,8 @@ export const cards = {
 };
 export const starter = ['guard', 'bomb', 'archer', 'ax', 'ghost', 'healer', 'knight', 'giant'];
 const sentries = ['guard', 'bomb', 'knight', 'ax', 'ghost', 'giant'];
-import {cardBonus,cardHealthBonus} from './inventory.mjs?v=landscape-lineup-1';
-import {dailyStage} from './daily.mjs?v=landscape-lineup-1';
+import {cardBonus,cardHealthBonus} from './inventory.mjs?v=book-growth-1';
+import {dailyStage} from './daily.mjs?v=book-growth-1';
 export const chapterNames = ["第一章・斷橋哨站", "第二章・沉鐘墓園", "第三章・翡翠林海", "第四章・赤焰熔城", "第五章・霜月群峰", "第六章・浮光水都", "第七章・沙海遺城", "第八章・幽影邊境", "第九章・蒼穹王庭", "第十章・裂界核心"];
 export const stages = [
   {name:'哨站前沿', goal:'倒數歸零就能部署。先用護衛或斥候接住第一波。', hp:8, opponents:['guard','archer','healer','knight'], opening:['archer'], reward:'bow'},
@@ -114,22 +115,28 @@ function unit(id, uid, level=1,effect=1) {
 function side(deck, hp) {
   return {hp, deck: deck.slice(3), hand: deck.slice(0, 3), board: []};
 }
-export function createBattle(rune = 'wall', hero = '', stage = 3, deck = starter, levels = {}, heroLevel=1, runeLevel=1, daily=null,effects={},heroEffect=1,runeEffect=1,rune2=null,instances=null) {
+export function createBattle(rune = 'wall', hero = '', stage = 3, deck = starter, levels = {}, heroLevel=1, runeLevel=1, daily=null,effects={},heroEffect=1,runeEffect=1,rune2=null,instances=null,random=Math.random) {
   const level = daily?dailyStage(daily):stages[stage];
-  const player = side(deck.map((id,i)=>{
+  const drawPile=shuffleDeck(deck.map((id,i)=>{
     const item=instances?.[i];
     const card=unit(id,i,item?.level??levels[id]??1,item?.effect??effects[id]??1);
     if(item?.uid)card.inventoryUid=item.uid;
     return card;
-  }),24+heroLevel-1);
-  const enemy = side(level.opponents.map((id, i) => unit(id, i + 8,level.enemyLevel??1,level.enemyEffect??1)), level.hp);
+  }),random);
+  // Avoid an entirely stalled opening when the player included a quick card.
+  if(!drawPile.slice(0,3).some(card=>card.count<=1)){
+    const ready=drawPile.findIndex(card=>card.count<=1);
+    if(ready>=3){const slot=Math.floor(random()*3);[drawPile[slot],drawPile[ready]]=[drawPile[ready],drawPile[slot]];}
+  }
+  const player=side(drawPile,heroHealth(heroLevel));
+  const enemy = side(level.opponents.map((id, i) => unit(id, i + 12,level.enemyLevel??1,level.enemyEffect??1)), level.hp);
   enemy.board.push(...level.opening.map((id,i)=>unit(id,20+i,level.enemyLevel??1,level.enemyEffect??1)));
   const state = {version: 3, phase: 'deploy', stage, round: 1, result: null, sides: [player, enemy], hero, heroUsed: false, heroShield: 0, rune, charges: rune === 'none' ? 0 : 2, nextUid: 24, sequence: 0};
   if(daily) {
     state.daily=daily;
     if(['gold','xp'].includes(daily.vault)) for(const card of enemy.board)card.shield=Math.max(card.shield,2);
   }
-  state.heroLevel=heroLevel;state.heroEffect=heroEffect;state.runeEffect=runeEffect;
+  state.heroMax=heroHealth(heroLevel);state.heroLevel=heroLevel;state.heroEffect=heroEffect;state.runeEffect=runeEffect;
   state.runeLevel=runeLevel;
   if(rune2)state.rune2={...rune2};
   begin(player, false);
@@ -154,9 +161,9 @@ function trigger(state, events, timing, lane) {
   let name = hero.name;
   let target = 0;
   if (hero.effect === 'shield' || hero.effect === 'recover') {
-    if (team.hp * 2 > 23+(state.heroLevel??1) || team.hp === 0) return;
+    if (team.hp * 2 > (state.heroMax??heroHealth(state.heroLevel??1)) || team.hp === 0) return;
     if (hero.effect === 'shield') state.heroShield += 3+boost;
-    else team.hp = Math.min(23+(state.heroLevel??1),team.hp+3+boost);
+    else team.hp = Math.min((state.heroMax??heroHealth(state.heroLevel??1)),team.hp+3+boost);
     lane = null;
   } else if (hero.effect === 'haste' || hero.effect === 'draw') {
     if (hero.effect === 'draw') {
@@ -276,7 +283,7 @@ function runRune(state, events, second=false) {
       player.board[lane].shield+=1+bonus;
       lanes=[lane];message=`堡壘 → ${player.board[lane].name}・護盾 +${1+bonus}`;
     } else if(id==='surge'){
-      if(enemies<2||player.hp*2>23+(state.heroLevel??1))return;
+      if(enemies<2||player.hp*2>(state.heroMax??heroHealth(state.heroLevel??1)))return;
       target=1;message='逆雷 → 敵方英雄';
     } else {
       const card=player.hand.find(item=>item.count>0);
@@ -291,7 +298,7 @@ function runRune(state, events, second=false) {
   }
   if(id==='mirror'||id==='dawn') {
     const hero=state.sides[0];
-    const maxHealth=23+(state.heroLevel??1);
+    const maxHealth=(state.heroMax??heroHealth(state.heroLevel??1));
     const mirror=id==='mirror';
     if(hero.hp*2>maxHealth || (mirror&&state.heroShield>0))return;
     if(mirror) state.heroShield+=1+bonus;

@@ -1,3 +1,4 @@
+import {heroCapacity} from './progression.mjs?v=book-growth-1';
 export function newInventory() { return {next:1,items:[]}; }
 export function addInstance(inventory,kind,id,level=1,experience=0) {
   const item={uid:`i${inventory.next++}`,kind,id,level,experience};
@@ -51,19 +52,22 @@ export function validInventory(value,types) {
   });
 }
 export function checkLineup(items,find) {
-  if(!items||!Array.isArray(items.cards)||items.cards.length!==8)return '請放入 8 張卡牌。';
+  if(!items||!Array.isArray(items.cards)||items.cards.length<8||items.cards.length>12)return '請放入 8 至 12 張卡牌。';
   const cards=items.cards.map(find);
   if(cards.some(card=>card?.kind!=='card'))return '有牌位缺少可用的卡牌，請重新選擇。';
-  if(new Set(items.cards).size!==8)return '同一張卡牌個體不能重複佔用牌位。';
+  if(new Set(items.cards).size!==items.cards.length)return '同一張卡牌個體不能重複佔用牌位。';
   if(find(items.hero)?.kind!=='hero')return '請選擇一位已持有的英雄。';
+  const cap=heroCapacity(find(items.hero).level);
+  if(cards.length>cap)return `此英雄目前最多可帶 ${cap} 張，請移除多出的卡牌或提升英雄等級。`;
   if(items.rune!==null&&find(items.rune)?.kind!=='rune')return '裝備的符文已不可用，請重新選擇或卸下。';
   if(items.rune2!=null&&(items.rune2===items.rune||find(items.rune2)?.kind!=='rune'))return '第二格符文無效或重複裝備。';
   return '';
 }
 export function assignLineupCard(slots,position,uid,find) {
   const candidate=find(uid);
-  if(candidate?.kind!=='card'||!Number.isInteger(position)||position<0||position>=slots.length)return null;
+  if(candidate?.kind!=='card'||!Number.isInteger(position)||position<0||position>slots.length)return null;
   const other=slots.findIndex((id,i)=>i!==position&&id===uid);
+  if(position===slots.length&&other>=0)return null;
   const next=[...slots];
   if(other>=0)next[other]=slots[position];
   next[position]=uid;
