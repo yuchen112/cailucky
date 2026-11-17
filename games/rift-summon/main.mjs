@@ -1,3 +1,4 @@
+import {articulatedMotion} from './hero-rig.mjs?v=hero-rig-1';
 import {HERO_FPS,HERO_DURATION,HERO_FRAME_COUNT,motionFrame} from './hero-motion.mjs?v=hero-motion-2';
 import {materials,bookFor} from './materials.mjs?v=town-2';
 import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=town-2';
@@ -422,6 +423,7 @@ function stopHomeMotion(){
   button.classList.remove('blinking','reacting','home-enter','home-notice','home-act','home-effect','home-cup');
   get('camp-hero-motion').style.transform='';
   get('camp-hero-canvas').hidden=true;
+  get('camp-hero-rig').hidden=true;
 }
 function startHomeMotion(hero){
   stopHomeMotion();
@@ -429,18 +431,24 @@ function startHomeMotion(hero){
   button.dataset.motion=homeReduced()?'off':'on';button.dataset.hero=hero.id;
   button.setAttribute('aria-label','與'+hero.name+'互動');
   const source=asset('hero-home-'+hero.id);
-  if(open.getAttribute('src')!==source)open.src=source;
+  if(open.getAttribute('src')!==source){
+    const next=new Image();
+    next.src=source;
+    const assign=()=>{if(button.dataset.hero===hero.id)open.src=source;};
+    if(next.complete&&next.naturalWidth)assign();
+    else void next.decode().then(assign,()=>{});
+  }
   async function react(){
     if(homeReaction||get('camp').hidden||homeReduced())return;
     const controller=new AbortController();
     homeReaction=controller;
     const {signal}=controller;
-    const canvas=get('camp-hero-canvas'), actor=get('camp-hero-motion');
+    const canvas=get(['memory','night'].includes(hero.id)?'camp-hero-rig':'camp-hero-canvas'), actor=get('camp-hero-motion');
     let motion;
     try {
       await open.decode();
-      if(signal.aborted)return;
-      motion=motionFrame(canvas,open,hero.id);
+      if(signal.aborted||open.getAttribute('src')!==source)return;
+      motion=articulatedMotion(canvas,open,hero.id,HERO_FRAME_COUNT)??motionFrame(canvas,open,hero.id);
       button.classList.remove('blinking');
       button.classList.add('reacting','home-act');
       motion?.paint(0);

@@ -835,6 +835,6 @@ body:has(#camp:not([hidden])) { background-size:cover; background-position:cente
 .featured-badge { display:inline-block; width:fit-content; color:#ffe3a2; border:1px solid #a17c47; border-radius:4px; padding:2px 5px; font-size:11px; }
 
 
-#camp-hero-canvas { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center bottom; pointer-events:none; }
-#camp-hero-canvas[hidden] { display:none; }
-#camp-hero-motion:has(#camp-hero-canvas:not([hidden])) #camp-featured { visibility:hidden; }
+:is(#camp-hero-canvas,#camp-hero-rig) { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center bottom; pointer-events:none; }
+:is(#camp-hero-canvas,#camp-hero-rig)[hidden] { display:none; }
+#camp-hero-motion:has(:is(#camp-hero-canvas,#camp-hero-rig):not([hidden])) #camp-featured { visibility:hidden; }
