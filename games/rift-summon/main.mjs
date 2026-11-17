@@ -1,3 +1,4 @@
+import {HERO_FPS,HERO_DURATION,HERO_FRAME_COUNT,motionFrame} from './hero-motion.mjs?v=hero-motion-1';
 import {materials,bookFor} from './materials.mjs?v=town-2';
 import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=town-2';
 import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=town-2';
@@ -413,30 +414,23 @@ function showCamp() {
   get('camp-collection').classList.toggle('town-unread',new Set(inventory.items.filter(item=>item.kind!=='material').map(item=>item.id)).size>townRead.collection);
   renderWallet(get('camp-wallet'));
 }
-let homeBlinkTimer,homeOpenTimer,homeTapTimer,homeReaction;
+let homeBlinkTimer,homeOpenTimer,homeReaction;
 const homeReduced=()=>lowMotion||matchMedia('(prefers-reduced-motion: reduce)').matches;
-const homeGestures={
-  trust:['rune-pulse','hero-staff'],dream:['rune-pulse','hero-star'],growth:['home-heal-glow','hero-leaf'],
-  healing:['home-heal-glow','hero-leaf'],hope:['hero-butterfly','hero-wing'],joy:['rune-pulse','hero-star'],
-  luck:['rune-pulse','coin'],memory:['home-heal-glow','hero-star'],night:['home-moon-glow','hero-wing'],sadness:['rune-pulse','hero-leaf'],
-};
 function stopHomeMotion(){
-  clearTimeout(homeBlinkTimer);clearTimeout(homeOpenTimer);clearTimeout(homeTapTimer);homeTapTimer=null;
+  clearTimeout(homeBlinkTimer);clearTimeout(homeOpenTimer);
   homeReaction?.abort();homeReaction=null;
   const button=get('camp-featured-button');
   button.classList.remove('blinking','reacting','home-enter','home-notice','home-act','home-effect','home-cup');
   get('camp-hero-motion').style.transform='';
-  get('camp-aura-wrap').style.cssText='';
+  get('camp-hero-canvas').hidden=true;
 }
 function startHomeMotion(hero){
   stopHomeMotion();
-  const button=get('camp-featured-button'), open=get('camp-featured'), closed=get('camp-blink'), aura=get('camp-aura');
-  const [effect,sound]=homeGestures[hero.id];
+  const button=get('camp-featured-button'), open=get('camp-featured'), closed=get('camp-blink');
   button.dataset.motion=homeReduced()?'off':'on';button.dataset.hero=hero.id;
   button.setAttribute('aria-label','與'+hero.name+'互動');
   open.src=asset('hero-home-'+hero.id);
   closed.src=asset('hero-blink-'+hero.id);
-  aura.src=asset(effect);
   function blink(){
     if(get('camp').hidden||document.hidden||homeReduced())return;
     if(!homeReaction&&closed.complete&&closed.naturalWidth){
@@ -449,56 +443,45 @@ function startHomeMotion(hero){
     button.classList.add('home-enter');
     homeBlinkTimer=setTimeout(blink,1950);
   }
-  async function react(alternate=false){
-    if(homeReaction||get('camp').hidden)return;
+  async function react(){
+    if(homeReaction||get('camp').hidden||homeReduced())return;
     const controller=new AbortController();
     homeReaction=controller;
     const {signal}=controller;
-    const actor=get('camp-hero-motion'), glow=get('camp-aura-wrap');
-    void unlock();
+    const canvas=get('camp-hero-canvas'), actor=get('camp-hero-motion');
+    let motion;
     try {
-      aura.src=asset(alternate?'home-heal-glow':effect);
-      await aura.decode();
+      await open.decode();
       if(signal.aborted)return;
-      if(homeReduced()){play(sound);return;}
+      motion=motionFrame(canvas,open,hero.id);
       button.classList.remove('blinking');
-      button.classList.add('reacting','home-act','home-effect');
-      button.classList.toggle('home-cup',alternate);
+      button.classList.add('reacting','home-act');
+      motion?.paint(0);
+      canvas.hidden=!motion;
       const started=performance.now();
-      const direction=['hope','night','trust'].includes(hero.id)?-1:1;
-      const drift=hero.id==='trust'?10:hero.id==='hope'?43:30;
       let last=-1;
       await new Promise(resolve=>{
-        const draw=now=>{
-          if(signal.aborted||now-started>=3000){resolve();return;}
-          const frame=Math.max(0,Math.min(89,Math.floor((now-started)*30/1000)));
+        function draw(now){
+          if(signal.aborted||now-started>=HERO_DURATION){resolve();return;}
+          const frame=Math.max(0,Math.min(HERO_FRAME_COUNT-1,Math.floor((now-started)*HERO_FPS/1000)));
           if(frame!==last){
-            if(last<18&&frame>=18)play(alternate?'hero-cup':sound);
             last=frame;
-            const t=frame/89;
-            const ease=x=>Math.max(0,Math.min(1,x));
-            const rise=ease((t-.17)/.18), fall=ease((.93-t)/.21);
-            const energy=Math.sin(rise*Math.PI/2)*Math.sin(fall*Math.PI/2);
-            const anticipation=Math.sin(Math.min(1,t/.2)*Math.PI);
-            const orbit=Math.max(0,(t-.23)/.61)*Math.PI*2;
-            const x=direction*drift*Math.sin(orbit)*energy;
-            const y=(hero.id==='trust'?10:-33)*(1-Math.cos(orbit))*.5*energy;
-            actor.style.transform=`translateY(${2*anticipation-3*energy}px) rotate(${direction*(2*energy-1.4*anticipation)}deg)`;
-            glow.style.transform=`translate(${x}px,${y}px) rotate(${direction*12*Math.sin(orbit)}deg) scale(${.64+.42*energy})`;
-            glow.style.opacity=String(energy*.93);
+            if(motion)motion.paint(frame);
+            else actor.style.transform=`rotate(${Math.sin(frame*Math.PI/(HERO_FRAME_COUNT-1))*1.3}deg)`;
             button.dataset.animationFrame=String(frame+1);
           }
           requestAnimationFrame(draw);
-        };
+        }
         requestAnimationFrame(draw);
       });
-    } catch(error) { console.warn('Hero effect unavailable',error); }
+    } catch(error) { console.warn('Hero animation unavailable',error); }
     finally {
       if(homeReaction===controller){
-        actor.style.transform='';glow.style.cssText='';
-        button.classList.remove('reacting','home-act','home-effect','home-cup');
+        canvas.hidden=true;actor.style.transform='';
+        button.classList.remove('reacting','home-act');
         homeReaction=null;
       }
+      motion?.dispose();
     }
   }
   button.onpointerdown=()=>button.classList.add('home-pointer');
@@ -509,13 +492,7 @@ function startHomeMotion(hero){
     clearTimeout(homeOpenTimer);button.classList.add('blinking');
     homeOpenTimer=setTimeout(()=>button.classList.remove('blinking'),125);
   };
-  button.onclick=()=>{
-    if(homeReaction)return;
-    if(hero.id!=='hope'){void react();return;}
-    if(homeTapTimer){
-      clearTimeout(homeTapTimer);homeTapTimer=null;void react(true);
-    } else homeTapTimer=setTimeout(()=>{homeTapTimer=null;void react();},240);
-  };
+  button.onclick=()=>void react();
 }
 document.addEventListener('visibilitychange',()=>{
   if(document.hidden)stopHomeMotion();

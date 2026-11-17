@@ -675,12 +675,8 @@ body:has(#capsule:not([hidden])) { background-image:none; }
 #camp-featured-button.blinking #camp-featured { opacity:0; }
 #camp-featured-button[data-motion=on]:not(.reacting) #camp-hero-motion { animation:home-idle 4.4s ease-in-out infinite; }
 #camp-featured-button.home-enter { animation:home-arrive .6s ease-out both; }
-#camp-aura-wrap { position:absolute; inset:10% 10% 1%; pointer-events:none; display:none; }
-#camp-aura { width:100%; height:100%; object-fit:contain; }
-#camp-featured-button.reacting #camp-aura-wrap { display:block; animation:home-aura .74s ease-out both; }
 @keyframes home-arrive { from { opacity:0; translate:0 13px; } }
 @keyframes home-idle { 27% { transform:translateY(-2px) rotate(.3deg) scale(1.012); } 61% { transform:translateY(-4px) rotate(-.45deg) scale(1.022); } }
-@keyframes home-aura { 0%,100% { opacity:0; scale:.77; } 48% { opacity:.52; scale:1.16; } }
 @media (prefers-reduced-motion:reduce) { #camp-featured-button,#camp-hero-motion { animation:none !important; } }
 
 .daily-details .controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -721,13 +717,6 @@ body:has(#camp:not([hidden])) { background-image:url("art/town.webp"); backgroun
 #camp-featured { transition:opacity .13s ease-out; }
 #camp-featured-button.home-notice #camp-blink { opacity:1; }
 #camp-featured-button.home-notice #camp-featured { opacity:0; }
-#camp-featured-button.reacting #camp-aura-wrap { display:none; }
-#camp-featured-button.home-effect #camp-aura-wrap { display:block; z-index:2; inset:30% 23% 22% 45%; animation:town-spark .72s ease-out both; }
-#camp-featured-button[data-hero=trust].home-effect #camp-aura-wrap { inset:58% 41% 2% 15%; }
-#camp-featured-button[data-hero=hope].home-effect #camp-aura-wrap { inset:26% 63% 46% 12%; }
-#camp-featured-button[data-hero=hope].home-effect #camp-aura { animation:hope-sprite .72s ease-in-out both; }
-@keyframes town-spark { 0%,100% { opacity:0; scale:.6; } 36% { opacity:.58; scale:1.15; } }
-@keyframes hope-sprite { 25% { translate:-11% -12%; } 57% { translate:15% -30%; } 85% { translate:24% -12%; } }
 @media (orientation:portrait) {
  #camp .world-camp { grid-template-columns:1fr; grid-template-rows:auto minmax(0,1fr) minmax(0,1.45fr); }
  #camp-featured-button { grid-area:2 / 1; width:58%; }
@@ -740,8 +729,6 @@ body:has(#camp:not([hidden])) { background-image:url("art/town.webp"); backgroun
  .town-landmark img,#camp-featured,#camp-gesture { transition:none; }
 }
 
-#camp-featured-button[data-hero=hope].home-effect.home-cup #camp-aura-wrap { inset:42% 20% 37% 60%; }
-#camp-featured-button[data-hero=hope].home-cup #camp-aura { animation:none; }
 
 #town-team { position:absolute; top:12%; right:13%; background:url("art/release-round.webp") center / contain no-repeat; width:25px; height:25px; display:grid; place-items:center; color:#ffdba0; font-size:12px; pointer-events:none; }
 .town-landmark.town-unread::after { content:""; position:absolute; top:9%; right:13%; width:20px; height:20px; pointer-events:none; background:url("art/rune-pulse.webp") center / contain no-repeat; }
@@ -833,8 +820,6 @@ body:has(#camp:not([hidden])) { background-image:url("art/town-avenue-hd.webp");
 }
 
 #camp-featured-button.home-pointer:focus { outline:none; box-shadow:none; }
-#camp-featured-button:is([data-hero=healing],[data-hero=growth],[data-hero=memory]).home-effect #camp-aura-wrap { inset:39% 33% 36% 45%; }
-#camp-featured-button.home-effect #camp-aura { display:block; }
 body:has(#camp:not([hidden])) { background-size:cover; background-position:center; }
 #camp .world-camp { background:none; }
 @media (orientation:portrait) {
@@ -854,5 +839,7 @@ body:has(#camp:not([hidden])) { background-size:cover; background-position:cente
 #game-notice { position:fixed; z-index:50; top:max(8px,env(safe-area-inset-top)); left:50%; transform:translateX(-50%); max-width:min(90vw,440px); pointer-events:none; }
 .featured-badge { display:inline-block; width:fit-content; color:#ffe3a2; border:1px solid #a17c47; border-radius:4px; padding:2px 5px; font-size:11px; }
 
-#camp-featured-button.home-effect #camp-aura-wrap,#camp-featured-button[data-hero=hope].home-effect #camp-aura { animation:none; }
-#camp-featured-button[data-hero=night].home-effect #camp-aura-wrap { inset:32% 65% 45% 10%; }
+
+#camp-hero-canvas { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center bottom; pointer-events:none; }
+#camp-hero-canvas[hidden] { display:none; }
+#camp-hero-motion:has(#camp-hero-canvas:not([hidden])) #camp-featured { visibility:hidden; }
