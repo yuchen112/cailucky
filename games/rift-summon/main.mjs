@@ -1,13 +1,13 @@
-import {createDialoguePicker} from './home-dialogue.mjs?v=home-dialogue-1';
-import {materials,bookFor} from './materials.mjs?v=home-dialogue-1';
-import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=home-dialogue-1';
-import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=home-dialogue-1';
+import {createDialoguePicker} from './home-dialogue.mjs?v=landscape-lineup-1';
+import {materials,bookFor} from './materials.mjs?v=landscape-lineup-1';
+import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=landscape-lineup-1';
+import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=landscape-lineup-1';
 import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=home-dialogue-1';
-import {makeBackup, readBackup} from './backup.mjs?v=home-dialogue-1';
-import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=home-dialogue-1';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=home-dialogue-1';
-import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=home-dialogue-1';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=landscape-lineup-1';
+import {makeBackup, readBackup} from './backup.mjs?v=landscape-lineup-1';
+import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=landscape-lineup-1';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=landscape-lineup-1';
+import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=landscape-lineup-1';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -29,7 +29,7 @@ let log = state ? saved?.log ?? [] : [];
 const cleared = new Set(Array.isArray(saved?.cleared) ? saved.cleared.filter(index => stages[index]) : []);
 let wallet=validWallet(saved?.wallet)?saved.wallet:startingWallet();
 const owned = () => [...new Set([...starter,...stages.filter((_,index)=>cleared.has(index)).map(stage=>stage.reward),...wallet.unlocked])];
-let deck = Array.isArray(saved?.deck) && saved.deck.length === 8 && new Set(saved.deck).size === 8 && saved.deck.every(id=>owned().includes(id)) ? saved.deck : [...starter];
+let deck = Array.isArray(saved?.deck) && saved.deck.length === 8 && saved.deck.every(id=>owned().includes(id)) ? saved.deck : [...starter];
 let stageIndex = state?.phase==='deploy' ? state.stage : Math.min(cleared.size, stages.length-1);
 const chapterFor=index=>Math.floor(index/4);
 let chosen = state?.hero || 'trust';
@@ -83,15 +83,22 @@ let teamItems;
 const teams=Array.from({length:3},(_,i)=>{
   const item=saved?.teams?.[i];
   return {
-    deck:Array.isArray(item?.deck)&&item.deck.length===8&&new Set(item.deck).size===8&&item.deck.every(id=>owned().includes(id))?[...item.deck]:[...deck],
+    deck:Array.isArray(item?.deck)&&item.deck.length===8&&item.deck.every(id=>owned().includes(id))?[...item.deck]:[...deck],
     hero:ownedHeroes().includes(item?.hero)?item.hero:(ownedHeroes().includes(chosen)?chosen:starterHero),
     rune:item?.rune==='none'||unlockedRunes(cleared,wallet).includes(item?.rune)?item.rune:loadout,
     items:item?.items,
   };
 });
 function mapTeamItems(team) {
-  return {
-    cards:team.deck.map((id,i)=>bindInstance(team.items?.cards?.[i],'card',id)),
+  const used=new Set();
+  const cards=team.deck.map((id,i)=>{
+    const linked=instance(team.items?.cards?.[i]);
+    const item=linked?.kind==='card'&&linked.id===id&&!used.has(linked.uid)?linked:
+      inventory.items.find(item=>item.kind==='card'&&item.id===id&&!used.has(item.uid));
+    if(item)used.add(item.uid);
+    return item?.uid??null;
+  });
+  return {cards,
     hero:bindInstance(team.items?.hero,'hero',team.hero),
     rune:bindInstance(team.items?.rune,'rune',team.rune),
     rune2:instance(team.items?.rune2)?.kind==='rune'&&team.items.rune2!==team.items.rune?team.items.rune2:null,
@@ -170,6 +177,18 @@ function view(id) {
   if(id!=='camp')hideHomeDialogue();
   for(const page of ['title-screen','starter-select','camp','rune-book','hero-book','inventory-page','team-editor','summon-hall','capsule','campaign','daily','settings-page','collection','lobby','battle','results']) get(page).hidden=page!==id;
 }
+function reviewLineup(){
+  const title=element('h2',`出戰編隊 ${activeTeam+1}`);
+  const grid=element('div','','lineup-review');
+  for(const [index,uid] of [...teamItems.cards,teamItems.hero,teamItems.rune,teamItems.rune2].entries()){
+    const item=instance(uid);if(!item)continue;
+    const button=confirmButton('',()=>modal(itemDetail(item)));
+    button.append(itemArt(item),element('strong',itemName(item)),element('small',`${index<8?'第 '+(index+1)+' 張':item.kind==='hero'?'英雄':'符文'}・Lv.${item.level}・效果 ${item.effect??1}`));grid.append(button);
+  }
+  modal(title,grid);
+}
+function lineupSignature(){return JSON.stringify([activeTeam,...[...teamItems.cards,teamItems.hero,teamItems.rune,teamItems.rune2].map(uid=>{const item=instance(uid);return item?[item.uid,item.level,item.effect??1,item.breakthrough??0]:null;})]);}
+function canResumeCampaign(){return state?.phase==='deploy'&&!state.daily&&state.stage===stageIndex&&state.lineupSignature===lineupSignature();}
 function teamSelect(id,refresh) {
   const select=id?get(id):element('select');
   select.setAttribute('aria-label','出戰編隊');
@@ -350,7 +369,7 @@ function renderWallet(node) {
 function cardDetail(card) {
   const layout=element('div','','card-inspector');
   const info=element('div','','inspector-copy');
-  info.append(element('h2',card.name),element('strong',card.skill||'普攻'),
+  info.append(element('h2',card.name),element('strong',(card.skill||'普攻')+'・效果 Lv.'+(card.effect??1)),
     element('p', descriptions[card.skill] ?? '普攻正對欄位，空位直擊敵方英雄。'),
     element('p',`生命 ${card.hp}/${card.max}・護盾 ${card.shield}・倒數 ${card.count}`,'inspector-stats'));
   layout.append(cardFace(card),info);
@@ -771,8 +790,9 @@ function lobby() {
 }
 function showCampaign() {
   view('campaign');
-  get('campaign-fight').textContent=state?.phase==='deploy'&&!state.daily&&state.stage===stageIndex?'繼續戰鬥':'開始戰鬥';
+  get('campaign-fight').textContent=canResumeCampaign()?'繼續戰鬥':'開始戰鬥';
   teamSelect('campaign-team',showCampaign);
+  get('campaign-review').textContent=`編隊 ${activeTeam+1}・${heroes.find(h=>h.id===chosen).name}`;
   const chapter=chapterFor(stageIndex);
   get('campaign-chapter').textContent=chapterNames[chapter];
   const chapterSelect=element('select');
@@ -805,13 +825,16 @@ function showCampaign() {
   const stage=stages[stageIndex];
   get('stage-name').textContent=stage.name;
   get('stage-detail').textContent=`敵軍 Lv.${stage.enemyLevel??1}・技能 Lv.${stage.enemyEffect??1}。${stage.goal} 首通取得：${cards[stage.reward][0]}。出戰：${heroes.find(hero=>hero.id===chosen).name}・${runes[loadout].name}`;
-  const preview=(label,id,level=1)=>{
+  const preview=(label,id,level=1,effect=1)=>{
     const figure=element('figure');
-    figure.append(cardFace(catalogCard(id,level)),element('figcaption',label));
+    const card={...catalogCard(id,level),effect};card.shield=card.skill==='護盾'?1+effect:0;
+    const inspect=confirmButton('',()=>cardDetail(card));inspect.append(cardFace(card));
+    inspect.setAttribute('aria-label','查看'+card.name);
+    figure.append(inspect,element('figcaption',label));
     return figure;
   };
   get('stage-preview').replaceChildren(
-    ...stage.opening.map(id=>preview('敵方先鋒',id,stage.enemyLevel??1)),
+    ...stage.opening.map(id=>preview('敵方先鋒',id,stage.enemyLevel??1,stage.enemyEffect??1)),
     preview(cleared.has(stageIndex)?'首通已領取':'首通獎勵',stage.reward)
   );
 }
@@ -858,7 +881,7 @@ function itemStats(item) {
   if(item.kind==='card') {
     const card=catalogCard(item.id,item.level);
     return [
-      ['攻擊',card.attack],['生命',card.max],['倒數',card.count],['初始護盾',card.shield],
+      ['攻擊',card.attack],['生命',card.max],['倒數',card.count],['初始護盾',card.skill==='護盾'?1+(item.effect??1):0],
       [card.skill||'普攻',descriptions[card.skill]??'普攻攻擊正對敵軍，沒有敵軍時直擊英雄。'],
     ];
   }
@@ -1077,7 +1100,7 @@ get('bag-sort').onchange=()=>{bagSort[bagKind]={key:get('bag-sort').value,asc:ba
 get('bag-direction').onclick=()=>{bagSort[bagKind]={key:get('bag-sort').value,asc:!bagSort[bagKind]?.asc};save();renderInventory();};
 
 let editorReturn='camp', teamDraft, editorSlot='cards', editorPosition=0, editorPreview=null;
-const editorQueries={};
+const editorQueries={},editorTiers={};
 function openTeamEditor(from,candidate=null,slot=null,position=0) {
   if(get('detail').open)get('detail').close();
   syncFixedInventory();flushTeam();
@@ -1089,6 +1112,18 @@ function openTeamEditor(from,candidate=null,slot=null,position=0) {
   renderTeamEditor();
 }
 function teamChanged(){return JSON.stringify(teamDraft)!==JSON.stringify(teamItems);}
+function commitTeamDraft(){
+  const problem=checkLineup(teamDraft,instance);
+  if(problem){get('team-status').textContent=problem;notify(problem,true);return false;}
+  const previous={items:teamItems,deck,chosen,loadout};
+  teamItems=structuredClone(teamDraft);
+  deck=teamItems.cards.map(uid=>instance(uid).id);
+  chosen=instance(teamItems.hero).id;loadout=instance(teamItems.rune)?.id??'none';
+  if(!save()){
+    teamItems=previous.items;deck=previous.deck;chosen=previous.chosen;loadout=previous.loadout;flushTeam();return false;
+  }
+  return true;
+}
 function leaveEditor() {
   if(editorReturn==='campaign')showCampaign();
   else if(editorReturn==='lobby')lobby();
@@ -1099,10 +1134,12 @@ function leaveEditor() {
 }
 get('team-exit').onclick=()=>{
   if(!teamChanged()){leaveEditor();return;}
-  modal(element('h2','尚未儲存編隊'),confirmButton('放棄並返回',()=>{get('detail').close();leaveEditor();}),confirmButton('繼續編輯',()=>get('detail').close()));
+  modal(element('h2','尚未儲存編隊'),confirmButton('儲存並返回',()=>{if(commitTeamDraft()){get('detail').close();leaveEditor();notify(`編隊 ${activeTeam+1} 已儲存。`);}}),confirmButton('放棄並返回',()=>{get('detail').close();leaveEditor();}),confirmButton('繼續編輯',()=>get('detail').close()));
 };
 function renderTeamEditor() {
   const host=get('team-editor-content');
+  const oldList=host.querySelector('.team-candidates');
+  const listScroll=oldList?.scrollTop??0;
   get('team-status').textContent=teamChanged()?'尚未儲存':'已儲存';
   const header=element('div','','team-tools');
   const tabs=element('div','','library-tabs');
@@ -1118,13 +1155,7 @@ function renderTeamEditor() {
     button.setAttribute('aria-pressed',String(i===activeTeam));tabs.append(button);
   }
   const saveTeam=confirmButton('儲存編隊',()=>{
-    const problem=checkLineup(teamDraft,instance);
-    if(problem){get('team-status').textContent=problem;notify(problem,true);return;}
-    teamItems=structuredClone(teamDraft);
-    deck=teamItems.cards.map(uid=>instance(uid).id);
-    chosen=instance(teamItems.hero).id;
-    loadout=instance(teamItems.rune)?.id??'none';
-    if(save()){renderTeamEditor();notify(`編隊 ${activeTeam+1} 已儲存。`);}
+    if(commitTeamDraft()){renderTeamEditor();notify(`編隊 ${activeTeam+1} 已儲存。`);}
   });
   header.append(tabs,saveTeam);
   const slots=element('div','','team-instance-slots');
@@ -1145,10 +1176,16 @@ function renderTeamEditor() {
   const candidate=instance(editorPreview), kind=editorSlot==='cards'?'card':editorSlot;
   const preview=element('section','','team-candidate');
   if(candidate?.kind===kind) {
-    preview.append(itemDetail(candidate));
-    const occupied=kind==='card'?teamDraft.cards.findIndex((uid,i)=>i!==editorPosition&&instance(uid)?.id===candidate.id):-1;
+    const info=element('div','','team-candidate-info');
+    info.append(element('strong',itemName(candidate)),element('small',`Lv.${candidate.level}・效果 ${candidate.effect??1}/10`));
+    const equipped=instance(kind==='card'?teamDraft.cards[editorPosition]:kind==='rune'?teamDraft[runeSlot]:teamDraft.hero);
+    const values=itemStats(candidate).slice(0,2).map(([label,value])=>label+' '+value).join('・');
+    info.append(element('small',values));
+    if(equipped&&equipped.uid!==candidate.uid)info.append(element('small',`替換：${itemName(equipped)} Lv.${equipped.level} → Lv.${candidate.level}`));
+    preview.append(info,confirmButton('詳細屬性',()=>modal(itemDetail(candidate))));
+    const occupied=kind==='card'?teamDraft.cards.findIndex((uid,i)=>i!==editorPosition&&uid===candidate.uid):-1;
     const duplicateRune=kind==='rune'&&candidate.uid===teamDraft[editorPosition===0?'rune2':'rune'];
-    const blocked=duplicateRune||occupied>=0&&teamDraft.cards[occupied]!==candidate.uid;
+    const blocked=duplicateRune;
     const assign=confirmButton(occupied>=0&&!blocked?'交換兩個牌位':'確認裝入此欄位',()=>{
       if(kind==='card'){
         const next=assignLineupCard(teamDraft.cards,editorPosition,candidate.uid,instance);
@@ -1159,7 +1196,7 @@ function renderTeamEditor() {
       renderTeamEditor();notify('已裝入草稿，請儲存編隊。');
     });
     if(duplicateRune)preview.append(element('p','此個體已裝備在另一格。'));
-    else if(blocked)preview.append(element('p',`同名卡已在第 ${occupied+1} 張。請先點該牌位，再換成這一份。`));
+    else if(occupied>=0)preview.append(element('small',`此張已在第 ${occupied+1} 格，裝入時交換位置。`));
     assign.disabled=blocked;
     preview.append(assign);
   }
@@ -1175,25 +1212,34 @@ function renderTeamEditor() {
   }
   sort.value=order.key;
   const direction=confirmButton('',()=>{order.asc=!order.asc;saveOrder();});
-  const tools=element('div','','lineup-filters');tools.append(search,sort,direction);
+  const tier=element('select');tier.setAttribute('aria-label','編隊品階篩選');
+  for(const value of ['all',...rarityNames]){const option=element('option',value==='all'?'全品階':value);option.value=value;tier.append(option);}
+  tier.value=editorTiers[kind]??'all';
+  const tools=element('div','','lineup-filters');tools.append(search,tier,sort,direction);
   function saveOrder(){lineupSort[kind]=order;save();fill();}
   sort.onchange=()=>{order.key=sort.value;saveOrder();};
   const fill=()=>{
     direction.textContent=order.asc?'↑':'↓';
     direction.setAttribute('aria-label',sort.selectedOptions[0].textContent+(order.asc?'由低到高':'由高到低'));
     const query=search.value.trim();
-    const items=sortCollectibles(inventory.items.filter(item=>item.kind===kind&&itemName(item).includes(query)),order);
+    const items=sortCollectibles(inventory.items.filter(item=>item.kind===kind&&itemName(item).includes(query)&&(tier.value==='all'||rarity(item.id)===tier.value)),order);
     candidates.replaceChildren(...(items.length?items.map(item=>{
       const button=confirmButton('',()=>{
         editorPreview=item.uid;renderTeamEditor();
-        get('team-editor-content').querySelector('.team-candidate').scrollIntoView({block:'nearest'});
       });
       button.append(itemArt(item),element('strong',itemName(item)),element('small',`${rarity(item.id)}・Lv.${item.level}`));
+      for(const image of button.querySelectorAll('img')){image.loading='lazy';image.decoding='async';}
+      const equipped=kind==='card'?teamDraft.cards.indexOf(item.uid):-1;
+      if(equipped>=0)button.append(element('small',`已編入 ${equipped+1}`,'equipped-tag'));
+      if(kind==='hero'&&teamDraft.hero===item.uid||kind==='rune'&&[teamDraft.rune,teamDraft.rune2].includes(item.uid))button.append(element('small','已裝備','equipped-tag'));
       button.setAttribute('aria-pressed',String(item.uid===editorPreview));return button;
     }):[element('p','沒有符合的個體。')]));
   };
+  tier.onchange=()=>{editorTiers[kind]=tier.value;fill();};
   search.oninput=()=>{editorQueries[kind]=search.value;fill();};fill();
-  host.replaceChildren(header,slots,preview,element('h2',`選擇${kindNames[kind]}`),tools,candidates);
+  search.placeholder=`搜尋${kindNames[kind]}個體`;
+  host.replaceChildren(header,slots,tools,candidates,preview);
+  candidates.scrollTop=listScroll;
 }
 function renderBoard(frame, event) {
   const [player, enemy] = frame.sides;
@@ -1421,7 +1467,7 @@ function rewardRune() { return state.resultReward?['ward','frost','flame','spark
 get('result-camp').onclick=()=>{if(state.daily)showDaily(state.daily.vault,state.daily.floor);else showCamp();changeMusic('lobby');};
 get('result-deck').onclick=()=>{stageIndex=state.stage;changeMusic('lobby');openTeamEditor('results');};
 get('result-retry').onclick=()=>{stageIndex=state.stage;enter(true,state.daily??null);};
-get('result-next').onclick=()=>{stageIndex=state.stage+1;lobby();changeMusic('lobby');};
+get('result-next').onclick=()=>{stageIndex=state.stage+1;showCampaign();changeMusic('lobby');};
 get('result-album').onclick=()=>showCollection('results');
 async function enter(restart, expedition=null) {
   if(!restart && state?.phase!=='deploy') return;
@@ -1436,8 +1482,10 @@ async function enter(restart, expedition=null) {
     const battleHero=instance(teamItems.hero);
     const battleRune=instance(teamItems.rune);
     const spareRune=instance(teamItems.rune2);
-    const levels=Object.fromEntries(battleCards.map(card=>[card.id,card.level]));
-    state=createBattle(battleRune?.id??'none',battleHero.id,stageIndex,battleCards.map(card=>card.id),levels,battleHero.level,battleRune?.level??1,expedition,Object.fromEntries(battleCards.map(card=>[card.id,card.effect??1])),battleHero.effect??1,battleRune?.effect??1,spareRune?{id:spareRune.id,level:spareRune.level,effect:spareRune.effect??1,charges:2}:null);
+    const levels={}; // Exact instance values are supplied in battleCards, preserving duplicate names.
+    state=createBattle(battleRune?.id??'none',battleHero.id,stageIndex,battleCards.map(card=>card.id),levels,battleHero.level,battleRune?.level??1,expedition,{},battleHero.effect??1,battleRune?.effect??1,spareRune?{id:spareRune.id,level:spareRune.level,effect:spareRune.effect??1,charges:2}:null,battleCards);
+    state.lineupSignature=lineupSignature();
+    state.teamIndex=activeTeam;
     log=[];
     selected=null;
     save();
@@ -1515,8 +1563,9 @@ get('camp-sortie').onclick=()=>{
   stageIndex=Math.min(cleared.size,stages.length-1);
   enter(true);
 };
+get('campaign-review').onclick=reviewLineup;
 get('campaign-prepare').onclick=()=>openTeamEditor('campaign');
-get('campaign-fight').onclick=()=>enter(!(state?.phase==='deploy'&&!state.daily&&state.stage===stageIndex));
+get('campaign-fight').onclick=()=>enter(!canResumeCampaign());
 get('campaign-back').onclick=showCamp;
 get('camp-map').onclick=showCampaign;
 get('camp-profile').onclick=()=>showInventory('hero');
@@ -1592,7 +1641,7 @@ function showDaily(vault='gold',floor) {
   guide.append(element('summary','關卡機制'),element('p',stage.goal));
   details.append(heading,rewards,enemies,guide);
   const buttons=element('div','','controls');
-  const resume=state?.phase==='deploy'&&state.daily?.vault===vault&&state.daily.floor===floor;
+  const resume=state?.phase==='deploy'&&state.daily?.vault===vault&&state.daily.floor===floor&&state.lineupSignature===lineupSignature();
   const fight=confirmButton(resume?'繼續戰鬥':'挑戰',()=>enter(!resume,{vault,floor}));
   fight.disabled=status.used>=info.limit||floor>status.highest+1;
   const skip=confirmButton('掃蕩此層',()=>sweep(floor));skip.disabled=status.used>=info.limit||floor>status.highest;
@@ -1674,3 +1723,8 @@ document.addEventListener('visibilitychange',()=>{
 });
 get('title-resume').hidden=state?.phase!=='deploy';
 get('title-start').textContent=starterHero?'繼續冒險':'開始冒險';
+
+get('rotate-fullscreen').onclick=async()=>{
+  try{await document.documentElement.requestFullscreen?.();await screen.orientation?.lock?.('landscape');}
+  catch{get('rotate-note').textContent='請將手機橫拿；若畫面未旋轉，請關閉手機的直向鎖定。';}
+};

@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
 <link rel="preload" as="image" href="art/table-inspect.webp">
-<link rel="stylesheet" href="style.css?v=home-dialogue-1">
+<link rel="stylesheet" href="style.css?v=landscape-lineup-1">
 </head>
 <body>
+<aside id="rotate-device" role="status"><img src="art/release-logo.webp" alt="CxQ 裂界召喚"><h2>請橫拿手機遊玩</h2><p id="rotate-note">將手機轉為橫向，展開完整卡牌戰場。</p><button id="rotate-fullscreen">全螢幕橫向</button></aside>
 <main>
 <section id="title-screen" aria-label="遊戲首頁">
   <div class="camp-content"><h1 aria-label="CxQ 裂界召喚"><img src="art/release-logo.webp" alt="CxQ 裂界召喚"></h1><div class="controls">
@@ -98,7 +99,7 @@
     <div class="campaign-dossier">
       <h2 id="stage-name"></h2><p id="stage-detail" aria-live="polite"></p>
       <div id="stage-preview" aria-label="敵方先鋒與首通獎勵"></div>
-      <div class="controls"><label>出戰編隊 <select id="campaign-team"></select></label><button id="campaign-prepare" data-art="deck">編輯編隊</button><button id="campaign-fight" data-art="attack">開始戰鬥</button></div>
+      <div class="controls"><label>出戰編隊 <select id="campaign-team"></select></label><button id="campaign-review">查看出戰編隊</button><button id="campaign-prepare" data-art="deck">編輯編隊</button><button id="campaign-fight" data-art="attack">開始戰鬥</button></div>
     </div>
   </div>
 </section>
@@ -183,6 +184,6 @@
 </dialog>
 <div id="game-notice" class="action-notice" role="status" aria-atomic="true"></div>
 </main>
-<script type="module" src="main.mjs?v=home-dialogue-1"></script>
+<script type="module" src="main.mjs?v=landscape-lineup-1"></script>
 </body>
 </html>

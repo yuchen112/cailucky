@@ -1,10 +1,10 @@
-import {cards, stages, starter} from './battle.mjs?v=home-dialogue-1';
+import {cards, stages, starter} from './battle.mjs?v=landscape-lineup-1';
 import {heroes} from './heroes.mjs';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=home-dialogue-1';
-import {validInventory} from './inventory.mjs?v=home-dialogue-1';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=landscape-lineup-1';
+import {validInventory} from './inventory.mjs?v=landscape-lineup-1';
 
-import {validDaily,dailyStage} from './daily.mjs?v=home-dialogue-1';
-import {materials} from './materials.mjs?v=home-dialogue-1';
+import {validDaily,dailyStage} from './daily.mjs?v=landscape-lineup-1';
+import {materials} from './materials.mjs?v=landscape-lineup-1';
 const format = 'cxq-rift-summon';
 const limit = 1024 * 1024;
 const integer = (n,min,max) => Number.isInteger(n) && n >= min && n <= max;
@@ -36,15 +36,15 @@ export async function readBackup(file) {
   const owned=validClears ? [...starter,...cleared.map(index=>stages[index].reward),...(walletOk?save.wallet?.unlocked??[]:[])] : [];
   const runeOwnership=validClears?unlockedRunes(new Set(cleared),walletOk?save.wallet:undefined):[];
   const validDeck=Array.isArray(save?.deck) && save.deck.length === 8 &&
-    new Set(save.deck).size === 8 && save.deck.every(id=>owned.includes(id));
+    save.deck.every(id=>owned.includes(id));
   const teamsOk=save?.teams===undefined||(Array.isArray(save.teams)&&save.teams.length===3&&save.teams.every(team=>
-    team&&Array.isArray(team.deck)&&team.deck.length===8&&new Set(team.deck).size===8&&team.deck.every(id=>owned.includes(id))&&
+    team&&Array.isArray(team.deck)&&team.deck.length===8&&team.deck.every(id=>owned.includes(id))&&
     heroIds.includes(team.hero)&&(team.rune==='none'||runeOwnership.includes(team.rune)))&&integer(save.activeTeam,0,2));
   const inventoryOk=save?.inventory===undefined||validInventory(save.inventory,{card:owned,hero:heroIds,rune:runeOwnership,material:Object.keys(materials)});
   const linksOk=save?.inventory===undefined||inventoryOk&&teamsOk&&Array.isArray(save.teams)&&save.teams.every(team=>{
     const byUid=new Map(save.inventory.items.map(item=>[item.uid,item]));
     const matches=(uid,kind,id)=>byUid.get(uid)?.kind===kind&&byUid.get(uid).id===id;
-    return team?.items&&Array.isArray(team.items.cards)&&team.items.cards.length===8&&
+    return team?.items&&Array.isArray(team.items.cards)&&team.items.cards.length===8&&new Set(team.items.cards).size===8&&
       team.items.cards.every((uid,i)=>matches(uid,'card',team.deck[i]))&&matches(team.items.hero,'hero',team.hero)&&
       (team.rune==='none'?team.items.rune===null:matches(team.items.rune,'rune',team.rune))&&
       (team.items.rune2==null||team.items.rune2!==team.items.rune&&byUid.get(team.items.rune2)?.kind==='rune');

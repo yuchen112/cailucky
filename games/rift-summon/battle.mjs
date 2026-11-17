@@ -54,8 +54,8 @@ export const cards = {
 };
 export const starter = ['guard', 'bomb', 'archer', 'ax', 'ghost', 'healer', 'knight', 'giant'];
 const sentries = ['guard', 'bomb', 'knight', 'ax', 'ghost', 'giant'];
-import {cardBonus,cardHealthBonus} from './inventory.mjs?v=home-dialogue-1';
-import {dailyStage} from './daily.mjs?v=home-dialogue-1';
+import {cardBonus,cardHealthBonus} from './inventory.mjs?v=landscape-lineup-1';
+import {dailyStage} from './daily.mjs?v=landscape-lineup-1';
 export const chapterNames = ["第一章・斷橋哨站", "第二章・沉鐘墓園", "第三章・翡翠林海", "第四章・赤焰熔城", "第五章・霜月群峰", "第六章・浮光水都", "第七章・沙海遺城", "第八章・幽影邊境", "第九章・蒼穹王庭", "第十章・裂界核心"];
 export const stages = [
   {name:'哨站前沿', goal:'倒數歸零就能部署。先用護衛或斥候接住第一波。', hp:8, opponents:['guard','archer','healer','knight'], opening:['archer'], reward:'bow'},
@@ -100,6 +100,12 @@ export const stages = [
   {"name":"裂界終戰","goal":"敵軍兼具破甲、戰吼與接替，依對位調整出牌順序。","hp":24,"opponents":["crane","rabbit","eagle","lynxguard","raven","lion","drake","wolf"],"opening":["lion","eagle"],"reward":"eagle","enemyLevel":20,"enemyEffect":4},
 ];
 
+// Gradual chapter and within-chapter growth, including the second chapter.
+for(const [index,stage] of stages.entries()){
+  const chapter=Math.floor(index/4),step=index%4;
+  stage.enemyLevel=chapter===0?1:1+chapter*2+Number(step>=2);
+  stage.enemyEffect=1+Math.floor(chapter/3);
+}
 function unit(id, uid, level=1,effect=1) {
   const [name, count, attack, max, skill] = cards[id];
   const bonus=cardBonus(level);
@@ -108,9 +114,14 @@ function unit(id, uid, level=1,effect=1) {
 function side(deck, hp) {
   return {hp, deck: deck.slice(3), hand: deck.slice(0, 3), board: []};
 }
-export function createBattle(rune = 'wall', hero = '', stage = 3, deck = starter, levels = {}, heroLevel=1, runeLevel=1, daily=null,effects={},heroEffect=1,runeEffect=1,rune2=null) {
+export function createBattle(rune = 'wall', hero = '', stage = 3, deck = starter, levels = {}, heroLevel=1, runeLevel=1, daily=null,effects={},heroEffect=1,runeEffect=1,rune2=null,instances=null) {
   const level = daily?dailyStage(daily):stages[stage];
-  const player = side(deck.map((id, i) => unit(id, i, levels[id]??1,effects[id]??1)), 24+heroLevel-1);
+  const player = side(deck.map((id,i)=>{
+    const item=instances?.[i];
+    const card=unit(id,i,item?.level??levels[id]??1,item?.effect??effects[id]??1);
+    if(item?.uid)card.inventoryUid=item.uid;
+    return card;
+  }),24+heroLevel-1);
   const enemy = side(level.opponents.map((id, i) => unit(id, i + 8,level.enemyLevel??1,level.enemyEffect??1)), level.hp);
   enemy.board.push(...level.opening.map((id,i)=>unit(id,20+i,level.enemyLevel??1,level.enemyEffect??1)));
   const state = {version: 3, phase: 'deploy', stage, round: 1, result: null, sides: [player, enemy], hero, heroUsed: false, heroShield: 0, rune, charges: rune === 'none' ? 0 : 2, nextUid: 24, sequence: 0};

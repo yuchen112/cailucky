@@ -849,3 +849,110 @@ img { -webkit-user-drag:none; -webkit-touch-callout:none; }
 #chapter-picker select { min-width:0; flex:1; max-width:400px; min-height:44px; font-size:15px; }
 #chapter-picker { justify-content:center; overflow:visible; }
 #chapter-picker button { min-width:44px; }
+
+/* Landscape game viewport: keep controls fixed, scroll only their own content. */
+#rotate-device { display:none; }
+@media (orientation:portrait) {
+ #rotate-device { position:fixed; inset:0; z-index:1000; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; padding:24px; text-align:center; background:#171228 url('art/arena.webp') center / cover; }
+ #rotate-device img { width:min(90%,350px); max-height:28vh; object-fit:contain; }
+ #rotate-device h2,#rotate-device p { margin:0; }
+ body { overflow:hidden; }
+ main { visibility:hidden; }
+}
+@media (orientation:landscape) {
+ body { overflow:hidden; }
+ main { height:100dvh; }
+ main > section:not([hidden]) { max-height:100%; overflow-y:auto; overscroll-behavior:contain; }
+ #camp,#battle { overflow:hidden; }
+ .collection-header { position:sticky; top:0; z-index:3; }
+ #team-editor { height:100%; display:grid; grid-template-rows:36px minmax(0,1fr); overflow:hidden; }
+ #team-editor > header { padding:0 8px; min-height:0; }
+ #team-editor > header h1 { font-size:19px; margin:0; }
+ #team-editor > header > div { display:flex; align-items:center; gap:12px; }
+ #team-editor #team-status { font-size:12px; margin:0; }
+ #team-editor #team-exit { min-height:32px; padding:3px 12px; }
+ #team-editor-content { display:grid; grid-template-columns:minmax(0,43fr) minmax(0,57fr); grid-template-rows:36px 34px minmax(0,1fr) auto; gap:5px 9px; min-height:0; }
+ .team-tools { grid-area:1 / 1 / 2 / 3; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+ .team-tools .library-tabs { margin:0; gap:5px; }
+ .team-tools button { min-height:32px; font-size:12px; padding:4px 12px; }
+ #team-editor .team-instance-slots { grid-area:2 / 1 / 5 / 2; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); grid-template-rows:repeat(3,minmax(0,1fr)); gap:4px; margin:0; min-height:0; }
+ #team-editor .team-instance-slots button { position:relative; padding:3px; gap:1px; overflow:hidden; align-content:center; }
+ #team-editor .team-instance-slots img { height:clamp(27px,9dvh,53px); max-height:100%; width:100%; }
+ #team-editor .team-instance-slots strong { display:none; }
+ #team-editor .team-instance-slots small { font-size:10px; line-height:1.1; }
+ #team-editor .inventory-card-art { height:auto; width:auto; max-width:100%; }
+ #team-editor .inventory-card-art .inventory-card-frame { height:100%; }
+ .lineup-filters { grid-area:2 / 2; display:flex; align-items:center; gap:3px; min-width:0; }
+ .lineup-filters input { width:0; flex:1; min-width:0; }
+ .lineup-filters select { width:86px; min-width:0; }
+ .lineup-filters :is(input,select,button) { height:32px; min-height:32px; font-size:11px; padding:3px 5px; }
+ #team-editor .team-candidates { grid-area:3 / 2; display:grid; grid-template-columns:repeat(auto-fill,minmax(66px,1fr)); align-content:start; gap:4px; min-height:0; overflow-y:auto; overscroll-behavior:contain; margin:0; }
+ #team-editor .team-candidates button { position:relative; padding:4px; gap:2px; }
+ #team-editor .team-candidates img { height:clamp(45px,17dvh,76px); }
+ #team-editor .team-candidates strong { font-size:10px; }
+ #team-editor .team-candidate { grid-area:4 / 2; padding:5px 7px; min-height:60px; max-height:95px; overflow-y:auto; display:flex; flex-wrap:wrap; align-items:center; gap:5px; background:url('art/table-inspect.webp') center / 100% 100% no-repeat; }
+ .team-candidate-info { display:grid; gap:2px; flex:1; min-width:105px; font-size:12px; }
+ .team-candidate-info small { font-size:10px; }
+ #team-editor .team-candidate > button { min-height:32px; padding:4px 7px; font-size:11px; }
+ .equipped-tag { color:#a9ffca !important; }
+ #campaign .collection-header { min-height:34px; padding-block:3px; }
+ #campaign .collection-header h1 { font-size:21px; margin:0; }
+ #campaign .collection-header p { margin:1px 0; font-size:12px; }
+ #campaign #chapter-picker { padding-bottom:3px; margin-block:3px; }
+ #campaign :is(.adventure-modes button,#chapter-picker button,#chapter-picker select) { min-height:32px; }
+ #campaign .campaign-dossier .controls { gap:4px; }
+ #campaign .campaign-dossier .controls button { min-height:32px; font-size:11px; padding:4px 8px; }
+}
+.lineup-review { display:grid; grid-template-columns:repeat(auto-fit,minmax(75px,1fr)); gap:6px; }
+.lineup-review button { display:grid; justify-items:center; min-width:0; font-size:11px; padding:5px; background:url('art/table-inspect.webp') center / 100% 100% no-repeat; }
+.lineup-review img { width:100%; height:75px; object-fit:contain; }
+.lineup-review small { font-size:10px; }
+
+@media (orientation:landscape) {
+ #team-editor .team-candidate { margin:0; }
+ #team-editor .lineup-filters input { min-height:32px; font-size:11px; }
+ #team-editor .team-instance-slots .inventory-card-art { height:clamp(27px,9dvh,53px); aspect-ratio:3/4; }
+ #team-editor .team-instance-slots .inventory-card-art img { height:100%; }
+ #stage-preview figure > button { padding:0; border:0; background:none; min-height:0; }
+}
+
+@media (orientation:landscape) {
+ #team-editor .team-candidates { grid-auto-rows:max-content; }
+ #team-editor .team-candidates button { height:calc(clamp(45px,17dvh,76px) + 47px); min-height:0; overflow:hidden; }
+ #team-editor .team-candidates .inventory-card-art { width:calc(clamp(45px,17dvh,76px) * .75); height:clamp(45px,17dvh,76px); aspect-ratio:3/4; }
+ #team-editor .team-candidates .inventory-card-art img { height:100%; }
+ #team-editor .team-instance-slots :is(img,.inventory-card-art) { height:clamp(30px,13dvh,60px); }
+ #team-editor .team-instance-slots .inventory-card-art { width:calc(clamp(30px,13dvh,60px) * .75); }
+ #team-editor .team-instance-slots .inventory-card-art img { height:100%; }
+ .lineup-review .inventory-card-art { width:56px; height:75px; }
+ .lineup-review .inventory-card-art img { height:100%; }
+}
+
+@media (orientation:landscape) {
+ #team-editor .lineup-filters { flex-wrap:nowrap; }
+ #team-editor .lineup-filters select { width:72px; }
+ #team-editor .lineup-filters select[aria-label="編隊品階篩選"] { width:60px; }
+ #campaign { height:100%; display:grid; grid-template-rows:34px 35px 36px minmax(0,1fr); gap:3px; overflow:hidden; }
+ #campaign .adventure-modes { margin:0; }
+ #campaign #chapter-picker { margin:0; padding:0; }
+ #campaign .campaign-scene { min-height:0; height:100%; align-items:stretch; }
+ #campaign .campaign-scene #stages { height:100%; }
+ #campaign .campaign-dossier { min-height:0; padding:5px 8px; display:grid; grid-template-rows:auto minmax(18px,1fr) auto auto; gap:2px; }
+ #campaign .campaign-dossier h2 { font-size:15px; }
+ #campaign #stage-detail { overflow:auto; min-height:0; margin:0; padding:0; font-size:10px; }
+ #campaign #stage-preview { margin:0; gap:3px; }
+ #campaign #stage-preview figure { margin:0; width:32px; }
+ #campaign #stage-preview .card-face { width:32px; }
+ #campaign #stage-preview figcaption { font-size:8px; white-space:nowrap; }
+ #campaign .campaign-dossier .controls { display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+ #campaign .campaign-dossier .controls label { grid-column:span 2; min-width:0; height:26px; }
+ #campaign .campaign-dossier .controls :is(button,select) { min-width:0; min-height:26px; height:26px; padding:2px 5px; font-size:10px; }
+ #campaign-fight { grid-column:span 2; }
+ #campaign #stages .stage-flag { font-size:10px; padding:0; min-height:30px; }
+ #campaign #stages .stage-flag img { max-height:45px; }
+}
+
+@media (orientation:landscape) {
+ #campaign > .collection-header > div { display:flex; align-items:center; gap:8px; min-width:0; }
+ #campaign > .collection-header p { font-size:11px; margin:0; }
+}
