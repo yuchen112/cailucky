@@ -508,7 +508,7 @@ function drawCapsule(count){
  showBatch(true);
 }
 const reducedReveal=()=>lowMotion||matchMedia('(prefers-reduced-motion: reduce)').matches;
-const sealArt=kind=>asset(kind==='card'?'album-card-back':kind==='rune'?'summon-rune-seal':'nav-heroes');
+const sealArt=kind=>asset(kind==='card'?'album-card-back':kind==='rune'?'nav-rune-book':'nav-heroes');
 const rewardArtwork=(kind,id)=>materials[id]?artwork(materials[id].kind?'tech':'xp','material'):kind==='card'?cardFace(catalogCard(id,1)):kind==='hero'?artwork(id,'hero'):runeImage(id);
 function showBatch(intro){
  if(!validBatch(lastBatch))return;
