@@ -4,6 +4,7 @@ Object.assign(sounds,{
   'reveal-card':[480,1030],'reveal-rune':[360,660],'reveal-hero':[175,485],
   'rank-N':[490,510],'rank-R':[650,880],'rank-SR':[750,1180],'rank-S':[660,1320],
   'rank-SS':[580,1480],'rank-SSR':[395,1490],'rank-UUR':[300,1760],
+  'hero-staff':[190,94],'hero-star':[600,1100],'hero-leaf':[440,675],'hero-wing':[550,940],'hero-cup':[950,685],
   shield:[1040,280],impact:[87,49],rune:[540,1080],
   crank:[105,78],'draw-card':[390,730],'draw-hero':[197,392],'draw-rune':[287,745],
 });

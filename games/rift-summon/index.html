@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CxQ 裂界召喚</title>
-<link rel="stylesheet" href="style.css?v=dual-rune-1">
+<link rel="stylesheet" href="style.css?v=town-1">
 </head>
 <body>
 <main>
@@ -19,7 +19,7 @@
 <section id="camp" hidden aria-label="裂界營地">
   <div class="world-camp">
     <header class="camp-hud"><button id="camp-profile"><img id="camp-profile-art" alt=""><span id="camp-progress"></span></button><div id="camp-wallet" class="wallet"></div><button id="camp-options" data-art="settings">設定</button></header>
-    <button id="camp-featured-button" aria-label="與首頁英雄互動"><span id="camp-aura-wrap"><img id="camp-aura" alt=""></span><span id="camp-hero-motion"><img id="camp-featured" alt=""><img id="camp-blink" alt=""></span></button><section hidden class="camp-expedition" aria-labelledby="camp-stage">
+    <button id="camp-featured-button" aria-label="與首頁英雄互動"><span id="camp-aura-wrap"><img id="camp-aura" alt=""></span><span id="camp-hero-motion"><img id="camp-featured" alt=""><img id="camp-blink" alt=""><img id="camp-gesture" alt=""></span></button><section hidden class="camp-expedition" aria-labelledby="camp-stage">
       <div class="expedition-content">
         <small id="camp-chapter"></small><h2 id="camp-stage"></h2>
         <div class="expedition-party"><img id="camp-hero-art" alt=""><div><strong id="camp-team-name"></strong><p id="camp-team-rune"></p></div></div>
@@ -29,14 +29,14 @@
         </div>
       </div>
     </section>
-    <nav class="camp-nav" aria-label="營地入口">
-      <button id="camp-campaign"><img src="art/map-flag.webp" alt=""><span>冒險</span></button><button id="camp-deck"><img src="art/nav-deck-chest.webp" alt=""><span>編隊</span></button>
-      <button id="camp-capsule"><img src="art/summon-machine.webp" alt=""><span>扭蛋召喚</span></button>
-      <button id="camp-heroes" hidden><img src="art/nav-heroes.webp" alt=""><span>英雄圖鑑</span></button>
-      <button id="camp-collection"><img src="art/nav-codex.webp" alt=""><span>圖鑑</span></button>
-      <button id="camp-bag"><img src="art/nav-card-bag.webp" alt=""><span>背包</span></button>
-      <button id="camp-runes" hidden><img src="art/nav-rune-book.webp" alt=""><span>符文冊</span></button>
+    <nav class="town-map" aria-label="裂界城鎮">
+      <button id="camp-campaign" class="town-landmark" aria-label="遠征城門・冒險"><img src="art/landmark-0.webp" alt=""><span>冒險</span></button>
+      <button id="camp-deck" class="town-landmark" aria-label="守備訓練場・編隊"><img src="art/landmark-1.webp" alt=""><span>編隊</span><small id="town-team" aria-hidden="true"></small></button>
+      <button id="camp-capsule" class="town-landmark" aria-label="召喚工坊・召喚"><img src="art/landmark-2.webp" alt=""><span>召喚</span></button>
+      <button id="camp-collection" class="town-landmark" aria-label="藏書塔・圖鑑"><img src="art/landmark-3.webp" alt=""><span>圖鑑</span></button>
+      <button id="camp-bag" class="town-landmark" aria-label="行囊商館・背包"><img src="art/landmark-4.webp" alt=""><span>背包</span></button>
     </nav>
+    <button id="camp-heroes" hidden></button><button id="camp-runes" hidden></button>
   </div>
 </section>
 <section id="rune-book" hidden aria-label="符文冊">
@@ -181,6 +181,6 @@
   <div class="controls"><button id="draw-open-all">一鍵開啟</button><button id="capsule-show-close">跳過</button></div>
 </dialog>
 </main>
-<script type="module" src="main.mjs?v=dual-rune-1"></script>
+<script type="module" src="main.mjs?v=town-1"></script>
 </body>
 </html>

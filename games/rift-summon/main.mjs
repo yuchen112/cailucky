@@ -2,7 +2,7 @@ import {materials,bookFor} from './materials.mjs?v=dual-rune-1';
 import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=dual-rune-1';
 import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=dual-rune-1';
 import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=dual-rune-1';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=town-1';
 import {makeBackup, readBackup} from './backup.mjs?v=dual-rune-1';
 import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=dual-rune-1';
 import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch} from './economy.mjs?v=dual-rune-1';
@@ -19,6 +19,7 @@ let daily=validDaily(saved?.daily)?saved.daily:emptyDaily();
 const consumed=new Set(Array.isArray(saved?.consumed)?saved.consumed:[]);
 let displayHero=saved?.displayHero;
 let lastBatch=saved?.lastBatch??null;
+let townRead=saved?.townRead??null;
 const bagSort=saved?.bagSort??{};
 const missionFor=battle=>battle.daily?dailyStage(battle.daily):stages[battle.stage];
 let log = state ? saved?.log ?? [] : [];
@@ -122,7 +123,7 @@ function currentSave() {
   syncFixedInventory();
   const ongoing=state?.phase==='deploy';
   flushTeam();
-  return {consumed:[...consumed],displayHero,daily,lastBatch,bagSort,state:ongoing?state:null, log:ongoing?log:[], deck, cleared:[...cleared], volumes, loadout, lowMotion, wallet, teams, inventory, activeTeam, starterHero, speed:get('speed').value};
+  return {consumed:[...consumed],displayHero,daily,lastBatch,townRead,bagSort,state:ongoing?state:null, log:ongoing?log:[], deck, cleared:[...cleared], volumes, loadout, lowMotion, wallet, teams, inventory, activeTeam, starterHero, speed:get('speed').value};
 }
 function save() {
   try { localStorage.setItem(key, JSON.stringify(currentSave())); return true; }
@@ -352,50 +353,92 @@ function showCamp() {
   get('camp-profile-art').src=asset(`hero-portrait-${featured.id}`);
   get('camp-progress').textContent=featured.name;
   startHomeMotion(featured);
+  get('camp-campaign').classList.toggle('town-available',Object.entries(vaults).some(([id,vault])=>dailyStatus(daily,id).used<vault.limit));
+  get('camp-deck').title='出戰編隊 '+(activeTeam+1);
+  townRead??={bag:inventory.next,collection:new Set(inventory.items.filter(item=>item.kind!=='material').map(item=>item.id)).size};
+  get('town-team').textContent=String(activeTeam+1);
+  get('camp-bag').classList.toggle('town-unread',inventory.next>townRead.bag);
+  get('camp-collection').classList.toggle('town-unread',new Set(inventory.items.filter(item=>item.kind!=='material').map(item=>item.id)).size>townRead.collection);
   renderWallet(get('camp-wallet'));
 }
-let homeBlinkTimer,homeOpenTimer,homeMotion;
+let homeBlinkTimer,homeOpenTimer,homeTapTimer,homeReaction;
 const homeReduced=()=>lowMotion||matchMedia('(prefers-reduced-motion: reduce)').matches;
 const homeGestures={
-  trust:[-11,-4,1.06,'rune-pulse'], dream:[-15,4,1.05,'fx-spirit'], growth:[-8,-7,1.04,'fx-heal'],
-  healing:[-9,5,1.05,'fx-heal'],hope:[-18,-3,1.04,'fx-shield'], joy:[-24,8,1.05,'rune-pulse'],
-  luck:[-17,-9,1.06,'fx-arrow'],memory:[-9,4,1.04,'fx-spirit'],night:[-14,-5,1.03,'rune-pulse'],sadness:[-6,5,1.035,'fx-shield'],
+  trust:['rune-pulse','hero-staff'],dream:['fx-spirit','hero-star'],growth:['fx-heal','hero-leaf'],
+  healing:['fx-heal','hero-leaf'],hope:['hero-butterfly','hero-wing'],joy:['rune-pulse','hero-star'],
+  luck:['fx-arrow','coin'],memory:['fx-spirit','hero-star'],night:['rune-pulse','hero-wing'],sadness:['fx-shield','hero-leaf'],
 };
 function stopHomeMotion(){
-  clearTimeout(homeBlinkTimer);clearTimeout(homeOpenTimer);
-  homeMotion?.cancel();homeMotion=null;
-  get('camp-featured-button').classList.remove('blinking','reacting','home-enter');
+  clearTimeout(homeBlinkTimer);clearTimeout(homeOpenTimer);clearTimeout(homeTapTimer);homeTapTimer=null;
+  homeReaction?.abort();homeReaction=null;
+  const button=get('camp-featured-button');
+  button.classList.remove('blinking','reacting','home-enter','home-notice','home-act','home-effect','home-cup');
+  get('camp-gesture').getAnimations().forEach(animation=>animation.cancel());
 }
 function startHomeMotion(hero){
   stopHomeMotion();
-  const button=get('camp-featured-button'), open=get('camp-featured'), closed=get('camp-blink'), aura=get('camp-aura');
-  const [rise,tilt,scale,effect]=homeGestures[hero.id];
-  button.dataset.motion=homeReduced()?'off':'on';
+  const button=get('camp-featured-button'), open=get('camp-featured'), closed=get('camp-blink'), gesture=get('camp-gesture'), aura=get('camp-aura');
+  const [effect,sound]=homeGestures[hero.id];
+  const signature=asset('hero-gesture-'+hero.id);
+  button.dataset.motion=homeReduced()?'off':'on';button.dataset.hero=hero.id;
   button.setAttribute('aria-label','與'+hero.name+'互動');
   open.src=asset('hero-home-'+hero.id);
   closed.src=asset('hero-blink-'+hero.id);
+  gesture.src=signature;
   aura.src=asset(effect);
   function blink(){
     if(get('camp').hidden||document.hidden||homeReduced())return;
-    if(closed.complete&&closed.naturalWidth){
+    if(!homeReaction&&closed.complete&&closed.naturalWidth){
       button.classList.add('blinking');
       homeOpenTimer=setTimeout(()=>button.classList.remove('blinking'),125);
     }
-    homeBlinkTimer=setTimeout(blink,2700+Math.random()*2100);
+    homeBlinkTimer=setTimeout(blink,3000+Math.random()*2300);
   }
   if(!homeReduced()){
     button.classList.add('home-enter');
     homeBlinkTimer=setTimeout(blink,1950);
   }
+  async function react(alternate=false){
+    if(homeReaction||get('camp').hidden)return;
+    const controller=new AbortController();
+    homeReaction=controller;
+    const {signal}=controller;
+    const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+    void unlock();
+    try {
+      gesture.src=alternate?asset('hero-gesture-hope-cup'):signature;
+      aura.src=asset(alternate?'rune-pulse':effect);
+      button.classList.toggle('home-cup',alternate);
+      await gesture.decode();
+      if(signal.aborted)return;
+      button.classList.remove('blinking');
+      if(homeReduced()){play(sound);return;}
+      button.classList.add('reacting','home-notice');
+      await pause(155);
+      if(signal.aborted)return;
+      button.classList.remove('home-notice');
+      button.classList.add('home-act','home-effect');
+      play(alternate?'hero-cup':sound);
+      await pause(alternate?620:750);
+      if(signal.aborted)return;
+      button.classList.remove('home-act','home-effect');
+      await pause(190);
+    } catch(error) { console.warn('Hero pose unavailable',error); }
+    finally {
+      if(homeReaction===controller){button.classList.remove('reacting','home-notice','home-act','home-effect','home-cup');homeReaction=null;}
+    }
+  }
+  button.onpointerenter=event=>{
+    if(event.pointerType!=='mouse'||homeReduced()||homeReaction||!closed.complete||!closed.naturalWidth)return;
+    clearTimeout(homeOpenTimer);button.classList.add('blinking');
+    homeOpenTimer=setTimeout(()=>button.classList.remove('blinking'),125);
+  };
   button.onclick=()=>{
-    if(homeReduced()||homeMotion?.playState==='running')return;
-    button.classList.add('reacting');
-    homeMotion=get('camp-hero-motion').animate([
-      {transform:'translateY(0) rotate(0) scale(1)'},{transform:'translateY(2px) scale(.975)',offset:.18},
-      {transform:`translateY(${rise}px) rotate(${tilt}deg) scale(${scale})`,offset:.48},
-      {transform:`translateY(-3px) rotate(${-tilt/3}deg)`,offset:.76},{transform:'none'},
-    ],{duration:740,easing:'ease-in-out'});
-    homeMotion.onfinish=()=>button.classList.remove('reacting');
+    if(homeReaction)return;
+    if(hero.id!=='hope'){void react();return;}
+    if(homeTapTimer){
+      clearTimeout(homeTapTimer);homeTapTimer=null;void react(true);
+    } else homeTapTimer=setTimeout(()=>{homeTapTimer=null;void react();},240);
   };
 }
 document.addEventListener('visibilitychange',()=>{
@@ -1444,8 +1487,11 @@ get('title-resume').onclick=()=>enter(false);
 get('camp-runes').onclick=()=>showRunes('camp');
 get('rune-back').onclick=()=>runeReturn==='lobby'?lobby():showCamp();
 get('camp-deck').onclick=()=>openTeamEditor('camp');
-get('camp-collection').onclick=()=>showCollection();
-get('camp-bag').onclick=()=>showInventory('card');
+get('camp-collection').onclick=()=>{
+  townRead.collection=new Set(inventory.items.filter(item=>item.kind!=='material').map(item=>item.id)).size;
+  save();showCollection();
+};
+get('camp-bag').onclick=()=>{townRead.bag=inventory.next;save();showInventory('card');};
 get('camp-heroes').onclick=showHeroes;
 get('hero-book-back').onclick=showCamp;
 for(const tier of rarityNames){const option=element('option',tier);option.value=tier;get('hero-rarity').append(option);}
