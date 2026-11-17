@@ -21,6 +21,7 @@ let displayHero=saved?.displayHero;
 let lastBatch=saved?.lastBatch??null;
 let townRead=saved?.townRead??null;
 const bagSort=saved?.bagSort??{};
+const listSort=saved?.listSort??{};
 const lineupSort=saved?.lineupSort??{};
 const missionFor=battle=>battle.daily?dailyStage(battle.daily):stages[battle.stage];
 let log = state ? saved?.log ?? [] : [];
@@ -124,7 +125,7 @@ function currentSave() {
   syncFixedInventory();
   const ongoing=state?.phase==='deploy';
   flushTeam();
-  return {consumed:[...consumed],displayHero,daily,lastBatch,townRead,bagSort,lineupSort,state:ongoing?state:null, log:ongoing?log:[], deck, cleared:[...cleared], volumes, loadout, lowMotion, wallet, teams, inventory, activeTeam, starterHero, speed:get('speed').value};
+  return {consumed:[...consumed],displayHero,daily,lastBatch,townRead,bagSort,lineupSort,listSort,state:ongoing?state:null, log:ongoing?log:[], deck, cleared:[...cleared], volumes, loadout, lowMotion, wallet, teams, inventory, activeTeam, starterHero, speed:get('speed').value};
 }
 function save() {
   try { localStorage.setItem(key, JSON.stringify(currentSave())); return true; }
@@ -199,12 +200,49 @@ function heroDetails(hero) {
   }
   modal(...nodes);
 }
+const rankIndex=id=>rarityNames.indexOf(rarity(id));
+const materialXP=item=>materials[item.id]?.xp??[40,50,65,80,100,125,150][rankIndex(item.id)]??50;
+function orderList(items,key,comparators){
+  const order=listSort[key]??{key:'tier',asc:false};
+  return items.sort((a,b)=>(order.asc?1:-1)*(comparators[order.key]??comparators.tier)(a,b));
+}
+function listToolbar(key,fields,refresh) {
+  const order=listSort[key]??{key:'tier',asc:false};
+  const bar=element('div','','collectible-sort');
+  const select=element('select');select.setAttribute('aria-label','排序方式');
+  for(const [id,label] of Object.entries(fields)){
+    const option=element('option',label);option.value=id;select.append(option);
+  }
+  select.value=Object.hasOwn(fields,order.key)?order.key:'tier';
+  const direction=confirmButton('',()=>{order.asc=!order.asc;change();});
+  function update(){
+    direction.textContent=order.asc?'↑':'↓';
+    direction.setAttribute('aria-label',select.selectedOptions[0].textContent+(order.asc?'由低到高':'由高到低'));
+  }
+  function change(){order.key=select.value;listSort[key]=order;update();save();refresh();}
+  select.onchange=change;update();bar.append(select,direction);return bar;
+}
+function catalogSort(kind,ids,type){
+  return orderList(ids,'codex-'+kind,{
+    tier:(a,b)=>rankIndex(a)-rankIndex(b),
+    name:(a,b)=>collectibleName(kind,a).localeCompare(collectibleName(kind,b),'zh-Hant'),
+    type:(a,b)=>type(a).localeCompare(type(b),'zh-Hant'),
+  });
+}
+function mountCatalogSort(section,kind,refresh){
+  const bar=get(section).querySelector('.codex-filters');
+  if(bar&&!bar.querySelector('.collectible-sort'))bar.append(listToolbar('codex-'+kind,{tier:'品階',name:'名稱',type:'類型'},refresh));
+}
 function showHeroes() {
   view('hero-book');
   codexTabs('hero-book','hero');
   const tier=get('hero-rarity').value, status=get('hero-owned').value, query=get('hero-search').value.trim();
-  get('hero-book-grid').replaceChildren(...heroes.filter(hero=>hero.name.includes(query)&&(tier==='all'||rarity(hero.id)===tier)&&
-    (status==='all'||ownedHeroes().includes(hero.id)===(status==='owned'))).map(hero=>{
+  mountCatalogSort('hero-book','hero',showHeroes);
+  const filtered=heroes.filter(hero=>hero.name.includes(query)&&(tier==='all'||rarity(hero.id)===tier)&&
+    (status==='all'||ownedHeroes().includes(hero.id)===(status==='owned')));
+  const byId=new Map(filtered.map(hero=>[hero.id,hero]));
+  get('hero-book-grid').replaceChildren(...catalogSort('hero',[...byId.keys()],id=>byId.get(id).effect).map(id=>{
+    const hero=byId.get(id);
     const button=confirmButton('',()=>heroDetails(hero));
     button.append(artwork(hero.id,'hero'),element('strong',`${hero.name}・${rarity(hero.id)}`),
       element('span',ownedHeroes().includes(hero.id)?'已收錄':'未收錄'));
@@ -245,7 +283,8 @@ function renderRuneBook() {
   const status=get('rune-owned').value;
   const ids=Object.keys(groups).filter(id=>(status==='all'||available.includes(id)===(status==='owned'))&&(filter==='all'||groups[id]===filter)&&(tier==='all'||rarity(id)===tier)&&`${runes[id].name} ${runes[id].effect}`.includes(query));
   get('rune-count').textContent=`已收錄 ${available.length} / ${Object.keys(groups).length} 枚・目前顯示 ${ids.length} 枚`;
-  const entries=ids.map(id=>{
+  mountCatalogSort('rune-book','rune',renderRuneBook);
+  const entries=catalogSort('rune',ids,id=>groups[id]).map(id=>{
     const button=element('button','','rune-entry');
     const ownedRune=available.includes(id);
     button.append(runeImage(id),element('strong',`${runes[id].name}・${rarity(id)}`),element('span',ownedRune?'已收錄':runes[id].source));
@@ -483,7 +522,15 @@ function renderCapsule(){
  const tiers=rarityNames.filter(tier=>pool.some(item=>rarity(item.id)===tier));
  const list=element('details');
  list.append(element('summary','單項抽取機率'));
- for(const item of pool)list.append(element('p',collectibleName(kind,item.id)+'・'+rarity(item.id)+'・'+(item.weight*100/total).toFixed(2)+'%'));
+ const rows=element('div');
+ const poolKey='pool-'+kind;
+ const refill=()=>rows.replaceChildren(...orderList([...pool],poolKey,{
+   tier:(a,b)=>rankIndex(a.id)-rankIndex(b.id),
+   name:(a,b)=>collectibleName(kind,a.id).localeCompare(collectibleName(kind,b.id),'zh-Hant'),
+   chance:(a,b)=>a.weight-b.weight,
+   type:(a,b)=>Number(Boolean(materials[a.id]))-Number(Boolean(materials[b.id])),
+ }).map(item=>element('p',collectibleName(kind,item.id)+'・'+rarity(item.id)+'・'+(item.weight*100/total).toFixed(2)+'%')));
+ refill();list.append(listToolbar(poolKey,{tier:'品階',name:'名稱',type:'類型',chance:'機率'},refill),rows);
  get('capsule-rules').replaceChildren(confirmButton('卡池說明',()=>modal(
    element('h2',get('capsule-title').textContent),element('p','最高 '+tiers.at(-1)),
    element('p',tiers.map(tier=>tier+' '+(pool.filter(item=>rarity(item.id)===tier).reduce((sum,item)=>sum+item.weight,0)*100/total).toFixed(2)+'%').join('・')),
@@ -699,6 +746,8 @@ function renderCollection(direction=0) {
   const query=get('card-search').value.trim();
   const status=get('card-owned').value;
   const filtered=albumCards.filter(id=>(status==='all'||collection.has(id)===(status==='owned'))&&(filter==='all'||cardGroup(id)===filter)&&(tier==='all'||rarity(id)===tier)&&`${cards[id][0]} ${cards[id][4]}`.includes(query));
+  mountCatalogSort('collection','card',()=>{albumPage=0;renderCollection();});
+  catalogSort('card',filtered,cardGroup);
   const pages=Math.max(1,Math.ceil(filtered.length/perLeaf));
   albumPage=Math.min(albumPage,pages-1);
   const spread=albumWide.matches?2:1;
@@ -900,7 +949,7 @@ function chooseMaterial(target,mode) {
   const matches=item=>mode==='xp'?item.kind===target.kind||target.kind==='card'&&item.kind==='material':
     item.kind===target.kind&&item.id===target.id||mode==='effect'&&materials[item.id]?.kind===target.kind;
   const candidates=inventory.items.filter(item=>safe(item)&&matches(item));
-  const xpOf=item=>materials[item.id]?.xp??50;
+  const xpOf=materialXP;
   const available=()=>mode==='xp'?target.level<levelLimit(target):mode==='effect'?(target.effect??1)<effectsMax:target.level===levelLimit(target)&&levelLimit(target)<99;
   const enough=count=>count>0&&(required===null||count===required);
   const selected=new Set(), preview=element('p'), title={xp:'經驗強化',break:'同名突破',effect:'效果強化'}[mode];
@@ -950,9 +999,40 @@ function chooseMaterial(target,mode) {
   const panel=element('div','','growth-picker');
   const grid=element('div','','team-candidates growth-materials');
   const search=element('input');search.type='search';search.placeholder='搜尋素材';search.setAttribute('aria-label','搜尋素材');
+  const rarityFilter=element('select');
+  rarityFilter.setAttribute('aria-label','素材品階');
+  for(const id of ['all',...rarityNames]){
+    const option=element('option',id==='all'?'全部品階':id);option.value=id;rarityFilter.append(option);
+  }
+  const targetLevel=element('input');targetLevel.type='number';targetLevel.min=target.level+1;targetLevel.max=levelLimit(target);
+  targetLevel.value=levelLimit(target);targetLevel.setAttribute('aria-label','目標等級');
+  const targetLabel=element('label','目標 Lv. ');targetLabel.append(targetLevel);targetLabel.hidden=mode!=='xp';
+  const sortKey='growth-'+mode;
+  const visible=()=>orderList(candidates.filter(item=>itemName(item).includes(search.value.trim())&&
+    (rarityFilter.value==='all'||rarity(item.id)===rarityFilter.value)),sortKey,{...comparisons,value:(a,b)=>xpOf(a)-xpOf(b)});
+  function selectMany(items,goal){
+    let remaining=0;
+    if(mode==='xp'){
+      for(let level=target.level;level<goal;level++)remaining+=xpNeeded(level);
+      remaining-=target.experience+project().xp;
+    }else remaining=mode==='break'?required-selected.size:effectsMax-(target.effect??1)-selected.size;
+    for(const item of items){
+      if(remaining<=0)break;
+      if(selected.has(item.uid))continue;
+      selected.add(item.uid);
+      remaining-=mode==='xp'?xpOf(item):1;
+    }
+    fill();update();
+  }
+  const limitGoal=()=>Math.min(levelLimit(target),Math.max(target.level+1,Math.trunc(Number(targetLevel.value))||levelLimit(target)));
+  const actions=element('div','','growth-actions');
+  if(mode==='xp')actions.append(confirmButton('一鍵選低階',()=>selectMany([...candidates].filter(item=>
+    item.kind!=='material'&&item.id!==target.id&&rankIndex(item.id)<=1
+  ).sort((a,b)=>xpOf(a)-xpOf(b)),limitGoal())));
+  actions.append(confirmButton(mode==='break'?'一鍵補足':'選取篩選結果',()=>selectMany(visible(),limitGoal())),
+    confirmButton('清除選取',()=>{selected.clear();fill();update();}));
   const fill=()=>{
-    const query=search.value.trim();
-    grid.replaceChildren(...candidates.filter(item=>itemName(item).includes(query)).map(item=>{
+    grid.replaceChildren(...visible().map(item=>{
       const button=confirmButton('',()=>{
         const {result}=project();
         if(selected.has(item.uid))selected.delete(item.uid);
@@ -965,15 +1045,15 @@ function chooseMaterial(target,mode) {
     }));
     if(!grid.children.length)grid.append(element('p','沒有符合的可用素材。'));
   };
-  search.oninput=fill;fill();update();
+  search.oninput=fill;rarityFilter.onchange=fill;fill();update();
   const summary=element('aside','','growth-summary');summary.append(element('h2',title),columns,counter,preview,apply,confirmButton('返回',()=>modal(itemDetail(target,true))));
-  const listing=element('div','','growth-listing');listing.append(search,grid);
+  const listing=element('div','','growth-listing');listing.append(search,rarityFilter,listToolbar(sortKey,{tier:'品階',name:'名稱',uid:'取得順序',...(mode==='xp'?{value:'提供經驗'}:{})},fill),targetLabel,actions,grid);
   panel.append(listing,summary);modal(panel);get('detail').scrollTop=0;
 }
 
 const comparisons={
     uid:(a,b)=>Number(a.uid.slice(1))-Number(b.uid.slice(1)), tier:(a,b)=>rarityNames.indexOf(rarity(a.id))-rarityNames.indexOf(rarity(b.id)),
-    level:(a,b)=>a.level-b.level, xp:(a,b)=>a.experience/xpNeeded(a.level)-b.experience/xpNeeded(b.level),
+    level:(a,b)=>a.level-b.level, effect:(a,b)=>(a.effect??1)-(b.effect??1), xp:(a,b)=>a.experience/xpNeeded(a.level)-b.experience/xpNeeded(b.level),
     name:(a,b)=>itemName(a).localeCompare(itemName(b),'zh-Hant'),
   };
 function sortCollectibles(items,order){
@@ -1109,7 +1189,7 @@ function renderTeamEditor() {
   search.value=editorQueries[kind]??'';
   const order=lineupSort[kind]??{key:'tier',asc:false};
   const sort=element('select');sort.setAttribute('aria-label','編隊排序方式');
-  for(const [key,label] of [['tier','品階'],['level','等級'],['xp','經驗進度'],['name','名稱'],['uid','取得順序']]){
+  for(const [key,label] of [['tier','品階'],['level','等級'],['effect','效果等級'],['xp','經驗進度'],['name','名稱'],['uid','取得順序']]){
     const option=element('option',label);option.value=key;sort.append(option);
   }
   sort.value=order.key;

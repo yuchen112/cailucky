@@ -843,3 +843,9 @@ body:has(#camp:not([hidden])) { background-size:cover; background-position:cente
 @media (orientation:portrait) {
  #camp .world-camp { background:url("art/town-avenue-hd.webp") 28% bottom / auto 65% no-repeat; }
 }
+
+.collectible-sort,.growth-actions { display:inline-flex; gap:4px; align-items:center; flex-wrap:wrap; }
+.collectible-sort select,.collectible-sort button,.growth-actions button { min-height:34px; }
+.growth-listing > label,.growth-listing > select { display:inline-block; margin:4px; font-size:12px; }
+.growth-listing > label input { width:4em; }
+.growth-actions { display:flex; margin-block:4px; }
