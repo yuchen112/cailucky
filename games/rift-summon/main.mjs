@@ -1,4 +1,4 @@
-import {HERO_FPS,HERO_DURATION,HERO_FRAME_COUNT,motionFrame} from './hero-motion.mjs?v=hero-motion-1';
+import {HERO_FPS,HERO_DURATION,HERO_FRAME_COUNT,motionFrame} from './hero-motion.mjs?v=hero-motion-2';
 import {materials,bookFor} from './materials.mjs?v=town-2';
 import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=town-2';
 import {applyAction, cards, createBattle, stages, starter} from './battle.mjs?v=town-2';
@@ -414,10 +414,9 @@ function showCamp() {
   get('camp-collection').classList.toggle('town-unread',new Set(inventory.items.filter(item=>item.kind!=='material').map(item=>item.id)).size>townRead.collection);
   renderWallet(get('camp-wallet'));
 }
-let homeBlinkTimer,homeOpenTimer,homeReaction;
+let homeReaction;
 const homeReduced=()=>lowMotion||matchMedia('(prefers-reduced-motion: reduce)').matches;
 function stopHomeMotion(){
-  clearTimeout(homeBlinkTimer);clearTimeout(homeOpenTimer);
   homeReaction?.abort();homeReaction=null;
   const button=get('camp-featured-button');
   button.classList.remove('blinking','reacting','home-enter','home-notice','home-act','home-effect','home-cup');
@@ -426,23 +425,11 @@ function stopHomeMotion(){
 }
 function startHomeMotion(hero){
   stopHomeMotion();
-  const button=get('camp-featured-button'), open=get('camp-featured'), closed=get('camp-blink');
+  const button=get('camp-featured-button'), open=get('camp-featured');
   button.dataset.motion=homeReduced()?'off':'on';button.dataset.hero=hero.id;
   button.setAttribute('aria-label','與'+hero.name+'互動');
-  open.src=asset('hero-home-'+hero.id);
-  closed.src=asset('hero-blink-'+hero.id);
-  function blink(){
-    if(get('camp').hidden||document.hidden||homeReduced())return;
-    if(!homeReaction&&closed.complete&&closed.naturalWidth){
-      button.classList.add('blinking');
-      homeOpenTimer=setTimeout(()=>button.classList.remove('blinking'),125);
-    }
-    homeBlinkTimer=setTimeout(blink,3000+Math.random()*2300);
-  }
-  if(!homeReduced()){
-    button.classList.add('home-enter');
-    homeBlinkTimer=setTimeout(blink,1950);
-  }
+  const source=asset('hero-home-'+hero.id);
+  if(open.getAttribute('src')!==source)open.src=source;
   async function react(){
     if(homeReaction||get('camp').hidden||homeReduced())return;
     const controller=new AbortController();
@@ -487,16 +474,10 @@ function startHomeMotion(hero){
   button.onpointerdown=()=>button.classList.add('home-pointer');
   button.onkeydown=()=>button.classList.remove('home-pointer');
   button.onblur=()=>button.classList.remove('home-pointer');
-  button.onpointerenter=event=>{
-    if(event.pointerType!=='mouse'||homeReduced()||homeReaction||!closed.complete||!closed.naturalWidth)return;
-    clearTimeout(homeOpenTimer);button.classList.add('blinking');
-    homeOpenTimer=setTimeout(()=>button.classList.remove('blinking'),125);
-  };
   button.onclick=()=>void react();
 }
 document.addEventListener('visibilitychange',()=>{
   if(document.hidden)stopHomeMotion();
-  else if(!get('camp').hidden)showCamp();
 });
 let drawing=false, revealTimer, revealRun=0;
 const summonTypes={card:'卡牌',rune:'符文',hero:'英雄'};
