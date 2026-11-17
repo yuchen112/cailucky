@@ -365,9 +365,9 @@ function showCamp() {
 let homeBlinkTimer,homeOpenTimer,homeTapTimer,homeReaction;
 const homeReduced=()=>lowMotion||matchMedia('(prefers-reduced-motion: reduce)').matches;
 const homeGestures={
-  trust:['rune-pulse','hero-staff'],dream:['fx-spirit','hero-star'],growth:['fx-heal','hero-leaf'],
-  healing:['fx-heal','hero-leaf'],hope:['hero-butterfly','hero-wing'],joy:['rune-pulse','hero-star'],
-  luck:['fx-arrow','coin'],memory:['fx-spirit','hero-star'],night:['rune-pulse','hero-wing'],sadness:['fx-shield','hero-leaf'],
+  trust:['rune-pulse','hero-staff'],dream:['rune-pulse','hero-star'],growth:['home-heal-glow','hero-leaf'],
+  healing:['home-heal-glow','hero-leaf'],hope:['hero-butterfly','hero-wing'],joy:['rune-pulse','hero-star'],
+  luck:['rune-pulse','coin'],memory:['home-heal-glow','hero-star'],night:['rune-pulse','hero-wing'],sadness:['rune-pulse','hero-leaf'],
 };
 function stopHomeMotion(){
   clearTimeout(homeBlinkTimer);clearTimeout(homeOpenTimer);clearTimeout(homeTapTimer);homeTapTimer=null;
@@ -429,6 +429,9 @@ function startHomeMotion(hero){
       if(homeReaction===controller){button.classList.remove('reacting','home-notice','home-act','home-effect','home-cup');homeReaction=null;}
     }
   }
+  button.onpointerdown=()=>button.classList.add('home-pointer');
+  button.onkeydown=()=>button.classList.remove('home-pointer');
+  button.onblur=()=>button.classList.remove('home-pointer');
   button.onpointerenter=event=>{
     if(event.pointerType!=='mouse'||homeReduced()||homeReaction||!closed.complete||!closed.naturalWidth)return;
     clearTimeout(homeOpenTimer);button.classList.add('blinking');

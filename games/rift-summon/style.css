@@ -819,8 +819,8 @@ body:has(#camp:not([hidden])) { background-image:url("art/town.webp"); backgroun
 @keyframes rim-release { 0% { opacity:.45; } 25% { opacity:1; scale:1.13; } 100% { opacity:var(--glow); } }
 #capsule-show[data-motion=off] .summon-intro-scene * { opacity:1; }
 
-body:has(#camp:not([hidden])) { background-image:url("art/town-avenue.webp"); }
-#camp .world-camp { background:url("art/town-avenue.webp") center / 100% 100% no-repeat; }
+body:has(#camp:not([hidden])) { background-image:url("art/town-avenue-hd.webp"); }
+#camp .world-camp { background:url("art/town-avenue-hd.webp") center / 100% 100% no-repeat; }
 #camp .town-map { padding:0 0 19%; }
 #camp .town-landmark { display:flex; justify-content:center; align-items:flex-end; padding-bottom:3%; }
 #camp .town-landmark span { transition:filter .15s,transform .15s; box-shadow:0 2px 5px #332009b0; }
@@ -830,7 +830,16 @@ body:has(#camp:not([hidden])) { background-image:url("art/town-avenue.webp"); }
 #camp .town-landmark:active::before { opacity:.6; }
 #camp-hero-motion { inset:14% 3% 22%; }
 @media (orientation:portrait) {
- #camp .world-camp { background: url("art/town-avenue.webp") 28% bottom / auto 65% no-repeat; }
+ #camp .world-camp { background: url("art/town-avenue-hd.webp") 28% bottom / auto 65% no-repeat; }
  #camp .town-map { padding:0 0 19%; }
  #camp-hero-motion { inset:0 2% 2%; }
+}
+
+#camp-featured-button.home-pointer:focus { outline:none; box-shadow:none; }
+#camp-featured-button:is([data-hero=healing],[data-hero=growth],[data-hero=memory]).home-effect #camp-aura-wrap { inset:39% 33% 36% 45%; }
+#camp-featured-button.home-effect #camp-aura { display:block; }
+body:has(#camp:not([hidden])) { background-size:cover; background-position:center; }
+#camp .world-camp { background:none; }
+@media (orientation:portrait) {
+ #camp .world-camp { background:url("art/town-avenue-hd.webp") 28% bottom / auto 65% no-repeat; }
 }
