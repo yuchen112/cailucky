@@ -76,3 +76,6 @@
  #detail .growth-materials .material-labels strong{font-size:clamp(7px,9cqw,9px);white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
  #detail .growth-materials .material-labels small{font-size:clamp(6px,8cqw,8px);white-space:normal}
 }
+/* Override the older generic slot-number rules, including their inset and color. */
+#battle .slot i.combat-number{inset:auto;left:50%;top:38%;margin:0;align-content:normal;z-index:14;font-size:clamp(14px,2vw,24px);font-style:normal;transform:translate(-50%,-50%)}
+#battle .combat-damage{color:#fff0db}#battle .combat-heal{color:#9affb5}#battle .combat-shield{color:#ffe38b}
