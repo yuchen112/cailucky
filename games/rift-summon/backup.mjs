@@ -1,12 +1,12 @@
-import {migrateCombatSave} from './save-migration.mjs?v=combat-4';
-import {heroCapacity,migrateHeroProgression} from './progression.mjs?v=combat-4';
-import {cards, stages, starter} from './battle.mjs?v=combat-4';
-import {heroes} from './heroes.mjs?v=combat-4';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=combat-4';
-import {validInventory} from './inventory.mjs?v=combat-4';
+import {migrateCombatSave} from './save-migration.mjs?v=bag18-1';
+import {heroCapacity,migrateHeroProgression} from './progression.mjs?v=bag18-1';
+import {cards, stages, starter} from './battle.mjs?v=bag18-1';
+import {heroes} from './heroes.mjs?v=bag18-1';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=bag18-1';
+import {validInventory} from './inventory.mjs?v=bag18-1';
 
-import {validDaily,dailyStage} from './daily.mjs?v=combat-4';
-import {materials} from './materials.mjs?v=combat-4';
+import {validDaily,dailyStage} from './daily.mjs?v=bag18-1';
+import {materials} from './materials.mjs?v=bag18-1';
 const format = 'cxq-rift-summon';
 const limit = 1024 * 1024;
 const integer = (n,min,max) => Number.isInteger(n) && n >= min && n <= max;

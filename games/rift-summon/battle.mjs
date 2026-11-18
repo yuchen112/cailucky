@@ -1,7 +1,7 @@
-import {cards,starter} from './card-data.mjs?v=combat-4';
-import {extendCampaign} from './campaign-expansion.mjs?v=combat-4';
+import {cards,starter} from './card-data.mjs?v=bag18-1';
+import {extendCampaign} from './campaign-expansion.mjs?v=bag18-1';
 export {cards,starter};
-export {createBattle,applyAction} from './battle-engine.mjs?v=combat-4';
+export {createBattle,applyAction} from './battle-engine.mjs?v=bag18-1';
 const sentries = ['guard', 'bomb', 'knight', 'ax', 'ghost', 'giant'];
 
 

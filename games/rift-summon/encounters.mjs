@@ -1,4 +1,4 @@
-import {heroHP,profiles} from './combat-rules.mjs?v=combat-4';
+import {heroHP,profiles} from './combat-rules.mjs?v=bag18-1';
 export const factions={
  fortress:['guard','knight','bow','giant','badgerforge','capyguard','humanlamp','rampart'],
  grove:['turtle','stag','hare','frog','beaver','hedgehog','koala','pandaoracle'],

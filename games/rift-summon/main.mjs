@@ -1,24 +1,26 @@
-import {migrateCombatSave} from './save-migration.mjs?v=combat-4';
-import {cardStats,cardDescription,profiles} from './combat-rules.mjs?v=combat-4';
-import {runeProfile,runeAdvancement} from './runes.mjs?v=combat-4';
-import {effectPoints,effectNeeded,grantEffect} from './inventory.mjs?v=combat-4';
-import {exclusiveInfo,exclusiveGroups} from './exclusive-cards.mjs?v=combat-4';
-import {runes,runeBonus,runeDescription} from './runes.mjs?v=combat-4';
-import {signatureDescription} from './combat-effects.mjs?v=combat-4';
-import {pityTier,pityRemaining} from './economy.mjs?v=combat-4';
-import {fragmentValue,exchangeCost,protectedItems,dismantle,exchangeCard} from './recycle.mjs?v=combat-4';
-import {heroSkillProfile} from './hero-skills.mjs?v=combat-4';
-import {heroHealth,heroCapacity,heroLimits,nextHeroCapacity,migrateHeroProgression} from './progression.mjs?v=combat-4';
-import {createDialoguePicker} from './home-dialogue.mjs?v=combat-4';
-import {materials,bookFor} from './materials.mjs?v=combat-4';
-import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=combat-4';
-import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=combat-4';
-import {heroes} from './heroes.mjs?v=combat-4';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=combat-4';
-import {makeBackup, readBackup} from './backup.mjs?v=combat-4';
-import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=combat-4';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,capsuleCards,walletCardIds} from './economy.mjs?v=combat-4';
-import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=combat-4';
+import {materialExperience,materialEffect,feedingValue,isTrained,experienceRoom,lineupAdvice} from './enhancement.mjs?v=bag18-1';
+import {statusDetails,runeReadiness} from './combat-feedback.mjs?v=bag18-1';
+import {migrateCombatSave} from './save-migration.mjs?v=bag18-1';
+import {cardStats,cardDescription,profiles} from './combat-rules.mjs?v=bag18-1';
+import {runeProfile,runeAdvancement} from './runes.mjs?v=bag18-1';
+import {effectPoints,effectNeeded,grantEffect} from './inventory.mjs?v=bag18-1';
+import {exclusiveInfo,exclusiveGroups} from './exclusive-cards.mjs?v=bag18-1';
+import {runes,runeBonus,runeDescription} from './runes.mjs?v=bag18-1';
+import {signatureDescription} from './combat-effects.mjs?v=bag18-1';
+import {pityTier,pityRemaining} from './economy.mjs?v=bag18-1';
+import {fragmentValue,exchangeCost,protectedItems,dismantle,exchangeCard} from './recycle.mjs?v=bag18-1';
+import {heroSkillProfile} from './hero-skills.mjs?v=bag18-1';
+import {heroHealth,heroCapacity,heroLimits,nextHeroCapacity,migrateHeroProgression} from './progression.mjs?v=bag18-1';
+import {createDialoguePicker} from './home-dialogue.mjs?v=bag18-1';
+import {materials,bookFor} from './materials.mjs?v=bag18-1';
+import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=bag18-1';
+import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=bag18-1';
+import {heroes} from './heroes.mjs?v=bag18-1';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=bag18-1';
+import {makeBackup, readBackup} from './backup.mjs?v=bag18-1';
+import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=bag18-1';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,capsuleCards,walletCardIds} from './economy.mjs?v=bag18-1';
+import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=bag18-1';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -230,7 +232,7 @@ function heroDetails(hero){
  layout.append(artwork(hero.id,'hero'),copy);modal(layout);
 }
 const rankIndex=id=>rarityNames.indexOf(rarity(id));
-const materialXP=item=>materials[item.id]?.xp??[40,50,65,80,100,125,150,200][rankIndex(item.id)]??50;
+const materialXP=materialExperience;
 function orderList(items,key,comparators){
   const order=listSort[key]??{key:'tier',asc:false};
   return items.sort((a,b)=>(order.asc?1:-1)*(comparators[order.key]??comparators.tier)(a,b));
@@ -321,7 +323,7 @@ function runeBadge(id, status, icon=id) {
 }
 function runeDetails(id,second=false){
  const battleVisible=!get('battle').hidden,item=battleVisible?(second?state.rune2:{id:state.rune,level:state.runeLevel,effect:state.runeEffect}):instance(second?teamItems.rune2:teamItems.rune),level=item?.id===id?item.level:1,effect=item?.id===id?item.effect??1:1;
- const panel=element('div','','rune-detail');panel.append(runeImage(id),element('h2',runes[id].name),element('p',runeDescription(id,level,effect)),element('p',id==='none'?'未裝備':`經驗 Lv.${level}/5・能力 Lv.${effect}/10`));modal(panel);
+ const panel=element('div','','rune-detail');panel.append(runeImage(id),element('h2',runes[id].name),element('p',runeDescription(id,level,effect)),element('p',id==='none'?'未裝備':`經驗 Lv.${level}/5・能力 Lv.${effect}/10`));if(battleVisible&&id!=='none')panel.append(element('p',runeReadiness(id,level,effect,state.sides[0],state.sides[1],state.runeStates?.[0]?.[second?'second':'first'],state.round,state.losses?.[0]??0).detail));modal(panel);
 }
 function showRunes(from) {
   runeReturn=from;
@@ -397,6 +399,7 @@ function cardDetail(card) {
   info.append(element('h2',card.name),element('strong',(card.skill||'普攻')+'・效果 Lv.'+(card.effect??1)),
     element('p',card.summonKind?`繼承等級 Lv.${card.level}・攻擊 ${card.attack}・生命 ${card.hp}/${card.max}。${card.summonKind==='egg'?'距重生 '+card.incubate+' 次己方回合開始；卵被擊破即無法重生。':'召喚物不能再次接替或復活。'}`:cardDescription(card.id,card.level,card.effect)),
     element('p',`生命 ${card.hp}/${card.max}・護盾 ${card.shield}・倒數 ${card.count}`,'inspector-stats'));
+  for(const text of statusDetails(card))info.append(element('p',text,'unit-status-detail'));
   layout.append(cardFace(card),info);
   modal(layout);
 }
@@ -967,26 +970,29 @@ function itemDetail(item,allowUpgrade=false) {
   }
   return layout;
 }
-function finishGrowth(item,message){
-  if(!save())return;
+function finishGrowth(item,message,persist=true){
+  if(persist&&!save())return;
   renderInventory();modal(itemDetail(item,true));notify(message);void unlock().then(()=>play('upgrade'));
 }
 function chooseMaterial(target,mode) {
   const required=mode==='break'?(target.breakthrough??0)+1:null;
-  const powerOf=effectPoints;
-  const safe=item=>item.uid!==target.uid&&!item.locked&&!teamsUsing(item.uid).length&&(item.kind==='material'||item.level===1&&!item.experience&&(item.effect??1)===1);
+  const powerOf=materialEffect;
+  const protectedUIDs=protectedItems(teams,inventory,featuredHeroId());
+  const safe=item=>item.uid!==target.uid&&!protectedUIDs.has(item.uid);
   const matches=item=>mode==='xp'?item.kind===target.kind||item.kind==='material'&&!materials[item.id]?.kind:
     item.kind===target.kind&&item.id===target.id||mode==='effect'&&materials[item.id]?.kind===target.kind;
   const candidates=inventory.items.filter(item=>safe(item)&&matches(item));
   const xpOf=materialXP;
   const available=()=>mode==='xp'?target.level<levelLimit(target):mode==='effect'?(target.effect??1)<effectsMax:target.level===levelLimit(target)&&levelLimit(target)<(target.kind==='hero'?50:99);
-  const enough=count=>count>0&&(required===null||count===required);
+  const enough=count=>count>0&&count<=100&&(required===null||count===required);
   const selected=new Set(), preview=element('p'), title={xp:'經驗強化',break:'同名突破',effect:'效果強化'}[mode];
-  const apply=confirmButton('確定強化',()=>{
+  const perform=()=>{
+    protectedUIDs.clear();for(const uid of protectedItems(teams,inventory,featuredHeroId()))protectedUIDs.add(uid);
     const chosen=[...selected].map(instance);
     if(!available()||!enough(chosen.length)||chosen.some(item=>!item||!safe(item)||!matches(item)))return;
     const goldCost=mode==='xp'?Math.ceil(chosen.reduce((n,i)=>n+xpOf(i),0)/10):mode==='effect'?chosen.reduce((n,i)=>n+powerOf(i),0)*40:0;
     if(wallet.gold<goldCost){notify('金幣不足。');return;}
+    const before={target:structuredClone(target),items:[...inventory.items],wallet:structuredClone(wallet),consumed:[...consumed]};
     if(mode==='xp'&&!grantExperience(target,chosen.reduce((sum,item)=>sum+xpOf(item),0)))return;
     if(mode==='break'){target.breakthrough=(target.breakthrough??0)+1;if(target.reserveExperience){grantExperience(target,target.reserveExperience);target.reserveExperience=0;}}
     if(mode==='effect')grantEffect(target,chosen.reduce((n,i)=>n+powerOf(i),0));
@@ -1002,7 +1008,17 @@ function chooseMaterial(target,mode) {
       if(item.kind==='card'&&!count){wallet.unlocked=wallet.unlocked.filter(id=>id!==item.id);wallet.exclusiveUnlocked=(wallet.exclusiveUnlocked??[]).filter(id=>id!==item.id);}
     }
     const summary=mode==='break'?`突破成功，等級上限 Lv.${levelLimit(target)}。`:mode==='effect'?`效果強化完成，目前效果 Lv.${target.effect}。`:`已強化 ${itemName(target)}，目前 Lv.${target.level}。`;
-    finishGrowth(target,summary);
+    if(!save()){for(const key of Object.keys(target))delete target[key];Object.assign(target,before.target);inventory.items=before.items;wallet=before.wallet;consumed.clear();for(const id of before.consumed)consumed.add(id);modal(panel);notify('儲存失敗，素材與金幣已還原。',true);return;}
+    finishGrowth(target,summary,false);
+  };
+  const apply=confirmButton('確定強化',()=>{
+    const chosen=[...selected].map(instance).filter(Boolean),trained=chosen.filter(isTrained),xp=chosen.reduce((n,i)=>n+xpOf(i),0),overflow=mode==='xp'?Math.max(0,xp-experienceRoom(target)):0;
+    if(trained.length||overflow){const review=element('section','','feeding-review');review.append(element('h2','確認消耗素材'),element('p',`共 ${chosen.length} 張，其中已培養 ${trained.length} 張。`));
+      if(overflow)review.append(element('strong',`超出目前等級上限，${overflow.toLocaleString()} 經驗不會保留；可減少素材或先突破。`));
+      review.append(element('p',mode==='xp'?'經驗回收為品階基礎值＋已投入經驗的80%；效果與突破不轉為經驗。':mode==='effect'?'能力培養值包含已投入效果培養值的80%；經驗與突破不轉入。':'同名突破僅計算同名張數，原經驗與效果培養不轉入。'));
+      for(const i of trained)review.append(element('p',`${itemName(i)} Lv.${i.level}・效果 ${i.effect??1}・突破 ${i.breakthrough??0}・提供 ${mode==='xp'?xpOf(i).toLocaleString()+' 經驗':mode==='effect'?powerOf(i)+' 培養值':'1 張同名素材'}`));
+      review.append(confirmButton('確定消耗並強化',perform),confirmButton('返回調整素材',()=>modal(panel)));modal(review);
+    }else perform();
   });
   const project=()=>{
     const chosen=[...selected].map(instance).filter(Boolean);
@@ -1026,10 +1042,11 @@ function chooseMaterial(target,mode) {
     }));
     preview.textContent=mode==='xp'?`投入 ${xp.toLocaleString('zh-TW')} 經驗・剩餘經驗 ${result.experience}`:
       mode==='effect'?`能力 Lv.${target.effect??1} → ${result.effect}・剩餘培養值 ${result.effectExperience??0} / ${effectNeeded(result)}`:`等級上限 Lv.${levelLimit(target)} → ${levelLimit(result)}`;
-    if(mode==='xp'&&selected.size&&result.level===levelLimit(target))preview.textContent+='・上限外經驗不保留';
+    if(mode==='xp'&&selected.size){const overflow=Math.max(0,xp-experienceRoom(target));preview.textContent+='・溢出 '+overflow.toLocaleString()+' 經驗'+(overflow?'（不保留，建議先突破或減少素材）':'');}
     const chosen=[...selected].map(instance).filter(Boolean),cost=mode==='xp'?Math.ceil(xp/10):mode==='effect'?chosen.reduce((n,i)=>n+powerOf(i),0)*40:0;
     preview.textContent+='・消耗金幣 '+cost.toLocaleString();
-    if(target.kind==='rune')preview.textContent+='。'+runeDescription(target.id,result.level,result.effect??1);
+
+    const details=summary?.querySelector('.growth-skill-preview');if(details){const current=target.kind==='hero'?heroSkillProfile(target.id,target.effect??1).detail:target.kind==='rune'?runeDescription(target.id,target.level,target.effect??1):cardDescription(target.id,target.level,target.effect??1);const next=result.kind==='hero'?heroSkillProfile(result.id,result.effect??1).detail:result.kind==='rune'?runeDescription(result.id,result.level,result.effect??1):cardDescription(result.id,result.level,result.effect??1);details.replaceChildren(element('summary','技能效果比較'),element('p','目前：'+current),element('p','強化後：'+next));}
     apply.disabled=!enough(selected.size)||wallet.gold<cost;
   };
   const panel=element('div','','growth-picker');
@@ -1043,6 +1060,7 @@ function chooseMaterial(target,mode) {
   const targetLevel=element('input');targetLevel.type='number';targetLevel.min=target.level+1;targetLevel.max=levelLimit(target);
   targetLevel.value=levelLimit(target);targetLevel.setAttribute('aria-label','目標等級');
   const targetLabel=element('label','目標 Lv. ');targetLabel.append(targetLevel);targetLabel.hidden=mode!=='xp';
+  const includeTrained=element('input');includeTrained.type='checkbox';includeTrained.setAttribute('aria-label','批次包含已培養素材');const includeLabel=element('label','批次包含已培養素材 ');includeLabel.className='include-trained';includeLabel.prepend(includeTrained);
   const sortKey='growth-'+mode;
   const visible=()=>orderList(candidates.filter(item=>itemSearch(item).includes(search.value.trim())&&
     (rarityFilter.value==='all'||rarity(item.id)===rarityFilter.value)),sortKey,{...comparisons,value:(a,b)=>xpOf(a)-xpOf(b)});
@@ -1054,6 +1072,8 @@ function chooseMaterial(target,mode) {
     }else if(mode==='break')remaining=required-selected.size;else {const current=project().result;remaining=0;for(let n=current.effect??1;n<10;n++)remaining+=[1,2,3,5,8,12,18,26,36][n-1];remaining-=current.effectExperience??0;}
     const ordered=[...items].sort((a,b)=>Number(a.kind!=='material')-Number(b.kind!=='material'));
     for(const item of ordered){
+      if(selected.size>=(mode==='break'?required:100))break;
+      if(!includeTrained.checked&&isTrained(item))continue;
       if(remaining<=0)break;
       if(mode==='xp'&&item.kind===target.kind&&item.id===target.id)continue;
       if(selected.has(item.uid))continue;
@@ -1084,17 +1104,21 @@ function chooseMaterial(target,mode) {
     actions.append(confirmButton('一鍵選階',()=>{gradePicker.hidden=!gradePicker.hidden;}));
   }
   actions.append(confirmButton(mode==='break'?'一鍵補足':'補足目標',()=>selectMany(visible(),limitGoal())),
-    confirmButton('全選篩選',()=>{for(const item of visible()){if(selected.size>=(mode==='break'?required:100))break;selected.add(item.uid);}fill();update();}),
+    confirmButton('全選篩選',()=>{for(const item of visible()){if(!includeTrained.checked&&isTrained(item))continue;if(selected.size>=(mode==='break'?required:100))break;selected.add(item.uid);}fill();update();}),
+    confirmButton('查看選取',()=>{const item=instance([...selected].at(-1));if(item)modal(itemDetail(item),confirmButton('返回素材選取',()=>modal(panel)));else notify('請先選取一份素材。');}),
     confirmButton('清除選取',()=>{selected.clear();fill();update();}));
+  let materialPage=0;const materialPager=element('nav','','material-pager');
   const fill=()=>{
-    grid.replaceChildren(...visible().map(item=>{
+    const all=visible(),pages=Math.max(1,Math.ceil(all.length/18));materialPage=Math.min(materialPage,pages-1);
+    const prev=confirmButton('‹',()=>{materialPage--;fill();}),next=confirmButton('›',()=>{materialPage++;fill();});prev.disabled=materialPage===0;next.disabled=materialPage===pages-1;materialPager.replaceChildren(prev,element('small',`${materialPage+1} / ${pages}・${all.length} 份`),next);
+    grid.replaceChildren(...all.slice(materialPage*18,materialPage*18+18).map(item=>{
       const button=confirmButton('',()=>{
         const {result}=project();
         if(selected.has(item.uid))selected.delete(item.uid);
-        else if(mode==='break'?selected.size<required:mode==='effect'?(result.effect??1)<effectsMax:selected.size<100)selected.add(item.uid);
+        else if(mode==='break'?selected.size<required:mode==='effect'?selected.size<100&&(result.effect??1)<effectsMax:selected.size<100)selected.add(item.uid);
         button.setAttribute('aria-pressed',String(selected.has(item.uid)));update();
       });
-      button.append(itemArt(item),element('strong',itemName(item)),element('small',mode==='xp'?rarity(item.id)+'・+ '+xpOf(item).toLocaleString('zh-TW')+' 經驗':mode==='effect'?rarity(item.id)+'・'+powerOf(item)+' 培養值':`Lv.${item.level}・${rarity(item.id)}`));
+      const labels=element('span','','material-labels');labels.append(element('strong',itemName(item)),element('small',mode==='xp'?'+'+new Intl.NumberFormat('zh-TW',{notation:'compact',maximumFractionDigits:1}).format(xpOf(item))+' 經驗':mode==='effect'?'+'+powerOf(item)+' 培養值':rarity(item.id)));if(isTrained(item))labels.append(element('small',`Lv.${item.level}・效${item.effect??1}`,'trained-label'));button.title=`${itemName(item)}・Lv.${item.level}・效果 ${item.effect??1}・提供 ${xpOf(item).toLocaleString()} 經驗`;button.append(itemArt(item),labels);
       button.setAttribute('aria-pressed',String(selected.has(item.uid)));
       button.dataset.tier=rarity(item.id);button.dataset.uid=item.uid;
       for(const image of button.querySelectorAll('img')){image.loading='lazy';image.decoding='async';}
@@ -1102,16 +1126,17 @@ function chooseMaterial(target,mode) {
     }));
     if(!grid.children.length)grid.append(element('p','沒有符合的可用素材。'));
   };
-  search.oninput=fill;rarityFilter.onchange=fill;fill();update();
-  const summary=element('aside','','growth-summary');summary.append(element('h2',title),columns,counter,preview,apply,confirmButton('返回',()=>modal(itemDetail(target,true))));
-  const listing=element('div','','growth-listing');listing.append(search,rarityFilter,listToolbar(sortKey,{tier:'品階',name:'名稱',uid:'取得順序',...(mode==='xp'?{value:'提供經驗'}:{})},fill),targetLabel,actions,grid,gradePicker);
-  panel.append(listing,summary);modal(panel);get('detail').scrollTop=0;
+  search.oninput=rarityFilter.onchange=()=>{materialPage=0;fill();};
+  const summary=element('aside','','growth-summary');summary.append(element('h2',title),columns,counter,preview,element('details','','growth-skill-preview'),apply,confirmButton('返回',()=>modal(itemDetail(target,true))));
+  const listing=element('div','','growth-listing');listing.append(search,rarityFilter,listToolbar(sortKey,{tier:'品階',name:'名稱',uid:'取得順序',...(mode==='xp'?{value:'提供經驗'}:{})},()=>{materialPage=0;fill();}),targetLabel,includeLabel,element('small','手動可選已培養個體；批次預設保留。投入經驗回收80%，效果／突破另依模式計算。'),actions,grid,materialPager,gradePicker);
+  panel.append(listing,summary);fill();update();modal(panel);get('detail').scrollTop=0;
 }
 
 const comparisons={
     uid:(a,b)=>Number(a.uid.slice(1))-Number(b.uid.slice(1)), tier:(a,b)=>rarityNames.indexOf(rarity(a.id))-rarityNames.indexOf(rarity(b.id)),
     level:(a,b)=>a.level-b.level, effect:(a,b)=>(a.effect??1)-(b.effect??1), xp:(a,b)=>a.experience/xpNeeded(a.level,a)-b.experience/xpNeeded(b.level,b),
     name:(a,b)=>itemName(a).localeCompare(itemName(b),'zh-Hant'),
+    group:(a,b)=>itemName(a).localeCompare(itemName(b),'zh-Hant')||b.level-a.level,
   };
 function sortCollectibles(items,order){
   const direction=order.asc?1:-1;
@@ -1125,13 +1150,13 @@ function renderInventory() {
   get('bag-sort').value=order.key;
   get('bag-direction').textContent=order.asc?'↑':'↓';
   get('bag-direction').setAttribute('aria-label',get('bag-sort').selectedOptions[0].textContent+(order.asc?'由低到高':'由高到低'));
-  const visible=list.filter(item=>(tier==='all'||rarity(item.id)===tier)&&itemSearch(item).includes(query));
+  const visible=list.filter(item=>(tier==='all'||rarity(item.id)===tier)&&itemSearch(item).includes(query)&&({all:true,unused:!teamsUsing(item.uid).length,unlocked:!item.locked,untrained:!isTrained(item)})[get('inventory-status').value]);
   sortCollectibles(visible,order);
   get('inventory-heading').textContent=bagNames[bagKind];
   get('inventory-count').textContent=`持有 ${list.length} 份・顯示 ${visible.length} 份`;
   for(const button of document.querySelectorAll('[data-bag]'))button.setAttribute('aria-pressed',String(button.dataset.bag===bagKind));
-  const signature=[tier,query,order.key,order.asc].join('|');
-  const pageSize=innerHeight<=440?6:12;
+  const signature=[tier,query,get('inventory-status').value,order.key,order.asc].join('|');
+  const pageSize=18;
   const pageCount=Math.max(1,Math.ceil(visible.length/pageSize));
   const previous=bagPages[bagKind];
   const pageIndex=previous?.signature===signature?Math.min(previous.index,pageCount-1):0;
@@ -1140,10 +1165,10 @@ function renderInventory() {
     const used=teamsUsing(item.uid);
     const button=confirmButton('',()=>modal(itemDetail(item,true)));
     button.className='instance-tile';button.dataset.uid=item.uid;
-    button.append(itemArt(item),element('strong',itemName(item)),element('small',`${exclusiveInfo[item.id]?.code??rarity(item.id)}・Lv.${item.level}`));
-    if(item.kind==='hero'&&item.id===featuredHeroId())button.append(element('small','首頁展示中','featured-badge'));
-    if(item.locked)button.append(element('small','素材已鎖定','featured-badge'));
-    if(used.length)button.append(element('small',`編隊 ${used.join('、')}`));
+    const labels=element('span','','bag-labels');labels.append(element('strong',itemName(item)),element('small',`${exclusiveInfo[item.id]?.code??rarity(item.id)}・Lv.${item.level}`));button.append(itemArt(item),labels);
+    if(item.kind==='hero'&&item.id===featuredHeroId())labels.append(element('small','首頁展示中','featured-badge'));
+    if(item.locked)labels.append(element('small','已鎖定','featured-badge'));
+    if(used.length)labels.append(element('small',`編隊 ${used.join('、')}`));
     return button;
   }):[element('p','沒有符合的持有物。')]));
   renderBagPager(pageCount);
@@ -1168,7 +1193,7 @@ function showInventory(kind=bagKind) {
 }
 for(const button of document.querySelectorAll('[data-bag]'))button.onclick=()=>{get('inventory-tier').value='all';get('inventory-search').value='';showInventory(button.dataset.bag);};
 for(const tier of rarityNames){const option=element('option',tier);option.value=tier;get('inventory-tier').append(option);}
-get('inventory-tier').onchange=renderInventory;
+get('inventory-tier').onchange=get('inventory-status').onchange=renderInventory;
 get('inventory-search').oninput=renderInventory;
 get('inventory-back').onclick=showCamp;
 get('bag-sort').onchange=()=>{bagSort[bagKind]={key:get('bag-sort').value,asc:bagSort[bagKind]?.asc??false};save();renderInventory();};
@@ -1233,7 +1258,7 @@ function renderTeamEditor() {
   const saveTeam=confirmButton('儲存編隊',()=>{
     if(commitTeamDraft()){renderTeamEditor();notify(`編隊 ${activeTeam+1} 已儲存。`);}
   });
-  header.append(tabs,saveTeam);
+  const analysis=lineupAdvice(teamDraft.cards.map(instance).filter(Boolean),cards,profiles);const c=analysis.counts;header.append(tabs,confirmButton('牌組分析',()=>modal(element('h2','牌組分析'),element('p',`輸出 ${c.damage}・護衛／護盾 ${c.protection}・續航 ${c.healing}・控制／狀態 ${c.control}`),element('p',`平均部署倒數 ${analysis.average.toFixed(1)}`),...analysis.notes.map(note=>element('p',note)),element('small','定位可重疊，僅提供搭配提示，不限制編隊。'))),saveTeam);
   const slots=element('div','','team-instance-slots');
   slots.style.setProperty('--team-rows',Math.ceil((Math.max(capacity,teamDraft.cards.length)+3)/4));
   function slot(kind,index,uid,label) {
@@ -1360,8 +1385,9 @@ function renderBoard(frame, event) {
   get('round').textContent = `回合 ${frame.round}`;
   for(const [index,id,charges] of [[1,state.rune,frame.charges],[2,state.rune2?.id??'none',frame.rune2Charges??frame.rune2?.charges??0]]){
     const button=get(index===1?'rune-status':'rune-status-2');
-    const wait=Math.max(0,((frame.runeActivity??state.runeStates?.[0])?.[index===1?'first':'second']?.next??0)-frame.round);
-    const status=id==='none'?'未裝備':runes[id].name+'\n'+(!charges?'已耗盡':wait?'冷卻 '+wait:'待觸發');
+    const slot=index===1?{id:state.rune,level:state.runeLevel,effect:state.runeEffect}:state.rune2;
+    const ready=runeReadiness(id,slot?.level??1,slot?.effect??1,{...state.sides[0],...player},{...state.sides[1],...enemy},(frame.runeActivity??state.runeStates?.[0])?.[index===1?'first':'second'],frame.round,state.losses?.[0]??0);
+    const status=id==='none'?'未裝備':runes[id].name+'\n'+ready.short;button.title=ready.detail;
     button.replaceChildren(runeBadge(id,status,id!=='none'&&!charges?'spent':id));
     button.setAttribute('aria-label','符文 '+index+'・'+button.textContent);
   }
@@ -1482,6 +1508,7 @@ async function act(action) {
     for(const lane of event.lanes??[]) {
       const slot=lane===null?(event.target===0?get('health'):get('enemy-health')):get('lanes').querySelector(`[data-slot="${event.target}:${lane}"]`);
       if(!slot) continue;
+      if(event.feedback){const f=event.feedback,label=f.type==='damage'?`−${f.amount}${f.absorbed?' ◆'+f.absorbed:''}`:f.type==='shield'?'◆ +'+f.amount:'+'+f.amount;const number=element('i',label,'combat-number combat-'+f.type);slot.append(number);setTimeout(()=>number.remove(),ms);}
       if(lane===null || event.kind==='hero') {
         if(!reducedMotion)slot.animate([{opacity:.45,transform:'scale(1.12)'},{opacity:1,transform:'none'}],ms);
         if(lane===null&&event.kind==='hit'){
@@ -1498,7 +1525,7 @@ async function act(action) {
       img.alt='';
       slot.append(img);
       if(series) frameAnimations.push({img,series});
-      if(event.kind==='hit') slot.append(element('i',event.message.split('：').at(-1)));
+      if(event.kind==='hit'&&!event.feedback) slot.append(element('i',event.message.split('：').at(-1)));
       if(!reducedMotion) img.animate([{opacity:0,transform:'scale(.68)'},{opacity:1,offset:.28},{opacity:.65,offset:.72},{opacity:0,transform:'scale(1.13)'}],{duration:ms,fill:'both'});
     }
     for(let step=1;step<=4;step++) {
@@ -1856,6 +1883,7 @@ function openRecycle(mode='dismantle',initialGroup='card'){
   for(const id of ['all',...rarityNames]){const o=element('option',id==='all'?'全品階':id);o.value=id;tier.append(o);}
   const grid=element('div','','team-candidates recycle-grid'),footer=element('footer','','recycle-footer'),pager=element('nav','','recycle-pager');
   const selected=new Set();let page=0;
+  const inspect=confirmButton('查看選取',()=>{const item=instance([...selected].at(-1));if(item)modal(itemDetail(item),confirmButton('返回工坊',()=>modal(panel)));});
   const blocked=()=>protectedItems(teams,inventory,featuredHeroId());
   const visible=()=>{
     const entries=mode==='exchange'?Object.keys(cards).filter(id=>!['boss','spirit'].includes(id)).map((id,i)=>({id,kind:'card',uid:'i'+i,level:1,experience:0})):inventory.items.filter(i=>i.kind===kind.value&&!blocked().has(i.uid));
@@ -1871,11 +1899,11 @@ function openRecycle(mode='dismantle',initialGroup='card'){
       if(entries.some(i=>i.level>1||i.experience||(i.effect??1)>1))review.append(element('strong','包含已培養個體；培養投入不額外返還。'));
       const names=element('div','','recycle-review-list');for(const i of entries)names.append(element('p',`${itemName(i)}・${rarity(i.id)}・Lv.${i.level}・效果 ${i.effect??1}・經驗 ${i.experience}`));
       review.append(names,confirmButton('確定消耗並分解',()=>{const current=dismantle(inventory,wallet,[...selected],blocked());if(commitRecycle(current)){notify(`分解完成，獲得 ${current.gain} 碎片。`);void unlock().then(()=>play('upgrade'));openRecycle();}}),confirmButton('取消',()=>openRecycle()));modal(review);
-    });action.disabled=!entries.length;
-    footer.replaceChildren(element('strong',`已選 ${entries.length} / 100 份・可得 ${gain} 碎片`),action,confirmButton('全選篩選',()=>{for(const i of visible()){if(selected.size>=100)break;selected.add(i.uid);}render();}),confirmButton('一鍵選未培養 N／R',()=>{for(const i of visible()){if(selected.size>=100)break;if(['N','R'].includes(rarity(i.id))&&i.level===1&&!i.experience&&(i.effect??1)===1)selected.add(i.uid);}render();}),confirmButton('清除',()=>{selected.clear();render();}));
+    });action.disabled=!entries.length;inspect.disabled=!entries.length;
+    footer.replaceChildren(element('strong',`已選 ${entries.length} / 100 份・可得 ${gain} 碎片`),action,inspect,confirmButton('全選篩選',()=>{for(const i of visible()){if(selected.size>=100)break;selected.add(i.uid);}render();}),confirmButton('一鍵選未培養 N／R',()=>{for(const i of visible()){if(selected.size>=100)break;if(['N','R'].includes(rarity(i.id))&&i.level===1&&!i.experience&&(i.effect??1)===1)selected.add(i.uid);}render();}),confirmButton('清除',()=>{selected.clear();render();}));
   }
   function render(){
-    const all=visible(),pageSize=innerHeight<=500?6:12,pages=Math.max(1,Math.ceil(all.length/pageSize));page=Math.min(page,pages-1);
+    const all=visible(),pageSize=18,pages=Math.max(1,Math.ceil(all.length/pageSize));page=Math.min(page,pages-1);
     grid.replaceChildren(...all.slice(page*pageSize,page*pageSize+pageSize).map(item=>{
       const b=confirmButton('',()=>{
         if(mode==='exchange'){
@@ -1885,8 +1913,8 @@ function openRecycle(mode='dismantle',initialGroup='card'){
         }
         if(selected.has(item.uid))selected.delete(item.uid);else if(selected.size<100)selected.add(item.uid);render();
       });
-      b.append(itemArt(item),element('strong',(exclusiveInfo[item.id]?.code?exclusiveInfo[item.id].code+' ':'')+itemName(item)),element('small',`${rarity(item.id)}・${mode==='exchange'?exchangeCost(item.id)+' 碎片':`Lv.${item.level} → ${fragmentValue(item)} 碎片`}`));b.dataset.tier=rarity(item.id);b.dataset.uid=item.uid;
-      if(mode==='dismantle'){b.setAttribute('aria-pressed',String(selected.has(item.uid)));b.append(element('small',selected.has(item.uid)?'✓ 已選':'點選加入'));}return b;
+      const labels=element('span','','bag-labels');labels.append(element('strong',(exclusiveInfo[item.id]?.code?exclusiveInfo[item.id].code+' ':'')+itemName(item)),element('small',`${rarity(item.id)}・${mode==='exchange'?exchangeCost(item.id)+' 碎片':`Lv.${item.level} → ${fragmentValue(item)} 碎片`}`));b.append(itemArt(item),labels);b.dataset.tier=rarity(item.id);b.dataset.uid=item.uid;
+      if(mode==='dismantle'){b.setAttribute('aria-pressed',String(selected.has(item.uid)));labels.append(element('small',selected.has(item.uid)?'✓ 已選':'點選加入'));b.classList.toggle('is-selected',selected.has(item.uid));}return b;
     }));
     if(!all.length)grid.append(element('p','沒有符合的可分解物件；鎖定、編隊中及首頁英雄不會列出。'));
     const prev=confirmButton('‹',()=>{page--;render();}),next=confirmButton('›',()=>{page++;render();});prev.disabled=page===0;next.disabled=page===pages-1;pager.replaceChildren(prev,element('span',`${page+1} / ${pages}`),next);update();

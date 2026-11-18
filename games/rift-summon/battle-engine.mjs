@@ -1,8 +1,8 @@
-import {cards,stages,starter} from './battle.mjs?v=combat-4';
-import {dailyStage} from './daily.mjs?v=combat-4';
-import {heroHealth,shuffleDeck} from './progression.mjs?v=combat-4';
-import {profiles,cardStats,skillScale,combatVersion} from './combat-rules.mjs?v=combat-4';
-import {runeProfile} from './runes.mjs?v=combat-4';
+import {cards,stages,starter} from './battle.mjs?v=bag18-1';
+import {dailyStage} from './daily.mjs?v=bag18-1';
+import {heroHealth,shuffleDeck} from './progression.mjs?v=bag18-1';
+import {profiles,cardStats,skillScale,combatVersion} from './combat-rules.mjs?v=bag18-1';
+import {runeProfile} from './runes.mjs?v=bag18-1';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 export function createBattle(rune='wall',hero='trust',stage=0,deck=starter,levels={},heroLevel=1,runeLevel=1,daily=null,effects={},heroEffect=1,runeEffect=1,rune2=null,instances=null,random=Math.random){
  const mission=daily?dailyStage(daily):stages[stage];if(!mission)throw Error('Unknown mission');
@@ -36,14 +36,14 @@ export function applyAction(previous,action){
  const capShield=c=>Math.round(c.max*.65);
  function shield(a,c,amount,source='護盾'){
   if(!c||c.hp<=0)return;const before=c.shield;c.shield=Math.min(capShield(c),c.shield+Math.max(1,Math.round(amount)));
-  if(c.shield>before)record('skill',`${source} → ${c.name}・護盾 +${c.shield-before}`,a,a,[state.sides[a].board.indexOf(c)]);
+  if(c.shield>before)record('skill',`${source} → ${c.name}・護盾 +${c.shield-before}`,a,a,[state.sides[a].board.indexOf(c)],{feedback:{type:'shield',amount:c.shield-before}});
  }
  function heal(a,c,amount,source='治療'){
   if(!c||c.hp<=0||c.antiHeal?.turns>0&&c.antiHeal.ratio>=1)return 0;
   const factor=(1-(c.antiHeal?.turns>0?c.antiHeal.ratio:0))*(c.id==='an01'?.75:1),n=Math.min(c.max-c.hp,Math.max(0,Math.round(amount*factor)));
-  if(n){c.hp+=n;record('skill',`${source} → ${c.name}・回復 ${n}`,a,a,[state.sides[a].board.indexOf(c)]);}return n;
+  if(n){c.hp+=n;record('skill',`${source} → ${c.name}・回復 ${n}`,a,a,[state.sides[a].board.indexOf(c)],{feedback:{type:'heal',amount:n}});}return n;
  }
- function heroHeal(a,amount,source){const s=state.sides[a],n=Math.min(s.maxHp-s.hp,Math.max(0,Math.round(amount)));if(n){s.hp+=n;record('skill',`${source}・英雄回復 ${n}`,a,a,[null]);}return n;}
+ function heroHeal(a,amount,source){const s=state.sides[a],n=Math.min(s.maxHp-s.hp,Math.max(0,Math.round(amount)));if(n){s.hp+=n;record('skill',`${source}・英雄回復 ${n}`,a,a,[null],{feedback:{type:'heal',amount:n}});}return n;}
  function clear(c){for(const key of ['burn','poison','stun','frost','silence','antiHeal','weaken','mark'])delete c[key];}
  function haste(a,delay=false){const list=state.sides[a].hand.filter(c=>delay?c.count<4:c.count>0).sort((x,y)=>x.count-y.count);if(list[0]){list[0].count=clamp(list[0].count+(delay?1:-1),0,4);record('skill',`${delay?'遲滯':'加速'} → ${list[0].name}・倒數 ${list[0].count}`,1-a,a,[null]);return true;}return false;}
  function buff(c,ratio,turns=2){c.power={ratio:Math.max(c.power?.ratio??0,ratio),turns};}
@@ -52,8 +52,8 @@ export function applyAction(previous,action){
   if(key==='frost'){
    if((c.immuneUntil??0)>=state.round)return;c.frost=(c.frost??0)+1;
    if(c.frost>=3){c.frost=0;c.stun=1;c.immuneUntil=state.round+2;}
-  }else if(key==='poison'){c.poison={stacks:Math.min(3,(c.poison?.stacks??0)+1),turns:3,amount:Math.max(1,Math.round(c.max*.03))};}
-  else if(key==='burn'){c.burn={amount:Math.max(1,Math.round((source?.baseAttack??10)*.35*skillScale(source?.effect??1))),turns:2};}
+  }else if(key==='poison'){c.poison={stacks:Math.min(3,(c.poison?.stacks??0)+1),turns:3,source:source?.name??'毒棘',amount:Math.max(1,Math.round(c.max*.03))};}
+  else if(key==='burn'){c.burn={source:source?.name??'燃燒',amount:Math.max(1,Math.round((source?.baseAttack??10)*.35*skillScale(source?.effect??1))),turns:2};}
   record('skill',`${source?.name??'符文'}・${{frost:'寒霜',poison:'中毒',burn:'燃燒'}[key]}`,a,1-a,[state.sides[1-a].board.indexOf(c)]);
  }
  let chain=0;
@@ -85,7 +85,7 @@ export function applyAction(previous,action){
   const barrier=c?c.shield:s.heroShield,absorb=Math.min(Math.round(barrier),Math.round(n*(1-pierce))),dealt=c?Math.min(c.hp,n-absorb):Math.min(s.hp,n-absorb);
   if(c){c.shield-=absorb;c.hp-=dealt;}else{s.heroShield-=absorb;s.hp-=dealt;
    const mazu=alive(target).find(x=>x.card.id==='dv01');if(s.hp<=0&&mazu&&!state.teamFlags[target].mazu){state.teamFlags[target].mazu=true;s.hp=Math.round(s.maxHp*.15);record('hero','天后護航・抵擋致命傷害',target,target,[null]);}}
-  record('hit',`${source.name} → ${c?.name??'英雄'}：${dealt} 傷害${absorb?'，盾吸收 '+absorb:''}`,a,target,[lane],{hp:c?.hp??s.hp,effectArt:kind==='explosion'?'fx-bomb':kind==='dot'||kind==='skill'?'fx-rune':kind==='reflect'?'fx-shield':'fx-ax'});
+  record('hit',`${source.name} → ${c?.name??'英雄'}：${dealt} 傷害${absorb?'，盾吸收 '+absorb:''}`,a,target,[lane],{hp:c?.hp??s.hp,feedback:{type:'damage',amount:dealt,absorbed:absorb},effectArt:kind==='explosion'?'fx-bomb':kind==='dot'||kind==='skill'?'fx-rune':kind==='reflect'?'fx-shield':'fx-ax'});
   if(c){
    if(!c.hp)die(target,c,lane);
    else{
