@@ -1,7 +1,9 @@
-import {heroCapacity} from './progression.mjs?v=book-growth-1';
+import {rarity} from './economy.mjs?v=hero-50-1';
+import {heroCapacity,heroLimits} from './progression.mjs?v=hero-50-1';
 export function newInventory() { return {next:1,items:[]}; }
 export function addInstance(inventory,kind,id,level=1,experience=0) {
   const item={uid:`i${inventory.next++}`,kind,id,level,experience};
+  if(kind==='hero')item.breakthrough=level>35?3:level>20?2:level>10?1:0;
   inventory.items.push(item);
   return item;
 }
@@ -23,15 +25,15 @@ export function migrateInventory(saved,wallet,owned,heroes,runes) {
 }
 export const limits=[20,40,60,80,99];
 export const effectsMax=10;
-export const levelLimit=item=>item.kind==='card'?limits[item.breakthrough??0]:5;
+export const levelLimit=item=>item.kind==='card'?limits[item.breakthrough??0]:item.kind==='hero'?heroLimits[item.breakthrough??0]:5;
 export const cardHealthBonus=level=>2*Math.min(4,Math.max(0,level-1))+Math.max(0,level-5);
 export const cardBonus=level=>Math.min(4,level-1)+Math.floor(Math.max(0,level-5)/8);
-export function xpNeeded(level) {return 100+(level-1)*50;}
+export function xpNeeded(level,item=null) {const rate=item?.kind==='hero'?({S:1.1,SS:1.2,SSR:1.3,UUR:1.4}[rarity(item.id)]??1):1;return Math.round((100+(level-1)*50)*rate);}
 export function grantExperience(item,amount) {
   if(item.level>=levelLimit(item))return false;
   item.experience+=amount;
-  while(item.level<levelLimit(item) && item.experience>=xpNeeded(item.level)) {
-    item.experience-=xpNeeded(item.level);
+  while(item.level<levelLimit(item) && item.experience>=xpNeeded(item.level,item)) {
+    item.experience-=xpNeeded(item.level,item);
     item.level++;
   }
   if(item.level===levelLimit(item))item.experience=0;
@@ -43,10 +45,11 @@ export function validInventory(value,types) {
   return value.items.every(item=>{
     if(!item||typeof item.uid!=='string'||!/^i[1-9]\d*$/.test(item.uid)||Number(item.uid.slice(1))>=value.next||ids.has(item.uid)||
       !Object.hasOwn(types,item.kind)||!types[item.kind].includes(item.id)||!Number.isInteger(item.level)||item.level<1||item.level>levelLimit(item)||
-      (item.breakthrough!==undefined&&(!Number.isInteger(item.breakthrough)||item.kind!=='card'||item.breakthrough<0||item.breakthrough>4))||
+      (item.breakthrough!==undefined&&(!Number.isInteger(item.breakthrough)||!['card','hero'].includes(item.kind)||item.breakthrough<0||item.breakthrough>(item.kind==='hero'?3:4)))||
+      (item.reserveExperience!==undefined&&(item.kind!=='hero'||!Number.isSafeInteger(item.reserveExperience)||item.reserveExperience<0||item.reserveExperience>1000000))||
       (item.effect!==undefined&&(!Number.isInteger(item.effect)||item.effect<1||item.effect>10))||
       (item.locked!==undefined&&typeof item.locked!=='boolean')||!Number.isInteger(item.experience)||item.experience<0||
-      (item.level===levelLimit(item)?item.experience!==0:item.experience>=xpNeeded(item.level)))return false;
+      (item.level===levelLimit(item)?item.experience!==0:item.experience>=xpNeeded(item.level,item)))return false;
     ids.add(item.uid);
     return true;
   });

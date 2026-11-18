@@ -1,14 +1,15 @@
-import {heroHealth,heroCapacity} from './progression.mjs?v=book-growth-1';
-import {createDialoguePicker} from './home-dialogue.mjs?v=book-growth-1';
-import {materials,bookFor} from './materials.mjs?v=book-growth-1';
-import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=book-growth-1';
-import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=book-growth-1';
-import {heroes} from './heroes.mjs';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=book-growth-1';
-import {makeBackup, readBackup} from './backup.mjs?v=book-growth-1';
-import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=book-growth-1';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,capsuleCards} from './economy.mjs?v=book-growth-1';
-import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=book-growth-1';
+import {heroSkillProfile} from './hero-skills.mjs?v=hero-50-1';
+import {heroHealth,heroCapacity,heroLimits,nextHeroCapacity,migrateHeroProgression} from './progression.mjs?v=hero-50-1';
+import {createDialoguePicker} from './home-dialogue.mjs?v=hero-50-1';
+import {materials,bookFor} from './materials.mjs?v=hero-50-1';
+import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=hero-50-1';
+import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=hero-50-1';
+import {heroes} from './heroes.mjs?v=hero-50-1';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=hero-50-1';
+import {makeBackup, readBackup} from './backup.mjs?v=hero-50-1';
+import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=hero-50-1';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,capsuleCards} from './economy.mjs?v=hero-50-1';
+import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=hero-50-1';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -16,6 +17,8 @@ const key = 'cxq-rift-summon-visual-slice';
 const recoveryKey = key + '-recovery';
 let saved;
 try { saved = JSON.parse(localStorage.getItem(key)); } catch {}
+let heroMigrationPending=Boolean(saved&&saved.heroProgressionVersion!==2);
+saved=migrateHeroProgression(saved);
 let state = saved?.state?.version === 3 && saved.state.phase==='deploy' ? saved.state : null;
 let daily=validDaily(saved?.daily)?saved.daily:emptyDaily();
 const consumed=new Set(Array.isArray(saved?.consumed)?saved.consumed:[]);
@@ -133,7 +136,7 @@ function currentSave() {
   syncFixedInventory();
   const ongoing=state?.phase==='deploy';
   flushTeam();
-  return {consumed:[...consumed],displayHero,daily,lastBatch,townRead,bagSort,lineupSort,listSort,state:ongoing?state:null, log:ongoing?log:[], deck, cleared:[...cleared], volumes, loadout, lowMotion, wallet, teams, inventory, activeTeam, starterHero, speed:get('speed').value};
+  return {heroProgressionVersion:2,consumed:[...consumed],displayHero,daily,lastBatch,townRead,bagSort,lineupSort,listSort,state:ongoing?state:null, log:ongoing?log:[], deck, cleared:[...cleared], volumes, loadout, lowMotion, wallet, teams, inventory, activeTeam, starterHero, speed:get('speed').value};
 }
 function save() {
   try { localStorage.setItem(key, JSON.stringify(currentSave())); return true; }
@@ -221,16 +224,18 @@ function showStarter() {
   }));
 }
 function confirmButton(label,action) {const button=element('button',label);button.onclick=action;return button;}
-function heroDetails(hero) {
-  const available=ownedHeroes().includes(hero.id);
-  const ownedItems=inventory.items.filter(item=>item.kind==='hero'&&item.id===hero.id);
-  const nodes=[artwork(hero.id,'hero'),element('h2',`${hero.name}・${rarity(hero.id)}`),element('strong',hero.skill),element('p',hero.detail),
-    element('p',`起始生命 24 → 40・出戰卡數 8 → 12（Lv.1–5）・持有 ${ownedItems.length} 份`)];
-  if(!available) {
-    const stage=stages[heroMilestones.indexOf(hero.id)];
-    nodes.push(element('p',stage?`英雄扭蛋或首通「${stage.name}」解鎖。`:'從英雄扭蛋取得。'));
-  }
-  modal(...nodes);
+function heroDetails(hero){
+ const ownedItems=inventory.items.filter(item=>item.kind==='hero'&&item.id===hero.id),current=ownedItems[0];
+ const level=element('select'),skill=element('select');level.setAttribute('aria-label','英雄預覽等級');skill.setAttribute('aria-label','英雄預覽技能');
+ for(let n=1;n<=50;n++){const option=element('option',`Lv.${n}`);option.value=n;level.append(option);}
+ for(let n=1;n<=10;n++){const option=element('option',`技能 Lv.${n}`);option.value=n;skill.append(option);}
+ level.value=current?.level??1;skill.value=current?.effect??1;
+ const controls=element('div','','controls');controls.append(level,skill);
+ const stats=element('p'),detail=element('p');
+ const update=()=>{const n=Number(level.value);stats.textContent=`生命 ${heroHealth(n)}・出戰上限 ${heroCapacity(n)} 張・持有 ${ownedItems.length} 份`;detail.textContent=heroSkillProfile(hero.id,Number(skill.value)).detail;};level.onchange=skill.onchange=update;update();
+ const layout=element('div','','hero-catalog-inspector'),copy=element('div');copy.append(element('h2',`${hero.name}・${rarity(hero.id)}`),element('strong',hero.skill),controls,stats,detail,element('p','Lv.10／20／35 以同名英雄突破，消耗依序為 1／2／3 份。'),element('small','這是圖鑑預覽，不影響實際英雄。'));
+ if(!ownedItems.length)copy.append(element('p','從英雄扭蛋或英雄首通獎勵取得。'));
+ layout.append(artwork(hero.id,'hero'),copy);modal(layout);
 }
 const rankIndex=id=>rarityNames.indexOf(rarity(id));
 const materialXP=item=>materials[item.id]?.xp??[40,50,65,80,100,125,150][rankIndex(item.id)]??50;
@@ -465,6 +470,7 @@ function showCamp() {
   get('camp-bag').classList.toggle('town-unread',inventory.next>townRead.bag);
   get('camp-collection').classList.toggle('town-unread',new Set(inventory.items.filter(item=>item.kind!=='material').map(item=>item.id)).size>townRead.collection);
   renderWallet(get('camp-wallet'));
+  if(heroMigrationPending&&save()){heroMigrationPending=false;notify('英雄養成已更新：原有等級對應至新階段，出戰卡數與培養進度已保留。');}
 }
 const pickHomeDialogue=createDialoguePicker();
 let dialogueTimer,dialogueCooldown=0;
@@ -881,7 +887,7 @@ function showHeroPreview() {
   get('hero-preview-art').alt=`${hero.name}的出戰立繪`;
   get('hero-preview-name').textContent=hero.name;
   get('hero-preview-skill').textContent=hero.skill;
-  get('hero-detail').textContent=hero.detail;
+  get('hero-detail').textContent=heroSkillProfile(hero.id,instance(teamItems.hero)?.effect??1).detail;
 }
 let bagKind='card';
 const bagPages={};
@@ -924,7 +930,7 @@ function itemStats(item) {
   }
   if(item.kind==='hero') {
     const hero=heroes.find(h=>h.id===item.id);
-    return [['起始生命',heroHealth(item.level)],['出戰卡牌上限',heroCapacity(item.level)],[hero.skill,hero.detail]];
+    return [['起始生命',heroHealth(item.level)],['出戰卡牌上限',heroCapacity(item.level)]];
   }
   return [['每場發動',2],['效果增益','+'+(item.level+(item.effect??1)-2)],[runes[item.id].name,runes[item.id].effect]];
 }
@@ -938,10 +944,20 @@ function itemDetail(item,allowUpgrade=false) {
   }
   const cap=levelLimit(item), effect=item.effect??1;
   copy.append(element('p',rarity(item.id)+'・Lv.'+item.level+' / '+cap+'・效果 Lv.'+effect+' / 10'));
-  copy.append(element('p',item.level===cap?'已達目前上限':'經驗 '+item.experience+' / '+xpNeeded(item.level)));
+  copy.append(element('p',item.level===cap?'已達目前上限':'經驗 '+item.experience+' / '+xpNeeded(item.level,item)));
   const stats=element('dl','','instance-stats');
   for(const [label,value] of itemStats(item))stats.append(element('dt',label),element('dd',String(value)));
-  copy.append(stats);
+  if(item.kind!=='hero')copy.append(stats);
+  if(item.kind==='hero'){
+    const next=Math.min(50,item.level+1),unlock=nextHeroCapacity(item.level);
+    const comparison=element('div','','hero-growth-comparison');
+    comparison.append(element('p',`Lv.${item.level} → ${next}：生命 ${heroHealth(item.level)} → ${heroHealth(next)}・卡數上限 ${heroCapacity(item.level)} → ${heroCapacity(next)}`),element('p',unlock?`下次卡數解鎖：Lv.${unlock}，上限 ${heroCapacity(unlock)} 張`:'已解鎖 12 張出戰上限'));
+    if(item.reserveExperience)comparison.append(element('p',`已保留舊制經驗 ${item.reserveExperience}，突破後自動補入。`));
+    const skillCompare=element('details');skillCompare.append(element('summary',heroes.find(h=>h.id===item.id).skill+'・'+(effect<10?`技能 Lv.${effect} → ${effect+1}`:'技能已滿級 Lv.10')),element('p','目前：'+heroSkillProfile(item.id,effect).detail));
+    if(effect<10)skillCompare.append(element('p','升級後：'+heroSkillProfile(item.id,effect+1).detail));
+    skillCompare.append(element('small','百分比依觸發時數值計算並取整數；每場僅發動一次。'));comparison.append(skillCompare);
+    copy.append(comparison);
+  }
   if(!allowUpgrade)return layout;
   if(item.kind==='hero'){
     const featured=featuredHeroId()===item.id;
@@ -954,7 +970,7 @@ function itemDetail(item,allowUpgrade=false) {
     });
     setHome.disabled=featured;
     if(featured)copy.append(element('strong','首頁展示中','featured-badge'));
-    copy.append(setHome);
+    copy.append(setHome,confirmButton('技能比較',()=>{const detail=layout.querySelector('.hero-growth-comparison details');detail.open=true;const info=layout.querySelector('.hero-info-scroll');if(info)info.scrollTop+=detail.getBoundingClientRect().top-info.getBoundingClientRect().top;}));
   }
   if(item.level<cap){
     const cost=levelCost(item.level);
@@ -967,7 +983,7 @@ function itemDetail(item,allowUpgrade=false) {
     }
     copy.append(confirmButton('經驗強化',()=>chooseMaterial(item,'xp')));
   }
-  if(item.kind==='card'&&item.level===cap&&cap<99)copy.append(confirmButton('突破至 Lv.'+limits[(item.breakthrough??0)+1],()=>chooseMaterial(item,'break')));
+  if(['card','hero'].includes(item.kind)&&item.level===cap&&cap<(item.kind==='hero'?50:99)){const steps=item.kind==='hero'?heroLimits:limits;copy.append(confirmButton('突破至 Lv.'+steps[(item.breakthrough??0)+1]+'・同名 × '+((item.breakthrough??0)+1),()=>chooseMaterial(item,'break')));}
   if(effect<effectsMax)copy.append(confirmButton('效果強化',()=>chooseMaterial(item,'effect')));
   copy.append(confirmButton(item.locked?'解除素材鎖定':'鎖定個體',()=>{
     const previous=item.locked;item.locked=!previous;
@@ -975,6 +991,12 @@ function itemDetail(item,allowUpgrade=false) {
     renderInventory();modal(itemDetail(item,true));notify(item.locked?'已鎖定，這個個體不能用作素材。':'已解除素材鎖定。');
   }),
     confirmButton('前往編隊',()=>openTeamEditor('inventory-page',item)));
+  if(item.kind==='hero'){
+    layout.classList.add('hero-instance-inspector');
+    const info=element('div','','hero-info-scroll'),actions=element('div','','hero-instance-actions');
+    for(const child of [...copy.children])(child.tagName==='BUTTON'?actions:info).append(child);
+    copy.replaceChildren(info,actions);
+  }
   return layout;
 }
 function finishGrowth(item,message){
@@ -988,14 +1010,14 @@ function chooseMaterial(target,mode) {
     item.kind===target.kind&&item.id===target.id||mode==='effect'&&materials[item.id]?.kind===target.kind;
   const candidates=inventory.items.filter(item=>safe(item)&&matches(item));
   const xpOf=materialXP;
-  const available=()=>mode==='xp'?target.level<levelLimit(target):mode==='effect'?(target.effect??1)<effectsMax:target.level===levelLimit(target)&&levelLimit(target)<99;
+  const available=()=>mode==='xp'?target.level<levelLimit(target):mode==='effect'?(target.effect??1)<effectsMax:target.level===levelLimit(target)&&levelLimit(target)<(target.kind==='hero'?50:99);
   const enough=count=>count>0&&(required===null||count===required);
   const selected=new Set(), preview=element('p'), title={xp:'經驗強化',break:'同名突破',effect:'效果強化'}[mode];
   const apply=confirmButton('確定強化',()=>{
     const chosen=[...selected].map(instance);
     if(!available()||!enough(chosen.length)||chosen.some(item=>!item||!safe(item)||!matches(item)))return;
     if(mode==='xp'&&!grantExperience(target,chosen.reduce((sum,item)=>sum+xpOf(item),0)))return;
-    if(mode==='break')target.breakthrough=(target.breakthrough??0)+1;
+    if(mode==='break'){target.breakthrough=(target.breakthrough??0)+1;if(target.reserveExperience){grantExperience(target,target.reserveExperience);target.reserveExperience=0;}}
     if(mode==='effect')target.effect=Math.min(effectsMax,(target.effect??1)+chosen.length);
     inventory.items=inventory.items.filter(item=>!selected.has(item.uid));
     for(const item of chosen){
@@ -1016,7 +1038,7 @@ function chooseMaterial(target,mode) {
     const result=structuredClone(target);
     if(mode==='xp'&&xp)grantExperience(result,xp);
     if(mode==='effect')result.effect=Math.min(effectsMax,(target.effect??1)+chosen.length);
-    if(mode==='break'&&enough(chosen.length))result.breakthrough=(target.breakthrough??0)+1;
+    if(mode==='break'&&enough(chosen.length)){result.breakthrough=(target.breakthrough??0)+1;if(result.reserveExperience){grantExperience(result,result.reserveExperience);result.reserveExperience=0;}}
     return {result,xp};
   };
   const columns=element('div','','growth-preview');
@@ -1052,11 +1074,13 @@ function chooseMaterial(target,mode) {
   function selectMany(items,goal){
     let remaining=0;
     if(mode==='xp'){
-      for(let level=target.level;level<goal;level++)remaining+=xpNeeded(level);
+      for(let level=target.level;level<goal;level++)remaining+=xpNeeded(level,target);
       remaining-=target.experience+project().xp;
     }else remaining=mode==='break'?required-selected.size:effectsMax-(target.effect??1)-selected.size;
-    for(const item of items){
+    const ordered=[...items].sort((a,b)=>Number(a.kind!=='material')-Number(b.kind!=='material'));
+    for(const item of ordered){
       if(remaining<=0)break;
+      if(mode==='xp'&&item.kind===target.kind&&item.id===target.id)continue;
       if(selected.has(item.uid))continue;
       selected.add(item.uid);
       remaining-=mode==='xp'?xpOf(item):1;
@@ -1081,7 +1105,7 @@ function chooseMaterial(target,mode) {
       selectMany(candidates.filter(item=>tiers.has(rarity(item.id))).sort((a,b)=>xpOf(a)-xpOf(b)),limitGoal());
       gradePicker.hidden=true;
     });
-    gradePicker.append(options,element('small','只選取素材，確認強化後才會消耗。'),pick,confirmButton('取消',()=>{gradePicker.hidden=true;}));
+    gradePicker.append(options,element('small','優先經驗書，保留同名個體供突破；確認強化後才消耗。'),pick,confirmButton('取消',()=>{gradePicker.hidden=true;}));
     actions.append(confirmButton('一鍵選階',()=>{gradePicker.hidden=!gradePicker.hidden;}));
   }
   actions.append(confirmButton(mode==='break'?'一鍵補足':'選取篩選結果',()=>selectMany(visible(),limitGoal())),
@@ -1110,7 +1134,7 @@ function chooseMaterial(target,mode) {
 
 const comparisons={
     uid:(a,b)=>Number(a.uid.slice(1))-Number(b.uid.slice(1)), tier:(a,b)=>rarityNames.indexOf(rarity(a.id))-rarityNames.indexOf(rarity(b.id)),
-    level:(a,b)=>a.level-b.level, effect:(a,b)=>(a.effect??1)-(b.effect??1), xp:(a,b)=>a.experience/xpNeeded(a.level)-b.experience/xpNeeded(b.level),
+    level:(a,b)=>a.level-b.level, effect:(a,b)=>(a.effect??1)-(b.effect??1), xp:(a,b)=>a.experience/xpNeeded(a.level,a)-b.experience/xpNeeded(b.level,b),
     name:(a,b)=>itemName(a).localeCompare(itemName(b),'zh-Hant'),
   };
 function sortCollectibles(items,order){
@@ -1371,7 +1395,7 @@ function render() {
   const current=heroes.find(hero=>hero.id===state.hero);
   get('portrait').src=asset(`hero-portrait-${current.id}`);
   get('hero-name').textContent=current.name;
-  get('hero-name').onclick=()=>modal(artwork(current.id,'hero'),element('h2',current.skill),element('p',current.detail));
+  get('hero-name').onclick=()=>modal(artwork(current.id,'hero'),element('h2',current.skill),element('p',heroSkillProfile(current.id,state.heroEffect??1).detail));
   const card=player.hand.find(item=>item.uid===selected);
   const hand=get('hand');
   get('hand-label').textContent=`手牌 ${player.hand.length}`;
@@ -1400,7 +1424,7 @@ function render() {
 }
 function effect(event) {
   if(event.rune) return 'rune-pulse';
-  if (event.kind==='skill') return event.message.includes('自爆')?'fx-bomb':event.message.includes('靈體')?'fx-spirit':/治療|回春|援護/.test(event.message)?'fx-heal':'fx-shield';
+  if (event.kind==='skill') return event.message.includes('自爆')?'fx-bomb':event.message.includes('靈體')?'fx-spirit':/治療|回春|援護|回復/.test(event.message)?'fx-heal':'fx-shield';
   if (event.kind==='attack') return event.message.includes('橫掃')?'fx-ax':event.message.includes('斥候')?'fx-arrow':'fx-ax';
   if (event.kind==='deploy') return 'fx-rune';
   if (event.kind==='death') return 'fx-spirit';
@@ -1765,7 +1789,7 @@ get('album-pages').addEventListener('touchend',event=>{
 get('album-pages').addEventListener('touchcancel',()=>{swipeStart=null;},{passive:true});
 get('hero-preview-open').onclick=()=>{
   const hero=heroes.find(h=>h.id===chosen);
-  modal(artwork(hero.id,'hero'),element('h2',hero.name),element('strong',hero.skill),element('p',hero.detail));
+  modal(artwork(hero.id,'hero'),element('h2',hero.name),element('strong',hero.skill),element('p',heroSkillProfile(hero.id,instance(teamItems.hero)?.effect??1).detail));
 };
 get('camp-resume').onclick=()=>enter(false);
 get('return-camp').onclick=showCamp;
@@ -1815,3 +1839,5 @@ document.addEventListener('dblclick',event=>event.preventDefault(),{passive:fals
 for(const id of ['card-filter','rune-filter'])get(id).options[0].textContent='全類別';
 for(const id of ['card-rarity','hero-rarity','rune-rarity'])get(id).options[0].textContent='全品階';
 for(const id of ['card-owned','hero-owned','rune-owned'])get(id).options[0].textContent='全收錄';
+
+get('title-start').disabled=false;

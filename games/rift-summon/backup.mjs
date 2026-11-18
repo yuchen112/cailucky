@@ -1,11 +1,11 @@
-import {heroCapacity} from './progression.mjs?v=book-growth-1';
-import {cards, stages, starter} from './battle.mjs?v=book-growth-1';
-import {heroes} from './heroes.mjs';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=book-growth-1';
-import {validInventory} from './inventory.mjs?v=book-growth-1';
+import {heroCapacity,migrateHeroProgression} from './progression.mjs?v=hero-50-1';
+import {cards, stages, starter} from './battle.mjs?v=hero-50-1';
+import {heroes} from './heroes.mjs?v=hero-50-1';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=hero-50-1';
+import {validInventory} from './inventory.mjs?v=hero-50-1';
 
-import {validDaily,dailyStage} from './daily.mjs?v=book-growth-1';
-import {materials} from './materials.mjs?v=book-growth-1';
+import {validDaily,dailyStage} from './daily.mjs?v=hero-50-1';
+import {materials} from './materials.mjs?v=hero-50-1';
 const format = 'cxq-rift-summon';
 const limit = 1024 * 1024;
 const integer = (n,min,max) => Number.isInteger(n) && n >= min && n <= max;
@@ -13,8 +13,8 @@ const fraction = n => typeof n === 'number' && n >= 0 && n <= 1;
 const cardValid = card => card && Object.hasOwn(cards, card.id) &&
   integer(card.uid,0,500) && card.name === cards[card.id][0] && card.skill === cards[card.id][4] &&
   integer(card.max,1,160) && integer(card.hp,1,card.max) && integer(card.attack,0,80) &&
-  integer(card.shield,0,80) && integer(card.count,0,4);
-const sideValid = side => side && integer(side.hp,0,40) &&
+  integer(card.shield,0,80) && integer(card.count,0,4) && (card.heroBreakHeal===undefined||integer(card.heroBreakHeal,0,2));
+const sideValid = side => side && integer(side.hp,0,73) &&
   ['deck','hand','board'].every(key=>Array.isArray(side[key]) && side[key].length <= 20 && side[key].every(card=>key==='board'&&card===null||cardValid(card)));
 
 export function makeBackup(save) {
@@ -27,7 +27,7 @@ export async function readBackup(file) {
   catch { throw new Error('這個檔案無法讀取為 JSON 備份。'); }
   if (data?.format !== format) throw new Error('這不是《CxQ 裂界召喚》的備份。');
   if (data.version !== 1) throw new Error('這個備份版本目前無法匯入。');
-  const save=data.save;
+  const save=migrateHeroProgression(data.save);
   const state=save?.state;
   const cleared=save?.cleared;
   const validClears=Array.isArray(cleared) && cleared.length <= stages.length &&
@@ -51,6 +51,10 @@ export async function readBackup(file) {
       (team.items.rune2==null||team.items.rune2!==team.items.rune&&byUid.get(team.items.rune2)?.kind==='rune');
   });
   const validState=state === null || (state?.version === 3 &&
+    (state.heroLevel===undefined||integer(state.heroLevel,1,50))&&
+    (state.heroEffect===undefined||integer(state.heroEffect,1,10))&&
+    (state.heroMax===undefined||integer(state.heroMax,24,73))&&
+    (state.heroNextShield===undefined||state.heroNextShield&&integer(state.heroNextShield.base,0,5)&&integer(state.heroNextShield.ratio,0,10))&&
     (state.daily?Boolean(dailyStage(state.daily)):integer(state.stage,0,Math.min(cleared?.length??-1,stages.length-1))) &&
     integer(state.round,1,40) && integer(state.charges,0,2) && integer(state.heroShield,0,80) &&
     integer(state.nextUid,24,500) && integer(state.sequence,0,10000) &&

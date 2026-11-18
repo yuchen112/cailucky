@@ -1,4 +1,5 @@
-import {heroHealth,shuffleDeck} from './progression.mjs?v=book-growth-1';
+import {heroSkillProfile,scaledHeroAmount} from './hero-skills.mjs?v=hero-50-1';
+import {heroHealth,shuffleDeck} from './progression.mjs?v=hero-50-1';
 export const cards = {
   guard: ['壁壘衛士', 1, 2, 7, '護衛'],
   bomb: ['爆燈兵', 1, 2, 3, '自爆'],
@@ -55,8 +56,8 @@ export const cards = {
 };
 export const starter = ['guard', 'bomb', 'archer', 'ax', 'ghost', 'healer', 'knight', 'giant'];
 const sentries = ['guard', 'bomb', 'knight', 'ax', 'ghost', 'giant'];
-import {cardBonus,cardHealthBonus} from './inventory.mjs?v=book-growth-1';
-import {dailyStage} from './daily.mjs?v=book-growth-1';
+import {cardBonus,cardHealthBonus} from './inventory.mjs?v=hero-50-1';
+import {dailyStage} from './daily.mjs?v=hero-50-1';
 export const chapterNames = ["第一章・斷橋哨站", "第二章・沉鐘墓園", "第三章・翡翠林海", "第四章・赤焰熔城", "第五章・霜月群峰", "第六章・浮光水都", "第七章・沙海遺城", "第八章・幽影邊境", "第九章・蒼穹王庭", "第十章・裂界核心"];
 export const stages = [
   {name:'哨站前沿', goal:'倒數歸零就能部署。先用護衛或斥候接住第一波。', hp:8, opponents:['guard','archer','healer','knight'], opening:['archer'], reward:'bow'},
@@ -136,7 +137,7 @@ export function createBattle(rune = 'wall', hero = '', stage = 3, deck = starter
     state.daily=daily;
     if(['gold','xp'].includes(daily.vault)) for(const card of enemy.board)card.shield=Math.max(card.shield,2);
   }
-  state.heroMax=heroHealth(heroLevel);state.heroLevel=heroLevel;state.heroEffect=heroEffect;state.runeEffect=runeEffect;
+  state.heroProgressionVersion=2;state.heroMax=heroHealth(heroLevel);state.heroLevel=heroLevel;state.heroEffect=heroEffect;state.runeEffect=runeEffect;
   state.runeLevel=runeLevel;
   if(rune2)state.rune2={...rune2};
   begin(player, false);
@@ -152,54 +153,80 @@ function record(state, events, kind, message, details = {}) {
     charges: state.charges, rune2Charges:state.rune2?.charges??0, heroShield: state.heroShield, round: state.round,
   }});
 }
-function trigger(state, events, timing, lane) {
-  const hero = heroes.find(h => h.id === state.hero);
-  if (!hero || state.heroUsed || hero.trigger !== timing) return;
-  const [team, foe] = state.sides;
-  const boost=(state.heroEffect??1)-1;
-  const eligible = test => team.board.map((card, index) => ({card, index})).filter(({card}) => card && test(card)).sort((a, b) => a.card.hp - b.card.hp);
-  let name = hero.name;
-  let target = 0;
-  if (hero.effect === 'shield' || hero.effect === 'recover') {
-    if (team.hp * 2 > (state.heroMax??heroHealth(state.heroLevel??1)) || team.hp === 0) return;
-    if (hero.effect === 'shield') state.heroShield += 3+boost;
-    else team.hp = Math.min((state.heroMax??heroHealth(state.heroLevel??1)),team.hp+3+boost);
-    lane = null;
-  } else if (hero.effect === 'haste' || hero.effect === 'draw') {
-    if (hero.effect === 'draw') {
-      if (!team.deck.length) return;
-      team.hand.push(...team.deck.splice(0,1+boost));
-    } else {
-      const card = team.hand.filter(c => c.count > 0).sort((a,b) => a.count - b.count)[0];
-      if (!card) return;
-      card.count=Math.max(0,card.count-1-boost);
-      name = card.name;
-    }
-  } else if (hero.effect === 'summon') {
-    if (team.board[lane]) return;
-    team.board[lane] = unit('spirit', state.nextUid++,1+boost);
-  } else if (hero.effect === 'strike') {
-    lane = foe.board.findIndex(c => c && c.hp + c.shield <= 2+boost);
-    if (lane < 0) return;
-    target = 1;
-    name = foe.board[lane].name;
-  } else {
-    const pick = timing === 'deploy' ? {card: team.board[lane], index: lane}
-      : eligible(c => hero.effect === 'heal' ? c.hp < c.max : c.hp * 2 <= c.max)[0];
-    if (!pick || (hero.effect === 'power' && team.board.length < 3)) return;
-    lane = pick.index;
-    name = pick.card.name;
-    if (hero.effect === 'heal') pick.card.hp = Math.min(pick.card.max, pick.card.hp + 3+boost);
-    else if (hero.effect === 'power') pick.card.attack+=1+boost;
-    else pick.card.shield += 2+boost;
+function trigger(state,events,timing,lane){
+ const hero=heroes.find(h=>h.id===state.hero);
+ if(!hero||state.heroUsed||hero.trigger!==timing)return;
+ const [team,foe]=state.sides,p=heroSkillProfile(hero.id,state.heroEffect??1),max=state.heroMax??heroHealth(state.heroLevel??1);
+ const injured=(half=false)=>team.board.map((card,index)=>({card,index})).filter(x=>x.card&&x.card.hp<x.card.max&&(!half||x.card.hp*2<=x.card.max)).sort((a,b)=>a.card.hp/a.card.max-b.card.hp/b.card.max||a.card.hp-b.card.hp);
+ const adjacent=index=>[index-1,index+1].find(i=>team.board[i]?.hp>0);
+ const addShield=(card,base,ratio)=>{card.shield+=scaledHeroAmount(base,card.max,ratio);};
+ let target=0,lanes=[],name='英雄',strikeLane=-1;
+ if(hero.effect==='shield'||hero.effect==='recover'){
+  if(!team.hp||team.hp*2>max)return;
+  const amount=scaledHeroAmount(3,max,p.ratio);
+  if(hero.effect==='shield'){
+   state.heroShield+=amount;
+   if(p.advanced)team.hp=Math.min(max,team.hp+2);
+   const ally=injured()[0]??team.board.map((card,index)=>({card,index})).filter(x=>x.card).sort((a,b)=>a.card.hp-b.card.hp)[0];
+   if(p.master&&ally){ally.card.shield+=2;lanes.push(ally.index);}
+  }else{
+   team.hp=Math.min(max,team.hp+amount);
+   const ally=injured()[0];if(p.advanced&&ally){ally.card.hp=Math.min(ally.card.max,ally.card.hp+2);lanes.push(ally.index);}
+   if(p.master)state.heroShield+=2;
   }
-  state.heroUsed = true;
-  record(state, events, 'hero', `${hero.name}・${hero.skill} → ${name}`, {actor: 0, target, lanes: [lane ?? null]});
-  if (hero.effect === 'strike') {
-    const deaths = [];
-    hitBatch(state, events, 0, hero, [{target: 1, lane, amount: 2+boost}], deaths);
-    settle(state, events, 0, deaths);
+  lanes.push(null);
+ }else if(hero.effect==='haste'){
+  const hand=team.hand.filter(c=>c.count>0).sort((a,b)=>a.count-b.count);
+  if(!hand.length)return;
+  hand[0].count=Math.max(0,hand[0].count-(p.master?2:1));addShield(hand[0],0,p.ratio);
+  if(p.advanced&&hand[1])hand[1].count=Math.max(0,hand[1].count-1);
+  name=hand[0].name;
+ }else if(hero.effect==='draw'){
+  if(!team.deck.length)return;
+  const drawn=team.deck.splice(0,p.advanced?2:1);
+  for(const card of drawn){addShield(card,0,p.ratio);if(p.master)card.count=Math.max(0,card.count-1);}
+  team.hand.push(...drawn);name=drawn.map(c=>c.name).join('、');
+ }else if(hero.effect==='summon'){
+  if(team.board[lane])return;
+  const spirit=unit('spirit',state.nextUid++);spirit.attack=p.spiritAttack;spirit.max=p.spiritHealth;spirit.hp=p.spiritHealth;spirit.shield=p.advanced?1:0;team.board[lane]=spirit;
+  if(p.master){const side=adjacent(lane);if(side!==undefined){team.board[side].shield+=2;lanes.push(side);}}
+  name='靈體';lanes.push(lane);
+ }else if(hero.effect==='strike'){
+  const pick=foe.board.map((card,index)=>({card,index})).filter(x=>x.card&&x.card.hp<=p.threshold).sort((a,b)=>a.card.hp-b.card.hp)[0];
+  if(!pick)return;strikeLane=pick.index;target=1;name=pick.card.name;lanes=[strikeLane];
+ }else{
+  const pick=timing==='deploy'?{card:team.board[lane],index:lane}:injured(hero.effect==='armor')[0];
+  if(!pick?.card||(hero.effect==='power'&&team.board.filter(Boolean).length<3))return;
+  const card=pick.card;lane=pick.index;name=card.name;lanes=[lane];
+  if(hero.effect==='heal'){
+   card.hp=Math.min(card.max,card.hp+scaledHeroAmount(3,card.max,p.ratio));
+   const second=injured().find(x=>x.index!==lane);
+   if(p.advanced&&second){second.card.hp=Math.min(second.card.max,second.card.hp+scaledHeroAmount(1,second.card.max,2));lanes.push(second.index);}
+   if(p.master)card.shield+=2;
+  }else if(hero.effect==='power'){
+   card.attack+=scaledHeroAmount(1,card.attack,p.ratio*2);
+   const side=adjacent(lane);if(p.advanced&&side!==undefined){team.board[side].attack++;lanes.push(side);}
+   if(p.master)addShield(card,1,3);
+  }else{
+   addShield(card,2,p.ratio);
+   if(hero.id==='trust'){
+    if(p.advanced)state.heroNextShield={base:1,ratio:2};
+    if(p.master)card.heroBreakHeal=2;
+   }else{
+    if(p.advanced)card.hp=Math.min(card.max,card.hp+scaledHeroAmount(1,card.max,2));
+    const side=adjacent(lane);if(p.master&&side!==undefined){addShield(team.board[side],1,2);lanes.push(side);}
+   }
   }
+ }
+ state.heroUsed=true;
+ record(state,events,'hero',`${hero.name}・${hero.skill} Lv.${p.level} → ${name}`,{actor:0,target,lanes:lanes.length?lanes:[null]});
+ if(strikeLane>=0){
+  const primaryUid=foe.board[strikeLane].uid;
+  const hit=lane=>{const deaths=[];hitBatch(state,events,0,hero,[{target:1,lane,amount:p.strike}],deaths);settle(state,events,0,deaths);};
+  hit(strikeLane);
+  if(p.advanced&&!foe.board.some(card=>card?.uid===primaryUid))hitBatch(state,events,0,hero,[{target:1,lane:null,amount:1}],[]);
+  if(p.master){const second=foe.board.map((card,index)=>({card,index})).filter(x=>x.card&&x.card.uid!==primaryUid&&x.card.hp<=p.threshold).sort((a,b)=>a.card.hp-b.card.hp)[0];if(second)hit(second.index);}
+ }
 }
 function deploy(state, events, actor, uid) {
   const {hand, board} = state.sides[actor];
@@ -208,6 +235,7 @@ function deploy(state, events, actor, uid) {
   const [card] = hand.splice(slot, 1);
   board.push(card);
   record(state, events, 'deploy', `${card.name} 部署到第 ${board.length} 欄`, {actor, target: actor, lanes: [board.length - 1]});
+  if(actor===0&&state.heroNextShield){const gift=state.heroNextShield;card.shield+=scaledHeroAmount(gift.base,card.max,gift.ratio);delete state.heroNextShield;record(state,events,'skill',`信約之盾・接續庇護 → ${card.name}`,{actor:0,target:0,lanes:[board.length-1]});}
   if (actor === 0) trigger(state, events, 'deploy', board.length - 1);
   return true;
 }
@@ -221,12 +249,14 @@ function hitBatch(state, events, actor, source, hits, deaths, normal = false) {
     const side = state.sides[target];
     const card = lane === null ? null : side.board[lane];
     if (lane !== null && !card) continue;
+    let healAfter=0;
     const absorbed = Math.min(card?.shield ?? (target === 0 ? state.heroShield : 0), damage);
     const dealt = damage - absorbed;
     if (card) {
       card.shield -= absorbed;
       if(['gold','xp'].includes(state.daily?.vault)&&target===1&&absorbed&&!card.shield)card.attack=Math.max(0,card.attack-1);
       card.hp = Math.max(0, card.hp - dealt);
+      if(absorbed&&!card.shield&&card.heroBreakHeal){healAfter=card.hp>0?card.heroBreakHeal:0;card.heroBreakHeal=0;}
       if (!card.hp) {
         side.board[lane] = null;
         deaths.push({actor: target, lane, card});
@@ -236,6 +266,7 @@ function hitBatch(state, events, actor, source, hits, deaths, normal = false) {
       if (target === 0) state.heroShield -= absorbed;
     }
     record(state, events, 'hit', `${source.name} → ${card?.name ?? '英雄'}：${dealt} 傷害${absorbed ? `，盾吸收 ${absorbed}` : ''}`, {actor, target, lanes: [lane], hp: card?.hp ?? side.hp});
+    if(healAfter){card.hp=Math.min(card.max,card.hp+healAfter);record(state,events,'skill',`信約之盾・護盾破裂回復 ${healAfter} → ${card.name}`,{actor:target,target,lanes:[lane]});}
   }
   if (batch.some(hit => hit.target === 0 && hit.lane === null)) trigger(state, events, 'danger');
 }
@@ -479,4 +510,4 @@ export function applyAction(previous, action) {
   } else return null;
   return {state, events};
 }
-import {heroes} from './heroes.mjs';
+import {heroes} from './heroes.mjs?v=hero-50-1';

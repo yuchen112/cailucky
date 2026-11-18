@@ -75,7 +75,7 @@ export function validWallet(wallet) {
     Object.values(wallet.levels).every(level=>Number.isInteger(level) && level>=1 && level<=maxLevel) &&
     record(wallet.copies,capsuleCards,Number.MAX_SAFE_INTEGER)&&
     record(wallet.runeCopies,validRunes.filter(id=>id!=='none'),Number.MAX_SAFE_INTEGER)&&record(wallet.runeLevels,validRunes.filter(id=>id!=='none'),maxLevel)&&
-    record(wallet.heroCopies,heroIds,Number.MAX_SAFE_INTEGER)&&record(wallet.heroLevels,heroIds,maxLevel);
+    record(wallet.heroCopies,heroIds,Number.MAX_SAFE_INTEGER)&&record(wallet.heroLevels,heroIds,50);
 }
 export function levelCost(level) { return 45+(level-1)*35; }
 export function cardLevel(economy,id) { return economy.levels[id]??1; }
