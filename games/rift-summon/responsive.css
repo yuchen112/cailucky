@@ -1,0 +1,142 @@
+html { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+/* Device-independent sizing: both faces share the same physical card slot. */
+@media (orientation:landscape) {
+ main { display:grid; grid-template-rows:minmax(0,1fr); align-items:center; }
+ main > section:not([hidden]) { width:100%; min-height:0; }
+ :is(#collection,#hero-book,#rune-book) { max-width:1200px; width:100%; height:min(100%,760px); margin-inline:auto; }
+ #album-pages .album-slot { display:grid; place-items:center; container-type:size; width:100%; height:100%; overflow:hidden; }
+ #album-pages .album-slot > button.collectible { display:block; position:relative; width:min(100cqw,calc(100cqh * .75)); height:min(100cqh,calc(100cqw * 4 / 3)); min-width:0; min-height:0; max-width:100%; max-height:100%; padding:0; margin:0; aspect-ratio:3/4; align-self:center; justify-self:center; }
+ #album-pages .collectible > .card-face { position:absolute; inset:0; display:block; width:100%; height:100%; min-width:0; min-height:0; max-width:none; margin:0; padding:0; aspect-ratio:3/4; }
+ #album-pages .collectible > .collectible-art { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+ #album-pages .collectible > span:not(.card-face) { position:absolute; left:0; right:0; bottom:3%; margin:0 3px; padding:2px; font-size:clamp(9px,1.2vw,13px); }
+ #album-pages .album-slot-placeholder,.codex-spread .album-slot-placeholder { width:100%; height:100%; aspect-ratio:auto; }
+ .codex-spread { margin:0 !important; }
+ .codex-spread .album-slot { overflow:hidden; }
+ #camp,#camp .world-camp { height:100%; min-height:0; }
+ #capsule { height:100%; min-height:0; display:grid; grid-template-rows:36px 32px minmax(0,1fr); gap:4px; overflow:hidden; }
+ #capsule > header { padding:2px 8px; min-height:0; }
+ #capsule > header h1 { margin:0; font-size:20px; }
+ #capsule > header button,#capsule > nav button { min-height:30px; font-size:12px; padding:3px 12px; }
+ #capsule > nav { margin:0; }
+ #capsule .summon-scene { min-height:0; height:100%; }
+ #capsule .summon-machine { min-height:0; align-content:center; }
+ #capsule .summon-machine > img { max-height:min(54dvh,330px); }
+ #capsule .capsule-console { min-height:0; max-height:100%; overflow-y:auto; margin-block:0; }
+ #capsule #capsule-reveal { min-height:30px; }
+ #daily { height:100%; display:grid; grid-template-rows:36px minmax(0,1fr); gap:4px; overflow:hidden; }
+ #daily > header { min-height:0; padding:2px 8px; }
+ #daily > header h1 { margin:0; font-size:22px; }
+ #daily > header button { min-height:30px; padding:3px 10px; font-size:12px; }
+ #daily-content { display:grid; grid-template-rows:clamp(44px,13dvh,90px) minmax(0,1fr) 15px; gap:4px; min-height:0; }
+ .daily-destinations { min-height:0; margin:0; }
+ .daily-destinations button { min-height:0; }
+ .daily-scene { min-height:0; height:100%; }
+ .daily-track { min-height:0; height:100%; }
+ .daily-details { min-height:0; max-height:100%; overflow-y:auto; }
+ .daily-reset { margin:0; }
+ #results { height:100%; display:grid; grid-template-rows:40px minmax(0,1fr) 38px; gap:5px; overflow:hidden; }
+ #results > header { min-height:0; padding:2px 8px; }
+ #results > header h1 { font-size:22px; }
+ #results > header button { min-height:32px; font-size:12px; }
+ #result-content { min-height:0; margin:0; overflow-y:auto; }
+ #results .result-actions { flex-wrap:nowrap; gap:4px; }
+ #results .result-actions button { flex:1; min-width:0; min-height:34px; padding:3px 6px; font-size:12px; }
+ #inventory-grid .instance-tile { align-self:center; height:min(100%,260px); }
+ #inventory-grid .instance-tile > img { height:clamp(32px,14dvh,130px); }
+ #inventory-grid .inventory-card-art { width:calc(clamp(32px,14dvh,130px) * .75); height:clamp(32px,14dvh,130px); }
+ #inventory-grid .inventory-card-art img { height:100%; }
+}
+@media (orientation:landscape) and (min-height:600px) {
+ main { max-width:1440px; }
+ #inventory-grid .instance-tile { max-width:175px; width:100%; justify-self:center; }
+ #inventory-grid strong { font-size:12px; }
+ #inventory-grid small { font-size:11px; }
+ #detail[open]:has(.growth-picker) { height:min(90dvh,700px); }
+ .growth-materials { grid-template-columns:repeat(auto-fill,minmax(90px,1fr)); }
+ .growth-materials button { height:142px; grid-template-rows:94px auto auto; }
+ #detail-content .growth-materials button > img { height:94px; }
+ #detail-content .growth-materials .inventory-card-art { width:70.5px; height:94px; }
+ #detail-content .growth-materials .inventory-card-art > img { height:100%; }
+ .growth-materials button strong,.growth-materials button small { font-size:11px; }
+ #detail-content .growth-preview section > img { width:125px; height:150px; }
+ #detail-content .growth-preview .inventory-card-art { width:112.5px; height:150px; }
+ .growth-preview section small { font-size:11px; }
+ .growth-preview section strong { font-size:13px; }
+}
+
+@media (orientation:landscape) {
+ #settings-page { height:100%; display:grid; grid-template-rows:36px minmax(0,1fr) 34px; gap:5px; overflow:hidden; }
+ #settings-page > header { min-height:0; padding:2px 8px; }
+ #settings-page > header h1 { font-size:21px; margin:0; }
+ #settings-page > header button,#settings-backup { min-height:32px; padding:3px 12px; font-size:12px; }
+ #settings-controls { min-height:0; overflow-y:auto; }
+ #results > header > div { display:flex; align-items:center; gap:8px; min-width:0; }
+ #result-stage { font-size:11px; }
+ .daily-encounter-heading h2 { margin:0; font-size:clamp(14px,2.2vw,22px); }
+ .daily-details { padding:5px; }
+ .daily-details .controls button { min-height:28px; padding:3px 6px; }
+ #starter-select { height:min(100%,650px); max-width:900px; display:grid; grid-template-rows:36px minmax(0,1fr); gap:6px; overflow:hidden; margin:auto; }
+ #starter-select > header { min-height:0; padding:2px 8px; }
+ #starter-select h1 { margin:0; font-size:22px; }
+ #starter-options { height:100%; min-height:0; margin:0; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:minmax(0,1fr); }
+ #starter-options button { min-height:0; min-width:0; display:grid; grid-template-rows:minmax(0,1fr) auto auto auto; gap:3px; padding:6px; }
+ #starter-options img { height:100%; width:100%; min-height:0; max-height:none; object-fit:contain; }
+ #starter-options span { font-size:14px; }
+ #starter-options p { margin:0; font-size:11px; }
+ #detail > form { position:sticky; bottom:0; padding-top:4px; background:#1f162e; z-index:5; }
+ #detail[open]:has(.instance-inspector):not(:has(.growth-picker)),#detail[open]:has(.card-inspector) { width:min(94vw,760px); height:min(90dvh,490px); max-height:90dvh; display:grid; grid-template-rows:auto minmax(0,1fr) 32px; gap:4px; padding:10px; overflow:hidden; }
+ #detail:has(.instance-inspector):not(:has(.growth-picker)) #detail-notice,#detail:has(.card-inspector) #detail-notice { grid-row:1; }
+ #detail:has(.instance-inspector):not(:has(.growth-picker)) #detail-content,#detail:has(.card-inspector) #detail-content { grid-row:2; min-height:0; overflow:auto; }
+ #detail:has(.instance-inspector):not(:has(.growth-picker)) > form,#detail:has(.card-inspector) > form { grid-row:3; }
+ #detail:has(.instance-inspector):not(:has(.growth-picker)) form button,#detail:has(.card-inspector) form button { min-height:28px; font-size:12px; padding:3px 12px; }
+ #detail .instance-inspector { height:100%; min-height:0; }
+ #detail .instance-inspector > div:not(.inventory-card-art) { max-height:100%; overflow-y:auto; min-height:0; }
+ #detail .instance-inspector > .inventory-card-art { width:min(100%,165px); height:auto; aspect-ratio:3/4; max-height:100%; margin-inline:auto; }
+ #detail .instance-inspector > img { height:100%; max-height:100%; object-fit:contain; }
+ #capsule-show[open] { width:min(94vw,960px); height:min(94dvh,600px); min-height:0; max-height:94dvh; padding:8px 12px; display:grid; grid-template-rows:24px minmax(0,1fr) 36px; gap:5px; overflow:hidden; }
+ #capsule-show h2 { margin:0; font-size:19px; line-height:24px; }
+ #capsule-show-body { min-height:0; height:100%; overflow:hidden; grid-template-columns:minmax(0,1fr); grid-template-rows:minmax(0,1fr); }
+ #capsule-show > .controls { height:36px; justify-content:center; }
+ #capsule-show > .controls button { min-height:32px; font-size:12px; padding:3px 16px; }
+ #capsule-show .draw-results { height:100%; min-height:0; grid-template-rows:minmax(0,1fr); }
+ #capsule-show .draw-results[data-count="10"] { grid-template-rows:repeat(2,minmax(0,1fr)); }
+ #capsule-show .draw-results[data-count="1"] { max-width:min(60vw,320px); }
+ #capsule-show .draw-item { container-type:size; height:100%; width:100%; min-height:0; grid-template-rows:minmax(0,1fr) 16px 13px; padding:5px; gap:2px; }
+ #capsule-show .draw-item > strong { font-size:clamp(10px,1vw,14px); white-space:nowrap; }
+ #capsule-show .draw-item > small { font-size:clamp(9px,.9vw,12px); white-space:nowrap; }
+ #capsule-show .draw-item .draw-face { grid-row:1; width:min(100cqw,calc((100cqh - 33px) * .75)); height:min(calc(100cqh - 33px),calc(100cqw * 4 / 3)); aspect-ratio:3/4; align-self:center; }
+ #capsule-show[data-kind=rune] .draw-item .draw-face { width:min(100cqw,calc(100cqh - 33px)); height:min(100cqw,calc(100cqh - 33px)); aspect-ratio:1; }
+ #capsule-show .summon-intro-scene { height:100%; min-height:0; }
+ #capsule-show-body:has(> .card-face),#capsule-show-body:has(> img) { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:4px; overflow:auto; }
+ #capsule-show-body > .card-face { flex-shrink:0; width:min(36vw,calc((100dvh - 180px) * .75),260px); }
+ #capsule-show-body > img { max-height:calc(100% - 65px); width:min(36vw,200px); object-fit:contain; }
+ #capsule-show-body > h3,#capsule-show-body > p { margin:0; font-size:12px; }
+}
+
+@media (orientation:landscape) {
+ #capsule-show { --reward-caption-height:33px; }
+ #capsule-show .draw-item .draw-face,#capsule-show[data-kind=hero] .draw-item .draw-face { width:min(100cqw,calc((100cqh - var(--reward-caption-height)) * .75)); height:min(calc(100cqh - var(--reward-caption-height)),calc(100cqw * 4 / 3)); aspect-ratio:3/4; }
+ #capsule-show[data-kind=rune] .draw-item .draw-face { width:min(100cqw,calc(100cqh - var(--reward-caption-height))); height:min(100cqw,calc(100cqh - var(--reward-caption-height))); aspect-ratio:1; }
+}
+@media (orientation:landscape) and (max-height:440px) {
+ #capsule-show[open] { height:calc(100dvh - 8px); max-height:calc(100dvh - 8px); padding:6px; gap:3px; grid-template-rows:22px minmax(0,1fr) 32px; --reward-caption-height:29px; }
+ #capsule-show .draw-item { padding:4px; grid-template-rows:minmax(0,1fr) 14px 11px; }
+ #capsule-show > .controls { height:32px; }
+ #capsule-show h2 { font-size:17px; line-height:22px; }
+}
+
+#detail,#capsule-show { inset:max(4px,env(safe-area-inset-top)) max(6px,env(safe-area-inset-right)) max(4px,env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-left)); }
+#detail[open],#capsule-show[open] { max-width:calc(100vw - max(6px,env(safe-area-inset-left)) - max(6px,env(safe-area-inset-right))); }
+#detail[open]:is(:has(.growth-picker),:has(.instance-inspector),:has(.card-inspector)),#capsule-show[open] { max-height:calc(100dvh - max(4px,env(safe-area-inset-top)) - max(4px,env(safe-area-inset-bottom))); }
+
+@media (orientation:landscape) {
+ #inventory-page { max-width:1200px; height:min(100%,720px); margin-inline:auto; }
+ #team-editor { max-width:1200px; height:min(100%,760px); margin-inline:auto; }
+ #campaign { max-width:1100px; height:min(100%,650px); margin-inline:auto; }
+ #campaign .campaign-scene #stages { background-size:cover; }
+ #daily { max-width:1200px; height:min(100%,650px); margin-inline:auto; }
+ .daily-track { background-size:cover; }
+ #capsule { max-width:1100px; height:min(100%,650px); margin-inline:auto; }
+ #settings-page { height:min(100%,520px); }
+ #results { height:min(100%,430px); }
+}
