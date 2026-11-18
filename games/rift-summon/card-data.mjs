@@ -1,5 +1,5 @@
-import {extraCards} from './content-expansion.mjs?v=combat-3';
-import {exclusiveCards} from './exclusive-cards.mjs?v=combat-3';
+import {extraCards} from './content-expansion.mjs?v=combat-4';
+import {exclusiveCards} from './exclusive-cards.mjs?v=combat-4';
 export const cards = {
   ...extraCards,
   ...exclusiveCards,

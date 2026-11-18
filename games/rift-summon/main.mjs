@@ -1,24 +1,24 @@
-import {migrateCombatSave} from './save-migration.mjs?v=combat-3';
-import {cardStats,cardDescription,profiles} from './combat-rules.mjs?v=combat-3';
-import {runeProfile,runeAdvancement} from './runes.mjs?v=combat-3';
-import {effectPoints,effectNeeded,grantEffect} from './inventory.mjs?v=combat-3';
-import {exclusiveInfo,exclusiveGroups} from './exclusive-cards.mjs?v=combat-3';
-import {runes,runeBonus,runeDescription} from './runes.mjs?v=combat-3';
-import {signatureDescription} from './combat-effects.mjs?v=combat-3';
-import {pityTier,pityRemaining} from './economy.mjs?v=combat-3';
-import {fragmentValue,exchangeCost,protectedItems,dismantle,exchangeCard} from './recycle.mjs?v=combat-3';
-import {heroSkillProfile} from './hero-skills.mjs?v=combat-3';
-import {heroHealth,heroCapacity,heroLimits,nextHeroCapacity,migrateHeroProgression} from './progression.mjs?v=combat-3';
-import {createDialoguePicker} from './home-dialogue.mjs?v=combat-3';
-import {materials,bookFor} from './materials.mjs?v=combat-3';
-import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=combat-3';
-import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=combat-3';
-import {heroes} from './heroes.mjs?v=combat-3';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=combat-3';
-import {makeBackup, readBackup} from './backup.mjs?v=combat-3';
-import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=combat-3';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,capsuleCards,walletCardIds} from './economy.mjs?v=combat-3';
-import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=combat-3';
+import {migrateCombatSave} from './save-migration.mjs?v=combat-4';
+import {cardStats,cardDescription,profiles} from './combat-rules.mjs?v=combat-4';
+import {runeProfile,runeAdvancement} from './runes.mjs?v=combat-4';
+import {effectPoints,effectNeeded,grantEffect} from './inventory.mjs?v=combat-4';
+import {exclusiveInfo,exclusiveGroups} from './exclusive-cards.mjs?v=combat-4';
+import {runes,runeBonus,runeDescription} from './runes.mjs?v=combat-4';
+import {signatureDescription} from './combat-effects.mjs?v=combat-4';
+import {pityTier,pityRemaining} from './economy.mjs?v=combat-4';
+import {fragmentValue,exchangeCost,protectedItems,dismantle,exchangeCard} from './recycle.mjs?v=combat-4';
+import {heroSkillProfile} from './hero-skills.mjs?v=combat-4';
+import {heroHealth,heroCapacity,heroLimits,nextHeroCapacity,migrateHeroProgression} from './progression.mjs?v=combat-4';
+import {createDialoguePicker} from './home-dialogue.mjs?v=combat-4';
+import {materials,bookFor} from './materials.mjs?v=combat-4';
+import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=combat-4';
+import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=combat-4';
+import {heroes} from './heroes.mjs?v=combat-4';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=combat-4';
+import {makeBackup, readBackup} from './backup.mjs?v=combat-4';
+import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=combat-4';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,capsuleCards,walletCardIds} from './economy.mjs?v=combat-4';
+import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=combat-4';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -1402,7 +1402,9 @@ function render() {
   get('deploy').hidden=!card;
 }
 function effect(event) {
+  if(event.effectArt)return event.effectArt;
   if(event.rune) return 'rune-pulse';
+  if(event.kind==='skill'&&/燃燒|中毒|寒霜|沉默|標記/.test(event.message))return 'fx-rune';
   if (event.kind==='skill') return event.message.includes('自爆')?'fx-bomb':event.message.includes('靈體')?'fx-spirit':/治療|回春|援護|回復/.test(event.message)?'fx-heal':'fx-shield';
   if (event.kind==='attack') return event.message.includes('橫掃')?'fx-ax':event.message.includes('斥候')?'fx-arrow':'fx-ax';
   if (event.kind==='deploy') return 'fx-rune';

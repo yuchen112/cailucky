@@ -1,8 +1,8 @@
-import {cards,stages,starter} from './battle.mjs?v=combat-3';
-import {dailyStage} from './daily.mjs?v=combat-3';
-import {heroHealth,shuffleDeck} from './progression.mjs?v=combat-3';
-import {profiles,cardStats,skillScale,combatVersion} from './combat-rules.mjs?v=combat-3';
-import {runeProfile} from './runes.mjs?v=combat-3';
+import {cards,stages,starter} from './battle.mjs?v=combat-4';
+import {dailyStage} from './daily.mjs?v=combat-4';
+import {heroHealth,shuffleDeck} from './progression.mjs?v=combat-4';
+import {profiles,cardStats,skillScale,combatVersion} from './combat-rules.mjs?v=combat-4';
+import {runeProfile} from './runes.mjs?v=combat-4';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 export function createBattle(rune='wall',hero='trust',stage=0,deck=starter,levels={},heroLevel=1,runeLevel=1,daily=null,effects={},heroEffect=1,runeEffect=1,rune2=null,instances=null,random=Math.random){
  const mission=daily?dailyStage(daily):stages[stage];if(!mission)throw Error('Unknown mission');
@@ -85,7 +85,7 @@ export function applyAction(previous,action){
   const barrier=c?c.shield:s.heroShield,absorb=Math.min(Math.round(barrier),Math.round(n*(1-pierce))),dealt=c?Math.min(c.hp,n-absorb):Math.min(s.hp,n-absorb);
   if(c){c.shield-=absorb;c.hp-=dealt;}else{s.heroShield-=absorb;s.hp-=dealt;
    const mazu=alive(target).find(x=>x.card.id==='dv01');if(s.hp<=0&&mazu&&!state.teamFlags[target].mazu){state.teamFlags[target].mazu=true;s.hp=Math.round(s.maxHp*.15);record('hero','天后護航・抵擋致命傷害',target,target,[null]);}}
-  record('hit',`${source.name} → ${c?.name??'英雄'}：${dealt} 傷害${absorb?'，盾吸收 '+absorb:''}`,a,target,[lane],{hp:c?.hp??s.hp});
+  record('hit',`${source.name} → ${c?.name??'英雄'}：${dealt} 傷害${absorb?'，盾吸收 '+absorb:''}`,a,target,[lane],{hp:c?.hp??s.hp,effectArt:kind==='explosion'?'fx-bomb':kind==='dot'||kind==='skill'?'fx-rune':kind==='reflect'?'fx-shield':'fx-ax'});
   if(c){
    if(!c.hp)die(target,c,lane);
    else{
@@ -108,7 +108,7 @@ export function applyAction(previous,action){
   if(c.id==='an01'&&!c.revived){revive(a,c,.35,'不腐殭身');return;}
   if(c.id==='al08'&&!c.summonKind){summon(a,c,'hatch',.4,.3);summon(a,c,'hatch',.4,.3);}
   if(c.id==='an10')for(const x of alive(1-a).slice(0,3)){status(a,x.card,'poison',c);x.card.antiHeal={ratio:.2,turns:2};}
-  if(!c.summonKind&&profiles[c.id]?.role==='bomber')for(const index of [lane-1,lane,lane+1])if(state.sides[1-a].board[index])damage(a,c,1-a,index,c.baseAttack*.9*skillScale(c.effect));
+  if(!c.summonKind&&profiles[c.id]?.role==='bomber')for(const index of [lane-1,lane,lane+1])if(state.sides[1-a].board[index])damage(a,c,1-a,index,c.baseAttack*.9*skillScale(c.effect),'explosion');
   if(!c.summonKind&&c.id!=='my03'&&profiles[c.id]?.role==='revenant')summon(a,c,'spirit',.5+.01*c.effect,.4+.01*c.effect);
  }
  function deploy(a,uid){
@@ -213,7 +213,7 @@ export function applyAction(previous,action){
   const s=state.sides[a];for(const c of [...s.board].filter(Boolean)){
    if(c.summonKind==='egg'){if(--c.incubate<=0){const lane=s.board.indexOf(c);s.board[lane]=null;revive(a,c.corpse,.4+.02*c.effect,'浴火重生');}continue;}
    c.turns++;
-   for(const key of ['burn','poison'])if(c[key]?.turns>0&&c.hp>0){const x=c[key];x.turns--;damage(1-a,{name:key==='burn'?'燃燒':'中毒'},a,s.board.indexOf(c),Math.min(c.max*.15,x.amount*(key==='poison'?x.stacks:1)),'dot');}
+   for(const key of ['burn','poison'])if(c[key]?.turns>0&&c.hp>0){const x=c[key];x.turns--;damage(1-a,{name:key==='burn'?'燃燒':'中毒'},a,s.board.indexOf(c),x.amount*(key==='poison'?x.stacks:1),'dot');}
   }
   if(!s.hp)return;pulseHero(a);
   if(a===0){const slot={id:state.rune,level:state.runeLevel,effect:state.runeEffect,key:'first',charges:state.charges};rune(a,slot);state.charges=slot.charges;if(state.rune2){state.rune2.key='second';rune(a,state.rune2);}}
