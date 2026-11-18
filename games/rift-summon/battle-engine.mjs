@@ -1,8 +1,8 @@
-import {cards,stages,starter} from './battle.mjs?v=combat-2';
-import {dailyStage} from './daily.mjs?v=combat-2';
-import {heroHealth,shuffleDeck} from './progression.mjs?v=combat-2';
-import {profiles,cardStats,skillScale,combatVersion} from './combat-rules.mjs?v=combat-2';
-import {runeProfile} from './runes.mjs?v=combat-2';
+import {cards,stages,starter} from './battle.mjs?v=combat-3';
+import {dailyStage} from './daily.mjs?v=combat-3';
+import {heroHealth,shuffleDeck} from './progression.mjs?v=combat-3';
+import {profiles,cardStats,skillScale,combatVersion} from './combat-rules.mjs?v=combat-3';
+import {runeProfile} from './runes.mjs?v=combat-3';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 export function createBattle(rune='wall',hero='trust',stage=0,deck=starter,levels={},heroLevel=1,runeLevel=1,daily=null,effects={},heroEffect=1,runeEffect=1,rune2=null,instances=null,random=Math.random){
  const mission=daily?dailyStage(daily):stages[stage];if(!mission)throw Error('Unknown mission');
@@ -109,7 +109,7 @@ export function applyAction(previous,action){
   if(c.id==='al08'&&!c.summonKind){summon(a,c,'hatch',.4,.3);summon(a,c,'hatch',.4,.3);}
   if(c.id==='an10')for(const x of alive(1-a).slice(0,3)){status(a,x.card,'poison',c);x.card.antiHeal={ratio:.2,turns:2};}
   if(!c.summonKind&&profiles[c.id]?.role==='bomber')for(const index of [lane-1,lane,lane+1])if(state.sides[1-a].board[index])damage(a,c,1-a,index,c.baseAttack*.9*skillScale(c.effect));
-  if(!c.summonKind&&profiles[c.id]?.role==='revenant')summon(a,c,'spirit',.5+.01*c.effect,.4+.01*c.effect);
+  if(!c.summonKind&&c.id!=='my03'&&profiles[c.id]?.role==='revenant')summon(a,c,'spirit',.5+.01*c.effect,.4+.01*c.effect);
  }
  function deploy(a,uid){
   const s=state.sides[a],index=s.hand.findIndex(c=>c.uid===uid&&c.count===0);if(index<0||s.board.filter(Boolean).length>=12)return false;

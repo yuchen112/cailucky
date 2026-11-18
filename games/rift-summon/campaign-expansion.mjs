@@ -1,5 +1,5 @@
-import {makeEncounter} from './encounters.mjs?v=combat-2';
-import {exclusiveIds} from './exclusive-cards.mjs?v=combat-2';
+import {makeEncounter} from './encounters.mjs?v=combat-3';
+import {exclusiveIds} from './exclusive-cards.mjs?v=combat-3';
 export const plannedChapters=99;
 export function campaignLevel(chapter,step=0){
   if(chapter>=80)return 99;
