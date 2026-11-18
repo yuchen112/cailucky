@@ -1136,7 +1136,7 @@ const comparisons={
     uid:(a,b)=>Number(a.uid.slice(1))-Number(b.uid.slice(1)), tier:(a,b)=>rarityNames.indexOf(rarity(a.id))-rarityNames.indexOf(rarity(b.id)),
     level:(a,b)=>a.level-b.level, effect:(a,b)=>(a.effect??1)-(b.effect??1), xp:(a,b)=>a.experience/xpNeeded(a.level,a)-b.experience/xpNeeded(b.level,b),
     name:(a,b)=>itemName(a).localeCompare(itemName(b),'zh-Hant'),
-    group:(a,b)=>itemName(a).localeCompare(itemName(b),'zh-Hant')||b.level-a.level,
+    group:(a,b)=>itemName(a).localeCompare(itemName(b),'zh-Hant')||a.level-b.level,
   };
 function sortCollectibles(items,order){
   const direction=order.asc?1:-1;
