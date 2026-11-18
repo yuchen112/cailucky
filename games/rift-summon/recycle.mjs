@@ -7,7 +7,11 @@ export const fragmentValue=item=>fragmentYields[rarityNames.indexOf(rarity(item.
 export const exchangeCost=id=>exchangeCosts[rarityNames.indexOf(rarity(id))];
 export function protectedItems(teams,inventory,homeHero){
  const ids=new Set(teams.flatMap(t=>t.items?[...t.items.cards,t.items.hero,t.items.rune,t.items.rune2].filter(Boolean):[]));
- for(const item of inventory.items)if(item.locked||item.kind==='hero'&&item.id===homeHero)ids.add(item.uid);
+ for(const item of inventory.items)if(item.locked)ids.add(item.uid);
+ // Display selection is a hero identity, not a stack. Preserve its strongest
+ // instance while allowing spare copies to remain independently recyclable.
+ const display=inventory.items.filter(i=>i.kind==='hero'&&i.id===homeHero).sort((a,b)=>b.level-a.level||(b.effect??1)-(a.effect??1)||b.experience-a.experience)[0];
+ if(display)ids.add(display.uid);
  return ids;
 }
 export function dismantle(inventory,wallet,uids,protectedUids=new Set()){
