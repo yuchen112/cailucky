@@ -1,7 +1,7 @@
-import {exclusiveInfo} from './exclusive-cards.mjs?v=xur-maps-1';
-import {rarity,rarityNames,walletCardIds} from './economy.mjs?v=xur-maps-1';
-import {cards} from './battle.mjs?v=xur-maps-1';
-import {addInstance} from './inventory.mjs?v=xur-maps-1';
+import {exclusiveInfo} from './exclusive-cards.mjs?v=combat-2';
+import {rarity,rarityNames,walletCardIds} from './economy.mjs?v=combat-2';
+import {cards} from './battle.mjs?v=combat-2';
+import {addInstance} from './inventory.mjs?v=combat-2';
 export const fragmentYields=[1,2,4,8,16,40,100,220];
 export const exchangeCosts=[30,60,140,300,700,1800,4800,9000];
 export const fragmentValue=item=>fragmentYields[rarityNames.indexOf(rarity(item.id))]??0;

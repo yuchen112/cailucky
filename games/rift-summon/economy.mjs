@@ -1,6 +1,6 @@
-import {exclusiveIds} from './exclusive-cards.mjs?v=xur-maps-1';
-import {extraCards,extraRunes,expansionRanks} from './content-expansion.mjs?v=xur-maps-1';
-import {materials} from './materials.mjs?v=xur-maps-1';
+import {exclusiveIds} from './exclusive-cards.mjs?v=combat-2';
+import {extraCards,extraRunes,expansionRanks} from './content-expansion.mjs?v=combat-2';
+import {materials} from './materials.mjs?v=combat-2';
 export const capsuleCards=[...Object.keys(extraCards),'ember','wisp','turtle','raven','stag','lynx','moth','drake','ibis','hare','otter','ram','bat','beetle','crane','yak','seal','boar','swan','crab','gecko','wolf','panda','hedgehog','koi','falcon','mole','lion','badger','lynxguard','robin','frog','yakfire','stork','ferret','beaver','rabbit','eagle'];
 export const walletCardIds=[...capsuleCards,...exclusiveIds];
 export const maxLevel=5;
@@ -36,7 +36,7 @@ export function poolFor(kind,currency) {
 export function pityTier(kind,currency){return Math.max(0,...poolFor(kind,currency).filter(item=>!materials[item.id]).map(item=>rarityNames.indexOf(rarity(item.id))))-1;}
 export function pityRemaining(wallet,kind,currency){return 10-(wallet.pity?.[currency+':'+kind]??0);}
 export function pullPrice(currency,count) {
-  return (currency==='gold'?80:12)*(count===10?9:1);
+  return (currency==='gold'?1200:12)*(count===10?9:1);
 }
 export function openBatch(wallet,kind,currency,count,roll=Math.random,alreadyOwned=[]) {
   const pool=poolFor(kind,currency);
@@ -76,7 +76,7 @@ export function improveCollectible(wallet,kind,id,baseOwned) {
 }
 
 export function startingWallet() {
-  return {gold:80,gems:12,unlocked:[],levels:{}};
+  return {gold:1200,gems:12,unlocked:[],levels:{}};
 }
 export function validWallet(wallet) {
   const record=(obj,ids,max)=>obj===undefined||(obj&&typeof obj==='object'&&!Array.isArray(obj)&&
@@ -94,7 +94,7 @@ export function validWallet(wallet) {
 }
 export function levelCost(level) { return 45+(level-1)*35; }
 export function cardLevel(economy,id) { return economy.levels[id]??1; }
-export function victoryPay(firstClear) { return firstClear?{gold:100,gems:12}:{gold:30,gems:2}; }
+export function victoryPay(firstClear,chapter=1) { return firstClear?{gold:500+chapter*100,gems:12+Math.floor(chapter/10)*2}:{gold:150+chapter*20,gems:2}; }
 export function unlockedRunes(clears,wallet) {
   return [...new Set([...fixedRunes(clears,wallet),...validRunes.filter(id=>id!=='none'&&wallet?.runeCopies?.[id]>0)])];
 }

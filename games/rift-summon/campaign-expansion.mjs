@@ -1,4 +1,5 @@
-import {exclusiveIds} from './exclusive-cards.mjs?v=xur-maps-1';
+import {makeEncounter} from './encounters.mjs?v=combat-2';
+import {exclusiveIds} from './exclusive-cards.mjs?v=combat-2';
 export const plannedChapters=99;
 export function campaignLevel(chapter,step=0){
   if(chapter>=80)return 99;
@@ -18,11 +19,7 @@ export function extendCampaign(stages,names,cards){
   }
  }
  stages.forEach((s,index)=>{
-  const chapter=Math.floor(index/4)+1,step=index%4;
-  s.enemyLevel=campaignLevel(chapter,step);s.enemyEffect=Math.min(10,1+Math.floor((chapter-1)/8));
-  const count=chapter<10?8:chapter<35?10:12;
-  const roster=[...s.opponents];s.opponents=Array.from({length:count},(_,i)=>roster[i%roster.length]);
-  // Keep the opening readable; the stronger deck provides the later pressure.
-  s.opening=s.opening.slice(0,step===3&&chapter>=15?2:1);
+  const chapter=Math.floor(index/4)+1,step=index%4;Object.assign(s,makeEncounter(chapter,step,campaignLevel(chapter,step)));
+  s.goal=s.strategy+'。'+['觀察敵軍配置，保留支援牌維持戰線。','留意敵方符文的發動條件與冷卻。','先處理治療與控制，避免長期消耗。','章末頭目配置；開局守軍計入牌組總數。'][step];
  });
 }

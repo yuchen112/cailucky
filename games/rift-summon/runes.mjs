@@ -1,97 +1,18 @@
-import {extraRunes} from './content-expansion.mjs?v=xur-maps-1';
-export const runeBonus=(level=1,effect=1)=>Math.floor((level-1)/2)+Math.floor((effect-1)/3);
-const definitions={
- wall:['鐵壁','guard','為正面有敵軍、半血以下的無盾友軍施加 2+B 護盾。'],
- heal:['回春','heal','為半血以下、至少缺 3 生命的最弱友軍回復 3+B 生命。'],
- frost:['霜縛','control','使攻擊至少 4 的最強敵軍永久降低 2+B 攻擊（最低 1）。'],
- spark:['雷印','attack','對生命與護盾合計不超過 2+B 的敵軍造成 2+B 傷害。'],
- ward:['共盾','guard','至少兩名友軍時，為最前方兩名無盾友軍各施加 1+⌊B/2⌋ 護盾。'],
- flame:['熾志','attack','至少兩名友軍時，為前方半血以下的友軍永久增加 1+B 攻擊。'],
- tide:['潮解','control','移除護盾最多的兩名敵軍各 3+B 護盾。'],
- root:['生根','heal','至少兩名受傷友軍時，為所有受傷友軍回復 1+⌊B/2⌋ 生命。'],
- mirror:['晶鏡','guard','英雄半血以下且無盾時，獲得 1+B 英雄護盾。'],
- dawn:['曉光','heal','英雄半血以下時，回復 2+B 英雄生命。'],
- anchor:['沉錨','control','使倒數最短且不超過 2 的敵方手牌增加 2+B 倒數（上限 4）。'],
- shelter:['堡壘','guard','敵軍至少三名時，為所有無盾友軍施加 1+⌊B/2⌋ 護盾。'],
- surge:['逆雷','attack','英雄半血以下且敵軍至少兩名時，對敵方英雄造成 1+B 傷害。'],
- echo:['回響','control','使最前方未就緒的手牌減少 1+B 倒數。'],
- cinder:['燃痕','attack','為最前方未燃燒的敵軍附加燃燒，接下來兩次出手前各受 1+⌊B/2⌋ 傷害。'],
- venom:['毒棘','attack','為生命最高的未中毒敵軍附加中毒，接下來三次出手前各受 1+⌊B/2⌋ 傷害。'],
- renewal:['甦泉','heal','英雄受傷且有受傷友軍時，英雄回復 2+B，最弱友軍回復 2+B 生命。'],
- valor:['英勇','attack','友軍至少三名時，使攻擊最高友軍永久增加 1+B 攻擊。'],
- aegis:['聖垣','guard','敵軍至少兩名且英雄護盾低於 2+B 時，施加 2+B 英雄護盾。'],
- blizzard:['寒潮','control','凍結攻擊最高且未凍結的敵軍，使其略過下一次出手。'],
- cleanse:['淨化','heal','清除最弱友軍的燃燒、中毒與凍結，並回復 2+B 生命。'],
- leech:['血契','attack','英雄受傷時，對最弱敵軍造成 2+B 傷害，並回復等量實際生命傷害。'],
- harvest:['歸魂','support','有友軍陣亡後，從牌庫抽一張牌並減少 1+B 倒數；每次需新的陣亡。'],
- comet:['彗星','attack','敵軍至少兩名時，對生命最低的兩名各造成 1+⌊B/2⌋ 傷害。'],
- fortify:['鑄魂','guard','為最大生命最低友軍增加 2+B 最大生命並回復等量生命。'],
- reckoning:['逆境','guard','敵軍多於友軍時，為最弱友軍施加 3+B 護盾。'],
- mend:['復甦','heal','為受傷最多的友軍回復 2+B 生命並施加 1+⌊B/2⌋ 護盾。'],
- siphon:['封魔','control','使攻擊最高敵軍降低 1+B 攻擊（最低 1），英雄獲得 1 護盾。'],
- oath:['連攜','guard','場上友軍至少有三種不同基礎技能時，為前兩名友軍各施加 2+⌊B/2⌋ 護盾。'],
- nova:['星爆','attack','敵軍至少四名時，對全部敵軍造成 1+⌊B/2⌋ 傷害。'],
- shadow:['影襲','attack','對最後方敵軍造成 2+B 技能傷害，不受相鄰護衛減傷。'],
- chronos:['時砂','control','至少三張未就緒手牌時，全部未就緒手牌倒數減少 1+⌊B/2⌋。'],
- sanctuary:['聖域','heal','英雄半血以下且有友軍受傷或燃燒時，全體友軍清除燃燒並回復 1+⌊B/2⌋ 生命。'],
- echoBlade:['回刃','attack','連續兩次對當下生命最低敵軍造成 1+⌊B/2⌋ 傷害，每次重新選擇目標。'],
- none:['未裝備','support','不觸發符文。'],
-};
-export const runes=Object.fromEntries(Object.entries(definitions).map(([id,[name,group,effect]])=>[id,{name,group,effect:effect+' 每場最多兩次；B＝等級與效果等級增益（0–5）。',source:id==='none'?'':extraRunes[id]?'符文召喚池':'初始、關卡或符文召喚池'}]));
-export function runeDescription(id,level=1,effect=1){return runes[id].effect.replaceAll('⌊B/2⌋',String(Math.floor(runeBonus(level,effect)/2))).replaceAll('B＝等級與效果等級增益（0–5）',`本個體增益＝${runeBonus(level,effect)}`).replaceAll('B',String(runeBonus(level,effect)));}
-export function runExpandedRune(state,events,second,api){
- const id=second?state.rune2?.id:state.rune,slot=second?state.rune2:state;
- if(!slot?.charges||id==='none'||!runes[id])return;
- const b=runeBonus(second?slot.level:state.runeLevel,second?slot.effect:state.runeEffect),a=Math.floor(b/2);
- const [own,foe]=state.sides,ownMax=state.heroMax??73;
- const alive=board=>board.flatMap((card,lane)=>card?[{card,lane}]:[]);
- const allies=alive(own.board),enemies=alive(foe.board),hurt=allies.filter(x=>x.card.hp<x.card.max).sort((x,y)=>x.card.hp-y.card.hp);
- const weakest=[...enemies].sort((x,y)=>x.card.hp-y.card.hp),strongest=[...enemies].sort((x,y)=>y.card.attack-x.card.attack);
- let acted=false;const deaths=[];const name=runes[id].name;
- const log=(target,lanes,message=name)=>api.record(state,events,'skill',message,{actor:0,target,lanes,rune:id});
- const shield=(targets,n)=>{for(const x of targets){x.card.shield=Math.min(80,x.card.shield+n);acted=true;}if(targets.length)log(0,targets.map(x=>x.lane));};
- const heal=(targets,n)=>{for(const x of targets){if(x.card.hp<x.card.max){x.card.hp=Math.min(x.card.max,x.card.hp+n);acted=true;}}if(acted)log(0,targets.map(x=>x.lane));};
- const hit=(targets,n)=>{if(!targets.length)return;acted=true;log(1,targets.map(x=>x.lane));api.hitBatch(state,events,0,{name},targets.map(x=>({target:1,lane:x.lane,amount:n})),deaths);};
- const haste=(targets,n)=>{for(const card of targets){card.count=Math.max(0,card.count-n);acted=true;}if(acted)log(0,[null]);};
- const power=(targets,n)=>{for(const x of targets){x.card.attack=Math.min(80,x.card.attack+n);acted=true;}if(acted)log(0,targets.map(x=>x.lane));};
- const heroHeal=n=>{if(own.hp<ownMax){own.hp=Math.min(ownMax,own.hp+n);acted=true;log(0,[null]);}};
- const half=own.hp*2<=ownMax;
- if(id==='wall')shield(hurt.filter(x=>x.card.hp*2<=x.card.max&&!x.card.shield&&foe.board[x.lane]).slice(0,1),2+b);
- if(id==='heal')heal(hurt.filter(x=>x.card.hp*2<=x.card.max&&x.card.max-x.card.hp>=3).slice(0,1),3+b);
- if(id==='frost'&&strongest[0]?.card.attack>=4)powerEnemy(strongest[0],2+b);
- function powerEnemy(x,n){x.card.attack=Math.max(1,x.card.attack-n);acted=true;log(1,[x.lane]);}
- if(id==='spark')hit(weakest.filter(x=>x.card.hp+x.card.shield<=2+b).slice(0,1),2+b);
- if(id==='ward'&&allies.length>=2)shield(allies.filter(x=>!x.card.shield).slice(0,2),1+a);
- if(id==='flame'&&allies.length>=2)power(hurt.filter(x=>x.card.hp*2<=x.card.max).sort((x,y)=>x.lane-y.lane).slice(0,1),1+b);
- if(id==='tide'){const list=enemies.filter(x=>x.card.shield).sort((x,y)=>y.card.shield-x.card.shield).slice(0,2);for(const x of list)x.card.shield=Math.max(0,x.card.shield-3-b);if(list.length){acted=true;log(1,list.map(x=>x.lane));}}
- if(id==='root'&&hurt.length>=2)heal(hurt,1+a);
- if(id==='mirror'&&half&&!state.heroShield){state.heroShield=1+b;acted=true;log(0,[null]);}
- if(id==='dawn'&&half)heroHeal(2+b);
- if(id==='anchor'){const c=foe.hand.filter(c=>c.count<=2).sort((x,y)=>x.count-y.count)[0];if(c){c.count=Math.min(4,c.count+2+b);acted=true;log(1,[null]);}}
- if(id==='shelter'&&enemies.length>=3)shield(allies.filter(x=>!x.card.shield),1+a);
- if(id==='surge'&&half&&enemies.length>=2){acted=true;log(1,[null]);api.hitBatch(state,events,0,{name},[{target:1,lane:null,amount:1+b}],deaths);}
- if(id==='echo')haste(own.hand.filter(c=>c.count>0).slice(0,1),1+b);
- if(['cinder','venom'].includes(id)){
-  const status=id==='cinder'?'burn':'poison';const list=enemies.filter(x=>!x.card[status]?.turns);if(id==='venom')list.sort((x,y)=>y.card.hp-x.card.hp);
-  const x=list[0];if(x){x.card[status]={amount:1+a,turns:id==='cinder'?2:3};acted=true;log(1,[x.lane]);}
- }
- if(id==='renewal'&&own.hp<ownMax&&hurt.length){heroHeal(2+b);heal(hurt.slice(0,1),2+b);}
- if(id==='valor'&&allies.length>=3)power([...allies].sort((x,y)=>y.card.attack-x.card.attack).slice(0,1),1+b);
- if(id==='aegis'&&enemies.length>=2&&state.heroShield<2+b){state.heroShield=Math.min(80,state.heroShield+2+b);acted=true;log(0,[null]);}
- if(id==='blizzard'){const x=strongest.find(x=>!x.card.stun);if(x){x.card.stun=1;acted=true;log(1,[x.lane]);}}
- if(id==='cleanse'){const x=[...allies].sort((x,y)=>x.card.hp-y.card.hp).find(x=>x.card.burn?.turns||x.card.poison?.turns||x.card.stun);if(x){delete x.card.burn;delete x.card.poison;delete x.card.stun;acted=true;heal([x],2+b);log(0,[x.lane]);}}
- if(id==='leech'&&own.hp<ownMax&&weakest.length){const x=weakest[0],before=x.card.hp;hit([x],2+b);heroHeal(before-x.card.hp);}
- if(id==='harvest'&&(state.losses?.[0]??0)>(slot.harvestLosses??0)&&own.deck.length){const c=own.deck.shift();own.hand.push(c);haste([c],1+b);slot.harvestLosses=state.losses[0];}
- if(id==='comet'&&enemies.length>=2)hit(weakest.slice(0,2),1+a);
- if(id==='fortify'&&allies.length){const x=[...allies].sort((x,y)=>x.card.max-y.card.max)[0];const n=Math.min(2+b,240-x.card.max);if(n>0){x.card.max+=n;x.card.hp+=n;acted=true;log(0,[x.lane]);}}
- if(id==='reckoning'&&enemies.length>allies.length)shield([...allies].sort((x,y)=>x.card.hp-y.card.hp).slice(0,1),3+b);
- if(id==='mend'&&hurt.length){const x=[...hurt].sort((x,y)=>(y.card.max-y.card.hp)-(x.card.max-x.card.hp))[0];heal([x],2+b);shield([x],1+a);}
- if(id==='siphon'&&strongest.length){powerEnemy(strongest[0],1+b);state.heroShield=Math.min(80,state.heroShield+1);log(0,[null]);}
- if(id==='oath'&&new Set(allies.map(x=>x.card.skill)).size>=3)shield(allies.slice(0,2),2+a);
- if(id==='nova'&&enemies.length>=4)hit(enemies,1+a);
- if(id==='shadow')hit(enemies.slice(-1),2+b);
- if(id==='chronos'&&own.hand.filter(c=>c.count>0).length>=3)haste(own.hand.filter(c=>c.count>0),1+a);
- if(id==='sanctuary'&&half&&allies.some(x=>x.card.hp<x.card.max||x.card.burn?.turns)){for(const x of allies)delete x.card.burn;acted=true;heal(allies,1+a);log(0,allies.map(x=>x.lane));}
- if(id==='echoBlade')for(let i=0;i<2;i++){const list=alive(foe.board).sort((x,y)=>x.card.hp-y.card.hp);hit(list.slice(0,1),1+a);api.settle(state,events,0,deaths.splice(0));}
- if(acted){slot.charges--;api.settle(state,events,0,deaths);}
+export const runeDefinitions={"wall":{"name":"鐵壁","group":"guard","action":"shield","condition":"wounded","cooldown":2,"targets":1,"percent":0.04,"limit":0},"heal":{"name":"回春","group":"heal","action":"heal","condition":"wounded","cooldown":2,"targets":1,"percent":0.06,"limit":0},"frost":{"name":"霜縛","group":"control","action":"weaken","condition":"two","cooldown":3,"targets":1,"percent":0.12,"limit":0},"spark":{"name":"雷印","group":"attack","action":"hit","condition":"two","cooldown":3,"targets":1,"percent":0.02,"limit":0},"ward":{"name":"共盾","group":"guard","action":"shield","condition":"two","cooldown":3,"targets":2,"percent":0.03,"limit":0},"flame":{"name":"熾志","group":"attack","action":"power","condition":"wounded","cooldown":3,"targets":1,"percent":0.12,"limit":0},"tide":{"name":"潮解","group":"control","action":"dispel","condition":"two","cooldown":2,"targets":2,"percent":0.06,"limit":0},"root":{"name":"生根","group":"heal","action":"heal","condition":"three","cooldown":3,"targets":3,"percent":0.03,"limit":0},"mirror":{"name":"晶鏡","group":"guard","action":"heroShield","condition":"half","cooldown":3,"targets":1,"percent":0.04,"limit":0},"dawn":{"name":"曉光","group":"heal","action":"heroHeal","condition":"half","cooldown":3,"targets":1,"percent":0.04,"limit":0},"anchor":{"name":"沉錨","group":"control","action":"delay","condition":"two","cooldown":3,"targets":1,"percent":0,"limit":0},"shelter":{"name":"堡壘","group":"guard","action":"shield","condition":"foes3","cooldown":3,"targets":3,"percent":0.03,"limit":0},"surge":{"name":"逆雷","group":"attack","action":"heroHit","condition":"half","cooldown":4,"targets":1,"percent":0,"limit":2},"echo":{"name":"回響","group":"control","action":"haste","condition":"two","cooldown":3,"targets":1,"percent":0,"limit":0},"cinder":{"name":"燃痕","group":"attack","action":"burn","condition":"two","cooldown":3,"targets":1,"percent":0,"limit":0},"venom":{"name":"毒棘","group":"attack","action":"poison","condition":"two","cooldown":3,"targets":1,"percent":0.03,"limit":0},"renewal":{"name":"甦泉","group":"heal","action":"renewal","condition":"wounded","cooldown":4,"targets":1,"percent":0.03,"limit":0},"valor":{"name":"英勇","group":"attack","action":"power","condition":"three","cooldown":3,"targets":2,"percent":0.1,"limit":0},"aegis":{"name":"聖垣","group":"guard","action":"heroShield","condition":"foes3","cooldown":4,"targets":1,"percent":0.06,"limit":0},"blizzard":{"name":"寒潮","group":"control","action":"freeze","condition":"foes3","cooldown":4,"targets":1,"percent":0,"limit":0},"cleanse":{"name":"淨化","group":"heal","action":"cleanse","condition":"two","cooldown":2,"targets":1,"percent":0.04,"limit":0},"leech":{"name":"血契","group":"attack","action":"leech","condition":"half","cooldown":3,"targets":1,"percent":0.03,"limit":0},"harvest":{"name":"歸魂","group":"support","action":"draw","condition":"death","cooldown":3,"targets":1,"percent":0,"limit":0},"comet":{"name":"彗星","group":"attack","action":"hit","condition":"foes3","cooldown":3,"targets":2,"percent":0.02,"limit":0},"fortify":{"name":"鑄魂","group":"guard","action":"vitality","condition":"two","cooldown":4,"targets":1,"percent":0,"limit":0},"reckoning":{"name":"逆境","group":"guard","action":"shield","condition":"outnumbered","cooldown":2,"targets":1,"percent":0.06,"limit":0},"mend":{"name":"復甦","group":"heal","action":"mend","condition":"wounded","cooldown":3,"targets":1,"percent":0.04,"limit":0},"siphon":{"name":"封魔","group":"control","action":"weaken","condition":"foes3","cooldown":3,"targets":1,"percent":0.15,"limit":0},"oath":{"name":"連攜","group":"guard","action":"shield","condition":"three","cooldown":3,"targets":2,"percent":0.04,"limit":0},"nova":{"name":"星爆","group":"attack","action":"hit","condition":"foes4","cooldown":4,"targets":4,"percent":0.01,"limit":2},"shadow":{"name":"影襲","group":"attack","action":"hit","condition":"two","cooldown":3,"targets":1,"percent":0.04,"limit":0},"chronos":{"name":"時砂","group":"control","action":"haste","condition":"hand3","cooldown":4,"targets":3,"percent":0,"limit":0},"sanctuary":{"name":"聖域","group":"heal","action":"heal","condition":"half","cooldown":4,"targets":4,"percent":0.04,"limit":0},"echoBlade":{"name":"回刃","group":"attack","action":"echo","condition":"two","cooldown":3,"targets":1,"percent":0.02,"limit":0}};
+const conditionText={wounded:'至少一名友軍受傷',two:'場上至少兩名友軍',three:'場上至少三名友軍',foes3:'敵軍至少三名',foes4:'敵軍至少四名',half:'己方英雄生命不高於 50%',outnumbered:'敵軍數量多於友軍',death:'有新的友軍陣亡',hand3:'至少三張手牌未就緒'};
+export const runeExperienceCosts=[1500,6000,18000,45000];
+export const effectCosts=[1,2,3,5,8,12,18,26,36];
+export function runeProfile(id,level=1,effect=1){
+ const d=runeDefinitions[id];if(!d)return null;
+ const n=Math.max(1,Math.min(5,level)),e=Math.max(1,Math.min(10,effect));
+ const amount=[8,14,22,32,46][n-1],percent=d.percent+(d.percent&&['weaken','power'].includes(d.action)?(n-1)*.025:d.percent?(n-1)*.01:0);
+ return {...d,id,level:n,effect:e,amount,percent,targets:Math.min(5,d.targets+Number(e>=5)+Number(e>=10)),cooldown:Math.max(d.action==='freeze'?3:2,d.cooldown-Number(e>=7)),limit:d.limit?d.limit+Number(e>=10):0,cleanse:e>=3&&['heal','renewal'].includes(d.action)||id==='sanctuary',addShield:e>=10&&['heal','renewal'].includes(d.action),haste:e>=3,threshold:e>=2?.6:.5};
 }
+export function runeDescription(id,level=1,effect=1){
+ if(id==='none')return '未裝備符文。';const p=runeProfile(id,level,effect),n=p.amount,percent=Math.round(p.percent*100),targets=p.targets;
+ const action={shield:`為 ${targets} 名友軍施加 ${n}＋目標最大生命 ${percent}% 護盾`,heal:`治療 ${targets} 名友軍，各回復 ${n}＋目標最大生命 ${percent}% 生命`,heroShield:`英雄獲得 ${n}＋英雄最大生命 ${percent}% 護盾`,heroHeal:`英雄回復 ${n}＋最大生命 ${percent}% 生命`,renewal:`英雄與 ${targets} 名友軍各回復 ${n}＋各自最大生命 ${percent}% 生命`,power:`${targets} 名友軍攻擊提高 ${percent}%，持續兩回合，不疊加`,haste:`讓最多 ${targets} 張未就緒手牌倒數減一`,delay:`讓最多 ${targets} 張敵方手牌倒數加一，上限四`,draw:`從牌庫抽一張牌${p.haste?'，該牌倒數減一':''}`,hit:`對 ${targets} 名敵軍造成 ${n}＋目標最大生命 ${percent}% 技能傷害${id==='shadow'?'，優先最後方敵軍':''}`,heroHit:`對敵方英雄造成 ${n} 傷害`,leech:`對 ${targets} 名敵軍造成 ${n}＋目標最大生命 ${percent}% 傷害，英雄回復等量實際生命傷害`,burn:`對 ${targets} 名敵軍附加兩回合燃燒，每次 ${n} 傷害`,poison:`對 ${targets} 名敵軍附加三回合中毒，每層每次為其最大生命 ${percent}%，最多三層`,freeze:`凍結 ${targets} 名敵軍一次出手，解凍後兩回合免疫凍結`,dispel:`移除 ${targets} 名敵軍最多 ${n}＋其最大生命 ${percent}% 的護盾`,weaken:`使 ${targets} 名敵軍攻擊降低 ${percent}%，持續兩回合，不疊加`,vitality:`為 ${targets} 名友軍增加 ${n} 最大生命並回復等量生命；最多增加原最大生命 35%`,cleanse:`淨化 ${targets} 名友軍，回復 ${n}＋最大生命 ${percent}% 生命`,mend:`治療 ${targets} 名友軍 ${n}＋最大生命 ${percent}% 生命，再加 ${Math.round(n*.5)} 護盾`,echo:`對 ${targets} 名敵軍造成 ${n}＋最大生命 ${percent}% 傷害，存活者再受 ${Math.round(n*.5)} 傷害`}[p.action];
+ return `條件：${conditionText[p.condition]}。${action}。冷卻 ${p.cooldown} 回合${p.limit?'；每場最多 '+p.limit+' 次':'；符合條件可再次發動'}。${p.cleanse?'治療同時清除負面狀態。':''}${p.addShield?'治療另附加 '+Math.round(n*.4)+' 護盾。':''}`;
+}
+export function runeAdvancement(id,level,effect){const a=runeProfile(id,level,effect),b=runeProfile(id,level,Math.min(10,effect+1));if(!a)return '';const changes=[];if(a.targets!==b.targets)changes.push(`目標 ${a.targets} → ${b.targets} 名`);if(a.cooldown!==b.cooldown)changes.push(`冷卻 ${a.cooldown} → ${b.cooldown} 回合`);if(!a.cleanse&&b.cleanse)changes.push('解鎖治療淨化');if(!a.addShield&&b.addShield)changes.push('解鎖治療附盾');if(!a.haste&&b.haste&&a.action==='draw')changes.push('抽牌附加倒數減一');if(a.limit!==b.limit)changes.push(`每場次數 ${a.limit} → ${b.limit}`);return changes.length?changes.join('；'):'累積機制培養，Lv.3 解鎖附加能力／Lv.5 增加目標／Lv.7 減少冷卻／Lv.10 最終能力（依各符文規則）。';}
+export const runes={...Object.fromEntries(Object.entries(runeDefinitions).map(([id,d])=>[id,{name:d.name,group:d.group,effect:runeDescription(id,1,1),source:'符文召喚與關卡獎勵'}])),none:{name:'未裝備',group:'support',effect:'不裝備符文。'}};
+export const runeBonus=(level=1)=>[8,14,22,32,46][Math.max(0,Math.min(4,level-1))];

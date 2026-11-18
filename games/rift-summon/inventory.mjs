@@ -1,5 +1,6 @@
-import {rarity} from './economy.mjs?v=xur-maps-1';
-import {heroCapacity,heroLimits} from './progression.mjs?v=xur-maps-1';
+import {runeExperienceCosts,effectCosts} from './runes.mjs?v=combat-2';
+import {rarity} from './economy.mjs?v=combat-2';
+import {heroCapacity,heroLimits} from './progression.mjs?v=combat-2';
 export function newInventory() { return {next:1,items:[]}; }
 export function addInstance(inventory,kind,id,level=1,experience=0) {
   const item={uid:`i${inventory.next++}`,kind,id,level,experience};
@@ -26,9 +27,9 @@ export function migrateInventory(saved,wallet,owned,heroes,runes) {
 export const limits=[20,40,60,80,99];
 export const effectsMax=10;
 export const levelLimit=item=>item.kind==='card'?limits[item.breakthrough??0]:item.kind==='hero'?heroLimits[item.breakthrough??0]:5;
-export const cardHealthBonus=level=>2*Math.min(4,Math.max(0,level-1))+Math.max(0,level-5);
-export const cardBonus=level=>Math.min(4,level-1)+Math.floor(Math.max(0,level-5)/8);
-export function xpNeeded(level,item=null) {const rate=item?.kind==='hero'?({S:1.1,SS:1.2,SSR:1.3,UUR:1.4}[rarity(item.id)]??1):1;return Math.round((100+(level-1)*50)*rate);}
+export const cardHealthBonus=level=>Math.ceil((level-1)*1.15);
+export const cardBonus=level=>Math.floor((level-1)*.23);
+export function xpNeeded(level,item=null) {if(item?.kind==='rune')return runeExperienceCosts[level-1]??45000;const rate=item?.kind==='hero'?({S:1.1,SS:1.2,SSR:1.3,UUR:1.4}[rarity(item.id)]??1):1;return Math.round((100+(level-1)*50)*rate);}
 export function grantExperience(item,amount) {
   if(item.level>=levelLimit(item))return false;
   item.experience+=amount;
@@ -47,6 +48,7 @@ export function validInventory(value,types) {
       !Object.hasOwn(types,item.kind)||!types[item.kind].includes(item.id)||!Number.isInteger(item.level)||item.level<1||item.level>levelLimit(item)||
       (item.breakthrough!==undefined&&(!Number.isInteger(item.breakthrough)||!['card','hero'].includes(item.kind)||item.breakthrough<0||item.breakthrough>(item.kind==='hero'?3:4)))||
       (item.reserveExperience!==undefined&&(item.kind!=='hero'||!Number.isSafeInteger(item.reserveExperience)||item.reserveExperience<0||item.reserveExperience>1000000))||
+      (item.effectExperience!==undefined&&(!Number.isSafeInteger(item.effectExperience)||item.effectExperience<0||(item.effect===10?item.effectExperience!==0:item.effectExperience>=effectNeeded(item))))||
       (item.effect!==undefined&&(!Number.isInteger(item.effect)||item.effect<1||item.effect>10))||
       (item.locked!==undefined&&typeof item.locked!=='boolean')||!Number.isInteger(item.experience)||item.experience<0||
       (item.level===levelLimit(item)?item.experience!==0:item.experience>=xpNeeded(item.level,item)))return false;
@@ -76,3 +78,7 @@ export function assignLineupCard(slots,position,uid,find) {
   next[position]=uid;
   return next;
 }
+
+export const effectPoints=item=>item.kind==='material'?({R:1,SR:3,S:6,SS:10,SSR:18,UUR:30,XUR:45}[rarity(item.id)]??1):({N:1,R:2,SR:3,S:5,SS:8,SSR:12,UUR:18,XUR:24}[rarity(item.id)]??1);
+export function grantEffect(item,points){item.effectExperience=(item.effectExperience??0)+points;item.effect??=1;while(item.effect<10&&item.effectExperience>=effectCosts[item.effect-1]){item.effectExperience-=effectCosts[item.effect-1];item.effect++;}if(item.effect===10)item.effectExperience=0;return item;}
+export const effectNeeded=item=>effectCosts[(item.effect??1)-1]??0;

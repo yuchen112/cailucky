@@ -1,23 +1,7 @@
-const clamp=level=>Math.min(10,Math.max(1,level));
+import {skillScale} from './combat-rules.mjs?v=combat-2';
 export function heroSkillProfile(id,level=1){
- const n=clamp(level),ratio=n-1,advanced=n>=5,master=n===10;
- const p={level:n,ratio,advanced,master,strike:2+Math.floor((n-1)/3),threshold:n+1,spiritAttack:1+Math.floor((n-1)/3)+Number(master),spiritHealth:n+1+3*Number(master)};
- const shield=ratio?`2 點＋目標最大生命的 ${ratio}% 護盾`:'2 點護盾';
- const heroAmount=ratio?`3 點＋英雄最大生命的 ${ratio}%`:'3 點';
- const healAmount=ratio?`3 點＋其最大生命的 ${ratio}%`:'3 點';
- const power=ratio?`1 點＋當前攻擊的 ${ratio*2}%`:'1 點';
- const descriptions={
-  hope:`首次半血且存活時，獲得 ${heroAmount} 護盾。${advanced?'另回復英雄 2 點生命。':''}${master?'再為最虛弱友軍加 2 點護盾。':''}`,
-  trust:`首次部署的友軍獲得 ${shield}。${advanced?'下一張部署的友軍再獲得 1 點＋其最大生命 2% 的護盾。':''}${master?'主目標護盾首次受擊破裂且存活時，回復 2 點生命。':''}`,
-  growth:`第 2 回合起首次有未就緒手牌時，使一張手牌倒數減 ${master?2:1}${ratio?'，並加其最大生命 '+ratio+'% 的護盾。':'。'}${advanced?'再讓另一張未就緒手牌倒數減 1。':''}`,
-  healing:`攻擊開始時，首次治療傷勢最重友軍 ${healAmount}。${advanced?'再治療另一名受傷友軍 1 點＋其最大生命 2%。':''}${master?'主目標另獲得 2 點護盾。':''}`,
-  joy:`首次部署第 3 名友軍時，增加其攻擊 ${power}。${advanced?'另一名相鄰友軍攻擊再加 1。':''}${master?'主目標另獲得 1 點＋最大生命 3% 的護盾。':''}`,
-  luck:`攻擊開始時，首次對生命不超過 ${p.threshold} 的最虛弱敵軍造成 ${p.strike} 點傷害。${advanced?'若擊退主目標，再對敵方英雄造成 1 點傷害。':''}${master?'另追擊一名符合條件的敵軍，最多追加一次。':''}`,
-  memory:`首次友軍退場且原位空出時，留下 ${p.spiritAttack} 攻 ${p.spiritHealth} 血靈體。${advanced?'靈體自帶 1 點護盾。':''}${master?'再為一名相鄰友軍加 2 點護盾。':''}`,
-  night:`首次半血且存活時，回復 ${heroAmount} 生命。${advanced?'再替最虛弱的受傷友軍回復 2 點生命。':''}${master?'英雄另獲得 2 點護盾。':''}`,
-  sadness:`攻擊開始時，首次替半血以下最虛弱友軍加 ${shield}。${advanced?'主目標另回復 1 點＋最大生命 2% 的生命。':''}${master?'另一名相鄰友軍再獲得 1 點＋最大生命 2% 的護盾。':''}`,
-  dream:`第 2 回合起首次有牌可抽時，額外抽 ${advanced?2:1} 張${ratio?'；抽到的牌各獲得最大生命 '+ratio+'% 的護盾。':'。'}${master?'這些牌的倒數再各減 1。':''}`,
- };
- p.detail=descriptions[id]??'';return p;
+ const n=Math.max(1,Math.min(10,level)),cooldown=n>=10?2:3,scale=skillScale(n),pct=x=>Math.round(x*scale*100)+'%';
+ const descriptions={hope:`英雄低於 65% 生命時，獲得最大生命 ${pct(.12)} 護盾。英雄護盾最多為最大生命 30%。`,trust:`為最虛弱友軍施加其最大生命 ${pct(.16)} 護盾。${n>=5?'另回復該友軍最大生命 6%。':''}`,growth:`讓未就緒手牌倒數減一，依序加速 ${n>=5?2:1} 次；無符合手牌時不進入冷卻。`,healing:`治療生命比例最低的 ${n>=5?2:1} 名友軍，各回復最大生命 ${pct(.2)}。`,joy:`至少兩名友軍時，鼓舞前 ${n>=5?3:2} 名友軍，攻擊提高 ${10+n}%，持續兩回合，同類不疊加。`,luck:`對生命最低的敵軍造成己方場上平均基礎攻擊 ${pct(.6)} 傷害；目標低於 35% 生命時提高為 ${pct(1.2)}。`,memory:`將最早陣亡的非召喚友軍轉為英靈，繼承其等級、${Math.round((.5+.02*n)*100)}% 攻擊與 ${Math.round((.35+.015*n)*100)}% 生命；本場最多兩次，英靈不能再次接替。`,night:`英雄低於 65% 生命時，回復最大生命 ${pct(.13)} 生命。`,sadness:`至少一名友軍低於或等於半血時，為最虛弱的 ${n>=5?2:1} 名受傷友軍施加最大生命 ${pct(.14)} 護盾。${n>=5?'另清除其燃燒與中毒。':''}`,dream:`從牌庫額外抽一張牌，該牌倒數減 ${n>=5?2:1}；手牌五張以上時不發動。`};
+ return {level:n,cooldown,advanced:n>=5,master:n===10,detail:(descriptions[id]??'')+` 冷卻 ${cooldown} 回合；符合條件可再次發動。`};
 }
-export const scaledHeroAmount=(base,max,ratio)=>base+Math.floor(max*ratio/100);
+export const scaledHeroAmount=(base,max,ratio)=>Math.round(base+max*ratio/100);

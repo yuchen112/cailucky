@@ -1,5 +1,5 @@
 export const heroLimits=[10,20,35,50];
-export const heroHealth=level=>23+Math.min(50,Math.max(1,level));
+export const heroHealth=level=>60+6*Math.min(50,Math.max(1,level));
 export const heroCapacity=level=>8+Number(level>=10)+Number(level>=20)+Number(level>=35)+Number(level>=50);
 export const nextHeroCapacity=level=>[10,20,35,50].find(n=>n>level)??null;
 export function migrateHeroProgression(save){

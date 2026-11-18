@@ -1,21 +1,18 @@
-import {heroCapacity,migrateHeroProgression} from './progression.mjs?v=xur-maps-1';
-import {cards, stages, starter} from './battle.mjs?v=xur-maps-1';
-import {heroes} from './heroes.mjs?v=xur-maps-1';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=xur-maps-1';
-import {validInventory} from './inventory.mjs?v=xur-maps-1';
+import {migrateCombatSave} from './save-migration.mjs?v=combat-2';
+import {heroCapacity,migrateHeroProgression} from './progression.mjs?v=combat-2';
+import {cards, stages, starter} from './battle.mjs?v=combat-2';
+import {heroes} from './heroes.mjs?v=combat-2';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=combat-2';
+import {validInventory} from './inventory.mjs?v=combat-2';
 
-import {validDaily,dailyStage} from './daily.mjs?v=xur-maps-1';
-import {materials} from './materials.mjs?v=xur-maps-1';
+import {validDaily,dailyStage} from './daily.mjs?v=combat-2';
+import {materials} from './materials.mjs?v=combat-2';
 const format = 'cxq-rift-summon';
 const limit = 1024 * 1024;
 const integer = (n,min,max) => Number.isInteger(n) && n >= min && n <= max;
 const fraction = n => typeof n === 'number' && n >= 0 && n <= 1;
-const cardValid = card => card && Object.hasOwn(cards, card.id) &&
-  integer(card.uid,0,500) && card.name === cards[card.id][0] && card.skill === cards[card.id][4] &&
-  integer(card.max,1,240) && integer(card.hp,1,card.max) && integer(card.attack,0,80) &&
-  integer(card.shield,0,80) && (card.signatureUses===undefined||integer(card.signatureUses,0,2)) && (card.stun===undefined||integer(card.stun,0,1)) && ['burn','poison'].every(key=>card[key]===undefined||card[key]&&integer(card[key].amount,1,6)&&integer(card[key].turns,0,3)) && integer(card.count,0,4) && (card.heroBreakHeal===undefined||integer(card.heroBreakHeal,0,2));
-const sideValid = side => side && integer(side.hp,0,73) &&
-  ['deck','hand','board'].every(key=>Array.isArray(side[key]) && side[key].length <= 20 && side[key].every(card=>key==='board'&&card===null||cardValid(card)));
+const cardValid = card => card && Object.hasOwn(cards,card.id)&&integer(card.uid,0,2000)&&integer(card.level,1,99)&&integer(card.effect,1,10)&&typeof card.name==='string'&&card.name.length<=50&&integer(card.max,1,1000)&&integer(card.hp,1,card.max)&&integer(card.attack,0,300)&&integer(card.shield,0,1000)&&integer(card.count,0,4);
+const sideValid=side=>side&&integer(side.hp,0,1000)&&integer(side.maxHp,1,1000)&&['deck','hand','board'].every(key=>Array.isArray(side[key])&&side[key].length<=20&&side[key].every(card=>key==='board'&&card===null||cardValid(card)))&&Array.isArray(side.graveyard)&&side.graveyard.length<=30&&side.graveyard.every(card=>card&&integer(card.hp,0,1000)&&Object.hasOwn(cards,card.id));
 
 export function makeBackup(save) {
   return JSON.stringify({format,version:1,createdAt:new Date().toISOString(),save},null,2);
@@ -27,7 +24,7 @@ export async function readBackup(file) {
   catch { throw new Error('這個檔案無法讀取為 JSON 備份。'); }
   if (data?.format !== format) throw new Error('這不是《CxQ 裂界召喚》的備份。');
   if (data.version !== 1) throw new Error('這個備份版本目前無法匯入。');
-  const save=migrateHeroProgression(data.save);
+  const save=migrateCombatSave(migrateHeroProgression(data.save));
   const state=save?.state;
   const cleared=save?.cleared;
   const validClears=Array.isArray(cleared) && cleared.length <= stages.length &&
@@ -50,16 +47,16 @@ export async function readBackup(file) {
       (team.rune==='none'?team.items.rune===null:matches(team.items.rune,'rune',team.rune))&&
       (team.items.rune2==null||team.items.rune2!==team.items.rune&&byUid.get(team.items.rune2)?.kind==='rune');
   });
-  const validState=state === null || (state?.version === 3 &&
+  const validState=state === null || (state?.version === 3 && state.combatVersion===2 &&
     (state.heroLevel===undefined||integer(state.heroLevel,1,50))&&
     (state.heroEffect===undefined||integer(state.heroEffect,1,10))&&
-    (state.heroMax===undefined||integer(state.heroMax,24,73))&&
+    (state.heroMax===undefined||integer(state.heroMax,60,500))&&
     (state.heroNextShield===undefined||state.heroNextShield&&integer(state.heroNextShield.base,0,5)&&integer(state.heroNextShield.ratio,0,10))&&
     (state.daily?Boolean(dailyStage(state.daily)):integer(state.stage,0,Math.min(cleared?.length??-1,stages.length-1))) &&
-    integer(state.round,1,40) && integer(state.charges,0,2) && integer(state.heroShield,0,80) &&
-    integer(state.nextUid,24,500) && integer(state.sequence,0,10000) &&
+    integer(state.round,1,60) && integer(state.charges,0,3) && integer(state.heroShield,0,1000) &&
+    integer(state.nextUid,24,2000) && integer(state.sequence,0,30000) &&
     heroes.some(h=>h.id===state.hero) && validRunes.includes(state.rune) && (state.rune==='none'||runeOwnership.includes(state.rune)) &&
-    (state.rune2==null||(runeOwnership.includes(state.rune2.id)&&integer(state.rune2.charges,0,2)&&integer(state.rune2.level,1,5)&&integer(state.rune2.effect,1,10))) &&
+    (state.rune2==null||(runeOwnership.includes(state.rune2.id)&&integer(state.rune2.charges,0,3)&&integer(state.rune2.level,1,5)&&integer(state.rune2.effect,1,10))) &&
     typeof state.heroUsed === 'boolean' && Array.isArray(state.sides) &&
     state.sides.length === 2 && state.sides.every(sideValid) &&
     (state.phase === 'deploy' && state.result === null || state.phase === 'end' && ['勝利','敗北','平局'].includes(state.result)));

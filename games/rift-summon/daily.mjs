@@ -1,6 +1,6 @@
 export const vaults = {
-  gold: {name:'熔金寶庫', limit:2, currency:'gold', opening:['guard','boar','knight','giant','boss'], roster:['guard','knight','boar','beetle','giant','ax','flag','turtle']},
-  gems: {name:'星晶裂谷', limit:1, currency:'gems', opening:['wisp','moth','bat','raven','lion'], roster:['wisp','bat','moth','crane','koi','swan','raven','wolf']},
+  gold: {name:'熔金寶庫', limit:5, currency:'gold', opening:['guard','boar','knight','giant','boss'], roster:['guard','knight','boar','beetle','giant','ax','flag','turtle']},
+  gems: {name:'星晶裂谷', limit:3, currency:'gems', opening:['wisp','moth','bat','raven','lion'], roster:['wisp','bat','moth','crane','koi','swan','raven','wolf']},
 };
 vaults.xp={...vaults.gold,name:'星火藏書塔',currency:'xp'};
 vaults.tech={...vaults.gems,name:'秘技典藏庫',currency:'tech'};
@@ -19,17 +19,13 @@ export function dailyStatus(data,key,day=localDay()) {
   return {...item,used:item.day===day?item.used:0,day};
 }
 export function dailyStage({vault,floor}) {
-  if(!Object.hasOwn(vaults,vault)||!Number.isInteger(floor)||floor<1||floor>10)return null;
-  const info=vaults[vault];
-  const head=floor%5===0;
-  const shift=(floor-1)%info.roster.length;
-  const opponents=[...info.roster.slice(shift),...info.roster.slice(0,shift)].slice(0,4+Math.ceil(floor/3));
-  return {name:`${info.name}・第 ${floor} 層`,hp:Math.min(28,8+floor+Math.floor(floor/5)*3),opponents,
-    enemyLevel:1+(floor-1)*2,enemyEffect:1+Math.floor((floor-1)/3),
-    opening:[info.opening[head?4:Math.floor((floor-1)/3)],...(floor>=7?[opponents[1]]:[])],head,
-    goal:['gold','xp'].includes(vault)?'打破守軍護盾可使其攻擊降低 1 點。':'發亮的欄位將在下一次進攻時爆裂。'};
+ if(!Object.hasOwn(vaults,vault)||!Number.isInteger(floor)||floor<1||floor>10)return null;
+ const levels=[10,20,30,40,50,60,70,80,90,99],info=vaults[vault];
+ const rosters={gold:['guard','knight','giant','turtle','boar','wolf','lion','healer','badgerforge','rampart','crane','drake'],gems:['raven','bat','koi','swan','crane','rabbit','lynxguard','wisp','wolf','eagle','moth','lion'],xp:['yak','turtle','stag','panda','hare','frog','crane','beaver','knight','wolf','stork','giant'],tech:['eagle','falcon','stork','lion','drake','wolf','rabbit','crane','lynxguard','raven','wisp','ibis']};
+ const count=floor<=3?8:floor<=6?10:12,deck=rosters[vault].slice(0,count),head=floor===5||floor===10,heroLevel=Math.min(50,Math.ceil(levels[floor-1]/2));
+ return {name:info.name+'・第 '+floor+' 層',hp:60+6*heroLevel,opponents:deck,opening:head?[deck[0]]:[],enemyLevel:levels[floor-1],enemyEffect:floor,heroLevel,hero:{gold:'trust',gems:'luck',xp:'healing',tech:'joy'}[vault],runeLevel:Math.ceil(floor/2),runes:floor<3?[]:{gold:['wall','ward'],gems:['spark','anchor'],xp:['root','sanctuary'],tech:['valor','comet']}[vault].slice(0,floor>=6?2:1),head,goal:{gold:'護盾與反擊守軍，使用破盾與持續傷害突破。',gems:'控制與追獵配置，保護關鍵支援單位。',xp:'回復與再生配置，使用禁療、集中火力。',tech:'鼓舞與爆發配置，使用護盾與控制打斷攻勢。'}[vault]};
 }
-export const dailyPay = (vault,floor) => vault==='gold'?180+70*floor:vault==='gems'?8+2*floor:1+Math.floor((floor-1)/3);
+export const dailyPay=(vault,floor)=>vault==='gold'?[1000,1500,2200,3000,4000,5200,6600,8200,10000,12000][floor-1]:vault==='gems'?[12,16,20,26,32,40,48,58,70,84][floor-1]:vault==='xp'?floor<=2?2:floor<=5?3:floor<=8?4:6:floor<=3?2:floor<=6?3:floor<=8?4:6;
 export function claimDaily(data,vault,floor,sweep=false,day=localDay()) {
   if(!dailyStage({vault,floor}))return null;
   const item=dailyStatus(data,vault,day);

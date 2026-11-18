@@ -1,20 +1,24 @@
-import {exclusiveInfo,exclusiveGroups} from './exclusive-cards.mjs?v=xur-maps-1';
-import {runes,runeBonus,runeDescription} from './runes.mjs?v=xur-maps-1';
-import {signatureDescription} from './combat-effects.mjs?v=xur-maps-1';
-import {pityTier,pityRemaining} from './economy.mjs?v=xur-maps-1';
-import {fragmentValue,exchangeCost,protectedItems,dismantle,exchangeCard} from './recycle.mjs?v=xur-maps-1';
-import {heroSkillProfile} from './hero-skills.mjs?v=xur-maps-1';
-import {heroHealth,heroCapacity,heroLimits,nextHeroCapacity,migrateHeroProgression} from './progression.mjs?v=xur-maps-1';
-import {createDialoguePicker} from './home-dialogue.mjs?v=xur-maps-1';
-import {materials,bookFor} from './materials.mjs?v=xur-maps-1';
-import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=xur-maps-1';
-import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=xur-maps-1';
-import {heroes} from './heroes.mjs?v=xur-maps-1';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=xur-maps-1';
-import {makeBackup, readBackup} from './backup.mjs?v=xur-maps-1';
-import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=xur-maps-1';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,capsuleCards,walletCardIds} from './economy.mjs?v=xur-maps-1';
-import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=xur-maps-1';
+import {migrateCombatSave} from './save-migration.mjs?v=combat-2';
+import {cardStats,cardDescription,profiles} from './combat-rules.mjs?v=combat-2';
+import {runeProfile,runeAdvancement} from './runes.mjs?v=combat-2';
+import {effectPoints,effectNeeded,grantEffect} from './inventory.mjs?v=combat-2';
+import {exclusiveInfo,exclusiveGroups} from './exclusive-cards.mjs?v=combat-2';
+import {runes,runeBonus,runeDescription} from './runes.mjs?v=combat-2';
+import {signatureDescription} from './combat-effects.mjs?v=combat-2';
+import {pityTier,pityRemaining} from './economy.mjs?v=combat-2';
+import {fragmentValue,exchangeCost,protectedItems,dismantle,exchangeCard} from './recycle.mjs?v=combat-2';
+import {heroSkillProfile} from './hero-skills.mjs?v=combat-2';
+import {heroHealth,heroCapacity,heroLimits,nextHeroCapacity,migrateHeroProgression} from './progression.mjs?v=combat-2';
+import {createDialoguePicker} from './home-dialogue.mjs?v=combat-2';
+import {materials,bookFor} from './materials.mjs?v=combat-2';
+import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=combat-2';
+import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=combat-2';
+import {heroes} from './heroes.mjs?v=combat-2';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=combat-2';
+import {makeBackup, readBackup} from './backup.mjs?v=combat-2';
+import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=combat-2';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,capsuleCards,walletCardIds} from './economy.mjs?v=combat-2';
+import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=combat-2';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -23,7 +27,7 @@ const recoveryKey = key + '-recovery';
 let saved;
 try { saved = JSON.parse(localStorage.getItem(key)); } catch {}
 let heroMigrationPending=Boolean(saved&&saved.heroProgressionVersion!==2);
-saved=migrateHeroProgression(saved);
+saved=migrateCombatSave(migrateHeroProgression(saved));
 let state = saved?.state?.version === 3 && saved.state.phase==='deploy' ? saved.state : null;
 let daily=validDaily(saved?.daily)?saved.daily:emptyDaily();
 const consumed=new Set(Array.isArray(saved?.consumed)?saved.consumed:[]);
@@ -124,7 +128,7 @@ function currentSave() {
   syncFixedInventory();
   const ongoing=state?.phase==='deploy';
   flushTeam();
-  return {heroProgressionVersion:2,consumed:[...consumed],displayHero,daily,lastBatch,townRead,bagSort,lineupSort,listSort,state:ongoing?state:null, log:ongoing?log:[], deck, cleared:[...cleared], volumes, loadout, lowMotion, wallet, teams, inventory, activeTeam, starterHero, speed:get('speed').value};
+  return {combatRulesVersion:2,heroProgressionVersion:2,consumed:[...consumed],displayHero,daily,lastBatch,townRead,bagSort,lineupSort,listSort,state:ongoing?state:null, log:ongoing?log:[], deck, cleared:[...cleared], volumes, loadout, lowMotion, wallet, teams, inventory, activeTeam, starterHero, speed:get('speed').value};
 }
 function save() {
   try { localStorage.setItem(key, JSON.stringify(currentSave())); return true; }
@@ -315,16 +319,9 @@ function runeBadge(id, status, icon=id) {
   badge.append(runeImage(icon),element('span',status));
   return badge;
 }
-function runeDetails(id,second=false) {
-  const rune=runes[id];
-  const inBattle=!get('battle').hidden;
-  const count=inventory.items.filter(item=>item.kind==='rune'&&item.id===id).length;
-  const panel=element('div','','rune-detail');
-  panel.append(runeImage(id),element('h2',rune.name),element('p',rune.effect),
-    element('p',id==='none'?'可從符文冊裝備。':`每場 2 次・${rune.source??'初始符文'}`));
-  if(id!=='none') panel.append(element('p',`${rarity(id)}・持有 ${count} 份・Lv.1–5・效果 Lv.1–10・增益 +0 → +5`));
-  if(inBattle && id!=='none' && state) panel.append(element('p',`Lv.${second?state.rune2.level:state.runeLevel??1}・本場剩 ${second?state.rune2.charges:state.charges} 次`));
-  modal(panel);
+function runeDetails(id,second=false){
+ const battleVisible=!get('battle').hidden,item=battleVisible?(second?state.rune2:{id:state.rune,level:state.runeLevel,effect:state.runeEffect}):instance(second?teamItems.rune2:teamItems.rune),level=item?.id===id?item.level:1,effect=item?.id===id?item.effect??1:1;
+ const panel=element('div','','rune-detail');panel.append(runeImage(id),element('h2',runes[id].name),element('p',runeDescription(id,level,effect)),element('p',id==='none'?'未裝備':`經驗 Lv.${level}/5・能力 Lv.${effect}/10`));modal(panel);
 }
 function showRunes(from) {
   runeReturn=from;
@@ -361,24 +358,25 @@ function renderRuneSlots() {
 
 function cardFace(card, {lazy=false}={}) {
   const face=element('span','','card-face');
-  const art=artwork(card.id,'card','face-art');
+  const art=artwork(card.artId??card.id,'card','face-art');
+  face.dataset.tier=rarity(card.sourceId??card.id);
   if(lazy) art.loading='lazy';
   const frame=element('img','','face-frame');
-  frame.src=asset(`rank-${rarity(card.id)}`);
+  frame.src=asset(`rank-${rarity(card.sourceId??card.id)}`);
   frame.alt='';
   const stats=element('span','','face-stats');
   stats.append(element('span',`攻 ${card.attack}`),element('span',`血 ${card.hp}`));
   face.append(art,frame,element('strong',card.name,'face-name'),
     element('span',card.count?`倒數 ${card.count}`:'就緒','face-count'),stats);
   face.append(element('span',`Lv.${card.level??1}`,'face-level'));
-  face.append(element('span',rarity(card.id),'face-rarity'));
+  face.append(element('span',rarity(card.sourceId??card.id),'face-rarity'));
   if(card.shield) face.append(element('span',`盾 ${card.shield}`,'face-shield'));
+  const statusText=[card.burn?.turns?'燃 '+card.burn.turns:'',card.poison?.turns?'毒 '+card.poison.stacks:'',card.stun?'凍結':'',card.silence?'沉默':'',card.summonKind==='egg'?'孵化 '+card.incubate:'',card.summonKind&&card.summonKind!=='egg'?'召喚物':''].filter(Boolean).join('・');
+  if(statusText)face.append(element('span',statusText,'face-states'));
   return face;
 }
-function catalogCard(id,level=firstInstance('card',id)?.level??1) {
-  const [name,count,attack,max,skill]=cards[id];
-  const bonus=cardBonus(level);
-  return {id,name,count,attack:attack+bonus,max:max+cardHealthBonus(level),hp:max+cardHealthBonus(level),level,skill,shield:skill==='護盾'?2:0};
+function catalogCard(id,level=firstInstance('card',id)?.level??1,effect=1) {
+ const [name,,, ,skill]=cards[id],stats=cardStats(id,level,effect);return {id,name,...stats,hp:stats.max,level,effect,skill};
 }
 function money(kind,amount) {
   const item=element('span','','money');
@@ -397,7 +395,7 @@ function cardDetail(card) {
   const layout=element('div','','card-inspector');
   const info=element('div','','inspector-copy');
   info.append(element('h2',card.name),element('strong',(card.skill||'普攻')+'・效果 Lv.'+(card.effect??1)),
-    element('p', descriptions[card.skill] ?? '普攻正對欄位，空位直擊敵方英雄。'),element('p',signatureDescription(card.id,card.level,card.effect)),
+    element('p',card.summonKind?`繼承等級 Lv.${card.level}・攻擊 ${card.attack}・生命 ${card.hp}/${card.max}。${card.summonKind==='egg'?'距重生 '+card.incubate+' 次己方回合開始；卵被擊破即無法重生。':'召喚物不能再次接替或復活。'}`:cardDescription(card.id,card.level,card.effect)),
     element('p',`生命 ${card.hp}/${card.max}・護盾 ${card.shield}・倒數 ${card.count}`,'inspector-stats'));
   layout.append(cardFace(card),info);
   modal(layout);
@@ -410,12 +408,12 @@ function encyclopediaCard(id) {
   previous.setAttribute('aria-label','預覽較低等級');next.setAttribute('aria-label','預覽較高等級');
   const stepper=element('div','','level-preview-stepper');stepper.append(previous,label,next);
   function preview(){
-    const level=levels[previewIndex],card={...base,level,attack:base.attack-bonus+cardBonus(level),max:base.max-cardHealthBonus(base.level)+cardHealthBonus(level)};card.hp=card.max;
-    art.replaceChildren(cardFace(card));signature.textContent=signatureDescription(id,level,1);label.textContent='Lv.'+level;
+    const level=levels[previewIndex],card=catalogCard(id,level,1);
+    art.replaceChildren(cardFace(card));signature.textContent=cardDescription(id,level,1);label.textContent='Lv.'+level;
     previous.disabled=previewIndex===0;next.disabled=previewIndex===levels.length-1;
   }
   const stage=stages.find(x=>x.reward===id),special=exclusiveInfo[id];
-  info.append(element('h2',`${base.name}・${rarity(id)}${special?'・'+special.code:''}`),stepper,element('p',base.skill||'普攻'),element('p',descriptions[base.skill]??'普攻正對欄位，空位直擊敵方英雄。'),signature,
+  info.append(element('h2',`${base.name}・${rarity(id)}${special?'・'+special.code:''}`),stepper,element('p',base.skill||'普攻'),signature,
     element('p',special?`${special.category}系列 ${special.code}・${special.inspiration}・僅限碎片兌換 ${special.cost.toLocaleString()} 碎片`:starter.includes(id)?'初始卡牌':stage?`首通「${stage.name}」取得`:'扭蛋取得'),element('small','預設顯示 Lv.1，點箭頭才切換預覽。'));
   if(special)info.append(confirmButton('前往碎片兌換',()=>openRecycle('exchange',special.group)));
   layout.append(art,info);preview();modal(layout);
@@ -448,6 +446,7 @@ function showCamp() {
   get('camp-bag').classList.toggle('town-unread',inventory.next>townRead.bag);
   get('camp-collection').classList.toggle('town-unread',new Set(inventory.items.filter(item=>item.kind!=='material').map(item=>item.id)).size>townRead.collection);
   renderWallet(get('camp-wallet'));
+  if(saved?.combatMigrationNotice){saved.combatMigrationNotice=false;save();notify('戰鬥規則已更新：養成與主線進度保留；金幣等比換算，秘境保留舊通關紀錄並開啟新版樓層認證。');}
   if(heroMigrationPending&&save()){heroMigrationPending=false;notify('英雄養成已更新：原有等級對應至新階段，出戰卡數與培養進度已保留。');}
 }
 const pickHomeDialogue=createDialoguePicker();
@@ -847,10 +846,10 @@ function showCampaign() {
   }));
   const stage=stages[stageIndex];
   get('stage-name').textContent=stage.name;
-  get('stage-detail').textContent=`敵軍 Lv.${stage.enemyLevel??1}・技能 Lv.${stage.enemyEffect??1}。${stage.goal} 首通取得：${cards[stage.reward][0]}。出戰：${heroes.find(hero=>hero.id===chosen).name}・${runes[loadout].name}`;
+  get('stage-detail').textContent=`牌組 ${stage.opponents.length} 張（含開局守軍）。敵軍 Lv.${stage.enemyLevel??1}・技能 Lv.${stage.enemyEffect??1}。${stage.goal} 首通取得：${cards[stage.reward][0]}。出戰：${heroes.find(hero=>hero.id===chosen).name}・${runes[loadout].name}`;
   const preview=(label,id,level=1,effect=1)=>{
     const figure=element('figure');
-    const card={...catalogCard(id,level),effect};card.shield=card.skill==='護盾'?1+effect:0;
+    const card=catalogCard(id,level,effect);
     const inspect=confirmButton('',()=>cardDetail(card));inspect.append(cardFace(card));
     inspect.setAttribute('aria-label','查看'+card.name);
     figure.append(inspect,element('figcaption',label));
@@ -858,8 +857,16 @@ function showCampaign() {
   };
   get('stage-preview').replaceChildren(
     ...stage.opening.map(id=>preview('敵方先鋒',id,stage.enemyLevel??1,stage.enemyEffect??1)),
-    preview(cleared.has(stageIndex)?'首通已領取':'首通獎勵',stage.reward)
+    preview(cleared.has(stageIndex)?'首通已領取':'首通獎勵',stage.reward),
+    confirmButton('查看敵方配置',()=>encounterDetails(stage))
   );
+}
+function encounterDetails(stage){
+ const hero=heroes.find(h=>h.id===stage.hero),grid=element('div','','encounter-roster');
+ for(const id of stage.opponents){const card=catalogCard(id,stage.enemyLevel,stage.enemyEffect),button=confirmButton('',()=>cardDetail(card));button.append(cardFace(card));grid.append(button);}
+ const content=[element('h2',stage.name+'・敵方配置'),element('p',`${hero.name} Lv.${stage.heroLevel}・生命 ${stage.hp}・技能 Lv.${stage.enemyEffect}。牌組 ${stage.opponents.length} 張，開局守軍已包含在內；每次出牌順序隨機。`),element('p',heroSkillProfile(hero.id,stage.enemyEffect).detail),grid];
+ for(const id of stage.runes??[])content.push(element('h3',runes[id].name+` Lv.${stage.runeLevel}／能力 Lv.${stage.enemyEffect}`),element('p',runeDescription(id,stage.runeLevel,stage.enemyEffect)));
+ modal(...content);
 }
 function showHeroPreview() {
   const hero=heroes.find(h=>h.id===chosen);
@@ -882,39 +889,17 @@ function itemArt(item) {
   const piece=element('span','','inventory-card-art');
   const frame=element('img','','inventory-card-frame');
   frame.src=asset(`rank-${rarity(item.id)}`);frame.alt='';
-  piece.append(artwork(item.id),frame);
+  piece.dataset.tier=rarity(item.id);piece.append(artwork(item.id,'card','inventory-illustration'),frame);
   return piece;
 }
 function teamsUsing(uid) {
   return teams.flatMap((team,index)=>[...team.items.cards,team.items.hero,team.items.rune,team.items.rune2].includes(uid)?[index+1]:[]);
 }
-function effectGrowth(item) {
-  const rank=item.effect??1;
-  if(item.kind==='hero'){
-    const role=heroes.find(hero=>hero.id===item.id).effect;
-    const base={shield:3,recover:3,draw:1,haste:1,summon:1,strike:2,heal:3,power:1,armor:2}[role];
-    const label={shield:'英雄護盾',recover:'英雄回復',draw:'額外抽牌',haste:'倒數減少',summon:'召喚靈體強度',strike:'追擊傷害',heal:'治療量',power:'攻擊增益',armor:'護盾'}[role];
-    return label+' '+(base+rank-1)+' → '+(base+rank);
-  }
-  if(item.kind==='rune')return '符文增益 +'+runeBonus(item.level,rank)+' → +'+runeBonus(item.level,Math.min(10,rank+1));
-  const skill=cards[item.id][4];
-  const label={'護盾':'初始護盾','護衛':'減傷','自爆':'爆炸傷害','治療':'治療量','援護':'治療量','追獵':'追獵額外傷害','破甲':'移除護盾','守蔭':'友軍護盾','猛進':'猛進額外傷害','戰吼':'戰吼傷害','橫掃':'橫掃額外傷害','亡靈接替':'靈體額外生命'}[skill]??'普攻額外傷害';
-  const base=['護盾','自爆','治療','援護','破甲'].includes(skill)?2:['追獵','橫掃','亡靈接替',''].includes(skill)?0:1;
-  return label+' '+(base+rank-1)+' → '+(base+rank);
-}
-function itemStats(item) {
-  if(item.kind==='card') {
-    const card=catalogCard(item.id,item.level);
-    return [
-      ['攻擊',card.attack],['生命',card.max],['倒數',card.count],['初始護盾',card.skill==='護盾'?1+(item.effect??1):0],
-      [card.skill||'普攻',descriptions[card.skill]??'普攻攻擊正對敵軍，沒有敵軍時直擊英雄。'],['專屬能力',signatureDescription(item.id,item.level,item.effect??1)],
-    ];
-  }
-  if(item.kind==='hero') {
-    const hero=heroes.find(h=>h.id===item.id);
-    return [['起始生命',heroHealth(item.level)],['出戰卡牌上限',heroCapacity(item.level)]];
-  }
-  return [['每場發動',2],['效果增益','+'+runeBonus(item.level,item.effect??1)],[runes[item.id].name,runeDescription(item.id,item.level,item.effect??1)]];
+function effectGrowth(item){if(item.kind==='rune')return runeAdvancement(item.id,item.level,item.effect??1);if(item.kind==='hero')return heroSkillProfile(item.id,Math.min(10,(item.effect??1)+1)).detail;return cardDescription(item.id,item.level,Math.min(10,(item.effect??1)+1));}
+function itemStats(item){
+ if(item.kind==='card'){const c=catalogCard(item.id,item.level,item.effect??1);return [['攻擊',c.attack],['生命',c.max],['倒數',c.count],['部署護盾',c.shield],['技能',cardDescription(item.id,item.level,item.effect??1)]];}
+ if(item.kind==='hero')return [['起始生命',heroHealth(item.level)],['出戰卡牌上限',heroCapacity(item.level)]];
+ const r=runeProfile(item.id,item.level,item.effect??1);return [['冷卻',r.cooldown+' 回合'],['目標上限',r.targets],['發動次數',r.limit?r.limit+' 次':'符合條件可再次發動'],['完整效果',runeDescription(item.id,item.level,item.effect??1)]];
 }
 function itemDetail(item,allowUpgrade=false) {
   const layout=element('div','','instance-inspector'), copy=element('div');
@@ -938,7 +923,7 @@ function itemDetail(item,allowUpgrade=false) {
     if(item.reserveExperience)comparison.append(element('p',`已保留舊制經驗 ${item.reserveExperience}，突破後自動補入。`));
     const skillCompare=element('details');skillCompare.append(element('summary',heroes.find(h=>h.id===item.id).skill+'・'+(effect<10?`技能 Lv.${effect} → ${effect+1}`:'技能已滿級 Lv.10')),element('p','目前：'+heroSkillProfile(item.id,effect).detail));
     if(effect<10)skillCompare.append(element('p','升級後：'+heroSkillProfile(item.id,effect+1).detail));
-    skillCompare.append(element('small','百分比依觸發時數值計算並取整數；每場僅發動一次。'));comparison.append(skillCompare);
+    skillCompare.append(element('small','百分比依實際數值取整數；符合條件且冷卻完成後再次發動，特殊限次能力另行標示。'));comparison.append(skillCompare);
     copy.append(comparison);
   }
   if(!allowUpgrade)return layout;
@@ -988,6 +973,7 @@ function finishGrowth(item,message){
 }
 function chooseMaterial(target,mode) {
   const required=mode==='break'?(target.breakthrough??0)+1:null;
+  const powerOf=effectPoints;
   const safe=item=>item.uid!==target.uid&&!item.locked&&!teamsUsing(item.uid).length&&(item.kind==='material'||item.level===1&&!item.experience&&(item.effect??1)===1);
   const matches=item=>mode==='xp'?item.kind===target.kind||item.kind==='material'&&!materials[item.id]?.kind:
     item.kind===target.kind&&item.id===target.id||mode==='effect'&&materials[item.id]?.kind===target.kind;
@@ -999,9 +985,12 @@ function chooseMaterial(target,mode) {
   const apply=confirmButton('確定強化',()=>{
     const chosen=[...selected].map(instance);
     if(!available()||!enough(chosen.length)||chosen.some(item=>!item||!safe(item)||!matches(item)))return;
+    const goldCost=mode==='xp'?Math.ceil(chosen.reduce((n,i)=>n+xpOf(i),0)/10):mode==='effect'?chosen.reduce((n,i)=>n+powerOf(i),0)*40:0;
+    if(wallet.gold<goldCost){notify('金幣不足。');return;}
     if(mode==='xp'&&!grantExperience(target,chosen.reduce((sum,item)=>sum+xpOf(item),0)))return;
     if(mode==='break'){target.breakthrough=(target.breakthrough??0)+1;if(target.reserveExperience){grantExperience(target,target.reserveExperience);target.reserveExperience=0;}}
-    if(mode==='effect')target.effect=Math.min(effectsMax,(target.effect??1)+chosen.length);
+    if(mode==='effect')grantEffect(target,chosen.reduce((n,i)=>n+powerOf(i),0));
+    wallet={...wallet,gold:wallet.gold-goldCost};
     inventory.items=inventory.items.filter(item=>!selected.has(item.uid));
     for(const item of chosen){
       if(item.kind==='material')continue;
@@ -1020,7 +1009,7 @@ function chooseMaterial(target,mode) {
     const xp=chosen.reduce((sum,item)=>sum+xpOf(item),0);
     const result=structuredClone(target);
     if(mode==='xp'&&xp)grantExperience(result,xp);
-    if(mode==='effect')result.effect=Math.min(effectsMax,(target.effect??1)+chosen.length);
+    if(mode==='effect')grantEffect(result,chosen.reduce((n,i)=>n+powerOf(i),0));
     if(mode==='break'&&enough(chosen.length)){result.breakthrough=(target.breakthrough??0)+1;if(result.reserveExperience){grantExperience(result,result.reserveExperience);result.reserveExperience=0;}}
     return {result,xp};
   };
@@ -1036,9 +1025,12 @@ function chooseMaterial(target,mode) {
       return panel;
     }));
     preview.textContent=mode==='xp'?`投入 ${xp.toLocaleString('zh-TW')} 經驗・剩餘經驗 ${result.experience}`:
-      mode==='effect'?`效果 Lv.${target.effect??1} → ${result.effect}`:`等級上限 Lv.${levelLimit(target)} → ${levelLimit(result)}`;
+      mode==='effect'?`能力 Lv.${target.effect??1} → ${result.effect}・剩餘培養值 ${result.effectExperience??0} / ${effectNeeded(result)}`:`等級上限 Lv.${levelLimit(target)} → ${levelLimit(result)}`;
     if(mode==='xp'&&selected.size&&result.level===levelLimit(target))preview.textContent+='・上限外經驗不保留';
-    apply.disabled=!enough(selected.size);
+    const chosen=[...selected].map(instance).filter(Boolean),cost=mode==='xp'?Math.ceil(xp/10):mode==='effect'?chosen.reduce((n,i)=>n+powerOf(i),0)*40:0;
+    preview.textContent+='・消耗金幣 '+cost.toLocaleString();
+    if(target.kind==='rune')preview.textContent+='。'+runeDescription(target.id,result.level,result.effect??1);
+    apply.disabled=!enough(selected.size)||wallet.gold<cost;
   };
   const panel=element('div','','growth-picker');
   const grid=element('div','','team-candidates growth-materials');
@@ -1059,14 +1051,14 @@ function chooseMaterial(target,mode) {
     if(mode==='xp'){
       for(let level=target.level;level<goal;level++)remaining+=xpNeeded(level,target);
       remaining-=target.experience+project().xp;
-    }else remaining=mode==='break'?required-selected.size:effectsMax-(target.effect??1)-selected.size;
+    }else if(mode==='break')remaining=required-selected.size;else {const current=project().result;remaining=0;for(let n=current.effect??1;n<10;n++)remaining+=[1,2,3,5,8,12,18,26,36][n-1];remaining-=current.effectExperience??0;}
     const ordered=[...items].sort((a,b)=>Number(a.kind!=='material')-Number(b.kind!=='material'));
     for(const item of ordered){
       if(remaining<=0)break;
       if(mode==='xp'&&item.kind===target.kind&&item.id===target.id)continue;
       if(selected.has(item.uid))continue;
       selected.add(item.uid);
-      remaining-=mode==='xp'?xpOf(item):1;
+      remaining-=mode==='xp'?xpOf(item):mode==='effect'?powerOf(item):1;
     }
     fill();update();
   }
@@ -1092,7 +1084,7 @@ function chooseMaterial(target,mode) {
     actions.append(confirmButton('一鍵選階',()=>{gradePicker.hidden=!gradePicker.hidden;}));
   }
   actions.append(confirmButton(mode==='break'?'一鍵補足':'補足目標',()=>selectMany(visible(),limitGoal())),
-    confirmButton('全選篩選',()=>{for(const item of visible()){if(selected.size>=(mode==='break'?required:mode==='effect'?effectsMax-(target.effect??1):100))break;selected.add(item.uid);}fill();update();}),
+    confirmButton('全選篩選',()=>{for(const item of visible()){if(selected.size>=(mode==='break'?required:100))break;selected.add(item.uid);}fill();update();}),
     confirmButton('清除選取',()=>{selected.clear();fill();update();}));
   const fill=()=>{
     grid.replaceChildren(...visible().map(item=>{
@@ -1102,7 +1094,7 @@ function chooseMaterial(target,mode) {
         else if(mode==='break'?selected.size<required:mode==='effect'?(result.effect??1)<effectsMax:selected.size<100)selected.add(item.uid);
         button.setAttribute('aria-pressed',String(selected.has(item.uid)));update();
       });
-      button.append(itemArt(item),element('strong',itemName(item)),element('small',mode==='xp'?rarity(item.id)+'・+ '+xpOf(item).toLocaleString('zh-TW')+' 經驗':`Lv.${item.level}・${rarity(item.id)}`));
+      button.append(itemArt(item),element('strong',itemName(item)),element('small',mode==='xp'?rarity(item.id)+'・+ '+xpOf(item).toLocaleString('zh-TW')+' 經驗':mode==='effect'?rarity(item.id)+'・'+powerOf(item)+' 培養值':`Lv.${item.level}・${rarity(item.id)}`));
       button.setAttribute('aria-pressed',String(selected.has(item.uid)));
       button.dataset.tier=rarity(item.id);button.dataset.uid=item.uid;
       for(const image of button.querySelectorAll('img')){image.loading='lazy';image.decoding='async';}
@@ -1139,11 +1131,12 @@ function renderInventory() {
   get('inventory-count').textContent=`持有 ${list.length} 份・顯示 ${visible.length} 份`;
   for(const button of document.querySelectorAll('[data-bag]'))button.setAttribute('aria-pressed',String(button.dataset.bag===bagKind));
   const signature=[tier,query,order.key,order.asc].join('|');
-  const pageCount=Math.max(1,Math.ceil(visible.length/12));
+  const pageSize=innerHeight<=440?6:12;
+  const pageCount=Math.max(1,Math.ceil(visible.length/pageSize));
   const previous=bagPages[bagKind];
   const pageIndex=previous?.signature===signature?Math.min(previous.index,pageCount-1):0;
   bagPages[bagKind]={signature,index:pageIndex};
-  get('inventory-grid').replaceChildren(...(visible.length?visible.slice(pageIndex*12,pageIndex*12+12).map(item=>{
+  get('inventory-grid').replaceChildren(...(visible.length?visible.slice(pageIndex*pageSize,pageIndex*pageSize+pageSize).map(item=>{
     const used=teamsUsing(item.uid);
     const button=confirmButton('',()=>modal(itemDetail(item,true)));
     button.className='instance-tile';button.dataset.uid=item.uid;
@@ -1355,19 +1348,21 @@ function renderBoard(frame, event) {
       return node;
     };
     lane.append(slot(1),element('span','','lane-divider'),slot(0));
-    if(['gems','tech'].includes(state.daily?.vault)&&index===((frame.round-1)%3))lane.classList.add('hazard-lane');
+
     return lane;
   }));
   field.scrollLeft = scroll;
   get('hero-hp').value=player.hp;get('hero-hp').max=state.heroMax??heroHealth(state.heroLevel??1);
   get('enemy-hp').value=enemy.hp;get('enemy-hp').max=missionFor(state).hp;
-  get('enemy-portrait').src=asset('illustration-'+missionFor(state).opening[0]);
+  get('enemy-portrait').src=asset('hero-portrait-'+state.enemyHero);
   get('health').textContent = `${player.hp}${frame.heroShield ? ' ◆'+frame.heroShield : ''}`;
-  get('enemy-health').textContent = `${enemy.hp}`;
+  get('enemy-health').textContent = `${enemy.hp}${enemy.heroShield?' ◆'+enemy.heroShield:''}`;
   get('round').textContent = `回合 ${frame.round}`;
   for(const [index,id,charges] of [[1,state.rune,frame.charges],[2,state.rune2?.id??'none',frame.rune2Charges??frame.rune2?.charges??0]]){
     const button=get(index===1?'rune-status':'rune-status-2');
-    button.replaceChildren(runeBadge(id,id==='none'?'未裝備':runes[id].name+' '+charges+' 次',id!=='none'&&!charges?'spent':id));
+    const wait=Math.max(0,((frame.runeActivity??state.runeStates?.[0])?.[index===1?'first':'second']?.next??0)-frame.round);
+    const status=id==='none'?'未裝備':runes[id].name+'\n'+(!charges?'已耗盡':wait?'冷卻 '+wait:'待觸發');
+    button.replaceChildren(runeBadge(id,status,id!=='none'&&!charges?'spent':id));
     button.setAttribute('aria-label','符文 '+index+'・'+button.textContent);
   }
   const boss=enemy.board.findIndex(card=>card?.id==='boss');
@@ -1418,8 +1413,9 @@ function duration(kind) {
   const speed=Number(get('speed').value);
   return kind==='hero'?Math.max(560,1150/speed):(kind==='round'?180:380)/speed;
 }
-function showHeroCast(ms, reducedMotion) {
-  const hero=heroes.find(h=>h.id===state.hero);
+function showHeroCast(ms, reducedMotion,actor=0) {
+  const hero=heroes.find(h=>h.id===(actor===1?state.enemyHero:state.hero));
+  get('hero-cut-in-art').src=asset('hero-cast-'+hero.id);
   const panel=get('hero-cut-in');
   get('hero-cut-in-name').textContent=hero.name;
   get('hero-cut-in-skill').textContent=hero.skill;
@@ -1455,7 +1451,7 @@ async function act(action) {
   }
   if(state.result) state.resultReward=reward;
   if(state.result==='勝利') {
-    const pay=state.daily?claimReward(state.daily.vault,state.daily.floor):victoryPay(Boolean(reward));
+    const pay=state.daily?claimReward(state.daily.vault,state.daily.floor):victoryPay(Boolean(reward),chapterFor(state.stage)+1);
     state.currencyReward=pay;
     wallet={...wallet,gold:wallet.gold+pay.gold,gems:wallet.gems+pay.gems};
   }
@@ -1476,7 +1472,7 @@ async function act(action) {
     play(event.kind==='hit'?(event.message.includes('盾吸收')?'shield':event.lanes?.includes(null)?'impact':'hit'):event.rune?'rune':event.kind,state.hero);
     const ms=duration(event.kind);
     const reducedMotion=lowMotion || matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(event.kind==='hero') showHeroCast(ms,reducedMotion);
+    if(event.kind==='hero') showHeroCast(ms,reducedMotion,event.actor);
     const origin=get('lanes').querySelector(`[data-slot="${event.actor}:${event.origin}"]`);
     if(origin && !reducedMotion) origin.animate(
       [{transform:'translateY(0)'},{transform:`translateY(${event.actor===0?-9:9}px)`},{transform:'translateY(0)'}],ms);
@@ -1527,14 +1523,14 @@ function showResults() {
   get('result-next').hidden=Boolean(state.daily) || state.result!=='勝利' || state.stage+1>=stages.length;
   const summary=element('section','','result-summary');
   summary.append(artwork(state.hero,'hero'),element('p',`第 ${state.round} 回合・我方剩餘生命 ${state.sides[0].hp}`),
-    runeBadge(state.rune,state.rune==='none'?'未裝備':`${runes[state.rune].name}・觸發 ${2-state.charges} 次`));
+    runeBadge(state.rune,state.rune==='none'?'未裝備':`${runes[state.rune].name}・發動 ${state.runeStates?.[0]?.first?.uses??0} 次`));
   if(state.currencyReward) {
     const rewards=element('div','','wallet');
     rewards.append(money('gold',`+${state.currencyReward.gold}`),money('gems',`+${state.currencyReward.gems}`));
     if(state.currencyReward.material)rewards.append(element('p',materials[state.currencyReward.material].name+' × '+state.currencyReward.count));
     summary.append(rewards);
   }
-  if(state.rune2)summary.append(runeBadge(state.rune2.id,`${runes[state.rune2.id].name}・觸發 ${2-state.rune2.charges} 次`));
+  if(state.rune2)summary.append(runeBadge(state.rune2.id,`${runes[state.rune2.id].name}・發動 ${state.runeStates?.[0]?.second?.uses??0} 次`));
   if(rewardRune()) summary.append(runeBadge(rewardRune(),`解鎖 ${runes[rewardRune()].name}`));
   if(state.heroReward) summary.append(element('p',`${collectibleName('hero',state.heroReward.id)}・${state.heroReward.duplicate?'培養材料 +1':'英雄已解鎖'}`));
   const reward=state.resultReward===stages[state.stage].reward?state.resultReward:null;
@@ -1591,7 +1587,20 @@ get('attack').onclick=()=>act({type:'attack'});
 get('deploy').onclick=()=>act({type:'deploy',uid:selected});
 get('speed').onchange=save;
 get('mute').onclick=()=>{get('mute').textContent=toggleMute()?'開聲音':'靜音';};
-get('report').onclick=()=>modal(element('h2','戰報'),...log.slice(-40).reverse().map(line=>element('p',line)));
+get('report').onclick=()=>{
+ const showLog=()=>modal(element('h2','戰報'),confirmButton('查看雙方退場單位',showGraves),...log.slice(-60).reverse().map(line=>element('p',line)));
+ function showGraves(){
+  const content=[element('h2','雙方退場單位'),confirmButton('返回戰報',showLog)];
+  for(const [index,side] of state.sides.entries()){
+   content.push(element('h3',(index===0?'我方':'敵方')+'・'+side.graveyard.length+' 張'));
+   const grid=element('div','','graveyard-grid');
+   for(const card of side.graveyard){const button=confirmButton('',()=>cardDetail(card));button.append(cardFace(card));grid.append(button);}
+   content.push(side.graveyard.length?grid:element('p','尚無退場單位。'));
+  }
+  content.push(element('small','已復活的單位移出退場區；召喚物不列為可復活卡牌。每方最多兩次復活。'));modal(...content);
+ }
+ showLog();
+};
 get('deck').onclick=()=>openTeamEditor('lobby');
 function backupPanel() {
   const status=element('div');
@@ -1710,6 +1719,7 @@ function showDaily(vault='gold',floor) {
     modal(element('h2','掃蕩完成'),pay.material?element('p',materials[pay.material].name+' × '+pay.count):money(vault,`+${pay[vault]}`));
   };
   const heading=element('div','','daily-encounter-heading');
+  if(status.legacyHighest)details.append(element('small',`舊制通關 ${status.legacyHighest} 層；新版需重新挑戰認證後解鎖掃蕩。`));
   heading.append(element('h2',`第 ${floor} 層${stage.head?'・頭目':''}`),element('small',`敵軍 Lv.${stage.enemyLevel}・技能 Lv.${stage.enemyEffect}`),
     element('small',floor<=status.highest?'已通關':floor===status.highest+1?'可挑戰':'未解鎖'));
   const rewards=element('div','','daily-loot');
@@ -1720,11 +1730,11 @@ function showDaily(vault='gold',floor) {
   const enemies=element('div','','daily-enemies');
   enemies.setAttribute('aria-label','敵方先鋒');
   for(const id of [...new Set([...stage.opening,...stage.opponents])].slice(0,4)){
-    const card=confirmButton('',()=>cardDetail({...catalogCard(id,stage.enemyLevel),effect:stage.enemyEffect}));
+    const card=confirmButton('',()=>cardDetail(catalogCard(id,stage.enemyLevel,stage.enemyEffect)));
     card.append(artwork(id));card.setAttribute('aria-label',cards[id][0]);enemies.append(card);
   }
   const guide=element('details','','daily-guide');
-  guide.append(element('summary','關卡機制'),element('p',stage.goal));
+  guide.append(element('summary','關卡機制'),element('p',stage.goal),confirmButton('查看完整敵方配置',()=>encounterDetails(stage)));
   details.append(heading,rewards,enemies,guide);
   const buttons=element('div','','controls');
   const resume=state?.phase==='deploy'&&state.daily?.vault===vault&&state.daily.floor===floor&&state.lineupSignature===lineupSignature();
@@ -1885,3 +1895,5 @@ function openRecycle(mode='dismantle',initialGroup='card'){
 }
 get('recycle-open').onclick=()=>openRecycle();
 get('title-start').disabled=false;
+
+let bagResizeFrame;window.addEventListener('resize',()=>{cancelAnimationFrame(bagResizeFrame);bagResizeFrame=requestAnimationFrame(()=>{if(!get('inventory-page').hidden)renderInventory();});});
