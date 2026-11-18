@@ -1,11 +1,11 @@
-import {heroCapacity,migrateHeroProgression} from './progression.mjs?v=expansion-1';
-import {cards, stages, starter} from './battle.mjs?v=expansion-1';
-import {heroes} from './heroes.mjs?v=expansion-1';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=expansion-1';
-import {validInventory} from './inventory.mjs?v=expansion-1';
+import {heroCapacity,migrateHeroProgression} from './progression.mjs?v=expansion-2';
+import {cards, stages, starter} from './battle.mjs?v=expansion-2';
+import {heroes} from './heroes.mjs?v=expansion-2';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=expansion-2';
+import {validInventory} from './inventory.mjs?v=expansion-2';
 
-import {validDaily,dailyStage} from './daily.mjs?v=expansion-1';
-import {materials} from './materials.mjs?v=expansion-1';
+import {validDaily,dailyStage} from './daily.mjs?v=expansion-2';
+import {materials} from './materials.mjs?v=expansion-2';
 const format = 'cxq-rift-summon';
 const limit = 1024 * 1024;
 const integer = (n,min,max) => Number.isInteger(n) && n >= min && n <= max;

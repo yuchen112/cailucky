@@ -1,6 +1,6 @@
-import {rarity,rarityNames,capsuleCards} from './economy.mjs?v=expansion-1';
-import {cards} from './battle.mjs?v=expansion-1';
-import {addInstance} from './inventory.mjs?v=expansion-1';
+import {rarity,rarityNames,capsuleCards} from './economy.mjs?v=expansion-2';
+import {cards} from './battle.mjs?v=expansion-2';
+import {addInstance} from './inventory.mjs?v=expansion-2';
 export const fragmentYields=[1,2,4,8,16,40,100];
 export const exchangeCosts=[30,60,140,300,700,1800,4800];
 export const fragmentValue=item=>fragmentYields[rarityNames.indexOf(rarity(item.id))]??0;

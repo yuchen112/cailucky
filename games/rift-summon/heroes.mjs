@@ -1,4 +1,4 @@
-import {heroSkillProfile} from './hero-skills.mjs?v=expansion-1';
+import {heroSkillProfile} from './hero-skills.mjs?v=expansion-2';
 export const heroes = [
   {id:'hope', name:'曦羽', skill:'曙光庇護', trigger:'danger', effect:'shield', detail:'英雄首次降至半血時，獲得 3 點護盾。'},
   {id:'trust', name:'伯恩', skill:'信約之盾', trigger:'deploy', effect:'armor', detail:'首次部署時，為該角色加 2 點護盾。'},
