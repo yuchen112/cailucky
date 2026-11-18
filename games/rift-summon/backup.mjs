@@ -1,19 +1,19 @@
-import {heroCapacity,migrateHeroProgression} from './progression.mjs?v=hero-50-1';
-import {cards, stages, starter} from './battle.mjs?v=hero-50-1';
-import {heroes} from './heroes.mjs?v=hero-50-1';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=hero-50-1';
-import {validInventory} from './inventory.mjs?v=hero-50-1';
+import {heroCapacity,migrateHeroProgression} from './progression.mjs?v=expansion-1';
+import {cards, stages, starter} from './battle.mjs?v=expansion-1';
+import {heroes} from './heroes.mjs?v=expansion-1';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=expansion-1';
+import {validInventory} from './inventory.mjs?v=expansion-1';
 
-import {validDaily,dailyStage} from './daily.mjs?v=hero-50-1';
-import {materials} from './materials.mjs?v=hero-50-1';
+import {validDaily,dailyStage} from './daily.mjs?v=expansion-1';
+import {materials} from './materials.mjs?v=expansion-1';
 const format = 'cxq-rift-summon';
 const limit = 1024 * 1024;
 const integer = (n,min,max) => Number.isInteger(n) && n >= min && n <= max;
 const fraction = n => typeof n === 'number' && n >= 0 && n <= 1;
 const cardValid = card => card && Object.hasOwn(cards, card.id) &&
   integer(card.uid,0,500) && card.name === cards[card.id][0] && card.skill === cards[card.id][4] &&
-  integer(card.max,1,160) && integer(card.hp,1,card.max) && integer(card.attack,0,80) &&
-  integer(card.shield,0,80) && integer(card.count,0,4) && (card.heroBreakHeal===undefined||integer(card.heroBreakHeal,0,2));
+  integer(card.max,1,240) && integer(card.hp,1,card.max) && integer(card.attack,0,80) &&
+  integer(card.shield,0,80) && (card.signatureUses===undefined||integer(card.signatureUses,0,2)) && (card.stun===undefined||integer(card.stun,0,1)) && ['burn','poison'].every(key=>card[key]===undefined||card[key]&&integer(card[key].amount,1,6)&&integer(card[key].turns,0,3)) && integer(card.count,0,4) && (card.heroBreakHeal===undefined||integer(card.heroBreakHeal,0,2));
 const sideValid = side => side && integer(side.hp,0,73) &&
   ['deck','hand','board'].every(key=>Array.isArray(side[key]) && side[key].length <= 20 && side[key].every(card=>key==='board'&&card===null||cardValid(card)));
 
