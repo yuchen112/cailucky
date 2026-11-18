@@ -199,3 +199,6 @@ html { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
 #detail-content .recycle-grid>button>img{height:calc(100% - 40px);width:auto;max-height:none;flex:none;object-fit:contain}
 .recycle-panel>header{padding:2px 4px}.recycle-panel button{min-height:26px}.recycle-pager button{padding:2px 12px!important}
 @media(max-height:500px){.recycle-grid{grid-template-rows:minmax(0,1fr)}.recycle-panel{gap:3px}.recycle-grid>button>.inventory-card-art{height:calc(100% - 36px)}#detail-content .recycle-grid>button>img{height:calc(100% - 36px)}}
+.recycle-grid>button{container-type:size}
+.recycle-grid>button>.inventory-card-art{height:min(calc(100cqh - 56px),calc((100cqw - 6px)*4/3));width:auto;max-width:none;aspect-ratio:3/4}
+#detail-content .recycle-grid>button>img{height:min(calc(100cqh - 56px),calc(100cqw - 6px));width:auto;max-width:none;object-fit:contain}
