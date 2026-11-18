@@ -1,4 +1,4 @@
-import {extraRunes} from './content-expansion.mjs?v=expansion-2';
+import {extraRunes} from './content-expansion.mjs?v=xur-maps-1';
 export const runeBonus=(level=1,effect=1)=>Math.floor((level-1)/2)+Math.floor((effect-1)/3);
 const definitions={
  wall:['鐵壁','guard','為正面有敵軍、半血以下的無盾友軍施加 2+B 護盾。'],

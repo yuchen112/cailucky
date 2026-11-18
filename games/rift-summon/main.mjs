@@ -1,19 +1,20 @@
-import {runes,runeBonus,runeDescription} from './runes.mjs?v=expansion-2';
-import {signatureDescription} from './combat-effects.mjs?v=expansion-2';
-import {pityTier,pityRemaining} from './economy.mjs?v=expansion-2';
-import {fragmentValue,exchangeCost,protectedItems,dismantle,exchangeCard} from './recycle.mjs?v=expansion-4';
-import {heroSkillProfile} from './hero-skills.mjs?v=expansion-2';
-import {heroHealth,heroCapacity,heroLimits,nextHeroCapacity,migrateHeroProgression} from './progression.mjs?v=expansion-2';
-import {createDialoguePicker} from './home-dialogue.mjs?v=expansion-2';
-import {materials,bookFor} from './materials.mjs?v=expansion-2';
-import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=expansion-2';
-import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=expansion-2';
-import {heroes} from './heroes.mjs?v=expansion-2';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=expansion-2';
-import {makeBackup, readBackup} from './backup.mjs?v=expansion-2';
-import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=expansion-2';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,capsuleCards} from './economy.mjs?v=expansion-2';
-import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=expansion-2';
+import {exclusiveInfo,exclusiveGroups} from './exclusive-cards.mjs?v=xur-maps-1';
+import {runes,runeBonus,runeDescription} from './runes.mjs?v=xur-maps-1';
+import {signatureDescription} from './combat-effects.mjs?v=xur-maps-1';
+import {pityTier,pityRemaining} from './economy.mjs?v=xur-maps-1';
+import {fragmentValue,exchangeCost,protectedItems,dismantle,exchangeCard} from './recycle.mjs?v=xur-maps-1';
+import {heroSkillProfile} from './hero-skills.mjs?v=xur-maps-1';
+import {heroHealth,heroCapacity,heroLimits,nextHeroCapacity,migrateHeroProgression} from './progression.mjs?v=xur-maps-1';
+import {createDialoguePicker} from './home-dialogue.mjs?v=xur-maps-1';
+import {materials,bookFor} from './materials.mjs?v=xur-maps-1';
+import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=xur-maps-1';
+import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=xur-maps-1';
+import {heroes} from './heroes.mjs?v=xur-maps-1';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=xur-maps-1';
+import {makeBackup, readBackup} from './backup.mjs?v=xur-maps-1';
+import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=xur-maps-1';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,capsuleCards,walletCardIds} from './economy.mjs?v=xur-maps-1';
+import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=xur-maps-1';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -36,7 +37,7 @@ const missionFor=battle=>battle.daily?dailyStage(battle.daily):stages[battle.sta
 let log = state ? saved?.log ?? [] : [];
 const cleared = new Set(Array.isArray(saved?.cleared) ? saved.cleared.filter(index => stages[index]) : []);
 let wallet=validWallet(saved?.wallet)?saved.wallet:startingWallet();
-const owned = () => [...new Set([...starter,...stages.filter((_,index)=>cleared.has(index)).map(stage=>stage.reward),...wallet.unlocked])];
+const owned = () => [...new Set([...starter,...stages.filter((_,index)=>cleared.has(index)).map(stage=>stage.reward),...wallet.unlocked,...(wallet.exclusiveUnlocked??[])])];
 let deck = Array.isArray(saved?.deck) && saved.deck.length >= 8 && saved.deck.length <= 12 && saved.deck.every(id=>owned().includes(id)) ? saved.deck : [...starter];
 let stageIndex = state?.phase==='deploy' ? state.stage : Math.min(cleared.size, stages.length-1);
 const chapterFor=index=>Math.floor(index/4);
@@ -159,10 +160,10 @@ function modal(...children) {
   get('detail-notice').textContent='';
   get('detail-content').replaceChildren(...children);
   const dialog=get('detail');
-  if (!dialog.open) {
-    dialog.showModal();
-    dialog.scrollTop=0;
-  }
+  const anchor=get('detail-content').querySelector('h1,h2,h3')??get('detail-content');
+  anchor.tabIndex=-1;anchor.setAttribute('autofocus','');
+  if(!dialog.open)dialog.showModal();
+  anchor.focus({preventScroll:true});anchor.removeAttribute('autofocus');dialog.scrollTop=0;
 }
 function view(id) {
   if(id!=='camp')hideHomeDialogue();
@@ -225,7 +226,7 @@ function heroDetails(hero){
  layout.append(artwork(hero.id,'hero'),copy);modal(layout);
 }
 const rankIndex=id=>rarityNames.indexOf(rarity(id));
-const materialXP=item=>materials[item.id]?.xp??[40,50,65,80,100,125,150][rankIndex(item.id)]??50;
+const materialXP=item=>materials[item.id]?.xp??[40,50,65,80,100,125,150,200][rankIndex(item.id)]??50;
 function orderList(items,key,comparators){
   const order=listSort[key]??{key:'tier',asc:false};
   return items.sort((a,b)=>(order.asc?1:-1)*(comparators[order.key]??comparators.tier)(a,b));
@@ -402,34 +403,22 @@ function cardDetail(card) {
   modal(layout);
 }
 function encyclopediaCard(id) {
-  const base=catalogCard(id,1);
-  const bonus=cardBonus(base.level);
-  const slider=element('select');
-  slider.setAttribute('aria-label','預覽等級');
-  for(const level of [1,5,...limits]) {
-    const option=element('option',`Lv.${level}`);option.value=String(level);slider.append(option);
+  const base=catalogCard(id,1),bonus=cardBonus(base.level),levels=[1,5,...limits];let previewIndex=0;
+  const art=element('div','','encyclopedia-preview'),info=element('div'),signature=element('p'),layout=element('div','','card-inspector');
+  const label=element('strong','Lv.1');label.setAttribute('aria-live','polite');
+  const previous=confirmButton('‹',()=>{previewIndex--;preview();}),next=confirmButton('›',()=>{previewIndex++;preview();});
+  previous.setAttribute('aria-label','預覽較低等級');next.setAttribute('aria-label','預覽較高等級');
+  const stepper=element('div','','level-preview-stepper');stepper.append(previous,label,next);
+  function preview(){
+    const level=levels[previewIndex],card={...base,level,attack:base.attack-bonus+cardBonus(level),max:base.max-cardHealthBonus(base.level)+cardHealthBonus(level)};card.hp=card.max;
+    art.replaceChildren(cardFace(card));signature.textContent=signatureDescription(id,level,1);label.textContent='Lv.'+level;
+    previous.disabled=previewIndex===0;next.disabled=previewIndex===levels.length-1;
   }
-  slider.value=String(base.level);
-  const art=element('div','','encyclopedia-preview');
-  const info=element('div');
-  const signature=element('p');
-  const layout=element('div','','card-inspector');
-  function preview() {
-    const level=Number(slider.value);
-    const growth=cardBonus(level);
-    const card={...base,level,attack:base.attack-bonus+growth,max:base.max-cardHealthBonus(base.level)+cardHealthBonus(level)};
-    card.hp=card.max;
-    art.replaceChildren(cardFace(card));
-    signature.textContent=signatureDescription(id,level,1);
-  }
-  slider.onchange=preview;
-  const stage=stages.find(x=>x.reward===id);
-  info.append(element('h2',`${base.name}・${rarity(id)}`),element('p',base.skill||'普攻'),
-    element('p',descriptions[base.skill]??'普攻正對欄位，空位直擊敵方英雄。'),signature,
-    element('p',starter.includes(id)?'初始卡牌':stage?`首通「${stage.name}」取得`:'扭蛋取得'),element('p','預覽等級'),slider);
-  layout.append(art,info);
-  preview();
-  modal(layout);
+  const stage=stages.find(x=>x.reward===id),special=exclusiveInfo[id];
+  info.append(element('h2',`${base.name}・${rarity(id)}${special?'・'+special.code:''}`),stepper,element('p',base.skill||'普攻'),element('p',descriptions[base.skill]??'普攻正對欄位，空位直擊敵方英雄。'),signature,
+    element('p',special?`${special.category}系列 ${special.code}・${special.inspiration}・僅限碎片兌換 ${special.cost.toLocaleString()} 碎片`:starter.includes(id)?'初始卡牌':stage?`首通「${stage.name}」取得`:'扭蛋取得'),element('small','預設顯示 Lv.1，點箭頭才切換預覽。'));
+  if(special)info.append(confirmButton('前往碎片兌換',()=>openRecycle('exchange',special.group)));
+  layout.append(art,info);preview();modal(layout);
 }
 function showCamp() {
   playback++;
@@ -750,7 +739,7 @@ function renderCollection(direction=0) {
   const tier=get('card-rarity').value;
   const query=get('card-search').value.trim();
   const status=get('card-owned').value;
-  const filtered=albumCards.filter(id=>(status==='all'||collection.has(id)===(status==='owned'))&&(filter==='all'||cardGroup(id)===filter)&&(tier==='all'||rarity(id)===tier)&&`${cards[id][0]} ${cards[id][4]}`.includes(query));
+  const filtered=albumCards.filter(id=>(status==='all'||collection.has(id)===(status==='owned'))&&(filter==='all'||cardGroup(id)===filter||exclusiveInfo[id]?.group===filter)&&(tier==='all'||rarity(id)===tier)&&`${cards[id][0]} ${cards[id][4]} ${exclusiveInfo[id]?.code??''} ${exclusiveInfo[id]?.category??''} ${exclusiveInfo[id]?.inspiration??''}`.includes(query));
   mountCatalogSort('collection','card',()=>{albumPage=0;renderCollection();});
   catalogSort('card',filtered,cardGroup);
   const pages=Math.max(1,Math.ceil(filtered.length/perLeaf));
@@ -842,6 +831,8 @@ function showCampaign() {
   next.setAttribute('aria-label','下一章');next.disabled=chapter===chapterNames.length-1||!cleared.has((chapter+1)*4-1);
   get('chapter-picker').replaceChildren(previous,chapterSelect,next);
   get('stages').dataset.chapter=String(chapter);
+  get('stages').style.backgroundImage=`url("${asset('chapter-map-'+String(chapter+1).padStart(2,'0'))}")`;
+  get('stages').setAttribute('aria-label',chapterNames[chapter]+'・章節地圖');
   get('stages').replaceChildren(...stages.slice(chapter*4,chapter*4+4).map((stage,offset)=>{
     const index=chapter*4+offset;
     const open=index===0 || cleared.has(index-1);
@@ -884,6 +875,7 @@ const bagPages={};
 const bagNames={card:'卡片背包',hero:'英雄背包',rune:'符文背包',material:'強化素材'};
 const kindNames={card:'卡片',hero:'英雄',rune:'符文'};
 function itemName(item){return materials[item.id]?.name??collectibleName(item.kind,item.id);}
+function itemSearch(item){return `${itemName(item)} ${exclusiveInfo[item.id]?.code??''} ${exclusiveInfo[item.id]?.category??''} ${exclusiveInfo[item.id]?.inspiration??''}`;}
 function itemArt(item) {
   if(item.kind==='material')return artwork(materials[item.id].kind?'tech':'xp','material');
   if(item.kind!=='card')return item.kind==='hero'?artwork(item.id,'hero'):runeImage(item.id);
@@ -928,6 +920,7 @@ function itemDetail(item,allowUpgrade=false) {
   const layout=element('div','','instance-inspector'), copy=element('div');
   layout.append(itemArt(item),copy);
   copy.append(element('h2',itemName(item)));
+  if(exclusiveInfo[item.id])copy.append(element('strong',exclusiveInfo[item.id].code+'・'+exclusiveInfo[item.id].category+'・'+exclusiveInfo[item.id].inspiration+'・碎片限定'));
   if(item.kind==='material'){
     const book=materials[item.id];
     copy.append(element('p',book.kind?'對應類別的效果強化素材':'經驗 +'+book.xp));return layout;
@@ -1015,9 +1008,9 @@ function chooseMaterial(target,mode) {
       const key=item.kind==='card'?'copies':item.kind==='hero'?'heroCopies':'runeCopies';
       const record={...wallet[key]};
       const count=inventory.items.filter(entry=>entry.kind===item.kind&&entry.id===item.id).length;
-      if(count&&(item.kind!=='card'||capsuleCards.includes(item.id)))record[item.id]=count;else {delete record[item.id];if(!count)consumed.add(item.kind+':'+item.id);}
+      if(count&&(item.kind!=='card'||walletCardIds.includes(item.id)))record[item.id]=count;else {delete record[item.id];if(!count)consumed.add(item.kind+':'+item.id);}
       wallet={...wallet,[key]:record};
-      if(item.kind==='card'&&!count)wallet.unlocked=wallet.unlocked.filter(id=>id!==item.id);
+      if(item.kind==='card'&&!count){wallet.unlocked=wallet.unlocked.filter(id=>id!==item.id);wallet.exclusiveUnlocked=(wallet.exclusiveUnlocked??[]).filter(id=>id!==item.id);}
     }
     const summary=mode==='break'?`突破成功，等級上限 Lv.${levelLimit(target)}。`:mode==='effect'?`效果強化完成，目前效果 Lv.${target.effect}。`:`已強化 ${itemName(target)}，目前 Lv.${target.level}。`;
     finishGrowth(target,summary);
@@ -1059,7 +1052,7 @@ function chooseMaterial(target,mode) {
   targetLevel.value=levelLimit(target);targetLevel.setAttribute('aria-label','目標等級');
   const targetLabel=element('label','目標 Lv. ');targetLabel.append(targetLevel);targetLabel.hidden=mode!=='xp';
   const sortKey='growth-'+mode;
-  const visible=()=>orderList(candidates.filter(item=>itemName(item).includes(search.value.trim())&&
+  const visible=()=>orderList(candidates.filter(item=>itemSearch(item).includes(search.value.trim())&&
     (rarityFilter.value==='all'||rarity(item.id)===rarityFilter.value)),sortKey,{...comparisons,value:(a,b)=>xpOf(a)-xpOf(b)});
   function selectMany(items,goal){
     let remaining=0;
@@ -1140,7 +1133,7 @@ function renderInventory() {
   get('bag-sort').value=order.key;
   get('bag-direction').textContent=order.asc?'↑':'↓';
   get('bag-direction').setAttribute('aria-label',get('bag-sort').selectedOptions[0].textContent+(order.asc?'由低到高':'由高到低'));
-  const visible=list.filter(item=>(tier==='all'||rarity(item.id)===tier)&&itemName(item).includes(query));
+  const visible=list.filter(item=>(tier==='all'||rarity(item.id)===tier)&&itemSearch(item).includes(query));
   sortCollectibles(visible,order);
   get('inventory-heading').textContent=bagNames[bagKind];
   get('inventory-count').textContent=`持有 ${list.length} 份・顯示 ${visible.length} 份`;
@@ -1154,7 +1147,7 @@ function renderInventory() {
     const used=teamsUsing(item.uid);
     const button=confirmButton('',()=>modal(itemDetail(item,true)));
     button.className='instance-tile';button.dataset.uid=item.uid;
-    button.append(itemArt(item),element('strong',itemName(item)),element('small',`${rarity(item.id)}・Lv.${item.level}`));
+    button.append(itemArt(item),element('strong',itemName(item)),element('small',`${exclusiveInfo[item.id]?.code??rarity(item.id)}・Lv.${item.level}`));
     if(item.kind==='hero'&&item.id===featuredHeroId())button.append(element('small','首頁展示中','featured-badge'));
     if(item.locked)button.append(element('small','素材已鎖定','featured-badge'));
     if(used.length)button.append(element('small',`編隊 ${used.join('、')}`));
@@ -1256,7 +1249,7 @@ function renderTeamEditor() {
     if(kind==='cards'&&index>teamDraft.cards.length)button.disabled=true;
     button.setAttribute('aria-pressed',String(editorSlot===kind&&(kind==='hero'||editorPosition===index)));
     button.append(element('small',label));
-    if(item)button.append(itemArt(item),element('strong',itemName(item)),element('small',`${rarity(item.id)}・Lv.${item.level}`));
+    if(item)button.append(itemArt(item),element('strong',itemName(item)),element('small',`${exclusiveInfo[item.id]?.code??rarity(item.id)}・Lv.${item.level}`));
     else button.append(element('span','未裝備'));
     slots.append(button);
   }
@@ -1315,12 +1308,12 @@ function renderTeamEditor() {
     direction.textContent=order.asc?'↑':'↓';
     direction.setAttribute('aria-label',sort.selectedOptions[0].textContent+(order.asc?'由低到高':'由高到低'));
     const query=search.value.trim();
-    const items=sortCollectibles(inventory.items.filter(item=>item.kind===kind&&itemName(item).includes(query)&&(tier.value==='all'||rarity(item.id)===tier.value)),order);
+    const items=sortCollectibles(inventory.items.filter(item=>item.kind===kind&&itemSearch(item).includes(query)&&(tier.value==='all'||rarity(item.id)===tier.value)),order);
     candidates.replaceChildren(...(items.length?items.map(item=>{
       const button=confirmButton('',()=>{
         editorPreview=item.uid;renderTeamEditor();
       });
-      button.append(itemArt(item),element('strong',itemName(item)),element('small',`${rarity(item.id)}・Lv.${item.level}`));
+      button.append(itemArt(item),element('strong',itemName(item)),element('small',`${exclusiveInfo[item.id]?.code??rarity(item.id)}・Lv.${item.level}`));
       for(const image of button.querySelectorAll('img')){image.loading='lazy';image.decoding='async';}
       const equipped=kind==='card'?teamDraft.cards.indexOf(item.uid):-1;
       if(equipped>=0)button.append(element('small',`已編入 ${equipped+1}`,'equipped-tag'));
@@ -1841,22 +1834,23 @@ function commitRecycle(result){
   if(!save()){Object.assign(inventory,before.inventory);wallet=before.wallet;consumed.clear();for(const id of before.consumed)consumed.add(id);notify('儲存失敗，交易已取消。');return false;}
   renderInventory();return true;
 }
-function openRecycle(mode='dismantle'){
+function openRecycle(mode='dismantle',initialGroup='card'){
   const panel=element('div','','recycle-panel'),header=element('header'),controls=element('div','','recycle-controls');
-  header.append(element('h2',mode==='dismantle'?'分解工坊':'碎片兌換'),element('strong',`持有碎片 ${(wallet.fragments??0).toLocaleString()}`),confirmButton(mode==='dismantle'?'前往兌換':'返回分解',()=>openRecycle(mode==='dismantle'?'exchange':'dismantle')),confirmButton('返回背包',()=>{get('detail').close();renderInventory();}));
+  header.append(element('h2',mode==='dismantle'?'分解工坊':'碎片兌換'),element('strong',`持有碎片 ${(wallet.fragments??0).toLocaleString()}`),confirmButton(mode==='dismantle'?'前往兌換':'返回分解',()=>openRecycle(mode==='dismantle'?'exchange':'dismantle')),confirmButton('返回背包',()=>{get('detail').close();showInventory('card');}));
   const kind=element('select'),tier=element('select'),search=element('input');
   kind.setAttribute('aria-label','分解類別');tier.setAttribute('aria-label','分解品階');search.type='search';search.placeholder='搜尋名稱';search.setAttribute('aria-label','工坊搜尋');
-  for(const [id,label] of mode==='exchange'?[['card','卡牌']]:[['card','卡牌'],['rune','符文'],['hero','英雄']]){const o=element('option',label);o.value=id;kind.append(o);}
+  for(const [id,label] of mode==='exchange'?[['card','全部卡牌'],...Object.entries(exclusiveGroups).map(([id,name])=>[id,id+'・'+name])]:[['card','卡牌'],['rune','符文'],['hero','英雄']]){const o=element('option',label);o.value=id;kind.append(o);}
+  kind.value=initialGroup;
   for(const id of ['all',...rarityNames]){const o=element('option',id==='all'?'全品階':id);o.value=id;tier.append(o);}
   const grid=element('div','','team-candidates recycle-grid'),footer=element('footer','','recycle-footer'),pager=element('nav','','recycle-pager');
   const selected=new Set();let page=0;
   const blocked=()=>protectedItems(teams,inventory,featuredHeroId());
   const visible=()=>{
     const entries=mode==='exchange'?Object.keys(cards).filter(id=>!['boss','spirit'].includes(id)).map((id,i)=>({id,kind:'card',uid:'i'+i,level:1,experience:0})):inventory.items.filter(i=>i.kind===kind.value&&!blocked().has(i.uid));
-    return orderList(entries.filter(i=>(tier.value==='all'||rarity(i.id)===tier.value)&&itemName(i).includes(search.value.trim())),'recycle-'+mode,comparisons);
+    return orderList(entries.filter(i=>(tier.value==='all'||rarity(i.id)===tier.value)&&`${itemName(i)} ${exclusiveInfo[i.id]?.code??''}`.includes(search.value.trim())&&(mode!=='exchange'||kind.value==='card'||exclusiveInfo[i.id]?.group===kind.value)),'recycle-'+mode,comparisons);
   };
   function update(){
-    if(mode==='exchange'){footer.replaceChildren(element('small','消耗碎片兌換指定 Lv.1 卡牌；每次取得新的獨立個體。'));return;}
+    if(mode==='exchange'){footer.replaceChildren(element('small','XUR 四系列各 10 張，僅限碎片兌換；取得新的 Lv.1 個體。'));return;}
     const entries=[...selected].map(instance).filter(Boolean),gain=entries.reduce((n,i)=>n+fragmentValue(i),0);
     const action=confirmButton('確認分解',()=>{
       const plan=dismantle(inventory,wallet,[...selected],blocked());if(!plan){notify('選取物件已變更或受到保護，請重新選取。');return;}
@@ -1879,7 +1873,7 @@ function openRecycle(mode='dismantle'){
         }
         if(selected.has(item.uid))selected.delete(item.uid);else if(selected.size<100)selected.add(item.uid);render();
       });
-      b.append(itemArt(item),element('strong',itemName(item)),element('small',`${rarity(item.id)}・${mode==='exchange'?exchangeCost(item.id)+' 碎片':`Lv.${item.level} → ${fragmentValue(item)} 碎片`}`));b.dataset.tier=rarity(item.id);b.dataset.uid=item.uid;
+      b.append(itemArt(item),element('strong',(exclusiveInfo[item.id]?.code?exclusiveInfo[item.id].code+' ':'')+itemName(item)),element('small',`${rarity(item.id)}・${mode==='exchange'?exchangeCost(item.id)+' 碎片':`Lv.${item.level} → ${fragmentValue(item)} 碎片`}`));b.dataset.tier=rarity(item.id);b.dataset.uid=item.uid;
       if(mode==='dismantle'){b.setAttribute('aria-pressed',String(selected.has(item.uid)));b.append(element('small',selected.has(item.uid)?'✓ 已選':'點選加入'));}return b;
     }));
     if(!all.length)grid.append(element('p','沒有符合的可分解物件；鎖定、編隊中及首頁英雄不會列出。'));

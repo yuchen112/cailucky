@@ -1,5 +1,5 @@
-import {rarity} from './economy.mjs?v=expansion-2';
-import {heroCapacity,heroLimits} from './progression.mjs?v=expansion-2';
+import {rarity} from './economy.mjs?v=xur-maps-1';
+import {heroCapacity,heroLimits} from './progression.mjs?v=xur-maps-1';
 export function newInventory() { return {next:1,items:[]}; }
 export function addInstance(inventory,kind,id,level=1,experience=0) {
   const item={uid:`i${inventory.next++}`,kind,id,level,experience};

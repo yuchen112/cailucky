@@ -202,3 +202,17 @@ html { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
 .recycle-grid>button{container-type:size}
 .recycle-grid>button>.inventory-card-art{height:min(calc(100cqh - 56px),calc((100cqw - 6px)*4/3));width:auto;max-width:none;aspect-ratio:3/4}
 #detail-content .recycle-grid>button>img{height:min(calc(100cqh - 56px),calc(100cqw - 6px));width:auto;max-width:none;object-fit:contain}
+
+.level-preview-stepper{display:flex;align-items:center;gap:8px;margin-block:6px}.level-preview-stepper strong{min-width:58px;text-align:center}
+#campaign .campaign-scene{container-type:size}
+#campaign{height:min(100%,calc((min(1100px,100vw - 24px) - 8px)*.3375 + 114px))}
+#campaign .campaign-scene #stages{width:min(100%,calc(100cqh * 16 / 9));height:auto;aspect-ratio:16/9;min-height:0;max-height:none;align-self:center;justify-self:center;background-size:100% 100%;box-sizing:border-box;padding:0}
+#campaign .campaign-dossier{height:min(100cqh,calc((100cqw - 8px)*.6*9/16));max-height:100%;align-self:center;box-sizing:border-box}
+#campaign #stage-preview figure,#campaign #stage-preview .card-face{width:clamp(32px,15cqh,80px)}
+#campaign #stage-preview figcaption{font-size:clamp(8px,2cqh,12px)}
+#campaign .campaign-dossier h2{font-size:clamp(15px,4cqh,21px)}
+#campaign #stage-detail{font-size:clamp(10px,2.5cqh,14px)}
+#campaign .campaign-dossier .controls :is(button,select),#campaign .campaign-dossier .controls label{height:clamp(26px,6cqh,34px);min-height:26px;font-size:clamp(10px,2.5cqh,13px)}
+@media(max-height:360px){#campaign .campaign-dossier{grid-template-rows:auto minmax(0,1fr) auto auto;gap:1px;padding:3px 6px}}
+#campaign #stages .stage-flag:nth-child(1){left:15%;top:73%}#campaign #stages .stage-flag:nth-child(2){left:37%;top:48%}#campaign #stages .stage-flag:nth-child(3){left:60%;top:68%}#campaign #stages .stage-flag:nth-child(4){left:84%;top:30%}
+#campaign #stages .stage-flag{transform:translate(-50%,-62%);max-width:25%}#campaign #stages .stage-flag strong{max-width:100%;font-size:clamp(9px,1.2vw,14px);white-space:normal;line-height:1.1}

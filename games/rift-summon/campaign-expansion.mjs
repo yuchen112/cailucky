@@ -1,3 +1,4 @@
+import {exclusiveIds} from './exclusive-cards.mjs?v=xur-maps-1';
 export const plannedChapters=99;
 export function campaignLevel(chapter,step=0){
   if(chapter>=80)return 99;
@@ -6,8 +7,8 @@ export function campaignLevel(chapter,step=0){
 }
 const regions=['晨曦港灣','翠羽丘陵','暮鐘小鎮','銀泉濕地','烈風峽谷','琉璃古塔','星沙綠洲','白霧森林','赤銅礦脈','月桂神殿','冰瀑長廊','浮島航路','熔岩深井','迷夢花園','珊瑚王城','千燈山道','翡翠庭院','雷鳴高原','靈鹿聖林','黃昏堡壘','星海迴廊','忘卻書庫','寒晶要塞','燼羽火山','流螢谷地','深潮裂谷','巡星觀測台','靜默荒原','雲端鐘樓','失落王庭','破曉邊境','鏡月迷宮','霜火戰線','天穹龍巢','夜紗城邦','時砂深淵','聖光禁域','群星之門','終焉前庭','裂界王座'];
 export function extendCampaign(stages,names,cards){
- const additions=Object.keys(cards).filter(id=>!stages.some(s=>s.reward===id)&&!['boss','spirit','guard','bomb','archer','ax','ghost','healer','knight','giant'].includes(id));
- const all=Object.keys(cards).filter(id=>!['boss','spirit'].includes(id));
+ const additions=Object.keys(cards).filter(id=>!exclusiveIds.includes(id)&&!stages.some(s=>s.reward===id)&&!['boss','spirit','guard','bomb','archer','ax','ghost','healer','knight','giant'].includes(id));
+ const all=Object.keys(cards).filter(id=>!exclusiveIds.includes(id)&&!['boss','spirit'].includes(id));
  for(let c=10;c<50;c++){
   const region=regions[c-10];names.push(`第 ${c+1} 章・${region}`);
   for(let step=0;step<4;step++){

@@ -1,10 +1,11 @@
-import {rarity,rarityNames,capsuleCards} from './economy.mjs?v=expansion-2';
-import {cards} from './battle.mjs?v=expansion-2';
-import {addInstance} from './inventory.mjs?v=expansion-2';
-export const fragmentYields=[1,2,4,8,16,40,100];
-export const exchangeCosts=[30,60,140,300,700,1800,4800];
+import {exclusiveInfo} from './exclusive-cards.mjs?v=xur-maps-1';
+import {rarity,rarityNames,walletCardIds} from './economy.mjs?v=xur-maps-1';
+import {cards} from './battle.mjs?v=xur-maps-1';
+import {addInstance} from './inventory.mjs?v=xur-maps-1';
+export const fragmentYields=[1,2,4,8,16,40,100,220];
+export const exchangeCosts=[30,60,140,300,700,1800,4800,9000];
 export const fragmentValue=item=>fragmentYields[rarityNames.indexOf(rarity(item.id))]??0;
-export const exchangeCost=id=>exchangeCosts[rarityNames.indexOf(rarity(id))];
+export const exchangeCost=id=>exclusiveInfo[id]?.cost??exchangeCosts[rarityNames.indexOf(rarity(id))];
 export function protectedItems(teams,inventory,homeHero){
  const ids=new Set(teams.flatMap(t=>t.items?[...t.items.cards,t.items.hero,t.items.rune,t.items.rune2].filter(Boolean):[]));
  for(const item of inventory.items)if(item.locked)ids.add(item.uid);
@@ -25,8 +26,8 @@ export function dismantle(inventory,wallet,uids,protectedUids=new Set()){
  for(const item of selected){
   const key={card:'copies',hero:'heroCopies',rune:'runeCopies'}[item.kind];
   money[key]??={};const count=next.items.filter(i=>i.kind===item.kind&&i.id===item.id).length;
-  if(count&&(item.kind!=='card'||capsuleCards.includes(item.id)))money[key][item.id]=count;else delete money[key][item.id];
-  if(!count){consumed.push(item.kind+':'+item.id);if(item.kind==='card')money.unlocked=money.unlocked.filter(id=>id!==item.id);}
+  if(count&&(item.kind!=='card'||walletCardIds.includes(item.id)))money[key][item.id]=count;else delete money[key][item.id];
+  if(!count){consumed.push(item.kind+':'+item.id);if(item.kind==='card'){money.unlocked=money.unlocked.filter(id=>id!==item.id);money.exclusiveUnlocked=(money.exclusiveUnlocked??[]).filter(id=>id!==item.id);}}
  }
  return {inventory:next,wallet:money,consumed,gain};
 }
@@ -34,6 +35,6 @@ export function exchangeCard(inventory,wallet,id){
  if(!cards[id]||['boss','spirit'].includes(id)||inventory.items.length>=5000)return null;
  const cost=exchangeCost(id);if((wallet.fragments??0)<cost)return null;
  const next=structuredClone(inventory),money=structuredClone(wallet);money.fragments-=cost;
- addInstance(next,'card',id);if(capsuleCards.includes(id)){money.copies??={};money.copies[id]=next.items.filter(i=>i.kind==='card'&&i.id===id).length;if(!money.unlocked.includes(id))money.unlocked.push(id);}
+ addInstance(next,'card',id);if(exclusiveInfo[id]){money.exclusiveUnlocked??=[];if(!money.exclusiveUnlocked.includes(id))money.exclusiveUnlocked.push(id);money.copies??={};money.copies[id]=next.items.filter(i=>i.kind==='card'&&i.id===id).length;}else if(walletCardIds.includes(id)){money.copies??={};money.copies[id]=next.items.filter(i=>i.kind==='card'&&i.id===id).length;if(!money.unlocked.includes(id))money.unlocked.push(id);}
  return {inventory:next,wallet:money,cost};
 }

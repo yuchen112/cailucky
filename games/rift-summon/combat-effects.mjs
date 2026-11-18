@@ -1,4 +1,6 @@
-import {cardSignatures} from './content-expansion.mjs?v=expansion-2';
+import {exclusiveSignatures} from './exclusive-cards.mjs?v=xur-maps-1';
+import {cardSignatures as ordinarySignatures} from './content-expansion.mjs?v=xur-maps-1';
+export const cardSignatures={...ordinarySignatures,...exclusiveSignatures};
 const timeText={deploy:'部署時',attack:'出手前',hurt:'受到傷害且存活時',death:'陣亡時'};
 const targetText={self:'自身（已退場則改為前方友軍）',weakest:'生命最低的單位',front:'最前方友軍',opposite:'正對敵軍（空位改為前方敵軍）',rear:'最後方敵軍',first:'最前方手牌',slowest:'倒數最長的手牌',two:'前兩張手牌'};
 export function effectAmount(spec,level=1,effect=1){return Math.min(9,spec.base+Math.floor((effect-1)/3)+Math.floor((level-1)/25));}

@@ -1,12 +1,14 @@
-import {runExpandedRune} from './runes.mjs?v=expansion-2';
-import {extraCards,cardSignatures} from './content-expansion.mjs?v=expansion-2';
-import {campaignLevel,extendCampaign} from './campaign-expansion.mjs?v=expansion-2';
-import {signatureDescription,runSignature} from './combat-effects.mjs?v=expansion-2';
+import {exclusiveCards} from './exclusive-cards.mjs?v=xur-maps-1';
+import {runExpandedRune} from './runes.mjs?v=xur-maps-1';
+import {extraCards,cardSignatures} from './content-expansion.mjs?v=xur-maps-1';
+import {campaignLevel,extendCampaign} from './campaign-expansion.mjs?v=xur-maps-1';
+import {signatureDescription,runSignature} from './combat-effects.mjs?v=xur-maps-1';
 export {signatureDescription};
-import {heroSkillProfile,scaledHeroAmount} from './hero-skills.mjs?v=expansion-2';
-import {heroHealth,shuffleDeck} from './progression.mjs?v=expansion-2';
+import {heroSkillProfile,scaledHeroAmount} from './hero-skills.mjs?v=xur-maps-1';
+import {heroHealth,shuffleDeck} from './progression.mjs?v=xur-maps-1';
 export const cards = {
   ...extraCards,
+  ...exclusiveCards,
   guard: ['壁壘衛士', 1, 2, 7, '護衛'],
   bomb: ['爆燈兵', 1, 2, 3, '自爆'],
   archer: ['荒牙斥候', 1, 2, 4, '追獵'],
@@ -62,8 +64,8 @@ export const cards = {
 };
 export const starter = ['guard', 'bomb', 'archer', 'ax', 'ghost', 'healer', 'knight', 'giant'];
 const sentries = ['guard', 'bomb', 'knight', 'ax', 'ghost', 'giant'];
-import {cardBonus,cardHealthBonus} from './inventory.mjs?v=expansion-2';
-import {dailyStage} from './daily.mjs?v=expansion-2';
+import {cardBonus,cardHealthBonus} from './inventory.mjs?v=xur-maps-1';
+import {dailyStage} from './daily.mjs?v=xur-maps-1';
 export const chapterNames = ["第一章・斷橋哨站", "第二章・沉鐘墓園", "第三章・翡翠林海", "第四章・赤焰熔城", "第五章・霜月群峰", "第六章・浮光水都", "第七章・沙海遺城", "第八章・幽影邊境", "第九章・蒼穹王庭", "第十章・裂界核心"];
 export const stages = [
   {name:'哨站前沿', goal:'倒數歸零就能部署。先用護衛或斥候接住第一波。', hp:8, opponents:['guard','archer','healer','knight'], opening:['archer'], reward:'bow'},
@@ -420,4 +422,4 @@ export function applyAction(previous, action) {
   } else return null;
   return {state, events};
 }
-import {heroes} from './heroes.mjs?v=expansion-2';
+import {heroes} from './heroes.mjs?v=xur-maps-1';

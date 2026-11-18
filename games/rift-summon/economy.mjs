@@ -1,12 +1,15 @@
-import {extraCards,extraRunes,expansionRanks} from './content-expansion.mjs?v=expansion-2';
-import {materials} from './materials.mjs?v=expansion-2';
+import {exclusiveIds} from './exclusive-cards.mjs?v=xur-maps-1';
+import {extraCards,extraRunes,expansionRanks} from './content-expansion.mjs?v=xur-maps-1';
+import {materials} from './materials.mjs?v=xur-maps-1';
 export const capsuleCards=[...Object.keys(extraCards),'ember','wisp','turtle','raven','stag','lynx','moth','drake','ibis','hare','otter','ram','bat','beetle','crane','yak','seal','boar','swan','crab','gecko','wolf','panda','hedgehog','koi','falcon','mole','lion','badger','lynxguard','robin','frog','yakfire','stork','ferret','beaver','rabbit','eagle'];
+export const walletCardIds=[...capsuleCards,...exclusiveIds];
 export const maxLevel=5;
 export const validRunes=[...Object.keys(extraRunes),'wall','heal','frost','spark','ward','flame','tide','root','mirror','dawn','anchor','shelter','surge','echo','none'];
-export const rarityNames=['N','R','SR','S','SS','SSR','UUR'];
+export const rarityNames=['N','R','SR','S','SS','SSR','UUR','XUR'];
 export const starterHeroes=['trust','healing','joy'];
 export const heroIds=['hope','trust','growth','healing','joy','luck','memory','night','sadness','dream'];
 const rare={
+  ...Object.fromEntries(exclusiveIds.map(id=>[id,7])),
   ...expansionRanks,
   guard:0,bomb:1,archer:0,ax:1,ghost:2,healer:1,knight:2,giant:2,bow:1,fang:2,flag:3,moon:3,boss:4,spirit:0,
   ember:3,wisp:4,turtle:3,raven:5,stag:2,lynx:4,moth:3,drake:6,ibis:5,hare:1,otter:2,ram:4,bat:2,beetle:3,crane:4,yak:5,
@@ -79,12 +82,13 @@ export function validWallet(wallet) {
   const record=(obj,ids,max)=>obj===undefined||(obj&&typeof obj==='object'&&!Array.isArray(obj)&&
     Object.entries(obj).every(([id,n])=>ids.includes(id)&&Number.isSafeInteger(n)&&n>=1&&n<=max));
   const pityOk=wallet?.pity===undefined||wallet.pity&&typeof wallet.pity==='object'&&!Array.isArray(wallet.pity)&&Object.entries(wallet.pity).every(([key,n])=>/^(gold|gems):(card|rune|hero)$/.test(key)&&Number.isInteger(n)&&n>=0&&n<=9);
-  return !!wallet && pityOk && (wallet.fragments===undefined||Number.isSafeInteger(wallet.fragments)&&wallet.fragments>=0) && ['gold','gems'].every(key=>Number.isSafeInteger(wallet[key]) && wallet[key]>=0) &&
+  const exclusiveOk=wallet?.exclusiveUnlocked===undefined||Array.isArray(wallet.exclusiveUnlocked)&&new Set(wallet.exclusiveUnlocked).size===wallet.exclusiveUnlocked.length&&wallet.exclusiveUnlocked.every(id=>exclusiveIds.includes(id));
+  return !!wallet && exclusiveOk && pityOk && (wallet.fragments===undefined||Number.isSafeInteger(wallet.fragments)&&wallet.fragments>=0) && ['gold','gems'].every(key=>Number.isSafeInteger(wallet[key]) && wallet[key]>=0) &&
     Array.isArray(wallet.unlocked) && new Set(wallet.unlocked).size===wallet.unlocked.length &&
     wallet.unlocked.every(id=>capsuleCards.includes(id)) && wallet.levels &&
     typeof wallet.levels==='object' && !Array.isArray(wallet.levels) &&
     Object.values(wallet.levels).every(level=>Number.isInteger(level) && level>=1 && level<=maxLevel) &&
-    record(wallet.copies,capsuleCards,Number.MAX_SAFE_INTEGER)&&
+    record(wallet.copies,walletCardIds,Number.MAX_SAFE_INTEGER)&&
     record(wallet.runeCopies,validRunes.filter(id=>id!=='none'),Number.MAX_SAFE_INTEGER)&&record(wallet.runeLevels,validRunes.filter(id=>id!=='none'),maxLevel)&&
     record(wallet.heroCopies,heroIds,Number.MAX_SAFE_INTEGER)&&record(wallet.heroLevels,heroIds,50);
 }

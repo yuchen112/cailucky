@@ -1,11 +1,11 @@
-import {heroCapacity,migrateHeroProgression} from './progression.mjs?v=expansion-2';
-import {cards, stages, starter} from './battle.mjs?v=expansion-2';
-import {heroes} from './heroes.mjs?v=expansion-2';
-import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=expansion-2';
-import {validInventory} from './inventory.mjs?v=expansion-2';
+import {heroCapacity,migrateHeroProgression} from './progression.mjs?v=xur-maps-1';
+import {cards, stages, starter} from './battle.mjs?v=xur-maps-1';
+import {heroes} from './heroes.mjs?v=xur-maps-1';
+import {validWallet,validRunes,unlockedRunes,starterHeroes,heroIds} from './economy.mjs?v=xur-maps-1';
+import {validInventory} from './inventory.mjs?v=xur-maps-1';
 
-import {validDaily,dailyStage} from './daily.mjs?v=expansion-2';
-import {materials} from './materials.mjs?v=expansion-2';
+import {validDaily,dailyStage} from './daily.mjs?v=xur-maps-1';
+import {materials} from './materials.mjs?v=xur-maps-1';
 const format = 'cxq-rift-summon';
 const limit = 1024 * 1024;
 const integer = (n,min,max) => Number.isInteger(n) && n >= min && n <= max;
@@ -34,7 +34,7 @@ export async function readBackup(file) {
     new Set(cleared).size === cleared.length &&
     cleared.every(index=>integer(index,0,cleared.length-1));
   const walletOk=save?.wallet===undefined || validWallet(save.wallet);
-  const owned=validClears ? [...starter,...cleared.map(index=>stages[index].reward),...(walletOk?save.wallet?.unlocked??[]:[])] : [];
+  const owned=validClears ? [...starter,...cleared.map(index=>stages[index].reward),...(walletOk?save.wallet?.unlocked??[]:[]),...(walletOk?save.wallet?.exclusiveUnlocked??[]:[])] : [];
   const runeOwnership=validClears?unlockedRunes(new Set(cleared),walletOk?save.wallet:undefined):[];
   const validDeck=Array.isArray(save?.deck) && save.deck.length >= 8 && save.deck.length <= 12 &&
     save.deck.every(id=>owned.includes(id));
