@@ -1,1 +1,1 @@
-export {cardDescription as signatureDescription} from './combat-rules.mjs?v=rift99-1';
+export {cardDescription as signatureDescription} from './combat-rules.mjs?v=rift99-2';

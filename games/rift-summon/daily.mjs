@@ -1,4 +1,4 @@
-import {dailyEncounters} from './daily-encounters.mjs?v=rift99-1';
+import {dailyEncounters} from './daily-encounters.mjs?v=rift99-2';
 export const vaults = {
   gold: {name:'熔金寶庫', limit:5, currency:'gold', opening:['guard','boar','knight','giant','boss'], roster:['guard','knight','boar','beetle','giant','ax','flag','turtle']},
   gems: {name:'星晶裂谷', limit:3, currency:'gems', opening:['wisp','moth','bat','raven','lion'], roster:['wisp','bat','moth','crane','koi','swan','raven','wolf']},

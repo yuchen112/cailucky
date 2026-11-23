@@ -1,4 +1,4 @@
-import {cards} from './card-data.mjs?v=rift99-1';
+import {cards} from './card-data.mjs?v=rift99-2';
 export const combatVersion=2;
 export const heroHP=level=>60+6*Math.max(1,Math.min(50,level));
 export const skillScale=effect=>.7+.06*Math.max(1,Math.min(10,effect));

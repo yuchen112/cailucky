@@ -1,7 +1,7 @@
-import {cards,starter} from './card-data.mjs?v=rift99-1';
-import {extendCampaign} from './campaign-expansion.mjs?v=rift99-1';
+import {cards,starter} from './card-data.mjs?v=rift99-2';
+import {extendCampaign} from './campaign-expansion.mjs?v=rift99-2';
 export {cards,starter};
-export {createBattle,applyAction} from './battle-engine.mjs?v=rift99-1';
+export {createBattle,applyAction} from './battle-engine.mjs?v=rift99-2';
 const sentries = ['guard', 'bomb', 'knight', 'ax', 'ghost', 'giant'];
 
 

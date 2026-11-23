@@ -1,5 +1,5 @@
-import {lateEncounter} from './late-encounters.mjs?v=rift99-1';
-import {heroHP,profiles} from './combat-rules.mjs?v=rift99-1';
+import {lateEncounter} from './late-encounters.mjs?v=rift99-2';
+import {heroHP,profiles} from './combat-rules.mjs?v=rift99-2';
 export const factions={
  fortress:['guard','knight','bow','giant','badgerforge','capyguard','humanlamp','rampart'],
  grove:['turtle','stag','hare','frog','beaver','hedgehog','koala','pandaoracle'],

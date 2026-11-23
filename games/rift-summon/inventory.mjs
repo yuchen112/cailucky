@@ -1,6 +1,6 @@
-import {runeExperienceCosts,effectCosts} from './runes.mjs?v=rift99-1';
-import {rarity} from './economy.mjs?v=rift99-1';
-import {heroCapacity,heroLimits} from './progression.mjs?v=rift99-1';
+import {runeExperienceCosts,effectCosts} from './runes.mjs?v=rift99-2';
+import {rarity} from './economy.mjs?v=rift99-2';
+import {heroCapacity,heroLimits} from './progression.mjs?v=rift99-2';
 export function newInventory() { return {next:1,items:[]}; }
 export function addInstance(inventory,kind,id,level=1,experience=0) {
   const item={uid:`i${inventory.next++}`,kind,id,level,experience};

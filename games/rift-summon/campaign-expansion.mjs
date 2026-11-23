@@ -1,6 +1,6 @@
-import {newChapters} from './chapter-plans.mjs?v=rift99-1';
-import {makeEncounter} from './encounters.mjs?v=rift99-1';
-import {exclusiveIds} from './exclusive-cards.mjs?v=rift99-1';
+import {newChapters} from './chapter-plans.mjs?v=rift99-2';
+import {makeEncounter} from './encounters.mjs?v=rift99-2';
+import {exclusiveIds} from './exclusive-cards.mjs?v=rift99-2';
 export const plannedChapters=99;
 export function campaignLevel(chapter,step=0){
   if(chapter>=80)return 99;

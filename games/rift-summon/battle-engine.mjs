@@ -1,8 +1,8 @@
-import {cards,stages,starter} from './battle.mjs?v=rift99-1';
-import {dailyStage} from './daily.mjs?v=rift99-1';
-import {heroHealth,shuffleDeck} from './progression.mjs?v=rift99-1';
-import {profiles,cardStats,skillScale,combatVersion} from './combat-rules.mjs?v=rift99-1';
-import {runeProfile} from './runes.mjs?v=rift99-1';
+import {cards,stages,starter} from './battle.mjs?v=rift99-2';
+import {dailyStage} from './daily.mjs?v=rift99-2';
+import {heroHealth,shuffleDeck} from './progression.mjs?v=rift99-2';
+import {profiles,cardStats,skillScale,combatVersion} from './combat-rules.mjs?v=rift99-2';
+import {runeProfile} from './runes.mjs?v=rift99-2';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 export function createBattle(rune='wall',hero='trust',stage=0,deck=starter,levels={},heroLevel=1,runeLevel=1,daily=null,effects={},heroEffect=1,runeEffect=1,rune2=null,instances=null,random=Math.random){
  const mission=daily?dailyStage(daily):stages[stage];if(!mission)throw Error('Unknown mission');
@@ -62,9 +62,11 @@ export function applyAction(previous,action){
   const c={id:'spirit',uid:state.nextUid++,name:{spirit:'英靈',tentacle:'深海觸手',paper:'護身紙偶',hatch:'熔巢幼體',egg:'鳳凰卵'}[kind],skill:'',level:source.level,effect:source.effect,count:0,attack:Math.max(1,Math.round(source.baseAttack*ar)),max:Math.max(1,Math.round(source.baseMax*hpr)),artId:kind==='spirit'?'spirit':'summon-'+kind,sourceId:source.sourceId??source.id,shield:0,turns:0,uses:{},summonKind:kind,rootUid:source.rootUid??source.uid};
   c.baseAttack=c.attack;c.baseMax=c.max;c.hp=c.max;s.board.push(c);record('deploy',`${source.name} 召喚 ${c.name}・Lv.${c.level}・攻 ${c.attack}・血 ${c.hp}`,a,a,[s.board.length-1]);return c;
  }
+ const pendingEgg=(side,corpse)=>side.board.some(c=>c?.summonKind==='egg'&&c.corpse?.uid===corpse.uid);
+ const availableCorpse=side=>side.graveyard.find(c=>!c.revived&&!c.summonKind&&!pendingEgg(side,c));
  function revive(a,corpse,ratio,source){
   const s=state.sides[a];if(!corpse||corpse.summonKind||corpse.revived||s.revivals>=2||s.board.filter(Boolean).length>=14)return false;
-  const index=s.graveyard.findIndex(x=>x.uid===corpse.uid);if(index>=0)s.graveyard.splice(index,1);
+  const index=s.graveyard.findIndex(x=>x.uid===corpse.uid);if(index<0||pendingEgg(s,corpse))return false;s.graveyard.splice(index,1);
   const c=structuredClone(corpse);c.uid=state.nextUid++;c.rootUid=corpse.rootUid??corpse.uid;c.revived=true;c.hp=Math.max(1,Math.round(c.max*ratio));c.shield=0;c.count=0;clear(c);s.revivals++;s.board.push(c);record('deploy',`${source}・${c.name} 復活 ${c.hp} / ${c.max} 生命`,a,a,[s.board.length-1]);return true;
  }
  function damage(a,source,target,lane,amount,kind='skill',pierce=0){
@@ -130,7 +132,7 @@ export function applyAction(previous,action){
   if(hero==='growth')for(let n=0;n<(level>=5?2:1);n++)fired=haste(a)||fired;
   if(hero==='joy'&&all.length>=2){for(const x of all.slice(0,level>=5?3:2))buff(x.card,.1+.01*level,2);fired=true;}
   if(hero==='luck'&&alive(1-a).length){const x=weak(1-a)[0],power=all.length?all.reduce((n,x)=>n+x.card.baseAttack,0)/all.length:4+(a===0?state.heroLevel:state.enemyHeroLevel)*.3;damage(a,{name:'幸運追擊'},1-a,x.lane,power*scale*(x.card.hp/x.card.max<.35?1.2:.6));fired=true;}
-  if(hero==='memory'&&s.graveyard.length&&state.heroUses[a]<2){const corpse=s.graveyard.find(c=>!c.revived);if(corpse){summon(a,corpse,'spirit',.5+.02*level,.35+.015*level);s.graveyard=s.graveyard.filter(c=>c.uid!==corpse.uid);fired=true;}}
+  if(hero==='memory'&&s.graveyard.length&&state.heroUses[a]<2){const corpse=availableCorpse(s);if(corpse){summon(a,corpse,'spirit',.5+.02*level,.35+.015*level);s.graveyard=s.graveyard.filter(c=>c.uid!==corpse.uid);fired=true;}}
   if(hero==='dream'&&s.deck.length&&s.hand.length<5){const c=s.deck.shift();c.count=Math.max(0,c.count-(level>=5?2:1));s.hand.push(c);fired=true;}
   if(fired){state.heroUses[a]++;timers[a]=state.round+(level>=10?2:3);if(a===0)state.heroUsed=true;record('hero',`${hero}・技能 Lv.${level}（${timers[a]-state.round} 回合冷卻）`,a,a,[null]);}
  }
@@ -147,7 +149,7 @@ export function applyAction(previous,action){
   if(c.id==='an05'&&every(3))for(const x of foes().filter(x=>x.card.burn?.turns))x.card.antiHeal={ratio:1,turns:1};
   if(c.id==='an06'&&every(2)){const x=weak(1-a).find(x=>x.card.hp/x.card.max<.3);if(x)damage(a,c,1-a,x.lane,atk*(x.card.id==='boss'?1:1.6));}
   if(c.id==='an09'&&every(3)){const x=foes().filter(x=>(x.card.immuneUntil??0)<state.round).sort((x,y)=>y.card.attack-x.card.attack)[0];if(x){x.card.silence=1;x.card.immuneUntil=state.round+2;record('skill',`${c.name} 沉默 ${x.card.name}`,a,1-a,[x.lane]);}}
-  if(c.id==='dv02'&&every(2)){for(const x of hurt().slice(0,3)){heal(a,x.card,x.card.max*.18,c.name);clear(x.card);}if(!c.uses.revive&&revive(a,state.sides[a].graveyard.find(x=>!x.revived),.4,'慈航蓮生'))c.uses.revive=1;}
+  if(c.id==='dv02'&&every(2)){for(const x of hurt().slice(0,3)){heal(a,x.card,x.card.max*.18,c.name);clear(x.card);}if(!c.uses.revive&&revive(a,availableCorpse(state.sides[a]),.4,'慈航蓮生'))c.uses.revive=1;}
   if(c.id==='dv04'&&every(2)){const lane=state.sides[a].board.indexOf(c);for(let n=0;n<2;n++){const target=state.sides[1-a].board[lane];if(target){damage(a,c,1-a,lane,atk*.7);if(target.hp>0)status(a,target,'burn',c);}}}
   if(c.id==='dv05'&&every(2)){const x=foes()[0];if(x){x.card.shield=0;delete x.card.power;record('skill',`${c.name}・破妄清除護盾與強化`,a,1-a,[x.lane]);}}
   if(c.id==='dv06'){

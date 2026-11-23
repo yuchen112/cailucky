@@ -1,5 +1,5 @@
-import {newChapters} from './chapter-plans.mjs?v=rift99-1';
-import {heroHP} from './combat-rules.mjs?v=rift99-1';
+import {newChapters} from './chapter-plans.mjs?v=rift99-2';
+import {heroHP} from './combat-rules.mjs?v=rift99-2';
 const packs={
 fortress:[['guard','knight','bow','healer','tiger','badger','humanshield','lion'],['capyguard','badgerforge','rampart','crane','wolf','ibis','humanclock','guard'],['dogpaladin','tortoise','yak','swan','bow','ax','lion','humanlamp'],['knight','guard','badger','crane','tiger','wolf','bow','flag']],
 grove:[['turtle','stag','hare','frog','knight','wolf','beaver','hedgehog'],['koala','panda','bunnychef','dragonfly','guard','ibis','bearhoney','lion'],['beaver','axolotl','ottermage','lizard','boar','humanlamp','wolf','eagle'],['stag','knight','pandaoracle','crane','frog','badger','lion','hare']],
