@@ -1,0 +1,5 @@
+[
+  {"name":"CxQ 童話大富翁","path":"games/cxq-fairytale-richman/","cover":"games/shared/loading-art-v2/richman.webp","width":16,"height":9,"open":true},
+  {"name":"CxQ 心光旅團：記憶核心","path":"games/brick-breaker/","cover":"games/shared/loading-art-v2/brick.webp","width":9,"height":16,"open":true},
+  {"name":"CxQ Picture Realm","path":"games/picture-realm/","cover":"games/shared/loading-art-v2/brick.webp","width":9,"height":16,"open":false}
+]
