@@ -1,6 +1,6 @@
-import {exclusiveIds} from './exclusive-cards.mjs?v=bag18-1';
-import {extraCards,extraRunes,expansionRanks} from './content-expansion.mjs?v=bag18-1';
-import {materials} from './materials.mjs?v=bag18-1';
+import {exclusiveIds} from './exclusive-cards.mjs?v=rift99-1';
+import {extraCards,extraRunes,expansionRanks} from './content-expansion.mjs?v=rift99-1';
+import {materials} from './materials.mjs?v=rift99-1';
 export const capsuleCards=[...Object.keys(extraCards),'ember','wisp','turtle','raven','stag','lynx','moth','drake','ibis','hare','otter','ram','bat','beetle','crane','yak','seal','boar','swan','crab','gecko','wolf','panda','hedgehog','koi','falcon','mole','lion','badger','lynxguard','robin','frog','yakfire','stork','ferret','beaver','rabbit','eagle'];
 export const walletCardIds=[...capsuleCards,...exclusiveIds];
 export const maxLevel=5;

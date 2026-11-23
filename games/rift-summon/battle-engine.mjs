@@ -1,8 +1,8 @@
-import {cards,stages,starter} from './battle.mjs?v=bag18-1';
-import {dailyStage} from './daily.mjs?v=bag18-1';
-import {heroHealth,shuffleDeck} from './progression.mjs?v=bag18-1';
-import {profiles,cardStats,skillScale,combatVersion} from './combat-rules.mjs?v=bag18-1';
-import {runeProfile} from './runes.mjs?v=bag18-1';
+import {cards,stages,starter} from './battle.mjs?v=rift99-1';
+import {dailyStage} from './daily.mjs?v=rift99-1';
+import {heroHealth,shuffleDeck} from './progression.mjs?v=rift99-1';
+import {profiles,cardStats,skillScale,combatVersion} from './combat-rules.mjs?v=rift99-1';
+import {runeProfile} from './runes.mjs?v=rift99-1';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 export function createBattle(rune='wall',hero='trust',stage=0,deck=starter,levels={},heroLevel=1,runeLevel=1,daily=null,effects={},heroEffect=1,runeEffect=1,rune2=null,instances=null,random=Math.random){
  const mission=daily?dailyStage(daily):stages[stage];if(!mission)throw Error('Unknown mission');

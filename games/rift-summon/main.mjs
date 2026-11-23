@@ -1,26 +1,26 @@
-import {materialExperience,materialEffect,feedingValue,isTrained,experienceRoom,lineupAdvice} from './enhancement.mjs?v=bag18-1';
-import {statusDetails,runeReadiness} from './combat-feedback.mjs?v=bag18-1';
-import {migrateCombatSave} from './save-migration.mjs?v=bag18-1';
-import {cardStats,cardDescription,profiles} from './combat-rules.mjs?v=bag18-1';
-import {runeProfile,runeAdvancement} from './runes.mjs?v=bag18-1';
-import {effectPoints,effectNeeded,grantEffect} from './inventory.mjs?v=bag18-1';
-import {exclusiveInfo,exclusiveGroups} from './exclusive-cards.mjs?v=bag18-1';
-import {runes,runeBonus,runeDescription} from './runes.mjs?v=bag18-1';
-import {signatureDescription} from './combat-effects.mjs?v=bag18-1';
-import {pityTier,pityRemaining} from './economy.mjs?v=bag18-1';
-import {fragmentValue,exchangeCost,protectedItems,dismantle,exchangeCard} from './recycle.mjs?v=bag18-1';
-import {heroSkillProfile} from './hero-skills.mjs?v=bag18-1';
-import {heroHealth,heroCapacity,heroLimits,nextHeroCapacity,migrateHeroProgression} from './progression.mjs?v=bag18-1';
-import {createDialoguePicker} from './home-dialogue.mjs?v=bag18-1';
-import {materials,bookFor} from './materials.mjs?v=bag18-1';
-import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=bag18-1';
-import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=bag18-1';
-import {heroes} from './heroes.mjs?v=bag18-1';
-import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=bag18-1';
-import {makeBackup, readBackup} from './backup.mjs?v=bag18-1';
-import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=bag18-1';
-import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,capsuleCards,walletCardIds} from './economy.mjs?v=bag18-1';
-import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=bag18-1';
+import {materialExperience,materialEffect,feedingValue,isTrained,experienceRoom,lineupAdvice} from './enhancement.mjs?v=rift99-1';
+import {statusDetails,runeReadiness} from './combat-feedback.mjs?v=rift99-1';
+import {migrateCombatSave} from './save-migration.mjs?v=rift99-1';
+import {cardStats,cardDescription,profiles} from './combat-rules.mjs?v=rift99-1';
+import {runeProfile,runeAdvancement} from './runes.mjs?v=rift99-1';
+import {effectPoints,effectNeeded,grantEffect} from './inventory.mjs?v=rift99-1';
+import {exclusiveInfo,exclusiveGroups} from './exclusive-cards.mjs?v=rift99-1';
+import {runes,runeBonus,runeDescription} from './runes.mjs?v=rift99-1';
+import {signatureDescription} from './combat-effects.mjs?v=rift99-1';
+import {pityTier,pityRemaining} from './economy.mjs?v=rift99-1';
+import {fragmentValue,exchangeCost,protectedItems,dismantle,exchangeCard} from './recycle.mjs?v=rift99-1';
+import {heroSkillProfile} from './hero-skills.mjs?v=rift99-1';
+import {heroHealth,heroCapacity,heroLimits,nextHeroCapacity,migrateHeroProgression} from './progression.mjs?v=rift99-1';
+import {createDialoguePicker} from './home-dialogue.mjs?v=rift99-1';
+import {materials,bookFor} from './materials.mjs?v=rift99-1';
+import {vaults,validDaily,emptyDaily,dailyStatus,dailyStage,dailyPay,claimDaily} from './daily.mjs?v=rift99-1';
+import {applyAction, cards, createBattle, stages, starter, chapterNames} from './battle.mjs?v=rift99-1';
+import {heroes} from './heroes.mjs?v=rift99-1';
+import {unlock, prepare, play, setMusic, toggleMute, updateVolume} from './audio.mjs?v=rift99-1';
+import {makeBackup, readBackup} from './backup.mjs?v=rift99-1';
+import {startingWallet,validWallet,levelCost,victoryPay,unlockedRunes} from './economy.mjs?v=rift99-1';
+import {starterHeroes,rarity,rarityNames,poolFor,pullPrice,openBatch,capsuleCards,walletCardIds} from './economy.mjs?v=rift99-1';
+import {migrateInventory,addInstance,xpNeeded,grantExperience,checkLineup,assignLineupCard,levelLimit,limits,cardBonus,cardHealthBonus,effectsMax} from './inventory.mjs?v=rift99-1';
 
 const get = id => document.getElementById(id);
 const asset = name => globalThis.riftArtwork?.[name] ?? `art/${name}.webp`;
@@ -30,7 +30,8 @@ let saved;
 try { saved = JSON.parse(localStorage.getItem(key)); } catch {}
 let heroMigrationPending=Boolean(saved&&saved.heroProgressionVersion!==2);
 saved=migrateCombatSave(migrateHeroProgression(saved));
-let state = saved?.state?.version === 3 && saved.state.phase==='deploy' ? saved.state : null;
+let dailyEncounterRefresh=Boolean(saved?.state?.phase==='deploy'&&saved.state.daily&&saved.dailyEncounterRevision!==2);
+let state = saved?.state?.version === 3 && saved.state.phase==='deploy'&&!dailyEncounterRefresh ? saved.state : null;
 let daily=validDaily(saved?.daily)?saved.daily:emptyDaily();
 const consumed=new Set(Array.isArray(saved?.consumed)?saved.consumed:[]);
 let displayHero=saved?.displayHero;
@@ -130,7 +131,7 @@ function currentSave() {
   syncFixedInventory();
   const ongoing=state?.phase==='deploy';
   flushTeam();
-  return {combatRulesVersion:2,heroProgressionVersion:2,consumed:[...consumed],displayHero,daily,lastBatch,townRead,bagSort,lineupSort,listSort,state:ongoing?state:null, log:ongoing?log:[], deck, cleared:[...cleared], volumes, loadout, lowMotion, wallet, teams, inventory, activeTeam, starterHero, speed:get('speed').value};
+  return {dailyEncounterRevision:2,combatRulesVersion:2,heroProgressionVersion:2,consumed:[...consumed],displayHero,daily,lastBatch,townRead,bagSort,lineupSort,listSort,state:ongoing?state:null, log:ongoing?log:[], deck, cleared:[...cleared], volumes, loadout, lowMotion, wallet, teams, inventory, activeTeam, starterHero, speed:get('speed').value};
 }
 function save() {
   try { localStorage.setItem(key, JSON.stringify(currentSave())); return true; }
@@ -449,6 +450,7 @@ function showCamp() {
   get('camp-bag').classList.toggle('town-unread',inventory.next>townRead.bag);
   get('camp-collection').classList.toggle('town-unread',new Set(inventory.items.filter(item=>item.kind!=='material').map(item=>item.id)).size>townRead.collection);
   renderWallet(get('camp-wallet'));
+  if(dailyEncounterRefresh){dailyEncounterRefresh=false;save();notify('秘境敵方配置已更新，本場未結算的舊戰鬥已返回營地；通關紀錄、資源與今日次數保留。');}
   if(saved?.combatMigrationNotice){saved.combatMigrationNotice=false;save();notify('戰鬥規則已更新：養成與主線進度保留；金幣等比換算，秘境保留舊通關紀錄並開啟新版樓層認證。');}
   if(heroMigrationPending&&save()){heroMigrationPending=false;notify('英雄養成已更新：原有等級對應至新階段，出戰卡數與培養進度已保留。');}
 }
@@ -849,7 +851,7 @@ function showCampaign() {
   }));
   const stage=stages[stageIndex];
   get('stage-name').textContent=stage.name;
-  get('stage-detail').textContent=`牌組 ${stage.opponents.length} 張（含開局守軍）。敵軍 Lv.${stage.enemyLevel??1}・技能 Lv.${stage.enemyEffect??1}。${stage.goal} 首通取得：${cards[stage.reward][0]}。出戰：${heroes.find(hero=>hero.id===chosen).name}・${runes[loadout].name}`;
+  get('stage-detail').textContent=`牌組 ${stage.opponents.length} 張（含開局守軍）。敵軍 Lv.${stage.enemyLevel??1}・技能 Lv.${stage.enemyEffect??1}。${stage.goal}${stage.fragmentBonus?' 章末首通另得 '+stage.fragmentBonus+' 碎片。':''} 首通取得：${cards[stage.reward][0]}。出戰：${heroes.find(hero=>hero.id===chosen).name}・${runes[loadout].name}`;
   const preview=(label,id,level=1,effect=1)=>{
     const figure=element('figure');
     const card=catalogCard(id,level,effect);
@@ -1109,9 +1111,9 @@ function chooseMaterial(target,mode) {
     confirmButton('清除選取',()=>{selected.clear();fill();update();}));
   let materialPage=0;const materialPager=element('nav','','material-pager');
   const fill=()=>{
-    const all=visible(),pages=Math.max(1,Math.ceil(all.length/18));materialPage=Math.min(materialPage,pages-1);
+    const all=visible(),pages=Math.max(1,Math.ceil(all.length/12));materialPage=Math.min(materialPage,pages-1);
     const prev=confirmButton('‹',()=>{materialPage--;fill();}),next=confirmButton('›',()=>{materialPage++;fill();});prev.disabled=materialPage===0;next.disabled=materialPage===pages-1;materialPager.replaceChildren(prev,element('small',`${materialPage+1} / ${pages}・${all.length} 份`),next);
-    grid.replaceChildren(...all.slice(materialPage*18,materialPage*18+18).map(item=>{
+    grid.replaceChildren(...all.slice(materialPage*12,materialPage*12+12).map(item=>{
       const button=confirmButton('',()=>{
         const {result}=project();
         if(selected.has(item.uid))selected.delete(item.uid);
@@ -1156,7 +1158,7 @@ function renderInventory() {
   get('inventory-count').textContent=`持有 ${list.length} 份・顯示 ${visible.length} 份`;
   for(const button of document.querySelectorAll('[data-bag]'))button.setAttribute('aria-pressed',String(button.dataset.bag===bagKind));
   const signature=[tier,query,get('inventory-status').value,order.key,order.asc].join('|');
-  const pageSize=18;
+  const pageSize=12;
   const pageCount=Math.max(1,Math.ceil(visible.length/pageSize));
   const previous=bagPages[bagKind];
   const pageIndex=previous?.signature===signature?Math.min(previous.index,pageCount-1):0;
@@ -1480,8 +1482,9 @@ async function act(action) {
   if(state.result) state.resultReward=reward;
   if(state.result==='勝利') {
     const pay=state.daily?claimReward(state.daily.vault,state.daily.floor):victoryPay(Boolean(reward),chapterFor(state.stage)+1);
+    if(reward&&stages[state.stage].fragmentBonus)pay.fragments=stages[state.stage].fragmentBonus;
     state.currencyReward=pay;
-    wallet={...wallet,gold:wallet.gold+pay.gold,gems:wallet.gems+pay.gems};
+    wallet={...wallet,gold:wallet.gold+pay.gold,gems:wallet.gems+pay.gems,fragments:(wallet.fragments??0)+(pay.fragments??0)};
   }
   log=[...log,...update.events.map(({message})=>message)].slice(-150);
   selected=null;
@@ -1556,6 +1559,7 @@ function showResults() {
   if(state.currencyReward) {
     const rewards=element('div','','wallet');
     rewards.append(money('gold',`+${state.currencyReward.gold}`),money('gems',`+${state.currencyReward.gems}`));
+    if(state.currencyReward.fragments)rewards.append(element('p','碎片 +'+state.currencyReward.fragments));
     if(state.currencyReward.material)rewards.append(element('p',materials[state.currencyReward.material].name+' × '+state.currencyReward.count));
     summary.append(rewards);
   }
@@ -1570,6 +1574,7 @@ function showResults() {
     card.onclick=()=>copy?modal(itemDetail(copy)):cardDetail(catalogCard(reward,1));
     summary.append(element('h2','首通獎勵已入冊'),card);
   }
+  if(state.stage===stages.length-1&&state.result==='勝利'&&!state.daily)summary.append(element('h2','99章主線通關'),element('p','裂界終章已完成；仍可返回冒險重戰、挑戰秘境與培養其他牌組。'));
   get('result-content').replaceChildren(summary);
   get('result-title').focus();
   changeMusic(state.result==='勝利'?'end':'loss');
@@ -1763,7 +1768,7 @@ function showDaily(vault='gold',floor) {
     card.append(artwork(id));card.setAttribute('aria-label',cards[id][0]);enemies.append(card);
   }
   const guide=element('details','','daily-guide');
-  guide.append(element('summary','關卡機制'),element('p',stage.goal),confirmButton('查看完整敵方配置',()=>encounterDetails(stage)));
+  guide.append(element('summary',stage.tactic+'・戰術與配置'),element('p',stage.goal),confirmButton('查看完整敵方配置',()=>encounterDetails(stage)));
   details.append(heading,rewards,enemies,guide);
   const buttons=element('div','','controls');
   const resume=state?.phase==='deploy'&&state.daily?.vault===vault&&state.daily.floor===floor&&state.lineupSignature===lineupSignature();
@@ -1903,7 +1908,7 @@ function openRecycle(mode='dismantle',initialGroup='card'){
     footer.replaceChildren(element('strong',`已選 ${entries.length} / 100 份・可得 ${gain} 碎片`),action,inspect,confirmButton('全選篩選',()=>{for(const i of visible()){if(selected.size>=100)break;selected.add(i.uid);}render();}),confirmButton('一鍵選未培養 N／R',()=>{for(const i of visible()){if(selected.size>=100)break;if(['N','R'].includes(rarity(i.id))&&i.level===1&&!i.experience&&(i.effect??1)===1)selected.add(i.uid);}render();}),confirmButton('清除',()=>{selected.clear();render();}));
   }
   function render(){
-    const all=visible(),pageSize=18,pages=Math.max(1,Math.ceil(all.length/pageSize));page=Math.min(page,pages-1);
+    const all=visible(),pageSize=12,pages=Math.max(1,Math.ceil(all.length/pageSize));page=Math.min(page,pages-1);
     grid.replaceChildren(...all.slice(page*pageSize,page*pageSize+pageSize).map(item=>{
       const b=confirmButton('',()=>{
         if(mode==='exchange'){

@@ -1,4 +1,5 @@
-import {heroHP,profiles} from './combat-rules.mjs?v=bag18-1';
+import {lateEncounter} from './late-encounters.mjs?v=rift99-1';
+import {heroHP,profiles} from './combat-rules.mjs?v=rift99-1';
 export const factions={
  fortress:['guard','knight','bow','giant','badgerforge','capyguard','humanlamp','rampart'],
  grove:['turtle','stag','hare','frog','beaver','hedgehog','koala','pandaoracle'],
@@ -12,6 +13,7 @@ export const factions={
 const themes=['fortress','dusk','grove','ember','frost','tide','desert','dusk','sky','sky','tide','grove','fortress','tide','desert','fortress','desert','grove','ember','sky','frost','sky','ember','grove','tide','fortress','grove','sky','grove','fortress','tide','dusk','frost','ember','grove','tide','sky','desert','fortress','fortress','fortress','dusk','frost','sky','dusk','desert','sky','sky','ember','sky'];
 const runeSets={fortress:['wall','ward'],grove:['root','cleanse'],ember:['cinder','flame'],frost:['frost','blizzard'],tide:['heal','renewal'],dusk:['venom','harvest'],sky:['valor','comet'],desert:['shadow','echo']};
 export function makeEncounter(chapter,step,level){
+ if(chapter>=51)return lateEncounter(chapter,step,level);
  const theme=themes[chapter-1]??'sky',roster=factions[theme],count=chapter<10?8:chapter<30?10:12;
  const offset=step%roster.length,deck=Array.from({length:count},(_,i)=>roster[(i+offset)%roster.length]);
  // Each encounter gets actual protection, sustain and pressure, then a specialty.

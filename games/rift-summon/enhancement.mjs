@@ -1,7 +1,7 @@
-import {rarity} from './economy.mjs?v=bag18-1';
-import {materials} from './materials.mjs?v=bag18-1';
-import {xpNeeded,levelLimit,effectPoints} from './inventory.mjs?v=bag18-1';
-import {effectCosts} from './runes.mjs?v=bag18-1';
+import {rarity} from './economy.mjs?v=rift99-1';
+import {materials} from './materials.mjs?v=rift99-1';
+import {xpNeeded,levelLimit,effectPoints} from './inventory.mjs?v=rift99-1';
+import {effectCosts} from './runes.mjs?v=rift99-1';
 export const recoveryRate=.8;
 export function investedExperience(item){if(item.kind==='material')return 0;let n=item.experience??0;for(let lv=1;lv<item.level;lv++)n+=xpNeeded(lv,item);return n+(item.reserveExperience??0);}
 export function investedEffect(item){let n=item.effectExperience??0;for(let lv=1;lv<(item.effect??1);lv++)n+=effectCosts[lv-1];return n;}
