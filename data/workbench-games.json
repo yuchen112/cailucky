@@ -1,5 +1,212 @@
 [
-  {"name":"CxQ 童話大富翁","path":"games/cxq-fairytale-richman/","cover":"games/shared/loading-art-v2/richman.webp","width":16,"height":9,"open":true},
-  {"name":"CxQ 心光旅團：記憶核心","path":"games/brick-breaker/","cover":"games/shared/loading-art-v2/brick.webp","width":9,"height":16,"open":true},
-  {"name":"CxQ Picture Realm","path":"games/picture-realm/","cover":"games/shared/loading-art-v2/brick.webp","width":9,"height":16,"open":false}
+  {
+    "name": "CxQ 心光對決",
+    "path": "games/heartlight-duel/arcade/index.html?v=20261108-buffered1",
+    "cover": "assets/game-covers/redrawn-20261008/heartlight-duel-thumb.webp?v=20261008-polish3",
+    "description": "選擇夥伴，挑戰橫向街機對決。",
+    "group": "官網遊戲",
+    "width": 16,
+    "height": 9,
+    "open": true
+  },
+  {
+    "name": "CxQ 幸運小鎮",
+    "path": "games/lucky-town/index.html?v=20261108-buffered1",
+    "cover": "assets/game-covers/redrawn-20261008/lucky-town-thumb.webp?v=20261008-polish3",
+    "description": "玩拉霸、刮票券，打造自己的小鎮生活。",
+    "group": "官網遊戲",
+    "width": 0,
+    "height": 0,
+    "open": true
+  },
+  {
+    "name": "CxQ 童話大富翁",
+    "path": "games/cxq-fairytale-richman/index.html?v=20261108-buffered1",
+    "cover": "assets/game-covers/redrawn-20261008/richman-thumb.webp?v=20261008-polish3",
+    "description": "擲骰買地，展開童話棋盤冒險。",
+    "group": "官網遊戲",
+    "width": 16,
+    "height": 9,
+    "open": true
+  },
+  {
+    "name": "CxQ 童話塔防",
+    "path": "games/fairytale-defense/index.html?v=20261108-buffered1",
+    "cover": "assets/game-covers/redrawn-20261008/fairytale-defense-thumb.webp?v=20261008-polish3",
+    "description": "集結英雄與部隊，守護童話世界。",
+    "group": "官網遊戲",
+    "width": 16,
+    "height": 9,
+    "open": true
+  },
+  {
+    "name": "CxQ 星願旅團：點亮夢境",
+    "path": "games/click-core/index.html?v=20261108-buffered1",
+    "cover": "games/click-core/trial/art/story-cover-thumb.webp",
+    "description": "點亮星願樹，經營你的童話庭院。",
+    "group": "官網遊戲",
+    "width": 0,
+    "height": 0,
+    "open": true
+  },
+  {
+    "name": "CxQ 撲克館",
+    "path": "games/poker/index.html?v=20261108-buffered1",
+    "cover": "assets/game-covers/redrawn-20261008/poker-thumb.webp?v=20261008-polish3",
+    "description": "選擇牌桌，挑戰八種撲克玩法。",
+    "group": "官網遊戲",
+    "width": 0,
+    "height": 0,
+    "open": true
+  },
+  {
+    "name": "CxQ 星界遠征",
+    "path": "games/star-survivors/expedition.html?v=20261108-buffered1",
+    "cover": "games/star-survivors/art/v5/cover.webp",
+    "description": "探索秘境，收集素材並培育自己的戰鬥流派。",
+    "group": "官網遊戲",
+    "width": 16,
+    "height": 9,
+    "open": true
+  },
+  {
+    "name": "CxQ 幻裝圖境",
+    "path": "games/picture-realm/index.html?v=20261108-gallery120",
+    "cover": "games/picture-realm/art/cover-v2-thumb.webp?v=20261101",
+    "description": "隨機華容道與凹凸拼圖，收集角色的全新模樣。",
+    "group": "官網遊戲",
+    "width": 0,
+    "height": 0,
+    "open": false
+  },
+  {
+    "name": "CxQ 裂界召喚",
+    "path": "games/rift-summon/index.html",
+    "cover": "assets/game-covers/rift-summon-arena-thumb.jpg",
+    "description": "收集角色、編組卡牌與符文，展開橫式卡牌對戰。",
+    "group": "官網遊戲",
+    "width": 16,
+    "height": 9,
+    "open": true
+  },
+  {
+    "name": "CxQ 心境織境",
+    "path": "games/tetris/index.html?v=20261108-buffered1",
+    "cover": "games/classic-hall/art-v2/tetris.webp",
+    "description": "旋轉與排列落下的方塊，填滿一整行即可消除。",
+    "group": "經典遊戲",
+    "width": 9,
+    "height": 16,
+    "open": true
+  },
+  {
+    "name": "CxQ 星願 2048",
+    "path": "games/2048/index.html?v=20261108-buffered1",
+    "cover": "games/classic-hall/art-v2/twenty48.webp",
+    "description": "滑動棋盤，讓相同數字合併，挑戰 2048。",
+    "group": "經典遊戲",
+    "width": 0,
+    "height": 0,
+    "open": true
+  },
+  {
+    "name": "CxQ 四葉草探險地圖",
+    "path": "games/mines/index.html?v=20261108-buffered1",
+    "cover": "games/classic-hall/art-v2/mines.webp",
+    "description": "依照周圍陷阱數字找出安全格，插旗標記疑點。",
+    "group": "經典遊戲",
+    "width": 0,
+    "height": 0,
+    "open": true
+  },
+  {
+    "name": "CxQ 暮光回憶收藏室",
+    "path": "games/memory/index.html?v=20261108-buffered1",
+    "cover": "games/classic-hall/art-v2/memory.webp",
+    "description": "翻開兩張卡片，找出相同圖案的一對。",
+    "group": "經典遊戲",
+    "width": 0,
+    "height": 0,
+    "open": true
+  },
+  {
+    "name": "CxQ 夢境織光",
+    "path": "games/link/index.html?v=20261108-buffered1",
+    "cover": "games/classic-hall/art-v2/link.webp",
+    "description": "找出相同圖案，用不超過兩次轉彎的路線連接。",
+    "group": "經典遊戲",
+    "width": 0,
+    "height": 0,
+    "open": true
+  },
+  {
+    "name": "CxQ 森林敲敲樂",
+    "path": "games/whack/index.html?v=20261108-buffered1",
+    "cover": "games/classic-hall/art-v2/whack.webp",
+    "description": "看準冒出來的小夥伴，在時間內點擊得分。",
+    "group": "經典遊戲",
+    "width": 9,
+    "height": 16,
+    "open": true
+  },
+  {
+    "name": "CxQ 心光旅團：記憶核心",
+    "path": "games/brick-breaker/index.html?v=20261108-buffered1",
+    "cover": "games/classic-hall/art-v2/brick.webp",
+    "description": "移動擋板反彈球，打破上方的磚塊。",
+    "group": "經典遊戲",
+    "width": 9,
+    "height": 16,
+    "open": true
+  },
+  {
+    "name": "CxQ 森林急件快遞",
+    "path": "games/dino/index.html?v=20261108-buffered1",
+    "cover": "games/classic-hall/art-v2/dino.webp",
+    "description": "跳過障礙與下滑躲避，完成森林配送挑戰。",
+    "group": "經典遊戲",
+    "width": 16,
+    "height": 9,
+    "open": true
+  },
+  {
+    "name": "CxQ 星願飛行郵差",
+    "path": "games/flappy/index.html?v=20261108-buffered1",
+    "cover": "games/classic-hall/art-v2/flappy.webp",
+    "description": "點按調整飛行高度，穿過障礙之間的空隙。",
+    "group": "經典遊戲",
+    "width": 9,
+    "height": 16,
+    "open": true
+  },
+  {
+    "name": "CxQ 魔法泡泡龍",
+    "path": "games/magic-bubble/index.html?v=20261108-buffered1",
+    "cover": "games/classic-hall/art-v2/magic-bubble.webp",
+    "description": "瞄準並發射泡泡，連起三顆以上同色泡泡。",
+    "group": "經典遊戲",
+    "width": 9,
+    "height": 16,
+    "open": true
+  },
+  {
+    "name": "CxQ 夢境消除",
+    "path": "games/dream-match/index.html?v=20261108-buffered1",
+    "cover": "games/classic-hall/art-v2/dream-match.webp",
+    "description": "交換相鄰寶石，連成三顆以上相同寶石。",
+    "group": "經典遊戲",
+    "width": 0,
+    "height": 0,
+    "open": true
+  },
+  {
+    "name": "CxQ 心光合成屋",
+    "path": "games/merge/index.html?v=20261108-buffered1",
+    "cover": "games/classic-hall/art-v2/merge.webp",
+    "description": "移動落點並放下球，讓相同球相遇合成更大的球。",
+    "group": "經典遊戲",
+    "width": 9,
+    "height": 16,
+    "open": true
+  }
 ]
