@@ -216,3 +216,23 @@ html { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
 @media(max-height:360px){#campaign .campaign-dossier{grid-template-rows:auto minmax(0,1fr) auto auto;gap:1px;padding:3px 6px}}
 #campaign #stages .stage-flag:nth-child(1){left:15%;top:73%}#campaign #stages .stage-flag:nth-child(2){left:37%;top:48%}#campaign #stages .stage-flag:nth-child(3){left:60%;top:68%}#campaign #stages .stage-flag:nth-child(4){left:84%;top:30%}
 #campaign #stages .stage-flag{transform:translate(-50%,-62%);max-width:25%}#campaign #stages .stage-flag strong{max-width:100%;font-size:clamp(9px,1.2vw,14px);white-space:normal;line-height:1.1}
+
+/* Give desktop landscape controls a readable floor, including embedded game windows. */
+@media (orientation:landscape) and (min-width:800px) and (min-height:430px) and (pointer:fine) {
+ #campaign .campaign-dossier {
+  padding:10px 13px 12px;
+  gap:5px;
+  grid-template-rows:auto minmax(28px,1fr) auto auto;
+ }
+ #campaign #stage-detail {font-size:clamp(14px,1.3vw,17px);line-height:1.45}
+ #campaign #stage-preview figcaption {font-size:12px;line-height:1.2}
+ #campaign .campaign-dossier .controls {gap:5px}
+ #campaign .campaign-dossier .controls button,
+ #campaign .campaign-dossier .controls select,
+ #campaign .campaign-dossier .controls label {
+  height:auto;min-height:34px;font-size:14px;line-height:1.25;
+ }
+ #campaign #campaign-fight {min-height:40px;font-size:16px}
+ #campaign :is(.adventure-modes button,#chapter-picker button,#chapter-picker select) {font-size:14px}
+ #campaign #stages .stage-flag strong {font-size:clamp(12px,1.2vw,15px)}
+}
