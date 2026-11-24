@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f1fb">
+<title>CxQ 工作台下載</title>
+<link rel="icon" href="icon.png">
+<style>
+:root{font-family:"Segoe UI","Microsoft JhengHei",sans-serif;color:#291738;background:#f7f1fb}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;padding:clamp(18px,6vw,72px) 16px}
+main{max-width:560px;margin:auto}
+a{color:#593183}
+.back{display:inline-block;padding:8px 0;margin-bottom:12px}
+article{padding:clamp(22px,6vw,38px);border:1px solid #e6d7ed;border-radius:24px;background:#fff;box-shadow:0 16px 44px #36164d12}
+header{display:flex;align-items:center;gap:16px}
+header img{width:64px;height:64px}
+h1{margin:0;font-size:clamp(25px,6vw,34px)}
+p{line-height:1.6}
+.meta{color:#604e70;margin:.3rem 0 0}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 18px}
+.actions a,.actions button{display:inline-flex;align-items:center;min-height:44px;padding:10px 14px;border-radius:10px;font:inherit;font-weight:600}
+.download{background:#653793;color:white;text-decoration:none}
+button{color:#462664;background:#f1e6f8;border:1px solid #ded0e8;cursor:pointer}
+.mobile{display:none;color:#604e70}
+@media(pointer:coarse){.mobile{display:block}}
+summary{cursor:pointer;padding:9px 0}
+code{display:block;overflow-wrap:anywhere;color:#493158}
+:focus-visible{outline:3px solid #aa64cc;outline-offset:3px}
+</style>
+<script defer src="download.js"></script>
+</head>
+<body>
+<main>
+<a class="back" href="../">← 回 CxQ 首頁</a>
+<article>
+<header><img src="icon.png" width="64" height="64" alt=""><div><h1>CxQ 工作台</h1><p class="meta">0.7.9 · Windows x64 · 約 1.26 GB</p></div></header>
+<p>在同一個桌面程式管理電腦、下載影音、轉換檔案和增強影像。也可以從工作台開啟 CxQ 官網與遊戲館。</p>
+<div class="actions">
+<a class="download" href="https://github.com/yuchen112/cailucky/releases/download/workbench-v0.7.9/CxQ-Workbench-Setup-0.7.9-x64.exe">下載 Windows x64 安裝檔</a>
+<button id="copy" type="button" hidden>複製頁面連結</button>
+</div>
+<p class="mobile">用手機瀏覽時，可以把這個頁面傳到 Windows 電腦再下載和安裝。</p>
+<p id="copy-status" role="status" hidden></p>
+<details><summary>SHA-256 校驗值</summary><code>87a772e2220872d4e6cbd6d611ab53f711221a99d8815dc734826c03b40f0283</code></details>
+</article>
+</main>
+</body>
+</html>
