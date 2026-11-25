@@ -1,6 +1,9 @@
 const dialog = document.querySelector("#cxq-account");
 const status = dialog.querySelector("[role=status]");
 const action = dialog.querySelector("[data-google]");
+const identity = dialog.querySelector("[data-identity]");
+const name = identity.querySelector("strong");
+const email = identity.querySelector("span");
 const root = document.querySelector("#root");
 const toggle = document.createElement("button");
 toggle.type = "button";
@@ -31,10 +34,17 @@ let busy = false;
 
 function show(session) {
   user = session?.user ?? null;
-  toggle.textContent = user ? "帳號" : "登入";
+  const displayName = user?.user_metadata?.full_name?.trim() || user?.user_metadata?.name?.trim();
+  const address = user?.email || "";
+  const label = displayName || address || "已登入";
+  toggle.textContent = user ? label : "登入";
+  toggle.title = user ? label : "";
+  identity.hidden = !user;
+  name.textContent = user ? label : "";
+  email.textContent = user && address !== label ? address : "";
   action.textContent = user ? "登出" : "使用 Google 登入";
   action.disabled = busy;
-  status.textContent = user ? (user.user_metadata?.full_name || user.email || "已登入") : "";
+  status.textContent = "";
 }
 
 try {
@@ -65,7 +75,7 @@ try {
   const { data, error } = await accounts.auth.getSession();
   show(data.session);
   if (incoming.searchParams.has("code") || incoming.searchParams.has("error") || incoming.hash.includes("error=")) {
-    if (!user) status.textContent = "登入未完成，請確認使用測試名單內的 Google 帳號。";
+    if (!user) status.textContent = "登入未完成，請重新使用你的 Google 帳號登入。";
     if (!dialog.open) dialog.showModal();
   } else if (error) {
     status.textContent = "無法確認登入狀態，請稍後再試。";

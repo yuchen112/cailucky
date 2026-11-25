@@ -10,3 +10,6 @@
 #cxq-account button:focus-visible,.cxq-account-toggle:focus-visible{outline:2px solid #765292;outline-offset:2px}
 .cxq-account-toggle{min-height:42px;min-width:56px;padding:0 11px;border:1px solid #ded0e4;border-radius:10px;background:#fff;color:#563776;font:inherit;font-size:14px;font-weight:650;white-space:nowrap;cursor:pointer}
 button.admin-button[hidden]{display:none!important}
+#cxq-account [data-identity]{margin:12px 0;overflow-wrap:anywhere}
+#cxq-account [data-identity] span{display:block;color:#64556b;font-size:13px}
+.cxq-account-toggle{max-inline-size:clamp(72px,20vw,156px);overflow:hidden;text-overflow:ellipsis}
