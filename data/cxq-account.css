@@ -1,5 +1,12 @@
-#cxq-account{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:.6rem;padding:.5rem max(1rem,env(safe-area-inset-right));color:#433455;background:#faf5ff;border-bottom:1px solid #e4d7ed;font:600 .875rem/1.4 system-ui,sans-serif}
-#cxq-account [role=status]{overflow-wrap:anywhere}
-#cxq-account button{font:inherit;cursor:pointer;min-height:36px;border:1px solid #765292;border-radius:999px;padding:.35rem .85rem;background:#fff;color:#553773}
-#cxq-account button:focus-visible{outline:2px solid #765292;outline-offset:2px}
-#cxq-account button:disabled{opacity:.65;cursor:wait}
+#cxq-account{width:min(360px,calc(100% - 32px));box-sizing:border-box;padding:20px;border:1px solid #e1d2e7;border-radius:18px;color:#312538;background:#fffcff;box-shadow:0 16px 45px #33223b35}
+#cxq-account::backdrop{background:#2b20334d}
+#cxq-account .cxq-account-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}
+#cxq-account h2{margin:0;font-size:20px}
+#cxq-account [role=status]{margin:8px 0;overflow-wrap:anywhere;font-size:14px}
+#cxq-account [data-close]{width:36px;height:36px;border:1px solid #e0d1e7;border-radius:10px;color:#553773;background:white;font-size:20px;cursor:pointer}
+#cxq-account [data-google]{display:block;width:100%;min-height:44px;margin-top:12px;border:0;border-radius:10px;background:#68448a;color:white;font:inherit;font-weight:650;cursor:pointer}
+#cxq-account [data-google]:disabled{opacity:.65;cursor:wait}
+#cxq-account [data-admin]{display:block;margin:14px auto 0;padding:7px 10px;border:0;background:transparent;color:#64556b;font:inherit;font-size:13px;text-decoration:underline;cursor:pointer}
+#cxq-account button:focus-visible,.cxq-account-toggle:focus-visible{outline:2px solid #765292;outline-offset:2px}
+.cxq-account-toggle{min-height:42px;min-width:56px;padding:0 11px;border:1px solid #ded0e4;border-radius:10px;background:#fff;color:#563776;font:inherit;font-size:14px;font-weight:650;white-space:nowrap;cursor:pointer}
+button.admin-button[hidden]{display:none!important}
