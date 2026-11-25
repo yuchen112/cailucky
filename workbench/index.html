@@ -44,7 +44,21 @@
  <section id="guide" aria-labelledby="guide-title">
   <h2 id="guide-title">使用指南</h2>
   <div class="guide-stack">
-   <article id="install"><h3>安裝與開啟</h3><ol><li>在 Windows 10 版本 2004 或更新版本的 x64 電腦下載安裝檔。</li><li>初次安裝時執行安裝程式。若是更新，先結束正在執行的工作台，再執行新版安裝檔。</li><li>從 Windows 開始功能表開啟「CxQ 工作台」，按「使用 Google 登入」，並在瀏覽器完成登入。回到工作台後，左側底部會顯示你的名稱和信箱。各頁右上角的「？」可查看使用說明。</li></ol></article>
+   <article id="install">
+    <h3>安裝與開啟</h3>
+    <ol>
+     <li>使用 Windows 10 版本 2004 或更新版本的 x64 電腦。從本頁下載安裝檔，等下載完成再開啟。</li>
+     <li>若是更新，先關閉正在執行的工作台，再執行新版安裝檔，依畫面指示完成安裝。</li>
+     <li>從 Windows 開始功能表開啟「CxQ 工作台」，按「使用 Google 登入」，在瀏覽器完成登入後回到工作台。左側底部可確認登入的名稱與信箱。</li>
+    </ol>
+    <h4>下載或安裝被安全性軟體攔截時</h4>
+    <p>瀏覽器、Windows Defender SmartScreen 或其他防毒軟體可能在下載、開啟或安裝時顯示警示。「無法辨識的應用程式」通常是信譽警示。若防毒軟體回報威脅名稱或隔離檔案，先暫停安裝。</p>
+    <ol>
+     <li>確認檔案來自本頁的官方 GitHub 下載連結。可用 PowerShell 執行 <code>Get-FileHash -Algorithm SHA256</code> 並指定下載的檔案，將結果與 <a href="https://github.com/yuchen112/cailucky/releases/download/workbench-v0.7.16/CxQ-Workbench-Setup-0.7.16-SHA256.txt">官方 SHA-256 校驗值</a>比對。</li>
+     <li>在「Windows 安全性 → 病毒與威脅防護 → 保護歷程記錄」，或你使用的防毒軟體中查看警示內容。若校驗值不同或仍有威脅警示，請停止安裝，透過官網聯絡管道提供版本、警示名稱和截圖。請保持安全性防護開啟。</li>
+    </ol>
+    <p><a href="https://support.microsoft.com/en-us/windows/security/windows-security/protection-history-in-the-windows-security-app">Microsoft 的保護歷程記錄說明</a></p>
+   </article>
    <article id="media"><h3>影音下載</h3><ol><li>貼上網址，確認「讀取模式」與輸出資料夾，再按「讀取作品」。預設會自動判斷，也可指定單一作品、作者或播放清單。</li><li>清單出現後勾選作品並加入佇列。播放清單會在輸出位置建立專用資料夾。</li><li>按「開啟下載佇列」，再按「開始下載」。管理視窗可調整大小，完成後從「下載歷史」開啟成品或所在位置。</li></ol><p>需要登入時，可先進入「平台帳號」選擇平台。網址欄旁也有「瀏覽器解析」入口。下載你有權存取的內容。</p></article>
    <article id="convert"><h3>檔案轉檔</h3><ol><li>加入檔案或資料夾，也可直接拖入。</li><li>選擇輸出資料夾，確認清單中各檔案的格式。批次工具可套用同一格式到相容檔案。</li><li>將清單加入轉檔佇列後按「開始／繼續」。完成後可開啟輸出資料夾或儲存轉檔報告。</li></ol></article>
    <article id="enhance"><h3>AI 影像增強</h3><ol><li>加入圖片或影片，選擇輸出資料夾。</li><li>選擇素材並按「產生對照預覽」，以滑桿比較原始與增強畫面。倍率和模型可在「增強參數」設定。</li><li>確認效果後加入佇列，按「開始／繼續」。完成後從紀錄開啟成品。</li></ol></article>
