@@ -4,47 +4,64 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f7f1fb">
-<title>CxQ 工作台下載</title>
+<meta name="description" content="CxQ 工作台的 Windows 安裝檔與使用指南。了解如何管理電腦、下載影音、轉換檔案和增強影像。">
+<title>CxQ 工作台｜介紹與使用指南</title>
 <link rel="icon" href="icon.png">
-<style>
-:root{font-family:"Segoe UI","Microsoft JhengHei",sans-serif;color:#291738;background:#f7f1fb}
-*{box-sizing:border-box}[hidden]{display:none!important}
-body{margin:0;padding:clamp(18px,6vw,72px) 16px}
-main{max-width:560px;margin:auto}
-a{color:#593183}
-.back{display:inline-block;padding:8px 0;margin-bottom:12px}
-article{padding:clamp(22px,6vw,38px);border:1px solid #e6d7ed;border-radius:24px;background:#fff;box-shadow:0 16px 44px #36164d12}
-header{display:flex;align-items:center;gap:16px}
-header img{width:64px;height:64px}
-h1{margin:0;font-size:clamp(25px,6vw,34px)}
-p{line-height:1.6}
-.meta{color:#604e70;margin:.3rem 0 0}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 18px}
-.actions a,.actions button{display:inline-flex;align-items:center;min-height:44px;padding:10px 14px;border-radius:10px;font:inherit;font-weight:600}
-.download{background:#653793;color:white;text-decoration:none}
-button{color:#462664;background:#f1e6f8;border:1px solid #ded0e8;cursor:pointer}
-.mobile{display:none;color:#604e70}
-@media(pointer:coarse){.mobile{display:block}}
-summary{cursor:pointer;padding:9px 0}
-code{display:block;overflow-wrap:anywhere;color:#493158}
-:focus-visible{outline:3px solid #aa64cc;outline-offset:3px}
-</style>
+<link rel="stylesheet" href="guide.css">
 <script defer src="download.js"></script>
 </head>
 <body>
-<main>
-<a class="back" href="../">← 回 CxQ 首頁</a>
-<article>
-<header><img src="icon.png" width="64" height="64" alt=""><div><h1>CxQ 工作台</h1><p class="meta">0.7.9 · Windows x64 · 約 1.26 GB</p></div></header>
-<p>在同一個桌面程式管理電腦、下載影音、轉換檔案和增強影像。也可以從工作台開啟 CxQ 官網與遊戲館。</p>
-<div class="actions">
-<a class="download" href="https://github.com/yuchen112/cailucky/releases/download/workbench-v0.7.9/CxQ-Workbench-Setup-0.7.9-x64.exe">下載 Windows x64 安裝檔</a>
-<button id="copy" type="button" hidden>複製頁面連結</button>
-</div>
-<p class="mobile">用手機瀏覽時，可以把這個頁面傳到 Windows 電腦再下載和安裝。</p>
-<p id="copy-status" role="status" hidden></p>
-<details><summary>SHA-256 校驗值</summary><code>87a772e2220872d4e6cbd6d611ab53f711221a99d8815dc734826c03b40f0283</code></details>
-</article>
+<a class="skip" href="#main">跳至主要內容</a>
+<header class="site-header"><div class="container topline">
+ <a class="back" href="../">← CxQ 官網</a>
+ <nav aria-label="本頁導覽"><a href="#tools">工具介紹</a><a href="#guide">使用指南</a><a href="#faq">常見問題</a><a href="#download">下載</a></nav>
+</div></header>
+<main class="container" id="main">
+ <section class="hero" id="download" aria-labelledby="title">
+  <div class="hero-copy">
+   <h1 id="title">CxQ 工作台</h1>
+   <p>用同一個 Windows 程式管理電腦、下載影音、轉換檔案與增強影像。CxQ 官網和遊戲館也可以直接從工作台開啟。</p>
+   <p class="meta">版本 0.7.9 · Windows x64 · 約 1.26 GB</p>
+   <div class="actions">
+    <a class="primary download" href="https://github.com/yuchen112/cailucky/releases/download/workbench-v0.7.9/CxQ-Workbench-Setup-0.7.9-x64.exe">下載 Windows x64 安裝檔</a>
+    <button id="copy" type="button" hidden>複製頁面連結</button>
+   </div>
+   <p class="mobile">可把這個頁面傳到 Windows 電腦再下載與安裝。</p>
+   <p id="copy-status" role="status" hidden></p>
+  </div>
+  <img class="hero-icon" src="icon.png" width="256" height="256" alt="">
+ </section>
+ <section id="tools" aria-labelledby="tools-title">
+  <h2 id="tools-title">工具介紹</h2>
+  <div class="tool-grid">
+   <article><h3>影音下載</h3><p>讀取單支作品、作者頁或播放清單，在勾選視窗挑選要下載的項目。進度、重試和完成紀錄集中在下載管理。</p><a href="#media">影音下載步驟</a></article>
+   <article><h3>檔案轉檔</h3><p>在同一批次加入不同類型的檔案，逐檔或統一選擇輸出格式，也能執行 PDF 合併等批次作業。</p><a href="#convert">轉檔步驟</a></article>
+   <article><h3>AI 影像增強</h3><p>在本機處理圖片、影片，先預覽前後差異，再調整放大倍率、模型和增強強度。</p><a href="#enhance">影像增強步驟</a></article>
+   <article><h3>電腦管理</h3><p>依用途開啟螢幕管理、睡眠聽歌、資源監控和系統工具。螢幕亮度控制會依裝置支援情況而異。</p><a href="#pc">電腦管理步驟</a></article>
+  </div>
+ </section>
+ <section id="guide" aria-labelledby="guide-title">
+  <h2 id="guide-title">使用指南</h2>
+  <div class="guide-stack">
+   <article id="install"><h3>安裝與開啟</h3><ol><li>在 Windows 10 版本 2004 或更新版本的 x64 電腦下載安裝檔。</li><li>初次安裝時執行安裝程式。若是更新，先結束正在執行的工作台，再執行新版安裝檔。</li><li>從 Windows 開始功能表開啟「CxQ 工作台」，再從左側選擇工具。各頁右上角的「？」可查看使用說明。</li></ol></article>
+   <article id="media"><h3>影音下載</h3><ol><li>貼上網址，確認「讀取模式」與輸出資料夾，再按「讀取作品」。預設會自動判斷，也可指定單一作品、作者或播放清單。</li><li>清單出現後勾選作品並加入佇列。播放清單會在輸出位置建立專用資料夾。</li><li>按「開啟下載佇列」，再按「開始下載」。管理視窗可調整大小，完成後從「下載歷史」開啟成品或所在位置。</li></ol><p>需要登入時，可先進入「平台帳號」選擇平台。網址欄旁也有「瀏覽器解析」入口。下載你有權存取的內容。</p></article>
+   <article id="convert"><h3>檔案轉檔</h3><ol><li>加入檔案或資料夾，也可直接拖入。</li><li>選擇輸出資料夾，確認清單中各檔案的格式。批次工具可套用同一格式到相容檔案。</li><li>將清單加入轉檔佇列後按「開始／繼續」。完成後可開啟輸出資料夾或儲存轉檔報告。</li></ol></article>
+   <article id="enhance"><h3>AI 影像增強</h3><ol><li>加入圖片或影片，選擇輸出資料夾。</li><li>選擇素材並按「產生對照預覽」，以滑桿比較原始與增強畫面。倍率和模型可在「增強參數」設定。</li><li>確認效果後加入佇列，按「開始／繼續」。完成後從紀錄開啟成品。</li></ol></article>
+   <article id="pc"><h3>電腦管理</h3><ol><li>在「螢幕管理」選擇螢幕。硬體亮度可用時調整並套用，也可使用軟體調暗。</li><li>在「睡眠聽歌」設定停止時間並開始計時。</li><li>在「資源監控」查看即時用量，或在「系統工具」開啟對應的 Windows 功能。</li></ol></article>
+   <article id="games"><h3>官網與遊戲館</h3><p>左側的「CxQ 官網」與「CxQ 遊戲館」是獨立入口。從遊戲館選擇作品後，遊戲會在獨立視窗開啟。具備方向設定的作品會以對應的橫向或直向比例顯示。</p></article>
+  </div>
+ </section>
+ <section id="faq" aria-labelledby="faq-title">
+  <h2 id="faq-title">常見問題</h2>
+  <div class="guide-stack">
+   <details><summary>手機可以安裝嗎？</summary><p>安裝檔適用於 Windows x64 電腦。可以用手機複製本頁連結，再到電腦下載。</p></details>
+   <details><summary>影音清單讀不到，或平台頁打不開怎麼辦？</summary><p>先檢查網址和讀取模式。若作品需要登入，請到「平台帳號」確認登入狀態。平台回傳錯誤時，可重新開啟平台再試。</p></details>
+   <details><summary>關閉下載管理視窗會停掉下載嗎？</summary><p>只關閉下載管理子視窗時，工作台仍可繼續處理佇列。重新開啟即可查看進度。</p></details>
+   <details><summary>清除下載歷史會刪掉成品嗎？</summary><p>「清除已完成紀錄」與「移除紀錄（保留檔案）」會移除工作台紀錄，成品留在輸出資料夾。</p></details>
+   <details><summary>SHA-256 校驗值</summary><p>可在 PowerShell 用 <kbd>Get-FileHash</kbd> 計算下載檔的 SHA-256，再與下列結果比對。</p><code>87a772e2220872d4e6cbd6d611ab53f711221a99d8815dc734826c03b40f0283</code></details>
+  </div>
+ </section>
 </main>
+<footer class="container"><a href="#download">回到下載</a><a href="../">回 CxQ 官網</a></footer>
 </body>
 </html>
